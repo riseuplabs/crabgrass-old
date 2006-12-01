@@ -1,0 +1,34 @@
+
+group vars
+-------------
+
+groups
+  can non-group members participate?
+  (this is for super groups, spokes council & board groups.
+   overrides the normal group inheritence. )
+  
+which (sub)group is the admin group?
+
+which (sub)group is the super group?
+
+network vars
+--------------
+
+all of group vars, plus:
+
+name
+
+maximum number of delegates per group
+
+
+nodes to users
+--------------
+
+last time viewed
+
+last update
+
+number of messages
+
+alien? (where you invited manually, not as a function of what group you are in).
+

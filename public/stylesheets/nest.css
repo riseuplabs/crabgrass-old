@@ -1,0 +1,325 @@
+body { background-color: #fff; color: #333; padding: 0; margin: 0; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 1.5em;
+}
+
+a { color: #000; }
+a:visited { color: #666; }
+
+pre.debug {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/** NOTICES AND ERRORS **/
+div.fieldWithErrors {
+  border: 2px solid red;
+  display: table-cell;
+}
+div.fieldWithErrors + div.fieldWithErrors {display:none;}
+input[type="hidden"] {display:none}
+/* input[type="checkbox"] {display:table-cell;} */
+/* label {display: table-cell; vertical-align: middle;} */
+/* div.checkbox {display: table-cell;} */
+
+div.notice img {
+  vertical-align: middle;
+}
+div.notice {
+  width: 30em;
+  padding: 7px;
+  padding-bottom: 1em;
+  margin-bottom: 2em;
+  background-color: #eee;
+}
+div.notice h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 0.5em;
+  font-size: 12pt;
+  margin: -7px;
+  background-color: #ccc;
+  border-bottom: 1px solid #999;
+}
+div.info h2 {background-color: #eee; border: 0}
+div.error  {border: 2px solid red;   color: #900;}
+div.info   {border: 2px solid green; color: #090;}
+div.update {border: 2px solid blue;  color: #009;}
+div#update {
+  background: #ddd url(/images/48/info.png) 0 50% no-repeat;
+  padding: 2em 2em 2em 48px;
+  
+}
+div.notice p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+div.notice ul li {
+  font-size: 12px;
+  list-style: square;
+  color: black;
+}
+div.uploadStatus {
+  margin: 5px;
+}
+div.progressBar {
+  margin: 5px;
+}
+div.progressBar div.border {
+  background-color: #fff;
+  border: 1px solid gray;
+  width: 100%;
+}
+div.progressBar div.background {
+  background-color: #333;
+  height: 18px;
+  width: 0%;
+}
+
+/** SIDEBAR **/
+div#sidebar {
+  width: 11em;
+  float: left;
+  text-align: center;
+  border-right: 1px solid #ccc;
+  margin-left: -0.8em;
+  padding-bottom: 5em;
+}
+div#sidebar a {
+  display:block;
+  text-decoration: none;
+  margin-bottom: 0.5em;
+  padding: 0.5em 0 0.5em 0;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
+div#sidebar a.selected {
+  font-weight: bold;
+  background: #eef;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+div#sidebar a:hover {
+  color: black;
+  background: #ffd;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/** LAYOUT **/
+div#main {
+  margin-left: 11em;
+  padding: 0 1em;
+}
+div#title {
+  margin-left: 1em;
+  padding: 1em;
+}
+
+
+/** TYPE **/
+#main > h2 {
+  background: #ccc url(/images/64/button-bg.png) 0% 50% repeat-x;
+  padding: 0 0 0 0.25em;
+  margin: 0 -1em 0 0;
+  border: 1px solid #999;
+  border-right: 0;
+/*
+padding: 0.5em 0 0 0.25em;
+  margin: 0 -1em 0 0;
+  line-height: 0.25em;
+  background: #eee;
+  border: solid #e6e6e6;
+  border-width: 1px 0 0.75em 1px;
+*/
+}
+#title > h1 {
+  padding:0; margin:0;
+  color: #999;
+}
+h3 {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+pre.email {
+  padding: 0; margin: 0;
+  font-size: 0.9em;
+}
+div.text, div.text p {
+  padding: 0 2em;
+}
+div.text ul p {
+  padding: 0;
+}
+div.text h2 {
+  padding: 0; margin: 0; font-size: 1em;
+}
+
+/** TABS **/
+ul#tabnav {
+  list-style-type: none;
+  background: url(/images/grey9.png) repeat-x bottom;
+}
+ul#tabnav li {
+  height: 1.6em; /* must equal a.height + a.vertical-padding */
+  padding: 1px;
+}
+ul#tabnav li.tab {
+  float: left;
+  background-color: #eee;
+  border: 1px solid #999;
+  padding: 0;
+  margin: 0 0.4em;
+}
+#tabnav a {
+ display: block;
+ color: #666;
+ text-decoration: none;
+ height: 1.2em;
+ padding: 0.1em 0.5em 0.3em 0.5em;
+}
+#tabnav a:hover {
+ background: #999;
+ color: white;
+}
+#tabnav a.selected, #tabnav a.selected:hover {
+ background: #fff;
+ color: black;
+ height: 1.3em;
+}
+
+/** FORMS **/
+div.section p {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em 0em;
+}
+div.section h2 {
+  margin-bottom: 0.2em;
+}
+
+.form input, .form textarea {
+  background: #fcfcfc;
+  border: 1px solid;
+  border-color: #ccc #eee #eee #ccc;
+}
+/*
+.form input[type="text"], .form textarea {
+  width: 30em;
+  font-size: 1em;
+  font-family: monospace;
+}
+*/
+.form input:focus, .form textarea:focus {
+  background: #ffd;
+}
+
+table.form {
+  border-collapse: collapse; 
+  width: 100%; 
+  background: white;
+}
+table.form td {
+  padding: 4px;
+  vertical-align: top;
+}
+table.form tr.title td {
+  font-size: 1.3em;
+  background: white;
+  font-weight: bold;
+}
+table.form tr.spacer td, table.form tr.label td {
+  padding: 0;
+  background: #fff url(/images/fade-small-ff-to-ef.png) 0 100% repeat-x;
+  font-weight: bold;
+  color: #600;
+  vertical-align: bottom;
+  height: 2em;
+}
+table.form td.label, table.form td.info {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+}
+table.form td.label {
+  border-left: 0;
+  font-weight: bold;
+  text-align: right;
+  width: 15em;
+}
+table.form td.info {
+  border-right: 0;
+}
+table.form td.input {
+  background: #f6f6f6;
+  border: 1px solid #ddd;
+  border-right: 0;
+}
+table.form td[align="center"] {
+  background: #f6f6f6;
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+table.form td[colspan="3"] {
+  border-right: 0;
+  border-left: 0;
+}
+
+a.button {
+  background: #6AD url(/images/64/button-bg.png) 0% 50% repeat-x;
+  padding: 3px 6px 4px 6px;
+  border: 1px solid #666;
+  text-decoration: none;
+  color: white;
+  font-size: 8pt;
+  margin-right: 6px;
+}
+a.button:hover {
+  background: #9cf url(/images/64/button-bg.png) 0% 50% repeat-x;
+}
+
+/** LOGIN **/
+div#frontmain {
+  padding: 5em;
+  text-align: center;
+}
+#loginform {
+  width: 20em;
+  text-align: left;
+  border: 1px solid #ccc;
+  background: #eee;
+  padding: 2em;
+  margin: 0 auto;
+}
+#loginform table {
+  margin: 0 auto;
+}
+
+/** TABLES **/
+table.list {
+ width:100%;
+ background: #999;
+ border-spacing: 1px;
+}
+table.list th, table.list th a {
+  color: #fff;
+  text-align: left;
+  font-weight: bold;
+  font-size: 11px;
+}
+table.list tr:first-child:hover {background: #999;}
+
+table.list tr.even {background: #fff;}
+table.list tr.odd {background: #eee;}
+table.list tr:hover {background: #ddf;}
+
+table.list td a {
+  text-decoration: none;
+  display: block;
+}
+

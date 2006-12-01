@@ -1,0 +1,3 @@
+class Network < Group
+
+end

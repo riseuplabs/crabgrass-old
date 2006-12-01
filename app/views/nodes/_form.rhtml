@@ -1,0 +1,16 @@
+<%= error_messages_for 'node' %>
+
+<!--[form:node]-->
+<p><label for="node_name">Name</label><br/>
+<%= text_field 'node', 'name'  %></p>
+
+<p><label for="node_node_type">Node type</label><br/>
+<%= text_field 'node', 'node_type'  %></p>
+
+<p><label for="node_created_at">Created at</label><br/>
+<%= datetime_select 'node', 'created_at'  %></p>
+
+<p><label for="node_updated_at">Updated at</label><br/>
+<%= datetime_select 'node', 'updated_at'  %></p>
+<!--[eoform:node]-->
+

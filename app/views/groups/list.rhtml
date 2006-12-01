@@ -1,0 +1,27 @@
+<h1>Listing groups</h1>
+
+<table>
+  <tr>
+  <% for column in Group.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for group in @groups %>
+  <tr>
+  <% for column in Group.content_columns %>
+    <td><%=h group.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => group %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => group %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => group }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @group_pages.current.previous } if @group_pages.current.previous %>
+<%= link_to 'Next page', { :page => @group_pages.current.next } if @group_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New group', :action => 'new' %>

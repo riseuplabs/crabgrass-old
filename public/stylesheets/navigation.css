@@ -1,0 +1,57 @@
+/**** drop down menu tabs ****/
+/* http://www.htmldog.com/articles/suckerfish/dropdowns/ */
+
+/* structure */
+
+#topmenu, #topmenu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#topmenu > li a {
+	display: block;
+}
+
+#topmenu > li {
+	float: left;
+	width: 6em;
+}
+
+#topmenu li ul {
+	position: absolute;
+	width: 10em;
+	left: -999em;
+}
+
+#topmenu li:hover ul {
+	left: auto;
+}
+
+/* styling */
+
+#topnav {
+  background: #550;
+  padding-top: 7px;
+}
+
+#topmenu li {
+  background: #990;
+  margin: 0 4px;
+}
+
+#topmenu li ul li {
+  margin: 0 0 -2px 0;
+}
+
+#topmenu a {
+  color: #000;
+  text-decoration: none;
+  padding: 2px;
+}
+#topmenu a:hover {
+  background: #cc0;
+}
+#topmenu a.selected {
+  background: white;
+}

@@ -1,0 +1,26 @@
+<div id="loginform">
+<%= start_form_tag :controller => 'account', :action => 'login' %>
+<table>
+<tr>
+  <td>
+    <label for="username"><%=_("Username")%></label><br/>
+    <%= text_field_tag 'username' %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label for="password"><%=_("Password")%></label><br/>
+    <%= password_field_tag 'password' %>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right">
+     <%= submit_tag _('Log in') %>
+  </td>
+</tr>
+</table>
+<%= end_form_tag %>
+
+<div><%= flash[:error] %></div>
+
+</div> <!-- end login -->
