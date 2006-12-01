@@ -2,37 +2,38 @@ class User < AuthenticatedUser
 
   ### attributes
   
-  cattr_accessor :current
+  # cattr_accessor :current
   
   ### associations
-  
-  has_many :memberships
-  has_many :groups,
-    :through => 'memberships'
+ 
+   has_and_belongs_to_many :groups, :join_table => :memberships
+    
+#  has_many :memberships
+#  has_many :groups, :through => :memberships
 
-  has_many :user_participations
-  has_many :nodes, :through => 'user_participations' do
-	def urgent
-	  find(:all, :conditions => 'deadline > now()', :order => 'deadline' )
-	end
-  end
+#  has_many :user_participations
+#  has_many :nodes, :through => 'user_participations' do
+#	def urgent
+#	  find(:all, :conditions => 'deadline > now()', :order => 'deadline' )
+#	end
+#  end
   
-  has_many :urgent_nodes,
-    :condition => 'deadline > now()',
-	:order => 'deadline',
-	:through => 'visits'
+#  has_many :urgent_nodes,
+#    :condition => 'deadline > now()',
+#	:order => 'deadline',
+#	:through => 'visits'
   
-  has_many :unread_nodes,
-    :condition => 'read_at < updated_at',
-    :order => 'updated_at',
-	:through => 'visits',
-    :class_name => 'Node'
+#  has_many :unread_nodes,
+#    :condition => 'read_at < updated_at',
+#    :order => 'updated_at',
+#	:through => 'visits',
+#   :class_name => 'Node'
 
-  has_many :watched_nodes,
-    :condition => 'watch = 1',
-    :order => 'updated_at',
-	:through => 'visits',
-    :class_name => 'Node'
+#  has_many :watched_nodes,
+#    :condition => 'watch = 1',
+#    :order => 'updated_at',
+#	:through => 'visits',
+#    :class_name => 'Node'
 
 #  has_many :nodes_created 
 #    :class_name => "Node"
@@ -45,13 +46,13 @@ class User < AuthenticatedUser
     :after_add => :reciprocate_add,
     :after_remove => :reciprocate_remove
  
-  has_many :messages
+#  has_many :messages
  
-  belongs_to :picture
+#  belongs_to :picture
   
   ### validations
   
-  validates_presence_of 'name', 'username'
+
   
   ### callbacks
   

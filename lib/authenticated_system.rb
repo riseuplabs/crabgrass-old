@@ -3,22 +3,17 @@ module AuthenticatedSystem
     # Returns true or false if the user is logged in.
     # Preloads @current_user with the user model if they're logged in.
     def logged_in?
-      (self.current_user ||= session[:user] ? User.find_by_id(session[:user]) : :false).is_a?(User)
+      current_user != :false
     end
     
     # Accesses the current user from the session.
     def current_user
-      @current_user if logged_in?
+      @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
     end
     
-    def current_email
-      @current_email if logged_in?
-    end
-
     # Store the given user in the session.
     def current_user=(new_user)
-      session[:user] = new_user.nil? ? nil : new_user.id
-      User.current = new_user
+      session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_user = new_user
     end
     
@@ -31,32 +26,13 @@ module AuthenticatedSystem
     # Example:
     #
     #  # only allow nonbobs
-    #  def authorize?(user)
-    #    user.login != "bob"
+    #  def authorize?
+    #    current_user.login != "bob"
     #  end
-    def authorized?(user)
-       true
-    end
-    
-    # Check whether or not to protect an action.
-    #
-    # Override this method in your controllers if you only want to protect
-    # certain actions.
-    #
-    # Example:
-    #
-    #  # don't protect the login and the about method
-    #  def protect?(action)
-    #    if ['action', 'about'].include?(action)
-    #       return false
-    #    else
-    #       return true
-    #    end
-    #  end
-    def protect?(action)
+    def authorized?
       true
     end
-    
+
     # Filter method to enforce a login requirement.
     #
     # To require logins for all actions, use this in your controllers:
@@ -72,18 +48,9 @@ module AuthenticatedSystem
     #   skip_before_filter :login_required
     #
     def login_required
-      # Skip this filter if the requested action is not protected
-      return true unless protect?(action_name)
-    
-      # Check if user is logged in and authorized
-      return true if logged_in? and authorized?(current_user)
-    
-      # Store current location so that we can redirect back after login
-      store_location
-    
-      # Call access_denied for an appropriate redirect and stop the filter
-      # chain here
-      access_denied and return false
+      username, passwd = get_auth_data
+      self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
+      logged_in? && authorized? ? true : access_denied
     end
     
     # Redirect as appropriate when an access request fails.
@@ -95,7 +62,18 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      redirect_to :controller => '/account', :action => 'login'
+      respond_to do |accepts|
+        accepts.html do
+          store_location
+          redirect_to :controller => '/account', :action => 'login'
+        end
+        accepts.xml do
+          headers["Status"]           = "Unauthorized"
+          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+          render :text => "Could't authenticate you", :status => '401 Unauthorized'
+        end
+      end
+      false
     end  
     
     # Store the URI of the current request in the session.
@@ -103,8 +81,6 @@ module AuthenticatedSystem
     # We can return to this location by calling #redirect_back_or_default.
     def store_location
       session[:return_to] = request.request_uri
-      # if we want to redirect back to the full request
-      #session[:jumpto] = @request.parameters
     end
     
     # Redirect to the URI stored by the most recent store_location call or
@@ -112,12 +88,33 @@ module AuthenticatedSystem
     def redirect_back_or_default(default)
       session[:return_to] ? redirect_to_url(session[:return_to]) : redirect_to(default)
       session[:return_to] = nil
-      #breakpoint
     end
     
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
       base.send :helper_method, :current_user, :logged_in?
+    end
+
+    # When called with before_filter :login_from_cookie will check for an :auth_token
+    # cookie and log the user back in if apropriate
+    def login_from_cookie
+      return unless cookies[:auth_token] && !logged_in?
+      user = User.find_by_remember_token(cookies[:auth_token])
+      if user && user.remember_token?
+        user.remember_me
+        self.current_user = user
+        cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
+        flash[:notice] = "Logged in successfully"
+      end
+    end
+
+  private
+    @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
+    # gets BASIC auth info
+    def get_auth_data
+      auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+      auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
+      return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
     end
 end

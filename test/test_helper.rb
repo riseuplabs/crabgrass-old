@@ -25,4 +25,16 @@ class Test::Unit::TestCase
   self.use_instantiated_fixtures  = false
 
   # Add more helper methods to be used by all tests here...
+
+  # make sure the associations are at least defined properly
+  def check_associations(m)
+    @m = m.new
+    m.reflect_on_all_associations.each do |assoc|
+      assert_nothing_raised("#{assoc.name} caused an error") do
+        @m.send(assoc.name, true)
+      end
+    end
+    true
+  end
+  
 end

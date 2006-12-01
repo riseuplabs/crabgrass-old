@@ -9,21 +9,6 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-require 'gettext/utils'
-
-desc "Create mo-files for L10n"
-task :makemo do
-  GetText.create_mofiles(true, "po", "locale")
-end
- 
-desc "Update pot/po files to match new version."
-task :updatepo do
-  MY_APP_TEXT_DOMAIN = "nest"
-  MY_APP_VERSION     = "nest 0.1"
-  GetText.update_pofiles(MY_APP_TEXT_DOMAIN, Dir.glob("{app,lib,components}/**/*.{rb,rhtml}"), MY_APP_VERSION)
-end
-
-
 desc "Reload the development environment"
 task :reload => :environment do
   ActiveRecord::Base.establish_connection(:development) 

@@ -1,26 +1,14 @@
-<div id="loginform">
-<%= start_form_tag :controller => 'account', :action => 'login' %>
-<table>
-<tr>
-  <td>
-    <label for="username"><%=_("Username")%></label><br/>
-    <%= text_field_tag 'username' %>
-  </td>
-</tr>
-<tr>
-  <td>
-    <label for="password"><%=_("Password")%></label><br/>
-    <%= password_field_tag 'password' %>
-  </td>
-</tr>
-<tr>
-  <td style="text-align: right">
-     <%= submit_tag _('Log in') %>
-  </td>
-</tr>
-</table>
-<%= end_form_tag %>
+<% form_tag do -%>
+<p><label for="login">Login</label><br/>
+<%= text_field_tag 'login' %></p>
 
-<div><%= flash[:error] %></div>
+<p><label for="password">Password</label><br/>
+<%= password_field_tag 'password' %></p>
 
-</div> <!-- end login -->
+<!-- Uncomment this if you want this functionality
+<p><label for="remember_me">Remember me:</label>
+<%= check_box_tag 'remember_me' %></p>
+-->
+
+<p><%= submit_tag 'Log in' %></p>
+<% end -%>

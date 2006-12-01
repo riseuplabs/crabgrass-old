@@ -8,9 +8,8 @@ class CreateGroups < ActiveRecord::Migration
       t.column :parent_id,      :integer
       t.column :admin_group_id, :integer
       t.column :council,        :boolean
-      t.column :created_on,     :timestamp
-      t.column :updated_at,     :timestamp
-      t.column :picture_id,     :integer
+      t.column :created_at,     :datetime
+      t.column :updated_at,     :datetime
     end
   end
 

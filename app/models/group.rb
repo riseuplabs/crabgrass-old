@@ -17,26 +17,30 @@ class Group < ActiveRecord::Base
   acts_as_tree :order => 'name', :counter_cache => 'true'
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
 
-  has_many :groups_to_networks
-  has_many :networks,
-    :through => 'groups_to_networks'
+#  has_many :groups_to_networks
+#  has_many :networks,
+#    :through => 'groups_to_networks'
   
-  has_many :groups_to_subgroups
-  has_many :subgroups,
-    :through => 'groups_to_subgroups'
+#  has_many :groups_to_committees
+#  has_many :committees,
+#    :through => 'groups_to_committees'
   
-  has_many :group_participates
-  has_many :nodes,
-    :through => 'group_participates'
+#  has_many :group_participates
+#  has_many :nodes,
+#    :through => 'group_participates'
 
-  has_many :memberships
-  has_many :users,
-    :through => 'memberships'
+#  has_many :memberships
+#  has_many :users, :through => :memberships
+
+  has_and_belongs_to_many :users, :join_table => :memberships
     
-  has_and_belongs_to_many :locations,
-    :class_name => 'Category'
-  has_and_belongs_to_many :categories
+#  has_and_belongs_to_many :locations,
+#    :class_name => 'Category'
+#  has_and_belongs_to_many :categories
   
-  belongs_to :picture
+#  belongs_to :picture
+
+  # validations
   
+  validates_presence_of :name
 end

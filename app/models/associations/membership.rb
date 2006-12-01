@@ -1,6 +1,6 @@
 #
 # user to group relationship
-# role (string) -- for now, just a title.
+# created_at (datetime) -- 
 #
 class Membership < ActiveRecord::Base
   belongs_to :user

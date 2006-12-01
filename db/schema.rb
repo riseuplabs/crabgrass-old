@@ -2,21 +2,55 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 9) do
+ActiveRecord::Schema.define(:version => 14) do
 
   create_table "categories", :force => true do |t|
   end
 
-  create_table "groups", :force => true do |t|
-    t.column "name", :string
-    t.column "parent_id", :integer
-    t.column "created_on", :datetime
-    t.column "updated_on", :datetime
+  create_table "contacts", :force => true do |t|
+    t.column "user_id", :integer
+    t.column "contact_id", :integer
   end
 
-  create_table "groups_to_nodes", :force => true do |t|
+  create_table "group_participations", :force => true do |t|
     t.column "group_id", :integer
     t.column "node_id", :integer
+    t.column "view_only", :boolean
+  end
+
+  create_table "groups", :force => true do |t|
+    t.column "name", :string
+    t.column "summary", :string
+    t.column "url", :string
+    t.column "type", :string
+    t.column "parent_id", :integer
+    t.column "admin_group_id", :integer
+    t.column "council", :boolean
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+  end
+
+  create_table "groups_to_committees", :force => true do |t|
+    t.column "group_id", :integer
+    t.column "committee_id", :integer
+  end
+
+  create_table "groups_to_networks", :force => true do |t|
+    t.column "group_id", :integer
+    t.column "network_id", :integer
+    t.column "council_id", :integer
+    t.column "delegates_id", :integer
+  end
+
+  create_table "links", :force => true do |t|
+    t.column "node_id", :integer
+    t.column "other_node_id", :integer
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.column "group_id", :integer
+    t.column "user_id", :integer
+    t.column "created_at", :datetime
   end
 
   create_table "nodes", :force => true do |t|
@@ -24,25 +58,46 @@ ActiveRecord::Schema.define(:version => 9) do
     t.column "node_type", :string
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+    t.column "public", :boolean
+    t.column "created_by_id", :integer
+    t.column "updated_by_id", :integer
+    t.column "tool_id", :integer
+    t.column "tool_type", :string
   end
 
-  create_table "nodes_users", :force => true do |t|
+  create_table "pictures", :force => true do |t|
+    t.column "comment", :string
+    t.column "name", :string
+    t.column "content_type", :string
+    t.column "data", :binary
+    t.column "created_by_id", :integer
+    t.column "created_at", :datetime
+    t.column "thumb", :binary
+    t.column "type", :string
+  end
+
+  create_table "user_participations", :force => true do |t|
     t.column "node_id", :integer
     t.column "user_id", :integer
+    t.column "message_count", :integer, :default => 0
+    t.column "read_at", :datetime
+    t.column "watch", :boolean
+    t.column "resolved", :boolean
+    t.column "view_only", :boolean
   end
 
   create_table "users", :force => true do |t|
-    t.column "username", :string
-    t.column "display_username", :string
-    t.column "language", :string, :limit => 5
+    t.column "login", :string
+    t.column "email", :string
     t.column "crypted_password", :string, :limit => 40
-    t.column "created_on", :datetime
-    t.column "updated_on", :datetime
-  end
-
-  create_table "users_to_users", :force => true do |t|
-    t.column "user1_id", :integer
-    t.column "user2_id", :integer
+    t.column "salt", :string, :limit => 40
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+    t.column "remember_token", :string
+    t.column "remember_token_expires_at", :datetime
+    t.column "display_name", :string
+    t.column "time_zone", :string
+    t.column "language", :string, :limit => 5
   end
 
 end

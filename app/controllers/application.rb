@@ -1,15 +1,10 @@
 # Filters added to this controller will be run for all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
-require 'gettext/rails'
-
 class ApplicationController < ActionController::Base
 
-  init_gettext "nest", "UTF-8", "text/html"
-  
   include AuthenticatedSystem	
   before_filter :login_required
-
 
   # a default success flash
   def flash_success(msg=nil)

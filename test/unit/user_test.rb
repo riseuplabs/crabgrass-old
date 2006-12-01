@@ -1,10 +1,30 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < Test::Unit::TestCase
-  fixtures :users
 
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  fixtures :users, :groups, :memberships
+
+  def test_memberships
+    u = create_user
+    g = Group.find 1
+    oldcount = g.users.count
+    u.groups << g
+    assert oldcount < g.users.count, "group should have more users after add user"   
   end
+
+  def test_associations
+    assert check_associations(User)
+  end
+  
+#  def test_should_require_login
+#    assert_no_difference User, :count do
+#      u = create_user(:login => nil)
+#      assert u.errors.on(:login)
+#    end
+#  end
+
+  protected
+    def create_user(options = {})
+      User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
+    end
 end
