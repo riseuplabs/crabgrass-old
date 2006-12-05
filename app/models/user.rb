@@ -2,21 +2,21 @@ class User < AuthenticatedUser
 
   ### attributes
   
-  # cattr_accessor :current
+  # a class attr which is set to the currently logged in user
+  cattr_accessor :current
   
   ### associations
  
-   has_and_belongs_to_many :groups, :join_table => :memberships
-    
-#  has_many :memberships
-#  has_many :groups, :through => :memberships
-
-#  has_many :user_participations
-#  has_many :nodes, :through => 'user_participations' do
-#	def urgent
-#	  find(:all, :conditions => 'deadline > now()', :order => 'deadline' )
-#	end
-#  end
+  # relationship to groups
+  has_and_belongs_to_many :groups, :join_table => :memberships
+  
+  # relationship to pages
+  has_many :participations, :class_name => 'UserParticipation'
+  has_many :pages, :through => :participations do
+	def pending
+	  find(:all, :conditions => ['revolved = ?',false], :order => 'happens_at' )
+	end
+  end
   
 #  has_many :urgent_nodes,
 #    :condition => 'deadline > now()',
@@ -35,9 +35,13 @@ class User < AuthenticatedUser
 #	:through => 'visits',
 #    :class_name => 'Node'
 
-#  has_many :nodes_created 
-#    :class_name => "Node"
+  has_many :pages_created, 
+    :class_name => "Page", :foreign_key => :created_by_id 
 
+  has_many :pages_updated, 
+    :class_name => "Page", :foreign_key => :updated_by_id 
+
+  # relationship to other users
   has_and_belongs_to_many :contacts,
     :class_name => "User",
     :join_table => "contacts",
