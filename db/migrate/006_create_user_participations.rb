@@ -1,7 +1,7 @@
 class CreateUserParticipations < ActiveRecord::Migration
   def self.up
     create_table :user_participations do |t|
-	  t.column :node_id, :integer
+	  t.column :page_id, :integer
 	  t.column :user_id, :integer
 	  t.column :message_count, :integer, :default => 0
 	  t.column :read_at, :timestamp

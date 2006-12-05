@@ -1,8 +1,8 @@
 class CreateLinks < ActiveRecord::Migration
   def self.up
-    create_table :links do |t|
-	  t.column :node_id, :integer
-	  t.column :other_node_id, :integer
+    create_table :links, :id => false do |t|
+	  t.column :page_id, :integer
+	  t.column :other_page_id, :integer
     end
   end
 
