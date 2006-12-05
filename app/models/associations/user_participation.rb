@@ -11,7 +11,7 @@
 #
 
 class UserParticipation < ActiveRecord::Base
-  belongs_to :node
+  belongs_to :page
   belongs_to :user
-  has_many :messages
+#  has_many :messages
 end
