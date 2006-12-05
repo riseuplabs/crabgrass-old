@@ -1,9 +1,0 @@
-<h1>Editing node</h1>
-
-<%= start_form_tag :action => 'update', :id => @node %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
-
-<%= link_to 'Show', :action => 'show', :id => @node %> |
-<%= link_to 'Back', :action => 'list' %>
