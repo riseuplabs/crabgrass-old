@@ -32,6 +32,13 @@ class GroupsController < ApplicationController
 
   def edit
     @group = Group.find(params[:id])
+    if request.post? 
+      @group.update_attributes(params[:group])
+      @new_user = User.find(:all, :conditions =>["login = ?",params[:login]])
+      @group.users << @new_user if @new_user
+
+    flash_error 'group'
+    end
   end
 
   def update

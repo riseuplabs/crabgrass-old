@@ -2,16 +2,15 @@
 
 <table>
   <tr>
-  <% for column in User.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th>Login</th>
+    <th>Email</th>
   </tr>
   
 <% for user in @users %>
   <tr>
-  <% for column in User.content_columns %>
-    <td><%=h user.send(column.name) %></td>
-  <% end %>
+    <td><%= link_to user.login, :action=>'edit', :id => user %></td>
+    <td><%=h user.email %></td>
+
     <td><%= link_to 'Show', :action => 'show', :id => user %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => user }, :confirm => 'Are you sure?', :post => true %></td>
