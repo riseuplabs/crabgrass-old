@@ -3,7 +3,7 @@
 #
 class CreateMemberships < ActiveRecord::Migration
   def self.up
-    create_table :memberships do |t|
+    create_table :memberships, :id => false do |t|
       t.column :group_id,   :integer
       t.column :user_id,    :integer
     end
