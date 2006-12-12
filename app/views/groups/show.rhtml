@@ -3,7 +3,13 @@
   <b><%= column.human_name %>:</b> <%=h @group.send(column.name) %>
 </p>
 <% end %>
-
+<b>Members:</b><br>
+<% @group.users.each do |u| %>
+	<%= h u.login %><br>	
+<% end %>
+<% if @group.users.count == 0 %>
+No members.<br>
+<% end %>
 
 <%= link_to 'Edit', :action => 'edit', :id => @group %> |
 <%= link_to 'Back', :action => 'list' %>
