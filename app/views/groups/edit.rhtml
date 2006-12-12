@@ -2,9 +2,9 @@
 
 <%= start_form_tag :action => 'edit', :id => @group %>
   <%= render :partial => 'form' %>
-  <p>Add User:
+  <p>Add Users:
   <%= 
-  text_field_tag "login", nil  
+  text_area_tag "login", nil  
   %></p>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
@@ -12,5 +12,6 @@
 <%= link_to 'Show', :action => 'show', :id => @group %> |
 <%= link_to 'Back', :action => 'list' %>
 
-<%= debug params %>
+<%= # debug params 
+%>
 

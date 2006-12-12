@@ -34,10 +34,20 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     if request.post? 
       @group.update_attributes(params[:group])
-      @new_user = User.find(:all, :conditions =>["login = ?",params[:login]])
-      @group.users << @new_user if @new_user
-
-    flash_error 'group'
+      
+      logins = params[:login].split  /[,\s]/
+      for user in logins
+          @new_user = User.find(:all, :conditions =>["login = ?",user])
+	  @group.users << @new_user unless @group.users.find_by_login user
+        if @new_user.nil?
+	   flash[:notice] = 'User %s does not exist.' %user
+	end
+# (@new_user and not 
+# @group.users.include?(@new_user))
+      end
+ #   flash_error 'group' #???
+      flash[:notice] = 'Group was successfully updated.'
+      redirect_to :action => 'show', :id => @group
     end
   end
 
