@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem	
-  before_filter :login_required
+#  before_filter :login_required
 
   # a default success flash
   def flash_success(msg=nil)
