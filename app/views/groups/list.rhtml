@@ -1,38 +1,22 @@
+<%= link_to 'New group', :action => 'new' %>
+
 <h1>My groups</h1>
 
-(a list of groups that i am a member of)
+<% current_user.groups.each do |g| %>
+<%= link_to g.name, :controller => 'groups', :action => 'view', :id => g %>
+<% end %>
 
 <h1>Groups by topic</h1>
 
-Environmental (20)      Queer (20)        Borders (20) 
+(not yet working)
 
 <h1>Groups by region</h1>
 
-North America 
-  US, Mexico, Canada
+(not yet working)
 
-<table>
-  <tr>
-  <% for column in Group.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
-  
+<h1>Search</h1>
+
 <% for group in @groups %>
-  <tr>
-  <% for column in Group.content_columns %>
-    <td><%=h group.send(column.name) %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => group %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => group %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => group }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
+<%= link_to group.name, :action => 'view', :id => group %>
 <% end %>
-</table>
 
-<%= link_to 'Previous page', { :page => @group_pages.current.previous } if @group_pages.current.previous %>
-<%= link_to 'Next page', { :page => @group_pages.current.next } if @group_pages.current.next %> 
-
-<br />
-
-<%= link_to 'New group', :action => 'new' %>

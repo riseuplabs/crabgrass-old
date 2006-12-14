@@ -10,11 +10,12 @@ class PeopleController < ApplicationController
   def list
    # @user_pages, @users = paginate :users, :per_page => 10
     @contacts = current_user.contacts
-    @in_common = current_user.users_in_common_groups
+    @peers = current_user.peers
   end
 
   def view
     @user = User.find_by_login params[:id]
+    @is_contact = current_user.contacts.include?(@user)
   end
 
   def new

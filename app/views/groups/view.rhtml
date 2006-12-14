@@ -1,15 +1,25 @@
-<% for column in Group.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @group.send(column.name) %>
-</p>
-<% end %>
-<b>Members:</b><br>
-<% @group.users.each do |u| %>
-	<%= h u.login %><br>	
-<% end %>
-<% if @group.users.count == 0 %>
-No members.<br>
-<% end %>
+<div style="width:96px;height:96px;background-color:#ccc; float:left; margin: 1em 1em 2em 0 ;">&nbsp;</div>
 
-<%= link_to 'Edit', :action => 'edit', :id => @group %> |
-<%= link_to 'Back', :action => 'list' %>
+<h1><%=h @group.name %></h1>
+<p>
+  group profile summary goes here...
+  <br/><%= link_to 'Edit profile', :action => 'edit', :id => @group %>
+</p>
+
+
+
+<p>
+  <b>Members:</b>
+  <% @group.users.each do |u| %>
+    <%= link_to u.login, :controller => 'people', :action => 'view', :id => u %>
+  <% end %>
+  <% if @group.users.count == 0 %>
+    No members.
+  <% end %>
+</p>
+
+<% if current_user.groups.include?(@group) %>
+  <%= link_to 'leave group', :controller => 'me', :action => 'leave_group', :id => @group %>
+<% else %>
+  <%= link_to 'join group', :controller => 'me', :action => 'join_group', :id => @group %>
+<% end %>

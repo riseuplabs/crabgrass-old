@@ -10,6 +10,10 @@ class User < AuthenticatedUser
   # relationship to groups
   has_and_belongs_to_many :groups, :join_table => :memberships
   
+  # peers are users who share at least one group with us
+  has_many :peers, :class_name => 'User', 
+    :finder_sql => 'SELECT DISTINCT * FROM users INNER JOIN memberships ON users.id = memberships.user_id WHERE users.id != #{id} AND memberships.group_id IN (SELECT id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE memberships.user_id = #{id})'
+  
   # relationship to pages
   has_many :participations, :class_name => 'UserParticipation'
   has_many :pages, :through => :participations do
@@ -69,7 +73,7 @@ class User < AuthenticatedUser
   # if i remove you as a contact, then you 
   # remove me as a contact as well.  
   def reciprocate_remove(other_user)
-    other_user.contacts.delete(self) rescue nil
+    other_user.contacts.delete(self) if other_user.contacts.include?(self)
   end
   
   ### public methods

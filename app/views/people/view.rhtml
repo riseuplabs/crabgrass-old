@@ -3,8 +3,13 @@
 
 <h1><%= @user.login %></h1>
 <p>
-  <%= @user.login %>'s profile goes here ... 
-  <br/><%= link_to 'add to my contacts', :controller => 'me', :action => 'add_contact', :id => @user %>
+  <%= @user.login %>'s profile goes here ... </br>
+
+<% if @is_contact %>
+  <%= link_to 'remove from my contacts', :controller => 'me', :action => 'remove_contact', :id => @user %>
+<% else %>
+  <%= link_to 'add to my contacts', :controller => 'me', :action => 'add_contact', :id => @user %>
+<% end %>
 </p>
 
 <p>
