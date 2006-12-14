@@ -1,0 +1,49 @@
+=Welcome to Globalize
+
+*Globalize* is a Ruby on Rails plugin designed to support globalized applications. It supports translation into multiple languages (for both db content and controller and view code) and localization of time, data, and numbers. It's under the MIT License, same as Ruby on Rails.
+
+==How to use it
+
+===In your models
+
+  class Product < ActiveRecord::Base
+    translates :name, :description, :specs
+  end
+
+Then:
+
+  Locale.set("en-US")
+  prod = Product.find(1) 
+
+<tt>prod.name -> "Meatballs"</tt>
+
+  Locale.set("es-ES")
+  prod = Product.find(1) 
+
+<tt>prod.name -> "Albondigas"</tt>
+
+=== In your views (or anywhere else)
+
+  Locale.set("he-IL")
+  <%= "Thanks for ordering!".t %> -> "תודה על ההזמנה!" 
+  <%= "You've got %d items in your cart" / 5 %> -> "יש 5 מוצרים בסל שלך"
+
+  Locale.set("es-ES")
+  <%= Time.now.loc("%d %B %Y") %> -> "17 Octubre 2005"
+  <%= 12345.45.loc %> -> "12.345,45"
+
+There's more, but let's save that for later.
+
+==How to install
+
+From your rails app root directory:
+
+1. <tt>script/plugin install http://svn.globalize-rails.org/svn/globalize/globalize/trunk</tt>
+1. <tt>rake globalize:setup</tt> (might take a while, about a minute or so)
+
+...and you're globalized, dude!
+
+Optionally, try:
+
+* <tt>rake test_plugins</tt>
+* <tt>rake plugindoc</tt>

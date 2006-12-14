@@ -1,3 +1,11 @@
+  ## associations ###########################################
+  ## attributes ############################################# 
+  ## validations ############################################
+  ## callbacks ##############################################
+  ## methods ################################################
+
+
+
 
 group vars
 -------------
@@ -15,10 +23,7 @@ network vars
 --------------
 
 all of group vars, plus:
-
-name
-
-maximum number of delegates per group
+ - maximum number of delegates per group
 
 
 nodes to users
@@ -32,3 +37,10 @@ number of messages
 
 alien? (where you invited manually, not as a function of what group you are in).
 
+
+scratch pad
+-------------------
+
+#   assert_nothing_raised("group.users.find should return user") do
+#      g.users.find(u.id)
+#    end

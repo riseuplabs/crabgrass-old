@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first_product:
+  id: 1
+  code: first-product
+  name: first
+  manufacturer_id: 1
+  description: This is a description of the first product
+  specs: these are the specs for the first product
+second_product:
+  id: 2
+  code: second-product
+  manufacturer_id: 1
+  description: This is a description of the second product
+  specs: these are the specs for the second product
+third:
+  id: 3
+  code: third-product
+  manufacturer_id: 1
+  name: efe
+fourth:
+  id: 4
+  code: fourth-product
+  manufacturer_id: 1
+  name: eff
+fifth:
+  id: 5
+  code: fifth-product
+  manufacturer_id: 1
+  name: ear
