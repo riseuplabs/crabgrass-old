@@ -1,4 +1,16 @@
 /** NOTICES AND ERRORS **/
+
+div.fieldWithErrors {
+  border: 2px solid red;
+  display: table-cell;
+}
+div.fieldWithErrors + div.fieldWithErrors {display:none;}
+input[type="hidden"] {display:none}
+/* input[type="checkbox"] {display:table-cell;} */
+/* label {display: table-cell; vertical-align: middle;} */
+/* div.checkbox {display: table-cell;} */
+
+/** NOTICES AND ERRORS **/
 div.fieldWithErrors {
   border: 2px solid red;
   display: table-cell;
@@ -11,9 +23,10 @@ input[type="hidden"] {display:none}
 
 div.notice img {
   vertical-align: middle;
+  float: left;
 }
 div.notice {
-  width: 30em;
+  width: 35em;
   padding: 7px;
   padding-bottom: 1em;
   margin-bottom: 2em;
@@ -25,6 +38,7 @@ div.notice h2 {
   padding: 0.5em;
   font-size: 12pt;
   margin: -7px;
+  padding-left: 60px;
   background-color: #ccc;
   border-bottom: 1px solid #999;
 }
@@ -35,31 +49,19 @@ div.update {border: 2px solid blue;  color: #009;}
 div#update {
   background: #ddd url(/images/48/info.png) 0 50% no-repeat;
   padding: 2em 2em 2em 48px;
-  
 }
 div.notice p {
   color: #333;
   margin-bottom: 0;
   padding: 5px;
+  padding-left: 53px;
+}
+div.notice ul {
+  padding-left: 53px;
 }
 div.notice ul li {
   font-size: 12px;
   list-style: square;
   color: black;
-}
-div.uploadStatus {
-  margin: 5px;
-}
-div.progressBar {
-  margin: 5px;
-}
-div.progressBar div.border {
-  background-color: #fff;
-  border: 1px solid gray;
-  width: 100%;
-}
-div.progressBar div.background {
-  background-color: #333;
-  height: 18px;
-  width: 0%;
+
 }

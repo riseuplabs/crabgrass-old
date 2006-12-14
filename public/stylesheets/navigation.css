@@ -15,7 +15,7 @@
 
 #topmenu > li {
 	float: left;
-	width: 6em;
+	/* width: 6em; */
 }
 
 #topmenu li ul {
@@ -33,11 +33,14 @@
 #topnav {
   background: #550;
   padding-top: 7px;
+  border-bottom: 2px solid #990;
 }
 
 #topmenu li {
-  background: #990;
+  xbackground: #990;
   margin: 0 4px;
+  position: relative;
+  top: 2px;
 }
 
 #topmenu li ul li {
@@ -45,13 +48,18 @@
 }
 
 #topmenu a {
-  color: #000;
+  color: #fff;
   text-decoration: none;
-  padding: 2px;
+  xpadding: 2px;
+  padding: 2px 6px;
 }
 #topmenu a:hover {
-  background: #cc0;
+  background: #660;
+  /* text-decoration: underline; */
 }
 #topmenu a.selected {
+  color: #000;
   background: white;
+  border: 2px solid #990;
+  border-width: 2px 2px 0 2px
 }

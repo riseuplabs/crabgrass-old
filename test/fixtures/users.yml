@@ -1,5 +1,7 @@
 # for authenticated_user
 
+require 'digest/sha1'
+
 quentin:
   id: 1
   login: quentin
@@ -28,4 +30,16 @@ gerrard:
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
   crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   created_at: <%= 5.days.ago.to_s :db %>
+  
+<% i = 4 %>
+<% for login in ['green','red','yellow','purple','orange','blue'] %>
+<%=login%>:
+  id: <%=i+=1%>
+  login: <%=login%>
+  display_name: <%=login%>!
+  email: <%=login%>@riseup.net
+  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
+  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
+  created_at: <%= 5.days.ago.to_s :db %>
+<% end %>
   
