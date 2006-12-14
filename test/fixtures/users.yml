@@ -32,7 +32,7 @@ gerrard:
   created_at: <%= 5.days.ago.to_s :db %>
   
 <% i = 4 %>
-<% for login in ['green','red','yellow','purple','orange','blue'] %>
+<% for login in ['blue','orange','purple','yellow','red','green'] %>
 <%=login%>:
   id: <%=i+=1%>
   login: <%=login%>

@@ -2,3 +2,24 @@
 one:
   group_id: "1"
   user_id: "3"
+# rainbows
+
+a:
+  group_id: 3
+  user_id: 4
+
+b:
+  group_id: 3
+  user_id: 5
+c:
+  group_id: 3
+  user_id: 6
+d:
+  group_id: 3
+  user_id: 7
+e:
+  group_id: 3
+  user_id: 8
+f:
+  group_id: 3
+  user_id: 9

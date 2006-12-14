@@ -71,5 +71,11 @@ class User < AuthenticatedUser
   def reciprocate_remove(other_user)
     other_user.contacts.delete(self) rescue nil
   end
+  
+  ### public methods
+  
+  def to_param
+    return login
+  end
 
 end

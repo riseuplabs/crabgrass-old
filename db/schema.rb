@@ -7,7 +7,7 @@ ActiveRecord::Schema.define(:version => 19) do
   create_table "categories", :force => true do |t|
   end
 
-  create_table "contacts", :force => true do |t|
+  create_table "contacts", :id => false, :force => true do |t|
     t.column "user_id", :integer
     t.column "contact_id", :integer
   end

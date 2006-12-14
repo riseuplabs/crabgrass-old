@@ -1,5 +1,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
-  id: 1
-another:
-  id: 2
+a:
+  user_id: 4
+  contact_id: 5
+b:
+  user_id: 5
+  contact_id: 4
+c:
+  user_id: 4
+  contact_id: 6
+d:
+  user_id: 6
+  contact_id: 4
+e:
+  user_id: 6
+  contact_id: 5
+f:
+  user_id: 5
+  contact_id: 6

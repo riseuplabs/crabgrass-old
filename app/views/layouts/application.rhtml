@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Users: <%= controller.action_name %></title>
-  <%= stylesheet_link_tag 'scaffold' %>
+  <%# stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag 'navigation' %>
   <%= stylesheet_link_tag 'main' %>
   <%= stylesheet_link_tag 'errors' %>
@@ -18,9 +18,9 @@ http://www.contentwithstyle.co.uk/Articles/17/a-css-framework
     <%= render 'layouts/header' %>
   </div><!--end header -->
 
-  <div id="topnav" class="clearfix">
+  <div id="topnav-outer"><div id="topnav" class="clearfix">
     <%= render 'layouts/menu' %>
-  </div><!--end menu -->
+  </div></div><!--end menu -->
 
   <div id="content" class="clearfix">
     <div id="main">

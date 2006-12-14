@@ -1,26 +1,22 @@
-<h1>Listing users</h1>
+<h1>my contacts</h1>
 
-<table>
-  <tr>
-    <th>Login</th>
-    <th>Email</th>
-  </tr>
-  
-<% for user in @users %>
-  <tr>
-    <td><%= link_to user.login, :action=>'edit', :id => user %></td>
-    <td><%=h user.email %></td>
-
-    <td><%= link_to 'Show', :action => 'show', :id => user %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => user %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => user }, :confirm => 'Are you sure?', :post => true %></td>
-  </tr>
+<% if @contacts %>
+<%   @contacts.each do |u| %>
+<%=     link_to u.login, :controller => 'people', :action => 'view', :id => u %>
+<%   end %>
+<% else %>
+<%=  'You have no contacts'.t %>
 <% end %>
-</table>
 
-<%= link_to 'Previous page', { :page => @user_pages.current.previous } if @user_pages.current.previous %>
-<%= link_to 'Next page', { :page => @user_pages.current.next } if @user_pages.current.next %> 
+<h1>users in common groups</h1>
 
-<br />
+<%# is it better to use a partial or a direct loop, like above? i think the partial is slower. %>
+<%= render :partial => 'user', :collection => @in_common %>
 
-<%= link_to 'New user', :action => 'new' %>
+<h1>search for a user</h1>
+
+<%= render :partial => 'search_form' %>
+
+<div id="search-results">
+  <%= render :file => 'people/search' %>
+</div>

@@ -5,7 +5,7 @@
   <li><%= menu_link_to "Networks", "", :controller => 'networks' %>
   </li>
 -->
-  <li><%= menu_link_to "Groups", "", :controller => 'groups' %>
+  <li <%= selected @params[:controller] == 'groups' %> ><%= menu_link_to "Groups", "", :controller => 'groups' %>
 <!--		<ul>
 			<li><a href="#">group 1</a></li>
 			<li><a href="#">group 2</a></li>
@@ -14,7 +14,7 @@
 -->
   </li>
 
-  <li><%= menu_link_to "People", "", :controller => 'people' %>
+  <li <%= selected @params[:controller] == 'people' %> ><%= menu_link_to "People", "", :controller => 'people' %>
 <!--  <ul>
     <li><a href="#">test 1</a></li>
     <li><a href="#">test 2</a></li>
@@ -25,7 +25,7 @@
 
   <% if current_user %>
 
-  <li><%= menu_link_to "Me", "", :controller => 'me' %>
+  <li <%= selected @params[:controller] == 'me' %> ><%= menu_link_to "Me", "", :controller => 'me' %>
   </li>
 
   <li><%= menu_link_to _("Logout"), "", :controller => 'account', :action => 'logout' %>

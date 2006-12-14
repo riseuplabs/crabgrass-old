@@ -33,14 +33,18 @@
 #topnav {
   background: #550;
   padding-top: 7px;
-  border-bottom: 2px solid #990;
+  border-bottom: 1px solid #aa0;
+}
+#topnav-outer {
+  border-bottom: 1px solid #330;
 }
 
+
 #topmenu li {
-  xbackground: #990;
+  /* background: #990; */
   margin: 0 4px;
   position: relative;
-  top: 2px;
+  top: 1px;
 }
 
 #topmenu li ul li {
@@ -57,9 +61,17 @@
   background: #660;
   /* text-decoration: underline; */
 }
-#topmenu a.selected {
+#topmenu li.selected a {
   color: #000;
   background: white;
-  border: 2px solid #990;
-  border-width: 2px 2px 0 2px
+  border: 1px solid #330;
+  border-bottom: 1px solid white;
+  position: relative;
+  top: 1px;
+}
+#topmenu li.selected  {
+  border: 1px solid #aa0;
+  border-bottom: 0px solid white;
+  border-top: 0;
+  background-color: #aa0;
 }

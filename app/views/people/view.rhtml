@@ -1,0 +1,20 @@
+
+<div style="width:96px;height:96px;background-color:<%=@user.login%>; float:left; margin: 1em 2em 2em 0 ;">&nbsp;</div>
+
+<h1><%= @user.login %></h1>
+<p>
+  <%= @user.login %>'s profile goes here ... 
+  <br/><%= link_to 'add to my contacts', :controller => 'me', :action => 'add_contact', :id => @user %>
+</p>
+
+<p>
+<b>Groups:</b>
+<% @user.groups.each do |g| %>
+<%= link_to g.name, :controller => 'groups', :action => 'view', :id => g %>
+<% end %>
+
+<% if @user.groups.count == 0 %>
+<%= 'none'.t %>
+<% end %>
+</p>
+

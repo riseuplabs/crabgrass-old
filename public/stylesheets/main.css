@@ -1,3 +1,5 @@
+
+
 body {margin: 0; padding: 0;}
 div#header {
   padding: 1em;
@@ -5,7 +7,7 @@ div#header {
   background: #660;
   color: #fff;
 }
-div#header h1 {margin: 0; padding: 0;}
+div#header span#title {margin: 0; padding: 0; font-size:2em; font-weight:bold;}
 div#header a {color: white;}
 
 /** MAIN **/
@@ -29,3 +31,22 @@ div#frontmain {
 #loginform table {
   margin: 0 auto;
 }
+
+/** style **/
+
+body { background-color: #fff; color: #333; }
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+h1 {font-size: 1.3em;}
+

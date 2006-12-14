@@ -23,4 +23,7 @@ module ApplicationHelper
     content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
   end
   
+  def selected(condition)
+    'class="selected"' if condition
+  end
 end

@@ -1,22 +1,20 @@
 class PeopleController < ApplicationController
 
-model :user
+  model :user
 
-def index
-  list
+  def index
+    list
     render :action => 'list'
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
-
   def list
-    @user_pages, @users = paginate :users, :per_page => 10
+   # @user_pages, @users = paginate :users, :per_page => 10
+    @contacts = current_user.contacts
+    @in_common = current_user.users_in_common_groups
   end
 
-  def show
-    @user = User.find(params[:id])
+  def view
+    @user = User.find_by_login params[:id]
   end
 
   def new
@@ -50,8 +48,6 @@ def index
     end
   end
 
-
- 
 
   def update
     @user = User.find(params[:id])
