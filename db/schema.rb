@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 14) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "categories", :force => true do |t|
   end
@@ -10,6 +10,13 @@ ActiveRecord::Schema.define(:version => 14) do
   create_table "contacts", :force => true do |t|
     t.column "user_id", :integer
     t.column "contact_id", :integer
+  end
+
+  create_table "discussions", :force => true do |t|
+    t.column "posts_count", :integer, :default => 0
+    t.column "replied_at", :datetime
+    t.column "replied_by", :integer
+    t.column "last_post_id", :integer
   end
 
   create_table "group_participations", :force => true do |t|
@@ -42,27 +49,31 @@ ActiveRecord::Schema.define(:version => 14) do
     t.column "delegates_id", :integer
   end
 
-  create_table "links", :force => true do |t|
-    t.column "node_id", :integer
-    t.column "other_node_id", :integer
+  create_table "links", :id => false, :force => true do |t|
+    t.column "page_id", :integer
+    t.column "other_page_id", :integer
   end
 
-  create_table "memberships", :force => true do |t|
+  create_table "memberships", :id => false, :force => true do |t|
     t.column "group_id", :integer
     t.column "user_id", :integer
-    t.column "created_at", :datetime
   end
 
-  create_table "nodes", :force => true do |t|
-    t.column "name", :string
-    t.column "node_type", :string
+  create_table "page_tools", :force => true do |t|
+    t.column "page_id", :integer
+    t.column "tool_id", :integer
+    t.column "tool_type", :string
+  end
+
+  create_table "pages", :force => true do |t|
+    t.column "title", :string
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+    t.column "happens_at", :datetime
+    t.column "resolved", :boolean
     t.column "public", :boolean
     t.column "created_by_id", :integer
     t.column "updated_by_id", :integer
-    t.column "tool_id", :integer
-    t.column "tool_type", :string
   end
 
   create_table "pictures", :force => true do |t|
@@ -76,8 +87,20 @@ ActiveRecord::Schema.define(:version => 14) do
     t.column "type", :string
   end
 
+  create_table "posts", :force => true do |t|
+    t.column "user_id", :integer
+    t.column "discussion_id", :integer
+    t.column "body", :text
+    t.column "body_html", :text
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+  end
+
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+  add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
+
   create_table "user_participations", :force => true do |t|
-    t.column "node_id", :integer
+    t.column "page_id", :integer
     t.column "user_id", :integer
     t.column "message_count", :integer, :default => 0
     t.column "read_at", :datetime
