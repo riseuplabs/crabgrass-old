@@ -1,0 +1,32 @@
+# == Schema Information
+# Schema version: 19
+#
+# Table name: pages
+#
+#  id            :integer(11)   not null, primary key
+#  title         :string(255)   
+#  created_at    :datetime      
+#  updated_at    :datetime      
+#  happens_at    :datetime      
+#  resolved      :boolean(1)    
+#  public        :boolean(1)    
+#  created_by_id :integer(11)   
+#  updated_by_id :integer(11)   
+#  tool_id       :integer(11)   
+#  tool_type     :string(255)   
+#
+
+
+first:
+  id: 1
+  title: "this is my first page ever"
+  summary: "Praesent aliquet dapibus purus. Integer fringilla, dui eu tempus lacinia, massa tellus iaculis dolor, id vulputate augue diam at massa. Sed id lectus. Pellentesque suscipit aliquam urna"
+  created_at: <%= 1.days.ago.to_s :db %>
+  updated_at: <%= 10.minutes.ago.to_s :db %>
+  updated_at: <%= 2.days.from_now.to_s :db %>
+  created_by_id: 5
+  updated_by_id: 5
+  tool_id: 1
+  tool_type: Discussion
+
+

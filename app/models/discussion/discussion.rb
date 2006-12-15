@@ -4,10 +4,14 @@ class Discussion < ActiveRecord::Base
 
   ## associations ###########################################
    
-  # relationship with parent page
+  # this is really a has_one
+  has_many :pages, :as => :tool
   def page() pages.first; end
-  # has_many :pages
-  # ^^^ auto created by has_many_polymorph in Page
+  
+  # disabled has_many_polymorph stuff:
+  ## relationship with parent page
+  ## has_many :pages
+  ## ^^^ auto created by has_many_polymorph in Page
 
   # relationship with posts   
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy do
@@ -25,7 +29,7 @@ class Discussion < ActiveRecord::Base
 
   ## validations ############################################
 
-  validates_presence_of :pages
+  #validates_presence_of :pages
 
   ## callbacks ##############################################
 

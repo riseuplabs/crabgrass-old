@@ -6,15 +6,7 @@
 <%= link_to g.name, :controller => 'groups', :action => 'view', :id => g %>
 <% end %>
 
-<h1>Groups by topic</h1>
-
-(not yet working)
-
-<h1>Groups by region</h1>
-
-(not yet working)
-
-<h1>Search</h1>
+<h1>All groups</h1>
 
 <% for group in @groups %>
 <%= link_to group.name, :action => 'view', :id => group %>

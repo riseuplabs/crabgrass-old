@@ -3,14 +3,17 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PageTest < Test::Unit::TestCase
 
   fixtures :pages, :users
-  
+
   def setup
     @page = create_page :title => 'this is a very fine test page'
     @discussion = Discussion.create
-    @page_tool_count = @page.tools.length
+    # @page_tool_count = @page.tools.length
   end
- 
-  def test_tool_assignment
+
+  # this is a test if we are using has_many_polymorphic
+  # currently, we are using a single belongs_to that is polymorphic
+  # for the relationship from page -> tool. 
+  def disabled_test_multi_tool
     assert @page.tools.blank?
     assert @page.tools.push(@discussion)
     assert @page.tools.push(Discussion.create)
@@ -21,7 +24,20 @@ class PageTest < Test::Unit::TestCase
     assert @discussion.pages.first.title == @page.title, 'page title must match'
     assert @discussion.page.title == @page.title    
   end
-   
+  
+  def test_tool
+    assert discussion = Discussion.create
+    assert discussion.valid?, discussion.errors.full_messages
+    #discussion.pages << @page
+    @page.tool = discussion
+    @page.save
+    #discussion.save
+    #discussion.reload
+    assert_equal discussion.pages.first, @page
+    assert_equal @page.tool, discussion
+  end
+  
+
   def test_user_associations
     user = User.find 3
     @page.created_by = user
@@ -44,6 +60,7 @@ class PageTest < Test::Unit::TestCase
     assert @page.users.include?(user)
     assert user.pages.include?(@page)
   end
+   
   
   def test_page_links
     p1 = create_page :title => 'red fish'

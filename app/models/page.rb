@@ -1,3 +1,21 @@
+# == Schema Information
+# Schema version: 19
+#
+# Table name: pages
+#
+#  id            :integer(11)   not null, primary key
+#  title         :string(255)   
+#  created_at    :datetime      
+#  updated_at    :datetime      
+#  happens_at    :datetime      
+#  resolved      :boolean(1)    
+#  public        :boolean(1)    
+#  created_by_id :integer(11)   
+#  updated_by_id :integer(11)   
+#  tool_id       :integer(11)   
+#  tool_type     :string(255)   
+#
+
 require 'discussion'
 require 'page_tool'
 
@@ -5,11 +23,13 @@ class Page < ActiveRecord::Base
   
   ### associations ###
  
-  # tools used on this page
-  has_many_polymorphs :tools, :through => :page_tools, :from => [:discussions]
-  # this magically creates...
-  #   has_many :discussions
-   
+  ## tools used on this page
+  #has_many_polymorphs :tools, :through => :page_tools, :from => [:discussions]
+  ## this magically creates "has_many :discussions"
+  
+  ## single tool for this page
+  belongs_to :tool, :polymorphic => true
+  
   # relationship of this page to users
   belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'

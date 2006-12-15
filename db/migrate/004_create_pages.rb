@@ -9,6 +9,11 @@ class CreatePages < ActiveRecord::Migration
 	  t.column :public, :boolean
       t.column :created_by_id, :integer
 	  t.column :updated_by_id, :integer
+	  t.column :summary, :string
+	  
+	  # polymorphic association
+	  t.column :tool_id, :integer
+	  t.column :tool_type, :string
     end
   end
 

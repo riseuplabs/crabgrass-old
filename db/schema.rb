@@ -74,6 +74,9 @@ ActiveRecord::Schema.define(:version => 19) do
     t.column "public", :boolean
     t.column "created_by_id", :integer
     t.column "updated_by_id", :integer
+    t.column "summary", :string
+    t.column "tool_id", :integer
+    t.column "tool_type", :string
   end
 
   create_table "pictures", :force => true do |t|
