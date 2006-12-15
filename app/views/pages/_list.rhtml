@@ -1,0 +1,20 @@
+<!-- begin page list -->
+<div class="page_list">
+<table>
+<tr>
+  <th>type</th><th>title</th><th>changed</th>
+</tr>
+<% if @pages %>
+<% @pages.each do |p| %>
+<tr>
+  <td><%= p.tool_type %></td>
+  <td><%=h p.title %></td>
+  <td><%= p.updated_at %></td>
+</tr>
+<% end %>
+<% else %>
+<tr><td colspan="10">error: null pages</td></tr>
+<% end %>
+</table>
+</div>
+<!-- end page list -->
