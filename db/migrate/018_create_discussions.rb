@@ -5,6 +5,7 @@ class CreateDiscussions < ActiveRecord::Migration
       t.column "replied_at",   :datetime
       t.column "replied_by",   :integer
       t.column "last_post_id", :integer
+      t.column "page_id", :integer
     end
   end
 

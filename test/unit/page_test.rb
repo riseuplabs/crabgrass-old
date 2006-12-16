@@ -26,17 +26,29 @@ class PageTest < Test::Unit::TestCase
   end
   
   def test_tool
+    assert poll = Poll::Poll.create
+    assert poll.valid?, poll.errors.full_messages
+    #poll.pages << @page
+    @page.tool = poll
+    @page.save
+    #poll.save
+    #poll.reload
+    assert_equal poll.pages.first, @page
+    assert_equal @page.tool, poll
+  end
+
+  def test_discussion
     assert discussion = Discussion.create
     assert discussion.valid?, discussion.errors.full_messages
     #discussion.pages << @page
-    @page.tool = discussion
+    @page.discussion = discussion
     @page.save
     #discussion.save
     #discussion.reload
-    assert_equal discussion.pages.first, @page
-    assert_equal @page.tool, discussion
+    assert_equal discussion.page, @page
+    assert_equal @page.discussion, discussion
   end
-  
+
 
   def test_user_associations
     user = User.find 3

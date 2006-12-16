@@ -30,6 +30,8 @@ class Page < ActiveRecord::Base
   ## single tool for this page
   belongs_to :tool, :polymorphic => true
   
+  has_one :discussion
+  
   # relationship of this page to users
   belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'

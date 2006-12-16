@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 19) do
+ActiveRecord::Schema.define(:version => 22) do
 
   create_table "categories", :force => true do |t|
   end
@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 19) do
     t.column "replied_at", :datetime
     t.column "replied_by", :integer
     t.column "last_post_id", :integer
+    t.column "page_id", :integer
   end
 
   create_table "group_participations", :force => true do |t|
@@ -90,6 +91,14 @@ ActiveRecord::Schema.define(:version => 19) do
     t.column "type", :string
   end
 
+  create_table "polls", :force => true do |t|
+  end
+
+  create_table "possibles", :force => true do |t|
+    t.column "name", :string
+    t.column "poll_id", :integer
+  end
+
   create_table "posts", :force => true do |t|
     t.column "user_id", :integer
     t.column "discussion_id", :integer
@@ -124,6 +133,12 @@ ActiveRecord::Schema.define(:version => 19) do
     t.column "display_name", :string
     t.column "time_zone", :string
     t.column "language", :string, :limit => 5
+  end
+
+  create_table "votes", :force => true do |t|
+    t.column "possible_id", :integer
+    t.column "user_id", :integer
+    t.column "value", :integer
   end
 
 end

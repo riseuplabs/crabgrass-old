@@ -27,6 +27,5 @@ first:
   created_by_id: 5
   updated_by_id: 5
   tool_id: 1
-  tool_type: Discussion
-
+  tool_type: Poll::Pool
 
