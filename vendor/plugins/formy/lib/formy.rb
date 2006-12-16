@@ -26,9 +26,9 @@ module Formy
   # <% concat("foo", binding) %>
   
   def self.define_formy_keywords
-    # this could be replaced with method missing:
+    # could be replaced with method missing?
     form_word :title, :row, :label, :info, :heading, :input, :section, :spacer,
-       :checkbox, :tab, :link, :selected
+       :checkbox, :tab, :link, :selectedx
   end
   
   def self.create(options={})
@@ -67,6 +67,19 @@ module Formy
       end
       end_eval
     end
+  end
+  
+  def method_missing(method_name)
+    word = method_name.id2name
+    e = @@base.current_element.last
+    return unless e
+    unless e.respond_to? word
+      @@base.puts "<!-- FORM ERROR: '" + e.classname + "' does not have a '#{word}' -->"
+      return
+    end
+    return e.send(word,options,&block) if block_given?
+    return e.send(word,options) if options
+    return e.send(word) 
   end
   
   def url_to_hash(url)
@@ -191,12 +204,12 @@ module Formy
   end
   
   class Tab < Element
-    element_attr :label, :link, :selected
+    element_attr :label, :link, :selectedx
     
     def close
       javascript = "id='@id' href='#' onclick='showtab(event.target)'"
       #hash = url_to_hash(@link)
-      selected = @selected ? 'selected' : ''
+      selected = @selectedx ? 'selected' : ''
       puts "<li class='tab'><a class='tab-link #{selected}' href='#{@link}'>#{@label}</a></li>"
       super
     end

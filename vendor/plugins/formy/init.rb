@@ -1,7 +1,6 @@
 require 'formy'
 
-Formy::define_formy_keywords
-
 module ApplicationHelper
   include Formy
+  Formy::define_formy_keywords
 end
