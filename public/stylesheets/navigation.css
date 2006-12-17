@@ -31,7 +31,7 @@
 /* styling */
 
 #topnav {
-  background: #550;
+/*  background: #550; */
   padding-top: 7px;
   border-bottom: 1px solid #aa0;
 }
@@ -58,7 +58,7 @@
   padding: 2px 6px;
 }
 #topmenu a:hover {
-  background: #660;
+  background: #000;
   /* text-decoration: underline; */
 }
 #topmenu li.selected a {
@@ -74,4 +74,38 @@
   border-bottom: 0px solid white;
   border-top: 0;
   background-color: #aa0;
+}
+
+/** TABS **/
+
+ul#tabnav {
+  list-style-type: none;
+  background: url(/images/grey9.png) repeat-x bottom;
+}
+ul#tabnav li {
+  height: 1.6em; /* must equal a.height + a.vertical-padding */
+  padding: 1px;
+}
+ul#tabnav li.tab {
+  float: left;
+  background-color: #eee;
+  border: 1px solid #999;
+  padding: 0;
+  margin: 0 0.4em;
+}
+#tabnav a {
+ display: block;
+ color: #666;
+ text-decoration: none;
+ height: 1.2em;
+ padding: 0.1em 0.5em 0.3em 0.5em;
+}
+#tabnav a:hover {
+ background: #999;
+ color: white;
+}
+#tabnav a.selected, #tabnav a.selected:hover {
+ background: #fff;
+ color: black;
+ height: 1.3em;
 }

@@ -6,7 +6,6 @@ class PageTest < Test::Unit::TestCase
 
   def setup
     @page = create_page :title => 'this is a very fine test page'
-    @discussion = Discussion.create
     # @page_tool_count = @page.tools.length
   end
 

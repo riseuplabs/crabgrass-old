@@ -1,14 +1,16 @@
 
 
 body {margin: 0; padding: 0;}
-div#header {
-  padding: 1em;
+div#masthead {
+  padding-top: 5px;
   text-align: right;
-  background: #660;
+  background: url(/images/masthead.png) repeat-x bottom left;
   color: #fff;
 }
-div#header span#title {margin: 0; padding: 0; font-size:2em; font-weight:bold;}
-div#header a {color: white;}
+div#masthead h1 {
+  display: inline; 
+  padding: 5px; color: white; font-size:2em; font-weight:bold;
+}
 
 /** MAIN **/
 #main {
@@ -30,6 +32,20 @@ div#frontmain {
 }
 #loginform table {
   margin: 0 auto;
+}
+
+
+/** layout for pages **/
+
+body.with_sidebar {
+  background: white url(/images/sidebar.png) repeat-y top right;
+}
+div#sidebar {
+  float:right;
+  width: 160px;
+}
+div#sidebar h2 {
+  border-bottom: 1px solid white;
 }
 
 /** style **/

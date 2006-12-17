@@ -4,6 +4,16 @@ class MeController < ApplicationController
     @user = current_user
   end
 
+  def urgent
+    @user = current_user
+    render :action => 'index'
+  end
+  
+  def search
+    @user = current_user
+    render :action => 'index'
+  end
+
   def add_contact
     @user = current_user
     other = User.find_by_login params[:id]

@@ -1,47 +1,9 @@
-<html>
-<head>
-  <title>Users: <%= controller.action_name %></title>
-  <%# stylesheet_link_tag 'scaffold' %>
-  <%= stylesheet_link_tag 'navigation' %>
-  <%= stylesheet_link_tag 'main' %>
-  <%= stylesheet_link_tag 'errors' %>
-</head>
-<body>
+<%= render :file => 'layouts/head' %>
 
-<!--
-structure from
-http://www.contentwithstyle.co.uk/Articles/17/a-css-framework
--->
-
-<div id="page">
-  <div id="header" class="clearfix">
-    <%= render 'layouts/header' %>
-  </div><!--end header -->
-
-  <div id="topnav-outer"><div id="topnav" class="clearfix">
-    <%= render 'layouts/menu' %>
-  </div></div><!--end menu -->
-
-  <div id="content" class="clearfix">
     <div id="main">
       <%= display_messages %>
       <%= @content_for_layout %>
     </div>
-    <div id="sub">
-    </div>
-    <div id="local">
-    </div>
-    <div id="nav">
-	</div>
-					                
-  </div><!-- end content -->
-              
-  <div id="footer" class="clearfix">
-  </div><!-- end footer -->
 
-</div><!-- end page -->
-<div id="extra1">&nbsp;</div>
-<div id="extra2">&nbsp;</div>
+<%= render :file => 'layouts/foot' %>
 
-</body>
-</html>

@@ -1,15 +1,12 @@
 <!-- begin page list -->
 <div class="page_list">
 <table>
-<tr>
-  <th>type</th><th>title</th><th>changed</th>
-</tr>
 <% if @pages %>
 <% @pages.each do |p| %>
 <tr>
-  <td><%= p.tool_type %></td>
-  <td><%=h p.title %></td>
-  <td><%= p.updated_at %></td>
+  <td><%= icon(p.tool_type) %></td>
+  <td><%= link_to_page p.title, p %></td>
+  <td><%= link_to_page(time_ago_in_words(p.updated_at) + " ago", p) if p.updated_at%></td>
 </tr>
 <% end %>
 <% else %>

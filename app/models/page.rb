@@ -16,7 +16,6 @@
 #  tool_type     :string(255)   
 #
 
-require 'discussion'
 require 'page_tool'
 
 class Page < ActiveRecord::Base

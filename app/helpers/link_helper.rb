@@ -41,4 +41,5 @@ module LinkHelper
     %Q[<a href="javascript:void(0);" onclick="toggleLink(this,'#{hidelabel}');Element.toggle($('#{element}'));return false;">#{showlabel}</a>]
   end  
   
+  
 end

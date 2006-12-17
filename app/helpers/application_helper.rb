@@ -1,7 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
-  # include FormMaker
+  include Formy
+#  Formy::define_formy_keywords
   
   include LinkHelper
     
@@ -26,4 +27,41 @@ module ApplicationHelper
   def selected(condition)
     'class="selected"' if condition
   end
+  
+  def icon(pagetype,size=16)
+    img = case pagetype
+      when "Poll::Poll"; 'check'
+      else; 'bubble'
+    end
+    image_tag "#{size}/#{img}.png", :size => "#{size}x#{size}"
+  end
+ 
+  def link_to_page(text, page)
+    controller = case page.tool_type
+      when "Poll::Poll"; 'polls'
+      when "Text::Text"; 'texts'
+      else; 'pages'
+    end
+    link_to( (text||'&nbsp;'), :controller => controller, :action => 'view', :id => page)
+  end 
+  
+  def link_to_user(user)
+    link_to user.login, :controller => 'person', :action => 'view', :id => user
+  end
+  #def user_path(user)
+  #  url_for :controller => 'person', :action => 'view', :id => user
+  #end
+  
+  def posts_path(options)
+    "yikes"
+  end
+  
+  def avatar_for(user, size=32)
+    image_tag "person.png", :size => "#{size}x#{size}", :class => 'photo'
+  end
+  
+  def ajax_spinner_for(id, spinner="spinner.gif")
+    "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
+  end
+  
 end

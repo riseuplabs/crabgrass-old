@@ -17,15 +17,34 @@
 #
 
 
-first:
+a:
   id: 1
-  title: "this is my first page ever"
+  title: "what is your favorite color?"
   summary: "Praesent aliquet dapibus purus. Integer fringilla, dui eu tempus lacinia, massa tellus iaculis dolor, id vulputate augue diam at massa. Sed id lectus. Pellentesque suscipit aliquam urna"
   created_at: <%= 1.days.ago.to_s :db %>
   updated_at: <%= 10.minutes.ago.to_s :db %>
-  updated_at: <%= 2.days.from_now.to_s :db %>
+  happens_at: <%= 2.days.from_now.to_s :db %>
   created_by_id: 5
   updated_by_id: 5
   tool_id: 1
-  tool_type: Poll::Pool
+  tool_type: Poll::Poll
+
+b:
+  id: 2
+  title: "when do you want smash capitalism?"
+  summary: "Praesent aliquet dapibus purus. Integer fringilla, dui eu tempus lacinia, massa tellus iaculis dolor, id vulputate augue diam at massa. Sed id lectus. Pellentesque suscipit aliquam urna"
+  created_at: <%= 2.days.ago.to_s :db %>
+  updated_at: <%= 10.hours.ago.to_s :db %>
+  happens_at: <%= 4.days.from_now.to_s :db %>
+  created_by_id: 5
+  updated_by_id: 5
+  tool_id: 2
+  tool_type: Poll::Poll
+
+c:
+  id: 3
+  title: "gosh, it sure is windy"
+  created_at: <%= 4.days.ago.to_s :db %>
+  created_by_id: 5
+  updated_by_id: 5
 

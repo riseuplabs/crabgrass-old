@@ -25,7 +25,8 @@
 
   <% if current_user %>
 
-  <li <%= selected @params[:controller] == 'me' %> ><%= menu_link_to "Me", "", :controller => 'me' %>
+  <%# hackish and temporary %>
+  <li <%= selected( @params[:controller] != 'groups' && @params[:controller] != 'people' )%> ><%= menu_link_to "Me", "", :controller => 'me' %>
   </li>
 
   <li><%= menu_link_to _("Logout"), "", :controller => 'account', :action => 'logout' %>

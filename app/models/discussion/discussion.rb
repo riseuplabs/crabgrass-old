@@ -22,7 +22,7 @@ class Discussion < ActiveRecord::Base
     end
   end
 
-  belongs_to :replied_by_user, :foreign_key => "replied_by", :class_name => "User"
+  #belongs_to :replied_by_user, :foreign_key => "replied_by", :class_name => "User"
   
   ## attributes ############################################# 
 
@@ -31,7 +31,7 @@ class Discussion < ActiveRecord::Base
 
   ## validations ############################################
 
-  #validates_presence_of :pages
+
 
   ## callbacks ##############################################
 
@@ -44,19 +44,11 @@ class Discussion < ActiveRecord::Base
 #    posts.map { |p| p.user_id }.uniq.size
 #  end
   
-#  def hit!
-#    self.class.increment_counter :hits, id
-#  end
-
-#  def sticky?() sticky == 1 end
-
-#  def views() hits end
-
 #  def paged?() posts_count > 25 end
   
-#  def last_page
-#    (posts_count.to_f / 25.0).ceil.to_i
-#  end
+  def last_page
+    (posts_count.to_f / 25.0).ceil.to_i
+  end
 
 #  def editable_by?(user)
 #    user && (user.id == user_id || user.admin? || user.moderator_of?(forum_id))
