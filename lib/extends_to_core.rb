@@ -21,3 +21,26 @@ class NilClass
   
 end
 
+# taken from beast
+# used to auto-format post body
+ActiveRecord::Base.class_eval do
+  def self.format_attribute(attr_name)
+    class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
+    define_method(:body)       { read_attribute attr_name }
+    define_method(:body_html)  { read_attribute "#{attr_name}_html" }
+    define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
+    before_save do |record|
+      unless record.body.blank?
+        record.body.strip!
+        record.body_html = auto_link record.body.to_s do |text|
+          truncate(text, 50)
+        end
+        record.body_html = white_list(RedCloth.new(record.body_html).to_html)
+      end
+    end
+  end
+  
+  def dom_id
+    [self.class.name.downcase.pluralize.dasherize, id] * '-'
+  end
+end
