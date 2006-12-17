@@ -1,0 +1,22 @@
+
+<% if @post_pages.page_count > 1 -%>
+<p class="pages">Pages: <strong><%= pagination_links @post_pages, :window_size => 10 %></strong></p>
+<% end -%>
+
+<table border="0" cellspacing="0" cellpadding="0" class="posts wide">
+<% for post in @posts do %>
+<%= render :partial => 'post', :locals => {:post => post} %>
+<% end %>
+</table>
+
+<% if @post_pages and @post_pages.current.next %>
+<p style="float:right;"><%= link_to "Next page", { :page => @post_pages.current.next }.merge(params.reject{|k,v| k=="page"})  %></p>
+<% end %>
+
+<% if @post_pages and @post_pages.page_count > 1 -%>
+<p class="pages">Pages: <strong><%= pagination_links @post_pages, :window_size => 10 %></strong></p>
+<% end -%>
+
+<% if logged_in? %>
+<%= render :partial => 'posts/reply' %>
+<% end %>

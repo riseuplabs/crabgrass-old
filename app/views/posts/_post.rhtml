@@ -1,0 +1,32 @@
+<% unless post == @posts.first %>
+<tr class="spacer">
+  <td colspan="2">&nbsp;</td>
+</tr>
+<% end %>
+<tr class="post">
+  <td class="author">
+    <div class="date">
+      <abbr class="updated" title="<%= post.created_at.xmlschema %>">
+      <%= time_ago_in_words(post.created_at) %>
+      </abbr>
+    </div>
+
+    <%= avatar_for post.user %>
+    <span class="fn"><%= link_to_user post.user %></span>
+
+    <% if logged_in? && post.editable_by?(current_user) -%>
+    <p>
+      <span class="edit">
+        <%= ajax_spinner_for "edit-post-#{post.id}", "spinner.gif" %>
+        <%= link_to_remote('Edit post', 
+              {:url => edit_post_path(:forum_id => @forum, :topic_id => @topic, :id => post), :method => :get,
+               :before => "EditForm.init(#{post.id});", :condition => "!EditForm.isEditing(#{post.id})" }, 
+              {:href => edit_post_path(:forum_id => @forum, :topic_id => @topic, :id => post, :page => params[:page]), :class => "utility"}) %>
+      </span>
+    </p>
+    <% end -%>
+  </td>
+  <td class="body entry-content" id="post-body-<%= post.id %>">
+    <%= post.body_html %>
+  </td>
+</tr>
