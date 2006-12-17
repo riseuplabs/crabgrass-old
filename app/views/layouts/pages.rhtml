@@ -1,0 +1,21 @@
+<%= render :file => 'layouts/head', :locals => {:main_class => 'with_sidebar'} %>
+
+    <div id="main" class="main_with_sidebar">
+      <div id="sidebar">
+        <%= @content_for_sidebar %>
+        <h2>access</h2>
+          (list of groups and users who have access to view, admin, or participate in this page goes here)
+        <h2>participation</h2>
+          (list of people who have contributed to this page with a comment, edit, or vote).
+        <h2>links</h2>
+          (links to related pages and links to pages in the same "folder")
+        <h2>tags</h2>
+          (tags associated with this page)
+	  </div>
+
+      <%= display_messages %>
+      <%= @content_for_layout %>
+
+    </div>
+
+<%= render :file => 'layouts/foot' %>
