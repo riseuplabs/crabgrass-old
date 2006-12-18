@@ -51,16 +51,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def update
-    @group = Group.find(params[:id])
-    if @group.update_attributes(params[:group])
-      flash[:notice] = 'Group was successfully updated.'
-      redirect_to :action => 'show', :id => @group
-    else
-      render :action => 'edit'
-    end
-  end
-
   def destroy
     Group.find(params[:id]).destroy
     redirect_to :action => 'list'
