@@ -1,0 +1,27 @@
+<!-- sidebar -->
+<h2>access</h2>
+<% @page.users.each do |u| %>
+<%= link_to_user u %>
+<% end %>
+<% @page.groups.each do |g| %>
+<%= link_to_group g %>
+<% end %>
+
+<p>
+<%= start_form_tag({:controller=>'pages',:action=>'add',:id=>@page},{:id=>'add_form'}) %>
+<%= submit_button 'add user', 'add_form' %>
+<%= submit_button 'add group', 'add_form' %>
+<%= text_field_tag 'name' %>
+<%= end_form_tag %>
+</p>
+
+<h2>participation</h2>
+<% @page.users.each do |u| %>
+<%= link_to_user u %>
+<% end %>
+<h2>links</h2>
+(links to related pages and links to pages in the same "folder")
+
+<h2>tags</h2>
+(tags associated with this page)
+<!-- end sidebar -->

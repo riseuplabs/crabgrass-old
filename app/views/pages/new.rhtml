@@ -1,0 +1,21 @@
+<h1>create a new page</h1>
+
+<%= start_form_tag :action => 'new' %>
+
+title: <%= text_field 'page', 'title' %>
+
+
+<% if params[:group_id] and (group=Group.find_by_id(params[:group_id])) %>
+<p>
+group: <b><%=h group.name %></b>
+<%= hidden_field_tag 'group_id', group.id %>
+</p>
+<% end %>
+
+<p>
+here you would select the page type, like poll, decision, text, discussion, event, etc.
+</p>
+
+  <%= submit_tag "Create" %>
+<%= end_form_tag %>
+
