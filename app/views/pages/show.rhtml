@@ -5,3 +5,6 @@ breadcrumbs > go > here<br/>
 <%= render :partial => 'posts/list' %>
 
 
+<p>
+<%= post_button 'destroy this page', :action => 'destroy', :id => @page %>
+</p>

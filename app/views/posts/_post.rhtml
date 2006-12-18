@@ -6,15 +6,17 @@
 </tr>
 <% end %>
 <tr class="post">
-  <td><div class="post-author">
-    <div><%= link_to_user post.user %></div>
-    <%= avatar_for post.user %></div> 
+  <td>
+    <div class="post-author">
+      <div><%= link_to_user post.user %></div>
+      <%= avatar_for post.user if post.body.length > 60 %>
+    </div> 
   </td>
-  <td rowspan="2" class="post-body entry-content" id="post-body-<%= post.id %>">
+  <td class="post-body entry-content" id="post-body-<%= post.id %>">
     <%= post.body_html %>
   </td>
 </tr>
-<tr>
+<!-- <tr>
   <td class="post-info">
     <div class="date" style="display:none">
       <abbr class="updated" title="<%= post.created_at.xmlschema %>">
@@ -35,3 +37,4 @@
     <% end -%>
   </td>
 </tr>
+-->

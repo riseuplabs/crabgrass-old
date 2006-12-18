@@ -1,6 +1,51 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+function showtab(tab) {
+  tabs = document.getElementsByClassName("tab-link");
+  for(i = 0; i < tabs.length; i++) {
+    Element.removeClassName(tabs[i].id, 'selected');
+  }
+  tabs = document.getElementsByClassName("tab-content");
+  for(i = 0; i < tabs.length; i++) {
+    Element.hide(tabs[i].id);
+  }
+  Element.addClassName(tab.id, 'selected');
+  Element.show(tab.id+"-content");
+  tab.blur();
+  return false;
+}
+
+function submit_form(form_id, value) {
+  f = $(form_id);
+  e = document.createElement("input");
+  e.name = "commit";
+  e.type = "hidden";
+  e.value = value;
+  f.appendChild(e);
+  f.submit();
+}
+
+function toggleLink(link, text) {
+  if ( link.innerHTML != text )  {
+    link.oldInnerHTML = link.innerHTML;
+    link.innerHTML = text;    
+  } else {
+    link.innerHTML = link.oldInnerHTML;
+  }
+  link.blur();
+}
+
+/* I can't get Element.toggle to work with $$().each, because it returns [element,number]
+   for each element and not element. */
+function mytoggle(element) {
+    Element.toggle(element)
+}
+
+/* stuff from beast */
+
+/* 
+
 var TopicForm = {
   editNewTitle: function(txtField) {
     $('new_topic').innerHTML = (txtField.value.length > 5) ? txtField.value : 'New Topic';
@@ -68,3 +113,5 @@ var ReplyForm = {
 Event.addBehavior({
   '#search,#monitor_submit': function() { this.hide(); }
 })
+
+*/

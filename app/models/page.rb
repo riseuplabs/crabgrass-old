@@ -51,6 +51,10 @@ class Page < ActiveRecord::Base
     :after_add => :reciprocate_add,
     :after_remove => :reciprocate_remove
 
+  ### validations ###
+  
+  validates_presence_of :title
+  
   ### callbacks ###
   
   before_create do

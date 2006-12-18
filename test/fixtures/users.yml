@@ -62,3 +62,16 @@ gerrard:
   created_at: <%= 5.days.ago.to_s :db %>
 <% end %>
   
+<% i = 10 %>
+<% for login in ['kangaroo','dolphin','penguin','iguana'] %>
+<%=login%>:
+  id: <%=i+=1%>
+  login: <%=login%>
+  display_name: <%=login%>!
+  email: <%=login%>@riseup.net
+  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
+  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
+  created_at: <%= 5.days.ago.to_s :db %>
+<% end %>
+  
+  

@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 22) do
 
   create_table "group_participations", :force => true do |t|
     t.column "group_id", :integer
-    t.column "node_id", :integer
+    t.column "page_id", :integer
     t.column "view_only", :boolean
   end
 

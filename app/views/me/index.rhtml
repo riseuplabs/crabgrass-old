@@ -54,3 +54,6 @@ end
 
 <% @pages = @user.pages %>
 <%= render :partial => 'pages/list' %>
+
+
+<p><%= link_to 'new page', :controller => 'pages', :action => 'new' %></p>

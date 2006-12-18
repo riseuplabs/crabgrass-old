@@ -24,6 +24,8 @@ class Discussion < ActiveRecord::Base
 
   #belongs_to :replied_by_user, :foreign_key => "replied_by", :class_name => "User"
   
+  #has_many :voices, :class => 'User', :finder_sql => "SELECT DISTINCT * FROM users WHERE users.id IN (SELECT user_id FROM posts WHERE discussion_id = #{id})"
+  
   ## attributes ############################################# 
 
   # to help with the create form

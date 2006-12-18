@@ -23,3 +23,10 @@
 <% else %>
   <%= link_to 'join group', :controller => 'me', :action => 'join_group', :id => @group %>
 <% end %>
+
+<h1>pages</h1>
+
+<% @pages = @group.pages %>
+<%= render :partial => 'pages/list' %>
+
+<p><%= link_to 'new page', :controller => 'pages', :action => 'new', :group_id => @group %></p>

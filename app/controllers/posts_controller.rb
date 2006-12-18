@@ -10,7 +10,8 @@ class PostsController < ApplicationController
       @post.save!
       respond_to do |wants|
         wants.html {
-          redirect_to pagepath(@page, :anchor => @post.dom_id, :paging => params[:paging] || '1')
+          redirect_to pagepath(@page, :anchor => @post.dom_id)
+          # :paging => params[:paging] || '1')
         }
         wants.xml {
           render :xml => @post.to_xml, :status => 500
@@ -18,14 +19,15 @@ class PostsController < ApplicationController
       end
       return
     rescue ActiveRecord::RecordInvalid
-      msg = @post.errors.to_xml
+      msg = @post.errors.full_messages.to_s
     rescue InsufficientPermission
       msg = 'you do not have permission to do that'
     end
     flash[:bad_reply] = msg
     respond_to do |wants|
       wants.html {
-        redirect_to pagepath(@page, :anchor => 'reply-form', :paging => params[:paging] || '1')
+        redirect_to pagepath(@page, :anchor => 'reply-form')
+        #, :paging => params[:paging] || '1')
       }
       wants.xml {
         render :xml => msg, :status => 400

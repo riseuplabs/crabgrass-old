@@ -36,6 +36,14 @@ class Group < ActiveRecord::Base
 
   has_and_belongs_to_many :users, :join_table => :memberships
 
+  # relationship to pages
+  has_many :participations, :class_name => 'GroupParticipation'
+  has_many :pages, :through => :participations do
+	def pending
+	  find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
+	end
+  end
+
 #  has_many :groups_to_networks
 #  has_many :networks,
 #    :through => 'groups_to_networks'
@@ -44,13 +52,6 @@ class Group < ActiveRecord::Base
 #  has_many :committees,
 #    :through => 'groups_to_committees'
   
-#  has_many :group_participates
-#  has_many :nodes,
-#    :through => 'group_participates'
-
-#  has_many :memberships
-#  has_many :users, :through => :memberships
-
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
 #  has_and_belongs_to_many :categories

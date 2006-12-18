@@ -29,6 +29,27 @@ class ApplicationController < ActionController::Base
     flash.now[:text] += content_tag "ul", msg
   end
 
+  def message(opts)    
+    if opts[:success]
+      flash[:notice] = opts[:success]
+    elsif opts[:error]
+      if opts[:later]
+        flash[:error] = opts[:error]
+      else
+        flash.now[:error] = opts[:error]
+      end
+    elsif opts[:object]
+      object = opts[:object]
+      unless object.errors.empty?
+        flash.now[:error] = _("Changes could not be saved.")
+        flash.now[:text] ||= ""
+        flash.now[:text] += content_tag "p", _("There are problems with the following fields") + ":"
+        flash.now[:text] += content_tag "ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) }
+        flash.now[:errors] = object.errors
+      end
+    end
+  end
+  
   def content_tag(tag, content)
     "<#{tag}>#{content}</#{tag}>"
   end

@@ -37,7 +37,7 @@ class User < AuthenticatedUser
   has_many :participations, :class_name => 'UserParticipation'
   has_many :pages, :through => :participations do
 	def pending
-	  find(:all, :conditions => ['revolved = ?',false], :order => 'happens_at' )
+	  find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
 	end
   end
   

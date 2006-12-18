@@ -7,6 +7,6 @@
 
 
 class GroupParticipation < ActiveRecord::Base
-  belongs_to :node
+  belongs_to :page
   belongs_to :group
 end
