@@ -43,10 +43,33 @@ body.with_sidebar {
 div#sidebar {
   float:right;
   width: 160px;
+  margin-left: 20px;
 }
 div#sidebar h2 {
   border-bottom: 1px solid white;
 }
+
+.post-author {
+  background: #ddd;
+  border: 2px solid #ccc;
+  border-right: 0;
+  position: relative;
+  left: 2px;
+  padding: 3px;
+}
+
+.post-body {
+  background: #efefef;
+  border: 2px solid #ccc;
+  padding: 3px;
+}
+
+tr.post td {
+  vertical-align: top;
+}
+tr.post-spacer td {line-height: 0.4em;}
+
+textarea#post_body {width: 100%}
 
 /** style **/
 

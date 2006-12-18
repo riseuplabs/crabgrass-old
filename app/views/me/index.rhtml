@@ -14,7 +14,7 @@ hello!!!
 <p>
 <b>Groups:</b>
 <% @user.groups.each do |g| %>
-<%= link_to g.name, :controller => 'groups', :action => 'view', :id => g %>
+<%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>
 <% end %>
 
 <% if @user.groups.count == 0 %>
@@ -25,7 +25,7 @@ hello!!!
 <p>
 <b>Contacts:</b>
 <% @user.contacts.each do |u| %>
-<%= link_to u.login, :controller => 'people', :action => 'view', :id => u %>
+<%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
 <% end %>
 
 <% if @user.contacts.count == 0 %>

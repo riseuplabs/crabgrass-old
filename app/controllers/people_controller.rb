@@ -13,7 +13,7 @@ class PeopleController < ApplicationController
     @peers = current_user.peers
   end
 
-  def view
+  def show
     @user = User.find_by_login params[:id]
     @is_contact = current_user.contacts.include?(@user)
   end

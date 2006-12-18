@@ -1,35 +1,24 @@
-<div id="edit"></div>
-<p><%= link_to_function "Reply to topic", "ReplyForm.init()", :class => "utility" %></p>
 
-<div id="reply" class="editbox">
-<div class="container">
-  <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-  <% form_for :post, :url => posts_path(:page_id => @page, :paging => @page.discussion.last_page) do |f| -%>
-  <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td rowspan="2" width="70%">
-        <%= f.text_area :body, :rows => 8 %>
-      </td>
-      <td valign="top">
-        <h5>Formatting Help</h5>
-        <ul class="help">
-          <li>*bold*
-          &nbsp; &nbsp; &nbsp;
-          _italics_
-          &nbsp; &nbsp; &nbsp;<br />
-          bq. <span>(quotes)</span></li>
-          <li>"IBM":http://www.ibm.com</li>
-          <li>* or # <span>(lists)</span></li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td valign="bottom" style="padding-bottom:15px;">
-       <%= submit_tag "Save Reply" %><span class="button_or">or <%= link_to_function 'cancel', "$('reply').hide()" %></span>
-     </td>
-   </tr>
-  </table>
+<tr class="post-spacer">
+  <td colspan="2">
+    <a name="reply-form">&nbsp;</a>
+  </td>
+</tr>
+
+<tr class="post">
+  <td><div class="post-author">
+    <div><%= link_to_user current_user %></div>
+    <%= avatar_for current_user %></div> 
+  </td>
+  <td rowspan="2" class="post-body" id="reply">
+    
+<%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
+  <% url = url_for(:controller => 'posts', :action => 'create', :page_id => @page, :paging => @page.discussion.last_page) %>
+  <% form_for :post, :url => url do |f| -%>
+    <%= f.text_area :body, :rows => 8, :cols => 60 %>
+    <br/>
+    <%= submit_tag "Post Message" %>
   <% end -%>
-</div>
-</div>
-<%= javascript_tag "$('reply').hide();"%>
+
+  </td>
+</tr>

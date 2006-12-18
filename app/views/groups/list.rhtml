@@ -3,12 +3,12 @@
 <h1>My groups</h1>
 
 <% current_user.groups.each do |g| %>
-<%= link_to g.name, :controller => 'groups', :action => 'view', :id => g %>
+<%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>
 <% end %>
 
 <h1>All groups</h1>
 
 <% for group in @groups %>
-<%= link_to group.name, :action => 'view', :id => group %>
+<%= link_to group.name, :action => 'show', :id => group %>
 <% end %>
 

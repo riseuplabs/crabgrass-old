@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
 
   ## attributes #############################################
   
-#  format_attribute :body
+  format_attribute :body
   attr_accessible :body
   
   ## validations ############################################

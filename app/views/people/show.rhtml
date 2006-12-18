@@ -15,7 +15,7 @@
 <p>
 <b>Groups:</b>
 <% @user.groups.each do |g| %>
-<%= link_to g.name, :controller => 'groups', :action => 'view', :id => g %>
+<%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>
 <% end %>
 
 <% if @user.groups.count == 0 %>

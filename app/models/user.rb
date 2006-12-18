@@ -101,4 +101,12 @@ class User < AuthenticatedUser
     return login
   end
 
+  def may?(perm, page)
+    may!(perm,page) rescue false
+  end
+  
+  def may!(perm, page)
+    true
+  end
+  
 end

@@ -2,7 +2,7 @@
 
 <% if @contacts %>
 <%   @contacts.each do |u| %>
-<%=     link_to u.login, :controller => 'people', :action => 'view', :id => u %>
+<%=     link_to u.login, :controller => 'people', :action => 'show', :id => u %>
 <%   end %>
 <% else %>
 <%=  'You have no contacts'.t %>

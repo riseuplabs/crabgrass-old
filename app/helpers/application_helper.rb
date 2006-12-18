@@ -42,14 +42,14 @@ module ApplicationHelper
       when "Text::Text"; 'texts'
       else; 'pages'
     end
-    link_to( (text||'&nbsp;'), :controller => controller, :action => 'view', :id => page)
+    link_to( (text||'&nbsp;'), :controller => controller, :action => 'show', :id => page)
   end 
   
   def link_to_user(user)
-    link_to user.login, :controller => 'person', :action => 'view', :id => user
+    link_to user.login, :controller => 'people', :action => 'show', :id => user
   end
   #def user_path(user)
-  #  url_for :controller => 'person', :action => 'view', :id => user
+  #  url_for :controller => 'person', :action => 'show', :id => user
   #end
   
   def posts_path(options)

@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
     @group_pages, @groups = paginate :groups, :per_page => 10
   end
 
-  def view
+  def show
     @group = Group.find(params[:id])
   end
 

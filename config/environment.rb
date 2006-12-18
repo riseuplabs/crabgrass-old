@@ -51,3 +51,7 @@ end
 # end
 
 # Include your application configuration below
+
+class InsufficientPermission < Exception; end
+
+require "#{RAILS_ROOT}/lib/extends_to_core.rb"

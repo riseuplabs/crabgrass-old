@@ -11,7 +11,7 @@
 <p>
   <b>Members:</b>
   <% @group.users.each do |u| %>
-    <%= link_to u.login, :controller => 'people', :action => 'view', :id => u %>
+    <%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
   <% end %>
   <% if @group.users.count == 0 %>
     No members.
