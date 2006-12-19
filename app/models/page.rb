@@ -73,4 +73,17 @@ class Page < ActiveRecord::Base
     other_page.pages.delete(self) rescue nil
   end
 
+  ### methods ###
+  
+  # return the page type, in underscore form, without module name.
+  def type
+    return tool_type.gsub(/^.*::/,'').underscore if tool_type
+    return 'page' # default
+  end
+  
+  # underscore name of the controller for the page's type
+  def controller
+    self.type.pluralize
+  end
+  
 end

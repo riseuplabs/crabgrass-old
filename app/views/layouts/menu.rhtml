@@ -1,41 +1,51 @@
-<% if controller.logged_in? %>
+<%
+#
+#
+# also supports drop down menus, like this:
+#
+#  <li>menu title
+#    <ul>
+#      <li>menu item 1</li>
+#      <li>menu item 2</li>
+#    </ul>
+#  </li>
+#
+ 
+# determine the controller
 
+if ['groups','people','me','account'].include? params[:controller]
+  active = params[:controller]
+  if controller.logged_in? and active == 'people' and params[:id] == controller.current_user.to_param
+    active = 'me'
+  end
+elsif ['groups','people','me'].include? params[:from]
+  active = params[:from]
+  if controller.logged_in? and active == 'people' and params[:from_id] == controller.current_user.to_param
+    active = 'me'
+  end
+end
+selected = 'class="selected"'
+
+%>
+
+<% if active != 'account' %>
 <ul id="topmenu">
-<!--
-  <li><%= menu_link_to "Networks", "", :controller => 'networks' %>
-  </li>
--->
-  <li <%= selected @params[:controller] == 'groups' %> ><%= menu_link_to "Groups", "", :controller => 'groups' %>
-<!--		<ul>
-			<li><a href="#">group 1</a></li>
-			<li><a href="#">group 2</a></li>
-			<li><a href="#">group 3</a></li>
-		</ul>
--->
+  <li <%= selected if active == 'groups' %> >
+    <%= link_to "Groups", groups_url %>
   </li>
 
-  <li <%= selected @params[:controller] == 'people' %> ><%= menu_link_to "People", "", :controller => 'people' %>
-<!--  <ul>
-    <li><a href="#">test 1</a></li>
-    <li><a href="#">test 2</a></li>
-    <li><a href="#">test 3</a></li>
-  </ul>
--->
+  <li <%= selected if active == 'people' %> >
+    <%= link_to "People", people_url %>
   </li>
 
-  <% if current_user %>
-
-  <%# hackish and temporary %>
-  <li <%= selected( @params[:controller] != 'groups' && @params[:controller] != 'people' )%> ><%= menu_link_to "Me", "", :controller => 'me' %>
+  <% if controller.logged_in? %>
+  <li <%= selected if active == 'me' %> >
+    <%= link_to "Me", me_url %>
   </li>
 
-  <li><%= menu_link_to _("Logout"), "", :controller => 'account', :action => 'logout' %>
+  <li><%= link_to "Logout".t, :controller => 'account', :action => 'logout' %>
   </li>
-
-  <% end %>
-  
+  <% end %>  
 </ul>
-
 <div style='clear:both'></div>
-
 <% end %>

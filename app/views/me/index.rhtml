@@ -1,8 +1,3 @@
-<% content_for :sidebar do %>
-hello!!!
-<% end %>
-
-
 <div style="width:32px;height:32px;background-color:<%=@user.login%>; float:left; margin: 1em 1em 2em 0 ;">&nbsp;</div>
 
 <h1><%= @user.login %></h1>
@@ -35,7 +30,7 @@ hello!!!
 
 <%= Formy.tabs do |t|
   t.tab do 
-    t.label "inbox".t
+    t.label "what's new?".t
     t.link url_for(:action => "index")
     t.selected params[:action] == 'index'
   end

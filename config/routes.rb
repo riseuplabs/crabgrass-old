@@ -9,6 +9,19 @@ ActionController::Routing::Routes.draw do |map|
   # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
 
+  # :defaults => {:file => nil},
+  # :requirements => {:file => %r{[^/]+(\.[^/]+)?}}
+  
+  map.full_page_path ':from/:from_id/:controller/:action/:id',
+     :from => /groups|me|people|networks/,
+     :controller => /pages|texts|polls|events/,
+     :action => 'show'
+  
+  # so we can use named urls
+  map.people 'people/:action/:id', :controller => 'people'
+  map.groups 'groups/:action/:id', :controller => 'groups'
+  map.me 'me/:action/:id', :controller => 'me'
+  
   # You can have the root of your site routed by hooking up '' 
   # -- just remember to delete public/index.html.
   map.connect '', :controller => "account"
