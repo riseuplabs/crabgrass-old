@@ -10,22 +10,9 @@
 #    </ul>
 #  </li>
 #
- 
-# determine the controller
 
-if ['groups','people','me','account'].include? params[:controller]
-  active = params[:controller]
-  if controller.logged_in? and active == 'people' and params[:id] == controller.current_user.to_param
-    active = 'me'
-  end
-elsif ['groups','people','me'].include? params[:from]
-  active = params[:from]
-  if controller.logged_in? and active == 'people' and params[:from_id] == controller.current_user.to_param
-    active = 'me'
-  end
-end
+active = first_breadcrumb
 selected = 'class="selected"'
-
 %>
 
 <% if active != 'account' %>

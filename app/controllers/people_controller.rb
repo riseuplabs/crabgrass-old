@@ -64,4 +64,15 @@ class PeopleController < ApplicationController
     User.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+  
+  protected
+  
+  def breadcrumbs
+    @user = User.find_by_login(params[:id])
+    add_crumb 'people', people_url(:action => 'index')
+    add_crumb @user.login, people_url(:id => @user, :action => 'show') if @user
+    unless ['show','index','list'].include? params[:action]
+      add_crumb params[:action], people_url(:action => params[:action], :id => @user)
+    end
+  end
 end

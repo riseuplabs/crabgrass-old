@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+
   def index
     list
     render :action => 'list'
@@ -54,5 +55,16 @@ class GroupsController < ApplicationController
   def destroy
     Group.find(params[:id]).destroy
     redirect_to :action => 'list'
+  end
+  
+  protected
+  
+  def breadcrumbs
+    @group = Group.find_by_id(params[:id])
+    add_crumb 'groups', groups_url(:action => 'list')
+    add_crumb @group.name, groups_url(:id => @group, :action => 'show') if @group
+    unless ['show','index','list'].include? params[:action]
+      add_crumb params[:action], groups_url(:action => params[:action], :id => @group)
+    end
   end
 end

@@ -79,17 +79,23 @@ module ApplicationHelper
   #def user_path(user)
   #  url_for :controller => 'person', :action => 'show', :id => user
   #end
-  
-  def posts_path(options)
-    "yikes"
-  end
-  
+    
   def avatar_for(user, size=32)
     image_tag "person.png", :size => "#{size}x#{size}", :class => 'photo'
   end
   
   def ajax_spinner_for(id, spinner="spinner.gif")
     "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
+  end
+  
+  def link_to_breadcrumbs
+    if @breadcrumbs and @breadcrumbs.length > 1
+      @breadcrumbs.collect{|b| link_to b[0],b[1]}.join ' &raquo; ' 
+    end
+  end
+  
+  def first_breadcrumb
+    @breadcrumbs.first.first if @breadcrumbs.any?
   end
   
 end

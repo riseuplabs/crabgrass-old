@@ -46,7 +46,7 @@ class MeController < ApplicationController
     @user = current_user
     if request.post? 
       @user.update_attributes(params[:user])
-      groups = params[:name].split  /[,\s]/
+      groups = params[:name].split(/[,\s]/)
       for group in groups
         @new_group = Group.find(:all, :conditions =>["name = ?",group])
         @user.groups << @new_group unless @user.groups.find_by_name group
@@ -59,5 +59,14 @@ class MeController < ApplicationController
      # redirect_to :action => 'show', :id => @user
     end
   end
-
+  
+  protected
+  
+  def breadcrumbs
+    @user = current_user
+    add_crumb 'me', me_url(:action => 'index')
+    unless ['show','index'].include? params[:action]
+      add_crumb params[:action], me_url(:action => params[:action])
+    end
+  end
 end

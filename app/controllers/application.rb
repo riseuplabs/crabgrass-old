@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem	
-  before_filter :login_required
+  before_filter :login_required, :breadcrumbs
 
   # a default success flash
   def flash_success(msg=nil)
@@ -60,4 +60,13 @@ class ApplicationController < ActionController::Base
   def pagepath(page, options)
     url_for({:controller => 'pages', :action => 'show', :id => page}.merge(options))
   end
+  
+  # a before filter to override by controllers
+  def breadcrumbs; end
+  
+  def add_crumb(crumb_text,crumb_url)
+    @breadcrumbs ||= []
+    @breadcrumbs << [crumb_text,crumb_url]
+  end
+  
 end
