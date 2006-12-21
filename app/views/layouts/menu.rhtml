@@ -15,7 +15,7 @@ active = first_breadcrumb
 selected = 'class="selected"'
 %>
 
-<% if active != 'account' %>
+<% if controller.logged_in? %>
 <ul id="topmenu">
   <li <%= selected if active == 'groups' %> >
     <%= link_to "Groups", groups_url %>

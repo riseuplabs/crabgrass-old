@@ -82,7 +82,7 @@ module ApplicationHelper
     
   def avatar_for(viewable, size='medium')   
     #image_tag avatar_url(:viewable_type => viewable.class.to_s.downcase, :viewable_id => viewable.id, :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
-    image_tag avatar_url(:id => (viewable.avatar||1), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
+    image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
   end
   
   def ajax_spinner_for(id, spinner="spinner.gif")
