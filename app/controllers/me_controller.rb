@@ -51,13 +51,22 @@ class MeController < ApplicationController
         @new_group = Group.find(:all, :conditions =>["name = ?",group])
         @user.groups << @new_group unless @user.groups.find_by_name group
         if @new_group.nil?
-	  flash[:notice] = 'Group %s does not exist.' %group
-	end
+          flash[:notice] = 'Group %s does not exist.' %group
+        end
       end
       flash[:notice] = 'User was successfully updated.'
-      render :action => 'index'
-     # redirect_to :action => 'show', :id => @user
     end
+  end
+
+  def avatar
+    if request.post?
+      avatar = Avatar.create(:data => params[:image][:data])
+      if avatar.valid?
+        @user.avatars.clear
+        @user.avatars << avatar
+      end
+    end
+    render :action => 'edit'
   end
   
   protected

@@ -1,0 +1,5 @@
+<%= form_tag({:action => 'new',:controller=>'avatars'}, {:multipart => true})%>
+  <%= file_field 'image', 'data' %>
+  <%= hidden_field_tag 'user_id', @user.id %>
+  <%= submit_tag 'Upload' %>
+<%= end_form_tag %>

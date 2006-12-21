@@ -1,0 +1,191 @@
+= FlexImage
+
+--
+***NOTE: This document will be much more readable if viewed through the rdoc
+run "rake rdoc" from inside vendor/plugins/flex_image to generate the html 
+documention
+++
+
+FlexImage is a plugin that allows you to put image data in your database or
+file sysytem and retrieve at any size, quality or cropping you like. It evens 
+supports some interesting effects with overlays, borders, shadows, and more.
+
+Combine this with  page caching and you have a fast and easy way to manage 
+large numbers of uploaded images that are always just the right size for your
+needs.
+
+== Prerequisites
+
+*RMagick* must be installed
+http://rmagick.rubyforge.org
+
+== Size declarations!  
+
+Any reference to a size is defined with a special format, similar to the rails 
++image_tag+ helper.  It is a string of format <tt>"100x200"</tt> where <tt>100</tt> is width and <tt>200</tt> is height.
+You can omit the <tt>"x"</tt>, or use a single number, to denote a square.  For instance <tt>"150"</tt>
+is identical in function to <tt>"150x150"</tt>
+
+See <tt>process!</tt> in <tt>FlexImage::Model</tt> for options explanation.
+
+== Setup
+
+=== Installation
+
+SVN: http://beautifulpixel.com/svn/plugins/flex_image/
+
+Install via the plugin script into your rails application
+
+  ruby script/plugin install http://beautifulpixel.com/svn/plugins/flex_image/
+  
+use <tt>install -x</tt> instead of <tt>install</tt> if your project is 
+already under subversion.  Then the plugin will update itself everytime you do a
++svn up+.
+
+=== Model and Migration
+
+First, you must create the table model and table used by FlexImage.  At
+a command prompt in the root of your rails app:
+
+  ruby script/generate flex_image ProductImage
+  rake migrate
+  
+This will create a model +ProductImage+ and a migration for a table called +product_images+, 
+just like <tt>script/generate model ProductImage</tt>.  Except with some added functionality.
+
+If you want to add FlexImage to an exsiting model, simply make it inherit from <tt>FlexImage::Model</tt>
+instead of <tt>ActiveRecord::Base</tt> and add a +MEDIUMBLOB+ field to your table for that model.
+
+Remember that your FlexImage class inherits from ActiveRecord and works just like every other
+model in Rails.  It simply has some added functionality.
+
+*NOTE*: if you want to store the images in the file system rather than the db, simply remove
+lines that create the binary column form the migration file, and add the following to your
+model object:
+
+  self.file_store = 'path/to/images'
+
+==== Image Pre-Processing
+
+Use the +pre_process_image+ method on your model to transform the images as they are uploaded.
+Simply pass any of the rendering options.  The following will make all uploaded images be no
+larger than 1000x1000.
+
+  class ProductImage < FlexImage::Model
+    pre_process_image :size => '1000x1000'
+  end
+  
+See <tt>process!</tt> in <tt>FlexImage::Model</tt> for options explanation.
+
+=== Controller
+
+In order to see the image, you use the +flex_image+ method to add an action to
+a controller.  The +action+ and +class+ parameters are required.  The +action+
+parameter is the name of the controller action that shows the image and the
++class+ is the model class that will be searched for images.  The actual class
+object or just it's name as a string can be used.
+
+  class ProductImagesController < ApplicationController
+    flex_image :action => 'show', 
+               :class => ProductImage
+  end
+
+You can also pass in any of the previously mentioned rendering options to set the defaults
+for image rendering.  For example:
+
+  flex_image :action => 'show', :class => ProductImage, :size => '100x50', :crop => true
+  
+Or even have a different action for two sizes of image:
+
+  flex_image :action => 'show',  :class => ProductImage, :size => '640x480'
+  flex_image :action => 'thumb', :class => ProductImage, :size => '100x75'
+
+*NOTE*: you can create your own action for rendering images instead of using the +flex_image+
+macro.  For more info see <tt>FlexImage::Controller</tt>.
+
+Now you could go to <tt>/product_images/show/1</tt> to see an image, but you haven't
+created any yet.  Luckily, this isn't hard. So let's create a quick little view for 
+creating +ProductImage+ objects.  Use this simple form:
+
+  #app/views/product_images/new.rhtml
+  
+  <%= form_tag({:action => 'create'}, {:multipart => true})%>
+    <%= file_field 'image', 'data' %>
+    <%= submit_tag %>
+  <%= end_form_tag %>
+
+*IMPORTANT* <tt>:multipart => true</tt> must be present on any form with a file upload or 
+the browser will not send the binary with the request.
+
+We will also add a +create+ method to process an uploaded file, creating a new database
+row for the image.
+
+  class ProductImagesController < ApplicationController
+    flex_image :action => 'show', :class => ProductImage
+    
+    def create
+      img = ProductImage.create(:data => params[:image][:data])
+      redirect_to :action => 'show', :id => img
+    end
+  end
+  
+Now find an image on your hard drive and upload via the form at <tt>/product_images/new</tt>.
+You should be redirected to your image, displayed in the browser.
+
+Try adding <tt>?size=100x50</tt> to the url, and watch the image size alter.  Or add options
+to the +flex_image+ method call to affect the image without changing the URL.
+
+=== View Usage
+
+To include an image tag in your view, simply call +url_for+ as the image location and point
+it to your image action.
+
+  <%= image_tag url_for(:controller => 'product_images',
+                        :action     => 'show',
+                        :id         => 123) %>
+  
+You can add any of the rendering options to this hash to override the defaults in the controller.
+
+Although the above works, it's not entirely compatible with page caching since the parameters are not
+actually part of the filename.  To remedy this make a custom route for your images.
+
+  map.product_image 'product_images/show/:id/:size/image.jpg',
+                    :controller => 'product_images',
+                    :action => 'show'
+
+Here in routes as well, you can use the rendering options.
+
+Now when page caching is active, the size is baked into the filename.  This means when the webserver
+fetches the same image of a different size the proper cache is used or generated.
+
+== Configuration Examples
+
+=== Adding a border
+
+Lets say we want the thumbnails in our app to have a border, to help them better blend into the layout.
+Assume that we have an image with an alpha channel that gives it a hole in the middle.  We can add
+this image as a border using the <tt>:size => :stretch_to_fit</tt> option in the overlay options.
+
+  flex_image :action => 'thumbnail',
+             :class  => MyImage,
+             :size   => '100x100',
+             :overlay => {
+               :file => 'public/images/border.png',
+               :size => :stretch_to_fit
+             }
+
+=== Adding a logo in the corner
+
+Stamp your sites logo on all the big images
+
+  flex_image :action => 'show',
+             :class  => MyImage,
+             :size   => '640x480',
+             :overlay => {
+               :file      => 'public/images/logo.png',
+               :alignment => :bottom_left,
+               :offset    => 10 
+             }
+  
+  
+  

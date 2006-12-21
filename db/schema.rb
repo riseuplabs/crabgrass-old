@@ -2,7 +2,13 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 22) do
+ActiveRecord::Schema.define(:version => 23) do
+
+  create_table "avatars", :force => true do |t|
+    t.column "data", :binary
+    t.column "viewable_id", :integer
+    t.column "viewable_type", :string
+  end
 
   create_table "categories", :force => true do |t|
   end

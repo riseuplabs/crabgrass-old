@@ -41,6 +41,9 @@ class User < AuthenticatedUser
 	end
   end
   
+  #has_one :avatar, :dependent => :destroy
+  has_many :avatars, :as => :viewable, :dependent => :destroy
+  
 #  has_many :urgent_nodes,
 #    :condition => 'deadline > now()',
 #	:order => 'deadline',

@@ -1,0 +1,23 @@
+<h1>Editing user</h1>
+
+<%= start_form_tag :action => 'edit', :id => @user %>
+   <p>Join Groups:
+  <%=
+  text_area_tag "name", nil
+  %></p>
+  <%= submit_tag 'Edit' %>
+<%= end_form_tag %>
+
+<h1>avatar</h1>
+
+<%= avatar_for @user, 'xlarge' %>
+
+<p>uploaded image will be cropped and stretched to 96 pixels square.</p>
+
+<p>
+<%= form_tag({:action => 'avatar'}, {:multipart => true})%>
+  <%= file_field 'image', 'data' %>
+  <%# hidden_field_tag 'user_id', @user.id %>
+  <%= submit_tag 'Upload' %>
+<%= end_form_tag %>
+</p>

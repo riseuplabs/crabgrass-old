@@ -1,0 +1,6 @@
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: root
+  :password:
+  :database: flex_image_test

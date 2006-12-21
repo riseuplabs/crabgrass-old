@@ -5,8 +5,19 @@ rake rails:freeze:edge
 
 (to restore gemrails... rake rails:unfreeze)
 
+
+
 PLUGINS
 ======================
+
+flex_image
+------------------
+
+see http://beautifulpixel.com/flex_image/index.html
+
+ruby script/plugin install http://beautifulpixel.com/svn/plugins/flex_image/
+sudo apt-get install librmagick-ruby1.8
+
 
 has_many_polymorphs
 -------------------

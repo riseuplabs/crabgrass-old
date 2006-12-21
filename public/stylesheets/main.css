@@ -73,6 +73,9 @@ tr.post-spacer td {line-height: 0.4em;}
 
 textarea#post_body {width: 100%}
 
+div.profile td {vertical-align: top;}
+div.profile h1 {margin: 0;}
+
 /** style **/
 
 body { background-color: #fff; color: #333; }

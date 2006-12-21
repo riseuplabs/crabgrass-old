@@ -1,10 +1,16 @@
-<div style="width:32px;height:32px;background-color:<%=@user.login%>; float:left; margin: 1em 1em 2em 0 ;">&nbsp;</div>
-
-<h1><%= @user.login %></h1>
-<p>
-  my profile summary goes here ... 
-  <br/><%= link_to 'edit my profile', :action => 'edit' %>
-</p>
+<div class='profile'>
+<table>
+<tr>
+  <td rowspan='2'><%= avatar_for @user, 'medium' %>
+  <td><h1><%= @user.login %></h1></td>
+</tr>
+<tr>
+  <td>
+     <%= link_to 'edit my profile', :action => 'edit' %>
+  </td>
+</tr>
+</table>
+</div>
 
 <p>
 <b>Groups:</b>
