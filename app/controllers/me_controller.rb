@@ -62,8 +62,9 @@ class MeController < ApplicationController
     if request.post?
       avatar = Avatar.create(:data => params[:image][:data])
       if avatar.valid?
-        @user.avatars.clear
-        @user.avatars << avatar
+        @user.avatar.destroy if @user.avatar
+        @user.avatar = avatar
+        @user.save
       end
     end
     render :action => 'edit'

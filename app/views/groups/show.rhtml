@@ -1,12 +1,16 @@
-<div style="width:96px;height:96px;background-color:#ccc; float:left; margin: 1em 1em 2em 0 ;">&nbsp;</div>
-
-<h1><%=h @group.name %></h1>
-<p>
-  group profile summary goes here...
-  <br/><%= link_to 'Edit profile', :action => 'edit', :id => @group %>
-</p>
-
-
+<div class='profile'>
+<table>
+<tr>
+  <td rowspan='2'><%= avatar_for @group, 'large' %>
+  <td><h1><%=h @group.name %></h1></td>
+</tr>
+<tr>
+  <td>
+     <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
+  </td>
+</tr>
+</table>
+</div>
 
 <p>
   <b>Members:</b>

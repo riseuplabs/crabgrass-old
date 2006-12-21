@@ -44,6 +44,8 @@ class Group < ActiveRecord::Base
 	end
   end
 
+  belongs_to :avatar
+  
 #  has_many :groups_to_networks
 #  has_many :networks,
 #    :through => 'groups_to_networks'

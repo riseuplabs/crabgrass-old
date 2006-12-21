@@ -9,9 +9,16 @@
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
 
-<%= link_to 'Show', :action => 'show', :id => @group %> |
-<%= link_to 'Back', :action => 'list' %>
+<h1>avatar</h1>
 
-<%= # debug params 
-%>
+<%= avatar_for @group, 'xlarge' %>
+
+<p>uploaded image will be cropped and stretched to 96 pixels square.</p>
+
+<p>
+<%= form_tag({:action => 'avatar',:id=>@group}, {:multipart => true})%>
+  <%= file_field 'image', 'data' %>
+  <%= submit_tag 'Upload' %>
+<%= end_form_tag %>
+</p>
 

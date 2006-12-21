@@ -9,7 +9,7 @@
   <td>
     <div class="post-author">
       <div><%= link_to_user post.user %></div>
-      <%= avatar_for post.user if post.body.length > 60 %>
+      <%= avatar_for post.user, 'small' if post.body.length > 60 %>
     </div> 
   </td>
   <td class="post-body entry-content" id="post-body-<%= post.id %>">

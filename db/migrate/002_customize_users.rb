@@ -7,6 +7,7 @@ class CustomizeUsers < ActiveRecord::Migration
     add_column :users, :display_name, :string
     add_column :users, :time_zone, :string
     add_column :users, :language, :string, :limit => 5
+    add_column :users, :avatar_id, :integer
   end
 
   def self.down

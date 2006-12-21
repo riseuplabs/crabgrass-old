@@ -6,8 +6,7 @@ ActiveRecord::Schema.define(:version => 23) do
 
   create_table "avatars", :force => true do |t|
     t.column "data", :binary
-    t.column "viewable_id", :integer
-    t.column "viewable_type", :string
+    t.column "public", :boolean, :default => false
   end
 
   create_table "categories", :force => true do |t|
@@ -42,6 +41,7 @@ ActiveRecord::Schema.define(:version => 23) do
     t.column "council", :boolean
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+    t.column "avatar_id", :integer
   end
 
   create_table "groups_to_committees", :force => true do |t|
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(:version => 23) do
     t.column "display_name", :string
     t.column "time_zone", :string
     t.column "language", :string, :limit => 5
+    t.column "avatar_id", :integer
   end
 
   create_table "votes", :force => true do |t|

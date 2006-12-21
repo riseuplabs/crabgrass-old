@@ -10,6 +10,7 @@ class CreateGroups < ActiveRecord::Migration
       t.column :council,        :boolean
       t.column :created_at,     :datetime
       t.column :updated_at,     :datetime
+      t.column :avatar_id,      :integer
     end
   end
 

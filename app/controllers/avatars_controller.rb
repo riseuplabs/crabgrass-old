@@ -12,16 +12,15 @@ class AvatarsController < ApplicationController
 #  end  
   
   def show
-    image = Avatar.find :first, :conditions => ['viewable_id = ? AND viewable_type = ?', params[:viewable_id], params[:viewable_type]]
+    image = Avatar.find_by_id params[:id]
     if image.nil?
-      image = Avatar.find :first
+      size = Avatar.pixels(params[:size])
+      size.sub!(/^\d\dx/,'')
+      send_file "#{File.dirname(__FILE__)}/../../public/images/#{size}/default.png", :type => 'image/png', :disposition => 'inline'
+    else
+      image.resize! :size => Avatar.pixels(params[:size])
+      render_flex_image(image)
     end
-    return render(:text => 'image not found', :status => 400) unless image
-    size = Avatar.pixels(params[:size].sub(/\.(jpg|png)$/,''))
-    if size
-      image.resize!(:size => size)
-    end
-    render_flex_image(image)
   end
   
 end

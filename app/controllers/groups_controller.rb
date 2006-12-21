@@ -57,6 +57,19 @@ class GroupsController < ApplicationController
     redirect_to :action => 'list'
   end
   
+  
+  def avatar
+    if request.post?
+      avatar = Avatar.create(:data => params[:image][:data])
+      if avatar.valid?
+        @group.avatar.destroy if @group.avatar
+        @group.avatar = avatar
+        @group.save
+      end
+    end
+    render :action => 'edit'
+  end
+  
   protected
   
   def breadcrumbs

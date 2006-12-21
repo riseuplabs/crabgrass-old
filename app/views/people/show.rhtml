@@ -1,16 +1,20 @@
-
-<div style="width:96px;height:96px;background-color:<%=@user.login%>; float:left; margin: 1em 2em 2em 0 ;">&nbsp;</div>
-
-<h1><%= @user.login %></h1>
-<p>
-  <%= @user.login %>'s profile goes here ... </br>
-
+<div class='profile'>
+<table>
+<tr>
+  <td rowspan='2'><%= avatar_for @user, 'large' %>
+  <td><h1><%=h @user.login %></h1></td>
+</tr>
+<tr>
+  <td>
 <% if @is_contact %>
   <%= link_to 'remove from my contacts', :controller => 'me', :action => 'remove_contact', :id => @user %>
 <% else %>
   <%= link_to 'add to my contacts', :controller => 'me', :action => 'add_contact', :id => @user %>
-<% end %>
-</p>
+<% end %>     
+  </td>
+</tr>
+</table>
+</div>
 
 <p>
 <b>Groups:</b>

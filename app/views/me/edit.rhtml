@@ -13,7 +13,6 @@
 <%= avatar_for @user, 'xlarge' %>
 
 <p>uploaded image will be cropped and stretched to 96 pixels square.</p>
-
 <p>
 <%= form_tag({:action => 'avatar'}, {:multipart => true})%>
   <%= file_field 'image', 'data' %>

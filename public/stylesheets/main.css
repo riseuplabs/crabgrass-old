@@ -1,6 +1,7 @@
 
-
 body {margin: 0; padding: 0;}
+table {margin: 0; padding: 0; border-spacing: 0;}
+
 div#masthead {
   padding-top: 5px;
   text-align: right;
@@ -73,8 +74,14 @@ tr.post-spacer td {line-height: 0.4em;}
 
 textarea#post_body {width: 100%}
 
-div.profile td {vertical-align: top;}
-div.profile h1 {margin: 0;}
+div.profile {
+  margin-top: 6px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+/*  border-width: 1px 3px 3px 1px;*/
+}
+div.profile td {vertical-align: top; padding: 3px;}
+div.profile h1 {margin: 0; font-size: 2em;}
 
 /** style **/
 

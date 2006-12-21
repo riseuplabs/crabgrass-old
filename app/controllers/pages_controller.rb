@@ -15,19 +15,40 @@ class PagesController < ApplicationController
   end
 
   def new
-    if request.post?
-      @page = Page.create(params[:page])
-      if @page.valid?
-        if params[:group_id]
-          GroupParticipation.create(:page_id => @page.id, :group_id => params[:group_id])
+    begin
+      if request.get?
+        @page = Page.new
+        raise 'render'
+      elsif request.post?
+        if params[:group_name].any?
+          group = Group.find_by_name params[:group_name]
+          if group.nil?
+            message :error => 'no such group'
+            raise 'render'
+          end
+        else
+          group = Group.find_by_id params[:group_id]
         end
-        UserParticipation.create(:page_id => @page.id, :user_id => current_user.id)
+      
+        @page = Page.create( params[:page].merge({:created_by_id => current_user.id}) )
+        unless @page.valid?
+          message :object => @page
+          raise 'render'
+        end
+        if group
+          GroupParticipation.create(:page_id => @page.id, :group_id => group.id)
+          if params[:announce]
+            for user in group.users
+              UserParticipation.create(:page_id => @page.id, :user_id => user.id)
+            end
+          end
+        else
+          UserParticipation.create(:page_id => @page.id, :user_id => current_user.id)
+        end
+        # success:
         redirect_to :action => 'show', :id => @page
-      else
-        message :object => @page
       end
-    else
-      @page = Page.new
+    rescue RuntimeError
       render :action => 'new', :layout => 'application'
     end
   end
@@ -64,6 +85,7 @@ class PagesController < ApplicationController
   
     # TODO: this is so complicated! can this be made more simple?
     def breadcrumbs
+      return unless params[:id]
       @page = Page.find_by_id params[:id]
       if params[:from]
         if logged_in? and params[:from] == 'people' and params[:from_id] == current_user.to_param
