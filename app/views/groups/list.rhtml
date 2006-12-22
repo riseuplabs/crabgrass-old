@@ -1,5 +1,3 @@
-<%= link_to 'New group', :action => 'new' %>
-
 <h1>My groups</h1>
 
 <% current_user.groups.each do |g| %>
@@ -12,3 +10,8 @@
 <%= link_to group.name, :action => 'show', :id => group %>
 <% end %>
 
+<p>
+
+<%= link_button 'New group', :action => 'new' %>
+
+</p>

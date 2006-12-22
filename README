@@ -10,6 +10,12 @@ rake rails:freeze:edge
 PLUGINS
 ======================
 
+ez-where
+------------------
+
+script/plugin install svn://rubyforge.org/var/svn/ez-where
+
+
 flex_image
 ------------------
 

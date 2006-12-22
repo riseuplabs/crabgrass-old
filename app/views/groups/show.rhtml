@@ -1,36 +1,42 @@
 <div class='profile'>
 <table>
 <tr>
-  <td rowspan='2'><%= avatar_for @group, 'large' %>
+  <td rowspan='3'><%= avatar_for @group, 'large' %>
   <td><h1><%=h @group.name %></h1></td>
 </tr>
 <tr>
   <td>
      <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
-  </td>
-</tr>
-</table>
-</div>
-
-<p>
-  <b>Members:</b>
-  <% @group.users.each do |u| %>
-    <%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
-  <% end %>
-  <% if @group.users.count == 0 %>
-    No members.
-  <% end %>
-</p>
 
 <% if current_user.groups.include?(@group) %>
   <%= link_to 'leave group', :controller => 'me', :action => 'leave_group', :id => @group %>
 <% else %>
   <%= link_to 'join group', :controller => 'me', :action => 'join_group', :id => @group %>
 <% end %>
+     
+  </td>
+</tr>
+<tr>
+  <td>
+  <b>Networks:</b><br/>
+  <b>Committees:</b><br/>
+  <b>Members:</b>
+    <% @group.users.each do |u| %>
+      <%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
+    <% end %>
+  </td>
+</tr>
+</table>
+</div>
+
+<div>
+
+<br/>
+</div>
 
 <h1>pages</h1>
 
 <% @pages = @group.pages %>
 <%= render :partial => 'pages/list' %>
 
-<p><%= link_to 'new page', :controller => 'pages', :action => 'new', :group_id => @group %></p>
+<p><%= link_button 'new page', :controller => 'pages', :action => 'new', :group_id => @group %></p>

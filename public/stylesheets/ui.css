@@ -1,0 +1,45 @@
+/*** USER INTERFACE ELEMENTS ***/
+
+/*
+a.button {
+  border: 1px solid #cdf;
+  text-decoration: none;
+  color: white;
+  margin: -3px;
+  padding: 2px 5px;
+  -moz-border-radius: 3px;
+}
+				  
+span.button {
+  border: 2px solid #666;
+  background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+  -moz-border-radius: 3px; 
+  padding: 2px;
+}
+											
+a.button:hover {
+  -moz-border-radius: 3px;
+  border: 1px solid #fff;
+  background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+}
+*/
+
+a.button {
+  border: 1px solid #cdf;
+  text-decoration: none;
+  color: white;
+  margin: -1px;
+  padding: 0px 5px 2px 5px;
+}
+				  
+span.button {
+  padding-bottom: 2px;
+  border: 2px solid #666;
+  background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+}
+											
+a.button:hover {
+  border: 1px solid #fff;
+  background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+}
+

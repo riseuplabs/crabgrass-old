@@ -16,19 +16,20 @@ module LinkHelper
     accesskey = shortcut_key label
     onclick = %Q<submit_form("#{form_id}", "#{label}")>
     onclick = %Q<if(confirm("#{options[:confirm]}")){submit_form("#{form_id}", "#{label}");}else{return false;}> if options[:confirm]
-    %Q(<a href='#' onclick='#{onclick}' style='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{label}</a>)
+    %Q(<span class="button"><a href='#' onclick='#{onclick}' style='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{label}</a></span>)
   end
     
   def link_button(label,options={},htmloptions={})
     accesskey = shortcut_key label
     url = url_for options
     aclass = htmloptions[:class]
-    %Q[<a href='#{url}' class='button #{aclass}' accesskey='#{accesskey}'>#{label}</a>]
+    %Q[<span class="button"><a href='#{url}' class='button #{aclass}' accesskey='#{accesskey}'>#{label}</a></span>]
   end
     
   def post_button(label,options={},html_options={})
     accesskey = shortcut_key label
-    link_to(label, options, {:post => true, :class=>'button', :accesskey=>accesskey}.merge(html_options) )
+    a = link_to(label, options, {:post => true, :class=>'button', :accesskey=>accesskey}.merge(html_options) )
+    "<span class='button'>#{a}</span>"
   end
     
   def shortcut_key(label)
