@@ -50,8 +50,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="38.842334"
-     inkscape:cy="67.205434"
+     inkscape:cx="92.648207"
+     inkscape:cy="70.001401"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="898"
@@ -73,6 +73,20 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="opacity:1;color:black;fill:url(#linearGradient2774);fill-opacity:1;fill-rule:nonzero;stroke:#676767;stroke-width:2.391;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect1880"
+       width="122.80944"
+       height="122.80944"
+       x="2.595279"
+       y="2.5952775" />
+    <rect
+       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:2.83705258;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.715847;visibility:visible;display:inline;overflow:visible"
+       id="rect2776"
+       width="117.59183"
+       height="117.44389"
+       x="4.8870268"
+       y="5.1027269" />
     <g
        id="g2778"
        transform="matrix(0.803833,0,0,0.803833,12.36762,12.94001)">
@@ -89,19 +103,5 @@
          d="M 16.701344,80.740109 L 16.701344,74.518959 C 32.133659,84.131986 47.582029,88.938503 63.0465,88.938523 C 69.09079,88.938503 75.086879,88.247265 81.034786,86.864807 C 85.857335,85.771668 90.487023,84.244513 94.923865,82.28334 C 97.817363,81.029452 102.63996,78.441328 109.39166,74.518959 L 109.39166,80.740109 C 101.32178,86.784412 93.219825,91.253347 85.085768,94.146928 C 78.076886,96.6225 70.746546,97.860298 63.094726,97.860328 C 54.414035,97.860298 46.022724,96.188466 37.92077,92.844827 C 29.818815,89.533289 22.74568,85.498387 16.701344,80.740109"
          style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
     </g>
-    <rect
-       style="opacity:1;color:black;fill:url(#linearGradient2774);fill-opacity:1;fill-rule:nonzero;stroke:#676767;stroke-width:5.19055796;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
-       id="rect1880"
-       width="122.80944"
-       height="122.80944"
-       x="2.595279"
-       y="2.5952775" />
-    <rect
-       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:4.31632519;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.715847;visibility:visible;display:inline;overflow:visible"
-       id="rect2776"
-       width="116.8986"
-       height="116.39352"
-       x="5.9479289"
-       y="6.1636291" />
   </g>
 </svg>
