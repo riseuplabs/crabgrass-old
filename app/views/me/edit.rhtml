@@ -1,7 +1,8 @@
 <h1>Editing user</h1>
 
 <%= start_form_tag :action => 'edit', :id => @user %>
-   <p>Join Groups:
+  <%= render :partial => 'form' %>  
+ <p>Join Groups:
   <%=
   text_area_tag "name", nil
   %></p>
