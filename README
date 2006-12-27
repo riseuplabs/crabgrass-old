@@ -1,19 +1,15 @@
+CRABGRASS
+======================
+
+What is crabgrass? blah blah blah. put that here.
+
 INSTALL
 ======================
 
-rake rails:freeze:edge
-
-(to restore gemrails... rake rails:unfreeze)
-
-
+steps to install....
 
 PLUGINS
 ======================
-
-ez-where
-------------------
-
-script/plugin install svn://rubyforge.org/var/svn/ez-where
 
 
 flex_image
@@ -25,10 +21,18 @@ ruby script/plugin install http://beautifulpixel.com/svn/plugins/flex_image/
 sudo apt-get install librmagick-ruby1.8
 
 
+OTHER PLUGINS
+========================
+
+plugins that are optional or that we do not currently use
+
 has_many_polymorphs
 -------------------
 
 http://blog.evanweaver.com/articles/2006/06/02/has_many_polymorphs
-
 script/plugin install svn://rubyforge.org/var/svn/polymorphs/has_many_polymorphs
 
+ez-where
+------------------
+
+script/plugin install svn://rubyforge.org/var/svn/ez-where
