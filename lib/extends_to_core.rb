@@ -21,6 +21,13 @@ class NilClass
   
 end
 
+class Object
+  def cast!(class_constant)
+    raise TypeError.new unless self.is_a? class_constant
+    self
+  end
+end
+
 # taken from beast
 # used to auto-format post body
 ActiveRecord::Base.class_eval do
