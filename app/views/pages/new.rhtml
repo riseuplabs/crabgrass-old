@@ -20,6 +20,13 @@ title: <%= text_field 'page', 'title' %>
 <p>
 Eventually, here you will select the page type (ie poll, decision, text, discussion, event, tasklist, etc).
 </p>
+<p>
 
+Tags:
+
+<%= text_field_tag 'tag_list' %>
+
+
+</p>
   <%= submit_tag "Create" %>
 <%= end_form_tag %>

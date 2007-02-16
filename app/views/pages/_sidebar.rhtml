@@ -1,5 +1,8 @@
 <!-- sidebar -->
 <h2>access</h2>
+<% if @page #trying. jb.
+%>
+
 <% @page.users.each do |u| %>
 <%= link_to_user u %>
 <% end %>
@@ -23,5 +26,28 @@
 (links to related pages and links to pages in the same "folder")
 
 <h2>tags</h2>
-(tags associated with this page)
+
+<%=
+   if @page.tags.blank?
+     "No tags"
+   else
+    # @page.tags.collect{|tag| tag.name}.join(", ")
+     @page.tags.collect{|tag| (link_to tag.name, "/pages/tagged/" + tag.name)}.join(", ")
+     
+   end
+   %>
+
+<p>
+<!--overwrites old tags -->
+<%= start_form_tag({:controller=>'pages',:action=>'add_tags',:id=>@page},{:id=>'tagging'}) %>
+<%= submit_button 'add tag', 'tagging' %>
+<%= text_field_tag 'new_tags' %>
+<%= end_form_tag %>
+</p>
+
+
+<%= #link_to_function("Edit Tags", "Element.toggle($(' #{form_id}' ))") 
+%>
+<% end #trying. jb.
+%>
 <!-- end sidebar -->

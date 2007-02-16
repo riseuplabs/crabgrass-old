@@ -31,6 +31,12 @@ class PagesController < ApplicationController
         end
       
         @page = Page.create( params[:page].merge({:created_by_id => current_user.id}) )
+        
+        
+        #tagging
+        @page.tag_with(params[:tag_list])      
+        @page.save
+       
         unless @page.valid?
           message :object => @page
           raise 'render'
@@ -81,12 +87,39 @@ class PagesController < ApplicationController
     redirect_to :action => 'show', :id => @page
   end
   
+  #over-writes old tags
+  def add_tags
+    @page = Page.find params[:id]
+    @page.tag_with(params[:new_tags])      
+    @page.save
+    redirect_to :action => 'show', :id => @page
+  end
+  
+  #show by tag
+  def tagged
+ # @page.title = "search by tag"
+#    @pages = if tag_name = params[:id]
+ #     Tag.find_by_name(tag_name).tagged
+    #if tag_name = params[:id]
+     # @pages = Tag.find_by_name(tag_name).tagged
+    if tag_name = params[:id]
+      if Tag.find_by_name(tag_name)
+        @pages = Tag.find_by_name(tag_name).tagged
+      end
+    end
+  end
+  
+  
+  
   protected
   
     # TODO: this is so complicated! can this be made more simple?
     def breadcrumbs
       return unless params[:id]
       @page = Page.find_by_id params[:id]
+      
+      if @page ##added jb
+      
       if params[:from]
         if logged_in? and params[:from] == 'people' and params[:from_id] == current_user.to_param
           add_crumb 'me', me_url
@@ -117,7 +150,22 @@ class PagesController < ApplicationController
         end
       end
       # this is silly
-      add_crumb @page.title, request.request_uri
+      add_crumb @page.title, request.request_uri #temporarily commented out. jb.
+    end #added jb
     end
+
+
+
+   #def tag
+    # @page = Page.find(params[:id])
+     #@page.tag_with(params[:tag_list])
+     #@page.save
+     #redirect_to :action => 'show', :id => @page
+     
+     #render :partial => "content",
+      # :locals => {:contact => contact, :form_id => params[:form_id]}
+   
+   #end
+
 
 end

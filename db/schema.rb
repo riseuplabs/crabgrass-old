@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 24) do
 
   create_table "avatars", :force => true do |t|
     t.column "data", :binary
@@ -116,6 +116,16 @@ ActiveRecord::Schema.define(:version => 23) do
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
   add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
+
+  create_table "taggings", :force => true do |t|
+    t.column "taggable_id", :integer
+    t.column "tag_id", :integer
+    t.column "taggable_type", :string
+  end
+
+  create_table "tags", :force => true do |t|
+    t.column "name", :string
+  end
 
   create_table "user_participations", :force => true do |t|
     t.column "page_id", :integer

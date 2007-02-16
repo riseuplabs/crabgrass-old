@@ -55,6 +55,10 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :title
   
+  ## added for tagging. jb
+  acts_as_taggable
+
+
   ### callbacks ###
   
   before_create do
