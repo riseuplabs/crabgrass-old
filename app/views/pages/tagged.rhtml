@@ -1,0 +1,21 @@
+<h2>
+Pages tagged <%= params[:id] %>
+</h2>
+<div class="page_list">
+<table>
+
+<% if @pages #&& !@pages.blank
+ %>
+<% @pages.each do |p| %>
+<tr>
+  <td><%= page_icon(p.type) %></td> 
+  <td><%= link_to p.title, page_url(p) %></td>
+  <td><%= link_to(time_ago_in_words(p.updated_at) + " ago", page_url(p)) if p.updated_at%></td> 
+</tr>
+<% end %>
+<% else %>
+<tr><td colspan="10">There are no pages with this tag.</td></tr>
+<% end %>
+</table>
+</div>
+
