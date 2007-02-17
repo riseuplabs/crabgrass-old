@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 24
 #
 # Table name: users
 #
@@ -15,6 +15,7 @@
 #  display_name              :string(255)   
 #  time_zone                 :string(255)   
 #  language                  :string(5)     
+#  avatar_id                 :integer(11)   
 #
 
 # for authenticated_user

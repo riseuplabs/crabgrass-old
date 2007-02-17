@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 24
 #
 # Table name: groups
 #
@@ -13,6 +13,7 @@
 #  council        :boolean(1)    
 #  created_at     :datetime      
 #  updated_at     :datetime      
+#  avatar_id      :integer(11)   
 #
 
 class Committee < Group

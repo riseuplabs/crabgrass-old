@@ -1,19 +1,22 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 24
 #
 # Table name: pages
 #
-#  id            :integer(11)   not null, primary key
-#  title         :string(255)   
-#  created_at    :datetime      
-#  updated_at    :datetime      
-#  happens_at    :datetime      
-#  resolved      :boolean(1)    
-#  public        :boolean(1)    
-#  created_by_id :integer(11)   
-#  updated_by_id :integer(11)   
-#  tool_id       :integer(11)   
-#  tool_type     :string(255)   
+#  id              :integer(11)   not null, primary key
+#  title           :string(255)   
+#  created_at      :datetime      
+#  updated_at      :datetime      
+#  happens_at      :datetime      
+#  resolved        :boolean(1)    
+#  public          :boolean(1)    
+#  needs_attention :boolean(1)    
+#  created_by_id   :integer(11)   
+#  updated_by_id   :integer(11)   
+#  summary         :string(255)   
+#  controller      :string(255)   
+#  tool_id         :integer(11)   
+#  tool_type       :string(255)   
 #
 
 #require 'page_tool'
