@@ -122,8 +122,8 @@ ActiveRecord::Schema.define(:version => 24) do
   add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
 
   create_table "taggings", :force => true do |t|
-    t.column "taggable_id", :integer
-    t.column "tag_id", :integer
+    t.column "taggable_id",   :integer
+    t.column "tag_id",        :integer
     t.column "taggable_type", :string
   end
 

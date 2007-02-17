@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
     page = Page.make :invite_to_join_group, :user => user, :group => group, :from => current_user
     if page.save
       message :success => "Invitation sent"
-      redirect_to group_url(:action => 'edit')
+      redirect_to group_url(:action => 'edit', :id => group)
     else
       message :object => page
       render :action => 'edit'
@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
     user = User.find_by_login params[:login]
     group.users.delete(user)
     message :success => 'User %s removed from group %s'.t % [user.login, group.name]
-    redirect_to group_url(:action => 'edit')
+    redirect_to group_url(:action => 'edit', :id => group)
   end
   
   # post only
@@ -76,7 +76,7 @@ class GroupsController < ApplicationController
     page = Page.make :request_to_join_group, :user => current_user, :group => group
     if page.save
       message :success => 'Your request to join this group has been sent.'
-      redirect_to group_url(:action => 'show')
+      redirect_to group_url(:action => 'show', :id => group)
     else
       message :object => page
       render :action => 'show'

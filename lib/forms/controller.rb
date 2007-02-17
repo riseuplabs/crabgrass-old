@@ -47,7 +47,7 @@ class Forms::Controller < ApplicationController
       object.page = params[:page] if object.respond_to? :page=
       instance_variable_set("@#{object_name.id2name}", object);
     end
-    @page = @params[:page]
+    @page = params[:page]
     @forward = params[:commit] == @forward_str
     @back    = params[:commit] == @back_str
     @finish  = params[:commit] == @finish_str

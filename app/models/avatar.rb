@@ -1,9 +1,6 @@
-
-
-#class Avatar < FlexImage::Model
-class Avatar < ActiveRecord::Base
+class Avatar < FlexImage::Model
   # limit image size to 96 x 96
-  #pre_process_image :size => '96x96', :crop => true
+  pre_process_image :size => '96x96', :crop => true
   
   def self.pixels(size)
     case size

@@ -46,7 +46,7 @@ class PageStork
         r.name = 'Add user %s to your contact list?' / user.login
       end
     end
-    page.add(user)
+    page.add(contact)
   end
   
   

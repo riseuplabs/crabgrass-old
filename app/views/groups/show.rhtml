@@ -1,7 +1,7 @@
 <div class='profile'>
 <table>
 <tr>
-  <td rowspan='3'><%= avatar_for @group, 'large' %>
+  <td rowspan='3'><%= avatar_for @group, 'large' %></td>
   <td><h1><%=h @group.name %></h1></td>
 </tr>
 <tr>
@@ -9,9 +9,9 @@
      <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
 
 <% if current_user.groups.include?(@group) %>
-  <%= link_to 'leave group', :controller => 'me', :action => 'leave_group', :id => @group %>
+  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group) %>
 <% else %>
-  <%= link_to 'join group', :controller => 'me', :action => 'join_group', :id => @group %>
+  <%= post_to 'join group', group_url(:action => 'join_group', :id => @group) %>
 <% end %>
      
   </td>

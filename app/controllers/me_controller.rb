@@ -14,21 +14,7 @@ class MeController < ApplicationController
     render :action => 'index'
   end
 
-  def add_contact
-    @user = current_user
-    other = User.find_by_login params[:id]
-    current_user.contacts << other
-    render :action => 'index'
-  end
-  
-  def remove_contact
-    @user = current_user
-    other = User.find_by_login params[:id]
-    current_user.contacts.delete(other)
-    render :action => 'index'
-  end
-  
-  
+
   def edit
     @user = current_user
     if request.post? 
@@ -62,7 +48,7 @@ class MeController < ApplicationController
   def breadcrumbs
     @user = current_user
     add_crumb 'me', me_url(:action => 'index')
-    unless ['show','index'].include? params[:action]
+    unless ['show','index'].include?(params[:action])
       add_crumb params[:action], me_url(:action => params[:action])
     end
   end

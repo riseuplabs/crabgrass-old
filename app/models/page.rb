@@ -101,9 +101,10 @@ class Page < ActiveRecord::Base
   # if a controller is not specifically defined for this page, 
   # then we derive the controller from the tool type.
   def controller
-    return 'page' if tool.nil?
+    return read_attribute('controller') if read_attribute('controller')
+    return 'pages' if tool.nil?
 	return tool.controller if tool.respond_to? 'controller'
-	return tool_type.gsub(/^.*::/,'').underscore.pluralize
+	return tool.type.gsub(/^.*::/,'').underscore.pluralize
   end
   
   def self.make(function,options={})

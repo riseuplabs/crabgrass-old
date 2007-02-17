@@ -1,6 +1,9 @@
 class PeopleController < ApplicationController
-
   model :user
+
+  verify :method => :post,
+    :only => [ :add_contact, :remove_contact],
+    :redirect_to => { :action => :list }
 
   def index
     list
@@ -63,6 +66,27 @@ class PeopleController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     redirect_to :action => 'list'
+  end
+  
+  # post only
+  def add_contact
+    contact = User.find_by_login params[:id]
+    page = Page.make :request_for_contact, :user => current_user, :contact => contact
+    if page.save
+      message :success => 'Your contact request has been sent to %s.' / contact.login
+      redirect_to person_url(:action => 'show', :id => contact)
+    else
+      message :object => page
+      render :action => 'show'
+    end
+  end
+  
+  # post only  
+  def remove_contact
+    other = User.find_by_login params[:id]
+    current_user.contacts.delete(other)
+    message :success => '%s has been removed from your contact list.' / other.login
+    redirect_to me_url
   end
   
   protected
