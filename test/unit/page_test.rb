@@ -61,17 +61,41 @@ class PageTest < Test::Unit::TestCase
     @page.save
     assert user.pages_updated.first == @page
     
-    ## @page.users << user
-    ## ^^^^^^^^^^^^^^^^^^^^ doesn't work until 1.2, instead we must:
-    UserParticipation.create :user => user, :page => @page
-    assert @page.users.include?(user)
-    assert user.pages.include?(@page)
-    @page.save
-    @page.reload
-    assert @page.users.include?(user)
-    assert user.pages.include?(@page)
   end
-   
+
+  def test_participations
+    user = User.find 3
+	group = Group.find 3
+    
+    # page = build_page :title => 'zebra'
+    #        ^^^^^ this doesn't work
+    # assertions only work if the page is saved first.
+    
+    page = create_page :title => 'zebra'
+        
+	page.add(user, :star => true)
+	page.add(group)
+    
+    assert page.users.include?(user), 'page must have an association with user'
+    assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'    
+    assert page.groups.include?(group), 'page must have an association with group'
+    assert user.pages.include?(page), 'user must have an association with page'
+    assert group.pages.include?(page), 'group must have an association with page'
+    
+    page.save
+    page.reload
+    assert page.users.include?(user), 'page must have an association with user'
+    assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'
+    assert page.groups.include?(group), 'page must have an association with group'
+    assert user.pages.include?(page), 'user must have an association with page'
+    assert group.pages.include?(page), 'group must have an association with page'
+	
+	page.remove(user)
+	page.remove(group)
+    assert !page.users.include?(user), 'page must NOT have an association with user'
+    assert !page.groups.include?(group), 'page must NOT have an association with group'
+	
+  end
   
   def test_page_links
     p1 = create_page :title => 'red fish'
@@ -93,7 +117,6 @@ class PageTest < Test::Unit::TestCase
     #p1.pages << p3
     #p1.save
     #assert_equal 2, p1.pages.length, 'shouldnt be able to add same link twice'
-    
   end
 
   def test_associations
@@ -101,8 +124,14 @@ class PageTest < Test::Unit::TestCase
   end
   
   protected
-    def create_page(options = {})
-      defaults = {:title => 'untitled page', :public => false}
-      Page.create(defaults.merge(options))
-    end
+  
+  def create_page(options = {})
+    defaults = {:title => 'untitled page', :public => false}
+    Page.create(defaults.merge(options))
+  end
+  
+  def build_page(options = {})
+    defaults = {:title => 'untitled page', :public => false}
+    Page.new(defaults.merge(options))
+  end
 end

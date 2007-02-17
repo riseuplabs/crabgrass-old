@@ -113,4 +113,17 @@ class User < AuthenticatedUser
     true
   end
   
+  def add_page(page, attributes)
+    #page.users << self
+    #page.user_participations.pop
+    # ^^^ super hacky way to remove the last user participation created by users <<
+    # but what else can we do? users << self does accept attributes, but user_participations.build
+    # doesn't update the pages.users until it is saved, which seems like a bug.
+    page.user_participations.create attributes.merge(:page_id => page.id, :user_id => id)
+  end
+  
+  def remove_page(page)
+    page.users.delete(self)
+  end
+
 end

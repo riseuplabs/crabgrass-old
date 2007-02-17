@@ -16,7 +16,7 @@
 #  tool_type     :string(255)   
 #
 
-require 'page_tool'
+#require 'page_tool'
 
 class Page < ActiveRecord::Base
   
@@ -60,12 +60,12 @@ class Page < ActiveRecord::Base
 
 
   ### callbacks ###
-  
-  before_create do
+
+  def before_create
     self.created_by = User.current if User.current
   end
  
-  before_save do
+  def before_save
     self.updated_by = User.current if User.current
   end
   
@@ -79,15 +79,35 @@ class Page < ActiveRecord::Base
 
   ### methods ###
   
+  # add a group or user participation to this page
+  def add(entity, attributes={})
+    entity.add_page(self,attributes)
+    self
+  end
+    
+  # remove a group or user participation from this page
+  def remove(entity)
+    entity.remove_page(self)
+  end
+  
   # return the page type, in underscore form, without module name.
-  def type
-    return tool_type.gsub(/^.*::/,'').underscore if tool_type
-    return 'page' # default
-  end
+  #def type
+  #  return  if tool_type
+  #  return 'page' # default
+  #end
   
-  # underscore name of the controller for the page's type
+  # returns the controller for this page.
+  # the controller name is in lowercase/underscore format.
+  # if a controller is not specifically defined for this page, 
+  # then we derive the controller from the tool type.
   def controller
-    self.type.pluralize
+    return 'page' if tool.nil?
+	return tool.controller if tool.respond_to? 'controller'
+	return tool_type.gsub(/^.*::/,'').underscore.pluralize
   end
   
+  def self.make(function,options={})
+    PageStork.send(function, options)
+  end
+
 end

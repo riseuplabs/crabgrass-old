@@ -4,6 +4,7 @@ class CreateVotes < ActiveRecord::Migration
       t.column :possible_id, :integer
       t.column :user_id, :integer
       t.column :value, :integer
+      t.column :comment, :string
     end
   end
 

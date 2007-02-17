@@ -21,6 +21,8 @@ ActionController::Routing::Routes.draw do |map|
   map.people 'people/:action/:id', :controller => 'people'
   map.groups 'groups/:action/:id', :controller => 'groups'
   map.me 'me/:action/:id', :controller => 'me'
+
+  map.group 'groups/:action/:id', :controller => 'groups'
   
   #map.avatar 'avatar/:viewable_type/:viewable_id/:size',
   #   :controller => 'avatars', :action => 'show', :viewable_id => /\d+/,

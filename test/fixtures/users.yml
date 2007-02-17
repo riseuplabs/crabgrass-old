@@ -57,8 +57,8 @@ gerrard:
   login: <%=login%>
   display_name: <%=login%>!
   email: <%=login%>@riseup.net
-  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
-  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
+  salt: <%# salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
+  crypted_password: <%# Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
   created_at: <%= 5.days.ago.to_s :db %>
 <% end %>
   
@@ -69,8 +69,8 @@ gerrard:
   login: <%=login%>
   display_name: <%=login%>!
   email: <%=login%>@riseup.net
-  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
-  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
+  salt: <%# salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
+  crypted_password: <%# Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
   created_at: <%= 5.days.ago.to_s :db %>
 <% end %>
   

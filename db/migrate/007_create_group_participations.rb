@@ -3,7 +3,7 @@ class CreateGroupParticipations < ActiveRecord::Migration
     create_table :group_participations do |t|
 	  t.column :group_id, :integer
 	  t.column :page_id, :integer
-	  t.column :view_only, :boolean
+	  t.column :access, :integer
 	end
   end
 

@@ -1,13 +1,15 @@
 class GroupsController < ApplicationController
 
+  before_filter :find_group
+  
   def index
     list
     render :action => 'list'
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
+  verify :method => :post,
+    :only => [ :destroy, :create, :add_user, :remove_user, :join_group, :leave_group ],
+    :redirect_to => { :action => :list }
 
   def list
     @group_pages, @groups = paginate :groups, :per_page => 10
@@ -34,29 +36,66 @@ class GroupsController < ApplicationController
   def edit
     @group = Group.find(params[:id])
     if request.post? 
-      @group.update_attributes(params[:group])
-      
-      logins = params[:login].split  /[,\s]/
-      for user in logins
-          @new_user = User.find(:all, :conditions =>["login = ?",user])
-	  @group.users << @new_user unless @group.users.find_by_login user
-        if @new_user.nil?
-	   flash[:notice] = 'User %s does not exist.' %user
+      @group.update_attributes(params[:group]) 
+      # for now, disable mass-add. see add_user instead
+      #logins = params[:login].split  /[,\s]/
+      #for user in logins
+      #  user = User.find_by_login user
+      #  @group.users << @new_user unless @group.users.find_by_login user
+      #  if @new_user.nil?
+	  # flash[:notice] = 'User %s does not exist.' %user
 	end
-# (@new_user and not 
-# @group.users.include?(@new_user))
-      end
- #   flash_error 'group' #???
-      flash[:notice] = 'Group was successfully updated.'
-      redirect_to :action => 'show', :id => @group
-    end
   end
 
+  # post only
+  def add_user
+    group = Group.find params[:id]
+    user = User.find_by_login params[:login]
+    page = Page.make :invite_to_join_group, :user => user, :group => group, :from => current_user
+    if page.save
+      message :success => "Invitation sent"
+      redirect_to group_url(:action => 'edit')
+    else
+      message :object => page
+      render :action => 'edit'
+    end
+  end
+  
+  # post only
+  def remove_user
+    group = Group.find params[:id]
+    user = User.find_by_login params[:login]
+    group.users.delete(user)
+    message :success => 'User %s removed from group %s'.t % [user.login, group.name]
+    redirect_to group_url(:action => 'edit')
+  end
+  
+  # post only
+  def join_group
+    group = Group.find(params[:id]) 
+    page = Page.make :request_to_join_group, :user => current_user, :group => group
+    if page.save
+      message :success => 'Your request to join this group has been sent.'
+      redirect_to group_url(:action => 'show')
+    else
+      message :object => page
+      render :action => 'show'
+    end
+  end
+  
+  # post only
+  def leave_group
+    group = Group.find(params[:id])
+    current_user.groups.delete(group)
+    message :success => 'You have been removed from %s' / group.name
+    redirect_to me_url
+  end
+
+  
   def destroy
     Group.find(params[:id]).destroy
     redirect_to :action => 'list'
-  end
-  
+  end  
   
   def avatar
     if request.post?
@@ -79,5 +118,9 @@ class GroupsController < ApplicationController
     unless ['show','index','list'].include? params[:action]
       add_crumb params[:action], groups_url(:action => params[:action], :id => @group)
     end
+  end
+  
+  def find_group
+    @group = Group.find_by_id params[:id]
   end
 end

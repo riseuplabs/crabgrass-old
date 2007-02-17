@@ -1,7 +1,7 @@
 class CreatePolls < ActiveRecord::Migration
   def self.up
     create_table :polls do |t|
-      # t.column :name, :string
+      t.column :type, :string
     end
   end
 
@@ -9,3 +9,5 @@ class CreatePolls < ActiveRecord::Migration
     drop_table :polls
   end
 end
+
+

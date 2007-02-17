@@ -28,27 +28,6 @@ class MeController < ApplicationController
     render :action => 'index'
   end
   
-  # this is just a permissionless stub until something 
-  # real exists.
-  def join_group
-    #@user = current_user
-    #@user.groups << Group.find(params[:id])
-    page = Page.new
-    group = Group.find(params[:id])
-    page.title = 'User %s join request'.t % current_user.login
-    poll = Poll::Poll.new
-    page.tool = poll
-    poll.possibles.create(:name =>'Add user %s to group %s'.t % [current_user.login, group.name])
-    page.save!
-    GroupParticipation.create(:page_id => page.id, :group_id => group.id)
-    render :action => 'index'
-  end
-  
-  def leave_group
-    @user = current_user
-    @user.groups.delete(Group.find(params[:id]))
-    render :action => 'index'
-  end
   
   def edit
     @user = current_user

@@ -26,6 +26,10 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  def debug(object)
+    puts object.to_yaml
+  end
+  
   # make sure the associations are at least defined properly
   def check_associations(m)
     @m = m.new

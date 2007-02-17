@@ -63,4 +63,20 @@ class Group < ActiveRecord::Base
   # validations
   
   validates_presence_of :name
+  
+  
+  # methods
+  
+  def add_page(page, attributes)
+    #page.groups << self
+    #page.group_participations.pop
+    # ^^^ super hack, see note in User.add_page
+    #page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
+    page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
+  end
+
+  def remove_page(page)
+    page.groups.delete(self)
+  end
+  
 end
