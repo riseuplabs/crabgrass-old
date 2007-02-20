@@ -1,10 +1,9 @@
-
-class PagesController < ApplicationController
+class PagesController < ToolsController
 
   in_place_edit_for :page, :title
   
   def show
-    @page = Page.find params[:id]
+    #@page = Page.find params[:id]
     #update_last_seen_at
     #(session[:topics] ||= {})[@topic.id] = Time.now.utc if logged_in?
     
@@ -67,7 +66,7 @@ class PagesController < ApplicationController
   end
   
   def add
-    @page = Page.find params[:id]
+    #@page = Page.find params[:id]
     if params[:commit] == 'add group'
       group = Group.find_by_name params[:name]
       if group
@@ -87,12 +86,11 @@ class PagesController < ApplicationController
     redirect_to :action => 'show', :id => @page
   end
   
-  #over-writes old tags
   def add_tags
-    @page = Page.find params[:id]
-    @page.tag_with(params[:new_tags])      
+    tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
+    @page.tag_with(tags.uniq.join(' '))
     @page.save
-    redirect_to :action => 'show', :id => @page
+    redirect_to page_url(@page)
   end
   
   #show by tag
@@ -108,64 +106,5 @@ class PagesController < ApplicationController
       end
     end
   end
-  
-  
-  
-  protected
-  
-    # TODO: this is so complicated! can this be made more simple?
-    def breadcrumbs
-      return unless params[:id]
-      @page = Page.find_by_id params[:id]
-      
-      if @page ##added jb
-      
-      if params[:from]
-        if logged_in? and params[:from] == 'people' and params[:from_id] == current_user.to_param
-          add_crumb 'me', me_url
-        else
-          add_crumb params[:from], url_for(:controller => params[:from])
-          if params[:from_id]
-            if params[:from] == 'groups'
-              group = Group.find_by_id(params[:from_id])
-              text = group.name if group
-            elsif params[:from] == 'people'
-              text = params[:from_id]
-            end
-            if text
-              add_crumb text, url_for(:controller => params[:from], :id => params[:from_id], :action => 'show')
-            end
-          end
-        end
-      elsif @page
-        # figure out the first group or first user, and use that for breadcrumb.
-        if @page.groups.any?
-          add_crumb 'groups', groups_url
-          group = @page.groups.first
-          add_crumb group.name, groups_url(:action => 'show', :id => group)
-        elsif @page.created_by
-          add_crumb 'people', people_url
-          user = @page.created_by
-          add_crumb user.login, people_url(:action => 'show', :id => user)
-        end
-      end
-      # this is silly
-      add_crumb @page.title, request.request_uri #temporarily commented out. jb.
-    end #added jb
-    end
-
-
-
-   #def tag
-    # @page = Page.find(params[:id])
-     #@page.tag_with(params[:tag_list])
-     #@page.save
-     #redirect_to :action => 'show', :id => @page
-     
-     #render :partial => "content",
-      # :locals => {:contact => contact, :form_id => params[:form_id]}
-   
-   #end
-
 
 end

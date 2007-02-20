@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   # http://www.artofmission.com/articles/2006/10/12/nested-routes-using-map-resources
   map.full_page_path ':from/:from_id/:controller/:action/:id',
      :from => /groups|me|people|networks/,
-     :controller => /pages|texts|polls|events/,
+     :controller => /pages|texts|polls|events|requests/,
      :action => 'show'
 
   # so we can use named urls

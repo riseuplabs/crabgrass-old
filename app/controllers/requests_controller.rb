@@ -1,16 +1,18 @@
-
-class RequestController < ToolController
-  layout :page
-
+class RequestsController < ToolsController
   # inherited actions
   # destroy
   # breadcrumbs
+  
+  
   
   def show
     @request = @page.tool
   end
 
-  def new
+  def approve
   end
   
+  def reject
+  end
+    
 end

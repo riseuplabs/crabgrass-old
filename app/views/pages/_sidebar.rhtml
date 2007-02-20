@@ -38,7 +38,6 @@
    %>
 
 <p>
-<!--overwrites old tags -->
 <%= start_form_tag({:controller=>'pages',:action=>'add_tags',:id=>@page},{:id=>'tagging'}) %>
 <%= submit_button 'add tag', 'tagging' %>
 <%= text_field_tag 'new_tags' %>

@@ -69,4 +69,27 @@ class ApplicationController < ActionController::Base
     @breadcrumbs << [crumb_text,crumb_url]
   end
   
+  def page_url(page, options_override={})
+    options = {}
+    options[:controller] = page.controller || 'pages'
+    options[:id] = page
+    if params[:from]
+      options[:from] = params[:from]
+      options[:from_id] = params[:from_id]
+    elsif ['groups','people','networks'].include? params[:controller]
+      options[:from] = params[:controller]
+      options[:from_id] = params[:id]
+    elsif 'me' == params[:controller]
+      options[:from] = 'people'
+      options[:from_id] = current_user
+    elsif page.groups.any?
+      options[:from] = 'groups'
+      options[:from_id] = page.groups.first.id
+    elsif page.users.any?
+      options[:from] = 'people'
+      options[:from_id] = page.users.first.id
+    end
+    full_page_path_url options.merge(options_override)
+  end
+  
 end

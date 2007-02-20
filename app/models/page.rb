@@ -66,6 +66,8 @@ class Page < ActiveRecord::Base
 
   def before_create
     self.created_by = User.current if User.current
+    self.controller = find_controller
+    true
   end
  
   def before_save
@@ -99,19 +101,21 @@ class Page < ActiveRecord::Base
   #  return 'page' # default
   #end
   
-  # returns the controller for this page.
+  # returns the controller for the tool of this page.
   # the controller name is in lowercase/underscore format.
   # if a controller is not specifically defined for this page, 
   # then we derive the controller from the tool type.
-  def controller
-    return read_attribute('controller') if read_attribute('controller')
+  def find_controller
+    return controller if controller
     return 'pages' if tool.nil?
 	return tool.controller if tool.respond_to? 'controller'
-	return tool.type.gsub(/^.*::/,'').underscore.pluralize
+	return tool.type.to_s.gsub(/^.*::/,'').underscore.pluralize
   end
   
   def self.make(function,options={})
     PageStork.send(function, options)
   end
 
+
+  
 end

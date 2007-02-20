@@ -50,7 +50,7 @@ module ApplicationHelper
   # 
   def page_url(page, options_override={})
     options = {}
-    options[:controller] = page.controller
+    options[:controller] = page.controller || 'pages'
     options[:id] = page
     if params[:from]
       options[:from] = params[:from]

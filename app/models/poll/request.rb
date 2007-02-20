@@ -9,7 +9,10 @@ class Poll::Request < Poll::Poll
   def name=(value)
     possible.name = value
   end
-    
+  def name
+    possible.name
+  end
+  
   def approve(comment=nil)
     resolve 1, comment
     possible.action.execute
