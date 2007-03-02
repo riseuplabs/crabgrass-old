@@ -57,3 +57,5 @@ end
 class InsufficientPermission < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
+
+PAGE_TYPES = [Page::Discussion, Page::Poll, Page::Event, Page::Request, Page::Wiki].freeze
