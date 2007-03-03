@@ -1,4 +1,4 @@
-class RequestsController < ToolsController
+class Pages::RequestController < Pages::BaseController
   # inherited actions
   # destroy
   # breadcrumbs

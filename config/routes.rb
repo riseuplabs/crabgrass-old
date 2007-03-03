@@ -12,12 +12,15 @@ ActionController::Routing::Routes.draw do |map|
   # :defaults => {:file => nil},
   # :requirements => {:file => %r{[^/]+(\.[^/]+)?}}
   
-  # perhaps use nested routes instead
+  # perhaps use nested routes instead?
   # http://www.artofmission.com/articles/2006/10/12/nested-routes-using-map-resources
-  map.full_page_path ':from/:from_id/:controller/:action/:id',
-     :from => /groups|me|people|networks/,
-     :controller => /pages|texts|polls|events|requests/,
+  
+  for page in PAGE_TYPES
+    map.connect ":from/:from_id/#{page}/:action/:id",
+     :from => /groups|me|people|networks|places/,
+     :controller => "pages/#{page}",
      :action => 'show'
+  end
 
   # so we can use named urls
   map.people 'people/:action/:id', :controller => 'people'

@@ -1,4 +1,0 @@
-class PollsController < PagesController
-
-  
-end

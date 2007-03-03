@@ -10,6 +10,9 @@ RAILS_GEM_VERSION = '1.2.2'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+#PAGE_TYPES = ['Pages::Discussion', 'Pages::Poll', 'Pages::Event', 'Pages::Request', 'Pages::Wiki'].freeze
+PAGE_TYPES = %w(discussion poll event request wiki).freeze
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
   
@@ -19,8 +22,7 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   config.load_paths += %w(associations discussion).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
-
-
+  
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
@@ -58,4 +60,3 @@ class InsufficientPermission < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 
-PAGE_TYPES = [Page::Discussion, Page::Poll, Page::Event, Page::Request, Page::Wiki].freeze

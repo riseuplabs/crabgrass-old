@@ -1,9 +1,9 @@
 class CreateWikis < ActiveRecord::Migration
   def self.up
     create_table :wikis do |t|
-	  t.add_column :body, :text
-	  t.add_column :updated_at, :datetime
-	  t.add_column :user_id, :integer
+	  t.column :body, :text
+	  t.column :updated_at, :datetime
+	  t.column :user_id, :integer
     end
   end
 

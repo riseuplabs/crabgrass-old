@@ -9,8 +9,8 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-desc "Reload the development environment"
-task :reload => :environment do
+desc "Reload the development environment from scratch (tear down db, build it back up)"
+task :startover => :environment do
   ActiveRecord::Base.establish_connection(:development) 
   ActiveRecord::Base.connection.execute("SET FOREIGN_KEY_CHECKS = 0")
   puts "== Dropping Tables ========================================="
