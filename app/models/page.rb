@@ -57,7 +57,8 @@ class Page < ActiveRecord::Base
   ### callbacks ###
 
   def before_create
-    self.created_by = User.current if User.current
+    created_by = User.current if User.current
+    self.type = self.class.to_s # to work around bug in rails with namespaced models http://dev.rubyonrails.org/ticket/7630
     true
   end
  
@@ -91,4 +92,8 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
+  def new_tool
+    tool = model.create
+  end
+  
 end

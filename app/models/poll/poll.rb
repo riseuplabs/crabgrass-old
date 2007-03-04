@@ -11,7 +11,5 @@ class Poll::Poll < ActiveRecord::Base
     'WHERE possibles.poll_id = #{id}'
 
   has_many :pages, :as => :tool
-  def page
-    pages.first
-  end
+  def page; pages.first; end
 end

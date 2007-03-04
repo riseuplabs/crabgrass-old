@@ -10,7 +10,7 @@ class PostsController < ApplicationController
       @post.save!
       respond_to do |wants|
         wants.html {
-          redirect_to pagepath(@page, :anchor => @post.dom_id)
+          redirect_to page_url(@page, :anchor => @post.dom_id)
           # :paging => params[:paging] || '1')
         }
         wants.xml {
@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     flash[:bad_reply] = msg
     respond_to do |wants|
       wants.html {
-        redirect_to pagepath(@page, :anchor => 'reply-form')
+        redirect_to page_url(@page, :anchor => 'reply-form')
         #, :paging => params[:paging] || '1')
       }
       wants.xml {

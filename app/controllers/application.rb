@@ -59,9 +59,9 @@ class ApplicationController < ActionController::Base
   # TODO: use params to determine how we got here, and generate a page path
   # using that information. ie, if we are at /group/:group_id/page/:page_id
   # then create a path that is based on group and not on user.
-  def pagepath(page, options)
-    url_for({:controller => 'pages', :action => 'show', :id => page}.merge(options))
-  end
+  #def pagepath(page, options)
+  #  url_for({:controller => 'pages', :action => 'show', :id => page}.merge(options))
+  #end
   
   # a before filter to override by controllers
   def breadcrumbs; end

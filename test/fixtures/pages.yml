@@ -29,7 +29,7 @@ a:
   happens_at: <%= 2.days.from_now.to_s :db %>
   created_by_id: 5
   updated_by_id: 5
-  type: Pages::Discussion
+  type: PageType::Discussion
 #  tool_id: 1
 #  tool_type: Poll::Poll
 
@@ -42,7 +42,7 @@ b:
   happens_at: <%= 4.days.from_now.to_s :db %>
   created_by_id: 5
   updated_by_id: 5
-  type: Pages::Discussion
+  type: PageType::Discussion
 #  tool_id: 2
 #  tool_type: Poll::Poll
 
@@ -50,7 +50,7 @@ c:
   id: 3
   title: "gosh, it sure is windy"
   created_at: <%= 4.days.ago.to_s :db %>
-  type: Pages::Discussion
+  type: PageType::Discussion
   created_by_id: 5
   updated_by_id: 5
 

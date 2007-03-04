@@ -37,6 +37,6 @@
 <h1>pages</h1>
 
 <% @pages = @group.pages %>
-<%= render :partial => 'pages/list' %>
+<%= render :partial => 'page/list' %>
 
 <p><%= link_button 'new page', :controller => 'pages', :action => 'new', :group_id => @group %></p>

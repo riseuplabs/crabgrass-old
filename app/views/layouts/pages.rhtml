@@ -1,14 +1,17 @@
 <%= render :file => 'layouts/head', :locals => {:main_class => 'with_sidebar'} %>
+<div id="main" class="main_with_sidebar">
 
-    <div id="main" class="main_with_sidebar">
-      <div id="sidebar">
-        <%= render :partial => 'pages/sidebar' %>
-      </div>
+<div id="sidebar">
+<%= render :partial => 'page/sidebar' %>
+</div>
 
-      <%= display_messages %>
-      <div class='breadcrumbs'><%= link_to_breadcrumbs %></div>
-      <%= @content_for_layout %>
+<%= display_messages %>
 
-    </div> <!-- end main -->
+<div class='breadcrumbs'><%= link_to_breadcrumbs %></div>
+<h1 id='page_title'><%= in_place_editor_field 'page', 'title' %></h1>
+<%= @content_for_layout %>
 
+<%= render :partial => 'posts/list' %>
+
+</div> <!-- end main -->
 <%= render :file => 'layouts/foot' %>

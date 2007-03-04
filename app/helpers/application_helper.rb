@@ -45,11 +45,11 @@ module ApplicationHelper
   #end 
     
   def link_to_user(user)
-    link_to user.login, :controller => 'people', :action => 'show', :id => user
+    link_to user.login, :controller => '/people', :action => 'show', :id => user
   end
 
  def link_to_group(group)
-    link_to group.name, :controller => 'groups', :action => 'show', :id => group
+    link_to group.name, :controller => '/groups', :action => 'show', :id => group
   end
   #def user_path(user)
   #  url_for :controller => 'person', :action => 'show', :id => user
