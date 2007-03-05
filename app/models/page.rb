@@ -27,7 +27,7 @@ class Page < ActiveRecord::Base
 
   ### associations ###  
   
-  belongs_to :tool, :polymorphic => true
+  belongs_to :data, :polymorphic => true
   has_one :discussion
   
   # relationship of this page to users
@@ -92,8 +92,8 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
-  def new_tool
-    tool = model.create
-  end
+  #def new_tool
+  #  tool = model.create
+  #end
   
 end

@@ -1,4 +1,4 @@
-class Pages::Event < Page
+class Tool::Event < Page
   @@controller = 'events'
   @@model = 'event'
   @@icon = 'event.png'

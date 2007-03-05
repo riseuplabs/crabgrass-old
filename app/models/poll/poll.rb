@@ -1,5 +1,7 @@
 class Poll::Poll < ActiveRecord::Base
-  
+  has_many :pages, :as => :data
+  def page; pages.first; end
+    
   has_many :possibles
   def possible
     possibles.first || possibles.build
@@ -9,7 +11,4 @@ class Poll::Poll < ActiveRecord::Base
     'SELECT votes.* FROM votes ' +
     'JOIN possibles ON possibles.id = votes.possible_id ' +
     'WHERE possibles.poll_id = #{id}'
-
-  has_many :pages, :as => :tool
-  def page; pages.first; end
 end

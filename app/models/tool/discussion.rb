@@ -1,5 +1,5 @@
 
-class PageType::Discussion < Page
+class Tool::Discussion < Page
   @@controller = 'discussion'
   @@model = nil
   @@icon = 'bubble.png'

@@ -1,5 +1,5 @@
 class Wiki < ActiveRecord::Base
-  has_many :pages, :as => :tool
+  has_many :pages, :as => :data
   def page
     pages.first
   end

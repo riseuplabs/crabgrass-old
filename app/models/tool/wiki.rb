@@ -1,6 +1,6 @@
 require 'wiki'
 
-class PageType::Wiki < Page
+class Tool::Wiki < Page
   
   @@controller = 'wiki'
   @@model = Wiki
