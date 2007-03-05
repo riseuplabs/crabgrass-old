@@ -2,7 +2,7 @@
 # the display and editing of a particular page are handled
 # by the controllers in the pages directory
 
-class PageController < ApplicationController
+class PagesController < ApplicationController
   
   def new
     if request.get?
