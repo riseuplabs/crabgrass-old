@@ -19,10 +19,8 @@
 #  tool_type       :string(255)   
 #
 
-#require 'page_tool'
-
 class Page < ActiveRecord::Base
-  cattr_accessor :controller, :model, :icon, :type_name # to be set by subclasses
+  cattr_accessor :controller, :model, :icon # to be set by subclasses
   acts_as_taggable
 
   ### associations ###  
