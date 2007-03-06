@@ -20,7 +20,10 @@
 #
 
 class Page < ActiveRecord::Base
-  cattr_accessor :controller, :model, :icon # to be set by subclasses
+
+  # to be set by subclasses (ie tools)
+  class_attribute :controller, :model, :icon, :tool_type, :internal?
+  
   acts_as_taggable
 
   ### associations ###  
@@ -51,7 +54,8 @@ class Page < ActiveRecord::Base
   ### validations ###
   
   validates_presence_of :title
-
+  validates_associated :data
+  
   ### callbacks ###
 
   def before_create
@@ -74,7 +78,7 @@ class Page < ActiveRecord::Base
   end
 
   ### methods ###
-  
+    
   # add a group or user participation to this page
   def add(entity, attributes={})
     entity.add_page(self,attributes)

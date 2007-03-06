@@ -8,6 +8,20 @@ class ApplicationController < ActionController::Base
   
   before_filter :login_required, :breadcrumbs
 
+  def get_tool_class(tool_class_str)
+    # Module.const_get(tool_class_str)
+    # ^^^ why does't this work?! something to do with rails weird lazy loading?
+    # instead, we have the silliest looking case statement on earth:
+    pt = case tool_class_str
+      when 'Tool::TextDoc';    Tool::TextDoc
+      when 'Tool::Discussion'; Tool::Discussion
+      when 'Tool::Event';      Tool::Event
+      when 'Tool::RateMany';   Tool::RateMany
+    end
+    raise Exception.new('page type is not a subclass of page') unless pt.superclass == Page
+    return pt
+  end
+
   # a default success flash
   def flash_success(msg=nil)
     flash[:notice] = msg ? msg : _("Changes saved successfully.")

@@ -13,9 +13,11 @@
   <td rowspan="2" class="post-body" id="reply">
     
 <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-  <% url = url_for(:controller => '/posts', :action => 'create', :page_id => @page, :paging => @page.discussion.last_page) %>
+  <% url = url_for(:controller => '/posts', :action => 'create') %>
   <% form_for :post, :url => url do |f| -%>
     <%= f.text_area :body, :rows => 8, :cols => 60 %>
+    <%= hidden_field_tag('page_id', @page.id) %>
+    <%= hidden_field_tag('paging', @page.discussion.last_page) %>
     <%= hidden_field_tag('from', params[:from]) %>
     <%= hidden_field_tag('from_id', params[:from_id]) %>
     <br/>

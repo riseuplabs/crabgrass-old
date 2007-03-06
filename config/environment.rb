@@ -10,8 +10,8 @@ RAILS_GEM_VERSION = '1.2.2'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-#PAGE_TYPES = ['Pages::Discussion', 'Pages::Poll', 'Pages::Event', 'Pages::Request', 'Pages::Wiki'].freeze
 PAGE_TYPES = %w(discussion poll event request wiki).freeze
+
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
@@ -60,3 +60,10 @@ class InsufficientPermission < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 
+# pre load the tool classes
+Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
+  #require "#{RAILS_ROOT}/app/models/tool/#{}"
+  require toolfile
+end
+# static array of tool *classes*
+TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze

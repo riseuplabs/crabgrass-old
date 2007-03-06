@@ -14,8 +14,8 @@ class CreatePages < ActiveRecord::Migration
 	  t.column :type,            :string
 
 	  # polymorphic association
-	  t.column :tool_id, :integer
-	  t.column :tool_type, :string
+	  t.column :data_id, :integer
+	  t.column :data_type, :string
     end
   end
 

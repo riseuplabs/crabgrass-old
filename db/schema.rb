@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "updated_by_id",   :integer
     t.column "summary",         :string
     t.column "type",            :string
-    t.column "tool_id",         :integer
-    t.column "tool_type",       :string
+    t.column "data_id",         :integer
+    t.column "data_type",       :string
   end
 
   create_table "pictures", :force => true do |t|
@@ -168,12 +168,14 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "wiki_id",    :integer
     t.column "version",    :integer
     t.column "body",       :text
+    t.column "body_html",  :text
     t.column "updated_at", :datetime
     t.column "user_id",    :integer
   end
 
   create_table "wikis", :force => true do |t|
     t.column "body",       :text
+    t.column "body_html",  :text
     t.column "updated_at", :datetime
     t.column "user_id",    :integer
     t.column "version",    :integer

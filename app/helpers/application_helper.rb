@@ -25,12 +25,8 @@ module ApplicationHelper
     content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
   end
     
-  def page_icon(pagetype,size=16)
-    img = case pagetype
-      when 'poll'; 'check'
-      else; 'bubble'
-    end
-    image_tag "#{size}/#{img}.png", :size => "#{size}x#{size}"
+  def page_icon(page,size=16)
+    image_tag "#{size}/#{page.icon}", :size => "#{size}x#{size}"
   end
  
  #this function needs to go far far away

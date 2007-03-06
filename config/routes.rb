@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   for page in PAGE_TYPES
     map.connect ":from/:from_id/#{page}/:action/:id",
      :from => /groups|me|people|networks|places/,
-     :controller => "pages/#{page}",
+     :controller => "tool/#{page}",
      :action => 'show'
   end
 

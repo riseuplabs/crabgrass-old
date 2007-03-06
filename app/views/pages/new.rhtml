@@ -2,31 +2,39 @@
 
 <%= start_form_tag :action => 'new' %>
 
-title: <%= text_field 'page', 'title' %>
-
+<p>
+<b>title</b><br/>
+<%= text_field 'page', 'title', :size => 30 %>
+<p>
 
 <p>
+<b>groups</b><br/>
 <% if params[:group_id] and (group=Group.find_by_id(params[:group_id])) %>
-  group: <b><%=h group.name %></b>
-  <%= hidden_field_tag 'group_id', group.id %>
+<b><%=h group.name %></b>
+<%= hidden_field_tag 'group_id', group.id %>
 <% else %>
-  group: <b><%= text_field_tag 'group_name' %></b>
+<b><%= text_field_tag 'group_name', '', :size => 30 %></b>
 <% end %>
 </p>
+
+<!--
 <p>
 <label><%= check_box_tag 'announce', '1', false %>  announce this page to everyone in this group</label>
 </p>
+-->
 
 <p>
-Eventually, here you will select the page type (ie poll, decision, text, discussion, event, tasklist, etc).
+  <b>page type</b><br/>
+  <%= select_tag('page_type', options_for_select(page_type_options, params['page_type']), :size => page_type_options.size) %>
 </p>
+
 <p>
-
-Tags:
-
-<%= text_field_tag 'tag_list' %>
-
-
+<b>tags</b><br/>
+<%= text_field_tag 'tag_list', '', :size => 30 %>
 </p>
-  <%= submit_tag "Create" %>
+
+<%= submit_tag "Create page" %>
 <%= end_form_tag %>
+
+<%= debug params %>
+<%= debug @page %>

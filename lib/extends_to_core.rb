@@ -50,4 +50,21 @@ ActiveRecord::Base.class_eval do
   def dom_id
     [self.class.name.downcase.pluralize.dasherize, id] * '-'
   end
+  
+  # used by Page
+  def self.class_attribute(*keywords)
+    for word in keywords
+      word = word.id2name
+      module_eval <<-"end_eval"
+      def self.#{word}(value=nil)
+        @#{word.sub '?',''} = value if value
+        @#{word.sub '?',''}
+      end
+      def #{word}
+        self.class.#{word.sub '?',''}
+      end
+      end_eval
+    end
+  end
+
 end

@@ -1,7 +1,7 @@
 # super class controller for all page types
 
 class Tool::BaseController < ApplicationController
-  layout 'pages'
+  layout 'tool'
   in_place_edit_for :page, :title
   append_before_filter :fetch_discussion
     

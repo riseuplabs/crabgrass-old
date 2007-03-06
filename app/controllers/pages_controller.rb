@@ -5,29 +5,29 @@
 class PagesController < ApplicationController
   
   def new
-    if request.get?
-      @page = Page.new
-    elsif request.post?
-      create
+    return @page = Page.new if request.get?
+    begin
+      @page = create_new_page
+      if @page.save
+        redirect_to page_url(@page)
+      else
+        message :object => @page
+      end
+    rescue Exception => exc
+      message :error => exc.to_s
     end
   end
   
-  def create
-    groups = get_groups
-    users  = get_users
+  def create_new_page
+    groups    = get_groups
+    users     = get_users
     page_type = get_page_type
-    return if groups.nil? or users.nil? or page_type.nil?
     
     @page = page_type.new params[:page].merge({:created_by_id => current_user.id})
-    @page.new_tool
-    groups.each{|g| @page.add(g) }
-    users.each{|u| @page.add(u) }
+    groups.each{|g| @page.add(g) } if groups
+    users.each {|u| @page.add(u) }
     @page.tag_with(params[:tag_list])
-    if @page.save
-      redirect_to page_url(@page)
-    else
-      message :object => @page
-    end
+    @page
   end
  
   def tagged
@@ -41,14 +41,15 @@ class PagesController < ApplicationController
   protected
   
   def get_groups
-    return [] unless params[:group_name].any?
-    group = Group.find_by_name params[:group_name]
-    if group.nil?
-      message :error => 'no such group'
-      return nil
+    if params[:group_name].any?
+      group = Group.find_by_name params[:group_name]
+      raise Exception.new('no such group %s' % params[:group_name]) if group.nil?
+      [group]
+    elsif params[:group_id].any?
+      group = Group.find_by_id params[:group_id]
+      raise Exception.new('no such group') if group.nil?
+      [group]
     end
-    group = Group.find_by_id params[:group_id]
-    [group]
   end
   
   def get_users
@@ -56,12 +57,19 @@ class PagesController < ApplicationController
   end
   
   def get_page_type
-    begin
-      klass = get_const(params['page_type'])
-      return klass if klass.is_a? Page
-    rescue
-      return nil
-    end
+    raise Exception.new('page type required') unless params['page_type']
+    return get_tool_class(params['page_type'])
+    # Module.const_get(params['page_type'])
+    # ^^^ why does't this work?! something to do with rails weird lazy loading?
+    # instead, we have the silliest looking case statement on earth:
+#    pt = case params['page_type']
+#      when 'Tool::Wiki';       Tool::Wiki
+#      when 'Tool::Discussion'; Tool::Discussion
+#      when 'Tool::Event';      Tool::Event
+#      when 'Tool::RateMany';   Tool::RateMany
+#    end
+#    raise Exception.new('page type is not a subclass of page') unless pt.superclass == Page
+#    return pt
   end
   
 end
