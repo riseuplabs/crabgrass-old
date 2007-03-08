@@ -1,7 +1,7 @@
 
 class Tool::Discussion < Page
   controller 'discussion'
-  icon 'chat.png'
+  icon 'bubbles.png'
   tool_type 'discussion'
 end
 

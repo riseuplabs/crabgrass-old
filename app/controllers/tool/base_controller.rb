@@ -3,7 +3,7 @@
 class Tool::BaseController < ApplicationController
   layout 'tool'
   in_place_edit_for :page, :title
-  append_before_filter :fetch_discussion
+  append_before_filter :fetch_discussion, :setup_view
     
   def fetch_discussion
     @page.discussion = Discussion.new unless @page.discussion
@@ -40,7 +40,12 @@ class Tool::BaseController < ApplicationController
   end
 
   protected
-  
+
+  # initializes default view variables. can be overwritten by subclasses.
+  def setup_view
+    @show_posts = true
+  end
+    
   # this is aweful, and should be refactored soon.
   def breadcrumbs
     return unless params[:id] and @page = Page.find_by_id(params[:id])

@@ -4,7 +4,7 @@
 <% if @pages %>
 <% @pages.each do |p| %>
 <tr>
-  <td><%= image_tag "16/#{p.icon}", :size => "16x16" %></td>
+  <td><%= page_icon p %></td>
   <td><%= link_to p.title, page_url(p) %></td>
   <td><%= link_to(time_ago_in_words(p.updated_at) + " ago", page_url(p)) if p.updated_at%></td>
   <td><%= p.tags.collect{|tag| (link_to tag.name, "/pages/tagged/" + tag.name)}.join(", ")%></td>

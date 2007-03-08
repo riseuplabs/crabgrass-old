@@ -6,6 +6,17 @@
   <%= stylesheet_link_tag 'main' %>
   <%= stylesheet_link_tag 'errors' %>
   <%= javascript_include_tag :defaults %>
+  <!-- local scripts -->
+  <script>
+    <%= yield :script %>
+  </script>  
+  <!-- local styles -->
+  <style>
+    <%= yield :style %>
+  </style>  
+  <!--[if lt IE 7.]>
+    <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+  <![endif]-->
 </head>
 <body class="<%=main_class||=''%>">
 

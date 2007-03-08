@@ -26,7 +26,8 @@ module ApplicationHelper
   end
     
   def page_icon(page,size=16)
-    image_tag "#{size}/#{page.icon}", :size => "#{size}x#{size}"
+    #image_tag "#{size}/#{page.icon}", :size => "#{size}x#{size}"
+    image_tag "pages/#{page.icon}", :size => "22x22"
   end
  
  #this function needs to go far far away
