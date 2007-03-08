@@ -1,0 +1,24 @@
+<% content_for :style do  %>
+div.wikitext {
+  background: #f6f6f6;
+  border: 1px solid #cfcfcf;
+  border-width: 0px 3px 3px 0px;
+  padding: 1em;
+  margin-right: 180px;
+}
+div.wikiedit {
+  margin: -0.5em;
+  text-align: right;
+}
+<% end %>
+
+<div class='wikitext'>
+<%= @wiki.body_html %>
+<div class='wikiedit'>
+<%= link_to 'edit', page_url(@page,:action=>'edit') %>
+<%= link_to 'versions', page_url(@page,:action=>'versions') %>
+</div>
+</div>
+
+<h1>comments</h1>
+

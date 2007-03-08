@@ -1,0 +1,14 @@
+<% @show_posts = false %>
+
+<div class='formbox'>
+
+  <% form_tag(page_url(@page,:action=>'edit')) do -%>
+   <%= text_area 'wiki', 'body', :size => '80x20' %>
+   <div>
+     <%= submit_tag 'Save' %>
+     <%= submit_tag 'Cancel' %>
+   </div>
+  <% end -%>
+
+</div>
+
