@@ -1,12 +1,112 @@
-  ## associations ###########################################
-  ## attributes ############################################# 
-  ## validations ############################################
-  ## callbacks ##############################################
-  ## methods ################################################
+PAGES
+===========================
+
+page flag behavior
+------------------
+
+What is a page? At the risk of creating a hybrid monster, we are attempting
+to make pages very flexible. 
+
+Pages are messages: pages show up like messages in an inbox. 
+They can be read or unread, flagged as important, sorted, filed away. When new
+messages are added, the page becomes unread.
+
+Pages are actions: pages might also require action. A page might require input from you
+or you might demand input from others. A page might expire or happen on a particular day.
+A page might be resolved or pending, such as an event or task or request.
+
+Pages are content: pages might contain static. You need to be able find the content again
+later. This could be through browsing a category or page type, searching, jumping around
+using tags, paging through an archive. You should also be able to discover content
+magically, based on who you know and what they find interesting.
+
+How do we use the page tags to achieve this?
+
+page flags:
+(this are flags of the page: every user experiences the same value for these flags)
+
+ needs_attention?
+   true: this page is of a page type that requires some response.
+   false: this *was* a page that required a response, but it no longer does.
+   nil: this page does not demand a response.
+   
+ resolved?
+   true: this page has been resolved.
+   false: this page needs to be resolved, but has not yet been.
+   nil: this page does not resolve.
+   
+user <> page flags:
+(these are flags on the user to page association: each user might have different ones)
+
+ watch?
+   true: the user wants to receive an update every time this page is updated.
+   false: the user does not want to receive an update, even if one sent by default.
+   nil: the user will receive updates only when sent by default.
+ 
+ recommend?
+   true: the user likes this content, and would recommends it to others
+   false: the user dislikes this content, and advises others to stay away.
+   nil: the user has no advice for others
+   
+ bookmarked?
+   true: the user would like to be able to find this page quickly.
+   false: the user doesn't care 
+   nil: same as false
+
+ resolved?
+   true: the user's needed interaction with this page has been resolved.
+   false: the user's needed interaction with this page is unresolved.
+   nil: the user does not need to interact with this page at all.
+
+
+user portals
+------------
+
+common filters
+ these filters are available on page portals on user page
+ - limit to a specific page type
+ - change the sort order
+ - full text search filter
+ - bookmarked?
+ - recommended?
+ - watched?
+ 
+what new?
+  an inbox of unread/unresolved pages, newest first.
+  - needs_attention? and not resolved?
+  - sorted by updated_at, newest first
+
+upcoming
+  pages which are unresolved and have a date for resolutions
+  - sorted by happens_at, oldest first
+  - 
+  
+tags
+  pages with a set of tags
+  - add and remove tag to filter
+  - sorted by updated_at, newest first.
+  
+recommended this week
+  pages which i might find interesting
+  - one of my contacts has recommended
+  - one of my peers has recommended
+  - sorted by interestingness
+  - limited to recently created pages  
+
+archived
+  allow you to search for any page you want.
+  - resolved pages
+  - full text search
+
+group portals
+-------------
 
 
 
-
+categories
+  a hierarchical folder-view of pages associated with this group.
+  
+  
 group vars
 -------------
 
@@ -44,3 +144,10 @@ scratch pad
 #   assert_nothing_raised("group.users.find should return user") do
 #      g.users.find(u.id)
 #    end
+
+
+  ## associations ###########################################
+  ## attributes ############################################# 
+  ## validations ############################################
+  ## callbacks ##############################################
+  ## methods ################################################
