@@ -1,0 +1,45 @@
+<% form_tag(page_url(@page,:action=>'vote')) do -%>
+
+
+  <%= submit_tag 'Vote' %>
+
+<ul class='possibles'>
+<% @poll.possibles.each do |possible| %>
+  <li style="background-color: #<%=possible.color%>" >
+    <div style="float:right; width:5em; text-align:right;">
+       <%= link_to "delete", :action=>'destroy_possible', :possible => possible, :id => @issue %>    
+    </div>
+    <h2><%=h possible.name %></h2>
+    <% vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user] %>
+    <% vote ||= Vote.new %>
+    <label><%= radio_button_tag "vote[#{possible.id}]", 'good', 'good' == vote.vote_str %>good</label>
+    <label><%= radio_button_tag "vote[#{possible.id}]", 'ok', 'ok' == vote.vote_str %>ok</label>
+    <label><%= radio_button_tag "vote[#{possible.id}]", 'bad', 'bad' == vote.vote_str %>bad</label>
+    <label><%= radio_button_tag "vote[#{possible.id}]", 'no', 'no' == vote.vote_str %>no!</label>
+    <%
+    allvotes = {}
+    possible.votes.each do |v|
+      (allvotes[v.value] ||= []) << h(v.user)
+    end
+    %>
+    <table>
+      <tr><td align='right'>good:</td><td><%= allvotes['good'].to_sentence if allvotes['good'] %></td></tr>
+      <tr><td align='right'>ok:</td>  <td><%= allvotes['ok'].to_sentence if allvotes['ok'] %>    </td></tr>
+      <tr><td align='right'>bad:</td> <td><%= allvotes['bad'].to_sentence if allvotes['bad'] %>  </td></tr>
+      <tr><td align='right'>no:</td>  <td><%= allvotes['no'].to_sentence if allvotes['no'] %>    </td></tr>
+    </table>
+  </li>
+<% end %>
+</ul>
+<% end %>
+
+
+<% form_tag(page_url(@page,:action=>'new_possible')) do -%>
+<ul class='commands'>
+<li>
+  Create a new possibility:</br>
+  <%= text_field 'possible','name' %>
+  <%= submit_tag "Create" %>
+</li>
+</ul>
+<% end %>

@@ -1,0 +1,12 @@
+<% @show_posts = false %>
+You are viewing version <%=params[:version]%>
+<%if params[:version] %>
+  <%=@wiki.versions.find_by_version(params[:version]).body_html%>
+<%else %>
+
+<ul>
+<% for version in @wiki.versions %>
+<li> <%=link_to ("version %s"%version.version, page_url(@page, :action => "versions", :version => version.version)) %> (diff), created <%= time_ago_in_words(version.updated_at) %> ago by <%= link_to_user(version.user_id) %></li>
+<% end %>
+</ul>
+<%end%>
