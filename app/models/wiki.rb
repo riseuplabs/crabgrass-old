@@ -10,6 +10,8 @@ class Wiki < ActiveRecord::Base
   #  pages.first
   #end
 
+  belongs_to :user
+  
   acts_as_versioned
   #self.non_versioned_columns << 'body_html'
   

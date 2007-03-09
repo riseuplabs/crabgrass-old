@@ -41,8 +41,14 @@ module ApplicationHelper
   #  link_to( (text||'&nbsp;'), :controller => 'pages', :action => 'show', :id => page)
   #end 
     
-  def link_to_user(user)
-    link_to user.login, :controller => '/people', :action => 'show', :id => user
+  def link_to_user(user_or_id)
+    if user_or_id.is_a? Integer
+      user = User.find_by_id user_or_id
+    else
+      user = user_or_id
+    end
+    
+    link_to user.login, :controller => '/people', :action => 'show', :id => user if user
   end
 
  def link_to_group(group)

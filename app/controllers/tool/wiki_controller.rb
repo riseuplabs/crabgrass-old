@@ -9,7 +9,7 @@ class Tool::WikiController < Tool::BaseController
   def edit
     if request.post?
       @wiki.body = params[:wiki][:body]
-      #@wiki.body_html = textilize(@wiki.body)
+      @wiki.user = current_user
       if @wiki.save
         redirect_to page_url(@page, :action => 'show')
       else
@@ -21,6 +21,8 @@ class Tool::WikiController < Tool::BaseController
   def preview
   
   end
+  
+  
   
   def save
   
