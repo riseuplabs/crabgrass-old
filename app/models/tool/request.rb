@@ -7,3 +7,4 @@ class Tool::Request < Page
    tool_type  'request'
    internal?   true
 end
+

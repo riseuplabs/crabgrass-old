@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  config.load_paths += %w(associations discussion).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths += %w(associations discussion actions).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
   
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)
@@ -67,3 +67,9 @@ Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
 end
 # static array of tool *classes*
 TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
+
+# pre load the actions (otherwise serialization won't work)
+Dir.glob("#{RAILS_ROOT}/app/models/actions/*.rb").each do |f|
+  require f
+end
+

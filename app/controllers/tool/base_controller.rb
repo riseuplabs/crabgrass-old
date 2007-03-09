@@ -53,7 +53,7 @@ class Tool::BaseController < ApplicationController
       if logged_in? and params[:from] == 'people' and params[:from_id] == current_user.to_param
         add_crumb 'me', me_url
       else
-        add_crumb params[:from], url_for(:controller => params[:from])
+        add_crumb params[:from], url_for(:controller => '/'+params[:from])
         if params[:from_id]
           if params[:from] == 'groups'
             group = Group.find_by_id(params[:from_id])
@@ -62,7 +62,7 @@ class Tool::BaseController < ApplicationController
             text = params[:from_id]
           end
           if text
-            add_crumb text, url_for(:controller => params[:from], :id => params[:from_id], :action => 'show')
+            add_crumb text, url_for(:controller => '/'+params[:from], :id => params[:from_id], :action => 'show')
           end
         end
       end

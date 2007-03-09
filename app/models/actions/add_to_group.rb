@@ -2,7 +2,7 @@
 # add a user to a group
 #
 
-class Actions::AddToGroup
+class Actions::AddToGroup < Actions::Base
 
   def initialize(user,group)
     @uid = user.id
@@ -12,7 +12,7 @@ class Actions::AddToGroup
   def execute
     group = Group.find @gid
 	user = User.find @uid
-    user.groups << group
+    group.users << user unless group.users.include? user
   end
   
 end

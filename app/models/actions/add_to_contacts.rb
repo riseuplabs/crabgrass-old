@@ -2,7 +2,7 @@
 # add a user to a group
 #
 
-class Actions::AddToContacts
+class Actions::AddToContacts < Actions::Base
 
   def initialize(user1,user2)
     @uid1 = user1.id

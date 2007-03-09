@@ -9,10 +9,10 @@ class PageStork
   def self.request_to_join_group(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
-    page = Page.new do |p|
+    page = Tool::Request.new do |p|
       p.title = 'Request to join %s from %s'.t % [group.name, user.login]
       p.needs_attention = true
-      p.tool = Poll::Request.new do |r|
+      p.data = Poll::Request.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
         r.name = 'Add user %s to group %s?'.t % [user.login, group.name]
       end
@@ -24,7 +24,7 @@ class PageStork
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
     from = options.delete(:from).cast! User
-    page = Page.new do |p|
+    page = Tool::Request.new do |p|
       p.title = 'Invitation to join group %s from user %s'.t % [group.name, from.login]
       p.needs_attention = true
       p.tool = Poll::Request.new do |r|
@@ -38,7 +38,7 @@ class PageStork
   def self.request_for_contact(options)
     user = options.delete(:user).cast! User
     contact = options.delete(:contact).cast! User
-    page = Page.new do |p|
+    page = Tool::Request.new do |p|
       p.title = 'Contact invitation from %s' / user.login
       p.needs_attention = true
       p.tool = Poll::Request.new do |r|

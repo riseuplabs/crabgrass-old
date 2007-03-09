@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 26) do
   create_table "votes", :force => true do |t|
     t.column "possible_id", :integer
     t.column "user_id",     :integer
+    t.column "created_at",  :datetime
     t.column "value",       :integer
     t.column "comment",     :string
   end

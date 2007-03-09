@@ -1,5 +1,9 @@
 class Poll::Request < Poll::Poll
   
+  def vote
+    votes.first
+  end
+    
   # a shortcut to the first possible
   def action=(value)
     possible.action = value
@@ -13,21 +17,21 @@ class Poll::Request < Poll::Poll
     possible.name
   end
   
-  def approve(comment=nil)
-    resolve 1, comment
+  def approve(options)
     possible.action.execute
+    resolve 1, options[:by], options[:comment]
   end
   
-  def reject(comment=nil)
-    resolve 0, comment
+  def reject(options)
+    resolve 0, options[:by], options[:comment]
   end
   
   private
   
-  def resolve(value,comment)
+  def resolve(value,user,comment)
     page.resolved = true
-    possible.create_vote(:user => current_user, :value => value, :comment => comment)
-    page.updated_by = current_user
+    possible.votes.create(:user => user, :value => value, :comment => comment)
+    page.updated_by = user
     page.save
   end
 
