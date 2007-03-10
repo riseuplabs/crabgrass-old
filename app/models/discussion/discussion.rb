@@ -5,16 +5,7 @@ class Discussion < ActiveRecord::Base
   ## associations ###########################################
   
   belongs_to :page
-  
-  # this is really a has_one
-  #has_many :pages, :as => :tool
-  #def page() pages.first; end
-  
-  # disabled has_many_polymorph stuff:
-  ## relationship with parent page
-  ## has_many :pages
-  ## ^^^ auto created by has_many_polymorph in Page
-  
+    
   # relationship with posts   
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy do
     def last
@@ -22,10 +13,7 @@ class Discussion < ActiveRecord::Base
     end
   end
 
-  #belongs_to :replied_by_user, :foreign_key => "replied_by", :class_name => "User"
-  
-  #has_many :voices, :class => 'User', :finder_sql => "SELECT DISTINCT * FROM users WHERE users.id IN (SELECT user_id FROM posts WHERE discussion_id = #{id})"
-  
+   
   ## attributes ############################################# 
 
   # to help with the create form
@@ -42,10 +30,7 @@ class Discussion < ActiveRecord::Base
 
   ## methods ################################################
   
-#  def voices
-#    posts.map { |p| p.user_id }.uniq.size
-#  end
-  
+ 
 #  def paged?() posts_count > 25 end
   
   def last_page

@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 26) do
 
   create_table "groups", :force => true do |t|
     t.column "name",           :string
+    t.column "full_name",      :string
     t.column "summary",        :string
     t.column "url",            :string
     t.column "type",           :string
@@ -136,9 +137,11 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "user_id",       :integer
     t.column "message_count", :integer,  :default => 0
     t.column "read_at",       :datetime
+    t.column "wrote_at",      :datetime
     t.column "access",        :integer
     t.column "watch",         :boolean
-    t.column "star",          :boolean
+    t.column "recommend",     :boolean
+    t.column "bookmarked",    :boolean
     t.column "resolved",      :boolean
   end
 

@@ -1,5 +1,5 @@
 class Tool::Event < Page
-  controller 'events'
+  controller 'event'
   model 'event'
   icon 'date.png'
   tool_type 'event'

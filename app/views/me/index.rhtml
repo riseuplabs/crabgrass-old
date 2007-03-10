@@ -1,7 +1,7 @@
 <div class='profile'>
 <table>
 <tr>
-  <td rowspan='2'><%= avatar_for @user, 'medium' %></td>
+  <td rowspan='2' align='right'><%= avatar_for @user, 'medium' %></td>
   <td><h1><%= @user.login %></h1></td>
 </tr>
 <tr>
@@ -9,30 +9,24 @@
      <%= link_to 'edit my profile', :action => 'edit' %>
   </td>
 </tr>
+<tr>
+  <td align='right'><b>Contacts:</b></td>
+  <td>
+    <% @user.contacts.each do |u| -%>
+    <%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
+    <% end -%>
+  </td>
+</tr>
+<tr>
+  <td align='right'><b>Groups:</b></td>
+  <td>
+    <% @user.groups.each do |g| -%>
+    <%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>
+    <% end -%>
+  </td>
+</tr>
 </table>
 </div>
-
-<p>
-<b>Groups:</b>
-<% @user.groups.each do |g| %>
-<%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>
-<% end %>
-
-<% if @user.groups.count == 0 %>
-<%= 'none'.t %>
-<% end %>
-</p>
-
-<p>
-<b>Contacts:</b>
-<% @user.contacts.each do |u| %>
-<%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
-<% end %>
-
-<% if @user.contacts.count == 0 %>
-<%= 'none'.t %>
-<% end %>
-</p>
 
 <%= Formy.tabs do |t|
   t.tab do 

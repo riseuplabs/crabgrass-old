@@ -16,7 +16,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
   end
 
   def new
@@ -26,26 +25,38 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(params[:group])
     if @group.save
-      flash[:notice] = 'Group was successfully created.'
-      redirect_to :action => 'list'
+      message :success => 'Group was successfully created.'
+      @group.users << current_user 
+      redirect_to :action => 'show', :id => @group
     else
+      message :object => @group
       render :action => 'new'
     end
   end
 
   def edit
-    @group = Group.find(params[:id])
     if request.post? 
-      @group.update_attributes(params[:group]) 
-      # for now, disable mass-add. see add_user instead
-      #logins = params[:login].split  /[,\s]/
-      #for user in logins
-      #  user = User.find_by_login user
-      #  @group.users << @new_user unless @group.users.find_by_login user
-      #  if @new_user.nil?
-	  # flash[:notice] = 'User %s does not exist.' %user
-	end
+      if @group.update_attributes(params[:group])
+        redirect_to :action => 'edit', :id => @group
+      else
+        message :object => @group
+      end
+    end
   end
+
+  def avatar
+    if request.post?
+      avatar = Avatar.create(:data => params[:image][:data])
+      if avatar.valid?
+        @group.avatar.destroy if @group.avatar
+        @group.avatar = avatar
+        @group.save
+        redirect_to :action => 'edit'
+      end
+    end
+    render :action => 'edit'
+  end
+
 
   # post only
   def add_user
@@ -90,25 +101,12 @@ class GroupsController < ApplicationController
     message :success => 'You have been removed from %s' / group.name
     redirect_to me_url
   end
-
   
   def destroy
     Group.find(params[:id]).destroy
     redirect_to :action => 'list'
   end  
-  
-  def avatar
-    if request.post?
-      avatar = Avatar.create(:data => params[:image][:data])
-      if avatar.valid?
-        @group.avatar.destroy if @group.avatar
-        @group.avatar = avatar
-        @group.save
-      end
-    end
-    render :action => 'edit'
-  end
-  
+    
   protected
   
   def breadcrumbs

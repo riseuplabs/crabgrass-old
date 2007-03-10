@@ -11,4 +11,11 @@ class Poll::Poll < ActiveRecord::Base
     'SELECT votes.* FROM votes ' +
     'JOIN possibles ON possibles.id = votes.possible_id ' +
     'WHERE possibles.poll_id = #{id}'
+
+  def votes_by_user(user)
+    Poll::Vote.find_by_sql ['SELECT votes.* FROM votes ' +
+      'JOIN possibles ON possibles.id = votes.possible_id ' +
+      'WHERE possibles.poll_id = ? AND votes.user_id = ?', id, user.id]
+  end
+
 end

@@ -11,7 +11,7 @@ class Actions::AddToContacts < Actions::Base
   
   def execute
     user1 = User.find @uid1
-	user2 = User.find @uid3
+	user2 = User.find @uid2
     user1.contacts << user2
   end
   

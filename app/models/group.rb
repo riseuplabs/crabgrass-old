@@ -14,9 +14,8 @@
 #  created_at     :datetime      
 #  updated_at     :datetime      
 #  avatar_id      :integer(11)   
-#
 
-#
+
 #  group.name       => string
 #  group.summary    => string
 #  group.url        => string
@@ -38,7 +37,7 @@ class Group < ActiveRecord::Base
   has_and_belongs_to_many :users, :join_table => :memberships
 
   # relationship to pages
-  has_many :participations, :class_name => 'GroupParticipation'
+  has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
   has_many :pages, :through => :participations do
 	def pending
 	  find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
@@ -59,20 +58,16 @@ class Group < ActiveRecord::Base
 #    :class_name => 'Category'
 #  has_and_belongs_to_many :categories
   
-#  belongs_to :picture
-
   # validations
   
-  validates_presence_of :name
-  
-  
+  validates_presence_of   :name
+  validates_format_of     :name, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
+  validates_length_of     :name, :within => 3..40
+  validates_uniqueness_of :name
+
   # methods
   
   def add_page(page, attributes)
-    #page.groups << self
-    #page.group_participations.pop
-    # ^^^ super hack, see note in User.add_page
-    #page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
     page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
   end
 

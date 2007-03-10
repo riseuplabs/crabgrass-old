@@ -3,35 +3,16 @@
 class Tool::BaseController < ApplicationController
   layout 'tool'
   in_place_edit_for :page, :title
-  append_before_filter :fetch_discussion, :setup_view
+  append_before_filter :fetch_page, :setup_view
     
-  def fetch_discussion
+  def fetch_page
+    @page ||= Page.find_by_id(params[:id])
     @page.discussion = Discussion.new unless @page.discussion
     @post_paging, @posts = paginate(:posts, :per_page => 25, :order => 'posts.created_at',
        :include => :user, :conditions => ['posts.discussion_id = ?', @page.discussion.id])
     @post = Post.new
   end
-
-  def add
-    group = Group.find_by_name(params[:name])
-    user = User.find_by_login(params[:name])
-    if group
-      page.add group
-    elsif user
-      page.add user
-    else
-      message :error => 'group or user not found', :later => 1    
-    end
-    redirect_to page_url(@page)
-  end
-  
-  def add_tags
-    tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
-    @page.tag_with(tags.uniq.join(' '))
-    @page.save
-    redirect_to page_url(@page)
-  end
-  
+    
   def destroy
     if request.post?
       Page.find(params[:id]).destroy
@@ -39,11 +20,27 @@ class Tool::BaseController < ApplicationController
     redirect_to from_url
   end
 
+  def access
+    @sidebar = false
+    if request.post?
+      if group_id = params[:remove_group]
+        @page.remove(Group.find_by_id(group_id))
+      elsif user_id = params[:remove_user]
+        @page.remove(User.find_by_id(user_id))
+      end
+      @page.save
+    end
+    render :template => 'pages/access'
+  end
+  
   protected
 
   # initializes default view variables. can be overwritten by subclasses.
   def setup_view
-    @show_posts = true
+    # default, only show comment posts for the 'show' action
+    @show_posts = (params[:action] == 'show')
+    @sidebar = true
+    true
   end
     
   # this is aweful, and should be refactored soon.
@@ -78,8 +75,8 @@ class Tool::BaseController < ApplicationController
         add_crumb user.login, people_url(:action => 'show', :id => user)
       end
     end
-    # this is silly
-    add_crumb @page.title, request.request_uri #temporarily commented out. jb.
+
+    add_crumb @page.title, page_url(@page, :action => 'show')
   end
   
 end

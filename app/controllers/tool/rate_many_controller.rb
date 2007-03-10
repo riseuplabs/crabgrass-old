@@ -1,38 +1,38 @@
-class Tool::RequestController < Tool::BaseController
-before_filter :fetch_poll
-
+class Tool::RateManyController < Tool::BaseController
+  before_filter :fetch_poll
+  
   def fetch_poll
     @poll = @page.data
   end
   
   def show
-    
   end
   
   def new_possible
     return unless @poll
-    possible = @poll.possibles.create params[:possible]
+    @poll.possibles.create params[:possible]
+    @poll.save
     redirect_to page_url(@page, :action => 'show')
   end
   
   def destroy_possible
     return unless @poll
-    possible = Possible.find(params[:possible])
+    possible = Poll::Possible.find(params[:possible])
     possible.destroy
     redirect_to page_url(@page, :action => 'show')
   end
   
   def vote
-    myvotes = params['vote'] || []
-    votes = @poll.votes.find_by_user_id(current_user.id)
-    votes.each{|v| v.destroy} if votes  
-    
-    if myvotes.length != 0
+    # destroy previous votes
+    @poll.votes_by_user(current_user).each{|v| v.destroy}
+  
+    # create new votes
+    new_votes = params['vote'] || []
     @poll.possibles.each do |possible|
-      weight = myvotes[possible.id.to_s]
-      possible.votes.create :username => @user, :value => weight
+      weight = new_votes[possible.id.to_s]
+      possible.votes.create :user => current_user, :value => weight if weight
     end
-    end
+    current_user.wrote(@page)
     redirect_to page_url(@page, :action => 'show')
   end
 

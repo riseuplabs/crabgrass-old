@@ -39,7 +39,7 @@ class PeopleController < ApplicationController
     @user = User.find(params[:id])
     if request.post? 
       @user.update_attributes(params[:user])
-      groups = params[:name].split  /[,\s]/
+      groups = params[:name].split(/[,\s]/)
       for group in groups
         @new_group = Group.find(:all, :conditions =>["name = ?",group])
         @user.groups << @new_group unless @user.groups.find_by_name group
@@ -86,7 +86,7 @@ class PeopleController < ApplicationController
     other = User.find_by_login params[:id]
     current_user.contacts.delete(other)
     message :success => '%s has been removed from your contact list.' / other.login
-    redirect_to me_url
+    redirect_to :action => 'show', :id => params[:id]
   end
   
   protected

@@ -1,5 +1,4 @@
-module RateManyHelper
-
+module Tool::RateManyHelper
   @@map = {
      2 => 'good', 'good' =>  2,
      1 => 'ok'  , 'ok'   =>  1,
@@ -7,21 +6,7 @@ module RateManyHelper
     -1 => 'bad' , 'bad'  => -1,
     -2 => 'no'  , 'no'   => -2,
   }
-
-  def vote_num_to_str(value)
+  def map(value)
     @@map[value]
-  end
-  
-  def vote_str_to_num(string)
-    @@map[string]
-  end
-  
-
-  def vote_str=(val)
-    vote_weight = @@map[val]
-  end
-
-  def self.str_to_weight(str)
-    @@map[str]
   end
 end

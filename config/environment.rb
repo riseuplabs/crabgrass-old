@@ -10,8 +10,13 @@ RAILS_GEM_VERSION = '1.2.2'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-PAGE_TYPES = %w(discussion poll event request wiki).freeze
+PAGE_TYPES = %w(discussion poll rate_many event request wiki).freeze
+SITE_NAME = 'riseup.net'
 
+# levels of page access
+ACCESS_ADMIN = '0'
+ACCESS_PLAY = '1'
+ACCESS_READ = '2'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
@@ -21,7 +26,7 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  config.load_paths += %w(associations discussion actions).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths += %w(associations discussion).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
   
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)
@@ -69,7 +74,7 @@ end
 TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
 
 # pre load the actions (otherwise serialization won't work)
-Dir.glob("#{RAILS_ROOT}/app/models/actions/*.rb").each do |f|
-  require f
-end
+#Dir.glob("#{RAILS_ROOT}/app/models/actions/*.rb").each do |f|
+#  require f
+#end
 

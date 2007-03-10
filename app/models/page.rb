@@ -35,7 +35,14 @@ class Page < ActiveRecord::Base
   belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'
   has_many :user_participations
-  has_many :users, :through => :user_participations
+  has_many :users, :through => :user_participations do
+    def with_access
+      find(:all, :conditions => 'access IS NOT NULL')
+    end
+    def participated
+      find(:all, :conditions => 'wrote_at IS NOT NULL')
+    end
+  end
 
   # relationship of this page to groups
   has_many :group_participations
@@ -84,7 +91,7 @@ class Page < ActiveRecord::Base
     entity.add_page(self,attributes)
     self
   end
-    
+      
   # remove a group or user participation from this page
   def remove(entity)
     entity.remove_page(self)

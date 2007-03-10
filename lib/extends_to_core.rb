@@ -4,7 +4,6 @@
 #
 
 class NilClass
-  
   def any?
     false
   end
@@ -18,7 +17,14 @@ class NilClass
   def zero?
     true
   end
+
+  def first
+    nil
+  end
   
+  def each
+    nil
+  end
 end
 
 class Object

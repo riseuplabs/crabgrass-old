@@ -43,13 +43,19 @@ body.with_sidebar {
 }
 div#sidebar {
   float:right;
-  width: 160px;
-  margin-left: 20px;
+  width: 170px;
 }
 div#sidebar h2 {
   border-bottom: 1px solid white;
+  font-size: 1em;
+  background-color: #efefef;
+  padding-left: 0.5em;
+}
+div.main_with_sidebar {
+  margin-right: 180px;
 }
 
+/*
 .post-author {
   background: #e9e9e9;
   border: 1px solid #ccc;
@@ -57,28 +63,64 @@ div#sidebar h2 {
   position: relative;
   left: 1px;
   padding: 3px;
+  text-align: right;
 }
-
 .post-body {
   background: #f3f3f3;
   border: 1px solid #ccc;
   padding: 3px;
 }
-
 td.post-body p {}
-
 tr.post td {
   vertical-align: top;
 }
 tr.post-spacer td {line-height: 0.4em;}
-
 textarea#post_body {width: 100%}
+*/
+
+div.posts {
+  margin: 1em 0;
+}
+div.posts h1 {margin: 0.5em; padding: 0; font-size: 1em;}
+table.posts {
+  width: 100%
+}
+.post-author {
+  text-align: right;
+  padding: 0 5px 0 10px;
+}
+.post-body {
+  border-left: 1px dotted #999;
+  padding: 0 10px 0 5px;
+}
+td.post-body p {}
+tr.post td {
+  vertical-align: top;
+}
+tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px dotted #999;}
+tr.post-spacer-top td {line-height: 10px;}
+tr.post-border-top td {border-top: 1px dotted #999;}
+
+tr.shade-even {background-color: #FAFAFA;}
+tr.shade-odd {background-color: #F0F1F7;}
+textarea#post_body {width: 100%}
+
+ul.plainlist {
+  padding: 0; margin: 0;
+  list-style: none;
+}
+ul.plainlist img, li {
+  vertical-align: bottom;
+  margin-top: 2px;
+}
+
+/** profile **/
 
 div.profile {
   margin-top: 6px;
   background: #f9f9f9;
   border: 1px solid #ccc;
-/*  border-width: 1px 3px 3px 1px;*/
+  padding: 6px;
 }
 div.profile td {vertical-align: top; padding: 3px;}
 div.profile h1 {margin: 0; font-size: 2em;}

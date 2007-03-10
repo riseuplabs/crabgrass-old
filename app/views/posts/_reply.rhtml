@@ -1,18 +1,20 @@
+<% color = cycle('shade-odd', 'shade-even') %>
 
-<tr class="post-spacer">
+<tr class="post-spacer-top <%=color%> <%= @posts.any? ? '' : 'post-border-top' %>">
   <td colspan="2">
     <a name="reply-form">&nbsp;</a>
   </td>
 </tr>
 
-<tr class="post">
-  <td><div class="post-author">
-    <div><%= link_to_user current_user %></div>
-    <%= avatar_for current_user, 'small' %></div> 
+<tr class="post <%=color%>">
+  <td>
+    <div class="post-author">
+      <%= avatar_for current_user, 'medium' %>
+      <div><%= link_to_user current_user %></div>  
+    </div> 
   </td>
-  <td rowspan="2" class="post-body" id="reply">
-    
-<%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
+  <td class="post-body" id="reply">
+  <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
   <% url = url_for(:controller => '/posts', :action => 'create') %>
   <% form_for :post, :url => url do |f| -%>
     <%= f.text_area :body, :rows => 8, :cols => 60 %>
@@ -21,8 +23,13 @@
     <%= hidden_field_tag('from', params[:from]) %>
     <%= hidden_field_tag('from_id', params[:from_id]) %>
     <br/>
+    <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
     <%= submit_tag "Post Message" %>
-  <% end -%>
 
+  <% end -%>
   </td>
+</tr>
+
+<tr class="post-spacer-bottom <%=color%>">
+  <td colspan="2">&nbsp;</td>
 </tr>

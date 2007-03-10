@@ -77,5 +77,11 @@ module ApplicationHelper
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
   
-  
+  def title_from_breadcrumbs
+    (
+      (@breadcrumbs||[]).collect{|b|truncate(b[0])}.reverse +
+      [SITE_NAME]
+    ).join(' : ')
+  end
+    
 end

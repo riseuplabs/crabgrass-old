@@ -7,10 +7,13 @@ class Tool::WikiController < Tool::BaseController
   end
 
   def edit
-    if request.post?
+    if params[:cancel]
+       return(redirect_to page_url(@page, :action => 'show'))
+    elsif request.post?
       @wiki.body = params[:wiki][:body]
       @wiki.user = current_user
       if @wiki.save
+        current_user.wrote(@page)
         redirect_to page_url(@page, :action => 'show')
       else
         message :object => @wiki
@@ -18,11 +21,13 @@ class Tool::WikiController < Tool::BaseController
     end
   end
   
+  def version
+    @version = @wiki.versions.find_by_version(params[:version])
+  end
+  
   def preview
   
   end
-  
-  
   
   def save
   

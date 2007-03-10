@@ -4,10 +4,12 @@ class CreateUserParticipations < ActiveRecord::Migration
       t.column :page_id, :integer
       t.column :user_id, :integer
       t.column :message_count, :integer, :default => 0
-      t.column :read_at, :timestamp
+      t.column :read_at, :datetime
+      t.column :wrote_at, :datetime
       t.column :access, :integer
       t.column :watch, :boolean
-      t.column :star, :boolean
+      t.column :recommend, :boolean
+      t.column :bookmarked, :boolean
       t.column :resolved, :boolean
     end
   end

@@ -2,6 +2,7 @@ class CreateGroups < ActiveRecord::Migration
   def self.up
     create_table :groups do |t|
       t.column :name,           :string
+      t.column :full_name,      :string
       t.column :summary,        :string
       t.column :url,            :string
       t.column :type,           :string

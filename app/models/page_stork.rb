@@ -27,12 +27,12 @@ class PageStork
     page = Tool::Request.new do |p|
       p.title = 'Invitation to join group %s from user %s'.t % [group.name, from.login]
       p.needs_attention = true
-      p.tool = Poll::Request.new do |r|
+      p.data = Poll::Request.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
         r.name = 'Join group %s?' / group.name
       end
     end
-    page.add(user)
+    page.add(user, :access => ACCESS_ADMIN)
   end
 
   def self.request_for_contact(options)
@@ -41,13 +41,12 @@ class PageStork
     page = Tool::Request.new do |p|
       p.title = 'Contact invitation from %s' / user.login
       p.needs_attention = true
-      p.tool = Poll::Request.new do |r|
+      p.data = Poll::Request.new do |r|
         r.action = Actions::AddToContacts.new(user,contact)
         r.name = 'Add user %s to your contact list?' / user.login
       end
     end
-    page.add(contact)
+    page.add(contact, :access => ACCESS_ADMIN)
   end
-  
   
 end

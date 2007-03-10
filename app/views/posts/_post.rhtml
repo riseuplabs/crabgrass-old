@@ -1,40 +1,21 @@
-<% unless post == @posts.first %>
-<tr class="post-spacer">
+<% color = cycle('shade-odd', 'shade-even') %>
+
+<tr class="post-spacer-top <%= color %> <%= @posts.first == post ? 'post-border-top' : ''%> ">
   <td colspan="2">
     <a name="<%= post.dom_id %>" id="<%= post.dom_id %>">&nbsp;</a>
   </td>
 </tr>
-<% end %>
-<tr class="post">
+<tr class="post <%= color %>">
   <td>
     <div class="post-author">
+      <%= avatar_for post.user, 'medium' if post.body.length > 60 %>
       <div><%= link_to_user post.user %></div>
-      <%= avatar_for post.user, 'small' if post.body.length > 60 %>
     </div> 
   </td>
   <td class="post-body entry-content" id="post-body-<%= post.id %>">
     <%= post.body_html %>
   </td>
 </tr>
-<!-- <tr>
-  <td class="post-info">
-    <div class="date" style="display:none">
-      <abbr class="updated" title="<%= post.created_at.xmlschema %>">
-      <%= time_ago_in_words(post.created_at) %>
-      </abbr>
-    </div>
-
-    <% if logged_in? && post.editable_by?(current_user) -%>
-    <p>
-      <span class="edit">
-        <%# ajax_spinner_for "edit-post-#{post.id}", "spinner.gif" %>
-        <%# link_to_remote('Edit post', 
-              {:url => edit_post_path(:forum_id => @forum, :topic_id => @topic, :id => post), :method => :get,
-               :before => "EditForm.init(#{post.id});", :condition => "!EditForm.isEditing(#{post.id})" }, 
-              {:href => edit_post_path(:forum_id => @forum, :topic_id => @topic, :id => post, :page => params[:page]), :class => "utility"}) %>
-      </span>
-    </p>
-    <% end -%>
-  </td>
+<tr class="post-spacer-bottom <%= color %>">
+  <td colspan="2">&nbsp;</td>
 </tr>
--->

@@ -24,8 +24,8 @@ class PagesController < ApplicationController
     page_type = get_page_type
     
     @page = page_type.new params[:page].merge({:created_by_id => current_user.id})
-    groups.each{|g| @page.add(g) } if groups
-    users.each {|u| @page.add(u) }
+    groups.each{|g| @page.add(g, :access => ACCESS_ADMIN) } if groups
+    users.each {|u| @page.add(u, :access => ACCESS_ADMIN) }
     @page.tag_with(params[:tag_list])
     @page
   end
@@ -37,7 +37,32 @@ class PagesController < ApplicationController
       end
     end
   end
-   
+
+  # add group or user to participations
+  def add
+    @page = Page.find_by_id(params[:id])
+    group = Group.find_by_name(params[:name])
+    user = User.find_by_login(params[:name])
+    access = params[:access] || ACCESS_ADMIN
+    if group
+      @page.add group, :access => access
+    elsif user
+      @page.add user, :access => access
+    else
+      message :error => 'group or user not found', :later => 1    
+    end
+    redirect_to page_url(@page)
+  end
+  
+  
+  def add_tags
+    @page = Page.find_by_id(params[:id])
+    tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
+    @page.tag_with(tags.uniq.join(' '))
+    @page.save
+    redirect_to page_url(@page)
+  end
+  
   protected
   
   def get_groups

@@ -1,24 +1,20 @@
-<h1>Editing group</h1>
+<h1>Group profile</h1>
 
-<%= start_form_tag :action => 'edit', :id => @group %>
-  <%= render :partial => 'form' %>
-  <p>Add Users:
-  <%= 
-  text_area_tag "login", nil  
-  %></p>
-  <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+<% form_tag(:action => 'edit', :id => @group) do -%>
+  <%= render :partial => 'form' %>  
+  <%= submit_tag 'Save changes' %>
+<% end -%>
 
-<h1>avatar</h1>
+<h1>Picture</h1>
 
 <%= avatar_for @group, 'xlarge' %>
 
 <p>uploaded image will be cropped and stretched to 96 pixels square.</p>
 
 <p>
-<%= form_tag({:action => 'avatar',:id=>@group}, {:multipart => true})%>
+<% form_tag({:action => 'avatar', :id => @group}, {:multipart => true}) do -%>
   <%= file_field 'image', 'data' %>
   <%= submit_tag 'Upload' %>
-<%= end_form_tag %>
+<% end -%>
 </p>
 

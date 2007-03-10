@@ -126,5 +126,21 @@ class User < AuthenticatedUser
   def remove_page(page)
     page.users.delete(self)
   end
+  
+    # should be called when a user visits a page
+  def read(page)
+    party = participations.find_or_create_by_page_id page.id
+    party.read_at = Time.now
+    party.save
+  end
+  
+  # should be called when a user writes to a page
+  def wrote(page)
+    party = participations.find_or_create_by_page_id page.id
+    party.wrote_at = Time.now
+    party.read_at = Time.now
+    party.save
+  end
+  
 
 end

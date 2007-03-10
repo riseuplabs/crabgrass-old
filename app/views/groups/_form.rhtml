@@ -1,14 +1,12 @@
-<%= error_messages_for 'group' %>
-
 <!--[form:group]-->
-<p><label for="group_name">Name</label><br/>
+<p><label for="group_name">Short name</label><br/>
 <%= text_field 'group', 'name'  %></p>
+
+<p><label for="group_full_name">Full name</label><br/>
+<%= text_field 'group', 'full_name'  %></p>
 
 <p><label for="group_summary">Summary</label><br/>
 <%= text_field 'group', 'summary'  %></p>
-
-<p><label for="group_url">URL</label><br/>
-<%= text_field 'group', 'url'  %></p>
 
 <!--[eoform:group]-->
 
