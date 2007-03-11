@@ -1,0 +1,14 @@
+
+<h1><%= @request.name %></h1>
+
+<% if @page.resolved? and @request.vote %>
+
+   This request was <%= @request.vote.value == 1 ? 'approved' : 'rejected' %>
+   by <%= @request.vote.user.login %>
+   on <%= @request.vote.created_at %>
+
+<% else %>
+  <%= post_button 'approve', :action => 'approve', :id => @page %>
+  <%= post_button 'reject', :action => 'reject', :id => @page %>
+<% end  %>
+ 

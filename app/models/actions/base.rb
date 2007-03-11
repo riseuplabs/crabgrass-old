@@ -1,0 +1,2 @@
+class Actions::Base
+end
