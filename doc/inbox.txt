@@ -1,0 +1,176 @@
+Page participations are like email
+==================================
+
+Email is what people know. It has its problems, but it is pretty powerful. There are
+a lot of possible user to page interaction models we could use, but one which follows
+email will be most readily understood by users.
+
+The key difference in our case is that actual page is shared by many people.
+It is not private to your inbox. 
+
+What is specific to your inbox is your page participation. So, if there is a
+page participation object between you and a page, the page shows up in your
+inbox somewhere (the me section).
+
+You can 'ignore' a page, which will delete your page participation but not the page itself.
+You can only find the page again by going through another participate or a group.
+
+This system gives the user solid, tangible control over what is in their inbox. 
+If, instead, we based everything on a heuristic filter, then what pops up might seem
+to shifting and inconsistant.
+
+Folder behavior
+===============
+
+ME (inbox)
+-------
+
+a simple inbox of all page participations, most recent first:
+- if you have watched a page, then the date is based on the last page update.
+- if you have not choosen to watch a page, it is based on the page's creation.
+
+this date information is stored in the user_participation table,
+there are not really two different queries. if you don't have a user_participation
+for a page, it won't show up in your inbox anyway.
+
+pending
+-------
+
+a special folder that contains pages that have not resolved,
+newest first. not resolved means resolved? set to false. if it is nil or true,
+it is not pending.
+
+what it means to resolve a page depends on the page type. for example:
+- read a wiki or discussion page.
+- commented on a wiki or discussion page.
+- rsvp'ed to an event
+- input your data for a scheduler
+- input your choice for a poll
+
+a page will stay in the pending folder until it is resolved or manually ignored.
+
+a page may be unresolved, but a user's participation might be resolved! for example, i 
+create a poll that everyone needs to answer. if hiro answers the poll, but claire does not,
+he is 'resolved' in regards to the page, but claire is not, and so the page itself
+remains unresolved.
+
+so, in a user context, 'pending' folder shows the resolved status of the user's
+participation. in a group context, the 'pending' folder shows the resolved status of
+the page itself.
+
+you cannot ignore a page which needs resolution until it is resolved.
+
+upcoming
+--------
+
+anything time sensitive, soonest first.
+
+for example:
+- an event
+- a vote/poll which needs input by a certain date.
+- a todo deadline
+
+starred
+-------
+
+pages that have been starred by me.
+
+recommended
+-----------
+
+pages that other people (contacts and peers) have starred.
+
+unsorted
+--------
+
+just like inbox, but limited only to pages that have no folder.
+
+static folder
+-------------
+
+a branch given a custom name. pages are limited to those that have been filed
+in this folder.
+
+dynamic folder
+--------------
+
+a saved path. in other words, you might drill down a particular path,
+like "groups>riseup>pending>dates>this-week>type>todo" and call it 
+'do this now'
+
+once saved as a dynamic folder, you cannot drill down anymore.
+
+THE DRILLABLE INBOX
+===================
+
++ ME
+  + pending
+  + upcoming
+  + starred
+  + recommended
+  + types
+  + tags
+  + dates
+    + this week
+    + this month
+    + by year, etc
+  + unsorted
+  + static folder
+    + ...
+  + dynamic folder
+    + .
+
++ Groups
+  + riseup
+  + egfs
+    + ...
+  + seattle
+
++ People
+  + hiro
+    + ...
+  + peter
+  + clair
+
+... = continues
+. = terminates
+
+
+STANDARD TREE
+-------------
+
+This is a tree segment that could be anywhere, group, person,
+or under one of its own branches.
+
+  + pending
+    + continues minus upcoming (minus self)
+  + upcoming
+    + continues minus pending (minus self)
+  + starred
+    + continues (minus self)
+  + by type
+    + continues (minus self)
+  + by tag
+    + terminates with one or more tags
+  + by date
+    + continues (minus self)
+
+In general, branches never repeat. eg, once you have filtered by type, you don't see 
+the type branch again. So, as you drill down, you start seeing fewer and fewer choices.
+
+Once you drill down a tags branch, all you see is more tags from then on. This allows
+you to use keep stacking on more tags.
+
+Some things are mutually exclusive. You can't view both pending and upcoming. or can you?
+
+example path
+
++ groups
+  + "seattle"
+    + types
+      + "event"
+        + dates
+          + "this week"
+            + tags
+              + "carbonwrenching"
+              

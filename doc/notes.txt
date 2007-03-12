@@ -1,0 +1,37 @@
+this is a document of misc. notes
+
+GROUPS
+=============================
+  
+group vars
+-------------
+
+groups
+  can non-group members participate?
+  (this is for super groups, spokes council & board groups.
+   overrides the normal group inheritence. )
+  
+which (sub)group is the admin group?
+
+which (sub)group is the super group?
+
+network vars
+--------------
+
+all of group vars, plus:
+ - maximum number of delegates per group
+
+
+SCRATCH PAD
+================================
+
+#   assert_nothing_raised("group.users.find should return user") do
+#      g.users.find(u.id)
+#    end
+
+
+  ## associations ###########################################
+  ## attributes ############################################# 
+  ## validations ############################################
+  ## callbacks ##############################################
+  ## methods ################################################
