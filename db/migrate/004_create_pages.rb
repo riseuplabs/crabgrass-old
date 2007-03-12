@@ -7,7 +7,6 @@ class CreatePages < ActiveRecord::Migration
       t.column :happens_at, :datetime
 	  t.column :resolved,   :boolean
 	  t.column :public,     :boolean
-	  t.column :needs_attention, :boolean
       t.column :created_by_id,   :integer
 	  t.column :updated_by_id,   :integer
 	  t.column :summary,         :string

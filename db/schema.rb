@@ -74,19 +74,18 @@ ActiveRecord::Schema.define(:version => 26) do
   end
 
   create_table "pages", :force => true do |t|
-    t.column "title",           :string
-    t.column "created_at",      :datetime
-    t.column "updated_at",      :datetime
-    t.column "happens_at",      :datetime
-    t.column "resolved",        :boolean
-    t.column "public",          :boolean
-    t.column "needs_attention", :boolean
-    t.column "created_by_id",   :integer
-    t.column "updated_by_id",   :integer
-    t.column "summary",         :string
-    t.column "type",            :string
-    t.column "data_id",         :integer
-    t.column "data_type",       :string
+    t.column "title",         :string
+    t.column "created_at",    :datetime
+    t.column "updated_at",    :datetime
+    t.column "happens_at",    :datetime
+    t.column "resolved",      :boolean
+    t.column "public",        :boolean
+    t.column "created_by_id", :integer
+    t.column "updated_by_id", :integer
+    t.column "summary",       :string
+    t.column "type",          :string
+    t.column "data_id",       :integer
+    t.column "data_type",     :string
   end
 
   create_table "pictures", :force => true do |t|
@@ -135,14 +134,14 @@ ActiveRecord::Schema.define(:version => 26) do
   create_table "user_participations", :force => true do |t|
     t.column "page_id",       :integer
     t.column "user_id",       :integer
-    t.column "message_count", :integer,  :default => 0
+    t.column "folder_id",     :integer
+    t.column "access",        :integer
     t.column "read_at",       :datetime
     t.column "wrote_at",      :datetime
-    t.column "access",        :integer
     t.column "watch",         :boolean
-    t.column "recommend",     :boolean
-    t.column "bookmarked",    :boolean
+    t.column "star",          :boolean
     t.column "resolved",      :boolean
+    t.column "message_count", :integer,  :default => 0
   end
 
   create_table "users", :force => true do |t|
