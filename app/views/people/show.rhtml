@@ -10,7 +10,9 @@
   <%= link_to 'remove from my contacts', {:controller => '/people', :action => 'remove_contact', :id => @user}, :method => 'post' %>
 <% else %>
   <%= link_to 'add to my contacts', {:controller => '/people', :action => 'add_contact', :id => @user}, :method => 'post' %>
-<% end %>     
+<% end %>
+  <br/>
+<%= link_to 'send private message', {:controller => '/people', :action => 'new_message', :id => @user}, :method => 'post' %>
   </td>
 </tr>
 </table>
@@ -27,3 +29,7 @@
 <% end %>
 </p>
 
+<div id='pagelist'>
+<% @pages = @user.pages %>
+<%= render :partial => 'pages/list' %>
+</div>

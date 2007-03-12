@@ -10,17 +10,21 @@ class ApplicationController < ActionController::Base
 
   def get_tool_class(tool_class_str)
     # Module.const_get(tool_class_str)
-    # ^^^ why does't this work?! something to do with rails weird lazy loading?
-    # instead, we have the silliest looking case statement on earth:
-    pt = case tool_class_str
-      when 'Tool::TextDoc';    Tool::TextDoc
-      when 'Tool::Discussion'; Tool::Discussion
-      when 'Tool::Event';      Tool::Event
-      when 'Tool::RateMany';   Tool::RateMany
+    # ^^^ rails lazy loading does work well with namespaced classes.
+    # so we help it along: 
+    mod = Module
+    tool_class_str.split('::').each do |const|
+       mod = mod.const_get(const)
     end
     raise Exception.new('page type is not a subclass of page') unless pt.superclass == Page
     return pt
   end
+
+  # override standard url_for to cache the result.
+  #def url_for(options = {})
+  #  @@cached_urls ||= {}
+  #  return(@@cached_urls[options.to_yaml] ||= super(options))
+  #end
 
   # a default success flash
   def flash_success(msg=nil)

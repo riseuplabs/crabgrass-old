@@ -89,6 +89,16 @@ class PeopleController < ApplicationController
     redirect_to :action => 'show', :id => params[:id]
   end
   
+  def new_message
+    page = Page.make :private_message, :from => current_user, :to => @user
+    if page.save
+      redirect_to page_url(page)
+    else
+      message :object => page
+      render :action => 'show'
+    end
+  end
+  
   protected
   
   def breadcrumbs

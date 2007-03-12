@@ -83,5 +83,12 @@ module ApplicationHelper
       [SITE_NAME]
     ).join(' : ')
   end
-    
+
+  # override standard url_for to cache the result.
+  #alias_method :orig_url_for, :url_for
+  #def url_for(options = {})
+  #  @@cached_urls ||= {}
+  #  return(@@cached_urls[options.to_yaml] ||= orig_url_for(options))
+  #end
+  
 end

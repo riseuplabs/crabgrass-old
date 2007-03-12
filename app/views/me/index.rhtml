@@ -28,27 +28,9 @@
 </table>
 </div>
 
-<%= Formy.tabs do |t|
-  t.tab do 
-    t.label "what's new?".t
-    t.link url_for(:action => "index")
-    t.selected params[:action] == 'index'
-  end
-  t.tab do
-    t.label "what's urgent?".t
-    t.link url_for(:action => "urgent")
-    t.selected params[:action] == 'urgent'
-  end
-  t.tab do
-    t.label "search".t
-    t.link url_for(:action => "search")
-    t.selected params[:action] == 'search'
-  end
-end
-%>
-
+<div id='pagelist'>
 <% @pages = @user.pages %>
 <%= render :partial => 'pages/list' %>
+</div>
 
-
-<p><%= link_button 'new page', :controller => '/pages', :action => 'new' %></p>
+<p><%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %></p>

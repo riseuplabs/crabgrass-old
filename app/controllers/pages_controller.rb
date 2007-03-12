@@ -84,17 +84,6 @@ class PagesController < ApplicationController
   def get_page_type
     raise Exception.new('page type required') unless params['page_type']
     return get_tool_class(params['page_type'])
-    # Module.const_get(params['page_type'])
-    # ^^^ why does't this work?! something to do with rails weird lazy loading?
-    # instead, we have the silliest looking case statement on earth:
-#    pt = case params['page_type']
-#      when 'Tool::Wiki';       Tool::Wiki
-#      when 'Tool::Discussion'; Tool::Discussion
-#      when 'Tool::Event';      Tool::Event
-#      when 'Tool::RateMany';   Tool::RateMany
-#    end
-#    raise Exception.new('page type is not a subclass of page') unless pt.superclass == Page
-#    return pt
   end
   
 end
