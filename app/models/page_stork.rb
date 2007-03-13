@@ -54,6 +54,7 @@ class PageStork
     to = options.delete(:to).cast! User
     page = Tool::Message.new do |p|
       p.title = 'Message from %s to %s' % [from.login, to.login]
+      p.created_by = from
     end
     page.add(from, :access => ACCESS_ADMIN)
     page.add(to, :access => ACCESS_ADMIN)

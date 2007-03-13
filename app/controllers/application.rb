@@ -8,16 +8,17 @@ class ApplicationController < ActionController::Base
   
   before_filter :login_required, :breadcrumbs
 
+  # rails lazy loading does work well with namespaced classes, so we help it along: 
   def get_tool_class(tool_class_str)
-    # Module.const_get(tool_class_str)
-    # ^^^ rails lazy loading does work well with namespaced classes.
-    # so we help it along: 
-    mod = Module
+    klass = Module
     tool_class_str.split('::').each do |const|
-       mod = mod.const_get(const)
+       klass = klass.const_get(const)
     end
-    raise Exception.new('page type is not a subclass of page') unless pt.superclass == Page
-    return pt
+    unless klass.superclass == Page
+      raise Exception.new('page type is not a subclass of page')
+    else
+      return klass
+    end
   end
 
   # override standard url_for to cache the result.

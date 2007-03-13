@@ -41,14 +41,16 @@ module ApplicationHelper
   #  link_to( (text||'&nbsp;'), :controller => 'pages', :action => 'show', :id => page)
   #end 
     
-  def link_to_user(user_or_id)
-    if user_or_id.is_a? Integer
-      user = User.find_by_id user_or_id
-    else
-      user = user_or_id
+  # arg might be a user object, a user id, or the user's login
+  def link_to_user(arg)
+    if arg.is_a? Integer
+      login = User.find(arg).login
+    elsif arg.is_a? String
+      login = arg
+    elsif arg.is_a? User
+      login = arg.login
     end
-    
-    link_to user.login, :controller => '/people', :action => 'show', :id => user if user
+    link_to login, :controller => '/people', :action => 'show', :id => login if login
   end
 
  def link_to_group(group)
@@ -90,5 +92,17 @@ module ApplicationHelper
   #  @@cached_urls ||= {}
   #  return(@@cached_urls[options.to_yaml] ||= orig_url_for(options))
   #end
+  
+  def friendly_date(time)
+    today = Date.today
+    date = time.to_date
+    if date == today
+      time.strftime("%I:%M%p")
+    elsif date.year != today.year
+      date.loc("%d/%b/%Y")
+    else
+      date.loc('%d/%b')
+    end
+  end
   
 end

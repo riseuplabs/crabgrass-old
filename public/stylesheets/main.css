@@ -101,8 +101,8 @@ tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px dotted #999;}
 tr.post-spacer-top td {line-height: 10px;}
 tr.post-border-top td {border-top: 1px dotted #999;}
 
-tr.shade-even {background-color: #FAFAFA;}
-tr.shade-odd {background-color: #F0F1F7;}
+.shade-even {background-color: #FAFAFA;}
+.shade-odd {background-color: #F0F1F7;}
 textarea#post_body {width: 100%}
 
 ul.plainlist {
@@ -112,6 +112,20 @@ ul.plainlist {
 ul.plainlist img, li {
   vertical-align: bottom;
   margin-top: 2px;
+}
+
+/** page list **/
+
+div.page-list table {
+  width: 100%;
+}
+div.page-list tr td {
+  border-top: 1px solid #ccc;
+  padding: 2px;
+}
+div.page-list {
+  margin: 1em 0;
+  border-bottom: 1px solid #ccc;
 }
 
 /** profile **/

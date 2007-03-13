@@ -31,17 +31,14 @@
 /* styling */
 
 #topnav {
-/*  background: #550; */
   padding-top: 7px;
-  border-bottom: 1px solid #aa0;
+  border-bottom: 1px solid #880;
 }
 #topnav-outer {
   border-bottom: 1px solid #330;
 }
 
-
 #topmenu li {
-  /* background: #990; */
   margin: 0 4px;
   position: relative;
   top: 1px;
@@ -54,12 +51,10 @@
 #topmenu a {
   color: #fff;
   text-decoration: none;
-  xpadding: 2px;
   padding: 2px 6px;
 }
 #topmenu a:hover {
-  background: #000;
-  /* text-decoration: underline; */
+  text-decoration: underline;
 }
 #topmenu li.selected a {
   color: #000;
@@ -70,10 +65,10 @@
   top: 1px;
 }
 #topmenu li.selected  {
-  border: 1px solid #aa0;
+  border: 1px solid #880;
   border-bottom: 0px solid white;
   border-top: 0;
-  background-color: #aa0;
+  background-color: #880;
 }
 
 /** TABS **/
