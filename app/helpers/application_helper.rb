@@ -93,11 +93,15 @@ module ApplicationHelper
   #  return(@@cached_urls[options.to_yaml] ||= orig_url_for(options))
   #end
   
-  def friendly_date(time)
+  def friendly_date(*times)
+    return nil unless times.any?
+    time = times.compact.max
     today = Date.today
     date = time.to_date
     if date == today
       time.strftime("%I:%M%p")
+    elsif today > date and (today-date) < 7
+      time.strftime("%A")
     elsif date.year != today.year
       date.loc("%d/%b/%Y")
     else

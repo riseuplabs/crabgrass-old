@@ -90,16 +90,16 @@ table.posts {
   padding: 0 5px 0 10px;
 }
 .post-body {
-  border-left: 1px dotted #999;
+  border-left: 1px solid #ccc;
   padding: 0 10px 0 5px;
 }
 td.post-body p {}
 tr.post td {
   vertical-align: top;
 }
-tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px dotted #999;}
+tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px solid #ccc;}
 tr.post-spacer-top td {line-height: 10px;}
-tr.post-border-top td {border-top: 1px dotted #999;}
+tr.post-border-top td {border-top: 1px solid #ccc;}
 
 .shade-even {background-color: #FAFAFA;}
 .shade-odd {background-color: #F0F1F7;}
@@ -124,8 +124,19 @@ div.page-list tr td {
   padding: 2px;
 }
 div.page-list {
-  margin: 1em 0;
+  margin: 1em 0 1em 11em;
   border-bottom: 1px solid #ccc;
+}
+div.page-list tr.unread {
+  font-weight: bold;
+}
+div#folders {
+  float: left;
+  width: 10em;
+}
+div#folders ul {
+  padding: 0; margin: 0 0 0 1em;
+  list-style: none;
 }
 
 /** profile **/

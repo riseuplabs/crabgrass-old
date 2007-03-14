@@ -40,8 +40,6 @@ aaron:
   # activation_code: aaronscode # only if you're activating new signups
   created_at: <%= 1.days.ago.to_s :db %>
 
-# for crabgrass user
-
 gerrard:
   id: 3
   login: gerrard
@@ -51,7 +49,7 @@ gerrard:
   crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   created_at: <%= 5.days.ago.to_s :db %>
   
-<% i = 4 %>
+<% i = 3 %>
 <% for login in ['blue','orange','purple','yellow','red','green'] %>
 <%=login%>:
   id: <%=i+=1%>
@@ -63,7 +61,7 @@ gerrard:
   created_at: <%= 5.days.ago.to_s :db %>
 <% end %>
   
-<% i = 10 %>
+<% i = 9 %>
 <% for login in ['kangaroo','dolphin','penguin','iguana'] %>
 <%=login%>:
   id: <%=i+=1%>

@@ -1,21 +1,37 @@
 class MeController < ApplicationController
 
+  append_before_filter :fetch_user
+  
   def index
-    @user = current_user
+    @pages = @user.participations.find(:all, :include=>'page', :order => 'pages.updated_at DESC')
   end
 
-  def urgent
-    @user = current_user
-    render :action => 'index'
-  end
-  
-  def search
-    @user = current_user
+  def folder
+    path = params[:path]
+    conditions = ["1"]
+    values = []
+    if path.first == 'unread'
+      conditions << 'viewed = ?'
+      values << false
+    elsif path.first == 'pending'
+      conditions << 'user_participations.resolved = ?'
+      values << false
+    elsif path.first == 'upcoming'
+      conditions << 'pages.happens_at > ?'
+      values << Time.now
+    end
+    @cond = [conditions.join(' AND ')] + values
+    @pages = @user.participations.find(
+      :all,
+      :conditions => @cond,
+      :include=>'page',
+      :order => 'pages.updated_at DESC'
+    )
     render :action => 'index'
   end
 
   def edit
-    @user = current_user
+    
     if request.post? 
       if @user.update_attributes(params[:user])
         redirect_to :action => 'edit'
@@ -40,8 +56,11 @@ class MeController < ApplicationController
   
   protected
   
-  def breadcrumbs
+  def fetch_user
     @user = current_user
+  end
+  
+  def breadcrumbs
     add_crumb 'me', me_url(:action => 'index')
     unless ['show','index'].include?(params[:action])
       add_crumb params[:action], me_url(:action => params[:action])

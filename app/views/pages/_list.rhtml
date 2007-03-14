@@ -1,20 +1,27 @@
 <!-- begin page list -->
-<div class="page-list">
 <table>
 <% if @pages %>
 <% @pages.each do |p| %>
+<% # this is weird and is a temporary hack for now.
+   if p.is_a? UserParticipation
+     page = p.page
+     part = p
+   else
+     page = p
+     part = nil
+   end
+%>
 <% color = cycle('shade-odd', 'shade-even') %>
-<tr class="<%= color %>">
-  <td><%= page_icon p %></td>
-  <td><%= link_to p.title, page_url(p) %></td>
-  <td><%= p.created_by ? link_to_user(p.created_by.login) : '&nbsp;' %></td>
-  <td><%= p.updated_at ? friendly_date(p.updated_at) : '&nbsp;'      %></td>
-  <%# p.tags.collect{|tag| (link_to tag.name, "/pages/tagged/" + tag.name)}.join(", ")%>
+<tr class="<%= color %> <%= 'unread' if part and not part.viewed? %>">
+  <td><%= page_icon page %></td>
+  <td><%= link_to page.title, page_url(page) %></td>
+  <td><%= page.created_by ? link_to_user(page.created_by.login) : '&nbsp;' %></td>
+  <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
+  <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>
 </tr>
 <% end %>
 <% else %>
 <tr><td colspan="10">no pages</td></tr>
 <% end %>
 </table>
-</div>
 <!-- end page list -->

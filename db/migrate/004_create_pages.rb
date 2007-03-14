@@ -11,6 +11,7 @@ class CreatePages < ActiveRecord::Migration
 	  t.column :updated_by_id,   :integer
 	  t.column :summary,         :string
 	  t.column :type,            :string
+      t.column :message_count, :integer, :default => 0
 
 	  # polymorphic association
 	  t.column :data_id, :integer

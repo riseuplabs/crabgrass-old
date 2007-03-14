@@ -22,9 +22,9 @@ ActionController::Routing::Routes.draw do |map|
      :action => 'show'
   end
 
-  # so we can use named urls
+  map.connect 'me/folder/*path', :controller => 'me', :action => 'folder'
   map.me 'me/:action/:id', :controller => 'me'
-    
+  
   map.people 'people/:action/:id', :controller => 'people'
   map.person 'people/:action/:id', :controller => 'people'
 

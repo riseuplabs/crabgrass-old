@@ -1,0 +1,35 @@
+<%
+
+
+def folder_link(text,path=nil,image=nil)
+  path ||= text
+  link_to text, url_for(:action => 'folder', :path => path)
+end
+
+
+%>
+
+
+
+<ul>
+  <li><%= folder_link 'all', '' %></li>
+  <li><%= folder_link 'unread' %></li>
+  <li><%= folder_link 'pending' %></li>
+  <li><%= folder_link 'upcoming' %></li>
+  <li>types</li>
+  <ul>
+     <li><%= folder_link 'wiki','type/wiki' %></li>
+     <li><%= folder_link 'poll','type/poll' %></li>
+  </ul>
+  <li>dates</li>
+  <ul>
+     <li><%= folder_link 'this week','ago/7' %></li>
+     <li><%= folder_link 'this month','ago/32' %></li>
+  </ul>
+  <li>people</li>
+  <ul>
+   <% for user in @user.contacts %>
+     <li><%= folder_link user.login,'person/'+user.login %></li>
+   <% end %>
+  </ul>
+</ul>

@@ -5,11 +5,12 @@ class CreateUserParticipations < ActiveRecord::Migration
       t.column :user_id,   :integer
       t.column :folder_id, :integer
       t.column :access,    :integer
-      t.column :read_at,   :datetime
-      t.column :wrote_at,  :datetime
+      t.column :viewed_at, :datetime
+      t.column :changed_at, :datetime
       t.column :watch,     :boolean
       t.column :star,      :boolean
       t.column :resolved,  :boolean
+      t.column :viewed,    :boolean
       t.column :message_count, :integer, :default => 0
     end
   end

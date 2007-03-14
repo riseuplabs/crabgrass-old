@@ -14,9 +14,9 @@ PAGE_TYPES = %w(discussion poll rate_many event request wiki).freeze
 SITE_NAME = 'riseup.net'
 
 # levels of page access
-ACCESS_ADMIN = '0'
-ACCESS_PLAY = '1'
-ACCESS_READ = '2'
+ACCESS_ADMIN = '1'
+ACCESS_CHANGE = '2'
+ACCESS_VIEW = '3'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here

@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "updated_by_id", :integer
     t.column "summary",       :string
     t.column "type",          :string
+    t.column "message_count", :integer,  :default => 0
     t.column "data_id",       :integer
     t.column "data_type",     :string
   end
@@ -136,11 +137,12 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "user_id",       :integer
     t.column "folder_id",     :integer
     t.column "access",        :integer
-    t.column "read_at",       :datetime
-    t.column "wrote_at",      :datetime
+    t.column "viewed_at",     :datetime
+    t.column "changed_at",    :datetime
     t.column "watch",         :boolean
     t.column "star",          :boolean
     t.column "resolved",      :boolean
+    t.column "viewed",        :boolean
     t.column "message_count", :integer,  :default => 0
   end
 

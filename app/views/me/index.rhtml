@@ -28,7 +28,13 @@
 </table>
 </div>
 
-<% @pages = @user.pages %>
-<%= render :partial => 'pages/list' %>
+<div id='page-holder'>
+  <div id='folders'>
+    <%= render :partial => 'folders' %>
+  </div>
+  <div class='page-list'>
+    <%= render :partial => 'pages/list' %>
+  </div>
+</div>
 
-<p><%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %></p>
+<p style="clear:both; padding-top: 2em"><%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %></p>

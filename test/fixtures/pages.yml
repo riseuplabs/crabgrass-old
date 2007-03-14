@@ -19,38 +19,43 @@
 #  tool_type       :string(255)   
 #
 
+<%
 
-a:
-  id: 1
-  title: "what is your favorite color?"
-  summary: "Praesent aliquet dapibus purus. Integer fringilla, dui eu tempus lacinia, massa tellus iaculis dolor, id vulputate augue diam at massa. Sed id lectus. Pellentesque suscipit aliquam urna"
-  created_at: <%= 1.days.ago.to_s :db %>
-  updated_at: <%= 10.minutes.ago.to_s :db %>
-  happens_at: <%= 2.days.from_now.to_s :db %>
-  created_by_id: 5
-  updated_by_id: 5
+$text_pool = %q[
+Mauris tristique magna ut mauris. Praesent id tellus vel odio fringilla suscipit. Morbi ultrices blandit turpis. Vestibulum justo dolor, malesuada nec, ornare id, venenatis eu, est. Donec vitae purus in augue interdum tincidunt. Sed ullamcorper turpis nec risus. Sed blandit elit a libero. Suspendisse potenti. Donec rhoncus pede sit amet massa. In suscipit ligula a nisi. Quisque augue. Maecenas mollis ipsum vitae lacus. Integer ornare. In metus libero, vulputate at, ultricies eget, ullamcorper nec, massa. Duis quis lectus. Vestibulum luctus, sapien sit amet aliquet adipiscing, pede dolor gravida odio, a pellentesque sem tortor ac nisi. Cras commodo. Aliquam arcu. Integer in odio et lectus facilisis ultrices. Sed congue metus a felis.
+Integer ut orci id arcu pulvinar imperdiet. Integer faucibus lorem et risus. Vivamus erat mauris, cursus non, auctor vitae, rhoncus in, lectus. Sed et magna. Sed porttitor ornare tellus. Praesent in enim nec quam tempus lacinia. Curabitur ipsum risus, volutpat ac, convallis eu, vestibulum vitae, massa. Nulla facilisi. Donec venenatis lorem id nunc. Etiam id felis sit amet erat imperdiet luctus. Cras nec arcu id justo aliquet luctus. Phasellus dictum dictum lacus. Cras neque lacus, lacinia quis, egestas et, mollis a, augue.
+Vestibulum sodales rhoncus dolor. Fusce sit amet justo. Mauris fringilla. Vestibulum faucibus ultricies lorem. Nunc posuere ipsum aliquam nulla. Nullam tortor justo, cursus vestibulum, volutpat sed, interdum vel, orci. Donec euismod ultrices odio. Suspendisse eu odio sit amet odio vulputate tristique. Vestibulum massa. Vestibulum nec orci. Cras tellus pede, tincidunt vitae, adipiscing ut, rutrum ut, urna. Integer ultricies, nunc id vulputate dapibus, magna velit bibendum nulla, nec congue nulla magna nec tortor. Aenean eget ante a leo auctor ultrices. Nunc interdum. Suspendisse potenti. Aenean nulla. Aliquam vitae ante. Sed eu orci. Etiam justo libero, tempus at, viverra sodales, imperdiet vitae, diam.
+Vestibulum dignissim ultricies odio. Etiam vestibulum, velit eu iaculis porta, libero ipsum mollis quam, ac tincidunt eros augue ac tortor. Cras tristique congue risus. Quisque nulla. Vivamus at dui. Nam ullamcorper volutpat est. Nullam sollicitudin, mauris ut eleifend sagittis, lorem tellus pellentesque felis, sit amet malesuada pede risus ut sem. Donec et pede. Donec ultrices blandit odio. Mauris facilisis orci. Morbi dolor. Pellentesque ut elit. Mauris ante eros, pulvinar quis, congue vitae, ultricies nec, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus nulla ligula, ornare nec, convallis et, commodo pulvinar, metus. Integer eu dolor ac dui tincidunt interdum. Maecenas blandit nisi lobortis velit rutrum vulputate. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cras mi nisi, pretium euismod, scelerisque sed, tincidunt vel, arcu. Fusce risus.
+Praesent porta. Suspendisse potenti. Vestibulum nisi risus, tincidunt at, nonummy vel, aliquet sit amet, risus. Donec suscipit, lorem et tincidunt facilisis, risus est cursus lacus, vitae rutrum augue orci ullamcorper mauris. Fusce ornare accumsan massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Maecenas at mauris. Etiam ullamcorper, velit ut condimentum ultricies, sem nulla nonummy risus, eu mollis mi metus ac nulla. Sed id velit vel eros viverra rhoncus. Nulla ac neque. Ut ipsum. Sed sem. Donec eu leo. Morbi tortor. Vivamus eleifend est at risus.
+]
+$text_pool_length = $text_pool.length
+
+# pass in a range of how much random garbled text
+# you want.
+def garble(range)
+  dist = range.last - range.first
+  a = rand($text_pool_length-(range.first+dist))
+  b = range.first + rand(dist)
+  $text_pool.slice(a,b)
+end
+
+%>
+
+<% for i in 1..20 %>
+page<%=i%>:
+  id: <%=i%>
+  title: "<%= garble(5..50) %>"
+  summary: "<%= garble(40..300) %>"
+  <% created = rand(32) %>
+  created_at: "<%= created.days.ago.to_s(:db) %>"
+  updated_at: "<%= rand(created).days.ago.to_s(:db) %>"
+  <% if rand(3) == 0 %>
+  happens_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  <% end %>
+<% if rand(3) == 0 %>
+  resolved: false
+<% end %>
+  created_by_id: <%= rand(11)+3 %>
+  updated_by_id:  <%= rand(11)+3 %>
   type: Tool::Discussion
-#  tool_id: 1
-#  tool_type: Poll::Poll
-
-b:
-  id: 2
-  title: "when do you want smash capitalism?"
-  summary: "Praesent aliquet dapibus purus. Integer fringilla, dui eu tempus lacinia, massa tellus iaculis dolor, id vulputate augue diam at massa. Sed id lectus. Pellentesque suscipit aliquam urna"
-  created_at: <%= 2.days.ago.to_s :db %>
-  updated_at: <%= 10.hours.ago.to_s :db %>
-  happens_at: <%= 4.days.from_now.to_s :db %>
-  created_by_id: 5
-  updated_by_id: 5
-  type: Tool::Discussion
-#  tool_id: 2
-#  tool_type: Poll::Poll
-
-c:
-  id: 3
-  title: "gosh, it sure is windy"
-  created_at: <%= 4.days.ago.to_s :db %>
-  type: Tool::Discussion
-  created_by_id: 5
-  updated_by_id: 5
-
+<% end %>
