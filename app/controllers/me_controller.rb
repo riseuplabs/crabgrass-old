@@ -69,6 +69,7 @@ class MeController < ApplicationController
         @user.avatar = avatar
         @user.save
         redirect_to :action => 'edit'
+        return
       end
     end
     render :action => 'edit'

@@ -52,6 +52,7 @@ class GroupsController < ApplicationController
         @group.avatar = avatar
         @group.save
         redirect_to :action => 'edit'
+        return
       end
     end
     render :action => 'edit'
