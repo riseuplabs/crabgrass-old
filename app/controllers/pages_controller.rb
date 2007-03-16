@@ -31,9 +31,9 @@ class PagesController < ApplicationController
     end
     users_to_add.uniq.each do |u|
       if users.include? u
-        @page.add(u, :access => ACCESS_ADMIN, :resolved => @page.resolved?)
+        @page.add(u, :access => ACCESS_ADMIN)
       else
-        @page.add(u, :resolved => @page.resolved?)
+        @page.add(u)
       end
     end
     @page.tag_with(params[:tag_list])

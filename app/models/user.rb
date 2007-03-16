@@ -117,7 +117,9 @@ class User < AuthenticatedUser
   def add_page(page, attributes)
     # user_participations.build doesn't update the pages.users
     # until it is saved, which seems like a bug, so we use create
-    page.user_participations.create attributes.merge(:page_id => page.id, :user_id => id)
+    page.user_participations.create attributes.merge(
+       :page_id => page.id, :user_id => id,
+       :resolved => page.resolved?)
   end
   
   def remove_page(page)
@@ -134,6 +136,11 @@ class User < AuthenticatedUser
   end
   
   # should be called when a user writes to a page
+  # or resolves a page.
+  # options:
+  #  - resolved: user's participation is resolved with this page
+  #  - all_resolved: everyone's participation is resolved.
+  #
   def updated(page, options={})
     # create self's participation if it does not exist
     page.user_participations.build(:user_id => self.id) unless page.participation_for_user(self) 
@@ -145,14 +152,16 @@ class User < AuthenticatedUser
         party.changed_at = now
         party.viewed_at = now
         party.viewed = true
-        party.resolved = options[:resolved] || false
+        party.resolved = options[:resolved] || options[:all_resolved] || party.resolved?
       else
+        party.resolved = options[:all_resolved] || party.resolved?
         party.viewed = false
       end
       party.save      
     end
     # this is unfortunate, because perhaps we have already just modified the page?
     # we should test here to see if we have already saved the page this request.
+    page.resolved = options[:all_resolved] || page.resolved?
     page.updated_at = now
     page.save
   end

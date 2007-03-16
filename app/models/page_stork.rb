@@ -18,6 +18,7 @@ class PageStork
       end
     end
     page.add(group)
+    page.add(group.users)
   end
   
   def self.invite_to_join_group(options)

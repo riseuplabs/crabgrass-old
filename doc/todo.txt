@@ -1,0 +1,25 @@
+permissions
+------------
+
+they don't work at all
+
+
+groups
+---------
+
+add person inbox controls
+
+make it so that only admins can approve request to join group.
+
+
+people
+----------
+
+add person inbox controls
+
+
+page view
+---------
+
+when posts paginate, start on the last page instead of the first.
+

@@ -11,7 +11,7 @@ class Tool::RequestController < Tool::BaseController
 
   def approve
     if @request.approve(:by => current_user)
-      current_user.updated(@page)
+      current_user.updated(@page, :all_resolved => true)
       message :text => 'request approved'
       redirect_to from_url
     else  
@@ -21,7 +21,7 @@ class Tool::RequestController < Tool::BaseController
   
   def reject
     if @request.reject(:by => current_user)
-      current_user.updated(@page)
+      current_user.updated(@page, :all_resolved => true)
       message :text => 'request rejected'
       redirect_to from_url
     else  

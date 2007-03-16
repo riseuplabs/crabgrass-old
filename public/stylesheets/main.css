@@ -51,6 +51,13 @@ div#sidebar h2 {
   background-color: #efefef;
   padding-left: 0.5em;
 }
+div#sidebar div {
+  font-size: 0.8em;
+  margin-top: 2px;
+}
+div#sidebar div img {
+  vertical-align: top;
+}
 div.main_with_sidebar {
   margin-right: 180px;
 }
@@ -173,6 +180,24 @@ div#folders li img {
   vertical-align: top;
   border: 0;
 }
+
+/** tool formatting **/
+
+div.greybox {
+  background: #f6f6f6;
+  border: 1px solid #cfcfcf;
+  border-width: 0px 3px 3px 0px;
+  padding: 1em;
+}
+div.request {
+  margin: 0 auto;
+  width: 50%;
+}
+div.request h2 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
 /** profile **/
 
 div.profile {

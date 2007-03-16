@@ -1,0 +1,50 @@
+<%
+  # notes:
+  # - we need to display different information depending on whether
+  #   we have user or group participation data (upart or gpart).
+  # - page.created_by.login is used so that it may be compatible with 
+  #   piggybacking, should we use piggybacking in the future.
+  # 
+  page = upart = gpart = nil
+  if page_line.instance_of? UserParticipation
+    page = page_line.page
+    upart = page_line
+  elsif page_line.instance_of? GroupParticipation
+    page = page_line.page
+    gpart = page_line
+  else
+    page = page_line
+  end
+  color = cycle('shade-odd', 'shade-even')
+%>
+<% if upart %>
+<tr class="<%= color %> <%= 'unread' unless upart.viewed? %>">
+  <td><%= page_icon page %></td>
+  <td>
+    <%= link_to page.title, page_url(page) %>
+    <%= image_tag "emblems/pending.png", :size => "11x11", :title => 'pending' unless upart.resolved? %>
+  </td>
+  <td><%= page.created_by ? link_to_user(page.created_by.login) : '&nbsp;' %></td>
+  <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
+  <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>
+</tr>
+<% elsif gpart %>
+<tr class="<%= color %>">
+  <td><%= page_icon page %></td>
+  <td>
+    <%= link_to page.title, page_url(page) %>
+    <%= image_tag "emblems/pending.png", :size => "11x11", :title => 'pending' unless page.resolved? %>
+  </td>
+  <td><%= page.created_by ? link_to_user(page.created_by.login) : '&nbsp;' %></td>
+  <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
+  <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>
+</tr>
+<% else %>
+<tr class="<%= color %>">
+  <td><%= page_icon page %></td>
+  <td><%= link_to page.title, page_url(page) %></td>
+  <td><%= page.created_by ? link_to_user(page.created_by.login) : '&nbsp;' %></td>
+  <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
+  <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>
+</tr>
+<% end %>

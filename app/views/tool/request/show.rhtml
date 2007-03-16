@@ -1,14 +1,16 @@
+<div class='request greybox'>
 
-<h1><%= @request.name %></h1>
+<h2><%= @request.name %></h2>
 
 <% if @page.resolved? and @request.vote %>
-
-   This request was <%= @request.vote.value == 1 ? 'approved' : 'rejected' %>
-   by <%= @request.vote.user.login %>
+<div>
+   This request was <b><%= @request.vote.value == 1 ? 'approved' : 'rejected' %></b>
+   by <b><%= @request.vote.user.login %></b>
    on <%= @request.vote.created_at %>
-
+</div>
 <% else %>
   <%= post_button 'approve', :action => 'approve', :id => @page %>
   <%= post_button 'reject', :action => 'reject', :id => @page %>
 <% end  %>
- 
+
+</div>

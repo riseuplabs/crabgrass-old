@@ -25,7 +25,7 @@ module PageUrlHelper
     url_for options.merge(options_override)
   end
   
-  def from_url
+  def from_url(page=nil)
     ctr    = "/"+params[:from]
     id     = params[:from_id]
     action = 'show'

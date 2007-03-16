@@ -5,7 +5,29 @@ class Tool::BaseController < ApplicationController
   in_place_edit_for :page, :title
   append_before_filter :setup_view
   append_after_filter :update_participation
-    
+  
+  def remove_from_my_pages
+    @upart.destroy
+    redirect_to from_url(@page)
+  end
+  
+  def add_to_my_pages
+    @page.add(current_user)
+    redirect_to page_url(@page)
+  end
+  
+  def make_resolved
+    @upart.resolved = true
+    @upart.save
+    redirect_to page_url(@page)
+  end
+  
+  def make_unresolved
+    @upart.resolved = false
+    @upart.save
+    redirect_to page_url(@page)
+  end  
+  
   def destroy
     if request.post?
       Page.find(params[:id]).destroy
@@ -47,13 +69,15 @@ class Tool::BaseController < ApplicationController
       # include all participations and users in the page object
       @page = Page.find :first, :conditions => ['pages.id = ?', params[:id]], :include => [:user_participations => :user]
       # grab the current user's participation from memory
-      @parti = @page.participation_for_user(current_user) if logged_in?
+      @upart = @page.participation_for_user(current_user) if logged_in?
     else
       @page = Page.find(params[:id])
+      @upart = nil
     end
     @page.discussion = Discussion.new unless @page.discussion
     @post_paging, @posts = paginate(:posts, :per_page => 25, :order => 'posts.created_at',
-       :include => :user, :conditions => ['posts.discussion_id = ?', @page.discussion.id])
+       :include => :user, :conditions => ['posts.discussion_id = ?', @page.discussion.id], 
+       :parameter => 'posts')
     @post = Post.new
   end
       
