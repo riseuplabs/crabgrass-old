@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "created_at",    :datetime
     t.column "updated_at",    :datetime
     t.column "happens_at",    :datetime
-    t.column "resolved",      :boolean
+    t.column "resolved",      :boolean,  :default => true
     t.column "public",        :boolean
     t.column "created_by_id", :integer
     t.column "updated_by_id", :integer
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(:version => 26) do
     t.column "changed_at",    :datetime
     t.column "watch",         :boolean
     t.column "star",          :boolean
-    t.column "resolved",      :boolean
+    t.column "resolved",      :boolean,  :default => true
     t.column "viewed",        :boolean
     t.column "message_count", :integer,  :default => 0
   end

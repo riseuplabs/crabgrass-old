@@ -1,35 +1,50 @@
 <%
 
+def folder_icon(image)
+  image = "folders/#{image}" unless image.match /\//
+  image_tag(image, :size => "22x22")
+end
 
 def folder_link(text,path=nil,image=nil)
-  path ||= text
-  link_to text, url_for(:action => 'folder', :path => path)
+  if params[:action] == 'folder'
+    klass = ('selected' if params[:path].join('/').ends_with?(path)) || ''
+  elsif path=='all'
+    klass = 'selected'
+  else
+    klass = ''
+  end
+
+  text = folder_icon(image) + " " + text if image
+  link_to text, url_for(:action => 'folder', :path => path), :class => klass
 end
 
 
 %>
 
-
-
-<ul>
-  <li><%= folder_link 'all', '' %></li>
-  <li><%= folder_link 'unread' %></li>
-  <li><%= folder_link 'pending' %></li>
-  <li><%= folder_link 'upcoming' %></li>
-  <li>types</li>
+<ul style="margin: 0">
+  <li class='first'><%= folder_link 'all', 'all', 'earth.png' %></li>
+  <li><%= folder_link 'unread'.t,   'unread',  'glasses.png' %></li>
+  <li><%= folder_link 'pending'.t,  'pending', 'pending.png' %></li>
+  <li><%= folder_link 'upcoming'.t, 'upcoming', 'time.png' %></li>
+  <li><span><%=folder_icon('types.png')%> types</span></li>
   <ul>
-     <li><%= folder_link 'wiki','type/wiki' %></li>
-     <li><%= folder_link 'poll','type/poll' %></li>
+     <li><%= folder_link 'discussion','type/discussion', 'pages/bubbles.png' %></li>
+     <li><%= folder_link 'wiki','type/wiki', 'pages/text.png' %></li>
+     <li><%= folder_link 'poll','type/poll', 'pages/shirt.png' %></li>
   </ul>
-  <li>dates</li>
+  <li><span><%=folder_icon('calendar.png')%> dates</span></li>
   <ul>
-     <li><%= folder_link 'this week','ago/7' %></li>
-     <li><%= folder_link 'this month','ago/32' %></li>
+     <li><%= folder_link 'this week',   'ago/0/7',   'date.png' %></li>
+     <li><%= folder_link 'this month',  'ago/0/32',  'date.png' %></li>
+     <li><%= folder_link 'last week',  'ago/7/14',  'date.png' %></li>
+     <li><%= folder_link 'last month', 'ago/32/64', 'date.png' %></li>
   </ul>
-  <li>people</li>
+  <% if @user.contacts.any? %>
+  <li><span><%=folder_icon('people.png')%>  contacts</span></li>
   <ul>
    <% for user in @user.contacts %>
-     <li><%= folder_link user.login,'person/'+user.login %></li>
+     <li><%= folder_link( avatar_for(user, 'xsmall') + " " + user.login,"person/%s"%user.id) %></li>
    <% end %>
   </ul>
+  <% end %>
 </ul>

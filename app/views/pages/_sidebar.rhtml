@@ -4,7 +4,7 @@
 <% @page.groups.each do |g| %>
   <b><%= link_to_group g %></b>
 <% end %>
-<% @page.users.with_access.each do |u| %>
+<% @page.users_with_access.each do |u| %>
   <%= link_to_user u %>
 <% end %>
 
@@ -12,10 +12,10 @@
 
 <h2>participation</h2>
 <ul class='plainlist'>
-<% unless @page.users.participated.any? %>
+<% unless @page.users_participated.any? %>
   <li>(none so far)</li>
 <% end %>
-<% @page.users.participated.each do |u| %>
+<% @page.users_participated.each do |u| %>
   <li><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></li>
 <% end %>
 </ul>

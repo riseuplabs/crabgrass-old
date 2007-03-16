@@ -13,7 +13,7 @@ class Tool::WikiController < Tool::BaseController
       @wiki.body = params[:wiki][:body]
       @wiki.user = current_user
       if @wiki.save
-        current_user.wrote(@page)
+        current_user.updated(@page)
         redirect_to page_url(@page, :action => 'show')
       else
         message :object => @wiki

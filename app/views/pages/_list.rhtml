@@ -14,7 +14,7 @@
 <% color = cycle('shade-odd', 'shade-even') %>
 <tr class="<%= color %> <%= 'unread' if part and not part.viewed? %>">
   <td><%= page_icon page %></td>
-  <td><%= link_to page.title, page_url(page) %></td>
+  <td><%= link_to page.title, page_url(page) %> <%= image_tag "emblems/pending.png", :size => "11x11", :title => 'pending' if part.resolved? == false %></td>
   <td><%= page.created_by ? link_to_user(page.created_by.login) : '&nbsp;' %></td>
   <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
   <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>

@@ -10,9 +10,15 @@ class Tool::RateManyController < Tool::BaseController
   
   def new_possible
     return unless @poll
-    @poll.possibles.create params[:possible]
-    @poll.save
-    redirect_to page_url(@page, :action => 'show')
+    possible = @poll.possibles.create params[:possible]
+    if @poll.save
+      @page.unresolve
+      redirect_to page_url(@page, :action => 'show')
+    else
+      @poll.possibles.delete(possible)
+      message :object => possible
+      render :action => 'show'
+    end
   end
   
   def destroy_possible
@@ -32,7 +38,7 @@ class Tool::RateManyController < Tool::BaseController
       weight = new_votes[possible.id.to_s]
       possible.votes.create :user => current_user, :value => weight if weight
     end
-    current_user.wrote(@page)
+    current_user.updated(@page, :resolved => true)
     redirect_to page_url(@page, :action => 'show')
   end
 

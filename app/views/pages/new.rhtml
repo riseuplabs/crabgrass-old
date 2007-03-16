@@ -3,35 +3,34 @@
 <%= start_form_tag :action => 'new' %>
 
 <p>
-<b>title</b><br/>
+<b>title:</b><br/>
 <%= text_field 'page', 'title', :size => 30 %>
 <p>
 
 <p>
-<b>groups</b><br/>
+<b>group name:</b><br/>
 <% if params[:group_id] and (group=Group.find_by_id(params[:group_id])) %>
 <b><%=h group.name %></b>
 <%= hidden_field_tag 'group_id', group.id %>
 <% else %>
-<b><%= text_field_tag 'group_name', '', :size => 30 %></b>
+<b><%= text_field_tag 'group_name', params[:group_name], :size => 30 %></b>
 <% end %>
 </p>
 
-<!--
 <p>
-<label><%= check_box_tag 'announce', '1', false %>  announce this page to everyone in this group</label>
+  <label><%= check_box_tag 'announce', true, params[:announce] %>  announce this page to everyone in the group</label>
 </p>
--->
 
 <p>
-  <b>page type</b><br/>
+  <b>page type:</b><br/>
   <%= select_tag('page_type', options_for_select(page_type_options, params['page_type']), :size => page_type_options.size) %>
 </p>
 
 <p>
-<b>tags</b><br/>
+<b>tags:</b><br/>
 <%= text_field_tag 'tag_list', '', :size => 30 %>
 </p>
 
 <%= submit_tag "Create page" %>
 <%= end_form_tag %>
+

@@ -115,11 +115,8 @@ class User < AuthenticatedUser
   end
   
   def add_page(page, attributes)
-    #page.users << self
-    #page.user_participations.pop
-    # ^^^ super hacky way to remove the last user participation created by users <<
-    # but what else can we do? users << self does accept attributes, but user_participations.build
-    # doesn't update the pages.users until it is saved, which seems like a bug.
+    # user_participations.build doesn't update the pages.users
+    # until it is saved, which seems like a bug, so we use create
     page.user_participations.create attributes.merge(:page_id => page.id, :user_id => id)
   end
   
@@ -128,20 +125,36 @@ class User < AuthenticatedUser
   end
   
   # should be called when a user visits a page
-  def read(page)
-    party = participations.find_or_create_by_page_id page.id
+  def viewed(page)
+    party = page.participation_for_user(self)
+    return unless party
     party.viewed_at = Time.now
     party.viewed = true
     party.save
   end
   
   # should be called when a user writes to a page
-  def wrote(page)
-    party = participations.find_or_create_by_page_id page.id
-    party.changed_at = Time.now
-    party.viewed_at = Time.now
-    party.viewed = true
-    party.save
+  def updated(page, options={})
+    # create self's participation if it does not exist
+    page.user_participations.build(:user_id => self.id) unless page.participation_for_user(self) 
+  
+    # update everyone's participation
+    now = Time.now
+    page.user_participations.each do |party|
+      if party.user_id == self.id
+        party.changed_at = now
+        party.viewed_at = now
+        party.viewed = true
+        party.resolved = options[:resolved] || false
+      else
+        party.viewed = false
+      end
+      party.save      
+    end
+    # this is unfortunate, because perhaps we have already just modified the page?
+    # we should test here to see if we have already saved the page this request.
+    page.updated_at = now
+    page.save
   end
   
 

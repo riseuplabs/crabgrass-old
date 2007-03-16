@@ -4,6 +4,8 @@ class Poll::Possible < ActiveRecord::Base
   belongs_to :poll
   has_many :votes, :dependent => :destroy
 
+  validates_presence_of :name
+  
   # rails doesn't let you serialize instances of auto loaded classes
   # see the bug here: http://dev.rubyonrails.org/ticket/7537
   # i tried config.load paths, i tried requiring all the actions in environment.rb

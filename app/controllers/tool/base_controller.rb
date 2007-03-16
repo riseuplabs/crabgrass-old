@@ -3,15 +3,8 @@
 class Tool::BaseController < ApplicationController
   layout 'tool'
   in_place_edit_for :page, :title
-  append_before_filter :fetch_page, :setup_view
-    
-  def fetch_page
-    @page ||= Page.find_by_id(params[:id])
-    @page.discussion = Discussion.new unless @page.discussion
-    @post_paging, @posts = paginate(:posts, :per_page => 25, :order => 'posts.created_at',
-       :include => :user, :conditions => ['posts.discussion_id = ?', @page.discussion.id])
-    @post = Post.new
-  end
+  append_before_filter :setup_view
+  append_after_filter :update_participation
     
   def destroy
     if request.post?
@@ -35,6 +28,12 @@ class Tool::BaseController < ApplicationController
   
   protected
 
+  def update_participation
+    if logged_in? and @page and params[:action] == 'show'
+      current_user.viewed(@page)
+    end
+  end
+
   # initializes default view variables. can be overwritten by subclasses.
   def setup_view
     # default, only show comment posts for the 'show' action
@@ -42,10 +41,26 @@ class Tool::BaseController < ApplicationController
     @sidebar = true
     true
   end
-    
+  
+  def fetch_page
+    if logged_in?
+      # include all participations and users in the page object
+      @page = Page.find :first, :conditions => ['pages.id = ?', params[:id]], :include => [:user_participations => :user]
+      # grab the current user's participation from memory
+      @parti = @page.participation_for_user(current_user) if logged_in?
+    else
+      @page = Page.find(params[:id])
+    end
+    @page.discussion = Discussion.new unless @page.discussion
+    @post_paging, @posts = paginate(:posts, :per_page => 25, :order => 'posts.created_at',
+       :include => :user, :conditions => ['posts.discussion_id = ?', @page.discussion.id])
+    @post = Post.new
+  end
+      
   # this is aweful, and should be refactored soon.
   def breadcrumbs
-    return unless params[:id] and @page = Page.find_by_id(params[:id])
+    return unless params[:id]
+    @page ||= Page.find_by_id(params[:id]) # page should already be loaded
     if params[:from]
       if logged_in? and params[:from] == 'people' and params[:from_id] == current_user.to_param
         add_crumb 'me', me_url

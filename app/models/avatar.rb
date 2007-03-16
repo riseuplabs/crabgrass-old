@@ -14,7 +14,7 @@ class Avatar < FlexImage::Model
   
   def self.pixels(size)
     case size
-      when 'xsmall'; '16x16'
+      when 'xsmall'; '22x22'
       when 'small' ; '32x32'
       when 'medium'; '48x48'
       when 'large' ; '64x64'

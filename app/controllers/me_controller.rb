@@ -7,26 +7,46 @@ class MeController < ApplicationController
   end
 
   def folder
-    path = params[:path]
-    conditions = ["1"]
-    values = []
-    if path.first == 'unread'
+    path = params[:path].reverse
+    
+    conditions = ['user_participations.user_id = ?']
+    values = [current_user.id]
+    include = :page
+    
+    folder = path.pop
+    if folder == 'unread'
       conditions << 'viewed = ?'
       values << false
-    elsif path.first == 'pending'
+    elsif folder == 'pending'
       conditions << 'user_participations.resolved = ?'
       values << false
-    elsif path.first == 'upcoming'
+    elsif folder == 'upcoming'
       conditions << 'pages.happens_at > ?'
       values << Time.now
+    elsif folder == 'ago'
+      near = path.pop.to_i.days.ago
+      far  = path.pop.to_i.days.ago
+      conditions << 'pages.updated_at < ? and pages.updated_at > ? '
+      values << near
+      values << far
+    elsif folder == 'type'
+      page_class = tool_class_str(path.pop)
+      conditions << 'pages.type IN (?)'
+      values << page_class
+    elsif folder == 'person'
+      conditions << 'user_participations_pages.user_id = ?'
+      values << path.pop
+      include = [:page => :user_participations]
     end
+    
     @cond = [conditions.join(' AND ')] + values
-    @pages = @user.participations.find(
+    @pages = UserParticipation.find(:all, 
       :all,
       :conditions => @cond,
-      :include=>'page',
+      :include => include,
       :order => 'pages.updated_at DESC'
     )
+    @folder = folder
     render :action => 'index'
   end
 

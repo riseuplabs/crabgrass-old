@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem	
   include PageUrlHelper
   
-  before_filter :login_required, :breadcrumbs
+  before_filter :login_required, :fetch_page, :breadcrumbs
 
   # rails lazy loading does work well with namespaced classes, so we help it along: 
   def get_tool_class(tool_class_str)
@@ -21,6 +21,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # returns a string representation of page class based on the tool_type.
+  # if the result in ambiguous, all matching classes are returned as an array.
+  # for example:
+  #   'poll/rate many' returns 'Tool::RateMany'
+  #   'poll'           returns ['Tool::RateOne', 'Tool::RateMany']
+  def tool_class_str(tool_type)
+    ary = TOOLS.collect{|tool_class| tool_class.to_s if (tool_class.tool_type.starts_with?(tool_type) and not tool_class.internal?)}.compact
+    return ary.first if ary.length == 1
+    return ary
+  end
+  
   # override standard url_for to cache the result.
   #def url_for(options = {})
   #  @@cached_urls ||= {}
@@ -75,12 +86,11 @@ class ApplicationController < ActionController::Base
     "<#{tag}>#{content}</#{tag}>"
   end
   
-  # TODO: use params to determine how we got here, and generate a page path
-  # using that information. ie, if we are at /group/:group_id/page/:page_id
-  # then create a path that is based on group and not on user.
-  #def pagepath(page, options)
-  #  url_for({:controller => 'pages', :action => 'show', :id => page}.merge(options))
-  #end
+  protected
+  
+  # to be written by controllers that display pages
+  # called before breadcrumbs
+  def fetch_page; end 
   
   # a before filter to override by controllers
   def breadcrumbs; end

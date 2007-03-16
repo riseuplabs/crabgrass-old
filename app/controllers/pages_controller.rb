@@ -5,7 +5,7 @@
 class PagesController < ApplicationController
   
   def new
-    return @page = Page.new if request.get?
+    return @page = Page.new(params[:page]) if request.get?
     begin
       @page = create_new_page
       if @page.save
@@ -22,10 +22,20 @@ class PagesController < ApplicationController
     groups    = get_groups
     users     = get_users
     page_type = get_page_type
+    users_to_add = users
     
     @page = page_type.new params[:page].merge({:created_by_id => current_user.id})
-    groups.each{|g| @page.add(g, :access => ACCESS_ADMIN) } if groups
-    users.each {|u| @page.add(u, :access => ACCESS_ADMIN) }
+    groups.each do |group|
+      @page.add(group, :access => ACCESS_ADMIN)
+      users_to_add += group.users if params[:announce] and group.users.any?
+    end
+    users_to_add.uniq.each do |u|
+      if users.include? u
+        @page.add(u, :access => ACCESS_ADMIN, :resolved => @page.resolved?)
+      else
+        @page.add(u, :resolved => @page.resolved?)
+      end
+    end
     @page.tag_with(params[:tag_list])
     @page
   end
@@ -74,6 +84,8 @@ class PagesController < ApplicationController
       group = Group.find_by_id params[:group_id]
       raise Exception.new('no such group') if group.nil?
       [group]
+    else
+      []
     end
   end
   
