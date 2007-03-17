@@ -67,14 +67,14 @@ class Page < ActiveRecord::Base
   has_many :groups, :through => :group_participations
 
   # reciprocal links between pages
-  has_and_belongs_to_many :pages,
-    :class_name => "Page",
-    :join_table => "links",
-    :association_foreign_key => "other_page_id",
-    :foreign_key => "page_id",
-    :uniq => true,
-    :after_add => :reciprocate_add,
-    :after_remove => :reciprocate_remove
+#  has_and_belongs_to_many :pages,
+#    :class_name => "Page",
+#    :join_table => "links",
+#    :association_foreign_key => "other_page_id",
+#    :foreign_key => "page_id",
+#    :uniq => true,
+#    :after_add => :reciprocate_add,
+#    :after_remove => :reciprocate_remove
 
   ### validations ###
   

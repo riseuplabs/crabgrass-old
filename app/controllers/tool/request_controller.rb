@@ -3,7 +3,7 @@ class Tool::RequestController < Tool::BaseController
   append_before_filter :fetch_request
   
   def fetch_request
-    @request = @page.data
+    @request = @page.data || @page.model.new
   end
   
   def show
