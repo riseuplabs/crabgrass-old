@@ -51,7 +51,7 @@ class GroupsController < ApplicationController
         @group.avatar.destroy if @group.avatar
         @group.avatar = avatar
         @group.save
-        redirect_to :action => 'edit'
+        redirect_to :action => 'edit', :id => @group
         return
       end
     end

@@ -11,14 +11,12 @@
 
 <h1>my peers <span class='normal'>(users I share a common group with)</span></h1>
 
-
-<%# is it better to use a partial or a direct loop, like above? i think the partial is slower. %>
 <%= render :partial => 'user', :collection => @peers %>
 
+<!--
 <h1>search for a user</h1>
-
 <%= render :partial => 'search_form' %>
-
 <div id="search-results">
   <%= render :file => 'people/search' %>
 </div>
+-->
