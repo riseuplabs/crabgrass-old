@@ -134,7 +134,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="8"
      inkscape:cx="50.163255"
-     inkscape:cy="5.6727116"
+     inkscape:cy="5.7352116"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -242,9 +242,10 @@
        sodipodi:nodetypes="czssc" />
     <g
        id="g1914"
-       transform="translate(-8,-30.125)">
+       transform="translate(-8,-30.125)"
+       style="fill:green">
       <path
-         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#75a1d0;fill-opacity:1;stroke:white;stroke-width:3.5999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:green;fill-opacity:1;stroke:white;stroke-width:3.5999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
          d="M 46.596185,75.360288 L 46.596185,69.039773 L 53.582926,69.011641 L 53.582926,64.113641 L 46.602437,64.113641 L 46.596185,57.139709 L 41.683516,57.147524 L 41.686642,64.101138 L 34.692086,64.152713 L 34.667079,69.031959 L 41.692894,69.011641 L 41.697582,75.341533 L 46.596185,75.360288 z "
          id="path1898"
          sodipodi:nodetypes="ccccccccccccc" />
@@ -252,7 +253,7 @@
          sodipodi:nodetypes="ccccccccccccc"
          id="path1900"
          d="M 46.596185,75.360288 L 46.596185,69.039773 L 53.582926,69.011641 L 53.582926,64.113641 L 46.602437,64.113641 L 46.596185,57.139709 L 41.683516,57.147524 L 41.686642,64.101138 L 34.692086,64.152713 L 34.667079,69.031959 L 41.692894,69.011641 L 41.697582,75.341533 L 46.596185,75.360288 z "
-         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#555;fill-opacity:1;stroke:none;stroke-width:0.70018226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
+         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:green;fill-opacity:1;stroke:none;stroke-width:0.70018226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
     </g>
   </g>
 </svg>

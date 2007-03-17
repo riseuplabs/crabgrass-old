@@ -94,7 +94,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="11.313708"
      inkscape:cx="41.87306"
-     inkscape:cy="7.5727275"
+     inkscape:cy="7.6169217"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -202,9 +202,10 @@
        sodipodi:nodetypes="czssc" />
     <g
        id="g3009"
-       transform="translate(-24.17296,-22.84111)">
+       transform="translate(-24.17296,-22.84111)"
+       style="fill:#a00">
       <path
-         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#75a1d0;fill-opacity:1;stroke:white;stroke-width:3.5999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#a00;fill-opacity:1;stroke:white;stroke-width:3.5999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
          d="M 62.769145,61.755883 L 69.755886,61.727751 L 69.755886,56.829751 L 62.775397,56.829751 L 57.859602,56.817248 L 50.865046,56.868823 L 50.840039,61.748069 L 57.865854,61.727751 L 62.769145,61.755883 z "
          id="path2989"
          sodipodi:nodetypes="ccccccccc" />
@@ -212,7 +213,7 @@
          sodipodi:nodetypes="ccccccccc"
          id="text1314"
          d="M 62.769145,61.755883 L 69.755886,61.727751 L 69.755886,56.829751 L 62.775397,56.829751 L 57.859602,56.817248 L 50.865046,56.868823 L 50.840039,61.748069 L 57.865854,61.727751 L 62.769145,61.755883 z "
-         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#555;fill-opacity:1;stroke:none;stroke-width:0.70018226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
+         style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#a00;fill-opacity:1;stroke:none;stroke-width:0.70018226px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
     </g>
   </g>
 </svg>

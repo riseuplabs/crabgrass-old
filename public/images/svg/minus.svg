@@ -328,7 +328,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="8"
      inkscape:cx="39.453173"
-     inkscape:cy="32.782594"
+     inkscape:cy="32.970094"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -398,7 +398,7 @@
        transform="matrix(2.182912,0,0,2.182912,-13.9268,-15.07969)" />
     <path
        sodipodi:type="arc"
-       style="opacity:1;fill:#6a99d1;fill-opacity:1;fill-rule:nonzero;stroke:#3465a4;stroke-width:3.47648597;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:1;fill:#b18b8b;fill-opacity:1;fill-rule:nonzero;stroke:#815757;stroke-width:3.47648597;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path1650"
        sodipodi:cx="24.130018"
        sodipodi:cy="23.42804"
@@ -408,7 +408,7 @@
        transform="matrix(0.94463,0,0,0.980053,1.2061,-0.28648)" />
     <path
        sodipodi:type="arc"
-       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#c6d8ec;stroke-width:1.8566916;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:1.8566916;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.70491803"
        id="path3392"
        sodipodi:cx="24.130018"
        sodipodi:cy="23.42804"
@@ -422,7 +422,7 @@
        id="path3068"
        sodipodi:nodetypes="czssc" />
     <path
-       style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#d8e5f8;fill-opacity:1;stroke:white;stroke-width:0.9068715px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       style="font-size:59.90107727px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#d40000;fill-opacity:1;stroke:white;stroke-width:0.9068715px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
        d="M 27.366021,26.189442 L 36.415204,26.153005 L 36.415204,19.809148 L 27.374118,19.809148 L 21.007212,19.792954 L 11.947908,19.859754 L 11.91552,26.179321 L 21.01531,26.153005 L 27.366021,26.189442 z "
        id="text1314"
        sodipodi:nodetypes="ccccccccc" />
