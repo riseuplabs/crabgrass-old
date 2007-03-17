@@ -1,0 +1,21 @@
+#/bin/bash
+
+while [ $# -ge 1 ]; do
+	case $1 in
+		-s) sourcef=$2;;
+		-d) destf=$2;;
+		*)  size=$1;;
+	esac
+	shift
+done																										
+
+echo $sourcef
+echo $destf
+echo $size
+
+
+#for i in svg/*.svg; do
+#  base=`basename $i`
+#  base=${base%.*}
+#  inkscape -e $1/$base.png -w $1 -h $1 $i
+#done

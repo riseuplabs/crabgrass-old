@@ -1,7 +1,0 @@
-#/bin/bash
-
-for i in svg/*.svg; do
-  base=`basename $i`
-  base=${base%.*}
-  inkscape -e $1/$base.png -w $1 -h $1 $i
-done
