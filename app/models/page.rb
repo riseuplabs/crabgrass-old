@@ -86,10 +86,6 @@ class Page < ActiveRecord::Base
     true
   end
  
-  def after_destroy
-    data.destroy if data
-  end
-  
   def before_save
     self.updated_by = User.current if User.current
     true
