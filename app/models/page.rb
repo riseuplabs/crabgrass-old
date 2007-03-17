@@ -29,12 +29,14 @@ class Page < ActiveRecord::Base
   ### associations ###  
   
   belongs_to :data, :polymorphic => true
-  has_one :discussion, :dependent => :destroy
+  has_one :discussion
+  #, :dependent => :destroy
   
   # relationship of this page to users
   belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
   belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'
-  has_many :user_participations, :dependent => :destroy
+  has_many :user_participations
+  #, :dependent => :destroy
   has_many :users, :through => :user_participations do
     def with_access
       find(:all, :conditions => 'access IS NOT NULL')
@@ -60,7 +62,8 @@ class Page < ActiveRecord::Base
   end
   
   # relationship of this page to groups
-  has_many :group_participations, :dependent => :destroy
+  has_many :group_participations
+  #, :dependent => :destroy
   has_many :groups, :through => :group_participations
 
   # reciprocal links between pages
