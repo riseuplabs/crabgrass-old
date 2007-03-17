@@ -30,7 +30,7 @@ class Tool::BaseController < ApplicationController
   
   def destroy
     if request.post?
-      #@page.data.destroy if @page.data # can this be in page?
+      @page.data.destroy if @page.data # can this be in page?
       @page.destroy
     end
     redirect_to from_url
