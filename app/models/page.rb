@@ -62,7 +62,10 @@ class Page < ActiveRecord::Base
   # relationship of this page to groups
   has_many :group_participations, :dependent => :destroy
   has_many :groups, :through => :group_participations
-
+  
+  # adding this in creates "SystemStackError (stack level too deep)"
+  # when the page is destroyed in production mode. weird.
+  # this bug seems related: http://dev.rubyonrails.org/ticket/4386
   # reciprocal links between pages
 #  has_and_belongs_to_many :pages,
 #    :class_name => "Page",

@@ -1,21 +1,44 @@
 #/bin/bash
 
+function usage() {
+	cat << EOF
+$0: converts svg file(s) to png file(s).
+usage: $0 <size> <destination-png-file-or-dir> <source-svg-file(s)>
+example: $0 32 pngs/32/ svgs/*.svg
+EOF
+}
+
+if [ $# -lt 2 ]; then
+  usage; exit
+fi
+
+size=$1
+shift
+destf=$1
+shift
+
+if [ ! $size -gt 0 ]; then
+  echo "bad size: " $size
+  usage; exit
+fi
+
+if [ $# -lt 1 ]; then
+  usage; exit
+fi
+
 while [ $# -ge 1 ]; do
-	case $1 in
-		-s) sourcef=$2;;
-		-d) destf=$2;;
-		*)  size=$1;;
-	esac
-	shift
+  sourcef=$1
+  if [ ! -f "$sourcef" ]; then
+    echo "bad svg file: " $sourcef
+    usage; exit
+  fi
+  if [ -d "$destf" ]; then
+    base=`basename "$sourcef"`
+    base=${base%.*}
+    destpng=$destf/$base.png
+  fi
+  echo "converting $sourcef --> $destpng"
+  inkscape -e $destpng -w $size -h $size $sourcef
+  shift
 done																										
 
-echo $sourcef
-echo $destf
-echo $size
-
-
-#for i in svg/*.svg; do
-#  base=`basename $i`
-#  base=${base%.*}
-#  inkscape -e $1/$base.png -w $1 -h $1 $i
-#done
