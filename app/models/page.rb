@@ -86,8 +86,8 @@ class Page < ActiveRecord::Base
     true
   end
  
-  def before_destroy
-    data.destroy
+  def after_destroy
+    data.destroy if data
   end
   
   def before_save
