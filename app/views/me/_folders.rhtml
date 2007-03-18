@@ -47,4 +47,12 @@ end
    <% end %>
   </ul>
   <% end %>
+  <% if @user.groups.any? %>
+  <li><span><%=folder_icon('beehive.png')%>  groups</span></li>
+  <ul>
+   <% for group in @user.groups %>
+     <li><%= folder_link( avatar_for(group, 'xsmall') + " " + group.name,"group/%s"%group.id) %></li>
+   <% end %>
+  </ul>
+  <% end %>
 </ul>

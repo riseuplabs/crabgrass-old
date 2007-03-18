@@ -37,6 +37,10 @@ class MeController < ApplicationController
       conditions << 'user_participations_pages.user_id = ?'
       values << path.pop
       include = [:page => :user_participations]
+    elsif folder == 'group'
+      conditions << 'group_participations.group_id = ?'
+      values << path.pop
+      include = [:page => :group_participations]
     end
     
     @cond = [conditions.join(' AND ')] + values
