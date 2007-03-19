@@ -29,14 +29,17 @@
 </table>
 </div>
 
-<div>
-
-<br/>
+<div id='page-holder'>
+  <div class='header'>
+    <div style='width:20em; float:right; text-align: right'>
+       <%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %>
+    </div>
+    <%= @group.name %> pages
+  </div>
+  <div id='folders'>
+    <%= render :partial => 'pages/folders', :locals => {:mode => 'groups', :users => @group.users, :users_text => 'members'} %>
+  </div>
+  <div id='page-list'>
+    <%= render :partial => 'pages/list' %>
+  </div>
 </div>
-
-<h1>pages</h1>
-
-<% @pages = @group.pages %>
-<%= render :partial => 'pages/list' %>
-
-<p><%= link_button 'new page', :controller => 'pages', :action => 'new', :group_id => @group %></p>

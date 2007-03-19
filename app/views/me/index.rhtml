@@ -29,13 +29,18 @@
 </div>
 
 <div id='page-holder'>
-  <div class='header'>My Pages</div>
+  <div class='header'>
+    <div style='width:20em; float:right; text-align: right'>
+       <%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %>
+    </div>
+    my pages
+  </div>
   <div id='folders'>
-    <%= render :partial => 'folders' %>
+    <%= render :partial => 'pages/folders', :locals => {:mode => 'me', :users => @user.contacts, :groups => @user.groups} %>
   </div>
   <div id='page-list'>
     <%= render :partial => 'pages/list' %>
   </div>
 </div>
 
-<p style="clear:both; padding-top: 2em"><%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %></p>
+<p style="clear:both; padding-top: 2em"></p>

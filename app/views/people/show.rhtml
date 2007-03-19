@@ -29,5 +29,17 @@
 <% end %>
 </p>
 
-<% @pages = @user.pages %>
-<%= render :partial => 'pages/list' %>
+<div id='page-holder'>
+  <div class='header'>
+    <div style='width:20em; float:right; text-align: right'>
+       <%= link_to 'new page &raquo;', {:controller => '/pages', :action => 'new'} %>
+    </div>
+    <%= @user.login %> pages
+  </div>
+  <div id='folders'>
+    <%= render :partial => 'pages/folders', :locals => {:mode => 'people', :groups => @user.groups} %>
+  </div>
+  <div id='page-list'>
+    <%= render :partial => 'pages/list' %>
+  </div>
+</div>

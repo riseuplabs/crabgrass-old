@@ -8,15 +8,33 @@ class GroupsController < ApplicationController
   end
 
   verify :method => :post,
-    :only => [ :destroy, :create, :add_user, :remove_user, :join_group, :leave_group ],
-    :redirect_to => { :action => :list }
+    :only => [ :destroy, :create, :add_user, :remove_user, :join_group, :leave_group ]
 
   def list
     @group_pages, @groups = paginate :groups, :per_page => 10
   end
 
   def show
+    params[:path] = []
+    folder()
   end
+
+  def folder
+    options = {:class => GroupParticipation, :path => params[:path].reverse}
+    if logged_in?
+      # the group's pages that we also have access to
+      options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
+      options[:values]     = [@group.id, current_user.group_ids, current_user.id, true]
+    else
+      # the group's public pages
+      options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
+      options[:values]     = [@group.id, true]
+    end
+    @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
+    render :action => 'show'
+  end
+  
+  # GroupParticipation.find(:all, :joins => "LEFT OUTER JOIN group_participations group_participations_pages ON group_participations_pages.page_id = pages.id LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id", :conditions => "group_participations.group_id = 1 and (group_participations_pages.group_id in (3) or user_participations.user_id = 4)", :include => :page ) 
 
   def new
     @group = Group.new
@@ -122,4 +140,5 @@ class GroupsController < ApplicationController
   def find_group
     @group = Group.find_by_id params[:id]
   end
+  
 end

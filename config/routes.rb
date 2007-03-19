@@ -27,10 +27,12 @@ ActionController::Routing::Routes.draw do |map|
   
   map.people 'people/:action/:id', :controller => 'people'
   map.person 'people/:action/:id', :controller => 'people'
-
+  map.connect 'people/:id/folder/*path', :controller => 'people', :action => 'folder'
+  
   map.groups 'groups/:action/:id', :controller => 'groups'
   map.group  'groups/:action/:id', :controller => 'groups'
-  
+  map.connect 'groups/:id/folder/*path', :controller => 'groups', :action => 'folder'
+    
   map.avatar 'avatars/:id/:size/image.jpg', :action => 'show', :controller => 'avatars'
   
   map.connect '', :controller => "account"

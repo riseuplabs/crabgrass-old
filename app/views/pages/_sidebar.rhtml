@@ -25,6 +25,18 @@
 </div>
 <% end %>
 
+<% if @upart %>
+<div>
+<% if @upart.star? %>
+  <%= image_tag 'actions/star-minus.png' %>
+  <%= link_to 'remove star', page_url(@page, :action => 'remove_star'), :method => :post %>
+<% else %>
+  <%= image_tag 'actions/star-plus.png' %>
+  <%= link_to 'add star', page_url(@page, :action => 'add_star'), :method => :post %>
+<% end %>
+</div>
+<% end %>
+
 <div>
   <%= image_tag 'actions/trash.png' %>
   <%= link_to 'destroy this page', {:action => 'destroy', :id => @page}, :method => 'post', :confirm => 'are you sure you want to delete this page?' %>

@@ -166,5 +166,9 @@ class User < AuthenticatedUser
     page.save
   end
   
-
+  # return an array of ids of all groups this user is a member of.
+  # in the future, perhaps this will be cached in the session.
+  def group_ids
+    groups.collect{|g|g.id}
+  end
 end

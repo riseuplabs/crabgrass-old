@@ -1,31 +1,19 @@
 <%
-
-def folder_icon(image)
-  image = "folders/#{image}" unless image.match /\//
-  image_tag(image, :size => "22x22")
-end
-
-def folder_link(text,path=nil,image=nil)
-  if params[:action] == 'folder'
-    klass = ('selected' if params[:path].join('/').ends_with?(path)) || ''
-  elsif path=='all'
-    klass = 'selected'
-  else
-    klass = ''
-  end
-
-  text = folder_icon(image) + " " + text if image
-  link_to text, url_for(:action => 'folder', :path => path), :class => klass
-end
-
-
+  # local variables passed in: users, groups
+  users ||= []
+  groups ||= []
+  users_text ||= "contacts"
 %>
-
 <ul style="margin: 0">
   <li class='first'><%= folder_link 'all', 'all', 'earth.png' %></li>
+  <% if mode == 'me' %>
   <li><%= folder_link 'unread'.t,   'unread',  'glasses.png' %></li>
   <li><%= folder_link 'pending'.t,  'pending', 'pending.png' %></li>
+  <% end %>
+  <% if mode != 'people' %>
   <li><%= folder_link 'upcoming'.t, 'upcoming', 'time.png' %></li>
+  <% end %>
+  <li><%= folder_link 'starred'.t, 'starred', 'star.png' %></li>
   <li><span><%=folder_icon('types.png')%> types</span></li>
   <ul>
      <li><%= folder_link 'discussion','type/discussion', 'pages/bubbles.png' %></li>
@@ -39,18 +27,18 @@ end
      <li><%= folder_link 'last week',  'ago/7/14',  'date.png' %></li>
      <li><%= folder_link 'last month', 'ago/32/64', 'date.png' %></li>
   </ul>
-  <% if @user.contacts.any? %>
-  <li><span><%=folder_icon('people.png')%>  contacts</span></li>
+  <% if users.any? %>
+  <li><span><%=folder_icon('people.png')%>  <%= users_text %></span></li>
   <ul>
-   <% for user in @user.contacts %>
+   <% for user in users %>
      <li><%= folder_link( avatar_for(user, 'xsmall') + " " + user.login,"person/%s"%user.id) %></li>
    <% end %>
   </ul>
   <% end %>
-  <% if @user.groups.any? %>
+  <% if groups.any? %>
   <li><span><%=folder_icon('beehive.png')%>  groups</span></li>
   <ul>
-   <% for group in @user.groups %>
+   <% for group in groups %>
      <li><%= folder_link( avatar_for(group, 'xsmall') + " " + group.name,"group/%s"%group.id) %></li>
    <% end %>
   </ul>

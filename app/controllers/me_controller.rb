@@ -7,6 +7,18 @@ class MeController < ApplicationController
   end
 
   def folder
+    options = {
+      :class => UserParticipation,
+      :path => params[:path].reverse,
+      :conditions => 'user_participations.user_id = ?',
+      :values => [current_user.id]
+    }
+    @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
+    render :action => 'index'
+  end
+
+
+  def xfolder
     path = params[:path].reverse
     
     conditions = ['user_participations.user_id = ?']
@@ -44,7 +56,7 @@ class MeController < ApplicationController
     end
     
     @cond = [conditions.join(' AND ')] + values
-    @pages = UserParticipation.find(:all, 
+    @pages = UserParticipation.find(
       :all,
       :conditions => @cond,
       :include => include,

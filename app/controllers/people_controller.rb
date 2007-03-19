@@ -5,6 +5,8 @@ class PeopleController < ApplicationController
     :only => [ :add_contact, :remove_contact],
     :redirect_to => { :action => :list }
 
+  prepend_before_filter :fetch_user
+  
   def index
     list
     render :action => 'list'
@@ -17,8 +19,23 @@ class PeopleController < ApplicationController
   end
 
   def show
-    @user = User.find_by_login params[:id]
-    @is_contact = current_user.contacts.include?(@user)
+    params[:path] = []
+    folder()
+  end
+
+  def folder
+    options = {:class => UserParticipation, :path => params[:path].reverse}
+    if logged_in?
+      # the person's pages that we also have access to
+      options[:conditions] = "(user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
+      options[:values]     = [@user.id, current_user.group_ids, current_user.id, true]
+    else
+      # the person's public pages
+      options[:conditions] = "user_participations.user_id = ? AND pages.public = ?"
+      options[:values]     = [@user.id, true]
+    end
+    @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
+    render :action => 'show'
   end
 
   def new
@@ -36,7 +53,6 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
     if request.post? 
       @user.update_attributes(params[:user])
       groups = params[:name].split(/[,\s]/)
@@ -44,17 +60,15 @@ class PeopleController < ApplicationController
         @new_group = Group.find(:all, :conditions =>["name = ?",group])
         @user.groups << @new_group unless @user.groups.find_by_name group
         if @new_group.nil?
-	  flash[:notice] = 'Group %s does not exist.' %group
-	end
+          flash[:notice] = 'Group %s does not exist.' %group
+        end
       end
       flash[:notice] = 'User was successfully updated.'
       redirect_to :action => 'show', :id => @user
     end
   end
 
-
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
       redirect_to :action => 'show', :id => @user
@@ -64,17 +78,16 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     redirect_to :action => 'list'
   end
   
   # post only
   def add_contact
-    contact = User.find_by_login params[:id]
-    page = Page.make :request_for_contact, :user => current_user, :contact => contact
+    page = Page.make :request_for_contact, :user => current_user, :contact => @user
     if page.save
-      message :success => 'Your contact request has been sent to %s.' / contact.login
-      redirect_to person_url(:action => 'show', :id => contact)
+      message :success => 'Your contact request has been sent to %s.' / @user.login
+      redirect_to person_url(:action => 'show', :id => @user)
     else
       message :object => page
       render :action => 'show'
@@ -83,10 +96,9 @@ class PeopleController < ApplicationController
   
   # post only  
   def remove_contact
-    other = User.find_by_login params[:id]
-    current_user.contacts.delete(other)
-    message :success => '%s has been removed from your contact list.' / other.login
-    redirect_to :action => 'show', :id => params[:id]
+    current_user.contacts.delete(@user)
+    message :success => '%s has been removed from your contact list.' / @user.login
+    redirect_to :action => 'show', :id => @user
   end
   
   def new_message
@@ -102,11 +114,17 @@ class PeopleController < ApplicationController
   protected
   
   def breadcrumbs
-    @user = User.find_by_login(params[:id])
     add_crumb 'people', people_url(:action => 'index')
     add_crumb @user.login, people_url(:id => @user, :action => 'show') if @user
     unless ['show','index','list'].include? params[:action]
       add_crumb params[:action], people_url(:action => params[:action], :id => @user)
     end
   end
+  
+  def fetch_user 
+    @user = User.find_by_login params[:id]
+    @is_contact = current_user.contacts.include?(@user)
+    true
+  end
+  
 end
