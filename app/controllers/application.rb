@@ -159,10 +159,10 @@ class ApplicationController < ActionController::Base
       #  order = 'pages.updated_at' if sortkey == 'updated'
       #  order = 'sortkey == 'person'
       end
-      
-      # default sort
-      order ||= 'pages.updated_at DESC'
     end
+
+    # default sort
+    order ||= 'pages.updated_at DESC'
     
     # add in join tables:
     # if the conditions use user or group participations to limit which pages are returned,

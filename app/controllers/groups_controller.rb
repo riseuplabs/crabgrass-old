@@ -106,6 +106,8 @@ class GroupsController < ApplicationController
     page = Page.make :request_to_join_group, :user => current_user, :group => group
     if page.save
       message :success => 'Your request to join this group has been sent.'
+      page = Page.make :join_sent_notice, :user => current_user, :group => group
+      page.save
       redirect_to group_url(:action => 'show', :id => group)
     else
       message :object => page

@@ -10,7 +10,7 @@ RAILS_GEM_VERSION = '1.2.3'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-PAGE_TYPES = %w(discussion poll rate_many event request wiki).freeze
+PAGE_TYPES = %w(discussion poll rate_many event request wiki info).freeze
 SITE_NAME = 'riseup.net'
 
 # levels of page access

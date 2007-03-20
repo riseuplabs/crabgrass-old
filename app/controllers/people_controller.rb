@@ -87,6 +87,8 @@ class PeopleController < ApplicationController
     page = Page.make :request_for_contact, :user => current_user, :contact => @user
     if page.save
       message :success => 'Your contact request has been sent to %s.' / @user.login
+      page = Page.make :contact_sent_notice, :user => current_user, :contact => @user
+      page.save
       redirect_to person_url(:action => 'show', :id => @user)
     else
       message :object => page

@@ -21,6 +21,16 @@ class PageStork
     page.add(group.users)
   end
   
+  def self.join_sent_notice(options)
+    user = options.delete(:user).cast! User
+    group = options.delete(:group).cast! Group
+    info = Tool::Info.new do |i|
+      i.title = 'Request sent to join %s'.t % group.name
+      i.summary = 'You requested to join group %s at %s' % [group.name, Time.now]
+    end
+    info.add(user, :access => ACCESS_ADMIN)
+  end
+  
   def self.invite_to_join_group(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
@@ -48,6 +58,16 @@ class PageStork
       end
     end
     page.add(contact, :access => ACCESS_ADMIN)
+  end
+  
+  def self.contact_sent_notice(options)
+    user = options.delete(:user).cast! User
+    contact = options.delete(:contact).cast! User
+    info = Tool::Info.new do |i|
+      i.title = 'Contact request sent to user %s'.t % contact.login
+      i.summary = 'Your request to add user %s as a contact has been sent. If %s approves the request, then you will also be added to the contact list of %s.' % ([contact.login]*3)
+    end
+    info.add(user, :access => ACCESS_ADMIN)
   end
   
   def self.private_message(options)
