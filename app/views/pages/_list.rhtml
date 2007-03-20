@@ -5,4 +5,7 @@
 <% end %>
 <%= render :partial => "pages/page_line", :collection => @pages %>
 </table>
+<% if @page_sections and @page_sections.page_count > 1 -%>
+<p class="pages"><strong><%= pagination_links @page_sections, :name => 'section', :window_size => 10 %></strong></p>
+<% end -%>
 <!-- end page list -->

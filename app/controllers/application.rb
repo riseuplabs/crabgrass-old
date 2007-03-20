@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem	
   include PageUrlHelper
   
-  before_filter :login_required, :fetch_page, :breadcrumbs
-
+  before_filter :login_required, :breadcrumbs
+    
   # rails lazy loading does work well with namespaced classes, so we help it along: 
   def get_tool_class(tool_class_str)
     klass = Module
@@ -133,12 +133,17 @@ class ApplicationController < ActionController::Base
       elsif folder == 'upcoming'
         conditions << 'pages.happens_at > ?'
         values << Time.now
+        order = 'pages.happens_at DESC'
       elsif folder == 'ago'
         near = path.pop.to_i.days.ago
         far  = path.pop.to_i.days.ago
         conditions << 'pages.updated_at < ? and pages.updated_at > ? '
         values << near
         values << far
+      elsif folder == 'recent'
+        order = 'pages.updated_at DESC'
+      elsif folder == 'old'
+        order = 'pages.updated_at ASC'
       elsif folder == 'type'
         page_class = tool_class_str(path.pop)
         conditions << 'pages.type IN (?)'
@@ -149,10 +154,14 @@ class ApplicationController < ActionController::Base
       elsif folder == 'group'
         conditions << 'group_parts.group_id = ?'
         values << path.pop
+      #elsif folder == 'ascending' or folder == 'descending'
+      #  sortkey = path.pop
+      #  order = 'pages.updated_at' if sortkey == 'updated'
+      #  order = 'sortkey == 'person'
       end
       
-      # sorting
-      order = 'pages.updated_at DESC' # hard coded for now
+      # default sort
+      order ||= 'pages.updated_at DESC'
     end
     
     # add in join tables:

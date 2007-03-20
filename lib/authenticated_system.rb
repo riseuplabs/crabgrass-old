@@ -67,6 +67,8 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
           store_location
+          message :error => 'You do not have sufficient permission to perform that action.' if logged_in?
+          message :error => 'Please login to perform that action.' unless logged_in?
           redirect_to :controller => '/account', :action => 'login'
         end
         accepts.xml do

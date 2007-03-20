@@ -1,17 +1,22 @@
 <h1>my contacts</h1>
 
 <% if @contacts %>
-<%   @contacts.each do |u| %>
-<%=     link_to u.login, :controller => 'people', :action => 'show', :id => u %>
-<%   end %>
+<%= render :partial => 'user', :collection => @contacts %>
 <% else %>
 <%=  'You have no contacts'.t %>
 <% end %>
 
+<h1 style='clear:both'>my peers <span class='normal'>(users I share a common group with)</span></h1>
 
-<h1>my peers <span class='normal'>(users I share a common group with)</span></h1>
-
+<% if @peers %>
 <%= render :partial => 'user', :collection => @peers %>
+<% else %>
+<%=  'You have no peers'.t %>
+<% end %>
+
+<h1 style='clear:both'>all people</h1>
+
+<%= render :partial => 'user', :collection => User.find(:all) %>
 
 <!--
 <h1>search for a user</h1>

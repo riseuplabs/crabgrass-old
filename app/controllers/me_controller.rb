@@ -3,7 +3,8 @@ class MeController < ApplicationController
   append_before_filter :fetch_user
   
   def index
-    @pages = @user.participations.find(:all, :include=>'page', :order => 'pages.updated_at DESC')
+    params[:path] = []
+    folder()
   end
 
   def folder
@@ -17,57 +18,8 @@ class MeController < ApplicationController
     render :action => 'index'
   end
 
-
-  def xfolder
-    path = params[:path].reverse
-    
-    conditions = ['user_participations.user_id = ?']
-    values = [current_user.id]
-    include = :page
-    
-    folder = path.pop
-    if folder == 'unread'
-      conditions << 'viewed = ?'
-      values << false
-    elsif folder == 'pending'
-      conditions << 'user_participations.resolved = ?'
-      values << false
-    elsif folder == 'upcoming'
-      conditions << 'pages.happens_at > ?'
-      values << Time.now
-    elsif folder == 'ago'
-      near = path.pop.to_i.days.ago
-      far  = path.pop.to_i.days.ago
-      conditions << 'pages.updated_at < ? and pages.updated_at > ? '
-      values << near
-      values << far
-    elsif folder == 'type'
-      page_class = tool_class_str(path.pop)
-      conditions << 'pages.type IN (?)'
-      values << page_class
-    elsif folder == 'person'
-      conditions << 'user_participations_pages.user_id = ?'
-      values << path.pop
-      include = [:page => :user_participations]
-    elsif folder == 'group'
-      conditions << 'group_participations.group_id = ?'
-      values << path.pop
-      include = [:page => :group_participations]
-    end
-    
-    @cond = [conditions.join(' AND ')] + values
-    @pages = UserParticipation.find(
-      :all,
-      :conditions => @cond,
-      :include => include,
-      :order => 'pages.updated_at DESC'
-    )
-    @folder = folder
-    render :action => 'index'
-  end
-
-  def edit
-    
+ 
+  def edit   
     if request.post? 
       if @user.update_attributes(params[:user])
         redirect_to :action => 'edit'

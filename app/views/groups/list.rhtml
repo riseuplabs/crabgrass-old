@@ -1,17 +1,16 @@
 <h1>My groups</h1>
 
-<% current_user.groups.each do |g| %>
-<%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>
+<% if current_user.groups %>
+<%= render :partial => 'group', :collection => current_user.groups %>
+<% else %>
+<%=  'You have no groups'.t %>
 <% end %>
 
-<h1>All groups</h1>
+<h1 style='clear:both'>All groups</h1>
 
-<% for group in @groups %>
-<%= link_to group.name, :action => 'show', :id => group %>
-<% end %>
+<%= render :partial => 'group', :collection => @groups %>
 
-<p>
-
+<p style='clear:both'>
 <%= link_button 'New group', :action => 'new' %>
-
 </p>
+

@@ -58,6 +58,11 @@ class Page < ActiveRecord::Base
   def participation_for_user(user) 
     user_participations.detect{|p| p.user_id==user.id }
   end
+
+  # takes an array of group ids, return all the matching group participations
+  def participation_for_groups(group_ids) 
+    group_participations.collect{|gpart| gpart if group_ids.include? gpart.group_id }.compact
+  end
   
   # relationship of this page to groups
   has_many :group_participations, :dependent => :destroy

@@ -110,8 +110,13 @@ class User < AuthenticatedUser
     may!(perm,page) rescue false
   end
   
+  # perm one of :view, :edit, :admin
   def may!(perm, page)
-    true
+    upart = page.participation_for_user(self)
+    return true if upart
+    gparts = page.participation_for_groups(self.group_ids)
+    return true if gparts.any?
+    raise PermissionDenied
   end
   
   def add_page(page, attributes)

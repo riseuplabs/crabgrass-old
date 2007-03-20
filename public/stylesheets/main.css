@@ -1,6 +1,7 @@
 
 body {margin: 0; padding: 0;}
 table {margin: 0; padding: 0; border-spacing: 0;}
+img {border:0}
 
 div#masthead {
   padding-top: 5px;
@@ -135,10 +136,10 @@ div#page-holder div.header {
 }
 div#page-list {
   margin: 0 0 1em 12.5em;
-  border-bottom: 1px solid #ccc;
 }
 div#page-list table {
   width: 100%;
+  border-bottom: 1px solid #ccc;
 }
 div#page-list tr td {
   border-top: 1px solid #ccc;

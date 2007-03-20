@@ -3,7 +3,11 @@
 class Tool::BaseController < ApplicationController
   layout 'tool'
   in_place_edit_for :page, :title
-  append_before_filter :setup_view
+  
+  prepend_before_filter :fetch_page
+  append_before_filter :login_or_public_page_required
+  skip_before_filter :login_required
+  before_filter :setup_view
   append_after_filter :update_participation
   
   def remove_from_my_pages
@@ -77,10 +81,22 @@ class Tool::BaseController < ApplicationController
     true
   end
   
+  def login_or_public_page_required
+    return true if @page.public? and action_name == 'show'
+    return login_required
+  end
+  
+  # this needs to be fleshed out for each action
+  def authorized?
+    return current_user.may?(:admin, @page)
+  end
+  
   def fetch_page
     if logged_in?
       # include all participations and users in the page object
-      @page = Page.find :first, :conditions => ['pages.id = ?', params[:id]], :include => [:user_participations => :user]
+      @page = Page.find :first,
+         :conditions => ['pages.id = ?', params[:id]],
+         :include => [{:user_participations => :user}, :group_participations]       
       # grab the current user's participation from memory
       @upart = @page.participation_for_user(current_user) if logged_in?
     else
