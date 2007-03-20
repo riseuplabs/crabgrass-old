@@ -6,10 +6,13 @@
 </tr>
 <tr>
   <td>
-     <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
-
 <% if current_user.groups.include?(@group) %>
-  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group) %>
+  <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
+&nbsp;  <%= link_to 'invite people to join group', :action => 'invite', :id => @group %>
+&nbsp;  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group), :confirm => 'Are you sure you want to leave this group?' %>
+  <% if @group.users.size == 1 and @group.users.first == current_user %>
+&nbsp;  <%= post_to 'destroy group', group_url(:action => 'destroy', :id => @group), :confirm => 'Are you sure you want to destroy this group?' %>
+  <% end %>
 <% else %>
   <%= post_to 'join group', group_url(:action => 'join_group', :id => @group) %>
 <% end %>

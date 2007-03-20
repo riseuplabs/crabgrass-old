@@ -62,6 +62,28 @@ class GroupsController < ApplicationController
     end
   end
 
+  def invite
+    return unless request.post?
+    wrong = []
+    sent = []
+    params[:users].split(/\s/).each do |login|
+      next if login.empty?
+      if user = User.find_by_login(login)
+        page = Page.make :invite_to_join_group, :group => @group, :user => user, :from => current_user
+        page.save
+        sent << login
+      else
+        wrong << login
+      end
+    end
+    if wrong.any?
+      message :later => true, :error => "These invites could not be sent because the user names don't exist: " + wrong.join(', ')
+    elsif sent.any?
+      message :success => 'Invites sent: ' + sent.join(', ')
+    end
+    redirect_to :action => 'show', :id => @group
+  end
+  
 #  def avatar
 #    if request.post?
 #      avatar = Avatar.create(:data => params[:image][:data])
@@ -79,9 +101,8 @@ class GroupsController < ApplicationController
 
   # post only
   def add_user
-    group = Group.find params[:id]
     user = User.find_by_login params[:login]
-    page = Page.make :invite_to_join_group, :user => user, :group => group, :from => current_user
+    page = Page.make :invite_to_join_group, :user => user, :group => @group, :from => current_user
     if page.save
       message :success => "Invitation sent"
       redirect_to group_url(:action => 'edit', :id => group)
@@ -93,22 +114,27 @@ class GroupsController < ApplicationController
   
   # post only
   def remove_user
-    group = Group.find params[:id]
     user = User.find_by_login params[:login]
-    group.users.delete(user)
-    message :success => 'User %s removed from group %s'.t % [user.login, group.name]
-    redirect_to group_url(:action => 'edit', :id => group)
+    @group.users.delete(user)
+    message :success => 'User %s removed from group %s'.t % [user.login, @group.name]
+    redirect_to group_url(:action => 'edit', :id => @group)
   end
   
   # post only
   def join_group
-    group = Group.find(params[:id]) 
-    page = Page.make :request_to_join_group, :user => current_user, :group => group
+    unless @group.users.any?
+      # if the group has no users, then let the first person join.
+      @group.users << current_user
+      message :success => 'You are the first pers:rows => 8, :cols => 60on in this group'
+      redirect_to :action => 'show', :id => @group
+      return
+    end
+    page = Page.make :request_to_join_group, :user => current_user, :group => @group
     if page.save
       message :success => 'Your request to join this group has been sent.'
-      page = Page.make :join_sent_notice, :user => current_user, :group => group
+      page = Page.make :join_sent_notice, :user => current_user, :group => @group
       page.save
-      redirect_to group_url(:action => 'show', :id => group)
+      redirect_to group_url(:action => 'show', :id => @group)
     else
       message :object => page
       render :action => 'show'
@@ -123,9 +149,15 @@ class GroupsController < ApplicationController
     redirect_to me_url
   end
   
+  # post only
   def destroy
-    Group.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    if @group.users.size > 1 or @group.users.first != current_user
+      message :error => 'You can only delete a group if you are the last member'
+      redirect_to :action => 'show', :id => @group
+    else
+      Group.find(params[:id]).destroy      
+      redirect_to :action => 'list'
+    end
   end  
     
   protected

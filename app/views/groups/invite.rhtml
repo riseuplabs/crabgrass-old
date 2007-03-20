@@ -1,0 +1,9 @@
+<p>
+Enter a list of usernames, one per line, of people you would like to
+invite to join this group:
+</p>
+
+<% form_tag(:action => 'invite', :id => @group) do -%>
+  <%= text_area_tag 'users', params[:users], :rows => 12, :cols => 30 %>  <br/>
+  <%= submit_tag 'Send invites' %>
+<% end -%>
