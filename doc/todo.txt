@@ -1,3 +1,6 @@
+
+invite people to join a group.
+
 general
 ------------
 
@@ -7,13 +10,11 @@ add time zone support
 permissions
 ------------
 
-they don't work at all
+what can people view about me?
 
 
 groups
 ---------
-
-add person inbox controls
 
 make it so that only admins can approve request to join group.
 
@@ -21,7 +22,6 @@ make it so that only admins can approve request to join group.
 people
 ----------
 
-add person inbox controls
 
 
 page view

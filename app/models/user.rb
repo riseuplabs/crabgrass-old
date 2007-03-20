@@ -31,8 +31,8 @@ class User < AuthenticatedUser
   has_and_belongs_to_many :groups, :join_table => :memberships
   
   # peers are users who share at least one group with us
-  has_many :peers, :class_name => 'User', 
-    :finder_sql => 'SELECT DISTINCT * FROM users INNER JOIN memberships ON users.id = memberships.user_id WHERE users.id != #{id} AND memberships.group_id IN (SELECT id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE memberships.user_id = #{id})'
+  has_many :peers, :class_name => 'User',
+    :finder_sql => 'SELECT DISTINCT users.* FROM users INNER JOIN memberships ON users.id = memberships.user_id WHERE users.id != #{id} AND memberships.group_id IN (SELECT id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE memberships.user_id = #{id})'
   
   # relationship to pages
   has_many :participations, :class_name => 'UserParticipation'
@@ -42,27 +42,8 @@ class User < AuthenticatedUser
 	end
   end
   
-  #has_one :avatar, :dependent => :destroy
   belongs_to :avatar
-  # :avatars, :as => :viewable, :dependent => :destroy
   
-#  has_many :urgent_nodes,
-#    :condition => 'deadline > now()',
-#	:order => 'deadline',
-#	:through => 'visits'
-  
-#  has_many :unread_nodes,
-#    :condition => 'read_at < updated_at',
-#    :order => 'updated_at',
-#	:through => 'visits',
-#   :class_name => 'Node'
-
-#  has_many :watched_nodes,
-#    :condition => 'watch = 1',
-#    :order => 'updated_at',
-#	:through => 'visits',
-#    :class_name => 'Node'
-
   has_many :pages_created, 
     :class_name => "Page", :foreign_key => :created_by_id 
 
@@ -77,16 +58,16 @@ class User < AuthenticatedUser
     :foreign_key => "user_id",
     :after_add => :reciprocate_add,
     :after_remove => :reciprocate_remove
- 
-#  has_many :messages
- 
-#  belongs_to :picture
   
   ### validations
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   
   ### callbacks
+ 
+  def after_destroy
+    avatar.destroy
+  end
   
   # if i add you as a contact, then you get
   # me as a contact as well.
@@ -111,6 +92,7 @@ class User < AuthenticatedUser
   end
   
   # perm one of :view, :edit, :admin
+  # this is still a basic stub.
   def may!(perm, page)
     upart = page.participation_for_user(self)
     return true if upart
@@ -173,6 +155,7 @@ class User < AuthenticatedUser
   
   # return an array of ids of all groups this user is a member of.
   # in the future, perhaps this will be cached in the session.
+  # or perhaps :include groups when fetching current_user
   def group_ids
     groups.collect{|g|g.id}
   end

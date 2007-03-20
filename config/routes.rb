@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   # perhaps use nested routes instead?
   # http://www.artofmission.com/articles/2006/10/12/nested-routes-using-map-resources
   
+  # PAGE_TYPES are hardcoded in environment.rb
   for page in PAGE_TYPES
     map.connect ":from/:from_id/#{page}/:action/:id",
      :from => /groups|me|people|networks|places/,
@@ -33,13 +34,9 @@ ActionController::Routing::Routes.draw do |map|
   map.group  'groups/:action/:id', :controller => 'groups'
   map.connect 'groups/:id/folder/*path', :controller => 'groups', :action => 'folder'
     
-  map.avatar 'avatars/:id/:size/image.jpg', :action => 'show', :controller => 'avatars'
+  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   
   map.connect '', :controller => "account"
-
-  # Allow downloading Web Service WSDL as a file with an extension
-  # instead of a file named 'wsdl'
-  map.connect ':controller/service.wsdl', :action => 'wsdl'
 
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id'

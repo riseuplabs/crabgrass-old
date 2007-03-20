@@ -62,19 +62,19 @@ class GroupsController < ApplicationController
     end
   end
 
-  def avatar
-    if request.post?
-      avatar = Avatar.create(:data => params[:image][:data])
-      if avatar.valid?
-        @group.avatar.destroy if @group.avatar
-        @group.avatar = avatar
-        @group.save
-        redirect_to :action => 'edit', :id => @group
-        return
-      end
-    end
-    render :action => 'edit'
-  end
+#  def avatar
+#    if request.post?
+#      avatar = Avatar.create(:data => params[:image][:data])
+#      if avatar.valid?
+#        @group.avatar.destroy if @group.avatar
+#        @group.avatar = avatar
+#        @group.save
+#        redirect_to :action => 'edit', :id => @group
+#        return
+#      end
+#    end
+#    render :action => 'edit'
+#  end
 
 
   # post only

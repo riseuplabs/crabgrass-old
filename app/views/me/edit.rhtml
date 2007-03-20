@@ -12,7 +12,9 @@
 <p>uploaded image will be cropped and stretched to 96 pixels square.</p>
 
 <p>
-<% form_tag({:action => 'avatar'}, {:multipart => true}) do -%>
+<% form_tag({:controller => 'avatars', :action => 'create'}, {:multipart => true}) do -%>
+  <%= hidden_field_tag 'redirect', url_for(:controller=>'me',:action=>'edit') %>
+  <%= hidden_field_tag 'user_id', @user.id %>
   <%= file_field 'image', 'data' %>
   <%= submit_tag 'Upload' %>
 <% end -%>
