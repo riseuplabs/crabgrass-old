@@ -15,19 +15,18 @@
    sodipodi:version="0.32"
    inkscape:version="0.44"
    version="1.0"
-   sodipodi:docbase="/home/elijah/crabgrass/trunk/public/images/svg"
+   sodipodi:docbase="/home/dev/crabgrass/trunk/public/images/smallsvgs"
    sodipodi:docname="default.svg">
   <defs
      id="defs1327">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient2768">
       <stop
          style="stop-color:#919191;stop-opacity:1;"
          offset="0"
          id="stop2770" />
       <stop
-         style="stop-color:#919191;stop-opacity:0;"
+         style="stop-color:white;stop-opacity:1;"
          offset="1"
          id="stop2772" />
     </linearGradient>
@@ -49,9 +48,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="92.648207"
-     inkscape:cy="70.001401"
+     inkscape:zoom="2.8"
+     inkscape:cx="78.721521"
+     inkscape:cy="62.904096"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="898"
@@ -74,19 +73,12 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="opacity:1;color:black;fill:url(#linearGradient2774);fill-opacity:1;fill-rule:nonzero;stroke:#676767;stroke-width:2.391;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       style="opacity:1;color:black;fill:url(#linearGradient2774);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.391;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
        id="rect1880"
        width="122.80944"
        height="122.80944"
        x="2.595279"
        y="2.5952775" />
-    <rect
-       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:2.83705258;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.715847;visibility:visible;display:inline;overflow:visible"
-       id="rect2776"
-       width="117.59183"
-       height="117.44389"
-       x="4.8870268"
-       y="5.1027269" />
     <g
        id="g2778"
        transform="matrix(0.803833,0,0,0.803833,12.36762,12.94001)">

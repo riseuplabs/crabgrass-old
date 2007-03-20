@@ -27,7 +27,8 @@ class AvatarsController < ApplicationController
     if image.nil?
       size = Avatar.pixels(params[:size])
       size.sub!(/^\d\dx/,'')
-      send_file "#{File.dirname(__FILE__)}/../../public/images/#{size}/default.png", :type => 'image/png', :disposition => 'inline'
+      filename = "#{File.dirname(__FILE__)}/../../public/images/default/#{size}.jpg"
+      send_data(IO.read(filename), :type => 'image/jpeg', :disposition => 'inline')
     else
       image.resize! :size => Avatar.pixels(params[:size])
       render_flex_image(image)
