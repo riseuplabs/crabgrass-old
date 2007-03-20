@@ -4,4 +4,13 @@ class Tool::DiscussionController < Tool::BaseController
     @comment_header = ""
   end
   
+  protected
+  
+  def setup_view
+    super
+    # always show reply box
+    @show_reply = true
+    true
+  end
+  
 end

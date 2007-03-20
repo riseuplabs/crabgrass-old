@@ -7,7 +7,7 @@ class Tool::BaseController < ApplicationController
   prepend_before_filter :fetch_page
   append_before_filter :login_or_public_page_required
   skip_before_filter :login_required
-  before_filter :setup_view
+  append_before_filter :setup_view
   append_after_filter :update_participation
   
   def remove_from_my_pages
@@ -77,6 +77,8 @@ class Tool::BaseController < ApplicationController
   def setup_view
     # default, only show comment posts for the 'show' action
     @show_posts = (params[:action] == 'show')
+    # by default, don't show the reply box if there are no posts
+    @show_reply = @posts.any?
     @sidebar = true
     true
   end

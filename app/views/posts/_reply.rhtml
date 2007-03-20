@@ -1,5 +1,12 @@
 <% color = cycle('shade-odd', 'shade-even') %>
 
+<% if @show_reply %>
+<tbody>
+<% else %>
+<%= link_to_function "Add comment &raquo;", "Element.show('reply_container'); Element.hide('show_reply_link')", :id=>'show_reply_link' %>
+<tbody id='reply_container' style='display:none;'>
+<% end %>
+
 <tr class="post-spacer-top <%=color%> <%= @posts.any? ? '' : 'post-border-top' %>">
   <td colspan="2">
     <a name="reply-form">&nbsp;</a>
@@ -33,3 +40,5 @@
 <tr class="post-spacer-bottom <%=color%>">
   <td colspan="2">&nbsp;</td>
 </tr>
+
+</tbody>
