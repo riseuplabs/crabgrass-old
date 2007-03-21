@@ -58,12 +58,8 @@ ActiveRecord::Base.class_eval do
   end
   
   # make sanitize_sql public so we can use it ourselves
-  def sanitize_sql(condition)
-    case condition
-      when Array; sanitize_sql_array(condition)
-      when Hash;  sanitize_sql_hash(condition)
-      else        condition
-    end
+  def public_sanitize_sql(condition)
+    sanitize_sql(condition)
   end
   
   # used by Page

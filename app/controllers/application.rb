@@ -212,7 +212,7 @@ class ApplicationController < ActionController::Base
       count_join = ''
     end
 
-    sql_conditions = ActiveRecord::Base.sanitize_sql(options[:conditions])
+    sql_conditions = klass.public_sanitize_sql(options[:conditions])
     sql  = "SELECT count(#{main_table}.id) FROM #{main_table} "
     sql += "#{count_join} #{options[:joins]} "
     sql += "WHERE #{sql_conditions} "
