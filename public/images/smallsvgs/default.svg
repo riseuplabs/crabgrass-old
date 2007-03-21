@@ -50,13 +50,13 @@
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
      inkscape:cx="78.721521"
-     inkscape:cy="62.904096"
+     inkscape:cy="63.082667"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="898"
      inkscape:window-height="593"
-     inkscape:window-x="0"
-     inkscape:window-y="24" />
+     inkscape:window-x="244"
+     inkscape:window-y="219" />
   <metadata
      id="metadata1330">
     <rdf:RDF>
@@ -72,28 +72,32 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="opacity:1;color:black;fill:url(#linearGradient2774);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.391;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
-       id="rect1880"
-       width="122.80944"
-       height="122.80944"
-       x="2.595279"
-       y="2.5952775" />
     <g
-       id="g2778"
-       transform="matrix(0.803833,0,0,0.803833,12.36762,12.94001)">
-      <path
-         id="path1878"
-         d="M 78.816392,34.068392 L 88.702715,34.068392 L 88.702715,43.954715 L 78.816392,43.954715 L 78.816392,34.068392"
-         style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
-      <path
-         id="path1876"
-         d="M 37.486736,34.068392 L 47.37306,34.068392 L 47.37306,43.954715 L 37.486736,43.954715 L 37.486736,34.068392"
-         style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
-      <path
-         id="text1869"
-         d="M 16.701344,80.740109 L 16.701344,74.518959 C 32.133659,84.131986 47.582029,88.938503 63.0465,88.938523 C 69.09079,88.938503 75.086879,88.247265 81.034786,86.864807 C 85.857335,85.771668 90.487023,84.244513 94.923865,82.28334 C 97.817363,81.029452 102.63996,78.441328 109.39166,74.518959 L 109.39166,80.740109 C 101.32178,86.784412 93.219825,91.253347 85.085768,94.146928 C 78.076886,96.6225 70.746546,97.860298 63.094726,97.860328 C 54.414035,97.860298 46.022724,96.188466 37.92077,92.844827 C 29.818815,89.533289 22.74568,85.498387 16.701344,80.740109"
-         style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" />
+       id="g1878"
+       transform="matrix(1.042265,0,0,1.042265,-2.704969,-2.704967)">
+      <rect
+         y="2.5952775"
+         x="2.595279"
+         height="122.80944"
+         width="122.80944"
+         id="rect1880"
+         style="opacity:1;color:black;fill:url(#linearGradient2774);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.39100003;stroke-linecap:square;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible" />
+      <g
+         transform="matrix(0.803833,0,0,0.803833,12.36762,12.94001)"
+         id="g2778">
+        <path
+           style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           d="M 78.816392,34.068392 L 88.702715,34.068392 L 88.702715,43.954715 L 78.816392,43.954715 L 78.816392,34.068392"
+           id="path1878" />
+        <path
+           style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           d="M 37.486736,34.068392 L 47.37306,34.068392 L 47.37306,43.954715 L 37.486736,43.954715 L 37.486736,34.068392"
+           id="path1876" />
+        <path
+           style="font-size:98.76678467px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           d="M 16.701344,80.740109 L 16.701344,74.518959 C 32.133659,84.131986 47.582029,88.938503 63.0465,88.938523 C 69.09079,88.938503 75.086879,88.247265 81.034786,86.864807 C 85.857335,85.771668 90.487023,84.244513 94.923865,82.28334 C 97.817363,81.029452 102.63996,78.441328 109.39166,74.518959 L 109.39166,80.740109 C 101.32178,86.784412 93.219825,91.253347 85.085768,94.146928 C 78.076886,96.6225 70.746546,97.860298 63.094726,97.860328 C 54.414035,97.860298 46.022724,96.188466 37.92077,92.844827 C 29.818815,89.533289 22.74568,85.498387 16.701344,80.740109"
+           id="text1869" />
+      </g>
     </g>
   </g>
 </svg>
