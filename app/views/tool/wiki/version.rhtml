@@ -2,6 +2,8 @@
   There is no version <%=params[:version]%>
 <% else %>
   <i>You are viewing version <%=@version.version%> by <%=link_to_user(@version.user_id)%></i><br/>
+<div class='greybox'>
   <%= @version.body_html %>
+</div>
 <% end %>
 

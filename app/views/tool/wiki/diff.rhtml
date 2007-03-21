@@ -1,0 +1,57 @@
+<% content_for :style do  %>
+del {
+    color: #999;
+    background-color: #ddd;
+}
+
+ins {
+    background-color: #cfc;
+    text-decoration: none;
+    color: #000;
+}
+
+pre.diff code{
+    padding: 0px;
+}
+
+pre.diff {
+    display: block;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 8px 20px;
+    margin: 15px 0px;
+}
+
+/* http://longren.org/2006/09/27/wrapping-text-inside-pre-tags */
+/* Browser specific (not valid) styles to make preformatted text wrap */
+pre.diff { 
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+<% end %>
+
+
+Comparing changes from 
+<span style='background-color: #ddd; padding: 1px 4px;' >version <%= @old.version %></span>
+to
+<span style='background-color: #cfc; padding: 1px 4px;'>version <%= @new.version %></span>
+
+<p>
+<% if @old.version.to_i != 1 %>
+<%= link_to 'prev change', page_url(@page, :action => 'diff', :old => (@old.version.to_i-1), :new => @old.version) %>
+<% else %>
+prev change
+<% end %>
+<% if @wiki.versions.last.version != @new.version %>
+<%= link_to 'next change', page_url(@page, :action => 'diff', :old => @new.version, :new => (@new.version.to_i+1)) %>
+<% else %>
+next change
+<% end %>
+</p>
+
+<pre class='diff'>
+  <%= @difftext %>
+</pre>

@@ -9,7 +9,10 @@ div.wikiedit {
   <%= @wiki.body_html %>
   <div class='wikiedit'>
    <%= link_to 'edit', page_url(@page,:action=>'edit') %>
+   &nbsp;
    <%= link_to 'versions', page_url(@page,:action=>'versions') %>
+   &nbsp;
+   <%= link_to 'last change', page_url(@page, :action=>'diff', :old => (@wiki.version.to_i-1), :new => @wiki.version) if @wiki.version > 1 %>
   </div>
 </div>
 
