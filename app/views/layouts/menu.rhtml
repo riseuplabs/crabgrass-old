@@ -17,6 +17,12 @@ selected = 'class="selected"'
 
 <% if controller.logged_in? %>
 <ul id="topmenu">
+  <% if controller.logged_in? %>
+  <li <%= selected if active == 'me' %> >
+    <%= link_to "Me", me_url %>
+  </li>
+  <% end %>
+
   <li <%= selected if active == 'groups' %> >
     <%= link_to "Groups", groups_url %>
   </li>
@@ -26,10 +32,6 @@ selected = 'class="selected"'
   </li>
 
   <% if controller.logged_in? %>
-  <li <%= selected if active == 'me' %> >
-    <%= link_to "Me", me_url %>
-  </li>
-
   <li><%= link_to "Logout".t, :controller => '/account', :action => 'logout' %>
   </li>
   <% end %>  
