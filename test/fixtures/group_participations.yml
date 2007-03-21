@@ -1,0 +1,6 @@
+<% for i in 1..20 %>
+grouppage_<%=i%>:
+  page_id: <%= i %>
+  group_id: <%= 3 %>
+  access: 1
+<% end %>

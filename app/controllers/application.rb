@@ -38,29 +38,7 @@ class ApplicationController < ActionController::Base
   #  return(@@cached_urls[options.to_yaml] ||= super(options))
   #end
 
-  # a default success flash
-  def flash_success(msg=nil)
-    flash[:notice] = msg ? msg : _("Changes saved successfully.")
-  end
-  
-  # sets up the flash to have the current error message
-  def flash_error(object_name)
-    object = instance_variable_get("@#{object_name}")
-    unless object.errors.empty?
-      flash.now[:error] = _("Changes could not be saved.")
-      flash.now[:text] ||= ""
-      flash.now[:text] += content_tag "p", _("There are problems with the following fields") + ":"
-      flash.now[:text] += content_tag "ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) }
-      flash.now[:errors] = object.errors
-    end
-  end
-  
-  def flash_error_msg(msg)
-    flash.now[:error] = _("Changes could not be saved.")
-    flash.now[:text] = content_tag "p", _("There are problems with the following fields") + ":"
-    flash.now[:text] += content_tag "ul", msg
-  end
-
+  # a one stop shopping function for flash messages
   def message(opts)    
     if opts[:success]
       flash[:notice] = opts[:success]
@@ -183,25 +161,81 @@ class ApplicationController < ActionController::Base
       :joins => join, :order => order, :class => klass }
   end
   
-  # executes the actual find based on the output of page_query_from_filter_path
+  #
+  # executes the actual find based on the output of page_query_from_filter_path.
+  # 
+  # ok, i admit, this is a little complicated:
+  # 
+  # 1) in order for pagination to work, we need to grab a count of how many records
+  #    we are fetching. this is usually done by running a count query, and then
+  #    using that count information to run a smaller data query.
+  #    
+  # 2) however, we want to use eager loading to pull in the participation and pages
+  #    in one query using joins. this creates a query with multiple rows for every Page
+  #    object. 
+  #    
+  # 3) this means that we need two counts: one for the number of rows returned, and one
+  #    for the number of pages returned. they are different numbers. the rows count is
+  #    used for the limit on the data query, and the pages count is used to paginate. 
+  #    
+  # 4) for this to work, when finding the two counts we need to sort by, group by, and count
+  #    the main table id (ie either group_participations.id or user_participations.id).
+  #    By doing this, we can run one count query which will tell us the number of pages
+  #    (which will be equal to the number of rows in our count query), and the number of
+  #    rows that will be returned in the data query (the sum of each value returned in
+  #    our count query). 
+  # 
+  # one more note: to add to the confusion, we are paginating pages, so the term page is
+  # ambiguous. it could mean a Page from the pages table, or it could mean a page of things
+  # when paginating. i have tried to use the term 'section' instead of a page for the latter.
+  # 
+  # also, because we are pagination, we need to take a slice (that pertains to the current section)
+  # of the counts returned. the idea is the same, but the sort order becomes more important
+  # (the count query and data query need to have the same sort)
+  # 
+  # how much slower is this? i don't know. the extra overhead is in sorting the count query and
+  # grouping the count query. i don't think that this will take much longer than a normal count query.
+  # 
   def find_and_paginate_pages(options)
-    klass = options[:class]
-    per_page = 30
-    options[:include] = :page unless klass == Page
-    count = klass.count(:all,
-      :conditions => options[:conditions],
-      :joins      => "LEFT OUTER JOIN pages ON pages.id = #{klass.to_s.underscore}s.page_id " +
-                     options[:joins]
-    )
-    page_sections = Paginator.new self, count, per_page, params[:section]
-    offset = page_sections.current.offset
+    pages_per_section = 30
+    current_section   = (params[:section] || 1).to_i
+    klass      = options[:class]
+    main_table = klass.to_s.underscore + "s"
+    offset     = (current_section - 1) * pages_per_section
+    order      = options[:order] + ", #{main_table}.id"
+    
+    unless klass == Page
+      options[:include] = :page
+      count_join = "LEFT OUTER JOIN pages ON pages.id = #{main_table}.page_id "
+    else
+      options[:include] = nil
+      count_join = ''
+    end
+
+    sql_conditions = ActiveRecord::Base.sanitize_sql(options[:conditions])
+    sql  = "SELECT count(#{main_table}.id) FROM #{main_table} "
+    sql += "#{count_join} #{options[:joins]} "
+    sql += "WHERE #{sql_conditions} "
+    sql += "GROUP BY #{main_table}.id "
+    sql += "ORDER BY #{order}"
+
+    counts = klass.connection.select_values(sql)
+    #logger.error "counts:\n#{counts.inspect}"
+    #logger.error "counts for this section:\n#{counts.slice(offset,pages_per_section).inspect}"
+    #logger.error "counts before this section:\n#{counts.slice(0, offset).inspect}"
+
+    total_page_count     = counts.size
+    section_row_count    = counts.slice(offset, pages_per_section).inject(0){|sum, n| sum + n.to_i }
+    section_starting_row = counts.slice(0     , offset           ).inject(0){|sum, n| sum + n.to_i }
+        
+    page_sections = Paginator.new self, total_page_count, pages_per_section, current_section
     pages = klass.find(:all,
       :conditions => options[:conditions],
       :joins      => options[:joins],
-      :order      => options[:order],
+      :order      => options[:order] + ", #{main_table}.id",
       :include    => options[:include],
-      :limit      => per_page,
-      :offset     => offset
+      :limit      => section_row_count,
+      :offset     => section_starting_row
     )
     return([pages, page_sections])
   end
