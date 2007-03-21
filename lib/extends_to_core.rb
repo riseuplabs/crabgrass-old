@@ -57,6 +57,15 @@ ActiveRecord::Base.class_eval do
     [self.class.name.downcase.pluralize.dasherize, id] * '-'
   end
   
+  # make sanitize_sql public so we can use it ourselves
+  def sanitize_sql(condition)
+    case condition
+      when Array; sanitize_sql_array(condition)
+      when Hash;  sanitize_sql_hash(condition)
+      else        condition
+    end
+  end
+  
   # used by Page
   def self.class_attribute(*keywords)
     for word in keywords
