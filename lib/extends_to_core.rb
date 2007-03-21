@@ -58,7 +58,7 @@ ActiveRecord::Base.class_eval do
   end
   
   # make sanitize_sql public so we can use it ourselves
-  def public_sanitize_sql(condition)
+  def self.public_sanitize_sql(condition)
     sanitize_sql(condition)
   end
   
