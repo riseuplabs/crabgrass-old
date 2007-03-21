@@ -36,7 +36,7 @@
     <%= link_to page.title, page_url(page) %>
     <%= image_tag "emblems/pending.png", :size => "11x11", :title => 'pending' unless page.resolved? %>
   </td>
-  <td><%= page.created_by ? link_to_user(page.created_by.login) : '&nbsp;' %></td>
+  <td><%= page.updated_by ? link_to_user(page.updated_by.login) : '&nbsp;' %></td>
   <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
   <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>
 </tr>

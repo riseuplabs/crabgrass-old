@@ -3,7 +3,16 @@ class Tool::WikiController < Tool::BaseController
   append_before_filter :fetch_wiki
   
   def show
-    redirect_to page_url(@page, :action => 'edit') unless @wiki.version
+    unless @wiki.version
+      redirect_to page_url(@page, :action => 'edit')
+      return
+    end
+    if not @upart.viewed? and @wiki.version.to_i > 1
+      @diffhtml = html_diff(
+         @wiki.find_version(@wiki.version.to_i-1).body_html,
+         @wiki.body_html
+      )
+    end
   end
 
   def edit

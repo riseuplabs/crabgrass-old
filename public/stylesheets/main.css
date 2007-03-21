@@ -210,6 +210,18 @@ div.profile {
 div.profile td {vertical-align: top; padding: 3px;}
 div.profile h1 {margin: 0; font-size: 2em;}
 
+/** wiki **/
+
+del {
+  color: #999;
+  background-color: #ddd;
+}
+ins {
+  background-color: #cfc;
+  text-decoration: none;
+  color: #000;
+}
+
 /** style **/
 
 body { background-color: #fff; color: #333; }
