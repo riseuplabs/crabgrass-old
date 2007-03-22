@@ -132,6 +132,13 @@ class ApplicationController < ActionController::Base
       elsif folder == 'group'
         conditions << 'group_parts.group_id = ?'
         values << path.pop
+      elsif folder == 'tag'
+         if tag = Tag.find_by_name(path.pop)
+           tag_count ||= 1
+           conditions << "taggings#{tag_count}.tag_id = ?"
+           values << tag.id
+           tag_count += 1
+         end
       #elsif folder == 'ascending' or folder == 'descending'
       #  sortkey = path.pop
       #  order = 'pages.updated_at' if sortkey == 'updated'
@@ -156,7 +163,12 @@ class ApplicationController < ActionController::Base
     if /group_parts\./ =~ conditions_string
       join += " LEFT OUTER JOIN group_participations group_parts ON group_parts.page_id = pages.id"
     end
-    
+    for i in 1..4
+      if /taggings#{i}\./ =~ conditions_string
+        join += " INNER JOIN taggings taggings#{i} ON (pages.id = taggings#{i}.taggable_id AND taggings#{i}.taggable_type = 'Page')"
+      end
+    end
+
     { :conditions => [conditions_string] + values,
       :joins => join, :order => order, :class => klass }
   end

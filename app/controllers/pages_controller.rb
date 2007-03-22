@@ -39,14 +39,6 @@ class PagesController < ApplicationController
     @page.tag_with(params[:tag_list])
     @page
   end
- 
-  def tagged
-    if tag_name = params[:id]
-      if Tag.find_by_name(tag_name)
-        @pages = Tag.find_by_name(tag_name).tagged
-      end
-    end
-  end
 
   # add group or user to participations
   def add

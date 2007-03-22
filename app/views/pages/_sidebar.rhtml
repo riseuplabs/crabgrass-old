@@ -71,7 +71,7 @@
    if @page.tags.blank?
      "(no tags)"
    else
-     @page.tags.collect{|tag| (link_to tag.name, "/pages/tagged/" + tag.name)}.join(", ")
+     @page.tags.collect{|tag| link_to tag.name, "/me/folder/tag/#{tag.name}" }.join(", ")
    end
 %>
 

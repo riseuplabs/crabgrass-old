@@ -59,6 +59,12 @@ class User < AuthenticatedUser
     :after_add => :reciprocate_add,
     :after_remove => :reciprocate_remove
   
+  has_many :tags, :finder_sql => %q[
+    SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
+    WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
+      (SELECT pages.id FROM pages INNER JOIN user_participations ON pages.id = user_participations.page_id
+      WHERE user_participations.user_id = #{id})]
+    
   ### validations
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
