@@ -106,9 +106,11 @@ class Tool::BaseController < ApplicationController
       @upart = nil
     end
     @page.discussion = Discussion.new unless @page.discussion
-    @post_paging, @posts = paginate(:posts, :per_page => 25, :order => 'posts.created_at',
-       :include => :user, :conditions => ['posts.discussion_id = ?', @page.discussion.id], 
-       :parameter => 'posts')
+    
+    disc = @page.discussion
+    current_page = params[:posts] || disc.last_page
+    @post_paging = Paginator.new self, disc.posts.count, disc.per_page, current_page
+    @posts = disc.posts.find(:all, :limit => disc.per_page, :offset =>  @post_paging.current.offset)
     @post = Post.new
   end
       

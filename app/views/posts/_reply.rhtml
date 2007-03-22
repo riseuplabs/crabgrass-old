@@ -30,9 +30,9 @@
     <%= hidden_field_tag('from', params[:from]) %>
     <%= hidden_field_tag('from_id', params[:from_id]) %>
     <br/>
-    <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
-    <%= submit_tag "Post Message" %>
 
+    <div style="float: left"><%= submit_tag "Post Message" %></div>
+    <div style="text-align: right"><a  href="javascript:quickRedReference();">formatting reference</a></div>
   <% end -%>
   </td>
 </tr>

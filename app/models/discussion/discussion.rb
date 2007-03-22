@@ -30,11 +30,14 @@ class Discussion < ActiveRecord::Base
 
   ## methods ################################################
   
+  def per_page() 25 end
  
-#  def paged?() posts_count > 25 end
+  # don't know why i can't get posts_count to be correct value
+  # for now, we use posts.count
+  def paged?() posts.count > per_page end
   
   def last_page
-    (posts_count.to_f / 25.0).ceil.to_i
+    (posts.count.to_f / per_page.to_f).ceil.to_i
   end
 
 #  def editable_by?(user)
