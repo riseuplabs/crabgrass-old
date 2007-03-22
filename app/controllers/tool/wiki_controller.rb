@@ -7,7 +7,7 @@ class Tool::WikiController < Tool::BaseController
       redirect_to page_url(@page, :action => 'edit')
       return
     end
-    if not @upart.viewed? and @wiki.version.to_i > 1
+    if @upart and not @upart.viewed? and @wiki.version.to_i > 1
       @diffhtml = html_diff(
          @wiki.find_version(@wiki.version.to_i-1).body_html,
          @wiki.body_html
