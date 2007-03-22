@@ -212,15 +212,16 @@ div.profile h1 {margin: 0; font-size: 2em;}
 
 /** wiki **/
 
-del.diffmod {
+del.diffmod, del.diffins {
   color: #999;
   background-color: #ddd;
 }
-ins.diffmod {
+ins.diffmod, ins.diffins {
   background-color: #cfc;
   text-decoration: none;
   color: #000;
 }
+
 
 /** style **/
 
