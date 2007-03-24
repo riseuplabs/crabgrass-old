@@ -13,7 +13,7 @@ class AvatarsController < ApplicationController
     avatar = Avatar.create(:data => params[:image][:data])
     if thing.avatar
       for size in %w(xsmall small medium large xlarge)
-        expire_page avatar_url(:id => avatar, :size => size)
+        expire_page :controller => 'avatar', :action => 'show', :id => avatar, :size => size
       end
       thing.avatar.destroy
     end
