@@ -55,12 +55,12 @@
 
 <%= link_to 'edit &raquo;', page_url(@page, :action => 'access') %>
 
-<h2>participation</h2>
+<h2>contributors</h2>
 <ul class='plainlist'>
-<% unless @page.users_participated.any? %>
+<% unless @page.contributors.any? %>
   <li>(none so far)</li>
 <% end %>
-<% @page.users_participated.each do |u| %>
+<% @page.contributors.each do |u| %>
   <li><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></li>
 <% end %>
 </ul>

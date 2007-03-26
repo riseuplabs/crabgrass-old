@@ -136,8 +136,14 @@ class User < AuthenticatedUser
   #
   def updated(page, options={})
     # create self's participation if it does not exist
-    page.user_participations.build(:user_id => self.id) unless page.participation_for_user(self) 
-  
+    unless page.participation_for_user(self) 
+      page.user_participations.build(:user_id => self.id) 
+    end 
+
+    unless page.contributors.include?(self)
+      page.contributors_count +=1
+    end
+     
     # update everyone's participation
     now = Time.now
     page.user_participations.each do |party|

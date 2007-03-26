@@ -50,7 +50,7 @@ class Page < ActiveRecord::Base
   end
   
   # like users.participated, but uses already included data
-  def users_participated
+  def contributors
     user_participations.collect{|part| part.user if part.changed_at }.compact
   end
   

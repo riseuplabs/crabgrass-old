@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 26) do
+ActiveRecord::Schema.define(:version => 27) do
 
   create_table "avatars", :force => true do |t|
     t.column "data",   :binary
@@ -74,19 +74,21 @@ ActiveRecord::Schema.define(:version => 26) do
   end
 
   create_table "pages", :force => true do |t|
-    t.column "title",         :string
-    t.column "created_at",    :datetime
-    t.column "updated_at",    :datetime
-    t.column "happens_at",    :datetime
-    t.column "resolved",      :boolean,  :default => true
-    t.column "public",        :boolean
-    t.column "created_by_id", :integer
-    t.column "updated_by_id", :integer
-    t.column "summary",       :string
-    t.column "type",          :string
-    t.column "message_count", :integer,  :default => 0
-    t.column "data_id",       :integer
-    t.column "data_type",     :string
+    t.column "title",              :string
+    t.column "created_at",         :datetime
+    t.column "updated_at",         :datetime
+    t.column "happens_at",         :datetime
+    t.column "resolved",           :boolean,  :default => true
+    t.column "public",             :boolean
+    t.column "created_by_id",      :integer
+    t.column "updated_by_id",      :integer
+    t.column "summary",            :string
+    t.column "type",               :string
+    t.column "message_count",      :integer,  :default => 0
+    t.column "data_id",            :integer
+    t.column "data_type",          :string
+    t.column "contributors_count", :integer,  :default => 0
+    t.column "posts_count",        :integer,  :default => 0
   end
 
   create_table "pictures", :force => true do |t|

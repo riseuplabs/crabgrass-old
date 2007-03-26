@@ -61,7 +61,7 @@ class PagesController < ApplicationController
     @page = Page.find_by_id(params[:id])
     tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
     @page.tag_with(tags.uniq.join(' '))
-    @page.save
+    @page.save 
     redirect_to page_url(@page)
   end
   
