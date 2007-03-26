@@ -162,6 +162,7 @@ class User < AuthenticatedUser
     # we should test here to see if we have already saved the page this request.
     page.resolved = options[:all_resolved] || page.resolved?
     page.updated_at = now
+    page.updated_by = self
     page.save
   end
   
