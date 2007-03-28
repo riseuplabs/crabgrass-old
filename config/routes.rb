@@ -1,3 +1,20 @@
+class ResourceMatcher < Regexp
+   def initialize(*args)
+     super('^$')
+   end
+
+   def inspect
+     "#{self.class}.new"
+   end
+end
+
+class FindController < ResourceMatcher
+   def =~(identifier)
+     puts identifier
+     return false
+   end
+end
+
 ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
   
@@ -38,6 +55,17 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect '', :controller => "account"
 
-  # Install the default route as the lowest priority.
+
+  
+  # typically, this is the default route
   map.connect ':controller/:action/:id'
+  
+  # our default route is sent to the dispatcher
+  map.connect ':group_name/:page_name', :controller => 'dispatch'
+  
 end
+
+# debug routes
+#ActionController::Routing::Routes.routes.each do |route|
+#  puts route
+#end

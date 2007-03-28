@@ -2,7 +2,7 @@
 
 class Tool::BaseController < ApplicationController
   layout 'tool'
-  in_place_edit_for :page, :title
+  #in_place_edit_for :page, :title
   
   prepend_before_filter :fetch_page
   append_before_filter :login_or_public_page_required
@@ -63,6 +63,29 @@ class Tool::BaseController < ApplicationController
       @page.save
     end
     render :template => 'pages/access'
+  end
+  
+  def title
+    title = params[:page][:title]
+    name = params[:page][:name]
+    if name.any?
+      pages = Page.find(:all,
+        :conditions => ['pages.name = ? and group_participations.group_id IN (?)',name, @page.group_ids],
+        :include => :group_participations)
+      if pages.any? and pages.first != @page
+        message :error => 'That page name is already taken'
+        render :action => 'show'
+        return
+      end
+    end
+    @page.title = title
+    @page.name = name
+    if @page.save
+      redirect_to page_url(@page, :action => 'show')
+    else
+      message :object => @page
+      render :action => 'show'
+    end
   end
   
   protected

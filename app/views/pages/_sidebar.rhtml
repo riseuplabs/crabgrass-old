@@ -39,7 +39,7 @@
 
 <div>
   <%= image_tag 'actions/trash.png' %>
-  <%= link_to 'destroy this page', {:action => 'destroy', :id => @page}, :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
+  <%= link_to 'destroy this page', page_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
 </div>
 
 <% end %>

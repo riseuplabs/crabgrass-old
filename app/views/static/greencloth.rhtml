@@ -1,0 +1,158 @@
+<% content_for :style do %>
+p, td {font-family: georgia, serif;
+  font-size: 85%;
+  line-height: 1.5em;
+}
+body {
+  padding: 1em;
+  background:#ccc;
+}
+#maintable {
+  background: #fafafa;
+  border-right: 4px solid #aaa;
+  border-bottom: 4px solid #aaa;
+}
+td.header {
+ color: #999;
+ font-size: 1.3em;
+ border-left: 4px solid #ccc;
+ padding-left: 0.5em;
+}
+td.code {
+  font-family: monospace;
+  background: #dfd;
+  vertical-align: top;
+  padding: 3px;
+}
+td.rendered {
+  background: #eef;
+  vertical-align: top;
+  padding: 3px;
+}
+
+<% end %>
+<%
+
+def row(text)
+  %Q(
+<tr>
+  <td class='code'><pre>#{text}</pre></td>
+  <td><b>&rarr;</b></td>
+  <td class='rendered'>#{GreenCloth.new(text).to_html}</td>
+</tr>
+  )
+end
+
+def header(text)
+  %Q(
+<tr>
+  <td class='header' colspan="3">#{text}</td>
+</tr>
+  )
+end
+
+%>
+
+<table cellpadding='0' cellspacing='10' id='maintable'>
+<%=  
+
+  header('Paragraphs and line breaks') +
+  row(<<END) +
+Paragraphs
+===========
+
+Paragraphs are separated by a blank line.
+This is the first paragraph.
+
+Followed by another.
+Lines within the paragraph will wrap.
+
+Line breaks
+-----------
+
+You can force 
+a line break by ending the line with a space.
+END
+
+  header('Lists') +
+  row(<<END) +
+* rainbows
+** are difficult to touch
+** make me happy
+* ninjas are cool
+* crows are smart
+
+# first, overthrow capitalism.
+# then, relax.
+
+# or perhaps take a nap instead.
+END
+
+  header('Blocks') +
+  row(<<END) +
+Blockquotes are indented text.
+bq. This is a blockquote.
+
+> this is also a blockquote
+> in 'email' style.
+END
+
+  header('Formatting') +
+  row(<<END) +
+_emphasis_, __italicized__, *strong*, **bold** 
+??citation??, -deleted text-, +inserted text+ 
+^superscript^, ~subscript~ 
+@code@, %(classname)span%
+END
+
+  header('Links') +
+  row(<<END) +
+# URLs becomes links http://riseup.net
+# Text [in brackets] is assumed to be a page name.
+# You can also point to a [different page -> trees].
+# To specify a different group:
+** [fruit/orange] is different from [colors/orange] 
+** [orange's -> fruit/orange] is different
+   from [orange's -> colors/orange] 
+# Instead of the page name, you can use the
+  page id number: [oranges -> 342] 
+# If you want a square bracket in your text, you can
+  disable linking \\[like so\\].
+END
+
+  header('Headings') +
+  row(<<END) +
+h1. Top level
+
+h2. Second level
+
+h3. Third level
+END
+  row(<<END) +
+Top Level
+=========
+
+Second Level
+------------
+END
+
+  header('Tables') +
+  row(<<END) +
+| bird      | color  | locomotion  |
+| macaw     | red    | fly  |
+| kakapo    | green  | walk |
+| penguin   | black  | swim |
+END
+  row(<<END) 
+|_. bird    |_. color |_. locomotion  |
+| macaw     | red     | fly  |
+| kakapo    | green   | walk |
+| penguin   | black   | swim |
+END
+%>
+
+<tr><td>
+For more details, see the <a href="http://hobix.com/textile/quick.html">quick guide to textile</a>
+</td></tr>
+</table>
+

@@ -85,7 +85,9 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :title
   validates_associated :data
-  
+
+  validates_format_of     :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
+ 
   ### callbacks ###
 
   def before_create
@@ -148,8 +150,8 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
-  #def new_tool
-  #  tool = model.create
-  #end
+  def group_ids
+    groups.collect{|g|g.id}
+  end
   
 end

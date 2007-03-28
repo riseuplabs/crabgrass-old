@@ -1,0 +1,11 @@
+<html>
+<head>
+  <title><%= params[:action] %></title>
+  <style>
+    <%= yield :style %>
+  </style>  
+</head>
+<body>
+<%= @content_for_layout %>
+</body>
+</html>

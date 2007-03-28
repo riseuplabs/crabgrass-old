@@ -63,6 +63,15 @@ div.main_with_sidebar {
   margin-right: 180px;
 }
 
+h1#page_title span {
+  display: none;
+}
+h1#page_title:hover span {
+  display: inline;
+}
+#title_editor {padding: 1em;}
+.h1 {font-size: 2em;}
+
 /*
 .post-author {
   background: #e9e9e9;

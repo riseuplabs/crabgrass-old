@@ -1,15 +1,13 @@
 <% if @sidebar %>
 
 <%= render :file => 'layouts/head', :locals => {:main_class => 'with_sidebar'} %>
-
 <div id="sidebar">
   <%= render :partial => 'pages/sidebar' -%>
 </div>
-
 <div id="main" class="main_with_sidebar">
   <%= display_messages -%>
   <div class='breadcrumbs'><%= link_to_breadcrumbs %></div>
-  <h1 id='page_title'><%= in_place_editor_field 'page', 'title' %></h1>
+  <%= render :partial => 'pages/title' %>
   <%= @content_for_layout %>
   <%= render :partial => 'posts/list' if @show_posts %>
 </div> <!-- end main -->
@@ -17,7 +15,6 @@
 <% else %>
 
 <%= render :file => 'layouts/head' %>
-
 <div id="main" class="main_with_sidebar">
   <%= display_messages -%>
   <div class='breadcrumbs'><%= link_to_breadcrumbs %></div>

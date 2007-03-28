@@ -34,9 +34,13 @@ class Object
   end
 end
 
-# taken from beast
-# used to auto-format post body
+ 
+
 ActiveRecord::Base.class_eval do
+  
+  # taken from beast
+  # used to auto-format post body
+  
   def self.format_attribute(attr_name)
     class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
     define_method(:body)       { read_attribute attr_name }
@@ -45,10 +49,7 @@ ActiveRecord::Base.class_eval do
     before_save do |record|
       unless record.body.blank?
         record.body.strip!
-        record.body_html = auto_link record.body.to_s do |text|
-          truncate(text, 50)
-        end
-        record.body_html = white_list(RedCloth.new(record.body_html).to_html)
+        record.body_html = GreenCloth.new(record.body).to_html
       end
     end
   end

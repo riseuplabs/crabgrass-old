@@ -1,8 +1,6 @@
-#require 'redcloth'
-
 class Wiki < ActiveRecord::Base
-  include ActionView::Helpers::TagHelper
-  include ActionView::Helpers::TextHelper
+#  include ActionView::Helpers::TagHelper
+#  include ActionView::Helpers::TextHelper
 #  include WhiteListHelper
   
   #has_many :pages, :as => :data
@@ -25,11 +23,12 @@ class Wiki < ActiveRecord::Base
 
   
   def format_wiki_text(text)
-    html = text.strip
-    html = auto_link(html) do |link|
-        truncate(link, 50)
-    end
-    html = RedCloth.new(html).to_html
+    #html = text.strip
+    #html = auto_link(html) do |link|
+    #    truncate(link, 50)
+    #end
+    #html = RedCloth.new(html).to_html
+    GreenCloth.new(text).to_html
   end
    
 end

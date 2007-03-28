@@ -62,7 +62,7 @@ class Group < ActiveRecord::Base
   
   validates_presence_of   :name
   validates_format_of     :name, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
-  validates_length_of     :name, :within => 3..40
+  validates_length_of     :name, :within => 3..50
   validates_uniqueness_of :name
 
   # methods

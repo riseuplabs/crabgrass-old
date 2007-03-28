@@ -4,7 +4,7 @@
 
 class AvatarsController < ApplicationController
   
-  caches_page :show  
+  caches_page :show
  
   def create 
     group = Group.find params[:group_id] if params[:group_id]

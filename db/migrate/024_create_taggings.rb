@@ -1,4 +1,4 @@
-class AddDatabaseStructureForTagging < ActiveRecord::Migration
+class CreateTaggings < ActiveRecord::Migration
   def self.up
     create_table :taggings do |t|
        t.column :taggable_id, :integer
