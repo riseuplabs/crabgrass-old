@@ -5,7 +5,7 @@ div.wikiedit {
 }
 <% end %>
 
-<div class='greybox'>
+<div class='wikibox'>
   <%= @diffhtml || @wiki.body_html %>
   <div class='wikiedit'>
    <%= link_to 'edit', page_url(@page,:action=>'edit') %>

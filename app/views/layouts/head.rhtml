@@ -18,22 +18,12 @@
     <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
   <![endif]-->
 </head>
-<body class="<%=main_class||=''%>">
+<body class="<%=body_class||=''%>">
 
-<!--
-structure from
-http://www.contentwithstyle.co.uk/Articles/17/a-css-framework
--->
-
-<div id="page">
+<div id="container">
   <div id="masthead" class="clearfix">
     <%= render 'layouts/masthead' %>
-
     <div id="topnav-outer"><div id="topnav" class="clearfix">
     <%= render 'layouts/menu' %>
     </div></div><!--end menu -->
-
   </div><!--end header -->
-
-
-  <div id="content" class="clearfix">

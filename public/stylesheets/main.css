@@ -1,3 +1,20 @@
+/*
+document outline
+(page view elements in parens):
+
+body (.with_sidebar)
+  div#container
+    div#masthead
+    (div#sidebar)
+    div#main (.with_sidebar)
+      div#message
+      div#breadcrumbs
+      div#content
+        (div#title)
+        ... content ...
+        (div#posts)
+
+*/
 
 body {margin: 0; padding: 0;}
 table {margin: 0; padding: 0; border-spacing: 0;}
@@ -12,11 +29,6 @@ div#masthead {
 div#masthead h1 {
   display: inline; 
   padding: 5px; color: white; font-size:2em; font-weight:bold;
-}
-
-/** MAIN **/
-#main {
-  padding: 10px;
 }
 
 /** LOGIN **/
@@ -36,69 +48,69 @@ div#frontmain {
   margin: 0 auto;
 }
 
+/** layout **/
+
+div#main {
+  padding: 10px;
+}
+div#content {}
+div#breadcrumbs {margin-bottom: 1em;}
 
 /** layout for pages **/
 
 body.with_sidebar {
-  background: white url(/images/sidebar.png) repeat-y top right;
+  background: white url(/images/sidebar-grey.png) repeat-y top right;
 }
 div#sidebar {
   float:right;
   width: 170px;
 }
 div#sidebar h2 {
-  border-bottom: 1px solid white;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
   font-size: 1em;
   background-color: #efefef;
   padding-left: 0.5em;
+  padding-bottom: 3px;
+  margin-left: -8px;
 }
-div#sidebar div {
+div#sidebar div.line {
   font-size: 0.8em;
   margin-top: 2px;
 }
 div#sidebar div img {
   vertical-align: top;
 }
-div.main_with_sidebar {
+div#main.with_sidebar {
   margin-right: 180px;
 }
 
-h1#page_title span {
+/* title */
+
+div#title {
+  background: #efefef;
+  color: #449;
+  padding: 10px;
+  border-right: 3px solid #ccc;
+}
+div#title_text span#title_edit_link {
   display: none;
 }
-h1#page_title:hover span {
+div#title_text:hover span#title_edit_link {
   display: inline;
 }
 #title_editor {padding: 1em;}
-.h1 {font-size: 2em;}
+.h1 {font-size: 2em; font-weight: bold;}
+div#title_text span {
+  float: right;
+  font-size: 50%;
+}
 
-/*
-.post-author {
-  background: #e9e9e9;
-  border: 1px solid #ccc;
-  border-right: 0;
-  position: relative;
-  left: 1px;
-  padding: 3px;
-  text-align: right;
-}
-.post-body {
-  background: #f3f3f3;
-  border: 1px solid #ccc;
-  padding: 3px;
-}
-td.post-body p {}
-tr.post td {
-  vertical-align: top;
-}
-tr.post-spacer td {line-height: 0.4em;}
-textarea#post_body {width: 100%}
-*/
 
-div.posts {
+/* posts */
+div#posts {
   margin: 1em 0;
 }
-/* div.posts h1 {margin: 0.5em; padding: 0; font-size: 1em;} */
 table.posts {
   width: 100%
 }
@@ -193,11 +205,17 @@ div#folders li img {
 
 /** tool formatting **/
 
-div.greybox {
+div.wikibox {
   background: #f6f6f6;
   border: 1px solid #cfcfcf;
   border-width: 0px 3px 3px 0px;
   padding: 1em;
+}
+div.formbox {
+  margin-top: 1em;
+}
+div.formbox textarea {
+  width: 100%;
 }
 div.request {
   margin: 0 auto;
@@ -248,5 +266,4 @@ pre {
   font-size: 11px;
 }
 
-/* h1 {font-size: 1.3em;} */
 .normal {font-size: 13px;font-weight:normal;}

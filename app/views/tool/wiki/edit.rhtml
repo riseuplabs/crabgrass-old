@@ -3,7 +3,8 @@
 <div class='formbox'>
 
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
-   <%= text_area 'wiki', 'body', :size => '80x20' %>
+   <%= text_area 'wiki', 'body' %>
+   <%# :size => '80x20' %>
    <div>
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
      <%= submit_tag 'Save', :name => 'save' %>

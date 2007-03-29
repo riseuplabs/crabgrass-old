@@ -1,26 +1,42 @@
 <% if @sidebar %>
 
-<%= render :file => 'layouts/head', :locals => {:main_class => 'with_sidebar'} %>
+<%= render :file => 'layouts/head', :locals => {:body_class => 'with_sidebar'} %>
 <div id="sidebar">
   <%= render :partial => 'pages/sidebar' -%>
 </div>
-<div id="main" class="main_with_sidebar">
-  <%= display_messages -%>
-  <div class='breadcrumbs'><%= link_to_breadcrumbs %></div>
-  <%= render :partial => 'pages/title' %>
-  <%= @content_for_layout %>
-  <%= render :partial => 'posts/list' if @show_posts %>
+<div id="main" class="with_sidebar">
+  <div id='message'>
+    <%= display_messages -%>
+  </div>
+  <div id='breadcrumbs'>
+    <%= link_to_breadcrumbs -%>
+  </div>
+  <div id='content'>
+    <div id='title'>
+      <%= render :partial => 'pages/title' -%>
+    </div>
+    <%= @content_for_layout %>
+    <%= render :partial => 'posts/list' if @show_posts %>
+  </div>
+  
 </div> <!-- end main -->
 
 <% else %>
 
 <%= render :file => 'layouts/head' %>
-<div id="main" class="main_with_sidebar">
-  <%= display_messages -%>
-  <div class='breadcrumbs'><%= link_to_breadcrumbs %></div>
-  <%= @content_for_layout %>
-</div> <!-- end main -->
+<div id="main" class="with_sidebar">
+  <div id='message'>
+    <%= display_messages -%>
+  </div>
+  <div id='breadcrumbs'>
+    <%= link_to_breadcrumbs -%>
+  </div>
+  <div id='content'>
+    <%= @content_for_layout %>
+  </div>
+</div>
+<%= render :file => 'layouts/foot' %>
 
 <% end %>
 
-<%= render :file => 'layouts/foot' %>
+

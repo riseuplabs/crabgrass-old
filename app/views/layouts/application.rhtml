@@ -1,10 +1,16 @@
 <%= render :file => 'layouts/head' %>
 
-    <div id="main">
-      <%= display_messages %>
-      <div class='breadcrumbs'><%= link_to_breadcrumbs %></div>
-      <%= @content_for_layout %>
-    </div>
+<div id="main">
+  <div id='message'>
+    <%= display_messages %>
+  </div>
+  <div id='breadcrumbs'>
+    <%= link_to_breadcrumbs %>
+  </div>
+  <div id='content'>
+    <%= @content_for_layout %>
+  </div>
+</div>
 
 <%= render :file => 'layouts/foot' %>
 
