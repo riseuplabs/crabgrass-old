@@ -1,0 +1,11 @@
+<h3>sorry, that page does not exist.</h3>
+
+<ul>
+  <li>search for similar pages</li>
+  <% if request.env["HTTP_REFERER"] %>
+  <li><%= "<a href='%s'>return to previous page</a>" % request.env["HTTP_REFERER"] %></li>
+  <% end %>
+</ul>
+
+
+
