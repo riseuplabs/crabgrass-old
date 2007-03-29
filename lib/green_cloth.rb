@@ -85,7 +85,7 @@ class GreenCloth < RedCloth
     :glyphs_textile
   ]
 
-  def initialize(string, default_group_name = 'pages')
+  def initialize(string, default_group_name = 'page')
     @filter_html = true
     @hard_breaks = true
     @default_group = default_group_name
@@ -116,12 +116,12 @@ class GreenCloth < RedCloth
   end
   
   CRABGRASS_LINK_RE = /
-     (^|.)         # start of line or any character
-     \[            # begin [
-     [ \t]*        # optional white space
-     ([^\[\]]+)    # $text : one or more characters that are not [ or ]
-     [ \t]*        # optional white space
-     \]            # end ]
+    (^|.)         # start of line or any character
+    \[            # begin [
+    [ \t]*        # optional white space
+    ([^\[\]]+)    # $text : one or more characters that are not [ or ]
+    [ \t]*        # optional white space
+    \]            # end ]
   /x 
 
   def inline_crabgrass_link( text ) 

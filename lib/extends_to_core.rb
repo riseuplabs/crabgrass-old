@@ -34,7 +34,11 @@ class Object
   end
 end
 
- 
+class String
+  def nameize
+    self.downcase.gsub(/[^-a-z0-9 ]/,'').gsub(/[ ]+/,'-')
+  end
+end 
 
 ActiveRecord::Base.class_eval do
   

@@ -1,9 +1,7 @@
-<div class="posts">
-
-<!-- <h1><%= @comment_header || "comments" %></h1> -->
+<div id="posts">
 
 <% if @post_paging.page_count > 1 -%>
-<p class="pages">posts: <strong><%= pagination_links @post_paging, :name => 'posts', :window_size => 10 %></strong></p>
+<p class="pagination">posts: <strong><%= pagination_links @post_paging, :name => 'posts', :window_size => 10 %></strong></p>
 <% end -%>
 
 <table border="0" cellspacing="0" cellpadding="0" class="posts">
@@ -20,7 +18,7 @@
 <% end %>
 
 <% if @post_paging and @post_paging.page_count > 1 -%>
-<p class="pages">posts: <strong><%= pagination_links @post_paging, :name => 'posts', :window_size => 10 %></strong></p>
+<p class="pagination">posts: <strong><%= pagination_links @post_paging, :name => 'posts', :window_size => 10 %></strong></p>
 <% end -%>
 
 </div>

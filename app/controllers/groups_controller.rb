@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
   end
 
   def folder
-    options = {:class => GroupParticipation, :path => params[:path].reverse}
+    options = {:class => GroupParticipation, :path => params[:path]}
     if logged_in?
       # the group's pages that we also have access to
       options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"

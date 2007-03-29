@@ -65,6 +65,16 @@ class PagesController < ApplicationController
     redirect_to page_url(@page)
   end
   
+  def search
+    if logged_in?
+      options = options_for_pages_viewable_by(current_user)
+    else
+      options = options_for_public_pages
+    end
+    options.merge!( {:class => Page, :path => params[:path]} )
+    @pages, @page_sections = find_and_paginate_pages(options)
+  end
+   
   protected
   
   def get_groups

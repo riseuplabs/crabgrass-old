@@ -67,6 +67,8 @@ class Page < ActiveRecord::Base
   # relationship of this page to groups
   has_many :group_participations, :dependent => :destroy
   has_many :groups, :through => :group_participations
+
+  
   
   # adding this in creates "SystemStackError (stack level too deep)"
   # when the page is destroyed in production mode. weird.
@@ -86,7 +88,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :title
   validates_associated :data
 
-  validates_format_of     :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
+  validates_format_of  :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
  
   ### callbacks ###
 
@@ -150,8 +152,33 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
+  # we use group_participations, because it will have current info
+  # even if a group is added before the page is saved.
   def group_ids
-    groups.collect{|g|g.id}
+    group_participations.collect{|gpart|gpart.group_id}
   end
+  
+  # generates a unique name that is sure to not conflict
+  # with any others.
+  def find_unique_name(string)
+    return nil unless string and group_ids.any?
+    newname = string.nameize
+    i=nil
+    while find_pages_with_name("#{newname}#{i}").any?
+      i ||= 0; i += 1
+    end
+    return "#{newname}#{i}"
+  end
+  
+  # returns a list of pages with a particular name in same "page space" as self.
+  # by "page space" we mean all pages in all groups that own this page.
+  def find_pages_with_name(pagename)
+    Page.find(
+      :all,
+      :conditions => ['pages.name = ? and group_participations.group_id IN (?)',pagename,self.group_ids],
+      :include => :group_participations
+    )
+  end  
+
   
 end

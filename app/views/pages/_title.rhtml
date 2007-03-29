@@ -1,22 +1,21 @@
 <% title_editor_style = params[:action] == 'title' ? '': 'display:none' %>
-<div id='title_div'>
-  <h1 id='page_title'>
-    <%=h @page.title %>
-    <span id='title_edit_link' class='normal'>
-    <%= link_to_function 'edit', "$('title_editor').show(); $('title_edit_link').hide(); $('page_title').hide()" %>
+  <div id='title_text' class='h1'>
+    <span id='title_edit_link' class=''>
+    <%= link_to_function 'edit', "$('title_editor').show(); $('title_text').hide()" %>
     </span>
-  </h1>
+    <%=h @page.title %>
+    <span>&nbsp;</span>
+  </div>
   <div id='title_editor' style='<%=title_editor_style%>'>
-    <% form_tag(:action => 'title', :id => @page) do %>
+    <% form_tag(page_url_hash(@page, :action => 'title')) do %>
       display title:<br/>
       <%= text_field 'page', 'title', :style => 'width: 100%', :class => 'h1' %><br/>
-      unique name:<br/>
-      <%= text_field 'page', 'name' %><br/>
-      (The name is used for linking to this page).
+      optional unique name:<br/>
+      <%= text_field 'page', 'name' %>
       <br/> 
       <%= submit_tag 'save', :name => 'save' %>
-      <%= button_to_function 'cancel', "$('title_editor').hide(); $('title_edit_link').show(); $('page_title').show()" %>
+      <%= button_to_function 'cancel', "$('title_editor').hide(); $('title_text').show();" %>
     <% end %>
   </div>
-</div>
+
 

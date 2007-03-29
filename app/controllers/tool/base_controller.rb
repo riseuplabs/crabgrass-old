@@ -66,8 +66,9 @@ class Tool::BaseController < ApplicationController
   end
   
   def title
+    return(redirect_to page_url(@page, :action => :show)) unless request.post?
     title = params[:page][:title]
-    name = params[:page][:name]
+    name = params[:page][:name].nameize
     if name.any?
       pages = Page.find(:all,
         :conditions => ['pages.name = ? and group_participations.group_id IN (?)',name, @page.group_ids],

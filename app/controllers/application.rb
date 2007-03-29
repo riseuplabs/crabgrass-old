@@ -85,11 +85,12 @@ class ApplicationController < ActionController::Base
   # 
   def page_query_from_filter_path(options={})
     klass      = options[:class]
-    path       = options[:path]
+    path       = options[:path] || []
     conditions = [options[:conditions]]
     values     = options[:values]
     
     # filters
+    path = path.reverse
     while folder = path.pop
       if folder == 'unread'
         conditions << 'viewed = ?'
@@ -139,6 +140,9 @@ class ApplicationController < ActionController::Base
            values << tag.id
            tag_count += 1
          end
+      elsif folder == 'name'
+        conditions << 'pages.name = ?'
+        values << path.pop
       #elsif folder == 'ascending' or folder == 'descending'
       #  sortkey = path.pop
       #  order = 'pages.updated_at' if sortkey == 'updated'
@@ -170,10 +174,18 @@ class ApplicationController < ActionController::Base
     end
 
     { :conditions => [conditions_string] + values,
-      :joins => join, :order => order, :class => klass }
+      :joins => join, :order => order, :class => klass, 
+      :already_built => true }
   end
   
   #
+  # find_and_paginate_pages()
+  # this is the wiz-bang main function for finding and paginating pages
+  # see find_pages() if you don't need to paginate.
+  # 
+  # the options passed in are different than for a normal rails find.
+  # see page_query_from_filter_path() for how the options are built.
+  # 
   # executes the actual find based on the output of page_query_from_filter_path.
   # 
   # ok, i admit, this is a little complicated:
@@ -209,6 +221,7 @@ class ApplicationController < ActionController::Base
   # grouping the count query. i don't think that this will take much longer than a normal count query.
   # 
   def find_and_paginate_pages(options)
+    options = page_query_from_filter_path(options) unless options[:already_built]
     pages_per_section = 30
     current_section   = (params[:section] || 1).to_i
     klass      = options[:class]
@@ -216,12 +229,14 @@ class ApplicationController < ActionController::Base
     offset     = (current_section - 1) * pages_per_section
     order      = options[:order] + ", #{main_table}.id"
     
-    unless klass == Page
-      options[:include] = :page
-      count_join = "LEFT OUTER JOIN pages ON pages.id = #{main_table}.page_id "
-    else
+    if klass == Page
       options[:include] = nil
       count_join = ''
+      options[:select] = 'pages.*'
+    else
+      options[:include] = :page
+      count_join = "LEFT OUTER JOIN pages ON pages.id = #{main_table}.page_id "
+      options[:select] = nil
     end
 
     sql_conditions = ActiveRecord::Base.public_sanitize_sql(options[:conditions])
@@ -246,10 +261,49 @@ class ApplicationController < ActionController::Base
       :joins      => options[:joins],
       :order      => options[:order] + ", #{main_table}.id",
       :include    => options[:include],
+      :select     => options[:select],
       :limit      => section_row_count,
       :offset     => section_starting_row
     )
     return([pages, page_sections])
+  end
+  
+  # a convenience function to find pages using 
+  # page_query_from_filter_path style options.
+  def find_pages(options)
+    options       = page_query_from_filter_path(options) unless options[:already_built]
+    klass         = options[:class]
+    main_table    = klass.to_s.underscore + "s"
+    
+    if klass == Page
+      options[:include] = nil
+      options[:select] = 'pages.*'
+    else
+      options[:include] = :page
+      options[:select] = nil
+    end
+    
+    klass.find(:all,
+      :conditions => options[:conditions],
+      :joins      => options[:joins],
+      :order      => options[:order] + ", #{main_table}.id",
+      :include    => options[:include],
+      :select     => options[:select]
+    )
+  end
+  
+  # option generators for page_query_from_filter_path
+  
+  def options_for_pages_viewable_by(user)
+    { :class      => Page,
+      :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
+      :values     => [user.group_ids, user.id, true] }
+  end
+  
+  def options_for_public_pages
+    { :class      => Page,
+      :conditions => "(pages.public = ?)",
+      :values     => [true] }
   end
   
 end

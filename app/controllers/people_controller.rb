@@ -24,7 +24,7 @@ class PeopleController < ApplicationController
   end
 
   def folder
-    options = {:class => UserParticipation, :path => params[:path].reverse}
+    options = {:class => UserParticipation, :path => params[:path]}
     if logged_in?
       # the person's pages that we also have access to
       options[:conditions] = "(user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"

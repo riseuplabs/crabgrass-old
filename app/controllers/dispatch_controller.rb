@@ -14,19 +14,51 @@ class DispatchController < ApplicationController
       @req_url = request.env["PATH_INFO"]
       find_controller.constantize.new.process(request, response)
     rescue NameError
-      render :file => "404.html"
+      render :action => "not_found"
     end
   end
 
+  #
+  # attempt to find a page by its name, and return the correct tool controller.
+  # 
+  # there are possibilities:
+  # 
+  # - if we can find a unique page, then show that page with the correct controller.
+  # - if we get a list of pages
+  #   - show either a list of public pages (if not logged in)
+  #   - a list of pages current_user has access to
+  # - if we fail entirely, show the page not found error.
+  # 
+
   def find_controller
-    @group = Group.find_by_name(params[:group_name])
-    if params[:page_name].to_i.to_s == params[:page_name]
-      @page = Page.find_by_id(params[:page_name])
+    name = params[:page_name]
+    @group = Group.find_by_name(params[:group_name]) if params[:group_name]
+    if name.to_i.to_s == name
+      # find by id, it will always be unique
+      @page = Page.find_by_id(name)
+    elsif @group
+      # find just pages with the name that are owned by the group
+      # no group should have multiple pages with the same name
+      @page = @group.pages.find_by_name(name)
     else
-      @page = Page.find_by_name(params[:page_name])
+      if logged_in?
+        options = options_for_pages_viewable_by( current_user )
+      else
+        options = options_for_public_pages 
+      end
+      options[:path] = ["name",name]
+      @pages = find_pages(options)
+      if @pages.size == 1
+        @page = @pages.first
+      elsif @pages.any?
+        params[:action] = 'search'
+        params[:path] = ['name',name]
+        params[:controller] = 'pages'
+        return "PagesController"
+      end
     end
 
-    raise NameError.new unless @group and @page
+    raise NameError.new unless @page
     
     params[:action] = 'show'
     params[:id] = @page

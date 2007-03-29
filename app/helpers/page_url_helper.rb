@@ -1,7 +1,6 @@
 module PageUrlHelper
 
-  def page_url(page, options_override={})
-    
+  def page_url_hash(page, options_override={})
     options = {}
     options[:controller] = "tool/" + page.controller
     options[:id] = page
@@ -22,7 +21,11 @@ module PageUrlHelper
       options[:from] = 'people'
       options[:from_id] = page.users.first.to_param
     end
-    url_for options.merge(options_override)
+    options.merge(options_override)
+  end
+  
+  def page_url(page,options={})
+    url_for page_url_hash(page,options)
   end
   
   def from_url(page=nil)

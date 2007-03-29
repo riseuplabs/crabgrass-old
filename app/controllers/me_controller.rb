@@ -10,7 +10,7 @@ class MeController < ApplicationController
   def folder
     options = {
       :class => UserParticipation,
-      :path => params[:path].reverse,
+      :path => params[:path],
       :conditions => 'user_participations.user_id = ?',
       :values => [current_user.id]
     }

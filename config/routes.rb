@@ -50,7 +50,9 @@ ActionController::Routing::Routes.draw do |map|
   map.groups 'groups/:action/:id', :controller => 'groups'
   map.group  'groups/:action/:id', :controller => 'groups'
   map.connect 'groups/:id/folder/*path', :controller => 'groups', :action => 'folder'
-    
+  
+  map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
+      
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   
   map.connect '', :controller => "account"
@@ -60,7 +62,9 @@ ActionController::Routing::Routes.draw do |map|
   # typically, this is the default route
   map.connect ':controller/:action/:id'
   
+  
   # our default route is sent to the dispatcher
+  map.connect 'page/:page_name', :controller => 'dispatch'
   map.connect ':group_name/:page_name', :controller => 'dispatch'
   
 end
