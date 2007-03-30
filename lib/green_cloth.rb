@@ -68,8 +68,6 @@
 
 class GreenCloth < RedCloth
 
-#  attr_accessor :default_group
-  
   # override default rules
   DEFAULT_RULES = [
     :block_markdown_setext, 
@@ -86,7 +84,7 @@ class GreenCloth < RedCloth
   ]
 
   def initialize(string, default_group_name = 'page')
-    @filter_html = true
+#    @filter_html = true
     @hard_breaks = true
     @default_group = default_group_name
     super(string)
@@ -107,14 +105,14 @@ class GreenCloth < RedCloth
   #END_SPACE_RE = /^ {1,}\n/
   #HARD_BREAK_RE = Regexp.union(SHORT_LINE_RE, END_SPACE_RE)
   def hard_break( text )
-    text.gsub!( / \n(?!\Z| *([#*=]+(\s|$)|[{|]))/, "\\1(((br)))" ) if hard_breaks
+    text.gsub!( / \n(?!\Z| *([#*=]+(\s|$)|[{|]))/, "\\1<br/>" ) if hard_breaks
     #text.gsub!( HARD_BREAK_RE, "\\0(((br)))\n" )
   end
   
-  def clean_html( text, tags = BASIC_TAGS )
-    super(text,tags).gsub!('(((br)))', '<br/>')
-  end
-  
+#  def clean_html( text, tags = BASIC_TAGS )
+#    super(text,tags).gsub!('(((br)))', '<br/>')
+#  end
+
   CRABGRASS_LINK_RE = /
     (^|.)         # start of line or any character
     \[            # begin [
