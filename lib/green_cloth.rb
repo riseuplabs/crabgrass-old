@@ -130,15 +130,21 @@ class GreenCloth < RedCloth
       else
         # from -> to
         from, to = text.split(/[ ]*->[ ]*/)[0..1]
-        # group_name / page_name
-        group_name, page_name = ( to || from ).split(/[ ]*\/[ ]*/)[0..1]
-        unless page_name
-          # there was no group indicated, so group_name is really the page_name
-          page_name = group_name
-          group_name = @default_group
+        if (to || from).starts_with?('/')
+          # assume to is an absolute path
+          atts = " href=\"#{(to||from)}\""
+          text = from
+        else
+          # group_name / page_name
+          group_name, page_name = ( to || from ).split(/[ ]*\/[ ]*/)[0..1]
+          unless page_name
+            # there was no group indicated, so group_name is really the page_name
+            page_name = group_name
+            group_name = @default_group
+          end
+          text = to.nil? ? page_name : from
+          atts = " href=\"/#{nameize group_name}/#{nameize page_name}\""
         end
-        text = to.nil? ? page_name : from
-        atts = " href=\"/#{nameize group_name}/#{nameize page_name}\""
         "#{preceding_char}<a#{ atts }>#{ text }</a>"
       end
     end
