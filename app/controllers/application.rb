@@ -232,15 +232,17 @@ class ApplicationController < ActionController::Base
     if klass == Page
       options[:include] = nil
       count_join = ''
-      options[:select] = 'pages.*'
+      count_distinct = "DISTINCT"
+      options[:select] = 'DISTINCT pages.*'
     else
       options[:include] = :page
       count_join = "LEFT OUTER JOIN pages ON pages.id = #{main_table}.page_id "
+      count_distinct = ""
       options[:select] = nil
     end
 
     sql_conditions = ActiveRecord::Base.public_sanitize_sql(options[:conditions])
-    sql  = "SELECT count(#{main_table}.id) FROM #{main_table} "
+    sql  = "SELECT count(#{count_distinct} #{main_table}.id) FROM #{main_table} "
     sql += "#{count_join} #{options[:joins]} "
     sql += "WHERE #{sql_conditions} "
     sql += "GROUP BY #{main_table}.id "
@@ -277,7 +279,7 @@ class ApplicationController < ActionController::Base
     
     if klass == Page
       options[:include] = nil
-      options[:select] = 'pages.*'
+      options[:select] = 'DISTINCT pages.*'
     else
       options[:include] = :page
       options[:select] = nil
