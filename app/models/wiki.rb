@@ -1,12 +1,7 @@
 class Wiki < ActiveRecord::Base
-#  include ActionView::Helpers::TagHelper
-#  include ActionView::Helpers::TextHelper
-#  include WhiteListHelper
   
-  #has_many :pages, :as => :data
-  #def page
-  #  pages.first
-  #end
+  has_many :pages, :as => :data
+  def page; pages.first; end
 
   belongs_to :user
   
@@ -20,15 +15,9 @@ class Wiki < ActiveRecord::Base
   def before_save
      self.body_html = format_wiki_text(body)
   end
-
   
   def format_wiki_text(text)
-    #html = text.strip
-    #html = auto_link(html) do |link|
-    #    truncate(link, 50)
-    #end
-    #html = RedCloth.new(html).to_html
-    GreenCloth.new(text).to_html
+    GreenCloth.new(text, (page.main_group_name || 'page') ).to_html
   end
    
 end

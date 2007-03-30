@@ -158,6 +158,16 @@ class Page < ActiveRecord::Base
     group_participations.collect{|gpart|gpart.group_id}
   end
   
+  # the main group is used for linking. we don't yet know what the main
+  # group is or how it is specified, but for linking it is very useful to
+  # have a default group for links that don't explicitly specify a group.
+  # return nil if there are no groups for this page
+  # (we use group_participations, because it will have current info
+  #  even if a group is added before the page is saved.)
+  def main_group_name
+    return group_participations.first.group.name if group_participations.any?
+  end
+  
   # generates a unique name that is sure to not conflict
   # with any others.
   def find_unique_name(string)
