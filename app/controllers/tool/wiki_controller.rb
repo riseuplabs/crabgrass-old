@@ -48,8 +48,8 @@ class Tool::WikiController < Tool::BaseController
     
   protected
   
-  def fetch_wiki
-    @page.data ||= Wiki.new(:body => 'new page')
+  def fetch_wiki    
+    @page.data ||= Wiki.new(:body => 'new page', :page => @page)
     @wiki = @page.data
   end
   
