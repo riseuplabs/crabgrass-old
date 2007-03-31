@@ -72,7 +72,7 @@ class User < AuthenticatedUser
   ### callbacks
  
   def after_destroy
-    avatar.destroy
+    avatar.destroy if avatar
   end
   
   # if i add you as a contact, then you get
