@@ -105,7 +105,7 @@ class GreenCloth < RedCloth
   #END_SPACE_RE = /^ {1,}\n/
   #HARD_BREAK_RE = Regexp.union(SHORT_LINE_RE, END_SPACE_RE)
   def hard_break( text )
-    text.gsub!( / \n(?!\Z| *([#*=]+(\s|$)|[{|]))/, "\\1<br/>" ) if hard_breaks
+    text.gsub!( / \n(?!\Z| *([#*=]+(\s|$)|[{|]))/, "\\1<br/>\n" ) if hard_breaks
     #text.gsub!( HARD_BREAK_RE, "\\0(((br)))\n" )
   end
   
@@ -128,17 +128,18 @@ class GreenCloth < RedCloth
       if preceding_char == '\\'
         $~[0].sub('\\[', '[').sub('\\]', ']')
       else
-        # from -> to
+        # $text = "from -> to"
         from, to = text.split(/[ ]*->[ ]*/)[0..1]
-        if (to || from).starts_with?('/')
-          # assume to is an absolute path
-          atts = " href=\"#{(to||from)}\""
+        to ||= from # in case there is no "->"
+        if to =~ /^(\/|https?:\/\/)/
+          # assume $to is an absolute path or full url
+          atts = " href=\"#{to}\""
           text = from
         else
-          # group_name / page_name
-          group_name, page_name = ( to || from ).split(/[ ]*\/[ ]*/)[0..1]
+          # $to = "group_name / page_name"
+          group_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
           unless page_name
-            # there was no group indicated, so group_name is really the page_name
+            # there was no group indicated, so $group_name is really the $page_name
             page_name = group_name
             group_name = @default_group
           end
