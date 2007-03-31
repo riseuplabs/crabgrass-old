@@ -3,6 +3,7 @@
 <div class='formbox'>
 
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
+   <%= hidden_field 'wiki', 'version' %>
    <%= text_area 'wiki', 'body' %>
    <%# :size => '80x20' %>
    <div>

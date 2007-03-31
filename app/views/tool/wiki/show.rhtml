@@ -8,7 +8,12 @@ div.wikiedit {
 <div class='wikibox'>
   <%= @diffhtml || @wiki.body_html %>
   <div class='wikiedit'>
-   <%= link_to 'edit', page_url(@page,:action=>'edit') %>
+   <% if @wiki.editable_by? current_user -%>
+     <%= link_to 'edit', page_url(@page,:action=>'edit') %>
+   <% else -%>
+     locked by <%= link_to_user(@wiki.locked_by_id) %>
+     (<%= link_to 'break_lock', page_url(@page,:action=>'break_lock'), :method => :post %>)
+   <% end %>
    &nbsp;
    <%= link_to 'versions', page_url(@page,:action=>'versions') %>
    &nbsp;

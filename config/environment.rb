@@ -62,6 +62,7 @@ end
 # Include your application configuration below
 
 class PermissionDenied < Exception; end
+class ErrorMessage < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 
