@@ -19,6 +19,13 @@
 #  tool_type       :string(255)   
 #
 
+# notes
+# all the relationship between a page and its groups is stored in the group_participations
+# table. however, we denormalize some of it: group_name and group_id are used to store
+# the info for the 'primary group'. what does this mean? the primary group is what is 
+# show when listing pages and it is the default group when linking from a wiki. 
+# 
+
 class Page < ActiveRecord::Base
 
   # to be set by subclasses (ie tools)
@@ -44,6 +51,11 @@ class Page < ActiveRecord::Base
     end
   end
 
+  # relationship of this page to groups
+  has_many :group_participations, :dependent => :destroy
+  has_many :groups, :through => :group_participations
+
+  
   # like users.with_access, but uses already included data
   def users_with_access
     user_participations.collect{|part| part.user if part.access }.compact
@@ -60,14 +72,10 @@ class Page < ActiveRecord::Base
   end
 
   # takes an array of group ids, return all the matching group participations
+  # this is called a lot, since it is used to determine permission for the page
   def participation_for_groups(group_ids) 
     group_participations.collect{|gpart| gpart if group_ids.include? gpart.group_id }.compact
   end
-  
-  # relationship of this page to groups
-  has_many :group_participations, :dependent => :destroy
-  has_many :groups, :through => :group_participations
-
   
   
   # adding this in creates "SystemStackError (stack level too deep)"
@@ -93,13 +101,22 @@ class Page < ActiveRecord::Base
   ### callbacks ###
 
   def before_create
-    created_by = User.current if User.current
+    self.created_by = User.current if User.current
+    self.updated_by = created_by
+    self.updated_by_login = updated_by.login if updated_by  # denormalize hack
     self.type = self.class.to_s # to work around bug in rails with namespaced models http://dev.rubyonrails.org/ticket/7630
     true
   end
  
   def before_save
-    self.updated_by = User.current if User.current
+    # denormalize hack follows:
+    if changed? :groups
+      self.group_name = (groups.first.name if groups.any?)
+      self.group_id = (groups.first.id if groups.any?)
+    end
+    if changed? :updated_by
+      self.updated_by_login = updated_by.login
+    end
     true
   end
   
@@ -164,9 +181,9 @@ class Page < ActiveRecord::Base
   # return nil if there are no groups for this page
   # (we use group_participations, because it will have current info
   #  even if a group is added before the page is saved.)
-  def main_group_name
-    return group_participations.first.group.name if group_participations.any?
-  end
+  #def main_group_name
+  #  return group_participations.first.group.name if group_participations.any?
+  #end
   
   # generates a unique name that is sure to not conflict
   # with any others.
@@ -190,5 +207,15 @@ class Page < ActiveRecord::Base
     )
   end  
 
+  # used to mark stuff that has been changed.
+  # so that we know we need to update other stuff when saving.
+  def changed(what)
+    @changed ||= {}
+    @changed[what] = true
+  end
+  def changed?(what)
+    @changed ||= {}
+    @changed[what]
+  end
   
 end

@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 29) do
+ActiveRecord::Schema.define(:version => 30) do
 
   create_table "avatars", :force => true do |t|
     t.column "data",   :binary
@@ -90,6 +90,9 @@ ActiveRecord::Schema.define(:version => 29) do
     t.column "contributors_count", :integer,  :default => 0
     t.column "posts_count",        :integer,  :default => 0
     t.column "name",               :string
+    t.column "group_id",           :integer
+    t.column "group_name",         :string
+    t.column "updated_by_login",   :string
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -184,11 +187,13 @@ ActiveRecord::Schema.define(:version => 29) do
   end
 
   create_table "wikis", :force => true do |t|
-    t.column "body",       :text
-    t.column "body_html",  :text
-    t.column "updated_at", :datetime
-    t.column "user_id",    :integer
-    t.column "version",    :integer
+    t.column "body",         :text
+    t.column "body_html",    :text
+    t.column "updated_at",   :datetime
+    t.column "user_id",      :integer
+    t.column "lock_version", :integer,  :default => 0
+    t.column "locked_at",    :datetime
+    t.column "locked_by_id", :integer
   end
 
 end

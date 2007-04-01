@@ -60,16 +60,16 @@ class Wiki < ActiveRecord::Base
      self.body_html = format_wiki_text(body)
   end
   
-  def main_group_name
+  def default_group_name
     if page
-      page.main_group_name || 'page'
+      page.group_name || 'page'
     else
       'page'
     end
   end
   
   def format_wiki_text(text)
-    GreenCloth.new(text, main_group_name).to_html
+    GreenCloth.new(text, default_group_name).to_html
   end
    
 end

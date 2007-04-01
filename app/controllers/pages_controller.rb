@@ -48,8 +48,10 @@ class PagesController < ApplicationController
     access = params[:access] || ACCESS_ADMIN
     if group
       @page.add group, :access => access
+      @page.save
     elsif user
       @page.add user, :access => access
+      @page.save
     else
       message :error => 'group or user not found', :later => 1    
     end

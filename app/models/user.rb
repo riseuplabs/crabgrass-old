@@ -113,10 +113,12 @@ class User < AuthenticatedUser
     page.user_participations.create attributes.merge(
        :page_id => page.id, :user_id => id,
        :resolved => page.resolved?)
+    page.changed :users
   end
   
   def remove_page(page)
     page.users.delete(self)
+    page.changed :users
   end
   
   # should be called when a user visits a page
@@ -159,16 +161,17 @@ class User < AuthenticatedUser
       party.save      
     end
     # this is unfortunate, because perhaps we have already just modified the page?
-    # we should test here to see if we have already saved the page this request.
     page.resolved = options[:all_resolved] || page.resolved?
     page.updated_at = now
     page.updated_by = self
+    page.changed :updated_by
     page.save
   end
   
   # return an array of ids of all groups this user is a member of.
   # in the future, perhaps this will be cached in the session.
-  # or perhaps :include groups when fetching current_user
+  # or perhaps :include groups when fetching current_user.
+  # this is used every time we view any page
   def group_ids
     groups.collect{|g|g.id}
   end

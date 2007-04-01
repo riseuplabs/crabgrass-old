@@ -69,10 +69,12 @@ class Group < ActiveRecord::Base
   
   def add_page(page, attributes)
     page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
+    page.changed :groups
   end
 
   def remove_page(page)
     page.groups.delete(self)
+    page.changed :groups
   end
   
 end
