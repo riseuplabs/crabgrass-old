@@ -24,20 +24,20 @@ class PagesController < ApplicationController
     page_type = get_page_type
     users_to_add = users
     
-    @page = page_type.new params[:page].merge({:created_by_id => current_user.id})
+    page = page_type.new params[:page].merge({:created_by_id => current_user.id})
     groups.each do |group|
-      @page.add(group, :access => ACCESS_ADMIN)
+      page.add(group, :access => ACCESS_ADMIN)
       users_to_add += group.users if params[:announce] and group.users.any?
     end
     users_to_add.uniq.each do |u|
       if users.include? u
-        @page.add(u, :access => ACCESS_ADMIN)
+        page.add(u, :access => ACCESS_ADMIN)
       else
-        @page.add(u)
+        page.add(u)
       end
     end
-    @page.tag_with(params[:tag_list])
-    @page
+    page.tag_with(params[:tag_list])
+    page
   end
 
   # add group or user to participations

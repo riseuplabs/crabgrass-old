@@ -110,9 +110,11 @@ class Page < ActiveRecord::Base
  
   def before_save
     # denormalize hack follows:
-    if changed? :groups
-      self.group_name = (groups.first.name if groups.any?)
-      self.group_id = (groups.first.id if groups.any?)
+    if changed? :groups 
+      # we use group_participations because self.groups might not reflect current data if unsaved.
+      group = (group_participations.first.group.name if group_participations.any?)
+      self.group_name = (group.name if group)
+      self.group_id = (group.id if group)
     end
     if changed? :updated_by
       self.updated_by_login = updated_by.login
