@@ -112,7 +112,7 @@ class Page < ActiveRecord::Base
     # denormalize hack follows:
     if changed? :groups 
       # we use group_participations because self.groups might not reflect current data if unsaved.
-      group = (group_participations.first.group.name if group_participations.any?)
+      group = (group_participations.first.group if group_participations.any?)
       self.group_name = (group.name if group)
       self.group_id = (group.id if group)
     end
