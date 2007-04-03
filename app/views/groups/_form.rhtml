@@ -1,12 +1,21 @@
 <!--[form:group]-->
-<p><label for="group_name">Short name</label><br/>
+<p><label for="group_name">Short name (must only contain alphanumeric characters)</label><br/>
 <%= text_field 'group', 'name'  %></p>
 
 <p><label for="group_full_name">Full name</label><br/>
 <%= text_field 'group', 'full_name'  %></p>
 
-<p><label for="group_summary">Summary</label><br/>
+<p><label for="group_summary">Public Summary</label><br/>
 <%= text_field 'group', 'summary'  %></p>
+
+<p><label for="group_public_description">Public Description</label><br/>
+<%= text_area 'group', 'public_description', :rows => 10  %></p>
+
+<p><label for="group_private_description">Private Description</label><br/>
+<%= text_area 'group', 'private_description', :rows => 10  %></p>
+
+
+
 
 <!--[eoform:group]-->
 

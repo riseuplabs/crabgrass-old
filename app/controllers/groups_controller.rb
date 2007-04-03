@@ -40,6 +40,7 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
+
   def create
     @group = Group.new(params[:group])
     if @group.save
@@ -60,6 +61,12 @@ class GroupsController < ApplicationController
         message :object => @group
       end
     end
+  end
+  
+  
+  def update
+    @group.update_attributes(params[:group])
+    redirect_to :action => 'show', :id => @group
   end
 
   def invite

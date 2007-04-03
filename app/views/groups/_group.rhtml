@@ -1,4 +1,4 @@
-<div style='float: left; text-align: center; margin: 1em;'>
-<%= link_to "#{avatar_for group, 'small'}<br/>#{group.name}", :controller => 'groups', :action => 'show', :id => group %>
+<div style='float: left; text-align: center; margin: 1em; width: 20em'>
+<%= link_to "#{group.full_name.any? ?  group.full_name : group.name }<br/>#{avatar_for group, 'small'}<br/>#{group.summary}", :controller => 'groups', :action => 'show', :id => group %>
 </div>
 
