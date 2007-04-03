@@ -143,7 +143,7 @@ class GreenCloth < RedCloth
             page_name = group_name
             group_name = @default_group
           end
-          text = to.nil? ? page_name : from
+          text = from =~ /\// ? page_name : from
           atts = " href=\"/#{nameize group_name}/#{nameize page_name}\""
         end
         "#{preceding_char}<a#{ atts }>#{ text }</a>"
