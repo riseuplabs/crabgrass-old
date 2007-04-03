@@ -57,6 +57,7 @@ class GroupsController < ApplicationController
     if request.post? 
       if @group.update_attributes(params[:group])
         redirect_to :action => 'edit', :id => @group
+        message :success => 'Group was successfully updated.'
       else
         message :object => @group
       end
