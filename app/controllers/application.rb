@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem	
   include PageUrlHelper
   
+  # don't allow passwords in the log file.
+  filter_parameter_logging "password"
+  
   before_filter :login_required, :breadcrumbs
     
   # rails lazy loading does work well with namespaced classes, so we help it along: 
