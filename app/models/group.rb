@@ -60,10 +60,7 @@ class Group < ActiveRecord::Base
   
   # validations
   
-  validates_presence_of   :name
-  validates_format_of     :name, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
-  validates_length_of     :name, :within => 3..50
-  validates_uniqueness_of :name
+  validates_handle :name
 
   # methods
   
@@ -75,6 +72,10 @@ class Group < ActiveRecord::Base
   def remove_page(page)
     page.groups.delete(self)
     page.changed :groups
+  end
+  
+  def to_param
+    return name
   end
   
 end
