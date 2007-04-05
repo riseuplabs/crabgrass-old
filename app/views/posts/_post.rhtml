@@ -8,12 +8,12 @@
 <tr class="post <%= color %>">
   <td>
     <div class="post-author">
-      <%= avatar_for post.user, 'medium' if post.body.length > 60 %>
+      <%= avatar_for post.user, 'small' if post.body.length > 60 %>
       <div><%= link_to_user post.user %></div>
     </div> 
   </td>
-  <td class="post-body entry-content" id="post-body-<%= post.id %>">
-    <%= post.body_html %>
+  <td class="post-body" id="post-body-<%= post.id %>">
+    <div class='negativespace'><%= post.body_html %></div>
   </td>
 </tr>
 <tr class="post-spacer-bottom <%= color %>">
