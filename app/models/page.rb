@@ -96,8 +96,21 @@ class Page < ActiveRecord::Base
   validates_presence_of :title
   validates_associated :data
 
-  validates_format_of  :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
+  # page name must start with a letter.
+  validates_format_of  :name, :with => /^$|^[a-z]+([-_]*[a-z0-9]+){1,39}$/
  
+  ### accessors ###
+  
+  def name_url
+    name.any? ? name : friendly_url
+  end
+  
+  def friendly_url
+    s = title.nameize
+    s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
+    "#{id}-#{s}"
+  end
+  
   ### callbacks ###
 
   def before_create
