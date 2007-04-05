@@ -127,4 +127,11 @@ module ApplicationHelper
     link_to text, url_for(:action => 'folder', :path => path), :class => klass
   end
   
+  # TODO: allow this to be set by the theme
+  def favicon
+   ret = ''
+   ret += '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />'  if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
+   ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
+  end
+  
 end
