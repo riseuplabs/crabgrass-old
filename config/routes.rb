@@ -1,44 +1,19 @@
-class ResourceMatcher < Regexp
-   def initialize(*args)
-     super('^$')
-   end
+#
+#
+# NOTE: make sure to update the validates_handle function whenever you add a new controller
+# or a new root path route. This way, group and user handles will not be created for those
+# (group name or user login are used as the :context in the default route, so it can't collide
+# with any of our other routes).
+# 
 
-   def inspect
-     "#{self.class}.new"
-   end
-end
-
-class FindController < ResourceMatcher
-   def =~(identifier)
-     puts identifier
-     return false
-   end
-end
-
-ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
-  
-  # Sample of regular route:
-  # map.connect 'products/:id', :controller => 'catalog', :action => 'show'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # :defaults => {:file => nil},
-  # :requirements => {:file => %r{[^/]+(\.[^/]+)?}}
-  
-  # perhaps use nested routes instead?
-  # http://www.artofmission.com/articles/2006/10/12/nested-routes-using-map-resources
-  
+ActionController::Routing::Routes.draw do |map|  
   # PAGE_TYPES are hardcoded in environment.rb
-  for page in PAGE_TYPES
-    map.connect ":from/:from_id/#{page}/:action/:id",
-     :from => /groups|me|people|networks|places/,
-     :controller => "tool/#{page}",
-     :action => 'show'
-  end
+#  for page in PAGE_TYPES
+#    map.connect ":from/:from_id/#{page}/:action/:id",
+#     :from => /groups|me|people|networks|places/,
+#     :controller => "tool/#{page}",
+#     :action => 'show'
+#  end
 
   map.connect 'me/folder/*path', :controller => 'me', :action => 'folder'
   map.me 'me/:action/:id', :controller => 'me'
@@ -56,17 +31,13 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   
   map.connect '', :controller => "account"
-
-
   
   # typically, this is the default route
   map.connect ':controller/:action/:id'
   
-  
   # our default route is sent to the dispatcher
-  map.connect 'page/:page_name', :controller => 'dispatch'
-  map.connect ':group_name/:page_name', :controller => 'dispatch'
-  
+  map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'index', :_page_action => 'show', :id => nil
+  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'index', :_page_action => 'show', :id => nil
 end
 
 # debug routes
