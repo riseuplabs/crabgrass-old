@@ -68,11 +68,7 @@ class ApplicationController < ActionController::Base
   end
   
   protected
-  
-  # to be written by controllers that display pages
-  # called before breadcrumbs
-  def fetch_page; end 
-  
+    
   # a before filter to override by controllers
   def breadcrumbs; end
   

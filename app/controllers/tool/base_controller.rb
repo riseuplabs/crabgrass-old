@@ -4,11 +4,18 @@ class Tool::BaseController < ApplicationController
   layout 'tool'
   #in_place_edit_for :page, :title
   
-  prepend_before_filter :fetch_page
+  prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   skip_before_filter :login_required
   append_before_filter :setup_view
   append_after_filter :update_participation
+  
+  def initialize(options={})
+    super()
+    @user = options[:user]   # the user context, if any
+    @group = options[:group] # the group context, if any
+    @page = options[:page]   # the page object, if already fetched
+  end
   
   def remove_from_my_pages
     @upart.destroy
@@ -68,7 +75,7 @@ class Tool::BaseController < ApplicationController
   def title
     return(redirect_to page_url(@page, :action => :show)) unless request.post?
     title = params[:page][:title]
-    name = params[:page][:name].nameize
+    name = params[:page][:name].to_s.nameize
     if name.any?
       pages = Page.find(:all,
         :conditions => ['pages.name = ? and group_participations.group_id IN (?)',name, @page.group_ids],
@@ -80,7 +87,7 @@ class Tool::BaseController < ApplicationController
       end
     end
     @page.title = title
-    @page.name = name
+    @page.name = name if name.any?
     if @page.save
       redirect_to page_url(@page, :action => 'show')
     else
@@ -117,16 +124,11 @@ class Tool::BaseController < ApplicationController
     return current_user.may?(:admin, @page)
   end
   
-  def fetch_page
+  def fetch_page_data
     if logged_in?
-      # include all participations and users in the page object
-      @page = Page.find :first,
-         :conditions => ['pages.id = ?', params[:id]],
-         :include => [{:user_participations => :user}, :group_participations]       
       # grab the current user's participation from memory
       @upart = @page.participation_for_user(current_user) if logged_in?
     else
-      @page = Page.find(params[:id])
       @upart = nil
     end
     @page.discussion = Discussion.new unless @page.discussion
@@ -138,40 +140,20 @@ class Tool::BaseController < ApplicationController
     @post = Post.new
   end
       
-  # this is aweful, and should be refactored soon.
   def breadcrumbs
-    return unless params[:id]
-    @page ||= Page.find_by_id(params[:id]) # page should already be loaded
-    if params[:from]
-      if logged_in? and params[:from] == 'people' and params[:from_id] == current_user.to_param
-        add_crumb 'me', me_url
-      else
-        add_crumb params[:from], url_for(:controller => '/'+params[:from])
-        if params[:from_id]
-          if params[:from] == 'groups'
-            group = Group.find_by_id(params[:from_id])
-            text = group.name if group
-          elsif params[:from] == 'people'
-            text = params[:from_id]
-          end
-          if text
-            add_crumb text, url_for(:controller => '/'+params[:from], :id => params[:from_id], :action => 'show')
-          end
-        end
-      end
-    elsif @page
-      # figure out the first group or first user, and use that for breadcrumb.
-      if @page.groups.any?
-        add_crumb 'groups', groups_url
-        group = @page.groups.first
-        add_crumb group.name, groups_url(:action => 'show', :id => group)
-      elsif @page.created_by
-        add_crumb 'people', people_url
-        user = @page.created_by
-        add_crumb user.login, people_url(:action => 'show', :id => user)
-      end
+    return unless @page
+    if @group
+      add_crumb 'groups', groups_url
+      add_crumb @group.name, groups_url(:action => 'show', :id => @group)
+    elsif @user and current_user != @user
+      add_crumb 'people', people_url
+      add_crumb @user.login, people_url(:action => 'show', :id => @user)
+    elsif @user and current_user == @user
+      add_crumb 'me', me_url
+    elsif @page.group_name
+      add_crumb 'groups', groups_url
+      add_crumb @page.group_name, groups_url(:action => 'show', :id => @page.group_name)      
     end
-
     add_crumb @page.title, page_url(@page, :action => 'show')
   end
   

@@ -33,8 +33,6 @@ class GroupsController < ApplicationController
     @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
     render :action => 'show'
   end
-  
-  # GroupParticipation.find(:all, :joins => "LEFT OUTER JOIN group_participations group_participations_pages ON group_participations_pages.page_id = pages.id LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id", :conditions => "group_participations.group_id = 1 and (group_participations_pages.group_id in (3) or user_participations.user_id = 4)", :include => :page ) 
 
   def new
     @group = Group.new
@@ -92,21 +90,6 @@ class GroupsController < ApplicationController
     redirect_to :action => 'show', :id => @group
   end
   
-#  def avatar
-#    if request.post?
-#      avatar = Avatar.create(:data => params[:image][:data])
-#      if avatar.valid?
-#        @group.avatar.destroy if @group.avatar
-#        @group.avatar = avatar
-#        @group.save
-#        redirect_to :action => 'edit', :id => @group
-#        return
-#      end
-#    end
-#    render :action => 'edit'
-#  end
-
-
   # post only
   def add_user
     user = User.find_by_login params[:login]
@@ -180,7 +163,8 @@ class GroupsController < ApplicationController
   end
   
   def find_group
-    @group = Group.find_by_id params[:id]
+    @group = Group.find_by_name params[:id]
+    true
   end
   
 end

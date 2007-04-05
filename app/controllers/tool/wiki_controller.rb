@@ -8,11 +8,12 @@ class Tool::WikiController < Tool::BaseController
       return
     end
     if @upart and not @upart.viewed? and @wiki.version > 1
+      last = @wiki.find_version(@wiki.version - 1)
       @diffhtml = html_diff(
          # TODO: show all the changes we haven't seen, not just the last change.
-         @wiki.find_version(@wiki.version - 1).body_html,
+         last.body_html,
          @wiki.body_html
-      )
+      ) if last
     end
   end
 
@@ -28,12 +29,13 @@ class Tool::WikiController < Tool::BaseController
   end
   
   def version
-    @version = @wiki.versions.find_by_version(params[:version])
+    @version = @wiki.versions.find_by_version(params[:id])
   end
   
   def diff
-    @old = @wiki.find_version(params[:old])
-    @new = @wiki.find_version(params[:new])
+    old_id, new_id = params[:id].split('-')
+    @old = @wiki.find_version(old_id)
+    @new = @wiki.find_version(new_id)
     @old_markup = @old.body || ''
     @new_markup = @new.body || ''
     @difftext = html_diff( @old_markup , @new_markup)

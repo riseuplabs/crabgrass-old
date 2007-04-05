@@ -76,7 +76,19 @@ class PagesController < ApplicationController
     options.merge!( {:class => Page, :path => params[:path]} )
     @pages, @page_sections = find_and_paginate_pages(options)
   end
-   
+  
+  # for quickly creating a wiki
+  def create_wiki
+    group = Group.find_by_name(params[:group])
+    if logged_in? and current_user.member_of?(group)
+      page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
+      page.save
+      redirect_to page_url(page)
+    else
+      message :error => 'You are not allowed to create a page for group %s' % group.name
+    end
+  end
+  
   protected
   
   def get_groups
