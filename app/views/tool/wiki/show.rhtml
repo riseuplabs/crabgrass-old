@@ -17,7 +17,7 @@ div.wikiedit {
    &nbsp;
    <%= link_to 'versions', page_url(@page,:action=>'versions') %>
    &nbsp;
-   <%= link_to 'last change', page_url(@page, :action=>'diff', :old => (@wiki.version.to_i-1), :new => @wiki.version) if @wiki.version > 1 %>
+   <%= link_to 'last change', page_url(@page, :action=>'diff', :id => "#{@wiki.version.to_i-1}-#{@wiki.version}") if @wiki.version > 1 %>
   </div>
 </div>
 

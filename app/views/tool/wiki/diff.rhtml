@@ -20,7 +20,7 @@ pre.diff {
 }
 <% end %>
 
-
+<p>
 Comparing changes from 
 <span style='background-color: #ddd; padding: 1px 4px;' >version <%= @old.version %></span>
 to
@@ -28,15 +28,16 @@ to
 
 <p>
 <% if @old.version.to_i != 1 %>
-<%= link_to 'prev change', page_url(@page, :action => 'diff', :old => (@old.version.to_i-1), :new => @old.version) %>
+<%= link_to 'prev change', page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
 <% else %>
 prev change
 <% end %>
 <% if @wiki.versions.last.version != @new.version %>
-<%= link_to 'next change', page_url(@page, :action => 'diff', :old => @new.version, :new => (@new.version.to_i+1)) %>
+<%= link_to 'next change', page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
 <% else %>
 next change
 <% end %>
 </p>
 
 <pre class='diff'><%= @difftext %></pre>
+</p>

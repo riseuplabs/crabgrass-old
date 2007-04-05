@@ -1,8 +1,8 @@
 <ul>
   <% for version in @wiki.versions %>
   <li>
-    <%=link_to ("version %s"%version.version, page_url(@page, :action => "version", :version => version.version)) %>
-    <%=link_to "(diff)", page_url(@page, :action=>'diff', :old => (version.version.to_i-1), :new => version.version) if version.version > 1 %>,
+    <%=link_to ("version %s"%version.version, page_url(@page, :action => "version", :id => version.version)) %>
+    <%=link_to "(diff)", page_url(@page, :action=>'diff', :id => "#{version.version.to_i-1}-#{version.version}") if version.version > 1 %>,
     created <%= time_ago_in_words(version.updated_at) %> ago by <%= link_to_user(version.user_id) %></li>
   <% end %>
 </ul>
