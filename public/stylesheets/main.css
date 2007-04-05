@@ -205,7 +205,7 @@ div#folders li img {
 
 /** tool formatting **/
 
-div.wikibox {
+div.wikibox, div.infobox {
   background: #f6f6f6;
   border: 1px solid #cfcfcf;
   border-width: 0px 3px 3px 0px;
@@ -218,7 +218,7 @@ div.formbox textarea {
   width: 100%;
 }
 div.request {
-  margin: 0 auto;
+  margin: 2em auto;
   width: 50%;
 }
 div.request h2 {
