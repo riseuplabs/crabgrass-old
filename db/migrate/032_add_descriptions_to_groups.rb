@@ -5,7 +5,7 @@ class AddDescriptionsToGroups < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :pages, :private_description
-    remove_column :pages, :public_description
+    remove_column :groups, :private_description
+    remove_column :groups, :public_description
   end
 end
