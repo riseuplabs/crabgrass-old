@@ -175,4 +175,9 @@ class User < AuthenticatedUser
   def group_ids
     groups.collect{|g|g.id}
   end
+  
+  # is this user a member of a group?
+  def member_of?(group)
+    return group_ids.include?(group.id)
+  end
 end
