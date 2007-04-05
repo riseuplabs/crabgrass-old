@@ -1,11 +1,12 @@
-<h3>sorry, that page does not exist.</h3>
-
+<p>
+<i>Sorry, page <b><%params[:page_name]%></b> does not exist.</i>
 <ul>
+  <% if @group and @user and @user.member_of?(@group) %>
+  <li><%= link_to "create #{params[:page_name]}", {:controller => 'pages', :action => :create_wiki, :name => params[:page_name], :group => @group.name }, :method=>:post %></li>
+  <% end %>
   <li>search for similar pages</li>
   <% if request.env["HTTP_REFERER"] %>
   <li><%= "<a href='%s'>return to previous page</a>" % request.env["HTTP_REFERER"] %></li>
   <% end %>
 </ul>
-
-
-
+</p>
