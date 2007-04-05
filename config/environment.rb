@@ -20,7 +20,7 @@ ACCESS_VIEW = '3'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
-  
+    
   # Skip frameworks you're not going to use (only works if using vendor/rails)
   # config.frameworks -= [ :action_web_service, :action_mailer ]
 
@@ -45,7 +45,7 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 
   # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
+  #config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
 end
@@ -65,17 +65,12 @@ class PermissionDenied < Exception; end
 class ErrorMessage < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
+require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
 
 # pre load the tool classes
 Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
-  #require "#{RAILS_ROOT}/app/models/tool/#{}"
   require toolfile
 end
 # static array of tool *classes*
 TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
-
-# pre load the actions (otherwise serialization won't work)
-#Dir.glob("#{RAILS_ROOT}/app/models/actions/*.rb").each do |f|
-#  require f
-#end
 
