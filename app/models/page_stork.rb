@@ -80,5 +80,17 @@ class PageStork
     page.add(from, :access => ACCESS_ADMIN)
     page.add(to, :access => ACCESS_ADMIN)
   end
-    
+  
+  def self.wiki(options)
+    user = options.delete(:user).cast! User
+    group = options.delete(:group).cast! Group
+    name = options.delete(:name).cast! String
+    page = Tool::TextDoc.new do |p|
+      p.title = name.titleize
+      p.name = name.nameize
+      p.created_by = user
+    end
+    page.add(group)
+  end
+  
 end
