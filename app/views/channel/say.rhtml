@@ -1,0 +1,3 @@
+<% if @message %>new Insertion.Bottom('stage', '<%= escape_javascript message_content(@message) %>');
+$('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight;<% end %>
+<% escape_javascript @aux_command if @aux_command %>

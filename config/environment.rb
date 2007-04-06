@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  config.load_paths += %w(associations discussion).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths += %w(associations discussion chat).collect{|dir| "#{RAILS_ROOT}/app/models/#{dir}"}
   
   # Force all environments to use the same logger level 
   # (by default production uses :info, the others :debug)

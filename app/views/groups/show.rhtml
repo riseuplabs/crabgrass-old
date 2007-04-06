@@ -6,8 +6,9 @@
 </tr>
 <tr>
   <td>
-<% if current_user.groups.include?(@group) %>
-  <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
+<% if current_user.member_of?(@group) %>
+  <%= link_to 'join chat', :controller => 'channel', :action => 'chat', :id => @group.name %>
+&nbsp;  <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
 &nbsp;  <%= link_to 'invite people to join group', :action => 'invite', :id => @group %>
 &nbsp;  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group), :confirm => 'Are you sure you want to leave this group?' %>
   <% if @group.users.size == 1 and @group.users.first == current_user %>
@@ -21,8 +22,6 @@
 </tr>
 <tr>
   <td>
-  <b>Networks:</b><br/>
-  <b>Committees:</b><br/>
   <b>Members:</b>
     <% @group.users.each do |u| %>
       <%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>

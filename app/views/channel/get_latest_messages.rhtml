@@ -1,0 +1,2 @@
+<% for message in @messages %><% next if message.sender_id == @user.id %>new Insertion.Bottom('stage', '<%= escape_javascript message_content(message) %>');<% end %>
+<% if @messages.length > 0 %>$('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight;<% end %>

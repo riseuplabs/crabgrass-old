@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 31) do
+ActiveRecord::Schema.define(:version => 33) do
 
   create_table "avatars", :force => true do |t|
     t.column "data",   :binary
@@ -10,6 +10,17 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "categories", :force => true do |t|
+  end
+
+  create_table "channels", :force => true do |t|
+    t.column "name",     :string
+    t.column "group_id", :integer
+  end
+
+  create_table "channels_users", :force => true do |t|
+    t.column "channel_id", :integer
+    t.column "user_id",    :integer
+    t.column "last_seen",  :datetime
   end
 
   create_table "contacts", :id => false, :force => true do |t|
@@ -32,17 +43,19 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "groups", :force => true do |t|
-    t.column "name",           :string
-    t.column "full_name",      :string
-    t.column "summary",        :string
-    t.column "url",            :string
-    t.column "type",           :string
-    t.column "parent_id",      :integer
-    t.column "admin_group_id", :integer
-    t.column "council",        :boolean
-    t.column "created_at",     :datetime
-    t.column "updated_at",     :datetime
-    t.column "avatar_id",      :integer
+    t.column "name",            :string
+    t.column "full_name",       :string
+    t.column "summary",         :string
+    t.column "url",             :string
+    t.column "type",            :string
+    t.column "parent_id",       :integer
+    t.column "admin_group_id",  :integer
+    t.column "council",         :boolean
+    t.column "created_at",      :datetime
+    t.column "updated_at",      :datetime
+    t.column "avatar_id",       :integer
+    t.column "private_home_id", :integer
+    t.column "public_home_id",  :integer
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -68,6 +81,18 @@ ActiveRecord::Schema.define(:version => 31) do
     t.column "group_id", :integer
     t.column "user_id",  :integer
   end
+
+  create_table "messages", :force => true do |t|
+    t.column "created_at",  :datetime
+    t.column "type",        :string
+    t.column "content",     :text
+    t.column "channel_id",  :integer
+    t.column "sender_id",   :integer
+    t.column "sender_name", :string
+    t.column "level",       :string
+  end
+
+  add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
 
   create_table "page_tools", :force => true do |t|
     t.column "page_id",   :integer

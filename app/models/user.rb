@@ -89,6 +89,10 @@ class User < AuthenticatedUser
   
   ### public methods
   
+  def display_name
+    read_attribute('display_name').any? ? read_attribute('display_name') : login
+  end
+  
   def to_param
     return login
   end
@@ -172,12 +176,17 @@ class User < AuthenticatedUser
   # in the future, perhaps this will be cached in the session.
   # or perhaps :include groups when fetching current_user.
   # this is used every time we view any page
+  # --- i think maybe this is built in to rails? ---
   def group_ids
     groups.collect{|g|g.id}
   end
   
   # is this user a member of a group?
   def member_of?(group)
-    return group_ids.include?(group.id)
+    if group.is_a? Integer
+      return group_ids.include?(group)
+    else
+      return group_ids.include?(group.id)
+    end
   end
 end
