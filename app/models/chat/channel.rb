@@ -2,7 +2,12 @@ class Channel < ActiveRecord::Base
 
   belongs_to :group
   
-  has_and_belongs_to_many :users do
+#  has_and_belongs_to_many :users do
+  has_many :channels_users, :dependent => :delete_all
+  has_many :users, :through => :channels_users do
+    def push_with_attributes(user, join_attrs)
+      ChannelsUser.with_scope(:create => join_attrs) { self << user }
+    end
     def cleanup
       connection.execute("DELETE FROM channels_users WHERE last_seen < DATE_SUB(\'#{ Time.now.strftime("%Y-%m-%d %H:%M:%S") }\', INTERVAL 1 MINUTE) OR last_seen IS NULL")
     end
