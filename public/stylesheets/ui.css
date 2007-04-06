@@ -43,6 +43,27 @@ a.button:hover {
   background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
 }
 
+form.button-to {
+  padding: 0; margin: 0;
+  display: inline; 
+}
+form.button-to div {
+  border: 1px solid #666;
+  display: inline;
+  padding: 1px 0px 3px 0px;
+}
+form.button-to input {
+  border: 1px solid #cdf;
+  text-decoration: none;
+  color: white;
+  background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+  display: inline;
+}
+form.button-to input:hover {
+  border: 1px solid #fff;
+  background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+}
+
 /** CHAT **/
 
 #conversation {

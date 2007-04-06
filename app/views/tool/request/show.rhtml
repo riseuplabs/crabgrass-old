@@ -9,8 +9,8 @@
    on <%= @request.vote.created_at %>
 </div>
 <% else %>
-  <%= post_button 'approve', :action => 'approve', :id => @page %>
-  <%= post_button 'reject', :action => 'reject', :id => @page %>
+  <%= button_to 'approve', page_url(@page, :action => 'approve') %>
+  <%= button_to 'reject', page_url(@page, :action => 'reject') %>
 <% end  %>
 
 </div>
