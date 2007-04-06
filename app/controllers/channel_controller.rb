@@ -17,6 +17,8 @@ class ChannelController < ApplicationController
       user_joins_channel(@user, @channel)
       @channel.users.push_with_attributes(@user, { :last_seen => Time.now })
     end
+    @messages = @channel.latest_messages
+    session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
   end
   
   # Post a user's message to a channel

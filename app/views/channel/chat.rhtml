@@ -6,7 +6,7 @@
 
 <div id="conversation">
   <div id="stage">
-    <% for message in @channel.latest_messages -%>
+    <% for message in @messages -%>
     <%= message_content(message) %>
     <% end -%>
   </div>
