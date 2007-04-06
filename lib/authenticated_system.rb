@@ -2,10 +2,10 @@ module AuthenticatedSystem
 
   # Accesses the current user from the session.
   def current_user
-    @current_user ||= (session[:user] && fetch_user(session[:user])) || :false
+    @current_user ||= (session[:user] && load_user(session[:user])) || :false
   end
 
-  def fetch_user(id)
+  def load_user(id)
     User.find_by_id(id)
   end
   
