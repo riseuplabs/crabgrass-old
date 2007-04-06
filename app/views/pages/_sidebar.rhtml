@@ -72,18 +72,9 @@
 
 <div class='section'>
 <h2>tags</h2>
-<%=
-   if @page.tags.blank?
-     "(no tags)"
-   else
-     @page.tags.collect{|tag| link_to tag.name, "/me/folder/tag/#{tag.name}" }.join(", ")
-   end
-%>
-<p>
-<%= start_form_tag({:controller=>'/pages',:action=>'add_tags',:id=>@page},{:id=>'tagging'}) %>
-<%= text_field_tag 'new_tags', '', :size=>13 %><%= submit_button 'add', 'tagging' %>
-<%= end_form_tag %>
-</p>
+<%= render :partial => "pages/tag_area"  %>
+
+
 </div> <!-- end section -->
 
 <!-- end sidebar -->

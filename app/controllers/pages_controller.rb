@@ -67,6 +67,16 @@ class PagesController < ApplicationController
     redirect_to page_url(@page)
   end
   
+  def tag
+    return unless request.xhr? 
+    @page = Page.find_by_id(params[:id])
+    tags = Tag.parse(params[:tag_list])
+    @page.tag_with(tags.uniq.join(' '))
+    @page.save
+    render :partial => "pages/tags"
+    
+  end
+  
   def search
     if logged_in?
       options = options_for_pages_viewable_by(current_user)
