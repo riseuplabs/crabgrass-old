@@ -1,0 +1,31 @@
+<% content_for :style do %>
+@import url(/stylesheets/chat.css);
+<% end %>
+
+<div id="userlist">
+  <%= render :partial => 'chat/userlist' %>
+</div>
+
+<div id="conversation">
+  <div id="stage">
+    <% for message in @messages -%>
+    <%= message_content(message) %>
+    <% end -%>
+  </div>
+</div>
+
+<%= javascript_tag "$('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight;" %>
+
+<%= form_remote_tag :url => { :controller => 'chat', :action => 'say', :id => @channel }, :loading => "$('entryfield').value = ''; $('entryfield').focus;", :complete => "eval(request.responseText)" %>
+<table id="typebox" cellpadding='0' cellspacing='0'>
+<tr>
+  <td width="1%" id='handle'><%= current_user.login %></td>
+  <td width="99%">
+    <input id="entryfield" type="text" name="message" value="Type your messages here and press enter.." onclick="$('entryfield').value=''" /><input type="submit" value="Say" style="display: none;" />
+  </td>
+</tr>
+</table>
+<%= end_form_tag %>
+
+<%= periodically_call_remote :url => { :controller => 'chat', :action => 'get_latest_messages', :id => @channel}, :frequency => 2, :complete => "eval(request.responseText)" %>
+<%= periodically_call_remote :url => { :controller => 'chat', :action => 'get_user_list', :id => @channel}, :frequency => 30, :update => 'userlist' %>

@@ -9,6 +9,14 @@ class ChatController < ApplicationController
   
   prepend_before_filter :get_channel_and_user
   
+  # show a list of available channels
+  def index
+    if logged_in?
+      @groups = current_user.groups
+    end
+  end
+  
+  
   # http request front door
   # everything else is xhr request.
   def channel
@@ -20,6 +28,7 @@ class ChatController < ApplicationController
     @messages = @channel.latest_messages
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
   end
+  
   
   # Post a user's message to a channel
   def say
@@ -95,6 +104,7 @@ class ChatController < ApplicationController
   end
 
   def authorized?
+    return true if params[:action] == 'index'
     return( @user and @channel and @user.member_of?(@channel.group_id) )
   end
   
@@ -120,6 +130,11 @@ class ChatController < ApplicationController
     say.gsub!(/\</, '&lt;')
     say.gsub!(/\>/, '&gt;')
     say
-  end	  
+  end
+  
+  def breadcrumbs
+    add_crumb 'chat', '/chat'
+    add_crumb @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
+  end
   
 end

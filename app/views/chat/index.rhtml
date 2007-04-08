@@ -1,0 +1,9 @@
+<% if @groups.any?%>
+  <% for group in @groups %>
+    <div style='float: left; text-align: center; margin: 1em;'>
+      <%= link_to "#{avatar_for group, 'small'}<br/>#{group.name}", :controller => 'chat', :action => 'channel', :id => group.name %>
+    </div>
+  <% end %>
+<% else %>
+  You are not a member of any group.
+<% end %>

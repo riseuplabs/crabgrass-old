@@ -1,0 +1,44 @@
+/** chat **/
+
+#conversation {
+  overflow: auto; 
+  font-size: 11px;
+  height:400px;
+  line-height: 14px;
+  border: 1px solid #aaa;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+#conversation .message .time { color: #aaa; }
+#conversation .message .sender { color: #66f; font-weight: bold; }
+#conversation .message .content { color: #333; }
+#conversation .message.sys .time { color: #aaa; }
+#conversation .message.sys .sender { color: #5b0; font-weight: bold; }
+#conversation .message.sys .content { color: #5b0; font-weight: bold; }
+#conversation .message.action .content { color: #66f; font-weight: bold; }
+#userlist { 
+  float:right;
+  overflow: auto; 
+  width: 160px;
+  height:400px;
+  background-color: #fff;
+  line-height: 14px;
+  border: 1px solid #aaa;
+}
+#userlist .user {
+  border-bottom: 1px solid #ddd;
+  padding: 4px;
+}
+
+td#handle {
+ padding: 0 6px;
+ font-weight: bold;
+}
+table#typebox {
+  background: #efefef;
+  width: 100%;
+}
+#entryfield {
+  font-size: 14px;
+  width: 100%;
+}
