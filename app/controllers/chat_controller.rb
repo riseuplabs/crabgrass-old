@@ -5,13 +5,13 @@
 # was copied from.
 #
 
-class ChannelController < ApplicationController
+class ChatController < ApplicationController
   
   prepend_before_filter :get_channel_and_user
   
   # http request front door
   # everything else is xhr request.
-  def chat
+  def channel
     @channel.destroy_old_messages
     unless @channel.users.include?(@user)
       user_joins_channel(@user, @channel)
