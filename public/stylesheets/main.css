@@ -31,7 +31,8 @@ div#masthead h1 {
   padding: 5px; color: white; font-size:2em; font-weight:bold;
 }
 
-/** LOGIN **/
+/** login screen **/
+
 div#frontmain {
   padding: 5em;
   text-align: center;
@@ -50,10 +51,11 @@ div#frontmain {
 
 /** layout **/
 
+div#container {z-index: 10;}
 div#main {
   padding: 10px;
 }
-div#content {}
+div#content {z-index: 20;}
 div#breadcrumbs {margin-bottom: 1em;}
 
 /** layout for pages **/
@@ -136,14 +138,6 @@ tr.post-border-top td {border-top: 1px solid #ccc;}
 .shade-odd {background-color: #F0F1F7;}
 textarea#post_body {width: 100%}
 
-ul.plainlist {
-  padding: 0; margin: 0;
-  list-style: none;
-}
-ul.plainlist img, li {
-  vertical-align: bottom;
-  margin-top: 2px;
-}
 
 /** page list **/
 

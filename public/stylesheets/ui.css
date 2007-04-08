@@ -1,118 +1,36 @@
 /*** USER INTERFACE ELEMENTS ***/
 
-/*
-a.button {
-  border: 1px solid #cdf;
-  text-decoration: none;
-  color: white;
-  margin: -3px;
-  padding: 2px 5px;
-  -moz-border-radius: 3px;
-}
-				  
-span.button {
-  border: 2px solid #666;
-  background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
-  -moz-border-radius: 3px; 
-  padding: 2px;
-}
-											
-a.button:hover {
-  -moz-border-radius: 3px;
-  border: 1px solid #fff;
-  background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
-}
-*/
+/** thing that look like buttons **/
 
-a.button {
+form.button-to input, a.button {
   border: 1px solid #cdf;
+  outline: 1px solid #666;
   text-decoration: none;
   color: white;
-  margin: -1px;
-  padding: 0px 5px 2px 5px;
-}
-				  
-span.button {
-  padding-bottom: 2px;
-  border: 2px solid #666;
   background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
-}
-											
-a.button:hover {
+  padding: 0 2px 2px 2px;
+}						
+form.button-to input:hover, a.button:hover {
   border: 1px solid #fff;
   background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
 }
 
+form.button-to input {display: inline;}
+form.button-to div {display: inline;}
 form.button-to {
   padding: 0; margin: 0;
   display: inline; 
 }
-form.button-to div {
-  border: 1px solid #666;
-  display: inline;
-  padding: 1px 0px 3px 0px;
-}
-form.button-to input {
-  border: 1px solid #cdf;
-  text-decoration: none;
-  color: white;
-  background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
-  display: inline;
-}
-form.button-to input:hover {
-  border: 1px solid #fff;
-  background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
-}
 
-/** CHAT **/
+/** common reusable elements **/
 
-#conversation {
-  overflow: auto; 
-  font-size: 11px;
-  height:400px;
-  line-height: 14px;
-  border: 1px solid #aaa;
-  margin-right: 10px;
-  margin-bottom: 10px;
+a.imglink { text-decoration: none; }
+a.imglink span { text-decoration: underline; }
+img.avatar { vertical-align: middle; } 
+ul.plainlist {
+  padding: 0; margin: 0;
+  list-style: none;
 }
-#conversation .message .time { color: #aaa; }
-#conversation .message .sender { color: #66f; font-weight: bold; }
-#conversation .message .content { color: #333; }
-#conversation .message.sys .time { color: #aaa; }
-#conversation .message.sys .sender { color: #5b0; font-weight: bold; }
-#conversation .message.sys .content { color: #5b0; font-weight: bold; }
-#conversation .message.action .content { color: #66f; font-weight: bold; }
-#userlist { 
-  float:right;
-  overflow: auto; 
-  width: 160px;
-  height:400px;
-  background-color: #fff;
-  font-size: 11px;
-  line-height: 14px;
-  border: 1px solid #aaa;
-}
-#userlist .user {
-  border-bottom: 1px solid #ddd;
-  padding: 4px;
-}
-#userlist H3 {
-  color: #fff;
-  padding: 3px;
-  padding-left: 6px;
-  font-size: 12px;
-  font-weight: bold;
-  margin: 0px 0px 0px 0px;
-}
-td#handle {
- padding: 0 6px;
- font-weight: bold;
-}
-table#typebox {
-  background: #efefef;
-  width: 100%;
-}
-#entryfield {
-  font-size: 14px;
-  width: 100%;
-}
+ul.plainlist li {margin: 3px 0;}
+
+

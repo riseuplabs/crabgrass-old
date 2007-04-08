@@ -1,4 +1,6 @@
-<div style='float: left; text-align: center; margin: 1em; width: 20em'>
-<%= link_to "#{group.full_name.any? ?  group.full_name : group.name }<br/>#{avatar_for group, 'small'}<br/>#{group.summary}", :controller => 'groups', :action => 'show', :id => group %>
+<% url = group_url(:action => 'show', :id => group) -%>
+<div class='group-entry'>
+  <%= link_to avatar_for(group, 'small'), url -%>
+  <%= link_to group.display_name, url -%>
+  <div><%= truncate(group.summary, 200) %></div>
 </div>
-

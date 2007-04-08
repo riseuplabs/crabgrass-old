@@ -17,9 +17,9 @@
     </div>
     <%= @content_for_layout %>
     <%= render :partial => 'posts/list' if @show_posts %>
-  </div>
-  
+  </div> 
 </div> <!-- end main -->
+<%= render :file => 'layouts/foot' %>
 
 <% else %>
 

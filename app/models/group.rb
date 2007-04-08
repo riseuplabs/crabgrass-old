@@ -78,4 +78,7 @@ class Group < ActiveRecord::Base
     return name
   end
   
+  def display_name
+    full_name.any? ? full_name : name
+  end
 end

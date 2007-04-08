@@ -1,0 +1,17 @@
+
+div.group-entry {
+  float: left;
+  margin: 1em;
+  margin-left: 38px;
+  width: 30em;
+}
+
+div.group-entry a {
+  font-weight: bold;
+}
+
+div.group-entry img {
+  margin-left: -38px;
+  vertical-align: top;
+  float: left;
+}

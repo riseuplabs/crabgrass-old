@@ -23,12 +23,16 @@ selected = 'class="selected"'
   </li>
   <% end %>
 
+  <li <%= selected if active == 'people' %> >
+    <%= link_to "People", people_url %>
+  </li>
+
   <li <%= selected if active == 'groups' %> >
     <%= link_to "Groups", groups_url %>
   </li>
 
-  <li <%= selected if active == 'people' %> >
-    <%= link_to "People", people_url %>
+  <li <%= selected if active == 'chat' %> >
+    <%= link_to "Chat", '/chat' %>
   </li>
 
   <% if controller.logged_in? %>
