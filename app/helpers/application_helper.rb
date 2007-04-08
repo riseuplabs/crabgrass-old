@@ -50,15 +50,14 @@ module ApplicationHelper
     elsif arg.is_a? User
       login = arg.login
     end
-    link_to login, :controller => '/people', :action => 'show', :id => login if login
+    #link_to login, :controller => '/people', :action => 'show', :id => login if login
+    link_to login, "/people/show/#{login}"
   end
 
- def link_to_group(group)
-    link_to group.name, :controller => '/groups', :action => 'show', :id => group
+  def link_to_group(group)
+    #link_to group.name, :controller => '/groups', :action => 'show', :id => group
+    link_to group.name, "/groups/show/#{group.name}"
   end
-  #def user_path(user)
-  #  url_for :controller => 'person', :action => 'show', :id => user
-  #end
     
   def avatar_for(viewable, size='medium')
     #image_tag avatar_url(:viewable_type => viewable.class.to_s.downcase, :viewable_id => viewable.id, :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
