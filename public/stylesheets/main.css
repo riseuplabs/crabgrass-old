@@ -76,6 +76,22 @@ div#main.with_sidebar {
   margin-right: 180px;
 }
 
+/** layout for groups **/
+
+div#group_sidebar {
+  float: left;
+  width: 120px;
+  margin-right: 0px;
+}
+div#group_maincolumn {
+  margin-left: 130px;
+}
+div#group_homepage {
+  margin: 1em 0;
+  padding: 1em;
+  background: #eee;
+  border: 1px solid #ccc;
+}
 /* title */
 
 div#title {
@@ -130,6 +146,7 @@ textarea#post_body {width: 100%}
 
 /** page list **/
 
+
 div#page-holder {
   margin-top: 2em;
 }
@@ -143,7 +160,7 @@ div#page-holder div.header {
 div#page-list {
   margin: 0 0 1em 12.5em;
 }
-div#page-list table {
+table.page-list {
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
