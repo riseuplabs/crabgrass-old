@@ -1,0 +1,16 @@
+<%=
+
+@group.tags.collect {|tag|
+  path = (params[:path]||[]).dup
+  t = tag.to_s
+  if path.include? t
+    path.delete(t)
+    text = "<b>%s</b>"
+  else
+    path << t
+    text = "%s"
+  end
+  text % (link_to t, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'))
+}.join(', ')
+
+-%>

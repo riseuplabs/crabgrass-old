@@ -1,0 +1,12 @@
+<% if logged_in? and current_user.member_of? @group -%>
+  <% if @group.private_home -%>
+    <%= @group.private_home.body_html %>
+  <% else -%>
+    <%= @group.public_home.body_html if @group.public_home %>
+  <% end -%>
+  <br/>edit home page: 
+  <%= link_to 'public', group_url(:id => @group, :action => 'edit_public_home') %>
+  <%= link_to 'private', group_url(:id => @group, :action => 'edit_private_home') %>
+<% else -%>
+  <%= @group.public_home.body_html if @group.public_home %>
+<% end -%>

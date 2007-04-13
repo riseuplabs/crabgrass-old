@@ -1,47 +1,8 @@
-<div class='profile'>
-<table>
-<tr>
-  <td rowspan='3'><%= avatar_for @group, 'large' %></td>
-  <td><h1><%=h @group.name %></h1></td>
-</tr>
-<tr>
-  <td>
-<% if current_user.member_of?(@group) %>
-  <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %>
-&nbsp;  <%= link_to 'edit group settings', :action => 'edit', :id => @group %>
-&nbsp;  <%= link_to 'invite people to join group', :action => 'invite', :id => @group %>
-&nbsp;  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group), :confirm => 'Are you sure you want to leave this group?' %>
-  <% if @group.users.size == 1 and @group.users.first == current_user %>
-&nbsp;  <%= post_to 'destroy group', group_url(:action => 'destroy', :id => @group), :confirm => 'Are you sure you want to destroy this group?' %>
-  <% end %>
-<% else %>
-  <%= post_to 'join group', group_url(:action => 'join_group', :id => @group) %>
-<% end %>
-     
-  </td>
-</tr>
-<tr>
-  <td>
-  <b>Members:</b>
-    <% @group.users.each do |u| %>
-      <%= link_to u.login, :controller => 'people', :action => 'show', :id => u %>
-    <% end %>
-  </td>
-</tr>
-</table>
+<% @sidebar = 'groups/sidebar' %>
+<div id='group_homepage'>
+  <%= render :partial => 'homepage' %>
+</div>
+<div id='group_pagelist'>
+  <%= render :partial => 'pagelist' %>
 </div>
 
-<div id='page-holder'>
-  <div class='header'>
-    <div style='width:20em; float:right; text-align: right'>
-       <%= link_to 'create page &raquo;', {:controller => '/pages', :action => 'new'} %>
-    </div>
-    <%= @group.name %> pages
-  </div>
-  <div id='folders'>
-    <%= render :partial => 'pages/folders', :locals => {:mode => 'groups', :users => @group.users, :users_text => 'members'} %>
-  </div>
-  <div id='page-list'>
-    <%= render :partial => 'pages/list' %>
-  </div>
-</div>

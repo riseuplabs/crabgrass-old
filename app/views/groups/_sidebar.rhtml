@@ -1,0 +1,30 @@
+<p>
+  <b>Pages</b><br/>
+  <%# link_to 'Archive', :action => 'archive', :id => @group %> <br/>
+  <%= link_to 'Tags',  :action => 'tags', :id => @group %> <br/>
+  <%# link_to 'Calendar', :action => 'calender', :id => @group %> <br/>
+  <%# link_to 'Tasks', :action => 'tasks', :id => @group %> <br/>
+</p>
+
+<p>
+  <b>Actions</b><br/>
+<% if current_user.member_of?(@group) %>
+  <%= link_to 'create page', {:controller => '/pages', :action => 'new', } %> <br/>
+  <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %> <br/>
+  <%= link_to 'edit settings', :action => 'edit', :id => @group %> <br/>
+  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group), :confirm => 'Are you sure you want to leave this group?' %> <br/>
+  <% if @group.users.size == 1 and @group.users.first == current_user %>
+    <%= post_to 'destroy group', group_url(:action => 'destroy', :id => @group), :confirm => 'Are you sure you want to destroy this group?' %> <br/>
+  <% end %>
+<% else %>
+  <%= post_to 'join group', group_url(:action => 'join_group', :id => @group) %> <br/>
+<% end %>
+</p>
+
+<p>
+  <b>Members</b>
+  <% @group.users.each do |u| %>
+    <div style="margin-bottom: 2px"><%= avatar_for u, 'xsmall'%> <%= link_to_user u %></div>
+  <% end %>
+  <%= link_to 'edit', group_url(:id => @group, :action=>'members') %>
+</p>
