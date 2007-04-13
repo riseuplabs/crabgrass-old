@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
-
-  before_filter :find_group
+  layout 'groups'
+  
+  prepend_before_filter :find_group
   
   def index
     list
@@ -20,24 +21,18 @@ class GroupsController < ApplicationController
   end
 
   def folder
-    options = {:class => GroupParticipation, :path => params[:path]}
-    if logged_in?
-      # the group's pages that we also have access to
-      options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
-      options[:values]     = [@group.id, current_user.group_ids, current_user.id, true]
-    else
-      # the group's public pages
-      options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
-      options[:values]     = [@group.id, true]
-    end
-    @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
+    fetch_pages_from_path(params[:path])
     render :action => 'show'
+  end
+
+  def tags
+    tags = params[:path] || []
+    fetch_pages_from_path(["tag"]+tags)
   end
 
   def new
     @group = Group.new
   end
-
 
   def create
     @group = Group.new(params[:group])
@@ -62,6 +57,29 @@ class GroupsController < ApplicationController
     end
   end
   
+  def edit_public_home
+    unless @group.public_home
+      page = Page.make :wiki, :group => @group, :user => current_user, :name => 'public home', :body => 'new public home'
+      page.save!
+      @group.public_home_id = page.data_id
+      @group.save!
+    else
+      page = @group.public_home.page
+    end
+    redirect_to page_url(page, :action => 'edit')
+  end
+  
+  def edit_private_home
+    unless @group.private_home
+      page = Page.make :wiki, :group => @group, :user => current_user, :name => 'private home', :body => 'new private home'
+      page.save!
+      @group.private_home_id = page.data_id
+      @group.save!
+    else
+      page = @group.private_home.page
+    end
+    redirect_to page_url(page, :action => 'edit')
+  end
   
   def update
     @group.update_attributes(params[:group])
@@ -69,7 +87,7 @@ class GroupsController < ApplicationController
   end
 
   def invite
-    return unless request.post?
+    return(render :action => 'members') unless request.post?
     wrong = []
     sent = []
     params[:users].split(/\s/).each do |login|
@@ -87,7 +105,7 @@ class GroupsController < ApplicationController
     elsif sent.any?
       message :success => 'Invites sent: ' + sent.join(', ')
     end
-    redirect_to :action => 'show', :id => @group
+    redirect_to :action => 'members', :id => @group
   end
   
   # post only
@@ -154,17 +172,42 @@ class GroupsController < ApplicationController
   protected
   
   def breadcrumbs
-    @group = Group.find_by_id(params[:id])
     add_crumb 'groups', groups_url(:action => 'list')
     add_crumb @group.name, groups_url(:id => @group, :action => 'show') if @group
     unless ['show','index','list'].include? params[:action]
       add_crumb params[:action], groups_url(:action => params[:action], :id => @group)
     end
+    if @group
+      set_banner 'groups/banner_large', @group.style
+    end
   end
-  
+    
   def find_group
     @group = Group.find_by_name params[:id]
     true
+  end
+  
+  def authorized?
+    members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update)
+    if members_only.include? params[:action]
+      return(logged_in? and current_user.member_of? @group)
+    else
+      return true
+    end
+  end
+  
+  def fetch_pages_from_path(path)
+    options = {:class => GroupParticipation, :path => path}
+    if logged_in?
+      # the group's pages that we also have access to
+      options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
+      options[:values]     = [@group.id, current_user.group_ids, current_user.id, true]
+    else
+      # the group's public pages
+      options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
+      options[:values]     = [@group.id, true]
+    end
+    @pages, @page_sections = find_and_paginate_pages options
   end
   
 end
