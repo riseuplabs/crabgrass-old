@@ -1,10 +1,12 @@
 <!-- begin page list -->
-<table>
-<% unless @pages.any? %>
+<table class='page-list'>
+<% unless @pages.any? -%>
   <tr><td colspan="10">no pages</td></tr>
-<% end %>
-<%= render :partial => "pages/page_line", :collection => @pages %>
+<% else -%>
+  <%= render :partial => "pages/page_line", :collection => @pages %>
+<% end -%>
 </table>
+
 <% if @page_sections and @page_sections.page_count > 1 -%>
 <p class="pages"><strong><%= pagination_links @page_sections, :name => 'section', :window_size => 10 %></strong></p>
 <% end -%>

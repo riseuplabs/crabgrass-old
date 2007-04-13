@@ -7,10 +7,10 @@
 <div class='line'>
 <% if @upart %>
   <%= image_tag 'actions/minus.png' %>
-  <%= link_to 'remove from my pages', page_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
+  <%= link_to 'remove from my inbox', page_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
 <% else %>
   <%= image_tag 'actions/plus.png' %>
-  <%= link_to 'add to my pages', page_url(@page, :action => 'add_to_my_pages'), :method => :post %>
+  <%= link_to 'add to my inbox', page_url(@page, :action => 'add_to_my_pages'), :method => :post %>
 <% end %>
 </div>
 
