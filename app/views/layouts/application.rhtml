@@ -4,11 +4,11 @@
   <div id='message'>
     <%= display_messages %>
   </div>
-  <!-- <div id='breadcrumbs'>
+  <div id='breadcrumbs'>
     <%= link_to_breadcrumbs %>
-  </div> -->
+  </div>
   <div id='content'>
-    <%= @content_for_layout %>
+    <%= yield %>
   </div>
 </div>
 
