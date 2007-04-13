@@ -19,24 +19,25 @@ selected = 'class="selected"'
 <ul id="topmenu">
   <% if controller.logged_in? %>
   <li <%= selected if active == 'me' %> >
-    <%= link_to "Me", me_url %>
+    <span><%= link_to "Me", me_url %></span>
   </li>
   <% end %>
 
   <li <%= selected if active == 'people' %> >
-    <%= link_to "People", people_url %>
+    <span><%= link_to "People", people_url %></span>
   </li>
 
   <li <%= selected if active == 'groups' %> >
-    <%= link_to "Groups", groups_url %>
+    <span><%= link_to "Groups", groups_url %></span>
   </li>
 
   <li <%= selected if active == 'chat' %> >
-    <%= link_to "Chat", '/chat' %>
+    <span><%= link_to "Chat", '/chat' %></span>
   </li>
 
   <% if controller.logged_in? %>
-  <li><%= link_to "Logout".t, :controller => '/account', :action => 'logout' %>
+  <li>
+    <span><%= link_to "Logout".t, :controller => '/account', :action => 'logout' %></span>
   </li>
   <% end %>  
 </ul>

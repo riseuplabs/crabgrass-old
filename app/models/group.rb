@@ -81,4 +81,9 @@ class Group < ActiveRecord::Base
   def display_name
     full_name.any? ? full_name : name
   end
+  
+  def style
+    "background: #1B5790; color: #eef"
+  end
+  
 end

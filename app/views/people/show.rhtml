@@ -1,23 +1,11 @@
-<div class='profile'>
-<table>
-<tr>
-  <td rowspan='2'><%= avatar_for @user, 'large' %></td>
-  <td><h1><%=h @user.login %></h1></td>
-</tr>
-<tr>
-  <td>
 <% if @is_contact %>
   <%= link_to 'remove from my contacts', {:controller => '/people', :action => 'remove_contact', :id => @user}, :method => 'post' %>
 <% else %>
   <%= link_to 'add to my contacts', {:controller => '/people', :action => 'add_contact', :id => @user}, :method => 'post' %>
 <% end %>
-  <br/>
-<%= link_to 'send private message', {:controller => '/people', :action => 'new_message', :id => @user}, :method => 'post' %>
-  </td>
-</tr>
-</table>
-</div>
 
+<br/>
+<%= link_to 'send private message', {:controller => '/people', :action => 'new_message', :id => @user}, :method => 'post' %>
 <p>
 <b>Groups:</b>
 <% @user.groups.each do |g| %>

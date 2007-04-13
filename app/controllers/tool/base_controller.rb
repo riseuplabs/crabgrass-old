@@ -145,14 +145,17 @@ class Tool::BaseController < ApplicationController
     if @group
       add_crumb 'groups', groups_url
       add_crumb @group.name, groups_url(:action => 'show', :id => @group)
+      set_bannder 'groups/banner_small', @group.style
     elsif @user and current_user != @user
       add_crumb 'people', people_url
       add_crumb @user.login, people_url(:action => 'show', :id => @user)
+      set_banner 'people/banner_small', @user.style
     elsif @user and current_user == @user
       add_crumb 'me', me_url
     elsif @page.group_name
       add_crumb 'groups', groups_url
       add_crumb @page.group_name, groups_url(:action => 'show', :id => @page.group_name)      
+      set_banner 'groups/banner_small', @group.style
     end
     add_crumb @page.title, page_url(@page, :action => 'show')
   end

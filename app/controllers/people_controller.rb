@@ -121,6 +121,9 @@ class PeopleController < ApplicationController
     unless ['show','index','list'].include? params[:action]
       add_crumb params[:action], people_url(:action => params[:action], :id => @user)
     end
+    if @user
+      set_banner 'people/banner_large', @user.style
+    end
   end
   
   def fetch_user 

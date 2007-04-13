@@ -30,17 +30,6 @@ module ApplicationHelper
     image_tag "pages/#{page.icon}", :size => "22x22"
   end
  
- #this function needs to go far far away
-  #def link_to_page(text, page)
-  #  controller = case page.tool_type
-  #    when "Poll::Poll"; 'polls'
-  #    when "Decider::Text"; 'texts'
-  #    when "Text::Text"; 'texts'
-  #    else; 'pages'
-  #  end
-  #  link_to( (text||'&nbsp;'), :controller => 'pages', :action => 'show', :id => page)
-  #end 
-    
   # arg might be a user object, a user id, or the user's login
   def link_to_user(arg)
     if arg.is_a? Integer
@@ -131,6 +120,14 @@ module ApplicationHelper
    ret = ''
    ret += '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />'  if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
    ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
+  end
+
+  def banner_style
+    @banner_style || "background: '#fff'; color: '#000'"
+  end
+  
+  def banner
+    @banner_partial
   end
   
 end

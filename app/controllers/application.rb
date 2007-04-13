@@ -71,10 +71,15 @@ class ApplicationController < ActionController::Base
     
   # a before filter to override by controllers
   def breadcrumbs; end
-  
+    
   def add_crumb(crumb_text,crumb_url)
     @breadcrumbs ||= []
     @breadcrumbs << [crumb_text,crumb_url]
+  end
+  
+  def set_banner(partial, style)
+    @banner_partial = partial
+    @banner_style = style
   end
   
   # builds conditions for findings pages based on filter path.

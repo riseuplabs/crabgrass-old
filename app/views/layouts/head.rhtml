@@ -10,13 +10,17 @@
   <%= stylesheet_link_tag 'errors' %>
   <%= javascript_include_tag :defaults %>
   <!-- local scripts -->
-  <script>
+  <script type="text/javascript">
     <%= yield :script %>
   </script>  
   <!-- local styles -->
-  <style>
+  <style type="text/css">
     <%= yield :style %>
-  </style>  
+    #topmenu li.selected a {<%= banner_style %>}
+    <% if banner -%>
+    #main {background: #fff url(/images/shadows/small-top.png) repeat-x top;}
+    <% end -%>
+  </style>
   <!--[if lt IE 7.]>
     <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
   <![endif]-->
@@ -24,9 +28,14 @@
 <body class="<%=body_class||=''%>">
 
 <div id="container">
-  <div id="masthead" class="clearfix">
-    <%= render 'layouts/masthead' %>
-    <div id="topnav-outer"><div id="topnav" class="clearfix">
-    <%= render 'layouts/menu' %>
-    </div></div><!--end menu -->
-  </div><!--end header -->
+  <div id="toprule-outer"><div id="toprule">
+  <table id="masthead" cellpadding="0" cellspacing="0"><tr>
+    <td><%= render 'layouts/menu' %></td>
+    <td><div id='masthead-image'></div></td>
+  </tr></table><!--end masthead -->
+  </div></div><!--end toprule -->
+  <% if banner -%>
+  <div id='banner' style='<%= banner_style %>'>
+    <%= render :partial => banner %>
+  </div>
+  <% end -%>
