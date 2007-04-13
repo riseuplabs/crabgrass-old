@@ -22,10 +22,10 @@ ActionController::Routing::Routes.draw do |map|
   map.person 'people/:action/:id', :controller => 'people'
   map.connect 'people/:id/folder/*path', :controller => 'people', :action => 'folder'
   
-  map.groups 'groups/:action/:id', :controller => 'groups'
-  map.group  'groups/:action/:id', :controller => 'groups'
-  map.connect 'groups/:id/folder/*path', :controller => 'groups', :action => 'folder'
-  
+  map.groups  'groups/:action/:id', :controller => 'groups'
+  map.group   'groups/:action/:id', :controller => 'groups'
+  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|calendar|filter/
+    
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
       
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
