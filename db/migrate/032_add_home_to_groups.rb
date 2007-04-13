@@ -8,6 +8,6 @@ class AddHomeToGroups < ActiveRecord::Migration
   def self.down
     remove_column :groups, :private_home_id
     remove_column :groups, :public_home_id
-    #remove_column :groups, :style
+    remove_column :groups, :style
   end
 end
