@@ -88,7 +88,7 @@ div#group_maincolumn {
 }
 div#group_homepage {
   margin: 1em 0;
-  padding: 1em;
+  padding: 0 1em 1em 1em;
   background: #eee;
   border: 1px solid #ccc;
 }
