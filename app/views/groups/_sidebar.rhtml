@@ -1,15 +1,15 @@
 <p>
   <b>Pages</b><br/>
-  <%# link_to 'Archive', :action => 'archive', :id => @group %> <br/>
+<!--  <%= link_to 'Archive', :action => 'archive', :id => @group %> <br/> -->
   <%= link_to 'Tags',  :action => 'tags', :id => @group %> <br/>
-  <%# link_to 'Calendar', :action => 'calender', :id => @group %> <br/>
-  <%# link_to 'Tasks', :action => 'tasks', :id => @group %> <br/>
+<!--  <%= link_to 'Calendar', :action => 'calender', :id => @group %> <br/> -->
+<!--  <%= link_to 'Tasks', :action => 'tasks', :id => @group %> <br/> -->
 </p>
 
 <p>
   <b>Actions</b><br/>
 <% if current_user.member_of?(@group) %>
-  <%= link_to 'create page', {:controller => '/pages', :action => 'new', } %> <br/>
+  <%= link_to 'create page', {:controller => '/pages', :action => 'new', :group_id => @group.id} %> <br/>
   <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %> <br/>
   <%= link_to 'edit settings', :action => 'edit', :id => @group %> <br/>
   <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group), :confirm => 'Are you sure you want to leave this group?' %> <br/>

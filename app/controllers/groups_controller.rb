@@ -27,7 +27,8 @@ class GroupsController < ApplicationController
 
   def tags
     tags = params[:path] || []
-    fetch_pages_from_path(["tag"]+tags)
+    path = tags.collect{|a|['tag',a]}.flatten
+    fetch_pages_from_path(path)
   end
 
   def new

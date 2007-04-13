@@ -95,6 +95,7 @@ class ApplicationController < ActionController::Base
     
     # filters
     path = path.reverse
+    logger.error(path.inspect)
     while folder = path.pop
       if folder == 'unread'
         conditions << 'viewed = ?'
