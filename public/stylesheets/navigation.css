@@ -2,41 +2,20 @@
 /* http://www.htmldog.com/articles/suckerfish/dropdowns/ */
 
 /* structure */
-
 #topmenu, #topmenu ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
+  padding: 0; margin: 0;
+  list-style: none;
 }
-
-#topmenu > li a {
-	display: block;
-}
-
-#topmenu > li {
-	float: left;
-	/* width: 6em; */
-}
-
+#topmenu > li a {display: block;}
+#topmenu > li {float: left;}
 #topmenu li ul {
-	position: absolute;
-	width: 10em;
-	left: -999em;
+  position: absolute;
+  width: 10em;
+  left: -999em;
 }
-
-#topmenu li:hover ul {
-	left: auto;
-}
+#topmenu li:hover ul {left: auto;}
 
 /* styling */
-
-#topnav {
-  padding-top: 7px;
-  border-bottom: 1px solid #880;
-}
-#topnav-outer {
-  border-bottom: 1px solid #330;
-}
 
 #topmenu li {
   margin: 0 4px;
@@ -52,24 +31,33 @@
   color: #fff;
   text-decoration: none;
   padding: 2px 6px;
+  font-weight: bold;
 }
 #topmenu a:hover {
   text-decoration: underline;
 }
+/*
+#topmenu li.selected span {
+  background: #fff url(/images/shadows/tab-bottom.png) no-repeat bottom;
+  display: block;
+  padding-bottom: 15px;
+  margin-bottom: -15px;
+  margin-right: -2px;
+}
+*/
+/* #topmenu li.selected  {
+  border: 1px solid #D1CB90;
+  border-bottom: 0px;
+} */
+
 #topmenu li.selected a {
   color: #000;
-  background: #fff;
-  border: 1px solid #330;
-  border-bottom: 1px solid #fff;
-  position: relative;
-  top: 1px;
+  background: #fff url(/images/shadows/small-top.png) repeat-x top;
+  border: 2px solid #000;
+  border-bottom: 0;
+  margin-bottom: -1px;
 }
-#topmenu li.selected  {
-  border: 1px solid #880;
-  border-bottom: 0px solid white;
-  border-top: 0;
-  background-color: #880;
-}
+
 
 /** TABS **/
 

@@ -20,17 +20,6 @@ body {margin: 0; padding: 0;}
 table {margin: 0; padding: 0; border-spacing: 0;}
 img {border:0}
 
-div#masthead {
-  padding-top: 5px;
-  text-align: right;
-  background: url(/images/masthead.png) repeat-x bottom left;
-  color: #fff;
-}
-div#masthead h1 {
-  display: inline; 
-  padding: 5px; color: white; font-size:2em; font-weight:bold;
-}
-
 /** login screen **/
 
 div#frontmain {
@@ -255,11 +244,41 @@ body, p, ol, ul, td {
   font-size:   13px;
   line-height: 18px;
 }
-
 pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px;
 }
-
 .normal {font-size: 13px;font-weight:normal;}
+
+/** theme **/
+
+table#masthead {
+  border-collapse: collapse;
+  width: 100%;
+  background: #cc9 url(/riseup/bg-top.png) repeat-x bottom left;
+}
+table#masthead td {
+  vertical-align: bottom;
+}
+div#masthead-image {
+  float: right;
+  background: url(/riseup/riseup.net.png) no-repeat;
+  width: 166px;
+  height: 30px;
+}
+#toprule-outer {border-bottom: 2px solid #000;}
+#main {}
+
+/* div#midmast {
+  height: 9px;
+  width: 100%;
+  background: #fff url(/images/shadows/small-bottom.png) repeat-x top;
+} */
+div#banner {
+  padding: 4px 10px;
+  border-bottom: 2px solid #000;
+}
+div#banner img {padding-right: 10px;}
+div#banner h1, div#banner h3 {padding: 0; margin: 0}
+div#banner table {width: 100%;}
