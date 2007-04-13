@@ -145,7 +145,7 @@ class Tool::BaseController < ApplicationController
     if @group
       add_crumb 'groups', groups_url
       add_crumb @group.name, groups_url(:action => 'show', :id => @group)
-      set_bannder 'groups/banner_small', @group.style
+      set_banner 'groups/banner_small', @group.style
     elsif @user and current_user != @user
       add_crumb 'people', people_url
       add_crumb @user.login, people_url(:action => 'show', :id => @user)
