@@ -3,6 +3,7 @@ class CreateChat < ActiveRecord::Migration
     create_table :channels do |t|
        t.column :name, :string
        t.column :group_id, :integer
+       t.column :public, :boolean, :default => false
     end
     create_table :channels_users do |t|
        t.column :channel_id, :integer
