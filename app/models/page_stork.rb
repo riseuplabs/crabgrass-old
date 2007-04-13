@@ -91,6 +91,10 @@ class PageStork
       p.created_by = user
     end
     page.add(group)
+    if options[:body]
+      page.data = Wiki.new(:body => options[:body], :page => page)
+    end
+    return page
   end
   
 end

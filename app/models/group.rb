@@ -45,7 +45,15 @@ class Group < ActiveRecord::Base
   end
 
   belongs_to :avatar
+  belongs_to :public_home, :class_name => 'Wiki', :foreign_key => 'public_home_id'
+  belongs_to :private_home, :class_name => 'Wiki', :foreign_key => 'private_home_id'
   
+  has_many :tags, :finder_sql => %q[
+    SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
+    WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
+      (SELECT pages.id FROM pages INNER JOIN group_participations ON pages.id = group_participations.page_id
+      WHERE group_participations.group_id = #{id})]
+      
 #  has_many :groups_to_networks
 #  has_many :networks,
 #    :through => 'groups_to_networks'
