@@ -1,8 +1,8 @@
 <p>
-<i>Sorry, page <b><%params[:page_name]%></b> does not exist.</i>
+<i>Sorry, page <b><%= params[:_page]%></b> does not exist.</i>
 <ul>
   <% if @group and @user and @user.member_of?(@group) %>
-  <li><%= link_to "create #{params[:page_name]}", {:controller => 'pages', :action => :create_wiki, :name => params[:page_name], :group => @group.name }, :method=>:post %></li>
+  <li><%= link_to "create #{params[:_page]}", {:controller => 'pages', :action => :create_wiki, :name => params[:_page], :group => @group.name }, :method=>:post %></li>
   <% end %>
   <li>search for similar pages</li>
   <% if request.env["HTTP_REFERER"] %>
