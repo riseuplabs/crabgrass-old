@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(:version => 33) do
   create_table "channels", :force => true do |t|
     t.column "name",     :string
     t.column "group_id", :integer
+    t.column "public",   :boolean, :default => false
   end
 
   create_table "channels_users", :force => true do |t|
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(:version => 33) do
     t.column "avatar_id",       :integer
     t.column "private_home_id", :integer
     t.column "public_home_id",  :integer
+    t.column "style",           :string
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
