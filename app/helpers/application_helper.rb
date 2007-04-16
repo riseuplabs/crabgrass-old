@@ -122,6 +122,10 @@ module ApplicationHelper
    ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
   end
 
+  def stylesheet
+    controller.class.stylesheet
+  end
+  
   def banner_style
     @banner_style || "background: #fff; color: #000"
   end

@@ -1,3 +1,4 @@
+<% @task = Task::Task.new %>
 <div id="new-task-link">
   <%= link_to_function 'add task', 'Element.show("new-task-form"); Element.hide("new-task-link");' %> 
 </div>
@@ -9,19 +10,19 @@
   :loading  => "Element.show('new-task-loading')"
 ) %>
    description:<br/>
-   <input type="text" name="task[new][name]" value="" maxlength="100" size='50'>
+   <%= text_field 'task', 'name', :size => 50 %>
    <br/>
    detail:<br/>
-   <textarea name="task[new][description]" rows="4" cols="50"></textarea>
+   <%= text_area 'task', 'description', :size => '50x4' %>
    <br/>
    <% if @page.group %>
      assign to:<br/>
-     <%= select_tag 'task[new][user]', options_for_select([''] + @page.group.users.to_select('login')) %>
+     <%= select 'task', 'user_id', [''] + @page.group.users.to_select('login') %>
      <br/>
    <% end %>
    <p>
    <%= submit_tag 'Add Task' %>
-   <%= button_to_function "Close", "Element.hide('new-task-form'); Element.show('new-task-link');" %>
+   <%= button_to_function "Done", "Element.hide('new-task-form'); Element.show('new-task-link');" %>
    <%= image_tag "spinner.gif", :id=>'new-task-loading', :style=>'display:none' %>
    </p>
 <%= end_form_tag %>

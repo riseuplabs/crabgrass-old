@@ -4,13 +4,19 @@
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem	
-  include PageUrlHelper
+  include PageUrlHelper 
   
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
   before_filter :login_required, :breadcrumbs
-    
+  
+  # let controllers set a custom stylesheet in their class definition
+  def self.stylesheet(cssfile=nil)
+    write_inheritable_attribute "stylesheet", cssfile if cssfile
+    read_inheritable_attribute "stylesheet"
+  end
+  
   # rails lazy loading does work well with namespaced classes, so we help it along: 
   def get_tool_class(tool_class_str)
     klass = Module
@@ -81,6 +87,9 @@ class ApplicationController < ActionController::Base
     @banner_partial = partial
     @banner_style = style
   end
+  
+  #######################################################3
+  # Page Finders
   
   # builds conditions for findings pages based on filter path.
   # for example: /starred/type/event would search for pages that are starred, of type event.

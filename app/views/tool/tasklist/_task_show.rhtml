@@ -1,0 +1,13 @@
+<%
+task_id      = "task_#{task.id}"
+details_id   = "#{task_id}_details"
+%>
+    <div class='name'>
+      <%= "<b>#{link_to_user(task.user)}:</b>" if task.user %>
+      <% if task.description.any? -%>
+        <span><%= link_to_function task.name, "Element.toggle('#{details_id}')" %></span>
+      <% else -%>
+        <%= task.name %>
+      <% end -%>
+    </div>
+    <div class='indent' id="<%=details_id%>" style='display: none'><%= task.description %></div>

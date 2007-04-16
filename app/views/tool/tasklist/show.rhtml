@@ -1,60 +1,6 @@
-<% content_for :style do %>
-ul.task_list {
-  list-style-type: none;
-  padding: 0;
-}
-span.handle {cursor: move;}
-span.handle img {
-  vertical-align: middle;
-}
-li.task {
-  clear: left;
-}
-li.task div.actions {
-  position: relative;
-  left: -1000px;
-  float: left;
-  background: #eee;
-  width: 4em;
-  height: 1.4em;
-  padding: 3px;
-  opacity: 0.3;
-}
-li.task div.actions img {
-  vertical-align: middle;
-}
-li.task:hover div.actions {
-  left: 0;
-}
-li.task div.actions:hover {
-  opacity: 1;
-}
-li.task div.checkbox {
-  float: left;
-  width: 2em;
-  height: 1.4em;
-  padding: 3px;
-}
-li.task div.name {
-  padding: 3px;
-}
-li.task div.name span a{
-  color: black;
-  text-decoration: none;
-  border-bottom: 1px #ccc dotted;
-  outline: 0;
-}
-li.task div.details {
-  margin-left: 7em;
-}
-li#add_task_link {
-  background: #eee;
-  margin: 0 7em;
-  padding: 4px;
-}
-<% end %>
+<div class='task_tool'>
 
-<h2>pending tasks</h2>
+<h2>Pending tasks</h2>
 <ul id='pending_tasks' class='task_list'>
   <%= render :partial => 'task', :collection => @list.pending %>
 </ul>
@@ -62,10 +8,12 @@ li#add_task_link {
   <li id='add_task_link'><%= render :partial => 'new_task'%></li>
 </ul>
 
-<h2>completed tasks</h2>
+<h2>Completed tasks</h2>
 <ul id='completed_tasks' class='task_list'>
   <%= render :partial => 'task', :collection => @list.completed %>
 </ul>
 
 <%= sortable_element 'pending_tasks', :handle => 'handle', :url => page_url(@page, :action=>'sort') %>
 <%= sortable_element 'completed_tasks', :handle => 'handle', :url => page_url(@page, :action=>'sort') %>
+
+</div> <!-- end task tool -->

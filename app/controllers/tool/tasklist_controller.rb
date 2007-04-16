@@ -1,50 +1,27 @@
 
 class Tool::TasklistController < Tool::BaseController
   before_filter :fetch_task_list
-      
+  stylesheet 'tasks'
+  
   def show 
   end
    
-  # reorder the tasks
-  # ajax only, returns status string.
-  def reorder
-    return unless request.xhr?  
-    success = 0
-    i = 0
-    tasks = @params[:tasks]
-    tasks.each_with_index do |id,i|
-      task = Task::Task.find(id)
-      task.position = i
-      success += 1 if task.save
-    end
-
-    if tasks.length == success
-      render :text => "Updated Sort Order"
-    else
-      render :text => "Some Items Weren't Saved"
-    end
-  end
-
+  # ajax only, returns nothing
   def sort
-    for id in params['pending_tasks']
-      task = @list.tasks.detect{|t| t.id == id.to_i}
-      task.move_to_bottom if task
+    ids = params['pending_tasks'] || params['completed_tasks']
+    @list.tasks.each do |task|
+      i = ids.index( task.id.to_s )
+      task.update_attribute('position',i+1) if i
     end
-#    @list.tasks.each do |task|
-      #task.position = params['pending_tasks'].index(task.id.to_s) + 1
-      #task.save
-#    end
     render :nothing => true
   end
   
-  # create_task
-  # ajax only, returns partial HTML
+  # ajax only, returns rjs
   def create_task
-    return unless @request.xhr?
-    @task = Task::Task.new( @params['task']['new'] )
+    return unless request.xhr?
+    @task = Task::Task.new(params[:task])
     @task.task_list = @list
     @task.save
-    #render :partial=>'task', :locals=>{:task=>task}
   end
   
   # ajax only, returns rjs
@@ -52,8 +29,7 @@ class Tool::TasklistController < Tool::BaseController
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
     @task.completed = true
-    @task.move_to_bottom
-    #@task.save
+    @task.move_to_bottom # also saves task
   end
 
   # ajax only, returns rjs
@@ -61,10 +37,25 @@ class Tool::TasklistController < Tool::BaseController
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
     @task.completed = false
-    @task.move_to_bottom
-    #@task.save
+    @task.move_to_bottom # also saves task
   end
-    
+  
+  # ajax only, returns nothing
+  def destroy_task
+    return unless request.xhr?
+    @task = @list.tasks.find(params[:id])
+    @task.remove_from_list
+    @task.destroy
+    render :nothing => true
+  end
+  
+  # ajax only, returns rjs
+  def update_task
+    return unless request.xhr?
+    @task = @list.tasks.find(params[:id])
+    @task.update_attributes(params[:task])
+  end
+  
   protected 
   
   def fetch_task_list

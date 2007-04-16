@@ -1,10 +1,8 @@
 ActiveRecord::Base.class_eval do
   
-  # taken from beast
-  # used to auto-format post body
-  
+  # used to auto-format body  
   def self.format_attribute(attr_name)
-    class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
+    #class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
     define_method(:body)       { read_attribute attr_name }
     define_method(:body_html)  { read_attribute "#{attr_name}_html" }
     define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
@@ -25,21 +23,40 @@ ActiveRecord::Base.class_eval do
     sanitize_sql(condition)
   end
   
-  # used by Page
+  # Used by Page subclasses to define themselved (ie icon, description, etc).
+  # class_inheritable_accessor is very close to what we want. However, when
+  # an attr is defined with class_inheritable_accessor, the accessor is not
+  # called when it appears in a class definition, and I don't understand why.
   def self.class_attribute(*keywords)
     for word in keywords
       word = word.id2name
       module_eval <<-"end_eval"
-      def self.#{word}(value=nil)
-        @#{word.sub '?',''} = value if value
-        @#{word.sub '?',''}
-      end
-      def #{word}
-        self.class.#{word.sub '?',''}
-      end
+        def self.#{word}(value=nil)
+          @#{word.sub '?',''} = value if value
+          @#{word.sub '?',''}
+        end
+        def #{word}
+          self.class.#{word.sub '?',''}
+        end
       end_eval
     end
   end
+
+  # this this should work, why not?
+#  def self.class_attribute(*keywords)
+#    for word in keywords
+#      word = word.id2name
+#      module_eval <<-"end_eval"
+#        class << self
+#          def #{word}(value=nil)
+#            write_inheritable_attribute("#{word}", value) if value
+#            read_inheritable_attribute("#{word}")
+#          end
+#          public :#{word}
+#        end
+#      end_eval
+#    end
+#  end
 
 end
 
