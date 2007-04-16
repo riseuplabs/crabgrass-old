@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="check.svg"
-   sodipodi:docbase="/home/dev/crabgrass/trunk/public/images/svg"
+   sodipodi:docbase="/home/dev/crabgrass/trunk/public/images/smallsvgs"
    inkscape:version="0.44"
    sodipodi:version="0.32"
    id="svg11300"
@@ -86,19 +86,19 @@
        x2="45.050514"
        y2="-33.421204"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.214995,0,0,1.20053,-4.264706,-4.289656)" />
+       gradientTransform="matrix(1.068787,0,0,1.054322,5.916613,-122.045)" />
   </defs>
   <sodipodi:namedview
-     inkscape:window-y="24"
-     inkscape:window-x="0"
-     inkscape:window-height="923"
-     inkscape:window-width="1270"
+     inkscape:window-y="64"
+     inkscape:window-x="36"
+     inkscape:window-height="762"
+     inkscape:window-width="898"
      inkscape:showpageshadow="false"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
      showgrid="true"
      inkscape:current-layer="layer1"
-     inkscape:cy="52.276554"
+     inkscape:cy="52.453331"
      inkscape:cx="108.07004"
      inkscape:zoom="2.8284271"
      inkscape:pageshadow="2"
@@ -167,21 +167,22 @@
      inkscape:label="Layer 1"
      id="layer1">
     <rect
-       style="opacity:1;color:black;fill:url(#linearGradient3056);fill-opacity:1;fill-rule:nonzero;stroke:#595959;stroke-width:4.6304822;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       style="opacity:1;color:black;fill:url(#linearGradient3056);fill-opacity:1;fill-rule:nonzero;stroke:#595959;stroke-width:4.06990814;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
        id="rect2163"
-       width="106.98718"
-       height="105.71351"
-       x="10.315241"
-       y="10.116718"
-       rx="7.7211728"
-       ry="6.8851585" />
+       width="94.112732"
+       height="92.839058"
+       x="18.742062"
+       y="-109.393"
+       rx="7.7211723"
+       ry="6.8851585"
+       transform="scale(1,-1)" />
     <rect
-       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:7.34200001;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.7103825;visibility:visible;display:inline;overflow:visible"
+       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:5.00229168;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.7103825;visibility:visible;display:inline;overflow:visible"
        id="rect3058"
-       width="94.275574"
-       height="94.140175"
-       x="16.895819"
-       y="16"
+       width="84.662231"
+       height="82.405518"
+       x="23.644234"
+       y="21.515417"
        rx="3.2830777"
        ry="3.7954261" />
     <g

@@ -7,13 +7,13 @@ class CreateTasklist < ActiveRecord::Migration
       t.column :name, :string, :limit => 50
       t.column :description, :string
       t.column :completed, :boolean, :default => false
+      t.column :position, :integer
     end
     create_table :tasks_users, :id => false do |t|
       t.column :user_id, :integer
       t.column :task_id, :integer
     end
   end 
-
 
   def self.down
     drop_table :task_lists

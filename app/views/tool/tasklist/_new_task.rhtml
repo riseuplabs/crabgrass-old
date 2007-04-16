@@ -1,0 +1,28 @@
+<div id="new-task-link">
+  <%= link_to_function 'add task', 'Element.show("new-task-form"); Element.hide("new-task-link");' %> 
+</div>
+
+<div id='new-task-form' style='display:none'>
+<%= form_remote_tag(
+  :url      => page_url(@page, :action=>'create_task'),
+  :html     => {:action => page_url(@page, :action=>'create_task')}, # non-ajax fallback
+  :loading  => "Element.show('new-task-loading')"
+) %>
+   description:<br/>
+   <input type="text" name="task[new][name]" value="" maxlength="100" size='50'>
+   <br/>
+   detail:<br/>
+   <textarea name="task[new][description]" rows="4" cols="50"></textarea>
+   <br/>
+   <% if @page.group %>
+     assign to:<br/>
+     <%= select_tag 'task[new][user]', options_for_select([''] + @page.group.users.to_select('login')) %>
+     <br/>
+   <% end %>
+   <p>
+   <%= submit_tag 'Add Task' %>
+   <%= button_to_function "Close", "Element.hide('new-task-form'); Element.show('new-task-link');" %>
+   <%= image_tag "spinner.gif", :id=>'new-task-loading', :style=>'display:none' %>
+   </p>
+<%= end_form_tag %>
+</div> <!-- end new task form -->

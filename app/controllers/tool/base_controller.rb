@@ -125,6 +125,7 @@ class Tool::BaseController < ApplicationController
   end
   
   def fetch_page_data
+    return true if request.xhr?
     if logged_in?
       # grab the current user's participation from memory
       @upart = @page.participation_for_user(current_user) if logged_in?

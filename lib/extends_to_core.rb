@@ -56,4 +56,9 @@ class String
   end
 end 
 
+class Array
+  def to_select(field,id='id')
+    self.collect { |x| [x.send(field),x.send(id)] }
+  end
+end
 

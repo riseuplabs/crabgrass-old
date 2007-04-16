@@ -54,7 +54,7 @@ class Page < ActiveRecord::Base
   # relationship of this page to groups
   has_many :group_participations, :dependent => :destroy
   has_many :groups, :through => :group_participations
-
+  belongs_to :group # the main group
   
   # like users.with_access, but uses already included data
   def users_with_access

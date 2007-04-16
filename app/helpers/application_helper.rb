@@ -123,7 +123,7 @@ module ApplicationHelper
   end
 
   def banner_style
-    @banner_style || "background: '#fff'; color: '#000'"
+    @banner_style || "background: #fff; color: #000"
   end
   
   def banner

@@ -1,0 +1,42 @@
+<%
+checked     = task.completed? ? "CHECKED" : ""
+alt_status  = task.completed? ? "pending" : "complete"
+task_id     = "task_#{task.id}"
+checkbox_id = "#{task_id}_check"
+spinner_id  = "#{task_id}_spinner"
+details_id  = "#{task_id}_details"
+action      = "mark_task_#{alt_status}"
+onclick     = "Element.hide('#{checkbox_id}');" +
+              "Element.show('#{spinner_id}');" +
+              remote_function(:url => page_url(@page, :action=>action, :id=>task.id))
+
+#              "$('#{form_id}').onsubmit"
+#before      = "Element.hide('#{checkbox_id}'); Element.show('#{spinner_id}')"
+
+# form_remote_tag(
+# :url        => page_url(@page, :action=>'mark_task_complete', :id=>task.id),
+# :html       => { :id => form_id })
+
+%>
+
+<li id='<%=task_id%>' class='task'>
+  <div class='actions'>
+    <%=image_tag 'actions/ex.png'%>
+    <%=image_tag 'actions/pencil.png'%>
+    <span class='handle'><%=image_tag 'actions/change-order-small.png'%></span>
+  </div>
+  <div class='checkbox'>
+    <input type='checkbox' onclick="<%=onclick%>" id='<%=checkbox_id%>' <%= checked %>/>
+    <%= image_tag 'spinner.gif', :id=>spinner_id, :style=>'display:none' %>
+  </div>
+  <div class='name'>
+    <%= "<b>#{link_to_user(task.user)}:</b>" if task.user %>
+    <% if task.description.any? -%>
+      <span><%= link_to_function task.name, "Element.toggle('#{details_id}')" %></span>
+    <% else -%>
+      <%= task.name %>
+    <% end -%>
+  </div>
+  <div class='details' id="<%=details_id%>" style='display: none'><%= task.description %></div>
+  <div></div>
+</li>

@@ -1,0 +1,3 @@
+page.insert_html :bottom, 'pending_tasks', :partial => 'task', :locals => {:task => @task}
+page.sortable "pending_tasks", :handle => 'handle', :url => page_url(@page, :action=>'sort')
+page.hide('new-task-loading')
