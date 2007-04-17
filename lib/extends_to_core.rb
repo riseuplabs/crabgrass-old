@@ -47,6 +47,7 @@ class String
     s.strip!            # ohh la la
     s.downcase!         # upper case characters in urls are confusing
     s.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
+    s = "-#{s}" if s =~ /^(\d+)$/ # don't allow all numbers
     s
   end
   
