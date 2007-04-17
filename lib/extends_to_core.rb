@@ -40,10 +40,12 @@ class String
   def nameize
     translation_to   = 'ascii//ignore//translit'
     translation_from = 'utf-8'
+    # Iconv transliteration seems to be broken right now in ruby, but
+    # if it was working, this should do it.
     s = Iconv.iconv(translation_to, translation_from, self).to_s
     s.gsub!(/\W+/, ' ') # all non-word chars to spaces
     s.strip!            # ohh la la
-    s.downcase!         #
+    s.downcase!         # upper case characters in urls are confusing
     s.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
     s
   end

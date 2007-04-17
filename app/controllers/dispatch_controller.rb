@@ -69,8 +69,9 @@ class DispatchController < ApplicationController
       @user  = User.find_by_login(context) unless @group
     end
 
-    if page_handle =~ /^(\d)+/
-      # if page handle starts with a number then find by id using that number.
+    if page_handle =~ / (\d+)$/
+      # if page handle ends with [:space:][:number:] then find by page id.
+      # (the url actually looks like "my-page+52", but pluses are interpreted as spaces).
       # find by id will always return a globally unique page so we can ignore context
       @page = find_page_by_id( $~[0] )
     elsif @group
