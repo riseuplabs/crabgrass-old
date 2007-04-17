@@ -26,7 +26,7 @@
        inkscape:collect="always"
        id="linearGradient3050">
       <stop
-         style="stop-color:#47565f;stop-opacity:1"
+         style="stop-color:#babdb6;stop-opacity:1"
          offset="0"
          id="stop3052" />
       <stop
@@ -81,24 +81,24 @@
        inkscape:collect="always"
        xlink:href="#linearGradient3050"
        id="linearGradient3056"
-       x1="70.89418"
-       y1="106.93949"
-       x2="45.050514"
-       y2="-33.421204"
+       x1="54.354244"
+       y1="91.849319"
+       x2="56.027828"
+       y2="18.556063"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.068787,0,0,1.054322,5.916613,-122.045)" />
   </defs>
   <sodipodi:namedview
-     inkscape:window-y="64"
-     inkscape:window-x="36"
+     inkscape:window-y="67"
+     inkscape:window-x="76"
      inkscape:window-height="762"
      inkscape:window-width="898"
      inkscape:showpageshadow="false"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
      showgrid="true"
-     inkscape:current-layer="layer1"
-     inkscape:cy="52.453331"
+     inkscape:current-layer="layer2"
+     inkscape:cy="52.806885"
      inkscape:cx="108.07004"
      inkscape:zoom="2.8284271"
      inkscape:pageshadow="2"
@@ -166,25 +166,6 @@
      inkscape:groupmode="layer"
      inkscape:label="Layer 1"
      id="layer1">
-    <rect
-       style="opacity:1;color:black;fill:url(#linearGradient3056);fill-opacity:1;fill-rule:nonzero;stroke:#595959;stroke-width:4.06990814;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
-       id="rect2163"
-       width="94.112732"
-       height="92.839058"
-       x="18.742062"
-       y="-109.393"
-       rx="7.7211723"
-       ry="6.8851585"
-       transform="scale(1,-1)" />
-    <rect
-       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:5.00229168;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.7103825;visibility:visible;display:inline;overflow:visible"
-       id="rect3058"
-       width="84.662231"
-       height="82.405518"
-       x="23.644234"
-       y="21.515417"
-       rx="3.2830777"
-       ry="3.7954261" />
     <g
        id="g1529"
        inkscape:label="Layer 1"
@@ -209,5 +190,30 @@
            style="opacity:0.50800003;color:black;fill:url(#radialGradient1457);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.94278264;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible" />
       </g>
     </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="hide"
+     style="display:none">
+    <rect
+       style="opacity:1;color:black;fill:url(#linearGradient3056);fill-opacity:1;fill-rule:nonzero;stroke:#babdb6;stroke-width:4.06990814;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect2163"
+       width="94.112732"
+       height="92.839058"
+       x="18.742062"
+       y="-109.393"
+       rx="7.7211723"
+       ry="6.8851585"
+       transform="scale(1,-1)" />
+    <rect
+       style="opacity:1;color:black;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:white;stroke-width:5.00229168;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.7103825;visibility:visible;display:inline;overflow:visible"
+       id="rect3058"
+       width="84.662231"
+       height="82.405518"
+       x="23.644234"
+       y="21.515417"
+       rx="3.2830777"
+       ry="3.7954261" />
   </g>
 </svg>

@@ -4,7 +4,7 @@ class Tool::TaskList < Page
 
   controller 'tasklist'
   model Task::TaskList
-  icon 'check.png'
+  icon 'task.png'
   tool_type 'task list'
   
 end
