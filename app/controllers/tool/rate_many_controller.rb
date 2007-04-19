@@ -42,7 +42,6 @@ class Tool::RateManyController < Tool::BaseController
     redirect_to page_url(@page, :action => 'show')
   end
 
-  # there has got to be a better way. Votes.delete_all?
   def clear_votes
     @poll.votes.clear
     redirect_to page_url(@page, :action => 'show')
