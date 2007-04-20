@@ -11,6 +11,7 @@ class PostsController < ApplicationController
       current_user.updated(@page)
       respond_to do |wants|
         wants.html {
+          @user = current_user # helps page_url
           redirect_to page_url(@page, :anchor => @post.dom_id)
           # :paging => params[:paging] || '1')
         }
