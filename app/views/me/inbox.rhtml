@@ -1,0 +1,16 @@
+<%= render :partial => 'tabs' %>
+
+<div class='tabinfo'>
+Inbox of pages I am actively participating in or watching for changes. <%= link_to 'create page &raquo;', {:controller => '/pages', :action => 'create'} %>
+</div>
+
+<div id='page-holder'>
+  <div id='folders'>
+    <%= render :partial => 'me/folders', :locals => {:mode => 'me', :users => @user.contacts, :groups => @user.groups} %>
+  </div>
+  <div id='page-list'>
+    <%= render :partial => 'pages/list' %>
+  </div>
+</div>
+
+<p style="clear:both; padding-top: 2em"></p>

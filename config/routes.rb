@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
 #     :action => 'show'
 #  end
 
-  map.connect 'me/folder/*path', :controller => 'me', :action => 'folder'
+  map.connect 'me/inbox/*path', :controller => 'me', :action => 'inbox'
   map.me 'me/:action/:id', :controller => 'me'
   
   map.people 'people/:action/:id', :controller => 'people'
@@ -31,6 +31,9 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   
   map.connect '', :controller => "account"
+  
+  # used for ajax calls to make a direct request bypassing the dispatcher
+  map.direct 'page-direct/:page_id/:action/:id/:controller', :controller => /.*/
   
   # typically, this is the default route
   map.connect ':controller/:action/:id'

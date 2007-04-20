@@ -193,7 +193,7 @@ module Formy
 
     def open
       super
-      puts "<div><ul id='tabnav'>"
+      puts "<div><ul class='tabset'>"
     end
     
     def close
@@ -211,7 +211,7 @@ module Formy
       javascript = "id='@id' href='#' onclick='showtab(event.target)'"
       #hash = url_to_hash(@link)
       selected = 'selected' if "#{@selected}" == "true"
-      puts "<li class='tab'><a class='tab-link #{selected}' href='#{@link}'>#{@label}</a></li>"
+      puts "<li class='tab #{selected}'><a class='tab-link #{selected}' href='#{@link}'>#{@label}</a></li>"
       super
     end
   end

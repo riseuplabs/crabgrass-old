@@ -1,0 +1,14 @@
+<%#
+  # these are little group and users boxes used for the me banner
+  #
+-%>
+<div class='iconboxes'>
+<% @user.contacts.each do |u| -%>
+  <% text = "<span>#{u.login}</span>" + avatar_for(u,'xsmall', :class=>'iconbox') %>
+  <%= link_to text, :controller => 'people', :action => 'show', :id => u %>
+<% end -%>
+<% @user.groups.each do |g| -%>
+  <% text = "<span>#{g.name}</span>" + avatar_for(g,'xsmall', :class=>'iconbox') %>
+  <%= link_to text, :controller => 'groups', :action => 'show', :id => g %>
+<% end -%>
+</div>

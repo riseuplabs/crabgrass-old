@@ -4,20 +4,26 @@ class MeController < ApplicationController
   
   def index
     params[:path] = []
-    folder()
+    inbox
   end
 
-  def folder
+  def inbox
+    path = params[:path]
+    path = ['starred','or','unread','or','pending'] if path.first == 'vital'
     options = {
       :class => UserParticipation,
-      :path => params[:path],
+      :path => path,
       :conditions => 'user_participations.user_id = ?',
       :values => [current_user.id]
     }
-    @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
-    render :action => 'index'
+    @pages, @page_sections = find_and_paginate_pages(options)
   end
 
+  def tasks
+    @stylesheet = 'tasks'
+    # eager load everything we will need to show tasks (pages, tasks, users)
+    @task_lists = Task::TaskList.find(:all, :conditions => ['users.id = ?',current_user.id], :include => [:pages, {:tasks => :users}])
+  end
  
   def edit   
     if request.post? 
@@ -52,8 +58,9 @@ class MeController < ApplicationController
   
   def breadcrumbs
     add_crumb 'me', me_url(:action => 'index')
-    unless ['show','index'].include?(params[:action])
-      add_crumb params[:action], me_url(:action => params[:action])
-    end
+    #unless ['show','index'].include?(params[:action])
+    #  add_crumb params[:action], me_url(:action => params[:action])
+    #end
+    set_banner 'me/banner', current_user.style
   end
 end
