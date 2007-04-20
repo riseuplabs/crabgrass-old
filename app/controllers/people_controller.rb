@@ -26,13 +26,17 @@ class PeopleController < ApplicationController
   def folder
     options = {:class => UserParticipation, :path => params[:path]}
     if logged_in?
-      # the person's pages that we also have access to
-      options[:conditions] = "user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)"
-      options[:values]     = [@user.id, current_user.group_ids, current_user.id, true]
+      # pages the user as contributed to and that we also have access to
+      options[:conditions] = "user_participations.user_id = ? " +
+                             "AND user_participations.changed_at IS NOT ? " + 
+                             "AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)"
+      options[:values]     = [@user.id, nil, current_user.group_ids, current_user.id, true]
     else
-      # the person's public pages
-      options[:conditions] = "user_participations.user_id = ? AND pages.public = ?"
-      options[:values]     = [@user.id, true]
+      # public pages the user has contributed to
+      options[:conditions] = "pages.public = ? " + 
+                             "AND user_participations.user_id = ? " + 
+                             "AND user_participations.changed_at IS NOT ?"
+      options[:values]     = [@user.id, true, nil]
     end
     @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
     render :action => 'show'
