@@ -1,7 +1,6 @@
 <h1>create a new page</h1>
 
-<%= start_form_tag :action => 'new' %>
-
+<% form_tag :action => 'new' do -%>
 <p>
 <b>title:</b><br/>
 <%= text_field 'page', 'title', :size => 30 %>
@@ -32,5 +31,6 @@
 </p>
 
 <%= submit_tag "Create page" %>
-<%= end_form_tag %>
+<% end -%>
 
+<%= debug params %>
