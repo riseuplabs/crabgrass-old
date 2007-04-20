@@ -5,9 +5,9 @@ module LinkHelper
     accesskey = shortcut_key label
     onclick = %Q<submit_form("#{form_id}", "#{label}")>
     onclick = %Q<if(confirm("#{options[:confirm]}")){submit_form("#{form_id}", "#{label}");}else{return false;}> if options[:confirm]
-    %Q(<span class="button"><a href='#' onclick='#{onclick}' style='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{label}</a></span>)
+    %Q(<a href='#' onclick='#{onclick}' style='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{label}</a>)
   end
-    
+  
   def link_button(label,options={},htmloptions={})
     accesskey = shortcut_key label
     url = url_for options

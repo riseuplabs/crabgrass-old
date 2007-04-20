@@ -31,7 +31,7 @@ module ApplicationHelper
   end
  
   # arg might be a user object, a user id, or the user's login
-  def link_to_user(arg)
+  def link_to_user(arg, options={})
     if arg.is_a? Integer
       login = User.find(arg).login
     elsif arg.is_a? String
@@ -40,17 +40,25 @@ module ApplicationHelper
       login = arg.login
     end
     #link_to login, :controller => '/people', :action => 'show', :id => login if login
-    link_to login, "/people/show/#{login}"
+    action = options[:action] || 'show'
+    link_to login, "/people/#{action}/#{login}"
   end
 
-  def link_to_group(group)
+  def link_to_group(arg)
+    if arg.instance_of? Integer
+      name = Group.find(arg).name
+    elsif arg.instance_of? String
+      name = arg
+    elsif arg.instance_of? Group
+      name = arg.name
+    end
     #link_to group.name, :controller => '/groups', :action => 'show', :id => group
-    link_to group.name, "/groups/show/#{group.name}"
+    link_to name, "/groups/show/#{name}"
   end
     
-  def avatar_for(viewable, size='medium')
+  def avatar_for(viewable, size='medium', options={})
     #image_tag avatar_url(:viewable_type => viewable.class.to_s.downcase, :viewable_id => viewable.id, :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
-    image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
+    image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => (options[:class] || 'avatar')
   end
   
   def ajax_spinner_for(id, spinner="spinner.gif")
@@ -96,25 +104,7 @@ module ApplicationHelper
       date.loc('%d/%b')
     end
   end
-  
-  def folder_icon(image)
-    image = "folders/#{image}" unless image.match(/\//)
-    image_tag(image, :size => "22x22")
-  end
-  
-  def folder_link(text,path=nil,image=nil)
-    if params[:action] == 'folder'
-      klass = ('selected' if params[:path].join('/').ends_with?(path)) || ''
-    elsif path=='all'
-      klass = 'selected'
-    else
-      klass = ''
-    end
     
-    text = folder_icon(image) + " " + text if image
-    link_to text, url_for(:action => 'folder', :path => path), :class => klass
-  end
-  
   # TODO: allow this to be set by the theme
   def favicon
    ret = ''
@@ -122,8 +112,17 @@ module ApplicationHelper
    ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
   end
 
+  # custom stylesheet
+  # rather than include every stylesheet in every request, some stylesheets are 
+  # only included if they are needed. a controller can set a custom stylesheet
+  # using 'stylesheet' in the class definition, or an action can set @stylesheet.
+  # you can't do both at the same time.
   def stylesheet
-    controller.class.stylesheet
+    if @stylesheet
+      @stylesheet # set for this action
+    else
+      controller.class.stylesheet # set for this controller
+    end
   end
   
   def banner_style

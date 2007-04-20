@@ -35,6 +35,25 @@ module PageUrlHelper
     [context, name, options.delete(:action), options.delete(:id)].compact.join('/')
   end
   
+  # like page_url, but it returns a direct URL that bypasses the dispatch
+  # controller. intended for use with ajax calls. 
+  def page_xurl(page,options={})
+    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => 'tool/' + page.controller}
+    direct_url(hash.merge(options))
+  end
+  
+  def create_page_link(text,options={})
+    url = url_for :controller => '/pages', :action => 'create'
+    ret = ""
+    ret += "<form class='link' method='post' action='#{url}'>"
+    options.each do |key,value|
+      ret += hidden_field_tag(key,value)
+    end
+    ret += link_to_function(text, 'event.target.parentNode.submit()')
+    ret += "</form>"
+    #link_to(text, {:controller => '/pages', :action => 'create'}.merge(options), :method => :post)  
+  end
+  
   # 
   # returns the url that this page was 'from'.
   # used when deleting this page, and other cases where we redirect back to 
@@ -43,6 +62,8 @@ module PageUrlHelper
   def from_url(page=nil)
     ary = if @group
       ['/groups', 'show', @group]
+    elsif @user == current_user
+      ['/me',     nil,    nil]
     elsif @user
       ['/people', 'show', @user]
     elsif logged_in?
