@@ -99,14 +99,21 @@ class ApplicationController < ActionController::Base
   def page_query_from_filter_path(options={})
     klass      = options[:class]
     path       = options[:path] || []
-    conditions = [options[:conditions]]
-    values     = options[:values]
+    conditions = []  # the current condition clause we are building
+    values     = []  # array of replacement values for the '?' in conditions
+    or_clauses = []  # used to build current clause of the form (x or x)
+    and_clauses = [] # used to build the current clause of the form (x and x)
+    
+    and_clauses << [options[:conditions]]
+    values = options[:values]
     
     # filters
     path = path.reverse
-    logger.error(path.inspect)
     while folder = path.pop
-      if folder == 'unread'
+      if folder == 'or'
+        or_clauses << conditions
+        conditions = []
+      elsif folder == 'unread'
         conditions << 'viewed = ?'
         values << false
       elsif folder == 'pending'
@@ -165,7 +172,27 @@ class ApplicationController < ActionController::Base
     end
 
     # default sort
-    order ||= 'pages.updated_at DESC'
+    order ||= 'pages.updated_at DESC'    
+
+    or_clauses << conditions if conditions.any? # grab the remaining conditions
+    and_clauses << or_clauses
+  
+    # holy crap, i can't believe how ugly this is
+    conditions_string = "(" + and_clauses.collect{|or_clause|
+      if or_clause.is_a? String
+        or_clause
+      elsif or_clause.any?
+        "(" + or_clause.collect{|conditions|
+          if conditions.is_a? String
+            conditions
+          elsif conditions.any?
+            conditions.join(' AND ')
+          end
+        }.join(') OR (') + ")"
+      else
+        "1"
+      end
+    }.join(') AND (') + ")"
     
     # add in join tables:
     # if the conditions use user or group participations to limit which pages are returned,
@@ -173,7 +200,6 @@ class ApplicationController < ActionController::Base
     # we just want to be able to add conditions to the query. We alias the tables because 
     # user_participations or group_participations might already be included as the main table, so
     # we have to give it a new name.
-    conditions_string = conditions.join(' AND ')
     join = ''
     if /user_parts\./ =~ conditions_string
       join += " LEFT OUTER JOIN user_participations user_parts ON user_parts.page_id = pages.id"
@@ -184,9 +210,14 @@ class ApplicationController < ActionController::Base
     for i in 1..4
       if /taggings#{i}\./ =~ conditions_string
         join += " INNER JOIN taggings taggings#{i} ON (pages.id = taggings#{i}.taggable_id AND taggings#{i}.taggable_type = 'Page')"
-      end
+      end  
     end
-
+    if klass == Page and /user_participations\./ =~ conditions_string
+      # so we can filter on pages that two users have in common without making the main
+      # table be user_participations
+      join += " LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id"
+    end
+    
     { :conditions => [conditions_string] + values,
       :joins => join, :order => order, :class => klass, 
       :already_built => true }
@@ -320,6 +351,20 @@ class ApplicationController < ActionController::Base
     { :class      => Page,
       :conditions => "(pages.public = ?)",
       :values     => [true] }
+  end
+  
+  def options_for_page_participation_by(user)
+    options = {:class => Page}
+    if logged_in?
+      # the person's pages that we also have access to
+      options[:conditions] = "user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)"
+      options[:values]     = [user.id, current_user.group_ids, current_user.id, true]
+    else
+      # the person's public pages
+      options[:conditions] = "user_participations.user_id = ? AND pages.public = ?"
+      options[:values]     = [user.id, true]
+    end
+    options
   end
   
 end
