@@ -45,6 +45,8 @@ class PeopleController < ApplicationController
   def tasks
     @stylesheet = 'tasks'
     options = options_for_page_participation_by(@user)
+    options[:conditions] += " AND user_participations.resolved = ?"
+    options[:values] << false
     options[:path] = ['type','task']
     @pages = find_pages(options)
     @task_lists = @pages.collect{|p|p.data}
