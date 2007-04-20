@@ -1,15 +1,17 @@
 <%# this is used by people controller and me controller -%>
-<% for @list in @task_lists %>
-  <% @page = @list.page;
+<% for @list in @task_lists -%>
+  <% 
+     @page = @list.page;
      task_list_id = "pending_tasks_#{@page.id}"
      tasks = @list.tasks.collect{|t|t if t.user == @user and not t.completed?}.compact
-   %>
+     next unless tasks.any?
+  -%>
   <div><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name)})" if @page.group_name %></div>
   <ul id='<%=task_list_id%>' class='task_list'>
     <%= render :partial => 'tool/tasklist/task', :collection => tasks %>
   </ul>
   <%= sortable_element task_list_id, :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
-<% end %>
+<% end -%>
 
-<%# this is just here so that we don't get an ajax error when a task is marked done %>
+<%# this is just here so that we don't get an ajax error when a task is marked done -%>
 <ul id='completed_tasks' style='display:none'></ul>
