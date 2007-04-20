@@ -4,11 +4,18 @@
 
 class PagesController < ApplicationController
   
-  def new
+  #
+  # params:
+  #   page_type
+  #   group_name or group_id
+  #   page[] (any page attributes)
+  #   
+  def create
     return @page = Page.new(params[:page]) if request.get?
     begin
       @page = create_new_page
       if @page.save
+        @user = current_user  # helps page_url guess a good url
         redirect_to page_url(@page)
       else
         message :object => @page
@@ -22,21 +29,20 @@ class PagesController < ApplicationController
     groups    = get_groups
     users     = get_users
     page_type = get_page_type
-    users_to_add = users
     
     page = page_type.new params[:page].merge({:created_by_id => current_user.id})
     groups.each do |group|
       page.add(group, :access => ACCESS_ADMIN)
-      users_to_add += group.users if params[:announce] and group.users.any?
+      users += group.users if params[:announce]
     end
-    users_to_add.uniq.each do |u|
-      if users.include? u
-        page.add(u, :access => ACCESS_ADMIN)
-      else
+    users.uniq.each do |u|
+      if u.member_of? groups
         page.add(u)
+      else
+        page.add(u, :access=>ACCESS_ADMIN)
       end
     end
-    page.tag_with(params[:tag_list])
+    page.tag_with(params[:tag_list]) if params[:tag_list]
     page
   end
 
