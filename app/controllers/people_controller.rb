@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
     options = {:class => UserParticipation, :path => params[:path]}
     if logged_in?
       # the person's pages that we also have access to
-      options[:conditions] = "(user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
+      options[:conditions] = "user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)"
       options[:values]     = [@user.id, current_user.group_ids, current_user.id, true]
     else
       # the person's public pages
@@ -36,6 +36,14 @@ class PeopleController < ApplicationController
     end
     @pages, @page_sections = find_and_paginate_pages page_query_from_filter_path(options)
     render :action => 'show'
+  end
+
+  def tasks
+    @stylesheet = 'tasks'
+    options = options_for_page_participation_by(@user)
+    options[:path] = ['type','task']
+    @pages = find_pages(options)
+    @task_lists = @pages.collect{|p|p.data}
   end
 
   def new
