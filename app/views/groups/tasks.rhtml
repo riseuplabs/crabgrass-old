@@ -1,3 +1,10 @@
-<p><b>pending tasks</b></p>
+<div>
+  <b>pending tasks.</b>
+  <%= create_page_link 'create new task list &raquo;',
+      'page_type' => 'Tool::TaskList', 'page[title]' => 'new task list', 
+      'page[resolved]' => false, 'group_id' => @group.id %>
+</div>
 
+<p>
 <%= render :partial => 'tool/tasklist/external_list_tasks' %>
+</p>

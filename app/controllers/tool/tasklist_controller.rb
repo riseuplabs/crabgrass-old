@@ -68,21 +68,27 @@ class Tool::TasklistController < Tool::BaseController
   
   def update_participations
     users_pending = {}
-    page_pending = false
+    page_resolved = true
+
+    # build a hash of the completed status for each user
     @list.tasks.each do |task|
       if task.user
         users_pending[task.user] ||= (not task.completed?)
       end
+      page_resolved &&= task.completed?
     end
+
+    # make the page resolved iff all the tasks are completed
+    @page.update_attribute(:resolved, page_resolved) if @page.resolved? != page_resolved
+
+    # update each user's resolved status
     users_pending.each do |user,pending|
       unless party = @page.participation_for_user(user) 
         party = @page.user_participations.build(:user_id => user.id) 
       end 
       party.update_attributes :resolved => (not pending)
-      page_pending ||= pending # mark the page as pending if it is pending for any user
     end
     current_user.updated(@page)
-    @page.update_attribute(:resolved, (not page_pending)) if @page.resolved == page_pending
     true
   end
   
