@@ -159,9 +159,8 @@ class GroupsController < ApplicationController
   
   # post only
   def leave_group
-    group = Group.find(params[:id])
-    current_user.groups.delete(group)
-    message :success => 'You have been removed from %s' / group.name
+    current_user.groups.delete(@group)
+    message :success => 'You have been removed from %s' / @group.name
     redirect_to me_url
   end
   
@@ -171,7 +170,7 @@ class GroupsController < ApplicationController
       message :error => 'You can only delete a group if you are the last member'
       redirect_to :action => 'show', :id => @group
     else
-      Group.find(params[:id]).destroy      
+      @group.destroy      
       redirect_to :action => 'list'
     end
   end  
