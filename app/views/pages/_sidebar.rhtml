@@ -55,7 +55,7 @@
 <% @page.users_with_access.each do |u| %>
   <%= link_to_user u %>
 <% end %>
-<%= link_to 'edit &raquo;', page_url(@page, :action => 'access') %>
+<%= link_to image_tag('actions/edit.png'), page_url(@page, :action => 'access') %>
 </div> <!-- end section -->
 
 <div class='section'>

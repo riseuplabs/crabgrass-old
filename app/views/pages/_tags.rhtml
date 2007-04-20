@@ -7,6 +7,5 @@
      @page.tags.collect{|tag| link_to tag.name, "/me/folder/tag/#{tag.name}" }.join(", ")
    end
 %>
-<br />
-<%= link_to_function("Edit Tags", "Element.toggle($('tag-form')); Element.toggle($('tags'))") %>
+<%= link_to_function(image_tag('actions/edit.png'), "Element.toggle($('tag-form')); Element.toggle($('tags'))") %>
 
