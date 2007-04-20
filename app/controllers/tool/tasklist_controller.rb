@@ -9,11 +9,17 @@ class Tool::TasklistController < Tool::BaseController
   end
    
   # ajax only, returns nothing
+  # for this to work, there must be a <ul id='sort_list_xxx'> element
+  # and it must be declared sortable like this:
+  # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
-    ids = params['pending_tasks'] || params['completed_tasks']
-    @list.tasks.each do |task|
-      i = ids.index( task.id.to_s )
-      task.update_attribute('position',i+1) if i
+    sort_list_key = params.keys.grep(/^sort_list_/)
+    if sort_list_key.any?
+      ids = params[sort_list_key[0]]
+      @list.tasks.each do |task|
+        i = ids.index( task.id.to_s )
+        task.update_attribute('position',i+1) if i
+      end
     end
     render :nothing => true
   end
@@ -62,6 +68,7 @@ class Tool::TasklistController < Tool::BaseController
   
   def update_participations
     users_pending = {}
+    page_pending = false
     @list.tasks.each do |task|
       if task.user
         users_pending[task.user] ||= (not task.completed?)
@@ -72,8 +79,10 @@ class Tool::TasklistController < Tool::BaseController
         party = @page.user_participations.build(:user_id => user.id) 
       end 
       party.update_attributes :resolved => (not pending)
+      page_pending ||= pending # mark the page as pending if it is pending for any user
     end
     current_user.updated(@page)
+    @page.update_attribute(:resolved, (not page_pending)) if @page.resolved == page_pending
     true
   end
   

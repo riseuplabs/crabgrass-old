@@ -1,7 +1,7 @@
 <div class='task_tool'>
 
 <h2>Pending tasks</h2>
-<ul id='pending_tasks' class='task_list'>
+<ul id='sort_list_pending' class='task_list'>
   <%= render :partial => 'task', :collection => @list.pending %>
 </ul>
 <ul class='task_list'>
@@ -9,11 +9,11 @@
 </ul>
 
 <h2>Completed tasks</h2>
-<ul id='completed_tasks' class='task_list'>
+<ul id='sort_list_completed' class='task_list'>
   <%= render :partial => 'task', :collection => @list.completed %>
 </ul>
 
-<%= sortable_element 'pending_tasks', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
-<%= sortable_element 'completed_tasks', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
+<%= sortable_element 'sort_list_pending', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
+<%= sortable_element 'sort_list_completed', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
 
 </div> <!-- end task tool -->

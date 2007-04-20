@@ -5,6 +5,10 @@ class Task::Task < ActiveRecord::Base
   acts_as_list :scope => :task_list
   format_attribute :description
   
+  def group_name
+    task_list.page.group_name
+  end
+  
   def user_id=(id)
     u = User.find_by_id(id)
     users.clear

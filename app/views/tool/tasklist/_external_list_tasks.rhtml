@@ -1,0 +1,25 @@
+<%# this is used by "external" views/controllers to display a list of tasks.
+  # for example, from people, groups, me. 
+  # in these cases, the task lists are often indirectly fetched from the db. -%>
+<% for @list in @task_lists -%>
+  <% 
+     @page = @list.page;
+     task_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
+     if @user
+       tasks = @list.tasks.collect{|t|t if t.user == @user and not t.completed?}.compact
+     elsif @group
+       tasks = @list.tasks.collect{|t|t if not t.completed?}.compact
+     end
+     next unless tasks.any?
+     tasks = tasks.sort{|t1,t2| t1.position <=> t2.position}
+  -%>
+  <div><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name, :action => 'tasks')})" if @page.group_name %></div>
+  <ul id='<%=task_list_id%>' class='task_list'>
+    <%= render :partial => 'tool/tasklist/task', :collection => tasks %>
+  </ul>
+  <%= sortable_element task_list_id, :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
+<% end -%>
+
+<%# this is just here so that we don't get an ajax error when a task is marked done -%>
+<ul id='sort_list_completed' style='display:none'></ul>
+

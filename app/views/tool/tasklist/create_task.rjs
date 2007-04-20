@@ -1,8 +1,8 @@
 # adds a newly created task to the bottom of the pending tasks
-page.insert_html :bottom, 'pending_tasks', :partial => 'task', :locals => {:task => @task}
+page.insert_html :bottom, 'sort_list_pending', :partial => 'task', :locals => {:task => @task}
 
 # makes sure the new one is sortable
-page.sortable "pending_tasks", :handle => 'handle', :url => page_url(@page, :action=>'sort')
+page.sortable 'sort_list_pending', :handle => 'handle', :url => page_url(@page, :action=>'sort')
 
 # hide the spinner
 page.hide('new-task-loading')

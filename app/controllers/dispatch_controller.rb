@@ -105,7 +105,7 @@ class DispatchController < ApplicationController
   
   def includes
     # for now, every time we fetch a page we suck in all the groups and users
-    # associated with the page
+    # associated with the page. don't do this for xhr
     return nil if request.xhr?
     [{:user_participations => :user}, {:group_participations => :group}]
   end

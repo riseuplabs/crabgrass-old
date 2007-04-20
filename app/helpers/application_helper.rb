@@ -33,7 +33,8 @@ module ApplicationHelper
   # arg might be a user object, a user id, or the user's login
   def link_to_user(arg, options={})
     if arg.is_a? Integer
-      login = User.find(arg).login
+      # this assumes that at some point simple id based finds will be cached in memcached
+      login = User.find(arg).login 
     elsif arg.is_a? String
       login = arg
     elsif arg.is_a? User
@@ -44,8 +45,9 @@ module ApplicationHelper
     link_to login, "/people/#{action}/#{login}"
   end
 
-  def link_to_group(arg)
+  def link_to_group(arg, options={})
     if arg.instance_of? Integer
+      # this assumes that at some point simple id based finds will be cached in memcached
       name = Group.find(arg).name
     elsif arg.instance_of? String
       name = arg
@@ -53,7 +55,8 @@ module ApplicationHelper
       name = arg.name
     end
     #link_to group.name, :controller => '/groups', :action => 'show', :id => group
-    link_to name, "/groups/show/#{name}"
+    action = options[:action] || 'show'
+    link_to name, "/groups/#{action}/#{name}"
   end
     
   def avatar_for(viewable, size='medium', options={})

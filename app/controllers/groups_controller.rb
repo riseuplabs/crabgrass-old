@@ -21,14 +21,20 @@ class GroupsController < ApplicationController
   end
 
   def folder
-    fetch_pages_from_path(params[:path])
+    @pages, @page_sections = fetch_pages_from_path(params[:path])
     render :action => 'show'
   end
 
   def tags
     tags = params[:path] || []
     path = tags.collect{|a|['tag',a]}.flatten
-    fetch_pages_from_path(path)
+    @pages, @page_sections = fetch_pages_from_path(path)
+  end
+
+  def tasks
+    @stylesheet = 'tasks'
+    @pages, @page_sections = fetch_pages_from_path(['type','task','pending'])
+    @task_lists = @pages.collect{|part|part.page.data}
   end
 
   def new
@@ -208,7 +214,7 @@ class GroupsController < ApplicationController
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
       options[:values]     = [@group.id, true]
     end
-    @pages, @page_sections = find_and_paginate_pages options
+    find_and_paginate_pages options
   end
   
 end

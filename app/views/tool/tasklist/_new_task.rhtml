@@ -11,11 +11,11 @@
 </div>
 
 <div id='new-task-form' style='display:none'>
-<%= form_remote_tag(
+<% form_remote_tag(
   :url      => page_xurl(@page, :action=>'create_task'),
   :html     => {:action => page_url(@page, :action=>'create_task')}, # non-ajax fallback
   :loading  => "Element.show('new-task-loading')"
-) %>
+) do -%>
    description:<br/>
    <%= text_field 'task', 'name', :size => 50 %>
    <br/>
@@ -30,5 +30,5 @@
    <%= button_to_function "Done", "Element.hide('new-task-form'); Element.show('new-task-link');" %>
    <%= image_tag "spinner.gif", :id=>'new-task-loading', :style=>'display:none' %>
    </p>
-<%= end_form_tag %>
+<% end -%>
 </div> <!-- end new task form -->
