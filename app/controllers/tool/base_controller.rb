@@ -56,7 +56,7 @@ class Tool::BaseController < ApplicationController
       @page.data.destroy if @page.data # can this be in page?
       @page.destroy
     end
-    redirect_to from_url
+    redirect_to from_url(@page)
   end
 
   def access
@@ -125,6 +125,12 @@ class Tool::BaseController < ApplicationController
   end
   
   def fetch_page_data
+    unless @page
+      # typically, @page will be loaded by the dispatch controller. 
+      # however, in some cases (like ajax) we bypass the dispatch controller
+      # and need to grab the page here.
+      @page = Page.find(params[:page_id])
+    end
     return true if request.xhr?
     if logged_in?
       # grab the current user's participation from memory
@@ -139,10 +145,12 @@ class Tool::BaseController < ApplicationController
     @post_paging = Paginator.new self, disc.posts.count, disc.per_page, current_page
     @posts = disc.posts.find(:all, :limit => disc.per_page, :offset =>  @post_paging.current.offset)
     @post = Post.new
+    true
   end
       
   def breadcrumbs
-    return unless @page
+    return true if request.xhr?
+    return true unless @page
     if @group
       add_crumb 'groups', groups_url
       add_crumb @group.name, groups_url(:action => 'show', :id => @group)
@@ -153,12 +161,14 @@ class Tool::BaseController < ApplicationController
       set_banner 'people/banner_small', @user.style
     elsif @user and current_user == @user
       add_crumb 'me', me_url
-    elsif @page.group_name
+      set_banner 'me/banner', @user.style
+    elsif @page.group_name and @group
       add_crumb 'groups', groups_url
       add_crumb @page.group_name, groups_url(:action => 'show', :id => @page.group_name)      
       set_banner 'groups/banner_small', @group.style
     end
     add_crumb @page.title, page_url(@page, :action => 'show')
+    true
   end
   
 end
