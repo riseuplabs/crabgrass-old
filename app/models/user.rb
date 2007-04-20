@@ -111,12 +111,14 @@ class User < AuthenticatedUser
     raise PermissionDenied
   end
   
-  def add_page(page, attributes)
+  def add_page(page, attributes)        
     # user_participations.build doesn't update the pages.users
-    # until it is saved, which seems like a bug, so we use create
+    # until it is saved, which seems like a bug, so we use create 
     page.user_participations.create attributes.merge(
        :page_id => page.id, :user_id => id,
        :resolved => page.resolved?)
+    
+    # mark users as changed
     page.changed :users
   end
   
@@ -185,6 +187,8 @@ class User < AuthenticatedUser
   def member_of?(group)
     if group.is_a? Integer
       return group_ids.include?(group)
+    elsif group.is_a? Array
+      return group.detect{|g| member_of?(g)}
     else
       return group_ids.include?(group.id)
     end

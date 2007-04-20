@@ -1,4 +1,5 @@
 class Task::Task < ActiveRecord::Base
+  
   belongs_to :task_list 
   has_and_belongs_to_many :users
   acts_as_list :scope => :task_list

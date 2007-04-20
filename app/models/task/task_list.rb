@@ -1,19 +1,16 @@
 class Task::TaskList < ActiveRecord::Base
-  has_many :tasks, :order => "position", :dependent => :delete_all, :include => :users
   
-  has_many :completed, :class_name => 'Task', :order => "position", :conditions => ['completed = ?', true], :include => :users
-  has_many :pending, :class_name => 'Task', :order => "position", :conditions => ['completed = ?', false], :include => :users
-
-  # do
-  #  def completed
-  #    find(:all, :conditions => ['completed = ?', true])
-  #  end
-  #end
-  #  def pending
-  #    find(:all, :conditions => ['completed = ?', false])
-  #  end
-  #end
+  # destroy() freaks out if we use :delete_all, so we use :destroy
+  has_many :tasks, :order => "position", :dependent => :destroy, :include => :users
+  # :class_name => 'Task::Task',
+  # 
+  has_many :completed, :class_name => 'Task',
+    :order => "position", :conditions => ['completed = ?', true], :include => :users
+    
+  has_many :pending, :class_name => 'Task',
+    :order => "position", :conditions => ['completed = ?', false], :include => :users
   
   has_many :pages, :as => :data
   def page; pages.first; end
+  
 end
