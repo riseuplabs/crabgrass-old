@@ -6,6 +6,7 @@ class CreateTasklist < ActiveRecord::Migration
       t.column :task_list_id, :integer
       t.column :name, :string, :limit => 50
       t.column :description, :string
+      t.column :description_html, :string
       t.column :completed, :boolean, :default => false
       t.column :position, :integer
     end

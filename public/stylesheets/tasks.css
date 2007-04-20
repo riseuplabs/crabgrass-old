@@ -56,3 +56,6 @@ li#add_task_link {
   margin: 0 6em;
   padding: 4px;
 }
+div.task_details p, div.task_details ul {
+  margin: 0;
+}
