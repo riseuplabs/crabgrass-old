@@ -22,7 +22,7 @@ class MeController < ApplicationController
   def tasks
     @stylesheet = 'tasks'
     # eager load everything we will need to show tasks (pages, tasks, users)
-    @task_lists = Task::TaskList.find(:all, :conditions => ['users.id = ?',current_user.id], :include => [:pages, {:tasks => :users}])
+    @task_lists = Task::TaskList.find(:all, :conditions => ['users.id = ? AND tasks.completed = ?',current_user.id,false], :include => [:pages, {:tasks => :users}])
   end
  
   def edit   
