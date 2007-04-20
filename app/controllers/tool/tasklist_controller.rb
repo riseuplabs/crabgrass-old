@@ -1,6 +1,8 @@
 
 class Tool::TasklistController < Tool::BaseController
   before_filter :fetch_task_list
+  after_filter :update_participations,
+    :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   stylesheet 'tasks'
   
   def show 
@@ -56,7 +58,24 @@ class Tool::TasklistController < Tool::BaseController
     @task.update_attributes(params[:task])
   end
   
-  protected 
+  protected
+  
+  def update_participations
+    users_pending = {}
+    @list.tasks.each do |task|
+      if task.user
+        users_pending[task.user] ||= (not task.completed?)
+      end
+    end
+    users_pending.each do |user,pending|
+      unless party = @page.participation_for_user(user) 
+        party = @page.user_participations.build(:user_id => user.id) 
+      end 
+      party.update_attributes :resolved => (not pending)
+    end
+    current_user.updated(@page)
+    true
+  end
   
   def fetch_task_list
     unless @page.data
