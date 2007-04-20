@@ -58,37 +58,24 @@
   margin-bottom: -1px;
 }
 
+/** icon nav boxes **/
 
-/** TABS **/
-
-ul#tabnav {
-  list-style-type: none;
-  background: url(/images/grey9.png) repeat-x bottom;
+div.iconboxes img.iconbox {
+  vertical-align: middle;
 }
-ul#tabnav li {
-  height: 1.6em; /* must equal a.height + a.vertical-padding */
-  padding: 1px;
+div.iconboxes a {
+  position: relative;
 }
-ul#tabnav li.tab {
-  float: left;
-  background-color: #eee;
-  border: 1px solid #999;
-  padding: 0;
-  margin: 0 0.4em;
+div.iconboxes a span {
+  display: none;
+  padding: 1px 4px;
 }
-#tabnav a.tab-link {
- display: block;
- color: #666;
- text-decoration: none;
- height: 1.2em;
- padding: 0.1em 0.5em 0.3em 0.5em;
-}
-#tabnav a.tab-link:hover {
- background: #999;
- color: white;
-}
-#tabnav a.selected, #tabnav a.selected:hover {
- background: #fff;
- color: black;
- height: 1.3em;
+div.iconboxes a:hover span {
+  display: inline;
+  outline: 1px solid #000;
+  background: #eee;
+  border: 1px solid #fff;
+  position: absolute;
+  top: 22px;
+  right: 0px;
 }

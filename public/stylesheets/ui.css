@@ -1,6 +1,6 @@
 /*** USER INTERFACE ELEMENTS ***/
 
-/** thing that look like buttons **/
+/** things that look like buttons **/
 
 form.button-to input, a.button {
   border: 1px solid #cdf;
@@ -22,6 +22,19 @@ form.button-to {
   display: inline; 
 }
 
+/** things that look like links **/
+
+form.link {display: inline; border: 0; padding: 0; margin: 0}
+form.link input[type=submit] {
+  border: none;
+  padding:0; margin:0;
+  text-decoration:underline; /* this doesn't work? */
+  color:blue;
+  background-color:transparent;
+  cursor:pointer; 
+  display: inline;
+}
+
 /** common reusable elements **/
 
 a.imglink { text-decoration: none; }
@@ -34,3 +47,39 @@ ul.plainlist {
 ul.plainlist li {margin: 3px 0;}
 
 
+/** horizontal Formy tabs **/
+
+ul.tabset {
+  font-size: 0.8em;
+  list-style-type: none;
+  background: url(/images/grey9.png) repeat-x bottom;
+  margin: 0; padding: 0 0 0 0.75em;
+}
+ul.tabset li {
+  height: 1.7em; /* must equal a.height + a.vertical-padding */
+  padding: 2px;
+}
+ul.tabset li.tab {
+  float: left;
+  padding: 1px; /* to make space for invisible white outline of a.tab-link */
+  margin: 0;
+}
+ul.tabset li.tab.selected {
+  border: 1px solid #999;
+}
+ul.tabset a.tab-link {
+  outline: 1px solid white; /* this is to remove dotted outline when link is clicked */
+  display: block;
+  text-decoration: none;
+/*  xheight: 1.5em;
+  xpadding: 0.1em 0.5em 0.3em 0.5em; */
+  padding: 0 1em;
+}
+ul.tabset a.tab-link:hover {
+ text-decoration: underline;
+}
+ul.tabset a.selected {
+ background: #fff url(/images/shadows/inside-tab.png) repeat-x top;
+ color: black;
+ height: 2em; /* this is what hides the bottom border */
+}
