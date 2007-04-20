@@ -14,10 +14,8 @@ details_id   = "#{task_id}_details"
 action       = "mark_task_#{alt_status}"
 check_click  = "Element.hide('#{checkbox_id}');" +
                "Element.show('#{spinner_id}');" +
-               remote_function(:url => page_url(@page, :action=>action, :id=>task.id))
-edit_click   = "Element.hide('#{task_show_id}');" +
-               "Element.show('#{task_edit_id}');"
-#               remote_function(:url => page_url(@page, :action=>'edit_task', :id=>task.id))
+               remote_function(:url => page_xurl(@page, :action=>action, :id=>task.id))
+edit_click   = "$('#{task_show_id}', '#{task_edit_id}').invoke('toggle');"
 %>
 
 <li id='<%=task_id%>' class='task'>
@@ -31,9 +29,9 @@ edit_click   = "Element.hide('#{task_show_id}');" +
     <%= image_tag 'spinner.gif', :id=>spinner_id, :style=>'display:none' %>
   </div>
   <div id='<%=task_show_id%>'>
-    <%= render :partial => 'task_show', :locals => {:task => task} %>
+    <%= render :partial => 'tool/tasklist/task_show', :locals => {:task => task} %>
   </div>
   <div id='<%=task_edit_id%>' class='indent task_edit' style='display: none'>
-    <%= render :partial => 'task_edit', :locals => {:task => task} %>
+    <%= render :partial => 'tool/tasklist/task_edit', :locals => {:task => task} %>
   </div>
 </li>

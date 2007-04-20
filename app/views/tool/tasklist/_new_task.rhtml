@@ -1,3 +1,10 @@
+<%
+  users = []
+  users += @page.users if @page.users
+  users += @page.group.users if @page.group
+  users.uniq!
+%>
+
 <% @task = Task::Task.new %>
 <div id="new-task-link">
   <%= link_to_function 'add task', 'Element.show("new-task-form"); Element.hide("new-task-link");' %> 
@@ -5,7 +12,7 @@
 
 <div id='new-task-form' style='display:none'>
 <%= form_remote_tag(
-  :url      => page_url(@page, :action=>'create_task'),
+  :url      => page_xurl(@page, :action=>'create_task'),
   :html     => {:action => page_url(@page, :action=>'create_task')}, # non-ajax fallback
   :loading  => "Element.show('new-task-loading')"
 ) %>
@@ -15,11 +22,9 @@
    detail:<br/>
    <%= text_area 'task', 'description', :size => '50x4' %>
    <br/>
-   <% if @page.group %>
-     assign to:<br/>
-     <%= select 'task', 'user_id', [''] + @page.group.users.to_select('login') %>
-     <br/>
-   <% end %>
+   assign to:<br/>
+   <%= select 'task', 'user_id', [''] + users.to_select('login') %>
+   <br/>
    <p>
    <%= submit_tag 'Add Task' %>
    <%= button_to_function "Done", "Element.hide('new-task-form'); Element.show('new-task-link');" %>

@@ -7,27 +7,22 @@ edit_loading_id = "#{task_edit_id}_loading"
 close_click = "Element.hide('#{task_edit_id}');" +
               "Element.show('#{task_show_id}');"
 delete_click = "Element.hide('#{task_id}');" +
-               remote_function(:url => page_url(@page, :action=>'destroy_task', :id=>task.id))
+               remote_function(:url => page_xurl(@page, :action=>'destroy_task', :id=>task.id))
+users = []
+users += @page.users if @page.users
+users += @page.group.users if @page.group
+users.uniq!
 %>
-<%= form_remote_tag(
-  :url      => page_url(@page, :action=>'update_task', :id => task.id),
-  :loading  => "Element.show('#{edit_loading_id}')"
-) %>
-  <!--  description:<br/> -->
-   <%= text_field 'task', 'name', :size => 50 %>
-   <br/>
-   <!-- detail:<br/> -->
-   <%= text_area 'task', 'description', :size => '50x4' %>
-   <br/>
-   <% if @page.group %>
-     <!-- assign to:<br/> -->
-     <%= select 'task', 'user_id', [''] + @page.group.users.to_select('login') %>
-     <br/>
-   <% end %>
-   <p>
-   <%= submit_tag 'Save' %>
-   <%= button_to_function "Close", close_click %>
-   <%= button_to_function "Delete", delete_click %>
-   <%= image_tag "spinner.gif", :id=>edit_loading_id, :style=>'display:none' %>
-   </p>
-<%= end_form_tag %>
+<% form_remote_tag(
+  :url      => page_xurl(@page, :action=>'update_task', :id => task.id),
+  :loading  => "Element.show('#{edit_loading_id}')") do -%>
+  <%= text_field 'task', 'name', :size => 50 %><br/>
+  <%= text_area 'task', 'description', :size => '50x4' %><br/>
+  <%= select 'task', 'user_id', [''] + users.to_select('login') %><br/>
+  <p>
+    <%= submit_tag 'Save' %>
+    <%= button_to_function "Cancel", close_click %>
+    <%= button_to_function "Delete", delete_click %>
+    <%= image_tag "spinner.gif", :id=>edit_loading_id, :style=>'display:none' %>
+  </p>
+<% end %>

@@ -13,7 +13,7 @@
   <%= render :partial => 'task', :collection => @list.completed %>
 </ul>
 
-<%= sortable_element 'pending_tasks', :handle => 'handle', :url => page_url(@page, :action=>'sort') %>
-<%= sortable_element 'completed_tasks', :handle => 'handle', :url => page_url(@page, :action=>'sort') %>
+<%= sortable_element 'pending_tasks', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
+<%= sortable_element 'completed_tasks', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
 
 </div> <!-- end task tool -->
