@@ -82,6 +82,7 @@ div.iconboxes div.iconbox:hover div.hover {
   left: -5px;
   background: white;
   color: black;
+  z-index: 100;
 }
 div.iconbox div.hover div.text {
   position: absolute;
