@@ -6,7 +6,7 @@
 
   <% @user.contacts.each do |u| -%>
   <div class='iconbox'>
-    <% url = person_url(:id => u) -%>
+    <% url = person_url(:id => u, :action => 'show') -%>
     <%= link_to avatar_for(u, 'xsmall', :class=>'iconbox'), url -%>
     <div class='hover'>
       <%= link_to avatar_for(u, 'small', :class=>'bigiconbox'), url -%>
@@ -19,7 +19,7 @@
 
   <% @user.groups.each do |g| -%>
   <div class='iconbox'>
-    <% url = group_url(:id => g) -%>
+    <% url = group_url(:id => g, :action => 'show') -%>
     <%= link_to avatar_for(g, 'xsmall', :class=>'iconbox'), url -%>
     <div class='hover'>
       <%= link_to avatar_for(g, 'small', :class=>'bigiconbox'), url -%>
