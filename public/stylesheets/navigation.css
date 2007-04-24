@@ -60,22 +60,40 @@
 
 /** icon nav boxes **/
 
-div.iconboxes img.iconbox {
-  vertical-align: middle;
+
+div.iconboxes {
 }
-div.iconboxes a {
+div.iconboxes img {
+  border:1px solid white;
+}
+div.iconboxes div.iconbox {
   position: relative;
+  width: 24px; height: 24px;
+  float: right;
+  margin: 2px;
 }
-div.iconboxes a span {
+div.iconboxes div.hover {
   display: none;
-  padding: 1px 4px;
 }
-div.iconboxes a:hover span {
+div.iconboxes div.iconbox:hover div.hover {
   display: inline;
-  outline: 1px solid #000;
-  background: #eee;
-  border: 1px solid #fff;
   position: absolute;
-  top: 22px;
+  top: -5px;
+  left: -5px;
+  background: white;
+  color: black;
+}
+div.iconbox div.hover div.text {
+  position: absolute;
+  width: 100em;
   right: 0px;
+  top: 37px
+}
+div.iconbox div.hover div.text span {
+  background: #eee;
+  border: 1px solid white;
+  padding: 3px;
+}
+div.iconbox a {
+  text-decoration: none;
 }

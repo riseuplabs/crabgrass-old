@@ -3,12 +3,31 @@
   #
 -%>
 <div class='iconboxes'>
-<% @user.contacts.each do |u| -%>
-  <% text = "<span>#{u.login}</span>" + avatar_for(u,'xsmall', :class=>'iconbox') %>
-  <%= link_to text, :controller => 'people', :action => 'show', :id => u %>
-<% end -%>
-<% @user.groups.each do |g| -%>
-  <% text = "<span>#{g.name}</span>" + avatar_for(g,'xsmall', :class=>'iconbox') %>
-  <%= link_to text, :controller => 'groups', :action => 'show', :id => g %>
-<% end -%>
+
+  <% @user.contacts.each do |u| -%>
+  <div class='iconbox'>
+    <% url = person_url(:id => u) -%>
+    <%= link_to avatar_for(u, 'xsmall', :class=>'iconbox'), url -%>
+    <div class='hover'>
+      <%= link_to avatar_for(u, 'small', :class=>'bigiconbox'), url -%>
+      <div class='text'>
+        <span><%= link_to u.login, url %></span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <% @user.groups.each do |g| -%>
+  <div class='iconbox'>
+    <% url = group_url(:id => g) -%>
+    <%= link_to avatar_for(g, 'xsmall', :class=>'iconbox'), url -%>
+    <div class='hover'>
+      <%= link_to avatar_for(g, 'small', :class=>'bigiconbox'), url -%>
+      <div class='text'>
+        <span><%= link_to g.name, url %></span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
 </div>
