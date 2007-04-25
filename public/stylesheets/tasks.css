@@ -59,3 +59,17 @@ li#add_task_link {
 div.task_details p, div.task_details ul {
   margin: 0;
 }
+
+/* optional side links */
+div.left-small div {
+  margin-bottom: 1em;
+}
+div.left-small div span {
+  display: block;
+  background: #eee;
+  border-bottom: 2px solid #ddd;
+  padding: 2px;
+}
+div.left-small div a {
+  display: block;
+}

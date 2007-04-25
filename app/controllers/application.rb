@@ -265,7 +265,8 @@ class ApplicationController < ActionController::Base
   # how much slower is this? i don't know. the extra overhead is in sorting the count query and
   # grouping the count query. i don't think that this will take much longer than a normal count query.
   # 
-  def find_and_paginate_pages(options)
+  def find_and_paginate_pages(options, path=nil)
+    options[:path] = path.split('/') if path
     options = page_query_from_filter_path(options) unless options[:already_built]
     pages_per_section = 30
     current_section   = (params[:section] || 1).to_i
@@ -317,7 +318,8 @@ class ApplicationController < ActionController::Base
   
   # a convenience function to find pages using 
   # page_query_from_filter_path style options.
-  def find_pages(options)
+  def find_pages(options, path=nil)
+    options[:path] = path.split('/') if path
     options       = page_query_from_filter_path(options) unless options[:already_built]
     klass         = options[:class]
     main_table    = klass.to_s.underscore + "s"

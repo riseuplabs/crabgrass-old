@@ -46,6 +46,15 @@ ul.plainlist {
 }
 ul.plainlist li {margin: 3px 0;}
 
+div.left-small {
+  float: left;
+  width: 10em;
+}
+div.right-big {
+  margin-left: 11em;
+}
+
+a.selected {font-weight: bold;}
 
 /** horizontal Formy tabs **/
 

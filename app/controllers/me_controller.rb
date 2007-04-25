@@ -21,8 +21,31 @@ class MeController < ApplicationController
 
   def tasks
     @stylesheet = 'tasks'
-    # eager load everything we will need to show tasks (pages, tasks, users)
-    @task_lists = Task::TaskList.find(:all, :conditions => ['users.id = ? AND tasks.completed = ?',current_user.id,false], :include => [:pages, {:tasks => :users}])
+    filter = params[:id] || 'my-pending'
+    if filter =~ /^all-(.*)/
+      completed = $1 == 'completed'
+      options = options_for_pages_viewable_by(current_user)
+      @pages = find_pages(options, 'type/task')
+      @task_lists = @pages.collect{|page|page.data}
+      @show_user = 'all'
+      @show_status = completed ? 'completed' : 'pending'
+    elsif filter =~ /^group-(.*)/
+      # show tasks from a particular group
+      groupid = $1
+      options = options_for_pages_viewable_by(current_user)
+      @pages = find_pages(options, "type/task/group/#{groupid}")
+      @task_lists = @pages.collect{|page|page.data}
+      @show_user = 'all'
+      @show_status = 'pending'
+    elsif filter =~ /^my-(.*)/
+      # show my completed or pending tasks
+      completed = $1 == 'completed'
+      include = [:pages, {:tasks => :users}] # eager load all we will need to show the tasks.
+      conditions = ['users.id = ? AND tasks.completed = ?', current_user.id, completed]
+      @task_lists = Task::TaskList.find(:all, :conditions => conditions, :include => include)
+      @show_user = current_user
+      @show_status = completed ? 'completed' : 'pending'
+    end
   end
  
   def edit   

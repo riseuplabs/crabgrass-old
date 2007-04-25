@@ -1,9 +1,35 @@
 <%= render :partial => 'tabs' %>
 
 <div class='tabinfo'>
-All my pending tasks.
+Task lists I have access to. 
 <%= create_page_link 'create new task list &raquo;',
   'page_type' => 'Tool::TaskList', 'page[title]' => 'new task list' %>
 </div>
 
-<%= render :partial => 'tool/tasklist/external_list_tasks' %>
+<div class='columns'>
+  <div class='left-small'>
+    <div>
+      <span>My tasks</span>
+      <%= task_link('pending', 'my-pending', true) %>
+      <%= task_link('completed', 'my-completed') %>
+    </div>
+    <div>
+      <span>All tasks</span>
+      <%= task_link('pending', 'all-pending') %>
+      <%= task_link('completed', 'all-completed') %>
+    </div>
+    <% if @user.groups %>
+    <div>
+      <span>Tasks for</span>
+      <% @user.groups.each do |g| -%>
+        <%= task_link(g.name, "group-#{g.id}") %>
+      <% end -%>
+    </div>
+    <% end -%>
+  </div>
+  <div class='right-big'><table><tr><td>
+    <%= render :partial => 'tool/tasklist/external_list_tasks' %>
+    </td></tr></table>
+  </div>
+</div>
+

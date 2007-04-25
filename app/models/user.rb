@@ -92,6 +92,7 @@ class User < AuthenticatedUser
   def display_name
     read_attribute('display_name').any? ? read_attribute('display_name') : login
   end
+  def name; login; end
   
   def to_param
     return login

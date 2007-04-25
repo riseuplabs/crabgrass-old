@@ -1,25 +1,38 @@
-<%# this is used by "external" views/controllers to display a list of tasks.
+<%
+  # this is used by "external" views/controllers to display a list of tasks.
   # for example, from people, groups, me. 
-  # in these cases, the task lists are often indirectly fetched from the db. -%>
-<% for @list in @task_lists -%>
-  <% 
+  # in these cases, the task lists are often indirectly fetched from the db. 
+
+  # local variables
+  @show_status ||= 'pending'  # one of pending, completed, both
+  @show_user   ||= @user # unless false, only show tasks for this user.
+  all_users  = (@show_user == 'all')
+  all_states = (@show_status == 'both')
+  completed  = (@show_status == 'completed')
+-%>
+<% for @list in @task_lists
      @page = @list.page;
-     task_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
-     if @user
-       tasks = @list.tasks.collect{|t|t if t.user == @user and not t.completed?}.compact
-     elsif @group
-       tasks = @list.tasks.collect{|t|t if not t.completed?}.compact
+     sort_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
+     tasks = @list.tasks.select do |t|
+        (all_users || t.user == @show_user ) && (all_states || t.completed? == completed)
      end
      next unless tasks.any?
-     tasks = tasks.sort{|t1,t2| t1.position <=> t2.position}
+     tasks = tasks.sort do |t1,t2|
+       if t1.completed? == t2.completed?
+         t1.position <=> t2.position
+       else
+         t1.completed? <=> t2.completed?
+       end
+     end
   -%>
   <div><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name, :action => 'tasks')})" if @page.group_name %></div>
-  <ul id='<%=task_list_id%>' class='task_list'>
+  <ul id='<%=sort_list_id%>' class='task_list'>
     <%= render :partial => 'tool/tasklist/task', :collection => tasks %>
   </ul>
-  <%= sortable_element task_list_id, :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
+  <%= sortable_element sort_list_id, :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
 <% end -%>
 
-<%# this is just here so that we don't get an ajax error when a task is marked done -%>
+<%# this is just here so that we don't get an ajax error when a task is marked completed or pending -%>
 <ul id='sort_list_completed' style='display:none'></ul>
+<ul id='sort_list_pending' style='display:none'></ul>
 
