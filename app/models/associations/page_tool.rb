@@ -1,6 +1,6 @@
 # 
 # join table for pages to have many polymorphic tools
-# 
+# currently unused!
 
 class PageTool < ActiveRecord::Base
   belongs_to :page

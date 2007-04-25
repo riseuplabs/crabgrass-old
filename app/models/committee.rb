@@ -16,6 +16,8 @@
 #  avatar_id      :integer(11)   
 #
 
+# currently unused
+
 class Committee < Group
   
 end
