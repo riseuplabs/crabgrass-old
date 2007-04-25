@@ -58,12 +58,12 @@ class Page < ActiveRecord::Base
   
   # like users.with_access, but uses already included data
   def users_with_access
-    user_participations.select{|part| part.access }
+    user_participations.collect{|part| part.user if part.access }.compact
   end
   
   # like users.participated, but uses already included data
   def contributors
-    user_participations.select{|part| part.changed_at }
+    user_participations.collect{|part| part.user if part.changed_at }.compact
   end
   
   # like user_participations.find_by_user_id, but uses already included data
@@ -74,7 +74,7 @@ class Page < ActiveRecord::Base
   # takes an array of group ids, return all the matching group participations
   # this is called a lot, since it is used to determine permission for the page
   def participation_for_groups(group_ids) 
-    group_participations.select{|gpart| group_ids.include? gpart.group_id }
+    group_participations.collect{|gpart| gpart if group_ids.include? gpart.group_id }.compact
   end
   
   
