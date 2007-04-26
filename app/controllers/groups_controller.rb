@@ -20,14 +20,55 @@ class GroupsController < ApplicationController
     folder()
   end
 
-  def archivex
-    params[:path] # ['2007-03']
-    path = %w(created-after 2007-03 created-before 2007-04)
-    @pages, @page_sections = fetch_pages_from_path(path)
+  def archive
+
+    @months2 = Page.connection.select_all( "SELECT MONTH(pages.created_at) AS month, " + 
+     "YEAR(pages.created_at) AS year, count(pages.id) " +
+     "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
+     "JOIN user_participations ON pages.id = user_participations.id " +
+     "WHERE group_participations.group_id = #{@group.id}  " +
+   # + " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
+     "GROUP BY year, month ORDER BY year, month")
+     
+    sql = "SELECT MONTH(pages.created_at) AS month, " + 
+     "YEAR(pages.created_at) AS year, count(pages.id) " +
+     "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
+     "JOIN user_participations ON pages.id = user_participations.id " +
+     "WHERE group_participations.group_id = #{@group.id} "   
+   # + " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
+    
+#    sql_sub = "group_participations.group_id #{group.id}"
+    
+    unless @group.users.include?(current_user)
+      sql = sql + " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
+    end
+   
+    sql = sql + "GROUP BY year, month ORDER BY year, month"
+    
+     
+    @months = Page.connection.select_all(sql)
+    #conditions to only add 2nd conjunct if user not in group
+    unless @months.empty?
+      @start_year = @months[0]['year'] 
+      @current_year = (Date.today).year
+      @current_month = (Date.today).month
+      next_month = @current_month.succ 
+      if @current_month == 12
+        year_next_month = @current_year.succ
+        month_next_month = 1
+      else 
+        year_next_month = @current_year
+        month_next_month = @current_month.succ 
+      end 
+      month_now = @current_year.to_s + "-" + @current_month.to_s
+      month_next = year_next_month.to_s + "-" + month_next_month.to_s
+      dates = params[:path] || [month_now, month_next]
+      path = ['created-after', dates[0], 'created-before', dates[1]]
+      @pages, @page_sections = fetch_pages_from_path(path)
+    end
   end
     
-  end
-  
+   
   def folder
     @pages, @page_sections = fetch_pages_from_path(params[:path])
     render :action => 'show'

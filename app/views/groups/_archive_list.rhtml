@@ -1,0 +1,38 @@
+<div>
+
+
+<% unless @months.empty? -%>
+  <table>
+  <% @start_year.upto(@current_year.to_s) do |year| -%>
+    <tr>
+    <td> <b><%= year %> </b></td>
+    <% '1'.upto('11') do |month| -%>
+      <% if @months.detect{|a|a['year'] == year and a['month'] == month}  -%>
+      <td> 
+      <%= link_to month, :path => year + '-'+ month +'/' + year + '-' + month.succ %> </td>
+      <% else %>
+        <td> <%= month  %>  </td>
+      <% end -%>
+    <% end -%>
+    <% month = '12' %>
+    <% if @months.detect{|a|a['year'] == year and a['month'] == month}  -%>
+      <td> 
+      <%= link_to month, :path => year + '-'+ month +'/' + year.succ + '-1' %> 
+      </td>
+    <% else %>
+      <td> <%= month  %>  </td>
+    <% end -%>
+    </tr>
+  <% end -%>
+  </table>
+<% end -%>
+
+<table class='page-list'>
+<% unless @pages.any? -%>
+  <tr><td colspan="10">no pages</td></tr>
+<% else -%>
+  <%= render :partial => "pages/page_line", :collection => @pages %>
+<% end -%>
+</table>
+
+</div>
