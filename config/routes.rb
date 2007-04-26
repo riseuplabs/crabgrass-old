@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
 #  end
 
   map.connect 'me/inbox/*path', :controller => 'me', :action => 'inbox'
+  map.connect 'me/search/*path', :controller => 'me', :action => 'search'
   map.me 'me/:action/:id', :controller => 'me'
   
   map.people 'people/:action/:id', :controller => 'people'
@@ -24,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.groups  'groups/:action/:id', :controller => 'groups'
   map.group   'groups/:action/:id', :controller => 'groups'
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|calendar|filter/
+  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|archive|calendar|filter/
     
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
       
