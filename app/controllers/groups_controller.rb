@@ -20,6 +20,14 @@ class GroupsController < ApplicationController
     folder()
   end
 
+  def archivex
+    params[:path] # ['2007-03']
+    path = %w(created-after 2007-03 created-before 2007-04)
+    @pages, @page_sections = fetch_pages_from_path(path)
+  end
+    
+  end
+  
   def folder
     @pages, @page_sections = fetch_pages_from_path(params[:path])
     render :action => 'show'
