@@ -20,6 +20,11 @@
     t.selected params[:action] == 'calendar'
   end
   f.tab do |t|
+    t.label 'Search'
+    t.link url_for(:action => 'search')
+    t.selected params[:action] == 'search'
+  end
+  f.tab do |t|
     t.label 'My Profile'
     t.link url_for(:action => 'edit')
     t.selected params[:action] == 'edit'

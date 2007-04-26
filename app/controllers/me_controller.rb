@@ -19,6 +19,11 @@ class MeController < ApplicationController
     @pages, @page_sections = find_and_paginate_pages(options)
   end
 
+  def search
+    options = options_for_pages_viewable_by(current_user)
+    @pages, @page_sections = find_and_paginate_pages(options, params[:path])
+  end
+  
   def tasks
     @stylesheet = 'tasks'
     filter = params[:id] || 'my-pending'
@@ -74,6 +79,12 @@ class MeController < ApplicationController
   #end
   
   protected
+
+  # it is impossible to see anyone else's me page,
+  # so no authorization is needed.
+  def authorized?
+    return true
+  end
   
   def fetch_user
     @user = current_user
