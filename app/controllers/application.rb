@@ -140,6 +140,16 @@ class ApplicationController < ActionController::Base
         conditions << 'pages.updated_at < ? and pages.updated_at > ? '
         values << near
         values << far
+      elsif folder == 'created-after'
+        year, month, day = path.pop.split('-')
+        date = Time.utc(year, month, day)
+        conditions << 'pages.created_at > ?'
+        values << date
+      elsif folder == 'created-before'
+        year, month, day = path.pop.split('-')
+        date = Time.utc(year, month, day)
+        conditions << 'pages.created_at < ?'
+        values << date
       elsif folder == 'recent'
         order = 'pages.updated_at DESC'
       elsif folder == 'old'
@@ -160,6 +170,8 @@ class ApplicationController < ActionController::Base
            conditions << "taggings#{tag_count}.tag_id = ?"
            values << tag.id
            tag_count += 1
+         else
+           conditions << "FALSE"
          end
       elsif folder == 'name'
         conditions << 'pages.name = ?'
@@ -266,7 +278,10 @@ class ApplicationController < ActionController::Base
   # grouping the count query. i don't think that this will take much longer than a normal count query.
   # 
   def find_and_paginate_pages(options, path=nil)
-    options[:path] = path.split('/') if path
+    if path
+      options[:path] = path.split('/') if path.is_a? String
+      options[:path] = path if path.is_a? Array
+    end
     options = page_query_from_filter_path(options) unless options[:already_built]
     pages_per_section = 30
     current_section   = (params[:section] || 1).to_i
@@ -319,7 +334,10 @@ class ApplicationController < ActionController::Base
   # a convenience function to find pages using 
   # page_query_from_filter_path style options.
   def find_pages(options, path=nil)
-    options[:path] = path.split('/') if path
+    if path
+      options[:path] = path.split('/') if path.is_a? String
+      options[:path] = path if path.is_a? Array
+    end
     options       = page_query_from_filter_path(options) unless options[:already_built]
     klass         = options[:class]
     main_table    = klass.to_s.underscore + "s"
