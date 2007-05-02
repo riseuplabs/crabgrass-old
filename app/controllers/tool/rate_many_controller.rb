@@ -33,7 +33,7 @@ class Tool::RateManyController < Tool::BaseController
     @poll.votes_by_user(current_user).each{|v| v.destroy}
   
     # create new votes
-    new_votes = params['vote'] || []
+    new_votes = params['vote'] || {} 
     @poll.possibles.each do |possible|
       weight = new_votes[possible.id.to_s]
       possible.votes.create :user => current_user, :value => weight if weight
