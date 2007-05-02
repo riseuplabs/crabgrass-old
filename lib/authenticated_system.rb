@@ -16,11 +16,18 @@ module AuthenticatedSystem
   end
     
   protected 
+
+    def update_last_seen_at
+      return unless logged_in?
+      User.update_all ['last_seen_at = ?', Time.now], ['id = ?', current_user.id] 
+      current_user.last_seen_at = Time.now
+    end
     
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       @current_user = new_user
+      update_last_seen_at
     end
     
     # Check if the user is authorized.
