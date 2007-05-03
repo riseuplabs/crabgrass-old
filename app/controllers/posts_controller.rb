@@ -37,4 +37,21 @@ class PostsController < ApplicationController
     end
   end
  
+  def edit
+  end
+  
+  def save
+    @post.update_attribute('body', params[:body])
+  end
+  
+  def authorized?
+    @post = Post.find(params[:id]) if params[:id]
+    if @post 
+      return current_user == @post.user
+    end
+    return true
+  end
+    
+
 end
+

@@ -1,0 +1,6 @@
+<% form_remote_for :post, :url => {:controller => 'posts', :action => 'save', :id => post.id} do -%>
+  <%= text_area_tag 'body', post.body, :rows => 8, :cols => 60 %>
+  <br/>
+  <div style="float: left"><%= submit_tag "Save Message" %></div>
+  <div style="text-align: right"><a  href="javascript:quickRedReference();">formatting reference</a></div>
+<% end -%>

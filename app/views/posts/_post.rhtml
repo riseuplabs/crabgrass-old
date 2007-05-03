@@ -1,5 +1,6 @@
 <% color = cycle('shade-odd', 'shade-even') %>
 
+
 <tr class="post-spacer-top <%= color %> <%= @posts.first == post ? 'post-border-top' : ''%> ">
   <td colspan="2">
     <a name="<%= post.dom_id %>" id="<%= post.dom_id %>">&nbsp;</a>
@@ -8,12 +9,17 @@
 <tr class="post <%= color %>">
   <td>
     <div class="post-author">
-      <%= avatar_for post.user, 'small' if post.body.length > 60 %>
+      <%= avatar_for post.user, 'small' if post.body and post.body.length > 60 %>
       <div><%= link_to_user post.user %></div>
+      <div>Created: <%= friendly_date(post.created_at) %></div>
+      <% unless post.created_at == post.updated_at %>
+        <div>Modified: <%= friendly_date(post.updated_at) %></div>
+      <% end %>
     </div> 
   </td>
   <td class="post-body" id="post-body-<%= post.id %>">
-    <div class='negativespace'><%= post.body_html %></div>
+    <%= render :partial => 'posts/post_body', :locals => {:post => post}  %>
+   
   </td>
 </tr>
 <tr class="post-spacer-bottom <%= color %>">
