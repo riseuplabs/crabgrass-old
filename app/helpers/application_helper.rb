@@ -92,20 +92,32 @@ module ApplicationHelper
   #  return(@@cached_urls[options.to_yaml] ||= orig_url_for(options))
   #end
   
+  # Our goal here it to automatically display the date in the way that
+  # makes the most sense. Elusive, i know. If an array of times is passed in
+  # we display the newest one. 
+  # Here are the current options:
+  #   4:30PM    -- time was today
+  #   Wednesday -- time was within the last week.
+  #   Mar/7     -- time was in the current year.
+  #   Mar/7/07  -- time was in a different year.
+  # The date is then wrapped in a label, so that if you hover over the text
+  # you will see the full details. TODO: improve the fullstr.
   def friendly_date(*times)
     return nil unless times.any?
     time = times.compact.max
+    fullstr = time.to_s
     today = Date.today
     date = time.to_date
     if date == today
-      time.strftime("%I:%M%p")
+      str = time.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
     elsif today > date and (today-date) < 7
-      time.strftime("%A")
+      str = time.strftime("%A")
     elsif date.year != today.year
-      date.loc("%d/%b/%Y")
+      str = date.loc("%d/%b/%Y")
     else
-      date.loc('%d/%b')
+      str = date.loc('%d/%b')
     end
+    "<label title='#{fullstr}'>#{str}</label>"
   end
     
   # TODO: allow this to be set by the theme

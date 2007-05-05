@@ -22,7 +22,7 @@ class PostsController < ApplicationController
       return
     rescue ActiveRecord::RecordInvalid
       msg = @post.errors.full_messages.to_s
-    rescue InsufficientPermission
+    rescue PermissionDenied
       msg = 'you do not have permission to do that'
     end
     flash[:bad_reply] = msg
