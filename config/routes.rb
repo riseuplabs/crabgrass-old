@@ -15,6 +15,9 @@ ActionController::Routing::Routes.draw do |map|
 #     :action => 'show'
 #  end
 
+  # unobtrusive javascript
+  UJS::routes
+  
   map.connect 'me/inbox/*path', :controller => 'me', :action => 'inbox'
   map.connect 'me/search/*path', :controller => 'me', :action => 'search'
   map.me 'me/:action/:id', :controller => 'me'

@@ -39,9 +39,9 @@ class Group < ActiveRecord::Base
   # relationship to pages
   has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
   has_many :pages, :through => :participations do
-	def pending
-	  find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
-	end
+    def pending
+      find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
+    end
   end
 
   belongs_to :avatar
