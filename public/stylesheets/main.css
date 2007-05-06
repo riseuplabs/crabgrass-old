@@ -141,7 +141,7 @@ tr.post-border-top td {border-top: 1px solid #ccc;}
 
 .shade-even {background-color: #FAFAFA;}
 .shade-odd {background-color: #F0F1F7;}
-textarea#post_body {width: 100%}
+textarea.post_body {width: 100%}
 
 
 /** page list **/

@@ -13,7 +13,7 @@
       <div><%= link_to_user post.user %></div>
       <div><%= friendly_date(post.created_at) %></div>
       <% unless post.created_at == post.updated_at %>
-        <div>(modified <%= friendly_date(post.updated_at) %>)</div>
+        <div>(modified&nbsp;<%= friendly_date(post.updated_at) %>)</div>
       <% end %>
     </div> 
   </td>
