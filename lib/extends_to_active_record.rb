@@ -64,6 +64,25 @@ ActiveRecord::Base.class_eval do
 
 end
 
+
+# It is nice to be able to have multiple submit buttons.
+# For non-ajax, this works fine: you just check the existance
+# in the params of the :name of the submit button.
+# For ajax, this breaks, and is labelled wontfix
+# http://dev.rubyonrails.org/ticket/3231
+# this hack is an attempt to get around the limitation
+
+class ActionView::Base
+  alias_method :rails_submit_tag, :submit_tag
+  def submit_tag(value = "Save changes", options = {})
+    options[:id] = (options[:id] || options[:name] || :commit)
+    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x) { if (x.value != this.value) x.name += '_not_pressed'; }.bind(this))")
+    rails_submit_tag(value, options)
+  end
+end
+
+
+
 #
 # validates_handle makes sure that 
 # (1) the handle is in a good format
