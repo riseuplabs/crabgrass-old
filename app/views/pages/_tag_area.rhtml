@@ -1,18 +1,18 @@
-<% form_tag = 'tag-form' %>
-<%= form_remote_tag :url => {:controller => "pages", :action => "tag", :id => @page},
-      :complete => "Element.toggle($('tag-form')); Element.toggle($('tags'))",
-      :update => "tags",
-      :html => {:id => 'tag-form', :style => "display:none"} %>
-<%= text_field_tag "tag_list",
-      @page.tags.collect{|t| t.name}.join(" "),
-      :size => 40 %>
+<%
+  toggle = "Element.toggle($('tag-form')); Element.toggle($('tags'))"
+  tags = @page.tags.collect{|t| t.name}.join(" ")
+-%>
+<% form_remote_tag :url => {:controller => "pages", :action => "tag", :id => @page},
+  :complete => toggle,
+  :html => {:id => 'tag-form', :style => "display:none"},
+  :update => "tags" do -%>
+<%= text_field_tag "tag_list", tags %>
 <%= hidden_field_tag "form_id", 'tag-form' %>
-<%= submit_tag("Save")  %>
-<%= end_form_tag %>
+<%= submit_tag("Save") %>
+<%= button_to_function "Cancel", toggle %>
+<% end -%>
 
 <div id='tags'>
-
-<%= render :partial => "pages/tags"%>
-<br />
-
+<%= render :partial => "pages/tags"%><br />
 </div>
+
