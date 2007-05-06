@@ -65,6 +65,7 @@ class PagesController < ApplicationController
   end
   
   
+  # not used anymore
   def add_tags
     @page = Page.find_by_id(params[:id])
     tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
@@ -74,13 +75,12 @@ class PagesController < ApplicationController
   end
   
   def tag
-    return unless request.xhr? 
+    return unless request.xhr?
     @page = Page.find_by_id(params[:id])
     tags = Tag.parse(params[:tag_list])
     @page.tag_with(tags.uniq.join(' '))
     @page.save
     render :partial => "pages/tags"
-    
   end
   
   def search
