@@ -1,9 +1,8 @@
-<% color = cycle('shade-odd', 'shade-even') %>
-
-
+<% color = cycle('shade-odd', 'shade-even') -%>
+<tbody id="<%=post.dom_id%>">
 <tr class="post-spacer-top <%= color %> <%= @posts.first == post ? 'post-border-top' : ''%> ">
   <td colspan="2">
-    <a name="<%= post.dom_id %>" id="<%= post.dom_id %>">&nbsp;</a>
+    <a name="<%= post.dom_id %>">&nbsp;</a>
   </td>
 </tr>
 <tr class="post <%= color %>">
@@ -18,10 +17,9 @@
     </div> 
   </td>
   <td class="post-body" id="post-body-<%= post.id %>">
-    <%= render :partial => 'posts/post_body', :locals => {:post => post}  %>
-   
+    <%= render :partial => 'posts/post_body', :locals => {:post => post}  %>   
   </td>
 </tr>
-<tr class="post-spacer-bottom <%= color %>">
-  <td colspan="2">&nbsp;</td>
-</tr>
+<tr class="post-spacer-bottom <%= color %>"><td colspan="2">&nbsp;</td></tr>
+</tbody>
+

@@ -41,9 +41,15 @@ class PostsController < ApplicationController
   end
   
   def save
-    unless params[:cancel]
+    if params[:save]
       @post.update_attribute('body', params[:body])
+    elsif params[:destroy]
+      @post.destroy
+      return(render :action => 'destroy')
     end
+  end
+  
+  def destroy
   end
   
   def authorized?

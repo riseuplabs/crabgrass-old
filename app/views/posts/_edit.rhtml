@@ -1,9 +1,10 @@
-<% form_remote_for :post, :loading => "Element.show('post-edit-submit-spinner')", 
+<% form_remote_tag :loading => "Element.show('post-edit-submit-spinner')", 
   :url => {:controller => 'posts', :action => 'save', :id => post.id} do -%>
   <%= text_area_tag 'body', post.body, :rows => 8, :cols => 60, :class => 'post_body'  %>  <br/>
   <div style="float: left">
     <%= submit_tag "Save", :name => 'save' %>
     <%= submit_tag 'Cancel', :name => 'cancel' %>
+    <%= submit_tag 'Delete', :name => 'destroy' %>
     <span id='post-edit-submit-spinner' style='display:none'><%=image_tag('spinner.gif')%></span>
   </div>
   <div style="text-align: right"><a href="javascript:quickRedReference();">formatting reference</a></div>
