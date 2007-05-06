@@ -1,0 +1,2 @@
+page.hide @post.dom_id
+
