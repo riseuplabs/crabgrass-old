@@ -11,9 +11,9 @@
     <div class="post-author">
       <%= avatar_for post.user, 'small' if post.body and post.body.length > 60 %>
       <div><%= link_to_user post.user %></div>
-      <div>Created: <%= friendly_date(post.created_at) %></div>
+      <div><%= friendly_date(post.created_at) %></div>
       <% unless post.created_at == post.updated_at %>
-        <div>Modified: <%= friendly_date(post.updated_at) %></div>
+        <div>(modified <%= friendly_date(post.updated_at) %>)</div>
       <% end %>
     </div> 
   </td>
