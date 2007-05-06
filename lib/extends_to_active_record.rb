@@ -76,7 +76,7 @@ class ActionView::Base
   alias_method :rails_submit_tag, :submit_tag
   def submit_tag(value = "Save changes", options = {})
     options[:id] = (options[:id] || options[:name] || :commit)
-    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x) { if (x.value != this.value) x.name += '_not_pressed'; }.bind(this))")
+    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x) { if (x.value != this.value) x.name += '_not_pressed'; else x.name = x.name.gsub('_not_pressed','')}.bind(this))")
     rails_submit_tag(value, options)
   end
 end
