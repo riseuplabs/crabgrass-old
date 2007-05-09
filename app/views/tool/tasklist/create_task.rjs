@@ -3,7 +3,3 @@ page.insert_html :bottom, 'sort_list_pending', :partial => 'task', :locals => {:
 
 # makes sure the new one is sortable
 page.sortable 'sort_list_pending', :handle => 'handle', :url => page_url(@page, :action=>'sort')
-
-# hide the spinner
-page.hide('new-task-loading')
-

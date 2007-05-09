@@ -7,14 +7,16 @@
 
 <% @task = Task::Task.new %>
 <div id="new-task-link">
-  <%= link_to_function 'add task', 'Element.show("new-task-form"); Element.hide("new-task-link");' %> 
+  <%= link_to_function 'add task', 'Element.show("new-task-form-container"); Element.hide("new-task-link");' %> 
 </div>
 
-<div id='new-task-form' style='display:none'>
+<div id='new-task-form-container' style='display:none'>
 <% form_remote_tag(
   :url      => page_xurl(@page, :action=>'create_task'),
-  :html     => {:action => page_url(@page, :action=>'create_task')}, # non-ajax fallback
-  :loading  => "Element.show('new-task-loading')"
+  :html     => {:action => page_url(@page, :action=>'create_task'), :id => 'new-task-form'}, # non-ajax fallback
+  :loading  => "$('new-task-loading').show()",
+  :complete => "$('new-task-loading').hide()",
+  :success => "$('new-task-form').reset()"
 ) do -%>
    description:<br/>
    <%= text_field 'task', 'name', :size => 50 %>
@@ -27,7 +29,7 @@
    <br/>
    <p>
    <%= submit_tag 'Add Task' %>
-   <%= button_to_function "Done", "Element.hide('new-task-form'); Element.show('new-task-link');" %>
+   <%= button_to_function "Done", "Element.hide('new-task-form-container'); Element.show('new-task-link');" %>
    <%= image_tag "spinner.gif", :id=>'new-task-loading', :style=>'display:none' %>
    </p>
 <% end -%>
