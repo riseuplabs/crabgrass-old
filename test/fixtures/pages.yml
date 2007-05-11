@@ -59,3 +59,18 @@ page<%=i%>:
   updated_by_id:  <%= rand(11)+3 %>
   type: Tool::Discussion
 <% end %>
+
+tasklist1:
+  id: 21
+  title: a task list
+  type: Tool::TaskList
+  data_type: Task::TaskList
+  data_id: 1
+  created_by_id: 1
+tasklist2:
+  id: 22
+  title: another task list
+  type: Tool::TaskList
+  data_type: Task::TaskList
+  data_id: 2
+  created_by_id: 1

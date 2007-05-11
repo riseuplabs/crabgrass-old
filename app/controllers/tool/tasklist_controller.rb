@@ -20,6 +20,10 @@ class Tool::TasklistController < Tool::BaseController
         i = ids.index( task.id.to_s )
         task.update_attribute('position',i+1) if i
       end
+      if ids.length > @list.tasks.length
+        new_ids = ids.reject {|t| @list.task_ids.include?(t.to_i) }
+        new_ids.each {|id| Task::Task.update(id, :position => ids.index(id)+1, :task_list_id => @list.id) }
+      end
     end
     render :nothing => true
   end

@@ -1,0 +1,22 @@
+<% 1.upto(3) do |n| %>
+<% task_name = "task#{n}" %>
+<%= task_name %>:
+  id: <%= n %>
+  task_list_id: 1
+  name: <%= task_name %>
+  description: <%= task_name %> description
+  description_html: <p><%= task_name %> description</p>
+  completed: false
+  position: <%= n %>
+<% end %>
+<% 4.upto(6) do |n| %>
+<% task_name = "task#{n}" %>
+<%= task_name %>:
+  id: <%= n %>
+  task_list_id: 2
+  name: <%= task_name %>
+  description: <%= task_name %> description
+  description_html: <p><%= task_name %> description</p>
+  completed: false
+  position: <%= n-3 %>
+<% end %>

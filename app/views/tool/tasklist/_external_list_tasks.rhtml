@@ -9,10 +9,12 @@
   all_users  = (@show_user == 'all')
   all_states = (@show_status == 'both')
   completed  = (@show_status == 'completed')
+  sortable_lists = {}
 -%>
 <% for @list in @task_lists
      @page = @list.page;
      sort_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
+     sortable_lists[sort_list_id] = @page
      tasks = @list.tasks.select do |t|
         (all_users || t.user == @show_user ) && (all_states || t.completed? == completed)
      end
@@ -29,8 +31,10 @@
   <ul id='<%=sort_list_id%>' class='task_list'>
     <%= render :partial => 'tool/tasklist/task', :collection => tasks %>
   </ul>
-  <%= sortable_element sort_list_id, :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
 <% end -%>
+<%= sortable_lists.collect do |id, page|
+  sortable_element id, :handle => 'handle', :url => page_xurl(page, :action=>'sort'), :containment => sortable_lists.keys
+end %>
 
 <%# this is just here so that we don't get an ajax error when a task is marked completed or pending -%>
 <ul id='sort_list_completed' style='display:none'></ul>

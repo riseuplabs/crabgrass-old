@@ -21,3 +21,10 @@ userpage_<%=i%>_<%=j%>:
   resolved: <%= rand(2) %>
   <% end %>
 <% end %>
+
+tasklist1:
+  page_id: 21
+  user_id: 1
+tasklist2:
+  page_id: 22
+  user_id: 1
