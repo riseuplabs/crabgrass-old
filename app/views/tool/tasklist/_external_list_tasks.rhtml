@@ -16,7 +16,7 @@
      sort_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
      sortable_lists[sort_list_id] = @page
      tasks = @list.tasks.select do |t|
-        (all_users || t.user == @show_user ) && (all_states || t.completed? == completed)
+        (all_users || t.user_ids.include?(@show_user.id)) && (all_states || t.completed? == completed)
      end
      next unless tasks.any?
      tasks = tasks.sort do |t1,t2|
