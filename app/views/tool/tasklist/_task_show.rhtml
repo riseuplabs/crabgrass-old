@@ -1,16 +1,17 @@
 <%
 task_id      = "task_#{task.id}"
 details_id   = "#{task_id}_details"
-if task.user == current_user
-  link = link_to(current_user.login, me_url(:action => 'tasks', :id => nil))
-elsif task.user
-  link = link_to_user(task.user, :action => 'tasks')
-else
-  link = nil
+links = []
+task.users.each do |user|
+  if user == current_user
+    links << link_to(current_user.login, me_url(:action => 'tasks', :id => nil))
+  else
+    links << link_to_user(user, :action => 'tasks')
+  end
 end
 %>
     <div class='name'>
-      <%= "<b>#{link}:</b>" if link %>
+      <%= "<b>#{links.join(', ')}:</b>" if links.any? %>
       <% if task.description.any? -%>
         <span><%= link_to_function task.name, "Element.toggle('#{details_id}')" %></span>
       <% else -%>

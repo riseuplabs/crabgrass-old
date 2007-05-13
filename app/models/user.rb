@@ -137,6 +137,15 @@ class User < AuthenticatedUser
     party.save
   end
   
+  # set resolved status vis-à-vis self.
+  def resolved(page, resolved_flag)
+    find_or_build_participation(page).update_attributes :resolved => resolved_flag
+  end
+  
+  def find_or_build_participation(page)
+    page.participation_for_user(self) || page.user_participations.build(:user_id => self.id) 
+  end
+  
   # should be called when a user writes to a page
   # or resolves a page.
   # options:
@@ -145,9 +154,7 @@ class User < AuthenticatedUser
   #
   def updated(page, options={})
     # create self's participation if it does not exist
-    unless page.participation_for_user(self) 
-      page.user_participations.build(:user_id => self.id) 
-    end 
+    find_or_build_participation(page)
 
     unless page.contributors.include?(self)
       page.contributors_count +=1

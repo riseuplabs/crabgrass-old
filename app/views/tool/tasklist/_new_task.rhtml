@@ -19,14 +19,11 @@
   :success => "$('new-task-form').reset()"
 ) do -%>
    description:<br/>
-   <%= text_field 'task', 'name', :size => 50 %>
-   <br/>
+   <%= text_field 'task', 'name', :size => 50 %><br/>
    detail:<br/>
-   <%= text_area 'task', 'description', :size => '50x4' %>
-   <br/>
+   <%= text_area 'task', 'description', :size => '50x4' %><br/>
    assign to:<br/>
-   <%= select 'task', 'user_id', [''] + users.to_select('login') %>
-   <br/>
+   <%= collection_multiple_select('task', 'user_ids', users, :id, :login, :outer_class=>'plainlist floatlist') %><br/>
    <p>
    <%= submit_tag 'Add Task' %>
    <%= button_to_function "Done", "Element.hide('new-task-form-container'); Element.show('new-task-link');" %>

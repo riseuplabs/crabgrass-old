@@ -9,16 +9,16 @@ class Task::Task < ActiveRecord::Base
     task_list.page.group_name
   end
   
-  def user_id=(id)
-    u = User.find_by_id(id)
-    users.clear
-    users << u if u
-  end
-  def user_id
-    users.first.id if users.any?
-  end
-  def user
-    users.first if users.any?
-  end
+  #def user_id=(id)
+  #  u = User.find_by_id(id)
+  #  users.clear
+  #  users << u if u
+  #end
+  #def user_id
+  #  users.first.id if users.any?
+  #end
+  #def user
+  #  users.first if users.any?
+  #end
   
 end

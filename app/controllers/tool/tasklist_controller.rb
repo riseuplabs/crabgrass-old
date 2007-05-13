@@ -76,8 +76,8 @@ class Tool::TasklistController < Tool::BaseController
 
     # build a hash of the completed status for each user
     @list.tasks.each do |task|
-      if task.user
-        users_pending[task.user] ||= (not task.completed?)
+      task.users.each do |user|
+        users_pending[user] ||= (not task.completed?)
       end
       page_resolved &&= task.completed?
     end
@@ -87,10 +87,7 @@ class Tool::TasklistController < Tool::BaseController
 
     # update each user's resolved status
     users_pending.each do |user,pending|
-      unless party = @page.participation_for_user(user) 
-        party = @page.user_participations.build(:user_id => user.id) 
-      end 
-      party.update_attributes :resolved => (not pending)
+      user.resolved(@page, (not pending))
     end
     current_user.updated(@page)
     true

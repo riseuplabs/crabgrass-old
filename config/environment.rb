@@ -61,6 +61,8 @@ end
 
 # Include your application configuration below
 
+FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist'
+
 class PermissionDenied < Exception; end
 class ErrorMessage < Exception; end
 

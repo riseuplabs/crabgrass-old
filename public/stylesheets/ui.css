@@ -40,11 +40,20 @@ form.link input[type=submit] {
 a.imglink { text-decoration: none; }
 a.imglink span { text-decoration: underline; }
 img.avatar { vertical-align: middle; } 
+
 ul.plainlist {
   padding: 0; margin: 0;
   list-style: none;
 }
 ul.plainlist li {margin: 3px 0;}
+
+ul.floatlist {
+ clear: left;
+}
+ul.floatlist li {
+  float: left;
+  margin-right: 1em;
+}
 
 div.left-small {
   float: left;
