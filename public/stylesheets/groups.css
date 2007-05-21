@@ -1,0 +1,35 @@
+/** layout for groups **/
+
+div#group_sidebar {
+  float: left;
+  width: 120px;
+  margin-right: 0px;
+}
+div#group_maincolumn {
+  margin-left: 130px;
+}
+div#group_homepage {
+  margin: 1em 0;
+  padding: 0 1em 1em 1em;
+  /* background: #eee;
+  border: 1px solid #ccc; */
+} 
+
+/** group directory **/
+
+div.group-entry {
+  float: left;
+  margin: 1em;
+  margin-left: 38px;
+  width: 30em;
+}
+
+div.group-entry a {
+  font-weight: bold;
+}
+
+div.group-entry img {
+  margin-left: -38px;
+  vertical-align: top;
+  float: left;
+}

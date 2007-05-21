@@ -1,237 +1,40 @@
-/*
-document outline
-(page view elements in parens):
+/* see application.rhtml for outline of DOM elements. */
 
-body (.with_sidebar)
-  div#container
-    div#masthead
-    (div#sidebar)
-    div#main (.with_sidebar)
-      div#message
-      div#breadcrumbs
-      div#content
-        (div#title)
-        ... content ...
-        (div#posts)
+/** general setup **/
 
-*/
-
-body {margin: 0; padding: 0;}
+body  {margin: 0; padding: 0;}
 table {margin: 0; padding: 0; border-spacing: 0;}
-img {border:0}
-
-/** login screen **/
-
-div#frontmain {
-  padding: 5em;
-  text-align: center;
-}
-#loginform {
-  width: 20em;
-  text-align: left;
-  border: 1px solid #ccc;
-  background: #eee;
-  padding: 2em;
-  margin: 0 auto;
-}
-#loginform table {
-  margin: 0 auto;
-}
+img   {border:0}
 
 /** layout **/
 
-div#container {z-index: 10;}
+div#container {
+  /* z-index: 10; */
+}
 div#main {
   padding: 10px;
 }
-div#content {z-index: 20;}
+div#content {
+  /* z-index: 20; */
+  background: white;  
+}
 div#breadcrumbs {margin-bottom: 1em;}
 
+.clear {
+  clear: both;
+}
 /** layout for pages **/
 
 body.with_sidebar {
-  background: white url(/images/sidebar-grey.png) repeat-y top right;
-}
-div#sidebar {
-  float:right;
-  width: 170px;
-}
-div#sidebar h2 {
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  font-size: 1em;
-  background-color: #efefef;
-  padding-left: 0.5em;
-  padding-bottom: 3px;
-  margin-left: -8px;
-}
-div#sidebar div.line {
-  font-size: 0.8em;
-  margin-top: 2px;
-}
-div#sidebar div img {
-  vertical-align: top;
-}
+  /* background: white url(/images/sidebar-grey.png) repeat-y top right; */
+} 
 div#main.with_sidebar {
-  margin-right: 180px;
-}
-
-/** layout for groups **/
-
-div#group_sidebar {
-  float: left;
-  width: 120px;
-  margin-right: 0px;
-}
-div#group_maincolumn {
-  margin-left: 130px;
-}
-div#group_homepage {
-  margin: 1em 0;
-  padding: 0 1em 1em 1em;
-  background: #eee;
-  border: 1px solid #ccc;
-}
-/* title */
-
-div#title {
-  background: #efefef;
-  color: #449;
-  padding: 10px;
-  border-right: 3px solid #ccc;
-}
-div#title_text span#title_edit_link {
-  display: none;
-}
-div#title_text:hover span#title_edit_link {
-  display: inline;
-}
-#title_editor {padding: 1em;}
-.h1 {font-size: 2em; font-weight: bold;}
-div#title_text span {
-  float: right;
-  font-size: 50%;
-}
-
-
-/* posts */
-div#posts {
-  margin: 1em 0;
-}
-table.posts {
-  width: 100%
-}
-.post-author {
-  text-align: right;
-  padding: 0 10px 0 10px;
-}
-td.post-body {
-  border-left: 1px solid #ccc;
-  padding: 0 10px 0 10px;
-}
-td.post-body div.negativespace {
-  margin: -1em 0;
-}
-tr.post td {
-  vertical-align: top;
-}
-tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px solid #ccc;}
-tr.post-spacer-top td {line-height: 10px;}
-tr.post-border-top td {border-top: 1px solid #ccc;}
-
-.shade-even {background-color: #FAFAFA;}
-.shade-odd {background-color: #F0F1F7;}
-textarea.post_body {width: 100%}
-
-
-/** page list **/
-
-div.tabinfo {
-  font-size: 0.8em;
-  margin: 1em;  
-}
-div#page-holder {
-}
-div#page-holder div.header {
-  font-weight: bold;
-  background: #ccc;
-  margin-bottom: 0.5em;
-  color: white;
-  padding: 3px;
-}
-div#page-list {
-  margin: 0 0 1em 12.5em;
-}
-table.page-list {
-  width: 100%;
-  border-bottom: 1px solid #ccc;
-}
-div#page-list tr td {
-  border-top: 1px solid #ccc;
-  padding: 2px;
-}
-div#page-list tr.unread {
-  font-weight: bold;
-}
-div#folders {
-  float: left;
-  width: 12em;
-  background: #eee;
-}
-div#folders ul {
-  padding: 0; margin: 0 0 0 1em;
-  list-style: none;
-}
-div#folders li {
-  margin: 0; padding: 0;
-  border-top: 1px solid white;
-}
-div#folders li.first {
-  border-top: 1px solid #ccc
-}
-div#folders li a, div#folders li span {
-  text-decoration: none;
-  display: block;
-  padding: 2px;
-  margin: 0;
-}
-div#folders li a.selected {
-  background: #ccc;
-  font-weight: bold;
-}
-div#folders li a:hover {
-  background: #ccc;
-}
-div#folders li img {
-  vertical-align: top;
-  border: 0;
-}
-
-/** tool formatting **/
-
-div.wikibox, div.infobox {
-  background: #f6f6f6;
-  border: 1px solid #cfcfcf;
-  border-width: 0px 3px 3px 0px;
-  padding: 1em;
-}
-div.formbox {
-  margin-top: 1em;
-}
-div.formbox textarea {
-  width: 100%;
-}
-div.request {
-  margin: 2em auto;
-  width: 50%;
-}
-div.request h2 {
-  font-size: 1em;
-  font-weight: normal;
+  /* margin-right: 180px; */
 }
 
 /** profile **/
 
+/*
 div.profile {
   margin-top: 6px;
   background: #f9f9f9;
@@ -240,33 +43,18 @@ div.profile {
 }
 div.profile td {vertical-align: top; padding: 3px;}
 div.profile h1 {margin: 0; font-size: 2em;}
-
-/** wiki **/
-
-del.diffmod, del.diffins {
-  color: #999;
-  background-color: #ddd;
-}
-ins.diffmod, ins.diffins {
-  background-color: #cfc;
-  text-decoration: none;
-  color: #000;
-}
-
+*/
 
 /** style **/
 
-body { background-color: #fff; color: #333; }
-
+body {
+  background-color: #fff;
+  color: #000;
+}
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
-}
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
 }
 .normal {font-size: 13px;font-weight:normal;}
 
@@ -289,11 +77,6 @@ div#masthead-image {
 #toprule-outer {border-bottom: 2px solid #000;}
 #main {}
 
-/* div#midmast {
-  height: 9px;
-  width: 100%;
-  background: #fff url(/images/shadows/small-bottom.png) repeat-x top;
-} */
 div#banner {
   padding: 4px 10px;
   border-bottom: 2px solid #000;
@@ -301,3 +84,4 @@ div#banner {
 div#banner img.avatar {padding-right: 10px;}
 div#banner h1, div#banner h3 {padding: 0; margin: 0}
 div#banner table {width: 100%;}
+

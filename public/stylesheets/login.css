@@ -1,0 +1,18 @@
+/** login screen **/
+
+div#frontmain {
+  padding: 5em;
+  text-align: center;
+}
+#loginform {
+  width: 20em;
+  text-align: left;
+  border: 1px solid #ccc;
+  background: #eee;
+  padding: 2em;
+  margin: 0 auto;
+}
+#loginform table {
+  margin: 0 auto;
+}
+

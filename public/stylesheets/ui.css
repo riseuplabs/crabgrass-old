@@ -2,16 +2,18 @@
 
 /** things that look like buttons **/
 
-form.button-to input, a.button {
-  border: 1px solid #cdf;
+form input[type=submit], form input[type=button], a.button {
+  border: 1px solid #bce;
   outline: 1px solid #666;
   text-decoration: none;
   color: white;
   background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
   padding: 0 2px 2px 2px;
-}						
-form.button-to input:hover, a.button:hover {
-  border: 1px solid #fff;
+  cursor: pointer;
+  margin: 1px;
+}
+form input[type=submit]:hover, form input[type=button]:hover, a.button:hover {
+  border: 1px solid #def;
   background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
 }
 
@@ -25,10 +27,10 @@ form.button-to {
 /** things that look like links **/
 
 form.link {display: inline; border: 0; padding: 0; margin: 0}
-form.link input[type=submit] {
+form.link input[type=submit], input[type=submit].link {
   border: none;
   padding:0; margin:0;
-  text-decoration:underline; /* this doesn't work? */
+  text-decoration: underline; /* this doesn't work? */
   color:blue;
   background-color:transparent;
   cursor:pointer; 
@@ -37,6 +39,12 @@ form.link input[type=submit] {
 
 /** common reusable elements **/
 
+a.dotted {
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px #999 dotted;
+  outline: 0;
+}
 a.imglink { text-decoration: none; }
 a.imglink span { text-decoration: underline; }
 img.avatar { vertical-align: middle; } 
@@ -86,18 +94,23 @@ ul.tabset li.tab.selected {
   border: 1px solid #999;
 }
 ul.tabset a.tab-link {
-  outline: 1px solid white; /* this is to remove dotted outline when link is clicked */
+  /* outline: 1px solid white; this is to remove dotted outline when link is clicked */
   display: block;
   text-decoration: none;
-/*  xheight: 1.5em;
-  xpadding: 0.1em 0.5em 0.3em 0.5em; */
   padding: 0 1em;
 }
 ul.tabset a.tab-link:hover {
- text-decoration: underline;
+  text-decoration: underline;
 }
 ul.tabset a.selected {
- background: #fff url(/images/shadows/inside-tab.png) repeat-x top;
- color: black;
- height: 2em; /* this is what hides the bottom border */
+  background: #fff url(/images/shadows/inside-tab.png) repeat-x top;
+  outline: 1px solid white;
+  color: black;
+  height: 2em; /* this is what hides the bottom border */
+}
+div.tabarea {
+/*  background: #fff;
+  border: 1px solid #999;
+  border-top: 0; 
+  padding: 1px;  not sure why this is needed */
 }

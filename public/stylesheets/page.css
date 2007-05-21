@@ -1,0 +1,234 @@
+/** page layout **/
+
+div#pagearea {
+  background: #eee;
+  margin: -10px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+div#page {
+  margin-right: 170px; /* set to #sidebar.width */
+}
+div#breadcrumbs {
+  margin: -10px;
+  padding: 5px;
+  padding-left: 10px;
+}
+div.workarea {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px; 
+}
+
+/** sidebar **/
+
+
+div#sidebar {
+  float: right;
+  width: 170px;
+  margin-right: -180px; /* -1 * (#sidebar.width + #main.padding) */
+}
+div#sidebar div.section {
+  outline: 0px solid green;
+  background: #f9f9f9 url(/images/shadows/sidebar/left.png) repeat-y left;
+  margin-bottom: 10px;
+}
+div#sidebar h2 {
+  font-size: 1em;
+  margin: 0;
+  padding: 3px 3px 3px 9px;
+  /* background: #a5cc7a url(/images/shadows/sidebar/top-dark.png) no-repeat top left;
+  background: #CAF0A5 url(/images/shadows/sidebar/top.png) no-repeat top left;
+  background: #1b5790 url(/images/shadows/sidebar/top-dark.png) no-repeat top left; */
+  background: #a5cc7a url(/images/shadows/sidebar/top.png) no-repeat top left;
+  color: white;
+  margin-bottom: 2px;
+}
+div#sidebar div.tail {
+  height: 5px;
+  background: #f9f9f9 url(/images/shadows/sidebar/bottom.png) no-repeat bottom left;
+}
+div#sidebar div.line {
+  padding: 3px 0 3px 9px;
+}
+div#sidebar div.line.link {
+  font-size: 0.8em;
+}
+div#sidebar div.line.link:hover {
+  background: #ddf url(/images/shadows/sidebar/left.png) repeat-y left;
+}
+div#sidebar div img {
+  vertical-align: top;
+}
+
+/* title */
+
+.h1 {font-size: 2em; font-weight: bold;}
+div#title {
+  margin-bottom: 10px;
+/*  background: #efefef;
+  color: #449;
+  padding: 10px;
+  border-right: 3px solid #ccc; */
+}
+div#title_text span#title_edit_link {
+  opacity: 0;
+}
+div#title_text:hover span#title_edit_link {
+  opacity: 1;
+}
+#title_editor {
+  padding: 1em;
+  background: white;
+  border: 1px solid #ccc;   
+}
+div#title_text span {
+}
+
+/* posts */
+div#posts {
+  margin: 1em 0;
+}
+table.posts {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+.post-author {
+  text-align: right;
+  padding: 0 10px 0 10px;
+}
+.post-author div.icon {float: right}
+.post-author div.username, .post-author div.date {margin-right: 38px}
+td.post-body {
+  border-left: 1px solid #ccc;
+  padding: 0 10px 0 10px;
+}
+td.post-body div.negativespace {
+  margin: -1em 0;
+}
+tr.post td {
+  vertical-align: top;
+}
+tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px solid #ccc;}
+tr.post-spacer-top td {line-height: 10px;}
+/* tr.post-border-top td {border-top: 1px solid #ccc;} */
+
+/* .shade-even {background-color: #FAFAFA;}
+.shade-odd {background-color: #F0F1F7;} */
+.shade-even {background-color: #fff;}
+.shade-odd {background-color: #fafafa;} 
+
+textarea.post_body {width: 100%}
+
+/** page creation **/
+
+div.page-class {
+  margin-bottom: 4px;
+}
+div.page-class div:hover {
+  background: #ffc;
+  outline: 1px solid #cc9;
+}
+div.page-class .page-link {
+  text-decoration: none;
+  padding: 20px 0 20px 58px;
+  display: block;
+  outline: 0;
+}
+
+/** page list **/
+
+div.tabinfo {
+  font-size: 0.8em;
+  margin: 1em;  
+}
+div#page-holder {
+}
+div#page-holder div.header {
+  font-weight: bold;
+  background: #ccc;
+  margin-bottom: 0.5em;
+  color: white;
+  padding: 3px;
+}
+div#page-list {
+  margin: 0 0 1em 13em;
+}
+table.page-list {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+div#page-list tr td {
+  border-top: 1px solid #ccc;
+  padding: 2px;
+}
+div#page-list tr.unread {
+  font-weight: bold;
+}
+
+div#folders {
+  float: left;
+  width: 12em;
+  margin-left: 4px;
+  xbackground: #eee;
+}
+div#folders ul {
+  padding: 0; margin: 0 0 0 1em;
+  list-style: none;
+}
+div#folders li {
+  margin: 0; padding: 0;
+  xoutline: 1px solid #ccc;
+}
+div#folders li.first {
+  xborder-top: 1px solid #ccc
+}
+div#folders li a, div#folders li span {
+  text-decoration: none;
+  display: block;
+  padding: 2px;
+  margin: 0;
+}
+div#folders li a.selected {
+  background: #eef;
+  font-weight: bold;
+  outline: 1px solid #dde;
+}
+div#folders li a:hover {
+  background: #ffc;
+  outline: 1px solid #cca;
+}
+div#folders li img {
+  vertical-align: top;
+  border: 0;
+}
+
+/** tool formatting **/
+
+div.formbox textarea {
+  width: 100%;
+}
+
+/*
+div.wikibox, div.infobox {
+  background: #f6f6f6;
+  border: 1px solid #cfcfcf;
+  border-width: 0px 3px 3px 0px;
+  padding: 1em;
+}
+div.formbox {
+  margin-top: 1em;
+}
+div.formbox textarea {
+  width: 100%;
+}
+div.request {
+  margin: 2em auto;
+  width: 50%;
+}
+div.request h2 {
+  font-size: 1em;
+  font-weight: normal;
+}
+*/

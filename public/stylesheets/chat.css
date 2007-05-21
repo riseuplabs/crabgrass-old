@@ -5,9 +5,11 @@
   font-size: 11px;
   height:400px;
   line-height: 14px;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
+  background: #fff;
   margin-right: 10px;
   margin-bottom: 10px;
+  
 }
 #conversation .message .time { color: #aaa; }
 #conversation .message .sender { color: #66f; font-weight: bold; }
@@ -23,10 +25,10 @@
   height:400px;
   background-color: #fff;
   line-height: 14px;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
 }
 #userlist .user {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ccc;
   padding: 4px;
 }
 

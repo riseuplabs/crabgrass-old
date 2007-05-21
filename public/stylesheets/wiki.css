@@ -1,0 +1,13 @@
+/** wiki **/
+
+del.diffmod, del.diffins {
+  color: #999;
+  background-color: #ddd;
+}
+ins.diffmod, ins.diffins {
+  background-color: #cfc;
+  text-decoration: none;
+  color: #000;
+}
+
+

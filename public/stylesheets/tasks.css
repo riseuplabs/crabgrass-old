@@ -42,7 +42,7 @@ li.task div.name {
 li.task div.name span a{
   color: black;
   text-decoration: none;
-  border-bottom: 1px #ccc dotted;
+  border-bottom: 1px #999 dotted;
   outline: 0;
 }
 li.task div.indent {
