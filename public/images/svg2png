@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function usage() {
 	cat << EOF
@@ -36,6 +36,8 @@ while [ $# -ge 1 ]; do
     base=`basename "$sourcef"`
     base=${base%.*}
     destpng=$destf/$base.png
+  else
+    destpng="$destf"
   fi
   echo "converting $sourcef --> $destpng"
   inkscape -e $destpng -w $size -h $size $sourcef
