@@ -1,6 +1,7 @@
 <div>
   <b>pending tasks.</b>
-  <%= create_page_link 'create new task list &raquo;',
+  <%= link_to 'create new task list &raquo;', create_page_url(Tool::TaskList, :group_id => @group.id) %>
+  <%# create_page_link 'create new task list &raquo;',
       'page_type' => 'Tool::TaskList', 'page[title]' => 'new task list', 
       'page[resolved]' => false, 'group_id' => @group.id %>
 </div>

@@ -112,9 +112,11 @@ class User < AuthenticatedUser
     raise PermissionDenied
   end
   
-  def add_page(page, attributes)        
+  def add_page(page, attributes)
+    return if page.participation_for_user(self) # don't add the page twice
+
     # user_participations.build doesn't update the pages.users
-    # until it is saved, which seems like a bug, so we use create 
+    # until it is saved, which seems like a bug, so we use create
     page.user_participations.create attributes.merge(
        :page_id => page.id, :user_id => id,
        :resolved => page.resolved?)
@@ -180,15 +182,6 @@ class User < AuthenticatedUser
     page.updated_by = self
     page.changed :updated_by
     page.save
-  end
-  
-  # return an array of ids of all groups this user is a member of.
-  # in the future, perhaps this will be cached in the session.
-  # or perhaps :include groups when fetching current_user.
-  # this is used every time we view any page
-  # --- i think maybe this is built in to rails? ---
-  def group_ids
-    groups.collect{|g|g.id}
   end
   
   # is this user a member of a group?

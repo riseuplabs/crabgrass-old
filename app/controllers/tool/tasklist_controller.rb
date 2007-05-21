@@ -94,6 +94,7 @@ class Tool::TasklistController < Tool::BaseController
   end
   
   def fetch_task_list
+    return true unless @page
     unless @page.data
       @page.data = Task::TaskList.create
       @page.save

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
-  before_filter :login_required, :breadcrumbs
+  before_filter :login_required, :breadcrumbs, :context
   
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(cssfile=nil)
@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   # rails lazy loading does work well with namespaced classes, so we help it along: 
   def get_tool_class(tool_class_str)
     klass = Module
+    tool_class_str = tool_class_str.to_s
     tool_class_str.split('::').each do |const|
        klass = klass.const_get(const)
     end
@@ -30,16 +31,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def str_to_page_class()
+      
+  end
+  
   # returns a string representation of page class based on the tool_type.
   # if the result in ambiguous, all matching classes are returned as an array.
   # for example:
   #   'poll/rate many' returns 'Tool::RateMany'
   #   'poll'           returns ['Tool::RateOne', 'Tool::RateMany']
-  def tool_class_str(tool_type)
-    ary = TOOLS.collect{|tool_class| tool_class.to_s if (tool_class.tool_type.starts_with?(tool_type) and not tool_class.internal?)}.compact
-    return ary.first if ary.length == 1
-    return ary
-  end
+  #def tool_class_str(tool_type)
+  #  ary = TOOLS.collect{|tool_class| tool_class.to_s if (tool_class.tool_type.starts_with?(tool_type) and not tool_class.internal?)}.compact
+  #  return ary.first if ary.length == 1
+  #  return ary
+  #end
   
   # override standard url_for to cache the result.
   #def url_for(options = {})
@@ -74,13 +79,26 @@ class ApplicationController < ActionController::Base
   end
   
   protected
-    
+  
+  #######################################################
+  # Context
+  # Context is the general term for information on where we
+  # are and how we got here. Includes breadcrumbs and banner,
+  # although each work differently.
+  
   # a before filter to override by controllers
   def breadcrumbs; end
-    
+  def context; end
+  
+  # deprecated
   def add_crumb(crumb_text,crumb_url)
     @breadcrumbs ||= []
     @breadcrumbs << [crumb_text,crumb_url]
+  end
+  
+  def add_context(text, url)
+    @breadcrumbs ||= []
+    @breadcrumbs << [text,url]
   end
   
   def set_banner(partial, style)
@@ -88,7 +106,46 @@ class ApplicationController < ActionController::Base
     @banner_style = style
   end
   
-  #######################################################3
+  # these context functions are here because other parts of the application 
+  # might need to set a group or person context. 
+  
+  def group_context(size='large')
+    add_context 'groups', groups_url(:action => 'list')
+    if @group
+      add_context @group.name, groups_url(:id => @group, :action => 'show')
+      set_banner "groups/banner_#{size}", @group.style
+    end
+  end
+  
+  def person_context(size='large')
+    add_context 'people', people_url
+    if @user
+      add_context @user.login, people_url(:action => 'show', :id => @user)
+      set_banner "people/banner_#{size}", @user.style
+    end
+  end
+
+  def me_context(size='large')
+    add_context 'me', me_url
+    @user ||= current_user
+    set_banner 'me/banner', current_user.style
+  end
+
+  def page_context
+    if @group or @group = Group.find_by_id(params[:group_id])
+      group_context('small')
+    elsif @user and current_user != @user
+      person_context('small')
+    elsif @user and current_user == @user
+      me_context()
+    elsif @page and @page.group_name
+      @group = @page.group
+      group_context('small')
+    end
+    add_context @page.title, page_url(@page, :action => 'show') if @page
+  end
+  
+  #######################################################
   # Page Finders
   
   # builds conditions for findings pages based on filter path.
@@ -155,9 +212,9 @@ class ApplicationController < ActionController::Base
       elsif folder == 'old'
         order = 'pages.updated_at ASC'
       elsif folder == 'type'
-        page_class = tool_class_str(path.pop)
+        page_classes = Page.class_group_to_class_names(path.pop)
         conditions << 'pages.type IN (?)'
-        values << page_class
+        values << page_classes
       elsif folder == 'person'
         conditions << 'user_parts.user_id = ?'
         values << path.pop

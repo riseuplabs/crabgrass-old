@@ -1,9 +1,29 @@
-# controller for managing abstract pages.
-# the display and editing of a particular page are handled
-# by the controllers in the pages directory
+# PagesController
+# ---------------------------------
+#
+# Controller for managing abstract pages. The display and editing of
+# a particular page type (aka tool) are handled by controllers
+# in controllers/tool.
+#
+# When should an action be in this controller or in Tool::Base?
+# The general rule is this:
+#
+#    If the action can go in PagesController, then do so.
+#
+# This means that only stuff specific to a tool should go in the
+# tool controllers.
+# 
+# For example, there are two create actions, one in PagesControllers
+# and one in Tool::Base. The one in PagesController handles the first
+# step where you choose a page type. The one in Tool::Base handles the
+# next step where you enter in data. This step is handled by Tool::Base
+# so that each tool can define their own method of creation.
+#
 
 class PagesController < ApplicationController
-  
+
+  prepend_before_filter :fetch_page
+    
   #
   # params:
   #   page_type
@@ -11,18 +31,18 @@ class PagesController < ApplicationController
   #   page[] (any page attributes)
   #   
   def create
-    return @page = Page.new(params[:page]) if request.get?
-    begin
-      @page = create_new_page
-      if @page.save
-        @user = current_user  # helps page_url guess a good url
-        redirect_to page_url(@page)
-      else
-        message :object => @page
-      end
-    rescue Exception => exc
-      message :error => exc.to_s
-    end
+#     return @page = Page.new(params[:page]) if request.get?
+#     begin
+#       @page = create_new_page
+#       if @page.save
+#         @user = current_user  # helps page_url guess a good url
+#         redirect_to page_url(@page)
+#       else
+#         message :object => @page
+#       end
+#     rescue Exception => exc
+#       message :error => exc.to_s
+#     end
   end
   
   def create_new_page
@@ -45,7 +65,7 @@ class PagesController < ApplicationController
     page.tag_with(params[:tag_list]) if params[:tag_list]
     page
   end
-
+  
   # add group or user to participations
   def add
     @page = Page.find_by_id(params[:id])
@@ -104,8 +124,55 @@ class PagesController < ApplicationController
       message :error => 'You are not allowed to create a page for group %s' % group.name
     end
   end
+
+  # send an announcement to users about this page.
+  # in other words, send to their inbox.
+  def announce
+    @errors = []; @infos = []
+    params[:announcees].split(/\W+/).each do |name|
+      entity = Group.find_by_name(name) || User.find_by_login(name)
+      if entity
+        if entity.may?(:view, @page)
+          @page.add(entity.users) if entity.instance_of? Group
+          @page.add(entity) if entity.instance_of? User
+          @infos << name
+        else
+          @errors << "%s is not allowed to view this page." % entity.name
+        end
+      else
+        @errors << "'%s' is not the name of a group or a person." % name
+      end
+    end
+  end
+
+  def access
+    if request.post?
+      if group_id = params[:remove_group]
+        @page.remove(Group.find_by_id(group_id))
+      elsif user_id = params[:remove_user]
+        @page.remove(User.find_by_id(user_id))
+      end
+      @page.save
+    end
+  end
+
+  def participation
+    
+  end
+  
+  def history
+  
+  end
   
   protected
+  
+  def context
+    @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
+    @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
+    @user ||= current_user 
+    page_context
+    true
+  end
   
   def get_groups
     if params[:group_name].any?
@@ -128,6 +195,11 @@ class PagesController < ApplicationController
   def get_page_type
     raise Exception.new('page type required') unless params['page_type']
     return get_tool_class(params['page_type'])
+  end
+  
+  def fetch_page
+    @page = Page.find_by_id(params[:id]) if params[:id]
+    true
   end
   
 end

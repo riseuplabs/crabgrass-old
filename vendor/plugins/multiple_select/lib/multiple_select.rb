@@ -355,13 +355,15 @@ module FightTheMelons #:nodoc:
           is_disabled = is_disabled.include?(item.last) if is_disabled.respond_to?(:include?)
           item_id = idfy("#{name}#{item.last}")
           cbt = check_box_tag("#{name}[]", html_escape(item.last.to_s), is_selected, :id => item_id, :disabled => is_disabled)
-          lbt = av_content_tag('label', html_escape(item.first.to_s), :for => item_id)
+          #lbt = av_content_tag('label', html_escape(item.first.to_s), :for => item_id)
+          lbt = html_escape(item.first.to_s)
         else
           is_selected = selected_items.include?(item)
           is_disabled = is_disabled.include?(item) if is_disabled.respond_to?(:include?)
           item_id = idfy("#{name}#{item.to_s}")
           cbt = check_box_tag("#{name}[]", html_escape(item.to_s), is_selected, :id => item_id, :disabled => is_disabled)
-          lbt = av_content_tag('label', html_escape(item.to_s), :for => item_id)
+          #lbt = av_content_tag('label', html_escape(item.to_s), :for => item_id)
+          lbt = html_escape(item.to_s)
         end
         
         item_class = is_alternate ? "#{inner_class} #{alternate_class}".strip : inner_class
@@ -370,7 +372,7 @@ module FightTheMelons #:nodoc:
         
         av_content_tag(
           FormMultipleSelectHelperConfiguration.list_tags[1],
-          position == :left ? lbt + cbt + extra : cbt + lbt + extra,
+          position == :left ? "<label>#{lbt}#{cbt}</label>" + extra : "<label>#{cbt}#{lbt}</label>" + extra,
           :class => item_class
         )
       end

@@ -57,6 +57,8 @@ page<%=i%>:
 <% end %>
   created_by_id: <%= rand(11)+3 %>
   updated_by_id:  <%= rand(11)+3 %>
+  group_id: <%= 3 %>
+  group_name: rainbow
   type: Tool::Discussion
 <% end %>
 

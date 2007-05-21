@@ -1,8 +1,7 @@
-<%= render :partial => 'tabs' %>
-
 <div class='tabinfo'>
 Task lists I have access to. 
-<%= create_page_link 'create new task list &raquo;',
+<%= link_to 'create new task list &raquo;', create_page_url(Tool::TaskList) %>
+<%# create_page_link 'create new task list &raquo;',
   'page_type' => 'Tool::TaskList', 'page[title]' => 'new task list' %>
 </div>
 

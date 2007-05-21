@@ -1,16 +1,99 @@
-<%= render :file => 'layouts/head' %>
+<%#
 
-<div id="main">
-  <div id='message'>
-    <%= display_messages %>
+GLOBAL LAYOUT
+
+body
+  div#container         a containing div with no formatting
+    div#masthead        the very top above the top tabs
+    div#banner          the custom banner, if set.
+    div#main            everything below the banner, padding of 10px
+      div#message       info and error messages
+      div#breadcrumbs   breadcrumb paths
+      .. yield ..       what ever the particular layout wants.
+    end#main
+  end#container
+end#body
+
+ME LAYOUT
+
+ul.tabset
+div.tabarea
+  ... yield ...
+end.tabarea
+ 
+PAGE LAYOUT
+
+div#title
+div#page
+  div#sidebar
+  div#pagebox
+      ... content ...
+  end#pagebox
+  div#posts
+end#page
+
+GROUP LAYOUT
+
+
+PERSON LAYOUT
+
+
+
+DIRECTORY LAYOUT
+
+
+-%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/ DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <%= favicon %>
+  <title><%= title_from_context %></title>
+  <%= stylesheet_link_tag 'ui', 'page', 'navigation', 'main', 'errors' %>
+  <%= stylesheet_link_tag stylesheet if stylesheet %>
+  <%= javascript_include_tag :defaults %>
+  <!-- local scripts -->
+  <script type="text/javascript">
+    <%= yield :script %>
+  </script>  
+  <!-- local styles -->
+  <style type="text/css">
+    <%= yield :style %>
+    <%# this is here because we need different styles if there is a banner %>
+    <% if banner -%>
+    #topmenu li.selected a {<%= banner_style %>}
+    #main {background: #fff url(/images/shadows/small-top.png) repeat-x top;}
+    <% end -%>
+  </style>
+  <!--[if lt IE 7.]>
+    <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+  <![endif]-->
+</head>
+<body class="<%=body_class||=''%>">
+<div id="container">
+  <div id="toprule-outer"><div id="toprule">
+  <table id="masthead" cellpadding="0" cellspacing="0"><tr>
+    <td><%= render 'layouts/menu' %></td>
+    <td><div id='masthead-image'></div></td>
+  </tr></table><!--end masthead -->
+  </div></div><!--end toprule -->
+  <% if banner -%>
+  <div id='banner' style='<%= banner_style %>'>
+    <%= render :partial => banner %>
   </div>
-  <div id='breadcrumbs'>
-    <%= link_to_breadcrumbs %>
-  </div>
-  <div id='content'>
+  <% end -%>
+  <div id="main">
+    <div id='message'>
+      <%= display_messages %>
+    </div>
+    <div id='breadcrumbs'>
+      <%= link_to_breadcrumbs %>
+    </div>
     <%= yield %>
-  </div>
-</div>
-
-<%= render :file => 'layouts/foot' %>
+  </div>              
+  <div id="footer">
+  </div><!-- end footer -->
+</div><!-- end container -->
+</body>
+</html>
 

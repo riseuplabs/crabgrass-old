@@ -53,6 +53,12 @@ module PageUrlHelper
     ret += "</form>"
     #link_to(text, {:controller => '/pages', :action => 'create'}.merge(options), :method => :post)  
   end
+
+  def create_page_url(page_class, options={})
+    controller = "tool/" + page_class.controller 
+    id = page_class.class_display_name.nameize
+    "/#{controller}/create/#{id}" + build_query_string(options)
+  end
   
   # 
   # returns the url that this page was 'from'.

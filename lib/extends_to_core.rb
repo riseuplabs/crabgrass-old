@@ -60,8 +60,12 @@ class String
 end 
 
 class Array
+  # creates an array suitable for options_for_select
+  # ids are converted to strings, so the 'selected' argument should
+  # be a string. 
   def to_select(field,id='id')
-    self.collect { |x| [x.send(field),x.send(id)] }
+    self.collect { |x| [x.send(field).to_s,x.send(id).to_s] }
   end
 end
+
 

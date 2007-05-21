@@ -193,12 +193,12 @@ module Formy
 
     def open
       super
-      puts "<div><ul class='tabset'>"
+      puts "<ul class='tabset'>"
     end
     
     def close
       @elements.each {|e| raw_puts e}
-      puts "<li></li></ul></div>"
+      puts "<li></li></ul>"
       super
     end  
     

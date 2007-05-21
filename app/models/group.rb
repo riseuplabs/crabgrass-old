@@ -70,6 +70,7 @@ class Group < ActiveRecord::Base
   
   validates_handle :name
 
+  #######################################################################
   # methods
   
   def add_page(page, attributes)
@@ -80,6 +81,18 @@ class Group < ActiveRecord::Base
   def remove_page(page)
     page.groups.delete(self)
     page.changed :groups
+  end
+  
+  def may?(perm, page)
+    may!(perm,page) rescue false
+  end
+  
+  # perm one of :view, :edit, :admin
+  # this is still a basic stub. see User.may!
+  def may!(perm, page)
+    gpart = page.participation_for_group(self)
+    return true if gpart
+    raise PermissionDenied
   end
   
   def to_param

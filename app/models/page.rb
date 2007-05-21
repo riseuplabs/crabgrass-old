@@ -29,7 +29,7 @@
 class Page < ActiveRecord::Base
 
   # to be set by subclasses (ie tools)
-  class_attribute :controller, :model, :icon, :tool_type, :internal?
+  class_attribute :controller, :model, :icon, :internal?, :class_description, :class_display_name, :class_group
   
   acts_as_taggable
 
@@ -76,7 +76,9 @@ class Page < ActiveRecord::Base
   def participation_for_groups(group_ids) 
     group_participations.collect{|gpart| gpart if group_ids.include? gpart.group_id }.compact
   end
-  
+  def participation_for_group(group)
+    group_participations.detect{|gpart| gpart.group_id == group.id}
+  end
   
   # adding this in creates "SystemStackError (stack level too deep)"
   # when the page is destroyed in production mode. weird.
@@ -110,6 +112,16 @@ class Page < ActiveRecord::Base
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
     "#{s}+#{id}"
   end
+  
+  # lets us convert from a url pretty name to the actual class.
+  def self.display_name_to_class(display_name)
+    dn = display_name.nameize
+    TOOLS.detect{|t|t.class_display_name.nameize == dn if t.class_display_name}
+  end 
+  # return an array of page classes that are members of class_group
+  def self.class_group_to_class_names(class_group)
+    TOOLS.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
+  end 
   
   ### callbacks ###
 

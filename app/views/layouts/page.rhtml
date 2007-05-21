@@ -1,0 +1,22 @@
+<% inside_layout 'application' do -%>
+<!-- begin page -->
+<div id='pagearea'>
+<div id='title'>
+  <%= render :partial => 'pages/title' -%>
+</div>
+<div id='page'>
+  <% if @sidebar -%>
+  <div id="sidebar">
+    <%= render :partial => 'pages/sidebar' -%>
+  </div>
+  <% end -%>
+  <div id='pagebox' class='<%= @show_workarea ? 'workarea' : ''%>'>
+    <%= yield %>
+  </div>
+  <%= render :partial => 'posts/list' if @show_posts %>  
+</div>
+<br style='clear: both' />
+</div>
+<!-- end page -->
+<% end -%>
+

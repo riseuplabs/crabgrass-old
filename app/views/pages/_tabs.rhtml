@@ -1,0 +1,23 @@
+<%= Formy.tabs do |f|
+  f.tab do |t|
+    t.label 'Access'
+    t.link url_for(:action => 'access', :id => @page)
+    t.selected params[:action] == 'access'
+  end
+  f.tab do |t|
+    t.label 'Participation'
+    t.link url_for(:action => 'participation', :id => @page)
+    t.selected params[:action] == 'participation'
+  end
+  f.tab do |t|
+    t.label 'History'
+    t.link url_for(:action => 'history', :id => @page)
+    t.selected params[:action] == 'history'
+  end
+  f.tab do |t|
+    t.label 'Return to <b>%s</b> &raquo;' % @page.title
+    t.link page_url(@page)
+  end
+
+end
+%>

@@ -1,0 +1,59 @@
+<% content_for :style do %>
+div.page-group {
+  margin-bottom: 4px;
+}
+div.page-info:hover {
+  background: #ffc;
+  outline: 1px solid #cc9;
+}
+div.page-group.selected {
+  background: #eef;
+  outline: 1px solid #ddd;
+}
+div.page-group.selected div.page-info:hover {
+  background: #eef;
+  outline: 0
+}
+div.page-info a {
+  text-decoration: none;
+  padding: 20px 0 20px 58px;
+  display: block;
+  outline: 0;
+}
+div.page-create {
+  padding: 1em;
+}
+div.page-create td {
+  padding: 4px;
+}
+<% end %>
+<%
+page_groups = [
+  {:name => 'personal message'.t, :description => 'A personal message sent to individual recipients.', :icon => 'message.png', :type => 'message'},
+  {:name => 'group discussion'.t, :description => 'A group discussion on a particular topic.', :icon => 'discussion.png', :type => 'discussion'},
+  {:name => 'wiki'.t, :description => 'A free-form text document.', :icon => 'wiki.png', :type => 'wiki'},
+  {:name => 'straw poll'.t, :description => "An informal poll of people's preferences.", :icon => 'poll.png', :type => 'poll'},
+  {:name => 'task list'.t, :description => 'A list of todo items.', :icon => 'task-list.png', :type => 'task list'},
+]
+%>
+
+<h1>create a new page</h1>
+<% page_groups.each_with_index do |pg,i| -%>
+<%
+  #id = "page-group-#{i+=1}"
+  detail_id = "page-form-#{i}"
+  selected = params[:page_type] == pg[:type] ? 'selected' : ''
+  function = "$$('div.page-group').invoke('removeClassName','selected'); $$('div.page-create').invoke('hide'); $('#{id}').addClassName('selected'); Element.show('#{detail_id}')"
+-%>
+<div id='<%=id%>' class="page-group <%=selected%>">
+  <div class="page-info">
+    <%= link_to_function "<b>#{pg[:type]}</b>: #{pg[:description]}", function,  
+      :style => "background: url(/images/pages/big/#{pg[:icon]}) no-repeat 0% 50%" %>
+  </div>
+  <div id="<%=detail_id%>" class='page-create' style="display:none">
+    <%= render :partial => 'pages/create_form', :locals => {:page_type => pg[:type]} %>
+  </div>
+</div>
+<% end -%>
+
+

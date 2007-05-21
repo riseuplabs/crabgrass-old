@@ -4,7 +4,9 @@ class AccountController < ApplicationController
   # before_filter :login_from_cookie
 
   skip_before_filter :login_required
-  
+
+  stylesheet 'login'
+    
   # say something nice, you goof!  something sweet.
   def index
     redirect_to(:action => 'signup') unless logged_in? || User.count > 0

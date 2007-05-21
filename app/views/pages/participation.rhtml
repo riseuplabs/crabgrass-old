@@ -1,0 +1,27 @@
+<%= render :partial => 'pages/tabs' %>
+
+<div class='tabinfo'>User participation with this page. This is currently a stub, more useful stuff to follow.</div>
+
+<table cellpadding='5'>
+<tr>
+  <th>user</th>
+  <th>viewed</th>
+  <th>contributed</th>
+  <th>&nbsp;</th>
+</tr>
+
+<% @page.user_participations.each do |upart| -%>
+<% next unless upart.user -%>
+<tr>
+  <td><%= upart.user.login %></td>
+  <td><%= friendly_date(upart.viewed_at) %></td>
+  <td><%= friendly_date(upart.changed_at) %></td>
+  <td>
+    <%= upart.viewed? ? 'read' : 'unread' %>
+    <%= image_tag "emblems/pending.png", :size => "11x11", :title => 'pending' unless upart.resolved? %>
+    <%= image_tag "emblems/star.png", :size => "11x11", :title => 'star' if upart.star? %>
+  </td>
+</tr>
+<% end -%>
+
+</table>

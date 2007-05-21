@@ -4,7 +4,6 @@ class Tool::Request < Page
    controller 'request'
    model      Poll::Poll
    icon       'bullhorn.png'
-   tool_type  'request'
    internal?   true
 end
 

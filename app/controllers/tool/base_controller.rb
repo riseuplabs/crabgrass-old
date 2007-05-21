@@ -1,8 +1,9 @@
 # super class controller for all page types
 
 class Tool::BaseController < ApplicationController
-  layout 'tool'
-  #in_place_edit_for :page, :title
+  include ToolCreation
+
+  layout :choose_layout
   
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
@@ -50,7 +51,7 @@ class Tool::BaseController < ApplicationController
     @upart.save
     redirect_to page_url(@page)
   end  
-  
+    
   def destroy
     if request.post?
       @page.data.destroy if @page.data # can this be in page?
@@ -58,28 +59,16 @@ class Tool::BaseController < ApplicationController
     end
     redirect_to from_url(@page)
   end
-
-  def access
-    @sidebar = false
-    if request.post?
-      if group_id = params[:remove_group]
-        @page.remove(Group.find_by_id(group_id))
-      elsif user_id = params[:remove_user]
-        @page.remove(User.find_by_id(user_id))
-      end
-      @page.save
-    end
-    render :template => 'pages/access'
-  end
   
   def title
     return(redirect_to page_url(@page, :action => :show)) unless request.post?
     title = params[:page][:title]
     name = params[:page][:name].to_s.nameize
     if name.any?
-      pages = Page.find(:all,
-        :conditions => ['pages.name = ? and group_participations.group_id IN (?)',name, @page.group_ids],
-        :include => :group_participations)
+      pages = @page.find_pages_with_name(name)
+      #Page.find(:all,
+      #  :conditions => ['pages.name = ? and group_participations.group_id IN (?)',name, @page.group_ids],
+      #  :include => :group_participations)
       if pages.any? and pages.first != @page
         message :error => 'That page name is already taken'
         render :action => 'show'
@@ -96,8 +85,29 @@ class Tool::BaseController < ApplicationController
     end
   end
   
+  # the form to create this type of page
+  # can be overridden by the subclasses
+  def create
+    @page_class = Page.display_name_to_class(params[:id])
+    if request.post?
+      @page = create_new_page
+      if @page.save
+        @user = current_user  # helps page_url guess a good url
+        return redirect_to page_url(@page)
+      else
+        message :object => @page
+      end
+    end
+    render :template => 'tool/base/create'
+  end
+  
   protected
 
+  def choose_layout
+    return 'application' if params[:action] == 'create'
+    return 'page'
+  end
+  
   def update_participation
     if logged_in? and @page and params[:action] == 'show'
       current_user.viewed(@page)
@@ -110,12 +120,13 @@ class Tool::BaseController < ApplicationController
     @show_posts = (params[:action] == 'show')
     # by default, don't show the reply box if there are no posts
     @show_reply = @posts.any?
+    @show_workarea = true
     @sidebar = true
     true
   end
   
   def login_or_public_page_required
-    return true if @page.public? and action_name == 'show'
+    return true if @page.nil? or (@page.public? and action_name == 'show')
     return login_required
   end
   
@@ -125,6 +136,7 @@ class Tool::BaseController < ApplicationController
   end
   
   def fetch_page_data
+    return true unless @page or params[:page_id]
     unless @page
       # typically, @page will be loaded by the dispatch controller. 
       # however, in some cases (like ajax) we bypass the dispatch controller
@@ -148,26 +160,12 @@ class Tool::BaseController < ApplicationController
     true
   end
       
-  def breadcrumbs
+  def context
     return true if request.xhr?
-    return true unless @page
-    if @group
-      add_crumb 'groups', groups_url
-      add_crumb @group.name, groups_url(:action => 'show', :id => @group)
-      set_banner 'groups/banner_small', @group.style
-    elsif @user and current_user != @user
-      add_crumb 'people', people_url
-      add_crumb @user.login, people_url(:action => 'show', :id => @user)
-      set_banner 'people/banner_small', @user.style
-    elsif @user and current_user == @user
-      add_crumb 'me', me_url
-      set_banner 'me/banner', @user.style
-    elsif @page.group_name and @group
-      add_crumb 'groups', groups_url
-      add_crumb @page.group_name, groups_url(:action => 'show', :id => @page.group_name)      
-      set_banner 'groups/banner_small', @group.style
-    end
-    add_crumb @page.title, page_url(@page, :action => 'show')
+    @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
+    @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
+    @user ||= current_user 
+    page_context
     true
   end
   

@@ -4,18 +4,18 @@
 <div class='section'>
 <h2>actions</h2>
 
-<div class='line'>
+<div class='line link'>
 <% if @upart %>
-  <%= image_tag 'actions/minus.png' %>
+  <%= image_tag 'actions/inbox-minus.png' %>
   <%= link_to 'remove from my inbox', page_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
 <% else %>
-  <%= image_tag 'actions/plus.png' %>
+  <%= image_tag 'actions/inbox-plus.png' %>
   <%= link_to 'add to my inbox', page_url(@page, :action => 'add_to_my_pages'), :method => :post %>
 <% end %>
 </div>
 
 <% if @upart %>
-<div class='line'>
+<div class='line link'>
 <% if @upart.resolved? %>
   <%= image_tag 'actions/pending-plus.png' %>
   <%= link_to 'add to pending', page_url(@page, :action => 'make_unresolved'), :method => :post %>
@@ -27,7 +27,7 @@
 <% end %>
 
 <% if @upart %>
-<div class='line'>
+<div class='line link'>
 <% if @upart.star? %>
   <%= image_tag 'actions/star-minus.png' %>
   <%= link_to 'remove star', page_url(@page, :action => 'remove_star'), :method => :post %>
@@ -38,43 +38,61 @@
 </div>
 <% end %>
 
-<div class='line'>
+<div class='line link'>
   <%= image_tag 'actions/trash.png' %>
   <%= link_to 'destroy this page', page_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
 </div>
 
+<div class='line link'>
+  <%= image_tag 'actions/announce.png' %>
+  <%= link_to_function 'send to', "Element.toggle('announce-area')" %>
+  <div id='announce-area' style = 'display:none'>
+    <% info_text = 'person/group names'.t %>
+    <% form_remote_tag :url => {:controller=>'pages', :action=>'announce', :id => @page.id}, :loading => show_spinner('announce'), :complete => hide_spinner('announce') do -%>
+      <%= text_field_tag 'announcees', info_text, :size => 15, :id => 'announcees', :onclick=>"if ($('announcees').value == '#{info_text}') {$('announcees').clear();}" %><br/>
+      <%= submit_link 'send', :name => 'send' %>
+      <%= link_to 'details' + ' &raquo;', {:controller => 'pages', :action => 'participation', :id => @page}, :onclick => 'this.form.submit' %>
+      <%= spinner 'announce' %>
+    <% end %>
+  </div>
+</div>
+
+<div class='tail'></div>
 </div> <!-- end section -->
 <% end %>
 
 <div class='section'>
 <h2>access</h2>
-
+<div class='line'>
 <% @page.groups.each do |g| %>
   <b><%= link_to_group g %></b>
 <% end %>
 <% @page.users_with_access.each do |u| %>
   <%= link_to_user u %>
 <% end %>
-<%= link_to image_tag('actions/edit.png'), page_url(@page, :action => 'access') %>
+<%= link_to image_tag('actions/edit.png'), {:controller => 'pages', :action => 'access', :id => @page.id} %>
+</div>
+<div class='tail'></div>
 </div> <!-- end section -->
 
 <div class='section'>
 <h2>contributors</h2>
 <ul class='plainlist'>
 <% unless @page.contributors.any? %>
-  <li>(none so far)</li>
+  <div class='line'>(none so far)</div>
 <% end %>
 <% @page.contributors.each do |u| %>
-  <li><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></li>
+  <div class='line'><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></div>
 <% end %>
 </ul>
+
+<div class='tail'></div>
 </div> <!-- end section -->
 
 <div class='section'>
 <h2>tags</h2>
-<%= render :partial => "pages/tag_area"  %>
-
-
+<div class='line'><%= render :partial => "pages/tag_area"  %></div>
+<div class='tail'></div>
 </div> <!-- end section -->
 
 <!-- end sidebar -->

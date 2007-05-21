@@ -1,22 +1,28 @@
 <h1>my contacts</h1>
-
+<div class='xworkarea'>
 <% if @contacts %>
 <%= render :partial => 'user', :collection => @contacts %>
 <% else %>
 <%=  'You have no contacts'.t %>
 <% end %>
+<br class='clear' />
+</div>
 
 <h1 style='clear:both'>my peers <span class='normal'>(users I share a common group with)</span></h1>
-
+<div class='xworkarea'>
 <% if @peers %>
 <%= render :partial => 'user', :collection => @peers %>
 <% else %>
 <%=  'You have no peers'.t %>
 <% end %>
+<br class='clear' />
+</div>
 
 <h1 style='clear:both'>all people</h1>
-
+<div class='xworkarea'>
 <%= render :partial => 'user', :collection => User.find(:all) %>
+<br class='clear' />
+</div>
 
 <!--
 <h1>search for a user</h1>

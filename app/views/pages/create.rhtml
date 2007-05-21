@@ -1,34 +1,19 @@
-<h1>create a new page</h1>
+<%
+page_classes = [
+  Tool::Message, Tool::Discussion, Tool::TextDoc, Tool::RateMany, Tool::TaskList
+]
+%>
 
-<% form_tag :action => 'create' do -%>
-<p>
-<b>title:</b><br/>
-<%= text_field 'page', 'title', :size => 30 %>
-<p>
+<h1 id='create-title'>create a new page</h1>
 
-<p>
-<b>group name:</b><br/>
-<% if params[:group_id] and (group=Group.find_by_id(params[:group_id])) %>
-<b><%=h group.name %></b>
-<%= hidden_field_tag 'group_id', group.id %>
-<% else %>
-<b><%= text_field_tag 'group_name', params[:group_name], :size => 30 %></b>
-<% end %>
-</p>
-
-<p>
-  <label><%= check_box_tag 'announce', true, params[:announce] %>  announce this page to everyone in the group</label>
-</p>
-
-<p>
-  <b>page type:</b><br/>
-  <%= select_tag('page_type', options_for_select(page_type_options, params['page_type']), :size => page_type_options.size) %>
-</p>
-
-<p>
-<b>tags:</b><br/>
-<%= text_field_tag 'tag_list', '', :size => 30 %>
-</p>
-
-<%= submit_tag "Create page" %>
+<div id='listing-of-page-classes' class='workarea'>
+<% page_classes.each_with_index do |page_class,i| -%>
+<div class="page-class"><div>
+  <%= link_to "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}",
+    {:controller => 'tool/'+page_class.controller, :action => 'create',
+     :id => page_class.class_display_name.nameize, :group_id => params[:group_id]},
+    {:style => "background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%", :class => 'page-link'} %>
+</div></div>
 <% end -%>
+</div>
+

@@ -5,7 +5,8 @@
 
   # local variables
   @show_status ||= 'pending'  # one of pending, completed, both
-  @show_user   ||= @user # unless false, only show tasks for this user.
+  @show_user   ||= @user # unless set already, only show tasks for this user.
+  @show_user   ||= 'all'
   all_users  = (@show_user == 'all')
   all_states = (@show_status == 'both')
   completed  = (@show_status == 'completed')

@@ -1,9 +1,10 @@
-<h2>page access</h2>
+<%= render :partial => 'pages/tabs' %>
 
-<p>
+<div class='tabinfo'>
   These groups and users will have access to this page.
   If a user is a member of the group, they will have access if the group has access.
-</p>
+  In the future, you will be able to make pages public, and be able to specify admin, edit, and view permissions separately.
+</div>
 
 <%# form_tag(page_url(@page, :action => 'access')) do -%>
 <%= "<b>groups</b>" if @page.groups.any? %>
@@ -33,6 +34,3 @@
 <% end -%>
 </p>
 
-<p>
-  <%= link_to 'return to page &raquo;', page_url(@page, :action => 'show') %>
-</p>

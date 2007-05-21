@@ -24,7 +24,25 @@ module ApplicationHelper
     header = content_tag("h2", message)
     content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
   end
-    
+  
+  # use by ajax
+  def notify_errors(title, errors)
+     type = "error"
+     img = image_tag("48/#{type}.png")
+     header = content_tag("h2", title)
+     text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
+     content_tag("div", img + header + text, "class" => "notice #{type}")
+  end
+ 
+   # use by ajax
+  def notify_infos(title, infos)
+     type = "info"
+     img = image_tag("48/#{type}.png")
+     header = content_tag("h2", title)
+     text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
+     content_tag("div", img + header + text, "class" => "notice #{type}")
+  end
+ 
   def page_icon(page,size=16)
     #image_tag "#{size}/#{page.icon}", :size => "#{size}x#{size}"
     image_tag "pages/#{page.icon}", :size => "22x22"
@@ -63,11 +81,17 @@ module ApplicationHelper
     #image_tag avatar_url(:viewable_type => viewable.class.to_s.downcase, :viewable_id => viewable.id, :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
     image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => (options[:class] || 'avatar')
   end
-  
-  def ajax_spinner_for(id, spinner="spinner.gif")
-    "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
+    
+  def spinner(id, spinner="spinner.gif")
+    "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}-spinner'>"
   end
-  
+  def hide_spinner(id)
+    "Element.hide('#{id.to_s}-spinner')"
+  end
+  def show_spinner(id)
+    "Element.show('#{id.to_s}-spinner')"
+  end
+
   def link_to_breadcrumbs
     if @breadcrumbs and @breadcrumbs.length > 1
       @breadcrumbs.collect{|b| link_to b[0],b[1]}.join ' &raquo; ' 
@@ -77,8 +101,12 @@ module ApplicationHelper
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
+ 
+  def first_context
+    @breadcrumbs.first.first if @breadcrumbs.any?
+  end
   
-  def title_from_breadcrumbs
+  def title_from_context
     (
       (@breadcrumbs||[]).collect{|b|truncate(b[0])}.reverse +
       [SITE_NAME]
@@ -119,7 +147,15 @@ module ApplicationHelper
     end
     "<label title='#{fullstr}'>#{str}</label>"
   end
-    
+  
+  def created_modified_date(created, modified=nil)
+    return friendly_date(created) unless modified and modified != created
+    created_date = friendly_date(created)
+    modified_date = friendly_date(modified)
+    detail_string = "created:&nbsp;#{created_date}<br/>modified:&nbsp;#{modified_date}"
+    link_to_function created_date, %Q[this.replace("#{detail_string}")], :class => 'dotted'
+  end
+  
   # TODO: allow this to be set by the theme
   def favicon
    ret = ''
@@ -147,5 +183,6 @@ module ApplicationHelper
   def banner
     @banner_partial
   end
+ 
   
 end

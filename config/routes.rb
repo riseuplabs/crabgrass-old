@@ -38,9 +38,12 @@ ActionController::Routing::Routes.draw do |map|
   
   # used for ajax calls to make a direct request bypassing the dispatcher
   map.direct 'page-direct/:page_id/:action/:id/:controller', :controller => /.*/
-  
+ 
   # typically, this is the default route
   map.connect ':controller/:action/:id'
+ 
+   # a generic route for tool controllers 
+  map.connect 'tool/:controller/:action/:id'
   
   # our default route is sent to the dispatcher
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'index', :_page_action => 'show', :id => nil

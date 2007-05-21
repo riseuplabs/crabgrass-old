@@ -16,6 +16,7 @@ class PeopleController < ApplicationController
    # @user_pages, @users = paginate :users, :per_page => 10
     @contacts = current_user.contacts
     @peers = current_user.peers
+    set_banner "people/banner_search", "background: #6E901B; color: #E2F0C0"
   end
 
   def show
@@ -47,7 +48,7 @@ class PeopleController < ApplicationController
     options = options_for_page_participation_by(@user)
     options[:conditions] += " AND user_participations.resolved = ?"
     options[:values] << false
-    options[:path] = ['type','task']
+    options[:path] = ['type','task-list']
     @pages = find_pages(options)
     @task_lists = @pages.collect{|p|p.data}
   end
@@ -129,14 +130,10 @@ class PeopleController < ApplicationController
   
   protected
   
-  def breadcrumbs
-    add_crumb 'people', people_url(:action => 'index')
-    add_crumb @user.login, people_url(:id => @user, :action => 'show') if @user
+  def context
+    person_context
     unless ['show','index','list'].include? params[:action]
-      add_crumb params[:action], people_url(:action => params[:action], :id => @user)
-    end
-    if @user
-      set_banner 'people/banner_large', @user.style
+      add_context params[:action], people_url(:action => params[:action], :id => @user)
     end
   end
   

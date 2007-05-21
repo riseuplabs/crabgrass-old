@@ -1,20 +1,20 @@
-<% content_for :style do %>
-@import url(/stylesheets/group_list.css);
-<% end %>
-
 <h1>My groups</h1>
-
+<div class='xworkarea' >
 <% if current_user.groups %>
 <%= render :partial => 'group', :collection => current_user.groups %>
 <% else %>
 <%=  'You have no groups'.t %>
 <% end %>
+<br class='clear' />
+</div>
 
 <h1 style='clear:both'>All groups</h1>
-
+<div class='xworkarea'>
 <%= render :partial => 'group', :collection => @groups %>
+<br class='clear' />
+</div>
 
-<p style='clear:both'>
+<p><div class='xworkarea'>
 <%= link_button 'New group', :action => 'new' %>
-</p>
+</div></p>
 

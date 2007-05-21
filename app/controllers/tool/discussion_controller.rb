@@ -10,6 +10,7 @@ class Tool::DiscussionController < Tool::BaseController
     super
     # always show reply box
     @show_reply = true
+    @show_workarea = false if params[:action] == 'show'
     true
   end
   

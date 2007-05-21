@@ -1,10 +1,6 @@
 class Tool::RateManyController < Tool::BaseController
   before_filter :fetch_poll
-  
-  def fetch_poll
-    @poll = @page.data
-  end
-  
+    
   def show
   end
   
@@ -46,4 +42,12 @@ class Tool::RateManyController < Tool::BaseController
     @poll.votes.clear
     redirect_to page_url(@page, :action => 'show')
   end
+  
+  protected
+  
+  def fetch_poll
+    return true unless @page
+    @poll = @page.data
+  end
+
 end

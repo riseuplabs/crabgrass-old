@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-  layout 'groups'
+  layout :choose_layout
+  stylesheet 'groups'
   
   prepend_before_filter :find_group
   
@@ -13,6 +14,7 @@ class GroupsController < ApplicationController
 
   def list
     @group_pages, @groups = paginate :groups, :per_page => 10
+    set_banner "groups/banner_search", "background: #1B5790; color: #eef"
   end
 
   def show
@@ -223,19 +225,21 @@ class GroupsController < ApplicationController
       redirect_to :action => 'list'
     end
   end  
-    
+     
   protected
   
-  def breadcrumbs
-    add_crumb 'groups', groups_url(:action => 'list')
-    add_crumb @group.name, groups_url(:id => @group, :action => 'show') if @group
+  def choose_layout
+     return 'application' if ['list','index'].include? params[:action]
+     return 'groups'
+  end
+  
+  def context
+    group_context
     unless ['show','index','list'].include? params[:action]
-      add_crumb params[:action], groups_url(:action => params[:action], :id => @group)
-    end
-    if @group
-      set_banner 'groups/banner_large', @group.style
+      add_context params[:action], groups_url(:action => params[:action], :id => @group)
     end
   end
+  
     
   def find_group
     @group = Group.find_by_name params[:id]
