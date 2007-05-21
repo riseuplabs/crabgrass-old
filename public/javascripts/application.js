@@ -26,14 +26,22 @@ function showtab(tab) {
   return false;
 }
 
-function submit_form(form_id, value) {
-  f = $(form_id);
+// submits a form, from the onclick of a link. 
+// use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
+function submit_form(link, name, value) {
+  form = link.ancestors().find(function(e) {
+    return e.nodeName == 'FORM';
+  })
   e = document.createElement("input");
-  e.name = "commit";
+  e.name = name;
   e.type = "hidden";
   e.value = value;
-  f.appendChild(e);
-  f.submit();
+  form.appendChild(e);
+  if (form.onsubmit) {
+    form.onsubmit(); // for ajax forms.
+  } else {
+    form.submit();
+  }
 }
 
 function toggleLink(link, text) {
@@ -52,76 +60,4 @@ function mytoggle(element) {
     Element.toggle(element)
 }
 
-/* stuff from beast */
 
-/* 
-
-var TopicForm = {
-  editNewTitle: function(txtField) {
-    $('new_topic').innerHTML = (txtField.value.length > 5) ? txtField.value : 'New Topic';
-  }
-}
-
-var EditForm = {
-  // show the form
-  init: function(postId) {
-    $('edit-post-' + postId + '_spinner').show();
-    this.clearReplyId();
-  },
-
-  // sets the current post id we're editing
-  setReplyId: function(postId) {
-    $('edit').setAttribute('post_id', postId.toString());
-    $('posts-' + postId + '-row').addClassName('editing');
-    if($('reply')) $('reply').hide();
-  },
-  
-  // clears the current post id
-  clearReplyId: function() {
-    var currentId = this.currentReplyId()
-    if(!currentId || currentId == '') return;
-
-    var row = $('posts-' + currentId + '-row');
-    if(row) row.removeClassName('editing');
-    $('edit').setAttribute('post_id', '');
-  },
-  
-  // gets the current post id we're editing
-  currentReplyId: function() {
-    return $('edit').getAttribute('post_id');
-  },
-  
-  // checks whether we're editing this post already
-  isEditing: function(postId) {
-    if (this.currentReplyId() == postId.toString())
-    {
-      $('edit').show();
-      $('edit_post_body').focus();
-      return true;
-    }
-    return false;
-  },
-
-  // close reply, clear current reply id
-  cancel: function() {
-    this.clearReplyId();
-    $('edit').hide()
-  }
-}
-
-var ReplyForm = {
-  // yes, i use setTimeout for a reason
-  init: function() {
-    EditForm.cancel();
-    $('reply').toggle();
-    $('post_body').focus();
-    // for Safari which is sometime weird
-//    setTimeout('$(\"post_body\").focus();',50);
-  }
-}
-
-Event.addBehavior({
-  '#search,#monitor_submit': function() { this.hide(); }
-})
-
-*/
