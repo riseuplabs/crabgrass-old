@@ -20,7 +20,7 @@ module ApplicationHelper
       type = "error"
       message = flash[:error]
     end
-    img = image_tag("48/#{type}.png")
+    img = image_tag("notice/#{type}.png")
     header = content_tag("h2", message)
     content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
   end
@@ -28,7 +28,7 @@ module ApplicationHelper
   # use by ajax
   def notify_errors(title, errors)
      type = "error"
-     img = image_tag("48/#{type}.png")
+     img = image_tag("notice/#{type}.png")
      header = content_tag("h2", title)
      text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
      content_tag("div", img + header + text, "class" => "notice #{type}")
@@ -37,7 +37,7 @@ module ApplicationHelper
    # use by ajax
   def notify_infos(title, infos)
      type = "info"
-     img = image_tag("48/#{type}.png")
+     img = image_tag("notice/#{type}.png")
      header = content_tag("h2", title)
      text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
      content_tag("div", img + header + text, "class" => "notice #{type}")
