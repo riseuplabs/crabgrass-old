@@ -84,10 +84,12 @@ class GreenCloth < RedCloth
   ]
 
   def initialize(string, default_group_name = 'page')
-#    @filter_html = true
+    # html cleaning in redcloth is reportedly broken, and i can't
+    # get it working either, so here it is disabled for good measure.
+    @filter_html = false 
     @hard_breaks = true
     @default_group = default_group_name
-    super(string)
+    super( escape_html_tags(string) )
   end
   
   def to_html(*rules)
@@ -109,10 +111,30 @@ class GreenCloth < RedCloth
     #text.gsub!( HARD_BREAK_RE, "\\0(((br)))\n" )
   end
   
-#  def clean_html( text, tags = BASIC_TAGS )
-#    super(text,tags).gsub!('(((br)))', '<br/>')
-#  end
+  #
+  # the clean_html function of redcloth seems to not work, and is reported by others to 
+  # not work. I don't understand what the code is trying to do anyway. 
+  # So, we have added our own simple filter to simply escape < >
+  #
+  # TODO: this breaks <pre> blocks, which is the only way to do code blocks in textile.
+  #
+  # TODO: bluecloth actually goes through the work of parsing the html
+  # to find matching tags and raises an error if a tag is not properly closed.
+  # If we wanted to allow some html, it seems like a good idea to do something
+  # like that.
+  #
+  def escape_html_tags( text )
+    text.gsub( "<", "&lt;" ).gsub( ">", "&gt;" )
+  end
 
+  # override internal redcloth function so that <pre><b>hi</b></pre> doesn't escape <b> twice
+  # this is super hacky and bad, but what to do....
+  def htmlesc( str, mode )
+     str.gsub!( '&lt;', '<')
+     str.gsub!( '&gt;', '>')
+     super(str, mode)
+  end
+		
   CRABGRASS_LINK_RE = /
     (^|.)         # start of line or any character
     \[            # begin [
