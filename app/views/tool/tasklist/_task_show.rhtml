@@ -15,9 +15,9 @@ end
       <% if task.description.any? -%>
         <span><%= link_to_function task.name, "Element.toggle('#{details_id}')" %></span>
       <% else -%>
-        <%= task.name %>
+        <%=h task.name %>
       <% end %>
     </div>
     <div class='indent task_details' id="<%=details_id%>" style='display: none'>
-      <%= task.description_html %>
+      <%=h task.description_html %>
     </div>
