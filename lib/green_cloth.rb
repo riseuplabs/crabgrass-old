@@ -124,14 +124,14 @@ class GreenCloth < RedCloth
   # like that.
   #
   def escape_html_tags( text )
-    text.gsub( "<", "&lt;" ).gsub( ">", "&gt;" )
+    text.gsub( "<", "&lt;" ) #.gsub( ">", "&gt;" )
   end
 
-  # override internal redcloth function so that <pre><b>hi</b></pre> doesn't escape <b> twice
+  # override internal redcloth function so that <pre><b>hi</b></pre> doesn't escape "<" twice
   # this is super hacky and bad, but what to do....
   def htmlesc( str, mode )
      str.gsub!( '&lt;', '<')
-     str.gsub!( '&gt;', '>')
+     #str.gsub!( '&gt;', '>')
      super(str, mode)
   end
 		
