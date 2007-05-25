@@ -1,0 +1,122 @@
+#
+# REMEMBER: you can see available tasks with "cap show_tasks"
+#
+
+set :application, "crabgrass"
+set :repository, "svn+ssh://code.autistici.org/svn/#{application}/trunk"
+
+role :web, "we.riseup.net"
+role :app, "we.riseup.net"
+
+set :deploy_to, "/usr/apps/#{application}" 
+set :user,      'crabgrass'
+set :password,  'xxxxx'
+set :use_sudo, false
+
+# the database.yml is built using these variables. 
+# if you change the values, run "cap after_setup" to rebuild
+# database.yml
+set :app_db_host, 'localhost'
+set :app_db_user, 'crabgrass'
+set :app_db_pass, 'xxxxxx'
+
+# =============================================================================
+# SSH OPTIONS
+# =============================================================================
+# ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
+# ssh_options[:port] = 25
+
+# =============================================================================
+# TASKS
+# =============================================================================
+
+# 
+# I theory, i understand why you need to trap HUP signals.
+# In practice, I am baffled why this only seems to be the case sometimes.
+# http://dev.rubyonrails.org/ticket/4832
+#
+
+desc "Starts fcgi listeners" 
+task :spawn, :roles => :app do
+  puts "Starting fcgi listeners..." 
+  #run "#{current_path}/script/process/spawner -r 5 -s \"/usr/bin/env spawn-fcgi -a 127.0.0.1\"" 
+  run "trap '' HUP; #{current_path}/script/process/spawner" 
+end
+
+desc "Starts fcgi listeners" 
+task :start, :roles => :app do
+  puts "Starting fcgi listeners..." 
+  run "trap '' HUP; #{current_path}/script/process/spawner; exit" 
+end
+
+desc "Stops fcgi listeners" 
+task :stop, :roles => :app do
+  puts "Stopping fcgi listeners..." 
+  run "trap '' HUP; #{current_path}/script/process/reaper -a kill"
+end
+
+desc "Status of fcgi listeners" 
+task :status, :roles => :app do
+  run "#{current_path}/script/process/inspector"
+end
+
+# CREATING DATABASE.YML
+# inspired by http://www.jvoorhis.com/articles/2006/07/07/managing-database-yml-with-capistrano
+
+def database_configuration(db_role)
+%Q[
+login: &login
+  adapter: mysql
+  encoding: utf8
+  host: #{eval(db_role+"_db_host")}
+  username: #{eval(db_role+"_db_user")}
+  password: #{eval(db_role+"_db_pass")}
+
+development:
+  database: #{application}_development
+  <<: *login
+
+test:
+  database: #{application}_test
+  <<: *login
+
+production:
+  database: #{application}
+  <<: *login
+]
+end
+
+# rerun after_setup if you change the db configuration
+desc "Create database.yml in shared/config" 
+task :after_setup, :roles => :app do
+  run "mkdir -p #{deploy_to}/#{shared_dir}/config" 
+  put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
+end
+
+desc "Create shared directories, update database.yml" 
+task :after_setup, :roles => :app do
+  run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/sessions"
+  run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/cache"
+  run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/sockets"
+  run "mkdir -p #{deploy_to}/#{shared_dir}/avatars"
+  
+  run "mkdir -p #{deploy_to}/#{shared_dir}/config" 
+  put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
+end
+
+desc "Link in the shared dirs" 
+task :after_update_code do
+  run "rm -rf #{release_path}/tmp"
+  run "ln -nfs #{shared_path}/tmp #{release_path}/tmp"
+  #run "ln -nfs #{shared_path}/tmp/pids #{release_path}/pids"
+  
+  run "rm -rf #{release_path}/public/avatars"
+  run "ln -nfs #{shared_path}/avatars #{release_path}/public/avatars"
+  
+  run "rm #{release_path}/config/database.yml" 
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+  
+#  run "ln -nfs #{deploy_to}/#{shared_dir}/css #{release_path}/public/css"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{release_path}/public/favicon.ico"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{release_path}/public/favicon.png"
+end
