@@ -93,7 +93,7 @@ class Tool::BaseController < ApplicationController
       @page = create_new_page
       if @page.save
         @user = current_user  # helps page_url guess a good url
-        return redirect_to page_url(@page)
+        return redirect_to(page_url(@page))
       else
         message :object => @page
       end

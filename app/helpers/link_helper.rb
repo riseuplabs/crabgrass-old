@@ -70,7 +70,7 @@ module LinkHelper
   
   def post_to(label, options={}, html_options={})
     accesskey = shortcut_key label
-    link_to(label, options, {:post => true, :accesskey=>accesskey}.merge(html_options))
+    link_to(label, options, {:method => :post, :accesskey => accesskey}.merge(html_options))
   end
   
 end

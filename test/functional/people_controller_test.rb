@@ -5,6 +5,8 @@ require 'people_controller'
 class PeopleController; def rescue_action(e) raise e end; end
 
 class PeopleControllerTest < Test::Unit::TestCase
+  fixtures :users
+
   def setup
     @controller = PeopleController.new
     @request    = ActionController::TestRequest.new
@@ -12,7 +14,10 @@ class PeopleControllerTest < Test::Unit::TestCase
   end
 
   # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_index
+    login_as :quentin
+    get :index
+    assert_response :success
+    assert_template 'list'
   end
 end

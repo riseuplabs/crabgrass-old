@@ -5,10 +5,6 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead
-  # Then, you can remove it from this and the units test.
-  include AuthenticatedTestHelper
-
   fixtures :users
 
   def setup
@@ -60,6 +56,8 @@ class AccountControllerTest < Test::Unit::TestCase
     end
   end
 
+=begin
+  #currently not required
   def test_should_require_email_on_signup
     assert_no_difference User, :count do
       create_user(:email => nil)
@@ -67,6 +65,7 @@ class AccountControllerTest < Test::Unit::TestCase
       assert_response :success
     end
   end
+=end
 
   def test_should_logout
     login_as :quentin
@@ -91,12 +90,15 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_equal @response.cookies["auth_token"], []
   end
 
+=begin
+  #not enabled
   def test_should_login_with_cookie
     users(:quentin).remember_me
     @request.cookies["auth_token"] = cookie_for(:quentin)
     get :index
     assert @controller.send(:logged_in?)
   end
+=end
 
   def test_should_fail_expired_cookie_login
     users(:quentin).remember_me

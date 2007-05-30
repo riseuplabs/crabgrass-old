@@ -1,6 +1,4 @@
 class PeopleController < ApplicationController
-  model :user
-
   verify :method => :post,
     :only => [ :add_contact, :remove_contact],
     :redirect_to => { :action => :list }

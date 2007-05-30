@@ -1,5 +1,5 @@
 <div id="loginform">
-<%= start_form_tag :controller => 'account', :action => 'login' %>
+<% form_tag :controller => 'account', :action => 'login' do -%>
 <table>
 <tr>
   <td>
@@ -25,7 +25,7 @@
 <%= check_box_tag 'remember_me' %></p>
 -->
 
-<%= end_form_tag %>
+<% end -%>
 <div><%# flash[:error] %></div>
 <div align='right'>
   <%# link_to 'I forgot my password'.t, :controller => 'forms', :action => 'password'%>

@@ -100,7 +100,7 @@ module ActiveRecord
         validates_each(attr_names, configuration) do |record, attr_name, value|
           unless value
             record.errors.add(attr_name, 'must exist')
-            return
+            next #can't use return cause it raises a LocalJumpError
           end
           unless (3..50).include? value.length
             record.errors.add(attr_name, 'must be at least 3 and no more than 50 characters')

@@ -19,7 +19,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 true_levellers:
   id: 1
-  name: the true levellers
+  name: the-true-levellers
   summary: We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow
 another:
   id: 2
