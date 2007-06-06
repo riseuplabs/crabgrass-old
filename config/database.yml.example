@@ -1,4 +1,5 @@
 development:
+  encoding: utf8
   adapter: mysql
   database: crabgrass_development
   user: root
@@ -6,6 +7,7 @@ development:
   host: localhost
 
 test:
+  encoding: utf8
   adapter: mysql
   database: crabgrass_test
   user: root
@@ -13,6 +15,7 @@ test:
   host: localhost
 
 production:
+  encoding: utf8
   adapter: mysql
   database: crabgrass
   user: root
