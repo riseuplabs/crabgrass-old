@@ -29,6 +29,8 @@
 #     page's controller wants it.
 #
 #
+# TODO: I think the dispatchController breaks flash hash. Fix it!
+# 
 
 class DispatchController < ApplicationController
   def process(request, response, method = :perform_action, *arguments)

@@ -92,6 +92,10 @@ module ApplicationHelper
     "Element.show('#{id.to_s}-spinner')"
   end
 
+  def bread
+    @breadcrumbs
+  end
+  
   def link_to_breadcrumbs
     if @breadcrumbs and @breadcrumbs.length > 1
       @breadcrumbs.collect{|b| link_to b[0],b[1]}.join ' &raquo; ' 
@@ -103,12 +107,12 @@ module ApplicationHelper
   end
  
   def first_context
-    @breadcrumbs.first.first if @breadcrumbs.any?
+    @context.first.first if @context.any?
   end
   
   def title_from_context
     (
-      (@breadcrumbs||[]).collect{|b|truncate(b[0])}.reverse +
+      (@context||[]).collect{|b|truncate(b[0])}.reverse +
       [SITE_NAME]
     ).join(' : ')
   end

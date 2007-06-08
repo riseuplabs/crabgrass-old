@@ -90,11 +90,15 @@ class MeController < ApplicationController
     @user = current_user
   end
   
-  def breadcrumbs
-    add_crumb 'me', me_url(:action => 'index')
-    #unless ['show','index'].include?(params[:action])
-    #  add_crumb params[:action], me_url(:action => params[:action])
-    #end
-    set_banner 'me/banner', current_user.style
+  def context
+    me_context('large')
+    unless ['show','index'].include?(params[:action])
+      # url_for is used here instead of me_url so we can include the *path in the link
+      # (it might be a bug in me_url that this is not included, or it might be a bug in url_for
+      # that it is. regardless, we want it.)
+      add_context params[:action], url_for(:controller => 'me', :action => params[:action])
+    end
   end
+  
 end
+

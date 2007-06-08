@@ -236,7 +236,8 @@ class GroupsController < ApplicationController
   def context
     group_context
     unless ['show','index','list'].include? params[:action]
-      add_context params[:action], groups_url(:action => params[:action], :id => @group)
+      add_context params[:action], url_for(:controller=>'groups', :action => params[:action], :id => @group, :path => params[:path])
+      # url_for is used here to capture the path
     end
   end
   

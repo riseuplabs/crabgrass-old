@@ -1,10 +1,8 @@
-# Filters added to this controller will be run for all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem	
   include PageUrlHelper 
+  include ContextHelper
   
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -79,72 +77,7 @@ class ApplicationController < ActionController::Base
   end
   
   protected
-  
-  #######################################################
-  # Context
-  # Context is the general term for information on where we
-  # are and how we got here. Includes breadcrumbs and banner,
-  # although each work differently.
-  
-  # a before filter to override by controllers
-  def breadcrumbs; end
-  def context; end
-  
-  # deprecated
-  def add_crumb(crumb_text,crumb_url)
-    @breadcrumbs ||= []
-    @breadcrumbs << [crumb_text,crumb_url]
-  end
-  
-  def add_context(text, url)
-    @breadcrumbs ||= []
-    @breadcrumbs << [text,url]
-  end
-  
-  def set_banner(partial, style)
-    @banner_partial = partial
-    @banner_style = style
-  end
-  
-  # these context functions are here because other parts of the application 
-  # might need to set a group or person context. 
-  
-  def group_context(size='large')
-    add_context 'groups', groups_url(:action => 'list')
-    if @group
-      add_context @group.name, groups_url(:id => @group, :action => 'show')
-      set_banner "groups/banner_#{size}", @group.style
-    end
-  end
-  
-  def person_context(size='large')
-    add_context 'people', people_url
-    if @user
-      add_context @user.login, people_url(:action => 'show', :id => @user)
-      set_banner "people/banner_#{size}", @user.style
-    end
-  end
-
-  def me_context(size='large')
-    add_context 'me', me_url
-    @user ||= current_user
-    set_banner 'me/banner', current_user.style
-  end
-
-  def page_context
-    if @group or @group = Group.find_by_id(params[:group_id])
-      group_context('small')
-    elsif @user and current_user != @user
-      person_context('small')
-    elsif @user and current_user == @user
-      me_context()
-    elsif @page and @page.group_name
-      @group = @page.group
-      group_context('small')
-    end
-    add_context @page.title, page_url(@page, :action => 'show') if @page
-  end
-  
+    
   #######################################################
   # Page Finders
   

@@ -133,8 +133,8 @@ class ChatController < ApplicationController
   end
   
   def breadcrumbs
-    add_crumb 'chat', '/chat'
-    add_crumb @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
+    add_context 'chat', '/chat'
+    add_context @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
   end
   
 end
