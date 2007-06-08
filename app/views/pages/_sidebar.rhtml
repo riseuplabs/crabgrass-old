@@ -7,10 +7,10 @@
 <div class='line link'>
 <% if @upart %>
   <%= image_tag 'actions/inbox-minus.png' %>
-  <%= link_to 'remove from my inbox', page_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
+  <%= link_to 'remove from my inbox', pages_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
 <% else %>
   <%= image_tag 'actions/inbox-plus.png' %>
-  <%= link_to 'add to my inbox', page_url(@page, :action => 'add_to_my_pages'), :method => :post %>
+  <%= link_to 'add to my inbox', pages_url(@page, :action => 'add_to_my_pages'), :method => :post %>
 <% end %>
 </div>
 
@@ -18,10 +18,10 @@
 <div class='line link'>
 <% if @upart.resolved? %>
   <%= image_tag 'actions/pending-plus.png' %>
-  <%= link_to 'add to pending', page_url(@page, :action => 'make_unresolved'), :method => :post %>
+  <%= link_to 'add to pending', pages_url(@page, :action => 'make_unresolved'), :method => :post %>
 <% else %>
   <%= image_tag 'actions/pending-minus.png' %>
-  <%= link_to 'remove from pending', page_url(@page, :action => 'make_resolved'), :method => :post %>
+  <%= link_to 'remove from pending', pages_url(@page, :action => 'make_resolved'), :method => :post %>
 <% end %>
 </div>
 <% end %>
@@ -30,17 +30,17 @@
 <div class='line link'>
 <% if @upart.star? %>
   <%= image_tag 'actions/star-minus.png' %>
-  <%= link_to 'remove star', page_url(@page, :action => 'remove_star'), :method => :post %>
+  <%= link_to 'remove star', pages_url(@page, :action => 'remove_star'), :method => :post %>
 <% else %>
   <%= image_tag 'actions/star-plus.png' %>
-  <%= link_to 'add star', page_url(@page, :action => 'add_star'), :method => :post %>
+  <%= link_to 'add star', pages_url(@page, :action => 'add_star'), :method => :post %>
 <% end %>
 </div>
 <% end %>
 
 <div class='line link'>
   <%= image_tag 'actions/trash.png' %>
-  <%= link_to 'destroy this page', page_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
+  <%= link_to 'destroy this page', pages_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
 </div>
 
 <div class='line link'>

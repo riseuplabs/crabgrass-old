@@ -6,12 +6,11 @@
   In the future, you will be able to make pages public, and be able to specify admin, edit, and view permissions separately.
 </div>
 
-<%# form_tag(page_url(@page, :action => 'access')) do -%>
 <%= "<b>groups</b>" if @page.groups.any? %>
 <ul>
   <% @page.groups.each do |group| %>
   <li>
-    <b><%= link_to_group group %></b> (<%= link_to 'remove', page_url(@page, :action => 'access', :remove_group => group.id),  :method => 'post' %>)
+    <b><%= link_to_group group %></b> (<%= link_to 'remove', pages_url(@page, :action => 'access', :remove_group => group.id),  :method => 'post' %>)
   </li>
   <% end %>
 </ul>
@@ -19,17 +18,14 @@
 <ul>
   <% @page.users.with_access.each do |user| %>
   <li>
-    <%= link_to_user user %> (<%= link_to 'remove', page_url(@page, :action => 'access', :remove_user => user.id),  :method => 'post' %>)
+    <%= link_to_user user %> (<%= link_to 'remove', pages_url(@page, :action => 'access', :remove_user => user.id),  :method => 'post' %>)
   </li>
   <% end %>
 </ul>
-<%# submit_tag 'save' %>
-<%# end %>
 
-<p>
-<b>add new access</b></br>
-<% form_tag(:controller=>'/pages',:action=>'add',:id=>@page) do -%>
-  User or group name: <%= text_field_tag 'name','',:size=>13 %>
+<p><b>add new access</b></br>
+<% form_tag(pages_url(@page, :action => 'access')) do -%>
+  User or group name: <%= text_field_tag 'add_name','',:size=>13 %>
   <%= submit_tag 'add' %>
 <% end -%>
 </p>
