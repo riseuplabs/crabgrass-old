@@ -1,32 +1,32 @@
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label 'Inbox'
-    t.link url_for(:action => 'inbox')
+    t.link me_url(:action => 'inbox')
     t.selected params[:action] == 'inbox' || params[:action] == 'index'
   end
 # f.tab do |t|
 #   t.label 'Dashboard'
-#   t.link url_for(:action => 'dash')
+#   t.link me_url(:action => 'dash')
 #   t.selected params[:action] == 'dash'
 # end
   f.tab do |t|
     t.label 'Tasks'
-    t.link url_for(:action => 'tasks')
+    t.link me_url(:action => 'tasks')
     t.selected params[:action] == 'tasks'
   end
 # f.tab do |t|
 #   t.label 'Calendar'
-#   t.link url_for(:action => 'calendar')
+#   t.link me_url(:action => 'calendar')
 #   t.selected params[:action] == 'calendar'
 # end
   f.tab do |t|
     t.label 'Search'
-    t.link url_for(:action => 'search')
+    t.link me_url(:action => 'search')
     t.selected params[:action] == 'search'
   end
   f.tab do |t|
     t.label 'My Profile'
-    t.link url_for(:action => 'edit')
+    t.link me_url(:action => 'edit')
     t.selected params[:action] == 'edit'
   end
 end
