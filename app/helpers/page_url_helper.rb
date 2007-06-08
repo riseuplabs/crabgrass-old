@@ -8,9 +8,9 @@ module PageUrlHelper
   #    /:context/:page/:action/:id
   #
   # what is the :context? the order of precedence: 
-  #   1. current group name
-  #   2. current user name
-  #   3. page's primary group name
+  #   1. current group name if set in the url and it has access to the page
+  #   2. name of the page's primary group if it exists
+  #   3. the user login that created the page
   #   4. 'page'
   #
   # what is :page? it will be the page name if it exists and the context
@@ -20,13 +20,13 @@ module PageUrlHelper
   def page_url(page,options={})
     options.delete(:action) if options[:action] == 'show' and not options[:id]
     if @group and page.group_ids.include?(@group.id)
-      path = page_path(@group.name,     page.name_url,     options)
-    elsif @user
-      path = page_path(@user.login,     page.friendly_url, options)
+      path = page_path(@group.name, page.name_url, options)
     elsif page.group_name
-      path = page_path(page.group_name, page.name_url,     options)
+      path = page_path(page.group_name, page.name_url, options)
+    elsif page.created_by_id
+      path = page_path(page.created_by.login, page.friendly_url, options)
     else
-      path = page_path('page',          page.friendly_url, options)
+      path = page_path('page', page.friendly_url, options)
     end
     '/' + path + build_query_string(options)
   end
@@ -40,6 +40,12 @@ module PageUrlHelper
   def page_xurl(page,options={})
     hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => 'tool/' + page.controller}
     direct_url(hash.merge(options))
+  end
+  
+  # a helper for links that are destined for the PagesController, not the
+  # Tool::BaseController or its decendents
+  def pages_url(page,options={})
+    url_for({:controller => 'pages',:id => page.id}.merge(options))
   end
   
   def create_page_link(text,options={})

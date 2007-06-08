@@ -64,30 +64,10 @@ class PagesController < ApplicationController
     end
     page.tag_with(params[:tag_list]) if params[:tag_list]
     page
-  end
-  
-  # add group or user to participations
-  def add
-    @page = Page.find_by_id(params[:id])
-    group = Group.find_by_name(params[:name])
-    user = User.find_by_login(params[:name])
-    access = params[:access] || ACCESS_ADMIN
-    if group
-      @page.add group, :access => access
-      @page.save
-    elsif user
-      @page.add user, :access => access
-      @page.save
-    else
-      message :error => 'group or user not found', :later => 1    
-    end
-    redirect_to page_url(@page)
-  end
-  
+  end  
   
   # not used anymore
   def add_tags
-    @page = Page.find_by_id(params[:id])
     tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
     @page.tag_with(tags.uniq.join(' '))
     @page.save 
@@ -96,7 +76,6 @@ class PagesController < ApplicationController
   
   def tag
     return unless request.xhr?
-    @page = Page.find_by_id(params[:id])
     tags = Tag.parse(params[:tag_list])
     @page.tag_with(tags.uniq.join(' '))
     @page.save
@@ -147,10 +126,20 @@ class PagesController < ApplicationController
 
   def access
     if request.post?
-      if group_id = params[:remove_group]
-        @page.remove(Group.find_by_id(group_id))
-      elsif user_id = params[:remove_user]
-        @page.remove(User.find_by_id(user_id))
+      if params[:remove_group]
+        @page.remove(Group.find_by_id(params[:remove_group]))
+      elsif params[:remove_user]
+        @page.remove(User.find_by_id(params[:remove_user]))
+      elsif params[:add_name]
+        access = params[:access] || ACCESS_ADMIN
+        if group = Group.find_by_name(params[:add_name])
+          @page.add group, :access => access
+        elsif user = User.find_by_login(params[:add_name])
+          @page.remove user
+          @page.add user, :access => access
+        else
+          message :error => 'group or user not found'
+        end
       end
       @page.save
     end
@@ -163,10 +152,65 @@ class PagesController < ApplicationController
   def history
   
   end
+
+  ##############################################
+  ## page participation modifications
+  
+  def remove_from_my_pages
+    @upart.destroy
+    redirect_to from_url(@page)
+  end
+  
+  def add_to_my_pages
+    @page.add(current_user)
+    redirect_to page_url(@page)
+  end
+  
+  def make_resolved
+    @upart.resolved = true
+    @upart.save
+    redirect_to page_url(@page)
+  end
+  
+  def make_unresolved
+    @upart.resolved = false
+    @upart.save
+    redirect_to page_url(@page)
+  end  
+  
+  def add_star
+    @upart.star = true
+    @upart.save
+    redirect_to page_url(@page)
+  end
+  
+  def remove_star
+    @upart.star = false
+    @upart.save
+    redirect_to page_url(@page)
+  end  
+    
+  def destroy
+    if request.post?
+      @page.data.destroy if @page.data # can this be in page?
+      @page.destroy
+    end
+    redirect_to from_url(@page)
+  end
   
   protected
   
+  def authorized?
+    # see BaseController::authorized?
+    if @page
+      return current_user.may?(:admin, @page)
+    else
+      return true
+    end
+  end
+
   def context
+    return true unless request.get?
     @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
@@ -199,6 +243,7 @@ class PagesController < ApplicationController
   
   def fetch_page
     @page = Page.find_by_id(params[:id]) if params[:id]
+    @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
     true
   end
   

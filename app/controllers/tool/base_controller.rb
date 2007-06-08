@@ -16,49 +16,7 @@ class Tool::BaseController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
-  end
-  
-  def remove_from_my_pages
-    @upart.destroy
-    redirect_to from_url(@page)
-  end
-  
-  def add_to_my_pages
-    @page.add(current_user)
-    redirect_to page_url(@page)
-  end
-  
-  def make_resolved
-    @upart.resolved = true
-    @upart.save
-    redirect_to page_url(@page)
-  end
-  
-  def make_unresolved
-    @upart.resolved = false
-    @upart.save
-    redirect_to page_url(@page)
   end  
-  
-  def add_star
-    @upart.star = true
-    @upart.save
-    redirect_to page_url(@page)
-  end
-  
-  def remove_star
-    @upart.star = false
-    @upart.save
-    redirect_to page_url(@page)
-  end  
-    
-  def destroy
-    if request.post?
-      @page.data.destroy if @page.data # can this be in page?
-      @page.destroy
-    end
-    redirect_to from_url(@page)
-  end
   
   def title
     return(redirect_to page_url(@page, :action => :show)) unless request.post?
