@@ -89,7 +89,6 @@ class Tool::TasklistController < Tool::BaseController
     users_pending.each do |user,pending|
       user.resolved(@page, (not pending))
     end
-    current_user.updated(@page)
     true
   end
   
