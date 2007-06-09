@@ -86,13 +86,6 @@ production:
 ]
 end
 
-# rerun after_setup if you change the db configuration
-desc "Create database.yml in shared/config" 
-task :after_setup, :roles => :app do
-  run "mkdir -p #{deploy_to}/#{shared_dir}/config" 
-  put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
-end
-
 desc "Create shared directories, update database.yml" 
 task :after_setup, :roles => :app do
   run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/sessions"
@@ -113,7 +106,7 @@ task :after_update_code do
   run "rm -rf #{release_path}/public/avatars"
   run "ln -nfs #{shared_path}/avatars #{release_path}/public/avatars"
   
-  run "rm #{release_path}/config/database.yml" 
+#  run "rm #{release_path}/config/database.yml" 
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   
 #  run "ln -nfs #{deploy_to}/#{shared_dir}/css #{release_path}/public/css"
