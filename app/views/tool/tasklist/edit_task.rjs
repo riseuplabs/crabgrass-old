@@ -1,0 +1,6 @@
+task_id      = "task_#{@task.id}"
+task_edit_id = "#{task_id}_edit"
+
+# update the task_edit div with the edit partial
+page.replace_html task_edit_id, :partial => 'task_edit', :locals => {:task => @task}
+

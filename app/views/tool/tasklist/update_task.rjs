@@ -1,7 +1,7 @@
 task_id      = "task_#{@task.id}"
 task_edit_id = "#{task_id}_edit"
 task_show_id = "#{task_id}_show"
-edit_loading_id = "#{task_edit_id}_loading"
+spinner_id   = spinner_id(task_edit_id)
 
 # update the task_show div with the updated task data
 page.replace_html task_show_id, :partial => 'task_show', :locals => {:task => @task}
@@ -11,4 +11,4 @@ page.show task_show_id
 page.hide(task_edit_id)
 
 # hide the edit box spinner
-page.hide(edit_loading_id)
+page.hide(spinner_id)

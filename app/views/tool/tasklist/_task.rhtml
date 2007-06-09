@@ -7,15 +7,20 @@ checked      = task.completed? ? "CHECKED" : ""
 alt_status   = task.completed? ? "pending" : "complete"
 task_id      = "task_#{task.id}"
 task_edit_id = "#{task_id}_edit"
+task_edit_form = "#{task_edit_id}_form"
 task_show_id = "#{task_id}_show"
 checkbox_id  = "#{task_id}_check"
-spinner_id   = "#{task_id}_spinner"
+spinner_edit = "#{task_id}-edit"
+spinner_done = "#{task_id}-done"
 details_id   = "#{task_id}_details"
-action       = "mark_task_#{alt_status}"
+mark_action  = "mark_task_#{alt_status}"
+edit_action  = "edit_task"
 check_click  = "Element.hide('#{checkbox_id}');" +
-               "Element.show('#{spinner_id}');" +
-               remote_function(:url => page_xurl(@page, :action=>action, :id=>task.id))
-edit_click   = "$('#{task_show_id}', '#{task_edit_id}').invoke('toggle');"
+               show_spinner(spinner_done) +
+               remote_function(:url => page_xurl(@page, :action=>mark_action, :id=>task.id))
+edit_function = remote_function(:url => page_xurl(@page, :action=>edit_action, :id=>task.id))                
+edit_click   = "$('#{task_show_id}', '#{task_edit_id}').invoke('toggle');" +
+               "if ($('#{task_edit_form}')==null) {#{edit_function}}"
 %>
 
 <li id='<%=task_id%>' class='task'>
@@ -25,13 +30,14 @@ edit_click   = "$('#{task_show_id}', '#{task_edit_id}').invoke('toggle');"
     <span class='handle'><%=image_tag 'actions/change-order-small.png'%></span>
   </div>
   <div class='checkbox'>
-    <input type='checkbox' onclick="<%=check_click%>" id='<%=checkbox_id%>' <%= checked %>/>
-    <%= image_tag 'spinner.gif', :id=>spinner_id, :style=>'display:none' %>
+    <input type='checkbox' onclick="<%=check_click%>" id='<%=checkbox_id%>' <%= checked %> />
+    &thinsp;<%= spinner(spinner_done) -%>&nbsp;
   </div>
   <div id='<%=task_show_id%>'>
-    <%= render :partial => 'tool/tasklist/task_show', :locals => {:task => task} %>
+<%= render :partial => 'tool/tasklist/task_show', :locals => {:task => task} %>
   </div>
   <div id='<%=task_edit_id%>' class='indent task_edit' style='display: none'>
-    <%= render :partial => 'tool/tasklist/task_edit', :locals => {:task => task} %>
+    <%= spinner(spinner_edit, :show=>true) -%> Loading... 
+    <%# render :partial => 'tool/tasklist/task_edit', :locals => {:task => task} %>
   </div>
 </li>

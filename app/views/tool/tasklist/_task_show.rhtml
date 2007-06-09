@@ -9,9 +9,9 @@ task.users.each do |user|
     links << link_to_user(user, :action => 'tasks')
   end
 end
-%>
+-%>
     <div class='name'>
-      <%= "<b>#{links.join(', ')}:</b>" if links.any? %>
+      <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
       <% if task.description.any? -%>
         <span><%= link_to_function task.name, "Element.toggle('#{details_id}')" %></span>
       <% else -%>

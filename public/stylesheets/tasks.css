@@ -36,6 +36,9 @@ li.task div.checkbox {
   height: 1.4em;
   padding: 3px;
 }
+li.task div.checkbox input {
+  margin-top: 0.3em; /* how can we make the checkbox vertical align? */
+}
 li.task div.name {
   padding: 3px;
 }

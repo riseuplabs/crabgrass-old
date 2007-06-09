@@ -82,14 +82,19 @@ module ApplicationHelper
     image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => (options[:class] || 'avatar')
   end
     
-  def spinner(id, spinner="spinner.gif")
-    "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}-spinner'>"
+  def spinner(id, options={})
+    display = ("display:none;" unless options[:show])
+    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
+    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}'>"
+  end
+  def spinner_id(id)
+    "#{id.to_s}_spinner"
   end
   def hide_spinner(id)
-    "Element.hide('#{id.to_s}-spinner')"
+    "Element.hide('#{spinner_id(id)}');"
   end
   def show_spinner(id)
-    "Element.show('#{id.to_s}-spinner')"
+    "Element.show('#{spinner_id(id)}');"
   end
 
   def bread

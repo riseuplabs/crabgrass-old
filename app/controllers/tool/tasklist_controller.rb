@@ -68,6 +68,12 @@ class Tool::TasklistController < Tool::BaseController
     @task.update_attributes(params[:task])
   end
   
+  # ajax only, returns rjs
+  def edit_task
+    return unless request.xhr?
+    @task = @list.tasks.find(params[:id])
+  end
+
   protected
   
   def update_participations
