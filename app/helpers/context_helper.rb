@@ -102,7 +102,7 @@ module ContextHelper
     add_context 'groups', groups_url(:action => 'list')
     if @group
       add_context @group.name, groups_url(:id => @group, :action => 'show')
-      set_banner "groups/banner_#{size}", @group.style
+      set_banner "groups/banner_#{size}", @group.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
@@ -111,7 +111,7 @@ module ContextHelper
     add_context 'people', people_url
     if @user
       add_context @user.login, people_url(:action => 'show', :id => @user)
-      set_banner "people/banner_#{size}", @user.style
+      set_banner "people/banner_#{size}", @user.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
@@ -119,7 +119,7 @@ module ContextHelper
   def me_context(size='large', update_breadcrumbs=true)
     @user ||= current_user
     add_context 'me', me_url
-    set_banner 'me/banner', current_user.style
+    set_banner 'me/banner', current_user.banner_style
     breadcrumbs_from_context if update_breadcrumbs
   end
 

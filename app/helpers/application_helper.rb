@@ -185,13 +185,18 @@ module ApplicationHelper
     end
   end
   
+  # banner stuff
   def banner_style
-    @banner_style || "background: #fff; color: #000"
+    "background: #{@banner_style.background_color}; color: #{@banner_style.color};"
+  end  
+  def banner_background
+    @banner_style.background_color
   end
-  
+  def banner_foreground
+    @banner_style.color
+  end
   def banner
     @banner_partial
   end
  
-  
 end

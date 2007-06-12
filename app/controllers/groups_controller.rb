@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   def list
     @group_pages, @groups = paginate :groups, :per_page => 10
-    set_banner "groups/banner_search", "background: #1B5790; color: #eef"
+    set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
 
   def show

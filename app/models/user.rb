@@ -195,7 +195,8 @@ class User < AuthenticatedUser
     end
   end
   
-  def style
-    "background: #6E901B; color: #E2F0C0"
+  def banner_style
+    @style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
   end
+    
 end

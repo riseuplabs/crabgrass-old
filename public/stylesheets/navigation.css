@@ -97,5 +97,6 @@ div.iconbox div.hover div.text span {
 }
 div.iconbox a {
   text-decoration: none;
+  color: black;
 }
 

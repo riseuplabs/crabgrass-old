@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
    # @user_pages, @users = paginate :users, :per_page => 10
     @contacts = current_user.contacts
     @peers = current_user.peers
-    set_banner "people/banner_search", "background: #6E901B; color: #E2F0C0"
+    set_banner "people/banner_search", Style.new(:background_color => "#6E901B", :color => "#E2F0C0")
   end
 
   def show

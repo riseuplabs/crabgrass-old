@@ -1,4 +1,4 @@
 <table><tr>
-  <td><%= avatar_for @user,'small'%></td>
-  <td style='width:99%'><h3><%=h @user.login %></h3></td>
+  <td nowrap><%= avatar_for @user,'small'%></td>
+  <td style='width:99%'><h3><%= link_to_user @user %></h3></td>
 </tr></table>

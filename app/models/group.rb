@@ -103,8 +103,8 @@ class Group < ActiveRecord::Base
     full_name.any? ? full_name : name
   end
   
-  def style
-    "background: #1B5790; color: #eef"
+  def banner_style
+    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
-  
+    
 end
