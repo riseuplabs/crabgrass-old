@@ -3,7 +3,7 @@ development:
   adapter: mysql
   database: crabgrass_development
   user: root
-  pass: 
+  password: 
   host: localhost
 
 test:
@@ -11,7 +11,7 @@ test:
   adapter: mysql
   database: crabgrass_test
   user: root
-  pass: 
+  password: 
   host: localhost
 
 production:
@@ -19,5 +19,5 @@ production:
   adapter: mysql
   database: crabgrass
   user: root
-  pass: 
+  password: 
   host: localhost
