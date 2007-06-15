@@ -95,13 +95,20 @@ module ContextHelper
     session[:breadcrumbs_by_referer][referer] || session[:breadcrumbs_by_referer][session[:referer_by_page_id][page.id]]
   end
 
+  def clear_referer(page)
+    session[:referer_by_page_id].delete(page.id)
+  end
+  
   # these context functions are here because other parts of the application 
   # might need to set a group or person context. 
 
   def group_context(size='large', update_breadcrumbs=true)
     add_context 'groups', groups_url(:action => 'list')
     if @group
-      add_context @group.name, groups_url(:id => @group, :action => 'show')
+      if @group.instance_of? Committee
+        add_context @group.parent.short_name, groups_url(:id => @group.parent, :action => 'show')
+      end
+      add_context @group.short_name, groups_url(:id => @group, :action => 'show')
       set_banner "groups/banner_#{size}", @group.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs

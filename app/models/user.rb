@@ -28,7 +28,9 @@ class User < AuthenticatedUser
   ### associations
  
   # relationship to groups
-  has_and_belongs_to_many :groups, :join_table => :memberships
+  has_and_belongs_to_many :groups, :join_table => :memberships,
+    :after_add => :clear_group_id_cache,
+    :after_remove => :clear_group_id_cache
   
   # peers are users who share at least one group with us
   has_many :peers, :class_name => 'User',
@@ -107,7 +109,7 @@ class User < AuthenticatedUser
   def may!(perm, page)
     upart = page.participation_for_user(self)
     return true if upart
-    gparts = page.participation_for_groups(self.group_ids)
+    gparts = page.participation_for_groups(all_group_ids)
     return true if gparts.any?
     raise PermissionDenied
   end
@@ -184,15 +186,48 @@ class User < AuthenticatedUser
     page.save
   end
   
-  # is this user a member of a group?
+  # is this user a member of the group?
+  # (or any of the associated groups)
   def member_of?(group)
     if group.is_a? Integer
-      return group_ids.include?(group)
+      return all_group_ids.include?(group)
     elsif group.is_a? Array
       return group.detect{|g| member_of?(g)}
     else
+      return all_group_ids.include?(group.id)
+    end
+  end
+  
+  # is the user a direct member of the group?
+  def direct_member_of?(group)
+    if group.is_a? Integer
+      return group_ids.include?(group)
+    elsif group.is_a? Array
+      return group.detect{|g| direct_member_of?(g)}
+    else
       return group_ids.include?(group.id)
     end
+  end
+  
+  # returns an array of the ids of all the groups we have access
+  # to. This might include groups we don't have a direct membership
+  # in (ie committees or networks of groups we are in.)
+  def all_group_ids
+    @all_group_ids ||= find_group_ids
+  end
+  
+  def find_group_ids
+    mygroups = Group.connection.select_values("SELECT id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE (memberships.user_id = #{self.id})")
+    return [] unless mygroups.any?
+    #mycommittees = Group.connection.select_values("SELECT groups.id FROM groups INNER JOIN groups_to_committees ON groups.id = groups_to_committees.committee_id WHERE groups_to_committees.group_id IN (#{mygroups.join(',')}) AND (groups.type = 'Committee')")
+    mycommittees = Group.connection.select_values("SELECT groups.id FROM groups WHERE groups.parent_id IN (#{mygroups.join(',')})")
+    mynetworks = Group.connection.select_values("SELECT groups.id FROM groups INNER JOIN groups_to_networks ON groups.id = groups_to_networks.network_id WHERE groups_to_networks.group_id IN (#{mygroups.join(',')}) AND (groups.type = 'Network')")
+    return (mygroups + mycommittees + mynetworks).collect{|id|id.to_i}.uniq
+  end
+  
+  # called whenever our group membership is changed
+  def clear_group_id_cache(group)
+    @all_group_ids = nil
   end
   
   def banner_style

@@ -1,0 +1,10 @@
+<% unless committee? -%>
+<p>
+  <b>Committees</b><br/>
+<% @group.committees.each do |c| -%>
+  <%= link_to_group c %>
+<% end -%>
+  <br/>
+  <%= link_to 'new'.t + ' &raquo;', :action => 'create', :parent_id => @group.id %>
+</p>
+<% end -%>

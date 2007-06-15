@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   layout :choose_layout
   stylesheet 'groups'
   
-  prepend_before_filter :find_group
+  prepend_before_filter :find_group, :except => ['list','create','index']
   
   def index
     list
@@ -10,10 +10,10 @@ class GroupsController < ApplicationController
   end
 
   verify :method => :post,
-    :only => [ :destroy, :create, :add_user, :remove_user, :join_group, :leave_group ]
+    :only => [ :destroy, :add_user, :remove_user, :join_group, :leave_group ]
 
   def list
-    @group_pages, @groups = paginate :groups, :per_page => 10
+    @group_pages, @groups = paginate :groups, :per_page => 10, :conditions => 'type IS NULL'
     set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
 
@@ -23,33 +23,17 @@ class GroupsController < ApplicationController
   end
 
   def archive
-
-    @months2 = Page.connection.select_all( "SELECT MONTH(pages.created_at) AS month, " + 
-     "YEAR(pages.created_at) AS year, count(pages.id) " +
-     "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
-     "JOIN user_participations ON pages.id = user_participations.id " +
-     "WHERE group_participations.group_id = #{@group.id}  " +
-   # + " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
-     "GROUP BY year, month ORDER BY year, month")
-     
     sql = "SELECT MONTH(pages.created_at) AS month, " + 
      "YEAR(pages.created_at) AS year, count(pages.id) " +
      "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
      "JOIN user_participations ON pages.id = user_participations.id " +
-     "WHERE group_participations.group_id = #{@group.id} "   
-   # + " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
-    
-#    sql_sub = "group_participations.group_id #{group.id}"
-    
-    unless @group.users.include?(current_user)
-      sql = sql + " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
+     "WHERE group_participations.group_id = #{@group.id} "
+    unless current_user.member_of? @group
+      sql += " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
     end
-   
-    sql = sql + "GROUP BY year, month ORDER BY year, month"
-    
-     
+    sql += "GROUP BY year, month ORDER BY year, month"
     @months = Page.connection.select_all(sql)
-    #conditions to only add 2nd conjunct if user not in group
+    
     unless @months.empty?
       @start_year = @months[0]['year'] 
       @current_year = (Date.today).year
@@ -88,19 +72,22 @@ class GroupsController < ApplicationController
     @task_lists = @pages.collect{|part|part.page.data}
   end
 
-  def new
-    @group = Group.new
-  end
-
   def create
-    @group = Group.new(params[:group])
-    if @group.save
-      message :success => 'Group was successfully created.'
-      @group.users << current_user 
-      redirect_to :action => 'show', :id => @group
+    @parent = Group.find(params[:parent_id]) if params[:parent_id]
+    if @parent
+      @group = Committee.new(params[:group])
+      @group.parent = @parent
     else
-      message :object => @group
-      render :action => 'new'
+      @group = Group.new(params[:group])
+    end  
+    if request.post?
+      if @group.save
+        message :success => 'Group was successfully created.'
+        @group.users << current_user 
+        redirect_to :action => 'show', :id => @group
+      else
+        message :object => @group
+      end
     end
   end
 
@@ -143,6 +130,19 @@ class GroupsController < ApplicationController
     @group.update_attributes(params[:group])
     redirect_to :action => 'show', :id => @group
   end
+
+  # an action to define the membership of a group. 
+  # allows you to add people, remove them, see their status, invite people.
+  def members
+    if request.post?
+      if @group.committee? and params[:group]
+        @group.user_ids = params[:group][:user_ids] 
+        @group.save
+        message :success => 'member list updated'
+      end
+    end
+  end
+  
 
   def invite
     return(render :action => 'members') unless request.post?
@@ -241,14 +241,19 @@ class GroupsController < ApplicationController
     end
   end
   
-    
   def find_group
-    @group = Group.find_by_name params[:id]
-    true
+    @group = Group.find_by_name params[:id].sub(' ','+') if params[:id]
+    if @group
+      @group_type = @group.class.to_s.downcase
+      return true
+    else
+      render :action => 'not_found'
+      return false
+    end
   end
   
   def authorized?
-    members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update)
+    members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update members)
     if members_only.include? params[:action]
       return(logged_in? and current_user.member_of? @group)
     else

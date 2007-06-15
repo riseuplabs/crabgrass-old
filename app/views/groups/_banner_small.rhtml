@@ -1,5 +1,13 @@
+<% if @group.committee? -%>
+<%= link_to_group @group.parent, :text => avatar_for(@group.parent,'xsmall') %>
+<span style='font-weight: bold;'>&rarr;</span>
+<b><%= link_to_group @group, :avatar => 'xsmall' %></b>
+<%=h @group.summary %>
+<% else -%>
 <table><tr>
   <td><%= avatar_for @group,'small'%></td>
   <td nowrap><h3><%= link_to_group @group %></h3></td>
   <td style='text-align: right; width:99%'><%=h @group.summary %></td>
 </tr></table>
+<% end -%>
+

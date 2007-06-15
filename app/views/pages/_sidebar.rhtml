@@ -45,7 +45,7 @@
 
 <div class='line link'>
   <%= image_tag 'actions/announce.png' %>
-  <%= link_to_function 'send to', "Element.toggle('announce-area')" %>
+  <%= link_to_function 'send to...', "Element.toggle('announce-area')" %>
   <div id='announce-area' style = 'display:none'>
     <% info_text = 'person/group names'.t %>
     <% form_remote_tag :url => {:controller=>'pages', :action=>'announce', :id => @page.id}, :loading => show_spinner('announce'), :complete => hide_spinner('announce') do -%>
@@ -56,6 +56,27 @@
     <% end %>
   </div>
 </div>
+
+<%# TODO: the move form is probably a lot slower to create than it needs to be.
+    the problem is that we are currently loading all the committees from the page's
+    primary group. that might be a lot of extra data to pull down just to get a
+    list a of group ids. %>
+<% if @page.group_id and current_user.may?(:admin,@page) %>
+<% group = @page.group -%>
+<% groups = group.committee? ? group.parent.committees.to_select(:short_name) + [[group.parent.short_name,group.parent.id]]: group.committees.to_select(:short_name) -%>
+<% if groups.any? -%>
+<div class='line link'>
+  <%= image_tag 'actions/lorry.png' %>
+  <%= link_to_function 'move to...', "Element.toggle('move-area')" %>
+  <div id='move-area' style = 'display:none'>
+    <% form_tag(:controller=>'pages',:action=>'move',:id=>@page.id) do -%>
+      <%= select_tag 'group_id', options_for_select(groups) %>
+      <%= submit_tag 'move' %>
+   <% end -%>
+  </div>
+</div>
+<% end -%>
+<% end -%>
 
 <div class='tail'></div>
 </div> <!-- end section -->

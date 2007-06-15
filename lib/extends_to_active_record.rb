@@ -65,6 +65,8 @@ ActiveRecord::Base.class_eval do
 end
 
 
+class ActionView::Base
+
 # It is nice to be able to have multiple submit buttons.
 # For non-ajax, this works fine: you just check the existance
 # in the params of the :name of the submit button.
@@ -72,13 +74,21 @@ end
 # http://dev.rubyonrails.org/ticket/3231
 # this hack is an attempt to get around the limitation
 
-class ActionView::Base
   alias_method :rails_submit_tag, :submit_tag
   def submit_tag(value = "Save changes", options = {})
     options[:id] = (options[:id] || options[:name] || :commit)
     options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x) { if (x.value != this.value) x.name += '_not_pressed'; else x.name = x.name.gsub('_not_pressed','')}.bind(this))")
     rails_submit_tag(value, options)
   end
+  
+# i really want to be able to use link_to(:id => 'group+name') and not have
+# it replace '+' with some ugly '%2B' character.
+
+  alias_method :rails_link_to, :link_to
+  def link_to(name, options = {}, html_options = nil, *parameters_for_method_reference)
+     rails_link_to(name, options, html_options, parameters_for_method_reference).sub('%2B','+')
+  end
+  
 end
 
 
@@ -105,10 +115,16 @@ module ActiveRecord
           unless (3..50).include? value.length
             record.errors.add(attr_name, 'must be at least 3 and no more than 50 characters')
           end
-          unless /^[a-z0-9]+([-_]*[a-z0-9]+){1,49}$/ =~ value
+          unless /^[a-z0-9]+([-\+_]*[a-z0-9]+){1,49}$/ =~ value
             record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
           end
-          if value =~ /^(groups|me|people|networks|places|avatars|page|pages|account|static|places)$/
+          unless record.instance_of?(Committee)
+            # only allow '+' for Committees
+            if /\+/ =~ value
+              record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
+            end
+          end
+          if value =~ /^(groups|me|people|networks|places|avatars|page|pages|account|static|places|assets|files|chat)$/
             record.errors.add(attr_name, 'is already taken')
           end
           # TODO: make this dynamic so this function can be

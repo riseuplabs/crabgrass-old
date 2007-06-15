@@ -153,6 +153,31 @@ class PagesController < ApplicationController
   
   end
 
+  # assigns a page to a different group. 
+  # we only allow assignments between committees of the same group
+  # or between the parent group and a committee.
+  def move
+    return unless request.post?
+    group = Group.find params[:group_id]
+    if group.committee? and @page.group.committee?
+      ok = group.parent == @page.group.parent
+    elsif group.committee? and !@page.group.committee?
+      ok = @page.group.committees.include? group
+    elsif !group.committee? and @page.group.committee?
+      ok = group.committees.include? @page.group
+    else
+      ok = false
+    end
+    if ok
+      @page.remove(@page.group)
+      @page.add(group)
+      @page.group = group
+      @page.save
+      clear_referer(@page)
+    end
+    redirect_to page_url(@page)
+  end
+
   ##############################################
   ## page participation modifications
   

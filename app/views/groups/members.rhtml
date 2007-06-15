@@ -1,9 +1,28 @@
+<% if committee? -%>
+<p>
+Members of group <b><%=@group.parent.name%></b> who should also be in committee <b><%=@group.short_name%></b>
+</p>
+<blockquote>
+<% form_tag(:action => 'members', :id => @group) do -%>
+  <%= collection_multiple_select('group', 'user_ids', @group.parent.users, :id, :login, :outer_class=>'plainlist floatlist') %>
+  <%= submit_tag "Save" %>
+<% end -%>
+</blockquote>
+<br class='clear'/>
+<% end -%>
+
 <p>
 Enter a list of usernames, one per line, of people you would like to
-invite to join this group:
+invite to join this <%=@group_type%>:
 </p>
-
+<blockquote>
 <% form_tag(:action => 'invite', :id => @group) do -%>
-  <%= text_area_tag 'users', params[:users], :rows => 12, :cols => 30 %>  <br/>
+  <%= text_area_tag 'users', params[:users], :rows => 6, :cols => 20 %>  <br/>
   <%= submit_tag 'Send invites' %>
 <% end -%>
+</blockquote>
+
+<p>
+<%= link_to_group @group, :text => '&laquo; ' + 'return to %s'.t %>
+</p>
+

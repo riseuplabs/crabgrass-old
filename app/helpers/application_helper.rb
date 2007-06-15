@@ -47,7 +47,7 @@ module ApplicationHelper
     #image_tag "#{size}/#{page.icon}", :size => "#{size}x#{size}"
     image_tag "pages/#{page.icon}", :size => "22x22"
   end
- 
+  
   # arg might be a user object, a user id, or the user's login
   def link_to_user(arg, options={})
     if arg.is_a? Integer
@@ -60,7 +60,7 @@ module ApplicationHelper
     end
     #link_to login, :controller => '/people', :action => 'show', :id => login if login
     action = options[:action] || 'show'
-    link_to login, "/people/#{action}/#{login}"
+    link_to login, "/people/#{action}/#{login}", :class => 'name_link'
   end
 
   def link_to_group(arg, options={})
@@ -69,17 +69,27 @@ module ApplicationHelper
       name = Group.find(arg).name
     elsif arg.instance_of? String
       name = arg
-    elsif arg.instance_of? Group
+    elsif arg.is_a? Committee
+      name = arg.name
+      display_name = arg.display_name
+    elsif arg.is_a? Group
       name = arg.name
     end
     #link_to group.name, :controller => '/groups', :action => 'show', :id => group
+    display_name ||= name
+    display_name = options[:text] % display_name if options[:text]
     action = options[:action] || 'show'
-    link_to name, "/groups/#{action}/#{name}"
+    path = "/groups/#{action}/#{name}"
+    ret = link_to display_name, path, :class => 'name_link'
+    if options[:avatar]
+      ret = link_to(avatar_for(arg, options[:avatar]),path) + " " + ret
+    end
+    ret
   end
     
   def avatar_for(viewable, size='medium', options={})
     #image_tag avatar_url(:viewable_type => viewable.class.to_s.downcase, :viewable_id => viewable.id, :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
-    image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => (options[:class] || 'avatar')
+    image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => (options[:class] || "avatar avatar_#{size}")
   end
     
   def spinner(id, options={})

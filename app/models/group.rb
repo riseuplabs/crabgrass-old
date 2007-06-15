@@ -30,8 +30,7 @@
 #  group.picture    => picture
 
 
-class Group < ActiveRecord::Base
-  acts_as_tree :order => 'name', :counter_cache => 'true'
+class Group < ActiveRecord::Base  
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
 
   has_and_belongs_to_many :users, :join_table => :memberships
@@ -54,13 +53,12 @@ class Group < ActiveRecord::Base
       (SELECT pages.id FROM pages INNER JOIN group_participations ON pages.id = group_participations.page_id
       WHERE group_participations.group_id = #{id})]
       
-#  has_many :groups_to_networks
-#  has_many :networks,
-#    :through => 'groups_to_networks'
-  
-#  has_many :groups_to_committees
-#  has_many :committees,
-#    :through => 'groups_to_committees'
+#  has_many :federations
+#  has_many :networks, :through => :federations
+
+  # committees are children! they must respect their parent group.  
+  acts_as_tree :order => 'name'
+  alias :committees :children
   
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
@@ -103,8 +101,22 @@ class Group < ActiveRecord::Base
     full_name.any? ? full_name : name
   end
   
+  def short_name
+    name
+  end
+  
   def banner_style
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
+   
+  def committee?; instance_of? Committee; end
+  def network?; instance_of? Network; end
+  def normal?; instance_of? Group; end
     
+  protected
+  
+  def after_save
+    committees.each {|c| c.update_name }
+  end
+   
 end

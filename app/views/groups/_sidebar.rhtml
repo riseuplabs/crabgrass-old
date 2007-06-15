@@ -8,16 +8,26 @@
 <p>
   <b>Actions</b><br/>
 <% if current_user.member_of?(@group) %>
+
   <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %> <br/>
-  <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %> <br/>
+
+  <% unless committee? -%><%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %><br/>
+  <% end -%>
+
   <%= link_to 'edit settings', :action => 'edit', :id => @group %> <br/>
-  <%= post_to 'leave group', group_url(:action => 'leave_group', :id => @group), :confirm => 'Are you sure you want to leave this group?' %> <br/>
-  <% if @group.users.size == 1 and @group.users.first == current_user %>
-    <%= post_to 'destroy group', group_url(:action => 'destroy', :id => @group), :confirm => 'Are you sure you want to destroy this group?' %> <br/>
+  
+<% if current_user.direct_member_of? @group -%>
+  <%= post_to "leave #{@group_type}", group_url(:action => 'leave_group', :id => @group), :confirm => "Are you sure you want to leave this #{@group_type}?" %> <br/>
+<% end -%>
+  
+  <% if @group.users.size == 1 and current_user.direct_member_of? @group -%>
+    <%= post_to "destroy #{@group_type}", group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this #{@group_type}?" %> <br/>
   <% end %>
-<% else %>
-  <%= post_to 'join group', group_url(:action => 'join_group', :id => @group) %> <br/>
-<% end %>
+  
+<% end -%>
+<% unless current_user.direct_member_of?(@group) -%>
+  <%= post_to "join #{@group_type}", group_url(:action => 'join_group', :id => @group) %> <br/>
+<% end -%>
 </p>
 
 <p>
@@ -25,5 +35,8 @@
   <% @group.users.each do |u| %>
     <div style="margin-bottom: 2px"><%= avatar_for u, 'xsmall'%> <%= link_to_user u %></div>
   <% end %>
-  <%= link_to 'edit', group_url(:id => @group, :action=>'members') %>
+  <%= link_to 'edit &raquo;', group_url(:id => @group, :action=>'members') if logged_in? and current_user.member_of? @group%>
 </p>
+
+<%= render :partial => 'committees' %>
+

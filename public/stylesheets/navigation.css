@@ -1,7 +1,8 @@
 /**** drop down menu tabs ****/
 /* http://www.htmldog.com/articles/suckerfish/dropdowns/ */
 
-/* structure */
+/* menu tabs structure */
+
 #topmenu, #topmenu ul {
   padding: 0; margin: 0;
   list-style: none;
@@ -15,7 +16,7 @@
 }
 #topmenu li:hover ul {left: auto;}
 
-/* styling */
+/* menu tabs styling */
 
 #topmenu li {
   margin: 0 4px;
@@ -58,8 +59,21 @@
   margin-bottom: -1px;
 }
 
-/** icon nav boxes **/
+/* the bottom of the tabs */
+#toprule-outer {border-bottom: 2px solid #000;}
 
+/*** banner ***/
+
+div#banner {
+  padding: 4px 10px;
+  border-bottom: 2px solid #000;
+}
+div#banner img.avatar_large {padding-right: 10px;}
+div#banner img.avatar_small {padding-right: 4px;}
+div#banner h1, div#banner h3 {padding: 0; margin: 0}
+div#banner table {width: 100%;}
+
+/*** banner icon boxes ***/
 
 div.iconboxes {
 }

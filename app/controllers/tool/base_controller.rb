@@ -11,6 +11,8 @@ class Tool::BaseController < ApplicationController
   append_before_filter :setup_view
   append_after_filter :update_participation
   
+  # i don't think this custom initialize() is used anymore
+  # with the new context system -elijah
   def initialize(options={})
     super()
     @user = options[:user]   # the user context, if any

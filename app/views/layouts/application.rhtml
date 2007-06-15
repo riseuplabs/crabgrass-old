@@ -61,8 +61,8 @@ DIRECTORY LAYOUT
 <%= yield :style %>
 <% if banner -%>
     #banner {<%=banner_style%>}
-    #banner h3 a, #banner h1 a {color: <%= banner_foreground %>; text-decoration: none;}
-    #banner h3 a:hover, #banner h1 a:hover {text-decoration: underline;}
+    #banner a.name_link {color: <%= banner_foreground %>; text-decoration: none;}
+    #banner a.name_link:hover {text-decoration: underline;}
     #topmenu li.selected a {background: <%= banner_background %>; color: <%= banner_foreground %>}
     #main {background: #fff url(/images/shadows/small-top.png) repeat-x top;}
 <% end %>
