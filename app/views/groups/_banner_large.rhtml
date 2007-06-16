@@ -18,10 +18,8 @@
 <table>
 <tr>
   <td rowspan='2'><%= avatar_for @group, 'large' %></td>
-  <td><h1><%= link_to_group @group %></h1></td>
+  <td style='width:99%'><h1><%= link_to_group @group %></h1></td>
 </tr>
-<tr>
-  <td style='width:99%'><%=h @group.summary %></td>
-</tr>
+
 </table>
 <% end -%>
