@@ -1,3 +1,16 @@
+/** move to another sytle sheet**/
+
+ul{ list-style-type : katakana-iroha ; }
+
+
+h4{
+	padding: 2px;
+	font-size:12px;
+	background: lightsteelblue;
+	border-top: 1px solid royalblue;
+}
+
+
 /** layout for groups **/
 
 div#group_sidebar {
@@ -5,15 +18,35 @@ div#group_sidebar {
   width: 120px;
   margin-right: 0px;
 }
-div#group_maincolumn {
-  margin-left: 130px;
-}
 div#group_homepage {
   margin: 1em 0;
   padding: 0 1em 1em 1em;
   /* background: #eee;
   border: 1px solid #ccc; */
-} 
+}
+div#group_maincolumn {
+  margin-left: 130px;
+  border-left: 1px solid;
+  padding-left: 2em;
+  border-left: 1px solid black
+}
+div#group_infopanel {	
+  border: 0px dotted blue
+}
+div#group_infopanel_left {	
+  width: 20em;
+  float: left;
+  padding: 0px 10px 10px 20px;
+  border: 1px solid LightSteelBlue;
+  background: 	Lavender;
+}
+div#group_infopanel_right {
+  margin-left: 26em;
+  width: 20em;
+  padding: 0px 10px 10px 20px;
+  border: 1px solid LightSteelBlue;
+  background: Lavender;
+}
 
 /** group directory **/
 
