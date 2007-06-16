@@ -1,8 +1,16 @@
 <% @sidebar = 'groups/sidebar' %>
-<div id='group_homepage'>
-  <%= render :partial => 'homepage' %>
+<div id="group_infopanel">
+  <%= render :partial => 'group_infopanel' %>
 </div>
+<br><br>
 <div id='group_pagelist'>
   <%= render :partial => 'pagelist' %>
 </div>
-
+<br>
+<div class='group_widget'>
+  <%= render :partial => 'groups/widgets/recently_created' %>
+</div>
+<br>
+<div class='group_widget'>
+  <%= render :partial => 'groups/widgets/homepage' %>
+</div>
