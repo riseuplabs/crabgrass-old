@@ -30,7 +30,9 @@
 #  group.picture    => picture
 
 
-class Group < ActiveRecord::Base  
+class Group < ActiveRecord::Base
+  track_changes :name
+  
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
 
   has_and_belongs_to_many :users, :join_table => :memberships
@@ -92,7 +94,7 @@ class Group < ActiveRecord::Base
     return true if gpart
     raise PermissionDenied
   end
-  
+   
   def to_param
     return name
   end
@@ -116,7 +118,15 @@ class Group < ActiveRecord::Base
   protected
   
   def after_save
-    committees.each {|c| c.update_name }
+    if changed? :name
+      update_group_name_of_pages
+      Wiki.clear_all_html(self) # in case there were links using the old name
+      committees.each {|c| c.update_name }
+    end
+  end
+   
+  def update_group_name_of_pages
+    Page.connection.execute "UPDATE pages SET `group_name` = '#{self.name}' WHERE pages.group_id = #{self.id}"
   end
    
 end
