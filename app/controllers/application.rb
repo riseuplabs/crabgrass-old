@@ -166,10 +166,15 @@ class ApplicationController < ActionController::Base
       elsif folder == 'name'
         conditions << 'pages.name = ?'
         values << path.pop
-      #elsif folder == 'ascending' or folder == 'descending'
-      #  sortkey = path.pop
-      #  order = 'pages.updated_at' if sortkey == 'updated'
-      #  order = 'sortkey == 'person'
+      elsif folder == 'ascending' or folder == 'descending'
+        ##clean sort key, add headers, need to hightlight column
+        if folder == 'ascending'
+          order = 'ASC'
+        else
+	  order = 'DESC'
+        end
+        sortkey = path.pop
+        order = 'pages.'+ sortkey +' ' + order # title
       end
     end
 
@@ -220,7 +225,7 @@ class ApplicationController < ActionController::Base
       join += " LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id"
     end
     
-    { :conditions => [conditions_string] + values,
+    { :conditions => [conditions_string] + values, 
       :joins => join, :order => order, :class => klass, 
       :already_built => true }
   end

@@ -3,6 +3,23 @@
 <% unless @pages.any? -%>
   <tr><td colspan="10">no pages</td></tr>
 <% else -%>
+   <tr>
+    <td></td>
+    <td>title <%= page_path_link 'up'.t,   'ascending/title' %> 
+    <%= page_path_link 'down'.t,   'descending/title' %></td>
+  <% if params[:controller] == 'me' -%>
+  <td>group <%= page_path_link 'up', 'ascending/group_name' %> 
+     <%= page_path_link 'down', 'descending/group_name' %>  </td>
+  <% end -%> 
+   <td>updater <%= page_path_link 'up', 'ascending/updated_by_login' %>
+		<%= page_path_link 'down', 'descending/updated_by_login' %></td>
+    <td>  update time <%= page_path_link 'up', 'ascending/updated_at' %>
+		<%= page_path_link 'down', 'descending/updated_at' %></td>
+    <td>created <%= page_path_link 'up', 'ascending/created_at' %>
+		<%= page_path_link 'down', 'descending/created_at' %></td>  
+    <td>contributors <%= page_path_link 'up', 'ascending/contributors_count' %>
+		<%= page_path_link 'down', 'descending/contributors_count' %></td>  
+ </tr> 
   <%= render :partial => "pages/page_line", :collection => @pages %>
 <% end -%>
 </table>

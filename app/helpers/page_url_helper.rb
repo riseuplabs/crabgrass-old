@@ -114,5 +114,43 @@ module PageUrlHelper
     query_string = "?#{elements.join("&")}" unless elements.empty?
     query_string || ""
   end
+
+  # moved from me_helper
+  def folder_link(text,path=nil,image=nil)
+    if params[:action] == 'inbox'
+      klass = ('selected' if params[:path].join('/').ends_with?(path)) || ''
+    elsif path=='all'
+      klass = 'selected'
+    else
+      klass = ''
+    end
+    
+    text = folder_icon(image) + " " + text if image
+    link_to text, url_for(:action => 'inbox', :path => path), :class => klass
+  end
+
+  def page_path_link(text,path=nil,image=nil)
+    hash = params.dup   
+    prefix = '' 
+    if old_path = params[:path]
+      old_path = old_path.reverse
+      while  folder = old_path.pop 
+        if folder == 'ascending' or folder == 'descending'
+          old_path.pop
+        else 
+          prefix = prefix  + folder + '/' 
+        end
+      end 
+    end
+    hash[:path] = prefix + path.to_s
+    #for tags this isn't right:
+    if params[:controller] == 'groups'
+      hash[:action] = 'search'
+    elsif params[:controller] == 'me' && params[:action] == 'index'
+      hash[:action] = 'inbox'
+    end
+    link_to text, hash
+  end
+
   
 end
