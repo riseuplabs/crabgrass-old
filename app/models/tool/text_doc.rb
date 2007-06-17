@@ -9,15 +9,26 @@ class Tool::TextDoc < Page
   class_display_name 'wiki'
   class_description 'A free-form text document.'
   class_group 'wiki'
-    
-  def validate_on_create
-    self.name = self.title.nameize
-    if group_ids.any?
-      if find_pages_with_name(name).any?
-        errors.add('title', 'is already taken')
-      end
-    end
-  end 
+   
+  #def before_create
+  #  self.name = self.title.nameize
+  #  super()
+  #end
+  
+  def title=(value)
+    write_attribute(:title,value)
+    write_attribute(:name,value.nameize)
+    #name ||= value.nameize
+  end
+  
+  #def validate_on_create
+  #  self.name = self.title.nameize
+  #  if group_ids.any?
+  #    if name_taken?
+  #      errors.add('title', 'is already taken')
+  #    end
+  #  end
+  #end 
   
   private
   

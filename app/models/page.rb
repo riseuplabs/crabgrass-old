@@ -27,11 +27,11 @@
 # 
 
 class Page < ActiveRecord::Base
-
+  acts_as_modified
+  acts_as_taggable
+    
   # to be set by subclasses (ie tools)
   class_attribute :controller, :model, :icon, :internal?, :class_description, :class_display_name, :class_group
-  
-  acts_as_taggable
 
   ### associations ###  
   
@@ -100,7 +100,13 @@ class Page < ActiveRecord::Base
 
   # page name must start with a letter.
   validates_format_of  :name, :with => /^$|^[a-z]+([-_]*[a-z0-9]+){1,39}$/
- 
+
+  def validate
+    if name_modified? and name_taken?
+      errors.add 'name', 'is already taken'
+    end
+  end
+    
   ### accessors ###
   
   def name_url
@@ -129,14 +135,17 @@ class Page < ActiveRecord::Base
     self.created_by = User.current if User.current
     self.updated_by = created_by
     self.updated_by_login = updated_by.login if updated_by  # denormalize hack
-    self.type = self.class.to_s # to work around bug in rails with namespaced models http://dev.rubyonrails.org/ticket/7630
+    self.type = self.class.to_s
+    # ^^^^^ to work around bug in rails with namespaced
+    # models. see http://dev.rubyonrails.org/ticket/7630
     true
   end
  
   def before_save
     # denormalize hack follows:
     if changed? :groups 
-      # we use group_participations because self.groups might not reflect current data if unsaved.
+      # we use group_participations because self.groups might not
+      # reflect current data if unsaved.
       group = (group_participations.first.group if group_participations.any?)
       self.group_name = (group.name if group)
       self.group_id = (group.id if group)
@@ -201,38 +210,25 @@ class Page < ActiveRecord::Base
   def group_ids
     group_participations.collect{|gpart|gpart.group_id}
   end
-  
-  # the main group is used for linking. we don't yet know what the main
-  # group is or how it is specified, but for linking it is very useful to
-  # have a default group for links that don't explicitly specify a group.
-  # return nil if there are no groups for this page
-  # (we use group_participations, because it will have current info
-  #  even if a group is added before the page is saved.)
-  #def main_group_name
-  #  return group_participations.first.group.name if group_participations.any?
-  #end
-  
-  # generates a unique name that is sure to not conflict
-  # with any others.
-  def find_unique_name(string)
-    return nil unless string and group_ids.any?
-    newname = string.nameize
-    i=nil
-    while find_pages_with_name("#{newname}#{i}").any?
-      i ||= 0; i += 1
-    end
-    return "#{newname}#{i}"
-  end
-  
-  # returns a list of pages with a particular name in same "page space" as self.
-  # by "page space" we mean all pages in all groups that own this page.
-  def find_pages_with_name(pagename)
-    Page.find(
-      :all,
-      :conditions => ['pages.name = ? and group_participations.group_id IN (?)',pagename,self.group_ids],
+    
+  # returns true if self's unique page name is already in use.
+  # what pages are in the namespace? all pages connected to all
+  # groups connected to this page (include the group's committees too).
+  def name_taken?
+    return false unless self.name.any?
+    p = Page.find(:first,
+      :conditions => ['pages.name = ? and group_participations.group_id IN (?)', self.name, self.namespace_group_ids],
       :include => :group_participations
     )
-  end  
+    return false if p.nil?
+    return self != p
+  end
+
+  # returns an array of group ids that compose this page's namespace
+  # includes direct groups and all the relatives of the direct groups.
+  def namespace_group_ids
+    Group.namespace_ids(group_ids)
+  end
 
   # used to mark stuff that has been changed.
   # so that we know we need to update other stuff when saving.

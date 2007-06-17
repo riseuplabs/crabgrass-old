@@ -1,4 +1,3 @@
-
 #
 # We have a problem: every page type has a different controller. 
 # This means that we either have to declare the controller somehow
@@ -33,6 +32,7 @@
 # 
 
 class DispatchController < ApplicationController
+
   def process(request, response, method = :perform_action, *arguments)
     super(request, response, :index)
   end
@@ -67,6 +67,11 @@ class DispatchController < ApplicationController
     page_handle = params[:_page]
     context = params[:_context]
     if context
+      #context.sub!(/^.*\+/,'') # remove committee name
+      if context =~ /\ /
+        # we are dealing with a committee!
+        context.sub!(' ','+')
+      end
       @group = Group.find_by_name(context) 
       @user  = User.find_by_login(context) unless @group
     end
@@ -102,7 +107,7 @@ class DispatchController < ApplicationController
   # create a new instance of a controller, and pass it whatever info regarding
   # current group or user context or page object that we have gathered.
   def new_controller(class_name)
-    class_name.constantize.new({:group => @group, :user => @user, :page => @page})
+    class_name.constantize.new({:group => @group, :user => @user, :page => @page, :pages => @pages})
   end
   
   def includes

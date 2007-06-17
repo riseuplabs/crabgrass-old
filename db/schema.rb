@@ -62,11 +62,6 @@ ActiveRecord::Schema.define(:version => 35) do
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
 
-  create_table "groups_to_committees", :force => true do |t|
-    t.column "group_id",     :integer
-    t.column "committee_id", :integer
-  end
-
   create_table "groups_to_networks", :force => true do |t|
     t.column "group_id",     :integer
     t.column "network_id",   :integer

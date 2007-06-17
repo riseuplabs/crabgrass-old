@@ -11,40 +11,16 @@ class Tool::BaseController < ApplicationController
   append_before_filter :setup_view
   append_after_filter :update_participation
   
-  # i don't think this custom initialize() is used anymore
-  # with the new context system -elijah
+  # if the tool controller is call by our custom DispatchController, 
+  # objects which have already been loaded will be passed to the tool
+  # via this initialize method.
   def initialize(options={})
     super()
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
   end  
-  
-  def title
-    return(redirect_to page_url(@page, :action => :show)) unless request.post?
-    title = params[:page][:title]
-    name = params[:page][:name].to_s.nameize
-    if name.any?
-      pages = @page.find_pages_with_name(name)
-      #Page.find(:all,
-      #  :conditions => ['pages.name = ? and group_participations.group_id IN (?)',name, @page.group_ids],
-      #  :include => :group_participations)
-      if pages.any? and pages.first != @page
-        message :error => 'That page name is already taken'
-        render :action => 'show'
-        return
-      end
-    end
-    @page.title = title
-    @page.name = name if name.any?
-    if @page.save
-      redirect_to page_url(@page, :action => 'show')
-    else
-      message :object => @page
-      render :action => 'show'
-    end
-  end
-  
+    
   # the form to create this type of page
   # can be overridden by the subclasses
   def create
@@ -52,7 +28,6 @@ class Tool::BaseController < ApplicationController
     if request.post?
       @page = create_new_page
       if @page.save
-        @user = current_user  # helps page_url guess a good url
         return redirect_to(page_url(@page))
       else
         message :object => @page
@@ -61,6 +36,19 @@ class Tool::BaseController < ApplicationController
     render :template => 'tool/base/create'
   end
   
+  def title
+    return(redirect_to page_url(@page, :action => :show)) unless request.post?
+    @page.title = params[:page][:title]
+    @page.name = params[:page][:name].to_s.nameize if params[:page][:name].any?
+    if @page.save
+      redirect_to page_url(@page, :action => 'show')
+    else
+      message :object => @page
+      @page.name = @page.original_name
+      render :action => 'show'
+    end
+  end
+
   protected
 
   def choose_layout
@@ -77,7 +65,7 @@ class Tool::BaseController < ApplicationController
   # initializes default view variables. can be overwritten by subclasses.
   def setup_view
     # default, only show comment posts for the 'show' action
-    @show_posts = (params[:action] == 'show')
+    @show_posts = (%w(show title).include?params[:action])
     # by default, don't show the reply box if there are no posts
     @show_reply = @posts.any?
     @show_workarea = true

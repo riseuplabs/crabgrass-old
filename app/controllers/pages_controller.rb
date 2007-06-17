@@ -23,26 +23,18 @@
 class PagesController < ApplicationController
 
   prepend_before_filter :fetch_page
-    
-  #
-  # params:
-  #   page_type
-  #   group_name or group_id
-  #   page[] (any page attributes)
-  #   
+
+  # if this controller is called by DispatchController,
+  # then we may be passed some objects that are already loaded.
+  def initialize(options={})
+    super()
+    @pages = options[:pages] # a list of pages, if already fetched
+  end  
+
+  # a simple form to allow the user to select which type of page
+  # they want to create. the actual create form is handled by
+  # Tool::BaseController (or overridden by the particular tool). 
   def create
-#     return @page = Page.new(params[:page]) if request.get?
-#     begin
-#       @page = create_new_page
-#       if @page.save
-#         @user = current_user  # helps page_url guess a good url
-#         redirect_to page_url(@page)
-#       else
-#         message :object => @page
-#       end
-#     rescue Exception => exc
-#       message :error => exc.to_s
-#     end
   end
   
   def create_new_page
@@ -65,7 +57,7 @@ class PagesController < ApplicationController
     page.tag_with(params[:tag_list]) if params[:tag_list]
     page
   end  
-  
+    
   # not used anymore
   def add_tags
     tags = Tag.parse(params[:new_tags]) + @page.tags.collect{|t|t.name}
@@ -83,13 +75,15 @@ class PagesController < ApplicationController
   end
   
   def search
-    if logged_in?
-      options = options_for_pages_viewable_by(current_user)
-    else
-      options = options_for_public_pages
+    unless @pages
+      if logged_in?
+        options = options_for_pages_viewable_by(current_user)
+      else
+        options = options_for_public_pages
+      end
+      options.merge!( {:class => Page, :path => params[:path]} )
+      @pages, @page_sections = find_and_paginate_pages(options)
     end
-    options.merge!( {:class => Page, :path => params[:path]} )
-    @pages, @page_sections = find_and_paginate_pages(options)
   end
   
   # for quickly creating a wiki

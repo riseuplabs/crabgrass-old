@@ -31,7 +31,8 @@
 
 
 class Group < ActiveRecord::Base
-  track_changes :name
+  #track_changes :name
+  acts_as_modified
   
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
 
@@ -61,6 +62,31 @@ class Group < ActiveRecord::Base
   # committees are children! they must respect their parent group.  
   acts_as_tree :order => 'name'
   alias :committees :children
+  
+  # returns an array of all children group ids and self's id. used for queries.
+  def group_ids
+    @group_ids ||= ([self.id] + committee_ids(self.id))
+  end
+  
+  # returns an array of committee ids given an array of group ids.
+  def self.committee_ids(group_ids)
+    return [] unless group_ids.any?
+    group_ids = [group_ids] unless group_ids.instance_of? Array
+    ids = group_ids.join(',')
+    Group.connection.select_values("SELECT groups.id FROM groups WHERE parent_id IN (#{ids})").collect{|id|id.to_i}
+  end
+    
+  # returns a list of group ids for the page namespace
+  # (of the group_ids passed in).
+  # wtf does this mean? for each group id, we get the ids
+  # of all its relatives (parents, children, siblings).
+  def self.namespace_ids(group_ids)
+    return [] unless group_ids.any?
+    group_ids = [group_ids] unless group_ids.instance_of? Array
+    ids = group_ids.join(',')
+    parent_ids = Group.connection.select_values("SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})").collect{|id|id.to_i}
+    return (group_ids + committee_ids(group_ids) + parent_ids + committee_ids(parent_ids)).flatten.uniq
+  end
   
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
@@ -114,14 +140,17 @@ class Group < ActiveRecord::Base
   def committee?; instance_of? Committee; end
   def network?; instance_of? Network; end
   def normal?; instance_of? Group; end
+  
+  
     
   protected
   
   def after_save
-    if changed? :name
-      update_group_name_of_pages
-      Wiki.clear_all_html(self) # in case there were links using the old name
-      committees.each {|c| c.update_name }
+    if name_modified?
+      update_group_name_of_pages  # update cached group name in pages
+      Wiki.clear_all_html(self)   # in case there were links using the old name
+      # update all committees (this will also trigger the after_save of committees)
+      committees.each {|c| c.update_name } if self.committee?
     end
   end
    
