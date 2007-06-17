@@ -38,14 +38,12 @@ div#group_infopanel_left {
   float: left;
   padding: 0px 10px 10px 20px;
   border: 1px solid LightSteelBlue;
-  background: 	Lavender;
 }
 div#group_infopanel_right {
   margin-left: 26em;
   width: 20em;
   padding: 0px 10px 10px 20px;
   border: 1px solid LightSteelBlue;
-  background: Lavender;
 }
 
 /** group directory **/
@@ -56,17 +54,14 @@ div.group-entry {
   margin-left: 38px;
   width: 30em;
 }
-
 div.group-entry a {
   font-weight: bold;
 }
-
 div.group-entry img {
   margin-left: -38px;
   vertical-align: top;
   float: left;
 }
-
 #l-shape {
   height: 1em;
   width: 2em;

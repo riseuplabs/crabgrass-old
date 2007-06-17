@@ -49,8 +49,8 @@ div.profile h1 {margin: 0; font-size: 2em;}
 
 a:link     {text-decoration: none; color:#003399;}
 a:visited  {text-decoration: none; color:#003399;}
-a:hover    {text-decoration: underline; color: #cc6699; }
-a:active   {color:green}
+a:hover    {text-decoration: none; color: #cc6699; }
+a:active   {color:#003399}
 
 
 body {
@@ -61,6 +61,7 @@ body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
+  color: #2B2B2B;
 }
 .normal {font-size: 13px;font-weight:normal;}
 

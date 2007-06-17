@@ -1,15 +1,38 @@
 /** login screen **/
 
-div#frontmain {
-  padding: 5em;
-  text-align: center;
+div#login_container{
+	margin-left: auto;
+	margin-right: auto;
+	width:60em;
+	line-height:120%;
+	border:0px solid pink;
 }
+div#login_left{
+	float: left;
+	width: 30em;
+	margin-left: 6em;
+	padding: 4em 0 0 0;
+	border:0px solid brown;
+}
+div#login_right{
+	margin-left: 39em;
+	width: 10em;
+	padding: 5em 0 0 0;
+}
+div#login_footer{
+	width: 60em;
+	text-align: right;
+	border-top:1px solid gray;
+}
+
+
+/**login form **/
+
 #loginform {
-  width: 20em;
+  width: 10em;
   text-align: left;
-  border: 1px solid #ccc;
-  background: #eee;
-  padding: 2em;
+  border-left: 2px dotted darkgrey;
+  padding: 0em 0em 0em 1em;
   margin: 0 auto;
 }
 #loginform table {
