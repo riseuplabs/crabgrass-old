@@ -1,4 +1,4 @@
-<h4> homepage wiki </h4>
+<h4 class="sectionhead1"> Homepage Wiki </h4>
 <% if logged_in? and current_user.member_of? @group -%>
   <% if @group.private_home -%>
     <%= @group.private_home.body_html %>
