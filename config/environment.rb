@@ -10,7 +10,7 @@ RAILS_GEM_VERSION = '1.2.3'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-PAGE_TYPES = %w(discussion poll rate_many event request wiki info).freeze
+PAGE_TYPES = %w(discussion poll rate_many event request wiki info asset).freeze
 SITE_NAME = 'riseup.net'
 
 # levels of page access
@@ -76,3 +76,4 @@ end
 # static array of tool *classes*
 TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
 
+#Asset.file_storage = "/crypt/files"

@@ -1,0 +1,42 @@
+<h2><%= "Create a new".t %> <b><%= @page_class.class_display_name.t %></b></h2>
+
+<div class='workarea'>
+<%= header_for_page_create(@page_class) %>
+
+<% form_tag({:action => 'create'}, :multipart => true) do %>
+<%= hidden_field_tag 'page_class', @page_class %>
+<table cellpadding='4'>
+<tr>
+  <td align='right'><b>title</b></td>
+  <td><%= text_field 'page', 'title', :size => 30 %></td>
+</tr>
+<tr>
+  <td align='right'><b>summary</b></td>
+  <td><%= text_area 'page', 'summary', :size => '30x3' %></td>
+</tr>
+<tr>
+  <td align='right'><b>group</b></td>
+  <td>
+    <%= select_tag 'group_id', options_for_select(
+      [['','']] + current_user.groups.to_select(:name), params[:group_id]
+    ) %>
+  </td>
+</tr>
+<tr>
+  <td align='right'><b>tags</b></td>
+  <td><%= text_field_tag 'tag_list', '', :size => 30 %></td>
+</tr>
+<tr>
+  <td align='right'><b>file</b></td>
+  <td><%= file_field 'asset', 'uploaded_data' %></td>
+</tr>
+<tr>
+  <td align='right' colspan="2">
+    <%= submit_tag "Create page".t, :name => 'create' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+</div>
+

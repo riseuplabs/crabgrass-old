@@ -24,6 +24,12 @@ class MeController < ApplicationController
     @pages, @page_sections = find_and_paginate_pages(options, params[:path])
   end
   
+  def files
+    options = options_for_pages_viewable_by(current_user)
+    @pages = find_pages(options, 'type/asset')
+    @assets = @pages.collect {|page| page.data }
+  end
+
   def tasks
     @stylesheet = 'tasks'
     filter = params[:id] || 'my-pending'
