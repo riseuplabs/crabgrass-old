@@ -114,3 +114,18 @@ div.tabarea {
   border-top: 0; 
   padding: 1px;  not sure why this is needed */
 }
+
+/** section headers **/
+
+.sectionhead1{
+	padding: 1px 1px 1px 4px;
+	font-size:12px;
+	background: lightsteelblue;
+	border-top: 1px solid royalblue;
+}
+
+
+
+
+
+

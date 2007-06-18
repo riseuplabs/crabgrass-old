@@ -6,14 +6,14 @@ div#login_container{
 	padding: 0em 2em 2em 2em;
 	width:60em;
 	line-height:160%;
-	border:1px solid grey;
+	border:0px solid grey;
 	background: white;
 }
 div#login_left{
 	float: left;
-	font-size: 16px;
+	font-size: 15px;
 	width: 30em;
-	margin-left: 1em;
+	margin-left: 3em;
 	padding: 2em 0 0 0;
 	border:0px solid brown;
 }
@@ -25,7 +25,7 @@ div#login_right{
 div#login_footer{
 	width: 60em;
 	text-align: right;
-	border-top:0px solid gray;
+	border-top:1px solid gray;
 	background: white;
 }
 
@@ -33,40 +33,51 @@ div#login_footer{
 /**login form **/
 
 #loginform {
-  width: 15em;
-  text-align: left;
-  padding: 1em 1em 1em 1em;
-  border: 1px dotted #BB8B1A;  
-  background: #EEE9E9;
+	width: 15em;
+	text-align: left;
+	padding: 1em 1em 1em 1em;
+	border: 1px dotted #BB8B1A;  
+	background: #EEE9E9;
 }
 #loginform table {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 
 
 /** signup form**/
 
-
 div#signup_container{
-	
 	margin-left: auto;
 	margin-right: auto;
-	text-align: center;
-	font-size: 16px;
-	width: 48em;
-	padding: 0em 2em 2em 2em;
+	width:60em;
 	line-height:160%;
-	border:1px solid grey;
+	border:0px solid grey;
 	background: white;
 }
-#signup_form {
-	margin-left: auto;
-	margin-right: auto;
-  	width: 15em;
-  	text-align: left;
-  	padding: 1em 1.5em 1em 1em;
-  	border: 1px dotted #BB8B1A;  
-  	background: #EEE9E9;
+div#signup_left{
+	float: left;
+	font-size: 15px;
+	width: 22em;
+	margin-left: 3em;
+	padding: 2em 0 0 0;
+}
+div#signup_right{
+	margin-left: 32em;
+	width: 20em;
+	padding: 3em 0 0 0;
+}
+div#signup_footer{
+	width: 60em;
+	text-align: right;
+	border-top:1px solid gray;
+	background: white;
+}
+#signupform {
+	width: 20em;
+	text-align: left;
+	padding: 0 0 0 1em;
+	border: 1px dotted #BB8B1A;  
+	background: #EEE9E9;
 }
 

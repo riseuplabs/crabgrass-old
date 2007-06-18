@@ -2,15 +2,6 @@
 
 ul{ list-style-type : katakana-iroha ; }
 
-
-h4{
-	padding: 1px 1px 1px 4px;
-	font-size:12px;
-	background: lightsteelblue;
-	border-top: 1px solid royalblue;
-}
-
-
 /** layout for groups **/
 
 div#group_sidebar {
@@ -25,7 +16,7 @@ div#group_homepage {
   border: 1px solid #ccc; */
 }
 div#group_maincolumn {
-  margin-left: 130px;
+  margin-left: 10em;
   border-left: 1px solid;
   padding-left: 2em;
   border-left: 1px solid black

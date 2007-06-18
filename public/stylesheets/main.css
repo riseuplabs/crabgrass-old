@@ -49,7 +49,7 @@ div.profile h1 {margin: 0; font-size: 2em;}
 
 a:link     {text-decoration: none; color:#003399;}
 a:visited  {text-decoration: none; color:#003399;}
-a:hover    {text-decoration: none; color: #cc6699; }
+a:hover    {text-decoration: none; color: #04B4AE; }
 a:active   {color:#003399}
 
 
@@ -81,5 +81,5 @@ div#masthead-image {
   width: 166px;
   height: 30px;
 }
-#main {background: #EEE4BE;}
+#main {}
 
