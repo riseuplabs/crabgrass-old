@@ -12,6 +12,7 @@ ActiveRecord::Schema.define(:version => 36) do
     t.column "size",         :integer
     t.column "width",        :integer
     t.column "height",       :integer
+    t.column "type",         :string
   end
 
   create_table "avatars", :force => true do |t|
@@ -179,10 +180,10 @@ ActiveRecord::Schema.define(:version => 36) do
 
   create_table "tasks", :force => true do |t|
     t.column "task_list_id",     :integer
-    t.column "name",             :string,  :limit => 50
-    t.column "description",      :string
-    t.column "description_html", :string
-    t.column "completed",        :boolean,               :default => false
+    t.column "name",             :string
+    t.column "description",      :text
+    t.column "description_html", :text
+    t.column "completed",        :boolean, :default => false
     t.column "position",         :integer
   end
 
