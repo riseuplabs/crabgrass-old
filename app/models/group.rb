@@ -69,10 +69,10 @@ class Group < ActiveRecord::Base
   end
   
   # returns an array of committee ids given an array of group ids.
-  def self.committee_ids(group_ids)
-    return [] unless group_ids.any?
-    group_ids = [group_ids] unless group_ids.instance_of? Array
-    ids = group_ids.join(',')
+  def self.committee_ids(ids)
+    ids = [ids] unless ids.instance_of? Array
+    return [] unless ids.any?
+    ids = ids.join(',')
     Group.connection.select_values("SELECT groups.id FROM groups WHERE parent_id IN (#{ids})").collect{|id|id.to_i}
   end
     
@@ -80,12 +80,12 @@ class Group < ActiveRecord::Base
   # (of the group_ids passed in).
   # wtf does this mean? for each group id, we get the ids
   # of all its relatives (parents, children, siblings).
-  def self.namespace_ids(group_ids)
-    return [] unless group_ids.any?
-    group_ids = [group_ids] unless group_ids.instance_of? Array
-    ids = group_ids.join(',')
+  def self.namespace_ids(ids)
+    ids = [ids] unless ids.instance_of? Array
+    return [] unless ids.any?
+    ids = ids.join(',')
     parent_ids = Group.connection.select_values("SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})").collect{|id|id.to_i}
-    return (group_ids + committee_ids(group_ids) + parent_ids + committee_ids(parent_ids)).flatten.uniq
+    return ([ids] + committee_ids(ids) + parent_ids + committee_ids(parent_ids)).flatten.uniq
   end
   
 #  has_and_belongs_to_many :locations,
@@ -98,6 +98,12 @@ class Group < ActiveRecord::Base
 
   #######################################################################
   # methods
+
+  # the code shouldn't call find_by_name directly, because the group name
+  # might contain a space in it, which we store in the database as a plus.
+  def self.get_by_name(name)
+    Group.find_by_name(name.gsub(' ','+'))
+  end
   
   def add_page(page, attributes)
     page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)

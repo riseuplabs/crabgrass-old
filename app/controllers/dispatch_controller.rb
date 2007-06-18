@@ -72,7 +72,7 @@ class DispatchController < ApplicationController
         # we are dealing with a committee!
         context.sub!(' ','+')
       end
-      @group = Group.find_by_name(context) 
+      @group = Group.get_by_name(context) 
       @user  = User.find_by_login(context) unless @group
     end
 
@@ -110,21 +110,33 @@ class DispatchController < ApplicationController
     class_name.constantize.new({:group => @group, :user => @user, :page => @page, :pages => @pages})
   end
   
-  def includes
+  def includes(default=nil)
     # for now, every time we fetch a page we suck in all the groups and users
-    # associated with the page. don't do this for xhr
-    return nil if request.xhr?
-    [{:user_participations => :user}, {:group_participations => :group}]
+    # associated with the page. we only do this for GET requests, because
+    # otherwise it is likely that we will not need the included data.
+    if request.get?
+      [{:user_participations => :user}, {:group_participations => :group}]
+    else
+      return default
+    end
   end
   
   def find_page_by_id(id)
     Page.find_by_id(id, :include => includes )
   end
   
+  # almost every page is fetched using this function
+  # we attempt to load the page using the group directly. 
+  # if that fails, then we resort to searching the entire
+  # page namespace.
   def find_page_by_group_and_name(group, name)
-    group.pages.find(:first, :conditions => ['pages.name = ?',name], :include => includes )
+    page = group.pages.find(:first, :conditions => ['pages.name = ?',name], :include => includes)
+    return page if page
+    ids = Group.namespace_ids(group.id)
+    Page.find(:first, :conditions => ['pages.name = ? AND group_participations.group_id IN (?)', name, ids], :include => includes(:group_participation))
   end
 
+  
   def find_pages_by_user_and_name(user, name)
     user.pages.find(:all, :conditions => ['pages.name = ?',name], :include => includes)
   end

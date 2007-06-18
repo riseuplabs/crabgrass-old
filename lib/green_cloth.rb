@@ -61,9 +61,9 @@
 # 
 # Redcloth restrictions: 
 # 
-# ! :filter_html   does not allow html to get passed through.
-# ! :hard_breaks   single newlines will be converted to HTML break tags.
-#
+# ! :filter_html   does not allow html to get passed through. (not working in redcloth
+#                  so disabled)
+#   :hard_breaks   single newlines will be converted to HTML break tags.
 #
 
 class GreenCloth < RedCloth
@@ -186,7 +186,7 @@ class GreenCloth < RedCloth
   # - replace spaces with hypens
   # 
   def nameize(text)
-    text.downcase.gsub(/[^-a-z0-9 ]/,'').gsub(/[ ]+/,'-') if text
+    text.downcase.gsub(/[^-a-z0-9 \+]/,'').gsub(/[ ]+/,'-') if text
   end
     
   AUTO_LINK_RE = %r{

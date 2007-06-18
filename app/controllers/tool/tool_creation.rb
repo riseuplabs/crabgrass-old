@@ -25,7 +25,7 @@ module Tool::ToolCreation
   
   def get_groups
     if params[:group_name].any?
-      group = Group.find_by_name params[:group_name]
+      group = Group.get_by_name params[:group_name]
       raise Exception.new('no such group %s' % params[:group_name]) if group.nil?
       [group]
     elsif params[:group_id].any?

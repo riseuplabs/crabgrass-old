@@ -92,7 +92,7 @@ class ChatController < ApplicationController
     @user = current_user
     @channel = Channel.find_by_id(params[:id])
     unless @channel
-      @group = Group.find_by_name(params[:id])
+      @group = Group.get_by_name(params[:id])
       if @group
         @channel = Channel.find_by_group_id(@group.id)
         unless @channel

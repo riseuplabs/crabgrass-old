@@ -242,7 +242,7 @@ class GroupsController < ApplicationController
   end
   
   def find_group
-    @group = Group.find_by_name params[:id].sub(' ','+') if params[:id]
+    @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
     if @group
       @group_type = @group.class.to_s.downcase
       return true

@@ -196,8 +196,10 @@ class User < AuthenticatedUser
       return all_group_ids.include?(group)
     elsif group.is_a? Array
       return group.detect{|g| member_of?(g)}
-    else
+    elsif group
       return all_group_ids.include?(group.id)
+    else
+      return false
     end
   end
   

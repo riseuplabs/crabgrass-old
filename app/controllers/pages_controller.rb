@@ -88,14 +88,20 @@ class PagesController < ApplicationController
   
   # for quickly creating a wiki
   def create_wiki
-    group = Group.find_by_name(params[:group])
-    if logged_in? and current_user.member_of?(group)
+    group = Group.get_by_name(params[:group])
+    if !logged_in?
+      message :error => 'You must first login.'
+    elsif group.nil?
+      message :error => 'Group does not exist.'
+    elsif !current_user.member_of?(group)
+      message :error => "You don't have permission to create a page for that group"
+    else
       page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
       page.save
       redirect_to page_url(page)
-    else
-      message :error => 'You are not allowed to create a page for group %s' % group.name
+      return
     end
+    render :text => '', :layout => 'application'
   end
 
   # send an announcement to users about this page.
@@ -103,7 +109,7 @@ class PagesController < ApplicationController
   def announce
     @errors = []; @infos = []
     params[:announcees].split(/\W+/).each do |name|
-      entity = Group.find_by_name(name) || User.find_by_login(name)
+      entity = Group.get_by_name(name) || User.find_by_login(name)
       if entity
         if entity.may?(:view, @page)
           @page.add(entity.users) if entity.instance_of? Group
@@ -126,7 +132,7 @@ class PagesController < ApplicationController
         @page.remove(User.find_by_id(params[:remove_user]))
       elsif params[:add_name]
         access = params[:access] || ACCESS_ADMIN
-        if group = Group.find_by_name(params[:add_name])
+        if group = Group.get_by_name(params[:add_name])
           @page.add group, :access => access
         elsif user = User.find_by_login(params[:add_name])
           @page.remove user
@@ -239,7 +245,7 @@ class PagesController < ApplicationController
   
   def get_groups
     if params[:group_name].any?
-      group = Group.find_by_name params[:group_name]
+      group = Group.get_by_name params[:group_name]
       raise Exception.new('no such group %s' % params[:group_name]) if group.nil?
       [group]
     elsif params[:group_id].any?

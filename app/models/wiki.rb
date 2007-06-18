@@ -66,6 +66,11 @@ class Wiki < ActiveRecord::Base
     return html    
   end
   
+  def body=(value)
+    write_attribute(:body, value)
+    write_attribute(:body_html, format_wiki_text(value))
+  end
+  
   # clears the rendered html. this is called
   # when a group's name is changed or some other event happens
   # which might affect how the html is rendered by greencloth.
@@ -78,9 +83,9 @@ class Wiki < ActiveRecord::Base
   protected 
     
   def default_group_name
-    if page.group_name
-      page.group_name
+    if page and page.group_name
       #.sub(/\+.*$/,'') # remove everything after +
+      page.group_name
     else
       'page'
     end
