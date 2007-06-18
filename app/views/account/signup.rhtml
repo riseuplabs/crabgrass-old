@@ -1,9 +1,19 @@
+<div id="signup_container">
+
+	<h2>Creating Your Account Is Easy.</h2>
+	Choose your user name and password. <Br>
+	Enter in your email address. Forgotten passwords will be sent here.<br> 
+	After clicking "signup" you can login to crabgrass, and join or create a group.
+
+<br><br>
+<div id="signup_form">
+	
 <%= error_messages_for :user %>
 <% form_for :user do |f| -%>
-<p><label for="login">Login</label><br/>
+<p><label for="login">Your login name </label><br/>
 <%= f.text_field :login %></p>
 
-<p><label for="password">Password</label><br/>
+<p><label for="password">Your Password</label><br/>
 <%= f.password_field :password %></p>
 
 <p><label for="password_confirmation">Confirm Password</label><br/>
@@ -11,3 +21,12 @@
 
 <p><%= submit_tag 'Sign up' %></p>
 <% end -%>
+
+</div>
+
+</div>
+<br><br>
+
+
+
+

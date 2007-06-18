@@ -3,39 +3,70 @@
 div#login_container{
 	margin-left: auto;
 	margin-right: auto;
+	padding: 0em 2em 2em 2em;
 	width:60em;
-	line-height:120%;
-	border:0px solid pink;
+	line-height:160%;
+	border:1px solid grey;
+	background: white;
 }
 div#login_left{
 	float: left;
+	font-size: 16px;
 	width: 30em;
-	margin-left: 6em;
-	padding: 4em 0 0 0;
+	margin-left: 1em;
+	padding: 2em 0 0 0;
 	border:0px solid brown;
 }
 div#login_right{
-	margin-left: 39em;
+	margin-left: 42em;
 	width: 10em;
 	padding: 5em 0 0 0;
 }
 div#login_footer{
 	width: 60em;
 	text-align: right;
-	border-top:1px solid gray;
+	border-top:0px solid gray;
+	background: white;
 }
 
 
 /**login form **/
 
 #loginform {
-  width: 10em;
+  width: 15em;
   text-align: left;
-  border-left: 2px dotted darkgrey;
-  padding: 0em 0em 0em 1em;
-  margin: 0 auto;
+  padding: 1em 1em 1em 1em;
+  border: 1px dotted #BB8B1A;  
+  background: #EEE9E9;
 }
 #loginform table {
   margin: 0 auto;
+}
+
+
+
+/** signup form**/
+
+
+div#signup_container{
+	
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	font-size: 16px;
+	width: 48em;
+	padding: 0em 2em 2em 2em;
+	line-height:160%;
+	border:1px solid grey;
+	background: white;
+}
+#signup_form {
+	margin-left: auto;
+	margin-right: auto;
+  	width: 15em;
+  	text-align: left;
+  	padding: 1em 1.5em 1em 1em;
+  	border: 1px dotted #BB8B1A;  
+  	background: #EEE9E9;
 }
 
