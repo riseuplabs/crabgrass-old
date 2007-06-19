@@ -4,10 +4,13 @@ ul{ list-style-type : katakana-iroha ; }
 
 /** layout for groups **/
 
-div#group_sidebar {
+div#group_sidebar {	
   float: left;
-  width: 120px;
-  margin-right: 0px;
+  margin-left: 1em;
+  width: 9em;
+  font-size:12px;
+  color: #585858;
+  border-right: 1px solid #848484;
 }
 div#group_homepage {
   margin: 1em 0;
@@ -17,25 +20,23 @@ div#group_homepage {
 }
 div#group_maincolumn {
   margin-left: 10em;
-  border-left: 1px solid;
-  padding-left: 2em;
-  border-left: 1px solid black
+  padding-left: 2.5em;
+  border-left: 0px solid black
 }
 div#group_infopanel {	
-  border: 0px dotted blue
+  border-bottom: 1px solid #D8D8D8;
+  padding: 1em	1em 1em 0em;
 }
 div#group_infopanel_left {	
   width: 20em;
   float: left;
-  padding: 0px 10px 10px 20px;
-  border: 1px solid LightSteelBlue;
 }
 div#group_infopanel_right {
   margin-left: 26em;
   width: 20em;
   padding: 0px 10px 10px 20px;
-  border: 1px solid LightSteelBlue;
 }
+
 
 /** group directory **/
 

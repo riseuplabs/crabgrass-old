@@ -1,4 +1,4 @@
-<h4 class="sectionhead1">Navigation</h4>
+<h4 class="sectionhead2">Navigation</h4>
   home<br>
   events<br>
   pages<br>
@@ -10,7 +10,7 @@
  </p>
 
 <p>
-<h4 class="sectionhead1">Actions</h4>
+<h4 class="sectionhead2">Actions</h4>
 <% if current_user.member_of?(@group) %>
 
   <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %> <br/>

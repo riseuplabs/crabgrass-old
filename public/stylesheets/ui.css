@@ -118,14 +118,20 @@ div.tabarea {
 /** section headers **/
 
 .sectionhead1{
-	padding: 1px 1px 1px 4px;
-	font-size:12px;
-	background: lightsteelblue;
-	border-top: 1px solid royalblue;
+	font-size: 24px;
+	font-weight: normal;
+	color: #2E2E2E;
+    letter-spacing: -.03em;
+	margin: 0 0 .5em 0;
 }
 
-
-
-
+	
+.sectionhead2{
+	font-size:14px;
+    font-weight: normal;
+    color: #2E2E2E;
+	border-bottom: 1px solid #848484;
+	margin: 2em .5em .5em 0;
+}
 
 

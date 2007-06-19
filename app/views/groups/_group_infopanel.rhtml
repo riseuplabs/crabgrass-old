@@ -1,36 +1,55 @@
 <div id="group_infopanel_left">
- 	<h4 class="sectionhead1">Group Information</h4>
-	<%=h @group.summary %> <a href="">more</a>
-	<ul class="katakana-iroha">
-	<li>Type of group
-	<li>Group owner / admin
-	<li>When founded
-	<li>Language		
-	</ul>
+	<table cellpadding="2">
+		<tr>
+			<td valign="top"><h4 class="sectionhead1">Group Information</h4>
+			<%=h @group.summary %> <a href="">more</a>
+			<ul class="katakana-iroha">
+			<li>Type of group
+			<li>Group owner / admin
+			<li>When founded
+			<li>Language		
+			</ul>
 
-	
-	<%= link_to 'edit settings', :action => 'edit', :id => @group %> |
-	<% if current_user.direct_member_of? @group -%>
-	  <%= post_to "leave #{@group_type}", group_url(:action => 'leave_group', :id => @group), :confirm => "Are you sure you want to leave this #{@group_type}?" %> <br/>
-	<% end -%>
-	
-	<% unless current_user.direct_member_of?(@group) -%>
-	  <%= post_to "join #{@group_type}", group_url(:action => 'join_group', :id => @group) %> <br/>
-	<% end -%>
+			<%= link_to 'edit settings', :action => 'edit', :id => @group %> |
+			<% if current_user.direct_member_of? @group -%>
+			  <%= post_to "leave #{@group_type}", group_url(:action => 'leave_group', :id => @group), :confirm => "Are you sure you want to leave this #{@group_type}?" %> <br/>
+			<% end -%>
+
+			<% unless current_user.direct_member_of?(@group) -%>
+			  <%= post_to "join #{@group_type}", group_url(:action => 'join_group', :id => @group) %> <br/>
+			<% end -%>
+			</td>
+		</tr>
+	</table>
+		
+ 	
 	
 </div>
 <div id="group_infopanel_right">
-	<h4 class="sectionhead1">Members</h4>
-	<ul class="katakana-iroha">
-	<li>Number of Members 
-	<li>Number Your Contacts in Group 
-	</ul>
 	
-	<h4 class="sectionhead1">Associations</h4>
-	<ul class="katakana-iroha">
-	<li>Subgroups: drop down
-	<li>Networks: drop down
-	</ul>
+	<table>
+		<tr>
+			<td valign="top"><img src=/images/folders/people.png> &nbsp</td>
+			<td valign="top">
+				<h4 class="sectionhead1">Members</h4>
+				<ul class="katakana-iroha">
+				<li>Number of Members 
+				<li>Number Your Contacts in Group 
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top"><img src=/images/folders/beehive.png>&nbsp</td>
+			<td valign="top">
+				<h4 class="sectionhead1">Associations</h4>
+				<ul class="katakana-iroha">
+				<li>Subgroups: drop down
+				<li>Networks: drop down
+				</ul>
+			</td>
+		</tr>
+	</table>
+	
 </div>
 
 <br>
