@@ -2,7 +2,7 @@ require 'asset'
 class Tool::Asset < Page
   controller 'asset'
   model ::Asset
-  icon 'file.png'
+  icon 'package.png'
   class_display_name 'file'
   class_description 'an uploaded file'
   class_group 'asset'
