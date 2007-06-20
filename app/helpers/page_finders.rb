@@ -201,8 +201,8 @@ module PageFinders
   end
   
   def filter_name(qb,name)
-    conditions << 'pages.name = ?'
-    values << name
+    qb.conditions << 'pages.name = ?'
+    qb.values << name
   end
   
   def filter_ascending(qb,sortkey)
@@ -278,7 +278,6 @@ module PageFinders
     filters = parse_filter_path( options[:path] )
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
-      logger.error filter_method
       args = filter.slice(1,100)
       self.send(filter_method, qb, *args)
     end
