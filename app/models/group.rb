@@ -102,6 +102,7 @@ class Group < ActiveRecord::Base
   # the code shouldn't call find_by_name directly, because the group name
   # might contain a space in it, which we store in the database as a plus.
   def self.get_by_name(name)
+    return nil unless name
     Group.find_by_name(name.gsub(' ','+'))
   end
   
