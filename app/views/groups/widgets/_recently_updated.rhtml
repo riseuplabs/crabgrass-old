@@ -1,0 +1,8 @@
+<table class='page-list'>
+<% unless @pages.any? -%>
+  <tr><td colspan="10">no pages</td></tr>
+<% else -%>
+  <%= render :partial => "pages/page_line", :collection => @pages %>
+<% end -%>
+</table>
+

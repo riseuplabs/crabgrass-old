@@ -1,8 +1,7 @@
 <div>
 
-
 <% unless @months.empty? -%>
-  <table>
+  <table class='archive-calendar'>
   <% @start_year.upto(@current_year.to_s) do |year| -%>
     <tr>
     <td> <b><%= year %> </b></td>
@@ -27,12 +26,6 @@
   </table>
 <% end -%>
 
-<table class='page-list'>
-<% unless @pages.any? -%>
-  <tr><td colspan="10">no pages</td></tr>
-<% else -%>
-  <%= render :partial => "pages/page_line", :collection => @pages %>
-<% end -%>
-</table>
+<%= render :partial => 'pages/list' %>
 
 </div>

@@ -4,152 +4,293 @@
 # This module includes a bunch of page finding methods
 # we want available in all controllers. 
 #
+# builds conditions for findings pages based on filter path.
+# for example: /starred/type/event would search for pages that are starred, of type event.
+# order does not matter: the above is equivalent to /type/event/starred
+# The actual find might be through the Page, GroupParticipation, or UserParticipation table.
+# 
 
 
 module PageFinders
+
+  private
   
-  # builds conditions for findings pages based on filter path.
-  # for example: /starred/type/event would search for pages that are starred, of type event.
-  # order does not matter: the above is equivalent to /type/event/starred
-  # The actual find might be through the Page, GroupParticipation, or UserParticipation table.
-  # 
-  def page_query_from_filter_path(options={})
-    klass      = options[:class]
-    path       = options[:path] || []
-    conditions = []  # the current condition clause we are building
-    values     = []  # array of replacement values for the '?' in conditions
-    or_clauses = []  # used to build current clause of the form (x or x)
-    and_clauses = [] # used to build the current clause of the form (x and x)
-    
-    and_clauses << [options[:conditions]]
-    values = options[:values]
-    
-    # filters
-    path = path.reverse
-    while folder = path.pop
-      if folder == 'or'
-        or_clauses << conditions
-        conditions = []
-      elsif folder == 'unread'
-        conditions << 'viewed = ?'
-        values << false
-      elsif folder == 'pending'
-        if klass == UserParticipation
-          conditions << 'user_participations.resolved = ?'
-        else
-          conditions << 'pages.resolved = ?'
-        end
-        values << false
-      elsif folder == 'starred'
-        if klass == UserParticipation
-          conditions << 'user_participations.star = ?'
-        else
-          conditions << 'user_parts.star = ?'
-        end
-        values << true
-      elsif folder == 'upcoming'
-        conditions << 'pages.happens_at > ?'
-        values << Time.now
-        order = 'pages.happens_at DESC'
-      elsif folder == 'ago'
-        near = path.pop.to_i.days.ago
-        far  = path.pop.to_i.days.ago
-        conditions << 'pages.updated_at < ? and pages.updated_at > ? '
-        values << near
-        values << far
-      elsif folder == 'created-after'
-        year, month, day = path.pop.split('-')
-        date = Time.utc(year, month, day)
-        conditions << 'pages.created_at > ?'
-        values << date
-      elsif folder == 'created-before'
-        year, month, day = path.pop.split('-')
-        date = Time.utc(year, month, day)
-        conditions << 'pages.created_at < ?'
-        values << date
-      elsif folder == 'recent'
-        order = 'pages.updated_at DESC'
-      elsif folder == 'old'
-        order = 'pages.updated_at ASC'
-      elsif folder == 'type'
-        page_classes = Page.class_group_to_class_names(path.pop)
-        conditions << 'pages.type IN (?)'
-        values << page_classes
-      elsif folder == 'person'
-        conditions << 'user_parts.user_id = ?'
-        values << path.pop
-      elsif folder == 'group'
-        conditions << 'group_parts.group_id = ?'
-        values << path.pop
-      elsif folder == 'tag'
-         if tag = Tag.find_by_name(path.pop)
-           tag_count ||= 1
-           conditions << "taggings#{tag_count}.tag_id = ?"
-           values << tag.id
-           tag_count += 1
-         else
-           conditions << "FALSE"
-         end
-      elsif folder == 'name'
-        conditions << 'pages.name = ?'
-        values << path.pop
-      elsif folder == 'ascending' or folder == 'descending'
-        order = folder == 'ascending' ? 'ASC' : 'DESC'
-        sortkey = path.pop
-        order = 'pages.' + sortkey + ' ' + order
-      end
+  class QueryBuilder
+    attr_accessor :table_class # one of: Page, UserParticipation, GroupParticipation
+    attr_accessor :conditions  # the current condition clause we are building
+    attr_accessor :values      # array of replacement values for the '?' in conditions
+    attr_accessor :order       # the sort order
+    attr_accessor :tag_count   # running total of the number of tag conditions
+    attr_accessor :or_clauses  # used to build current clause of the form (x or x)
+    attr_accessor :and_clauses # used to build the current clause of the form (x and x)
+        
+    def initialize
+      self.table_class = Page
+      self.conditions  = []
+      self.values      = []
+      self.order       = nil
+      self.tag_count   = 0
+      self.or_clauses  = []
+      self.and_clauses = []
     end
 
-    # default sort
-    order ||= 'pages.updated_at DESC'    
-
-    or_clauses << conditions if conditions.any? # grab the remaining conditions
-    and_clauses << or_clauses
-  
-    # holy crap, i can't believe how ugly this is
-    conditions_string = "(" + and_clauses.collect{|or_clause|
-      if or_clause.is_a? String
-        or_clause
-      elsif or_clause.any?
-        "(" + or_clause.collect{|conditions|
-          if conditions.is_a? String
-            conditions
-          elsif conditions.any?
-            conditions.join(' AND ')
-          end
-        }.join(') OR (') + ")"
-      else
-        "1"
-      end
-    }.join(') AND (') + ")"
+    # grab the remaining open conditions
+    def finalize
+      or_clauses << conditions if conditions.any? # grab the remaining conditions
+      and_clauses << or_clauses
+    end
+      
+    # convert the query we have built into an actual sql condition  
+    def sql_for_conditions
+      # holy crap, i can't believe how ugly this is
+      @sql_string ||= "(" + and_clauses.collect{|or_clause|
+        if or_clause.is_a? String
+          or_clause
+        elsif or_clause.any?
+          "(" + or_clause.collect{|condition|
+            if condition.is_a? String
+              condition
+            elsif condition.any?
+              condition.join(' AND ')
+            end
+          }.join(') OR (') + ")"
+        else
+          "1"
+        end
+      }.join(') AND (') + ")"
+    end
     
-    # add in join tables:
     # if the conditions use user or group participations to limit which pages are returned,
     # then we must join in those tables. we don't use :include because we don't want the data,
     # we just want to be able to add conditions to the query. We alias the tables because 
     # user_participations or group_participations might already be included as the main table, so
     # we have to give it a new name.
-    join = ''
-    if /user_parts\./ =~ conditions_string
-      join += " LEFT OUTER JOIN user_participations user_parts ON user_parts.page_id = pages.id"
-    end
-    if /group_parts\./ =~ conditions_string
-      join += " LEFT OUTER JOIN group_participations group_parts ON group_parts.page_id = pages.id"
-    end
-    for i in 1..4
-      if /taggings#{i}\./ =~ conditions_string
-        join += " INNER JOIN taggings taggings#{i} ON (pages.id = taggings#{i}.taggable_id AND taggings#{i}.taggable_type = 'Page')"
-      end  
-    end
-    if klass == Page and /user_participations\./ =~ conditions_string
-      # so we can filter on pages that two users have in common without making the main
-      # table be user_participations
-      join += " LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id"
+    
+    def sql_for_joins
+      conditions_string = self.sql_for_conditions()
+      join = ''
+      if /user_parts\./ =~ conditions_string
+        join += " LEFT OUTER JOIN user_participations user_parts ON user_parts.page_id = pages.id"
+      end
+      if /group_parts\./ =~ conditions_string
+        join += " LEFT OUTER JOIN group_participations group_parts ON group_parts.page_id = pages.id"
+      end
+      for i in 1..4
+        if /taggings#{i}\./ =~ conditions_string
+          join += " INNER JOIN taggings taggings#{i} ON (pages.id = taggings#{i}.taggable_id AND taggings#{i}.taggable_type = 'Page')"
+        end  
+      end
+      if table_class == Page and /user_participations\./ =~ conditions_string
+        # so we can filter on pages that two users have in common without making the main
+        # table be user_participations
+        join += " LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id"
+      end
+      return join
     end
     
-    { :conditions => [conditions_string] + values,
-      :joins => join, :order => order, :class => klass, 
-      :already_built => true }
+  end
+  
+  # path keyword => number of arguments required for the keyword.
+  PATH_KEYWORDS = {
+    'or' => 0,
+    'unread' => 0,
+    'pending' => 0,
+    'starred' => 0,
+    'stars' => 1,
+    'upcoming' => 0,
+    'ago' => 2,
+    'created-after' => 1,
+    'created-befor' => 1,
+    'recent' => 1,
+    'old' => 1,
+    'type' => 1,
+    'person' => 1,
+    'group' => 1,
+    'tag' => 1,
+    'name' => 1,
+    'ascending' => 1,
+    'descending' => 1
+  }.freeze
+  
+  ###############################################################
+  ## FILTERS!!
+  
+  def filter_unread(qb)
+    qb.conditions << 'viewed = ?'
+    qb.values << false  
+  end
+  
+  def filter_pending(qb)
+    if qb.table_class == UserParticipation
+      qb.conditions << 'user_participations.resolved = ?'
+    else
+      qb.conditions << 'pages.resolved = ?'
+    end
+    qb.values << false
+  end
+  
+  def filter_starred(qb)
+    if qb.table_class == UserParticipation
+      qb.conditions << 'user_participations.star = ?'
+    else
+      qb.conditions << 'user_parts.star = ?'
+    end
+    qb.values << true
+  end
+  
+  def filter_upcoming(qb)
+    qb.conditions << 'pages.happens_at > ?'
+    qb.values << Time.now
+    qb.order = 'pages.happens_at DESC'
+  end
+  
+  def filter_ago(qb,near,far)
+    near = near.to_i.days.ago
+    far  = far.to_i.days.ago
+    qb.conditions << 'pages.updated_at < ? and pages.updated_at > ? '
+    qb.values << near
+    qb.values << far
+  end
+  
+  def filter_created_after(qb,date)
+    year, month, day = date.split('-')
+    date = Time.utc(year, month, day)
+    qb.conditions << 'pages.created_at > ?'
+    qb.values << date
+  end
+  
+  def filter_created_before(qb,date)
+    year, month, day = path.pop.split('-')
+    date = Time.utc(year, month, day)
+    qb.conditions << 'pages.created_at < ?'
+    qb.values << date
+  end
+  
+#  def filter_recent(qb)
+#    qb.order = 'pages.updated_at DESC'
+#  end
+   
+#   def filter_old(qb)
+#     qb.order = 'pages.updated_at ASC'
+#   end
+
+  def filter_type(qb,page_class_group)
+    page_classes = Page.class_group_to_class_names(page_class_group)
+    qb.conditions << 'pages.type IN (?)'
+    qb.values << page_classes
+  end
+  
+  def filter_person(qb,id)
+    qb.conditions << 'user_parts.user_id = ?'
+    qb.values << id
+  end
+  
+  def filter_group(qb,id)
+    qb.conditions << 'group_parts.group_id = ?'
+    qb.values << id
+  end
+
+  def filter_tag(qb,tag_name)
+    if tag = Tag.find_by_name(tag_name)
+      qb.conditions << "taggings#{qb.tag_count}.tag_id = ?"
+      qb.values << tag.id
+      qb.tag_count += 1
+    else
+      qb.conditions << "FALSE"
+    end
+  end
+  
+  def filter_name(qb,name)
+    conditions << 'pages.name = ?'
+    values << name
+  end
+  
+  def filter_ascending(qb,sortkey)
+    qb.order = "pages.`#{sortkey}` ASC"
+  end
+  
+  def filter_descending(qb,sortkey)
+    qb.order = "pages.`#{sortkey}` DESC"
+  end
+  
+  def filter_or(qb)
+    qb.or_clauses << qb.conditions
+    qb.conditions = []
+  end
+  
+  public
+  
+  class ParsedPath < Array
+    # return true if keyword is in the path
+    def keyword?(word)
+      detect do |e|
+        e[0] == word
+      end
+    end
+    
+    # return the first argument of the pathkeyword
+    # if:   path = "/person/23"
+    # then: first_arg_for('person') == 23
+    def first_arg_for(word)
+      element = keyword?(word)
+      return nil unless element
+      return element[1]
+    end
+  end
+  
+  # parses a page filter path into an array like so...
+  # incoming path:
+  #   /unread/tag/urgent/person/23/starred
+  # array returned:
+  #   [ ['unread'], ['tag','urgent'], ['person',23], ['starred'] ]
+  # in other words, we identify the key words and their arguments,
+  # and split up that path into an array where each element is a different
+  # keyword (with its included arguments). 
+  
+  def parse_filter_path(path)
+    return [] unless path
+    path = path.split('/') if path.instance_of? String
+    path = path.reverse
+    parsed_path = ParsedPath.new
+    while keyword = path.pop
+      next unless PATH_KEYWORDS[keyword]
+      element = [keyword]
+      args = PATH_KEYWORDS[keyword]
+      args.times do |i|
+        element << path.pop if path.any?
+      end
+      parsed_path << element
+    end
+    return parsed_path
+  end
+  
+  # returns a hash of options (conditions, joins, sorts, etc),
+  # that can be sent to ActiveRecord.find.
+  # in particular, this function adds the correct options
+  # based on the filter path (if set).
+  def page_query_from_filter_path(options={})    
+    qb = QueryBuilder.new()        
+    qb.table_class = options[:class] if options[:class]
+    qb.and_clauses << [options[:conditions]]
+    qb.values      = options[:values]
+    qb.order       = options[:order] || 'pages.updated_at DESC'    
+    
+    filters = parse_filter_path( options[:path] )
+    filters.each do |filter|
+      filter_method = "filter_#{filter[0].gsub('-','_')}"
+      logger.error filter_method
+      args = filter.slice(1,100)
+      self.send(filter_method, qb, *args)
+    end
+    
+    qb.finalize
+    return {
+      :conditions => [qb.sql_for_conditions] + qb.values,
+      :joins => qb.sql_for_joins,
+      :order => qb.order,
+      :class => qb.table_class, 
+      :already_built => true
+    }
   end
   
   #

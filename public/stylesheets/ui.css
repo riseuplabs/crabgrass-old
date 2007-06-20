@@ -115,6 +115,25 @@ div.tabarea {
   padding: 1px;  not sure why this is needed */
 }
 
+
+/** table heading **/
+/* this needs help! */
+tr.page-list-heading td {
+  background: url(/images/ui/list-head-light.png);
+  font-size: 12px;
+  line-height: 14px;
+}
+tr.page-list-heading td a {
+  color: #333;
+}
+tr.page-list-heading td.selected {
+  background: url(/images/ui/list-head-dark.png);
+}
+tr.page-list-heading td.selected a {
+  color: white;
+}
+
+
 /** section headers **/
 
 .sectionhead1{

@@ -128,7 +128,38 @@ module PageUrlHelper
     text = folder_icon(image) + " " + text if image
     link_to text, url_for(:action => 'inbox', :path => path), :class => klass
   end
+  
+  
 
+  # used to create the page list headings
+  # set member variable @path beforehand if you want 
+  # the links to take it into account instead of params[:path]
+  def list_heading(text, action, select_by_default=false)
+    path = @path || params[:path] || []
+    parsed = @parsed_path || controller.parse_filter_path(path)
+    selected = false
+    arrow = ''
+    if parsed.keyword?('ascending')
+      link = page_path_link(text,"descending/#{action}")
+      if parsed.first_arg_for('ascending') == action
+        selected = true
+        arrow = image_tag('ui/sort-asc.png')
+      end
+    elsif parsed.keyword?('descending')
+      link = page_path_link(text,"ascending/#{action}")
+      if parsed.first_arg_for('descending') == action
+        selected = true
+        arrow = image_tag('ui/sort-desc.png')
+      end
+    else
+      link = page_path_link(text.gsub(' ','&nbsp;'), "ascending/#{action}")
+      selected = select_by_default
+      arrow = image_tag('ui/sort-desc.png') if selected
+    end
+    "<td class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</td>"
+  end
+
+  # used to create the page list headings
   def page_path_link(text,path=nil,image=nil)
     hash = params.dup   
     prefix = '' 
@@ -144,6 +175,7 @@ module PageUrlHelper
     end
     hash[:path] = prefix + path.to_s
     #for tags this isn't right:
+    # todo: do not hard code the action here.
     if params[:controller] == 'groups'
       hash[:action] = 'search'
     elsif params[:controller] == 'me' && params[:action] == 'index'

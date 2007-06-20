@@ -51,5 +51,6 @@
   <td><%= page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;' %></td>
   <td><%= friendly_date(page.updated_at, page.created_at) || '&nbsp;' %></td>
   <td><%= friendly_date(page.happens_at) || '&nbsp;' %></td>
+  <td><%= page.contributors_count %> </td>
 </tr>
 <% end %>
