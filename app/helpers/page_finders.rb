@@ -278,7 +278,7 @@ module PageFinders
     filters = parse_filter_path( options[:path] )
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
-      args = filter.slice(1,100)
+      args = filter.slice(1,-1) # remove first element.
       self.send(filter_method, qb, *args)
     end
     
