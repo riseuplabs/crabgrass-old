@@ -19,7 +19,8 @@ class Asset < ActiveRecord::Base
   end
 
   def is_public?
-    true
+    return true unless page
+    return page.public?
   end
 
   def public_filename
