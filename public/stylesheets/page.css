@@ -61,6 +61,23 @@ div#sidebar div.line.link:hover {
 div#sidebar div img {
   vertical-align: top;
 }
+div#sidebar h2 a {
+ display: block;
+ width: 16px;
+ float: right;
+ margin-top: -16px;
+ opacity: 0.5;
+}
+div#sidebar h2 a:hover {
+ opacity: 1;
+}
+div#sidebar h3 {
+ padding: 0;
+ margin: 4px 0 0 10px;
+ font-size: 1em;
+ font-weight: normal;
+ border-bottom: 1px dotted #ccc;
+}
 
 /* title */
 

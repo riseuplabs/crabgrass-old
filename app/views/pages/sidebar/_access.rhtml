@@ -1,0 +1,25 @@
+<%
+check_click  = "Element.hide('public_check');" +
+               show_spinner('public') +
+               remote_function(:url => pages_url(@page, :action=>'mark_public'))
+checked      = @page.public? ? "CHECKED" : ""
+disabled     = (logged_in? and current_user.may?(:admin, @page)) ? '' : DISABLED
+-%>
+<h3><%= image_tag 'actions/admin.png' %> admin</h3>
+
+<div class='line'>
+<% @page.groups.each do |g| -%>
+  <b><%= link_to_group g %></b><br/>
+<% end -%>
+<% @page.users_with_access.each do |u| -%>
+  <%= link_to_user u %><br/>
+<% end -%>
+</div>
+
+<h3><%= image_tag 'actions/eye.png' %> view</h3>
+
+<div class='line'>
+<input type='checkbox' onclick="<%=check_click%>" id='public_check' <%= checked %> <%= disabled %>/>
+<%= spinner('public') -%> <label for='public_check'>public?</label>
+</div>
+

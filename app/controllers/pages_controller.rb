@@ -178,6 +178,19 @@ class PagesController < ApplicationController
     redirect_to page_url(@page)
   end
 
+
+  # only works with xhr for now.
+  def mark_public
+    @page.update_attribute(:public, true)
+    render :partial => 'public'
+  end
+  
+ # only works with xhr for now.
+  def mark_private
+    @page.update_attribute(:public, false)
+    render :partial => 'public'
+  end
+  
   ##############################################
   ## page participation modifications
   

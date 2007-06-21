@@ -83,21 +83,13 @@
 <% end %>
 
 <div class='section'>
-<h2>access</h2>
-<div class='line'>
-<% @page.groups.each do |g| %>
-  <b><%= link_to_group g %></b>
-<% end %>
-<% @page.users_with_access.each do |u| %>
-  <%= link_to_user u %>
-<% end %>
-<%= link_to image_tag('actions/edit.png'), {:controller => 'pages', :action => 'access', :id => @page.id} %>
-</div>
+<h2>access <%= link_to image_tag('actions/pencil.png'), {:controller => 'pages', :action => 'access', :id => @page.id}, :title => 'edit page access' %></h2>
+  <%= render :partial => 'pages/sidebar/access' %>
 <div class='tail'></div>
 </div> <!-- end section -->
 
 <div class='section'>
-<h2>contributors</h2>
+<h2>contributors <%= link_to image_tag('actions/pencil.png'), {:controller => 'pages', :action => 'participation', :id => @page.id}, :title => 'view contribution detail' %></h2>
 <ul class='plainlist'>
 <% unless @page.contributors.any? %>
   <div class='line'>(none so far)</div>

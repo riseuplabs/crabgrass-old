@@ -4,6 +4,7 @@ class PeopleController < ApplicationController
     :redirect_to => { :action => :list }
 
   prepend_before_filter :fetch_user
+  skip_before_filter :login_required
   
   def index
     list
@@ -11,9 +12,11 @@ class PeopleController < ApplicationController
   end
 
   def list
-   # @user_pages, @users = paginate :users, :per_page => 10
-    @contacts = current_user.contacts
-    @peers = current_user.peers
+    # @user_pages, @users = paginate :users, :per_page => 10
+    if logged_in?
+      @contacts = current_user.contacts
+      @peers = current_user.peers
+    end
     set_banner "people/banner_search", Style.new(:background_color => "#6E901B", :color => "#E2F0C0")
   end
 
@@ -137,7 +140,7 @@ class PeopleController < ApplicationController
   
   def fetch_user 
     @user = User.find_by_login params[:id]
-    @is_contact = current_user.contacts.include?(@user)
+    @is_contact = (logged_in? and current_user.contacts.include?(@user))
     true
   end
   

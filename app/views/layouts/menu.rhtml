@@ -13,15 +13,18 @@
 
 active = first_context()
 selected = 'class="selected"'
-%>
+-%>
 
-<% if controller.logged_in? %>
 <ul id="topmenu">
-  <% if controller.logged_in? %>
+  <% if logged_in? -%>
   <li <%= selected if active == 'me' %> >
     <span><%= link_to "Me", me_url %></span>
   </li>
-  <% end %>
+  <% else -%>
+    <li <%= selected if params[:controller]=='account' %> >
+      <span><%= link_to "Home", '/' %></span>
+    </li>    
+  <% end -%>
 
   <li <%= selected if active == 'people' %> >
     <span><%= link_to "People", people_url %></span>
@@ -31,15 +34,18 @@ selected = 'class="selected"'
     <span><%= link_to "Groups", groups_url %></span>
   </li>
 
+  <% if logged_in? -%>
   <li <%= selected if active == 'chat' %> >
     <span><%= link_to "Chat", '/chat' %></span>
   </li>
+  <% end -%>
 
-  <% if controller.logged_in? %>
+  <% if logged_in? -%>
   <li>
     <span><%= link_to "Logout".t, :controller => '/account', :action => 'logout' %></span>
   </li>
-  <% end %>  
+  <% end -%>  
 </ul>
 <div style='clear: both;'></div>
-<% end %>
+
+

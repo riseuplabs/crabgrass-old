@@ -149,7 +149,7 @@ module ContextHelper
       else
         # unknown context. will we ever get here?
       end
-      if referer_has_crumbs?(@page)
+      if logged_in? and referer_has_crumbs?(@page)
         breadcrumbs_from_referer(@page)
       else
         breadcrumbs_from_context(false)

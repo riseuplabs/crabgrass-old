@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
   stylesheet 'groups'
   
   prepend_before_filter :find_group, :except => ['list','create','index']
+  skip_before_filter :login_required
   
   def index
     list
@@ -13,7 +14,8 @@ class GroupsController < ApplicationController
     :only => [ :destroy, :add_user, :remove_user, :join_group, :leave_group ]
 
   def list
-    @group_pages, @groups = paginate :groups, :per_page => 10, :conditions => 'type IS NULL'
+    #@group_pages, @groups = paginate :groups, :per_page => 10, :conditions => 'type IS NULL'
+    @groups = Group.find :all, :conditions => 'type IS NULL'
     set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
 

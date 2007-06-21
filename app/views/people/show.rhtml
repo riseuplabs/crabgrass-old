@@ -1,3 +1,9 @@
+<% unless logged_in? -%>
+
+  This user does not have public profile.
+
+<% else -%>
+
 <% if @is_contact %>
   <%= link_to 'remove from my contacts', {:controller => '/people', :action => 'remove_contact', :id => @user}, :method => 'post' %>
 <% else %>
@@ -28,3 +34,5 @@
     <%= render :partial => 'pages/list' %>
   </div>
 </div>
+
+<% end -%>

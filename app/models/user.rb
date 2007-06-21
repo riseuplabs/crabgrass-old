@@ -104,7 +104,11 @@ class User < AuthenticatedUser
   end
 
   def may?(perm, page)
-    may!(perm,page) rescue false
+    begin
+      return may!(perm,page)
+    rescue PermissionDenied
+      return false
+    end
   end
   
   # perm one of :view, :edit, :admin

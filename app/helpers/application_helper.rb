@@ -209,4 +209,8 @@ module ApplicationHelper
     @banner_partial
   end
  
+  def logged_in?
+    controller.logged_in?
+  end
+  
 end

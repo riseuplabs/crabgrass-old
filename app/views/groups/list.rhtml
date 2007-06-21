@@ -1,3 +1,5 @@
+<% if logged_in? -%>
+
 <h1>My groups</h1>
 <div class='xworkarea' >
 <% if current_user.groups %>
@@ -18,3 +20,8 @@
 <%= link_button 'New group', :action => 'create' %>
 </div></p>
 
+<% else -%>
+
+There are no public group profiles
+
+<% end -%>
