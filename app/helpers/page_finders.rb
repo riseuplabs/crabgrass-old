@@ -206,10 +206,12 @@ module PageFinders
   end
   
   def filter_ascending(qb,sortkey)
+    sortkey.gsub!(/[^[:alnum:]]+/, '_')
     qb.order = "pages.`#{sortkey}` ASC"
   end
   
   def filter_descending(qb,sortkey)
+    sortkey.gsub!(/[^[:alnum:]]+/, '_')
     qb.order = "pages.`#{sortkey}` DESC"
   end
   
@@ -278,7 +280,7 @@ module PageFinders
     filters = parse_filter_path( options[:path] )
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
-      args = filter.slice(1,-1) # remove first element.
+      args = filter.slice(1..-1) # remove first element.
       self.send(filter_method, qb, *args)
     end
     
