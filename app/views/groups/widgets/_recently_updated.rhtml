@@ -5,4 +5,4 @@
 -%>
 <%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
 
-<%= link_to 'more &raquo;', :action => 'search', :path => ['descending', 'updated_at'] %>
+<%= link_to 'more &raquo;', groups_url(:id => @group, :action => 'search') + "/descending/updated_at" %>

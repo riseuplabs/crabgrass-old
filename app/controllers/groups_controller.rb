@@ -20,8 +20,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    params[:path] = []
-    search()
   end
 
   def archive
@@ -51,11 +49,9 @@ class GroupsController < ApplicationController
       @pages, @page_sections = fetch_pages_from_path(path)
     end
   end
-    
-   
+  
   def search
     @pages, @page_sections = fetch_pages_from_path(params[:path])
-    render :action => 'show'
   end
 
   def tags
