@@ -36,7 +36,7 @@ def garble(range)
   dist = range.last - range.first
   a = rand($text_pool_length-(range.first+dist))
   b = range.first + rand(dist)
-  $text_pool.slice(a,b)
+  $text_pool.slice(a,b).strip
 end
 
 %>
@@ -46,9 +46,9 @@ page<%=i%>:
   id: <%=i%>
   title: "<%= garble(5..50) %>"
   summary: "<%= garble(40..300) %>"
-  <% created = rand(32) %>
+  <% updated = rand(32); created = updated + rand(32) %>
+  updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
-  updated_at: "<%= rand(created).days.ago.to_s(:db) %>"
   <% if rand(3) == 0 %>
   happens_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   <% end %>
