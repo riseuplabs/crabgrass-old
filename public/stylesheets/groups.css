@@ -69,6 +69,24 @@ div#info_panel td#group_info_cell {
   border-left: 1px solid #ccc;
 }
 
+/** searching and archive **/
+
+table.archive-calendar {
+  color: #999;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+table.archive-calendar td {
+  width: 20px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+table.archive-calendar td a {
+  display: block;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 /** group directory **/
 
 div.group-entry {
