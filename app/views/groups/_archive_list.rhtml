@@ -26,6 +26,6 @@
   </table>
 <% end -%>
 
-<%= render :partial => 'pages/list' %>
+<%= render :partial => 'pages/list/table', :locals => {:heading => true, :columns => [:icon, :title, :created_by, :created_at, :contributors_count]} %>
 
 </div>

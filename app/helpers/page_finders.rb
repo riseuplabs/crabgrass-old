@@ -20,15 +20,19 @@ module PageFinders
     attr_accessor :conditions  # the current condition clause we are building
     attr_accessor :values      # array of replacement values for the '?' in conditions
     attr_accessor :order       # the sort order
+    attr_accessor :limit       # the sql limit
+    attr_accessor :offset      # the sql offset
     attr_accessor :tag_count   # running total of the number of tag conditions
     attr_accessor :or_clauses  # used to build current clause of the form (x or x)
     attr_accessor :and_clauses # used to build the current clause of the form (x and x)
-        
+
     def initialize
       self.table_class = Page
       self.conditions  = []
       self.values      = []
       self.order       = nil
+      self.limit       = nil
+      self.offset      = nil
       self.tag_count   = 0
       self.or_clauses  = []
       self.and_clauses = []
@@ -109,7 +113,8 @@ module PageFinders
     'tag' => 1,
     'name' => 1,
     'ascending' => 1,
-    'descending' => 1
+    'descending' => 1,
+    'limit' => 1
   }.freeze
   
   ###############################################################
@@ -220,6 +225,13 @@ module PageFinders
     qb.conditions = []
   end
   
+  def filter_limit(qb,limit)
+    offset = nil
+    limit,offset = limit.split('-') if limit.instance_of? Array 
+    qb.limit = limit.to_i if limit
+    qb.offset = offset.to_i if offset
+  end
+  
   public
   
   class ParsedPath < Array
@@ -288,6 +300,7 @@ module PageFinders
     return {
       :conditions => [qb.sql_for_conditions] + qb.values,
       :joins => qb.sql_for_joins,
+      :limit => qb.limit,
       :order => qb.order,
       :class => qb.table_class, 
       :already_built => true
@@ -361,12 +374,17 @@ module PageFinders
       options[:select] = nil
     end
 
+    # we have to build our own count query because rails finder does
+    # not have the ability to do DISTINCT
     sql_conditions = ActiveRecord::Base.public_sanitize_sql(options[:conditions])
     sql  = "SELECT count(#{count_distinct} #{main_table}.id) FROM #{main_table} "
     sql += "#{count_join} #{options[:joins]} "
     sql += "WHERE #{sql_conditions} "
     sql += "GROUP BY #{main_table}.id "
-    sql += "ORDER BY #{order}"
+    sql += "ORDER BY #{order} "
+    sql += "LIMIT #{options[:limit]} "  if options[:limit]
+    sql += "OFFSET #{options[:offset]} "  if options[:offset]
+    
 
     counts = klass.connection.select_values(sql)
     #logger.error "counts:\n#{counts.inspect}"
@@ -397,7 +415,12 @@ module PageFinders
       options[:path] = path.split('/') if path.is_a? String
       options[:path] = path if path.is_a? Array
     end
-    options       = page_query_from_filter_path(options) unless options[:already_built]
+    options = page_query_from_filter_path(options) unless options[:already_built]
+    if options[:limit]
+      # limit is not compatible with find_pages
+      pages, page_sections = find_and_paginate_pages(options,path)
+      return pages
+    end
     klass         = options[:class]
     main_table    = klass.to_s.underscore + "s"
     
@@ -413,6 +436,8 @@ module PageFinders
       :conditions => options[:conditions],
       :joins      => options[:joins],
       :order      => options[:order] + ", #{main_table}.id",
+      :limit      => options[:limit],
+      :offset     => options[:offset],
       :include    => options[:include],
       :select     => options[:select]
     )
@@ -447,17 +472,20 @@ module PageFinders
   end
 
   def options_for_group(group)
-    options = {:class => GroupParticipation, :path => path}
+    options = {:class => GroupParticipation}
     if logged_in?
-      # the group's pages that we also have access to
+      # the group's pages that current_useralso has access to
+      # this means: the group must have a group participation and one of the following
+      # must be true... the page is public, we have a user participation for it, or a group
+      # that we are a member of has a group participation for the page.
       options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
-      options[:values]     = [@group.id, current_user.all_group_ids, current_user.id, true]
+      options[:values]     = [group.id, current_user.all_group_ids, current_user.id, true]
     else
       # the group's public pages
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
-      options[:values]     = [@group.id, true]
+      options[:values]     = [group.id, true]
     end
-    find_and_paginate_pages options
+    options
   end
 
 

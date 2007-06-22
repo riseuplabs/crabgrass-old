@@ -2,5 +2,8 @@
 Search through all viewable pages.
 </div>
 
-<%= render :partial => 'pages/list' %>
+<%= render :partial => 'pages/list/table', :locals => {:heading => true,
+   :columns => [:icon, :title, :group, :updated_by, :updated_at, :contributors]}
+%>
+
 

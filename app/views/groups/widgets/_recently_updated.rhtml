@@ -1,8 +1,8 @@
-<table class='page-list'>
-<% unless @pages.any? -%>
-  <tr><td colspan="10">no pages</td></tr>
-<% else -%>
-  <%= render :partial => "pages/page_line", :collection => @pages %>
-<% end -%>
-</table>
+<h3 class='landing'>Recently Updated</h3>
+<%
+  pages = find_pages(options_for_group(@group),'/descending/updated_at/limit/10')
+  columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+-%>
+<%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
 
+<%= link_to 'more &raquo;', :action => 'search', :path => ['descending', 'updated_at'] %>

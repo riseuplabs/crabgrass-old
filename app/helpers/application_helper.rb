@@ -213,4 +213,66 @@ module ApplicationHelper
     controller.logged_in?
   end
   
+  #
+  # used to spit out a column value for a single row.
+  # for example:
+  #  page_column(page, :title)
+  # this function exists so we can re-arrange the columns easily.
+  #
+  def page_list_cell(page, column, participation)
+    if column == :icon
+      return page_icon(page)
+    elsif column == :title
+      title = link_to(page.title, page_url(page))
+      if participation and participation.instance_of? UserParticipation
+        title += " " + image_tag("emblems/pending.png", :size => "11x11", :title => 'pending') unless participation.resolved?
+        title += " " + image_tag("emblems/star.png", :size => "11x11", :title => 'star') if participation.star?
+      else
+        title += " " + image_tag("emblems/pending.png", :size => "11x11", :title => 'pending') unless page.resolved?
+      end
+      return title
+    elsif column == :updated_by or column == :updated_by_login
+      return( page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;')
+    elsif column == :created_by or column == :created_by_login
+      # TODO: there is no created_by_login column, i think we should add one!
+      return( page.created_by ? link_to_user(page.updated_by) : '&nbsp;')
+    elsif column == :updated_at
+      return friendly_date(page.updated_at)
+    elsif column == :created_at
+      return friendly_date(page.created_at)
+    elsif column == :happens_at
+      return friendly_date(page.happens_at)
+    elsif column == :group or column == :group_name
+      return link_to_group(page.group_name)
+    elsif column == :contributors_count or column == :contributors
+      return page.contributors_count
+    else
+      return page.send(column)
+    end
+  end
+  
+  def page_list_heading(column=nil)
+    if column == :group or column == :group_name
+      list_heading 'group'.t, 'group_name'
+    elsif column == :icon
+      "<th></th>"
+    elsif column == :updated_by or column == :updated_by_login
+      list_heading 'updated by'.t, 'updated_by_login'
+    elsif column == :created_by or column == :created_by_login
+      # can't sort on this yet! there is no created_by_login field in pages.
+      "<th>created by</th>"
+    elsif column == :updated_at
+      list_heading 'updated'.t, 'updated_at'
+    elsif column == :created_at
+      list_heading 'created'.t, 'created_at'
+    elsif column == :happens_at
+      list_heading 'happens'.t, 'happens_at'
+    elsif column == :contributors_count or column == :contributors
+      #"<th>" + image_tag('ui/person-dark.png') + "</th>"
+      list_heading image_tag('ui/person-dark.png'), 'contributors_count'
+    elsif column
+      list_heading column.to_s.t, column.to_s
+    end    
+  end
+  
 end

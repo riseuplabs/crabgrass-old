@@ -1,0 +1,46 @@
+<%#
+
+a partial to display a list of pages in a table, one page per row.
+
+arguments
+---------
+
+pages: an array of pages.
+
+columns: what columns to display. default is 
+  [:icon, :title, :updated_by, :update_at, :posts]
+
+heading: show heading if set to true.
+
+-%>
+<%
+
+pages ||= @pages
+columns ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
+heading ||= false
+
+-%>
+<table class='page-list'>
+<% unless pages.any? -%>
+  <tr><td colspan="10">no pages</td></tr>
+<% else -%>
+
+<% if heading -%>
+  <tr class='page-list-heading'>
+<% columns.each do |column| -%>
+    <%= page_list_heading(column) %>
+<% end -%>
+  </tr>
+<% end -%>
+
+<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns} %>
+
+<% if @page_sections and @page_sections.page_count > 1 -%>
+  <tr class='pagination'><td colspan='100'>
+    <%= pagination_links @page_sections, :name => 'section', :window_size => 10 %>
+  </tr>
+<% end -%>
+
+<% end -%>  
+</table>
+

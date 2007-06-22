@@ -9,6 +9,5 @@ module PagesHelper
   #    {:type => tool.tool_type.t, :icon => tool.icon, :class => tool.to_s} unless tool.internal?
   #  }.compact
   #end
-  
-  
+    
 end

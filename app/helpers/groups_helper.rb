@@ -1,5 +1,7 @@
 module GroupsHelper
 
+  include PageFinders
+  
   def committee?
     @group.instance_of? Committee
   end

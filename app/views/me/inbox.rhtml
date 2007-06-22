@@ -7,7 +7,9 @@ Inbox of pages I am actively participating in or watching for changes. <%= link_
     <%= render :partial => 'me/folders', :locals => {:mode => 'me', :users => @user.contacts, :groups => @user.groups} %>
   </div>
   <div id='page-list'>
-    <%= render :partial => 'pages/list' %>
+    <%= render :partial => 'pages/list/table', :locals => {:heading => true,
+        :columns => [:icon, :title, :group, :updated_by, :updated_at, :contributors]}
+    %>
   </div>
 </div>
 

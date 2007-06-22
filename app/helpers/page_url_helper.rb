@@ -152,11 +152,11 @@ module PageUrlHelper
         arrow = image_tag('ui/sort-desc.png')
       end
     else
-      link = page_path_link(text.gsub(' ','&nbsp;'), "ascending/#{action}")
+      link = page_path_link(text, "ascending/#{action}")
       selected = select_by_default
       arrow = image_tag('ui/sort-desc.png') if selected
     end
-    "<td class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</td>"
+    "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
   end
 
   # used to create the page list headings
