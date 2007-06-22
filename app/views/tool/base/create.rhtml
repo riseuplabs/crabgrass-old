@@ -14,6 +14,7 @@
   <td align='right'><b>summary</b></td>
   <td><%= text_area 'page', 'summary', :size => '30x3' %></td>
 </tr>
+<% if current_user.all_groups.any? -%>
 <tr>
   <td align='right'><b>group</b></td>
   <td>
@@ -22,6 +23,7 @@
     ) %>
   </td>
 </tr>
+<% end -%>
 <tr>
   <td align='right'><b>tags</b></td>
   <td><%= text_field_tag 'tag_list', '', :size => 30 %></td>

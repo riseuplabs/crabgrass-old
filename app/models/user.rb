@@ -33,7 +33,7 @@ class User < AuthenticatedUser
     :after_remove => :clear_group_id_cache
 
   # all groups, including groups we have indirect access to (ie committees and networks)
-  has_many :all_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_ids.join(",")})'
+  has_many :all_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{ all_group_ids.any? ? all_group_ids.join(",") : "NULL" })'
   
   # peers are users who share at least one group with us
   has_many :peers, :class_name => 'User',
