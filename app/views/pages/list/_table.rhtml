@@ -16,7 +16,7 @@ heading: show heading if set to true.
 <%
 
 pages ||= @pages
-columns ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
+columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 heading ||= false
 
 -%>

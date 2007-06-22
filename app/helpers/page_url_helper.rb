@@ -128,15 +128,21 @@ module PageUrlHelper
     text = folder_icon(image) + " " + text if image
     link_to text, url_for(:action => 'inbox', :path => path), :class => klass
   end
-  
-  
+    
+  def filter_path
+    @path ||= (params[:path] || [])
+  end
+  def parsed_path
+    return @parsed_path if @parsed_path
+    @parsed_path ||= controller.parse_filter_path(filter_path)
+  end
 
   # used to create the page list headings
   # set member variable @path beforehand if you want 
   # the links to take it into account instead of params[:path]
   def list_heading(text, action, select_by_default=false)
-    path = @path || params[:path] || []
-    parsed = @parsed_path || controller.parse_filter_path(path)
+    path = filter_path
+    parsed = parsed_path
     selected = false
     arrow = ''
     if parsed.keyword?('ascending')
