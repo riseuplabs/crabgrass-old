@@ -1,16 +1,20 @@
-<%=
+<% if @group.tags.any? -%>
 
-@group.tags.collect {|tag|
+<%= @group.tags.collect {|tag|
   path = (params[:path]||[]).dup
   t = tag.to_s
   if path.include? t
     path.delete(t)
-    text = "<b>%s</b>"
+    klass = 'invert'
   else
     path << t
-    text = "%s"
+    klass = ''
   end
-  text % (link_to t, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'))
-}.join(', ')
+  link_to t, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), :class=>klass
+}.join(' ') -%>
 
--%>
+<% else -%>
+
+no tags
+
+<% end -%>

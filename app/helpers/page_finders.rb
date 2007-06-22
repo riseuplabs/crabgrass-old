@@ -209,9 +209,9 @@ module PageFinders
 
   def filter_tag(qb,tag_name)
     if tag = Tag.find_by_name(tag_name)
+      qb.tag_count += 1
       qb.conditions << "taggings#{qb.tag_count}.tag_id = ?"
       qb.values << tag.id
-      qb.tag_count += 1
     else
       qb.conditions << "FALSE"
     end
