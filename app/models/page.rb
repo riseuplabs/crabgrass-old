@@ -132,9 +132,12 @@ class Page < ActiveRecord::Base
   ### callbacks ###
 
   def before_create
-    self.created_by = User.current if User.current
-    self.updated_by = created_by
-    self.updated_by_login = updated_by.login if updated_by  # denormalize hack
+    if User.current
+      self.created_by = User.current 
+      self.created_by_login = created_by.login
+      self.updated_by = created_by
+      self.updated_by_login = created_by.login
+    end
     self.type = self.class.to_s
     # ^^^^^ to work around bug in rails with namespaced
     # models. see http://dev.rubyonrails.org/ticket/7630

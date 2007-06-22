@@ -262,6 +262,11 @@ module PageFinders
       return nil unless element
       return element[1]
     end
+    
+    # returns true if arg is the value for a sort keyword
+    def sort_arg?(arg)
+      (keyword?('ascending') and first_arg_for('ascending') == arg) or (keyword?('descending') and first_arg_for('descending') == arg)
+    end
   end
   
   # parses a page filter path into an array like so...

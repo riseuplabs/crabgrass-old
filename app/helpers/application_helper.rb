@@ -263,8 +263,7 @@ module ApplicationHelper
     elsif column == :updated_by or column == :updated_by_login
       return( page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;')
     elsif column == :created_by or column == :created_by_login
-      # TODO: there is no created_by_login column, i think we should add one!
-      return( page.created_by ? link_to_user(page.updated_by) : '&nbsp;')
+      return( page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;')
     elsif column == :updated_at
       return friendly_date(page.updated_at)
     elsif column == :created_at
@@ -288,8 +287,7 @@ module ApplicationHelper
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'.t, 'updated_by_login'
     elsif column == :created_by or column == :created_by_login
-      # can't sort on this yet! there is no created_by_login field in pages.
-      "<th>created by</th>"
+      list_heading 'created by'.t, 'created_by_login'
     elsif column == :updated_at
       list_heading 'updated'.t, 'updated_at'
     elsif column == :created_at

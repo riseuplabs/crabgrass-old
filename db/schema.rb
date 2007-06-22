@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 36) do
+ActiveRecord::Schema.define(:version => 37) do
 
   create_table "assets", :force => true do |t|
     t.column "parent_id",    :integer
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 36) do
     t.column "group_id",           :integer
     t.column "group_name",         :string
     t.column "updated_by_login",   :string
+    t.column "created_by_login",   :string
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"

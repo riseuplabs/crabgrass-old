@@ -58,7 +58,7 @@ class GroupsController < ApplicationController
   def search
     @pages, @page_sections = fetch_pages_from_path(params[:path])
     
-    if (parsed_path.keyword?('ascending') and parsed_path.first_arg_for('ascending') == 'created_at') or (parsed_path.keyword?('descending') and parsed_path.first_arg_for('descending') == 'created_at')
+    if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
       @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
     else
       @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
