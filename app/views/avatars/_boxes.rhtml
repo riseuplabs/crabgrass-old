@@ -1,0 +1,23 @@
+<%#
+  # this partial display a grid of little avatar boxes. 
+  # arguments: groups, people, side
+  #
+-%>
+<% side ||= 'right' %>
+<div class='iconboxes'>
+  <% (groups || people).each do |e| -%>
+  <%  url = group_url(:id => e, :action => 'show') if e.is_a? Group
+      url = person_url(:id => e, :action => 'show') if e.is_a? User
+  -%>
+  <div class='iconbox <%=side%>'>
+    <%= link_to avatar_for(e, 'xsmall', :class=>'iconbox'), url -%>
+    <div class='hover'>
+      <%= link_to avatar_for(e, 'small', :class=>'bigiconbox'), url -%>
+      <div class='text'>
+        <span><%= link_to e.name, url %></span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+

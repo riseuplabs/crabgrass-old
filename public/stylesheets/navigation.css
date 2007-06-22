@@ -86,6 +86,9 @@ div.iconboxes div.iconbox {
   float: right;
   margin: 2px;
 }
+div.iconboxes div.iconbox.left {
+  float: left;
+}
 div.iconboxes div.hover {
   display: none;
 }

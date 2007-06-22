@@ -1,31 +1,21 @@
-<h4 class="sectionhead2">Navigation</h4>
-  home<br>
-  events<br>
-  pages<br>
-  members<br>
+<div class='section'>
+<h4>Navigation</h4>
+  <%= link_to 'search', :action => 'search', :id => @group, :path => nil %><br/> 
   <%= link_to 'archive', :action => 'archive', :id => @group, :path => nil %><br/> 
   <%= link_to 'tags',  :action => 'tags', :id => @group %> <br/>
 <!--  <%= link_to 'Calendar', :action => 'calender', :id => @group %> <br/> -->
   <%= link_to 'tasks', :action => 'tasks', :id => @group %> <br/>
- </p>
+</div>
 
-<p>
-<h4 class="sectionhead2">Actions</h4>
+<div class='section'>
+<h4>Actions</h4>
 <% if current_user.member_of?(@group) %>
-
   <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %> <br/>
-
   <% unless committee? -%><%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %><br/>
   <% end -%>
-
-  
   <% if @group.users.size == 1 and current_user.direct_member_of? @group -%>
     <%= post_to "destroy #{@group_type}", group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this #{@group_type}?" %> <br/>
-  <% end %>
-  
+  <% end %> 
 <% end -%>
-
-</p>
-
-<%= render :partial => 'committees' %>
+</div>
 

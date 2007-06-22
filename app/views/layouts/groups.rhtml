@@ -1,10 +1,10 @@
 <% inside_layout 'application' do -%>
 <% if @sidebar -%>
-<div id='group_sidebar'>
+<div id='navbar'>
   <%= render :partial => @sidebar %>
 </div>
-<% end %>
-<div id='group_maincolumn' style="<%="margin-left: 0" unless @sidebar %>">
+<% end -%>
+<div id='maincolumn' style="<%="margin-left: 0" unless @sidebar %>">
   <%= yield %>
 </div>
 <% end -%>

@@ -1,0 +1,7 @@
+<% if @group.users.any? -%>
+<%= render :partial => 'avatars/boxes', :locals => {:people => @group.users, :side => 'left'} %>
+<% else -%>
+(no members)
+<% end -%>
+<br style='clear:both'/>
+<%= link_line(more_members_link, edit_members_link) %>

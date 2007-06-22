@@ -1,42 +1,73 @@
-/** move to another sytle sheet**/
-
-ul{ list-style-type : katakana-iroha ; }
-
 /** layout for groups **/
 
-div#group_sidebar {	
+div#navbar {
+  font-family: arial;	
   float: left;
-  margin-left: 1em;
-  width: 9em;
-  font-size:12px;
-  color: #585858;
-  border-right: 1px solid #848484;
+  width: 8em;
+  color: #666;
+  background-color: #f5f8ff;
+  outline: 1px solid #ccc;
+  border: 1px solid white;
+  padding: 1em;
 }
-div#group_homepage {
-  margin: 1em 0;
-  padding: 0 1em 1em 1em;
-  /* background: #eee;
-  border: 1px solid #ccc; */
-}
-div#group_maincolumn {
-  margin-left: 10em;
+div#maincolumn {
+  margin-left: 9em;
   padding-left: 2.5em;
-  border-left: 0px solid black
-}
-div#group_infopanel {	
-  border-bottom: 1px solid #D8D8D8;
-  padding: 1em	1em 1em 0em;
-}
-div#group_infopanel_left {	
-  width: 20em;
-  float: left;
-}
-div#group_infopanel_right {
-  margin-left: 26em;
-  width: 20em;
-  padding: 0px 10px 10px 20px;
 }
 
+/** sidebar **/
+
+div#navbar h4 {
+  color: #999;
+  font-size: 1em;
+  margin: 0;
+}
+
+div#navbar div.section {
+  margin-bottom: 1em;
+}
+
+/** group landing page **/
+
+h3.landing {
+  font-family: arial;
+	font-size: 1.8em;
+	font-weight: normal;
+	color: #333;
+	margin: 0 0 3px 0;
+}
+
+h3.landing span {
+  font-family: arial;
+  color: #666;
+  font-size: 0.6em;
+  margin-left: 1em;
+}
+
+h4.landing {
+  font-family: arial;
+  font-size: 1.4em;
+  font-weight: normal;
+  color: #333;
+  padding: 0 0 4px 0;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+div#info_panel {
+  background-color: #f5f8ff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+}
+div#info_panel td {
+  vertical-align: top;
+  padding: 0 20px;
+}
+
+div#info_panel td#group_info_cell {
+  border-left: 1px solid #ccc;
+}
 
 /** group directory **/
 

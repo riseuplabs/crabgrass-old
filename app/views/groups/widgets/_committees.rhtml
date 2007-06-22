@@ -1,0 +1,7 @@
+<% if @group.committees.any? -%>
+<%= render :partial => 'avatars/boxes', :locals => {:groups => @group.committees, :side => 'left'} %>
+<% else -%>
+(no committees)
+<% end -%>
+<br style='clear:both'/>
+<%= link_line(create_committee_link) %>

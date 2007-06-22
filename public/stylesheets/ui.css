@@ -137,23 +137,3 @@ tr.page-list-heading th.selected a {
 }
 
 
-/** section headers **/
-
-.sectionhead1{
-	font-size: 24px;
-	font-weight: normal;
-	color: #2E2E2E;
-    letter-spacing: -.03em;
-	margin: 0 0 .5em 0;
-}
-
-	
-.sectionhead2{
-	font-size:14px;
-    font-weight: normal;
-    color: #2E2E2E;
-	border-bottom: 1px solid #848484;
-	margin: 2em .5em .5em 0;
-}
-
-
