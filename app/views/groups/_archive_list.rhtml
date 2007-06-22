@@ -5,26 +5,22 @@
   <% @start_year.upto(@current_year.to_s) do |year| -%>
     <tr>
     <td> <b><%= year %> </b></td>
-    <% '1'.upto('11') do |month| -%>
+    <% '1'.upto('12') do |month| -%>
+      <td> 
       <% if @months.detect{|a|a['year'] == year and a['month'] == month}  -%>
-      <td> 
-      <%= link_to month, :path => year + '-'+ month +'/' + year + '-' + month.succ %> </td>
+        <% parsed = parse_filter_path(params[:path])
+        if parsed.first_arg_for('month').to_i == month.to_i or (parsed.first_arg_for('month') == nil and month.to_i == @current_month)
+          month_link =  '<b>'+month+'</b>'
+        end -%>
+        <%= link_to month_link || month, :path => 'month/' + month + '/year/' + year %> 
       <% else %>
-        <td> <%= month  %>  </td>
+        <%= month  %> 
       <% end -%>
-    <% end -%>
-    <% month = '12' %>
-    <% if @months.detect{|a|a['year'] == year and a['month'] == month}  -%>
-      <td> 
-      <%= link_to month, :path => year + '-'+ month +'/' + year.succ + '-1' %> 
       </td>
-    <% else %>
-      <td> <%= month  %>  </td>
     <% end -%>
-    </tr>
-  <% end -%>
-  </table>
+  <% end -%>   
 <% end -%>
+
 
 <%= render :partial => 'pages/list/table', :locals => {:heading => true, :columns => [:icon, :title, :created_by, :created_at, :contributors_count]} %>
 

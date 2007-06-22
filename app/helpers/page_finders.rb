@@ -103,8 +103,10 @@ module PageFinders
     'stars' => 1,
     'upcoming' => 0,
     'ago' => 2,
-    'created-after' => 1,
-    'created-befor' => 1,
+    'created_after' => 1,
+    'created_before' => 1,
+    'month' => 1,
+    'year' => 1,
     'recent' => 1,
     'old' => 1,
     'type' => 1,
@@ -165,10 +167,20 @@ module PageFinders
   end
   
   def filter_created_before(qb,date)
-    year, month, day = path.pop.split('-')
+    year, month, day = date.split('-')#path.pop.split('-')
     date = Time.utc(year, month, day)
     qb.conditions << 'pages.created_at < ?'
     qb.values << date
+  end
+ 
+  def filter_month(qb,month)
+    qb.conditions << 'MONTH(pages.created_at) = ?'
+    qb.values << month.to_i
+  end
+
+  def filter_year(qb,year)
+    qb.conditions << 'YEAR(pages.created_at) = ?'
+    qb.values << year.to_i
   end
   
 #  def filter_recent(qb)
@@ -262,7 +274,7 @@ module PageFinders
   # keyword (with its included arguments). 
   
   def parse_filter_path(path)
-    return [] unless path
+    return ParsedPath.new unless path
     path = path.split('/') if path.instance_of? String
     path = path.reverse
     parsed_path = ParsedPath.new

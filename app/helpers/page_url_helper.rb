@@ -169,14 +169,14 @@ module PageUrlHelper
         if folder == 'ascending' or folder == 'descending'
           old_path.pop
         else 
-          prefix = prefix  + folder + '/' 
+          prefix = "#{prefix}#{folder}/" 
         end
       end 
     end
     hash[:path] = prefix + path.to_s
     #for tags this isn't right:
     # todo: do not hard code the action here.
-    if params[:controller] == 'groups'
+    if params[:controller] == 'groups' && params[:action] == 'show'
       hash[:action] = 'search'
     elsif params[:controller] == 'me' && params[:action] == 'index'
       hash[:action] = 'inbox'

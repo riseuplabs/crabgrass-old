@@ -40,18 +40,14 @@ class GroupsController < ApplicationController
       @start_year = @months[0]['year'] 
       @current_year = (Date.today).year
       @current_month = (Date.today).month
-      next_month = @current_month.succ 
-      if @current_month == 12
-        year_next_month = @current_year.succ
-        month_next_month = 1
-      else 
-        year_next_month = @current_year
-        month_next_month = @current_month.succ 
-      end 
-      month_now = @current_year.to_s + "-" + @current_month.to_s
-      month_next = year_next_month.to_s + "-" + month_next_month.to_s
-      dates = params[:path] || [month_now, month_next]
-      path = ['created-after', dates[0], 'created-before', dates[1]]
+      path = params[:path] || []
+      parsed = parse_filter_path(params[:path])
+      unless parsed.keyword?('month')
+        path << 'month' << @current_month
+      end
+      unless parsed.keyword?('year')
+        path << 'year' << @current_year
+      end
       @pages, @page_sections = fetch_pages_from_path(path)
     end
   end
