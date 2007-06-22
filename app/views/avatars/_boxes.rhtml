@@ -3,9 +3,13 @@
   # arguments: groups, people, side
   #
 -%>
-<% side ||= 'right' %>
+<%
+  side ||= 'right' 
+  groups ||= nil
+  people ||= nil
+%>
 <div class='iconboxes'>
-  <% (groups || people).each do |e| -%>
+  <% (groups || people || []).each do |e| -%>
   <%  url = group_url(:id => e, :action => 'show') if e.is_a? Group
       url = person_url(:id => e, :action => 'show') if e.is_a? User
   -%>
