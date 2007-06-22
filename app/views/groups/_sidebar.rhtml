@@ -1,10 +1,9 @@
 <div class='section'>
 <h4>Navigation</h4>
-  <%= link_to 'search', :action => 'search', :id => @group, :path => nil %><br/> 
-  <%= link_to 'archive', :action => 'archive', :id => @group, :path => nil %><br/> 
-  <%= link_to 'tags',  :action => 'tags', :id => @group %> <br/>
-<!--  <%= link_to 'Calendar', :action => 'calender', :id => @group %> <br/> -->
-  <%= link_to 'tasks', :action => 'tasks', :id => @group %> <br/>
+  <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %><br/> 
+  <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %><br/> 
+  <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %><br/>
+  <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %> <br/>
 </div>
 
 <div class='section'>

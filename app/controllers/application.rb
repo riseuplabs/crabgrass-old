@@ -76,5 +76,11 @@ class ApplicationController < ActionController::Base
   def content_tag(tag, content)
     "<#{tag}>#{content}</#{tag}>"
   end
-    
+   
+  # some helpers we include in controllers. this allows us to 
+  # grab the controller that will work in a view context and a
+  # controller context.
+  def controller
+    self
+  end 
 end

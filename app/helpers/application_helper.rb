@@ -49,7 +49,7 @@ module ApplicationHelper
   end
   
   # arg might be a user object, a user id, or the user's login
-  def link_to_user(arg, options={})
+  def login_and_path_for_user(arg, options={})
     if arg.is_a? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
       login = User.find(arg).login 
@@ -60,10 +60,25 @@ module ApplicationHelper
     end
     #link_to login, :controller => '/people', :action => 'show', :id => login if login
     action = options[:action] || 'show'
-    link_to login, "/people/#{action}/#{login}", :class => 'name_link'
+    if action == 'show'
+      path = "/#{login}"
+    else
+      path = "/people/#{action}/#{login}"
+    end
+    [login, path]
+  end
+  
+  def url_for_user(arg, options={})
+    login, path = login_and_path_for_user(arg,options)
+    path
+  end
+  
+  def link_to_user(arg, options={})
+    login, path = login_and_path_for_user(arg,options)
+    link_to login, path, :class => 'name_link'
   end
 
-  def link_to_group(arg, options={})
+  def name_and_path_for_group(arg,options={})
     if arg.instance_of? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
       name = Group.find(arg).name
@@ -79,7 +94,21 @@ module ApplicationHelper
     display_name ||= name
     display_name = options[:text] % display_name if options[:text]
     action = options[:action] || 'show'
-    path = "/groups/#{action}/#{name}"
+    if action == 'show'
+      path = "/#{name}"
+    else
+      path = "/groups/#{action}/#{name}"
+    end
+    [display_name, path]  
+  end
+
+  def url_for_group(arg, options={})
+    display_name, path = name_and_path_for_group(arg,options)
+    path
+  end
+  
+  def link_to_group(arg, options={})
+    display_name, path = name_and_path_for_group(arg,options)
     ret = link_to display_name, path, :class => 'name_link'
     if options[:avatar]
       ret = link_to(avatar_for(arg, options[:avatar]),path) + " " + ret

@@ -16,7 +16,7 @@ module GroupsHelper
   end
   
   def edit_settings_link
-    link_to 'edit settings'.t, :action => 'edit', :id => @group
+    link_to 'edit settings'.t, group_url(:action => 'edit', :id => @group)
   end
   
   def leave_group_link
@@ -36,7 +36,7 @@ module GroupsHelper
   end
   
   def create_committee_link
-    link_to 'create committee'.t, :action => 'create', :parent_id => @group.id
+    link_to 'create committee'.t, group_url(:action => 'create', :parent_id => @group.id)
   end
   
   def more_members_link

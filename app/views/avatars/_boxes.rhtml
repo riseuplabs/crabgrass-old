@@ -10,8 +10,8 @@
 %>
 <div class='iconboxes'>
 <% (groups || people || []).each do |e| -%>
-<%  url = group_url(:id => e, :action => 'show') if e.is_a? Group
-    url = person_url(:id => e, :action => 'show') if e.is_a? User
+<%  url = url_for_group(e) if e.is_a? Group
+    url = url_for_user(e) if e.is_a? User
 -%>
   <div class='iconbox <%=side%>'>
     <%= link_to avatar_for(e, 'xsmall', :class=>'iconbox'), url %>

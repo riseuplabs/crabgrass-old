@@ -34,13 +34,11 @@
 class DispatchController < ApplicationController
 
   def process(request, response, method = :perform_action, *arguments)
-    super(request, response, :index)
+    super(request, response, :dispatch)
   end
 
-  def index
+  def dispatch
     begin
-      #@req_host = request.env["HTTP_HOST"]
-      #@req_url = request.env["PATH_INFO"]
       find_controller.process(request, response)
     rescue NameError
       @user = current_user
@@ -67,7 +65,6 @@ class DispatchController < ApplicationController
     page_handle = params[:_page]
     context = params[:_context]
     if context
-      #context.sub!(/^.*\+/,'') # remove committee name
       if context =~ /\ /
         # we are dealing with a committee!
         context.sub!(' ','+')
@@ -76,7 +73,11 @@ class DispatchController < ApplicationController
       @user  = User.find_by_login(context) unless @group
     end
 
-    if page_handle =~ / (\d+)$/ || page_handle =~ /^(\d+)$/
+    if page_handle.nil?
+      return controller_for_groups if @group
+      return controller_for_people if @user
+      raise NameError.new
+    elsif page_handle =~ / (\d+)$/ || page_handle =~ /^(\d+)$/
       # if page handle ends with [:space:][:number:] or entirely just numbers
       # then find by page id. (the url actually looks like "my-page+52", but
       # pluses are interpreted as spaces). find by id will always return a
@@ -163,6 +164,18 @@ class DispatchController < ApplicationController
     #params[:id] = page
     params[:controller] = page.controller
     new_controller("Tool::#{page.controller.camelcase}Controller")
+  end
+  
+  def controller_for_groups
+    params[:action] = 'show'
+    params[:controller] = 'groups'
+    new_controller('GroupsController')
+  end
+  
+  def controller_for_people
+    params[:action] = 'show'
+    params[:controller] = 'people'
+    new_controller('PeopleController')
   end
   
 end

@@ -48,8 +48,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'tool/:controller/:action/:id'
   
   # our default route is sent to the dispatcher
-  map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'index', :_page_action => 'show', :id => nil
-  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'index', :_page_action => 'show', :id => nil
+  map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+  map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
 end
 
 # debug routes

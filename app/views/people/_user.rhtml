@@ -2,7 +2,7 @@
 <div style='float: left; text-align: center; margin: 1em;'>
 <%=
   link_to "#{avatar_for user, 'small'}<br/><span>#{user.login}</span>",
-    {:controller => 'people', :action => 'show', :id => user},:class=>'imglink'
+    url_for_user(user),:class=>'imglink'
 %>
 </div>
 <% end %>

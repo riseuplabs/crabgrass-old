@@ -5,6 +5,11 @@ class PeopleController < ApplicationController
 
   prepend_before_filter :fetch_user
   skip_before_filter :login_required
+
+  def initialize(options={})
+    super()
+    @user = options[:user]   # the user context, if any
+  end
   
   def index
     list
@@ -139,7 +144,7 @@ class PeopleController < ApplicationController
   end
   
   def fetch_user 
-    @user = User.find_by_login params[:id]
+    @user ||= User.find_by_login params[:id] if params[:id]
     @is_contact = (logged_in? and current_user.contacts.include?(@user))
     true
   end
