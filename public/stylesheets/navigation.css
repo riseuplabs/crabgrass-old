@@ -103,9 +103,12 @@ div.iconboxes div.iconbox:hover div.hover {
 }
 div.iconbox div.hover div.text {
   position: absolute;
-  width: 100em;
+  width: 20em;
   right: 0px;
   top: 37px
+}
+div.iconbox.left div.hover div.text {
+  left: 0px;
 }
 div.iconbox div.hover div.text span {
   background: #eee;

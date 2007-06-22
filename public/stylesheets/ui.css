@@ -45,6 +45,10 @@ a.dotted {
   border-bottom: 1px #999 dotted;
   outline: 0;
 }
+a.invert {
+  color: white;
+  background-color: #003399;
+}
 a.imglink { text-decoration: none; }
 a.imglink span { text-decoration: underline; }
 img.avatar { vertical-align: middle; } 
