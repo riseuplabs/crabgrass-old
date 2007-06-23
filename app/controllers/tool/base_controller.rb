@@ -74,13 +74,20 @@ class Tool::BaseController < ApplicationController
   end
   
   def login_or_public_page_required
-    return true if @page.nil? or (@page.public? and action_name == 'show')
-    return login_required
+    if action_name == 'show' and @page and @page.public?
+      true
+    else
+      return login_required
+    end
   end
   
   # this needs to be fleshed out for each action
   def authorized?
-    return current_user.may?(:admin, @page)
+    if @page
+      current_user.may?(:admin, @page)
+    else
+      true
+    end
   end
   
   def fetch_page_data

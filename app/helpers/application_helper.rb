@@ -271,7 +271,7 @@ module ApplicationHelper
     elsif column == :happens_at
       return friendly_date(page.happens_at)
     elsif column == :group or column == :group_name
-      return link_to_group(page.group_name)
+      return( page.group_name ? link_to_group(page.group_name) : '&nbsp;')
     elsif column == :contributors_count or column == :contributors
       return page.contributors_count
     else
