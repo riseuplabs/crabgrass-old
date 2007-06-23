@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
     :redirect_to => { :action => :list }
 
   prepend_before_filter :fetch_user
-  skip_before_filter :login_required
+  skip_before_filter :login_required, :only => ['index','list','show']
 
   def initialize(options={})
     super()

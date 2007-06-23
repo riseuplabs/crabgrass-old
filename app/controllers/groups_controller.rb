@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
   stylesheet 'groups'
   
   prepend_before_filter :find_group, :except => ['list','create','index']
-  skip_before_filter :login_required
+  skip_before_filter :login_required, :only => ['show', 'index','list']
 
   def initialize(options={})
     super()
