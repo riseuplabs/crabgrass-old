@@ -29,14 +29,16 @@ td.rendered {
   vertical-align: top;
   padding: 3px;
 }
-
+p > code {
+  white-space: pre;
+}
 <% end %>
 <%
 
 def row(text)
   %Q(
 <tr>
-  <td class='code'><pre>#{text}</pre></td>
+  <td class='code'><pre>#{text.gsub('<','&lt;')}</pre></td>
   <td><b>&rarr;</b></td>
   <td class='rendered'>#{GreenCloth.new(text).to_html}</td>
 </tr>
@@ -54,6 +56,9 @@ end
 %>
 
 <table cellpadding='0' cellspacing='10' id='maintable'>
+<tr><td colspan="3">
+Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. 
+</tr></td>
 <%=  
 
   header('Paragraphs and line breaks') +
@@ -61,17 +66,16 @@ end
 Paragraphs
 ===========
 
-Paragraphs are separated by a blank line.
-This is the first paragraph.
+Paragraphs are separated by a blank line. This is the first paragraph.
 
-Followed by another.
-Lines within the paragraph will wrap.
+Followed by another very fine paragraph. 
 
 Line breaks
 -----------
 
-You can force 
-a line break by ending the line with a space.
+Paragraphs will
+contain line breaks
+everywhere you type return.
 END
 
   header('Lists') +
@@ -88,13 +92,17 @@ END
 # or perhaps take a nap instead.
 END
 
-  header('Blocks') +
+  header('Blockquotes') +
   row(<<END) +
 Blockquotes are indented text.
 bq. This is a blockquote.
 
 > this is also a blockquote
 > in 'email' style.
+
+  this is a blockquote
+  that is formed by starting the
+  paragraph with spaces.
 END
 
   header('Formatting') +
@@ -143,12 +151,41 @@ END
 | kakapo    | green  | walk |
 | penguin   | black  | swim |
 END
-  row(<<END) 
+  row(<<END) +
 |_. bird    |_. color |_. locomotion  |
 | macaw     | red     | fly  |
 | kakapo    | green   | walk |
 | penguin   | black   | swim |
 END
+
+  header('Preformatted Code') +
+  row(<<END) +
+Here is some @inline code that is *not* processed@ for formatting.
+
+<pre>
+this paragraph is
+    preformatted
+         with some really impressive text.
+</pre>
+
+<code>
+def fibonacci(max)
+  i1, i2 = 1, 1
+  while i1 <= max
+    yield i1
+    i1, i2 = i2, i1+i2
+  end
+end
+</code>
+END
+
+  header('Hanging Indent') +
+  row(<<END) 
+If you have a single line of text
+  followed by some indented text,
+  It will have a hanging indent.
+END
+
 %>
 
 <tr><td>

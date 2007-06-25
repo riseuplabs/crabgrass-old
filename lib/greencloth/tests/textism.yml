@@ -1,0 +1,198 @@
+---
+in: h1. Header 1
+out: <h1>Header 1</h1>
+---
+in: h2. Header 2
+out: <h2>Header 2</h2>
+---
+in: h3. Header 3
+out: <h3>Header 3</h3>
+---
+in: |-
+  Any old text.
+
+  bq. A block quotation.
+
+  Any old text.
+
+out: |-
+  <p>Any old text.</p>
+  
+  	<blockquote>
+  		<p>A block quotation.</p>
+  	</blockquote>
+  
+  <p>Any old text.</p>
+
+---
+in: |-
+  # A first item
+  # A second item
+  # A third item
+  # A fourth item
+out: |-
+  <ol>
+  	<li>A first item</li>
+  		<li>A second item</li>
+  		<li>A third item</li>
+  		<li>A fourth item</li>
+  	</ol>
+---
+in: |-
+  * A first item
+  * A second item
+  * A third item
+  * A fourth item
+
+out: |-
+  <ul>
+  	<li>A first item</li>
+  		<li>A second item</li>
+  		<li>A third item</li>
+  		<li>A fourth item</li>
+  	</ul>
+
+---
+in: _a phrase_
+out: <p><em>a phrase</em></p>
+---
+in: __a phrase__
+out: <p><i>a phrase</i></p>
+---
+in: '*a phrase*'
+out: <p><strong>a phrase</strong></p>
+---
+in: '**a phrase**'
+out: <p><b>a phrase</b></p>
+---
+in: '*(a)* a'
+out: <p><strong>(a)</strong> a</p>
+---
+in: '*(a)* *'
+out: <p><strong>(a)</strong> *</p>
+---
+in: Nabokov's ??Pnin??
+out: <p>Nabokov&#8217;s <cite>Pnin</cite></p>
+---
+in: -a phrase-
+out: <p><del>a phrase</del></p>
+---
+in: +a phrase+
+out: <p><ins>a phrase</ins></p>
+---
+in: ^a phrase^
+out: <p><sup>a phrase</sup></p>
+---
+in: ~a phrase~
+out: <p><sub>a phrase</sub></p>
+# ---
+# in: %(caps)SPAN%
+# out: <p><span class="caps">SPAN</span>
+---
+in: %{color:red}red%
+out: <p><span style="color:red;">red</span></p>
+---
+in: _(big)red_
+out: <p><em class="big">red</em></p>
+---
+in: p(bob). A paragraph
+out: <p class="bob">A paragraph</p>
+---
+in: p{color:#ddd}. A paragraph
+out: <p style="color:#ddd;">A paragraph</p>
+---
+in: p[fr]. A paragraph
+out: <p lang="fr">A paragraph</p>
+---
+in: h2()>. right-aligned header2, indented 1em both side
+out: <h2 style="padding-left:1em;padding-right:1em;text-align:right;">right-aligned header2, indented 1em both side</h2>
+---
+in: h3=. centered header
+out: <h3 style="text-align:center;">centered header</h3>
+---
+in: '!>/image.gif! right-aligned image'
+out: <p style="float:right"><img src="/image.gif" alt="" /> right-aligned image</p>
+---
+in: p[no]{color:red}. A Norse of a different colour.
+out: <p style="color:red;" lang="no">A Norse of a different colour.</p>
+---
+in: |-
+  |This|is|a|simple|table|
+  |This|is|a|simple|row|
+out: |-
+  <table>
+  		<tr>
+  			<td>This</td>
+  			<td>is</td>
+  			<td>a</td>
+  			<td>simple</td>
+  			<td>table</td>
+  		</tr>
+  		<tr>
+  			<td>This</td>
+  			<td>is</td>
+  			<td>a</td>
+  			<td>simple</td>
+  			<td>row</td>
+  		</tr>
+  	</table>
+---
+in: |-
+  table{border:1px solid black}.
+  |This|is|a|row|
+  |This|is|a|row|
+out: |-
+  <table style="border:1px solid black;">
+  		<tr>
+  			<td>This</td>
+  			<td>is</td>
+  			<td>a</td>
+  			<td>row</td>
+  		</tr>
+  		<tr>
+  			<td>This</td>
+  			<td>is</td>
+  			<td>a</td>
+  			<td>row</td>
+  		</tr>
+  	</table>
+---
+in: '{background:#ddd}. |This|is|a|row|'
+out: |-
+  <table>
+  		<tr style="background:#ddd;">
+  			<td>This</td>
+  			<td>is</td>
+  			<td>a</td>
+  			<td>row</td>
+  		</tr>
+  	</table>
+---
+in: |-
+  |{background:#ddd}. Cell with gray background|
+  |\2. Cell spanning 2 columns|
+  |/3. Cell spanning 3 rows|
+  |>. Right-aligned cell|
+out: |-
+  <table>
+  		<tr>
+  			<td style="background:#ddd;">Cell with gray background</td>
+  		</tr>
+  		<tr>
+  			<td colspan="2">Cell spanning 2 columns</td>
+  		</tr>
+  		<tr>
+  			<td rowspan="3">Cell spanning 3 rows</td>
+  		</tr>
+  		<tr>
+  			<td style="text-align:right;">Right-aligned cell</td>
+  		</tr>
+  	</table>
+# ---
+# in: |-
+#   This is a "link":bob to Bob's website.
+# 
+#   [bob]http://itsbob.com/index.html
+---
+in: ACLU(American Civil Liberties Union)
+out: <p><acronym title="American Civil Liberties Union">ACLU</acronym></p>

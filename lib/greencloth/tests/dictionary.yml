@@ -1,0 +1,36 @@
+---
+in: |-
+  this is the title
+    this is the definition
+out: |-
+  <dl>
+  <dt>this is the title</dt>
+  <dd>this is the definition</dd>
+  </dl>
+---
+in: |-
+  this one
+    has *three*
+    definitions
+    to read
+  
+  and a paragraph afterword.
+out: |-
+  <dl>
+  <dt>this one</dt>
+  <dd>has <strong>three</strong></dd>
+  <dd>definitions</dd>
+  <dd>to read</dd>
+  </dl>
+  
+  <p>and a paragraph afterword.</p>
+---
+in: |-
+  this is the title a normal paragraph
+  without a
+    definition
+out: |-
+  <p>this is the title a normal paragraph<br />without a<br />  definition</p>
+
+
+

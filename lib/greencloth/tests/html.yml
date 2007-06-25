@@ -1,0 +1,4 @@
+---
+in: "this line <b>has</b> a lot of <a>html</a> in it."
+out: "<p>this line &lt;b&gt;has&lt;/b&gt; a lot of &lt;a&gt;html&lt;/a&gt; in it.</p>"
+

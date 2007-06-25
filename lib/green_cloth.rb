@@ -14,13 +14,9 @@
 # GreenCloth changes from RedCloth:
 # 
 # - links and references are in a totally different format
-# - when specifying 'atx-style' headers, more # means a bigger header.
 # - horizontal rules are disabled
 # - no inline html is allowed
-# - hard breaks
-#   - created by short line
-#   - can be forced by ending with a space
-#   - can be disabled by ending with a hypen
+# - hard breaks on every return
 #
 # GreenCloth links
 #
@@ -66,6 +62,9 @@
 #   :hard_breaks   single newlines will be converted to HTML break tags.
 #
 
+require 'rubygems'
+require 'redcloth'
+
 class GreenCloth < RedCloth
 
   # override default rules
@@ -75,6 +74,7 @@ class GreenCloth < RedCloth
     :block_textile_lists,
     :block_textile_prefix,
     :block_markdown_bq,
+    :block_dictionary,
     :inline_crabgrass_link,
     :inline_textile_image,
     :inline_textile_code,
@@ -84,57 +84,98 @@ class GreenCloth < RedCloth
   ]
 
   def initialize(string, default_group_name = 'page')
-    # html cleaning in redcloth is reportedly broken, and i can't
-    # get it working either, so here it is disabled for good measure.
-    @filter_html = false 
-    @hard_breaks = true
     @default_group = default_group_name
-    super( escape_html_tags(string) )
+    super( string )
   end
   
   def to_html(*rules)
-    super(DEFAULT_RULES)
+    green_html(DEFAULT_RULES)
   end
+  
+  # we have our own to_html method so that
+  # we can insert escape_html exactly where
+  # we need to in the procesessing.
+  def green_html( *rules )
+    rules = DEFAULT_RULES if rules.empty?
+    # make our working copy
+    text = self.dup
+       
+    @urlrefs = {}
+    @shelf = []
+    @rules = rules.collect do |rule|
+      rule
+    end.flatten
+
+    # standard clean up
+    incoming_entities text 
+    clean_white_space text 
+
+    # start processor
+    @pre_list = []
+    rip_offtags text
+    escape_html text
+    #no_textile text
+    #hard_break text 
+    unless @lite_mode
+      refs text
+      blocks text
+    end
+    inline text
+    smooth_offtags text
+    retrieve text
+
+    #text.gsub!( /<\/?notextile>/, '' )
+    text.gsub!( /x%x%/, '&#38;' )
+    #clean_html text if filter_html
+    text.strip!
+    text
+  end 
   
   private
   
-  # change hard breaks:
-  # - force break if line ends with a space
-  # - only break on short lines (not working yet!)
-  # - force continuation if line ends with a \ (not working yet!)
- 
-  #SHORT_LINE_RE = /^.{1,40}\n/
-  #END_SPACE_RE = /^ {1,}\n/
-  #HARD_BREAK_RE = Regexp.union(SHORT_LINE_RE, END_SPACE_RE)
   def hard_break( text )
-    text.gsub!( / \n(?!\Z| *([#*=]+(\s|$)|[{|]))/, "\\1<br/>\n" ) if hard_breaks
-    #text.gsub!( HARD_BREAK_RE, "\\0(((br)))\n" )
   end
   
-  #
-  # the clean_html function of redcloth seems to not work, and is reported by others to 
-  # not work. I don't understand what the code is trying to do anyway. 
-  # So, we have added our own simple filter to simply escape < >
-  #
-  # TODO: this breaks <pre> blocks, which is the only way to do code blocks in textile.
-  #
-  # TODO: bluecloth actually goes through the work of parsing the html
+  def green_hard_break( text )
+    # redcloth original:
+    text.gsub!( /(.)\n(?!\Z| *([#*=]+(\s|$)|[{|]))/, "\\1<br />" )
+    
+    # reading this regexp:
+    # (.)         any single character
+    # \n          followed by a newline
+    # (?!         look ahead to the next line and fail if...
+    #   \Z        the line is empty
+    #   |         or
+    #    *        zero or more spaces
+    #   (         followed by
+    #     [#*=]+  one or more #*= characters
+    #     (\s|$)  and whitespace or end of line
+    #     |       or 
+    #     [{|]    { or | character
+    #   )
+    # )           end of next line expression.
+  end
+          
+  # escape "<" when it does not in the form of <pre> or <code> or
+  # </pre> or </code> or <redpre# (the latter is used internally for
+  # pre blocks that are removed from the text and then put back later.
+  # 
+  # TODO: bluecloth/markdown actually goes through the work of parsing the html
   # to find matching tags and raises an error if a tag is not properly closed.
   # If we wanted to allow some html, it seems like a good idea to do something
   # like that.
   #
-  def escape_html_tags( text )
-    text.gsub( "<", "&lt;" ) #.gsub( ">", "&gt;" )
-  end
-
-  # override internal redcloth function so that <pre><b>hi</b></pre> doesn't escape "<" twice
-  # this is super hacky and bad, but what to do....
-  def htmlesc( str, mode )
-     str.gsub!( '&lt;', '<')
-     #str.gsub!( '&gt;', '>')
-     super(str, mode)
+  def escape_html( text )
+    text.gsub!(/<(?!\/?(redpre#|pre|code))/, "&lt;" )
   end
 		
+  ###############################################################3
+  # INLINE FILTERS
+  #
+  # Here lie the greencloth inline filters. An inline filter
+  # processes text within a block.
+  #
+  
   CRABGRASS_LINK_RE = /
     (^|.)         # start of line or any character
     \[            # begin [
@@ -186,7 +227,7 @@ class GreenCloth < RedCloth
   # - replace spaces with hypens
   # 
   def nameize(text)
-    text.downcase.gsub(/[^-a-z0-9 \+]/,'').gsub(/[ ]+/,'-') if text
+    text.strip.downcase.gsub(/[^-a-z0-9 \+]/,'').gsub(/[ ]+/,'-') if text
   end
     
   AUTO_LINK_RE = %r{
@@ -229,6 +270,133 @@ class GreenCloth < RedCloth
     l = length - truncate_string.chars.length
     text.chars.length > length ? text.chars[0...l] + truncate_string : text
   end
-   
+
+  #####################################################
+  # BLOCK FILTERS
+  #
+  # Here in lie the custom GreenCloth block filters. These
+  # are filters that do block level formatting, like lists
+  # blockquotes, tables, etc.
+ 
+
+  #
+  # Dictionary entries look like this:
+  # 
+  # term
+  #   entry one
+  #   entry two
+  #
+  
+  DICTIONARY_RE = /\A([^<\n]*)\n^( +.*)/m
+  # start of string
+  # title line is anything but < and \n
+  # followed by definition lines that start with
+  # one or more spaces 
+  
+  def block_dictionary( text )
+    text.gsub!( DICTIONARY_RE ) do |blk|
+      title = $1
+      definitions = $2.gsub(/^ +(.*)$/) do |dd|
+        "<dd>#{$1}</dd>"
+      end
+      "<dl>\n<dt>#{title}</dt>\n#{definitions}\n</dl>"
+    end
+  end
+
+  def block_markdown_bq( text )
+    text.gsub!( MARKDOWN_BQ_RE ) do |blk|
+      blk.gsub!( /^ *> ?/, '' )
+      flush_left blk
+      blocks blk, false, true
+      blk.gsub!( /^(\S)/, "  \\1" ) # add two leading spaces for readability.
+      "<blockquote>\n#{ blk }\n</blockquote>\n\n"
+    end
+  end
+
+  ######################################################
+  # BLOCK PROCESSING
+  #
+  # The core redcloth function for block processing is blocks().
+  # Unfortunately, we need to override this function, because
+  # the redcloth version assumes that leading spacing in the block
+  # means preformatted code. In order to change this behavior
+  # we need our own blocks() function.
+  #
+  # So that I can understand what is going on, I have split the
+  # behavior of blocks() into blocks() and process_single_block(). 
+  # Some variable names have been changed to make the code more
+  # readable (less inscrutable).
+  #
+
+  # Redcloth's block RE
+  # BLOCKS_GROUP_RE = /\n{2,}(?! )/m
+      
+  def blocks(text, indented = false, in_blockquote = false) 
+    text.replace( 
+      text.split( BLOCKS_GROUP_RE ).collect do |blk|
+        process_single_block(blk, indented, in_blockquote)
+      end.join("\n\n")
+    )
+  end
+    
+  def process_single_block(blk, indented, in_blockquote)
+    blk.strip!
+    return "" if blk.empty?
+
+    #debug "process block #{indented} #{in_blockquote} \n/--\n#{blk}\n\\--"
+    
+    # process subsequent blocks that start with
+    # a leading space. if the start of this block
+    # was plain, then leading spaces make the subsequent
+    # blocks into an indented block.
+    started_as_plain = blk !~ /\A[#*> ]/
+    skip_rules_blk = nil
+    blk.gsub!( /((?:\n(?:\n^ +[^\n]*)+)+)/m ) do |iblk|
+      iblk_indented = true if started_as_plain
+      flush_left iblk
+      blocks(iblk, iblk_indented)
+      #iblk.gsub( /^(\S)/, "\t\\1" )
+      if iblk_indented
+        # don't apply block rules to indented blocks
+        skip_rules_blk = iblk; ""
+      else
+        iblk
+      end
+    end
+     
+    # apply block rules
+    block_applied = 0 
+    @rules.each do |rule_name|
+      block_applied += 1 if apply_block_rule(rule_name,blk)
+    end
+    
+    # if no rules applied and indented, then output
+    # a code block, otherwise we have a plain paragraph.
+    if block_applied.zero?
+      if indented
+        #blk = "\t<pre><code>#{ blk }</code></pre>"
+        blk = "<blockquote>#{ blk }</blockquote>"
+      elsif !in_blockquote
+        # apply hard breaks only to plain block where no
+        # block rules have applied and we are not in
+        # an explicit blockquote (ie lines starting >)
+        green_hard_break(blk)
+        blk = "<p>#{ blk }</p>"
+      else
+        blk = "<p>#{ blk }</p>"
+      end
+    end
+    # add back in text of block that bypassed block rules.
+    blk + "\n#{ skip_rules_blk }"
+  end
+
+  def apply_block_rule(rule_name, blk)
+    rule_name.to_s.match /^block_/ and method( rule_name ).call( blk )
+  end
+  
+  def debug(msg)
+    puts "\n====\n#{msg}\n====\n"
+  end
+    
 end
 

@@ -1,0 +1,16 @@
+---
+in: this is a [plain link] in some text
+out: <p>this is a <a href="/page/plain-link">plain link</a> in some text</p>
+---
+in: this is a [namespaced / link] in some text
+out: <p>this is a <a href="/namespaced/link">link</a> in some text</p>
+---
+in: this is a [link to -> something else ] in some text
+out: <p>this is a <a href="/page/something-else">link to</a> in some text</p>
+---
+in: this is a [link to -> namespace / something else ] in some text
+out: <p>this is a <a href="/namespace/something-else">link to</a> in some text</p>
+---
+in: this is a [link to -> /an/absolute/path] in some text
+out: <p>this is a <a href="/an/absolute/path">link to</a> in some text</p>
+

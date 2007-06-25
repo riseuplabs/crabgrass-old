@@ -1,0 +1,81 @@
+---
+in: |-
+  yeah
+  
+    here is a *paragraph*
+    with leading spaces
+  
+  what?
+out: |-
+  <p>yeah</p>
+  <blockquote>here is a <strong>paragraph</strong>
+  with leading spaces</blockquote>
+  <p>what?</p>
+---
+in: |-
+  here is a regular paragraph
+  
+  > this one is a blockquote
+  > and lasts for two lines
+  
+  another regular paragraph
+out: |-
+  <p>here is a regular paragraph</p>
+
+  <blockquote>
+    <p>this one is a blockquote
+    and lasts for two lines</p>
+  </blockquote>
+  
+  <p>another regular paragraph</p>
+---
+in: |-
+  > here is a paragraph
+  >
+  >> with a nested paragraph
+  >> within it.
+  >
+  > what do you think about that?
+out: |-
+  <blockquote>
+    <p>here is a paragraph</p>
+    <blockquote>
+    <p>with a nested paragraph
+    within it.</p>
+    </blockquote>
+    <p>what do you think about that?</p>
+  </blockquote>
+---
+in: |
+  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  > consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  > Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+  > 
+  > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  > id sem consectetuer libero luctus adipiscing.
+out: |-
+  <blockquote>
+    <p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+    consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+    
+    <p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+    id sem consectetuer libero luctus adipiscing.</p>
+  </blockquote>
+in: |
+  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+  >
+  > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  id sem consectetuer libero luctus adipiscing.
+out: |-
+  <blockquote>
+    <p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+    consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+    
+    <p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+    id sem consectetuer libero luctus adipiscing.</p>
+  </blockquote>
+

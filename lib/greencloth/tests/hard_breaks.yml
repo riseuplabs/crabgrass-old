@@ -1,0 +1,17 @@
+---
+in: |-
+  here is a paragraph
+  with many short
+  lines
+out: |-
+  <p>here is a paragraph<br />with many short<br />lines</p>
+---
+in: |-
+  here is a paragraph without any returns in it.
+  
+  and then here comes another one
+  with a line break.
+out: |-
+  <p>here is a paragraph without any returns in it.</p>
+  <p>and then here comes another one<br />with a line break.</p>
+

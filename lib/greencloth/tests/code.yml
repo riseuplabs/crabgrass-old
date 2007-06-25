@@ -1,0 +1,33 @@
+in: do you like my @function@?
+out: <p>do you like my <code>function</code>?</p>
+---
+in: 'This is an empty dictionary: @{}@'
+out: '<p>This is an empty dictionary: <code>{}</code></p>'
+---
+in: |-
+  <pre>
+  _a_ < _b_
+  </pre>
+out: |-
+  <p><pre>
+  _a_ &lt; _b_
+  </pre></p>
+---
+in: |-
+  <code>
+  _a_ < _b_
+  </code>
+out: |-
+  <p><code>
+  _a_ &lt; _b_
+  </code></p>
+---
+in: what about <pre> __inline__</pre> this?
+out: <p>what about <pre> __inline__</pre> this?</p>
+---
+in: |-
+  * @foo@
+  * @bar@
+  * and @x@ is also.
+out: "<ul>\n\t<li><code>foo</code></li>\n\t\t<li><code>bar</code></li>\n\t\t<li>and <code>x</code> is also.</li>\n\t</ul>"
+
