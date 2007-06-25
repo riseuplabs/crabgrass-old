@@ -11,6 +11,12 @@
 <p><label for="user_language">Language</label><br/>
 <%= text_field 'user', 'language'  %></p>
 
+<p><label for="user_website">Website</label><br/>
+<%= text_field 'user', 'website'  %></p>
+
+<p><label for="user_about_me">About me</label><br/>
+<%= text_area 'user', 'about_me', :rows => 10  %></p>
+
 <p><label for="user_password">Password</label><br/>
 <%= password_field 'user', 'password'  %></p>
 

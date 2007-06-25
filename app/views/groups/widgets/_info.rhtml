@@ -3,8 +3,8 @@
 <ul class='plainlist'>
  <li>Category: <b>not set</b></li>
  <li>Admin: <b>unknown</b></li>
- <li>Founded: <b>unknown</b></li>
- <li>Language: <b>Esperanto</b></li>
+ <li>Founded: <b><%= @group.year_founded %></b></li>
+ <li>Language: <b><%= @group.language %></b></li>
 </ul>
 
 <p><%= link_line(edit_settings_link, leave_group_link, join_group_link) %></p>
