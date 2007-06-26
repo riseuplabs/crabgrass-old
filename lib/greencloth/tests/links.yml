@@ -13,4 +13,7 @@ out: <p>this is a <a href="/namespace/something-else">link to</a> in some text</
 ---
 in: this is a [link to -> /an/absolute/path] in some text
 out: <p>this is a <a href="/an/absolute/path">link to</a> in some text</p>
+---
+in: "[link to -> /-dashes/in/the/link-]"
+out: <p><a href="/-dashes/in/the/link-">link to</a></p>
 

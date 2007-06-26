@@ -1,0 +1,10 @@
+---
+in: http://riseup.net/-dashes/in/the/link-
+out: <p><a href="http://riseup.net/-dashes/in/the/link-">riseup.net/-dashes/in/the/link-</a></p>
+---
+in: http://riseup.net/__weirdchar/in/the/link__
+out: <p><a href="http://riseup.net/__weirdchar/in/the/link__">riseup.net/__weirdchar/in/the/link__</a></p>
+---
+in: http://riseup.net/!weirdchar/in/the/link!x
+out: <p><a href="http://riseup.net/!weirdchar/in/the/link!x">riseup.net/!weirdchar/in/the/link!x</a></p>
+

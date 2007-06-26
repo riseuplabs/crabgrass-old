@@ -1,24 +1,34 @@
-#
 # GreenCloth
 # ==========
 # 
-# GreenCloth is a simple subclass customization of RedCloth, which is the defacto
-# text to html converter for ruby, based on a combination of the rules from Textile
-# and Markdown. Textile is designed for full html control, but using 'prettier' inline
-# markup, where as Markdown is designed to look just as good in plain text mode as in
-# formatted html. 
-# 
-# GreenCloth is intended to work with Crabgrass: it's linking system
-# does not apply to other programs.
-# 
-# GreenCloth changes from RedCloth:
-# 
-# - links and references are in a totally different format
-# - horizontal rules are disabled
-# - no inline html is allowed
-# - hard breaks on every return
 #
-# GreenCloth links
+# GreenCloth is derived from RedCloth, the defacto
+# text to html converter for ruby.
+#
+# Improvements from RedCloth
+# --------------------------
+#
+# * URLs are not accidently formatted (for example if a word *like/this* appears in the url, it will not be bold).
+#
+# * Automagic URL recognition (ie http://riseup.net is turned into a link).
+#
+# * Hard breaks are enabled, and work better (applied in fewer situations).
+#
+# * Added "dictionary" block, which looks like a hanging indent.
+#
+# Major changes from RedCloth
+# ---------------------------
+#
+# * Totally different linking system
+#
+# * No HTML of any sort, except for <pre> and <code> tags.
+#
+# * No horizontal rules.
+#
+# * Leading spaces create blockquotes, not <pre><code>
+#
+# GreenCloth Linking
+# ------------------
 #
 # [A good page]                  ---> <a href="/mygroup/a-good-page">A good page</a>
 # [I like pages -> A good page]  ---> <a href="/mygroup/a-good-page">I like pages</a>
@@ -76,10 +86,10 @@ class GreenCloth < RedCloth
     :block_markdown_bq,
     :block_dictionary,
     :inline_crabgrass_link,
+    :inline_auto_link_urls,
     :inline_textile_image,
     :inline_textile_code,
     :inline_textile_span,
-    :inline_auto_link_urls,
     :glyphs_textile
   ]
 
@@ -133,6 +143,16 @@ class GreenCloth < RedCloth
   
   private
   
+
+  # makes it so that text is not filtered by any inline filters.
+  # replaces the text with a placeholder, that is expanded at the end.  
+  def bypass_filter( text )
+    placeholder = "<redpre##{ @pre_list.length }>"
+    @pre_list << text
+    return placeholder
+  end
+  
+  # disable redcloth's broken hard breaks
   def hard_break( text )
   end
   
@@ -209,7 +229,8 @@ class GreenCloth < RedCloth
           text = from =~ /\// ? page_name : from
           atts = " href=\"/#{nameize group_name}/#{nameize page_name}\""
         end
-        "#{preceding_char}<a#{ atts }>#{ text }</a>"
+        atag = bypass_filter("<a#{ atts }>#{ text }</a>")
+        "#{preceding_char}#{atag}"
       end
     end
   end
@@ -229,7 +250,24 @@ class GreenCloth < RedCloth
   def nameize(text)
     text.strip.downcase.gsub(/[^-a-z0-9 \+]/,'').gsub(/[ ]+/,'-') if text
   end
-    
+  
+  #
+  # characters that might be found in a valid URL
+  # according to the RFC, although some are rarely
+  # seen in the wild.
+  #
+  # alphnum: a-z A-Z 0-9 
+  #    safe: $ - _ . +
+  #   extra: ! * ' ( ) ,
+  #  escape: %
+  #
+  # additionally, the "~" character is common although expressly
+  # excluded from the list of valid characters in the RFC. go figure.
+  #
+  
+  URL_CHAR = '\w' + Regexp::quote('+%$*\'()-~')
+  URL_PUNCT = Regexp::quote(',.;:!')
+  
   AUTO_LINK_RE = %r{
     (                          # leading text
       <\w+.*?>|                # leading HTML tag, or
@@ -244,22 +282,27 @@ class GreenCloth < RedCloth
       [-\w]+                   # subdomain or domain
       (?:\.[-\w]+)*            # remaining subdomains or domain
       (?::\d+)?                # port
-      (?:/(?:(?:[~\w\+%-]|(?:[,.;:][^\s$]))+)?)* # path
+      (?:/(?:(?:[#{URL_CHAR}]|(?:[#{URL_PUNCT}][^\s$]))+)?)* # path
       (?:\?[\w\+%&=.;-]+)?     # query string
       (?:\#[\w\-]*)?           # trailing anchor
     )
     ([[:punct:]]|\s|<|$)       # trailing text
   }x
-                       
+
+  # 
+  # auto links are extracted and put in @pre_list so they
+  # can escape the inline filters.
+  #                       
   def inline_auto_link_urls(text)
-    extra_options = ""
     text.gsub!(AUTO_LINK_RE) do
       all, a, b, c, d = $&, $1, $2, $3, $4
       if a =~ /<a\s/i # don't replace URL's that are already linked
         all
       else
         text = truncate c, 42
-        %(#{a}<a href="#{b=="www."?"http://www.":b}#{c}"#{extra_options}>#{text}</a>#{d})
+        url = %(#{b=="www."?"http://www.":b}#{c})
+        link = bypass_filter( %(<a href="#{url}">#{text}</a>) )
+        %(#{a}#{link}#{d})
       end
     end
   end
@@ -267,8 +310,8 @@ class GreenCloth < RedCloth
   # from actionview texthelper
   def truncate(text, length = 30, truncate_string = "...")
     if text.nil? then return end
-    l = length - truncate_string.chars.length
-    text.chars.length > length ? text.chars[0...l] + truncate_string : text
+    l = length - truncate_string.length
+    text.length > length ? text[0...l] + truncate_string : text
   end
 
   #####################################################
@@ -308,7 +351,7 @@ class GreenCloth < RedCloth
       blk.gsub!( /^ *> ?/, '' )
       flush_left blk
       blocks blk, false, true
-      blk.gsub!( /^(\S)/, "  \\1" ) # add two leading spaces for readability.
+      blk.gsub!( /^(\S)/, "\t\\1" ) # add two leading spaces for readability.
       "<blockquote>\n#{ blk }\n</blockquote>\n\n"
     end
   end
