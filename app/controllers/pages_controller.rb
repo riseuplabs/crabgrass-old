@@ -180,15 +180,9 @@ class PagesController < ApplicationController
 
 
   # only works with xhr for now.
-  def mark_public
-    @page.update_attribute(:public, true)
-    render :partial => 'public'
-  end
-  
- # only works with xhr for now.
-  def mark_private
-    @page.update_attribute(:public, false)
-    render :partial => 'public'
+  def update_public
+    @page.update_attribute(:public, ('true' == params[:public]))
+    render :nothing => true
   end
   
   ##############################################

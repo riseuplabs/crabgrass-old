@@ -1,2 +1,0 @@
-page.hide(spinner_id('public'))
-page.show('public_check')
