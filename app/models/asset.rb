@@ -4,18 +4,27 @@ class Asset < ActiveRecord::Base
   @@public_storage = "#{RAILS_ROOT}/public/assets"
   cattr_accessor :public_storage
 
-  has_attachment :storage => :file_system, :file_system_path => file_storage
+  has_attachment :storage => :file_system
   validates_as_attachment
+
+  def full_filename(thumbnail = nil)
+    File.join(@@file_storage, *partitioned_path(thumbnail_name_for(thumbnail)))
+  end
 
   has_many :pages, :as => :data
   def page; pages.first; end
 
   def update_access
     if is_public?
-      FileUtils.ln_s(full_dirpath, public_dirpath)
+      FileUtils.ln_s(full_dirpath, public_dirpath) unless File.exists?(public_dirpath)
     else
-      FileUtils.rm_f(public_dirpath) if File.exists?(public_dirpath)
+      remove_symlink
     end
+  end
+  before_destroy :remove_symlink
+
+  def remove_symlink
+    FileUtils.rm_f(public_dirpath) if File.exists?(public_dirpath)
   end
 
   def is_public?
