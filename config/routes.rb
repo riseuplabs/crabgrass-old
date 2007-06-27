@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
 #     :action => 'show'
 #  end
 
-  map.assets 'assets/:id/:filename', :action => 'show', :controller => 'assets'
+  map.assets 'assets/:id/:filename.:format', :action => 'show', :controller => 'asset'
 
   # unobtrusive javascript
   #UJS::routes

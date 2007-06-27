@@ -11,6 +11,10 @@ class Asset < ActiveRecord::Base
     File.join(@@file_storage, *partitioned_path(thumbnail_name_for(thumbnail)))
   end
 
+  def document?
+    content_type.to_s =~ /^application\/[msword|pdf]/
+  end
+
   has_many :pages, :as => :data
   def page; pages.first; end
 

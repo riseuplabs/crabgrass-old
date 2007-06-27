@@ -2,7 +2,7 @@ class AssetController < ApplicationController
   prepend_before_filter :fetch_asset
 
   def show
-    send_file(full_path_to_file, :filename => @asset.filename)
+    send_file(@asset.full_filename, :filename => @asset.filename)
   end
 
   protected
@@ -11,9 +11,9 @@ class AssetController < ApplicationController
     @asset = Asset.find(params[:id], :include => 'pages') if params[:id]
   end
 
-  def authorized?(user)
+  def authorized?
     if @asset
-      user.may?(@asset.page, :read)
+      current_user.may?(:read, @asset.page)
     else
       false
     end
