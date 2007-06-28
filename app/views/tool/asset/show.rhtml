@@ -1,3 +1,7 @@
+<% if @asset.image? -%>
+<%= image_tag @asset.public_filename(:preview) %>
+<br/>
+<% end -%>
 <%= icon_for @asset %> <%= link_to @asset.filename, @asset.public_filename %>
 
 <%= @asset.content_type %>, <%= @asset.size %> bytes<%= " (#{@asset.width}x#{@asset.height})" if @asset.image? %>

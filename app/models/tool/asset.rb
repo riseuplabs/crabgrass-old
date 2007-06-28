@@ -29,4 +29,9 @@ class Tool::Asset < Page
   def asset=(a)
     self.data = a
   end
+
+  # title is the filename if title hasn't been set
+  def title
+    self['title'] || self.data.filename.nameize
+  end
 end

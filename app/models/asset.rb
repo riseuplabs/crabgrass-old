@@ -4,7 +4,7 @@ class Asset < ActiveRecord::Base
   @@public_storage = "#{RAILS_ROOT}/public/assets"
   cattr_accessor :public_storage
 
-  has_attachment :storage => :file_system
+  has_attachment :storage => :file_system, :thumbnails => { :thumb => "22x22>", :preview => "128x128>" }
   validates_as_attachment
 
   def full_filename(thumbnail = nil)
@@ -32,8 +32,8 @@ class Asset < ActiveRecord::Base
     return page.public?
   end
 
-  def public_filename
-    "/assets/#{id}/#{filename}"
+  def public_filename(thumbnail = nil)
+    "/assets/#{id}/#{thumbnail_name_for(thumbnail)}"
   end
 
   def public_filepath
