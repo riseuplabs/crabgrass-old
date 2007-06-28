@@ -1,0 +1,46 @@
+/** landing pages **/
+
+div.landing div.section {
+  margin-bottom: 1em;
+}
+
+div.landing h3 {
+  font-family: arial;
+	font-size: 1.8em;
+	font-weight: normal;
+	color: #333;
+	margin: 0 0 3px 0;
+}
+
+div.landing h3 span {
+  font-family: arial;
+  color: #666;
+  font-size: 0.6em;
+  margin-left: 1em;
+}
+
+div.landing h4 {
+  font-family: arial;
+  font-size: 1.4em;
+  font-weight: normal;
+  color: #333;
+  padding: 0 0 4px 0;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+div#info_panel {
+  background-color: #f5f8ff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+}
+div#info_panel td {
+  vertical-align: top;
+  padding: 0 20px;
+}
+
+div#info_panel td#group_info_cell {
+  border-left: 1px solid #ccc;
+}
+

@@ -5,20 +5,24 @@ This group does not have a public profile.
 <% else -%>
 
 <% @sidebar = 'groups/sidebar' %>
-<div id="info_panel">
+
+<div class='landing'>
+
+<div id="info_panel" class='section'>
   <%= render :partial => 'groups/widgets/infopanel' %>
 </div>
-<br />
-<div class='group_widget'>
+
+<div class='group_widget section'>
   <%= render :partial => 'groups/widgets/recently_created' %>
 </div>
-<br />
-<div class='group_widget'>
+
+<div class='group_widget section'>
   <%= render :partial => 'groups/widgets/recently_updated' %>
 </div>
-<br />
-<div class='group_widget'>
+
+<div class='group_widget section'>
   <%= render :partial => 'groups/widgets/homepage' %>
 </div>
 
+</div>
 <% end -%>

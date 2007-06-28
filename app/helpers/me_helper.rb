@@ -1,5 +1,7 @@
 module MeHelper
 
+  include PageFinders
+  
   def folder_icon(image)
     image = "folders/#{image}" unless image.match(/\//)
     image_tag(image, :size => "22x22")

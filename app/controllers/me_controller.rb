@@ -4,7 +4,8 @@ class MeController < ApplicationController
   
   def index
     params[:path] = []
-    inbox
+    dash
+    render :action => 'dash'
   end
 
   def inbox
@@ -23,6 +24,9 @@ class MeController < ApplicationController
     options = options_for_pages_viewable_by(current_user)
     @pages, @page_sections = find_and_paginate_pages(options, params[:path])
   end
+  
+  def dash
+  end  
   
   def files
     options = options_for_pages_viewable_by(current_user)

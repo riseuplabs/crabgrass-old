@@ -2,5 +2,30 @@
 A dashboard of interesting stuff.
 </div>
 
-(nothing here yet)
+<div class='landing'>
 
+<div class='section' id='info_panel' >
+  <%= render :partial => 'infopanel' %>
+</div>
+
+<div class='section'>
+<h4 class='landing'>New Pages</h4>
+<% 
+pages = find_pages(options_for_me,'/descending/created_at/limit/15')
+columns = [:icon, :title, :created_by, :created_at, :contributors_count]
+-%>
+<%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
+<%= link_to 'more &raquo;', me_url(:action => 'search') + "/descending/created_at" %>
+</div>
+
+<div class='section'>
+<h4>Recently Updated</h4>
+<% 
+pages = find_pages(options_for_me,'/changed/descending/updated_at/limit/15')
+columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+-%>
+<%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
+<%= link_to 'more &raquo;', me_url(:action => 'search') + "/changed/descending/updated_at" %>
+</div>
+
+</div>

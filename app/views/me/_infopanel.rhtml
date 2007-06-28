@@ -1,0 +1,27 @@
+<table>
+<tr>
+  <td width="50%">
+    <h3>Contacts</h3>
+
+<% if current_user.contacts.any? -%>
+  <%= render :partial => 'avatars/boxes', :locals => {:people => current_user.contacts, :side => 'left'} %>
+  <br style='clear:both'/>
+<% else -%>
+  (you have no personal contacts)
+<% end -%>
+
+  </td>
+  <td width="50%">
+    <h3>Groups</h3>
+    
+<% if current_user.groups.any? -%>
+  <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.groups, :side => 'left'} %>
+  <br style='clear:both'/>
+<% else -%>
+  (not a member of any groups)
+<% end -%>
+    
+  </td>
+</tr>
+</table>
+

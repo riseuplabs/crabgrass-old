@@ -96,27 +96,40 @@ module PageFinders
   
   # path keyword => number of arguments required for the keyword.
   PATH_KEYWORDS = {
+    # boolean
     'or' => 0,
+    
+    # conditions
     'unread' => 0,
     'pending' => 0,
     'starred' => 0,
-    'stars' => 1,
-    'upcoming' => 0,
-    'ago' => 2,
-    'created_after' => 1,
-    'created_before' => 1,
-    'month' => 1,
-    'year' => 1,
-    'recent' => 1,
-    'old' => 1,
+    'stars' => 1,    
     'type' => 1,
-    'person' => 1,
-    'group' => 1,
     'tag' => 1,
     'name' => 1,
+    'changed' => 0,
+    
+    # associations
+    'person' => 1,
+    'group' => 1,
+    
+    # date
+    'month' => 1,
+    'year' => 1,
+    'ago' => 2,
+    'upcoming' => 0,
+    'created_after' => 1,
+    'created_before' => 1,
+        
+    # limit
+    'limit' => 1,
+        
+    # sorting
     'ascending' => 1,
-    'descending' => 1,
-    'limit' => 1
+    'descending' => 1
+#    'recent' => 1,
+#    'old' => 1,
+    
   }.freeze
   
   ###############################################################
@@ -143,6 +156,10 @@ module PageFinders
       qb.conditions << 'user_parts.star = ?'
     end
     qb.values << true
+  end
+  
+  def filter_changed(qb)
+    qb.conditions << 'pages.updated_at > pages.created_at'
   end
   
   def filter_upcoming(qb)
@@ -460,12 +477,20 @@ module PageFinders
     )
   end
   
-  # option generators for page_query_from_filter_path
+  ###########################################################
+  # option macros: used to set up the options for path finders
+  #
+  
+  def options_for_me
+    { :class      => Page,
+      :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
+      :values     => [current_user.all_group_ids, current_user.id, true] }
+  end
   
   def options_for_pages_viewable_by(user)
     { :class      => Page,
       :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
-      :values     => [user.group_ids, user.id, true] }
+      :values     => [user.all_group_ids, user.id, true] }
   end
   
   def options_for_public_pages
@@ -479,7 +504,7 @@ module PageFinders
     if logged_in?
       # the person's pages that we also have access to
       options[:conditions] = "user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)"
-      options[:values]     = [user.id, current_user.group_ids, current_user.id, true]
+      options[:values]     = [user.id, current_user.all_group_ids, current_user.id, true]
     else
       # the person's public pages
       options[:conditions] = "user_participations.user_id = ? AND pages.public = ?"
@@ -504,6 +529,5 @@ module PageFinders
     end
     options
   end
-
 
 end
