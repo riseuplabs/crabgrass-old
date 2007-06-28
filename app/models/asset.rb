@@ -11,10 +11,6 @@ class Asset < ActiveRecord::Base
     File.join(@@file_storage, *partitioned_path(thumbnail_name_for(thumbnail)))
   end
 
-  def document?
-    content_type.to_s =~ /^application\/[msword|pdf]/
-  end
-
   has_many :pages, :as => :data
   def page; pages.first; end
 
@@ -51,4 +47,94 @@ class Asset < ActiveRecord::Base
   def full_dirpath
     File.dirname(full_filename)
   end
+
+  def big_icon
+    "mime/big/#{icon}"
+  end
+
+  def small_icon
+    "mime/small/#{icon}"
+  end
+  
+  def icon
+    ctype = content_type.to_s.sub(/\/x\-/,'/')  # remove x-
+    cgroup = ctype.sub(/\/.*$/,'/')              # everything after /
+    iconname = @@mime_to_icon_map[ctype] || @@mime_to_icon_map[cgroup] || @@mime_to_icon_map['default']
+    "#{iconname}.png"
+  end
+    
+  @@mime_to_icon_map = {
+    'default' => 'default',
+    
+    'text/' => 'text',
+    'text/html' => 'html',
+    'application/rtf' => 'rtf',
+    
+    'application/pdf' => 'pdf',
+    'application/bzpdf' => 'pdf',
+    'application/gzpdf' => 'pdf',
+    'application/postscript' => 'pdf',
+    
+    'text/spreadsheet' => 'spreadsheet',
+    'application/gnumeric' => 'spreadsheet',
+    'application/kspread' => 'spreadsheet',
+        
+    'application/scribus' => 'doc',
+    'application/abiword' => 'doc',
+    'application/kword' => 'doc',
+    
+    'application/msword' => 'msword',
+    'application/mswrite' => 'msword',
+    'application/vnd.ms-powerpoint' => 'mspowerpoint',
+    'application/vnd.ms-excel' => 'msexcel',
+    'application/vnd.ms-access' => 'msaccess',
+    
+    'application/executable' => 'binary',
+    'application/ms-dos-executable' => 'binary',
+    'application/octet-stream' => 'binary',
+    
+    'application/shellscript' => 'shell',
+    'application/ruby' => 'ruby',
+        
+    'application/vnd.oasis.opendocument.spreadsheet' => 'oo-spreadsheet',    
+    'application/vnd.oasis.opendocument.spreadsheet-template' => 'oo-spreadsheet',
+    'application/vnd.oasis.opendocument.formula' => 'oo-spreadsheet',
+    'application/vnd.oasis.opendocument.chart' => 'oo-spreadsheet',
+    'application/vnd.oasis.opendocument.image' => 'oo-graphics',    
+    'application/vnd.oasis.opendocument.graphics' => 'oo-graphics',
+    'application/vnd.oasis.opendocument.graphics-template' => 'oo-graphics',
+    'application/vnd.oasis.opendocument.presentation-template' => 'oo-presentation',
+    'application/vnd.oasis.opendocument.presentation' => 'oo-presentation',
+    'application/vnd.oasis.opendocument.database' => 'oo-database',
+    'application/vnd.oasis.opendocument.text-web' => 'oo-html',
+    'application/vnd.oasis.opendocument.text' => 'oo-text',
+    'application/vnd.oasis.opendocument.text-template' => 'oo-text',
+    'application/vnd.oasis.opendocument.text-master' => 'oo-text',
+    
+    'packages/' => 'archive',
+    'application/zip' => 'archive',
+    'application/gzip' => 'archive',
+    'application/rar' => 'archive',
+    'application/deb' => 'archive',
+    'application/tar' => 'archive',
+    'application/stuffit' => 'archive',
+    'application/compress' => 'archive',
+        
+    'video/' => 'video',
+
+    'audio/' => 'audio',
+    
+    'image/' => 'image',
+    'image/svg+xml' => 'vector',
+    'image/svg+xml-compressed' => 'vector',
+    'application/illustrator' => 'vector',
+    'image/bzeps' => 'vector',
+    'image/eps' => 'vector',
+    'image/gzeps' => 'vector',
+    
+    'application/pgp-encrypted' => 'lock',
+    'application/pgp-signature' => 'lock',
+    'application/pgp-keys' => 'lock'
+  }
+  
 end
