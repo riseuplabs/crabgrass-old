@@ -12,6 +12,11 @@ class Tool::Asset < Page
     return 'package.png' 
   end
   
+  # for the page class icon
+  def self.icon
+    'package.png'
+  end
+  
   after_save :update_access
   def update_access
     asset.update_access if asset

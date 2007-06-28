@@ -481,10 +481,16 @@ module PageFinders
   # option macros: used to set up the options for path finders
   #
   
-  def options_for_me
-    { :class      => Page,
-      :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
-      :values     => [current_user.all_group_ids, current_user.id, true] }
+  def options_for_me(*args)
+    if args.include?(:public)
+      { :class      => Page,
+        :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
+        :values     => [current_user.all_group_ids, current_user.id, true] }
+    else
+      { :class      => Page,
+        :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ?)",
+        :values     => [current_user.all_group_ids, current_user.id] }    
+    end
   end
   
   def options_for_pages_viewable_by(user)
