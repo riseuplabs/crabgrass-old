@@ -5,13 +5,13 @@
 <div class='iconboxes'>
 
   <% @user.contacts.each do |u| -%>
-  <div class='iconbox'>
+  <div class='iconbox<%= ' online' if u.online? %>'>
     <% url = person_url(:id => u, :action => 'show') -%>
     <%= link_to avatar_for(u, 'xsmall', :class=>'iconbox'), url -%>
     <div class='hover'>
       <%= link_to avatar_for(u, 'small', :class=>'bigiconbox'), url -%>
       <div class='text'>
-        <span><%= link_to u.login, url %></span>
+        <span><%= link_to "#{u.login}#{' (online)' if u.online?}", url %></span>
       </div>
     </div>
   </div>

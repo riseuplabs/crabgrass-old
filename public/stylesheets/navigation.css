@@ -80,6 +80,10 @@ div.iconboxes {
 div.iconboxes img {
   border:1px solid white;
 }
+div.online img {
+  border:1px solid yellow;
+}
+
 div.iconboxes div.iconbox {
   position: relative;
   width: 24px; height: 24px;

@@ -243,4 +243,7 @@ class User < AuthenticatedUser
     @style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
   end
     
+  def online?
+    last_seen_at > 5.minutes.ago
+  end
 end
