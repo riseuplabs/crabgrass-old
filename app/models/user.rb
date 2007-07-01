@@ -244,6 +244,6 @@ class User < AuthenticatedUser
   end
     
   def online?
-    last_seen_at > 5.minutes.ago
+   last_seen_at > 5.minutes.ago if last_seen_at
   end
 end

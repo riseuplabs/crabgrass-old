@@ -75,7 +75,11 @@ module ApplicationHelper
   
   def link_to_user(arg, options={})
     login, path = login_and_path_for_user(arg,options)
-    link_to login, path, :class => 'name_link'
+    ret = link_to login, path, :class => 'name_link'
+    if options[:avatar]
+      ret = link_to(avatar_for(arg, options[:avatar]),path) + " " + ret
+    end
+    ret
   end
 
   def name_and_path_for_group(arg,options={})
@@ -90,7 +94,6 @@ module ApplicationHelper
     elsif arg.is_a? Group
       name = arg.name
     end
-    #link_to group.name, :controller => '/groups', :action => 'show', :id => group
     display_name ||= name
     display_name = options[:text] % display_name if options[:text]
     action = options[:action] || 'show'

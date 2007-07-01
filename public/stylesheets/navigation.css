@@ -13,8 +13,11 @@
   position: absolute;
   width: 10em;
   left: -999em;
+  z-index: 100;
 }
-#topmenu li:hover ul {left: auto;}
+#topmenu li:hover ul {
+  left: auto;
+}
 
 /* menu tabs styling */
 
@@ -51,12 +54,43 @@
   border-bottom: 0px;
 } */
 
-#topmenu li.selected a {
+
+/* selected tab */
+#topmenu li.selected span a {
   color: #000;
   background: #fff url(/images/shadows/small-top.png) repeat-x top;
   border: 2px solid #000;
   border-bottom: 0;
   margin-bottom: -1px;
+}
+
+/* selected tab hover */
+#topmenu li.selected:hover span a {
+  color: #B26F23;
+  background: #FFECA2;
+  border-color: #FFECA2;
+}
+
+/* normal tab hover */
+#topmenu li:hover span a {
+  color: #B26F23;
+  background: #FFECA2;
+}
+
+/* drop down styling */
+#topmenu li ul li {
+  margin-top: -1px;
+  background: #FFECA2;
+  padding: 4px;
+}
+/* drop down link */
+#topmenu li ul li a {
+  color: #B26F23;
+  display: inline;
+}
+/* drop down link hover */
+#topmenu li:hover ul li:hover {
+  background-color: #FFF6D1;
 }
 
 /* the bottom of the tabs */
