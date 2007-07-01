@@ -77,7 +77,7 @@ class Wiki < ActiveRecord::Base
   # this only clears the primary group's wikis, which should be fine
   # because default_group_name just uses the primary group's name.
   def self.clear_all_html(group)
-    Wiki.connection.execute("UPDATE wikis set wikis.body_html = NULL WHERE wikis.id IN (SELECT pages.data_id FROM pages WHERE pages.data_type='Wiki' and pages.group_id = #{self.id})")
+    Wiki.connection.execute("UPDATE wikis set wikis.body_html = NULL WHERE wikis.id IN (SELECT pages.data_id FROM pages WHERE pages.data_type='Wiki' and pages.group_id = #{group.id})")
   end
   
   protected 
