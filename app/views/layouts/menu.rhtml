@@ -36,7 +36,7 @@ selected = 'class="selected"'
     <% if logged_in? -%>
     <ul>
       <% current_user.contacts.each do |person| -%>
-      <li><%= link_to_user person, :avatar => 'xsmall' %></li>
+      <li><%= link_to_user person, :avatar => 'xsmall', :one_link => true %></li>
       <% end -%>
     </ul>
     <% end -%>
@@ -47,7 +47,7 @@ selected = 'class="selected"'
    <% if logged_in? -%>
     <ul>
       <% current_user.groups.each do |group| -%>
-      <li><%= link_to_group group, :avatar => 'xsmall' %></li>
+      <li><%= link_to_group group, :avatar => 'xsmall', :one_link => true %></li>
       <% end -%>
     </ul>
     <% end -%>

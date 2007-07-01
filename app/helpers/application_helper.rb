@@ -75,11 +75,13 @@ module ApplicationHelper
   
   def link_to_user(arg, options={})
     login, path = login_and_path_for_user(arg,options)
-    ret = link_to login, path, :class => 'name_link'
+    style = nil
     if options[:avatar]
-      ret = link_to(avatar_for(arg, options[:avatar]),path) + " " + ret
+      size = Avatar.pixels(options[:avatar])[0..1].to_i
+      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+4}px;"
     end
-    ret
+    link_to login, path, :class => 'name_link', :style => style
   end
 
   def name_and_path_for_group(arg,options={})
@@ -112,11 +114,13 @@ module ApplicationHelper
   
   def link_to_group(arg, options={})
     display_name, path = name_and_path_for_group(arg,options)
-    ret = link_to display_name, path, :class => 'name_link'
+    style = nil
     if options[:avatar]
-      ret = link_to(avatar_for(arg, options[:avatar]),path) + " " + ret
+      size = Avatar.pixels(options[:avatar])[0..1].to_i
+      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+4}px;"
     end
-    ret
+    link_to display_name, path, :class => 'name_link', :style => style
   end
     
   def avatar_for(viewable, size='medium', options={})

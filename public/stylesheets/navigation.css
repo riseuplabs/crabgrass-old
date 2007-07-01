@@ -7,11 +7,10 @@
   padding: 0; margin: 0;
   list-style: none;
 }
-#topmenu > li a {display: block;}
+#topmenu li span a {display: block;}
 #topmenu > li {float: left;}
 #topmenu li ul {
   position: absolute;
-  width: 10em;
   left: -999em;
   z-index: 100;
 }
@@ -21,7 +20,7 @@
 
 /* menu tabs styling */
 
-#topmenu li {
+#topmenu > li {
   margin: 0 4px;
   position: relative;
   top: 1px;
@@ -31,15 +30,64 @@
   margin: 0 0 -2px 0;
 }
 
-#topmenu a {
+#topmenu a:hover {
+  text-decoration: underline;
+}
+
+/* normal tab */
+#topmenu li span a {
   color: #fff;
   text-decoration: none;
   padding: 2px 6px;
   font-weight: bold;
+  border: 2px solid transparent;
+  border-bottom: 0; 
+  margin-bottom: -1px;
 }
-#topmenu a:hover {
-  text-decoration: underline;
+
+/* normal tab hover */
+#topmenu li:hover span a {
+  color: white;
+  background: #000;
 }
+
+/* selected tab */
+#topmenu li.selected span a {
+  background: #fff url(/images/shadows/small-top.png) repeat-x top;
+  border-color: #000;
+}
+
+/* selected tab hover */
+#topmenu li.selected:hover span a {
+  color: white;
+  background: #000;
+}
+
+/* drop down menu */
+#topmenu li ul {
+  background: #555;
+  border: 2px solid black;
+  border-top: 0;
+  padding: 0 4em 2px 0;
+}
+/* drop down menu line */
+#topmenu li ul li {
+  padding: 2px 4px;
+}
+/* drop down link */
+#topmenu li ul li a {
+  color: white;
+  font-weight: bold;
+  padding: 4px;
+  display: block;
+}
+/* drop down link hover */
+#topmenu li:hover ul li:hover {
+}
+
+/* the bottom of the tabs */
+#toprule-outer {border-bottom: 2px solid #000;}
+
 /*
 #topmenu li.selected span {
   background: #fff url(/images/shadows/tab-bottom.png) no-repeat bottom;
@@ -54,47 +102,6 @@
   border-bottom: 0px;
 } */
 
-
-/* selected tab */
-#topmenu li.selected span a {
-  color: #000;
-  background: #fff url(/images/shadows/small-top.png) repeat-x top;
-  border: 2px solid #000;
-  border-bottom: 0;
-  margin-bottom: -1px;
-}
-
-/* selected tab hover */
-#topmenu li.selected:hover span a {
-  color: #B26F23;
-  background: #FFECA2;
-  border-color: #FFECA2;
-}
-
-/* normal tab hover */
-#topmenu li:hover span a {
-  color: #B26F23;
-  background: #FFECA2;
-}
-
-/* drop down styling */
-#topmenu li ul li {
-  margin-top: -1px;
-  background: #FFECA2;
-  padding: 4px;
-}
-/* drop down link */
-#topmenu li ul li a {
-  color: #B26F23;
-  display: inline;
-}
-/* drop down link hover */
-#topmenu li:hover ul li:hover {
-  background-color: #FFF6D1;
-}
-
-/* the bottom of the tabs */
-#toprule-outer {border-bottom: 2px solid #000;}
 
 /*** banner ***/
 
