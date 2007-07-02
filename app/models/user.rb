@@ -28,23 +28,28 @@ class User < AuthenticatedUser
   ### associations
  
   # groups we are members of
-  has_and_belongs_to_many :groups, :join_table => :memberships,
+  has_many :memberships, :dependent => :delete_all
+  has_many :groups, :through => :memberships,
     :after_add => :clear_group_id_cache,
     :after_remove => :clear_group_id_cache
+
+#  has_and_belongs_to_many :groups, :join_table => :memberships,
+#    :after_add => :clear_group_id_cache,
+#    :after_remove => :clear_group_id_cache
 
   # all groups, including groups we have indirect access to (ie committees and networks)
   has_many :all_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{ all_group_ids.any? ? all_group_ids.join(",") : "NULL" })'
   
   # peers are users who share at least one group with us
   has_many :peers, :class_name => 'User',
-    :finder_sql => 'SELECT DISTINCT users.* FROM users INNER JOIN memberships ON users.id = memberships.user_id WHERE users.id != #{id} AND memberships.group_id IN (SELECT id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE memberships.user_id = #{id})'
+    :finder_sql => 'SELECT DISTINCT users.* FROM users INNER JOIN memberships ON users.id = memberships.user_id WHERE users.id != #{id} AND memberships.group_id IN (SELECT groups.id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE memberships.user_id = #{id})'
   
   # relationship to pages
   has_many :participations, :class_name => 'UserParticipation'
   has_many :pages, :through => :participations do
-	def pending
-	  find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
-	end
+    def pending
+      find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
+    end
   end
   
   belongs_to :avatar
@@ -62,7 +67,11 @@ class User < AuthenticatedUser
     :association_foreign_key => "contact_id",
     :foreign_key => "user_id",
     :after_add => :reciprocate_add,
-    :after_remove => :reciprocate_remove
+    :after_remove => :reciprocate_remove do
+    def online
+      find(:all, :conditions => ['users.last_seen_at > ?',10.minutes.ago], :order => 'users.last_seen_at DESC')
+    end
+  end
   
   has_many :tags, :finder_sql => %q[
     SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
@@ -218,6 +227,10 @@ class User < AuthenticatedUser
     end
   end
   
+  def group_ids
+    @group_ids ||= memberships.collect{|m|m.group_id}
+  end
+
   # returns an array of the ids of all the groups we have access
   # to. This might include groups we don't have a direct membership
   # in (ie committees or networks of groups we are in.)
@@ -226,7 +239,7 @@ class User < AuthenticatedUser
   end
   
   def find_group_ids
-    mygroups = Group.connection.select_values("SELECT id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE (memberships.user_id = #{self.id})")
+    mygroups = Group.connection.select_values("SELECT groups.id FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE (memberships.user_id = #{self.id})")
     return [] unless mygroups.any?
     #mycommittees = Group.connection.select_values("SELECT groups.id FROM groups INNER JOIN groups_to_committees ON groups.id = groups_to_committees.committee_id WHERE groups_to_committees.group_id IN (#{mygroups.join(',')}) AND (groups.type = 'Committee')")
     mycommittees = Group.connection.select_values("SELECT groups.id FROM groups WHERE groups.parent_id IN (#{mygroups.join(',')})")
@@ -237,6 +250,7 @@ class User < AuthenticatedUser
   # called whenever our group membership is changed
   def clear_group_id_cache(group)
     @all_group_ids = nil
+    @group_ids = nil
   end
   
   def banner_style
@@ -244,6 +258,6 @@ class User < AuthenticatedUser
   end
     
   def online?
-   last_seen_at > 5.minutes.ago if last_seen_at
+   last_seen_at > 10.minutes.ago if last_seen_at
   end
 end

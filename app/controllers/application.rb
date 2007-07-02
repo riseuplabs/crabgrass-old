@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem	
-  include PageUrlHelper 
+  include PageUrlHelper
+  include UrlHelper
   include ContextHelper
   include PageFinders
   

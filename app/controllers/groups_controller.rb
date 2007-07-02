@@ -141,9 +141,17 @@ class GroupsController < ApplicationController
   def members
     if request.post?
       if @group.committee? and params[:group]
-        @group.user_ids = params[:group][:user_ids] 
-        @group.save
+        new_ids = params[:group][:user_ids]
+        @group.memberships.each do |m|  
+          m.destroy if m.user.member_of?(@group.parent) and not new_ids.include?(m.user_id.to_s)
+        end
+        new_ids.each do |id|
+          next unless id.any?
+          u = User.find(id)
+          @group.memberships.create(:user => u) if u.member_of?(@group.parent) and not u.direct_member_of?(@group)
+        end
         message :success => 'member list updated'
+        redirect_to url_for_group(@group, :action => 'members')
       end
     end
   end

@@ -29,9 +29,11 @@
 class Page < ActiveRecord::Base
   acts_as_modified
   acts_as_taggable
-    
+  acts_as_ferret :additional_fields => []
+  
   # to be set by subclasses (ie tools)
-  class_attribute :controller, :model, :icon, :internal?, :class_description, :class_display_name, :class_group
+  class_attribute :controller, :model, :icon, :internal?,
+    :class_description, :class_display_name, :class_group
 
   ### associations ###  
   
@@ -206,12 +208,20 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
-  # we use group_participations, because it will have current info
-  # even if a group is added before the page is saved.
+  # When getting a list of ids of groups for this page,
+  # we use group_participations. This way, we will have
+  # current data even if a group is added and the page
+  # has not yet been saved.
+  # used extensively, and by ferret.
   def group_ids
     group_participations.collect{|gpart|gpart.group_id}
   end
-    
+  
+  # used for ferret index
+  def user_ids
+    user_participations.collect{|upart|upart.user_id}
+  end
+  
   # returns true if self's unique page name is already in use.
   # what pages are in the namespace? all pages connected to all
   # groups connected to this page (include the group's committees too).

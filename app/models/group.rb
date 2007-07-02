@@ -36,7 +36,9 @@ class Group < ActiveRecord::Base
   
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
 
-  has_and_belongs_to_many :users, :join_table => :memberships
+  has_many :memberships, :dependent => :delete_all
+  has_many :users, :through => :memberships
+  #has_and_belongs_to_many :users, :join_table => :memberships
 
   # relationship to pages
   has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
@@ -62,6 +64,10 @@ class Group < ActiveRecord::Base
   # committees are children! they must respect their parent group.  
   acts_as_tree :order => 'name'
   alias :committees :children
+  
+  def user_ids
+    @user_ids ||= memberships.collect{|m|m.user_id}
+  end
   
   # returns an array of all children group ids and self's id. used for queries.
   def group_ids

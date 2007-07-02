@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 37) do
+ActiveRecord::Schema.define(:version => 38) do
 
   create_table "assets", :force => true do |t|
     t.column "parent_id",    :integer
@@ -85,9 +85,11 @@ ActiveRecord::Schema.define(:version => 37) do
     t.column "other_page_id", :integer
   end
 
-  create_table "memberships", :id => false, :force => true do |t|
-    t.column "group_id", :integer
-    t.column "user_id",  :integer
+  create_table "memberships", :force => true do |t|
+    t.column "group_id",   :integer
+    t.column "user_id",    :integer
+    t.column "created_at", :datetime
+    t.column "page_id",    :integer
   end
 
   create_table "messages", :force => true do |t|
