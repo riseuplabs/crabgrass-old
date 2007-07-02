@@ -49,6 +49,7 @@
 #topmenu li:hover span a {
   color: white;
   background: #000;
+  border-color: #000;
 }
 
 /* selected tab */
@@ -65,9 +66,8 @@
 
 /* drop down menu */
 #topmenu li ul {
-  background: #555;
-  border: 2px solid black;
-  border-top: 0;
+  background: #000;
+  /* border: 2px solid black; */
   padding: 0 4em 2px 0;
 }
 /* drop down menu line */
@@ -87,20 +87,6 @@
 
 /* the bottom of the tabs */
 #toprule-outer {border-bottom: 2px solid #000;}
-
-/*
-#topmenu li.selected span {
-  background: #fff url(/images/shadows/tab-bottom.png) no-repeat bottom;
-  display: block;
-  padding-bottom: 15px;
-  margin-bottom: -15px;
-  margin-right: -2px;
-}
-*/
-/* #topmenu li.selected  {
-  border: 1px solid #D1CB90;
-  border-bottom: 0px;
-} */
 
 
 /*** banner ***/
