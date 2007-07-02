@@ -1,0 +1,30 @@
+<%# this is a partial of search controls to be used by any search view %>
+<% 
+  users ||= nil 
+  path = filter_path
+  parsed = parsed_path
+%>
+
+<blockquote style='text-align: center'>
+<% form_tag do -%>
+
+<p>
+<%= text_field_tag 'search[text]', parsed.arg_for('text'), :size => '40' %>
+<%= submit_tag 'Search' %>
+</p>
+
+<%= select_tag 'search[type]', options_for_select([['all page types',''],['discussions','discussion'],['wikis','wiki'],['polls','poll'],['task lists','task'], ['files','asset']], parsed.arg_for('type') ) %>
+
+<% if users -%>
+<%= select_tag 'search[person]', "<option value=''>all people</option>"+
+options_from_collection_for_select(users, "id", "name", parsed.int_for('person')) %>
+<% end -%>
+
+<%= select_month(parsed.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
+<%= select_year(parsed.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
+<label><%= check_box_tag 'search[pending]', 'true', parsed.keyword?('pending') %> pending</label>
+<label><%= check_box_tag 'search[starred]', 'true', parsed.keyword?('starred') %> starred</label>
+
+<% end -%>
+</blockquote>
+

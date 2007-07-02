@@ -12,7 +12,10 @@ debian/ubuntu
 
 apt-get install rubygems
 gem install -y rails
+
+apt-get install ruby1.8-dev build-essential (required to build ferret)
 gem install ferret
+
 gem install rmagick (or apt-get install librmagick-ruby1.8)
 
 svn co https://code.autistici.org/svn/crabgrass/trunk crabgrass

@@ -11,7 +11,7 @@ A dashboard of interesting stuff. <%= link_to 'create page &raquo;', {:controlle
 <div class='section'>
 <h4 class='landing'>New Pages</h4>
 <% 
-pages = find_pages(options_for_me,'/descending/created_at/limit/15')
+pages = find_pages(options_for_me,'/descending/created_at/limit/10')
 columns = [:icon, :title, :created_by, :created_at, :contributors_count]
 -%>
 <%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
@@ -21,7 +21,7 @@ columns = [:icon, :title, :created_by, :created_at, :contributors_count]
 <div class='section'>
 <h4>Recently Updated</h4>
 <% 
-pages = find_pages(options_for_me,'/changed/descending/updated_at/limit/15')
+pages = find_pages(options_for_me,'/changed/descending/updated_at/limit/30') - pages
 columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
 -%>
 <%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>

@@ -108,6 +108,7 @@ module PageFinders
     'tag' => 1,
     'name' => 1,
     'changed' => 0,
+    'text' => 1,
     
     # associations
     'person' => 1,
@@ -131,7 +132,21 @@ module PageFinders
 #    'old' => 1,
     
   }.freeze
-  
+
+  # path keyword => order weight
+  # this with a lower weight show up sooner in the path
+  PATH_ORDER = {
+    'month' => 1,
+    'year' => 2,
+    'person' => 5,
+    'group' => 5,
+    'default' => 10,
+    'descending' => 20,
+    'ascending' => 20,
+    'limit' => 21,
+    'text' => 100
+  }.freeze
+    
   ###############################################################
   ## FILTERS!!
   
@@ -261,6 +276,11 @@ module PageFinders
     qb.offset = offset.to_i if offset
   end
   
+  def filter_text(qb, text)
+    qb.conditions << 'pages.title LIKE ?'
+    qb.values << "%#{text}%"
+  end
+
   public
   
   class ParsedPath < Array
@@ -278,6 +298,15 @@ module PageFinders
       element = keyword?(word)
       return nil unless element
       return element[1]
+    end
+    alias :arg_for :first_arg_for
+    
+    def int_for(word)
+      (arg_for(word)||0).to_i
+    end
+    
+    def args_for(word)
+      keyword?(word)
     end
     
     # returns true if arg is the value for a sort keyword
@@ -310,6 +339,34 @@ module PageFinders
       parsed_path << element
     end
     return parsed_path
+  end
+  
+  #
+  # given a hash search options (like might be returned
+  # in params[:search], build a filter path. For example:
+  # in:
+  #   {"month"=>"6", "pending"=>"true"}
+  # out:
+  #   /month/6/pending
+  #
+  def build_filter_path(search)
+    search = search.sort{|a,b| (PATH_ORDER[a[0]]||PATH_ORDER['default']) <=> (PATH_ORDER[b[0]]||PATH_ORDER['default']) }
+    path = ['']
+    search.each do |pair|
+      key, value = pair
+      next unless PATH_KEYWORDS[key]
+      if PATH_KEYWORDS[key] == 0
+        path << key if value == 'true'
+      elsif PATH_KEYWORDS[key] == 1 and value.any?
+        path << key
+        path << value
+      elsif PATH_KEYWORDS[key] == 2 and value.size = 2
+        path << key
+        path << value[0]
+        path << value[1]
+      end
+    end
+    path.join('/')
   end
   
   # returns a hash of options (conditions, joins, sorts, etc),

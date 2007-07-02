@@ -56,12 +56,18 @@ class GroupsController < ApplicationController
   end
   
   def search
+    if request.post?
+      path = build_filter_path(params[:search])
+      redirect_to groups_url(:id => @group, :action => 'search') + path   
+    else
+
     @pages, @page_sections = fetch_pages_from_path(params[:path])
     
     if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
       @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
     else
       @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+    end
     end
   end
 
