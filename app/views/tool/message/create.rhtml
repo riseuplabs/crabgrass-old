@@ -12,7 +12,8 @@
 <tr>
   <td align='right'><b>recipients</b></td>
   <td>
-    <%= text_field_tag 'to', params[:to]+' ', :size => 80 %>
+    <% to = params[:to]+' ' if params[:to] -%>
+    <%= text_field_tag 'to', to, :size => 80 %>
     <br/>
     <%= select_tag('contact_drop',
         options_for_select(
