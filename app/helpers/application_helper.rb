@@ -44,9 +44,12 @@ module ApplicationHelper
      content_tag("div", img + header + text, "class" => "notice #{type}")
   end
  
-  def page_icon(page,size=16)
-    #image_tag "#{size}/#{page.icon}", :size => "#{size}x#{size}"
+  def page_icon(page)
     image_tag "pages/#{page.icon}", :size => "22x22"
+  end
+  
+  def page_icon_style(icon)
+   "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
   
   def link_to_user(arg, options={})

@@ -20,9 +20,10 @@ selected = 'class="selected"'
   <li <%= selected if active == 'me' %> >
     <span><%= link_to "Me", me_url %></span>
     <ul>
-      <li><%= link_to 'inbox', me_url(:action => 'inbox') %></li>
-      <li><%= link_to 'tasks', me_url(:action => 'tasks') %></li>
-      <li><%= link_to 'search', me_url(:action => 'search') %></li>
+      <li><%= link_to 'inbox', me_url(:action => 'inbox'), :style => page_icon_style('inbox') %></li>
+      <li><%= link_to 'tasks', me_url(:action => 'tasks'), :style => page_icon_style('task-list') %></li>
+      <li><%= link_to 'search', me_url(:action => 'search'), :style => page_icon_style('search') %></li>
+      <li><%= link_to 'create&nbsp;page', {:controller => 'pages', :action => 'create'}, :style => page_icon_style('new') %></li>
     </ul>
   </li>
   <% else -%>
