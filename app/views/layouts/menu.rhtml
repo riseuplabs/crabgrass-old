@@ -34,7 +34,7 @@ selected = 'class="selected"'
 
   <li <%= selected if active == 'people' %> >
     <span><%= link_to "People", people_url %></span>
-    <% if logged_in? -%>
+    <% if logged_in? and current_user.contacts.any? -%>
     <ul>
       <% current_user.contacts.each do |person| -%>
       <li><%= link_to_user person, :avatar => 'xsmall', :one_link => true %></li>
@@ -45,7 +45,7 @@ selected = 'class="selected"'
 
   <li <%= selected if active == 'groups' %> >
     <span><%= link_to "Groups", groups_url %></span>
-   <% if logged_in? -%>
+   <% if logged_in? and current_user.groups.any? -%>
     <ul>
       <% current_user.groups.each do |group| -%>
       <li><%= link_to_group group, :avatar => 'xsmall', :one_link => true %></li>
