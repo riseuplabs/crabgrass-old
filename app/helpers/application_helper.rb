@@ -132,11 +132,11 @@ module ApplicationHelper
   #   Mar/7     -- time was in the current year.
   #   Mar/7/07  -- time was in a different year.
   # The date is then wrapped in a label, so that if you hover over the text
-  # you will see the full details. TODO: improve the fullstr.
+  # you will see the full details.
   def friendly_date(*times)
     return nil unless times.any?
     time = times.compact.max
-    fullstr = time.to_s
+    fullstr = full_time(time)
     today = Date.today
     date = time.to_date
     if date == today
@@ -149,6 +149,12 @@ module ApplicationHelper
       str = date.loc('%d/%b')
     end
     "<label title='#{fullstr}'>#{str}</label>"
+  end
+  
+  # formats a time, in full detail
+  # for example: Sunday July/3/2007 2:13PM
+  def full_time(time)
+    '%s %s %s (UTC %s)' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M<span style="font-size: 80%">%p</span>'), time.loc('%z')]
   end
   
   def created_modified_date(created, modified=nil)

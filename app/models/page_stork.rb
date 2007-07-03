@@ -28,7 +28,7 @@ class PageStork
       i.title = 'Request sent to join %s'.t % group.name
       i.summary = 'You requested to join group %s at %s' % [group.name, Time.now]
     end
-    info.add(user, :access => ACCESS_ADMIN)
+    info.add(user, :access => :admin)
   end
   
   def self.invite_to_join_group(options)
@@ -43,7 +43,7 @@ class PageStork
         r.name = 'Join group %s?' / group.name
       end
     end
-    page.add(user, :access => ACCESS_ADMIN)
+    page.add(user, :access => :admin)
   end
 
   def self.request_for_contact(options)
@@ -57,7 +57,7 @@ class PageStork
         r.name = 'Add user %s to your contact list?' / user.login
       end
     end
-    page.add(contact, :access => ACCESS_ADMIN)
+    page.add(contact, :access => :admin)
   end
   
   def self.contact_sent_notice(options)
@@ -67,18 +67,24 @@ class PageStork
       i.title = 'Contact request sent to user %s'.t % contact.login
       i.summary = 'Your request to add user %s as a contact has been sent. If %s approves the request, then you will also be added to the contact list of %s.' % ([contact.login]*3)
     end
-    info.add(user, :access => ACCESS_ADMIN)
+    info.add(user, :access => :admin)
   end
   
   def self.private_message(options)
     from = options.delete(:from).cast! User
-    to = options.delete(:to).cast! User
+    to = options.delete(:to)
     page = Tool::Message.new do |p|
-      p.title = 'Message from %s to %s' % [from.login, to.login]
+      p.title = options[:title] || 'Message from %s to %s' % [from.login, to.login]
       p.created_by = from
+      p.discussion = Discussion.new
+      post = Post.new(:body => options[:body])
+      post.discussion = p.discussion
+      post.user = from
+      p.discussion.posts << post
     end
-    page.add(from, :access => ACCESS_ADMIN)
-    page.add(to, :access => ACCESS_ADMIN)
+    page.add(from, :access => :admin)
+    page.add(to, :access => :admin)
+    page
   end
   
   def self.wiki(options)

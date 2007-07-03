@@ -8,7 +8,7 @@ class Tool::AssetController < Tool::BaseController
   def create
     @page_class = Tool::Asset
     if request.post?
-      @page = create_new_page
+      @page = build_new_page
       @page.data = Asset.new params[:asset]
       if @page.save
         return redirect_to page_url(@page)

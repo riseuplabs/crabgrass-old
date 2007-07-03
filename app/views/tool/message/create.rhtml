@@ -1,0 +1,43 @@
+<h2><%= "Create a new".t %> <b><%= Tool::Message.class_display_name.t %></b></h2>
+
+<div class='workarea'>
+<%= header_for_page_create Tool::Message %>
+
+<% form_tag({:action => 'create'}, :multipart => true) do %>
+<table class='create'>
+<tr>
+  <td align='right'><b>subject</b></td>
+  <td><%= text_field_tag 'title', params[:title], :size => 80 %></td>
+</tr>
+<tr>
+  <td align='right'><b>recipients</b></td>
+  <td>
+    <%= text_field_tag 'to', params[:to]+' ', :size => 80 %>
+    <br/>
+    <%= select_tag('contact_drop',
+        options_for_select(
+           [['contacts...','']] + 
+           current_user.contacts.to_select(:both_names, :name), params[:user_ids]),
+        :onchange => "$('to').value += $('contact_drop').value + ' '") %>
+    <%= select_tag('peer_drop',
+        options_for_select(
+           [['peers...','']] +
+           current_user.peers.to_select(:both_names, :name), params[:user_ids]),
+        :onchange => "$('to').value += $('peer_drop').value + ' '") %>
+
+  </td>
+</tr>
+<tr>
+  <td align='right'><b>message</b></td>
+  <td><%= text_area_tag 'message', params[:message], :rows => 20, :cols => 80 %></td>
+</tr>
+<tr>
+  <td align='right' colspan="2">
+    <%= submit_tag "Send".t, :name => 'send' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+</div>
+

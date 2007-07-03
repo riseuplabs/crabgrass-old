@@ -1,3 +1,10 @@
+#
+# body          :text
+# body_html     :text
+# created_at    :datetime
+# updated_at    :datetime
+#
+
 class Post < ActiveRecord::Base
 
   ## associations ############################################
@@ -12,7 +19,7 @@ class Post < ActiveRecord::Base
   
   ## validations ############################################
 
-  validates_presence_of :discussion_id, :user_id, :body  
+  validates_presence_of :discussion, :user, :body  
 
   ## methods ################################################
 

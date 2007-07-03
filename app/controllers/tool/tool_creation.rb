@@ -1,20 +1,20 @@
 module Tool::ToolCreation
 
-  def create_new_page
+  def build_new_page
     groups    = get_groups
     users     = get_users
     page_type = get_page_type
     
     page = page_type.new params[:page].merge({:created_by_id => current_user.id})
     groups.each do |group|
-      page.add(group, :access => ACCESS_ADMIN)
+      page.add(group, :access => :admin)
       users += group.users if params[:announce]
     end
     users.uniq.each do |u|
       if u.member_of? groups
         page.add(u)
       else
-        page.add(u, :access=>ACCESS_ADMIN)
+        page.add(u, :access=>:admin)
       end
     end
     page.tag_with(params[:tag_list]) if params[:tag_list]

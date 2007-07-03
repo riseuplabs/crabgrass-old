@@ -11,7 +11,8 @@
 <% end %>
 
 <br/>
-<%= link_to 'send private message', {:controller => '/people', :action => 'new_message', :id => @user}, :method => 'post' %>
+<%= link_to 'send private message', {:controller => 'tool/message', :action => 'create', :to => @user.login}, :method => 'get' %>
+
 <p>
 <b>Groups:</b>
 <% @user.groups.each do |g| %>

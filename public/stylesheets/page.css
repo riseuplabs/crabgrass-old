@@ -249,3 +249,13 @@ div.request h2 {
   font-weight: normal;
 }
 */
+
+/** tool creation **/
+
+table.create td {
+  vertical-align: top;
+  padding: 4px;
+}
+table.create td input {
+  margin-bottom: 0.5em;
+}

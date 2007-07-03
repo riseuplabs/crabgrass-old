@@ -134,10 +134,12 @@ class Page < ActiveRecord::Base
   ### callbacks ###
 
   def before_create
-    self.created_by = User.current
-    self.created_by_login = self.created_by.login
-    self.updated_by       = self.created_by
-    self.updated_by_login = self.created_by.login
+    if User.current
+      self.created_by = User.current
+      self.created_by_login = self.created_by.login
+      self.updated_by       = self.created_by
+      self.updated_by_login = self.created_by.login
+    end
     self.type = self.class.to_s
     # ^^^^^ to work around bug in rails with namespaced
     # models. see http://dev.rubyonrails.org/ticket/7630
@@ -171,6 +173,7 @@ class Page < ActiveRecord::Base
     
   # add a group or user participation to this page
   def add(entity, attributes={})
+    attributes[:access] = ACCESS[attributes[:access]] if attributes[:access]
     if entity.is_a? Enumerable
       entity.each do |e|
         e.add_page(self,attributes)

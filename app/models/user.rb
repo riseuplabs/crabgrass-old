@@ -103,10 +103,23 @@ class User < AuthenticatedUser
   
   ### public methods
   
+  # the user's custom display name, could be anything.
   def display_name
     read_attribute('display_name').any? ? read_attribute('display_name') : login
   end
+  
+  # the user's handle, in same namespace as group name,
+  # must be url safe.
   def name; login; end
+  
+  # displays both display_name and name
+  def both_names
+    if read_attribute('display_name').any?
+      '%s (%s)' % [display_name,name]
+    else
+      name
+    end
+  end
   
   def to_param
     return login
@@ -120,7 +133,13 @@ class User < AuthenticatedUser
     end
   end
   
-  # perm one of :view, :edit, :admin
+  # basic permissions:
+  #   :view or :read -- user can see the page.
+  #   :edit or :change -- user can participate.
+  #   :admin -- user can destroy the page, change access.
+  # conditional permissions:
+  #   :comment -- sometimes viewers can comment and sometimes only participates can.
+  #
   # this is still a basic stub.
   def may!(perm, page)
     upart = page.participation_for_user(self)

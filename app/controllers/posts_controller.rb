@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   def create    
     begin
       @page = Page.find params[:page_id]
-      current_user.may!(:participate, @page)      
+      current_user.may!(:comment, @page)      
       @discussion = @page.discussion ||= Discussion.create
       @post       = @discussion.posts.build(params[:post])
       @post.user  = current_user
