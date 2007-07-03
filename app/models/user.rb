@@ -114,7 +114,7 @@ class User < AuthenticatedUser
   
   # displays both display_name and name
   def both_names
-    if read_attribute('display_name').any?
+    if read_attribute('display_name').any? and read_attribute('display_name') != name
       '%s (%s)' % [display_name,name]
     else
       name
