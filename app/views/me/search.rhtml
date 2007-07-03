@@ -1,9 +1,9 @@
 <div class='tabinfo'>
-Search through all viewable pages.
+Search through all pages you have access to.
 </div>
 
-<%= render :partial => 'pages/list/table', :locals => {:heading => true,
-   :columns => [:icon, :title, :group, :updated_by, :updated_at, :contributors]}
-%>
+<%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups} %>
+
+<%= render :partial => 'pages/list/table', :locals => {:heading => true} %>
 
 

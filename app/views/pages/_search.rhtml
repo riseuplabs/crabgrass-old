@@ -1,6 +1,7 @@
 <%# this is a partial of search controls to be used by any search view %>
 <% 
   users ||= nil 
+  groups ||= nil 
   path = filter_path
   parsed = parsed_path
 %>
@@ -18,6 +19,11 @@
 <% if users -%>
 <%= select_tag 'search[person]', "<option value=''>all people</option>"+
 options_from_collection_for_select(users, "id", "name", parsed.int_for('person')) %>
+<% end -%>
+
+<% if groups -%>
+<%= select_tag 'search[group]', "<option value=''>all groups</option>"+
+options_from_collection_for_select(groups, "id", "name", parsed.int_for('group')) %>
 <% end -%>
 
 <%= select_month(parsed.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
