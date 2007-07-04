@@ -4,7 +4,7 @@ class Asset < ActiveRecord::Base
   @@public_storage = "#{RAILS_ROOT}/public/assets"
   cattr_accessor :public_storage
 
-  has_attachment :storage => :file_system, :thumbnails => { :thumb => "22x22>", :preview => "128x128>" }
+  has_attachment :storage => :file_system, :max_size => 3.megabytes, :thumbnails => { :thumb => "22x22>", :preview => "128x128>" }
   validates_as_attachment
 
   def full_filename(thumbnail = nil)
