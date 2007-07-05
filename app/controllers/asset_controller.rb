@@ -14,6 +14,10 @@ class AssetController < ApplicationController
 
   def fetch_asset
     @asset = Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
+    if @asset.is_public? && !logged_in?
+      @asset.update_access 
+      redirect_to and return false
+    end
   end
 
   def authorized?
