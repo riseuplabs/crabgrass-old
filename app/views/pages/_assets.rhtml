@@ -1,0 +1,26 @@
+<div id="assets">
+  <% assets = @page.assets.collect { |asset| link_to "#{image_tag(asset.small_icon)} #{asset.filename}", asset.public_filename }.join(', ') %>
+  <%= assets + '<br/' unless assets.empty? %>
+  <%= link_to_function "Add files &raquo;", "$('upload-form').toggle()" %><br/>
+  <div id="upload-form" style="display: none;">
+    <% form_for( :asset, Asset.new(:page_id => @page.id), :url => {:controller => 'asset', :action => 'create'}, :html => {:multipart => true}) do |f| -%>
+    <%= f.hidden_field 'page_id' %>
+    <%= f.file_field 'uploaded_data' %>
+    <%= submit_tag 'upload' %>
+    <br/>
+    <%= link_to_function "(more options)", "$('upload-options').toggle()" %>
+    <div id="upload-options" style="display: none;">
+      <table>
+      <tr>
+        <td align='right'><b>title</b></td>
+        <td><%= text_field_tag 'title', '', :size => 30 %></td>
+      </tr>
+      <tr>
+        <td align='right'><b>tags</b></td>
+        <td><%= text_field_tag 'tag_list', '', :size => 30 %></td>
+      </tr>
+      </table>
+    </div>
+    <% end -%>
+  </div>
+</div>

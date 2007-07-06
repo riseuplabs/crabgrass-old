@@ -11,8 +11,11 @@ class Asset < ActiveRecord::Base
     File.join(@@file_storage, *partitioned_path(thumbnail_name_for(thumbnail)))
   end
 
+  belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page'
   has_many :pages, :as => :data
-  def page; pages.first; end
+  def page
+    pages.first || parent_page
+  end
 
   def update_access
     if is_public?

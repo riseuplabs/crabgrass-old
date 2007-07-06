@@ -13,6 +13,7 @@
   <div id='pagebox' class='<%= @show_workarea ? 'workarea' : ''%>'>
     <%= yield %>
   </div>
+  <%= render :partial => 'pages/assets' %>
   <%= render :partial => 'posts/list' if @show_posts %>  
 </div>
 <br style='clear: both' />
