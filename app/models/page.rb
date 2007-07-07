@@ -29,7 +29,7 @@
 class Page < ActiveRecord::Base
   acts_as_modified
   acts_as_taggable
-  acts_as_ferret :additional_fields => []
+  #acts_as_ferret :additional_fields => []
   
   # to be set by subclasses (ie tools)
   class_attribute :controller, :model, :icon, :internal?,
