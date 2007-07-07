@@ -92,8 +92,11 @@ task :after_setup, :roles => :app do
   run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/cache"
   run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/sockets"
   run "mkdir -p #{deploy_to}/#{shared_dir}/avatars"
-  
-  run "mkdir -p #{deploy_to}/#{shared_dir}/config" 
+  run "mkdir -p #{deploy_to}/#{shared_dir}/assets"
+  run "mkdir -p #{deploy_to}/#{shared_dir}/index"
+  run "mkdir -p #{deploy_to}/#{shared_dir}/public_assets"
+      
+  run "mkdir -p #{deploy_to}/#{shared_dir}/config"   
   put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
 end
 
@@ -103,10 +106,19 @@ task :after_update_code do
   run "ln -nfs #{shared_path}/tmp #{release_path}/tmp"
   #run "ln -nfs #{shared_path}/tmp/pids #{release_path}/pids"
   
+  run "rm -rf #{release_path}/index"
+  run "ln -nfs #{shared_path}/index #{release_path}/index"
+
+  run "rm -rf #{release_path}/assets"
+  run "ln -nfs #{shared_path}/assets #{release_path}/assets"
+
+  run "rm -rf #{release_path}/public/assets"
+  run "ln -nfs #{shared_path}/public_assets #{release_path}/public/assets"
+    
   run "rm -rf #{release_path}/public/avatars"
   run "ln -nfs #{shared_path}/avatars #{release_path}/public/avatars"
   
-#  run "rm #{release_path}/config/database.yml" 
+  #run "rm #{release_path}/config/database.yml" 
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   
 #  run "ln -nfs #{deploy_to}/#{shared_dir}/css #{release_path}/public/css"
