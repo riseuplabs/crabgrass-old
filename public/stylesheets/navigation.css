@@ -40,9 +40,9 @@
   text-decoration: none;
   padding: 2px 6px;
   font-weight: bold;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-bottom: 0; 
-  margin-bottom: -1px;
+  /* margin-bottom: -1px; */
 }
 
 /* normal tab hover */
@@ -55,6 +55,7 @@
 /* selected tab */
 #topmenu li.selected span a {
   background: #fff url(/images/shadows/small-top.png) repeat-x top;
+  color: black;
   border-color: #000;
 }
 
@@ -80,20 +81,21 @@
   font-weight: bold;
   padding: 4px;
   display: block;
+  text-decoration: none;
 }
 /* drop down link hover */
 #topmenu li:hover ul li:hover {
 }
 
 /* the bottom of the tabs */
-#toprule-outer {border-bottom: 2px solid #000;}
+#toprule-outer {border-bottom: 1px solid transparent;}
 
 
 /*** banner ***/
 
 div#banner {
   padding: 4px 10px;
-  border-bottom: 2px solid #000;
+  border-bottom: 1px solid transparent;
 }
 div#banner img.avatar_large {padding-right: 10px;}
 div#banner img.avatar_small {padding-right: 4px;}

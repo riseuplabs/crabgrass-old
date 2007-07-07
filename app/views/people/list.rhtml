@@ -1,7 +1,7 @@
 <% if logged_in? -%>
 
 <h1>my contacts</h1>
-<div class='xworkarea'>
+<div class='workarea'>
 <% if @contacts %>
 <%= render :partial => 'user', :collection => @contacts %>
 <% else %>
@@ -11,7 +11,7 @@
 </div>
 
 <h1 style='clear:both'>my peers <span class='normal'>(users I share a common group with)</span></h1>
-<div class='xworkarea'>
+<div class='workarea'>
 <% if @peers %>
 <%= render :partial => 'user', :collection => @peers %>
 <% else %>
@@ -21,7 +21,7 @@
 </div>
 
 <h1 style='clear:both'>all people</h1>
-<div class='xworkarea'>
+<div class='workarea'>
 <%= render :partial => 'user', :collection => User.find(:all) %>
 <br class='clear' />
 </div>

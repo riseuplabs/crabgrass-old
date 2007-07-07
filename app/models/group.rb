@@ -97,11 +97,17 @@ class Group < ActiveRecord::Base
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
 #  has_and_belongs_to_many :categories
-  
+ 
+  ####################################################################### 
   # validations
   
   validates_handle :name
-
+  before_validation_on_create :clean_name
+  
+  def clean_name
+    write_attribute(:name, read_attribute(:name).downcase)
+  end
+  
   #######################################################################
   # methods
 
@@ -170,5 +176,5 @@ class Group < ActiveRecord::Base
   def update_group_name_of_pages
     Page.connection.execute "UPDATE pages SET `group_name` = '#{self.name}' WHERE pages.group_id = #{self.id}"
   end
-   
+    
 end

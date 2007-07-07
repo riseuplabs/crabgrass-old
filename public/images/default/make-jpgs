@@ -1,5 +1,5 @@
 
 
-for size in 22 32 48 64 96; do
+for size in 12 22 32 48 64 96; do
   gm convert default.png -quality 100 -resize ${size}x${size} ${size}.jpg
 done

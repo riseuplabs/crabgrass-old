@@ -1,0 +1,132 @@
+/** sidebar **/
+
+div#leftbar {
+  float: left;
+  width: 170px;
+  margin-left: -191px; /* sidebar width + #main padding + 1px */
+}
+#maincolumn.leftbar {
+  margin-left: 170px;
+}
+div#rightbar {
+  float: right;
+  width: 210px;
+  margin-right: -231px; /* sidebar width + #main padding + 1px */
+}
+#maincolumn.rightbar {
+  margin-right: 210px;
+}
+
+div.sidesection {
+  margin-bottom: 1em;
+  border: 1px solid white;
+  background: #eee;
+}
+div#leftbar div.sidesection {
+  border-right: 0;
+  xbackground: #f9f9f9 url(/images/shadows/small-left-a.png) repeat-y left;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-bottomleft: 4px;
+}
+div#rightbar div.sidesection {
+  border-left: 0;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
+
+  xbackground: #f9f9f9 url(/images/shadows/small-right-a.png) repeat-y right;
+}
+
+div.sidehead {
+  font-weight: bold;
+  color: white;
+  padding: 4px 4px 4px 9px;
+  /* background: #a5cc7a url(/images/shadows/sidebar/topleft.png) no-repeat top left; */
+}
+div#leftbar div.sidehead {
+  border-right: 0;
+  -moz-border-radius-topleft: 4px;
+  xbackground: #a5cc7a url(/images/shadows/small-topleft-a.png) no-repeat top left;
+}
+div#rightbar div.sidehead {
+  border-left: 0;
+  -moz-border-radius-topright: 4px;
+  xbackground: #a5cc7a url(/images/shadows/small-topright-a.png) no-repeat top right;
+}
+
+
+div.sideline, div.sidelink {
+  padding: 3px 0 3px 9px;
+}
+div.sidelink a, div.sideline a {
+  text-decoration: none;
+  outline: 0;
+}
+div.sidelink a:hover, div.sideline a:hover {
+  text-decoration: underline;
+}
+div.sidelink:hover {
+  background: #ddf;
+}
+/*
+div#leftbar div.sidelink:hover {
+  background: #ddf url(/images/shadows/small-left-a.png) repeat-y left;
+}
+div#rightbar div.sidelink:hover {
+  background: #ddf url(/images/shadows/small-right-a.png) repeat-y right;
+}
+*/
+
+
+div.sidetail {
+  height: 4px;
+  xbackground: #f9f9f9 url(/images/shadows/sidebar/bottom.png) no-repeat bottom left;
+}
+
+div.sidesection img {
+  vertical-align: top;
+}
+
+div.sidesubhead {
+  border-bottom: 1px dotted #999;
+  padding: 4px;
+  padding-bottom: 0px;
+  margin-top: 4px;
+  font-weight: bold;
+  color: #666;
+}
+
+a.sidedetails {
+  font-size: 0.8em;
+  display: block;
+  text-align: right;
+  padding-right: 4px;
+}
+div.sideinfo {
+  font-size: 0.8em;
+  line-height: 1.2em;
+}
+div.sidesubarea {
+  margin: 0.5em;
+}
+/*
+div#sidebar div.line.link {
+  font-size: 0.8em;
+}
+div#sidebar h2 a {
+ display: block;
+ width: 16px;
+ float: right;
+ margin-top: -16px;
+ opacity: 0.5;
+}
+div#sidebar h2 a:hover {
+ opacity: 1;
+}
+div#sidebar h3 {
+ padding: 0;
+ margin: 4px 0 0 10px;
+ font-size: 1em;
+ font-weight: normal;
+ border-bottom: 1px dotted #ccc;
+}
+*/

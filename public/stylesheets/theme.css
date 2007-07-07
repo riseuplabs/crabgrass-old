@@ -1,0 +1,43 @@
+/**
+ theme.css: colors for the default theme.
+ any color that might be changed by the theme goes in here.
+ colors which do not change, such as UI elements, do not go here.
+ **/
+
+/* body {background: #e6e6e6;} */
+/*
+body {
+  background: #eee;
+}
+#main {
+  background: url(/images/test/grey-to-light-grey.jpg) repeat-x;
+}
+*/
+
+#maincolumn {
+  /* border-color: #999; */
+}
+
+div.sidehead {
+  /* color: #fff; */
+  /* background: #1B5790; */
+  /* background-color: #A5CC7A; */
+  /* background-color: #73B32D; */
+}
+
+div.sidesection {
+  /* background-color: #AFC7DD; */
+  /* background-color: #E9FFD1; */
+  /* background-color: #A5CC7A; */
+  /* background: white url(/images/shadows/small-left-a.png) repeat-y; */
+  /* border-color: white; */
+}
+
+div.sideline a {
+}
+
+/* banner */
+
+div#banner {border-color: white;}
+#toprule-outer {border-color: black;}
+

@@ -62,6 +62,20 @@ nested_layouts
 
 lets us have layouts that nest inside other layouts
 
+bundled_assets
+--------------
+
+This plugin allows us to have many css and javascript files, with lots of comments, and it will combine them and compress them when in production mode. This makes the stylesheets reabable, easy to edit, and much faster.
+
+For this to work, the stylesheet and javascript tags should look like this:
+
+<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type="text/css" media="screen" charset="utf-8" />
+
+<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>
+
+http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
+
+NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
 
 OTHER PLUGINS
 ========================

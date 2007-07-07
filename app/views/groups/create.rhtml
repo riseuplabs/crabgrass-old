@@ -4,6 +4,7 @@
   <h1>New group</h1>
 <% end %>
 
+<div class='workarea'>
 <% form_tag :action => 'create' do -%>
 
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
@@ -14,7 +15,7 @@
 <p><label for="group_summary">Summary</label><br/>
 <%= text_field 'group', 'summary'  %></p>
 <%= submit_tag "Create" %>
+</div>
 
 <% end -%>
-
 

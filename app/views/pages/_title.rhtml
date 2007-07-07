@@ -4,7 +4,7 @@
   <div id='title_text' class='h1' style='<%=title_text_style%>'>
     <%=h @page.title %>
     <span id='title_edit_link' class=''>
-    <%= link_to_function image_tag('actions/edit.png'), "$('title_editor').show(); $('title_text').hide()" %>
+    <%= link_to_function 'edit', "$('title_editor').show(); $('title_text').hide()", :style => icon_style('actions/pencil.png') %>
     </span>
   </div>
   <div id='title_editor' style='<%=title_editor_style%>'>

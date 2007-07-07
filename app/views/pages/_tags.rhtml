@@ -5,5 +5,5 @@ else
  @page.tags.collect{|tag| link_to tag.name, "/me/search/tag/#{tag.name}" }.join(" ")
 end
 %>
-<%= link_to_function(image_tag('actions/edit.png'), "Element.toggle($('tag-form')); Element.toggle($('tags'))") if logged_in? %>
+<%= link_to_function(image_tag('actions/pencil.png'), "Element.toggle($('tag-form')); Element.toggle($('tags'))") if logged_in? %>
 

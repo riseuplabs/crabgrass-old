@@ -1,55 +1,48 @@
 <!-- sidebar -->
 
 <% if logged_in? %>
-<div class='section'>
-<h2>actions</h2>
+<div class='sidesection'>
+<div class='sidehead'>actions</div>
 
-<div class='line link'>
+<div class='sidelink'>
 <% if @upart %>
-  <%= image_tag 'actions/inbox-minus.png' %>
-  <%= link_to 'remove from my inbox', pages_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
+  <%= link_to_icon 'remove from my inbox', 'actions/inbox-minus.png', pages_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
 <% else %>
-  <%= image_tag 'actions/inbox-plus.png' %>
-  <%= link_to 'add to my inbox', pages_url(@page, :action => 'add_to_my_pages'), :method => :post %>
+  <%= link_to_icon 'add to my inbox', 'actions/inbox-plus.png', pages_url(@page, :action => 'add_to_my_pages'), :method => :post %>
 <% end %>
 </div>
 
 <% if @upart %>
-<div class='line link'>
+<div class='sidelink'>
 <% if @upart.resolved? %>
-  <%= image_tag 'actions/pending-plus.png' %>
-  <%= link_to 'add to pending', pages_url(@page, :action => 'make_unresolved'), :method => :post %>
+  <%= link_to_icon 'add to pending', 'actions/pending-plus.png', pages_url(@page, :action => 'make_unresolved'), :method => :post %>
 <% else %>
-  <%= image_tag 'actions/pending-minus.png' %>
-  <%= link_to 'remove from pending', pages_url(@page, :action => 'make_resolved'), :method => :post %>
+  <%= link_to_icon 'remove from pending', 'actions/pending-minus.png', pages_url(@page, :action => 'make_resolved'), :method => :post %>
 <% end %>
 </div>
 <% end %>
 
 <% if @upart %>
-<div class='line link'>
+<div class='sidelink'>
 <% if @upart.star? %>
-  <%= image_tag 'actions/star-minus.png' %>
-  <%= link_to 'remove star', pages_url(@page, :action => 'remove_star'), :method => :post %>
+  <%= link_to_icon 'remove star', 'actions/star-minus.png', pages_url(@page, :action => 'remove_star'), :method => :post %>
 <% else %>
-  <%= image_tag 'actions/star-plus.png' %>
-  <%= link_to 'add star', pages_url(@page, :action => 'add_star'), :method => :post %>
+  <%= link_to_icon 'add star', 'actions/star-plus.png', pages_url(@page, :action => 'add_star'), :method => :post %>
 <% end %>
 </div>
 <% end %>
 
-<div class='line link'>
-  <%= image_tag 'actions/trash.png' %>
-  <%= link_to 'destroy this page', pages_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
+<div class='sidelink'>
+  <%= link_to_icon 'destroy this page', 'actions/trash.png', pages_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
 </div>
 
-<div class='line link'>
-  <%= image_tag 'actions/announce.png' %>
-  <%= link_to_function 'send to...', "Element.toggle('announce-area')" %>
-  <div id='announce-area' style = 'display:none'>
-    <% info_text = 'person/group names'.t %>
+<div class='sidelink'>
+  <%= link_to_function 'notify...', "Element.toggle('announce-area')", :style => icon_style('actions/announce.png') %>
+  <div id='announce-area' class='sidesubarea' style='display:none'>
+    <div class='sideinfo'>notify these people or groups about this page:</div>
+    <% info_text = 'names of people or groups'.t %>
     <% form_remote_tag :url => {:controller=>'pages', :action=>'announce', :id => @page.id}, :loading => show_spinner('announce'), :complete => hide_spinner('announce') do -%>
-      <%= text_field_tag 'announcees', info_text, :size => 15, :id => 'announcees', :onclick=>"if ($('announcees').value == '#{info_text}') {$('announcees').clear();}" %><br/>
+      <%= text_field_tag 'announcees', info_text, :id => 'announcees', :onclick=>"if ($('announcees').value == '#{info_text}') {$('announcees').clear();}", :style=>'width:90%' %><br/>
       <%= submit_link 'send', :name => 'send' %>
       <%= link_to 'details' + ' &raquo;', {:controller => 'pages', :action => 'participation', :id => @page}, :onclick => 'this.form.submit' %>
       <%= spinner 'announce' %>
@@ -65,10 +58,10 @@
 <% group = @page.group -%>
 <% groups = group.committee? ? group.parent.committees.to_select(:short_name) + [[group.parent.short_name,group.parent.id]]: group.committees.to_select(:short_name) -%>
 <% if groups.any? -%>
-<div class='line link'>
-  <%= image_tag 'actions/lorry.png' %>
-  <%= link_to_function 'move to...', "Element.toggle('move-area')" %>
-  <div id='move-area' style = 'display:none'>
+<div class='sidelink'>
+  <%= link_to_function 'move to...', "Element.toggle('move-area')", :style => icon_style('actions/lorry.png') %>
+  <div id='move-area' class='sidesubarea' style = 'display:none'>
+    <div class='sideinfo'>move this page to:</div>
     <% form_tag(:controller=>'pages',:action=>'move',:id=>@page.id) do -%>
       <%= select_tag 'group_id', options_for_select(groups) %>
       <%= submit_tag 'move' %>
@@ -82,29 +75,31 @@
 </div> <!-- end section -->
 <% end %>
 
-<div class='section'>
-<h2>access <%= link_to image_tag('actions/pencil.png'), {:controller => 'pages', :action => 'access', :id => @page.id}, :title => 'edit page access' %></h2>
+<div class='sidesection'>
+<div class='sidehead'>access</div>
   <%= render :partial => 'pages/sidebar/access' %>
+  <%= link_to 'access details', {:controller => 'pages', :action => 'access', :id => @page.id}, :title => 'edit page access', :class => 'sidedetails' %>
 <div class='tail'></div>
 </div> <!-- end section -->
 
-<div class='section'>
-<h2>contributors <%= link_to image_tag('actions/pencil.png'), {:controller => 'pages', :action => 'participation', :id => @page.id}, :title => 'view contribution detail' %></h2>
+<div class='sidesection'>
+<div class='sidehead'>contributors</div>
 <ul class='plainlist'>
 <% unless @page.contributors.any? %>
-  <div class='line'>(none so far)</div>
+  <div class='sideline'>(none so far)</div>
 <% end %>
 <% @page.contributors.each do |u| %>
-  <div class='line'><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></div>
+  <div class='sideline'><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></div>
 <% end %>
+ <%= link_to 'contribution details', {:controller => 'pages', :action => 'participation', :id => @page.id}, :title => 'view contribution detail', :class => 'sidedetails' %>
 </ul>
 
 <div class='tail'></div>
 </div> <!-- end section -->
 
-<div class='section'>
-<h2>tags</h2>
-<div class='line'><%= render :partial => "pages/tag_area"  %></div>
+<div class='sidesection'>
+<div class='sidehead'>tags</div>
+<div class='sideline'><%= render :partial => "pages/tag_area"  %></div>
 <div class='tail'></div>
 </div> <!-- end section -->
 

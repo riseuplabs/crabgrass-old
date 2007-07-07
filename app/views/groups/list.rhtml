@@ -1,7 +1,9 @@
 <% if logged_in? -%>
 
+<%= link_to_icon 'Create a new group', 'actions/plus.png', :action => 'create' %>
+
 <h1>My groups</h1>
-<div class='xworkarea' >
+<div class='workarea' >
 <% if current_user.groups %>
 <%= render :partial => 'group', :collection => current_user.groups %>
 <% else %>
@@ -11,14 +13,10 @@
 </div>
 
 <h1 style='clear:both'>All groups</h1>
-<div class='xworkarea'>
+<div class='workarea'>
 <%= render :partial => 'group', :collection => @groups %>
 <br class='clear' />
 </div>
-
-<p><div class='xworkarea'>
-<%= link_button 'New group', :action => 'create' %>
-</div></p>
 
 <% else -%>
 

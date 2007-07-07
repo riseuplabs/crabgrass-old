@@ -112,13 +112,6 @@ ul.tabset a.selected {
   color: black;
   height: 2em; /* this is what hides the bottom border */
 }
-div.tabarea {
-/*  background: #fff;
-  border: 1px solid #999;
-  border-top: 0; 
-  padding: 1px;  not sure why this is needed */
-}
-
 
 /** table heading **/
 /* this needs help! */

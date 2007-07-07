@@ -30,17 +30,13 @@ div.landing h4 {
 }
 
 div#info_panel {
-  background-color: #f5f8ff;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  padding: 20px 0;
 }
 div#info_panel td {
   vertical-align: top;
-  padding: 0 20px;
+  padding: 20px 20px 20px 0;
 }
-
-div#info_panel td#group_info_cell {
+div#info_panel td.right {
+  padding: 20px 0px 20px 20px;
   border-left: 1px solid #ccc;
 }
 

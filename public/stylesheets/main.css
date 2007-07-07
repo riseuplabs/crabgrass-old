@@ -8,55 +8,33 @@ img   {border:0}
 
 /** layout **/
 
-div#container {
-  /* z-index: 10; */
+#main {
+  padding: 22px 20px;
 }
-div#main {
-  padding: 10px;
+#breadcrumbs {margin-bottom: 1em;}
+
+#maincolumn, #tabarea {
+  padding: 20px;
+  background: white;
+  border: 1px solid transparent;
 }
-div#content {
-  /* z-index: 20; */
-  background: white;  
+#tabarea {
+  padding-top: 0;
 }
-div#breadcrumbs {margin-bottom: 1em;}
-
-.clear {
-  clear: both;
+div.tabinfo {
+  font-size: 0.8em;
+  margin: 1em;  
 }
-/** layout for pages **/
-
-body.with_sidebar {
-  /* background: white url(/images/sidebar-grey.png) repeat-y top right; */
-} 
-div#main.with_sidebar {
-  /* margin-right: 180px; */
+#title {
+  margin: -20px; /* equal to #maincolumn padding */
+  margin-bottom: 20px;
+  padding: 20px;
+  padding-top: 10px;
+  background: #F5F8FF;
 }
 
-/** profile **/
+/** type **/
 
-/*
-div.profile {
-  margin-top: 6px;
-  background: #f9f9f9;
-  border: 1px solid #ccc;
-  padding: 6px;
-}
-div.profile td {vertical-align: top; padding: 3px;}
-div.profile h1 {margin: 0; font-size: 2em;}
-*/
-
-/** style **/
-
-a:link     {text-decoration: none; color:#003399;}
-a:visited  {text-decoration: none; color:#003399;}
-a:hover    {text-decoration: none; color: #04B4AE; }
-a:active   {color:#003399}
-
-
-body {
-  background-color: #fff;
-  color: #000;
-}
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
@@ -64,7 +42,8 @@ body, p, ol, ul, td {
 }
 .normal {font-size: 13px;font-weight:normal;}
 
-/** theme **/
+
+/** masthead **/
 
 table#masthead {
   border-collapse: collapse;
@@ -80,5 +59,16 @@ div#masthead-image {
   width: 166px;
   height: 30px;
 }
-#main {}
+
+/** utility **/
+
+.clear {clear: both;}
+
+/* links and text */
+
+body       {color: black;}
+a:link     {color:#00E;}
+a:visited  {color:#551A8B;}
+a:hover    {text-decoration: underline;}
+a:active   {color:#F00;}
 

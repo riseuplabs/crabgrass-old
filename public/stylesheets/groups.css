@@ -1,32 +1,5 @@
 /** layout for groups **/
 
-div#navbar {
-  font-family: arial;	
-  float: left;
-  width: 8em;
-  color: #666;
-  background-color: #f5f8ff;
-  outline: 1px solid #ccc;
-  border: 1px solid white;
-  padding: 1em;
-}
-div#maincolumn {
-  margin-left: 9em;
-  padding-left: 2.5em;
-}
-
-/** sidebar **/
-
-div#navbar h4 {
-  color: #999;
-  font-size: 1em;
-  margin: 0;
-}
-
-div#navbar div.section {
-  margin-bottom: 1em;
-}
-
 /** searching and archive **/
 
 table.archive-calendar {

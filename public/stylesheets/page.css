@@ -21,95 +21,32 @@ div.workarea {
   padding: 10px; 
 }
 
-/** sidebar **/
-
-
-div#sidebar {
-  float: right;
-  width: 170px;
-  margin-right: -180px; /* -1 * (#sidebar.width + #main.padding) */
-}
-div#sidebar div.section {
-  outline: 0px solid green;
-  background: #f9f9f9 url(/images/shadows/sidebar/left.png) repeat-y left;
-  margin-bottom: 10px;
-}
-div#sidebar h2 {
-  font-size: 1em;
-  margin: 0;
-  padding: 3px 3px 3px 9px;
-  /* background: #a5cc7a url(/images/shadows/sidebar/top-dark.png) no-repeat top left;
-  background: #CAF0A5 url(/images/shadows/sidebar/top.png) no-repeat top left;
-  background: #1b5790 url(/images/shadows/sidebar/top-dark.png) no-repeat top left; */
-  background: #a5cc7a url(/images/shadows/sidebar/top.png) no-repeat top left;
-  color: white;
-  margin-bottom: 2px;
-}
-div#sidebar div.tail {
-  height: 5px;
-  background: #f9f9f9 url(/images/shadows/sidebar/bottom.png) no-repeat bottom left;
-}
-div#sidebar div.line {
-  padding: 3px 0 3px 9px;
-}
-div#sidebar div.line.link {
-  font-size: 0.8em;
-}
-div#sidebar div.line.link:hover {
-  background: #ddf url(/images/shadows/sidebar/left.png) repeat-y left;
-}
-div#sidebar div img {
-  vertical-align: top;
-}
-div#sidebar h2 a {
- display: block;
- width: 16px;
- float: right;
- margin-top: -16px;
- opacity: 0.5;
-}
-div#sidebar h2 a:hover {
- opacity: 1;
-}
-div#sidebar h3 {
- padding: 0;
- margin: 4px 0 0 10px;
- font-size: 1em;
- font-weight: normal;
- border-bottom: 1px dotted #ccc;
-}
 
 /* title */
-
-.h1 {font-size: 2em; font-weight: bold;}
-div#title {
-  margin-bottom: 10px;
-/*  background: #efefef;
-  color: #449;
-  padding: 10px;
-  border-right: 3px solid #ccc; */
+.h1 {font-size: 2em; font-weight: bold; line-height: 1.2em;}
+div#title_text {
+  margin-top: 15px;
 }
 div#title_text span#title_edit_link {
+  font-size: 8pt;
   opacity: 0;
 }
 div#title_text:hover span#title_edit_link {
   opacity: 1;
 }
 #title_editor {
-  padding: 1em;
-  background: white;
-  border: 1px solid #ccc;   
+  margin-top: 15px;
 }
 div#title_text span {
 }
 
 /* posts */
 div#posts {
-  margin: 1em 0;
+  /* margin: 1em -20px 0 -20px; */
 }
 table.posts {
   width: 100%;
-  border: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 .post-author {
   text-align: right;
@@ -119,7 +56,7 @@ table.posts {
 .post-author div.username, .post-author div.date {margin-right: 38px}
 td.post-body {
   border-left: 1px solid #ccc;
-  padding: 0 10px 0 10px;
+  padding: 0 10px;
 }
 td.post-body div.negativespace {
   margin: -1em 0;
@@ -156,10 +93,6 @@ div.page-class .page-link {
 
 /** page list **/
 
-div.tabinfo {
-  font-size: 0.8em;
-  margin: 1em;  
-}
 div#page-holder {
 }
 div#page-holder div.header {
@@ -172,15 +105,17 @@ div#page-holder div.header {
 div#page-list {
   margin: 0 0 1em 13em;
 }
+table.page-list a {text-decoration: none;}
+table.page-list a:hover {text-decoration: underline;}
 table.page-list {
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
-div#page-list tr td {
-  border-top: 1px solid #ccc;
-  padding: 2px;
+table.page-list tr td {
+  border-top: 1px solid #eee;
+  padding: 1px;
 }
-div#page-list tr.unread {
+table.page-list tr.unread {
   font-weight: bold;
 }
 

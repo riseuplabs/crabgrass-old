@@ -1,11 +1,15 @@
+<% @leftbar = render :partial => 'groups/sidebar' -%>
 <% inside_layout 'application' do -%>
-<% if @sidebar -%>
-<div id='navbar'>
-  <%= render :partial => @sidebar %>
-</div>
-<% end -%>
-<div id='maincolumn' style="<%="margin-left: 0" unless @sidebar %>">
+<div id='maincolumn' class='leftbar' style="<%=sidebar_space%>">
+  <%= sidebar %>
+  <div id='title'>
+    <% unless params[:action] == 'show' -%>
+    <div id='breadcrumbs'><%= link_to_breadcrumbs %></div>
+    <% end -%>
+    <%= @title if @title %>
+  </div>
   <%= yield %>
+  <br clear='both' />
 </div>
 <% end -%>
 

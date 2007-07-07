@@ -82,6 +82,7 @@ class GroupsController < ApplicationController
   end
 
   def create
+    set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
     @parent = Group.find(params[:parent_id]) if params[:parent_id]
     if @parent
       @group = Committee.new(params[:group])
@@ -246,7 +247,7 @@ class GroupsController < ApplicationController
   protected
   
   def choose_layout
-     return 'application' if ['list','index'].include? params[:action]
+     return 'application' if ['list','index', 'create'].include? params[:action]
      return 'groups'
   end
   

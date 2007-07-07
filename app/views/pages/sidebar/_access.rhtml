@@ -2,20 +2,22 @@
 checked      = @page.public? ? "CHECKED" : ""
 disabled     = (logged_in? and current_user.may?(:admin, @page)) ? '' : DISABLED
 -%>
-<h3><%= image_tag 'actions/admin.png' %> admin</h3>
+<div class='sidesubhead'>
+<%= image_tag 'actions/wrench.png' %> admin
+</div>
 
-<div class='line'>
+<div class='sideline'>
 <% @page.groups.each do |g| -%>
-  <b><%= link_to_group g %></b><br/>
+  <b><%= link_to_group g, :avatar => 'tiny' %></b><br/>
 <% end -%>
 <% @page.users_with_access.each do |u| -%>
-  <%= link_to_user u %><br/>
+  <%= link_to_user u, :avatar => 'tiny' %><br/>
 <% end -%>
 </div>
 
-<h3><%= image_tag 'actions/eye.png' %> view</h3>
+<div class='sidesubhead'><%= image_tag 'actions/eye.png' %> view</div>
 
-<div class='line'>
+<div class='sideline'>
 <input type='checkbox' id='public_check' <%= checked %> <%= disabled %> value="true"/>
 <%= spinner('public') -%> <label for='public_check'>public?</label>
 <%= observe_field 'public_check', :url => pages_url(@page, :action => 'update_public'), :with => "public", :before => "Element.hide('public_check');" + show_spinner('public'), :complete => "Element.hide('#{spinner_id('public')}'); Element.show('public_check')" %>

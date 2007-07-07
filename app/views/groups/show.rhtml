@@ -3,14 +3,11 @@
 This group does not have a public profile.
 
 <% else -%>
-
-<% @sidebar = 'groups/sidebar' %>
+<%
+  @title = render :partial => 'groups/widgets/infopanel'
+%>
 
 <div class='landing'>
-
-<div id="info_panel" class='section'>
-  <%= render :partial => 'groups/widgets/infopanel' %>
-</div>
 
 <div class='group_widget section'>
   <%= render :partial => 'groups/widgets/recently_created' %>

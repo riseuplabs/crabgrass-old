@@ -4,8 +4,7 @@ module ApplicationHelper
   include PageUrlHelper
   include UrlHelper
   include Formy
-#  Formy::define_formy_keywords
-  
+  include LayoutHelper
   include LinkHelper
     
   # display flash messages with appropriate styling
@@ -51,7 +50,17 @@ module ApplicationHelper
   def page_icon_style(icon)
    "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
-  
+
+  def link_to_icon(text, icon, path={}, options={})
+    link_to text, path, options.merge(:style => icon_style(icon))
+  end
+
+  def icon_style(icon)
+    size = 16
+    url = "/images/#{icon}"
+    "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
+  end
+
   def link_to_user(arg, options={})
     login, path = login_and_path_for_user(arg,options)
     style = nil
@@ -94,30 +103,6 @@ module ApplicationHelper
     "Element.show('#{spinner_id(id)}');"
   end
 
-  def bread
-    @breadcrumbs
-  end
-  
-  def link_to_breadcrumbs
-    if @breadcrumbs and @breadcrumbs.length > 1
-      @breadcrumbs.collect{|b| link_to b[0],b[1]}.join ' &raquo; ' 
-    end
-  end
-  
-  def first_breadcrumb
-    @breadcrumbs.first.first if @breadcrumbs.any?
-  end
- 
-  def first_context
-    @context.first.first if @context.any?
-  end
-  
-  def title_from_context
-    (
-      (@context||[]).collect{|b|truncate(b[0])}.reverse +
-      [SITE_NAME]
-    ).join(' : ')
-  end
 
   # override standard url_for to cache the result.
   #alias_method :orig_url_for, :url_for
@@ -173,33 +158,6 @@ module ApplicationHelper
    ret = ''
    ret += '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />'  if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
    ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
-  end
-
-  # custom stylesheet
-  # rather than include every stylesheet in every request, some stylesheets are 
-  # only included if they are needed. a controller can set a custom stylesheet
-  # using 'stylesheet' in the class definition, or an action can set @stylesheet.
-  # you can't do both at the same time.
-  def stylesheet
-    if @stylesheet
-      @stylesheet # set for this action
-    else
-      controller.class.stylesheet # set for this controller
-    end
-  end
-  
-  # banner stuff
-  def banner_style
-    "background: #{@banner_style.background_color}; color: #{@banner_style.color};"
-  end  
-  def banner_background
-    @banner_style.background_color
-  end
-  def banner_foreground
-    @banner_style.color
-  end
-  def banner
-    @banner_partial
   end
  
   def logged_in?

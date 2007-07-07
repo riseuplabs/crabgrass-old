@@ -5,7 +5,7 @@
 <% if logged_in? and post.user_id == current_user.id -%>
   <div style='float:right; margin-top: -1em'>
     <span style="display: none" id="<%=edit_loading_id%>"><%=image_tag "spinner.gif"%></span>
-    <%= link_to_remote image_tag('actions/edit.png'), 
+    <%= link_to_remote image_tag('actions/pencil.png'), 
         :url => {:controller => 'posts', :action => 'edit', :id => post.id},
         :loading => "Element.show('#{edit_loading_id}')" %>
   </div>

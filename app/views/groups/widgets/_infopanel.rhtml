@@ -1,10 +1,11 @@
+<div id='info_panel' class='landing'>
 <table>
 <tr>
   <td width="50%">
     <h3>Members <span><%= @group.users.count %> members</span></h3>
 <%= render :partial => 'groups/widgets/members' %>
   </td>
-  <td rowspan='2' width="50%" id='group_info_cell'>
+  <td rowspan='2' width="50%" class='right'>
     <h3>Group Information</h3>
 <%= render :partial => 'groups/widgets/info' %>
   </td>
@@ -18,4 +19,4 @@
   </td>
 </tr>
 </table>
-
+</div>

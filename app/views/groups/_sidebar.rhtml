@@ -1,20 +1,37 @@
-<div class='section'>
-<h4>Navigation</h4>
-  <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %><br/> 
-  <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %><br/> 
-  <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %><br/>
-  <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %> <br/>
+<div class='sidesection'>
+<div class='sidehead'>Navigation</div>
+<div class='sidelink'>
+  <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %>
+</div>
+<div class='sidelink'>
+  <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %>
+</div>
+<div class='sidelink'>  
+  <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %>
+</div>
+<div class='sidelink'>
+  <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %>
+</div>
+<div class='sidetail'></div>
 </div>
 
-<div class='section'>
-<h4>Actions</h4>
-<% if current_user.member_of?(@group) %>
-  <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %> <br/>
-  <% unless committee? -%><%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %><br/>
-  <% end -%>
-  <% if @group.users.size == 1 and current_user.direct_member_of? @group -%>
-    <%= post_to "destroy #{@group_type}", group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this #{@group_type}?" %> <br/>
-  <% end %> 
+<div class='sidesection'>
+<div class='sidehead'>Actions</div>
+<% if current_user.member_of?(@group) -%>
+<div class='sidelink'>
+  <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %>
+</div>
+<% unless committee? -%>
+<div class='sidelink'>
+  <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %>
+</div>
 <% end -%>
+<% if @group.users.size == 1 and current_user.direct_member_of? @group -%>
+<div class='sidelink'>
+  <%= post_to "destroy #{@group_type}", group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this #{@group_type}?" %>
+</div>
+<% end -%> 
+<% end -%>
+<div class='sidetail'></div>
 </div>
 

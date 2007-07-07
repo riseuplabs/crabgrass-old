@@ -154,7 +154,7 @@ module ContextHelper
       else
         breadcrumbs_from_context(false)
       end
-      add_breadcrumb( @page.title, page_url(@page, :action => 'show') )
+      # add_breadcrumb( @page.title, page_url(@page, :action => 'show') )
     else    
       # there is no page, but for some reason we are still using a page
       # context. so, we just use what we are given.
