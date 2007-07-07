@@ -8,7 +8,7 @@ class Tool::BaseController < ApplicationController
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   skip_before_filter :login_required
-  append_before_filter :setup_view
+  append_before_filter :setup_default_view
   append_after_filter :update_participation
   
   # if the tool controller is call by our custom DispatchController, 
@@ -61,16 +61,21 @@ class Tool::BaseController < ApplicationController
       current_user.viewed(@page)
     end
   end
-
-  # initializes default view variables. can be overwritten by subclasses.
-  def setup_view
+  
+  def setup_default_view
     # default, only show comment posts for the 'show' action
     @show_posts = (%w(show title).include?params[:action])
     # by default, don't show the reply box if there are no posts
     @show_reply = @posts.any?
     @show_workarea = true
     @sidebar = true
+    @show_attach = false
+    setup_view
     true
+  end
+  
+  # to be overwritten by subclasses.
+  def setup_view
   end
   
   def login_or_public_page_required

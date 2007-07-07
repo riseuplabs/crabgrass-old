@@ -9,11 +9,6 @@ module GroupsHelper
   def network?
     @group.instance_of? Network
   end
-
-  # makes this: link | link | link
-  def link_line(*links)
-    "<div class='link_line'>" + links.compact.join(' | ') + "</div>"
-  end
   
   def edit_settings_link
     link_to 'edit settings'.t, group_url(:action => 'edit', :id => @group)

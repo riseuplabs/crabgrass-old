@@ -19,7 +19,14 @@ class Tool::AssetController < Tool::BaseController
   end
 
   protected
-    def fetch_asset
-      @asset = @page.data if @page
-    end
+  
+  def fetch_asset
+    @asset = @page.data if @page
+  end
+  
+  def setup_view
+    @show_attach = false
+    @show_posts = true
+  end
+  
 end

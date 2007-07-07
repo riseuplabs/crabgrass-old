@@ -88,6 +88,11 @@ module ApplicationHelper
     image_tag avatar_url(:id => (viewable.avatar||0), :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => (options[:class] || "avatar avatar_#{size}")
   end
   
+  # makes this: link | link | link
+  def link_line(*links)
+    "<div class='link_line'>" + links.compact.join(' | ') + "</div>"
+  end
+
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
     options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
@@ -144,6 +149,17 @@ module ApplicationHelper
   def full_time(time)
     '%s %s %s (UTC %s)' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M<span style="font-size: 80%">%p</span>'), time.loc('%z')]
   end
+  
+  def friendly_size(bytes)
+    if bytes > 1.megabyte
+      '%s MB' % (bytes / 1.megabyte)
+    elsif bytes > 1.kilobyte
+      '%s KB' % (bytes / 1.kilobyte)
+    else
+      '%s B' % bytes
+    end
+  end
+  
   
   def created_modified_date(created, modified=nil)
     return friendly_date(created) unless modified and modified != created

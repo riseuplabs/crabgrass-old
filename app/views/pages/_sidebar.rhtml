@@ -103,4 +103,16 @@
 <div class='tail'></div>
 </div> <!-- end section -->
 
+<% if @show_attach -%>
+<% if @page.assets.any? -%>
+<div class='sidesection'>
+<div class='sidehead'>attachments</div>
+<%= render :partial => 'pages/assets' %> 
+<div class='tail'></div>
+</div>
+<% else -%>
+<%= render :partial => 'pages/assets' %> 
+<% end -%>
+
+<% end -%>
 <!-- end sidebar -->

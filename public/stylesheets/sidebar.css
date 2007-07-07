@@ -60,6 +60,7 @@ div.sideline, div.sidelink {
 div.sidelink a, div.sideline a {
   text-decoration: none;
   outline: 0;
+  padding: 3px; /* to make icons show up and not get clipped */
 }
 div.sidelink a:hover, div.sideline a:hover {
   text-decoration: underline;

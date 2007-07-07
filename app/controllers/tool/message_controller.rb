@@ -28,11 +28,10 @@ class Tool::MessageController < Tool::BaseController
   protected
   
   def setup_view
-    super
     # always show reply box
     @show_reply = true
     @show_workarea = false if params[:action] == 'show'
-    true
+    @show_attach = true
   end
   
 end

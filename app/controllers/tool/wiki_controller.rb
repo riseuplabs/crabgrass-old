@@ -96,5 +96,9 @@ class Tool::WikiController < Tool::BaseController
     @wiki = @page.data
   end
   
+  def setup_view
+    @show_attach = true
+  end
+  
 end
 

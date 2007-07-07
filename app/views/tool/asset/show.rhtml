@@ -1,11 +1,37 @@
 <% if @asset.image? -%>
-<%= image_tag @asset.public_filename(:preview) %>
-<br/>
+  <%= link_to(image_tag(@asset.public_filename(:preview)), @asset.public_filename) %>
 <% end -%>
-<%= icon_for @asset %> <%= link_to @asset.filename, @asset.public_filename %>
-
-<%= @asset.content_type %>, <%= @asset.size %> bytes<%= " (#{@asset.width}x#{@asset.height})" if @asset.image? %>
-
-<br/>
 
 <%= @page.summary %>
+
+<table cellpadding='4'>
+<tr>
+  <td align='right'><b><%= 'created by'.t %>:</b></td>
+  <td><%= h @page.created_by.both_names %></td>
+</tr>
+<tr>
+  <td align='right'><b><%= 'created on'.t %>:</b></td>
+  <td><%= full_time(@page.created_at) %></td>
+</tr>
+<tr>
+  <td align='right'><b><%= 'file type'.t %>:</b></td>
+  <td><%= @asset.content_type %></td>
+</tr>
+<tr>
+  <td align='right'><b><%= 'size'.t %>:</b></td>
+  <td><%= friendly_size(@asset.size) %></td>
+</tr>
+<% if @asset.image? -%>
+<tr>
+  <td align='right'><b><%= 'dimensions'.t %>:</b></td>
+  <td><%= "#{@asset.width}x#{@asset.height}" %></td>
+</tr>
+<% end -%>
+</table>
+
+<p><%= link_line(
+  link_to("download %s" % @asset.filename, @asset.public_filename),
+  'upload a new version',
+  'view versions'
+  ) %></p>
+<br/>

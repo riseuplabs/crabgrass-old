@@ -13,23 +13,23 @@ class AssetController < ApplicationController
 
   def create
     if @asset.save
-      if params[:title] || params[:tag_list]
-        params[:page] = {:title => params[:title]}
-        @page = build_new_page
-        @page.data = @asset
-        @page.save
-      end
+#      if params[:title] || params[:tag_list]
+#        params[:page] = {:title => params[:title]}
+#        @page = build_new_page
+#        @page.data = @asset
+#        @page.save
+#      end
       return redirect_to page_url(@asset.page)
     end
   end
 
-  include Tool::ToolCreation
-  def get_groups
-    @asset.page.groups
-  end
-  def get_page_type
-    Tool::Asset
-  end
+#  include Tool::ToolCreation
+#  def get_groups
+#    @asset.page.groups
+#  end
+#  def get_page_type
+#    Tool::Asset
+#  end
 
   protected
 
@@ -43,6 +43,9 @@ class AssetController < ApplicationController
 
   def initialize_asset
     @asset = Asset.new params[:asset]
+    suffix = @asset.filename.sub(/^.*\.(.+)$/,'.\\1')
+    @asset.filename = params[:asset_title]+suffix if params[:asset_title].any?
+    true
   end
 
   def authorized?
