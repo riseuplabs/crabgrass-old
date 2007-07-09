@@ -43,6 +43,7 @@ class AssetController < ApplicationController
 
   def initialize_asset
     @asset = Asset.new params[:asset]
+    message(:error => "Invalid file") and redirect_to(:back) and return false unless @asset.valid?
     suffix = @asset.filename.sub(/^.*\.(.+)$/,'.\\1')
     @asset.filename = params[:asset_title]+suffix if params[:asset_title].any?
     true

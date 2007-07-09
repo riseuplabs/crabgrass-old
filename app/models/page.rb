@@ -161,6 +161,11 @@ class Page < ActiveRecord::Base
     end
     true
   end
+
+  after_save :update_access
+  def update_access
+    assets.each { |asset| asset.update_access }
+  end
   
   def reciprocate_add(other_page)
     other_page.pages << self unless other_page.pages.include?(self)
