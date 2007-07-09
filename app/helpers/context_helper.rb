@@ -62,7 +62,7 @@ module ContextHelper
       if @group.instance_of? Committee
         add_context @group.parent.short_name, groups_url(:id => @group.parent, :action => 'show')
       end
-      add_context @group.short_name, groups_url(:id => @group, :action => 'show')
+      add_context @group.short_name, url_for_group(@group, :action => 'show')
       set_banner "groups/banner_#{size}", @group.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs

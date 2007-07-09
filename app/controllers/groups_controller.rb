@@ -271,11 +271,15 @@ class GroupsController < ApplicationController
   end
   
   def authorized?
-    members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update members)
-    if members_only.include? params[:action]
-      return(logged_in? and current_user.member_of? @group)
-    else
+    #members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update members create)
+    non_members_post_allowed = %w(archive search tags tasks)
+    non_members_get_allowed = %w(show members) + non_members_post_allowed
+    if request.get? and non_members_get_allowed.include? params[:action]
       return true
+    elsif request.post? and non_members_post_allowed.include? params[:action]
+      return true
+    else
+      return(logged_in? and current_user.member_of? @group)
     end
   end
   

@@ -1,0 +1,13 @@
+<h1>Dual memberships</h1>
+
+<p>Members of group <b><%=@group.parent.name%></b> who should also be in committee <b><%=@group.short_name%></b></p>
+
+<blockquote>
+<% form_tag(:action => 'members', :id => @group) do -%>
+  <%= collection_multiple_select('group', 'user_ids', @group.parent.users, :id, :login, :outer_class=>'plainlist floatlist') %>
+  <br class='clear'/>
+  <%= submit_tag "Save" %>
+<% end -%>
+</blockquote>
+
+

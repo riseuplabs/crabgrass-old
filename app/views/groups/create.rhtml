@@ -9,7 +9,7 @@
 
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 <p><label for="group_name">Short name (must only contain alphanumeric characters)</label><br/>
-<%= @parent.name + "-" if @parent %><%= text_field 'group', 'name' %></p>
+<%= @parent.name + "+" if @parent %><%= text_field 'group', 'name' %></p>
 <p><label for="group_full_name">Full name</label><br/>
 <%= text_field 'group', 'full_name'  %></p>
 <p><label for="group_summary">Summary</label><br/>

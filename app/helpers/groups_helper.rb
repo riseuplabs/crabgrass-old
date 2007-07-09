@@ -1,7 +1,11 @@
 module GroupsHelper
 
   include PageFinders
-  
+
+  def may_admin_group?
+    logged_in? and current_user.member_of? @group
+  end
+    
   def committee?
     @group.instance_of? Committee
   end
@@ -11,7 +15,9 @@ module GroupsHelper
   end
   
   def edit_settings_link
-    link_to 'edit settings'.t, group_url(:action => 'edit', :id => @group)
+    if may_admin_group?
+      link_to 'edit settings'.t, group_url(:action => 'edit', :id => @group)
+    end
   end
   
   def leave_group_link
@@ -31,7 +37,9 @@ module GroupsHelper
   end
   
   def create_committee_link
-    link_to 'create committee'.t, group_url(:action => 'create', :parent_id => @group.id)
+    if may_admin_group?
+      link_to 'create committee'.t, group_url(:action => 'create', :parent_id => @group.id)
+    end
   end
   
   def more_members_link
@@ -39,7 +47,7 @@ module GroupsHelper
   end
   
   def edit_members_link
-    if logged_in? and current_user.member_of?(@group)
+    if may_admin_group?
       link_to 'edit'.t, group_url(:action => 'members', :id => @group)
     end
   end
