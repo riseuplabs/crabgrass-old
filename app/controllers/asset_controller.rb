@@ -3,12 +3,7 @@ class AssetController < ApplicationController
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
   def show
-    thumb = nil
-    unless @asset.filename == "#{params[:filename]}.#{params[:format]}"
-      file = @asset.thumbnails.detect {|a| a.filename == "#{params[:filename]}.#{params[:format]}"}
-      thumb = file.thumbnail if file
-    end
-    send_file(@asset.full_filename(thumb), :type => @asset.content_type, :disposition => (@asset.image? ? 'inline' : 'attachment'))
+    send_file(@asset.full_filename(@thumb), :type => @asset.content_type, :disposition => (@asset.image? ? 'inline' : 'attachment'))
   end
 
   def create
@@ -34,7 +29,14 @@ class AssetController < ApplicationController
   protected
 
   def fetch_asset
+    @thumb = nil
     @asset = Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
+    if @asset && @asset.image? && @asset.filename != "#{params[:filename]}.#{params[:format]}"
+      thumb = @asset.thumbnails.detect {|a| a.filename == "#{params[:filename]}.#{params[:format]}"}
+      render(:text => "Not found", :status => :not_found) and return unless thumb
+      @thumb = thumb.thumbnail.to_sym
+      @asset.create_or_update_thumbnail(@asset.full_filename,@thumb,Asset.attachment_options[:thumbnails][@thumb]) unless File.exists? thumb.full_filename
+    end
     if @asset.is_public?
       @asset.update_access 
       redirect_to and return false
