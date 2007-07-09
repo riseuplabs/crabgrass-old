@@ -82,6 +82,11 @@ class User < AuthenticatedUser
   ### validations
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
+  before_validation_on_create :clean_login
+  
+  def clean_login
+    write_attribute(:login, read_attribute(:login).downcase)
+  end
   
   ### callbacks
  
