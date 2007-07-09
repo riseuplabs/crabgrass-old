@@ -86,6 +86,10 @@ class GroupsController < ApplicationController
     @parent = Group.find(params[:parent_id]) if params[:parent_id]
     if @parent
       @group = Committee.new(params[:group])
+      unless logged_in? and current_user.member_of?(@parent)
+        message( :error => 'you do not have permission to do that', :later => true )
+        redirect_to url_for_group(@parent)
+      end
       @group.parent = @parent
     else
       @group = Group.new(params[:group])
@@ -272,7 +276,7 @@ class GroupsController < ApplicationController
   
   def authorized?
     #members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update members create)
-    non_members_post_allowed = %w(archive search tags tasks)
+    non_members_post_allowed = %w(archive search tags tasks create)
     non_members_get_allowed = %w(show members) + non_members_post_allowed
     if request.get? and non_members_get_allowed.include? params[:action]
       return true
