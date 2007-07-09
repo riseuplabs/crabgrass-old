@@ -1,8 +1,10 @@
 <% content_for :style do %>
-p, td {font-family: georgia, serif;
+p, td, div {font-family: georgia, serif;
   font-size: 85%;
   line-height: 1.5em;
+  color: black;
 }
+.light {color: #ccc; padding-left: 2px;}
 body {
   padding: 1em;
   background:#ccc;
@@ -29,8 +31,24 @@ td.rendered {
   vertical-align: top;
   padding: 3px;
 }
-p > code {
-  white-space: pre;
+pre {
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+pre.code {
+  background: black;
+  color: #0f0;
+  padding: 0.5em;
+}
+div.codetitle {
+  background: #333;
+  color: #fff;
+  margin-bottom: -1em;
+  padding: 0.25em;
+  font-weight: bold;
 }
 <% end %>
 <%
@@ -38,9 +56,9 @@ p > code {
 def row(text)
   %Q(
 <tr>
-  <td class='code'><pre>#{text.gsub('<','&lt;')}</pre></td>
+  <td class='code'><pre>#{text.gsub('<','&lt;').gsub("\n","<span class='light'>&crarr;</span>\n")}</pre></td>
   <td><b>&rarr;</b></td>
-  <td class='rendered'>#{GreenCloth.new(text).to_html}</td>
+  <td class='rendered wiki'>#{GreenCloth.new(text).to_html}</td>
 </tr>
   )
 end
@@ -57,7 +75,7 @@ end
 
 <table cellpadding='0' cellspacing='10' id='maintable'>
 <tr><td colspan="3">
-Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. 
+Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. In the example source text, the symbol <b>&crarr;</b> is used to indicate where returns are. 
 </tr></td>
 <%=  
 
@@ -66,9 +84,9 @@ Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_langua
 Paragraphs
 ===========
 
-Paragraphs are separated by a blank line. This is the first paragraph.
+Paragraphs are separated by a blank line. This is the first paragraph. Only put returns (enter key) in a paragraph if you want to force a line break.
 
-Followed by another very fine paragraph. 
+Here is another paragraph, but shorter than the first.
 
 Line breaks
 -----------
@@ -107,10 +125,7 @@ END
 
   header('Formatting') +
   row(<<END) +
-_emphasis_, __italicized__, *strong*, **bold** 
-??citation??, -deleted text-, +inserted text+ 
-^superscript^, ~subscript~ 
-@code@, %(classname)span%
+_emphasis_, __italicized__, *strong*, **bold**, ??citation??, -deleted text-, +inserted text+, ^superscript^, ~subscript~, @code@, %(classname)span%
 END
 
   header('Links') +
@@ -119,13 +134,11 @@ END
 # Text [in brackets] is assumed to be a page name.
 # You can also point to a [different page -> trees].
 # To specify a different group:
-** [fruit/orange] is different from [colors/orange] 
-** [orange's -> fruit/orange] is different
-   from [orange's -> colors/orange] 
-# Instead of the page name, you can use the
-  page id number: [oranges -> 342] 
-# If you want a square bracket in your text, you can
-  disable linking \\[like so\\].
+** [fruit/orange] is different from [colors/orange]
+** [my orange -> fruit/orange] is different
+   from [my orange -> colors/orange]
+# Instead of the page name, you can use the page id number: [oranges -> 342]. It is always safe to link to a page id: it will never change.
+# If you want a square bracket in your text, you can disable linking \\[like so\\].
 END
 
   header('Headings') +
@@ -178,8 +191,8 @@ def fibonacci(max)
 end
 </code>
 
-/--
-another way to make blocks
+/-- another way to
+   make code blocks
 \\--
 
 @@ a single code block line
@@ -194,8 +207,8 @@ END
 
 %>
 
-<tr><td>
-For more details, see the <a href="http://hobix.com/textile/quick.html">quick guide to textile</a>
+<tr><td colspan='4'>
+For more details, see the <a href="http://hobix.com/textile/quick.html">quick guide to textile</a>. Not all textile options work with GreenCloth.
 </td></tr>
 </table>
 

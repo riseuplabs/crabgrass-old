@@ -380,7 +380,7 @@ class GreenCloth < RedCloth
   
   CG_CODE_BEGIN = Regexp::quote('/--')
   CG_CODE_END = Regexp::quote('\--')
-  CRABGRASS_MULTI_LINE_CODE_RE = /^#{CG_CODE_BEGIN}(\s+[^\n]*)?(\n.*\n)#{CG_CODE_END}(\n|$)/m
+  CRABGRASS_MULTI_LINE_CODE_RE = /^#{CG_CODE_BEGIN}( +[^\n]*)?(\n.*\n)#{CG_CODE_END}(\n|$)/m
   CRABGRASS_SINGLE_LINE_CODE_RE = /^@@( )(.*)$/
   CRABGRASS_CODE_RE = Regexp::union(CRABGRASS_MULTI_LINE_CODE_RE, CRABGRASS_SINGLE_LINE_CODE_RE)
   def block_crabgrass_code( text )
