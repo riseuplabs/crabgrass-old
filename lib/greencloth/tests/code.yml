@@ -9,25 +9,63 @@ in: |-
   _a_ < _b_
   </pre>
 out: |-
-  <p><pre>
-  _a_ &lt; _b_
-  </pre></p>
+  <p><pre>_a_ &lt; _b_</pre></p>
 ---
 in: |-
   <code>
   _a_ < _b_
   </code>
 out: |-
-  <p><code>
-  _a_ &lt; _b_
-  </code></p>
+  <p><pre class="code"><code>_a_ &lt; _b_</code></pre></p>
+---
+in: |-
+  <code /etc/resolv.conf>
+  nameserver 127.0.0.1
+  </code>
+out: |-
+  <p><div class="codetitle">/etc/resolv.conf</div>
+  <pre class="code"><code>nameserver 127.0.0.1</code></pre></p>
 ---
 in: what about <pre> __inline__</pre> this?
-out: <p>what about <pre> __inline__</pre> this?</p>
+out: <p>what about <pre>__inline__</pre> this?</p>
 ---
 in: |-
   * @foo@
   * @bar@
   * and @x@ is also.
 out: "<ul>\n\t<li><code>foo</code></li>\n\t\t<li><code>bar</code></li>\n\t\t<li>and <code>x</code> is also.</li>\n\t</ul>"
+---
+in: |-
+  /--
+  this is some really nice code
+  \--
+out: |-
+  <pre class="code"><code>this is some really nice code</code></pre>
+---
+in: |-
+  /-- a little note
+  this is some really nice code
+  and it continues
+  \--
+out: |-
+  <div class="codetitle">a little note</div>
+  <pre class="code"><code>this is some really nice code
+  and it continues</code></pre>
+---
+in: |-
+  <code>one fish</code>
+  
+  <code>two fish</code>
+  
+  <code>red fish</code>
+out: |-
+  <p><pre class="code"><code>one fish</code></pre></p>
+  <p><pre class="code"><code>two fish</code></pre></p>
+  <p><pre class="code"><code>red fish</code></pre></p>
+---
+in: |-
+  @@ a single line of code
+out: |-
+  <pre class="code"><code>a single line of code</code></pre>
+---
 

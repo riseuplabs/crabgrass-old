@@ -79,6 +79,7 @@ class GreenCloth < RedCloth
 
   # override default rules
   DEFAULT_RULES = [
+    :block_crabgrass_code,
     :block_markdown_setext, 
     :block_textile_table,
     :block_textile_lists,
@@ -122,7 +123,9 @@ class GreenCloth < RedCloth
 
     # start processor
     @pre_list = []
-    rip_offtags text
+    rip_offtags text, false
+    #puts text
+    #puts @pre_list.inspect
     escape_html text
     #no_textile text
     #hard_break text 
@@ -195,6 +198,19 @@ class GreenCloth < RedCloth
   # Here lie the greencloth inline filters. An inline filter
   # processes text within a block.
   #
+  
+  def xglyphs_textile( text, level = 0 )
+    if text !~ HASTAG_MATCH
+      pgl text
+    else
+      text.gsub!( ALLTAG_MATCH ) do |line|
+        if $1.nil?
+          glyphs_textile( line, level + 1 )
+        end
+        line
+      end
+    end
+  end
   
   CRABGRASS_LINK_RE = /
     (^|.)         # start of line or any character
@@ -356,6 +372,26 @@ class GreenCloth < RedCloth
     end
   end
 
+  # crabgrass code blocks look like this:
+  #   /--
+  #   here is some code
+  #   \--
+  # they work the same as <code>
+  
+  CG_CODE_BEGIN = Regexp::quote('/--')
+  CG_CODE_END = Regexp::quote('\--')
+  CRABGRASS_MULTI_LINE_CODE_RE = /^#{CG_CODE_BEGIN}(\s+[^\n]*)?(\n.*\n)#{CG_CODE_END}(\n|$)/m
+  CRABGRASS_SINGLE_LINE_CODE_RE = /^@@( )(.*)$/
+  CRABGRASS_CODE_RE = Regexp::union(CRABGRASS_MULTI_LINE_CODE_RE, CRABGRASS_SINGLE_LINE_CODE_RE)
+  def block_crabgrass_code( text )
+    text.gsub!( CRABGRASS_CODE_RE ) do |blk|
+      body = $2||$5
+      note = $1||$4
+      htmlesc( body, :NoQuotes )  
+      bypass_filter( format_block_code("<code #{note}>", body) )
+    end
+  end
+    
   ######################################################
   # BLOCK PROCESSING
   #
@@ -436,8 +472,65 @@ class GreenCloth < RedCloth
   def apply_block_rule(rule_name, blk)
     rule_name.to_s.match /^block_/ and method( rule_name ).call( blk )
   end
+
+  ##############################################
+  ## OFFTAGS: when greencloth does not apply
+
+  # changed from redcloth values
+  OFFTAGS = /(code|pre)/
+  OFFTAG_MATCH = /(?:(<\/#{ OFFTAGS }>)|(<#{ OFFTAGS }[^>]*>))(.*?)(<\/?#{ OFFTAGS }>|\Z)/mi
+
+  # rip_offtags()
+  # removes 'offtags' (code that turns off processes) from the text, 
+  # and replaces it with <redpre01> or <redpre02>, etc.
+  # the replaced text is stored in @pre_list.
+  # later, the replaced text is returned via smooth_offtags
+  # comments use example string "hi <code>there</code> bigbird!"
+  
+  def rip_offtags( text, inline=true )
+    return text unless text =~ /<.*>/ # skip unless text has the possibility of tags
+    text.gsub!( OFFTAG_MATCH ) do |line|
+      matchtext  = $&  # eg '<code>there</code>'
+      endisfirst = $1  # eg '</code>' (only if </code> appears before <code> in the text)
+      tag        = $3  # eg '<code>'
+      tagname    = $4  # eg 'code'
+      codebody   = $5  # eg 'there'
+      if tag and codebody
+        htmlesc( codebody, :NoQuotes ) #if codebody
+        if inline
+          line = bypass_filter( format_inline_code(tag, codebody) )
+        else
+          line = bypass_filter( format_block_code(tag, codebody) )
+        end
+      end
+      line
+    end
+    return text
+  end
+
+  def format_inline_code(tag,body)
+    tag.match /<(#{ OFFTAGS })([^>]*)>/
+    tagname, args = $1, $2
+    "<#{tagname}>#{body}</#{tagname}>"
+  end
+  
+  def format_block_code(tag, body)
+    tag.match /<(#{ OFFTAGS })\s*([^>]*)\s*>/
+    tagname, arg = $1, $3
+    ret = "<#{tagname}>#{body.strip}</#{tagname}>"
+    if tagname == 'code'
+      ret = "<pre class=\"code\">#{ret}</pre>"
+    end
+    if arg.any?
+      ret = "<div class=\"#{tagname}title\">#{arg}</div>\n#{ret}"
+    end
+    ret
+  end
   
   def debug(msg)
+    if msg.is_a? Hash
+      msg = msg.inspect
+    end
     puts "\n====\n#{msg}\n====\n"
   end
     

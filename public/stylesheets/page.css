@@ -162,29 +162,6 @@ div.formbox textarea {
   width: 100%;
 }
 
-/*
-div.wikibox, div.infobox {
-  background: #f6f6f6;
-  border: 1px solid #cfcfcf;
-  border-width: 0px 3px 3px 0px;
-  padding: 1em;
-}
-div.formbox {
-  margin-top: 1em;
-}
-div.formbox textarea {
-  width: 100%;
-}
-div.request {
-  margin: 2em auto;
-  width: 50%;
-}
-div.request h2 {
-  font-size: 1em;
-  font-weight: normal;
-}
-*/
-
 /** tool creation **/
 
 table.create td {

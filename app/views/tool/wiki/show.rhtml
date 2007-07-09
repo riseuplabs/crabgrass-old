@@ -5,7 +5,7 @@ div.wikiedit {
 }
 <% end %>
 
-<div class='wikibox'>
+<div class='wiki'>
   <%= @diffhtml || @wiki.body_html %>
   <div class='wikiedit'>
    <% if @wiki.editable_by? current_user -%>
@@ -19,5 +19,5 @@ div.wikiedit {
    &nbsp;
    <%= link_to 'last change', page_url(@page, :action=>'diff', :id => "#{@wiki.version.to_i-1}-#{@wiki.version}") if @wiki.version > 1 %>
   </div>
-</div>
+</div><!-- end wiki -->
 
