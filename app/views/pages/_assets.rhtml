@@ -4,6 +4,7 @@
     link_to_icon(asset.filename, asset.small_icon, asset.public_filename) +
     "</div>"
   }.join("\n") %>
+<% if logged_in? -%>
   <div class='sidelink'>
     <%= link_to_function "Add attachment &raquo;", "$('upload-form').toggle()" %>
     <div id="upload-form" class='sidesubarea' style="display: none;">
@@ -30,4 +31,5 @@
     <% end -%>
     </div> 
   </div>
+<% end -%>
 </div>

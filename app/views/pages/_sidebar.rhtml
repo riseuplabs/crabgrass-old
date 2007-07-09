@@ -97,11 +97,15 @@
 <div class='tail'></div>
 </div> <!-- end section -->
 
+<% if @page.tags.any? -%>
 <div class='sidesection'>
 <div class='sidehead'>tags</div>
 <div class='sideline'><%= render :partial => "pages/tag_area"  %></div>
 <div class='tail'></div>
 </div> <!-- end section -->
+<% else -%>
+<div class='sidelink'><%= render :partial => "pages/tag_area"  %></div>
+<% end -%>
 
 <% if @show_attach -%>
 <% if @page.assets.any? -%>

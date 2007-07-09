@@ -1,9 +1,7 @@
-<%=
-if @page.tags.blank?
- "no tags"
-else
- @page.tags.collect{|tag| link_to tag.name, "/me/search/tag/#{tag.name}" }.join(" ")
-end
-%>
+<% if @page.tags.any? -%>
+<%= @page.tags.collect{|tag| link_to tag.name, "/me/search/tag/#{tag.name}" }.join(" ") %>
 <%= link_to_function(image_tag('actions/pencil.png'), "Element.toggle($('tag-form')); Element.toggle($('tags'))") if logged_in? %>
+<% elsif logged_in? -%>
+<%= link_to_function('Add tags &raquo;', "Element.toggle($('tag-form')); Element.toggle($('tags'))") %>
+<% end -%>
 
