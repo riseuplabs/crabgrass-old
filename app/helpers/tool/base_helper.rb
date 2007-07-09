@@ -8,4 +8,10 @@ module Tool::BaseHelper
     ]
   end
 
+  def return_to_page(page)
+    '<p>' + 
+    link_to('&laquo; return to <b>%s</b>' % @page.title, page_url(@page)) +
+    "</p>\n"
+  end
+  
 end

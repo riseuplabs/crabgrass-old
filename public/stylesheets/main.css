@@ -28,10 +28,10 @@ div.tabinfo {
 #title {
   margin: -20px; /* equal to #maincolumn padding */
   margin-bottom: 20px;
-  padding: 20px;
-  padding-top: 10px;
+  padding: 10px 20px;
   background: #F5F8FF;
 }
+#title .h1 {color: #669;}
 
 /** type **/
 

@@ -4,7 +4,7 @@
 
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
-   <%= text_area 'wiki', 'body' %>
+   <%= text_area 'wiki', 'body', :size => '80x35' %>
    <%# :size => '80x20' %>
    <div>
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>

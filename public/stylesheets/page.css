@@ -42,7 +42,7 @@ div#title_text span {
 
 /* posts */
 div#posts {
-  /* margin: 1em -20px 0 -20px; */
+  margin-top: 1em
 }
 table.posts {
   width: 100%;
