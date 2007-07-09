@@ -22,13 +22,6 @@ div#login_right{
 	width: 10em;
 	padding: 5em 0 0 0;
 }
-div#login_footer{
-	width: 60em;
-	text-align: right;
-	border-top:1px solid gray;
-	background: white;
-}
-
 
 /**login form **/
 
