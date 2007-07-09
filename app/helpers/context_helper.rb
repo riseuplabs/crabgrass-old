@@ -25,6 +25,9 @@
 module ContextHelper
 
   protected
+
+  ############################################################
+  ## SETTING THE CONTEXT
   
   # before filter that may be overridden by controllers
   def breadcrumbs; end
@@ -45,62 +48,13 @@ module ContextHelper
     @banner_style = style
   end
 
-  def referer
-    @referer ||= get_referer
-  end
+  ############################################################
+  ## CONTEXT MACROS
   
-  def get_referer
-    return false unless raw = request.env["HTTP_REFERER"]
-    server = request.env["SERVER_NAME"]
-    prot = request.protocol
-    if raw.starts_with?("#{prot}#{server}/")
-      raw.sub(/^#{prot}#{server}/, '')
-    else
-      false
-    end
-  end
-  
-  # sets the breadcrumbs to be the same as the context.
-  # and saves them to the session.
-  def breadcrumbs_from_context(update_session=true)
-    @breadcrumbs = @context
-    if update_session
-      session[:breadcrumbs_by_referer] ||= {}
-      session[:breadcrumbs_by_referer][request.request_uri] = @breadcrumbs
-    end
-  end
-  
-  # returns array of crumbs if the referrer has breadcrumbs saved in the session
-  def referer_has_crumbs?(page)
-    referer_or_last_crumb(page).any?
-  end
-  
-  # sets current breadcrumbs to a copy of the referer's crumbs
-  # (it must be a copy so that stuff we add doesn't get saved in the session)
-  def breadcrumbs_from_referer(page)
-    crumb = referer_or_last_crumb(page)
-    if referer_crumb
-      # if a referer crumb is specifically set, update the page id crumb.
-      session[:referer_by_page_id][page.id] = referer
-    end
-    @breadcrumbs = crumb.dup
-  end
-
-  def referer_crumb
-    session[:breadcrumbs_by_referer][referer]
-  end
-  
-  def referer_or_last_crumb(page)
-    session[:referer_by_page_id] ||= {}
-    session[:breadcrumbs_by_referer][referer] || session[:breadcrumbs_by_referer][session[:referer_by_page_id][page.id]]
-  end
-
-  def clear_referer(page)
-    session[:referer_by_page_id].delete(page.id)
-  end
-  
-  # these context functions are here because other parts of the application 
-  # might need to set a group or person context. 
+  # functions to do all the things necessary to set up the context
+  # for a group, person, or page. these context functions are here
+  # because various parts of the application might need to set a
+  # group, person, or page context. 
 
   def group_context(size='large', update_breadcrumbs=true)
     add_context 'groups', groups_url(:action => 'list')
@@ -168,6 +122,72 @@ module ContextHelper
     end
 
   end
+
+
+  #################################################
+  ## HELPER FUNCTIONS
+
+  def referer
+    @referer ||= get_referer
+  end
+    
+  def get_referer
+    return false unless raw = request.env["HTTP_REFERER"]
+    server = request.env["SERVER_NAME"]
+    prot = request.protocol
+    if raw.starts_with?("#{prot}#{server}/")
+      raw.sub(/^#{prot}#{server}/, '')
+    else
+      false
+    end
+  end
+
+  def breadcrumbs_by_referer
+    session[:breadcrumbs_by_referer] ||= {}
+  end
+  
+  def referer_by_page_id
+    session[:referer_by_page_id] ||= {}
+  end
+
+  def referer_crumb
+    session[:breadcrumbs_by_referer][referer]
+  end
+  
+  def referer_or_last_crumb(page)
+    breadcrumbs_by_referer[referer] || 
+    breadcrumbs_by_referer[referer_by_page_id[page.id]]
+  end
+
+  def clear_referer(page)
+    referer_by_page_id.delete(page.id)
+  end
+  
+  # sets the breadcrumbs to be the same as the context.
+  # and saves them to the session.
+  def breadcrumbs_from_context(update_session=true)
+    @breadcrumbs = @context
+    if update_session
+      breadcrumbs_by_referer[request.request_uri] = @breadcrumbs
+    end
+  end
+  
+  # returns array of crumbs if the referrer has breadcrumbs saved in the session
+  def referer_has_crumbs?(page)
+    referer_or_last_crumb(page).any?
+  end
+  
+  # sets current breadcrumbs to a copy of the referer's crumbs
+  # (it must be a copy so that stuff we add doesn't get saved in the session)
+  def breadcrumbs_from_referer(page)
+    crumb = referer_or_last_crumb(page)
+    if referer_crumb
+      # if a referer crumb is specifically set, update the page id crumb.
+      referer_by_page_id[page.id] = referer
+    end
+    @breadcrumbs = crumb.dup
+  end
+  
   
 end
 
