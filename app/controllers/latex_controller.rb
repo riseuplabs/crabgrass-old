@@ -3,7 +3,7 @@
 #
 
 # requires:
-# apt-get install graphicsmagick tetex-bin
+# apt-get install graphicsmagick tetex-bin gs-gpl
 # gem install open4
 #
 
