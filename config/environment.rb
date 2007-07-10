@@ -72,6 +72,7 @@ class ErrorMessage < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
+require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
 
 # pre load the tool classes
 Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
@@ -81,3 +82,7 @@ end
 TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
 
 #Asset.file_storage = "/crypt/files"
+
+LATEX = '/usr/bin/latex'
+DVIPS = '/usr/bin/dvips'
+

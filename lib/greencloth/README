@@ -1,0 +1,74 @@
+GreenCloth
+==========
+
+GreenCloth is derived from RedCloth, the defacto
+text to html converter for ruby.
+
+Improvements from RedCloth
+--------------------------
+
+* URLs are not accidently formatted (for example if a word *like/this* appears in the url, it will not be bold).
+
+* Automagic URL recognition (ie http://riseup.net is turned into a link).
+
+* Hard breaks are enabled, and work better (applied in fewer situations).
+
+* Added "dictionary" block, which looks like a hanging indent.
+
+Major changes from RedCloth
+---------------------------
+
+* Totally different linking system
+
+* No HTML of any sort, except for <pre> and <code> tags.
+
+* No horizontal rules.
+
+* Leading spaces create blockquotes, not <pre><code>
+
+GreenCloth Linking
+------------------
+
+[A good page]                  ---> <a href="/mygroup/a-good-page">A good page</a>
+[I like pages -> A good page]  ---> <a href="/mygroup/a-good-page">I like pages</a>
+[I like pages -> 2452]         ---> <a href="/mygroup/2452">I like pages</a>
+[other group/A good page]      ---> <a href="/other-group/a-good-page">A good page</a>
+[I like pages -> other-group/] ---> <a href="/other-group/i-like-pages">I like pages</a>
+http://riseup.net              ---> <a href="http://riseup.net">riseup.net</a>
+
+
+
+Here are the specific Redcloth rules we have enabled (marked with !):
+
+textile rules
+  http://hobix.com/textile/
+  :textile               all the following textile rules, in that order
+  :refs_textile          Textile references (i.e. [hobix]http://hobix.com/)
+! :block_textile_table   Textile table block structures. eg: |a|b|c|
+! :block_textile_lists   Textile list structures. eg: * item\n** inset item
+! :block_textile_prefix  Textile blocks with prefixes (i.e. bq., h2., etc.)
+! :inline_textile_image  Textile inline images
+  :inline_textile_link   Textile inline links
+! :inline_textile_span   Textile inline spans
+! :glyphs_textile        Textile entities (such as em-dashes and smart quotes)
+
+markdown rules
+  http://daringfireball.net/projects/markdown/syntax
+  :markdown             all the following markdown rules, in that order.
+  :refs_markdown         Markdown references.       eg: [hobix]: http://hobix.com/
+! :block_markdown_setext Markdown setext headers.   eg: ---- or =====
+  :block_markdown_atx    Markdown atx headers.      eg: ##or ##
+  :block_markdown_rule   Markdown horizontal rules. eg: * * *, or ***, or ----, or - - -
+! :block_markdown_bq     Markdown blockquotes.      eg: > indented
+  :block_markdown_lists  Markdown lists.            eg: -, *, or +, or 1.
+  ^^^^  NOT YET WORKING as of redcloth 3.0.4
+  :inline_markdown_link  Markdown links.            eg: [This link](http://example.net/), or <http://example.net>
+
+Redcloth restrictions: 
+
+! :filter_html   does not allow html to get passed through. (not working in redcloth
+                 so disabled)
+! :hard_breaks   single newlines will be converted to HTML break tags.
+                 (greencloth has its own hard_breaks method, which is called at different times)
+
+

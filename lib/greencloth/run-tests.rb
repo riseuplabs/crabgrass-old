@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-$: << '..'
-require 'green_cloth'
+#$: << '..'
+require 'greencloth'
 require 'yaml'
 
 i = 0

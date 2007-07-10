@@ -35,7 +35,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
       
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
-  
+  map.connect 'latex/*path.png', :action => 'show', :controller => 'latex'
+      
   map.connect '', :controller => "account"
   
   # used for ajax calls to make a direct request bypassing the dispatcher
