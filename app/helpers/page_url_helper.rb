@@ -72,20 +72,22 @@ module PageUrlHelper
   # some higher containing context.
   # 
   def from_url(page=nil)
-    ary = if @group
-      ['/groups', 'show', @group]
+    if page and (url = url_for_page_context(page))
+      return url
+    elsif @group
+      url = ['/groups', 'show', @group]
     elsif @user == current_user
-      ['/me',     nil,    nil]
+      url = ['/me',     nil,    nil]
     elsif @user
-      ['/people', 'show', @user]
+      url = ['/people', 'show', @user]
     elsif logged_in?
-      ['/me',     nil,    nil]
+      url = ['/me',     nil,    nil]
     elsif page and page.group_name
-      ['/groups', 'show', page.group_name]
+      url = ['/groups', 'show', page.group_name]
     else
       raise "From url cannot be determined" # i don't know what to do here.
     end
-    url_for :controller => ary[0], :action => ary[1], :id => ary[2]
+    url_for :controller => url[0], :action => url[1], :id => url[2]
   end
   
   #

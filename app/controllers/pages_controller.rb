@@ -194,11 +194,11 @@ class PagesController < ApplicationController
   end  
     
   def destroy
-    if request.post?
-      @page.data.destroy if @page.data # can this be in page?
-      @page.destroy
-    end
-    redirect_to from_url(@page)
+    return unless request.post?
+    url = from_url(@page)
+    @page.data.destroy if @page.data # can this be in page?
+    @page.destroy
+    redirect_to url
   end
   
   protected

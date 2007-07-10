@@ -187,7 +187,12 @@ module ContextHelper
     end
     @breadcrumbs = crumb.dup
   end
-  
+
+  # returns the URL that is the last enclosing element of the context.
+  def url_for_page_context(page)
+    refcrumbs = referer_or_last_crumb(page)
+    return (refcrumbs.last.last if refcrumbs.any?)
+  end
   
 end
 
