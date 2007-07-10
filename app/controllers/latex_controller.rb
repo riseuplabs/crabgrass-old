@@ -28,6 +28,7 @@ class LatexController < ApplicationController
       blob = get_image_from_latex(latex)
       send_data(blob, :type => 'image/png', :disposition => 'inline')
     rescue Exception => exc
+      expire_page :controller=> 'latex', :action=>'show', :path => params[:path]
       render :text => "<pre>%s</pre>" % exc.to_s
     end
   end
