@@ -14,7 +14,7 @@ require 'base64'
 class LatexController < ApplicationController
 
   skip_before_filter :login_required  
-  caches_page :show
+  #caches_page :show
   
   def show
     begin
@@ -26,6 +26,7 @@ class LatexController < ApplicationController
       end
       latex = @@latex_head + equation + @@latex_tail
       blob = get_image_from_latex(latex)
+      cache_page :controller=> 'latex', :action=>'show', :path => params[:path]
       send_data(blob, :type => 'image/png', :disposition => 'inline')
     rescue Exception => exc
       expire_page :controller=> 'latex', :action=>'show', :path => params[:path]
