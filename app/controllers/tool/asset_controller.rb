@@ -18,6 +18,19 @@ class Tool::AssetController < Tool::BaseController
     end
   end
 
+  def update
+    @new = Asset.new params[:asset]
+    if @new.valid?
+      @page.data.destroy # for now, soon we keep versions
+      @page.data = @new
+    end
+    if @page.save
+      return redirect_to page_url(@page)
+    else
+      message :object => @page
+    end
+  end
+
   protected
   
   def fetch_asset

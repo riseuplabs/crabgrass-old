@@ -31,7 +31,14 @@
 
 <p><%= link_line(
   link_to("download %s" % @asset.filename, @asset.public_filename),
-  'upload a new version',
+  link_to_function("upload a new version", "$('upload-new').toggle()"),
   'view versions'
   ) %></p>
 <br/>
+
+<div id="upload-new" style="display: none;">
+  <% form_for :asset, Asset.new, :url => page_url(@page, :action => 'update'), :html => {:multipart => true} do |f| -%>
+  <%= f.file_field 'uploaded_data' %>
+  <%= submit_tag 'upload' %>
+  <% end %>
+</div>
