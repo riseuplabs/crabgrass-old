@@ -2,7 +2,11 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < Test::Unit::TestCase
 
-  fixtures :users, :groups, :memberships
+  fixtures :users, :groups, :memberships, :pages
+
+  def setup
+    TzTime.zone = TimeZone["Pacific Time (US & Canada)"]
+  end
 
   def test_memberships
     u = create_user
@@ -22,6 +26,19 @@ class UserTest < Test::Unit::TestCase
   def test_associations
     assert check_associations(User)
   end
+
+  def test_viewed
+    p = pages(:page1)
+    p.updated_at = Time.now
+    p.save
+    user = users(:orange)
+    part = p.participation_for_user user
+    assert !part.viewed_at
+    user.viewed(p)
+    part.reload
+    assert part.viewed_at
+  end
+
   
 #  def test_should_require_login
 #    assert_no_difference User, :count do

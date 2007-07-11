@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging "password"
   
   before_filter :login_required, :breadcrumbs, :context
+
+  around_filter :set_timezone
   
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(cssfile=nil)
@@ -84,4 +86,11 @@ class ApplicationController < ActionController::Base
   def controller
     self
   end 
+
+  private
+  def set_timezone
+    TzTime.zone = logged_in? ? TimeZone[current_user.time_zone] : TimeZone[0]
+    yield
+    TzTime.reset!
+  end
 end

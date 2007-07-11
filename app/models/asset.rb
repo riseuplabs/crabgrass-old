@@ -1,4 +1,6 @@
 class Asset < ActiveRecord::Base
+  tz_time_attributes :created_at
+
   @@file_storage = "#{RAILS_ROOT}/assets"
   cattr_accessor :file_storage
   @@public_storage = "#{RAILS_ROOT}/public/assets"

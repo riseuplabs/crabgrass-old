@@ -49,7 +49,7 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 
   # Make Active Record use UTC-base instead of local time
-  #config.active_record.default_timezone = :utc
+  config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
 end
@@ -86,3 +86,6 @@ TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
 LATEX = '/usr/bin/latex'
 DVIPS = '/usr/bin/dvips'
 
+ENV['TZ'] = 'UTC' # for Time.now
+#stupid edge rails
+require 'acts_like_date_or_time'

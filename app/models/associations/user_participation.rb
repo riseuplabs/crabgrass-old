@@ -11,6 +11,7 @@
 #
 
 class UserParticipation < ActiveRecord::Base
+  tz_time_attributes :viewed_at, :changed_at
   belongs_to :page
   belongs_to :user
 #  has_many :messages

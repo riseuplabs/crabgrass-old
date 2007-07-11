@@ -1,4 +1,5 @@
 class Poll::Vote < ActiveRecord::Base
+  tz_time_attributes :created_at
 
   belongs_to :possible
   belongs_to :user

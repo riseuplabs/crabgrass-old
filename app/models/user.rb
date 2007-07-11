@@ -19,6 +19,7 @@
 #
 
 class User < AuthenticatedUser
+  tz_time_attributes :created_at, :updated_at
 
   ### attributes
   

@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 39) do
+ActiveRecord::Schema.define(:version => 40) do
 
   create_table "assets", :force => true do |t|
     t.column "parent_id",    :integer
@@ -12,9 +12,9 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "size",         :integer
     t.column "width",        :integer
     t.column "height",       :integer
-    t.column "type",         :string
     t.column "page_id",      :integer
     t.column "created_at",   :datetime
+    t.column "version",      :integer
   end
 
   create_table "avatars", :force => true do |t|
@@ -74,6 +74,11 @@ ActiveRecord::Schema.define(:version => 39) do
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
+
+  create_table "groups_to_committees", :force => true do |t|
+    t.column "group_id",     :integer
+    t.column "committee_id", :integer
+  end
 
   create_table "groups_to_networks", :force => true do |t|
     t.column "group_id",     :integer
@@ -185,10 +190,10 @@ ActiveRecord::Schema.define(:version => 39) do
 
   create_table "tasks", :force => true do |t|
     t.column "task_list_id",     :integer
-    t.column "name",             :string
-    t.column "description",      :text
-    t.column "description_html", :text
-    t.column "completed",        :boolean, :default => false
+    t.column "name",             :string,  :limit => 50
+    t.column "description",      :string
+    t.column "description_html", :string
+    t.column "completed",        :boolean,               :default => false
     t.column "position",         :integer
   end
 
@@ -221,10 +226,10 @@ ActiveRecord::Schema.define(:version => 39) do
     t.column "remember_token",            :string
     t.column "remember_token_expires_at", :datetime
     t.column "display_name",              :string
-    t.column "time_zone",                 :string
     t.column "language",                  :string,   :limit => 5
     t.column "avatar_id",                 :integer
     t.column "last_seen_at",              :datetime
+    t.column "time_zone",                 :string,                 :default => "Pacific Time (US & Canada)"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

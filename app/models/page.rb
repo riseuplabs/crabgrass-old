@@ -31,6 +31,8 @@ class Page < ActiveRecord::Base
   acts_as_taggable
   #acts_as_ferret :additional_fields => []
   
+  tz_time_attributes :created_at, :updated_at, :happens_at
+
   # to be set by subclasses (ie tools)
   class_attribute :controller, :model, :icon, :internal?,
     :class_description, :class_display_name, :class_group

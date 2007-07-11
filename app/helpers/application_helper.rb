@@ -147,7 +147,7 @@ module ApplicationHelper
   # formats a time, in full detail
   # for example: Sunday July/3/2007 2:13PM
   def full_time(time)
-    '%s %s %s (UTC %s)' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M'), time.loc('%z')]
+    '%s %s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M'), time.period.abbreviation]
   end
   
   def friendly_size(bytes)

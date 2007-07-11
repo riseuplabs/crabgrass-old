@@ -77,6 +77,15 @@ http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
 
 NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
 
+tztime
+------
+for easy-ish handling of user timezones
+
+tzinfo_timezone
+---------------
+
+required by tztime
+
 OTHER PLUGINS
 ========================
 
@@ -92,3 +101,11 @@ ez-where
 ------------------
 
 script/plugin install svn://rubyforge.org/var/svn/ez-where
+
+GEMS
+====
+
+tzinfo
+------
+
+required by tzinfo_timezone + tztime
