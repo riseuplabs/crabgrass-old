@@ -1,6 +1,49 @@
 class Asset < ActiveRecord::Base
   tz_time_attributes :created_at
 
+  acts_as_versioned
+  before_update :copy_asset
+  def copy_asset
+    if file = self.instance_variable_get(:@old_filename)
+      version_dir = FileUtils.mkdir_p File.join(full_dirpath, 'versions', "#{version - 1}")
+      FileUtils.cp file, version_dir
+    end
+  end
+  before_destroy :destroy_versions
+  def destroy_versions
+    FileUtils.rm_rf File.join(full_dirpath, 'versions')
+  end
+  versioned_class.class_eval do
+    delegate :page, :is_public?, :partitioned_path, :to => :asset
+    def public_filename(thumbnail = nil)
+      "/assets/#{asset.id}/versions/#{version}/#{thumbnail_name_for(thumbnail)}"
+    end
+    def full_filename(thumbnail = nil)
+      File.join(@@file_storage, *partitioned_path('versions', version.to_s, thumbnail_name_for(thumbnail)))
+    end
+    def image?
+      Asset.image? content_type
+    end
+
+    ## reimplemented attachment_fu - perhaps a better way? ##
+=begin
+    # don't quite have this yet
+    with_options :foreign_key => 'parent_id' do |m|
+      m.has_many :thumbnails, :class_name => 'Asset::Version' # must be a better way for this
+      m.belongs_to :parent, :class_name => 'Asset::Version'
+    end
+=end
+
+    # Gets the thumbnail name for a filename.  'foo.jpg' becomes 'foo_thumbnail.jpg'
+    def thumbnail_name_for(thumbnail = nil)
+      return filename if thumbnail.blank?
+      ext = nil
+      basename = filename.gsub /\.\w+$/ do |s|                                                              ext = s; ''
+      end
+      "#{basename}_#{thumbnail}#{ext}"
+    end
+  end
+
   @@file_storage = "#{RAILS_ROOT}/assets"
   cattr_accessor :file_storage
   @@public_storage = "#{RAILS_ROOT}/public/assets"

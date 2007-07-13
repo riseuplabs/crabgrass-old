@@ -19,12 +19,8 @@ class Tool::AssetController < Tool::BaseController
   end
 
   def update
-    @new = Asset.new params[:asset]
-    if @new.valid?
-      @page.data.destroy # for now, soon we keep versions
-      @page.data = @new
-    end
-    if @page.save
+    @page.data.uploaded_data = params[:asset]
+    if @page.data.save
       return redirect_to page_url(@page)
     else
       message :object => @page

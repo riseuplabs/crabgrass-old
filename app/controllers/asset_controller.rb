@@ -31,6 +31,7 @@ class AssetController < ApplicationController
   def fetch_asset
     @thumb = nil
     @asset = Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
+    @asset = @asset.versions[params[:version].to_i - 1] if params[:version]
     if @asset && @asset.image? && @asset.filename != "#{params[:filename]}.#{params[:format]}"
       thumb = @asset.thumbnails.detect {|a| a.filename == "#{params[:filename]}.#{params[:format]}"}
       render(:text => "Not found", :status => :not_found) and return unless thumb
@@ -53,7 +54,7 @@ class AssetController < ApplicationController
 
   def authorized?
     if @asset
-      if action_name == 'show'
+      if action_name == 'show' || action_name == 'version'
         current_user.may?(:read, @asset.page)
       elsif action_name == 'create'
         current_user.may?(:edit, @asset.page)
