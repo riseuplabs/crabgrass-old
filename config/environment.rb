@@ -83,9 +83,9 @@ TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
 
 #Asset.file_storage = "/crypt/files"
 
-LATEX = '/usr/bin/latex'
-DVIPS = '/usr/bin/dvips'
-
 ENV['TZ'] = 'UTC' # for Time.now
+DEFAULT_TZ = 'Pacific Time (US & Canada)'
+
 #stupid edge rails
 require 'acts_like_date_or_time'
+
