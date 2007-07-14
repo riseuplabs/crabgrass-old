@@ -1,66 +1,90 @@
 CRABGRASS
-======================
+=========================================================
 
 What is crabgrass? blah blah blah. put that here.
 
 
 INSTALL
-======================
+=========================================================
 
 debian/ubuntu
 --------------
 
-apt-get install rubygems
-gem install -y rails
+required:
+  apt-get install rubygems
+  gem install -y rails
+  gem install redcloth
+  gem install rmagick
+  gem install tzinfo
 
-apt-get install ruby1.8-dev build-essential (required to build ferret)
-gem install ferret
+optional for ferret:
+  apt-get install ruby1.8-dev build-essential
+  gem install ferret
 
-gem install rmagick (or apt-get install librmagick-ruby1.8)
+optional for latex rendering:
+  apt-get install graphicsmagick tetex-bin gs-gpl
+  gem install open4
 
-svn co https://code.autistici.org/svn/crabgrass/trunk crabgrass
+then check out the code:
+  svn co https://code.autistici.org/svn/crabgrass/trunk crabgrass
 
+set up your database:
+  edit config/database.yml
+  mysqladmin create crabgrass
+  rake db:migrate
+
+  
 PLUGINS
-======================
+=========================================================
 
 
 flex_image
 ------------------
 
 see http://beautifulpixel.com/flex_image/index.html
-
 ruby script/plugin install http://beautifulpixel.com/svn/plugins/flex_image/
 sudo apt-get install librmagick-ruby1.8
+
+some feature overlap with attachment_fu. We should probably phase this out.
 
 acts_as_modified
 ------------------
 
-lets you test which properties have been modified of an activerecord.
+Lets you test which properties have been modified of an activerecord.
 
 acs_as_taggable
 ----------------
 
-provides tagging.
+Provides tagging. Should be replaced with act_as_taggable_on_steriods or has_many_polymorph.
 
 acts_as_versioned
 ------------------
 
-versioning for wikis
+Versioning for wikis and other things.
 
 attachment_fu
 ---------------
 
-used for assets
+Used for assets. Makes it much easier to work with uploaded data.
 
 multiple_select
 ---------------
 
-adds fun helpers for has_and_belongs_to_many associations
+Adds fun helpers for has_and_belongs_to_many associations, such as
+a bunch of text boxes or a selection tree.
 
 nested_layouts
 --------------
 
-lets us have layouts that nest inside other layouts
+Lets us have layouts that nest inside other layouts. Very useful.
+For example:
+
+<% inside_layout 'application' do -%>
+<div class='custom'>
+  <%= yield %>
+</div>
+<% end -%>
+
 
 bundled_assets
 --------------
@@ -101,11 +125,18 @@ ez-where
 ------------------
 
 script/plugin install svn://rubyforge.org/var/svn/ez-where
+provides a nice way to do complex queries. 
 
 GEMS
-====
+=========================================================
 
-tzinfo
-------
+tzinfo: required by tzinfo_timezone + tztime
 
-required by tzinfo_timezone + tztime
+redcloth: greencloth derives from redcloth
+
+rmagick: used to scale avatars and build thumbnails
+
+ferret: indexed full text searches.
+
+open4: used by latex renderer (optional)
+
