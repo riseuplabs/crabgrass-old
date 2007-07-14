@@ -9,7 +9,13 @@ class Tool::AssetController < Tool::BaseController
     @page_class = Tool::Asset
     if request.post?
       @page = build_new_page
-      @page.data = Asset.new params[:asset]
+      @asset = Asset.new params[:asset]
+      @page.data = @asset
+      if @page.title.any?
+        @asset.filename = @page.title + @asset.suffix
+      else
+        @page.title = @asset.filename
+      end
       if @page.save
         return redirect_to page_url(@page)
       else

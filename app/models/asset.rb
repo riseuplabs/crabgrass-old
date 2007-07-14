@@ -1,7 +1,22 @@
 class Asset < ActiveRecord::Base
   tz_time_attributes :created_at
 
+  ## associations #####################################
+
+  belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page'
+  has_many :pages, :as => :data
+  def page
+    pages.first || parent_page
+  end
+
+  has_attachment :storage => :file_system, :max_size => 3.megabytes,
+    :thumbnails => {:thumb => "22x22>", :preview => "128x128>"}
+  validates_as_attachment
+
+  ## versions #########################################
+  
   acts_as_versioned
+  
   before_update :copy_asset
   def copy_asset
     if file = self.instance_variable_get(:@old_filename)
@@ -9,10 +24,12 @@ class Asset < ActiveRecord::Base
       FileUtils.cp file, version_dir
     end
   end
+  
   before_destroy :destroy_versions
   def destroy_versions
     FileUtils.rm_rf File.join(full_dirpath, 'versions')
   end
+  
   versioned_class.class_eval do
     delegate :page, :is_public?, :partitioned_path, :to => :asset
     def public_filename(thumbnail = nil)
@@ -44,22 +61,15 @@ class Asset < ActiveRecord::Base
     end
   end
 
+  ## methods #########################################
+  
   @@file_storage = "#{RAILS_ROOT}/assets"
   cattr_accessor :file_storage
   @@public_storage = "#{RAILS_ROOT}/public/assets"
   cattr_accessor :public_storage
 
-  has_attachment :storage => :file_system, :max_size => 3.megabytes, :thumbnails => { :thumb => "22x22>", :preview => "128x128>" }
-  validates_as_attachment
-
   def full_filename(thumbnail = nil)
     File.join(@@file_storage, *partitioned_path(thumbnail_name_for(thumbnail)))
-  end
-
-  belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page'
-  has_many :pages, :as => :data
-  def page
-    pages.first || parent_page
   end
 
   def update_access
@@ -69,12 +79,12 @@ class Asset < ActiveRecord::Base
       remove_symlink
     end
   end
-  before_destroy :remove_symlink
 
+  before_destroy :remove_symlink
   def remove_symlink
     FileUtils.rm_f(public_dirpath) if File.exists?(public_dirpath)
   end
-
+  
   def is_public?
     return true unless page
     return page.public?
@@ -96,6 +106,10 @@ class Asset < ActiveRecord::Base
     File.dirname(full_filename)
   end
 
+  def suffix
+    filename.sub(/^.*\.(.+)$/,'.\\1')
+  end
+  
   def big_icon
     "mime/big/#{icon}"
   end
