@@ -3,7 +3,7 @@
 
 <div class='sidelink'>
 <% if @is_contact -%>
-<%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user}, :method => 'post' %>
+<%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user} %>
 <% else -%>
 <%= link_to 'add to my contacts', url_for(:controller => 'contact', :action => 'add', :id => @user) %>
 <% end -%>
@@ -14,7 +14,7 @@
 </div>
 
 <div class='sidelink'>
-  <%= link_to 'tasks', people_url(:action => 'tasks', :id => @user) if @user %>
+  <%= link_to 'tasks', url_for_user(@user, :action => 'tasks') if @user %>
 </div>
 
 <div class='sidetail'></div>

@@ -338,9 +338,20 @@ module PageFinders
     end
     
     # returns true if arg is the value for a sort keyword
+    # ie sort_arg('created_at') is true if path == /ascending/created_at
     def sort_arg?(arg)
       (keyword?('ascending') and first_arg_for('ascending') == arg) or (keyword?('descending') and first_arg_for('descending') == arg)
     end
+    
+    def remove_sort
+      self.delete_if{|e| e[0] == 'ascending' or e[0] == 'descending' }
+    end
+    
+    # converts this parsed path into a string path
+    def to_s
+      self.flatten.join('/')
+    end
+    
   end
   
   # parses a page filter path into an array like so...

@@ -25,13 +25,13 @@ div.tabinfo {
   font-size: 0.8em;
   margin: 1em;  
 }
-#title {
+#titlebox {
   margin: -20px; /* equal to #maincolumn padding */
   margin-bottom: 20px;
   padding: 10px 20px;
   background: #F5F8FF;
 }
-#title .h1 {color: #669;}
+#titlebox .h1 {color: #669;}
 
 /** type **/
 

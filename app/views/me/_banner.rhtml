@@ -3,7 +3,7 @@
   <td style='width: 1%'><%= avatar_for current_user,'small'%></td>
   <td style='width: 1%' align='left'><h3><%=h current_user.login %></h3></td>
   <td align='right'>
-    <%= render :partial => 'me/boxes' %>
+    <%= render :partial => 'avatars/boxes', :locals => {:users => current_user.contacts.online, :side => 'right'} %>
   </td>
  </tr>
 </table>

@@ -1,0 +1,13 @@
+<h1><%= 'Remove contact'.t %></h1>
+
+<blockquote>
+If you remove <b><%= @user.name %></b> as a contact, you will not be able to see when <b><%= @user.name %></b> is logged in or see their full profile. Also, removing them as a contact will mean that you are also removed from their contact list. 
+
+<p>Are you sure you wish to break contact with <b><%= @user.name %></b>?</p>
+
+<% form_for :action => 'add' do -%>
+<%= submit_tag 'Cancel', :name => 'cancel' %>
+<%= submit_tag 'Remove Contact', :name => 'remove' %>
+<% end %>
+
+</blockquote>

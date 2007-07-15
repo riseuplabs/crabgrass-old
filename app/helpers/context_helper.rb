@@ -71,8 +71,8 @@ module ContextHelper
   def person_context(size='large', update_breadcrumbs=true)
     add_context 'people', people_url
     if @user
-      add_context @user.login, people_url(:action => 'show', :id => @user)
-      set_banner "people/banner_#{size}", @user.banner_style
+      add_context @user.login, url_for_user(@user, :action => 'show')
+      set_banner "person/banner_#{size}", @user.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs
   end

@@ -29,8 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.me 'me/:action/:id', :controller => 'me'
   
   map.people 'people/:action/:id', :controller => 'people'
-  map.person 'people/:action/:id', :controller => 'people'
-  map.connect 'people/:id/folder/*path', :controller => 'people', :action => 'folder'
+  map.connect 'person/:action/:id/*path', :controller => 'person'
   
   map.groups  'groups/:action/:id', :controller => 'groups'
   map.group   'groups/:action/:id', :controller => 'groups'

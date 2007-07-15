@@ -1,8 +1,8 @@
-<% @leftbar = render :partial => 'people/sidebar' -%>
+<% @leftbar = render :partial => 'person/sidebar' -%>
 <% inside_layout 'application' do -%>
 <div id='maincolumn' class='leftbar' style="<%=sidebar_space%>">
   <%= sidebar %>
-  <div id='title'>
+  <div id='titlebox'>
     <% unless params[:action] == 'show' -%>
     <div id='breadcrumbs'><%= link_to_breadcrumbs %></div>
     <% end -%>

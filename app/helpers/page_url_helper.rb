@@ -168,27 +168,21 @@ module PageUrlHelper
   end
 
   # used to create the page list headings
-  def page_path_link(text,path=nil,image=nil)
-    hash = params.dup   
-    prefix = '' 
-    if old_path = params[:path]
-      old_path = old_path.reverse
-      while  folder = old_path.pop 
-        if folder == 'ascending' or folder == 'descending'
-          old_path.pop
-        else 
-          prefix = "#{prefix}#{folder}/" 
-        end
-      end 
-    end
-    hash[:path] = prefix + path.to_s
+  def page_path_link(text,path='',image=nil)
+    hash = params.dup
+    old = parsed_path().dup.remove_sort
+    hash[:path] = old.to_s + path
     #for tags this isn't right:
     # todo: do not hard code the action here.
     if params[:controller] == 'groups' && params[:action] == 'show'
       hash[:action] = 'search'
     elsif params[:controller] == 'me' && params[:action] == 'index'
       hash[:action] = 'inbox'
+    elsif params[:controller] == 'person'
+      hash[:action] = 'search'
+      hash[:id] ||= hash['_context']
     end
+    hash.delete('_context')
     link_to text, hash
   end
 

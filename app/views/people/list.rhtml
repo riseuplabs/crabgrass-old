@@ -1,5 +1,3 @@
-<% if logged_in? -%>
-
 <h1>my contacts</h1>
 <div class='workarea'>
 <% if @contacts %>
@@ -26,16 +24,4 @@
 <br class='clear' />
 </div>
 
-<!--
-<h1>search for a user</h1>
-<%= render :partial => 'search_form' %>
-<div id="search-results">
-  <%= render :file => 'people/search' %>
-</div>
--->
 
-<% else -%>
-
-There are no people with public profiles. 
-
-<% end -%>

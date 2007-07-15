@@ -4,10 +4,7 @@
 
 class ContactController < ApplicationController
 
-  verify :method => :post, :only => [:remove]
-  layout 'people'
-  
-  
+  layout 'person'  
   
   def add
     if request.post?
@@ -26,9 +23,12 @@ class ContactController < ApplicationController
   end
   
   def remove
-    current_user.contacts.delete(@user)
-    message :success => '%s has been removed from your contact list.' / @user.login
-    redirect_to url_for_person(@user)
+    if request.post?
+      return redirect_to(url_for_user(@user)) if params[:cancel]
+      current_user.contacts.delete(@user)
+      message :success => '%s has been removed from your contact list.' / @user.login
+      redirect_to url_for_user(@user)
+    end
   end
 
   protected

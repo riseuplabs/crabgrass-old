@@ -174,8 +174,8 @@ class DispatchController < ApplicationController
   
   def controller_for_people
     params[:action] = 'show'
-    params[:controller] = 'people'
-    new_controller('PeopleController')
+    params[:controller] = 'person'
+    new_controller('PersonController')
   end
   
 end

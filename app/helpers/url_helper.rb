@@ -43,7 +43,7 @@ module UrlHelper
     if action == 'show'
       path = "/#{login}"
     else
-      path = "/people/#{action}/#{login}"
+      path = "/person/#{action}/#{login}"
     end
     [login, path]
   end
