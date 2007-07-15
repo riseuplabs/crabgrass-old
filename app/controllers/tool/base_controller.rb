@@ -63,14 +63,13 @@ class Tool::BaseController < ApplicationController
   end
   
   def setup_default_view
-    # default, only show comment posts for the 'show' action
-    @show_posts = (%w(show title).include?params[:action])
-    # by default, don't show the reply box if there are no posts
-    @show_reply = @posts.any?
-    @show_workarea = true
-    @sidebar = true
+    @show_posts = (%w(show title).include?params[:action]) # default, only show comment posts for the 'show' action
+    @show_reply = @posts.any? # by default, don't show the reply box if there are no posts
     @show_attach = false
-    setup_view
+    @show_tags = true
+    @show_links = true
+    @sidebar = true
+    setup_view # allow subclass to override view
     true
   end
   

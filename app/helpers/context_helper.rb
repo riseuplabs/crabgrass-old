@@ -130,7 +130,7 @@ module ContextHelper
   def referer
     @referer ||= get_referer
   end
-    
+ 	   
   def get_referer
     return false unless raw = request.env["HTTP_REFERER"]
     server = request.env["SERVER_NAME"]
@@ -141,6 +141,7 @@ module ContextHelper
       false
     end
   end
+ 	
 
   def breadcrumbs_by_referer
     session[:breadcrumbs_by_referer] ||= {}

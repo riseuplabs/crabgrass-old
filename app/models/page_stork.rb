@@ -50,24 +50,36 @@ class PageStork
     user = options.delete(:user).cast! User
     contact = options.delete(:contact).cast! User
     page = Tool::Request.new do |p|
-      p.title = 'Contact invitation from %s' / user.login
+      p.title = 'contact invitation from %s to %s'.t % [user.login, contact.login]
       p.resolved = false
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToContacts.new(user,contact)
         r.name = 'Add user %s to your contact list?' / user.login
       end
+      p.flow = FLOW[:contacts]
     end
     page.add(contact, :access => :admin)
+    #if options[:message].any?
+    #  page.build_post(options[:message],user)
+    #end
+    page
   end
   
-  def self.contact_sent_notice(options)
+  def self.contact_discussion(options)
     user = options.delete(:user).cast! User
     contact = options.delete(:contact).cast! User
-    info = Tool::Info.new do |i|
-      i.title = 'Contact request sent to user %s'.t % contact.login
-      i.summary = 'Your request to add user %s as a contact has been sent. If %s approves the request, then you will also be added to the contact list of %s.' % ([contact.login]*3)
+    info = Tool::RequestDiscussion.new do |i|
+      i.title = 'discussion re: contact invitation from %s to %s'.t % [user.name, contact.name]
+      i.summary = 'User %s has sent a contact invitation to %s. Both people have access to this page, so you can use this space discuss the request.' % [user.name, contact.name]
+      i.flow = FLOW[:contacts]
+      i.resolved = false
     end
     info.add(user, :access => :admin)
+    info.add(contact, :access => :admin)
+    if options[:message].any?
+      info.build_post(options[:message],user)
+    end
+    info
   end
   
   def self.private_message(options)

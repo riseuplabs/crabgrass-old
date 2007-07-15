@@ -22,6 +22,13 @@ ACCESS = {
  :read => '3'
 }.freeze
 
+# types of page flows
+FLOW = {
+ :membership => '1',
+ :contacts => '2',
+}.freeze
+
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
     

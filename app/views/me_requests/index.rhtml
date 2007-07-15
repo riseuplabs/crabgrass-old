@@ -1,0 +1,19 @@
+<div class='tabinfo'> 
+All contact requests and memberhip requests, including requests created by you and requests for you to approve.
+</div>
+
+<h2>my requests</h2>
+<%= render :partial => 'pages/list/table', :locals => {:pages => @my_pages, :sections => @my_sections, :columns => @my_columns} %>
+<%= link_to 'more &raquo;', url_for(:action => 'mine') + "/descending/created_at" %>
+
+
+<h2>membership requests</h2>
+<%= render :partial => 'pages/list/table', :locals => {:pages => @membership_pages, :sections => @membership_sections, :columns => @membership_columns} %>
+<%= link_to 'more &raquo;', url_for(:action => 'memberships') + "/descending/created_at" %>
+
+
+<h2>contact requests</h2>
+<%= render :partial => 'pages/list/table', :locals => {:pages => @contact_pages, :sections => @contact_sections, :columns => @contact_columns} %>
+<%= link_to 'more &raquo;', url_for(:action => 'contacts') + "/descending/created_at" %>
+
+

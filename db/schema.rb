@@ -2,21 +2,22 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 41) do
+ActiveRecord::Schema.define(:version => 42) do
 
   create_table "asset_versions", :force => true do |t|
-    t.column "asset_id",     :integer
-    t.column "version",      :integer
-    t.column "parent_id",    :integer
-    t.column "content_type", :string
-    t.column "filename",     :string
-    t.column "thumbnail",    :string
-    t.column "size",         :integer
-    t.column "width",        :integer
-    t.column "height",       :integer
-    t.column "page_id",      :integer
-    t.column "created_at",   :datetime
-    t.column "updated_at",   :datetime
+    t.column "asset_id",       :integer
+    t.column "version",        :integer
+    t.column "parent_id",      :integer
+    t.column "content_type",   :string
+    t.column "filename",       :string
+    t.column "thumbnail",      :string
+    t.column "size",           :integer
+    t.column "width",          :integer
+    t.column "height",         :integer
+    t.column "page_id",        :integer
+    t.column "created_at",     :datetime
+    t.column "versioned_type", :string
+    t.column "updated_at",     :datetime
   end
 
   create_table "assets", :force => true do |t|
@@ -27,6 +28,7 @@ ActiveRecord::Schema.define(:version => 41) do
     t.column "size",         :integer
     t.column "width",        :integer
     t.column "height",       :integer
+    t.column "type",         :string
     t.column "page_id",      :integer
     t.column "created_at",   :datetime
     t.column "version",      :integer
@@ -90,11 +92,6 @@ ActiveRecord::Schema.define(:version => 41) do
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
 
-  create_table "groups_to_committees", :force => true do |t|
-    t.column "group_id",     :integer
-    t.column "committee_id", :integer
-  end
-
   create_table "groups_to_networks", :force => true do |t|
     t.column "group_id",     :integer
     t.column "network_id",   :integer
@@ -153,6 +150,7 @@ ActiveRecord::Schema.define(:version => 41) do
     t.column "group_name",         :string
     t.column "updated_by_login",   :string
     t.column "created_by_login",   :string
+    t.column "flow",               :integer
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -205,10 +203,10 @@ ActiveRecord::Schema.define(:version => 41) do
 
   create_table "tasks", :force => true do |t|
     t.column "task_list_id",     :integer
-    t.column "name",             :string,  :limit => 50
-    t.column "description",      :string
-    t.column "description_html", :string
-    t.column "completed",        :boolean,               :default => false
+    t.column "name",             :string
+    t.column "description",      :text
+    t.column "description_html", :text
+    t.column "completed",        :boolean, :default => false
     t.column "position",         :integer
   end
 
@@ -241,10 +239,10 @@ ActiveRecord::Schema.define(:version => 41) do
     t.column "remember_token",            :string
     t.column "remember_token_expires_at", :datetime
     t.column "display_name",              :string
+    t.column "time_zone",                 :string
     t.column "language",                  :string,   :limit => 5
     t.column "avatar_id",                 :integer
     t.column "last_seen_at",              :datetime
-    t.column "time_zone",                 :string,                 :default => "Pacific Time (US & Canada)"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

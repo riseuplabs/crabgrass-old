@@ -4,16 +4,7 @@
 
 <% else -%>
 
-<% if @is_contact %>
-  <%= link_to 'remove from my contacts', {:controller => '/people', :action => 'remove_contact', :id => @user}, :method => 'post' %>
-<% else %>
-  <%= link_to 'add to my contacts', {:controller => '/people', :action => 'add_contact', :id => @user}, :method => 'post' %>
-<% end %>
 
-<br/>
-<%= link_to 'send private message', {:controller => 'tool/message', :action => 'create', :to => @user.login}, :method => 'get' %>
-
-<p>
 <b>Groups:</b>
 <% @user.groups.each do |g| %>
 <%= link_to g.name, :controller => 'groups', :action => 'show', :id => g %>

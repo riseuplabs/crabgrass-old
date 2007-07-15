@@ -83,20 +83,6 @@ class MeController < ApplicationController
       end
     end
   end
-
-  #def avatar
-  #  if request.post?
-  #    avatar = Avatar.create(:data => params[:image][:data])
-  #    if avatar.valid?
-  #      @user.avatar.destroy if @user.avatar
-  #      @user.avatar = avatar
-  #      @user.save
-  #      redirect_to :action => 'edit'
-  #      return
-  #    end
-  #  end
-  #  render :action => 'edit'
-  #end
   
   protected
 

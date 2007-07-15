@@ -1,29 +1,20 @@
+#
+# PersonContoller
+# ================================
+# 
+# A controller which handles a single user. For processing collections of users,
+# see PeopleController.
+#
+
 class PeopleController < ApplicationController
 
-  layout 'people'
+  layout 'person'
   
-  prepend_before_filter :fetch_user
-  skip_before_filter :login_required, :only => ['index','list','show']
-
   def initialize(options={})
     super()
     @user = options[:user]   # the user context, if any
   end
   
-  def index
-    list
-    render :action => 'list'
-  end
-
-  def list
-    # @user_pages, @users = paginate :users, :per_page => 10
-    if logged_in?
-      @contacts = current_user.contacts
-      @peers = current_user.peers
-    end
-    set_banner "people/banner_search", Style.new(:background_color => "#6E901B", :color => "#E2F0C0")
-  end
-
   def show
     params[:path] = []
     folder()
@@ -95,6 +86,7 @@ class PeopleController < ApplicationController
     end
   end
   
+  prepend_before_filter :fetch_user
   def fetch_user 
     @user ||= User.find_by_login params[:id] if params[:id]
     @is_contact = (logged_in? and current_user.contacts.include?(@user))

@@ -85,19 +85,25 @@ class Page < ActiveRecord::Base
     group_participations.detect{|gpart| gpart.group_id == group.id}
   end
   
-  # adding this in creates "SystemStackError (stack level too deep)"
-  # when the page is destroyed in production mode. weird.
-  # this bug seems related: http://dev.rubyonrails.org/ticket/4386
   # reciprocal links between pages
-#  has_and_belongs_to_many :pages,
-#    :class_name => "Page",
-#    :join_table => "links",
-#    :association_foreign_key => "other_page_id",
-#    :foreign_key => "page_id",
-#    :uniq => true,
-#    :after_add => :reciprocate_add,
-#    :after_remove => :reciprocate_remove
-
+  has_and_belongs_to_many :links,
+    :class_name => "Page",
+    :join_table => "links",
+    :association_foreign_key => "other_page_id",
+    :foreign_key => "page_id",
+    :uniq => true,
+    :after_add => :reciprocate_add,
+    :after_remove => :reciprocate_remove
+  def reciprocate_add(other_page)
+    other_page.links << self unless other_page.links.include?(self)
+  end
+  def reciprocate_remove(other_page)
+    other_page.links.delete(self) rescue nil
+  end
+  def add_link(page)
+    links << page unless links.include?(page)
+  end
+  
   ### validations ###
   
   validates_presence_of :title
@@ -136,20 +142,24 @@ class Page < ActiveRecord::Base
   
   ### callbacks ###
 
-  def before_create
+  before_create :set_user, :single_table_inheritance_hack
+  def set_user
     if User.current
       self.created_by = User.current
       self.created_by_login = self.created_by.login
       self.updated_by       = self.created_by
       self.updated_by_login = self.created_by.login
     end
+    true
+  end
+  def single_table_inheritance_hack
     self.type = self.class.to_s
     # ^^^^^ to work around bug in rails with namespaced
     # models. see http://dev.rubyonrails.org/ticket/7630
-    true
   end
  
-  def before_save
+  before_save :denormalize
+  def denormalize
     # denormalize hack follows:
     if changed? :groups 
       # we use group_participations because self.groups might not
@@ -169,15 +179,7 @@ class Page < ActiveRecord::Base
     assets.each { |asset| asset.update_access }
   end
   
-  def reciprocate_add(other_page)
-    other_page.pages << self unless other_page.pages.include?(self)
-  end
-  
-  def reciprocate_remove(other_page)
-    other_page.pages.delete(self) rescue nil
-  end
-
-  ### methods ###
+  ### association modifiers ##################################################
     
   # add a group or user participation to this page
   def add(entity, attributes={})
@@ -202,7 +204,22 @@ class Page < ActiveRecord::Base
       entity.remove_page(self)
     end
   end
-  
+
+  def build_post(post,user)
+    # this looks like overkill, but it seems to be needed
+    # in order to build the post in memory and have it saved when
+    # (possibly new) pages is saved
+    self.discussion ||= Discussion.new
+    self.discussion.page = self
+    if post.instance_of? String
+      post = Post.new(:body => post)
+    end
+    self.discussion.posts << post
+    post.discussion = self.discussion
+    post.user = user
+    return post
+  end
+    
   def unresolve
     resolve(false)
   end
@@ -218,6 +235,7 @@ class Page < ActiveRecord::Base
   def self.make(function,options={})
     PageStork.send(function, options)
   end
+
 
   # When getting a list of ids of groups for this page,
   # we use group_participations. This way, we will have

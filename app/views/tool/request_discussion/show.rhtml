@@ -1,0 +1,17 @@
+<blockquote>
+<%= @page.summary %>
+
+<p>
+<% if @link -%>
+This request is: <b><%= @link.resolved? ? 'resolved' : 'pending' -%></b>
+<% end -%>
+</p>
+
+
+<p>
+<% if @link and current_user.may?(:admin, @link) -%>
+<%= link_to 'approve or reject this request', page_url(@link) -%>
+<% end -%>
+</p>
+
+</blockquote>

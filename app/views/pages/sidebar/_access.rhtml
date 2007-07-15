@@ -8,10 +8,10 @@ disabled     = (logged_in? and current_user.may?(:admin, @page)) ? '' : DISABLED
 
 <div class='sideline'>
 <% @page.groups.each do |g| -%>
-  <b><%= link_to_group g, :avatar => 'tiny' %></b><br/>
+  <b><%= link_to_group g, :avatar => 'tiny', :style => 'width:10em' %></b>
 <% end -%>
 <% @page.users_with_access.each do |u| -%>
-  <%= link_to_user u, :avatar => 'tiny' %><br/>
+  <%= link_to_user u, :avatar => 'tiny', :style => '' %>
 <% end -%>
 </div>
 

@@ -23,6 +23,7 @@ ActionController::Routing::Routes.draw do |map|
   # unobtrusive javascript
   #UJS::routes
   
+  map.connect 'me/requests/:action/*path', :controller => 'me_requests'
   map.connect 'me/inbox/*path', :controller => 'me', :action => 'inbox'
   map.connect 'me/search/*path', :controller => 'me', :action => 'search'
   map.me 'me/:action/:id', :controller => 'me'
@@ -38,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
       
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
-  map.connect 'latex/*path.png', :action => 'show', :controller => 'latex'
+  map.connect 'latex/*path', :action => 'show', :controller => 'latex'
       
   map.connect '', :controller => "account"
   

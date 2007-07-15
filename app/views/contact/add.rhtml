@@ -1,0 +1,19 @@
+<h1><%= 'Send contact request'.t %></h1>
+
+<blockquote>
+When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Also, all your contacts are available in the drop down menu <b>People</b> from every page. Once you become a contact of another person, they also become your contact.
+
+
+<p>Tell <%= @user.login %> why you want to be their contact:</p>
+
+<% form_for :action => 'add' do -%>
+
+<%= text_area_tag 'message', params[:message], :size => '50x5' %>
+<br/>
+<%= submit_tag 'Cancel', :name => 'cancel' %>
+<%= submit_tag 'Send', :name => 'send' %>
+
+<% end %>
+
+
+</blockquote>

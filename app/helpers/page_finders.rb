@@ -113,6 +113,8 @@ module PageFinders
     # associations
     'person' => 1,
     'group' => 1,
+    'created_by' => 1,
+    'not_created_by' => 1,
     
     # date
     'month' => 1,
@@ -239,6 +241,16 @@ module PageFinders
     qb.values << id
   end
 
+  def filter_created_by(qb,id)
+    qb.conditions << 'pages.created_by_id = ?'
+    qb.values << id 
+  end
+
+  def filter_not_created_by(qb,id)
+    qb.conditions << 'pages.created_by_id != ?'
+    qb.values << id 
+  end
+  
   def filter_tag(qb,tag_name)
     if tag = Tag.find_by_name(tag_name)
       qb.tag_count += 1
@@ -279,6 +291,22 @@ module PageFinders
   def filter_text(qb, text)
     qb.conditions << 'pages.title LIKE ?'
     qb.values << "%#{text}%"
+  end
+
+  def add_flow(qb, flow)
+    if flow.nil?
+      qb.conditions << 'pages.flow IS NULL'
+    elsif flow.instance_of? Symbol
+      qb.conditions << 'pages.flow = ?'
+      qb.values << FLOW[flow]
+    elsif flow.instance_of? Array
+      cond = []
+      flow.each do |f|
+        cond << 'pages.flow = ?'
+        qb.values << FLOW[f]
+      end
+      qb.conditions << "(" + cond.join(' OR ') + ")"
+    end
   end
 
   public
@@ -378,14 +406,15 @@ module PageFinders
     qb.table_class = options[:class] if options[:class]
     qb.and_clauses << [options[:conditions]]
     qb.values      = options[:values]
-    qb.order       = options[:order] || 'pages.updated_at DESC'    
+    qb.order       = options[:order] || 'pages.updated_at DESC'
     
     filters = parse_filter_path( options[:path] )
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
       args = filter.slice(1..-1) # remove first element.
       self.send(filter_method, qb, *args)
-    end
+    end    
+    add_flow(qb, options[:flow])
     
     qb.finalize
     return {
@@ -550,10 +579,22 @@ module PageFinders
     end
   end
   
-  def options_for_pages_viewable_by(user)
+#   def options_for_pages_created_by(user, options={})
+#     { :class      => Page,
+#       :conditions => "pages.created_by_id = ?",
+#       :values     => user.id}.merge(options)
+#   end
+
+#   def options_for_pages_not_created_by(user, options={})
+#     { :class      => Page,
+#       :conditions => "pages.created_by_id != ?",
+#       :values     => user.id}.merge(options)
+#   end
+  
+  def options_for_pages_viewable_by(user, options={})
     { :class      => Page,
       :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
-      :values     => [user.all_group_ids, user.id, true] }
+      :values     => [user.all_group_ids, user.id, true] }.merge(options)
   end
   
   def options_for_public_pages

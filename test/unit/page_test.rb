@@ -106,27 +106,30 @@ class PageTest < Test::Unit::TestCase
     assert_equal group.name, p.group_name, 'page should have a denormalized copy of the group name'
   end
   
-#  def test_page_links
-#    p1 = create_page :title => 'red fish'
-#    p2 = create_page :title => 'two fish'
-#    p3 = create_page :title => 'blue fish'
-#    
-#    p1.pages << p2              
-#    assert_equal p1.pages.length, 1
-#    assert_equal p2.pages.length, 1
-#    assert_equal p1.pages.first.title, p2.title
-#    assert_equal p2.pages.first.title, p1.title
-#    
-#    p1.pages << p3
-#    assert_equal p1.pages.length, 2
-#    assert_equal p3.pages.length, 1
-#    assert p1.pages.include?(p3)
+  def test_page_links
+    p1 = create_page :title => 'red fish'
+    p2 = create_page :title => 'two fish'
+    p3 = create_page :title => 'blue fish'
     
-    #p1.pages << p3
-    #p1.pages << p3
-    #p1.save
-    #assert_equal 2, p1.pages.length, 'shouldnt be able to add same link twice'
-#  end
+    p1.add_link p2              
+    assert_equal p1.links.length, 1
+    assert_equal p2.links.length, 1
+    assert_equal p1.links.first.title, p2.title
+    assert_equal p2.links.first.title, p1.title
+   
+    p1.add_link p3
+    assert_equal p1.links.length, 2
+    assert_equal p3.links.length, 1
+    assert p1.links.include?(p3)
+    
+    p1.add_link p3
+    p1.add_link p3
+    p1.save
+    assert_equal 2, p1.links.length, 'shouldnt be able to add same link twice'
+    
+    p2.destroy
+    assert_equal 1, p1.links.length, 'after destroy, links should be removed'
+  end
 
   def test_associations
     assert check_associations(Page)

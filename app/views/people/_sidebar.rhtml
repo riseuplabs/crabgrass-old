@@ -1,0 +1,22 @@
+<div class='sidesection'>
+<!-- <div class='sidehead'>Navigation</div> -->
+
+<div class='sidelink'>
+<% if @is_contact -%>
+<%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user}, :method => 'post' %>
+<% else -%>
+<%= link_to 'add to my contacts', url_for(:controller => 'contact', :action => 'add', :id => @user) %>
+<% end -%>
+</div>
+
+<div class='sidelink'>
+<%= link_to 'send message', {:controller => 'tool/message', :action => 'create', :to => @user.login}, :method => 'get' if @user%>
+</div>
+
+<div class='sidelink'>
+  <%= link_to 'tasks', people_url(:action => 'tasks', :id => @user) if @user %>
+</div>
+
+<div class='sidetail'></div>
+</div>
+

@@ -3,16 +3,14 @@ class PostsController < ApplicationController
   def create    
     begin
       @page = Page.find params[:page_id]
-      current_user.may!(:comment, @page)      
-      @discussion = @page.discussion ||= Discussion.create
-      @post       = @discussion.posts.build(params[:post])
-      @post.user  = current_user
+      current_user.may!(:comment, @page)
+      @post = Post.new params[:post]
+      @page.build_post(@post,current_user)
       @post.save!
       current_user.updated(@page)
       respond_to do |wants|
         wants.html {
-          @user = current_user # helps page_url
-          redirect_to page_url(@page, :anchor => @post.dom_id)
+          redirect_to page_url(@page)#, :anchor => @page.discussion.posts.last.dom_id)
           # :paging => params[:paging] || '1')
         }
         wants.xml {

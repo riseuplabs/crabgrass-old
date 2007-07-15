@@ -2,7 +2,7 @@
   f.tab do |t|
     t.label 'Dashboard'
     t.link me_url(:action => 'dash')
-    t.selected params[:action] == 'dash' || params[:action] == 'index'
+    t.selected params[:controller] == 'me' && (params[:action] == 'dash' || params[:action] == 'index')
   end
   f.tab do |t|
     t.label 'Inbox'
@@ -24,6 +24,12 @@
     t.link me_url(:action => 'search')
     t.selected params[:action] == 'search'
   end
+  f.tab do |t|
+    t.label 'Requests'
+    t.link url_for(:controller => 'me_requests', :action => '')
+    t.selected params[:controller] == 'me_requests'
+  end
+
   f.tab do |t|
     t.label 'My Profile'
     t.link me_url(:action => 'edit')

@@ -1,7 +1,5 @@
-<div class='request greybox'>
-
-<h2><%= @request.name %></h2>
-
+<blockquote>
+<b><%= @request.name %></b>
 <% if @page.resolved? and @request.vote %>
 <div>
    This request was <b><%= @request.vote.value == 1 ? 'approved' : 'rejected' %></b>
@@ -12,5 +10,10 @@
   <%= button_to 'approve', page_url(@page, :action => 'approve') %>
   <%= button_to 'reject', page_url(@page, :action => 'reject') %>
 <% end  %>
+<p>
+<% if @link and current_user.may?(:admin, @link) -%>
+<%= link_to 'discuss this request with %s' % @page.created_by.name, page_url(@link) -%>
+<% end -%>
+</p>
+</blockquote>
 
-</div>

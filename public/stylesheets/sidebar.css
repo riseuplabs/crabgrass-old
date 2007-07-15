@@ -57,10 +57,14 @@ div#rightbar div.sidehead {
 div.sideline, div.sidelink {
   padding: 3px 0 3px 9px;
 }
+div.sidelink a { 
+  display: block;
+  outline: 0;
+  line-height: 1em;
+  padding: 3px 0; /* to make icons show up and not get clipped */
+}
 div.sidelink a, div.sideline a {
   text-decoration: none;
-  outline: 0;
-  padding: 3px; /* to make icons show up and not get clipped */
 }
 div.sidelink a:hover, div.sideline a:hover {
   text-decoration: underline;
