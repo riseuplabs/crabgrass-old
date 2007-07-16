@@ -1,8 +1,7 @@
 CRABGRASS
 =========================================================
 
-What is crabgrass? blah blah blah. put that here.
-
+Crabgrass is a software libre web application designed for group and network organizing, and tailored to the needs of the global justice movement. The long term goal is to provide the technical tools to facilitate active, confederal, and directly democratic social change networks.
 
 INSTALL
 =========================================================
@@ -33,10 +32,13 @@ set up your database:
   mysqladmin create crabgrass
   rake db:migrate
 
-  
+logger:
+  By default production.rb is set to use SyslogLogger.
+  Either comment this out or 'gem install SyslogLogger'
+
+
 PLUGINS
 =========================================================
-
 
 flex_image
 ------------------
@@ -44,7 +46,6 @@ flex_image
 see http://beautifulpixel.com/flex_image/index.html
 ruby script/plugin install http://beautifulpixel.com/svn/plugins/flex_image/
 sudo apt-get install librmagick-ruby1.8
-
 some feature overlap with attachment_fu. We should probably phase this out.
 
 acts_as_modified
@@ -84,7 +85,6 @@ For example:
   <%= yield %>
 </div>
 <% end -%>
-
 
 bundled_assets
 --------------
@@ -127,6 +127,7 @@ ez-where
 script/plugin install svn://rubyforge.org/var/svn/ez-where
 provides a nice way to do complex queries. 
 
+
 GEMS
 =========================================================
 
@@ -140,3 +141,4 @@ ferret: indexed full text searches.
 
 open4: used by latex renderer (optional)
 
+SyslogLogger: improved logging (optional)

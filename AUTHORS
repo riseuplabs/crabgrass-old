@@ -1,0 +1,42 @@
+Copyright © 2007 Riseup Labs
+
+Crabgrass is free software; you can redistribute it and/or modify
+it under the terms of the Affero General Public License as published by
+the Free Software Foundation or Affero Inc.
+
+Crabgrass is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+Affero General Public License for more details.
+
+You should have received a copy of the Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+CRABGRASS AUTHORS
+=================
+
+Elijah Saxon
+Jessi Berkelhammer
+Daniel Scott
+Seth Walker
+
+AUTHORS OF INCLUDED SOFTWARE 
+=============================
+
+Crabgrass includes many libraries and images created by third parties
+and distributed under various licenses.
+
+rails
+  http://rubyonrails.org
+  Copyright© 2004 David Heinemeier Hansson
+  http://opensource.org/licenses/mit-license.php
+  
+tango icons
+  http://tango.freedesktop.org
+  Creative Commons Attribution ShareAlike 2.5
+  http://creativecommons.org/licenses/by-sa/2.5/
+  
+famfamfam silk icons
+  http://www.famfamfam.com/lab/icons/silk/
+  Creative Commons Attribution 2.5 License
+  
