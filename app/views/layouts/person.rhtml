@@ -1,4 +1,4 @@
-<% @leftbar = render :partial => 'person/sidebar' -%>
+<% @leftbar ||= 'person/sidebar' -%>
 <% inside_layout 'application' do -%>
 <div id='maincolumn' class='leftbar' style="<%=sidebar_space%>">
   <%= sidebar %>
