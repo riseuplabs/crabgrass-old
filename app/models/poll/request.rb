@@ -18,7 +18,7 @@ class Poll::Request < Poll::Poll
   end
   
   def approve(options)
-    possible.action.execute
+    possible.action.execute(page)
     resolve 1, options[:by], options[:comment]
   end
   

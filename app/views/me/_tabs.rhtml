@@ -26,8 +26,8 @@
   end
   f.tab do |t|
     t.label 'Requests'
-    t.link url_for(:controller => 'me_requests', :action => '')
-    t.selected params[:controller] == 'me_requests'
+    t.link url_for(:controller => 'requests', :action => '')
+    t.selected params[:controller] == 'requests'
   end
 
   f.tab do |t|

@@ -19,4 +19,12 @@ module MeHelper
     link_to text, url, :class => "tasklink #{selected}"
   end
   
+  def pending_request_link
+    if @request_count == 1
+      link_to @request_count.to_s + ' ' + 'pending request'.t, :controller => 'requests'
+    elsif @request_count > 1
+      link_to @request_count.to_s + ' ' + 'pending requests'.t, :controller => 'requests'
+    end
+  end
+  
 end

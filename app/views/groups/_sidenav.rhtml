@@ -1,0 +1,20 @@
+<div class='sidesection'>
+<div class='sidehead'><%=@group.name%></div>
+<div class='sidelink'>
+  <%= link_to 'home', url_for_group(@group) %>
+</div>
+<div class='sidelink'>
+  <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %>
+</div>
+<div class='sidelink'>
+  <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %>
+</div>
+<div class='sidelink'>  
+  <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %>
+</div>
+<div class='sidelink'>
+  <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %>
+</div>
+<div class='sidetail'></div>
+</div>
+

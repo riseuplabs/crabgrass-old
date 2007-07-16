@@ -33,6 +33,15 @@ div.tabinfo {
 }
 #titlebox .h1 {color: #669;}
 
+#maincolumn.leftbar #content {
+  float: left;
+  width: 100%;
+}
+#maincolumn.rightbar #content {
+  float: right;
+  width: 100%;
+}
+
 /** type **/
 
 body, p, ol, ul, td {

@@ -23,5 +23,10 @@
     
   </td>
 </tr>
+<% if @request_count > 0 -%>
+<tr><td colspan='2' class='thin'>
+<%= image_tag 'emblems/pending.png' %> <%= pending_request_link %>
+</td></tr>
+<% end -%>
 </table>
 

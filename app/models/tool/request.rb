@@ -6,7 +6,8 @@ class Tool::Request < Page
   model      Poll::Poll
   icon       'bullhorn.png'
   internal?   true
-
+  class_group 'request'
+  
   # update the resolved status of all linked pages if a request
   # has its resolved status changed.
   after_save :update_resolved  

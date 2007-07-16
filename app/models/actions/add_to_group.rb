@@ -9,10 +9,12 @@ class Actions::AddToGroup < Actions::Base
     @gid = group.id
   end
   
-  def execute
-    group = Group.find @gid
-    user = User.find @uid
-    group.users << user unless group.users.include? user
+  def execute(page)
+    group = Group.find_by_id @gid
+    user = User.find_by_id @uid
+    if group and user and !user.member_of?(group)
+      group.memberships.create :user => user, :group => group, :page => page
+    end
   end
   
 end

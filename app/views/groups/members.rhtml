@@ -1,7 +1,0 @@
-<% if may_admin_group? -%>
-<%= render :partial => 'groups/members/committee' if committee? %>
-<%= render :partial => 'groups/members/private' %>
-<% else -%>
-<%= render :partial => 'groups/members/public' %>
-<% end -%>
-

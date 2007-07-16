@@ -1,7 +1,8 @@
-<% @leftbar = render :partial => 'groups/sidebar' -%>
+<% @leftbar ||= 'groups/sidebar' -%>
 <% inside_layout 'application' do -%>
 <div id='maincolumn' class='leftbar' style="<%=sidebar_space%>">
   <%= sidebar %>
+  <div id='content'>
   <div id='titlebox'>
     <% unless params[:action] == 'show' -%>
     <div id='breadcrumbs'><%= link_to_breadcrumbs %></div>
@@ -9,6 +10,7 @@
     <%= @title if @title %>
   </div>
   <%= yield %>
+  </div>
   <br clear='both' />
 </div>
 <% end -%>

@@ -5,30 +5,44 @@
 
 
 class PageStork
- 
+
+  def self.bold(*args)
+    args.collect do |a|
+      "<b>#{a}</b>"
+    end
+  end
+  
   def self.request_to_join_group(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
     page = Tool::Request.new do |p|
-      p.title = 'Request to join %s from %s'.t % [group.name, user.login]
+      p.title = 'request to join %s from %s'.t % [group.name, user.login]
       p.resolved = false
+      p.flow = FLOW[:membership]
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
-        r.name = 'Add user %s to group %s?'.t % [user.login, group.name]
+        r.name = 'Add user %s to group %s?'.t % bold(user.login, group.name)
       end
     end
     page.add(group)
     page.add(group.users)
   end
   
-  def self.join_sent_notice(options)
+  def self.join_discussion(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
-    info = Tool::Info.new do |i|
-      i.title = 'Request sent to join %s'.t % group.name
-      i.summary = 'You requested to join group %s at %s' % [group.name, Time.now]
+    page = Tool::RequestDiscussion.new do |p|
+      p.title = 'discussion re: request to join %s from %s'.t % [group.name, user.name]
+      p.summary = 'User %s has requested to join group %s. Both %s and %s have access to this page, so can use this space discuss the request.' % bold(user.name, group.name, user.name, group.name)
+      p.flow = FLOW[:membership]
+      p.resolved = false
     end
-    info.add(user, :access => :admin)
+    page.add(user, :access => :admin)
+    page.add(group, :access => :admin)
+    if options[:message].any?
+      page.build_post(options[:message],user)
+    end
+    page
   end
   
   def self.invite_to_join_group(options)
@@ -36,15 +50,36 @@ class PageStork
     group = options.delete(:group).cast! Group
     from = options.delete(:from).cast! User
     page = Tool::Request.new do |p|
-      p.title = 'Invitation to join group %s from user %s'.t % [group.name, from.login]
+      p.title = 'invitation to join group %s'.t % group.name
       p.resolved = false
+      p.flow = FLOW[:membership]
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
-        r.name = 'Join group %s?' / group.name
+        r.name = 'Join group %s?'.t % bold(group.name)
       end
     end
     page.add(user, :access => :admin)
   end
+
+  def self.invite_discussion(options)
+    user = options.delete(:user).cast! User
+    group = options.delete(:group).cast! Group
+    from = options.delete(:from).cast! User
+    page = Tool::RequestDiscussion.new do |p|
+      p.title = 'discussion re: invitation to join group %s'.t % [group.name]
+      p.summary = 'User %s has sent %s an invitation to join group %s. Both %s and %s have access to this page, you can use this space discuss the request.' % bold(from.name, user.name, link_to_group(group), group.name, user.name)
+      p.flow = FLOW[:membership]
+      p.resolved = false
+    end
+    page.add(group, :access => :admin)
+    page.add(user, :access => :admin)
+    if options[:message].any?
+      page.build_post(options[:message],from)
+    end
+    page
+  end
+
+
 
   def self.request_for_contact(options)
     user = options.delete(:user).cast! User
@@ -54,7 +89,7 @@ class PageStork
       p.resolved = false
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToContacts.new(user,contact)
-        r.name = 'Add user %s to your contact list?' / user.login
+        r.name = 'Add user %s to your contact list?' % bold(user.login)
       end
       p.flow = FLOW[:contacts]
     end
@@ -70,7 +105,7 @@ class PageStork
     contact = options.delete(:contact).cast! User
     info = Tool::RequestDiscussion.new do |i|
       i.title = 'discussion re: contact invitation from %s to %s'.t % [user.name, contact.name]
-      i.summary = 'User %s has sent a contact invitation to %s. Both people have access to this page, so you can use this space discuss the request.' % [user.name, contact.name]
+      i.summary = 'User %s has sent a contact invitation to %s. Both people have access to this page, so you can use this space discuss the request.' % bold(user.name, contact.name)
       i.flow = FLOW[:contacts]
       i.resolved = false
     end
@@ -81,24 +116,7 @@ class PageStork
     end
     info
   end
-  
-  def self.private_message(options)
-    from = options.delete(:from).cast! User
-    to = options.delete(:to)
-    page = Tool::Message.new do |p|
-      p.title = options[:title] || 'Message from %s to %s' % [from.login, to.login]
-      p.created_by = from
-      p.discussion = Discussion.new
-      post = Post.new(:body => options[:body])
-      post.discussion = p.discussion
-      post.user = from
-      p.discussion.posts << post
-    end
-    page.add(from, :access => :admin)
-    page.add(to, :access => :admin)
-    page
-  end
-  
+    
   def self.wiki(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group

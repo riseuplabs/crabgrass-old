@@ -1,0 +1,6 @@
+<tr>
+  <td><%= link_to_user membership.user, :avatar => 'xsmall' %></td>
+  <td><%= friendly_date membership.created_at %></td>
+  <td><%= link_to 'details', page_url(membership.page) if membership.page %></td>
+</tr>
+

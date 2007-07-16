@@ -60,7 +60,7 @@ ul.plainlist {
 ul.plainlist li {margin: 3px 0;}
 
 ul.floatlist {
- clear: left;
+ /* clear: left; */
 }
 ul.floatlist li {
   float: left;

@@ -22,13 +22,14 @@ module GroupsHelper
   
   def leave_group_link
     if logged_in? and current_user.direct_member_of? @group
-	    post_to "leave #{@group_type}", group_url(:action => 'leave_group', :id => @group), :confirm => "Are you sure you want to leave this #{@group_type}?"
+	    link_to "leave #{@group_type}", url_for(:controller => 'membership', :action => 'leave', :id => @group)
+	    #, :confirm => "Are you sure you want to leave this #{@group_type}?"
 		end
   end
   
   def join_group_link
     unless logged_in? and current_user.direct_member_of?(@group)
-      post_to "join #{@group_type}", group_url(:action => 'join_group', :id => @group)
+      link_to "join #{@group_type}", url_for(:controller => 'membership', :action => 'join', :id => @group)
     end
   end
   
@@ -43,12 +44,18 @@ module GroupsHelper
   end
   
   def more_members_link
-    link_to 'view all'.t, group_url(:action => 'members', :id => @group)
+    link_to 'view all'.t, url_for(:controller => 'membership', :action => 'list', :id => @group)
   end
   
-  def edit_members_link
+  def invite_link
     if may_admin_group?
-      link_to 'edit'.t, group_url(:action => 'members', :id => @group)
+      link_to 'send invites'.t, url_for(:controller => 'membership', :action => 'invite', :id => @group)
+    end
+  end
+
+  def requests_link
+    if may_admin_group?
+      link_to 'view requests'.t, url_for(:controller => 'membership', :action => 'requests', :id => @group)
     end
   end
   

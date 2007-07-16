@@ -36,7 +36,10 @@ class MeController < ApplicationController
   end
   
   def dash
-  end  
+    options = options_for_pages_viewable_by(current_user, :flow => :membership)
+    path = "/type/request/pending/not_created_by/#{current_user.id}"
+    @request_count = count_pages(options, path)
+  end
   
   def files
     options = options_for_pages_viewable_by(current_user)

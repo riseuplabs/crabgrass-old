@@ -31,6 +31,8 @@ module Formy
 #       :checkbox, :tab, :link, :selectedx
 #  end
   
+  #### FORM CREATION ##################################################
+  
   def self.create(options={})
     @@base = f = Form.new(options)
     f.open
@@ -47,7 +49,17 @@ module Formy
     f.close
     f.to_s
   end
-    
+
+  def self.sidebar(options={})
+    @@base = f = Sidebar.new(options)
+    f.open
+    yield f
+    f.close
+    f.to_s
+  end
+  
+  #### HELPER METHODS #################################################
+  
   # sets up form keywords. when a keyword is called,
   # it tries to call this method on the current form element. 
   def self.form_word(*keywords)
@@ -74,6 +86,8 @@ module Formy
     ActionController::Routing::Routes.recognize_path(path)
   end
    
+  #### BASE CLASSES ###################################################
+    
   class Buffer
     def initialize
       @data = ""
@@ -126,18 +140,18 @@ module Formy
       @buffer << str
     end
     def indent(str)
-      ("  " * @base.depth) + str + "\n"
+      ("  " * @base.depth) + str.to_s + "\n"
     end
     def puts(str)
       @buffer << indent(str)
     end
   
-    def self.sub_element(*element_names)
-      for e in element_names
-        e = e.id2name
+    def self.sub_element(*class_names)
+      for class_name in class_names
+        method_name = class_name.to_s.gsub(/^.*::/,'').downcase
         module_eval <<-"end_eval"
-        def #{e}(options={})
-          element = #{e.capitalize}.new(@base,options)
+        def #{method_name}(options={})
+          element = #{class_name}.new(@base,options)
           element.open
           yield element
           element.close
@@ -163,8 +177,9 @@ module Formy
     
     def method_missing(method_name, *args, &block)
       word = method_name.id2name
-      e = @current_element.last
-      return unless e
+      #e = @current_element.last
+      #return unless e
+      e = self
       unless e.respond_to? word
         @base.puts "<!-- FORM ERROR: '" + e.classname + "' does not have a '#{word}' -->"
         return
@@ -188,9 +203,23 @@ module Formy
     end
   end
   
+  #### TAB CLASSES ##################################################
+    
   class Tabset < Root
-    sub_element :tab
+    
+    class Tab < Element
+      element_attr :label, :link, :selected
+      def close
+        javascript = "id='@id' href='#' onclick='showtab(event.target)'"
+        #hash = url_to_hash(@link)
+        selected = 'selected' if "#{@selected}" == "true"
+        puts "<li class='tab #{selected}'><a class='tab-link #{selected}' href='#{@link}'>#{@label}</a></li>"
+        super
+      end
+    end
 
+    sub_element Tabset::Tab
+    
     def open
       super
       puts "<ul class='tabset'>"
@@ -201,20 +230,56 @@ module Formy
       puts "<li></li></ul>"
       super
     end  
+        
+  end
+  
+  
+  #### SIDETAB CLASSES ###############################################
+    
+  class Sidebar < Root
+
+    class Link < Element
+      element_attr :label, :link, :selected
+      def close
+        selected = 'selected' if "#{@selected}" == "true"
+        puts "<div class='sidelink #{selected}'>"
+        if @label.any?
+          puts "<a href='#{@link}'>#{@label}</a>"
+        else
+          puts @link
+        end
+        puts "</div>"
+        super
+      end
+    end
+
+    class Section < Element
+      element_attr :label
+      sub_element Sidebar::Link
+      def close    
+        puts "<div class='sidesection'>"
+        puts "<div class='sidehead'>#{@label}</div>"
+        @elements.each {|e| raw_puts e}
+        puts "<div class='sidetail'></div>"
+        puts "</div>"
+        super
+      end      
+    end
+  
+    sub_element Sidebar::Section
+
+    def open
+      super
+    end
+
+    def close
+      @elements.each {|e| raw_puts e}
+      super
+    end  
     
   end
   
-  class Tab < Element
-    element_attr :label, :link, :selected
-    
-    def close
-      javascript = "id='@id' href='#' onclick='showtab(event.target)'"
-      #hash = url_to_hash(@link)
-      selected = 'selected' if "#{@selected}" == "true"
-      puts "<li class='tab #{selected}'><a class='tab-link #{selected}' href='#{@link}'>#{@label}</a></li>"
-      super
-    end
-  end
+  #### FORM CLASSES ###################################################
     
   class Form < Root
     sub_element :row, :section

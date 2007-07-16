@@ -1,0 +1,22 @@
+<h2>Join <%= @group.name %></h2>
+		
+<blockquote>
+
+<% form_tag(:action => 'join', :id => @group) do -%>
+
+<p>You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting <a href='/me/requests'>your requests page</a>.
+</p>
+
+<p>The membership policy of this group is: unknown</p>
+
+<p>
+Optional message included with the join request:<br/>
+<%= text_area_tag 'message', params[:message], :rows => 2, :cols => 50 %>
+</p>
+
+<%= submit_tag 'Request to join' %>
+
+<% end -%>
+
+</blockquote>
+

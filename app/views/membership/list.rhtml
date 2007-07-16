@@ -1,0 +1,25 @@
+<% content_for :style do -%>
+table.members td {padding: 4px;}
+table.members td a {padding: 4px;}
+<% end -%>
+
+<% if may_admin_group? -%>
+<%= render :partial => 'admin' %>
+<% end -%>
+
+<% if committee? -%>
+<%= render :partial => 'committee' %>
+<% end -%>
+
+<h2>current <%=@group_type%> members</h2>
+
+<table class='members'>
+<tr>
+  <th>User</th>
+  <th>Joined</th>
+  <th>&nbsp;</th>
+</tr>
+<%= render :partial => 'membership', :collection => @group.memberships %>
+
+</table>
+

@@ -57,6 +57,9 @@ div#rightbar div.sidehead {
 div.sideline, div.sidelink {
   padding: 3px 0 3px 9px;
 }
+div.sidelink.selected {
+  font-weight: bold;
+}
 div.sidelink a { 
   display: block;
   outline: 0;

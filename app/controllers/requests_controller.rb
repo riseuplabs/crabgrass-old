@@ -10,7 +10,7 @@
 #   from other to groups i am admin of
 #
 
-class MeRequestsController < ApplicationController
+class RequestsController < ApplicationController
 
   layout 'me'
     
@@ -76,8 +76,8 @@ class MeRequestsController < ApplicationController
   
   def context
     me_context('small')
-    add_context 'requests', url_for(:controller => 'me_requests', :action => 'index')
-    add_context params[:action], url_for(:controller => 'me_requests') unless params[:action] == 'index'
+    add_context 'requests', url_for(:controller => 'requests', :action => 'index')
+    add_context params[:action], url_for(:controller => 'requests') unless params[:action] == 'index'
   end
   
 end

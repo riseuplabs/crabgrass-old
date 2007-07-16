@@ -35,11 +35,11 @@ module LayoutHelper
   # SIDEBAR
   
   def leftbar 
-    @leftbar ? "<div id='leftbar'>\n#{@leftbar}</div>\n" : ''
+    @leftbar ? "<div id='leftbar'>\n#{render :partial => @leftbar}</div>\n" : ''
   end
   
   def rightbar
-    @rightbar ? "<div id='rightbar'>\n#{@rightbar}</div>\n" : ''
+    @rightbar ? "<div id='rightbar'>\n#{render :partial => @rightbar}</div>\n" : ''
   end
 
   def sidebar

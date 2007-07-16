@@ -413,13 +413,18 @@ module PageFinders
   # in particular, this function adds the correct options
   # based on the filter path (if set).
   def page_query_from_filter_path(options={})    
+    if path = options[:path]
+      path = path.split('/') if path.is_a? String
+      path = path if path.is_a? Array
+    end
+
     qb = QueryBuilder.new()        
     qb.table_class = options[:class] if options[:class]
     qb.and_clauses << [options[:conditions]]
     qb.values      = options[:values]
     qb.order       = options[:order] || 'pages.updated_at DESC'
     
-    filters = parse_filter_path( options[:path] )
+    filters = parse_filter_path( path )
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
       args = filter.slice(1..-1) # remove first element.
@@ -481,10 +486,7 @@ module PageFinders
   # grouping the count query. i don't think that this will take much longer than a normal count query.
   # 
   def find_and_paginate_pages(options, path=nil)
-    if path
-      options[:path] = path.split('/') if path.is_a? String
-      options[:path] = path if path.is_a? Array
-    end
+    options[:path] ||= path
     options = page_query_from_filter_path(options) unless options[:already_built]
     pages_per_section = 30
     current_section   = (params[:section] || 1).to_i
@@ -523,6 +525,7 @@ module PageFinders
     #logger.error "counts before this section:\n#{counts.slice(0, offset).inspect}"
 
     total_page_count     = counts.size
+    return total_page_count if options[:count_only]
     section_row_count    = counts.slice(offset, pages_per_section).inject(0){|sum, n| sum + n.to_i }
     section_starting_row = counts.slice(0     , offset           ).inject(0){|sum, n| sum + n.to_i }
         
@@ -539,13 +542,17 @@ module PageFinders
     return([pages, page_sections])
   end
   
+  def count_pages(options, path=nil)
+    options[:path] ||= path
+    options = page_query_from_filter_path(options)
+    options[:count_only] = true
+    return find_and_paginate_pages(options,path)
+  end
+  
   # a convenience function to find pages using 
   # page_query_from_filter_path style options.
   def find_pages(options, path=nil)
-    if path
-      options[:path] = path.split('/') if path.is_a? String
-      options[:path] = path if path.is_a? Array
-    end
+    options[:path] ||= path
     options = page_query_from_filter_path(options) unless options[:already_built]
     if options[:limit]
       # limit is not compatible with find_pages
@@ -628,7 +635,7 @@ module PageFinders
     options
   end
 
-  def options_for_group(group)
+  def options_for_group(group, default={})
     options = {:class => GroupParticipation}
     if logged_in?
       # the group's pages that current_useralso has access to
@@ -642,7 +649,7 @@ module PageFinders
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
       options[:values]     = [group.id, true]
     end
-    options
+    options.merge(default)
   end
 
 end

@@ -1,5 +1,25 @@
 <%#
 
+READ ME
+
+There are some things about this layout which might seem odd at first.
+Before you go ahead and make any big changes, read these notes:
+
+* The sidebar divs are inside the maincolumn for most layouts.
+  This is so the maincolumn will be forced to a height at least
+  as high as the sidebar (should the content be short).
+  There could be other ways to acheive this.
+  
+* The 'maincolumn > content' div is floated in the same direction
+  as the sidebar. Why? Because we need to set up a new block
+  formatting context[1]. A new context will allow us to have content
+  that uses floats and clears without interacting with the sidebar.
+  content is also made 100%, so that it doesn't actually look floated.
+  
+[1] http://developer.mozilla.org/en/docs/CSS:block_formatting_context
+
+
+
 GLOBAL LAYOUT
 
 body
@@ -60,9 +80,10 @@ div#leftbar
     div.sidehead
     div.sideline
 div#maincolumn.leftbar
-  div#title
-    div#breadcrumbs
-  yield
+  div#content
+    div#title
+      div#breadcrumbs
+    yield
 
 PERSON LAYOUT
 

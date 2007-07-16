@@ -1,0 +1,22 @@
+<h2>Invite users</h2>
+		
+<blockquote>
+
+<% form_tag(:action => 'invite', :id => @group) do -%>
+
+<p>
+Enter a list of usernames, separated by spaces, of people you would like to
+invite to join this <%=@group_type%>:<br/>
+<%= text_area_tag 'users', params[:users], :rows => 2, :cols => 50 %>
+</p>
+  
+<p>
+Optional message included with the invite:<br/>
+<%= text_area_tag 'message', params[:message], :rows => 2, :cols => 50 %> <br/>
+</p>
+
+<%= submit_tag 'Send invites' %>
+<% end -%>
+
+</blockquote>
+

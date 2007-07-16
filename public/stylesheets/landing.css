@@ -39,4 +39,7 @@ div#info_panel td.right {
   padding: 20px 0px 20px 20px;
   border-left: 1px solid #ccc;
 }
+div#info_panel td.thin {
+  padding: 4px;
+}
 
