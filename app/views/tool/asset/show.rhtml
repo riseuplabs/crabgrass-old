@@ -37,7 +37,7 @@
 
 <div id="versions" style="display: none;">
   <% @asset.versions.each do |version| -%>
-  <%= link_to "#{version.version}: #{version.filename}", version.public_filename %>
+  <%= link_to_unless version.version == @asset.version, "#{version.version}: #{version.filename}", version.public_filename %>
   <% end -%>
 </div>
 <br/>
