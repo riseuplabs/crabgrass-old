@@ -133,4 +133,21 @@ class PageStork
     return page
   end
   
+  def self.private_message(options) 
+    from = options.delete(:from).cast! User 
+    to = options.delete(:to) 
+    page = Tool::Message.new do |p| 
+      p.title = options[:title] || 'Message from %s to %s' % [from.login, to.login] 
+      p.created_by = from 
+      p.discussion = Discussion.new 
+      post = Post.new(:body => options[:body]) 
+      post.discussion = p.discussion 
+      post.user = from 
+      p.discussion.posts << post 
+    end 
+    page.add(from, :access => :admin) 
+    page.add(to, :access => :admin) 
+    page 
+  end
+  
 end
