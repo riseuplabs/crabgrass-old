@@ -21,7 +21,7 @@ optional for ferret:
   gem install ferret
 
 optional for latex rendering:
-  apt-get install graphicsmagick tetex-bin gs-gpl
+  apt-get install graphicsmagick texlive gs-gpl
   gem install open4
 
 then check out the code:
