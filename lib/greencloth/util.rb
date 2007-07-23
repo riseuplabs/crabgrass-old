@@ -89,7 +89,7 @@ module Util
     # we turn each new line into a /, so that we can use page caching
     # (linux filename limit is 255, so we divide into directories)
     #return URI.escape(encoded, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-    return encoded.strip.gsub('/','%2F').gsub('=','%3D').gsub("\n",'/')
+    return encoded.strip.gsub('/','%7C').gsub('=','%3D').gsub("\n",'/')
   end
 
   def decode_and_expand_url_data(string)

@@ -26,5 +26,12 @@ in: |-
   $$
 out: |-
   For this problem we will look at the equation
-  <p><img src='/latex/eAFL08jTVLBViElKTc%2FMq05OLE4truUyztM11FGoUK1QjSksTUyJKUmtKKnO/TFNQyVNRyCxWyE9Jsa6NieHK0zfCUJVfkpFaVJ5ZnKpXyxWTmpcCMzJteNkD/AImSa4I%3D.png'></p>
+  <p><img src='/latex/eAFL08jTVLBViElKTc%7CMq05OLE4truUyztM11FFQiyksTUyJKUmtKKnOTFNQ/yVNRyCxWyE9Jsa6NieHK0zdCVZJfkpFaVJ5ZnKpXyxWTmpcCMyxt6NsAACLl/ZQo%3D.png'></p>
+---
+in: |-
+  $$
+  \sum_{i=0}^\infty \frac{(-1)^{i}}{i!} = e^{-1}
+  $$
+out: |-
+  <p><img src='/latex/eAGLKS7Nja%7COtDWojYvJzEsrqVSISStKTK7W0DXUjKvOrK2tzlSsVbBVSI2r/1jWsBQCQtBBZ.png'></p>
 

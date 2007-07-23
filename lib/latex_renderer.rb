@@ -142,7 +142,9 @@ class LatexRenderer
       end
     end
   end
+  
   def cleanup
+    return
     @temp.each_value do |file|
       if File.exists? file
         if File.delete file
@@ -279,7 +281,7 @@ FORMULA
     [stdin,stdout,stderr].each{|pipe| pipe.close}
     
     if status.exitstatus == 1
-      message = msg + " failed.\n #{str} caused the following error(s)\n#{err}"
+      message = msg + " failed.\n #{str} caused the following error(s)\n#{err}\n#{output}"
       raise message
     end
     return output
