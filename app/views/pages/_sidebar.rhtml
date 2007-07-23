@@ -84,7 +84,6 @@
 
 <div class='sidesection'>
 <div class='sidehead'>contributors</div>
-<ul class='plainlist'>
 <% unless @page.contributors.any? %>
   <div class='sideline'>(none so far)</div>
 <% end %>
@@ -92,8 +91,6 @@
   <div class='sideline'><%= avatar_for u, 'xsmall' %> <%= link_to_user u %></div>
 <% end %>
  <%= link_to 'contribution details', {:controller => 'pages', :action => 'participation', :id => @page.id}, :title => 'view contribution detail', :class => 'sidedetails' %>
-</ul>
-
 <div class='tail'></div>
 </div> <!-- end section -->
 

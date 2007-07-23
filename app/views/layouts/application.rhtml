@@ -10,11 +10,13 @@ Before you go ahead and make any big changes, read these notes:
   as high as the sidebar (should the content be short).
   There could be other ways to acheive this.
   
-* The 'maincolumn > content' div is floated in the same direction
+* The '#maincolumn > #content' div is floated in the same direction
   as the sidebar. Why? Because we need to set up a new block
   formatting context[1]. A new context will allow us to have content
   that uses floats and clears without interacting with the sidebar.
   content is also made 100%, so that it doesn't actually look floated.
+  Also, there is a clearing br at the end of 'div#content' that is
+  needed to keep the div from 'rolling up'.
   
 [1] http://developer.mozilla.org/en/docs/CSS:block_formatting_context
 
@@ -35,12 +37,14 @@ body
 end#body
 
 
-APPLICATION LAYOUT
+GENERIC LAYOUT
 div#leftbar     
 div#maincolumn (.leftbar or .rightbar)
-  div#title
-    div#breadcrumbs   breadcrumb paths
- yield
+  maybe sidebar
+  div#content
+    div#titlebox
+      div#breadcrumbs   breadcrumb paths
+    yield
 
 
 ME LAYOUT
@@ -53,23 +57,24 @@ end.tabarea
 PAGE LAYOUT
 inherits application, plus...
 
-div#rightbar     
-  div.sidesection
-    div.sidehead
-    div.sideline
 div#maincolumn.rightbar
-  div#title
-    div#breadcrumbs
-  yield
-  div#posts
-
-div#pagearea
-  div#title
-  div#page
-    div#sidebar
-    div#pagebox
-      ... yield ...
+  div#rightbar
+    div.sidesection
+      div.sidehead
+      div.sideline
+  div#content
+    div#titlebox
+      div#breadcrumbs
+    yield
     div#posts
+
+#div#pagearea
+#  div#title
+#  div#page
+#    div#sidebar
+#    div#pagebox
+#      ... yield ...
+#    div#posts
 
 
 GROUP LAYOUT
@@ -81,7 +86,7 @@ div#leftbar
     div.sideline
 div#maincolumn.leftbar
   div#content
-    div#title
+    div#titlebox
       div#breadcrumbs
     yield
 
