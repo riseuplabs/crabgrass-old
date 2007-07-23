@@ -1,0 +1,22 @@
+<%
+# this partial handles one line item in a list of possibles.
+# it is heavy ajax... probably the non-ajax version should be a different partial
+
+possible_id        = "possible_#{possible.id}"
+possible_edit_id   = "#{possible_id}_edit"
+possible_show_id   = "#{possible_id}_show"
+spinner_edit       = "#{possible_id}_edit"
+-%>
+
+<li id='<%=possible_id%>' class='possible'>
+  
+  <div id='<%=possible_show_id%>' class='handle'>
+    <%= render :partial => 'possible_show', :locals => {:possible => possible} %>
+  </div>
+  
+  <div id='<%=possible_edit_id%>' class='indent possible_edit' style='display: none'>
+    <%= spinner(spinner_edit, :show=>true) -%> <%= 'Loading...'.t %>
+  </div>
+  
+</li>
+

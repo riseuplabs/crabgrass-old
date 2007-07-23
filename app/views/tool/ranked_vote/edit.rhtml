@@ -1,0 +1,26 @@
+<%= render :partial => 'tabs' %>
+
+<div class='edit_vote'>
+
+<div id='progress_area'>
+  <div id='progress' style='display:none'>
+  <%= spinner('progress', :show => true) %> <%= 'Saving...' %>
+  </div>
+  <div id='instructions'>
+<%= 'Click and drag to arrange the possibilities in order of your preference.'.t  if @possibles.any? %>
+  </div>
+</div>
+
+<ul id='sort_list' class='possible_list plainlist'>
+  <%= render :partial => 'possible', :collection => @possibles %>
+</ul>
+
+<ul class='possible_list plainlist'>
+  <li id='add_possible_link'><%= render :partial => 'new_possible'%></li>
+</ul>
+
+<%= sortable_element 'sort_list', :handle => 'handle', :url => page_xurl(@page, :action=>'sort'), :loading => "Element.show('progress');Element.hide('instructions')", :complete => "Element.hide('progress'); Element.show('instructions')" %>
+
+</div> <!-- end edit_vote -->
+
+

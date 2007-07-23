@@ -1,0 +1,26 @@
+<% @possible = Poll::Possible.new %>
+<div id="new_possible_link">
+  <%= link_to_function 'add new possibility'.t, 'Element.show("new_possible_form_container"); Element.hide("new_possible_link");' %> 
+</div>
+
+<div id='new_possible_form_container' style='display:none'>
+<% form_remote_tag(
+  :url      => page_xurl(@page, :action=>'add_possible'),
+  :html     => {:action => page_url(@page, :action=>'add_possible'), :id => 'new_possible_form'}, # non-ajax fallback
+  :loading  => show_spinner('new_possible_loading'),
+  :complete => hide_spinner('new_possible_loading'),
+  :success => "$('new_possible_form').reset()"
+) do -%>
+   description:<br/>
+   <%= text_field 'possible', 'name', :size => 70 %><br/>
+   detail:<br/>
+   <%= text_area 'possible', 'description', :size => '70x4' %><br/>
+   <p>
+   <%= submit_tag 'Add Possibility'.t %>
+   <%= button_to_function "Done", "Element.hide('new_possible_form_container'); Element.show('new_possible_link');" %>
+   <%= spinner('new_possible_loading') %>
+   </p>
+<% end -%>
+</div> <!-- end new possible form -->
+
+

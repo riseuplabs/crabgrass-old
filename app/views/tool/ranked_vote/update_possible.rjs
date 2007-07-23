@@ -1,0 +1,15 @@
+possible_id      = "possible_#{@possible.id}"
+possible_edit_id = "#{possible_id}_edit"
+possible_show_id = "#{possible_id}_show"
+spinner_id       = spinner_id(possible_edit_id)
+
+# update the possible_show div with the updated possible data
+page.replace_html possible_show_id, :partial => 'possible_show', :locals => {:possible => @possible}
+page.show possible_show_id
+
+# hide the edit box
+page.hide(possible_edit_id)
+
+# hide the edit box spinner
+page.hide(spinner_id)
+

@@ -19,8 +19,11 @@ class LatexController < ApplicationController
   def show
     begin
       equation = params[:path].join("\n")
-      equation = decode_and_expand_url_data(equation)
-      # return render :text => "<pre>%s</pre>" % equation
+      begin
+        equation = decode_and_expand_url_data(equation)
+      rescue Exception => exc
+        equation = '\text {error decoding url}'
+      end
       if equation !~ /^\\begin/
         equation = "$\n#{equation}\n$"
       end
@@ -37,7 +40,7 @@ class LatexController < ApplicationController
   private
   
   def decode_and_expand_url_data(string)
-    Zlib::Inflate.inflate( Base64.decode64(string) )
+    Zlib::Inflate.inflate( Base64.decode64( string.gsub('|','/') ) )
   end
 
   # this uses the LatexRenderer plugin from mephisto.
@@ -69,6 +72,7 @@ class LatexController < ApplicationController
   
   @@latex_head = %q(
 \documentclass[12pt]{article}
+\usepackage{amsmath}
 \pagestyle{empty}
 \title{\LaTeX}
 \date{}

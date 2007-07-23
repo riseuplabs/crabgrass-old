@@ -1,0 +1,6 @@
+possible_id      = "possible_#{@possible.id}"
+possible_edit_id = "#{possible_id}_edit"
+
+# update the possible_edit div with the edit partial
+page.replace_html possible_edit_id, :partial => 'possible_edit', :locals => {:possible => @possible}
+

@@ -5,8 +5,8 @@ class Tool::RateMany < Page
   controller 'rate_many'
   model Poll::Poll
   icon 'rate-many.png'
-  class_display_name 'straw poll'
-  class_description "An informal poll of people's preferences."
+  class_display_name 'Straw Poll'
+  class_description "Approve or disapprove of each possibility."
   class_group 'poll'
     
   def initialize(*args)

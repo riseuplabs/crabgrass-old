@@ -1,0 +1,78 @@
+/* editing possibles */
+
+#progress, #instructions {
+  padding: 0.5em;
+  background-color: #FEA;
+  border: 1px solid #EB0;
+}
+
+#progress_area {
+  padding: 1em;
+  height: 2em;
+}
+
+ul.possible_list {
+
+}
+
+ul.possible_list li {
+  margin: 0 3em 0 3em;
+  padding: 4px 16px;
+  cursor: move;
+  line-height: 24px;
+}
+ul.possible_list li:hover {
+  background: #eee;
+}
+
+ul.possible_list li .edit {
+  display: none;
+}
+ul.possible_list li:hover .edit {
+  display: inline;
+}
+
+li#add_possible_link {
+  margin-top: 2em;
+  background: #eee;
+  padding: 10px;
+}
+
+div.name {
+  font-weight: bold;
+}
+
+div.possible_details {
+  margin: 6px;
+  color: #666;
+}
+
+/* showing possibles */
+
+
+ul.possibles {
+  margin: 1em;
+}
+ul.possibles li {
+  padding: 10px 10px 14px 10px;
+  clear: both;
+  padding-left: 44px;
+}
+
+ul.possibles li div.rank {
+  float: left;
+  display: inline;
+  color: #5bf;
+  font-size: 36px;
+  margin-left: -30px;
+}
+
+ul.possibles li.winner {
+  background-color: #ffA;
+}
+
+span.winner {
+  display: block;
+  float: right;
+}
+

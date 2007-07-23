@@ -98,7 +98,7 @@ module ApplicationHelper
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
     options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
-    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}'>"
+    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
   end
   def spinner_id(id)
     "#{id.to_s}_spinner"

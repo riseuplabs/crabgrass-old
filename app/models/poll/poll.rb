@@ -18,4 +18,8 @@ class Poll::Poll < ActiveRecord::Base
       'WHERE possibles.poll_id = ? AND votes.user_id = ?', id, user.id]
   end
 
+  def delete_votes_by_user(user)
+    Poll::Vote.connection.delete "DELETE FROM votes USING votes, possibles WHERE possibles.id = votes.possible_id AND possibles.poll_id = #{id} AND votes.user_id = #{user.id}"
+  end
+  
 end

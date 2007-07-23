@@ -3,7 +3,7 @@ class Poll::Possible < ActiveRecord::Base
 
   belongs_to :poll
   has_many :votes, :dependent => :destroy
-
+  format_attribute :description  
   validates_presence_of :name
   
   # rails doesn't let you serialize instances of auto loaded classes
@@ -19,6 +19,16 @@ class Poll::Possible < ActiveRecord::Base
   end
   def action=(s)
     write_attribute('action',YAML.dump(s))
+  end
+  
+  def vote_by_user(user)
+    votes.detect {|v| v.user == user}
+  end
+  
+  def value_by_user(user, default=-1)
+    v = vote_by_user(user)
+    return v.value if v
+    return default
   end
   
   # the score is the sum of:

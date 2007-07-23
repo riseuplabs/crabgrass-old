@@ -1,0 +1,28 @@
+<%
+@possible = possible
+possible_id      = "possible_#{possible.id}"
+possible_edit_id = "#{possible_id}_edit"
+form_id          = "#{possible_edit_id}_form"
+possible_show_id     = "#{possible_id}_show"
+close_click      = "Element.hide('#{possible_edit_id}');" +
+                   "Element.show('#{possible_show_id}');"
+delete_url       =  page_xurl(@page, :action=>'destroy_possible', :id=>possible.id)
+update_url       =  page_xurl(@page, :action=>'update_possible', :id=>possible.id)
+delete_click     = "Element.hide('#{possible_id}');" + remote_function(:url => delete_url)
+-%>
+<% form_remote_tag(
+  :url      => update_url,
+  :loading  => show_spinner(possible_edit_id),
+  :html => {:id => form_id}) do -%>
+  <%# text_field 'possible', 'name', :size => 70 %>
+  <%= h possible.name %>
+  <br/>
+  <%= text_area 'possible', 'description', :size => '70x4' %><br/>
+  <p>
+    <%= submit_tag 'Save'.t %>
+    <%= button_to_function "Cancel".t, close_click %>
+    <%= button_to_function "Delete".t, delete_click %>
+    <%= spinner(possible_edit_id) %>
+  </p>
+<% end %>
+
