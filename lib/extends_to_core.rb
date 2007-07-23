@@ -66,6 +66,15 @@ class Array
   def to_select(field,id='id')
     self.collect { |x| [x.send(field).to_s,x.send(id).to_s] }
   end
+  
+  def any_in?(array)
+    return (self & array).any?
+  end
+  def to_h(&block)
+    Hash[*self.collect { |v|
+      [v, block.call(v)]
+    }.flatten]
+  end
 end
 
 
