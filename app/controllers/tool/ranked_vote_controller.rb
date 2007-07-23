@@ -11,7 +11,7 @@ class Tool::RankedVoteController < Tool::BaseController
     
     @result = CloneproofSSDVote.new( build_vote_array ).result
     @possibles = @poll.possibles.sort_by do |possible|
-      @result.rank_of_candidate possible.name
+      @result.rank_of_candidate(possible.name) || 10000
     end
     @winners = @possibles.select{|p| @result.winners.include? p.name}
   end
