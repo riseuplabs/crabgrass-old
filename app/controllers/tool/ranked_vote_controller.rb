@@ -17,9 +17,9 @@ class Tool::RankedVoteController < Tool::BaseController
   end
 
   def edit
-    # this sorting could be improved. it will be slow if there are many votes.
     @possibles = @poll.possibles.sort_by do |pos|
-      pos.value_by_user(current_user, rand(@poll.possibles.size))
+      default_for_unvoted = @poll.possibles.size + rand(@poll.possibles.size)
+      pos.value_by_user(current_user, default_for_unvoted)
     end
   end
     
