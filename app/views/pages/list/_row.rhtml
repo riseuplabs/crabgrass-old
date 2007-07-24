@@ -27,6 +27,13 @@ we have user or group participation data (upart or gpart).
 -%>
 
 <tr class="<%= color %> <%= 'unread' if upart and !upart.viewed? %>">
+
+<% if checkbox -%>
+  <td >
+  <%= check_box('page_checked', page.id, {}, 'checked', '') %>  
+  </td>
+<% end -%>
+
 <% columns.each do |column| -%>
   <td><%= page_list_cell(page, column, upart || gpart) %></td>
 <% end -%>

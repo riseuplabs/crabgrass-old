@@ -19,6 +19,8 @@ pages ||= @pages
 sections ||= @sections
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 heading ||= false
+checkbox ||= false
+
 
 -%>
 <table class='page-list'>
@@ -34,13 +36,25 @@ heading ||= false
   </tr>
 <% end -%>
 
-<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns} %>
+<% if checkbox -%>
+<%= form_tag({:controller => 'pages', :action => 'removeSelection'}) %>
+  <tr class = 'delete-button'>
+  <input type='submit' value='Remove selected pages'/> 
+  </tr>
+<% end -%>
+
+<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox} %>
 
 <% if sections and sections.page_count > 1 -%>
   <tr class='pagination'><td colspan='100'>
     <%= pagination_links sections, :name => 'section', :window_size => 10 %>
   </tr>
 <% end -%>
+
+<% if checkbox -%>
+  <% end_form_tag() %>
+<% end -%>
+
 
 <% end -%>  
 </table>

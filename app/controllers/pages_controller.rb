@@ -201,6 +201,23 @@ class PagesController < ApplicationController
     redirect_to url
   end
   
+
+  def removeSelection
+    to_remove = params[:page_checked]
+    if to_remove
+      to_remove.each do |page_id, do_it|
+        if do_it == 'checked'
+          page = Page.find_by_id(page_id) if page_id
+          upart = (page.participation_for_user(current_user) if logged_in? and page)
+          upart.destroy
+        end
+      end
+    end
+   redirect_to me_url(:action => 'inbox') 
+  end
+  
+
+
   protected
   
   def authorized?
@@ -226,5 +243,6 @@ class PagesController < ApplicationController
     @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
     true
   end
+
   
 end
