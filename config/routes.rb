@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
   #UJS::routes
   
   map.connect 'me/requests/:action/*path', :controller => 'requests'
-  map.connect 'me/inbox/*path', :controller => 'me', :action => 'inbox'
+  map.connect 'me/inbox/*path', :controller => 'inbox', :action => 'index'
   map.connect 'me/search/*path', :controller => 'me', :action => 'search'
   map.me 'me/:action/:id', :controller => 'me'
   

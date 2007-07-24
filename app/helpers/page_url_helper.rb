@@ -116,21 +116,7 @@ module PageUrlHelper
     query_string = "?#{elements.join("&")}" unless elements.empty?
     query_string || ""
   end
-
-  # moved from me_helper
-  def folder_link(text,path=nil,image=nil)
-    if params[:action] == 'inbox'
-      klass = ('selected' if params[:path].join('/').ends_with?(path)) || ''
-    elsif path=='all'
-      klass = 'selected'
-    else
-      klass = ''
-    end
-    
-    text = folder_icon(image) + " " + text if image
-    link_to text, url_for(:action => 'inbox', :path => path), :class => klass
-  end
-    
+      
   def filter_path
     @path ||= (params[:path] || [])
   end
@@ -170,14 +156,15 @@ module PageUrlHelper
   # used to create the page list headings
   def page_path_link(text,path='',image=nil)
     hash = params.dup
-    old = parsed_path().dup.remove_sort
-    hash[:path] = old.to_s + path
+    current_path = parsed_path().dup.remove_sort.to_s
+    current_path += '/' if current_path.any? and !current_path.ends_with? '/'
+    hash[:path] = current_path + path
     #for tags this isn't right:
     # todo: do not hard code the action here.
     if params[:controller] == 'groups' && params[:action] == 'show'
       hash[:action] = 'search'
-    elsif params[:controller] == 'me' && params[:action] == 'index'
-      hash[:action] = 'inbox'
+    elsif params[:controller] == 'inbox'
+      hash[:action] = 'index'
     elsif params[:controller] == 'person'
       hash[:action] = 'search'
       hash[:id] ||= hash['_context']

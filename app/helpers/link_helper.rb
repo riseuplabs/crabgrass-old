@@ -58,6 +58,9 @@ module LinkHelper
 # as link_to with :method => 'post'
 #
   
+  
+  ### SUBMITS ###
+  
   def submit_button(label, options={})
     submit_link(label, {:class => 'button'}.merge(options))
   end
@@ -76,6 +79,8 @@ module LinkHelper
 label}</a></span>)    
   end
 
+  ### BUTTONS ###
+  
   def link_button(label,options={},htmloptions={})
     accesskey = shortcut_key label
     url = url_for options
@@ -90,7 +95,17 @@ accesskey='#{accesskey}'>#{label}</a></span>]
 accesskey}.merge(html_options) )
     "<span class='button'>#{a}</span>"
   end
-    
+  
+  ### AJAX ###
+  
+  def function_button(label, *args, &block)
+    accesskey = shortcut_key label
+    args << {:class => 'button', :accesskey=> accesskey}
+    link_to_function(label, *args, &block)
+  end
+  
+  ### UTIL ###
+  
   def shortcut_key(label)
     label.gsub!(/\[(.)\]/, '<u>\1</u>')
     /<u>(.)<\/u>/.match(label).to_a[1]

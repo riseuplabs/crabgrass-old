@@ -6,8 +6,8 @@
   end
   f.tab do |t|
     t.label 'Inbox'
-    t.link me_url(:action => 'inbox')
-    t.selected params[:action] == 'inbox'
+    t.link url_for(:controller => 'inbox', :action => 'index', :path => '')
+    t.selected params[:controller] == 'inbox'
   end
   f.tab do |t|
     t.label 'Tasks'

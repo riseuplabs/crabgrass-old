@@ -1,13 +1,6 @@
 module MeHelper
 
   include PageFinders
-  
-  def folder_icon(image)
-    image = "folders/#{image}" unless image.match(/\//)
-    image_tag(image, :size => "22x22")
-  end
-  
-##moved folder_link to page_url_helper  
 
   def task_link(text, id, default=false)
     if default and params[:id].empty?

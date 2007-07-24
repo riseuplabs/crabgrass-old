@@ -1,0 +1,32 @@
+<% content_for :style do -%>
+p#inbox_buttons {
+  text-align: right;
+}
+<% end -%>
+
+<div class='tabinfo'>
+Inbox of pages I am actively participating in or watching for changes. <%= link_to 'create page &raquo;', {:controller => '/pages', :action => 'create'} %>
+</div>
+
+<div id='page-holder'>
+  <div id='folders'>
+    <%= render :partial => 'me/folders', :locals => {:mode => 'me', :users => @user.contacts, :groups => @user.groups} %>
+  </div>
+  
+  <% form_tag({:controller => 'inbox', :action => 'index', :path => params[:path]}, {:id => 'inbox_form'}) do -%>  
+  <div id='page-list'>
+    <%= render :partial => 'pages/list/table', :locals => {:heading => true, :checkbox => true, 
+        :columns => [:checkbox, :icon, :title, :group, :updated_by, :updated_at, :contributors]}
+    %>
+  </div>
+
+  <p id='inbox_buttons'>
+    <%= function_button '[T]oggle selection'.t, "$('inbox_form').getInputs('checkbox').invoke('click')" %>  
+    <%= submit_button '[R]emove from inbox'.t, :name => 'remove' %>  
+  </p>
+  
+  <% end # form -%>
+</div>
+
+
+

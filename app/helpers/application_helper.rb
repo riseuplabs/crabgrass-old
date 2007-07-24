@@ -191,6 +191,8 @@ module ApplicationHelper
   def page_list_cell(page, column, participation)
     if column == :icon
       return page_icon(page)
+    elsif column == :checkbox
+      check_box('page_checked', page.id, {}, 'checked', '')
     elsif column == :title
       title = link_to(page.title, page_url(page))
       if participation and participation.instance_of? UserParticipation
@@ -222,7 +224,7 @@ module ApplicationHelper
   def page_list_heading(column=nil)
     if column == :group or column == :group_name
       list_heading 'group'.t, 'group_name'
-    elsif column == :icon
+    elsif column == :icon or column == :checkbox
       "<th></th>"
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'.t, 'updated_by_login'
