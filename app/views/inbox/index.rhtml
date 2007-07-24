@@ -10,7 +10,7 @@ Inbox of pages I am actively participating in or watching for changes. <%= link_
 
 <div id='page-holder'>
   <div id='folders'>
-    <%= render :partial => 'me/folders', :locals => {:mode => 'me', :users => @user.contacts, :groups => @user.groups} %>
+    <%= render :partial => 'folders', :locals => {:mode => 'me', :users => @user.contacts, :groups => @user.groups} %>
   </div>
   
   <% form_tag({:controller => 'inbox', :action => 'index', :path => params[:path]}, {:id => 'inbox_form'}) do -%>  
