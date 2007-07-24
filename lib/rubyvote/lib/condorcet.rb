@@ -93,7 +93,8 @@ end
 ## directly.
 
 class CondorcetResult < ElectionResult
-  attr_reader :ranked_candidates
+  #attr_reader :ranked_candidates
+  attr_accessor :candidate_sums
     
   def initialize(voteobj=nil)
     unless voteobj and voteobj.kind_of?( CondorcetVote )
@@ -101,31 +102,46 @@ class CondorcetResult < ElectionResult
     end
 
     super(voteobj)
-
-    candidate_sums = []
-    @election.votes.each_pair do |candidate,wins|
-      candidate_sums << [candidate, wins.values.inject{|sum,n| n == 0 ? sum : sum+1 }]
-    end
-    candidate_sums.sort! {|a,b| b[1] <=> a[1] }  # sort by the number of wins, desc.
-    
-    @ranked_candidates = []
-    @candidate_ranks = {}
-    previous_win_amount = -1
-    rank = 0
-    candidate_sums.each do |candidate_and_wins|
-      candidate, win_amount = candidate_and_wins
-      @ranked_candidates << candidate
-      rank += 1 if win_amount != previous_win_amount
-      @candidate_ranks[candidate] = rank
-      previous_win_amount = win_amount
-    end
   end
   
   def rank_of_candidate(candidate)
-    @candidate_ranks[candidate]
+    candidate_ranks[candidate]
   end
     
   protected
+  
+  def candidate_ranks
+    @candidate_ranks ||= calculate_candidate_ranks
+  end
+  
+  def calculate_candidate_ranks()
+    @candidate_sums = []
+    @election.votes.each_pair do |candidate,wins|
+      if @winners.include? candidate
+        @candidate_sums << [candidate, 100000000]
+      else
+        #sum = wins.values.inject{ |sum,n| sum+n }
+        count = wins.values.inject{ |count,n| n == 0 ? count : count+1 }
+        @candidate_sums << [candidate, count]
+      end
+    end
+    @candidate_sums.sort! {|a,b| b[1] <=> a[1] }  # sort by the win sums, desc.
+    
+    #ranked_candidates = []
+    ranks = {}
+    previous_win_sum = -1
+    rank = 0
+    @candidate_sums.each do |candidate_and_wins|
+      candidate, win_sum = candidate_and_wins
+      #@ranked_candidates << candidate
+      rank += 1 if win_sum != previous_win_sum
+      ranks[candidate] = rank
+      previous_win_sum = win_sum
+    end
+    return ranks
+  end
+  
+  
   def defeats(candidates=nil, votes=nil)
     candidates = @election.candidates unless candidates
     votes = @election.votes unless votes

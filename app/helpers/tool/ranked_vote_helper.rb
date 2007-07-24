@@ -1,7 +1,7 @@
 module Tool::RankedVoteHelper
 
  def possible_name(possible)
-   if possible.description.any?
+   if possible.description.any? or @who_voted_for[possible.name].any?
      link_to_function(possible.name,
        "Element.toggle('#{details_id(possible)}')",
        :class => 'dotted')

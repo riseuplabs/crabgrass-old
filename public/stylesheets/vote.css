@@ -36,6 +36,7 @@ li#add_possible_link {
   margin-top: 2em;
   background: #eee;
   padding: 10px;
+  cursor: default;
 }
 
 div.name {

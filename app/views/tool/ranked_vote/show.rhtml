@@ -6,11 +6,15 @@
   <div class='rank'><%= @result.rank_of_candidate(possible.name) %></div>
   <span class='winner'><%= "(" + winner.t + ")" if winner.any? %></span>
   <div class='name'><%= possible_name(possible) %></div>
-  
   <div class='indent possible_details' id="<%=details_id(possible)%>" style='display: none'>
     <%= possible.description_html %>
+    <% if @who_voted_for[possible.name].any? -%>
+    <p><%= 'first choice of'.t%>: <%= @who_voted_for[possible.name].join(', ') %></p>
+    <% end -%>
   </div>
 </li>
 <% end -%>
 </ul>
 
+
+<%= debug @result %>

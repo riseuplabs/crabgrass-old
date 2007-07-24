@@ -19,7 +19,7 @@ class Tool::RankedVoteController < Tool::BaseController
   def edit
     # this sorting could be improved. it will be slow if there are many votes.
     @possibles = @poll.possibles.sort_by do |pos|
-      pos.value_by_user(current_user, 10000)
+      pos.value_by_user(current_user, rand(@poll.possibles.size))
     end
   end
     
@@ -43,12 +43,6 @@ class Tool::RankedVoteController < Tool::BaseController
     end
   end
     
-  def destroy_possible
-    possible = Poll::Possible.find(params[:possible])
-    possible.destroy
-    redirect_to page_url(@page, :action => 'show')
-  end
-
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -77,17 +71,31 @@ class Tool::RankedVoteController < Tool::BaseController
     return unless request.xhr?
     @possible = @poll.possibles.find(params[:id])
   end
+
+  def destroy_possible    
+    possible = @poll.possibles.find(params[:id])
+    possible.destroy
+    render :nothing => true
+  end
   
   protected
 
   def build_vote_array
     ## first, build hash of votes
-    ## the key is the user's id
-    ## the element is an array of all their votes
+    ## the key is the user's id and the element is an array of all their votes
+    ## (this should be changed if we start caching User.find(id)
+    possibles = @poll.possibles.find(:all, :include => {:votes => :user})
     hash = {}
-    @poll.votes.each do |vote|
-      hash[vote.user.id] ||= []
-      hash[vote.user.id] << [vote.possible.name, vote.value]
+    @who_voted_for = {}
+    possibles.each do |possible|
+      possible.votes.each do |vote|
+        hash[vote.user_id] ||= []
+        hash[vote.user_id] << [possible.name, vote.value]
+        if vote.value == 0
+          @who_voted_for[possible.name] ||= []
+          @who_voted_for[possible.name] << vote.user.name
+        end
+      end  
     end
     
     ## second, build array of votes. each element is an array of a user's

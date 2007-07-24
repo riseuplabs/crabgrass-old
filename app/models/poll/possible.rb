@@ -22,7 +22,7 @@ class Poll::Possible < ActiveRecord::Base
   end
   
   def vote_by_user(user)
-    votes.detect {|v| v.user == user}
+    votes.detect {|v| v.user_id == user.id}
   end
   
   def value_by_user(user, default=-1)
