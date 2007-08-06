@@ -1,15 +1,12 @@
 class AccountController < ApplicationController
-  
-  # If you want "remember me" functionality, add this before_filter to Application Controller
-  # before_filter :login_from_cookie
 
   skip_before_filter :login_required
-
   stylesheet 'login'
-    
-  # say something nice, you goof!  something sweet.
+
   def index
-    redirect_to(:action => 'signup') unless logged_in? || User.count > 0
+    if logged_in?
+      redirect_to me_url
+    end
   end
 
   def login
@@ -21,7 +18,6 @@ class AccountController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       redirect_back_or_default(:controller => '/me', :action => 'index')
-      #flash[:notice] = "Logged in successfully"
     else
       flash[:error] = "Username or password is incorrect"
     end
@@ -37,7 +33,7 @@ class AccountController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end
-  
+
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
@@ -45,4 +41,5 @@ class AccountController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/account', :action => 'index')
   end
+
 end
