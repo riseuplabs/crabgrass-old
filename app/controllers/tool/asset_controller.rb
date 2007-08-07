@@ -8,7 +8,7 @@ class Tool::AssetController < Tool::BaseController
   def create
     @page_class = Tool::Asset
     if request.post?
-      @page = build_new_page
+      @page = build_new_page(@page_class)
       @asset = Asset.new params[:asset]
       @page.data = @asset
       if @page.title.any?

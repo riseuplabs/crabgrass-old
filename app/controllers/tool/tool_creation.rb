@@ -1,9 +1,9 @@
 module Tool::ToolCreation
 
-  def build_new_page
+  def build_new_page(page_class=nil)
     groups    = get_groups
     users     = get_users
-    page_type = get_page_type
+    page_type = page_class || get_page_type
     
     page = page_type.new params[:page].merge({:created_by_id => current_user.id})
     groups.each do |group|
