@@ -120,9 +120,9 @@ class CondorcetResult < ElectionResult
       if @winners.include? candidate
         @candidate_sums << [candidate, 100000000]
       else
-        #sum = wins.values.inject{ |sum,n| sum+n }
-        count = wins.values.inject{ |count,n| n == 0 ? count : count+1 }
-        @candidate_sums << [candidate, count]
+        sum = wins.values.inject{ |sum,n| sum+n }
+        #count = wins.values.inject{ |count,n| n == 0 ? count : count+1 }
+        @candidate_sums << [candidate, sum]
       end
     end
     @candidate_sums.sort! {|a,b| b[1] <=> a[1] }  # sort by the win sums, desc.

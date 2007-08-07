@@ -1,10 +1,11 @@
 <%= render :partial => 'tabs' %>
 <ul class='possibles plainlist'>
+
 <% @possibles.each do |possible| -%>
-<% winner = @winners.include?(possible) ? 'winner' : '' %>
+<% winner = @winners.include?(possible) ? 'winner' : '' if @winners.any? %>
 <li class='<%=winner%>'>
   <div class='rank'><%= @result.rank_of_candidate(possible.name) %></div>
-  <span class='winner'><%= "(" + winner.t + ")" if winner.any? %></span>
+  <span class='winner'><%= "(" + 'top pick'.t + ")" if winner.any? %></span>
   <div class='name'><%= possible_name(possible) %></div>
   <div class='indent possible_details' id="<%=details_id(possible)%>" style='display: none'>
     <%= possible.description_html %>
@@ -14,5 +15,6 @@
   </div>
 </li>
 <% end -%>
+
 </ul>
 
