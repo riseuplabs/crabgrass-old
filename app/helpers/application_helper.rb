@@ -60,30 +60,6 @@ module ApplicationHelper
     url = "/images/#{icon}"
     "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
   end
-
-  def link_to_user(arg, options={})
-    login, path = login_and_path_for_user(arg,options)
-    style = options[:style] || ''
-    if options[:avatar]
-      size = Avatar.pixels(options[:avatar])[0..1].to_i
-      padding = size/5 + size
-      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px; " + style
-    end
-    link_to login, path, :class => 'name_link', :style => style
-  end
-  
-  def link_to_group(arg, options={})
-    display_name, path = name_and_path_for_group(arg,options)
-    style = options[:style] || ''
-    if options[:avatar]
-      size = Avatar.pixels(options[:avatar])[0..1].to_i
-      padding = size/5 + size
-      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px;" + style
-    end
-    link_to display_name, path, :class => 'name_link', :style => style
-  end
     
   def avatar_for(viewable, size='medium', options={})
     #image_tag avatar_url(:viewable_type => viewable.class.to_s.downcase, :viewable_id => viewable.id, :size => size), :alt => 'avatar', :size => Avatar.pixels(size), :class => 'avatar'
@@ -193,6 +169,10 @@ module ApplicationHelper
       return page_icon(page)
     elsif column == :checkbox
       check_box('page_checked', page.id, {}, 'checked', '')
+    elsif column == :discuss
+      if page.links.any?
+        return( link_to 'discuss'.t, page_url(page.links.first) )
+      end
     elsif column == :title
       title = link_to(page.title, page_url(page))
       if participation and participation.instance_of? UserParticipation
@@ -224,7 +204,7 @@ module ApplicationHelper
   def page_list_heading(column=nil)
     if column == :group or column == :group_name
       list_heading 'group'.t, 'group_name'
-    elsif column == :icon or column == :checkbox
+    elsif column == :icon or column == :checkbox or column == :discuss
       "<th></th>"
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'.t, 'updated_by_login'
