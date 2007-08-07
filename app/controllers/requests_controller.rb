@@ -50,18 +50,18 @@ class RequestsController < ApplicationController
   end
   
   def contact_req_list(path=[])
-    path << 'not_created_by' << current_user.id
+    path << 'not_created_by' << current_user.id << 'type' << 'request'
     options = options_for_pages_viewable_by(current_user, :flow => :contacts)
     pages, page_sections = find_and_paginate_pages(options, path)
-    columns = [:title, :created_by, :created_at, :contributors_count]
+    columns = [:title, :discuss, :created_by, :created_at, :contributors_count]
     [pages, page_sections, columns]
   end
 
   def membership_req_list(path=[])
-    path << 'not_created_by' << current_user.id
+    path << 'not_created_by' << current_user.id << 'type' << 'request'
     options = options_for_pages_viewable_by(current_user, :flow => :membership)
     pages, page_sections = find_and_paginate_pages(options, path)
-    columns = [:title, :group, :created_by, :created_at, :contributors_count]
+    columns = [:title, :group, :discuss, :created_by, :created_at, :contributors_count]
     [pages, page_sections, columns]
   end
 

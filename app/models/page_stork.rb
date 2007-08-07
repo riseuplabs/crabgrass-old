@@ -3,9 +3,14 @@
 # Here in lies all the reusable macros for creating complex pages
 #
 
-
 class PageStork
 
+  def self.link(*args)
+    args.collect do |entity|
+      "<b><a href='/#{entity.name}'>#{entity.name}</a></b>"
+    end
+  end
+  
   def self.bold(*args)
     args.collect do |a|
       "<b>#{a}</b>"
@@ -21,7 +26,7 @@ class PageStork
       p.flow = FLOW[:membership]
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
-        r.name = 'Add user %s to group %s?'.t % bold(user.login, group.name)
+        r.name = 'Add user %s to group %s?'.t % link(user, group)
       end
     end
     page.add(group)
@@ -33,7 +38,7 @@ class PageStork
     group = options.delete(:group).cast! Group
     page = Tool::RequestDiscussion.new do |p|
       p.title = 'discussion re: request to join %s from %s'.t % [group.name, user.name]
-      p.summary = 'User %s has requested to join group %s. Both %s and %s have access to this page, so can use this space discuss the request.' % bold(user.name, group.name, user.name, group.name)
+      p.summary = ('User %s has requested to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the request.'.t) % link(user, group, user, group)
       p.flow = FLOW[:membership]
       p.resolved = false
     end
@@ -55,7 +60,7 @@ class PageStork
       p.flow = FLOW[:membership]
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
-        r.name = 'Join group %s?'.t % bold(group.name)
+        r.name = 'Join group %s?'.t % link(group)
       end
     end
     page.add(user, :access => :admin)
@@ -67,7 +72,7 @@ class PageStork
     from = options.delete(:from).cast! User
     page = Tool::RequestDiscussion.new do |p|
       p.title = 'discussion re: invitation to join group %s'.t % [group.name]
-      p.summary = 'User %s has sent %s an invitation to join group %s. Both %s and %s have access to this page, you can use this space discuss the request.' % bold(from.name, user.name, link_to_group(group), group.name, user.name)
+      p.summary = ('User %s has sent %s an invitation to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % link(from, user, group, group, user)
       p.flow = FLOW[:membership]
       p.resolved = false
     end
@@ -79,8 +84,6 @@ class PageStork
     page
   end
 
-
-
   def self.request_for_contact(options)
     user = options.delete(:user).cast! User
     contact = options.delete(:contact).cast! User
@@ -89,7 +92,7 @@ class PageStork
       p.resolved = false
       p.data = Poll::Request.new do |r|
         r.action = Actions::AddToContacts.new(user,contact)
-        r.name = 'Add user %s to your contact list?' % bold(user.login)
+        r.name = 'Add user %s to your contact list?' % link(user)
       end
       p.flow = FLOW[:contacts]
     end
@@ -105,7 +108,7 @@ class PageStork
     contact = options.delete(:contact).cast! User
     info = Tool::RequestDiscussion.new do |i|
       i.title = 'discussion re: contact invitation from %s to %s'.t % [user.name, contact.name]
-      i.summary = 'User %s has sent a contact invitation to %s. Both people have access to this page, so you can use this space discuss the request.' % bold(user.name, contact.name)
+      i.summary = ('User %s has sent a contact invitation to %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % link(user, contact, user, contact)
       i.flow = FLOW[:contacts]
       i.resolved = false
     end
@@ -151,3 +154,4 @@ class PageStork
   end
   
 end
+

@@ -79,9 +79,11 @@ class MembershipController < ApplicationController
     params[:users].split(/\s/).each do |login|
       next if login.empty?
       if user = User.find_by_login(login)
-        page = Page.make :invite_to_join_group, :group => @group, :user => user, :from => current_user
+        page = Page.make :invite_to_join_group, :group => @group,
+          :user => user, :from => current_user
         if page.save
-          discussion = Page.make :join_discussion, :group => @group, :user => user, :from => current_user, :message => params[:message]
+          discussion = Page.make :invite_discussion, :group => @group,
+            :user => user, :from => current_user, :message => params[:message]
           discussion.save
           page.add_link discussion
         end

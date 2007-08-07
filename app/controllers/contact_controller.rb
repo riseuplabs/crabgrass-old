@@ -19,6 +19,9 @@ class ContactController < ApplicationController
       else
         message :object => page
       end
+    else
+      Page.find :all, :conditions => {:flow => FLOW[:contacts]}
+      
     end 
   end
   
