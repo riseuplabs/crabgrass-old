@@ -25,7 +25,8 @@ module PageFinders
     attr_accessor :tag_count   # running total of the number of tag conditions
     attr_accessor :or_clauses  # used to build current clause of the form (x or x)
     attr_accessor :and_clauses # used to build the current clause of the form (x and x)
-
+    attr_accessor :date_field
+    
     def initialize
       self.table_class = Page
       self.conditions  = []
@@ -36,6 +37,7 @@ module PageFinders
       self.tag_count   = 0
       self.or_clauses  = []
       self.and_clauses = []
+      self.date_field = 'created_at'
     end
 
     # grab the remaining open conditions
@@ -123,6 +125,7 @@ module PageFinders
     'upcoming' => 0,
     'created_after' => 1,
     'created_before' => 1,
+    'starts' => 0,
         
     # limit
     'limit' => 1,
@@ -175,14 +178,18 @@ module PageFinders
     qb.values << true
   end
   
+  def filter_starts(qb)
+    qb.date_field = "starts_at"
+  end
+  
   def filter_changed(qb)
     qb.conditions << 'pages.updated_at > pages.created_at'
   end
   
   def filter_upcoming(qb)
-    qb.conditions << 'pages.happens_at > ?'
+    qb.conditions << 'pages.starts_at > ?'
     qb.values << Time.now
-    qb.order = 'pages.happens_at DESC'
+    qb.order = 'pages.starts_at DESC'
   end
   
   def filter_ago(qb,near,far)
@@ -208,12 +215,12 @@ module PageFinders
   end
  
   def filter_month(qb,month)
-    qb.conditions << 'MONTH(pages.created_at) = ?'
+    qb.conditions << "MONTH(pages.#{qb.date_field}) = ?"
     qb.values << month.to_i
   end
 
   def filter_year(qb,year)
-    qb.conditions << 'YEAR(pages.created_at) = ?'
+    qb.conditions << "YEAR(pages.#{qb.date_field}) = ?"
     qb.values << year.to_i
   end
   

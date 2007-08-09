@@ -14,11 +14,11 @@
     t.link me_url(:action => 'tasks')
     t.selected params[:action] == 'tasks'
   end
-# f.tab do |t|
-#   t.label 'Calendar'
-#   t.link me_url(:action => 'calendar')
-#   t.selected params[:action] == 'calendar'
-# end
+ f.tab do |t|
+   t.label 'Calendar'
+   t.link url_for(:controller => 'my_calendar', :action => 'index')
+   t.selected params[:controller] == 'my_calendar'
+ end
   f.tab do |t|
     t.label 'Search'
     t.link me_url(:action => 'search')

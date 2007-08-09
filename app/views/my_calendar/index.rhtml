@@ -1,0 +1,11 @@
+
+
+<ul>
+<% if @events.any? -%>
+<% @events.each do |event| -%>
+<li>
+<%= link_to event.title ,page_url(event) %>
+</li>
+<% end -%>
+<% end -%>
+</ul>
