@@ -1,9 +1,9 @@
 class MyCalendarController < ApplicationController
   layout 'me'
  
-  def index
+  def index 
     options = options_for_me( :public )
-    path = '/type/event/descending/starts_at/starts/year/2207/month/8'
+    path = '/type/event/descending/starts_at/starts/year/2007'
      @events = find_pages options, path
   end
 
