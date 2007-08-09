@@ -1,0 +1,65 @@
+<%= calendar_date_select_includes "blue" %>
+
+<h2><%= "Create a new".t %> <b><%= @page_class.class_display_name.t %></b></h2>
+
+<div class='workarea'>
+<%= header_for_page_create(@page_class) %>
+
+<% form_tag({:action => 'create'}, :multipart => true) do %>
+<%= hidden_field_tag 'page_class', @page_class %>
+<table class='create'>
+<tr>
+  <td align='right'><b>what</b></td>
+  <td><%= text_field 'page', 'title', :size => 80 %></td>
+</tr>
+<tr>
+  <td align='right'><b>when</b></td>
+  <td><%= calendar_date_select_tag 'time_start', nil, :time => true %> <span id="to">to <%= calendar_date_select_tag "time_end", nil, :time => true %></span></td>
+</tr>
+<tr>
+	<td></td>
+	<td><b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('is_all_day').checked) {$('to').hide();} else {$('to').show();}") %></td>
+</tr>
+<!-- <tr>
+	<td></td>
+	<td><b>repeats</b>
+		#<= select_tag('repeaat_drop', options_for_select('daily','weekly')) %>
+	
+	</td>
+</tr>
+-->
+<tr>
+	<td align='right'><b>where</b></td>
+	<td><%= text_field 'event', 'location', :size =>40 %>
+</tr>
+<tr>
+  <td align='right'><b>description</b></td>
+  <td>
+	  <%= text_area 'event', 'description', :rows => 10, :cols => 50 %>
+  </td>
+</tr>
+<!-- Public, Private, Group-->
+<tr>
+	<td><b>this event is</b></td>
+	<td><%# select('event', 'privacy_drop',[['private',0],['public',1], ['group',2]],  {:onchange => "if ($('event_privacy_drop').value == 2) {$('event_group_id').show()} else {$('event_group_id').hide()}"}) %>
+	</td>
+</tr>
+<!-- Which group-->
+--<div id="group">
+<tr>
+	<td><b>groups</b></td>
+	<td>
+	 <%= select_tag 'group_id', options_for_select([['','']] + current_user.all_groups.to_select(:name), params[:group_id]) %>
+	<%# select('event', 'group_id', current_user.groups.to_select(:name)) %></td>
+</tr>
+</div>
+<tr>
+  <td align='right' colspan="2">
+    <%= submit_tag "Create event".t, :name => 'create' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+</div>
+

@@ -34,6 +34,7 @@ page_groups = [
   {:name => 'wiki'.t, :description => 'A free-form text document.', :icon => 'wiki.png', :type => 'wiki'},
   {:name => 'straw poll'.t, :description => "An informal poll of people's preferences.", :icon => 'poll.png', :type => 'poll'},
   {:name => 'task list'.t, :description => 'A list of todo items.', :icon => 'task-list.png', :type => 'task list'},
+  {:name => 'event'.t, :description => 'An event added to a personal/public calendar.', :icon => 'event.png', :type => 'event'},
 ]
 %>
 

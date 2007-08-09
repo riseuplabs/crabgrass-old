@@ -1,0 +1,18 @@
+<table cellpadding='4'>
+<tr>
+  <td align='right'><b><%='starts at'.t %>:</b></td>
+  <td><%= friendly_date @page.starts_at %></td>
+</tr>
+<tr>
+  <td align='right'><b><%='ends at'.t %>:</b></td>
+  <td><%= friendly_date @page.ends_at %></td>
+</tr>
+<tr>
+  <td align='right'><b><%='place'.t %>:</b></td>
+  <td><%= @event.location %></td>
+</tr>
+<tr>
+  <td align='right'><b><%='description'.t %>:</b></td>
+  <td><%= @event.description_html %></td>
+</tr>
+</table>

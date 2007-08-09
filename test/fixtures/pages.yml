@@ -50,7 +50,7 @@ page<%=i%>:
   updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
   <% if rand(3) == 0 %>
-  happens_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  starts_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   <% end %>
 <% if rand(3) == 0 %>
   resolved: false
