@@ -2,7 +2,7 @@ development:
   encoding: utf8
   adapter: mysql
   database: crabgrass_development
-  user: root
+  username: root
   password: 
   host: localhost
 
@@ -10,7 +10,7 @@ test:
   encoding: utf8
   adapter: mysql
   database: crabgrass_test
-  user: root
+  username: root
   password: 
   host: localhost
 
@@ -18,6 +18,6 @@ production:
   encoding: utf8
   adapter: mysql
   database: crabgrass
-  user: root
+  username: root
   password: 
   host: localhost
