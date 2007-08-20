@@ -7,13 +7,6 @@
 # 
 
 ActionController::Routing::Routes.draw do |map|  
-  # PAGE_TYPES are hardcoded in environment.rb
-#  for page in PAGE_TYPES
-#    map.connect ":from/:from_id/#{page}/:action/:id",
-#     :from => /groups|me|people|networks|places/,
-#     :controller => "tool/#{page}",
-#     :action => 'show'
-#  end
 
   map.with_options :controller => 'asset', :action => 'show' do |m|
     m.asset_version 'assets/:id/versions/:version/:filename.:format'
