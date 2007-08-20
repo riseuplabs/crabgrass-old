@@ -51,7 +51,7 @@ class GroupsController < ApplicationController
       unless parsed.keyword?('year')
         path << 'year' << @current_year
       end
-      @pages, @page_sections = fetch_pages_from_path(path)
+      @pages, @sections = fetch_pages_from_path(path)
     end
   end
   
@@ -60,7 +60,7 @@ class GroupsController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to groups_url(:id => @group, :action => 'search') + path   
     else
-      @pages, @page_sections = fetch_pages_from_path(params[:path])
+      @pages, @sections = fetch_pages_from_path(params[:path])
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
       else
@@ -72,12 +72,12 @@ class GroupsController < ApplicationController
   def tags
     tags = params[:path] || []
     path = tags.collect{|a|['tag',a]}.flatten
-    @pages, @page_sections = fetch_pages_from_path(path)
+    @pages, @sections = fetch_pages_from_path(path)
   end
 
   def tasks
     @stylesheet = 'tasks'
-    @pages, @page_sections = fetch_pages_from_path(['type','task','pending'])
+    @pages, @sections = fetch_pages_from_path(['type','task','pending'])
     @task_lists = @pages.collect{|part|part.page.data}
   end
 

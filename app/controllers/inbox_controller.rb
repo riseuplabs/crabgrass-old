@@ -13,7 +13,7 @@ class InboxController < ApplicationController
         :conditions => 'user_participations.user_id = ?',
         :values => [current_user.id]
       }
-      @pages, @page_sections = find_and_paginate_pages(options)
+      @pages, @sections = find_and_paginate_pages(options)
     end
   end
 

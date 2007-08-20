@@ -40,8 +40,8 @@ checkbox ||= false
 
 <% if sections and sections.page_count > 1 -%>
   <tr class='pagination'><td colspan='100'>
-    <%= pagination_links sections, :name => 'section', :window_size => 10 %>
-  </tr>
+    <%= pagination_links sections, :name => 'section', :window_size => 10, :params => {:_context => params[:_context] } %>
+</tr>
 <% end -%>
 
 <% end -%>  
