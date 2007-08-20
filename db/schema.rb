@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 44) do
+ActiveRecord::Schema.define(:version => 48) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(:version => 44) do
     t.column "replied_by",   :integer
     t.column "last_post_id", :integer
     t.column "page_id",      :integer
+  end
+
+  create_table "events", :force => true do |t|
+    t.column "description",      :text
+    t.column "description_html", :text
+    t.column "is_all_day",       :boolean, :default => false
+    t.column "is_cancelled",     :boolean, :default => false
+    t.column "is_tentative",     :boolean, :default => true
+    t.column "location",         :string
   end
 
   create_table "group_participations", :force => true do |t|
@@ -133,7 +142,6 @@ ActiveRecord::Schema.define(:version => 44) do
     t.column "title",              :string
     t.column "created_at",         :datetime
     t.column "updated_at",         :datetime
-    t.column "happens_at",         :datetime
     t.column "resolved",           :boolean,  :default => true
     t.column "public",             :boolean
     t.column "created_by_id",      :integer
@@ -151,6 +159,8 @@ ActiveRecord::Schema.define(:version => 44) do
     t.column "updated_by_login",   :string
     t.column "created_by_login",   :string
     t.column "flow",               :integer
+    t.column "starts_at",          :datetime
+    t.column "ends_at",            :datetime
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -224,11 +234,12 @@ ActiveRecord::Schema.define(:version => 44) do
     t.column "access",        :integer
     t.column "viewed_at",     :datetime
     t.column "changed_at",    :datetime
-    t.column "watch",         :boolean
+    t.column "watch",         :boolean,  :default => false
     t.column "star",          :boolean
     t.column "resolved",      :boolean,  :default => true
     t.column "viewed",        :boolean
     t.column "message_count", :integer,  :default => 0
+    t.column "attend",        :boolean,  :default => false
   end
 
   create_table "users", :force => true do |t|
