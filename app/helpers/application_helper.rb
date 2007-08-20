@@ -6,7 +6,8 @@ module ApplicationHelper
   include Formy
   include LayoutHelper
   include LinkHelper
-    
+  include PaginationHelper
+  
   # display flash messages with appropriate styling
   def display_messages()
     return "" unless flash[:notice] || flash[:error] || flash[:update]

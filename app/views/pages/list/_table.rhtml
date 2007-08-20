@@ -38,12 +38,12 @@ checkbox ||= false
 
 <%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox} %>
 
+<% end -%>
+</table>
+
 <% if sections and sections.page_count > 1 -%>
-  <tr class='pagination'><td colspan='100'>
-    <%= pagination_links sections, :name => 'section', :window_size => 10, :params => {:_context => params[:_context] } %>
-</tr>
+    <%= render :partial => 'pages/list/paginate', :locals => {:sections => sections} %>
+    <%# pagination_links sections, :name => 'section', :window_size => 10, :params => {:_context => params[:_context] } %>
 <% end -%>
 
-<% end -%>  
-</table>
 

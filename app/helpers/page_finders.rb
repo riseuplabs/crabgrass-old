@@ -495,7 +495,7 @@ module PageFinders
   def find_and_paginate_pages(options, path=nil)
     options[:path] ||= path
     options = page_query_from_filter_path(options) unless options[:already_built]
-    pages_per_section = 30
+    pages_per_section = options[:section_size] || ::SECTION_SIZE
     current_section   = (params[:section] || 1).to_i
     klass      = options[:class]
     main_table = klass.to_s.underscore + "s"

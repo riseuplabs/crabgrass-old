@@ -79,7 +79,7 @@ class PagesController < ApplicationController
   # in other words, send to their inbox.
   def announce
     @errors = []; @infos = []
-    params[:announcees].split(/\W+/).each do |name|
+    params[:announcees].split(/\s+/).each do |name|
       entity = Group.get_by_name(name) || User.find_by_login(name)
       if entity
         if entity.may?(:view, @page)

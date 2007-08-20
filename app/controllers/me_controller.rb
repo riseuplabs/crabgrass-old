@@ -14,7 +14,7 @@ class MeController < ApplicationController
       redirect_to me_url(:action => 'search') + path   
     else
       options = options_for_pages_viewable_by(current_user)
-      @pages, @page_sections = find_and_paginate_pages(options, params[:path])
+      @pages, @sections = find_and_paginate_pages(options, params[:path])
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :group, :created_by, :created_at, :contributors_count]
       else

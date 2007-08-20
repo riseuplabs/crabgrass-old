@@ -70,9 +70,10 @@ class Group < ActiveRecord::Base
     @user_ids ||= memberships.collect{|m|m.user_id}
   end
   
-  # returns an array of all children group ids and self's id. used for queries.
-  def group_ids
-    @group_ids ||= ([self.id] + committee_ids(self.id))
+  # returns an array of all children ids and self id (but not parents).
+  # this is used to determine if a group has access to a page.
+  def group_and_committee_ids
+    @group_ids ||= ([self.id] + Group.committee_ids(self.id))
   end
   
   # returns an array of committee ids given an array of group ids.
@@ -130,14 +131,18 @@ class Group < ActiveRecord::Base
   end
   
   def may?(perm, page)
-    may!(perm,page) rescue false
+    begin
+       may!(perm,page)
+    rescue PermissionDenied
+       false
+    end
   end
   
   # perm one of :view, :edit, :admin
   # this is still a basic stub. see User.may!
   def may!(perm, page)
-    gpart = page.participation_for_group(self)
-    return true if gpart
+    gparts = page.participation_for_groups(group_and_committee_ids)
+    return true if gparts.any?
     raise PermissionDenied
   end
    

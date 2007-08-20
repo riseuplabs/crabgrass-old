@@ -162,3 +162,50 @@ div.iconbox a {
   color: black;
 }
 
+/*** pagination ***/
+
+.pagination {
+  padding: 5px 0;
+}
+
+.pagination ul {
+  margin: 0; 
+  padding: 0;
+  text-align: left; /*Set to "right" to right align pagination interface*/
+}
+
+.pagination li {
+  list-style-type: none;
+  display: inline;
+  padding-bottom: 1px;
+}
+
+.pagination a, .pagination a:visited {
+  padding: 0 5px 1px 5px;
+  border: 1px solid #9aafe5;
+  text-decoration: none;
+  color: #2e6ab1;
+}
+
+.pagination a:hover, .pagination a:active {
+  border: 1px solid #2b66a5;
+  color: #000;
+  background-color: lightyellow;
+  text-decoration: none;
+}
+
+.pagination li.currentpage {
+  padding: 0 5px 1px 5px;
+  border: 1px solid navy;
+  background-color: #2e6ab1;
+  color: #FFF;
+}
+  
+.pagination li.disablepage {
+  padding: 0 5px 1px 5px;
+  border: 1px solid #929292;
+  color: #929292;
+}
+   
+/* .pagination li.nextpage {} */
+

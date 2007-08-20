@@ -1,0 +1,38 @@
+<% sections ||= @sections -%>
+
+<% if sections.page_count > 1 -%>
+<div class="pagination">
+<ul>
+
+<% if sections.current.previous -%>
+  <li class="nextpage">
+    <%= link_to '&laquo; ' + 'previous'.t, { :section => sections.current.previous } %>
+  </li>
+<% else -%>
+  <li class="disablepage"><%= '&laquo; ' + 'previous'.t %></li>
+<% end -%>
+
+<% last_page = 0 -%>
+<% windowed_pagination_links(sections, :window_size => 2, :link_to_current_page => true, :always_show_anchors => true) do |n| -%>
+  <% if sections.current.number == n -%>
+     <li class="currentpage"><%= n %></li>
+  <% else -%>
+     <li><%= "..." if last_page +1 < n %>
+       <%= link_to n, :section => n %>
+     </li>
+  <% end -%>
+  <% last_page = n -%>
+<% end -%>
+  
+<% if sections.current.next -%>
+  <li class="nextpage">
+    <%=  link_to 'next' + ' &raquo;', { :section => sections.current.next } %>
+  </li>  
+<% else -%>  
+  <li class="disablepage"><%= 'next' + ' &raquo;' %></li>
+<% end -%>
+
+</ul>
+</div>
+<% end -%>
+
