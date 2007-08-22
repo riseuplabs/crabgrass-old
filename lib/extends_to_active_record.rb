@@ -27,10 +27,24 @@ ActiveRecord::Base.class_eval do
     sanitize_sql(condition)
   end
   
-  # Used by Page subclasses to define themselved (ie icon, description, etc).
+  # class_attribute()
+  #
+  # Used by Page in order to allow subclasses (ie Tools) to define themselves
+  # (ie icon, description, etc) by setting class attributes.
+  #
+  # <example>
+  #   class Page
+  #     class_attribute :color
+  #   end
+  #   class Wiki < Page
+  #     color 'blue'
+  #   end
+  # </example>
+  #
   # class_inheritable_accessor is very close to what we want. However, when
   # an attr is defined with class_inheritable_accessor, the accessor is not
   # called when it appears in a class definition, and I don't understand why.
+  #
   def self.class_attribute(*keywords)
     for word in keywords
       word = word.id2name
@@ -45,22 +59,6 @@ ActiveRecord::Base.class_eval do
       end_eval
     end
   end
-
-  # this this should work, why not?
-#  def self.class_attribute(*keywords)
-#    for word in keywords
-#      word = word.id2name
-#      module_eval <<-"end_eval"
-#        class << self
-#          def #{word}(value=nil)
-#            write_inheritable_attribute("#{word}", value) if value
-#            read_inheritable_attribute("#{word}")
-#          end
-#          public :#{word}
-#        end
-#      end_eval
-#    end
-#  end
 
   #
   # TRACK CHANGES
@@ -81,14 +79,15 @@ ActiveRecord::Base.class_eval do
   # TODO: track changes currenlty only works with simple attributes,
   #       not with associations!!!
   #
-  # there is a slick plugin that does the same thing, but better.
-  # unfortunately, i was unable to get it working. i think it requires ruby 1.9
-  # (or, at least, it creates an error about instance_variable_defined? not existing
-  # but this method only exists for ruby 1.9 and mysteriously doesn't exist
-  # anywhere in any rails code but it is called nonetheless).
+  # this code is here because originally the acts_as_modified plugin
+  # did not work with ruby 1.8. I wrote to the author about this and
+  # he released a new versions that works with 1.8. So, there we should
+  # probably eliminate this code and just use the plugin:
   # 
   # http://svn.viney.net.nz/things/rails/plugins/acts_as_modified/
   # 
+  # This plugin is currently installed and used by some models.
+  #
   def self.track_changes(*attr_names)
     attr_names.each do |attr_name|
       define_method "#{attr_name}=" do |value|
@@ -212,3 +211,72 @@ module ActiveRecord
     end   
   end
 end
+
+
+
+################################################################
+# 
+# Updating some attributes.
+#
+# The problem: the call update_attributes() updates all attributes, even
+# ones that you have not passed to the method and even attributes that haven't
+# changed. 
+#
+# It would be nice to be able to just update some attributes. 
+# That is what this code does. For tables with many columns or text columns,
+# this can result in a dramatic speed increase.
+#
+# This code is inspired by: http://dev.rubyonrails.org/ticket/5961
+#
+# Also, there is a acts_as_changed plugin that I think does something
+# similar, but the website is currently down.
+#
+# Example usage:
+# 
+#    user.update_this_attribute(:last_seen, Time.now)
+#    page.update_these_attributes(:owner_id => user.id, :owner_name => user.name)
+#
+# This calls will result in UPDATE statements that only modify the columns 
+# passed into the methods. 
+#
+
+# class ActiveRecord::Base
+
+#   # new method
+#   # only update the one attribute
+#   def update_this_attribute(name, value)
+#     update_these_attributes(name => value)
+#   end
+
+#   # new method
+#   # only update the attributes passed in as @new_attributes@
+#   def update_these_attributes(new_attributes)
+#     return if new_attributes.nil?
+#     new_attributes = new_attributes.stringify_keys
+#     self.attributes.merge new_attributes
+#     update(new_attributes)
+#   end
+#   
+#   private
+#   
+#   ## modified to take optional attrs arg
+#   def update(attrs=nil)
+#     connection.update(
+#       "UPDATE #{self.class.table_name} " +
+#       "SET #{quoted_comma_pair_list(connection, attributes_with_quotes(false, attrs))} " +
+#       "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
+#       "#{self.class.name} Update"
+#     )
+#   end
+
+#   ## modified to take optional attrs arg
+#   def attributes_with_quotes(include_primary_key = true, attrs = nil)
+#     (attrs||attributes).inject({}) do |quoted, (name, value)|
+#       if column = column_for_attribute(name)
+#         quoted[name] = quote_value(value, column) unless !include_primary_key && column.primary
+#       end
+#       quoted
+#     end
+#   end
+# end
+
