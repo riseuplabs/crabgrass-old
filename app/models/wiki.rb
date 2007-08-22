@@ -4,11 +4,11 @@ class Wiki < ActiveRecord::Base
   has_many :pages, :as => :data
   belongs_to :locked_by, :class_name => 'User', :foreign_key => 'locked_by_id'
   belongs_to :user
+  
   acts_as_versioned :version_column => :lock_version
   self.non_versioned_columns << 'locked_by_id' << 'locked_at'
   
-  
-  # we do this so that we can access the page even before page or wiki are saved
+    # we do this so that we can access the page even before page or wiki are saved
   def page
     return pages.first if pages.any?
     return @page
@@ -20,6 +20,8 @@ class Wiki < ActiveRecord::Base
   def version
     lock_version.to_i
   end
+  
+  #### LOCKING #######################
   
   LOCKING_PERIOD = 60.minutes
 
@@ -49,10 +51,23 @@ class Wiki < ActiveRecord::Base
     not locked? or locked_by == user
   end
   
+  ##### VERSIONING #############################
+  
   # returns true if the last version was created recently by this same author.
   def recent_edit_by?(author)
     (user == author) && (updated_at + 30.minutes > Time.now) if updated_at
   end 
+  
+  # returns first version since @time@
+  def first_since(time)
+     versions.find(
+       :first,
+       :conditions => ['updated_at <= ?', time.to_s(:db)],
+       :order => 'updated_at DESC',
+       :limit => 1)
+  end
+
+  ##### RENDERING #################################
   
   # lazy rendering of body_html:
   # the body_html is only rendered when it is requested

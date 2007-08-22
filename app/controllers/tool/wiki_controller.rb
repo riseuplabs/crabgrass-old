@@ -9,13 +9,9 @@ class Tool::WikiController < Tool::BaseController
       redirect_to page_url(@page, :action => 'edit')
       return
     end
-    if @upart and not @upart.viewed? and @wiki.version > 1
-      last = @wiki.find_version(@wiki.version - 1)
-      @diffhtml = html_diff(
-         # TODO: show all the changes we haven't seen, not just the last change.
-         last.body_html,
-         @wiki.body_html
-      ) if last
+    if @upart and !@upart.viewed? and @wiki.version > 1
+      last_seen = @wiki.first_since( @upart.viewed_at )
+      @diffhtml = html_diff(last_seen.body_html,@wiki.body_html) if last_seen
     end
   end
 
@@ -83,7 +79,7 @@ class Tool::WikiController < Tool::BaseController
   def save_revision(wiki)
     if wiki.recent_edit_by?(current_user)
       wiki.save_without_revision
-      wiki.find_version(wiki.version).update_attributes(:body => wiki.body, :body_html => wiki.body_html, :updated_at => wiki.updated_at)
+      wiki.find_version(wiki.version).update_attributes(:body => wiki.body, :body_html => wiki.body_html, :updated_at => Time.now)
     else
       wiki.user = current_user
       wiki.save
