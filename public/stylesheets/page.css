@@ -118,6 +118,10 @@ table.page-list tr td {
 table.page-list tr.unread {
   font-weight: bold;
 }
+span.newpage {
+  font-weight: bold;
+  color: #5cd75c; 
+}
 
 div#folders {
   float: left;
