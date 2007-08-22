@@ -19,8 +19,6 @@
 #
 
 class User < AuthenticatedUser
-  tz_time_attributes :created_at, :updated_at
-
   ### attributes
   
   # a class attr which is set to the currently logged in user
@@ -174,12 +172,11 @@ class User < AuthenticatedUser
   end
   
   # should be called when a user visits a page
+  # we only update user_participation if it already exists
   def viewed(page)
-    party = page.participation_for_user(self)
-    return unless party
-    party.viewed_at = Time.now
-    party.viewed = true
-    party.save
+    part = page.participation_for_user(self)
+    return unless part
+    part.update_attributes(:viewed_at => Time.now, :viewed => true)
   end
   
   # set resolved status vis-à-vis self.

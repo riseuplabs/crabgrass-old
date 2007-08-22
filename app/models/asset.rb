@@ -1,5 +1,4 @@
 class Asset < ActiveRecord::Base
-  tz_time_attributes :created_at
 
   ## associations #####################################
 

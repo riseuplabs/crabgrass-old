@@ -30,8 +30,6 @@ class Page < ActiveRecord::Base
   acts_as_modified
   acts_as_taggable
   #acts_as_ferret :additional_fields => []
-  
-  tz_time_attributes :created_at, :updated_at, :happens_at
 
   # to be set by subclasses (ie tools)
   class_attribute :controller, :model, :icon, :internal?,
@@ -281,4 +279,8 @@ class Page < ActiveRecord::Base
     @changed[what]
   end
   
+  # tmp in-memory storage used by views
+  def flag
+    @flags ||= {}
+  end
 end

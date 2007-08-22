@@ -1,5 +1,4 @@
 class Discussion < ActiveRecord::Base
-  tz_time_attributes :replied_at
 
   ## associations ###########################################
   

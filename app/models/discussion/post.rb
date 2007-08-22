@@ -6,7 +6,6 @@
 #
 
 class Post < ActiveRecord::Base
-  tz_time_attributes :created_at, :updated_at
 
   ## associations ############################################
   

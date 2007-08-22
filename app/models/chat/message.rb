@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  tz_time_attributes :created_at
+
   belongs_to :channel
   belongs_to :sender, :class_name => 'User', :foreign_key => 'sender_id'
   

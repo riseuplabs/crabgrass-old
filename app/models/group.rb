@@ -31,7 +31,7 @@
 
 
 class Group < ActiveRecord::Base
-  tz_time_attributes :created_at, :updated_at
+
   #track_changes :name
   acts_as_modified
   

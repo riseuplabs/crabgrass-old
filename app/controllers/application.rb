@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   include UrlHelper
   include ContextHelper
   include PageFinders
-  
+  include TimeHelper
+    
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
@@ -86,8 +87,9 @@ class ApplicationController < ActionController::Base
   def controller
     self
   end 
-
+  
   private
+  
   def set_timezone
     TzTime.zone = logged_in? && current_user.time_zone ? TimeZone[current_user.time_zone] : TimeZone[DEFAULT_TZ]
     yield

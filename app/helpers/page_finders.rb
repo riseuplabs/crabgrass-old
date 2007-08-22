@@ -185,6 +185,10 @@ module PageFinders
   def filter_changed(qb)
     qb.conditions << 'pages.updated_at > pages.created_at'
   end
+
+  ### Time finders
+  # dates in database are UTC
+  # we assume the values pass to the finder are local
   
   def filter_upcoming(qb)
     qb.conditions << 'pages.starts_at > ?'
@@ -193,8 +197,8 @@ module PageFinders
   end
   
   def filter_ago(qb,near,far)
-    near = near.to_i.days.ago
-    far  = far.to_i.days.ago
+    near = to_local(near.to_i.days.ago)
+    far  = to_local(far.to_i.days.ago)
     qb.conditions << 'pages.updated_at < ? and pages.updated_at > ? '
     qb.values << near
     qb.values << far
@@ -202,36 +206,33 @@ module PageFinders
   
   def filter_created_after(qb,date)
     year, month, day = date.split('-')
-    date = Time.utc(year, month, day)
+    date = TzTime.local(year, month, day)
     qb.conditions << 'pages.created_at > ?'
-    qb.values << date
+    qb.values << date.to_s(:db)
   end
   
   def filter_created_before(qb,date)
-    year, month, day = date.split('-')#path.pop.split('-')
-    date = Time.utc(year, month, day)
+    year, month, day = date.split('-')
+    date = TzTime.local(year, month, day)
     qb.conditions << 'pages.created_at < ?'
-    qb.values << date
+    qb.values << date.to_s(:db)
   end
  
+  # this is a grossly inefficient method
   def filter_month(qb,month)
-    qb.conditions << "MONTH(pages.#{qb.date_field}) = ?"
+    offset = TzTime.zone.utc_offset
+    qb.conditions << "MONTH(DATE_ADD(`pages.#{qb.date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     qb.values << month.to_i
   end
 
   def filter_year(qb,year)
-    qb.conditions << "YEAR(pages.#{qb.date_field}) = ?"
+    offset = TzTime.zone.utc_offset
+    qb.conditions << "YEAR(DATE_ADD(`pages.#{qb.date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     qb.values << year.to_i
   end
   
-#  def filter_recent(qb)
-#    qb.order = 'pages.updated_at DESC'
-#  end
-   
-#   def filter_old(qb)
-#     qb.order = 'pages.updated_at ASC'
-#   end
-
+  ####
+  
   def filter_type(qb,page_class_group)
     page_classes = Page.class_group_to_class_names(page_class_group)
     qb.conditions << 'pages.type IN (?)'

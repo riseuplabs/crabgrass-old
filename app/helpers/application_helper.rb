@@ -7,7 +7,8 @@ module ApplicationHelper
   include LayoutHelper
   include LinkHelper
   include PaginationHelper
-  
+  include TimeHelper
+    
   # display flash messages with appropriate styling
   def display_messages()
     return "" unless flash[:notice] || flash[:error] || flash[:update]
@@ -95,41 +96,7 @@ module ApplicationHelper
   #  return(@@cached_urls[options.to_yaml] ||= orig_url_for(options))
   #end
   
-  # Our goal here it to automatically display the date in the way that
-  # makes the most sense. Elusive, i know. If an array of times is passed in
-  # we display the newest one. 
-  # Here are the current options:
-  #   4:30PM    -- time was today
-  #   Wednesday -- time was within the last week.
-  #   Mar/7     -- time was in the current year.
-  #   Mar/7/07  -- time was in a different year.
-  # The date is then wrapped in a label, so that if you hover over the text
-  # you will see the full details.
-  def friendly_date(*times)
-    return nil unless times.any?
-    time = times.compact.max
-    fullstr = full_time(time)
-    today = Date.today
-    date = time.to_date
-    if date == today
-      str = time.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
-    elsif today > date and (today-date) < 7
-      str = time.strftime("%A")
-    elsif date.year != today.year
-      str = date.loc("%d/%b/%Y")
-    else
-      str = date.loc('%d/%b')
-    end
-    "<label title='#{fullstr}'>#{str}</label>"
-  end
-  
-  # formats a time, in full detail
-  # for example: Sunday July/3/2007 2:13PM
-  def full_time(time)
-    #'%s %s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M'), time.period.abbreviation]
-    '%s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M')]
-  end
-  
+ 
   def friendly_size(bytes)
     if bytes > 1.megabyte
       '%s MB' % (bytes / 1.megabyte)
@@ -182,6 +149,9 @@ module ApplicationHelper
         title += " " + image_tag("emblems/star.png", :size => "11x11", :title => 'star') if participation.star?
       else
         title += " " + image_tag("emblems/pending.png", :size => "11x11", :title => 'pending') unless page.resolved?
+      end
+      if page.flag[:new]
+        title += " <span class='newpage'>#{'new'.t}</span>"
       end
       return title
     elsif column == :updated_by or column == :updated_by_login
