@@ -27,6 +27,19 @@ class MeController < ApplicationController
     options = options_for_pages_viewable_by(current_user, :flow => [:membership,:contacts])
     path = "/type/request/pending/not_created_by/#{current_user.id}"
     @request_count = count_pages(options, path)
+    
+    @new_pages = find_pages(options_for_me,'/descending/created_at/limit/20')
+    @updated_pages = find_pages(options_for_me,'/changed/descending/updated_at/limit/40') - @new_pages
+    @pages = {}
+    @new_pages.each do |page|
+      page.flag[:new] = true
+      groupname = page.group_name || page.created_by_login || 'other'
+      (@pages[groupname] ||= []) << page
+    end
+    @updated_pages.each do |page|
+      groupname = page.group_name || page.created_by_login || 'other'
+      (@pages[groupname] ||= []) << page
+    end
   end
   
   def files

@@ -10,24 +10,17 @@ A dashboard of interesting stuff. <%= link_to 'create page &raquo;', {:controlle
 </div>
 </div>
 
-<div class='section'>
-<h4 class='landing'>New Pages</h4>
-<% 
-pages = find_pages(options_for_me,'/descending/created_at/limit/10')
-columns = [:icon, :title, :created_by, :created_at, :contributors_count]
--%>
-<%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
-<%= link_to 'more &raquo;', me_url(:action => 'search') + "/descending/created_at" %>
-</div>
+<% @pages.each do |groupname,grouppages| -%>
 
 <div class='section'>
-<h4>Recently Updated</h4>
+<h4 class='landing'><%= groupname %></h4>
 <% 
-pages = find_pages(options_for_me,'/changed/descending/updated_at/limit/30') - pages
-columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+columns = [:icon, :title, :created_by, :created_at, :contributors_count]
 -%>
-<%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
-<%= link_to 'more &raquo;', me_url(:action => 'search') + "/changed/descending/updated_at" %>
+<%= render :partial => 'pages/list/table', :locals => {:pages => grouppages, :columns => columns} %>
+<%= link_to 'more &raquo;', url_for_group(groupname, :action => 'search') + "/descending/created_at" %>
 </div>
+
+<% end -%>
 
 </div>
