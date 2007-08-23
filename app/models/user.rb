@@ -27,7 +27,10 @@ class User < AuthenticatedUser
   ### associations
  
   # groups we are members of
-  has_many :memberships, :dependent => :delete_all
+  has_many :memberships, :dependent => :delete_all,
+    :after_add => :clear_group_id_cache,
+    :after_remove => :clear_group_id_cache
+
   has_many :groups, :through => :memberships,
     :after_add => :clear_group_id_cache,
     :after_remove => :clear_group_id_cache
@@ -271,6 +274,8 @@ class User < AuthenticatedUser
   
   # called whenever our group membership is changed
   def clear_group_id_cache(group)
+    puts '------------------------------------------'
+    puts 'clear_group_id_cache'
     @all_group_ids = nil
     @group_ids = nil
   end

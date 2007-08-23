@@ -33,7 +33,9 @@ class CommitteeTest < Test::Unit::TestCase
     u = users(:kangaroo)
     
     assert(!u.member_of?(g), 'user should not be member yet')
-    u.groups << g
+    u.groups.add g
+    #Membership.create :user => u, :group => g
+    #u.clear_group_id_cache(g)
     assert u.member_of?(g), 'user should be member of group'
     assert u.member_of?(c1), 'user should also be a member of committee'
     assert(u.direct_member_of?(g), 'user should be a direct member of the group')
