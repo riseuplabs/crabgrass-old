@@ -34,19 +34,21 @@ class Group < ActiveRecord::Base
 
   #track_changes :name
   acts_as_modified
-  
-  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
 
-  has_many :memberships, :dependent => :delete_all
-  has_many :users, :through => :memberships
-  #has_and_belongs_to_many :users, :join_table => :memberships
+  ####################################################################
+  ## about this group
 
-  # relationship to pages
-  has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
-  has_many :pages, :through => :participations do
-    def pending
-      find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
-    end
+  validates_handle :name
+  before_validation_on_create :clean_name  
+  def clean_name
+    write_attribute(:name, read_attribute(:name).downcase)
+  end
+
+  # the code shouldn't call find_by_name directly, because the group name
+  # might contain a space in it, which we store in the database as a plus.
+  def self.get_by_name(name)
+    return nil unless name
+    Group.find_by_name(name.gsub(' ','+'))
   end
 
   belongs_to :avatar
@@ -58,18 +60,85 @@ class Group < ActiveRecord::Base
     WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
       (SELECT pages.id FROM pages INNER JOIN group_participations ON pages.id = group_participations.page_id
       WHERE group_participations.group_id = #{id})]
-      
+  
+  # name stuff
+  def to_param; name; end
+  def display_name; full_name.any? ? full_name : name; end
+  def short_name; name; end
+  
+  # visual identity
+  def banner_style
+    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
+  end
+   
+  def committee?; instance_of? Committee; end
+  def network?; instance_of? Network; end
+  def normal?; instance_of? Group; end  
+  
+
+  ####################################################################
+  ## relationships to users
+
+  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
+    
+  has_many :memberships, :dependent => :delete_all,
+    :after_add => :membership_changed, :after_remove => :membership_changed  
+  has_many :users, :through => :memberships
+
+  def user_ids
+    @user_ids ||= memberships.collect{|m|m.user_id}
+  end
+
+  def membership_changed(membership)
+    membership.user.update_membership_cache
+  end
+
+  ####################################################################
+  ## relationship to pages
+  
+  has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
+  has_many :pages, :through => :participations do
+    def pending
+      find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
+    end
+  end
+
+  def add_page(page, attributes)
+    page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
+    page.changed :groups
+  end
+
+  def remove_page(page)
+    page.groups.delete(self)
+    page.changed :groups
+  end
+  
+  def may?(perm, page)
+    begin
+       may!(perm,page)
+    rescue PermissionDenied
+       false
+    end
+  end
+  
+  # perm one of :view, :edit, :admin
+  # this is still a basic stub. see User.may!
+  def may!(perm, page)
+    gparts = page.participation_for_groups(group_and_committee_ids)
+    return true if gparts.any?
+    raise PermissionDenied
+  end
+
+  ####################################################################
+  ## relationship to other groups
+
 #  has_many :federations
 #  has_many :networks, :through => :federations
 
   # committees are children! they must respect their parent group.  
   acts_as_tree :order => 'name'
   alias :committees :children
-  
-  def user_ids
-    @user_ids ||= memberships.collect{|m|m.user_id}
-  end
-  
+    
   # returns an array of all children ids and self id (but not parents).
   # this is used to determine if a group has access to a page.
   def group_and_committee_ids
@@ -99,83 +168,16 @@ class Group < ActiveRecord::Base
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
 #  has_and_belongs_to_many :categories
- 
-  ####################################################################### 
-  # validations
-  
-  validates_handle :name
-  before_validation_on_create :clean_name
-  
-  def clean_name
-    write_attribute(:name, read_attribute(:name).downcase)
-  end
-  
-  #######################################################################
-  # methods
-
-  # the code shouldn't call find_by_name directly, because the group name
-  # might contain a space in it, which we store in the database as a plus.
-  def self.get_by_name(name)
-    return nil unless name
-    Group.find_by_name(name.gsub(' ','+'))
-  end
-  
-  def add_page(page, attributes)
-    page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
-    page.changed :groups
-  end
-
-  def remove_page(page)
-    page.groups.delete(self)
-    page.changed :groups
-  end
-  
-  def may?(perm, page)
-    begin
-       may!(perm,page)
-    rescue PermissionDenied
-       false
-    end
-  end
-  
-  # perm one of :view, :edit, :admin
-  # this is still a basic stub. see User.may!
-  def may!(perm, page)
-    gparts = page.participation_for_groups(group_and_committee_ids)
-    return true if gparts.any?
-    raise PermissionDenied
-  end
    
-  def to_param
-    return name
-  end
-  
-  def display_name
-    full_name.any? ? full_name : name
-  end
-  
-  def short_name
-    name
-  end
-  
-  def banner_style
-    @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
-  end
-   
-  def committee?; instance_of? Committee; end
-  def network?; instance_of? Network; end
-  def normal?; instance_of? Group; end
-  
-  
-    
   protected
   
-  def after_save
+  after_save :update_name
+  def update_name
     if name_modified?
       update_group_name_of_pages  # update cached group name in pages
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c| c.update_name } if self.committee?
+      committees.each {|c| c.parent_name_change }
     end
   end
    

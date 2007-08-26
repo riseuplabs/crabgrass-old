@@ -55,6 +55,7 @@ class ErrorMessage < Exception; end
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
+require "#{RAILS_ROOT}/lib/extends_like_edge.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
 
 #### TOOLS #########################

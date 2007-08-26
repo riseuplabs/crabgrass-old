@@ -1,3 +1,65 @@
+##
+## serialize_as
+## ---------------------------------
+##
+## usage:
+##
+## class Tree < ActiveRecord::Base
+##   serialize_as IntArray, :branches, :roots
+## end
+##
+## In this case, the column 'branches' will be serialized and unserialized
+## using the IntArray.to_s and IntArray.new methods (respectively).
+##
+## It would be cool if I made this into a plugin, but then again, a lot
+## of things would be cool.
+##
+## initialized_by
+## ---------------------------------
+##
+## usage:
+##
+## class Tree < ActiveRecord::Base
+##   initialized_by :my_method, :my_attribute
+## end
+##
+## In this case, my_method() will be called each time my_attribute()
+## is accessed if my_attribute is nil.
+##
+
+ActiveRecord::Base.class_eval do
+
+  def self.serialize_as(klass, *keywords)
+    for word in keywords
+      word = word.id2name
+      module_eval <<-"end_eval"
+        def #{word}=(value)
+          @#{word} = #{klass.to_s}.new(value)
+          write_attribute('#{word}', @#{word}.to_s)
+        end
+        def #{word}
+          @#{word} ||= #{klass.to_s}.new( read_attribute('#{word}') )
+        end
+      end_eval
+    end
+  end
+  
+  def self.initialized_by(method, *attributes)
+    method = method.id2name
+    for attribute in attributes
+      attribute = attribute.id2name
+      module_eval <<-"end_eval"
+        alias_method :#{attribute}_without_initialize, :#{attribute}
+        def #{attribute}
+          self.#{method}() if read_attribute('#{attribute}').nil?
+          #{attribute}_without_initialize()
+        end
+      end_eval
+    end
+  end
+  
+end
+
 ActiveRecord::Base.class_eval do
   
   # used to auto-format body  
@@ -240,6 +302,16 @@ end
 # passed into the methods. 
 #
 
+ class ActiveRecord::Base
+   def update_this_attribute(name, value)
+     update_these_attributes(name => value)
+   end
+
+   def update_these_attributes(new_attributes)
+     update_attributes(new_attributes)
+   end
+ end
+ 
 # class ActiveRecord::Base
 
 #   # new method

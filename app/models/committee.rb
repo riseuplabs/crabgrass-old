@@ -1,7 +1,5 @@
 class Committee < Group
-  alias :group :parent
-  alias :group= :parent=
-
+  
   # NAMING
   # the name of a committee includes the name of the parent, 
   # so the committee names are unique. however, for display purposes
@@ -27,20 +25,28 @@ class Committee < Group
   #end
 
   # called when the parent's name has change
-  def update_name
-    new_name = parent.name + '+' + short_name
-    update_attribute(:name, new_name) if new_name != full_name
+  def parent_name_change
+    name = short_name
+    update_attribute(:name, name)
   end
   
-  protected
-  
-  def before_save
+  # custom name setter so that we can ensure that the parent's
+  # name is part of the committee's name.
+  def name=(str)
     if parent
-      name_without_parent = full_name.sub(/^#{parent.name}\+/,'').gsub('+','-')
+      name_without_parent = str.sub(/^#{parent.name}\+/,'').gsub('+','-')
       write_attribute(:name, parent.name + '+' + name_without_parent)
     else
-      write_attribute(:name, full_name.gsub('+','-'))
+      write_attribute(:name, str.gsub('+','-'))
     end
   end
-
+  
+  # custom setter so that we can ensure that the the committee's
+  # name includes the parent's name.
+  def parent=(p)
+    update_attribute(:parent_id, p.id)
+    parent_name_change
+  end
+ 
+  
 end

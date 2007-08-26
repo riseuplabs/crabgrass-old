@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 48) do
+ActiveRecord::Schema.define(:version => 49) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -256,6 +256,13 @@ ActiveRecord::Schema.define(:version => 48) do
     t.column "language",                  :string,   :limit => 5
     t.column "avatar_id",                 :integer
     t.column "last_seen_at",              :datetime
+    t.column "version",                   :integer,                  :default => 0
+    t.column "direct_group_id_cache",     :string
+    t.column "all_group_id_cache",        :string,   :limit => 512
+    t.column "friend_id_cache",           :string,   :limit => 512
+    t.column "foe_id_cache",              :string
+    t.column "peer_id_cache",             :string,   :limit => 1024
+    t.column "tag_id_cache",              :string,   :limit => 1024
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
