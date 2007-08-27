@@ -291,8 +291,10 @@ class GroupsController < ApplicationController
     options = {:class => GroupParticipation, :path => path}
     if logged_in?
       # the group's pages that we also have access to
+      # we might not be in a group, but still have access one of the group's
+      # pages via our membership in another group.
       options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
-      options[:values]     = [@group.id, current_user.group_ids, current_user.id, true]
+      options[:values]     = [@group.id, current_user.all_group_ids, current_user.id, true]
     else
       # the group's public pages
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
