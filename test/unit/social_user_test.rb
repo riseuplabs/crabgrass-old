@@ -30,7 +30,7 @@ class SocialUserTest < Test::Unit::TestCase
 
   def test_contacts
     a = users(:red)
-    b = users(:blue)
+    b = users(:green)
     
     assert !a.contacts.include?(b), 'no contact yet'
     a.contacts << b

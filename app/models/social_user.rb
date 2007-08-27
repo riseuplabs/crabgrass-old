@@ -36,7 +36,7 @@ class SocialUser < AuthenticatedUser
   
   serialize_as IntArray, :direct_group_id_cache, :all_group_id_cache, 
     :friend_id_cache, :foe_id_cache, :peer_id_cache, :tag_id_cache
-    
+  
   initialized_by :update_membership_cache,
     :direct_group_id_cache, :all_group_id_cache, :peer_id_cache
 
@@ -44,7 +44,7 @@ class SocialUser < AuthenticatedUser
     :friend_id_cache, :foe_id_cache
     
   initialized_by :update_tag_cache, :tag_id_cache
-  
+   
   ######################################################################
   ## Relationship to groups
 
@@ -56,6 +56,14 @@ class SocialUser < AuthenticatedUser
   # all groups, including groups we have indirect access to (ie committees and networks)
   has_many :all_groups, :class_name => 'Group',
     :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})'
+
+  def group_ids
+    self.direct_group_id_cache
+  end
+  
+  def all_groups_ids
+    self.all_group_id_cache
+  end
   
   # is this user a member of the group?
   # (or any of the associated groups)
@@ -149,7 +157,7 @@ class SocialUser < AuthenticatedUser
   # read_attribute(*_group_id_cache) is nil. Therefore, we better
   # set the id caches to non-nil in this method unless we want to
   # recurse forever.
-  def update_membership_cache(membership=nil)
+  def update_membership_cache(membership=nil)    
     direct, all = get_group_ids
     peer = get_peer_ids(direct)
     update_these_attributes :version => version+1,

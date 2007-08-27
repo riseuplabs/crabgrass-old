@@ -1,19 +1,42 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-a:
+
+# give user 4 (aka blue) lots of contacts 
+
+a1:
   user_id: 4
   contact_id: 5
-b:
+a2:
   user_id: 5
   contact_id: 4
-c:
+b1:
   user_id: 4
   contact_id: 6
-d:
+b2:
   user_id: 6
   contact_id: 4
-e:
+c1:
+  user_id: 4
+  contact_id: 7
+c2:
+  user_id: 7
+  contact_id: 4
+d1:
+  user_id: 4
+  contact_id: 8
+d2:
+  user_id: 8
+  contact_id: 4
+e1:
+  user_id: 4
+  contact_id: 9
+e2:
+  user_id: 9
+  contact_id: 4
+  
+# and some other people too  
+aa:
   user_id: 6
   contact_id: 5
-f:
+bb:
   user_id: 5
   contact_id: 6

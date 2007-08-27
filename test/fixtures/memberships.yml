@@ -1,13 +1,25 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# blue is in every group
+blue1:
+  group_id: 1
+  user_id: 4
+blue2:
+  group_id: 2
+  user_id: 4
+blue3:
+  group_id: 3
+  user_id: 4
+
+# group 1
+
 one:
   group_id: "1"
   user_id: "3"
+
 # rainbows
 
 a:
   group_id: 3
   user_id: 4
-
 b:
   group_id: 3
   user_id: 5
@@ -41,3 +53,4 @@ j:
 k:
   group_id: 2
   user_id: 14
+

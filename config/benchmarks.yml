@@ -1,0 +1,101 @@
+###################################
+## STATIC AND SEMI-STATIC
+
+account_login:
+ uri: /account/login
+
+account_index:
+ uri: /
+
+static_file:
+ uri: /static/dummy
+
+static:
+ account_index, account_login, static_file
+
+default:
+ static
+
+####################################
+## ME
+
+inbox:
+  uri: /me/inbox
+
+dash:
+  uri: /me/dash
+
+#me_search:
+#  uri:            /me/search/:path/
+#  action:         search
+#  controller:     me
+
+#me:
+# uri:            /me/:action/:id/
+#  action:         
+#  controller:     me
+
+#me_controller:
+#  me_search, me
+
+######################################
+## PEOPLE
+
+people:
+    uri:            /people/:action/:id/
+    action:         
+    controller:     people
+
+person:
+    uri:            /people/:action/:id/*path
+    action:         
+    controller:     person
+
+#######################################
+## GROUPS
+
+groups:
+    uri:            /groups/:action/:id/
+    action:         
+    controller:     groups
+
+#groups_archive:
+#    uri:            /groups/archive
+#    action:         archive
+#    controller:     groups
+
+#groups_tags:
+#    uri:            /groups/tags
+#    action:         tags
+#    controller:     groups
+
+
+#dispatch_dispatch:
+#    uri:            /page/:_page/:_page_action/:id/
+#    action:         dispatch
+#    controller:     dispatch
+
+#dispatch_dispatch:
+#    uri:            /:_context/:_page/:_page_action/:id/
+#    action:         dispatch
+#    controller:     dispatch
+
+#dispatch_dispatch:
+#    uri:            /:_context/
+#    action:         dispatch
+#    controller:     dispatch
+
+
+
+#dispatch_controller:
+#    dispatch_dispatch
+    
+groups_controller:
+    groups
+
+inbox_controller:
+    inbox
+    
+all_controllers:
+    inbox_controller, me_controller, groups_controller, account_controller, static_controller, 
+
