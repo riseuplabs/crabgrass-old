@@ -3,10 +3,7 @@
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true
-
-require 'production_log/syslog_logger'
-config.logger = SyslogLogger.new
-
+  
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = true
@@ -19,4 +16,11 @@ config.action_controller.perform_caching             = true
 
 ActionController::Base.session_options[:session_secure] = true
 ActionController::Base.session_options[:new_session] = true
+
+begin
+  require 'syslog_logger'
+  RAILS_DEFAULT_LOGGER = SyslogLogger.new
+rescue LoadError => exc
+  # i guess there is no syslog_logger
+end
 
