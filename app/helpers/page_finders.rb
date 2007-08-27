@@ -221,13 +221,13 @@ module PageFinders
   # this is a grossly inefficient method
   def filter_month(qb,month)
     offset = TzTime.zone.utc_offset
-    qb.conditions << "MONTH(DATE_ADD(`pages.#{qb.date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
+    qb.conditions << "MONTH(DATE_ADD(pages.`#{qb.date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     qb.values << month.to_i
   end
 
   def filter_year(qb,year)
     offset = TzTime.zone.utc_offset
-    qb.conditions << "YEAR(DATE_ADD(`pages.#{qb.date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
+    qb.conditions << "YEAR(DATE_ADD(pages.`#{qb.date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     qb.values << year.to_i
   end
   
