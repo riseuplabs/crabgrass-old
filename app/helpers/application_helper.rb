@@ -8,7 +8,7 @@ module ApplicationHelper
   include LinkHelper
   include PaginationHelper
   include TimeHelper
-    
+  
   # display flash messages with appropriate styling
   def display_messages()
     return "" unless flash[:notice] || flash[:error] || flash[:update]

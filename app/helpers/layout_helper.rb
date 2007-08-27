@@ -26,11 +26,12 @@ module LayoutHelper
   
   def title_from_context
     (
+      [@html_title] +
       (@context||[]).collect{|b|truncate(b[0])}.reverse +
       [SITE_NAME]
-    ).join(' : ')
+    ).compact.join(' - ')
   end
-  
+    
   #########################################
   # SIDEBAR
   

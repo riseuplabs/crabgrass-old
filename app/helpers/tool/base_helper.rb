@@ -13,5 +13,5 @@ module Tool::BaseHelper
     link_to('&laquo; return to <b>%s</b>' % @page.title, page_url(@page)) +
     "</p>\n"
   end
-  
+    
 end
