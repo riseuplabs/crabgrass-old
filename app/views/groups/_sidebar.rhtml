@@ -17,7 +17,7 @@
 
 <div class='sidesection'>
 <div class='sidehead'>Actions</div>
-<% if current_user.member_of?(@group) -%>
+<% if logged_in? and current_user.member_of?(@group) -%>
 <div class='sidelink'>
   <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %>
 </div>
