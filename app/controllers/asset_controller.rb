@@ -14,7 +14,7 @@ class AssetController < ApplicationController
 #        @page.data = @asset
 #        @page.save
 #      end
-      return redirect_to page_url(@asset.page)
+      return redirect_to(page_url(@asset.page))
     end
   end
 
