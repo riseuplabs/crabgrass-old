@@ -13,7 +13,7 @@ A dashboard of interesting stuff. <%= link_to 'create page &raquo;', {:controlle
 <% @pages.each do |groupname,grouppages| -%>
 
 <div class='section'>
-<h4 class='landing'><%= groupname %></h4>
+<h4 class='landing'><%= link_to_group groupname %></h4>
 <% 
 columns = [:icon, :title, :created_by, :created_at, :contributors_count]
 -%>
