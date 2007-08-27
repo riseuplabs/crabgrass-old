@@ -15,7 +15,7 @@ body {
 */
 
 #maincolumn {
-  /* border-color: #999; */
+  border-color: #999;
 }
 
 div.sidehead {
@@ -34,6 +34,14 @@ div.sidesection {
 }
 
 div.sideline a {
+}
+
+/* title and info panel */
+
+#titlebox {
+  background: #E6F2FF;
+  border: 2px solid white;
+  xbackground: #DDEEFF; /* light blue */
 }
 
 /* banner */

@@ -47,9 +47,9 @@
 
 /* normal tab hover */
 #topmenu li:hover span a {
-  background: #eee;
-  color: black;
-  border-color: #fff;
+  background: #000;
+  color: #fff;
+  xborder-color: #fff;
 /*  -moz-border-radius-topright: 4px;
   -moz-border-radius-topleft: 4px; */
 }
@@ -63,22 +63,21 @@
 
 /* selected tab hover */
 #topmenu li.selected:hover span a {
-  color: black;
-  background: #eee;
-  border-color: #fff;
+  color: white;
+  background: black;
+/*  border-color: #fff; */
 /*  -moz-border-radius-topright: 0px;
   -moz-border-radius-topleft: 0px; */
 }
 
 /* drop down menu */
 #topmenu li ul {
-  background: #eee;
-/*  background: #000; */
-  border: 1px solid white;
+  background: #000;
+/*  border: 1px solid white; */
   padding: 0 4em 2px 0;
-  -moz-border-radius-topright: 4px;
+/*  -moz-border-radius-topright: 4px;
   -moz-border-radius-bottomleft: 4px;
-  -moz-border-radius-bottomright: 4px;
+  -moz-border-radius-bottomright: 4px; */
 }
 /* drop down menu line */
 #topmenu li ul li {
@@ -86,7 +85,7 @@
 }
 /* drop down link */
 #topmenu li ul li a {
-/*  color: white; */
+  color: white;
   font-weight: bold;
   padding: 4px;
   display: block;

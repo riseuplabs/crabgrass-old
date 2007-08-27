@@ -104,7 +104,8 @@ module LayoutHelper
      if banner
        style << 'body {background-color: %s}' % background_color
        style << '#main {background: %s}' % background if background
-       style << 'div.sidehead {background: %s;}' % banner_background
+#       style << 'div.sidehead {background: %s;}' % banner_background
+       style << 'div.sidehead {background: %s;}' % '#bbb'
        style << '#banner {%s}' % banner_style
        style << '#banner a.name_link {color: %s; text-decoration: none;}' %
                 banner_foreground
