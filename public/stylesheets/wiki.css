@@ -22,25 +22,33 @@ ins.diffmod, ins.diffins {
 }
 
 .wiki pre.code {
-  background: black;
-  color: #0f0;
+  background: #FFF6DD;
+  border: solid 1px;
+  border-color: #FFE8A9;
   padding: 0.5em;
+/*  background: #FCEDD7;
+  color: #4C3B23;
+   */
 }
 .wiki div.codetitle {
-  background: #333;
-  color: #fff;
+  background: #FFE8A9;
+  xbackground: #EBDAC0;
+  color: #614B2A;
   margin-bottom: -1em;
   padding: 0.25em;
   font-weight: bold;
 }
 .wiki h1 {
-  font-size: 1.6em;
-  margin-top: 1.25em;
-  border-bottom: 2px dotted #ccc;
+  font-size: 24pt;
+  line-height: 1.25em;
+  margin-top: 1.5em;
+  color: #666;
+  border-bottom: 2px dotted #999;
 }
 .wiki h2 {
-  font-size: 1.3em;
-  margin-top: 1em;
+  font-size: 14pt;
+  margin-top: 1.25em;
+  line-height: 1.25em;
   border-bottom: 1px dashed #ccc;
 }
 .wiki h3 {
@@ -48,3 +56,6 @@ ins.diffmod, ins.diffins {
   margin-top: 0.75em;
 }
 
+div.wiki > h1:first-child {
+  margin-top: 0;
+}
