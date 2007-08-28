@@ -69,7 +69,7 @@ class Tool::BaseController < ApplicationController
     @show_tags = true
     @show_links = true
     @sidebar = true
-    @html_title = @page.title
+    @html_title = @page.title if @page
     setup_view # allow subclass to override view
     true
   end
