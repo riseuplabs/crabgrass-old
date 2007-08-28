@@ -19,9 +19,9 @@ module TimeHelper
     date  = local.to_date
     
     if date == today
-      str = time.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
+      str = local.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
     elsif today > date and (today-date) < 7
-      str = time.strftime("%A")
+      str = local.strftime("%A")
     elsif date.year != today.year
       str = date.loc("%d/%b/%Y")
     else
