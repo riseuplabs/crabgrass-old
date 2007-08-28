@@ -50,10 +50,10 @@ end
 
 #### SESSION HANDLING ##############
 
-ActionController::Base.session_options[:session_expires] = 3.hours.from_now
-if File.directory? '/dev/shm/'
-  ActionController::Base.session_options[:tmpdir] = '/dev/shm/'
-end
+#ActionController::Base.session_options[:session_expires] = 3.hours.from_now
+#if File.directory? '/dev/shm/'
+#  ActionController::Base.session_options[:tmpdir] = '/dev/shm/'
+#end
   
 #### CUSTOM EXCEPTIONS #############
 
