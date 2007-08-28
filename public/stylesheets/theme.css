@@ -14,9 +14,10 @@ body {
 }
 */
 
-#maincolumn {
+#maincolumn, #tabarea {
   border-color: #999;
 }
+#tabarea {border-top: 1px solid transparent;}
 
 div.sidehead {
   /* color: #fff; */
@@ -41,7 +42,6 @@ div.sideline a {
 #titlebox {
   background: #E6F2FF;
   border: 2px solid white;
-  xbackground: #DDEEFF; /* light blue */
 }
 
 /* banner */
