@@ -40,7 +40,7 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
 
-  config.action_controller.session_store = :p_store
+#  config.action_controller.session_store = :p_store
   
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
@@ -50,10 +50,10 @@ end
 
 #### SESSION HANDLING ##############
 
-ActionController::Base.session_options[:session_expires] = 3.hours.from_now
-if File.directory? '/dev/shm/'
-  ActionController::Base.session_options[:tmpdir] = '/dev/shm/'
-end
+#ActionController::Base.session_options[:session_expires] = 3.hours.from_now
+#if File.directory? '/dev/shm/'
+#  ActionController::Base.session_options[:tmpdir] = '/dev/shm/'
+#end
   
 #### CUSTOM EXCEPTIONS #############
 
