@@ -14,9 +14,6 @@ config.action_controller.perform_caching             = true
 # Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-ActionController::Base.session_options[:session_secure] = true
-ActionController::Base.session_options[:new_session] = true
-
 begin
   require 'syslog_logger'
   RAILS_DEFAULT_LOGGER = SyslogLogger.new
