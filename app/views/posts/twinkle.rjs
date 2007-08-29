@@ -1,0 +1,4 @@
+post_id  = "post-body-#{@post.id}"
+
+# update the task_show div with the updated task data
+page.replace_html post_id, :partial => 'post_body', :locals => {:post => @post}

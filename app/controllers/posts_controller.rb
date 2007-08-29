@@ -46,13 +46,29 @@ class PostsController < ApplicationController
       return(render :action => 'destroy')
     end
   end
+
   
+  def twinkle
+    post = Post.find(params[:id])
+    rating = Rating.new(:rating => 1, :user_id => current_user.id)
+    @post.ratings << rating
+  end
+
+  def untwinkle
+    post = Post.find(params[:id])
+    Rating.delete_all(["rateable_id = ? AND user_id =?",
+      @post.id, current_user.id])
+  end
+
+
   def destroy
   end
   
   def authorized?
     @post = Post.find(params[:id]) if params[:id]
-    if @post 
+    #incorrect permissions for twinkling
+    # should only allow those in group to twinkle?
+    if @post and not params[:action] == 'twinkle' and not params[:action] == 'untwinkle' 
       return current_user == @post.user
     else
       return true

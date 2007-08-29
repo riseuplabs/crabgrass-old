@@ -7,6 +7,8 @@
 
 class Post < ActiveRecord::Base
 
+  acts_as_rateable
+
   ## associations ############################################
   
   belongs_to :discussion, :counter_cache => true

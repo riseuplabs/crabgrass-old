@@ -227,5 +227,8 @@ class PagesController < ApplicationController
     true
   end
 
+
+ 
+
   
 end

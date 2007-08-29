@@ -2,6 +2,7 @@
   edit_loading_id = "spinner-#{post.id}"
 -%>
 <div class='negativespace'><%= post.body_html %></div>
+
 <% if logged_in? and post.user_id == current_user.id -%>
   <div style='float:right; margin-top: -1em'>
     <span style="display: none" id="<%=edit_loading_id%>"><%=image_tag "spinner.gif"%></span>
@@ -10,3 +11,29 @@
         :loading => "Element.show('#{edit_loading_id}')" %>
   </div>
 <% end -%>
+
+<% if logged_in? and post.user_id != current_user.id -%> 
+  <div style='float:right; margin-top: -1em'>
+
+  <% if not post.rated_by_user?(current_user)-%>
+      <%= link_to_remote image_tag('actions/star-plus.png'), 
+        {:url => { :controller => 'posts', :action => 'twinkle', :id => post.id }}
+      %>
+  <% else -%>
+    <%= link_to_remote image_tag('actions/star-minus.png'), 
+      {:url => { :controller => 'posts', :action => 'untwinkle', :id => post.id }}
+    %>
+  <% end -%>
+  </div>
+<% end %>
+
+<div style='float:right; margin-top: -1em, margin-right: 2em'>
+  <% count = post.ratings.size %>
+  <% if count == 1 -%>
+     <%= count %> twinkle
+  <% end -%>
+  <% if count > 1 -%>
+     <%= count %> twinkles
+  <% end -%>
+</div>
+
