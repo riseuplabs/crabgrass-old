@@ -61,7 +61,21 @@ class CommitteeTest < Test::Unit::TestCase
     g.save
     assert_equal 'riseup-collective+legal', g.committees.first.full_name, 'committee name update when group name changed.'
   end
-    
+  
+  def test_create
+    g = Committee.create
+    assert !g.valid?, 'committee with no name should not be valid'
+  end
+  
+  def test_assignment
+    # we should be able to assign a parent even when the committee
+    # has no name    
+    parent = Group.create :name => 'parent'
+    c = Committee.new
+    c.parent = parent
+    ## TODO: add a assert_raises nothing here
+  end
+  
   def test_associations
     assert check_associations(Committee)
   end

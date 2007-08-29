@@ -1,6 +1,6 @@
 class InboxController < ApplicationController
   layout 'me'
- 
+      
   def index
     if request.post?
       update

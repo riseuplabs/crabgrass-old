@@ -41,6 +41,27 @@ class SocialUserTest < Test::Unit::TestCase
     assert !a.contacts.include?(b), 'no contact now'
   end
 
+  def test_duplicate_contacts
+    a = users(:red)
+    b = users(:green)
+    
+    a.contacts << b
+    assert_raises(AssociationError) do
+      a.contacts << b
+    end
+    assert_equal 1, Contact.count(:conditions => ['user_id = ? and contact_id = ?', a.id, b.id]), 'should be only be one contact, but there are really two'
+  end
+
+  def test_duplicate_memberships
+    u = create_user :login => 'harry-potter'
+    g = Group.create :name => 'hogwarts-academy'
+    
+    u.memberships.create :group => g
+    assert_raises(AssociationError) do
+      u.memberships.create :group => g
+    end
+  end
+  
   def test_associations
     assert check_associations(SocialUser)
     assert check_associations(Contact)

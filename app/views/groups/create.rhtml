@@ -1,21 +1,42 @@
 <% if @parent -%>
+  <% @group_type = 'committee'.t -%>
   <h1>New committee for group <%= @parent.name %></h1>
 <% else %>
+  <% @group_type = 'group'.t -%>
   <h1>New group</h1>
 <% end %>
 
 <div class='workarea'>
+
 <% form_tag :action => 'create' do -%>
 
-<%= hidden_field_tag('parent_id', @parent.id) if @parent %>
-<p><label for="group_name">Short name (must only contain alphanumeric characters)</label><br/>
-<%= @parent.name + "+" if @parent %><%= text_field 'group', 'name' %></p>
-<p><label for="group_full_name">Full name</label><br/>
-<%= text_field 'group', 'full_name'  %></p>
-<p><label for="group_summary">Summary</label><br/>
-<%= text_field 'group', 'summary'  %></p>
-<%= submit_tag "Create" %>
-</div>
+  <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
+
+  <p>
+    <label for="group_name"><b>Name</b><br>This name how you will refer to this group in links and URLs. It must only contain alphanumeric characters.</label><br/>
+    <%= @parent.name + "+" if @parent %><%= text_field 'group', 'short_name' %>
+  </p>
+
+  <p>
+    <label for="group_full_name">
+      <b>Full name</b><br/>
+      A descriptive name used for display
+    </label><br/>
+    <%= text_field 'group', 'full_name'  %>
+  </p>
+
+  <p>
+    <label for="group_summary">
+      <b>Summary</b><br/>
+      <%= 'Brief information regarding this %s.' / @group_type %>  
+    </label><br/>
+    <%= text_field 'group', 'summary'  %>
+  </p>
+
+  <%= submit_tag "Create" %>
 
 <% end -%>
+
+</div> <!-- end work area -->
+
 

@@ -23,12 +23,8 @@ module ActiveRecord
         else
           record = build(attributes)
           unless @owner.new_record?
-            #puts 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             callback(:before_add, record)
-            #y callbacks_for(:after_add)
-            #y @owner
             record.save
-            #puts 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
             callback(:after_add, record)
           end
           record

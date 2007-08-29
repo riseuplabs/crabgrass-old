@@ -21,6 +21,11 @@ class GroupTest < Test::Unit::TestCase
     assert_equal 0, g.users.size, 'there should be no users'
   end
 
+  def test_name
+    g = Group.create
+    assert !g.valid?, 'group with no name should not be valid'
+  end
+
   def test_associations
     assert check_associations(Group)
   end

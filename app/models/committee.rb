@@ -11,8 +11,9 @@ class Committee < Group
   end
   # committee name without parent
   def short_name
-    read_attribute(:name).sub(/^.*\+/,'')
+    (read_attribute(:name)||'').sub(/^.*\+/,'')
   end
+  
   # what we show to the user
   def display_name
     read_attribute(:display_name) || short_name
@@ -40,6 +41,7 @@ class Committee < Group
       write_attribute(:name, str.gsub('+','-'))
     end
   end
+  alias_method :short_name=, :name=
   
   # custom setter so that we can ensure that the the committee's
   # name includes the parent's name.

@@ -4,7 +4,7 @@
 <div class='sidelink'>
 <% if @is_contact -%>
 <%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user} %>
-<% else -%>
+<% elsif logged_in? and !current_user.contacts.include?(@user) -%>
 <%= link_to 'add to my contacts', url_for(:controller => 'contact', :action => 'add', :id => @user) %>
 <% end -%>
 </div>

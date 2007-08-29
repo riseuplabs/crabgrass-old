@@ -98,7 +98,7 @@ class GroupsController < ApplicationController
       if @group.save
         message :success => 'Group was successfully created.'
         @group.users << current_user 
-        redirect_to :action => 'show', :id => @group
+        redirect_to url_for_group(@group)
       else
         message :object => @group
       end
