@@ -2,8 +2,6 @@ class Tool::WikiController < Tool::BaseController
   include HTMLDiff
   append_before_filter :fetch_wiki
   
-  stylesheet 'wiki'
-  
   def show
     unless @wiki.version > 0
       redirect_to page_url(@page, :action => 'edit')
