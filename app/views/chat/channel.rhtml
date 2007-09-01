@@ -21,7 +21,10 @@
 <tr>
   <td width="1%" id='handle'><%= current_user.login %></td>
   <td width="99%">
-    <input id="entryfield" type="text" name="message" value="Type your messages here and press enter.." onclick="$('entryfield').value=''" /><input type="submit" value="Say" style="display: none;" />
+    <% default_text = "Type your messages here and press enter...".t -%>
+    <input id="entryfield" type="text" name="message" value="<%=default_text%>"
+      onclick="if ($('entryfield').value == '<%=default_text%>') {$('entryfield').clear();}"/>
+    <input type="submit" value="Say" style="display: none;" />
   </td>
 </tr>
 </table>
