@@ -9,7 +9,7 @@ module Juixe
 
       module ClassMethods
         def acts_as_rateable
-          has_many :ratings, :as => :rateable, :dependent => true
+          has_many :ratings, :as => :rateable, :dependent => :destroy
           include Juixe::Acts::Rateable::InstanceMethods
           extend Juixe::Acts::Rateable::SingletonMethods
         end
