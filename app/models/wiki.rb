@@ -60,6 +60,7 @@ class Wiki < ActiveRecord::Base
   
   # returns first version since @time@
   def first_since(time)
+     return nil unless time
      versions.find(
        :first,
        :conditions => ['updated_at <= ?', time.to_s(:db)],
