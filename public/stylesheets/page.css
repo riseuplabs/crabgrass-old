@@ -66,12 +66,9 @@ tr.post td {
 }
 tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px solid #ccc;}
 tr.post-spacer-top td {line-height: 10px;}
-/* tr.post-border-top td {border-top: 1px solid #ccc;} */
 
-/* .shade-even {background-color: #FAFAFA;}
-.shade-odd {background-color: #F0F1F7;} */
 .shade-even {background-color: #fff;}
-.shade-odd {background-color: #fafafa;} 
+.shade-odd {background-color: #f3f3f3;} 
 
 textarea.post_body {width: 100%}
 

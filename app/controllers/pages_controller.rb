@@ -22,6 +22,8 @@
 
 class PagesController < ApplicationController
 
+  helper Tool::BaseHelper
+  
   prepend_before_filter :fetch_page
 
   # if this controller is called by DispatchController,
@@ -77,14 +79,16 @@ class PagesController < ApplicationController
 
   # send an announcement to users about this page.
   # in other words, send to their inbox.
-  def announce
+  def notify
     @errors = []; @infos = []
-    params[:announcees].split(/\s+/).each do |name|
+    params[:to].split(/\s+/).each do |name|
+      next unless name.any?
       entity = Group.get_by_name(name) || User.find_by_login(name)
       if entity
         if entity.may?(:view, @page)
-          @page.add(entity.users) if entity.instance_of? Group
-          @page.add(entity) if entity.instance_of? User
+          notice = params[:message] ? {:user_login => current_user.login, :message => params[:message], :time => Time.now} : nil
+          @page.add(entity.users, :notice => notice) if entity.instance_of? Group
+          @page.add(entity, :notice => notice) if entity.instance_of? User
           @infos << name
         else
           @errors << "%s is not allowed to view this page." % entity.name

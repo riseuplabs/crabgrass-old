@@ -1,0 +1,9 @@
+page.replace_html 'message', ''
+if @errors.any?
+  page.insert_html :bottom, 'message', notify_errors('Could not send some notices'.t+":", @errors)
+else
+  page << "$('to').value = ''"
+  page.hide 'notify_area'
+end
+page.insert_html :bottom, 'message', notify_infos('Notices sent to'.t + ":", @infos) if @infos.any?
+ 

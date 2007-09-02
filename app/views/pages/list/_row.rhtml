@@ -30,4 +30,18 @@ we have user or group participation data (upart or gpart).
   <td><%= page_list_cell(page, column, upart || gpart) %></td>
 <% end -%>
 </tr>
+<% if upart and upart.notice -%>
+<% upart.notice.each do |notice| -%>
+<%# next unless notice.is_a? Hash %>
+<tr class="<%= color %> page_info" >
+  <td></td><td></td>
+  <td colspan='100'>
+    <%= 'page sent by %s on %s'.t % [link_to_user(notice[:user_login]), friendly_date(notice[:time])] %>
+    <% if notice[:message].any? -%>
+    <%= 'with message'.t %> &ldquo;<i><%= h notice[:message] %></i>&rdquo;
+    <% end -%>
+  </td>
+</tr>
+<% end -%>
+<% end -%>
 

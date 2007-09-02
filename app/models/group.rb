@@ -65,7 +65,8 @@ class Group < ActiveRecord::Base
   def to_param; name; end
   def display_name; full_name.any? ? full_name : name; end
   def short_name; name; end
-  
+  def cut_name; name[0..20]; end
+
   # visual identity
   def banner_style
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")

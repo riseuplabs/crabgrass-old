@@ -40,7 +40,6 @@ div.sidehead {
   font-weight: bold;
   color: white;
   padding: 4px 4px 4px 9px;
-  /* background: #a5cc7a url(/images/shadows/sidebar/topleft.png) no-repeat top left; */
 }
 div#leftbar div.sidehead {
   border-right: 0;
@@ -60,12 +59,6 @@ div.sideline, div.sidelink {
 div.sidelink.selected {
   font-weight: bold;
 }
-div.sidelink a { 
-  display: block;
-  outline: 0;
-  line-height: 1em;
-  padding: 3px 0; /* to make icons show up and not get clipped */
-}
 div.sidelink a, div.sideline a {
   text-decoration: none;
 }
@@ -73,21 +66,11 @@ div.sidelink a:hover, div.sideline a:hover {
   text-decoration: underline;
 }
 div.sidelink:hover {
-  background: #ddf;
+  background: #cdf;
 }
-/*
-div#leftbar div.sidelink:hover {
-  background: #ddf url(/images/shadows/small-left-a.png) repeat-y left;
-}
-div#rightbar div.sidelink:hover {
-  background: #ddf url(/images/shadows/small-right-a.png) repeat-y right;
-}
-*/
-
 
 div.sidetail {
   height: 4px;
-  xbackground: #f9f9f9 url(/images/shadows/sidebar/bottom.png) no-repeat bottom left;
 }
 
 div.sidesection img {
@@ -110,31 +93,20 @@ a.sidedetails {
   padding-right: 4px;
 }
 div.sideinfo {
-  font-size: 0.8em;
+  font-size: 0.9em;
   line-height: 1.2em;
+  color: black;
 }
+
 div.sidesubarea {
-  margin: 0.5em;
+  padding: 0.5em;
+  background: #cdf;
+  border: 1px solid white;
+  border-right: 0;
+  border-left: 0;
+  color: #669;
 }
-/*
-div#sidebar div.line.link {
-  font-size: 0.8em;
+div.sidesubarea textarea, div.sidesubarea select {
+  width: 190px;
 }
-div#sidebar h2 a {
- display: block;
- width: 16px;
- float: right;
- margin-top: -16px;
- opacity: 0.5;
-}
-div#sidebar h2 a:hover {
- opacity: 1;
-}
-div#sidebar h3 {
- padding: 0;
- margin: 4px 0 0 10px;
- font-size: 1em;
- font-weight: normal;
- border-bottom: 1px dotted #ccc;
-}
-*/
+

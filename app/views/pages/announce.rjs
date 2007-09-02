@@ -1,9 +1,0 @@
-page.replace_html 'message', ''
-if @errors.any?
-  page.insert_html :bottom, 'message', notify_errors('could not send some announcements', @errors)
-else
-  page << "$('announcees').value = ''"
-  page.hide 'announce-area'
-end
-page.insert_html :bottom, 'message', notify_infos('announcement sent to:', @infos) if @infos.any?
- 

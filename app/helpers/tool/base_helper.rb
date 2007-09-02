@@ -13,5 +13,14 @@ module Tool::BaseHelper
     link_to('&laquo; return to <b>%s</b>' % @page.title, page_url(@page)) +
     "</p>\n"
   end
-    
+  
+  def show_notify_function
+    remote_function(:url => pages_url(@page, :action=>'show_notify_form'))
+  end
+  
+  def show_notify_click
+    %Q[ $('notify_area').toggle(); if ($('page_notify_form')==null) {#{show_notify_function};} ]
+  end
+
+  
 end

@@ -3,18 +3,21 @@
 /** things that look like buttons **/
 
 form input[type=submit], form input[type=button], a.button {
-  border: 1px solid #bce;
-  outline: 1px solid #666;
+  border: 1px solid;
+  border-color: #fff #ccc #bbb #ddd;
+  outline: 1px solid #336;
   text-decoration: none;
-  color: white;
-  background: #6AD url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
-  padding: 0 2px 2px 2px;
+  color: #000;
+  background: #eee url(/images/blend/24-wb-25.png) 0% 50% repeat-x;
+  padding: 0 6px 1px 6px;
   cursor: pointer;
   margin: 1px;
 }
+a.button {
+  padding-bottom: 3px;
+}
 form input[type=submit]:hover, form input[type=button]:hover, a.button:hover {
-  border: 1px solid #def;
-  background: #9cf url(/images/blend/24-bw-25.png) 0% 50% repeat-x;
+  background: #fff url(/images/blend/24-wb-25.png) 0% 50% repeat-x;
 }
 
 form.button-to input {display: inline;}
@@ -132,5 +135,6 @@ tr.page-list-heading th.selected {
 tr.page-list-heading th.selected a {
   color: white;
 }
+
 
 

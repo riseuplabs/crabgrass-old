@@ -46,7 +46,11 @@ class User < SocialUser
       name
     end
   end
-  
+
+  def cut_name
+    name[0..20]
+  end
+    
   def to_param
     return login
   end
@@ -63,8 +67,8 @@ class User < SocialUser
     read_attribute(:time_zone) || DEFAULT_TZ
   end
 
-  #########################################################    
-  # relationship to pages
+  ############################################################################
+  ## RELATIONSHIP TO PAGES
   
   has_many :participations, :class_name => 'UserParticipation', 
     :after_add => :update_tag_cache, :after_remove => :update_tag_cache
@@ -74,7 +78,7 @@ class User < SocialUser
     end
   end
   
-  has_many :pages_created, 
+  has_many :pages_created,
     :class_name => "Page", :foreign_key => :created_by_id 
 
   has_many :pages_updated, 
@@ -104,17 +108,30 @@ class User < SocialUser
     raise PermissionDenied
   end
   
-  def add_page(page, attributes)
-    return if page.participation_for_user(self) # don't add the page twice
-
-    # user_participations.build doesn't update the pages.users
-    # until it is saved, which seems like a bug, so we use create
-    page.user_participations.create attributes.merge(
+  ##
+  ## makes self a participant of a page. 
+  ## this method is not called directly. instead, page.add(user)
+  ## should be used.
+  ##
+  def add_page(page, part_attributes)
+    participation = page.participation_for_user(self)
+    if participation
+      if part_attributes[:notice]
+        part_attributes[:notice] = [part_attributes[:notice]]
+        part_attributes[:viewed] = false
+        if participation.notice
+          part_attributes[:notice] += participation.notice
+        end
+      end
+      participation.update_attributes(part_attributes)
+    else
+      # user_participations.build doesn't update the pages.users
+      # until it is saved, so we use create instead
+      page.user_participations.create(part_attributes.merge(
        :page_id => page.id, :user_id => id,
-       :resolved => page.resolved?)
-    
-    # mark users as changed
-    page.changed :users
+       :resolved => page.resolved?))
+    end  
+    page.changed :users    # mark users as changed
   end
   
   def remove_page(page)
@@ -127,7 +144,7 @@ class User < SocialUser
   def viewed(page)
     part = page.participation_for_user(self)
     return unless part
-    part.update_attributes(:viewed_at => Time.now, :viewed => true)
+    part.update_attributes(:viewed_at => Time.now, :notice => nil, :viewed => true)
   end
   
   # set resolved status vis-à-vis self.
