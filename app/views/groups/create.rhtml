@@ -14,7 +14,11 @@
 
   <p>
     <label for="group_name"><b>Name</b><br>This name how you will refer to this group in links and URLs. It must only contain alphanumeric characters.</label><br/>
-    <%= @parent.name + "+" if @parent %><%= text_field 'group', 'short_name' %>
+    <% if @parent -%>
+      <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
+    <% else -%>
+      <%= text_field 'group', 'name' %>
+    <% end -%>
   </p>
 
   <p>
