@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 49) do
+ActiveRecord::Schema.define(:version => 56) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -20,6 +20,11 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "updated_at",     :datetime
   end
 
+  add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["parent_id"], :name => "index_asset_versions_parent_id"
+  add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
+  add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
+
   create_table "assets", :force => true do |t|
     t.column "parent_id",    :integer
     t.column "content_type", :string
@@ -33,6 +38,10 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "created_at",   :datetime
     t.column "version",      :integer
   end
+
+  add_index "assets", ["parent_id"], :name => "index_assets_parent_id"
+  add_index "assets", ["version"], :name => "index_assets_version"
+  add_index "assets", ["page_id"], :name => "index_assets_page_id"
 
   create_table "avatars", :force => true do |t|
     t.column "data",   :binary
@@ -48,16 +57,22 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "public",   :boolean, :default => false
   end
 
+  add_index "channels", ["group_id"], :name => "index_channels_group_id"
+
   create_table "channels_users", :force => true do |t|
     t.column "channel_id", :integer
     t.column "user_id",    :integer
     t.column "last_seen",  :datetime
   end
 
+  add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
+
   create_table "contacts", :id => false, :force => true do |t|
     t.column "user_id",    :integer
     t.column "contact_id", :integer
   end
+
+  add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "discussions", :force => true do |t|
     t.column "posts_count",  :integer,  :default => 0
@@ -66,6 +81,8 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "last_post_id", :integer
     t.column "page_id",      :integer
   end
+
+  add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
 
   create_table "events", :force => true do |t|
     t.column "description",      :text
@@ -76,11 +93,20 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "location",         :string
   end
 
+  create_table "federations", :force => true do |t|
+    t.column "group_id",     :integer
+    t.column "network_id",   :integer
+    t.column "council_id",   :integer
+    t.column "delegates_id", :integer
+  end
+
   create_table "group_participations", :force => true do |t|
     t.column "group_id", :integer
     t.column "page_id",  :integer
     t.column "access",   :integer
   end
+
+  add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
 
   create_table "groups", :force => true do |t|
     t.column "name",            :string
@@ -100,18 +126,14 @@ ActiveRecord::Schema.define(:version => 49) do
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
-
-  create_table "groups_to_networks", :force => true do |t|
-    t.column "group_id",     :integer
-    t.column "network_id",   :integer
-    t.column "council_id",   :integer
-    t.column "delegates_id", :integer
-  end
+  add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
 
   create_table "links", :id => false, :force => true do |t|
     t.column "page_id",       :integer
     t.column "other_page_id", :integer
   end
+
+  add_index "links", ["page_id", "other_page_id"], :name => "index_links_page_and_other_page"
 
   create_table "memberships", :force => true do |t|
     t.column "group_id",   :integer
@@ -119,6 +141,8 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "created_at", :datetime
     t.column "page_id",    :integer
   end
+
+  add_index "memberships", ["group_id", "user_id", "page_id"], :name => "index_memberships"
 
   create_table "messages", :force => true do |t|
     t.column "created_at",  :datetime
@@ -131,12 +155,15 @@ ActiveRecord::Schema.define(:version => 49) do
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
+  add_index "messages", ["sender_id"], :name => "index_messages_channel"
 
   create_table "page_tools", :force => true do |t|
     t.column "page_id",   :integer
     t.column "tool_id",   :integer
     t.column "tool_type", :string
   end
+
+  add_index "page_tools", ["page_id", "tool_id"], :name => "index_page_tools"
 
   create_table "pages", :force => true do |t|
     t.column "title",              :string
@@ -164,17 +191,17 @@ ActiveRecord::Schema.define(:version => 49) do
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
-
-  create_table "pictures", :force => true do |t|
-    t.column "comment",       :string
-    t.column "name",          :string
-    t.column "content_type",  :string
-    t.column "data",          :binary
-    t.column "created_by_id", :integer
-    t.column "created_at",    :datetime
-    t.column "thumb",         :binary
-    t.column "type",          :string
-  end
+  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
+  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
+  add_index "pages", ["group_id"], :name => "index_page_group_id"
+  add_index "pages", ["type"], :name => "index_pages_on_type"
+  add_index "pages", ["flow"], :name => "index_pages_on_flow"
+  add_index "pages", ["public"], :name => "index_pages_on_public"
+  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
+  add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
+  add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
+  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
+  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
 
   create_table "polls", :force => true do |t|
     t.column "type", :string
@@ -188,6 +215,8 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "description_html", :text
   end
 
+  add_index "possibles", ["poll_id"], :name => "index_possibles_poll_id"
+
   create_table "posts", :force => true do |t|
     t.column "user_id",       :integer
     t.column "discussion_id", :integer
@@ -200,15 +229,30 @@ ActiveRecord::Schema.define(:version => 49) do
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
   add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
 
+  create_table "ratings", :force => true do |t|
+    t.column "rating",        :integer,                :default => 0
+    t.column "created_at",    :datetime,                               :null => false
+    t.column "rateable_type", :string,   :limit => 15, :default => "", :null => false
+    t.column "rateable_id",   :integer,                :default => 0,  :null => false
+    t.column "user_id",       :integer,                :default => 0,  :null => false
+  end
+
+  add_index "ratings", ["user_id"], :name => "fk_ratings_user"
+  add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
+
   create_table "taggings", :force => true do |t|
     t.column "taggable_id",   :integer
     t.column "tag_id",        :integer
     t.column "taggable_type", :string
   end
 
+  add_index "taggings", ["taggable_type", "taggable_id"], :name => "fk_taggings_taggable"
+
   create_table "tags", :force => true do |t|
     t.column "name", :string
   end
+
+  add_index "tags", ["name"], :name => "tags_name"
 
   create_table "task_lists", :force => true do |t|
   end
@@ -222,10 +266,15 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "position",         :integer
   end
 
+  add_index "tasks", ["task_list_id"], :name => "index_tasks_task_list_id"
+  add_index "tasks", ["task_list_id", "completed", "position"], :name => "index_tasks_completed_positions"
+
   create_table "tasks_users", :id => false, :force => true do |t|
     t.column "user_id", :integer
     t.column "task_id", :integer
   end
+
+  add_index "tasks_users", ["user_id", "task_id"], :name => "index_tasks_users_ids"
 
   create_table "user_participations", :force => true do |t|
     t.column "page_id",       :integer
@@ -240,7 +289,17 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "viewed",        :boolean
     t.column "message_count", :integer,  :default => 0
     t.column "attend",        :boolean,  :default => false
+    t.column "notice",        :text
   end
+
+  add_index "user_participations", ["page_id"], :name => "index_user_participations_page"
+  add_index "user_participations", ["user_id"], :name => "index_user_participations_user"
+  add_index "user_participations", ["page_id", "user_id"], :name => "index_user_participations_page_user"
+  add_index "user_participations", ["viewed"], :name => "index_user_participations_viewed"
+  add_index "user_participations", ["watch"], :name => "index_user_participations_watch"
+  add_index "user_participations", ["star"], :name => "index_user_participations_star"
+  add_index "user_participations", ["resolved"], :name => "index_user_participations_resolved"
+  add_index "user_participations", ["attend"], :name => "index_user_participations_attend"
 
   create_table "users", :force => true do |t|
     t.column "login",                     :string
@@ -276,6 +335,9 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "comment",     :string
   end
 
+  add_index "votes", ["possible_id"], :name => "index_votes_possible"
+  add_index "votes", ["possible_id", "user_id"], :name => "index_votes_possible_and_user"
+
   create_table "wiki_versions", :force => true do |t|
     t.column "wiki_id",    :integer
     t.column "version",    :integer
@@ -284,6 +346,9 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "updated_at", :datetime
     t.column "user_id",    :integer
   end
+
+  add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
+  add_index "wiki_versions", ["wiki_id", "updated_at"], :name => "index_wiki_versions_with_updated_at"
 
   create_table "wikis", :force => true do |t|
     t.column "body",         :text
@@ -294,5 +359,8 @@ ActiveRecord::Schema.define(:version => 49) do
     t.column "locked_at",    :datetime
     t.column "locked_by_id", :integer
   end
+
+  add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
+  add_index "wikis", ["locked_by_id"], :name => "index_wikis_locked_by_id"
 
 end

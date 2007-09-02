@@ -204,8 +204,8 @@ class SocialUser < AuthenticatedUser
       ])
       network = Group.connection.select_values(%Q[
         SELECT groups.id FROM groups
-        INNER JOIN groups_to_networks ON groups.id = groups_to_networks.network_id
-        WHERE groups_to_networks.group_id IN (#{direct.join(',')})
+        INNER JOIN federations ON groups.id = federations.network_id
+        WHERE federations.group_id IN (#{direct.join(',')})
         AND (groups.type = 'Network')
       ])
     else
