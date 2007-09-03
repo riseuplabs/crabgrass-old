@@ -53,12 +53,13 @@ class Poll::Possible < ActiveRecord::Base
   # and very red if the score is low.
   def color
     rgb = {'r'=>255, 'g'=>255, 'b'=>255}
+    offset = (15 * (score.abs > 17 ? 17 : score.abs))
     if score < 0
-       rgb['g'] = rgb['g'] - (16*score.abs);
-       rgb['b'] = rgb['b'] - (16*score.abs);
+       rgb['g'] = rgb['g'] - offset;
+       rgb['b'] = rgb['b'] - offset;
     elsif score > 0
-       rgb['r'] = rgb['r'] - (16*score);
-       rgb['b'] = rgb['b'] - (16*score);
+       rgb['r'] = rgb['r'] - offset;
+       rgb['b'] = rgb['b'] - offset;
     else
       return "efefef"
     end
