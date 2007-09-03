@@ -72,6 +72,15 @@ tr.post-spacer-top td {line-height: 10px;}
 
 textarea.post_body {width: 100%}
 
+.star_post {
+  float: right;
+  margin-top: -20px;
+  display: none;
+}
+td:hover .star_post {
+  display: block;
+}
+
 /** page creation **/
 
 div.page-class {
