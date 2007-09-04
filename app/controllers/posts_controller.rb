@@ -46,20 +46,26 @@ class PostsController < ApplicationController
       return(render :action => 'destroy')
     end
   end
-
   
   def twinkle
     post = Post.find(params[:id])
-    rating = Rating.new(:rating => 1, :user_id => current_user.id)
-    @post.ratings << rating
+
+    # twinkle control doesn't disappear quickly enough,
+    # so store last_twinkled_post in the session to prevent
+    # double click from adding two twinkles
+    if post != session[:last_twinkled_post]
+      session[:last_twinkled_post] = post
+      rating = Rating.new(:rating => 1, :user_id => current_user.id)
+      @post.ratings << rating
+    end
   end
 
   def untwinkle
     post = Post.find(params[:id])
     Rating.delete_all(["rateable_id = ? AND user_id =?",
       @post.id, current_user.id])
+    session[:last_twinkled_post] = nil
   end
-
 
   def destroy
   end
@@ -74,7 +80,6 @@ class PostsController < ApplicationController
       return true
     end
   end
-    
 
 end
 

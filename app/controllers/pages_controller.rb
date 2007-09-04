@@ -230,9 +230,5 @@ class PagesController < ApplicationController
     @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
     true
   end
-
-
- 
-
   
 end
