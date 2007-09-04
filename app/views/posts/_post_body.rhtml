@@ -1,6 +1,7 @@
 <%
   edit_loading_id = "spinner-#{post.id}"
   stars = post.ratings.size
+  @page ||= post.discussion.page # in case @page is not already set
 -%>
 <% (1..stars).each do -%>
   <div style='background: url(/images/emblems/light-star-<%= rand(3) %>.png) no-repeat <%= rand(100) %>% <%= rand(100) %>%'>  
