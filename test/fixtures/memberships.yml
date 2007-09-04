@@ -17,9 +17,6 @@ one:
 
 # rainbows
 
-a:
-  group_id: 3
-  user_id: 4
 b:
   group_id: 3
   user_id: 5

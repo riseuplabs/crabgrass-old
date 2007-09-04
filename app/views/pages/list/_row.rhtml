@@ -32,7 +32,7 @@ we have user or group participation data (upart or gpart).
 </tr>
 <% if upart and upart.notice -%>
 <% upart.notice.each do |notice| -%>
-<%# next unless notice.is_a? Hash %>
+<% next unless notice.is_a? Hash %>
 <tr class="<%= color %> page_info" >
   <td></td><td></td>
   <td colspan='100'>

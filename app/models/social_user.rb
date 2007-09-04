@@ -138,6 +138,17 @@ class SocialUser < AuthenticatedUser
   has_many :peers, :class_name => 'User',
     :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})'
 
+  ##
+  ## TODO: this is a stub. may_pester?(entity) should return true if self
+  ## is able to pester the entity. The entity might be a group or a user.
+  ## What does it mean to pester? If true is returned, we assume that self
+  ## is able to do things that are potentially annoying to the other
+  ## person/group, like invite them to things, send them notices, etc.
+  ## 
+
+  def may_pester?(entity)
+    true
+  end
 
   ######################################################################
   ## Relationship to tags

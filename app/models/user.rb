@@ -100,6 +100,10 @@ class User < SocialUser
   #   :comment -- sometimes viewers can comment and sometimes only participates can.
   #
   # this is still a basic stub.
+  #
+  # :view should only return true if the user has access to view the page
+  # because of participation objects, NOT because the page is public.
+  #
   def may!(perm, page)
     upart = page.participation_for_user(self)
     return true if upart
@@ -113,25 +117,45 @@ class User < SocialUser
   ## this method is not called directly. instead, page.add(user)
   ## should be used.
   ##
-  def add_page(page, part_attributes)
+  def add_page(page, part_attrs)
+    part_attrs = part_attrs.dup
+    part_attrs[:notice] = [part_attrs[:notice]] if part_attrs[:notice]
     participation = page.participation_for_user(self)
     if participation
-      if part_attributes[:notice]
-        part_attributes[:notice] = [part_attributes[:notice]]
-        part_attributes[:viewed] = false
-        if participation.notice
-          part_attributes[:notice] += participation.notice
+      self.update_participation(participation, part_attrs)
+    else
+      self.create_participation(page, part_attrs)
+    end  
+    page.changed :users
+  end
+  ## called only by add_page
+  def update_participation(participation, part_attrs)
+    if part_attrs[:notice]        
+      part_attrs[:viewed] = false
+      if participation.notice
+        if repeat_notice?(participation.notice, part_attrs[:notice])
+          part_attrs[:notice] = participation.notice # don't repeat
+        else
+          part_attrs[:notice] += participation.notice
         end
       end
-      participation.update_attributes(part_attributes)
-    else
-      # user_participations.build doesn't update the pages.users
-      # until it is saved, so we use create instead
-      page.user_participations.create(part_attributes.merge(
-       :page_id => page.id, :user_id => id,
-       :resolved => page.resolved?))
-    end  
-    page.changed :users    # mark users as changed
+    end
+    participation.update_attributes(part_attrs)
+  end
+  ## called only by update_participation
+  def repeat_notice?(current_notices, new_notice)
+    new_notice = new_notice.first
+    current_notices.detect do |notice|
+      notice[:message] == new_notice[:message] and notice[:user_login] == new_notice[:user_login]
+    end
+  end
+  ## called only by add_page
+  def create_participation(page, part_attrs)
+    # user_participations.build doesn't update the pages.users
+    # until it is saved, so we use create instead
+    page.user_participations.create(part_attrs.merge(
+      :page_id => page.id, :user_id => id,
+      :resolved => page.resolved?))
   end
   
   def remove_page(page)

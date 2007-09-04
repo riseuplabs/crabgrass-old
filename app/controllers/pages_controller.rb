@@ -79,23 +79,34 @@ class PagesController < ApplicationController
 
   # send an announcement to users about this page.
   # in other words, send to their inbox.
+  # requires: login, view access
   def notify
     @errors = []; @infos = []
     params[:to].split(/\s+/).each do |name|
       next unless name.any?
       entity = Group.get_by_name(name) || User.find_by_login(name)
-      if entity
-        if entity.may?(:view, @page)
-          notice = params[:message] ? {:user_login => current_user.login, :message => params[:message], :time => Time.now} : nil
-          @page.add(entity.users, :notice => notice) if entity.instance_of? Group
-          @page.add(entity, :notice => notice) if entity.instance_of? User
-          @infos << name
-        else
-          @errors << "%s is not allowed to view this page." % entity.name
+      if entity.nil?
+        @errors << "'%s' is not the name of a group or a person." / name
+        next
+      end
+      if @page.public?
+        unless current_user.may_pester?(entity)
+          @errors << "%s is not allowed to notify %s.".t % [current_user.login, entity.name]
+          next
         end
       else
-        @errors << "'%s' is not the name of a group or a person." % name
+        unless entity.may?(:view, @page)
+          @errors << "%s is not allowed to view this page." / entity.name
+          next
+        end
       end
+      notice = params[:message] ? {:user_login => current_user.login, :message => params[:message], :time => Time.now} : nil
+      if entity.instance_of? Group
+        @page.add(entity.users - [current_user], :notice => notice) if entity.users.any?
+      elsif entity.instance_of? User
+        @page.add(entity, :notice => notice)
+      end
+      @infos << name
     end
   end
 
