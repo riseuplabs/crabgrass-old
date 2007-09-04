@@ -47,37 +47,24 @@ class PostsController < ApplicationController
     end
   end
   
-  def twinkle
-    post = Post.find(params[:id])
-
-    # twinkle control doesn't disappear quickly enough,
-    # so store last_twinkled_post in the session to prevent
-    # double click from adding two twinkles
-    if post != session[:last_twinkled_post]
-      session[:last_twinkled_post] = post
-      rating = Rating.new(:rating => 1, :user_id => current_user.id)
-      @post.ratings << rating
-    end
+  def twinkle   
+    @post.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, 1)
   end
 
   def untwinkle
-    post = Post.find(params[:id])
-    Rating.delete_all(["rateable_id = ? AND user_id =?",
-      @post.id, current_user.id])
-    session[:last_twinkled_post] = nil
-  end
-
-  def destroy
+    if rating = @post.ratings.find_by_user_id(current_user.id)
+      rating.destroy
+    end
   end
   
   def authorized?
     @post = Post.find(params[:id]) if params[:id]
-    #incorrect permissions for twinkling
-    # should only allow those in group to twinkle?
-    if @post and not params[:action] == 'twinkle' and not params[:action] == 'untwinkle' 
-      return current_user == @post.user
+    return true unless @post
+
+    if %w[twinkle untwinkle].include? params[:action]
+      return current_user.may?(:comment, @post.discussion.page)
     else
-      return true
+      return current_user.id == @post.user_id
     end
   end
 

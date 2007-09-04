@@ -14,7 +14,7 @@
         :loading => "Element.show('#{edit_loading_id}')" %>
   </div>
 <% end -%>
-<% if logged_in? and post.user_id != current_user.id -%> 
+<% if logged_in? and post.user_id != current_user.id and current_user.may?(:comment,@page)-%> 
   <div class='star_post'>
   <% if not post.rated_by_user?(current_user) -%>
       <%= link_to_remote image_tag('actions/star-plus.png'), 
