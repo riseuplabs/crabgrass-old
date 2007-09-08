@@ -27,3 +27,7 @@ rescue LoadError => exc
   # i guess there is no syslog_logger
 end
 
+# bundled_assets plugin:
+# don't compress asset bundles (javascript and css) when in development mode.
+# otherwise, they will get recompressed on every page load!
+MAKE_ASSET_BUNDLES =  false

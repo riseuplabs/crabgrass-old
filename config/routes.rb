@@ -16,6 +16,9 @@ ActionController::Routing::Routes.draw do |map|
   # unobtrusive javascript
   #UJS::routes
   
+  # bundled_assets plugin:
+  map.connect 'bundles/:names.:ext', :controller => 'assets_bundle', :action => 'fetch', :ext => /css|js/, :names => /[^.]*/
+    
   map.connect 'me/requests/:action/*path', :controller => 'requests'
   map.connect 'me/inbox/*path', :controller => 'inbox', :action => 'index'
   map.connect 'me/search/*path', :controller => 'me', :action => 'search'

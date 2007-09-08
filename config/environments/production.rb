@@ -21,3 +21,7 @@ rescue LoadError => exc
   # i guess there is no syslog_logger
 end
 
+# bundled_assets plugin:
+# in production mode, compress css and js files and page cache the result
+MAKE_ASSET_BUNDLES = true
+

@@ -1,0 +1,46 @@
+= ASSETS_BUNDLE
+
+This plugin bundles up your CSS and Javascript files on the fly and caches 
+them using the regular Rails page caching mechanism.
+
+You can find more detailled information on this plugin in this article:
+http://www.artweb-design.de/2007/4/13/rails-plugin-blazing-fast-page-loads-through-bundled-css-and-javascript
+
+For benchmarks and detailled explanations of this concept see:
+
+http://www.sitepoint.com/blogs/2007/04/10/faster-page-loads-bundle-your-css-and-javascript/
+http://rakaz.nl/item/make_your_pages_load_faster_by_combining_and_compressing_javascript_and_css_files
+
+The plugin uses 
+
+* Ruby Javascript Minifier created by Douglas Crockford (http://www.crockford.com/javascript/jsmin.html)
+* Code from Asset_Packager created by Scott Becker (http://sbecker.net/shared/plugins/asset_packager)
+
+== Installation
+
+Drop the plugin in your vendor/plugin directory (e.g. using script/plugin 
+install [...])
+
+Add the following route to your routes setup:
+
+  map.connect 'bundles/:names.:ext', :controller => 'assets_bundle', :action => 'fetch', :ext => /css|js/, :names => /[^.]*/
+
+That's it. Don't forget to restart your server.
+
+== Usage
+
+After installing the plugin you can use it by accessing URLs like:
+
+http://example.com/bundles/one,two,three.css
+http://example.com/bundles/one,two,three.js
+
+one, two, three should (if they don't, they are ignored) correspond to either 
+a file or subdirectory under public/stylesheets or public/javascripts 
+respectively. If they correspond to a subdirectory, all CSS or Javascript files
+in this directory and recursively all of its subdirectories will be merged
+into the bundle.
+
+E.g. there are the following tags on my blog (http://www.artweb-design.de)
+
+<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type=d"text/css" media="screen" charset="utf-8" />
+<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>

@@ -31,7 +31,6 @@ FLOW = {
  :contacts => '2',
 }.freeze
 
-
 Rails::Initializer.run do |config|
   config.load_paths += %w(associations discussion chat).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
