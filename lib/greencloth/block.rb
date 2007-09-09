@@ -4,6 +4,8 @@ module Block
 
   private
   
+  
+  
   #####################################################
   # BLOCK FILTERS
   #
@@ -79,6 +81,107 @@ module Block
         imgtag = bypass_filter("<img src='/latex/#{url}.png'>")
         "\n<p>#{imgtag}</p>\n"
       end
+    end
+  end
+
+  #
+  # Regular expressions to convert to HTML.
+  #
+  A_HLGN = /(?:(?:<>|<|>|\=|[()]+)+)/
+  A_VLGN = /[\-^~]/
+  C_CLAS = '(?:\([^)]+\))'
+  C_LNGE = '(?:\[[^\]]+\])'
+  C_STYL = '(?:\{[^}]+\})'
+  S_CSPN = '(?:\\\\\d+)'
+  S_RSPN = '(?:/\d+)'
+  A = "(?:#{A_HLGN}?#{A_VLGN}?|#{A_VLGN}?#{A_HLGN}?)"
+  S = "(?:#{S_CSPN}?#{S_RSPN}|#{S_RSPN}?#{S_CSPN}?)"
+  C = "(?:#{C_CLAS}?#{C_STYL}?#{C_LNGE}?|#{C_STYL}?#{C_LNGE}?#{C_CLAS}?|#{C_LNGE}?#{C_STYL}?#{C_CLAS}?)"  
+  TABLE_RE = /^(?:table(_?#{S}#{A}#{C})\. ?\n)?^(#{A}#{C}\.? ?\|.*?\|)(\n\n|\Z)/m
+  
+  # Parses Textile attribute lists and builds an HTML attribute string
+  def pba( text_in, element = "", default_class='' )
+    return '' unless text_in
+
+    style = []
+    text = text_in.dup
+    if element == 'td'
+      colspan = $1 if text =~ /\\(\d+)/
+      rowspan = $1 if text =~ /\/(\d+)/
+      style << "vertical-align:#{ v_align( $& ) };" if text =~ A_VLGN
+    end
+
+    style << "#{ $1 };" if not filter_styles and
+      text.sub!( /\{([^}]*)\}/, '' )
+
+    lang = $1 if
+      text.sub!( /\[([^)]+?)\]/, '' )
+
+    cls = $1 if
+      text.sub!( /\(([^()]+?)\)/, '' )
+                        
+    style << "padding-left:#{ $1.length }em;" if
+      text.sub!( /([(]+)/, '' )
+
+    style << "padding-right:#{ $1.length }em;" if text.sub!( /([)]+)/, '' )
+
+    style << "text-align:#{ h_align( $& ) };" if text =~ A_HLGN
+
+    cls, id = $1, $2 if cls =~ /^(.*?)#(.*)$/
+    
+    cls = default_class if cls.to_s.empty? and default_class.any?
+    
+    atts = ''
+    atts << " style=\"#{ style.join }\"" unless style.empty?
+    atts << " class=\"#{ cls }\"" unless cls.to_s.empty?
+    atts << " lang=\"#{ lang }\"" if lang
+    atts << " id=\"#{ id }\"" if id
+    atts << " colspan=\"#{ colspan }\"" if colspan
+    atts << " rowspan=\"#{ rowspan }\"" if rowspan
+    
+    atts
+  end
+
+  # Parses a Textile table block, building HTML from the result.
+  def block_textile_table( text ) 
+    text.gsub!( TABLE_RE ) do |matches|
+
+      tatts, fullrow = $~[1..2]
+      tatts = pba( tatts, 'table' )
+      tatts = shelve( tatts ) if tatts
+      rows = []
+
+      odd = true
+      fullrow.
+        split( /\|$/m ).
+        delete_if { |x| x.empty? }.
+        each do |row|
+          default_class = odd ? 'odd' : 'even'
+          if row =~ /^(#{A}#{C}\. )(.*)/m
+            ratts, row = pba( $1, 'tr', default_class ), $2
+          else
+            ratts = " class=\"#{default_class}\""
+          end
+          
+          cells = []
+          row.split( '|' ).each do |cell|          
+            ctyp = 'd'
+            ctyp = 'h' if cell =~ /^_/
+
+            catts = ''
+            catts, cell = pba( $1, 'td'), $2 if 
+              cell =~ /^(_?#{S}#{A}#{C}\. ?)(.*)/
+            
+            unless cell.strip.empty?
+              catts = shelve( catts ) if catts
+              cells << "\t\t\t<t#{ ctyp }#{ catts }>#{ cell }</t#{ ctyp }>" 
+            end
+          end
+          ratts = shelve( ratts ) if ratts
+          rows << "\t\t<tr#{ ratts }>\n#{ cells.join( "\n" ) }\n\t\t</tr>"
+          odd = !odd
+        end
+      "\t<table#{ tatts }>\n#{ rows.join( "\n" ) }\n\t</table>\n\n"
     end
   end
   

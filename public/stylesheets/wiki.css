@@ -60,3 +60,23 @@ ins.diffmod, ins.diffins {
 div.wiki > h1:first-child {
   margin-top: 0;
 }
+
+/** inline table formatting */
+
+.wiki table {
+  border-collapse: collapse;
+}
+.wiki td, .wiki th {
+  padding: 4px;
+  border: 1px solid #CCC;
+}
+.wiki tr.odd {
+  background-color: #F2F2F2;
+}
+.wiki tr.even {
+ background-color: white;
+}
+.wiki th {
+  background: #ddd;
+}
+

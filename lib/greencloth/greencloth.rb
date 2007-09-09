@@ -11,6 +11,18 @@ module Greencloth; end
 
 class GreenCloth < RedCloth
 
+    A_HLGN = /(?:(?:<>|<|>|\=|[()]+)+)/
+    A_VLGN = /[\-^~]/
+    C_CLAS = '(?:\([^)]+\))'
+    C_LNGE = '(?:\[[^\]]+\])'
+    C_STYL = '(?:\{[^}]+\})'
+    S_CSPN = '(?:\\\\\d+)'
+    S_RSPN = '(?:/\d+)'
+    A = "(?:#{A_HLGN}?#{A_VLGN}?|#{A_VLGN}?#{A_HLGN}?)"
+    S = "(?:#{S_CSPN}?#{S_RSPN}|#{S_RSPN}?#{S_CSPN}?)"
+    C = "(?:#{C_CLAS}?#{C_STYL}?#{C_LNGE}?|#{C_STYL}?#{C_LNGE}?#{C_CLAS}?|#{C_LNGE}?#{C_STYL}?#{C_CLAS}?)"
+
+
   include Greencloth::Util
   include Greencloth::Inline
   include Greencloth::Block
