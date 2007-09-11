@@ -1,0 +1,11 @@
+<% 1.upto(3) do |n| %>
+<% event_name = "event#{n}" %>
+<%= event_name %>:
+  id: <%= n %>
+  description: <%= event_name %> description
+  description_html: <p><%= event_name %> description</p>
+  is_all_day: false
+  is_cancelled: false
+  is_tentative: false
+  location: <%= event_name %> location
+<% end %>

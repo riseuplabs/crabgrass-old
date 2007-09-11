@@ -1,0 +1,6 @@
+  <div class='checkbox'>
+    <%= check_box_tag("not_user_participation") %>
+
+    <%= spinner('not_attending_watching') -%> <label for='not_user_participation'>not attending or watching?</label>
+    <%= observe_field 'not_user_participation', :url => page_xurl(@page, :action => 'participate'), :before => "Element.hide('not_user_participation');" + show_spinner('not_attending_watching'), :complete => "Element.hide('#{spinner_id('not_attending_watching')}'); Element.show('not_user_participation');" %>
+  </div>

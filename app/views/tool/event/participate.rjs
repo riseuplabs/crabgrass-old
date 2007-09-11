@@ -1,0 +1,5 @@
+
+# update the watchers and attendies divs with the  partial
+page.replace_html "watchers", :partial => 'watchers', :locals => {:watchers => @watchers}
+page.replace_html "attendies", :partial => 'attendies', :locals => {:attendies => @attendies}
+
