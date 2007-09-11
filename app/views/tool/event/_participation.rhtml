@@ -1,0 +1,31 @@
+<table cellpadding='4'>
+<tr>
+<td>
+
+  <div class='checkbox'>
+    <%= check_box(:user_participation, :watch) %>
+
+    <%= spinner('watching') -%> <label for='user_participation_watch'>watching?</label>
+    <%= observe_field 'user_participation_watch', :url => page_xurl(@page, :action => 'participate'), :with => "'user_participation_watch=' + escape(value)" , :before => "Element.hide('user_participation_watch');" + show_spinner('watching'), :complete => "Element.hide('#{spinner_id('watching')}'); Element.show('user_participation_watch'); " %>
+    <ul id ="watchers" >
+	<% @watchers.each do |w| %>
+	<li><%= "<b>" if w.user_id == @current_user.id -%><%=  User.find(w.user_id).display_name  -%><%= "</b>" if w.user_id == @current_user.id -%></li>
+    <% end %>
+    </ul>
+    </div>
+
+    <div class='checkbox'>
+      <%= check_box(:user_participation, :attend) %>
+
+      <%= spinner('attending') -%> <label for='user_participation_attend'>attending?</label>
+      <%= observe_field 'user_participation_attend', :url => page_xurl(@page, :action => 'participate'), :with => "'user_participation_attend=' + escape(value)", :before => "Element.hide('user_participation_attend');" + show_spinner('attending'), :complete => "Element.hide('#{spinner_id('attending')}'); Element.show('user_participation_attend');" %>
+      <ul id ="attendies" >
+	<% for a in @attendies -%>
+	<li><%= "<b>" if a.user_id == @current_user.id -%><%= User.find(a.user_id).display_name -%><%= "</b>" if a.user_id == @current_user.id -%></li>
+    <% end -%>
+    </ul>
+  </div>
+
+  </td>
+</tr>
+</table>

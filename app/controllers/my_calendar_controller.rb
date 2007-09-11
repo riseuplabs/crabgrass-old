@@ -1,10 +1,12 @@
 class MyCalendarController < ApplicationController
   layout 'me'
  
-  def index 
-    options = options_for_me( :public )
-    path = '/type/event/descending/starts_at/starts/year/2007'
-     @events = find_pages options, path
+  def index(year=nil,month=nil,day=nil) 
+    options = options_for_me( )
+    if year.nil? and month.nil? and day.nil? then
+      path = '/type/event/ascending/starts_at/starts/year/' + Time.now.year.to_s
+    end
+    @events = find_pages options, path
   end
 
   protected
@@ -23,5 +25,6 @@ class MyCalendarController < ApplicationController
     me_context('large')
     add_context 'inbox'.t, url_for(:controller => 'inbox', :action => 'index')
   end
+  
   
 end

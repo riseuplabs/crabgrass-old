@@ -76,3 +76,45 @@ tasklist2:
   data_type: Task::TaskList
   data_id: 2
   created_by_id: 1
+event1:
+  id: 23
+  title : an event
+  starts_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  type: Tool::Event
+  data_type: Event
+  data_id: 1
+  created_by_id: 9
+  updated_by_id: 9
+  group_id: <%= 3 %>
+  group_name: rainbow
+  updated_at: "<%= updated.days.ago.to_s(:db) %>"
+  created_at: "<%= created.days.ago.to_s(:db) %>"
+event2:
+  id: 24
+  title : other event
+  starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  type: Tool::Event
+  data_type: Event
+  data_id: 2
+  created_by_id: 9
+  updated_by_id:  9
+  group_id: <%= 3 %>
+  group_name: rainbow
+  updated_at: "<%= updated.days.ago.to_s(:db) %>"
+  created_at: "<%= created.days.ago.to_s(:db) %>"
+event3:
+  id: 25
+  title : one other event
+  starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+  type: Tool::Event
+  data_type: Event
+  data_id: 3
+  created_by_id: 4
+  updated_by_id:  4
+  group_id: <%= 3 %>
+  group_name: rainbow
+  updated_at: "<%= updated.days.ago.to_s(:db) %>"
+  created_at: "<%= created.days.ago.to_s(:db) %>"

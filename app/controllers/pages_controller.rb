@@ -77,6 +77,7 @@ class PagesController < ApplicationController
     render :text => '', :layout => 'application'
   end
 
+
   # send an announcement to users about this page.
   # in other words, send to their inbox.
   # requires: login, view access

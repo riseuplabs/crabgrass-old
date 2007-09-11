@@ -1,4 +1,4 @@
-<% for i in 1..20 %>
+<% for i in 1..25 %>
 grouppage_<%=i%>:
   page_id: <%= i %>
   group_id: <%= 3 %>

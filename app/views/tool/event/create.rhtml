@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td></td>
-	<td><b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('is_all_day').checked) {$('to').hide();} else {$('to').show();}") %></td>
+	<td><b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('event_is_all_day').checked) {$('to').hide();} else {$('to').show();}") %></td>
 </tr>
 <!-- <tr>
 	<td></td>
@@ -35,22 +35,16 @@
 <tr>
   <td align='right'><b>description</b></td>
   <td>
+
 	  <%= text_area 'event', 'description', :rows => 10, :cols => 50 %>
   </td>
-</tr>
-<!-- Public, Private, Group-->
-<tr>
-	<td><b>this event is</b></td>
-	<td><%# select('event', 'privacy_drop',[['private',0],['public',1], ['group',2]],  {:onchange => "if ($('event_privacy_drop').value == 2) {$('event_group_id').show()} else {$('event_group_id').hide()}"}) %>
-	</td>
 </tr>
 <!-- Which group-->
 --<div id="group">
 <tr>
 	<td><b>groups</b></td>
 	<td>
-	 <%= select_tag 'group_id', options_for_select([['','']] + current_user.all_groups.to_select(:name), params[:group_id]) %>
-	<%# select('event', 'group_id', current_user.groups.to_select(:name)) %></td>
+	 <%= select_tag 'group_id', options_for_select([['','']] + current_user.all_groups.to_select(:name), params[:group_id]) %></td>
 </tr>
 </div>
 <tr>

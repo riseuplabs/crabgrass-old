@@ -14,7 +14,7 @@
 <%= submit_tag 'Search' %>
 </p>
 
-<%= select_tag 'search[type]', options_for_select([['all page types',''],['discussions','discussion'],['wikis','wiki'],['polls','poll'],['task lists','task'], ['files','asset']], parsed.arg_for('type') ) %>
+<%= select_tag 'search[type]', options_for_select([['all page types',''],['discussions','discussion'],['wikis','wiki'],['polls','poll'],['task lists','task'], ['files','asset'], ['events', 'event']], parsed.arg_for('type') ) %>
 
 <% if users -%>
 <%= select_tag 'search[person]', "<option value=''>all people</option>"+

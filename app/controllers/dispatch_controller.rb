@@ -46,7 +46,7 @@ class DispatchController < ApplicationController
     end
   end
 
-  private
+   private
   
   #
   # attempt to find a page by its name, and return a new instance of the

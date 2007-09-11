@@ -1,11 +1,11 @@
 <table cellpadding='4'>
 <tr>
   <td align='right'><b><%='starts at'.t %>:</b></td>
-  <td><%= friendly_date @page.starts_at %></td>
+  <td><%= full_time @page.starts_at %></td>
 </tr>
 <tr>
-  <td align='right'><b><%='ends at'.t %>:</b></td>
-  <td><%= friendly_date @page.ends_at %></td>
+  <td align='right'><b><%= if !@event.is_all_day then 'ends at'.t+' :' else 'all day event'.t end%></b></td>
+  <td><%= if !@event.is_all_day then full_time @page.ends_at end%></td>
 </tr>
 <tr>
   <td align='right'><b><%='place'.t %>:</b></td>
@@ -13,6 +13,13 @@
 </tr>
 <tr>
   <td align='right'><b><%='description'.t %>:</b></td>
-  <td><%= @event.description_html %></td>
+  <td>
+	  <%= in_place_editor_field :event, :description, { :url => page_xurl(@page, :action => 'set_event_description') } %>
+  </td>
+</tr>
+<tr>
+<td>
+	 <%= render :partial => 'participation' %>
+ </td>
 </tr>
 </table>

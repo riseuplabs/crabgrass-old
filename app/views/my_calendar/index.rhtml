@@ -1,11 +1,23 @@
+<!-- by default this only shows my events, the ones i watch or attend -->
 
+<h1>My Events</h1>
 
-<ul>
-<% if @events.any? -%>
-<% @events.each do |event| -%>
-<li>
-<%= link_to event.title ,page_url(event) %>
-</li>
-<% end -%>
-<% end -%>
-</ul>
+Show: All, Only Watching, Only Attending
+
+<table class="my_event_list">
+	<% if @events.any? -%>
+	<% @events.each do |event| -%>
+	<tr>
+		<td><b><%= friendly_date event.starts_at %></b></td>
+		<td><%# location %></td>
+		<td><%= link_to event.title, page_url(event) %></td>
+	</tr>
+	<% end -%>
+	<% end -%>
+</table>
+
+<%= link_to "all the events".t , page_url(:controller => 'my_calendar', :action => 'index', :year => 2007)%>
+
+<!--  things to add :
+ 	paginate
+	filter by watching, attending, all-->

@@ -9,7 +9,7 @@ c:
   user_id: 5
 
 # 20 pages
-<% for i in 1..20 %>
+<% for i in 1..25 %>
   <% people = (1..15).to_a.sort{rand(2)} %>
   # each page has 5 people
   <% for j in 1..5 %>
