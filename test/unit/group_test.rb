@@ -7,12 +7,13 @@ class GroupTest < Test::Unit::TestCase
     g = Group.create :name => 'fruits'
     u = users(:blue)
     assert_equal 0, g.users.size, 'there should be no users'
-    g.users << u
-    assert_equal 1, g.users.size, 'there should be one user'
-
+	assert_raises(Exception, '<< should raise exception not allowed') do
+      g.users << u
+	end
+	g.memberships.create :user => u
     g.memberships.create :user_id => users(:red).id, :page_id => 1
-    g.reload
-    assert_equal 2, g.users.size, 'there should be two users'
+
+    assert u.member_of?(g), 'user should be member of group'
     
     g.memberships.each do |m|
       m.destroy

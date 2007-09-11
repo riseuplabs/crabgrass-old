@@ -84,8 +84,12 @@ class Group < ActiveRecord::Base
     
   has_many :memberships, :dependent => :delete_all,
     :after_add => :membership_changed, :after_remove => :membership_changed  
-  has_many :users, :through => :memberships
-
+  has_many :users, :through => :memberships do
+    def <<(*dummy)
+      raise Exception.new("don't call << on group.users");
+    end
+  end
+  
   def user_ids
     @user_ids ||= memberships.collect{|m|m.user_id}
   end

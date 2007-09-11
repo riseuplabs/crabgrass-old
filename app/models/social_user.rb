@@ -54,7 +54,11 @@ class SocialUser < AuthenticatedUser
     :after_add => :update_membership_cache,
     :after_remove => :update_membership_cache
     
-  has_many :groups, :foreign_key => 'user_id', :through => :memberships
+  has_many :groups, :foreign_key => 'user_id', :through => :memberships do
+    def <<(*dummy)
+      raise Exception.new("don't call << on user.groups");
+    end
+  end
     
   # all groups, including groups we have indirect access to (ie committees and networks)
   has_many :all_groups, :class_name => 'Group',

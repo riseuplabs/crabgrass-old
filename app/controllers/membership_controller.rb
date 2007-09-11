@@ -24,7 +24,7 @@ class MembershipController < ApplicationController
     
     unless @group.users.any?
       # if the group has no users, then let the first person join.
-      @group.users << current_user
+      @group.memberships.create :user => current_user
       message :success => 'You are the first person in this group'
       redirect_to :action => 'show', :id => @group
       return

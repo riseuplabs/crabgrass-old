@@ -26,11 +26,6 @@
   <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %>
 </div>
 <% end -%>
-<% if @group.users.size == 1 and current_user.direct_member_of? @group -%>
-<div class='sidelink'>
-  <%= post_to "destroy #{@group_type}", group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this #{@group_type}?" %>
-</div>
-<% end -%> 
 <% end -%>
 <div class='sidetail'></div>
 </div>

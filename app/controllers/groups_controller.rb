@@ -97,7 +97,7 @@ class GroupsController < ApplicationController
     if request.post?
       if @group.save
         message :success => 'Group was successfully created.'
-        @group.users << current_user 
+        @group.memberships.create :user => current_user
         redirect_to url_for_group(@group)
       else
         message :object => @group
@@ -143,98 +143,6 @@ class GroupsController < ApplicationController
   def update
     @group.update_attributes(params[:group])
     redirect_to :action => 'show', :id => @group
-  end
-
-  # an action to define the membership of a group. 
-  # allows you to add people, remove them, see their status, invite people.
-  def members
-    if request.post?
-      if @group.committee? and params[:group]
-        new_ids = params[:group][:user_ids]
-        @group.memberships.each do |m|  
-          m.destroy if m.user.member_of?(@group.parent) and not new_ids.include?(m.user_id.to_s)
-        end
-        new_ids.each do |id|
-          next unless id.any?
-          u = User.find(id)
-          @group.memberships.create(:user => u) if u.member_of?(@group.parent) and not u.direct_member_of?(@group)
-        end
-        message :success => 'member list updated'
-        redirect_to url_for_group(@group, :action => 'members')
-      end
-    end
-  end
-  
-
-  def invite
-    return(render :action => 'members') unless request.post?
-    wrong = []
-    sent = []
-    params[:users].split(/\s/).each do |login|
-      next if login.empty?
-      if user = User.find_by_login(login)
-        page = Page.make :invite_to_join_group, :group => @group, :user => user, :from => current_user
-        page.save
-        sent << login
-      else
-        wrong << login
-      end
-    end
-    if wrong.any?
-      message :later => true, :error => "These invites could not be sent because the user names don't exist: " + wrong.join(', ')
-    elsif sent.any?
-      message :success => 'Invites sent: ' + sent.join(', ')
-    end
-    redirect_to :action => 'members', :id => @group
-  end
-  
-  # post only
-  def add_user
-    user = User.find_by_login params[:login]
-    page = Page.make :invite_to_join_group, :user => user, :group => @group, :from => current_user
-    if page.save
-      message :success => "Invitation sent"
-      redirect_to group_url(:action => 'edit', :id => group)
-    else
-      message :object => page
-      render :action => 'edit'
-    end
-  end
-  
-  # post only
-  def remove_user
-    user = User.find_by_login params[:login]
-    @group.users.delete(user)
-    message :success => 'User %s removed from group %s'.t % [user.login, @group.name]
-    redirect_to group_url(:action => 'edit', :id => @group)
-  end
-  
-  # post only
-  def join_group
-    unless @group.users.any?
-      # if the group has no users, then let the first person join.
-      @group.users << current_user
-      message :success => 'You are the first pers:rows => 8, :cols => 60on in this group'
-      redirect_to :action => 'show', :id => @group
-      return
-    end
-    page = Page.make :request_to_join_group, :user => current_user, :group => @group
-    if page.save
-      message :success => 'Your request to join this group has been sent.'
-      page = Page.make :join_sent_notice, :user => current_user, :group => @group
-      page.save
-      redirect_to group_url(:action => 'show', :id => @group)
-    else
-      message :object => page
-      render :action => 'show'
-    end
-  end
-  
-  # post only
-  def leave_group
-    current_user.groups.delete(@group)
-    message :success => 'You have been removed from %s' / @group.name
-    redirect_to me_url
   end
   
   # post only
