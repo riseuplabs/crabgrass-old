@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 56) do
+ActiveRecord::Schema.define(:version => 57) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -83,6 +83,17 @@ ActiveRecord::Schema.define(:version => 56) do
   end
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
+
+  create_table "event_recurrencies", :force => true do |t|
+    t.column "event_id",          :integer
+    t.column "start",             :datetime
+    t.column "end",               :datetime
+    t.column "type",              :string
+    t.column "day_of_the_week",   :string
+    t.column "day_of_the_month",  :string
+    t.column "month_of_the_year", :string
+    t.column "created_at",        :datetime, :null => false
+  end
 
   create_table "events", :force => true do |t|
     t.column "description",      :text

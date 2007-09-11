@@ -25,7 +25,6 @@ class Tool::EventController < Tool::BaseController
 	    @page.starts_at = params[:time_start]
 	    @page.ends_at = params[:time_end]
 	    @event = ::Event.new params[:event]
-	    breakpoint
 	    @page.data = @event
 	    if @page.save
 		   return redirect_to page_url(@page)
@@ -41,14 +40,19 @@ class Tool::EventController < Tool::BaseController
 
  def participate
    @user_participation = UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})
-   if params[:user_participation_attend].nil? 
+   if !params[:user_participation_watch].nil? 
      @user_participation.watch = params[:user_participation_watch]
      @user_participation.attend = false
-   else if params[:user_participation_watch].nil?
-       @user_participation.watch = false
-       @user_participation.attend = params[:user_participation_attend]
-     end
-   end
+   else
+	   if !params[:user_participation_attend].nil?
+	       @user_participation.watch = false
+	       @user_participation.attend = params[:user_participation_attend]
+	   else
+		@user_participation.watch = false
+		@user_participation.attend = false
+		# remove the user participation from the table?
+	   end
+    end
 
    @user_participation.save
    render:nothing => true

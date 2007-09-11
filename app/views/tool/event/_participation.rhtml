@@ -26,6 +26,8 @@
     </ul>
   </div>
 
-  </td>
+  <%= render :partial => 'not_user_participation' if (@user_participation.watch or @user_participation.attend) -%>
+
+</td>
 </tr>
 </table>

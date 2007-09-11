@@ -20,14 +20,15 @@
 	<td></td>
 	<td><b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('event_is_all_day').checked) {$('to').hide();} else {$('to').show();}") %></td>
 </tr>
-<!-- <tr>
+ <tr>
 	<td></td>
 	<td><b>repeats</b>
-		#<= select_tag('repeaat_drop', options_for_select('daily','weekly')) %>
+
+<%= select_tag('repeat_drop', options_for_select([['does not repeat',  0], ['daily',1],['weekly',2], ['monthly',3],[ 'yearly',4]])) %>
 	
 	</td>
 </tr>
--->
+
 <tr>
 	<td align='right'><b>where</b></td>
 	<td><%= text_field 'event', 'location', :size =>40 %>
