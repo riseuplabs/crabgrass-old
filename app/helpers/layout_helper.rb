@@ -33,7 +33,7 @@ module LayoutHelper
   end
     
   #########################################
-  # SIDEBAR
+  # SIDEBAR 
   
   def leftbar 
     @leftbar ? "<div id='leftbar'>\n#{render :partial => @leftbar}</div>\n" : ''
@@ -68,6 +68,22 @@ module LayoutHelper
     else
       controller.class.stylesheet # set for this controller
     end
+  end
+  
+  def http_plain
+    'http://' + controller.request.host_with_port
+  end
+  
+  ############################################
+  # JAVASCRIPT
+  
+  def need_extra_javascript?
+    #@javascript_extra
+    true
+  end
+
+  def get_unobtrusive_javascript
+    controller.get_unobtrusive_javascript
   end
   
   ############################################

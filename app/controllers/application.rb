@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     read_inheritable_attribute "stylesheet"
   end
   
+  def get_unobtrusive_javascript
+    @js_behaviours.to_s
+  end
+  
   # rails lazy loading does work well with namespaced classes, so we help it along: 
   def get_tool_class(tool_class_str)
     klass = Module

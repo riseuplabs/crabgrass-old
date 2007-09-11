@@ -5,5 +5,6 @@ class AssetsBundleController < ActionController::Base
     bundle = AssetsBundle.new(params['names'], params['ext'])
     headers['Content-Type'] = bundle.content_type
     render :text => bundle.content || ''
-  end  
+  end
+  
 end

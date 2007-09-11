@@ -8,6 +8,8 @@
 
 ActionController::Routing::Routes.draw do |map|  
 
+  ##### ASSET ROUTES ######################################
+  
   map.with_options :controller => 'asset', :action => 'show' do |m|
     m.asset_version 'assets/:id/versions/:version/:filename.:format'
     m.assets 'assets/:id/:filename.:format'
@@ -17,8 +19,13 @@ ActionController::Routing::Routes.draw do |map|
   #UJS::routes
   
   # bundled_assets plugin:
-  map.connect 'bundles/:names.:ext', :controller => 'assets_bundle', :action => 'fetch', :ext => /css|js/, :names => /[^.]*/
-    
+  map.connect 'bundles/:version/:names.:ext', :controller => 'assets_bundle', :action => 'fetch', :ext => /css|js/, :names => /[^.]*/
+  
+  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
+  map.connect 'latex/*path', :action => 'show', :controller => 'latex'
+
+  ##### REGULAR ROUTES ####################################
+  
   map.connect 'me/requests/:action/*path', :controller => 'requests'
   map.connect 'me/inbox/*path', :controller => 'inbox', :action => 'index'
   map.connect 'me/search/*path', :controller => 'me', :action => 'search'
@@ -32,10 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|archive|calendar|search/
     
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
-      
-  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
-  map.connect 'latex/*path', :action => 'show', :controller => 'latex'
-      
+            
   map.connect '', :controller => "account"
   
   # used for ajax calls to make a direct request bypassing the dispatcher
@@ -44,8 +48,10 @@ ActionController::Routing::Routes.draw do |map|
   # typically, this is the default route
   map.connect ':controller/:action/:id'
  
-   # a generic route for tool controllers 
+  # a generic route for tool controllers 
   map.connect 'tool/:controller/:action/:id'
+
+  ##### DISPATCHER ROUTES ###################################
   
   # our default route is sent to the dispatcher
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil

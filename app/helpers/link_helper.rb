@@ -1,5 +1,7 @@
 module LinkHelper
-  
+
+# http://www.digital-web.com/articles/push_my_button/
+
 #
 # Here lies many helpers for making links and buttons.
 #

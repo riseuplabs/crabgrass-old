@@ -16,6 +16,8 @@ SECTION_SIZE = 29 # the default size for pagination sections
 ########################################################################
 
 
+#### ENUMERATIONS ##############
+
 # levels of page access
 ACCESS = {
  :admin => '1',
@@ -47,6 +49,8 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
 end
 
+
+
 #### SESSION HANDLING ##############
 
 #ActionController::Base.session_options[:session_expires] = 3.hours.from_now
@@ -66,6 +70,7 @@ require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
 require "#{RAILS_ROOT}/lib/extends_like_edge.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
+require "#{RAILS_ROOT}/lib/misc.rb"
 
 #### TOOLS #########################
 
@@ -79,6 +84,12 @@ TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
 #### ASSETS ########################
 
 #Asset.file_storage = "/crypt/files"
+
+# force a new css and javascript url whenever any of the said
+# files have a new mtime. this way, no need to expire
+# static cache of css and js.
+CSS_VERSION = max_mtime("#{RAILS_ROOT}/public/stylesheets/*.css")
+JAVASCRIPT_VERSION = max_mtime("#{RAILS_ROOT}/public/javascripts/*.js")
 
 #### TIME ##########################
 
