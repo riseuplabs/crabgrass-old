@@ -1,13 +1,14 @@
 class MyCalendarController < ApplicationController
   layout 'me'
  
-  def index(year=nil,month=nil,day=nil) 
+  def index
+    params[:participate] ||= "interesting"
     # by default all the events im watching or attending in the future
     options = options_for_me( )
-    if year.nil? and month.nil? and day.nil? then
-      path = '/type/event/ascending/starts_at/starts/year/' + Time.now.year.to_s
+    if params[:year].nil? and params[:month].nil? and params[:day].nil?
+      path = '/type/event/' + params[:participate] +'/ascending/starts_at/starts/year/' + Time.now.year.to_s
     else
-      path = '/type/event/ascending/starts_at/starts/year/' + year.to_s +'/' + month.to_s + '/' + day.to_s
+      path = '/type/event/' + params[:participate] + '/ascending/starts_at/starts/year/' + params[:year].to_s + '/' + params[:month].to_s + '/' +params[:day].to_s
     end
     @events = find_pages options, path
   end

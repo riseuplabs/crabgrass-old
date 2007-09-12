@@ -2,7 +2,7 @@
 
 <h1>My Events</h1>
 
-Show: All, Only Watching, Only Attending
+<b>Show events:</b> <%= link_to "All", {:action => "index"} %> | <%= link_to "Watching Only", {:action => "index", :participate => "watching"} %> | <%= link_to "Attending Only", {:action => "index", :participate => "attending"} %><br><br>
 
 <table class="my_event_list">
 	<% if @events.any? -%>
@@ -15,9 +15,3 @@ Show: All, Only Watching, Only Attending
 	<% end -%>
 	<% end -%>
 </table>
-
-<%= link_to "all the events".t , page_url(:controller => 'my_calendar', :action => 'index', :year => 2007)%>
-
-<!--  things to add :
- 	paginate
-	filter by watching, attending, all-->

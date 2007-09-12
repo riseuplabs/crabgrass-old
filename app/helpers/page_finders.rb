@@ -104,6 +104,9 @@ module PageFinders
     # conditions
     'unread' => 0,
     'pending' => 0,
+    'interesting' => 0,
+    'attending' => 0,
+    'watching' => 0,
     'starred' => 0,
     'stars' => 1,    
     'type' => 1,
@@ -168,7 +171,23 @@ module PageFinders
     end
     qb.values << false
   end
-  
+
+  def filter_interesting(qb)
+    qb.conditions << '(user_parts.watch = ? or user_parts.attend = ?)'
+    qb.values << true
+    qb.values << true
+  end
+
+  def filter_watching(qb)
+    qb.conditions << 'user_parts.watch = ?'
+    qb.values << true
+  end
+
+  def filter_attending(qb)
+    qb.conditions << 'user_parts.attend = ?'
+    qb.values << true
+  end
+
   def filter_starred(qb)
     if qb.table_class == UserParticipation
       qb.conditions << 'user_participations.star = ?'

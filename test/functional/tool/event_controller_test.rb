@@ -22,6 +22,22 @@ class Tool::EventControllerTest < Test::Unit::TestCase
     assert_equal num_pages + 1, Page.count
   end
 
+  def test_get_create
+    login_as :quentin
+    get :create, {:action => "create", "id"=>"event", "controller"=>"tool/event"}
+    assert_response :success
+    assert assigns(:event)
+    assert assigns(:page_class)
+    assert assigns(:event).new_record?
+  end
+
+  def test_create_login_required
+    get :create, {:action => "create", "id"=>"event", "controller"=>"tool/event"}
+    assert_response 302
+  end
+
+
   #starts_at < ends_at if all_day is false
+
   #
 end

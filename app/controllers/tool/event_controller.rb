@@ -2,6 +2,7 @@ require 'calendar_date_select'
 
 class Tool::EventController < Tool::BaseController
   append_before_filter :fetch_event
+  before_filter :login_required, :only => ['create', 'edit']
   
   #stylesheet 'event'
   

@@ -153,5 +153,16 @@ class PageStork
     page 
   end
   
+	def self.event(options)
+    user = options.delete(:user).cast! User
+    group = options.delete(:group).cast! Group
+    page = Tool::Event.new do |e|
+	e.title = options[:title]
+	e.created_by = user
+    end
+    page.add(group)
+    page
+  end
+	
 end
 
