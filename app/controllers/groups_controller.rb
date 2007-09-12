@@ -18,6 +18,19 @@ class GroupsController < ApplicationController
   verify :method => :post,
     :only => [ :destroy, :add_user, :remove_user, :join_group, :leave_group ]
 
+  def handle_rss
+    if params[:path].any? and (params[:path].last == 'rss' or params[:path].last == '.rss')
+      response.headers['Content-Type'] = 'application/rss+xml'
+#      @items = find_pages(options_for_group(@group),'/descending/updated_at/limit/10')
+      @title ||= @group.name
+      @description ||= @group.summary 
+      @link ||= url_for_group(@group)
+      @image ||= @group.avatar
+      render :partial => '/pages/rss', :locals => {:items => @pages}
+    end
+  end
+
+
   def list
     #@group_pages, @groups = paginate :groups, :per_page => 10, :conditions => 'type IS NULL'
     @groups = Group.find :all, :conditions => 'type IS NULL'
@@ -67,6 +80,8 @@ class GroupsController < ApplicationController
         @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
       end
     end
+
+    handle_rss
   end
 
   def tags

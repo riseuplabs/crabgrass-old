@@ -2,6 +2,16 @@ class MeController < ApplicationController
 
   append_before_filter :fetch_user
   
+  def handle_rss
+    if params[:path].any? and (params[:path].last == 'rss' or params[:path].last == '.rss')
+      response.headers['Content-Type'] = 'application/rss+xml'
+#      @items = find_pages(options_for_group(@group),'/descending/updated_at/limit/10')
+      @link ||= '/me'
+      @image ||= @user.avatar
+      render :partial => '/pages/rss', :locals => {:items => @pages}
+    end
+  end
+
   def index
     params[:path] = []
     dash
@@ -20,6 +30,7 @@ class MeController < ApplicationController
       else
         @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors_count]
       end
+      handle_rss
     end
   end
   
