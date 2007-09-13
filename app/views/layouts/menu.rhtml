@@ -1,29 +1,17 @@
 <%
-#
-#
-# also supports drop down menus, like this:
-#
-#  <li>menu title
-#    <ul>
-#      <li>menu item 1</li>
-#      <li>menu item 2</li>
-#    </ul>
-#  </li>
-#
-
-active = first_context()
-selected = 'class="selected"'
+  active = first_context()
+  selected = 'class="selected"'
 -%>
 
 <ul id="topmenu">
   <% if logged_in? -%>
   <li <%= selected if active == 'me' %> >
-    <span><%= link_to "Me", me_url %></span>
+    <span><%= link_to 'Me', '/me/dashboard' %></span>
     <ul>
-      <li><%= link_to 'inbox', me_url(:action => 'inbox'), :style => page_icon_style('inbox') %></li>
-      <li><%= link_to 'tasks', me_url(:action => 'tasks'), :style => page_icon_style('task-list') %></li>
-      <li><%= link_to 'search', me_url(:action => 'search'), :style => page_icon_style('search') %></li>
-      <li><%= link_to 'requests', url_for(:controller => 'requests'), :style => page_icon_style('request') %></li>
+      <li><%= link_to 'inbox', '/me/inbox', :style => page_icon_style('inbox') %></li>
+      <li><%= link_to 'tasks', '/me/tasks', :style => page_icon_style('task-list') %></li>
+      <li><%= link_to 'search', '/me/search', :style => page_icon_style('search') %></li>
+      <li><%= link_to 'requests', '/me/requests', :style => page_icon_style('request') %></li>
       <li><%= link_to 'new&nbsp;page', {:controller => 'pages', :action => 'create'}, :style => page_icon_style('add') %></li>
     </ul>
   </li>

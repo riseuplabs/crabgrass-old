@@ -13,9 +13,7 @@ class MeController < ApplicationController
   end
 
   def index
-    params[:path] = []
-    dash
-    render :action => 'dash'
+    redirect_to :action => 'dashboard'
   end
     
   def search
@@ -34,7 +32,7 @@ class MeController < ApplicationController
     end
   end
   
-  def dash
+  def dashboard
     options = options_for_pages_viewable_by(current_user, :flow => [:membership,:contacts])
     path = "/type/request/pending/not_created_by/#{current_user.id}"
     @request_count = count_pages(options, path)

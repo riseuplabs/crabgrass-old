@@ -1,8 +1,8 @@
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label 'Dashboard'
-    t.link me_url(:action => 'dash')
-    t.selected params[:controller] == 'me' && (params[:action] == 'dash' || params[:action] == 'index')
+    t.link me_url(:action => 'dashboard')
+    t.selected params[:controller] == 'me' && (params[:action] == 'dashboard' || params[:action] == 'index')
   end
   f.tab do |t|
     t.label 'Inbox'
