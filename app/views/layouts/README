@@ -1,0 +1,96 @@
+There are some things about this layout which might seem odd at first.
+Before you go ahead and make any big changes, read these notes:
+
+* The sidebar divs are inside the maincolumn for most layouts.
+  This is so the maincolumn will be forced to a height at least
+  as high as the sidebar (should the content be short).
+  There could be other ways to acheive this.
+  
+* The '#maincolumn > #content' div is floated in the same direction
+  as the sidebar. Why? Because we need to set up a new block
+  formatting context[1]. A new context will allow us to have content
+  that uses floats and clears without interacting with the sidebar.
+  content is also made 100%, so that it doesn't actually look floated.
+  Also, there is a clearing br at the end of 'div#content' that is
+  needed to keep the div from 'rolling up'.
+  
+[1] http://developer.mozilla.org/en/docs/CSS:block_formatting_context
+
+
+APPLICATION LAYOUT
+-------------------
+
+This is the structure of the layout defined in application.rhtml.
+Most other layouts are a nested version inside this layout.
+
+<body>
+  <div id='container'>               - a containing div with no formatting
+     <div id='masthead'</div>        - the very top above the top tabs
+     <div id='banner'></div>         - the custom user defined banner, if set.
+     <div id='main'>                 - everything below the banner, padding of 10px
+        <div id='message'></div>     - info and error messages
+        yield
+     </div>
+     <div id='footer'></div>
+  </div>
+</body>
+
+ME LAYOUT
+---------
+
+nested inside application layout
+
+<ul class='tabset'></ul>
+<div class='tabarea'>
+  yield
+</div>
+
+PAGE LAYOUT
+------------
+
+nested inside application layout
+
+<div id='maincolumn' class='rightbar'>
+  <div id='rightbar'>
+    <div class='sidesection'>
+      <div class='sidehead'></div>
+      <div class='sideline'></div>
+      ...
+    </div>
+    ...
+  </div>
+  <div id='content'>
+    <div id='titlebox'>
+      <div id='breadcrumbs'></div>
+    </div>
+    yield
+    <div id='posts'></div>
+  </div>
+  <br clear='all' />
+</div>
+
+
+GROUP LAYOUT
+------------
+
+nested inside application layout
+
+<div id='maincolumn' class='leftbar'>
+  <div id='leftbar'>
+    <div class='sidesection'>
+      <div class='sidehead'></div>
+      <div class='sideline'></div>
+      ...
+    </div>
+    ...
+  </div>
+  <div id='content'>
+    <div id='titlebox'>
+      <div id='breadcrumbs'></div>
+      <div id='title'></div>
+    </div>
+    yield
+  </div>
+  <br clear='all' />
+</div>
+

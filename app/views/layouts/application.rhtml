@@ -1,103 +1,4 @@
-<%#
-
-READ ME
-
-There are some things about this layout which might seem odd at first.
-Before you go ahead and make any big changes, read these notes:
-
-* The sidebar divs are inside the maincolumn for most layouts.
-  This is so the maincolumn will be forced to a height at least
-  as high as the sidebar (should the content be short).
-  There could be other ways to acheive this.
-  
-* The '#maincolumn > #content' div is floated in the same direction
-  as the sidebar. Why? Because we need to set up a new block
-  formatting context[1]. A new context will allow us to have content
-  that uses floats and clears without interacting with the sidebar.
-  content is also made 100%, so that it doesn't actually look floated.
-  Also, there is a clearing br at the end of 'div#content' that is
-  needed to keep the div from 'rolling up'.
-  
-[1] http://developer.mozilla.org/en/docs/CSS:block_formatting_context
-
-
-
-GLOBAL LAYOUT
-
-body
-  div#container         a containing div with no formatting
-    div#masthead        the very top above the top tabs
-    div#banner          the custom banner, if set.
-    div#main            everything below the banner, padding of 10px
-      div#message       info and error messages
-      yield
-    end#main
-    div#footer
-  end#container
-end#body
-
-
-GENERIC LAYOUT
-div#leftbar     
-div#maincolumn (.leftbar or .rightbar)
-  maybe sidebar
-  div#content
-    div#titlebox
-      div#breadcrumbs   breadcrumb paths
-    yield
-
-
-ME LAYOUT
-
-ul.tabset
-div.tabarea
-  ... yield ...
-end.tabarea
- 
-PAGE LAYOUT
-inherits application, plus...
-
-div#maincolumn.rightbar
-  div#rightbar
-    div.sidesection
-      div.sidehead
-      div.sideline
-  div#content
-    div#titlebox
-      div#breadcrumbs
-    yield
-    div#posts
-
-#div#pagearea
-#  div#title
-#  div#page
-#    div#sidebar
-#    div#pagebox
-#      ... yield ...
-#    div#posts
-
-
-GROUP LAYOUT
-inherits application, plus...
-
-div#leftbar     
-  div.sidesection
-    div.sidehead
-    div.sideline
-div#maincolumn.leftbar
-  div#content
-    div#titlebox
-      div#breadcrumbs
-    yield
-
-PERSON LAYOUT
-
-
-
-DIRECTORY LAYOUT
-
-
--%>
+<% # see README -%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/ DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -105,10 +6,10 @@ DIRECTORY LAYOUT
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <%= favicon %>
   <title><%=h title_from_context %></title>
-  <link rel="stylesheet" href="<%=http_plain%>/bundles/<%=CSS_VERSION%>/base.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/bundles/<%=CSS_VERSION%>/base.css" type="text/css" media="screen" charset="utf-8" />
   <%= stylesheet_link_tag stylesheet if stylesheet %>
-  <script type="text/javascript" src="<%=http_plain%>/bundles/<%=JAVASCRIPT_VERSION%>/base.js"></script>
-  <% if need_extra_javascript? %><script type="text/javascript" src="<%=http_plain%>/bundles/<%=JAVASCRIPT_VERSION%>/extra.js"></script><% end %>
+  <script type="text/javascript" src="/bundles/<%=JAVASCRIPT_VERSION%>/base.js"></script>
+  <% if need_extra_javascript? %><script type="text/javascript" src="/bundles/<%=JAVASCRIPT_VERSION%>/extra.js"></script><% end %>
   <script>
 <%# get_unobtrusive_javascript %>
   </script>
