@@ -74,12 +74,13 @@ tr.post-spacer-top td {line-height: 10px;}
 textarea.post_body {width: 100%}
 
 
-.star_post {
-  float: right;
-  margin-top: -20px;
+.post_action_icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
   display: none;
 }
-td:hover .star_post {
+td:hover .post_action_icon {
   display: block;
 }
 
