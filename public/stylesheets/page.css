@@ -61,6 +61,7 @@ td.post-body {
 td.post-body div.negativespace {
   margin: -1em 0;
 }
+.post-body p {overflow: auto;}
 tr.post td {
   vertical-align: top;
 }
@@ -71,6 +72,7 @@ tr.post-spacer-top td {line-height: 10px;}
 .shade-odd {background-color: #f3f3f3;} 
 
 textarea.post_body {width: 100%}
+
 
 .star_post {
   float: right;
