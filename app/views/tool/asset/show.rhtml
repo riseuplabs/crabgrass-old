@@ -13,6 +13,16 @@
   <td align='right'><b><%= 'created on'.t %>:</b></td>
   <td><%= full_time(@page.created_at) %></td>
 </tr>
+<% if @page.updated_at > @page.created_at -%>
+<tr>
+  <td align='right'><b><%= 'last updated by'.t %>:</b></td>
+  <td><%= h @page.updated_by.both_names %></td>
+</tr>
+<tr>
+  <td align='right'><b><%= 'last updated on'.t %>:</b></td>
+  <td><%= full_time(@page.updated_at) %></td>
+</tr>
+<% end -%>
 <tr>
   <td align='right'><b><%= 'file type'.t %>:</b></td>
   <td><%= @asset.content_type %></td>
