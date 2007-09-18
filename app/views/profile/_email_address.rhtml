@@ -1,5 +1,5 @@
 <% index ||= params[:index] || random_dom_id -%>
-<% dom_id = "person_email_address_#{index}" -%>
+<% dom_id = "profile_email_address_#{index}" -%>
 <% email_types_options = options_for_select(
      Profile::EmailAddress.options,
      (email_address ? email_address.email_type : nil)
@@ -7,13 +7,13 @@
 -%>
 <tr id="<%=dom_id%>" class='data_row'>
   <td>
-    <%= mark_as_primary(email_address, 'person', 'email_address', index) %>
+    <%= mark_as_primary(email_address, 'profile', 'email_address', index) %>
   </td>
   <td style="width:80px;">
-    <%= select_tag_with_id "person[email_addresses][#{index}][email_type]", email_types_options, {:id => "person_email_addresses_#{index}_email_type"} %>
+    <%= select_tag_with_id "profile[email_addresses][#{index}][email_type]", email_types_options, {:id => "profile_email_addresses_#{index}_email_type"} %>
   </td>
   <td>
-    <input id="person_email_addresses_<%= index %>_email_address" size="20" value="<%=h email_address.email_address %>" type="text" maxlength="100" name="person[email_addresses][<%= index %>][email_address]" class="textInput person_email_address" style="width:199px;" />
+    <input id="profile_email_addresses_<%= index %>_email_address" size="20" value="<%=h email_address.email_address %>" type="text" maxlength="100" name="profile[email_addresses][<%= index %>][email_address]" class="textInput profile_email_address" style="width:199px;" />
   </td>
   <td>
     <%= remove_link dom_id %>
