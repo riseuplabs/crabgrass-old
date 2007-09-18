@@ -20,12 +20,12 @@ config.action_view.debug_rjs                         = true
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-begin
-  require 'syslog_logger'
-  RAILS_DEFAULT_LOGGER = SyslogLogger.new
-rescue LoadError => exc
-  # i guess there is no syslog_logger
-end
+#begin
+#  require 'syslog_logger'
+#  RAILS_DEFAULT_LOGGER = SyslogLogger.new
+#rescue LoadError => exc
+#  # i guess there is no syslog_logger
+#end
 
 # bundled_assets plugin:
 # don't compress asset bundles (javascript and css) when in development mode.
