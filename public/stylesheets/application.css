@@ -20,6 +20,7 @@ img   {border:0}
 }
 #tabarea {
   padding-top: 0;
+  clear: both;
 }
 div.tabinfo {
   font-size: 0.8em;

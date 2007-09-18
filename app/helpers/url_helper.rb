@@ -77,4 +77,12 @@ module UrlHelper
     link_to display_name, path, :class => 'name_link', :style => style
   end
 
+  def url_for_entity(entity, options={})
+    if entity.is_a? User
+      url_for_user(entity, options)
+    elsif entity.is_a? Group
+      url_for_group(entity, options)
+    end
+  end
+
 end

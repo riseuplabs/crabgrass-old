@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 57) do
+ActiveRecord::Schema.define(:version => 58) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -84,6 +84,15 @@ ActiveRecord::Schema.define(:version => 57) do
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
 
+  create_table "email_addresses", :force => true do |t|
+    t.column "profile_id",    :integer
+    t.column "preferred",     :boolean, :default => false
+    t.column "email_type",    :string
+    t.column "email_address", :string
+  end
+
+  add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
+
   create_table "event_recurrencies", :force => true do |t|
     t.column "event_id",          :integer
     t.column "start",             :datetime
@@ -139,12 +148,35 @@ ActiveRecord::Schema.define(:version => 57) do
   add_index "groups", ["name"], :name => "index_groups_on_name"
   add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
 
+  create_table "im_addresses", :force => true do |t|
+    t.column "profile_id", :integer
+    t.column "preferred",  :boolean, :default => false
+    t.column "im_type",    :string
+    t.column "im_address", :string
+  end
+
+  add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
+
   create_table "links", :id => false, :force => true do |t|
     t.column "page_id",       :integer
     t.column "other_page_id", :integer
   end
 
   add_index "links", ["page_id", "other_page_id"], :name => "index_links_page_and_other_page"
+
+  create_table "locations", :force => true do |t|
+    t.column "profile_id",    :integer
+    t.column "preferred",     :boolean, :default => false
+    t.column "location_type", :string
+    t.column "street",        :string
+    t.column "city",          :string
+    t.column "state",         :string
+    t.column "postal_code",   :string
+    t.column "geocode",       :string
+    t.column "country_name",  :string
+  end
+
+  add_index "locations", ["profile_id"], :name => "locations_profile_id_index"
 
   create_table "memberships", :force => true do |t|
     t.column "group_id",   :integer
@@ -214,6 +246,16 @@ ActiveRecord::Schema.define(:version => 57) do
   add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
   add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
 
+  create_table "phone_numbers", :force => true do |t|
+    t.column "profile_id",        :integer
+    t.column "preferred",         :boolean, :default => false
+    t.column "provider",          :string
+    t.column "phone_number_type", :string
+    t.column "phone_number",      :string
+  end
+
+  add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
+
   create_table "polls", :force => true do |t|
     t.column "type", :string
   end
@@ -239,6 +281,41 @@ ActiveRecord::Schema.define(:version => 57) do
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
   add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
+
+  create_table "profile_notes", :force => true do |t|
+    t.column "profile_id", :integer
+    t.column "preferred",  :boolean, :default => false
+    t.column "note_type",  :string
+    t.column "body",       :text
+  end
+
+  add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
+
+  create_table "profiles", :force => true do |t|
+    t.column "entity_id",    :integer
+    t.column "entity_type",  :string
+    t.column "language",     :string,   :limit => 5
+    t.column "all",          :boolean
+    t.column "stranger",     :boolean
+    t.column "peer",         :boolean
+    t.column "friend",       :boolean
+    t.column "foe",          :boolean
+    t.column "name_prefix",  :string
+    t.column "first_name",   :string
+    t.column "middle_name",  :string
+    t.column "last_name",    :string
+    t.column "name_suffix",  :string
+    t.column "nickname",     :string
+    t.column "role",         :string
+    t.column "organization", :string
+    t.column "created_at",   :datetime
+    t.column "updated_at",   :datetime
+    t.column "birthday",     :string,   :limit => 8
+    t.column "layout_type",  :string
+    t.column "layout_data",  :text
+  end
+
+  add_index "profiles", ["entity_id", "entity_type", "language", "all", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
 
   create_table "ratings", :force => true do |t|
     t.column "rating",        :integer,                :default => 0
@@ -348,6 +425,15 @@ ActiveRecord::Schema.define(:version => 57) do
 
   add_index "votes", ["possible_id"], :name => "index_votes_possible"
   add_index "votes", ["possible_id", "user_id"], :name => "index_votes_possible_and_user"
+
+  create_table "websites", :force => true do |t|
+    t.column "profile_id", :integer
+    t.column "preferred",  :boolean, :default => false
+    t.column "site_title", :string,  :default => ""
+    t.column "site_url",   :string,  :default => ""
+  end
+
+  add_index "websites", ["profile_id"], :name => "websites_profile_id_index"
 
   create_table "wiki_versions", :force => true do |t|
     t.column "wiki_id",    :integer

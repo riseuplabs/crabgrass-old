@@ -1,22 +1,28 @@
-<h2>Profile</h2>
+<table class='layout'><tr>
+<td><%= render :partial => 'profile/side_tabs' %></td>
+<td>
 
-<% form_tag(:action => 'edit') do -%>
-  <%= render :partial => 'form' %>  
-  <%= submit_tag 'Save changes' %>
-<% end -%>
+  <table><tr>
+  <td><%= avatar_for @user, 'xlarge' %></td>
+  <td valign='top' style='padding-left: 10px'>
+  <%= link_to_function 'upload image'.t, "Element.show($('uploadimage'))" %>
+  <div id='uploadimage' style='display:none'>
+    <p><% form_tag({:controller => 'avatars', :action => 'create'}, {:multipart => true}) do -%>
+      <%= hidden_field_tag 'redirect', url_for(:controller=>'me',:action=>'edit') %>
+      <%= hidden_field_tag 'user_id', @user.id %>
+      <%= file_field 'image', 'data' %>
+      <%= submit_tag 'Upload' %>
+    <% end -%></p>
+    uploaded image will be cropped and stretched to 96 pixels square.
+  </div>
+  </td></tr></table>
+  
+  <% form_tag(:action => 'edit') do -%>
+    <%= render :partial => 'form' %>  
+    <%= submit_tag 'Save changes' %>
+  <% end -%>
 
-<h2>Picture</h2>
 
-<%= avatar_for @user, 'xlarge' %>
 
-<p>uploaded image will be cropped and stretched to 96 pixels square.</p>
-
-<p>
-<% form_tag({:controller => 'avatars', :action => 'create'}, {:multipart => true}) do -%>
-  <%= hidden_field_tag 'redirect', url_for(:controller=>'me',:action=>'edit') %>
-  <%= hidden_field_tag 'user_id', @user.id %>
-  <%= file_field 'image', 'data' %>
-  <%= submit_tag 'Upload' %>
-<% end -%>
-</p>
-
+</td>
+</tr></table>

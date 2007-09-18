@@ -1,0 +1,19 @@
+<% index ||= params[:index] || random_dom_id -%>
+<% dom_id = "profile_website_#{index}" -%>
+<tr id="<%= dom_id %>" class='data_row'>
+	<td>
+	  <%= mark_as_primary(website, 'profile', 'website', index) %>
+	</td>
+	<td>
+		<input id="profile_websites_<%= index %>_site_title" size="40" value="<%= website.site_title %>" type="text" maxlength="100" name="profile[websites][<%= index %>][site_title]" class="textInput" style="width:90px;"  />
+		<div class="input_label"><%= _('site name') -%></div>
+	</td>
+	<td>
+		<input id="profile_websites_<%= index %>_site_url" size="40" value="<%=h website.site_url %>" type="text" maxlength="100" name="profile[websites][<%= index %>][site_url]" class="textInput" style="width:180px;"  />
+		<div class="input_label"><%= _('url') -%></div>
+	</td>
+	<td>
+	  <%= remove_link dom_id %>
+	</td>
+</tr>
+<tr><td><div class='spacer'></div></td></tr>

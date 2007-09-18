@@ -1,0 +1,164 @@
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('General Info') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tr>
+            <td>
+              <%= text_field 'profile', 'first_name', 'size' => 15, 'maxlength' => 100, 'style' => 'width:100px' %>
+              <div class="infoGroupInputLabel"><%= _('first name') -%></div>
+            </td>
+            <td>
+              <%= text_field 'profile', 'middle_name', 'size' => 9, 'maxlength' => 100, 'style' => 'width:50px' %>
+              <div class="infoGroupInputLabel"><%= _('middle') -%></div>
+            </td>
+            <td>
+              <%= text_field 'profile', 'last_name', 'size' => 15, 'maxlength' => 100, 'style' => 'width:111px' %>
+              <div class="infoGroupInputLabel"><%= _('last') -%></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <%= text_field 'profile', 'organization', 'size' => 40, 'maxlength' => 100, 'style' => 'width:285px' %>
+              <div class="infoGroupInputLabel"><%= _('organization') -%></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+            <%= text_field 'profile', 'role', 'size' => 40, 'maxlength' => 100, 'style' => 'width:285px' %>
+              <div class="infoGroupInputLabel"><%= _('organizational role') -%></div>
+            </td>
+          </tr>
+        </table>
+        <!--<div id="profile_photo_area">
+          <%# render :partial => 'photo', :locals => { :profile => @profile } %>
+        </div>-->
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('Descriptions') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_notes">
+            <% @profile.notes.each_with_index do |note, index| -%>
+              <%= render :partial => 'note', :locals => { :note => note, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add Description'.t, 'add_note' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('Phone Numbers') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_phone_numbers">
+            <% @profile.phone_numbers.each_with_index do |phone_number, index| -%>
+              <%= render :partial => 'phone_number', :locals => { :phone_number => phone_number, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add Phone Number'.t, 'add_phone_number' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('Email Addresses') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_email_addresses">
+            <% @profile.email_addresses.each_with_index do |email_address, index| -%>
+              <%= render :partial => 'email_address', :locals => { :email_address => email_address, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add Email Address'.t, 'add_email_address' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('Locations') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_locations">
+            <% @profile.locations.each_with_index do |location, index| -%>
+              <%= render :partial => 'location', :locals => { :location => location, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add Location'.t, 'add_location' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('IM Addresses') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_im_addresses">
+            <% @profile.im_addresses.each_with_index do |im_address, index| -%>
+              <%= render :partial => 'im_address', :locals => { :im_address => im_address, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add IM Address'.t, 'add_im_address' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('Websites') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_websites">
+            <% @profile.websites.each_with_index do |website, index| -%>
+              <%= render :partial => 'website', :locals => { :website => website, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add Websites'.t, 'add_website' %>
+      </td>
+    </tr>
+  </table>
+</div>
+

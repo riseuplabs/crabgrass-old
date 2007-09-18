@@ -1,0 +1,60 @@
+<% index ||= params[:index] || random_dom_id -%>
+<% dom_id = "profile_location_#{index}" -%>
+<tr id="<%= dom_id %>" class='data_row'>
+  <td>
+    <table>
+      <tr>
+        <td valign="top"><%= mark_as_primary(location, 'profile', 'location', index) %></td>
+        <td colspan="2">
+          <table style="border-collapse: collapse;">
+            <tr>
+              <td style="width:80px;padding:0px;" valign="top">
+                <% location_types_options = options_for_select(
+                     Profile::Location.options,
+                     (location ? location.location_type : nil)
+                   ) -%>
+                <%= select_tag_with_id "profile[locations][#{index}][location_type]", location_types_options, {:id => "profile_locations_#{index}_location_type"} %>
+                <br /><span class="input_label"><%= _('type') -%></span>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td valign="top">
+          <%= remove_link dom_id %>
+        </td>
+      </tr>
+      <tr>
+        <td />
+        <td colspan="2">
+          <input id="profile_locations_<%= index %>_street" size="40" value="<%=h location.street %>" type="text" maxlength="100" name="profile[locations][<%= index %>][street]" class="textInput" style="width:275px;" />
+          <div class="input_label"><%= _('street address') -%></div>
+        </td>
+      </tr>
+      <tr>
+        <td />
+        <td>
+          <input id="profile_locations_<%= index %>_city" size="40" value="<%=h location.city %>" type="text" maxlength="100" name="profile[locations][<%= index %>][city]" class="textInput" style="width:133px;" />
+          <div class="input_label"><%= _('city') -%></div>
+        </td>
+        <td>
+          <input id="profile_locations_<%= index %>_state" size="40" value="<%=h location.state %>" type="text" maxlength="100" name="profile[locations][<%= index %>][state]" class="textInput" style="width:136px;" />
+          <div class="input_label"><%= _('state') -%></div>
+        </td>
+        <td />
+      </tr>
+      <tr>
+        <td />
+        <td>
+          <input id="profile_locations_<%= index %>_postal_code" size="40" value="<%=h location.postal_code %>" type="text" maxlength="100" name="profile[locations][<%= index %>][postal_code]" class="textInput" style="width:133px;" />
+          <div class="input_label"><%= _('postal code') -%></div>
+        </td>
+        <td>
+          <input id="profile_locations_<%= index %>_country_name" size="40" value="<%=h location.country_name %>" type="text" maxlength="100" name="profile[locations][<%= index %>][country_name]" class="textInput" style="width:136px;" />
+          <div class="input_label"><%= _('country') -%></div>
+        </td>
+        <td />
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr><td><div class='spacer'></div><div class='spacer'></div></td></tr>

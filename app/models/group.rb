@@ -52,6 +52,14 @@ class Group < ActiveRecord::Base
   end
 
   belongs_to :avatar
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile'
+
+  def profile_visible_by(user)
+    # TODO: filter on language too
+    # TODO: combine profiles if multiple matches
+    profiles.find(:first, :conditions => [in_user_terms(relationship_to(user)) + ' = ?',true])
+  end
+
   belongs_to :public_home, :class_name => 'Wiki', :foreign_key => 'public_home_id'
   belongs_to :private_home, :class_name => 'Wiki', :foreign_key => 'private_home_id'
   
@@ -98,6 +106,22 @@ class Group < ActiveRecord::Base
     membership.user.update_membership_cache
   end
 
+  def relationship_to(user)
+    if user == self || user.member_of?(self)
+      :member
+    else
+      :stranger
+    end
+  end
+  
+  def in_user_terms(relationship)
+    case relationship
+      when :member; 'contact'
+      when :ally; 'peer'
+      when :stranger; 'stranger'
+    end  
+  end
+  
   ####################################################################
   ## relationship to pages
   

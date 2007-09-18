@@ -83,24 +83,56 @@ a.selected {font-weight: bold;}
 /** horizontal Formy tabs **/
 
 ul.tabset {
-  font-size: 0.8em;
   list-style-type: none;
-  background: url(/images/grey9.png) repeat-x bottom;
-  margin: 0; padding: 0 0 0 0.75em;
+  margin: 0;
 }
-ul.tabset li {
+
+/* left */
+ul.tabset.left {
+  padding: 0 20px 0 0;
+}
+ul.tabset.left li.tab {
+  border: 1px solid transparent;
+}
+ul.tabset.left li.tab.selected {
+  background: #eef;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+ul.tabset.left li.tab:hover {
+  background: #ffc;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+ul.tabset.left a.tab-link {
+  display: block;
+  text-decoration: none;
+  padding: 1.5em;
+  padding-left: 56px;
+}
+ul.tabset a.tab-link:hover {
+  text-decoration: underline;
+}
+
+/* top */
+ul.tabset.top {
+  font-size: 0.8em;
+  background: url(/images/grey9.png) repeat-x bottom;
+  padding: 0 0 0 0.75em;
+}
+ul.tabset.top li {
   height: 1.7em; /* must equal a.height + a.vertical-padding */
   padding: 2px;
 }
-ul.tabset li.tab {
+ul.tabset.top li.tab {
   float: left;
   padding: 1px; /* to make space for invisible white outline of a.tab-link */
   margin: 0;
 }
-ul.tabset li.tab.selected {
+ul.tabset.top li.tab.selected {
   border: 1px solid #999;
 }
-ul.tabset a.tab-link {
+ul.tabset.top a.tab-link {
   /* outline: 1px solid white; this is to remove dotted outline when link is clicked */
   display: block;
   text-decoration: none;
@@ -109,12 +141,17 @@ ul.tabset a.tab-link {
 ul.tabset a.tab-link:hover {
   text-decoration: underline;
 }
-ul.tabset a.selected {
+ul.tabset.top a.selected {
   background: #fff url(/images/shadows/inside-tab.png) repeat-x top;
   outline: 1px solid white;
   color: black;
   height: 2em; /* this is what hides the bottom border */
 }
+/* table for side tab */
+table.layout {
+  margin-top: 2em;
+}
+table.layout td {vertical-align: top;}
 
 /** table heading **/
 /* this needs help! */

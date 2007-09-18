@@ -1,0 +1,17 @@
+<% index ||= params[:index] || random_dom_id -%>
+<% dom_id = "profile_phone_number_#{index}" -%>
+<tr id="<%=dom_id%>" class='data_row'>
+  <td><%= mark_as_primary(phone_number, 'profile', 'phone_number', index) %></td>
+  <td style="width:80px;">
+    <% phone_types_options = options_for_select(
+         Profile::PhoneNumber.options,  
+         (phone_number ? phone_number.phone_number_type : nil)
+       ) -%>
+    <%= select_tag_with_id "profile[phone_numbers][#{index}][phone_number_type]", phone_types_options, {:id => "profile_phone_numbers_#{index}_phone_number_types"} %>
+  </td>
+  <td><input id="profile_phone_numbers_<%= index %>_phone_number" size="20" value="<%=h phone_number.phone_number %>" type="text" maxlength="20" name="profile[phone_numbers][<%= index %>][phone_number]" class="textInput profile_phone_number" style="width:200px;" /></td>
+  <td>
+    <%= remove_link dom_id %>
+  </td>
+</tr>
+<tr><td><div class='spacer'></div></td></tr>

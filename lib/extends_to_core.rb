@@ -66,6 +66,14 @@ class Array
   def to_select(field,id='id')
     self.collect { |x| [x.send(field).to_s,x.send(id).to_s] }
   end
+
+  # creates an array suitable for options_for_select.
+  # for use with arrays of single values where you want the
+  # option shown to be localized.
+  # eg ['hi','bye'] --> [['hi'.t,'hi'],['bye'.t,'bye']]
+  def to_localized_select
+    self.collect{|a| [a.t, a] }
+  end
   
   def any_in?(array)
     return (self & array).any?
@@ -76,5 +84,13 @@ class Array
     }.flatten]
   end
 end
+
+class Hash
+  # returns a copy of the hash, limited to keys that are in the specified array
+  def limit_keys_to(keys)
+    reject{|key,value| !keys.include?(key)}
+  end
+end
+
 
 

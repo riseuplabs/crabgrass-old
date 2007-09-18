@@ -1,0 +1,32 @@
+<table class='layout'>
+  <tr>
+    <td style='width:17em'><%= render :partial => 'profile/side_tabs' %></td>
+    <td>
+
+<% if @profile.public? -%>
+  This profile is public and will be visible to anyone visiting this website.
+  The information you put here is also searchable by other people. 
+  Use caution when adding personal information to your public profile.
+<% elsif @profile.private? -%>
+  This profile is private and is only visible to your contacts.
+  The information you put here is not searchable, even by your contacts.
+<% end -%>
+
+<!-- begin profile form -->
+<% form_tag do -%>
+
+<div class='profile'>
+<%= render :partial => 'form' %>
+</div>
+
+<p style='text-align:right'>
+<%= submit_tag 'Save Changes'.t, :name => 'save' %>
+</p>
+
+<% end -%>
+<!-- end profile form -->
+
+    </td>
+  </tr>
+</table>
+

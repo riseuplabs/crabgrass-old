@@ -1,0 +1,83 @@
+<%# @page_javascript << javascript_jsar_init([@profile], 'show') -%>
+
+<div class="infobox">
+<table style="width:100%;"><tr>
+  <td style="text-align:left;">						
+    <table><tr>
+      <td>
+        <%= photo @profile $>
+      </td>
+      <td>
+        <h2><%= @profile.full_name %></h2>
+        <div><%= [@profile.organization, @profile.title].reject(&:blank?).join(', ') %></div>
+      </td>
+    </tr></table>
+  </td>
+  <td class="" style="text-align:right;">
+    <%# link_to '<div class="buttonStandardLeft"><div class="buttonStandardRight"><div class="buttonStandardBG"><span class="download addIconLeft">'+_('Download vCard')+'</span></div></div></div>', person_vcard_url(:id => @profile), {:class => 'buttonStandard', :style => '', :title => _('Download vCard for this person')} %>
+  </td>
+</tr></table>
+</div>
+
+<dl>
+  <% unless @profile.phone_numbers.empty? -%>
+    <dt><%= _('Phone') -%>:</dt>
+    <% @profile.phone_numbers.each do |phone_number| -%>
+      <dd>                                                                  
+          <%= h(phone_number.phone_number) %>
+        <em>
+          <%= h(_(phone_number.phone_number_type)) %>
+        </em>
+      </dd>
+    <% end -%>
+  <% end -%>
+  <% unless @profile.email_addresses.empty? -%>
+    <dt><%= _('Email') -%>:</dt>
+    <% @profile.email_addresses.each do |email_address| -%>
+      <dd>
+        <%= link_to(h(email_address.email_address), {:controller => 'mail', :action => 'compose', :to => "#{@profile.full_name} <#{email_address.email_address}>"}, {:title => _("Compose a new email to %{i18n_email_address}")%{:i18n_email_address => "#{email_address.email_address}"}}) %>
+        <em>
+          <%= h(_(email_address.email_type)) %>
+        </em>
+      </dd>
+    <% end -%>
+  <% end -%>
+  <% @profile.locations.each do |address| -%>
+    <dt><%= _('Location') -%>:</dt>
+    <dd>
+      <%= h(location.street) %> <em><%= h(_(location.location_type)) %></em>
+      <br />
+      <%= h(location.city) %>, <%= h(location.state) %> <%= h(location.postal_code) %>
+      <br />
+      <%# google_maps_link(location) %>
+    </dd>
+  <% end -%>
+  <% unless @profile.im_addresses.empty? -%>
+    <dt><%= _('Instant Messaging') -%>:</dt>
+    <% @profile.im_addresses.each do |im| -%>
+      <dd>
+        <%= im.im_address %>
+        <em><%= h(im.im_type) %></em>
+      </dd>
+    <% end -%>
+  <% end -%>
+  <% unless @profile.websites.empty? -%>
+    <dt><%= _('Websites') -%>:</dt>
+    <% @profile.websites.each do |website| -%>
+      <dd>
+        <a target="_blank" href="<%= website.site_url %>">
+          <%= h(website.site_title.length > 0 ? website.site_title : website.site_url) %>
+        </a>
+      </dd>
+    <% end -%>
+  <% end -%>
+  <% unless @profile.notes.empty? -%>
+    <% @profile.notes.each do |note| -%>
+      <dt><%= _(note.type) -%>:</dt>
+      <dd>
+        <%=h note.body %>
+      </dd>
+    <% end -%>
+  <% end -%>
+</dl>
+

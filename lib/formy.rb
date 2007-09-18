@@ -205,24 +205,28 @@ module Formy
   
   #### TAB CLASSES ##################################################
     
-  class Tabset < Root
-    
+  class Tabset < Root    
     class Tab < Element
-      element_attr :label, :link, :selected
+      element_attr :label, :link, :selected, :icon
       def close
         javascript = "id='@id' href='#' onclick='showtab(event.target)'"
         #hash = url_to_hash(@link)
         selected = 'selected' if "#{@selected}" == "true"
-        puts "<li class='tab #{selected}'><a class='tab-link #{selected}' href='#{@link}'>#{@label}</a></li>"
+        style = @icon ? "background: url(/images/#{@icon}) no-repeat center left" : ''
+        puts "<li class='tab #{selected}'><a class='tab-link #{selected}' style='#{style}' href='#{@link}'>#{@label}</a></li>"
         super
       end
     end
 
     sub_element Tabset::Tab
     
+    def initialize(options={})
+      super( {'class' => 'top'}.merge(options) )
+    end
+    
     def open
       super
-      puts "<ul class='tabset'>"
+      puts "<ul class='tabset #{@options['class']}'>"
     end
     
     def close

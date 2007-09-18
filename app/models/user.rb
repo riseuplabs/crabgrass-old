@@ -7,7 +7,26 @@ class User < SocialUser
   # my identity
 
   belongs_to :avatar
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile'
 
+  # this is a hack to get 'has_many :profiles' to polymorph on User instead of AuthenticatedUser
+  def self.base_class; User; end
+    
+  def profile_visible_by(user)
+    # TODO: filter on language too
+    if user
+      profile_with_access relationship_to(user)
+    else
+      profile_with_access :stranger, :all
+    end
+  end
+  
+  def profile_with_access(*args)
+    # TODO: combine profiles if multiple matches
+    conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
+    profiles.find(:first, :conditions => [conditions]+[true]*args.size )
+  end
+  
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   validates_handle :login
   before_validation_on_create :clean_login

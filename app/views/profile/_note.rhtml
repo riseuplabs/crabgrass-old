@@ -1,0 +1,27 @@
+<% index ||= params[:index] || random_dom_id -%>
+<% dom_id = "profile_note_#{index}" -%>
+<% note_options =  options_for_select(
+     Profile::Note.options,  
+     (note ? note.note_type : nil)
+   ) -%>
+<tr id="<%=dom_id%>" class='data_row'>
+  <td>
+    <table>
+      <tr>
+        <td style="width:80px;">
+           <%= select_tag_with_id "profile[notes][#{index}][note_type]", note_options, {:id => "profile_notes_#{index}_note_types"} %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <textarea id="profile_notes_<%= index %>_body" rows="4" type="text" maxlength="20" name="profile[notes][<%= index %>][body]" class="textInput" style="width:285px;" /><%=h note.body %></textarea>
+        </td>
+      </tr>
+    </table>
+  </td>
+  <td>
+    <%= remove_link dom_id %>
+  </td>
+</tr>
+<tr><td><div class='spacer'></div></td></tr>
+

@@ -1,0 +1,26 @@
+<% @entity ||= @group || @user -%>
+<% @public ||= @entity.profile_with_access(:all) || @entity.profiles.create(:all => true) -%>
+<% @private ||= @entity.profile_with_access(:friend) || @entity.profiles.create(:friend => true) -%>
+
+<%= Formy.tabs('class' => 'left') do |f|
+  f.tab do |t|
+    t.label 'Settings'.t
+    t.icon 'actions/settings.png'
+    t.link( @user ? me_url(:action => 'edit') : url_for_group(@group, :action => 'edit') )
+    t.selected params[:action] == 'edit' && params[:controller] == 'me'
+  end
+  f.tab do |t|
+    t.label 'Public Profile'.t
+    t.icon 'actions/profile-public.png'
+    t.link url_for(:controller => 'profile', :action => 'edit', :id => @public.id)
+    t.selected params[:controller] == 'profile' && params[:id] == @public.id.to_s
+  end
+  f.tab do |t|
+    t.label 'Private Profile'.t
+    t.icon 'actions/profile-private.png'
+    t.link url_for(:controller => 'profile', :action => 'edit', :id => @private.id)
+    t.selected params[:controller] == 'profile' && params[:id] == @private.id.to_s
+  end
+end
+%>
+

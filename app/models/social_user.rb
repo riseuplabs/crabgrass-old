@@ -154,6 +154,31 @@ class SocialUser < AuthenticatedUser
     true
   end
 
+  def stranger_to?(user)
+    !peer_of(user) and !contact_of(user)
+  end
+  
+  def peer_of?(user)
+    id = user.instance_of?(Integer) ? user : user.id
+    peer_id_cache.include?(id)  
+  end
+  
+  def friend_of?(user)
+    id = user.instance_of?(Integer) ? user : user.id
+    friend_id_cache.include?(id)
+  end
+  
+  def relationship_to(user)
+    return :stranger unless user
+    (@relationships ||= {})[user.login] ||= if friend_of?(user) || user == self
+      :friend
+    elsif peer_of?(user)
+      :peer
+    else
+      :stranger
+    end
+  end
+  
   ######################################################################
   ## Relationship to tags
 

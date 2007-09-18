@@ -1,0 +1,19 @@
+<% index ||= params[:index] || random_dom_id -%>
+<% dom_id = "profile_im_address_#{index}" -%>
+<% im_types = Profile::ImAddress.options -%>
+<% im_types_options = options_for_select im_types, (im_address ? im_address.im_type : nil) -%>
+<tr id="<%= dom_id %>" class='data_row'>
+  <td>
+    <%= mark_as_primary(im_address, 'profile', 'im_address', index) %>
+  </td>
+  <td style="width:80px;">
+    <%= select_tag_with_id "profile[im_addresses][#{index}][im_type]", im_types_options, {:id => "profile_im_addresses_#{index}_im_type"} %>
+  </td>
+  <td>
+    <input id="profile_im_addresses_<%= index %>_im_address" size="40" value="<%=h im_address.im_address %>" type="text" maxlength="100" name="profile[im_addresses][<%= index %>][im_address]" class="textInput profile_im_address" style="width:199px;"  />
+  </td>
+  <td>
+    <%= remove_link dom_id %>  
+  </td>
+</tr>
+<tr><td><div class='spacer'></div></td></tr>

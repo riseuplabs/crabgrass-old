@@ -1,0 +1,21 @@
+div.profile td.label {
+  width: 10em;
+  text-align: right;
+  font-weight: bold;
+  padding: 8px;
+}
+
+div.profile td.form {
+  padding: 8px;
+}
+
+div.profile div.section {
+  padding: 8px;
+  margin: 1em 0;
+  background: #eee;
+}
+
+div.profile div.spacer {
+  height: 8px;
+}
+
