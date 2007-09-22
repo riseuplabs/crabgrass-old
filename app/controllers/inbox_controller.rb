@@ -18,14 +18,8 @@ class InboxController < ApplicationController
     else
       path = params[:path]
       path = ['starred','or','unread','or','pending'] if path.first == 'vital'
-      options = {
-        :class => UserParticipation,
-        :path => path,
-        :conditions => 'user_participations.user_id = ?',
-        :values => [current_user.id]
-      }
-      @pages, @sections = find_and_paginate_pages(options)
-
+      path << 'descending' << 'updated_at'
+      @pages, @sections = find_and_paginate_pages(options_for_inbox, path)
       handle_rss
     end
   end
