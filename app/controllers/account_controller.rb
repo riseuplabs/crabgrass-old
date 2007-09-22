@@ -43,21 +43,27 @@ class AccountController < ApplicationController
     redirect_back_or_default(:controller => '/account', :action => 'index')
   end
 
+  def welcome
+    render :text => GreenCloth.new(WELCOME_TEXT_MARKUP).to_html, :layout => 'me'
+  end
+  
   protected
   def send_welcome_message(user)
     page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => WELCOME_TEXT_MARKUP
     page.save
   end
 
+  # TODO: make this configurable
+  
   WELCOME_TEXT_MARKUP = <<MARKUP
 *Welcome*
 
-Hi. This is a quick intro for new users. Next time you log in you will land at your dashboard which will be a cold and lonely place until you join groups and make contacts.
+Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
 
-So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory ->https://we.riseup.net/groups] and either click "create a new group" or click on the group you want to join and find the "join group" link. 
+So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link. 
 
-Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages ->https://we.riseup.net/crabgrass/table-of-contents].
+Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
 
-Development is driven by user feedback, so please [join -> https://we.riseup.net/users] the user feed back group and get involved by clicking the [Get involved building Crabgrass! -> https://we.riseup.net/users/get-involved] link at the bottom over every page.
+Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the [Get involved building Crabgrass! -> /users/get-involved] link at the bottom over every page.
 MARKUP
 end
