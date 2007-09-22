@@ -11,7 +11,6 @@ class ProfileController < ApplicationController
 
   def edit
     if request.post?
-      y params
       @profile.save_from_params params['profile']
     end
   end

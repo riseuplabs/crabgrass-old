@@ -10,17 +10,9 @@ A dashboard of interesting stuff. <%= link_to 'create page &raquo;', {:controlle
 </div>
 </div>
 
-<% @pages.each do |groupname,grouppages| -%>
+<style>div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}</style>
 
-<div class='section'>
-<h4 class='landing'><%= link_to_group groupname %></h4>
-<% 
-columns = [:icon, :title, :created_by, :created_at, :contributors_count]
--%>
-<%= render :partial => 'pages/list/table', :locals => {:pages => grouppages, :columns => columns} %>
-<%= link_to 'more &raquo;', url_for_group(groupname, :action => 'search') + "/descending/created_at" %>
-</div>
-
-<% end -%>
+<%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages} %>
+<%= link_to 'more &raquo;', me_url(:action => 'search') + "/descending/updated_at" %>
 
 </div>

@@ -1,0 +1,60 @@
+<%
+
+@today = []
+@yesterday = []
+@week = []
+@later = []
+ 
+page = @pages.shift
+while page and after_local_day_start?(page.updated_at)
+  @today << page
+  page = @pages.shift
+end
+
+while page and after_local_yesterday_start?(page.updated_at)
+  @yesterday << page
+  page = @pages.shift
+end
+
+while page and after_local_week_start?(page.updated_at)
+  @week << page
+  page = @pages.shift
+end
+
+while page
+  @later << page
+  page = @pages.shift
+end
+
+-%>
+
+<table class='activity'>
+<% if @today.any? -%>
+  <tr><th colspan='30'><h4 class='landing'>Today</h4></td></tr>
+  <% @today.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+  <% end -%>
+<% end -%>
+
+<% if @yesterday.any? -%>
+  <tr><th colspan='30'><h4 class='landing'>Yesterday</h4></td></tr>
+  <% @yesterday.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+  <% end -%>
+<% end -%>
+
+<% if @week.any? -%>
+  <tr><th colspan='30'><h4 class='landing'>This Past Week</h4></td></tr>
+  <% @week.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+  <% end -%>
+<% end -%>
+
+<% if @later.any? -%>
+  <tr><th colspan='30'><h4 class='landing'>Later</h4></td></tr>
+  <% @later.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+  <% end -%>
+<% end -%>
+
+</table>

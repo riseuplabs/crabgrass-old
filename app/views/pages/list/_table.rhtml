@@ -27,17 +27,14 @@ checkbox ||= false
 <% unless pages.any? -%>
   <tr><td colspan="10">no pages</td></tr>
 <% else -%>
-
 <% if heading -%>
   <tr class='page-list-heading'>
-<% columns.each do |column| -%>
+  <% columns.each do |column| -%>
     <%= page_list_heading(column) %>
-<% end -%>
+  <% end -%>
   </tr>
 <% end -%>
-
 <%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox} %>
-
 <% end -%>
 </table>
 
@@ -45,5 +42,4 @@ checkbox ||= false
     <%= render :partial => 'pages/list/paginate', :locals => {:sections => sections} %>
     <%# pagination_links sections, :name => 'section', :window_size => 10, :params => {:_context => params[:_context] } %>
 <% end -%>
-
 

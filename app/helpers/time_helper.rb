@@ -49,6 +49,18 @@ module TimeHelper
   def local_now
     TzTime.zone.now
   end
-    
+
+  def after_local_day_start?(utc_time)
+    local_now.at_beginning_of_day < to_local(utc_time)
+  end
+  
+  def after_local_yesterday_start?(utc_time)
+    local_now.yesterday.at_beginning_of_day < to_local(utc_time)
+  end
+
+  def after_local_week_start?(utc_time)
+    (local_now.at_beginning_of_day - 7.days) < to_local(utc_time)
+  end
+  
 end
 

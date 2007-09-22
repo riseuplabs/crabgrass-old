@@ -31,7 +31,7 @@ module PageFinders
       self.table_class = Page
       self.conditions  = []
       self.values      = []
-      self.order       = nil
+      self.order       = []
       self.limit       = nil
       self.offset      = nil
       self.tag_count   = 0
@@ -94,6 +94,9 @@ module PageFinders
       return join
     end
     
+    def sql_for_order
+      self.order.reject(&:blank?).join(', ')
+    end
   end
   
   # path keyword => number of arguments required for the keyword.
@@ -212,7 +215,7 @@ module PageFinders
   def filter_upcoming(qb)
     qb.conditions << 'pages.starts_at > ?'
     qb.values << Time.now
-    qb.order = 'pages.starts_at DESC'
+    qb.order << 'pages.starts_at DESC'
   end
   
   def filter_ago(qb,near,far)
@@ -295,12 +298,12 @@ module PageFinders
   
   def filter_ascending(qb,sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    qb.order = "pages.`#{sortkey}` ASC"
+    qb.order << "pages.`#{sortkey}` ASC"
   end
   
   def filter_descending(qb,sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    qb.order = "pages.`#{sortkey}` DESC"
+    qb.order << "pages.`#{sortkey}` DESC"
   end
   
   def filter_or(qb)
@@ -449,7 +452,7 @@ module PageFinders
     qb.table_class = options[:class] if options[:class]
     qb.and_clauses << [options[:conditions]]
     qb.values      = options[:values]
-    qb.order       = options[:order] || 'pages.updated_at DESC'
+    qb.order       << options[:order] || 'pages.updated_at DESC'
     
     filters = parse_filter_path( path )
     filters.each do |filter|
@@ -464,7 +467,7 @@ module PageFinders
       :conditions => [qb.sql_for_conditions] + qb.values,
       :joins => qb.sql_for_joins,
       :limit => qb.limit,
-      :order => qb.order,
+      :order => qb.sql_for_order,
       :class => qb.table_class, 
       :already_built => true
     }
@@ -520,7 +523,7 @@ module PageFinders
     klass      = options[:class]
     main_table = klass.to_s.underscore + "s"
     offset     = (current_section - 1) * pages_per_section
-    order      = options[:order] + ", #{main_table}.id"
+    order      = [options[:order], "#{main_table}.id"].reject(&:blank?).join(', ')
     
     if klass == Page
       options[:include] = nil
@@ -560,7 +563,7 @@ module PageFinders
     pages = klass.find(:all,
       :conditions => options[:conditions],
       :joins      => options[:joins],
-      :order      => options[:order] + ", #{main_table}.id",
+      :order      => [options[:order], "#{main_table}.id"].reject(&:blank?).join(', '),
       :include    => options[:include],
       :select     => options[:select],
       :limit      => section_row_count,
@@ -600,7 +603,7 @@ module PageFinders
     klass.find(:all,
       :conditions => options[:conditions],
       :joins      => options[:joins],
-      :order      => options[:order] + ", #{main_table}.id",
+      :order      => [options[:order], "#{main_table}.id"].reject(&:blank?).join(', '),
       :limit      => options[:limit],
       :offset     => options[:offset],
       :include    => options[:include],
@@ -623,6 +626,15 @@ module PageFinders
         :values     => [current_user.all_group_ids, current_user.id] }    
     end
   end
+  
+  def options_for_inbox()
+    options = {
+      :class => UserParticipation,
+      :conditions => 'user_participations.user_id = ?',
+      :values => [current_user.id]
+    }
+  end
+  
   
 #   def options_for_pages_created_by(user, options={})
 #     { :class      => Page,

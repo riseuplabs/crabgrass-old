@@ -1,6 +1,7 @@
 class MeController < ApplicationController
 
   append_before_filter :fetch_user
+  stylesheet 'me'
   
   def handle_rss
     if params[:path].any? and (params[:path].last == 'rss' or params[:path].last == '.rss')
@@ -37,18 +38,11 @@ class MeController < ApplicationController
     path = "/type/request/pending/not_created_by/#{current_user.id}"
     @request_count = count_pages(options, path)
     
-    @new_pages = find_pages(options_for_me,'/descending/created_at/limit/20')
-    @updated_pages = find_pages(options_for_me,'/changed/descending/updated_at/limit/40') - @new_pages
-    @pages = {}
-    @new_pages.each do |page|
-      page.flag[:new] = true
-      groupname = page.group_name || page.created_by_login || 'other'
-      (@pages[groupname] ||= []) << page
-    end
-    @updated_pages.each do |page|
-      groupname = page.group_name || page.created_by_login || 'other'
-      (@pages[groupname] ||= []) << page
-    end
+    options = options_for_inbox
+    @unread_count = count_pages(options_for_inbox, 'unread')
+    @pending_count = count_pages(options_for_inbox, 'pending')
+    
+    @pages = find_pages(options_for_me,'descending/updated_at/ascending/group_name/limit/40')
   end
   
   def files

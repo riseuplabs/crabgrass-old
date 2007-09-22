@@ -1,0 +1,15 @@
+<% page.created_at ||= Time.now; page.updated_at ||= Time.now -%>
+<tr class='<%= cycle 'odd', 'even' %>'>
+  <td><%= page_list_cell(page, :owner_with_icon) %></td>
+  <td>&nbsp;&nbsp;&nbsp;</td>
+  <td><%= page_list_cell(page, :icon) %></td>
+  <td><%= page_list_cell(page, :title) %></td>
+  <td>
+    <% if page.updated_at > page.created_at + 1.hour -%>
+      Updated by <%= link_to_user(page.updated_by_login) %> <%= time_ago_in_words(page.updated_at) %> ago.
+    <% else -%>
+      Created by <%= link_to_user(page.created_by_login) %> <%= time_ago_in_words(page.created_at) %> ago.
+    <% end -%>
+  </td>
+</tr>
+

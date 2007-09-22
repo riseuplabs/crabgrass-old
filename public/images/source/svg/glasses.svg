@@ -10,12 +10,13 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="glasses.svg"
-   sodipodi:docbase="/home/dev/crabgrass/trunk/public/images/svg"
-   inkscape:version="0.44"
+   sodipodi:docbase="/home/elijah/crabgrass/public/images/source/svg"
+   inkscape:version="0.45.1"
    sodipodi:version="0.32"
    id="svg4376"
    height="48px"
-   width="48px">
+   width="48px"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs3">
     <linearGradient
@@ -299,16 +300,6 @@
        d="M 3.5903076,19.305877 L 14.984354,8.4192017 C 14.984354,8.4192017 18.184598,6.2175076 17.700561,12.521022"
        id="path1993"
        sodipodi:nodetypes="ccc" />
-    <path
-       d="M 44.42857 38.57143 A 19.714285 6.5714288 0 1 1  5,38.57143 A 19.714285 6.5714288 0 1 1  44.42857 38.57143 z"
-       sodipodi:ry="6.5714288"
-       sodipodi:rx="19.714285"
-       sodipodi:cy="38.57143"
-       sodipodi:cx="24.714285"
-       id="path4563"
-       style="opacity:0.53164559;color:black;fill:url(#radialGradient4571);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.40487173;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
-       sodipodi:type="arc"
-       transform="matrix(1.004484,0,0,0.852046,-1.966962,6.906115)" />
     <g
        id="g5201" />
     <g

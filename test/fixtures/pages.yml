@@ -46,17 +46,21 @@ page<%=i%>:
   id: <%=i%>
   title: "<%= garble(5..50) %>"
   summary: "<%= garble(40..300) %>"
-  <% updated = rand(32); created = updated + rand(32) %>
+<% updated = rand(32); created = updated + rand(32) %>
   updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
-  <% if rand(3) == 0 %>
+<% if rand(3) == 0 %>
   starts_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  <% end %>
+<% end %>
 <% if rand(3) == 0 %>
   resolved: false
 <% end %>
-  created_by_id: <%= rand(11)+3 %>
-  updated_by_id:  <%= rand(11)+3 %>
+<% user = User.find(rand(11)+3) %>
+  created_by_login: <%= user.login %>
+  created_by_id: <%= user.id %>
+<% user = User.find(rand(11)+3) %>  
+  updated_by_login: <%= user.login %>
+  updated_by_id: <%= user.id %>
   group_id: <%= 3 %>
   group_name: rainbow
   type: Tool::Discussion

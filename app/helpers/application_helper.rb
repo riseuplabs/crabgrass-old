@@ -127,13 +127,19 @@ module ApplicationHelper
     controller.logged_in?
   end
   
+  def once?(key)
+    @called_before ||= {}
+    return false if @called_before[key]
+    @called_before[key]=true
+  end
+  
   #
   # used to spit out a column value for a single row.
   # for example:
   #  page_column(page, :title)
   # this function exists so we can re-arrange the columns easily.
   #
-  def page_list_cell(page, column, participation)
+  def page_list_cell(page, column, participation=nil)
     if column == :icon
       return page_icon(page)
     elsif column == :checkbox
@@ -168,6 +174,14 @@ module ApplicationHelper
       return( page.group_name ? link_to_group(page.group_name) : '&nbsp;')
     elsif column == :contributors_count or column == :contributors
       return page.contributors_count
+    elsif column == :owner
+      return (page.group_name || page.created_by_login)
+    elsif column == :owner_with_icon
+      if page.group_id
+        return link_to_group(page.group, :avatar => 'xsmall')
+      elsif page.created_by
+        return link_to_user(page.created_by, :avatar => 'xsmall')
+      end
     else
       return page.send(column)
     end
