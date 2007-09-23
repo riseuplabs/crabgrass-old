@@ -18,13 +18,38 @@ class Tool::EventController < Tool::BaseController
     @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})  
   end
 
+  def edit
+
+  end
+
+  def update
+	  @page.attributes = params[:page]
+	  @event.attributes = params[:event]
+	  if @page.save and @event.save
+		  return redirect_to page_url(@page)
+	  else
+		  message :object => @page
+	  end
+  end
+
+
   def create
    @page_class = Tool::Event
    @event = ::Event.new   
     if request.post?
 	    @page = build_new_page @page_class
-	    @page.starts_at = params[:time_start]
-	    @page.ends_at = params[:time_end]
+
+	    d = params[:date_start].split("/")
+	    params[:date_start] = [d[1], d[0], d[2]].join("/")
+	    params[:time_start] =  params[:date_start] + " "+ params[:hour_start]
+
+	    @page.starts_at = TzTime.zone.local_to_utc(params[:time_start].to_time)
+
+	    d = params[:date_end].split("/")
+	    params[:date_end] = [d[1], d[0], d[2]].join("/")
+
+	    params[:time_end] =  params[:date_end] + " " + params[:hour_end]
+	    @page.ends_at = TzTime.zone.local_to_utc(params[:time_end].to_time)
 	    @event = ::Event.new params[:event]
 	    @page.data = @event
 	    if @page.save
@@ -36,7 +61,9 @@ class Tool::EventController < Tool::BaseController
   end
  
  def set_event_description
-   render:nothing => true
+	 @event.description =  params[:value]
+	 @event.save
+	 render :text => @event.description_html
  end
 
  def participate
@@ -56,7 +83,10 @@ class Tool::EventController < Tool::BaseController
     end
 
    @user_participation.save
-   render:nothing => true
+
+   @watchers = UserParticipation.find(:all, :conditions => {:page_id => @page.id, :watch => TRUE})
+   @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})
+
  end
  
   protected
@@ -76,4 +106,11 @@ class Tool::EventController < Tool::BaseController
 	time
   end
 
+  def authorized?
+	  if params[:action] == 'set_event_description' or params[:action] == 'edit'
+		  return current_user.may?(:admin, @page)
+	  else
+		  return true
+	  end
+  end
 end

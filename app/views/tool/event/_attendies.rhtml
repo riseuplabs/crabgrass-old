@@ -1,4 +1,4 @@
-      <ul id ="attendies" >
+      <ul>
 	<% for a in @attendies -%>
 	<li><%= "<b>" if a.user_id == @current_user.id -%><%= User.find(a.user_id).display_name -%><%= "</b>" if a.user_id == @current_user.id -%></li>
     <% end -%>

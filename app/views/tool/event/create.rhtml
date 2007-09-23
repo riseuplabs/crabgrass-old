@@ -1,4 +1,5 @@
 <%= calendar_date_select_includes "blue" %>
+<script src="/javascripts/calendar.js"></script>
 
 <h2><%= "Create a new".t %> <b><%= @page_class.class_display_name.t %></b></h2>
 
@@ -12,23 +13,37 @@
   <td align='right'><b>what</b></td>
   <td><%= text_field 'page', 'title', :size => 80 %></td>
 </tr>
+
+<!--<tr>
+  <td align='right'><b>when</b></td>
+   <td><%# calendar_date_select_tag 'time_start', nil, :time => true %> <span id="to">to <%# calendar_date_select_tag "time_end", nil, :time => true %></span></td>
+</tr>
+-->
 <tr>
   <td align='right'><b>when</b></td>
-  <td><%= calendar_date_select_tag 'time_start', nil, :time => true %> <span id="to">to <%= calendar_date_select_tag "time_end", nil, :time => true %></span></td>
+  <td><%= text_field_tag 'date_start','dd/mm/yyyy', :size => 10, :onfocus => "this.select();lcs(this)", :onclick => "event.cancelBubble=true;this.select();lcs(this)" -%>
+      <%= text_field_tag 'hour_start', '??:??', :size => 8 %> 
+	  
+	  <span id="to">to
+	  
+          <%= text_field_tag 'date_end','dd/mm/yyyy', :size => 10, :onfocus => "this.select();lcs(this)", :onclick => "event.cancelBubble=true;this.select();lcs(this)" %>
+      <%= text_field_tag 'hour_end', '??:??', :size => 8 %> 
+          </span>
 </tr>
+
 <tr>
 	<td></td>
 	<td><b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('event_is_all_day').checked) {$('to').hide();} else {$('to').show();}") %></td>
 </tr>
- <tr>
+<!--  <tr>
 	<td></td>
 	<td><b>repeats</b>
 
-<%= select_tag('repeat_drop', options_for_select([['does not repeat',  0], ['daily',1],['weekly',2], ['monthly',3],[ 'yearly',4]])) %>
+<%# select_tag('repeat_drop', options_for_select([['does not repeat',  0], ['daily',1],['weekly',2], ['monthly',3],[ 'yearly',4]])) %>
 	
 	</td>
 </tr>
-
+-->
 <tr>
 	<td align='right'><b>where</b></td>
 	<td><%= text_field 'event', 'location', :size =>40 %>

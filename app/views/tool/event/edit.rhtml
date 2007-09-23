@@ -1,0 +1,63 @@
+<%= calendar_date_select_includes "blue" %>
+<script src="/javascripts/calendar.js"></script>
+
+
+<div class='workarea'>
+
+	<% form_tag(page_url(@page,:action => 'update'), :multipart => true) do %>
+<table class='create'>
+<tr>
+  <td align='right'><b>what</b></td>
+  <td><%= text_field 'page', 'title', :size => 80 %></td>
+</tr>
+
+<tr>
+  <td align='right'><b>when</b></td>
+  <td><%= text_field 'page', 'starts_at' %> <span id="to">to <%= text_field 'page', 'ends_at' %></span></td>
+</tr>
+
+<!--<tr>
+  <td align='right'><b>when</b></td>
+  <td><%# text_field_tag 'date_start', :size => 10, :options => {} %><input type="text" id="time_start" value="dd/mm/yyyy" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" size=10>
+	  <input type="text" id="hour_start" value="??:??" size=8> 
+	  
+	  <span id="to">to
+	  
+	  <input type="text" id="time_end" value="dd/mm/yyyy" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" size=10>
+	  <input type="text" id="hour_end" value="??:??" size=8></td>
+          </span>
+</tr>
+-->
+<tr>
+	<td></td>
+	<td><b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('event_is_all_day').checked) {$('to').hide();} else {$('to').show();}") %></td>
+</tr>
+<tr>
+	<td align='right'><b>where</b></td>
+	<td><%= text_field 'event', 'location', :size =>40 %>
+</tr>
+<tr>
+  <td align='right'><b>description</b></td>
+  <td>
+
+	  <%= text_area 'event', 'description', :rows => 10, :cols => 50 %>
+  </td>
+</tr>
+<!-- Which group-->
+--<div id="group">
+<tr>
+	<td><b>groups</b></td>
+	<td>
+	 <%= select_tag 'group_id', options_for_select(current_user.all_groups.to_select(:name), @page[:group_name]) %></td>
+</tr>
+</div>
+<tr>
+  <td align='right' colspan="2">
+    <%= submit_tag "Update event".t, :name => 'update' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+</div>
+

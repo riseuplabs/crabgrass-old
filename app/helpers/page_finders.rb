@@ -118,6 +118,7 @@ module PageFinders
     'changed' => 0,
     'text' => 1,
     
+    
     # associations
     'person' => 1,
     'group' => 1,
@@ -132,7 +133,9 @@ module PageFinders
     'created_after' => 1,
     'created_before' => 1,
     'starts' => 0,
-        
+    'before' => 1,
+    'after' => 1,
+
     # limit
     'limit' => 1,
         
@@ -202,6 +205,32 @@ module PageFinders
   
   def filter_starts(qb)
     qb.date_field = "starts_at"
+  end
+
+  def filter_after(qb,date)
+    if date == 'now'
+       date = Time.now
+    else
+       if date == 'today'
+          date = Time.now.to_date
+       else
+          year, month, day = date.split('-')
+          date = TzTime.local(year, month, day)
+       end
+    end
+    qb.conditions << "pages.#{qb.date_field} >= ?"
+    qb.values << date.to_s(:db)
+  end
+
+  def filter_before(qb,date)
+     if date == 'now'
+       date = Time.now
+     else
+       year, month, day = date.split('-')
+       date = TzTime.local(year, month, day)
+     end
+     qb.conditions << "pages.#{qb.date_field} <= ?"
+     qb.values << date.to_s(:db)
   end
   
   def filter_changed(qb)

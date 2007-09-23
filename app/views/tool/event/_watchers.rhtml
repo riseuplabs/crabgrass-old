@@ -1,4 +1,4 @@
-    <ul id ="watchers" >
+    <ul>
 	<% @watchers.each do |w| %>
 	<li><%= "<b>" if w.user_id == @current_user.id -%><%=  User.find(w.user_id).display_name  -%><%= "</b>" if w.user_id == @current_user.id -%></li>
     <% end %>

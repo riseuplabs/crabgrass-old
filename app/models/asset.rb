@@ -20,6 +20,7 @@ class Asset < ActiveRecord::Base
   def copy_asset
     if file = self.instance_variable_get(:@old_filename)
       version_dir = FileUtils.mkdir_p File.join(full_dirpath, 'versions', "#{version - 1}")
+      breakpoint
       FileUtils.cp file, version_dir
     end
   end

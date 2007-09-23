@@ -2,6 +2,9 @@
 
 <h1>My Events</h1>
 
+<%=  link_to 'day' , {:action => 'day'} %> <br><br>
+<%=  link_to 'week' , {:action => 'week'} %> <br><br>
+
 <b>Show events:</b> <%= link_to "All", {:action => "index"} %> | <%= link_to "Watching Only", {:action => "index", :participate => "watching"} %> | <%= link_to "Attending Only", {:action => "index", :participate => "attending"} %><br><br>
 
 <table class="my_event_list">
