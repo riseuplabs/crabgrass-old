@@ -56,6 +56,16 @@ class AccountControllerTest < Test::Unit::TestCase
     end
   end
 
+  def test_should_not_allow_duplicate_username
+    assert_no_difference User, :count do
+      create_user(:login => 'quentin',
+                  :password => 'quentin',
+                  :password_confirmation => 'quentin')
+      assert assigns(:user).errors.on(:login)
+      assert_response :success
+    end
+  end
+
 =begin
   #currently not required
   def test_should_require_email_on_signup
