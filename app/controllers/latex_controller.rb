@@ -25,7 +25,7 @@ class LatexController < ApplicationController
         equation = '\text {error decoding url}'
       end
       if equation !~ /^\\begin/
-        equation = "$\n#{equation}\n$"
+        equation = "$$\n#{equation}\n$$"
       end
       latex = @@latex_head + equation + @@latex_tail
       blob = get_image_from_latex(latex)
