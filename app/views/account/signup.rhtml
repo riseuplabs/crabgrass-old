@@ -13,6 +13,10 @@
 <p><label for="login">Your login name </label><br/>
 <%= f.text_field :login %></p>
 
+<script>
+  document.getElementById('user_login').focus();
+</script>
+
 <p><label for="password">Your Password</label><br/>
 <%= f.password_field :password %></p>
 
