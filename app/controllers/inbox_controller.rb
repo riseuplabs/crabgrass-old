@@ -1,17 +1,6 @@
 class InboxController < ApplicationController
   layout 'me'
 
-  def handle_rss
-    if params[:path].any? and (params[:path].last == 'rss' or params[:path].last == '.rss')
-      response.headers['Content-Type'] = 'application/rss+xml'
-#      @items = find_pages(options_for_group(@group),'/descending/updated_at/limit/10')
-      @title ||= 'Crabgrass Inbox'
-      @link ||= '/me/inbox'
-      @image ||= @user.avatar
-      render :partial => '/pages/rss', :locals => {:items => @pages}
-    end
-  end
-      
   def index
     if request.post?
       update
@@ -20,7 +9,8 @@ class InboxController < ApplicationController
       path = ['starred','or','unread','or','pending'] if path.first == 'vital'
       path << 'descending' << 'updated_at'
       @pages, @sections = find_and_paginate_pages(options_for_inbox, path)
-      handle_rss
+      handle_rss  :title => 'Crabgrass Inbox', :link => '/me/inbox',
+                 :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
     end
   end
 

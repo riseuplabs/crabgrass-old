@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include ContextHelper
   include PageFinders
   include TimeHelper
-    
+      
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
@@ -41,7 +41,16 @@ class ApplicationController < ActionController::Base
   def str_to_page_class()
       
   end
-  
+
+  def handle_rss(locals)
+    if params[:path].any? and 
+        (params[:path].include? 'rss' or params[:path].include? '.rss')
+      response.headers['Content-Type'] = 'application/rss+xml'
+      
+      render :partial => '/pages/rss', :locals => locals
+    end
+  end
+        
   # returns a string representation of page class based on the tool_type.
   # if the result in ambiguous, all matching classes are returned as an array.
   # for example:
