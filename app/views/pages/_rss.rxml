@@ -1,8 +1,9 @@
-items ||= @items
-title ||= @title
-link ||= @link
-description ||= @description
-image ||= @image
+# local vars that will be displayed if they are set:
+items ||= @pages
+title ||= 'Crabgrass RSS Feed'
+link ||= ''
+description ||= ''
+image ||= ''
 
 base_url = request.protocol + request.host_with_port
 link = base_url + link unless link.include? ':'
@@ -10,16 +11,18 @@ link = base_url + link unless link.include? ':'
 xml.instruct! :xml, :version=>"1.0" 
 xml.rss(:version=>"2.0"){
   xml.channel{
-    xml.title(title)
-    xml.link(link)
-    xml.description(description)
+    xml.title title
+    xml.link link
+    xml.description description
 
-    xml.image do
-      xml.url image
-      xml.title title
-      xml.link link
-#      xml.width 96
-#      xml.height 96
+    if image != ''
+      xml.image do
+        xml.url image
+        xml.title title
+        xml.link link
+#        xml.width 96
+#        xml.height 96
+      end
     end
 
     xml.generator 'crabgrass'
@@ -27,16 +30,12 @@ xml.rss(:version=>"2.0"){
     
     xml.language('en-us')
     for item in items
-      item = item.page unless item.instance_of? Page
+      item = item.page if item.instance_of? UserParticipation or item.instance_of? GroupParticipation
         
       xml.item do
         xml.title(item.title)
-        if item.data and item.data.body
-          xml.description(item.data.body)
-        else
-          xml.description(item.summary)
-        end         
-        xml.author(item.created_by.display_name)
+        xml.description(item.summary)
+        xml.author(item.updated_by.display_name)
         xml.pubDate(item.updated_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
         page_url = base_url + page_url(item)
         xml.link(page_url)
