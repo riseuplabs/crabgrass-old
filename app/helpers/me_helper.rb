@@ -28,7 +28,7 @@ module MeHelper
 
   def pending_inbox_link
     s = @pending_count == 1 ? '' : 's'
-    link_to '%s pending page%s in your inbox'.t % [@unread_count, s],
+    link_to '%s pending page%s in your inbox'.t % [@pending_count, s],
       :controller => 'inbox', :action => 'index', :path => 'pending'
   end
   
