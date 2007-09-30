@@ -1,4 +1,7 @@
 class AssetController < ApplicationController
+
+  before_filter :public_or_login_required
+  
   prepend_before_filter :fetch_asset, :only => :show
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
@@ -17,14 +20,6 @@ class AssetController < ApplicationController
       return redirect_to(page_url(@asset.page))
     end
   end
-
-#  include Tool::ToolCreation
-#  def get_groups
-#    @asset.page.groups
-#  end
-#  def get_page_type
-#    Tool::Asset
-#  end
 
   protected
 
@@ -51,6 +46,12 @@ class AssetController < ApplicationController
     true
   end
 
+  protected
+
+  def public_or_login_required
+    @asset.page.public? or login_required
+  end
+  
   def authorized?
     if @asset
       if action_name == 'show' || action_name == 'version'
@@ -69,5 +70,7 @@ class AssetController < ApplicationController
     message :error => 'Please login to access that file.' unless logged_in?
     redirect_to :controller => '/account', :action => 'login'
   end
+  
+  
 end
 

@@ -3,7 +3,12 @@ class GroupsController < ApplicationController
   stylesheet 'groups'
   
   prepend_before_filter :find_group, :except => ['list','create','index']
-  skip_before_filter :login_required, :only => ['show', 'index','list']
+  
+  before_filter :login_required,
+    :only => [:create, :edit, :edit_public_home, :edit_private_home, :destroy, :update]
+
+  verify :method => :post,
+    :only => [:destroy, :update ]
 
   def initialize(options={})
     super()
@@ -15,11 +20,7 @@ class GroupsController < ApplicationController
     render :action => 'list'
   end
 
-  verify :method => :post,
-    :only => [ :destroy, :add_user, :remove_user, :join_group, :leave_group ]
-
   def list
-    #@group_pages, @groups = paginate :groups, :per_page => 10, :conditions => 'type IS NULL'
     @groups = Group.find :all, :conditions => 'type IS NULL'
     set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
@@ -85,6 +86,7 @@ class GroupsController < ApplicationController
     @task_lists = @pages.collect{|part|part.page.data}
   end
 
+  # login required
   def create
     set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
     @parent = Group.find(params[:parent_id]) if params[:parent_id]
@@ -109,6 +111,7 @@ class GroupsController < ApplicationController
     end
   end
 
+  # login required
   def edit
     if request.post? 
       if @group.update_attributes(params[:group])
@@ -120,6 +123,7 @@ class GroupsController < ApplicationController
     end
   end
   
+  # login required
   def edit_public_home
     unless @group.public_home
       page = Page.make :wiki, :group => @group, :user => current_user, :name => 'public home', :body => 'new public home'
@@ -132,6 +136,7 @@ class GroupsController < ApplicationController
     redirect_to page_url(page, :action => 'edit')
   end
   
+  # login required
   def edit_private_home
     unless @group.private_home
       page = Page.make :wiki, :group => @group, :user => current_user, :name => 'private home', :body => 'new private home'
@@ -144,12 +149,15 @@ class GroupsController < ApplicationController
     redirect_to page_url(page, :action => 'edit')
   end
   
+  # login required
+  # post required
   def update
     @group.update_attributes(params[:group])
     redirect_to :action => 'show', :id => @group
   end
   
-  # post only
+  # login required
+  # post required
   def destroy
     if @group.users.size > 1 or @group.users.first != current_user
       message :error => 'You can only delete a group if you are the last member'
@@ -187,7 +195,6 @@ class GroupsController < ApplicationController
   end
   
   def authorized?
-    #members_only = %w(destroy leave_group remove_user add_user invite edit edit_home update members create)
     non_members_post_allowed = %w(archive search tags tasks create)
     non_members_get_allowed = %w(show members) + non_members_post_allowed
     if request.get? and non_members_get_allowed.include? params[:action]

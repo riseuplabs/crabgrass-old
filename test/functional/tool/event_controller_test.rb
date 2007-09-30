@@ -13,14 +13,14 @@ class Tool::EventControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_create
-    login_as :quentin
-    num_pages = Page.count
-    post :create, :page_type => "Tool::Event", :id => 'event', :page => {:title => 'my title event' }
-    assert_response :success
-    assert_not_nil assigns(:page)
-    assert_equal num_pages + 1, Page.count
-  end
+#  def test_create
+#    login_as :quentin
+#    num_pages = Page.count
+#    post :create, :page_type => "Tool::Event", :id => 'event', :page => {:title => 'my title event' }
+#    assert_response :success
+#    assert_not_nil assigns(:page)
+#    assert_equal num_pages + 1, Page.count
+#  end
 
   def test_get_create
     login_as :quentin

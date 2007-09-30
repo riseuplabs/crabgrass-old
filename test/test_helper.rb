@@ -41,4 +41,26 @@ class Test::Unit::TestCase
     true
   end
   
+=begin
+  def assert_login_required(method, url)
+    if method == :get
+      get action, url
+      assert_redirect_to {:controller => 'account', :action => 'login'}, "get %s must require a login" % url.inspect
+    elsif method = :post
+      post action, url
+      assert_redirect_to {:controller => 'account', :action => 'login'}, "post %s must require a login" % url.inspect
+    end
+  end    
+
+  def assert_login_not_required(method, url)
+    if method == :get
+      get action, url
+      assert_response :success, {:controller => 'account', :action => 'login'}, "get %s must require a login" % url.inspect
+    elsif method = :post
+      post action, url
+      assert_redirect_to {:controller => 'account', :action => 'login'}, "post %s must require a login" % url.inspect
+    end
+  end    
+=end
+
 end

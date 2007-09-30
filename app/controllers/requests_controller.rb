@@ -12,8 +12,10 @@
 
 class RequestsController < ApplicationController
 
+  before_filter :login_required
+  before_filter :fetch_user
   layout 'me'
-    
+
   def index
     path = ['descending', 'created_at', 'limit', '20']
     @my_pages, @my_sections, @my_columns = my_req_list(path.dup)
@@ -65,11 +67,12 @@ class RequestsController < ApplicationController
     [pages, page_sections, columns]
   end
 
+  protected
+  
   def authorized?
     return true # current_user always authorized for me
   end
 
-  append_before_filter :fetch_user  
   def fetch_user
     @user = current_user
   end

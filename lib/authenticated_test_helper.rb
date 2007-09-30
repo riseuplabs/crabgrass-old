@@ -77,7 +77,7 @@ class BaseLoginProxy
       raise NotImplementedError
     end
     
-    def check
+    def check(method)
       raise NotImplementedError
     end
     
@@ -85,7 +85,7 @@ class BaseLoginProxy
       @controller.reset!
       authenticate
       @controller.send(method, *args)
-      check
+      check(method,*args)
     end
 end
 
@@ -95,8 +95,8 @@ class HttpLoginProxy < BaseLoginProxy
       @controller.login_as @login if @login
     end
     
-    def check
-      @controller.assert_redirected_to :controller => 'account', :action => 'login'
+    def check(method,*args)
+      @controller.assert_redirected_to({:controller => 'account', :action => 'login'}, "%s: %s(%s) did not require a login" % [@controller, method, args.collect{|a|a.inspect}.join(', ')])
     end
 end
 
@@ -107,7 +107,7 @@ class XmlLoginProxy < BaseLoginProxy
       @controller.authorize_as @login if @login
     end
     
-    def check
+    def check(method)
       @controller.assert_response 401
     end
 end

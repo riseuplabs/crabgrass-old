@@ -94,4 +94,13 @@ class GroupsControllerTest < Test::Unit::TestCase
 #      Group.find(1)
 #    }
   end
+
+  def test_login_required
+    [:create, :edit, :destroy, :update].each do |action|
+      assert_requires_login do |c|
+        c.get action, :id => groups(:rainbow).name
+      end
+    end
+  end
+
 end

@@ -1,6 +1,7 @@
 class MyCalendarController < ApplicationController
   layout 'me'
- 
+  before_filter :login_required
+  
   def index
     params[:participate] ||= "interesting"
     # by default all the events im watching or attending in the future

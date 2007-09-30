@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
 
+  before_filter :login_required
+  
   def create    
     begin
       @page = Page.find params[:page_id]
@@ -56,7 +58,9 @@ class PostsController < ApplicationController
       rating.destroy
     end
   end
-  
+
+  protected
+    
   def authorized?
     @post = Post.find(params[:id]) if params[:id]
     return true unless @post

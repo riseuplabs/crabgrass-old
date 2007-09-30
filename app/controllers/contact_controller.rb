@@ -4,6 +4,7 @@
 
 class ContactController < ApplicationController
 
+  before_filter :login_required
   layout 'person'  
   
   def add
@@ -20,8 +21,7 @@ class ContactController < ApplicationController
         message :object => page
       end
     else
-      Page.find :all, :conditions => {:flow => FLOW[:contacts]}
-      
+      Page.find :all, :conditions => {:flow => FLOW[:contacts]}      
     end 
   end
   

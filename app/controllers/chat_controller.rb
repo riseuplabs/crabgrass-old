@@ -1,12 +1,14 @@
 #
-# this code was originally free software called Congress,
-# but then taken offline by the author.
-# The code ended up in Toombila, where this code
-# was copied from.
+# There was once a free software demo of chat in rails.
+# Eventually, the code was taken offline by the author.
+# and later ended up in Toombila.
+#
+# This chat is inspired by the code from toombila.
 #
 
 class ChatController < ApplicationController
-  
+ 
+  before_filter :login_required 
   prepend_before_filter :get_channel_and_user
   
   # show a list of available channels

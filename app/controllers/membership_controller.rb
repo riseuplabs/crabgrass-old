@@ -1,14 +1,18 @@
-# Membership Controller
-# ---------------------
-# All the relationship between users and groups is managed by this controller,
-# including join requests.
+=begin
+Membership Controller
+---------------------
+
+All the relationships between users and groups are managed by this controller,
+including join requests.
+
+=end
 
 class MembershipController < ApplicationController
   layout 'groups'
   stylesheet 'groups'
   helper 'groups', 'application'
     
-  skip_before_filter :login_required, :only => ['list']
+  before_filter :login_required, :except => ['list']
 
   ###### PUBLIC ACTIONS #########################################################
   

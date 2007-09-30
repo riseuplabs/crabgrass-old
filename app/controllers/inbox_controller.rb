@@ -1,4 +1,7 @@
 class InboxController < ApplicationController
+ 
+  before_filter :login_required
+ 
   layout 'me'
 
   def index
@@ -14,6 +17,7 @@ class InboxController < ApplicationController
     end
   end
 
+  # post required
   def update
     if params[:remove] 
       remove
@@ -22,6 +26,7 @@ class InboxController < ApplicationController
     end
   end
 
+  # post required
   def remove
     to_remove = params[:page_checked]
     if to_remove

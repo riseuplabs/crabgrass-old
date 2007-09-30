@@ -80,6 +80,7 @@ tasklist2:
   data_type: Task::TaskList
   data_id: 2
   created_by_id: 1
+  created_by_id: 4
 event1:
   id: 23
   title : an event
@@ -122,3 +123,8 @@ event3:
   group_name: rainbow
   updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
+hello:
+  id: 26
+  title: hello
+  type: Tool::Message
+

@@ -81,6 +81,7 @@ module ContextHelper
   end
 
   def me_context(size='large', update_breadcrumbs=true)
+    return unless logged_in?
     @user ||= current_user
     add_context 'me', me_url
     set_banner 'me/banner', current_user.banner_style

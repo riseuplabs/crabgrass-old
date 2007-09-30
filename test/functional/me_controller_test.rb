@@ -5,6 +5,9 @@ require 'me_controller'
 class MeController; def rescue_action(e) raise e end; end
 
 class MeControllerTest < Test::Unit::TestCase
+
+  fixtures :users
+  
   def setup
     @controller = MeController.new
     @request    = ActionController::TestRequest.new
@@ -15,4 +18,5 @@ class MeControllerTest < Test::Unit::TestCase
   def test_truth
     assert true
   end
+  
 end

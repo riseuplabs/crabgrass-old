@@ -19,4 +19,12 @@ class PagesControllerTest < Test::Unit::TestCase
     assert :success
     assert_template 'create'
   end
+  
+  def test_login_required
+    [:tag, :notify, :access, :move, :destroy].each do |action|
+      assert_requires_login do |c|
+        c.get action, :id => pages(:hello).id
+      end
+    end
+  end
 end

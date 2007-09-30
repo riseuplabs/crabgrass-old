@@ -1,13 +1,13 @@
-#
-# PeopleContoller
-# ================================
-# 
-# A controller which handles collections of users, or
-# for creating new users.
-#
-# For processing a single user, see PersonController.
-#
+=begin
+PeopleContoller
+================================
 
+A controller which handles collections of users, or
+for creating new users.
+
+For processing a single user, see PersonController.
+
+=end
 
 class PeopleController < ApplicationController
   
@@ -21,20 +21,6 @@ class PeopleController < ApplicationController
     if logged_in?
       @contacts = current_user.contacts
       @peers = current_user.peers
-    end
-  end
-
-  def create
-    if request.get?
-      @user = User.new
-    elsif request.post?
-      @user = User.new(params[:user])
-      if @user.save
-        flash[:notice] = 'User was successfully created.'
-        redirect_to :action => 'list'
-      else
-        render :action => 'new'
-      end
     end
   end
     

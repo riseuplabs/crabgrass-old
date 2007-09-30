@@ -1,29 +1,32 @@
-# PagesController
-# ---------------------------------
-#
-# Controller for managing abstract pages. The display and editing of
-# a particular page type (aka tool) are handled by controllers
-# in controllers/tool.
-#
-# When should an action be in this controller or in Tool::Base?
-# The general rule is this:
-#
-#    If the action can go in PagesController, then do so.
-#
-# This means that only stuff specific to a tool should go in the
-# tool controllers.
-# 
-# For example, there are two create actions, one in PagesControllers
-# and one in Tool::Base. The one in PagesController handles the first
-# step where you choose a page type. The one in Tool::Base handles the
-# next step where you enter in data. This step is handled by Tool::Base
-# so that each tool can define their own method of creation.
-#
+=begin
+
+PagesController
+---------------------------------
+
+This is a controller for managing abstract pages. The display and editing of
+a particular page type (aka tool) are handled by controllers in controllers/tool.
+
+When should an action be in this controller or in Tool::Base?
+The general rule is this:
+
+   If the action can go in PagesController, then do so.
+
+This means that only stuff specific to a tool should go in the
+tool controllers.
+
+For example, there are two create() actions, one in PagesControllers
+and one in Tool::Base. The one in PagesController handles the first
+step where you choose a page type. The one in Tool::Base handles the
+next step where you enter in data. This step is handled by Tool::Base
+so that each tool can define their own method of creation.
+
+=end
 
 class PagesController < ApplicationController
 
   helper Tool::BaseHelper
   
+  before_filter :login_required, :except => 'search'
   prepend_before_filter :fetch_page
 
   # if this controller is called by DispatchController,
@@ -33,19 +36,8 @@ class PagesController < ApplicationController
     @pages = options[:pages] # a list of pages, if already fetched
   end  
 
-  # a simple form to allow the user to select which type of page
-  # they want to create. the actual create form is handled by
-  # Tool::BaseController (or overridden by the particular tool). 
-  def create
-  end
-    
-  def tag
-    return unless request.xhr?
-    tags = Tag.parse(params[:tag_list])
-    @page.tag_with(tags.uniq.join(' '))
-    @page.save
-    render :partial => "pages/tags"
-  end
+  ##############################################################
+  ## PUBLIC ACTIONS
   
   def search
     unless @pages
@@ -58,7 +50,22 @@ class PagesController < ApplicationController
       @pages, @page_sections = find_and_paginate_pages(options)
     end
   end
-  
+
+  # a simple form to allow the user to select which type of page
+  # they want to create. the actual create form is handled by
+  # Tool::BaseController (or overridden by the particular tool). 
+  def create
+  end
+ 
+     
+  def tag
+    return unless request.xhr?
+    tags = Tag.parse(params[:tag_list])
+    @page.tag_with(tags.uniq.join(' '))
+    @page.save
+    render :partial => "pages/tags"
+  end
+    
   # for quickly creating a wiki
   def create_wiki
     group = Group.get_by_name(params[:group])

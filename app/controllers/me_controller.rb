@@ -1,6 +1,7 @@
 class MeController < ApplicationController
 
-  append_before_filter :fetch_user
+  before_filter :login_required
+  before_filter :fetch_user
   stylesheet 'me'
 
   def index

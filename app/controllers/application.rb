@@ -10,9 +10,10 @@ class ApplicationController < ActionController::Base
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
-  before_filter :login_required, :breadcrumbs, :context
-
+  before_filter :breadcrumbs, :context
   around_filter :set_timezone
+  
+  protected
   
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(cssfile=nil)
@@ -38,35 +39,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def str_to_page_class()
-      
-  end
-
   def handle_rss(locals)
     if params[:path].any? and 
         (params[:path].include? 'rss' or params[:path].include? '.rss')
-      response.headers['Content-Type'] = 'application/rss+xml'
-      
+      response.headers['Content-Type'] = 'application/rss+xml'   
       render :partial => '/pages/rss', :locals => locals
     end
   end
-        
-  # returns a string representation of page class based on the tool_type.
-  # if the result in ambiguous, all matching classes are returned as an array.
-  # for example:
-  #   'poll/rate many' returns 'Tool::RateMany'
-  #   'poll'           returns ['Tool::RateOne', 'Tool::RateMany']
-  #def tool_class_str(tool_type)
-  #  ary = TOOLS.collect{|tool_class| tool_class.to_s if (tool_class.tool_type.starts_with?(tool_type) and not tool_class.internal?)}.compact
-  #  return ary.first if ary.length == 1
-  #  return ary
-  #end
-  
-  # override standard url_for to cache the result.
-  #def url_for(options = {})
-  #  @@cached_urls ||= {}
-  #  return(@@cached_urls[options.to_yaml] ||= super(options))
-  #end
+
 
   # a one stop shopping function for flash messages
   def message(opts)    

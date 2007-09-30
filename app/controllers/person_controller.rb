@@ -1,10 +1,12 @@
-#
-# PersonContoller
-# ================================
-# 
-# A controller which handles a single user. For processing collections of users,
-# see PeopleController.
-#
+=begin
+
+PersonContoller
+================================
+
+A controller which handles a single user. For processing collections of users,
+see PeopleController.
+
+=end
 
 class PersonController < ApplicationController
   layout 'person'
