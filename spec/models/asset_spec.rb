@@ -1,38 +1,40 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+
 describe Asset, "when updating" do
 #  fixtures :assets
-
+  before(:all) do
+    @old_file_storage = Asset.file_storage
+    @old_public_storage = Asset.public_storage
+    Asset.file_storage = "#{RAILS_ROOT}/tmp/assets"
+    Asset.public_storage = "#{RAILS_ROOT}/tmp/public/assets"
+  end
+  after(:all) do
+    Asset.file_storage = @old_file_storage
+    Asset.public_storage = @old_public_storage
+  end
   before do
-    @asset = Asset.create :uploaded_data => ActionController::TestUploadedFile.new(asset_fixture_path('gears.jpg'), 'image/jpg')
+    FileUtils.mkdir_p(Asset.file_storage)
+    FileUtils.mkdir_p(Asset.public_storage)
+    @asset = Asset.new :uploaded_data => ActionController::TestUploadedFile.new(asset_fixture_path('gears.jpg'), 'image/jpg')
+  end
+  after do
+    FileUtils.rm_rf(Asset.file_storage)
+    FileUtils.rm_rf(Asset.public_storage)
   end
 
   it "should remember the old filename" do
+    @asset.save
     filename = @asset.filename
     @asset.uploaded_data = ActionController::TestUploadedFile.new(asset_fixture_path('gears2.jpg'), 'image/jpg')
-    File.basename(@asset.instance_variable_get(:@old_filename)).should == filename
+    File.basename(@asset.old_filename).should == filename
+    File.basename(@asset.filename).should == 'gears2.jpg'
   end
 
-=begin
-  it "should receive a call to the filename setter" do
-    @asset.expects(:filename=).once
-    @asset.uploaded_data = ActionController::TestUploadedFile.new(asset_fixture_path('gears2.jpg'), 'image/jpg')
+  it "should remember old filename when it's time to copy asset" do
     @asset.save
+    lambda {
+    @asset.update_attribute(:uploaded_data, ActionController::TestUploadedFile.new(asset_fixture_path('gears2.jpg'), 'image/jpg')) #uploaded_data= + save
+    }.should_not raise_error
   end
-=end
-
-  it "should save the new file with the name of the asset page" do
-    full_filename = @asset.full_filename
-    @asset.uploaded_data = ActionController::TestUploadedFile.new(asset_fixture_path('gears2.jpg'), 'image/jpg')
-    @asset.save
-    @asset.full_filename.should == full_filename
-  end
-
-#  it "should create a version folder if one doesn't exist"
-
-  it "should put the old file in the versions folder" do
-    @asset.uploaded_data = ActionController::TestUploadedFile.new(asset_fixture_path('gears2.jpg'), 'image/jpg')
-    File.exists?(File.join(@asset.full_dirpath, 'versions')).should be_true
-  end
-
 end

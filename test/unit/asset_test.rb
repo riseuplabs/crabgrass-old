@@ -3,10 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AssetTest < Test::Unit::TestCase
 #  fixtures :groups
 
-  FILE_STORAGE = "#{RAILS_ROOT}/tmp/assets"
-  PUBLIC_STORAGE = "#{RAILS_ROOT}/tmp/public/assets"
-  Asset.file_storage = FILE_STORAGE
-  Asset.public_storage = PUBLIC_STORAGE
+  Asset.file_storage = "#{RAILS_ROOT}/tmp/assets"
+  Asset.public_storage = "#{RAILS_ROOT}/tmp/public/assets"
 
   def setup
     FileUtils.mkdir_p(FILE_STORAGE)

@@ -8,27 +8,16 @@ class Asset < ActiveRecord::Base
     pages.first || parent_page
   end
 
+  before_update :copy_asset #XXX: must be declared before has_attachment, order of hooks is important!!!
+  before_destroy :destroy_versions
   has_attachment :storage => :file_system, :max_size => 3.megabytes,
     :thumbnails => {:thumb => "22x22>", :preview => "128x128>"}
   validates_as_attachment
+  attr_reader :old_filename
 
   ## versions #########################################
   
   acts_as_versioned
-  
-  before_update :copy_asset
-  def copy_asset
-    if file = self.instance_variable_get(:@old_filename)
-      version_dir = FileUtils.mkdir_p File.join(full_dirpath, 'versions', "#{version - 1}")
-      breakpoint
-      FileUtils.cp file, version_dir
-    end
-  end
-  
-  before_destroy :destroy_versions
-  def destroy_versions
-    FileUtils.rm_rf File.join(full_dirpath, 'versions')
-  end
   
   versioned_class.class_eval do
     delegate :page, :is_public?, :partitioned_path, :to => :asset
@@ -199,4 +188,15 @@ class Asset < ActiveRecord::Base
     'application/pgp-keys' => 'lock'
   }
   
+  private
+  def copy_asset
+    if old_filename
+      version_dir = FileUtils.mkdir_p File.join(full_dirpath, 'versions', "#{version - 1}")
+      FileUtils.cp file, version_dir
+    end
+  end
+  
+  def destroy_versions
+    FileUtils.rm_rf File.join(full_dirpath, 'versions')
+  end
 end

@@ -20,6 +20,8 @@ Spec::Runner.configure do |config|
   #
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
+
+  config.mock_with :mocha
 end
 
 def asset_fixture_path(filename)
