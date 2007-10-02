@@ -17,7 +17,7 @@ class Tool::AssetController < Tool::BaseController
         @page.title = @asset.filename
       end
       if @page.save
-        return redirect_to page_url(@page)
+        return redirect_to(page_url(@page))
       else
         message :object => @page
       end
@@ -26,8 +26,9 @@ class Tool::AssetController < Tool::BaseController
 
   def update
     @page.data.uploaded_data = params[:asset]
+    @page.data.filename = @page.title + @page.data.suffix
     if @page.data.save
-      return redirect_to page_url(@page)
+      return redirect_to(page_url(@page))
     else
       message :object => @page
     end
