@@ -1,3 +1,5 @@
+require 'svg/svg'
+
 class GroupsController < ApplicationController
   layout :choose_layout
   stylesheet 'groups'
@@ -26,6 +28,16 @@ class GroupsController < ApplicationController
   end
 
   def show
+  end
+
+  def visualize
+    unless logged_in? and current_user.member_of?(@group)
+      message( :error => 'you do not have permission to do that', :later => true )
+      redirect_to url_for_group(@group)
+    end
+
+    # return xhtml so that svg content is rendered correctly --- only works for firefox (?)    
+    response.headers['Content-Type'] = 'application/xhtml+xml'       
   end
 
   def archive

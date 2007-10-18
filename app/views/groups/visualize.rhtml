@@ -1,0 +1,73 @@
+<% unless logged_in? -%>
+
+This group does not have a public profile.
+
+<% else -%>
+
+<div class='network_viz'>
+  <svg xmlns="http://www.w3.org/2000/svg"
+       xmlns:xlink="http://www.w3.org/1999/xlink"
+       width="600" height="800">
+    <% # find a nice place on the screen for all the icons
+    psize = 32
+
+    pt = {}
+    pages = find_pages(options_for_group(@group),'/changed/descending/updated_at/limit/5')
+    members = User.find @group.memberships.collect { |m| m.user_id }
+    
+    members.each_with_index { |m, i|
+      pt[m] = SVG::Point.new(20 + 0*(i%2), (psize+8+50)*i)
+    }
+    
+    pages.each_with_index { |p, i|
+      pt[p] = SVG::Point.new(psize*7 + 20 + 0*(i%2), psize/2 + (psize+8+50)*i)
+    }
+    -%>
+
+    <%= #SVG::Image.new(0, 0, 600, 800, avatar_url(@group.avatar||0, 'huge')) 
+    %>
+ 
+    <% pages.each do |p| -%>
+      <% p.page.user_participations.each do |upart| -%>
+        <% next if not upart.user or not pt[upart.user] -%>
+        <%= SVG::Path.new(["M", "#{pt[upart.user].x+psize}, #{pt[upart.user].y+psize/2}",
+                           'C', "#{pt[upart.user].x+4*psize}, #{pt[upart.user].y+psize/2}",
+                                "#{pt[p].x-3*psize}, #{pt[p].y+psize/2}",
+                                "#{pt[p].x}, #{pt[p].y+psize/2}"
+                          ]
+                         ) { self.style = SVG::Style.new(:fill => 'none', :stroke => 'black')} %>
+      <% end -%>
+    <% end -%>
+
+   <% members.each do |m| -%>
+      <%= SVG::Image.new(pt[m].x, pt[m].y, psize, psize, avatar_url(m.avatar||0, 'small')) %>
+      <%= SVG::Text.new(pt[m].x+psize/2, pt[m].y+psize+10, m.display_name) {
+        self.style = SVG::Style.new
+        self.style.fill           = '#000000'
+        self.style.font_size      = '8pt'
+        self.style.font_family    = 'sans'
+        self.style.baseline_shift = 'sub'
+        self.style.text_anchor    = 'middle'
+      }
+      %>
+    <% end -%>
+    <% pages.each do |p| -%>
+      <%= SVG::Image.new(pt[p].x, pt[p].y, psize, psize, 
+            request.protocol + request.host_with_port + "/images/pages/#{p.page.icon}")
+      %>
+      <%= SVG::Text.new(pt[p].x+psize/2, pt[p].y+psize+10, p.page.title) {
+        self.style = SVG::Style.new
+        self.style.fill           = '#000000'
+        self.style.font_size      = '8pt'
+        self.style.font_family    = 'sans'
+        self.style.baseline_shift = 'sub'
+        self.style.text_anchor    = 'middle'
+      }
+      %>
+    <% end -%>
+
+  </svg>
+  <br></br>
+</div>
+
+<% end -%>
