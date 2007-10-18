@@ -6,12 +6,16 @@
   If a user is a member of the group, they will have access if the group has access.
   In the future, you will be able to make pages public, and be able to specify admin, edit, and view permissions separately.
 </div>
+<% accessor_count = @page.groups.length + @page.users.with_access.length -%>
 
 <%= "<b>groups</b>" if @page.groups.any? %>
 <ul>
   <% @page.groups.each do |group| %>
   <li>
-    <b><%= link_to_group group %></b> (<%= link_to 'remove', pages_url(@page, :action => 'access', :remove_group => group.id),  :method => 'post' %>)
+    <b><%= link_to_group group %></b>
+    <% if accessor_count > 1 -%>
+      (<%= link_to 'remove', pages_url(@page, :action => 'access', :remove_group => group.id),  :method => 'post' %>)
+    <% end -%>
   </li>
   <% end %>
 </ul>
@@ -19,7 +23,10 @@
 <ul>
   <% @page.users.with_access.each do |user| %>
   <li>
-    <%= link_to_user user %> (<%= link_to 'remove', pages_url(@page, :action => 'access', :remove_user => user.id),  :method => 'post' %>)
+    <%= link_to_user user %> 
+    <% if accessor_count > 1 -%>
+      (<%= link_to 'remove', pages_url(@page, :action => 'access', :remove_user => user.id),  :method => 'post' %>)
+    <% end %>
   </li>
   <% end %>
 </ul>
@@ -28,6 +35,12 @@
 <% form_tag(pages_url(@page, :action => 'access')) do -%>
   User or group name: <%= text_field_tag 'add_name','',:size=>13 %>
   <%= submit_tag 'add' %>
-<% end -%>
+<% end %>
+
+<script>
+  document.getElementById('add_name').focus();
+</script>
+
+
 </p>
 </div>

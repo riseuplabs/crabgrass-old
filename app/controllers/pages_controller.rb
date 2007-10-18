@@ -124,6 +124,7 @@ class PagesController < ApplicationController
         @page.remove(Group.find_by_id(params[:remove_group]))
       elsif params[:remove_user]
         @page.remove(User.find_by_id(params[:remove_user]))
+      # maybe we shouldn't allow removal of last entity (?) -- now handled in view -af
       elsif params[:add_name]
         access = params[:access] || :admin
         if group = Group.get_by_name(params[:add_name])
@@ -236,7 +237,7 @@ class PagesController < ApplicationController
   end
 
   def context
-    return true unless request.get?
+#    return true unless request.get?  #I don't know what the purpose of this is, but commenting it out makes access look better after removing access  --af
     @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
