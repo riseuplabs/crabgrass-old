@@ -129,8 +129,11 @@ class ChatController < ApplicationController
   end
   
   def sanitize(say)
-    say.gsub!(/\</, '&lt;')
-    say.gsub!(/\>/, '&gt;')
+#    say.gsub!(/\</, '&lt;')
+#    say.gsub!(/\>/, '&gt;')
+    say  = GreenCloth.new(say).to_html
+    say.gsub!(/^<p>/, '')
+    say.gsub!(/<\/p>$/, '')
     say
   end
   
