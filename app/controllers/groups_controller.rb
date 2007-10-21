@@ -1,5 +1,3 @@
-require 'svg/svg'
-
 class GroupsController < ApplicationController
   layout :choose_layout
   stylesheet 'groups'
