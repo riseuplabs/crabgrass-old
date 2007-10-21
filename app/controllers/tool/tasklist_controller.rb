@@ -95,6 +95,9 @@ class Tool::TasklistController < Tool::BaseController
     users_pending.each do |user,pending|
       user.resolved(@page, (not pending))
     end
+    
+    # make sure the page is updated_at this very moment
+    @page.save
     true
   end
   
