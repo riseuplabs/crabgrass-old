@@ -97,7 +97,9 @@ class Tool::TasklistController < Tool::BaseController
     end
     
     # make sure the page is updated_at this very moment
-    @page.save
+#    @page.save 
+    #elijah recommended doing this as follows instead:
+    current_user.updated(@page)
     true
   end
   
