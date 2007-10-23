@@ -61,6 +61,7 @@ class GroupsControllerTest < Test::Unit::TestCase
     group = Group.find_by_name 'test-create-group'
     assert_redirected_to url_for_group(group, :action => 'show')
     assert_equal assigns(:group).name, 'test-create-group'
+    assert_equal group.name, 'test-create-group'
     assert_equal num_groups + 1, Group.count
   end
 
@@ -83,16 +84,18 @@ class GroupsControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy
-#    login_as :gerrard
-#    assert_not_nil Group.find(1)
-#
-#    post :destroy, :id => groups(:true_levellers).name
-#    assert_response :redirect
-#    assert_redirected_to :action => 'list'
-#
-#    assert_raise(ActiveRecord::RecordNotFound) {
-#      Group.find(1)
-#    }
+    login_as :gerrard
+    num_groups = Group.count
+
+    post :create, :group => {:name => 'short-lived-group'}
+
+    group = Group.find_by_name 'short-lived-group'    
+    assert_redirected_to url_for_group(group, :action => 'show')
+    assert_equal num_groups + 1, Group.count
+
+    post :destroy, :id => group.name
+    assert_equal num_groups, Group.count
+    assert_redirected_to :action => 'list'    
   end
 
   def test_login_required
@@ -103,4 +106,16 @@ class GroupsControllerTest < Test::Unit::TestCase
     end
   end
 
+  def test_invite
+    login_as :gerrard
+    post :create, :group => {:name => 'awesome-new-group'}
+    
+    group = Group.find_by_name 'awesome-new-group'
+    num_members = group.memberships.count
+    assert_equal num_members, 1
+    
+# i'm not sure how to write tests  --af
+#    post :invite, :user => 'blue'
+  end
+  
 end
