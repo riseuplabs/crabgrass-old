@@ -20,21 +20,26 @@ module GroupsHelper
     end
   end
   
+  def join_group_link
+    if logged_in? 
+      if not current_user.member_of?(@group)
+        link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'join', :id => @group)
+      elsif not current_user.direct_member_of? @group
+        # if you are an indirect member of this group then it is a committee and you are a member of the group containing it, so you can add yourself to the committee from the edit page.  This may not be true when networks are implemented
+        link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'list', :id => @group)
+      end
+    end
+  end
+
   def leave_group_link
-    if logged_in? and current_user.direct_member_of? @group
+    if @group.users.uniq.size > 1 and logged_in? and current_user.direct_member_of? @group
 	    link_to "leave #{@group_type}".t, url_for(:controller => 'membership', :action => 'leave', :id => @group)
 	    #, :confirm => "Are you sure you want to leave this #{@group_type}?"
 		end
   end
   
-  def join_group_link
-    unless logged_in? and current_user.direct_member_of?(@group)
-      link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'join', :id => @group)
-    end
-  end
-
   def destroy_group_link
-    if @group.users.size == 1 and current_user.direct_member_of? @group
+    if @group.users.uniq.size == 1 and logged_in? and current_user.direct_member_of? @group
       post_to "destroy #{@group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % @group_type
     end
   end
@@ -68,6 +73,5 @@ module GroupsHelper
       link_to 'view requests'.t, url_for(:controller => 'membership', :action => 'requests', :id => @group)
     end
   end
-  
   
 end

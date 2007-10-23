@@ -99,20 +99,23 @@ class GroupsController < ApplicationController
   # login required
   def create
     set_banner "groups/banner_search", Style.new(:background_color => "#1B5790", :color => "#eef")
+
     @parent = Group.find(params[:parent_id]) if params[:parent_id]
-    if @parent
-      @group = Committee.new(params[:group])
-      unless logged_in? and current_user.member_of?(@parent)
-        message( :error => 'you do not have permission to do that', :later => true )
-        redirect_to url_for_group(@parent)
-      end
-      @group.parent = @parent
-    else
-      @group = Group.new(params[:group])
-    end  
+    if @parent and not current_user.member_of?(@parent)
+      message( :error => 'you do not have permission to do that'.t, :later => true )
+      redirect_to url_for_group(@parent)
+    end
+
     if request.post?
+      if @parent
+        @group = Committee.new(params[:group])
+        @group.parent = @parent
+      else
+        @group = Group.new(params[:group])
+      end
+
       if @group.save
-        message :success => 'Group was successfully created.'
+        message :success => 'Group was successfully created.'.t
         @group.memberships.create :user => current_user
         redirect_to url_for_group(@group)
       else
@@ -169,12 +172,19 @@ class GroupsController < ApplicationController
   # login required
   # post required
   def destroy
-    if @group.users.size > 1 or @group.users.first != current_user
+    if @group.users.uniq.size > 1 or @group.users.first != current_user
       message :error => 'You can only delete a group if you are the last member'
       redirect_to :action => 'show', :id => @group
     else
-      @group.destroy      
-      redirect_to :action => 'list'
+      # it would be nice to redirect to the parent if there is one
+      parent = @group.parent
+      @group.destroy
+
+      if parent
+        redirect_to url_for_group(parent)
+      else
+        redirect_to :action => 'list'
+      end
     end
   end  
      
