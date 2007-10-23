@@ -16,8 +16,14 @@
     <label for="group_name"><b>Name</b><br>This name how you will refer to this group in links and URLs. It must only contain alphanumeric characters.</label><br/>
     <% if @parent -%>
       <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
+      <script>
+        document.getElementById('group_short_name').focus()
+      </script>
     <% else -%>
       <%= text_field 'group', 'name' %>
+      <script>
+        document.getElementById('group_name').focus()
+      </script>
     <% end -%>
   </p>
 
