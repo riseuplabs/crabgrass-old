@@ -71,7 +71,11 @@ module UrlHelper
     if options[:avatar]
       size = Avatar.pixels(options[:avatar])[0..1].to_i
       padding = size/5 + size
-      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      if arg and arg.avatar
+        url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      else
+        url = avatar_url(:id => 0, :size => options[:avatar])
+      end      
       style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px;" + style
     end
     link_to display_name, path, :class => 'name_link', :style => style
