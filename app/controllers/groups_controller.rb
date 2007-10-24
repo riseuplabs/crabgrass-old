@@ -222,7 +222,8 @@ class GroupsController < ApplicationController
     elsif request.post? and non_members_post_allowed.include? params[:action]
       return true
     else
-      return(logged_in? and current_user.member_of? @group)
+#      return(logged_in? and current_user.member_of? @group)
+      return(logged_in? and @group.users.include? current_user)
     end
   end
   
