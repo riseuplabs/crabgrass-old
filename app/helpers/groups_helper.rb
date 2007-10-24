@@ -3,7 +3,8 @@ module GroupsHelper
   include PageFinders
 
   def may_admin_group?
-    logged_in? and current_user.member_of? @group
+#    logged_in? and current_user.member_of? @group
+    logged_in? and @group.users.include? current_user
   end
     
   def committee?
@@ -22,7 +23,8 @@ module GroupsHelper
   
   def join_group_link
     if logged_in? 
-      if not current_user.member_of?(@group)
+#      if not current_user.member_of?(@group)
+      if not @group.users.include? current_user
         link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'join', :id => @group)
       elsif not current_user.direct_member_of? @group
         # if you are an indirect member of this group then it is a committee and you are a member of the group containing it, so you can add yourself to the committee from the edit page.  This may not be true when networks are implemented
@@ -32,15 +34,17 @@ module GroupsHelper
   end
 
   def leave_group_link
-    if @group.users.uniq.size > 1 and logged_in? and current_user.direct_member_of? @group
+#    if @group.users.uniq.size > 1 and logged_in? and current_user.direct_member_of? @group
+    if @group.users.uniq.size > 1 and logged_in? and @group.users.include? current_user
 	    link_to "leave #{@group_type}".t, url_for(:controller => 'membership', :action => 'leave', :id => @group)
 	    #, :confirm => "Are you sure you want to leave this #{@group_type}?"
 		end
   end
   
   def destroy_group_link
-    if @group.users.uniq.size == 1 and logged_in? and current_user.direct_member_of? @group
-      post_to "destroy #{@group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % @group_type
+#    if @group.users.uniq.size == 1 and logged_in? and current_user.direct_member_of? @group
+    if @group.users.uniq.size == 1 and logged_in? and @group.users.include? current_user
+          post_to "destroy #{@group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % @group_type
     end
   end
     
