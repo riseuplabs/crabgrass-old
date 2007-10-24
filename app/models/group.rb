@@ -90,7 +90,7 @@ class Group < ActiveRecord::Base
 
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
     
-  has_many :memberships, :dependent => :delete_all,
+  has_many :memberships, :dependent => :destroy,
     :after_add => :membership_changed, :after_remove => :membership_changed  
   has_many :users, :through => :memberships do
     def <<(*dummy)

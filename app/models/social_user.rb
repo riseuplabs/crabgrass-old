@@ -49,7 +49,7 @@ class SocialUser < AuthenticatedUser
   ## Relationship to groups
 
   has_many :memberships, :foreign_key => 'user_id',
-    :dependent => :delete_all,
+    :dependent => :destroy,
     :before_add => :check_duplicate_memberships,
     :after_add => :update_membership_cache,
     :after_remove => :update_membership_cache

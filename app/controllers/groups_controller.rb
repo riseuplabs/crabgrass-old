@@ -116,7 +116,7 @@ class GroupsController < ApplicationController
 
       if @group.save
         message :success => 'Group was successfully created.'.t
-        @group.memberships.create :user => current_user
+        @group.memberships.create :user => current_user, :group => @group
         redirect_to url_for_group(@group)
       else
         message :object => @group
