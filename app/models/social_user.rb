@@ -251,7 +251,9 @@ class SocialUser < AuthenticatedUser
     else
       committee, network = [],[]
     end
-    all = (direct + committee + network).collect{|id|id.to_i}.uniq
+    # i'm making this drastic change to see why george_bush can read our internal documents --af
+    #  all = (direct + committee + network).collect{|id|id.to_i}.uniq
+    all = direct
     [direct, all]
   end
 
