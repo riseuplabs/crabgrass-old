@@ -100,8 +100,6 @@ class SocialUser < AuthenticatedUser
   def direct_member_of?(group)
     if group.is_a? Array
       group.detect{|g| direct_member_of?(g)}
-    elsif group.is_a? Array
-      group.detect{|g| direct_member_of?(g)}
     else
       group = group.id unless group.is_a? Integer
       group_ids.include?(group)
