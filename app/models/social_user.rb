@@ -61,39 +61,50 @@ class SocialUser < AuthenticatedUser
   end
     
   # all groups, including groups we have indirect access to (ie committees and networks)
-  has_many :all_groups, :class_name => 'Group',
-    :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})'
+#  has_many :all_groups, :class_name => 'Group',
+#    :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})'
 
+  def all_group_ids
+    self.all_groups_ids
+  end
+  
   def group_ids
-    self.direct_group_id_cache
+#    self.direct_group_id_cache
+    direct, all = self.get_group_ids
+    direct
   end
   
   def all_groups_ids
-    self.all_group_id_cache
+#    self.all_group_id_cache
+    direct, all = self.get_group_ids
+    all
+  end
+  
+  # i bet that this method is a real sql no-no, efficiency-wise --af
+  def all_groups
+    self.all_groups_ids.collect {|id| Group.find(id)}
   end
   
   # is this user a member of the group?
   # (or any of the associated groups)
   def member_of?(group)
-    if group.is_a? Integer
-      all_group_id_cache.include?(group)
-    elsif group.is_a? Array
+    if group.is_a? Array
       group.detect{|g| member_of?(g)}
-    elsif group
-      all_group_id_cache.include?(group.id)
     else
-      false
+      group = group.id unless group.is_a? Integer
+      all_group_ids.include?(group)
     end
   end
   
   # is the user a direct member of the group?
   def direct_member_of?(group)
-    if group.is_a? Integer
-      direct_group_id_cache.include?(group)
+    if group.is_a? Array
+      group.detect{|g| direct_member_of?(g)}
     elsif group.is_a? Array
       group.detect{|g| direct_member_of?(g)}
     else
-      direct_group_id_cache.include?(group.id)
+      group = group.id unless group.is_a? Integer
+      group_ids.include?(group)
     end
   end
   
@@ -251,9 +262,8 @@ class SocialUser < AuthenticatedUser
     else
       committee, network = [],[]
     end
-    # i'm making this drastic change to see why george_bush can read our internal documents --af
-    #  all = (direct + committee + network).collect{|id|id.to_i}.uniq
-    all = direct
+    direct = direct.collect{|id| id.to_i}.uniq
+    all = (direct + committee + network).collect{|id|id.to_i}.uniq
     [direct, all]
   end
 

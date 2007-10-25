@@ -67,6 +67,36 @@ class SocialUserTest < Test::Unit::TestCase
     assert check_associations(Contact)
   end  
 
+  def test_caching_and_function_all_groups
+    u = create_user :login => 'harry-potter'
+    assert_equal 0, u.all_groups.length
+
+    g = Group.create :name => 'hogwarts-academy'
+    g.memberships.create :user => u
+    
+    assert_equal 1, u.groups.length
+    assert_equal 1, u.group_ids.length
+    assert_equal 1, u.all_groups.length
+    assert_equal 1, u.all_group_ids.length
+  end
+  
+  def test_caching_and_function_all_groups_with_a_committee
+    u = create_user :login => 'harry-potter'
+    assert_equal 0, u.all_groups.length
+
+    g = Group.create :name => 'hogwarts-academy'
+    g.memberships.create :user => u
+
+    assert_equal 1, u.all_group_ids.length
+
+    c = Committee.create :name => 'dumbledores-army', :parent => g
+
+    assert_equal 1, u.groups.length
+    assert_equal 1, u.group_ids.length
+    assert_equal 2, u.all_groups.length
+    assert_equal 2, u.all_group_ids.length
+  end
+
   protected
     def create_user(options = {})
       User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))

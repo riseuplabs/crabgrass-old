@@ -707,7 +707,7 @@ module PageFinders
   def options_for_group(group, default={})
     options = {:class => GroupParticipation}
     if logged_in?
-      # the group's pages that current_useralso has access to
+      # the group's pages that current_user also has access to
       # this means: the group must have a group participation and one of the following
       # must be true... the page is public, we have a user participation for it, or a group
       # that we are a member of has a group participation for the page.
