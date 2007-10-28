@@ -46,7 +46,7 @@ module PaginationHelper
   end
   
   def pagination(page_name, pages) 
-    return unless pages.page_count > 1
+    return unless pages and pages.page_count > 1
     
     html = ""
     html += '<div class="pagination"><ul>'
