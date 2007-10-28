@@ -28,7 +28,7 @@ class Discussion < ActiveRecord::Base
 
   ## methods ################################################
   
-  def per_page() 25 end
+  def per_page() 20 end
  
   # don't know why i can't get posts_count to be correct value
   # for now, we use posts.count

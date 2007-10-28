@@ -44,6 +44,51 @@ module PaginationHelper
     
     html  
   end
+  
+  def pagination(page_name, pages) 
+    return unless pages.page_count > 1
     
+    html = ""
+    html += '<div class="pagination"><ul>'
+
+    if pages.current.previous
+      html += '<li class="nextpage">%s</li> ' % plink_to('&laquo; ' + 'previous'.t, { page_name => pages.current.previous })
+    else
+      html += '<li class="disablepage">&laquo; %s</li> ' % 'previous'.t
+    end
+
+    last_page = 0
+    html += windowed_pagination_links(pages, :window_size => 2,
+    :link_to_current_page => true, :always_show_anchors => true) do |n|
+      if pages.current.number == n
+        li = '<li class="currentpage">%s</li> ' % n
+      elsif last_page+1 < n
+        li = '<li>... %s</li> ' % plink_to(n, page_name => n)
+      else
+        li = '<li>%s</li> ' % plink_to(n, page_name => n)
+      end
+      last_page = n 
+      li
+    end
+  
+    if pages.current.next
+      html += '<li class="nextpage">%s</li> ' % plink_to('next'.t + ' &raquo;', { page_name => pages.current.next })
+    else
+      html += '<li class="disablepage">%s &raquo;</li> ' % 'next'.t
+    end
+    html += '</ul></div>'
+    return html
+  end
+  
+  # a special link_to for doing pagination
+  
+  def plink_to(title, path)
+    if @page
+      link_to title, page_url(@page, path)
+    else
+      link_to(title, path)
+    end
+  end
+  
 end
 

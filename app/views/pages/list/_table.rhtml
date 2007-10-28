@@ -38,8 +38,5 @@ checkbox ||= false
 <% end -%>
 </table>
 
-<% if sections and sections.page_count > 1 -%>
-    <%= render :partial => 'pages/list/paginate', :locals => {:sections => sections} %>
-    <%# pagination_links sections, :name => 'section', :window_size => 10, :params => {:_context => params[:_context] } %>
-<% end -%>
+<%= pagination 'section', sections %>
 
