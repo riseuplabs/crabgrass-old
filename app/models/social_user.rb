@@ -25,10 +25,27 @@
 # 
 # id caches -- there are many columns to cache our relationships,
 #   because they are used very frequently and take time to calculate.
-#   the caches are called: direct_groups_ids, all_groups_ids, friend_ids,
-#   foe_ids, peer_ids, tag_ids.
+#   The names of the cache attributes end with "_cache". 
 #
-
+# How to use
+# -----------
+# 
+# There are two valid ways to establish membership between user and group:
+#
+# group.memberships.create :user => user
+# user.memberships.create :group => group
+#
+# Other methods should not be used.
+#
+# Membership information is cached in the user table. It will get
+# automatically updated whenever membership is created or destroyed. In cases
+# of indirect membership (all_groups) the database is correctly updated
+# but the in-memory object will need to be reloaded if you want the new data.
+#
+# However, when the structure of an organization changes (via adding/removing
+# networks or committees), then the cache is not automatically updated. 
+# In these cases, you need to manually clear the cache and reload the user. 
+#
 
 class SocialUser < AuthenticatedUser
 
@@ -61,38 +78,28 @@ class SocialUser < AuthenticatedUser
   end
     
   # all groups, including groups we have indirect access to (ie committees and networks)
-#  has_many :all_groups, :class_name => 'Group',
-#    :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})'
+  has_many :all_groups, :class_name => 'Group',
+    :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})'
 
-  def all_group_ids
-    self.all_groups_ids
-  end
-  
+  # alias for the cache.
   def group_ids
-#    self.direct_group_id_cache
-    direct, all = self.get_group_ids
-    direct
+    self.direct_group_id_cache
   end
   
-  def all_groups_ids
-#    self.all_group_id_cache
-    direct, all = self.get_group_ids
-    all
+  # alias for the cache
+  def all_group_ids
+    self.all_group_id_cache
   end
-  
-  # i bet that this method is a real sql no-no, efficiency-wise --af
-  def all_groups
-    self.all_groups_ids.collect {|id| Group.find(id)}
-  end
-  
+    
   # is this user a member of the group?
   # (or any of the associated groups)
   def member_of?(group)
     if group.is_a? Array
       group.detect{|g| member_of?(g)}
-    else
-      group = group.id unless group.is_a? Integer
+    elsif group.is_a? Integer
       all_group_ids.include?(group)
+    elsif group.is_a? Group
+      all_group_ids.include?(group.id)
     end
   end
   
@@ -100,9 +107,10 @@ class SocialUser < AuthenticatedUser
   def direct_member_of?(group)
     if group.is_a? Array
       group.detect{|g| direct_member_of?(g)}
-    else
-      group = group.id unless group.is_a? Integer
+    elsif group.is_a? Integer
       group_ids.include?(group)
+    elsif group.is_a? Group
+      group_ids.include?(group.id)
     end
   end
   
@@ -197,7 +205,7 @@ class SocialUser < AuthenticatedUser
   
   ######################################################################
   ## Caching IDs
-
+  #
   # The idea here is that every user in a social networking universe
   # has a lot of relationships to other entities that might be expensive
   # to discover. For example, a list of all your peers or a list of all
@@ -219,7 +227,7 @@ class SocialUser < AuthenticatedUser
   # read_attribute(*_group_id_cache) is nil. Therefore, we better
   # set the id caches to non-nil in this method unless we want to
   # recurse forever.
-  def update_membership_cache(membership=nil)    
+  def update_membership_cache(membership=nil)
     direct, all = get_group_ids
     peer = get_peer_ids(direct)
     update_these_attributes :version => version+1,
@@ -228,6 +236,18 @@ class SocialUser < AuthenticatedUser
       :peer_id_cache         => peer
   end
 
+  # This should be called if a change in relationships has potentially
+  # invalidated the cache. For example, adding or removing a commmittee.
+  # This only updates the database: if you want to update the in-memory
+  # object, follow this call with reload()
+  def clear_cache
+     SocialUser.connection.execute "
+       UPDATE users SET 
+       tag_id_cache = NULL, direct_group_id_cache = NULL, foe_id_cache = NULL,
+       peer_id_cache = NULL, friend_id_cache = NULL, all_group_id_cache = NULL
+       WHERE id = #{self.id}"
+  end
+  
   def update_contacts_cache()
     friend,foe = get_contact_ids
     update_these_attributes :version => version+1,

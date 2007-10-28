@@ -117,6 +117,11 @@ class GroupsController < ApplicationController
       if @group.save
         message :success => 'Group was successfully created.'.t
         @group.memberships.create :user => current_user, :group => @group
+        if @parent
+          @parent.users.each do |u|
+            u.clear_cache
+          end
+        end
         redirect_to url_for_group(@group)
       else
         message :object => @group
@@ -176,11 +181,10 @@ class GroupsController < ApplicationController
       message :error => 'You can only delete a group if you are the last member'
       redirect_to :action => 'show', :id => @group
     else
-      # it would be nice to redirect to the parent if there is one
       parent = @group.parent
       @group.destroy
-
       if parent
+        parent.users.each {|u| u.clear_cache}
         redirect_to url_for_group(parent)
       else
         redirect_to :action => 'list'

@@ -122,6 +122,16 @@ class Group < ActiveRecord::Base
     end  
   end
   
+  # whenever the structure of this group has changed 
+  # (ie a committee or network has been added or removed)
+  # this function should be called to update each user's
+  # membership cache.
+  def update_membership_caches
+    users.each do |u|
+      u.update_membership_cache
+    end
+  end
+  
   ####################################################################
   ## relationship to pages
   

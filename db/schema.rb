@@ -93,17 +93,6 @@ ActiveRecord::Schema.define(:version => 58) do
 
   add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
 
-  create_table "event_recurrencies", :force => true do |t|
-    t.column "event_id",          :integer
-    t.column "start",             :datetime
-    t.column "end",               :datetime
-    t.column "type",              :string
-    t.column "day_of_the_week",   :string
-    t.column "day_of_the_month",  :string
-    t.column "month_of_the_year", :string
-    t.column "created_at",        :datetime, :null => false
-  end
-
   create_table "events", :force => true do |t|
     t.column "description",      :text
     t.column "description_html", :text
@@ -316,6 +305,18 @@ ActiveRecord::Schema.define(:version => 58) do
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "all", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+
+  create_table "properties", :force => true do |t|
+    t.column "name",                       :string
+    t.column "value",                      :string
+    t.column "language",                   :string,  :limit => 5
+    t.column "access",                     :integer,               :default => 0,  :null => false
+    t.column "type",                       :string
+    t.column "thing_with_properties_type", :string,  :limit => 15, :default => "", :null => false
+    t.column "thing_with_properties_id",   :integer,               :default => 0,  :null => false
+  end
+
+  add_index "properties", ["thing_with_properties_id", "thing_with_properties_type", "access", "language"], :name => "fk_thing_with_properties"
 
   create_table "ratings", :force => true do |t|
     t.column "rating",        :integer,                :default => 0
