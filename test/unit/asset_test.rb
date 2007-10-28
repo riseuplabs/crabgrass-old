@@ -7,13 +7,13 @@ class AssetTest < Test::Unit::TestCase
   Asset.public_storage = "#{RAILS_ROOT}/tmp/public/assets"
 
   def setup
-    FileUtils.mkdir_p(FILE_STORAGE)
-    FileUtils.mkdir_p(PUBLIC_STORAGE)
+    FileUtils.mkdir_p(Asset.file_storage)
+    FileUtils.mkdir_p(Asset.public_storage)
   end
 
   def teardown
-    FileUtils.rm_rf(FILE_STORAGE)
-    FileUtils.rm_rf(File.dirname(PUBLIC_STORAGE))
+    FileUtils.rm_rf(Asset.file_storage)
+    FileUtils.rm_rf(File.dirname(Asset.public_storage))
   end
 
   #XXX:warning, extremely brittle test
