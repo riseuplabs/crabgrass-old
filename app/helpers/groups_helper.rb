@@ -3,8 +3,9 @@ module GroupsHelper
   include PageFinders
 
   def may_admin_group?
-#    logged_in? and current_user.member_of? @group
-    logged_in? and @group.users.include? current_user
+    logged_in? and current_user.member_of? @group
+# slower way, but was working better before
+#    logged_in? and @group.users.include? current_user
   end
     
   def committee?
@@ -23,27 +24,28 @@ module GroupsHelper
   
   def join_group_link
     if logged_in? 
-#      if not current_user.member_of?(@group)
-      if not @group.users.include? current_user
+      if not current_user.member_of?(@group)
+# slower way, but was working better before
+#      if not @group.users.include? current_user
         link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'join', :id => @group)
       elsif not current_user.direct_member_of? @group
-        # if you are an indirect member of this group then it is a committee and you are a member of the group containing it, so you can add yourself to the committee from the edit page.  This may not be true when networks are implemented
+        # if you are an indirect member of this group then (1) it is a committee and (2) you are a member of the group containing it, so you may add yourself to the committee from the edit page.  This may not be true when networks are implemented.
         link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'list', :id => @group)
       end
     end
   end
 
   def leave_group_link
-#    if @group.users.uniq.size > 1 and logged_in? and current_user.direct_member_of? @group
-    if @group.users.uniq.size > 1 and logged_in? and @group.users.include? current_user
+    if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size > 1
+#    if @group.users.uniq.size > 1 and logged_in? and @group.users.include? current_user
 	    link_to "leave #{@group_type}".t, url_for(:controller => 'membership', :action => 'leave', :id => @group)
-	    #, :confirm => "Are you sure you want to leave this #{@group_type}?"
+	    #, :confirm => "Are you sure you want to leave this %s?".t % @group_type
 		end
   end
   
   def destroy_group_link
-#    if @group.users.uniq.size == 1 and logged_in? and current_user.direct_member_of? @group
-    if @group.users.uniq.size == 1 and logged_in? and @group.users.include? current_user
+    if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size == 1
+#    if @group.users.uniq.size == 1 and logged_in? and @group.users.include? current_user
           post_to "destroy #{@group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % @group_type
     end
   end
