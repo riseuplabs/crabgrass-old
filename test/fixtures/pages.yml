@@ -55,12 +55,12 @@ page<%=i%>:
 <% if rand(3) == 0 %>
   resolved: false
 <% end %>
-<% user = User.find(rand(11)+3) %>
-  created_by_login: <%= user.login %>
-  created_by_id: <%= user.id %>
-<% user = User.find(rand(11)+3) %>  
-  updated_by_login: <%= user.login %>
-  updated_by_id: <%= user.id %>
+<%# user = User.find(rand(11)+3) %>
+  created_by_login: <%= 'unknown' %>
+  created_by_id: <%= rand(11)+3 %>
+<%# user = User.find(rand(11)+3) %>  
+  updated_by_login: <%= 'unknown' %>
+  updated_by_id: <%= rand(11)+3 %>
   group_id: <%= 3 %>
   group_name: rainbow
   type: Tool::Discussion
