@@ -67,44 +67,85 @@ class SocialUserTest < Test::Unit::TestCase
     assert check_associations(Contact)
   end  
 
-  def test_caching_and_function_all_groups
+  def test_group_membership_caching
     u = create_user :login => 'hermione'
-    assert_equal 0, u.all_groups.length
+    assert_equal [], u.group_ids, 'should be no group (id)'
+    assert_equal [], u.all_group_ids, 'should be no group (all id)'
+    assert_equal [], u.groups, 'should be no groups'
+    assert_equal [], u.all_groups, 'should no all_groups'
 
     g = Group.create :name => 'hogwarts-academy'
     g.memberships.create :user => u
 
-    assert_equal 1, u.groups.length, 'should be one group'
-    assert_equal 1, u.group_ids.length, 'should be one group (id)'
-    assert_equal 1, u.all_group_ids.length, 'should be one group (all id)'
+    assert_equal [g.id], u.group_ids, 'should be one group (id)'
+    assert_equal [g.id], u.all_group_ids, 'should be one group (all id)'
+
+    # u.groups is already cached, must be manually refreshed
+    u.groups.reload
+    assert_equal [g], u.groups, 'should be one group'
 
     # u.all_groups is already cached, and must be manually refreshed
     u.all_groups.reload
-    assert_equal 1, u.all_groups.length, 'should be one group (all)'
+    assert_equal [g], u.all_groups, 'should be one group (all)'
 
   end
   
-  def test_caching_and_function_all_groups_with_a_committee
+  def test_group_membership_caching_with_a_committee
     u = create_user :login => 'ron'
-    assert_equal 0, u.all_groups.length
 
     g = Group.create :name => 'hogwarts-academy'
     g.memberships.create :user => u
 
-    assert_equal 1, u.all_group_ids.length, 'should be one group'
+    assert_equal [g.id], u.all_group_ids, 'should be one group (all id)'
+
+    # u.all_groups has not been cached, so doesn't need manually refreshed
+    # u.all_groups.reload
+    assert_equal [g], u.all_groups, 'should be one group (all)'
 
     c = Committee.create :name => 'dumbledores-army', :parent => g
     
-    assert_equal 1, u.group_ids.length, 'should be one direct group'
-    assert_equal 1, u.groups.length, 'should be one direct group'
+    assert_equal [g.id], u.group_ids, 'should be one direct group (id)'
+
+    # u.groups has not been cached, so doesn't need manually refreshed
+    # u.groups.reload
+    assert_equal [g], u.groups, 'should be one direct group'
    
     # for the indirect membership values to be correct,
     # we must clear the cache and reload the options.  
+    assert_equal [g.id], u.all_group_ids, 'should be one group before cache refresh (all id)'
+    assert_equal [g], u.all_groups, 'should be one group before cache refresh (all)'
+
     u.clear_cache
     u.reload
 
-    assert_equal 2, u.all_group_ids.length, 'should be two groups overall'
-    assert_equal 2, u.all_groups.length, 'should be two groups overall'
+    assert_equal [], [g.id, c.id] - u.all_group_ids, 'should be two groups after cache refresh (all id)'
+    assert_equal [], [g, c] - u.all_groups, 'should be two groups overall (all)'
+  end
+
+  def test_create_20_groups_join_10
+    u = create_user
+
+    g = []
+    to_join = [2,3,5,7,11,13,17,19]
+    for i in 0..19
+      g[i] = Group.create :name => 'group-%d' % i
+      if to_join.include? i
+        g[i].memberships.create :user => u
+      end
+    end
+
+    assert_equal [], 
+                 to_join.collect { |i| g[i].id} - u.group_ids,
+                 'wrong groups (id)'    
+    assert_equal [],
+                 to_join.collect { |i| g[i].id} - u.all_group_ids,
+                 'wrong groups (all id)'    
+    assert_equal [], 
+                 to_join.collect { |i| g[i]} - u.groups,
+                 'wrong groups'
+    assert_equal [], 
+                 to_join.collect { |i| g[i]} - u.all_groups,
+                 'wrong groups (all)'    
   end
 
   protected
