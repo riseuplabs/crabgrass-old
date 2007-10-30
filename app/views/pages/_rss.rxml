@@ -35,8 +35,8 @@ xml.rss(:version=>"2.0"){
       xml.item do
         xml.title(item.title)
         xml.description(item.summary)
-        xml.author(item.updated_by.display_name)
-        xml.pubDate(item.updated_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
+        xml.author(item.updated_by.display_name) if item.updated_by
+        xml.pubDate(item.updated_at.strftime("%a, %d %b %Y %H:%M:%S %z")) if item.updated_at
         page_url = base_url + page_url(item)
         xml.link(page_url)
         xml.guid(page_url)
