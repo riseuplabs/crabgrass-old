@@ -118,11 +118,12 @@ class SocialUserTest < Test::Unit::TestCase
     u.clear_cache
     u.reload
 
-    assert_equal [], [g.id, c.id] - u.all_group_ids, 'should be two groups after cache refresh (all id)'
-    assert_equal [], [g, c] - u.all_groups, 'should be two groups overall (all)'
+    assert_equal [g.id, c.id].sort, u.all_group_ids.sort, 'should be two groups after cache refresh (all id)'
+    assert_equal [g, c].sort_by {|g| g.id}, u.all_groups.sort_by {|g| g.id},
+                 'should be two groups overall (all)'
   end
 
-  def test_create_20_groups_join_10
+  def test_create_many_groups_join_some
     u = create_user
 
     g = []
@@ -134,18 +135,55 @@ class SocialUserTest < Test::Unit::TestCase
       end
     end
 
-    assert_equal [], 
-                 to_join.collect { |i| g[i].id} - u.group_ids,
-                 'wrong groups (id)'    
-    assert_equal [],
-                 to_join.collect { |i| g[i].id} - u.all_group_ids,
-                 'wrong groups (all id)'    
-    assert_equal [], 
-                 to_join.collect { |i| g[i]} - u.groups,
+    assert_equal to_join.collect { |i| g[i].id}, u.group_ids.sort,
+                 'wrong groups (id)'
+    assert_equal to_join.collect { |i| g[i].id}, u.all_group_ids.sort,
+                 'wrong groups (all id)'
+    assert_equal to_join.collect { |i| g[i]}, u.groups.sort_by {|x| x.id},
                  'wrong groups'
-    assert_equal [], 
-                 to_join.collect { |i| g[i]} - u.all_groups,
+    assert_equal to_join.collect { |i| g[i]}, u.all_groups.sort_by {|x| x.id},
                  'wrong groups (all)'    
+  end
+
+  def test_create_many_groups_and_committees_join_some
+    u = create_user
+
+    g = []
+    c = []
+    
+    committee_cnt = [15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0,0]
+    groups_to_join = [0,2,4,6,8,10,12,14,16,17,18]
+    committees_to_join = [2,0,4,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in 0..19
+      g[i] = Group.create :name => 'group-%d' % i
+    end
+    
+    for i in 0..19
+      c[i] = []
+      for j in 0..committee_cnt[i]
+        c[i][j] = Committee.create :name => 'subgroup-%d-%d' % [i, j]
+      end
+    end
+    
+    for i in 0..19
+      if groups_to_join.include? i
+        u.memberships.create :group => g[i]
+        for j in 0..committees_to_join[i]
+          u.memberships.create :group => c[i][j]
+        end
+      end
+    end
+
+    correct_group_ids = []
+    for i in groups_to_join
+      correct_group_ids += [g[i].id]
+      for j in 0..committees_to_join[i]
+        correct_group_ids += [c[i][j].id]
+      end
+    end
+
+    assert_equal correct_group_ids.sort, u.group_ids.sort,
+                 'wrong groups (id)'
   end
 
   protected
