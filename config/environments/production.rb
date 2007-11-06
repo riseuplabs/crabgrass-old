@@ -3,7 +3,10 @@
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true
-  
+
+# do not log passwords to the log file.
+config.log_level = :warn
+
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = true
