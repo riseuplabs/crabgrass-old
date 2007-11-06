@@ -192,7 +192,7 @@ class Asset < ActiveRecord::Base
   def copy_asset
     if old_filename
       version_dir = FileUtils.mkdir_p File.join(full_dirpath, 'versions', "#{version - 1}")
-      FileUtils.cp file, version_dir
+      FileUtils.cp old_filename, version_dir
     end
   end
   
