@@ -2,7 +2,7 @@ module Technoweenie # :nodoc:
   module AttachmentFu # :nodoc:
     @@default_processors = %w(ImageScience Rmagick MiniMagick)
     @@tempfile_path      = File.join(RAILS_ROOT, 'tmp', 'attachment_fu')
-    @@content_types      = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+    @@content_types      = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg']
     mattr_reader :content_types, :tempfile_path, :default_processors
     mattr_writer :tempfile_path
 
@@ -183,7 +183,7 @@ module Technoweenie # :nodoc:
       
       # Returns true/false if an attachment is thumbnailable.  A thumbnailable attachment has an image content type and the parent_id attribute.
       def thumbnailable?
-        image? && respond_to?(:parent_id)
+        image? && respond_to?(:parent_id) && parent_id.nil?
       end
 
       # Returns the class used to create new thumbnails for this attachment.
