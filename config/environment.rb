@@ -103,3 +103,5 @@ require 'acts_like_date_or_time'
 
 FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist'
 
+r = `svn info | grep Revision | sed "s/Revision: //"`
+SVN_REVISION = r.empty? ? nil : r.strip

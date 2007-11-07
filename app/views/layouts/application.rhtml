@@ -51,9 +51,14 @@
 </div>
 
 <div id="footer">
-  <div style="width:20em; margin:0 auto; padding-bottom: 3em;">
+  <div style="width:20em; margin:0 auto;">
     <img src='/images/actions/brick.png' style='vertical-align:middle' />
     <a href='/users/get-involved' style='font-weight:bold'>Get involved building crabgrass!</a>
+  </div>
+  <div style="text-align: center; font-size: 9px; padding-bottom: 3em;">
+  <% if SVN_REVISION -%>
+    <a href="http://code.autistici.org/trac/crabgrass/timeline">crabgrass r<%= SVN_REVISION %></a>
+  <% end -%>
   </div>
 </div><!-- end footer -->
 
