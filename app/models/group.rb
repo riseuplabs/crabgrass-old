@@ -91,6 +91,7 @@ class Group < ActiveRecord::Base
   has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
     
   has_many :memberships, :dependent => :destroy,
+    :before_add => :check_duplicate_memberships,
     :after_add => :membership_changed, :after_remove => :membership_changed  
   has_many :users, :through => :memberships do
     def <<(*dummy)
@@ -102,7 +103,12 @@ class Group < ActiveRecord::Base
     @user_ids ||= memberships.collect{|m|m.user_id}
   end
 
+  def check_duplicate_memberships(membership)
+    membership.user.check_duplicate_memberships(membership)
+  end
+
   def membership_changed(membership)
+    @user_ids = nil
     membership.user.update_membership_cache
   end
 
