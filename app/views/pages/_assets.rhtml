@@ -1,8 +1,8 @@
 <div id="assets" style='margin-top: 4px'>
   <%= assets = @page.assets.collect { |asset|
     "<div class='sideline' id='asset_#{asset.id}'>" +
-      link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'asset', :action => 'destroy', :id => asset.id}}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id), :style => "float: left;"}) + 
-    link_to_icon(asset.filename, asset.small_icon, asset.public_filename) +
+    link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'asset', :action => 'destroy', :id => asset.id}}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id), :style => "padding-right: 6px;;"}) + 
+    link_to_icon(truncate(asset.filename, 20), asset.small_icon, asset.public_filename) +
     "</div>"
   }.join("\n") %>
 <% if logged_in? -%>
