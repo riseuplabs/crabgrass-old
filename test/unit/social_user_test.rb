@@ -151,9 +151,9 @@ class SocialUserTest < Test::Unit::TestCase
     g = []
     c = []
     
-    committee_cnt = [15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0,0]
+    committee_cnt = [15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,1,1,1,1,1]
     groups_to_join = [0,2,4,6,8,10,12,14,16,17,18]
-    committees_to_join = [2,0,4,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    committees_to_join = [8,0,7,0,6,0,5,0,4,0,3,0,2,0,1,0,0,0,0,0]
     for i in 0..19
       g[i] = Group.create :name => 'group-%d' % i
     end
@@ -195,7 +195,11 @@ class SocialUserTest < Test::Unit::TestCase
                  'wrong groups (ids)'
     assert_equal correct_all_group_ids.sort, u.all_group_ids.sort,
                  'wrong groups (all ids)'
-  end
+    assert_equal correct_group_ids.sort.collect { |i| Group.find(i)}, u.groups.sort_by {|x| x.id},
+                 'wrong groups'
+    assert_equal correct_all_group_ids.sort.collect { |i| Group.find(i)}, u.all_groups.sort_by {|x| x.id},
+                 'wrong groups (all)'    
+   end
 
   protected
     def create_user(options = {})
