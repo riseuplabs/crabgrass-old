@@ -2,7 +2,7 @@ class AssetController < ApplicationController
 
   before_filter :public_or_login_required
   
-  prepend_before_filter :fetch_asset, :only => :show
+  prepend_before_filter :fetch_asset, :only => [:show, :destroy]
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
   def show
@@ -21,13 +21,29 @@ class AssetController < ApplicationController
     end
   end
 
+  def destroy
+    @asset.destroy
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.remove "asset_#{@asset.id}"
+          page.alert "Attachment deleted"
+        end
+      end
+      format.html do
+        message(:success => "Attachment deleted") 
+        redirect_to(page_url(@asset.page))
+      end
+    end
+  end
+
   protected
 
   def fetch_asset
     @thumb = nil
     @asset = Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
     @asset = @asset.versions[params[:version].to_i - 1] if params[:version]
-    if @asset && @asset.image? && @asset.filename != "#{params[:filename]}.#{params[:format]}"
+    if @asset && @asset.image? && params[:filename] && params[:format] && @asset.filename != "#{params[:filename]}.#{params[:format]}"
       thumb = @asset.thumbnails.detect {|a| a.filename == "#{params[:filename]}.#{params[:format]}"}
       render(:text => "Not found", :status => :not_found) and return unless thumb
       @thumb = thumb.thumbnail.to_sym
@@ -56,7 +72,7 @@ class AssetController < ApplicationController
     if @asset
       if action_name == 'show' || action_name == 'version'
         current_user.may?(:read, @asset.page)
-      elsif action_name == 'create'
+      elsif action_name == 'create' || action_name == 'destroy'
         current_user.may?(:edit, @asset.page)
       end
     else
