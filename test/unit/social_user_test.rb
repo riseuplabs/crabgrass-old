@@ -175,15 +175,26 @@ class SocialUserTest < Test::Unit::TestCase
     end
 
     correct_group_ids = []
+    correct_all_group_ids = []
     for i in groups_to_join
       correct_group_ids += [g[i].id]
-      for j in 0..committees_to_join[i]
-        correct_group_ids += [c[i][j].id]
+      correct_all_group_ids += [g[i].id]
+      
+      for j in 0..committee_cnt[i]
+        if j <= committees_to_join[i]
+          correct_group_ids += [c[i][j].id]
+        end
+        correct_all_group_ids += [c[i][j].id]
       end
     end
 
+    u.clear_cache
+    u.reload
+
     assert_equal correct_group_ids.sort, u.group_ids.sort,
-                 'wrong groups (id)'
+                 'wrong groups (ids)'
+    assert_equal correct_all_group_ids.sort, u.all_group_ids.sort,
+                 'wrong groups (all ids)'
   end
 
   protected
