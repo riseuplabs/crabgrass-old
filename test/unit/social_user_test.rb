@@ -161,7 +161,7 @@ class SocialUserTest < Test::Unit::TestCase
     for i in 0..19
       c[i] = []
       for j in 0..committee_cnt[i]
-        c[i][j] = Committee.create :name => 'subgroup-%d-%d' % [i, j]
+        c[i][j] = Committee.create :name => 'subgroup-%d-%d' % [i, j], :parent => g[i]
       end
     end
     
@@ -188,8 +188,8 @@ class SocialUserTest < Test::Unit::TestCase
       end
     end
 
-    u.clear_cache
-    u.reload
+#    u.clear_cache
+#    u.reload
 
     assert_equal correct_group_ids.sort, u.group_ids.sort,
                  'wrong groups (ids)'
