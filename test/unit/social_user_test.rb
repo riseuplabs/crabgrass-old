@@ -124,7 +124,7 @@ class SocialUserTest < Test::Unit::TestCase
   end
 
   def test_create_many_groups_join_some
-    u = create_user
+    u = create_user :login => 'pippi'
 
     g = []
     to_join = [2,3,5,7,11,13,17,19]
@@ -134,7 +134,7 @@ class SocialUserTest < Test::Unit::TestCase
         g[i].memberships.create :user => u
       end
     end
-
+    
     assert_equal to_join.collect { |i| g[i].id}, u.group_ids.sort,
                  'wrong groups (id)'
     assert_equal to_join.collect { |i| g[i].id}, u.all_group_ids.sort,
@@ -143,6 +143,14 @@ class SocialUserTest < Test::Unit::TestCase
                  'wrong groups'
     assert_equal to_join.collect { |i| g[i]}, u.all_groups.sort_by {|x| x.id},
                  'wrong groups (all)'    
+    
+    y u.all_group_id_cache
+    y u.clear_cache
+    u = User.find_by_login 'pippi'
+    y u.all_group_id_cache
+    u = User.find_by_login 'pippi'
+    y u.all_group_id_cache
+
   end
 
   def test_create_many_groups_and_committees_join_some
