@@ -123,6 +123,22 @@ class SocialUserTest < Test::Unit::TestCase
                  'should be two groups overall (all)'
   end
 
+  def test_clear_id_cache
+    u = create_user :login => 'peter'
+
+    g1 = Group.create :name => 'pumpkin'
+    g2 = Group.create :name => 'eaters'
+    g1.memberships.create :user => u
+    g2.memberships.create :user => u
+
+    #u.clear_cache
+    #u = User.find_by_login 'peter'
+    #assert_equal [g1.id, g2.id], all_group_id_cache, 'the serialize as intarray is not working!'
+    u = User.find_by_login 'peter'
+    assert_equal [g1.id, g2.id], u.all_group_id_cache, 'the serialize as intarray is not working!!'
+    #y u.all_group_id_cache
+  end
+
   def test_create_many_groups_join_some
     u = create_user :login => 'pippi'
 
@@ -142,15 +158,7 @@ class SocialUserTest < Test::Unit::TestCase
     assert_equal to_join.collect { |i| g[i]}, u.groups.sort_by {|x| x.id},
                  'wrong groups'
     assert_equal to_join.collect { |i| g[i]}, u.all_groups.sort_by {|x| x.id},
-                 'wrong groups (all)'    
-    
-    y u.all_group_id_cache
-    y u.clear_cache
-    u = User.find_by_login 'pippi'
-    y u.all_group_id_cache
-    u = User.find_by_login 'pippi'
-    y u.all_group_id_cache
-
+                 'wrong groups (all)'
   end
 
   def test_create_many_groups_and_committees_join_some

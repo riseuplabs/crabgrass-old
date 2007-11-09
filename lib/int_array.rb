@@ -4,9 +4,10 @@
 # it is serialized in a space efficient form.
 #
 # For integers less than 16384, only two bytes are used per
-# entry in the IntArray. In rails, a string is varchar(255).
-# If using utf8 and mysql (where every character could be three bytes)
-# this string then has at most 3 x 255 or 765 bytes.
+# entry in the IntArray. 
+# 
+# The column type MUST BE BLOB, or IntArray will not serialize
+# correctly when the numbers get above 2 digits.
 #
 
 class IntArray < Array
