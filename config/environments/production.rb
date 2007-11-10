@@ -24,6 +24,9 @@ rescue LoadError => exc
   # i guess there is no syslog_logger
 end
 
+#ANALYZABLE_PRODUCTION_LOG = "#{RAILS_ROOT}/log/production.log"
+ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
+
 # bundled_assets plugin:
 # in production mode, compress css and js files and page cache the result
 MAKE_ASSET_BUNDLES = true
