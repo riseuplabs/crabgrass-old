@@ -5,8 +5,22 @@
 <p><label for="group_full_name">Full name</label><br/>
 <%= text_field 'group', 'full_name'  %></p>
 
-<p><label for="group_summary">Public Summary</label><br/>
-<%= text_field 'group', 'summary'  %></p>
+<p><%= check_box :group, :publicly_visable_group %>
+<label fom="group_visable">Publicly visable</label></p>
+
+<div style='margin-left: 2em'>
+  <p><label for="group_summary">Public Summary</label><br/>
+  <%= text_field 'group', 'summary'  %></p>
+
+  <p><%= check_box :group, :publicly_visable_committees %>
+  <label fom="group_visable">Publicly visable committees</label></p>
+
+  <p><%= check_box :group, :publicly_visable_members %>
+  <label fom="group_visable">Publicly visable members</label></p>
+
+  <p><%= check_box :group, :accept_new_membership_requests %>
+  <label fom="group_visable">Accept new membership requests</label></p>
+</div>
 
 <!--
 <p><label for="group_language">Language</label><br/>

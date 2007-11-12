@@ -1,8 +1,5 @@
-<% unless logged_in? -%>
+<% if logged_in? and current_user.member_of?(@group) or @group.publicly_visable_group -%>
 
-This group does not have a public profile.
-
-<% else -%>
 <%
   @title = render :partial => 'groups/widgets/infopanel'
 %>
@@ -26,4 +23,15 @@ This group does not have a public profile.
 </div>
 
 </div>
+
+<% elsif @group.publicly_visable_group -%>
+
+<div class='group_widget section'>
+  <%= render :partial => 'groups/widgets/homepage' %>
+</div>
+
+<% else -%>
+
+This group does not have a public profile.
+
 <% end -%>

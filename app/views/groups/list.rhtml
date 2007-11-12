@@ -12,14 +12,12 @@
 <br class='clear' />
 </div>
 
+<% end -%>
+
 <h1 style='clear:both'>All groups</h1>
 <div class='workarea'>
-<%= render :partial => 'group', :collection => @groups %>
+<%= render :partial => 'group', :collection => @groups.select {|g| g.publicly_visable_group } %>
 <br class='clear' />
 </div>
 
-<% else -%>
 
-There are no public group profiles
-
-<% end -%>

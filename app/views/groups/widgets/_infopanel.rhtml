@@ -2,9 +2,11 @@
 <table>
 <tr>
   <td width="50%">
-    <h3>Members <span><%= @group.users.count %> members</span></h3>
-<%= render :partial => 'groups/widgets/members' %>
-  </td>
+    <% if current_user.member_of? @group or @group.publicly_visable_members %>
+      <h3>Members <span><%= @group.users.count %> members</span></h3>
+      <%= render :partial => 'groups/widgets/members' %>
+    <% end -%>
+    </td>
   <td rowspan='2' width="50%" class='right'>
     <h3>Group Information</h3>
 <%= render :partial => 'groups/widgets/info' %>
@@ -12,7 +14,8 @@
 </tr>
 <tr>
   <td>
-    <% unless @group.committee? -%>
+    <% if not @group.committee? and 
+         (current_user.member_of? @group or @group.publicly_visable_committees) -%>
     <h3>Committees <span><%= @group.committees.count %> committees</span></h3>
 <%= render :partial => 'groups/widgets/committees' %>
     <% end -%>
