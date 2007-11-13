@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 58) do
+ActiveRecord::Schema.define(:version => 60) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -93,6 +93,17 @@ ActiveRecord::Schema.define(:version => 58) do
 
   add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
 
+  create_table "event_recurrencies", :force => true do |t|
+    t.column "event_id",          :integer
+    t.column "start",             :datetime
+    t.column "end",               :datetime
+    t.column "type",              :string
+    t.column "day_of_the_week",   :string
+    t.column "day_of_the_month",  :string
+    t.column "month_of_the_year", :string
+    t.column "created_at",        :datetime, :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.column "description",      :text
     t.column "description_html", :text
@@ -118,20 +129,24 @@ ActiveRecord::Schema.define(:version => 58) do
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
 
   create_table "groups", :force => true do |t|
-    t.column "name",            :string
-    t.column "full_name",       :string
-    t.column "summary",         :string
-    t.column "url",             :string
-    t.column "type",            :string
-    t.column "parent_id",       :integer
-    t.column "admin_group_id",  :integer
-    t.column "council",         :boolean
-    t.column "created_at",      :datetime
-    t.column "updated_at",      :datetime
-    t.column "avatar_id",       :integer
-    t.column "private_home_id", :integer
-    t.column "public_home_id",  :integer
-    t.column "style",           :string
+    t.column "name",                           :string
+    t.column "full_name",                      :string
+    t.column "summary",                        :string
+    t.column "url",                            :string
+    t.column "type",                           :string
+    t.column "parent_id",                      :integer
+    t.column "admin_group_id",                 :integer
+    t.column "council",                        :boolean
+    t.column "created_at",                     :datetime
+    t.column "updated_at",                     :datetime
+    t.column "avatar_id",                      :integer
+    t.column "private_home_id",                :integer
+    t.column "public_home_id",                 :integer
+    t.column "style",                          :string
+    t.column "publicly_visable_group",         :boolean
+    t.column "publicly_visable_committees",    :boolean
+    t.column "publicly_visable_members",       :boolean
+    t.column "accept_new_membership_requests", :boolean
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -306,18 +321,6 @@ ActiveRecord::Schema.define(:version => 58) do
 
   add_index "profiles", ["entity_id", "entity_type", "language", "all", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
 
-  create_table "properties", :force => true do |t|
-    t.column "name",                       :string
-    t.column "value",                      :string
-    t.column "language",                   :string,  :limit => 5
-    t.column "access",                     :integer,               :default => 0,  :null => false
-    t.column "type",                       :string
-    t.column "thing_with_properties_type", :string,  :limit => 15, :default => "", :null => false
-    t.column "thing_with_properties_id",   :integer,               :default => 0,  :null => false
-  end
-
-  add_index "properties", ["thing_with_properties_id", "thing_with_properties_type", "access", "language"], :name => "fk_thing_with_properties"
-
   create_table "ratings", :force => true do |t|
     t.column "rating",        :integer,                :default => 0
     t.column "created_at",    :datetime,                               :null => false
@@ -404,13 +407,13 @@ ActiveRecord::Schema.define(:version => 58) do
     t.column "language",                  :string,   :limit => 5
     t.column "avatar_id",                 :integer
     t.column "last_seen_at",              :datetime
-    t.column "version",                   :integer,                  :default => 0
-    t.column "direct_group_id_cache",     :string
-    t.column "all_group_id_cache",        :string,   :limit => 512
-    t.column "friend_id_cache",           :string,   :limit => 512
-    t.column "foe_id_cache",              :string
-    t.column "peer_id_cache",             :string,   :limit => 1024
-    t.column "tag_id_cache",              :string,   :limit => 1024
+    t.column "version",                   :integer,                :default => 0
+    t.column "direct_group_id_cache",     :binary
+    t.column "all_group_id_cache",        :binary
+    t.column "friend_id_cache",           :binary
+    t.column "foe_id_cache",              :binary
+    t.column "peer_id_cache",             :binary
+    t.column "tag_id_cache",              :binary
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

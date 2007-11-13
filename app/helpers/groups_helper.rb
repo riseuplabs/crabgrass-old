@@ -4,8 +4,6 @@ module GroupsHelper
 
   def may_admin_group?
     logged_in? and current_user.member_of? @group
-# slower way, but was working better before
-#    logged_in? and @group.users.include? current_user
   end
     
   def committee?

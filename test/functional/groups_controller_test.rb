@@ -43,6 +43,16 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert assigns(:group).valid?
   end
 
+  def test_show_when_not_logged_in
+    get :show, :id => groups(:public_group).name    
+    assert_response :success
+    assert_template 'show'
+    
+    get :show, :id => groups(:private_group).name
+    assert_response :redirect
+#    assert_template 'dispatch/not_found'
+  end
+
   def test_get_create
     login_as :gerrard
     get :create

@@ -1,6 +1,8 @@
 require 'svg/svg' 
 
 class GroupsController < ApplicationController
+  include GroupsHelper
+  
   layout :choose_layout
   stylesheet 'groups'
   
@@ -28,6 +30,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    redirect_to :action => 'not_found' unless @group.publicly_visable_group or may_admin_group?
   end
 
   def visualize
