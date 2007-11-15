@@ -106,4 +106,4 @@ FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'pl
 r = `svn info | grep Revision | sed "s/Revision: //"`
 SVN_REVISION = r.empty? ? nil : r.strip
 
-require 'enhanced_migrations'
+require "#{RAILS_ROOT}/vendor/enhanced_migrations-1.2.0/lib/enhanced_migrations.rb"
