@@ -6,7 +6,7 @@ class RenameFederations < ActiveRecord::Migration
   end
 
   def self.down
-    rename_table :federations, :group_to_networks
+    rename_table :federations, :groups_to_networks
   end
   
 end
