@@ -1,0 +1,64 @@
+require File.expand_path(File.dirname(__FILE__) + "/config/environment")
+require File.expand_path(File.dirname(__FILE__) + "/lib/enhanced_migrations")
+
+require 'rake'
+require 'rake/testtask'
+require 'rake/gempackagetask'
+require 'rake/rdoctask'
+require 'tasks/rails'
+
+Dir[File.dirname(__FILE__) + '/tasks/*.rake'].each { |rake| load rake }
+
+# Custom rake task used to clean sqlite db files
+SQLITE_DB_FILES = FileList['db/*.db']
+
+namespace :enhanced_migrations do
+  task :clean_sqlite_db do
+    rm SQLITE_DB_FILES
+  end
+end
+
+desc 'Default: run unit tests.'
+task :default => :test
+
+desc 'Test the enhanced_migrations plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/*_test.rb'
+  t.verbose = true
+end
+
+dist_dirs = [ "config", "db", "lib", "migrations", "tasks", "test" ]
+
+gem_spec = Gem::Specification.new do |s|
+    s.platform  =   Gem::Platform::RUBY
+    s.name      =   "enhanced_migrations"
+    s.version   =   "1.2.0"
+    s.author    =   "RHG Team"
+    s.email     =   "rails-trunk@revolution.com"
+    s.summary   =   "Rails Enhanced Migrations"
+    s.files = [ "Changelog", "MIT-LICENSE", "Rakefile", "README" ]
+    dist_dirs.each do |dir|
+      s.files = s.files + Dir.glob( "#{dir}/**/*" ).delete_if { |item| /(\.[svn|log|db])|(schema\.rb)/ === item }
+    end
+    s.autorequire = 'enhanced_migrations'
+    s.require_path  =   "lib"
+    s.test_files = Dir.glob('test/*_test.rb')
+    s.has_rdoc  =   false
+    s.extra_rdoc_files  =   ["README", "Changelog"]
+    s.add_dependency('rails', '>= 1.1.6')
+end
+    
+gem = Rake::GemPackageTask.new(gem_spec) do |pkg|
+  pkg.need_tar = true
+  pkg.need_zip = true
+end
+
+desc 'Generate documentation for the enhanced_migrations plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'Enhanced Migrations'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('lib/*.rb')
+end
