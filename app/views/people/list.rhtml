@@ -1,3 +1,4 @@
+<% if logged_in? %>
 <h1>my contacts</h1>
 <div class='workarea'>
 <% if @contacts %>
@@ -23,5 +24,7 @@
 <%= render :partial => 'user', :collection => User.find(:all) %>
 <br class='clear' />
 </div>
-
+<% else %>
+No public profiles yet...
+<% end %>
 
