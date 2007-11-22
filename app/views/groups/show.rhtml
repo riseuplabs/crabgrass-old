@@ -1,4 +1,4 @@
-<% if logged_in? and current_user.member_of?(@group) or @group.publicly_visable_group -%>
+<% if logged_in? and current_user.member_of?(@group) or @group.publicly_visible_group -%>
 
 <%
   @title = render :partial => 'groups/widgets/infopanel'
@@ -24,7 +24,7 @@
 
 </div>
 
-<% elsif @group.publicly_visable_group -%>
+<% elsif @group.publicly_visible_group -%>
 
 <div class='group_widget section'>
   <%= render :partial => 'groups/widgets/homepage' %>

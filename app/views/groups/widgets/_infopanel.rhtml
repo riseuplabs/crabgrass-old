@@ -2,7 +2,7 @@
 <table>
 <tr>
   <td width="50%">
-    <% if @group.publicly_visable_members or may_admin_group? %>
+    <% if @group.publicly_visible_members or may_admin_group? %>
       <h3>Members <span><%= @group.users.count %> members</span></h3>
       <%= render :partial => 'groups/widgets/members' %>
     <% end -%>
@@ -15,7 +15,7 @@
 <tr>
   <td>
     <% if not @group.committee? and 
-         (@group.publicly_visable_committees or may_admin_group?) -%>
+         (@group.publicly_visible_committees or may_admin_group?) -%>
     <h3>Committees <span><%= @group.committees.count %> committees</span></h3>
 <%= render :partial => 'groups/widgets/committees' %>
     <% end -%>

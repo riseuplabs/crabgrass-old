@@ -5,21 +5,34 @@
 <p><label for="group_full_name">Full name</label><br/>
 <%= text_field 'group', 'full_name'  %></p>
 
-<p><%= check_box :group, :publicly_visable_group %>
-<label fom="group_visable">Publicly visable</label></p>
+<p><label for="group_summary">Group Summary</label><br/>
+<%= text_field 'group', 'summary'  %></p>
+
+<p><%= check_box :group, :publicly_visible_group %>
+<label for="group_visible"><b>Make Group Publicly Visible</b></label>
+<br>
+Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
+</p>
 
 <div style='margin-left: 2em'>
-  <p><label for="group_summary">Public Summary</label><br/>
-  <%= text_field 'group', 'summary'  %></p>
 
-  <p><%= check_box :group, :publicly_visable_committees %>
-  <label fom="group_visable">Publicly visable committees</label></p>
+  <p><%= check_box :group, :publicly_visible_committees %>
+  <label for="group_visible"><b>Make Committees Publicly Visible</b></label>
+  <br>
+  Committees are viewable by non-members at we.riseup.net/yourgroupname
+  </p>
 
-  <p><%= check_box :group, :publicly_visable_members %>
-  <label fom="group_visable">Publicly visable members</label></p>
+  <p><%= check_box :group, :publicly_visible_members %>
+  <label for="group_visible"><b>Make Members Publicly Visible</b></label>
+  <br>
+  Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
+  </p>
 
   <p><%= check_box :group, :accept_new_membership_requests %>
-  <label fom="group_visable">Accept new membership requests</label></p>
+  <label for="group_visible"><b>Allow Membership Requests</b></label>
+  <br>
+  A “join group” link will appear on your grouppage. This will send a request for membership to your group that can be accepted or rejected.
+  </p>
 </div>
 
 <!--

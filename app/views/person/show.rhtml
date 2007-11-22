@@ -8,7 +8,7 @@
 <b>Groups:</b>
 <% group_count = 0 -%>
 <% @user.groups.each do |g| %>
-  <% if g.publicly_visable_members or current_user.member_of? g %>
+  <% if g.publicly_visible_members or current_user.member_of? g %>
     <%= link_to(g.name, :controller => 'groups', :action => 'show', :id => g) %>
     <% group_count += 1 -%>
   <% end -%>

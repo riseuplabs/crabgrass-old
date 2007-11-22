@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    redirect_to :action => 'not_found' unless @group.publicly_visable_group or may_admin_group?
+    redirect_to :action => 'not_found' unless @group.publicly_visible_group or may_admin_group?
   end
 
   def visualize
