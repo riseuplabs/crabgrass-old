@@ -8,6 +8,7 @@
 <p><label for="group_summary">Group Summary</label><br/>
 <%= text_field 'group', 'summary'  %></p>
 
+<% if not committee? -%>
 <p><%= check_box :group, :publicly_visible_group %>
 <label for="group_visible"><b>Make Group Publicly Visible</b></label>
 <br>
@@ -31,9 +32,10 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
   <p><%= check_box :group, :accept_new_membership_requests %>
   <label for="group_visible"><b>Allow Membership Requests</b></label>
   <br>
-  A “join group” link will appear on your grouppage. This will send a request for membership to your group that can be accepted or rejected.
+  A “join group” link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected.
   </p>
 </div>
+<% end -%>
 
 <!--
 <p><label for="group_language">Language</label><br/>
