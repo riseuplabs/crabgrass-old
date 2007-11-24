@@ -7,10 +7,10 @@ in: |-
 out: |-
   <ul>
   	<li>first line</li>
-  		<li>second
+  	<li>second
     line</li>
-  		<li>third line</li>
-  	</ul>
+  	<li>third line</li>
+  </ul>
 ---
 in: |-
   p. start
@@ -24,14 +24,14 @@ in: |-
   p. end
 out: |-
   <p>start</p>
-  	<ul>
+  <ul>
   	<li>one
   and one</li>
-  		<li>two
+  	<li>two
   and two</li>
-  		<li>three</li>
-  	</ul>
-  
+  	<li>three</li>
+  </ul>
+
   	<p>end</p>
 ---
 in: |-
@@ -50,14 +50,13 @@ in: |-
 
 out: |-
   <p>Funky:</p>
-  	<ul>
+  <ul>
   	<li>Testing
   	<ol>
-  	<li>number
-  	<ul>
-  	<li>bullet</li>
-  	</ul>
-  	</li>
+  		<li>number
+  		<ul>
+  			<li>bullet</li>
+  		</ul></li>
   		<li>number</li>
   		<li>number
   yeah number</li>

@@ -33,7 +33,12 @@ in: |-
   * @foo@
   * @bar@
   * and @x@ is also.
-out: "<ul>\n\t<li><code>foo</code></li>\n\t\t<li><code>bar</code></li>\n\t\t<li>and <code>x</code> is also.</li>\n\t</ul>"
+out: |-
+  <ul>
+  	<li><code>foo</code></li>
+  	<li><code>bar</code></li>
+  	<li>and <code>x</code> is also.</li>
+  </ul>
 ---
 in: |-
   /--
@@ -68,4 +73,15 @@ in: |-
 out: |-
   <pre class="code"><code>a single line of code</code></pre>
 ---
+in: |-
+  @@ a line of code with html <b>in it</b>
+out: |-
+  <pre class="code"><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;</code></pre>
+---
+in: |-
+  /--
+  a line of code with html <b>in it</b>
+  \--
+out: |-
+  <pre class="code"><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;</code></pre>
 
