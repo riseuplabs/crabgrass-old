@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 60) do
+ActiveRecord::Schema.define(:version => 61) do
 
   create_table "asset_versions", :force => true do |t|
     t.column "asset_id",       :integer
@@ -143,10 +143,10 @@ ActiveRecord::Schema.define(:version => 60) do
     t.column "private_home_id",                :integer
     t.column "public_home_id",                 :integer
     t.column "style",                          :string
-    t.column "publicly_visable_group",         :boolean
-    t.column "publicly_visable_committees",    :boolean
-    t.column "publicly_visable_members",       :boolean
     t.column "accept_new_membership_requests", :boolean
+    t.column "publicly_visible_group",         :boolean
+    t.column "publicly_visible_committees",    :boolean
+    t.column "publicly_visible_members",       :boolean
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"

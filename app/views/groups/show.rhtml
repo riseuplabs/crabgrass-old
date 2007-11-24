@@ -1,4 +1,4 @@
-<% if logged_in? and current_user.member_of?(@group) or @group.publicly_visible_group -%>
+<% if logged_in? and (current_user.member_of?(@group) or @group.publicly_visible_group) -%>
 
 <%
   @title = render :partial => 'groups/widgets/infopanel'

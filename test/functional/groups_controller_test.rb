@@ -49,7 +49,7 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_template 'show'
     
     get :show, :id => groups(:private_group).name
-    assert_response :redirect
+    assert_template 'not_found'
 #    assert_template 'dispatch/not_found'
   end
 
@@ -111,9 +111,15 @@ class GroupsControllerTest < Test::Unit::TestCase
   def test_login_required
     [:create, :edit, :destroy, :update].each do |action|
       assert_requires_login do |c|
-        c.get action, :id => groups(:rainbow).name
+        c.get action, :id => groups(:public_group).name
       end
     end
+
+# should we test unlogged in stuff on a private group?
+#    [:create, :edit, :destroy, :update].each do |action|
+#      get :, :id => groups(:private_group).name
+#      assert_template 'not_found'
+#    end
   end
 
   def test_invite
@@ -128,4 +134,23 @@ class GroupsControllerTest < Test::Unit::TestCase
 #    post :invite, :user => 'blue'
   end
   
+  def test_archive
+    login_as :blue
+    get :archive, :id => groups(:rainbow).name
+
+    assert_response :success
+    assert_template 'archive'
+
+#    assert_not_nil assigns(:months)
+#    assert assigns(:group).valid?
+  end
+
+  def test_archive_when_not_logged_in
+    get :archive, :id => groups(:public_group).name    
+    assert_response :success
+    assert_template 'archive'
+    
+    get :archive, :id => groups(:private_group).name
+    assert_template 'not_found'
+  end
 end

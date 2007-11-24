@@ -9,8 +9,9 @@ class GroupsController < ApplicationController
   prepend_before_filter :find_group, :except => ['list','create','index']
   
   before_filter :login_required,
-    :only => [:create, :edit, :edit_public_home, :edit_private_home, :destroy, :update]
-
+#    :only => [:create, :edit, :edit_public_home, :edit_private_home, :destroy, :update]
+    :except => [:list, :index, :show, :search, :archive, :tags]
+    
   verify :method => :post,
     :only => [:destroy, :update ]
 
@@ -30,7 +31,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    redirect_to :action => 'not_found' unless @group.publicly_visible_group or may_admin_group?
+#    redirect_to :action => 'not_found' unless (@group.parent and @group.parent.publicly_visible_group) or @group.publicly_visible_group or may_admin_group?
   end
 
   def visualize
@@ -49,15 +50,15 @@ class GroupsController < ApplicationController
      "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
      "JOIN user_participations ON pages.id = user_participations.id " +
      "WHERE group_participations.group_id = #{@group.id} "
-    unless current_user.member_of? @group
+    unless may_admin_group?
       sql += " AND (pages.public = 1 OR user_participations.user_id = #{current_user.id}) "
     end
     sql += "GROUP BY year, month ORDER BY year, month"
     @months = Page.connection.select_all(sql)
     
     unless @months.empty?
-      @start_year = @months[0]['year'] 
-      @current_year = (Date.today).year
+      @current_year = (Date.today).year 
+      @start_year = @months[0]['year'] || @current_year.to_s
       @current_month = (Date.today).month
       path = params[:path] || []
       parsed = parse_filter_path(params[:path])
@@ -214,15 +215,41 @@ class GroupsController < ApplicationController
   
   def find_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
-    if @group
+    if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or may_admin_group?) ##committees need to be handled better
       @group_type = @group.class.to_s.downcase
       return true
     else
-      render :action => 'not_found'
+      render :template => 'dispatch/not_found'
       return false
     end
   end
   
+=begin
+  def authorized?
+    post_allowed_always = %w(create)
+    get_allowed_always  = post_allowed_always
+    post_allowed_if_visible = %w(archive search tags tasks create) + post_allowed_always
+    get_allowed_if_visible  = %w(show members) + post_allowed_if_visible
+
+    if request.get? and get_allowed_always.include? params[:action]
+      return true
+    elsif request.post? and post_allowed_always.include? params[:action]
+      return true
+    end
+  
+    if may_admin_group?
+      return true
+    elsif @group.publicly_visible_group or (@group.parent and @group.parent.publicly_visible_group)
+      if request.get? and get_allowed_if_visible.include? params[:action]
+        return true
+      elsif request.post? and post_allowed_if_visible.include? params[:action]
+        return true
+      end
+    end
+    render :action => 'not_found'
+    return false
+  end
+=end
   def authorized?
     non_members_post_allowed = %w(archive search tags tasks create)
     non_members_get_allowed = %w(show members) + non_members_post_allowed
@@ -233,7 +260,7 @@ class GroupsController < ApplicationController
     else
       return(logged_in? and current_user.member_of? @group)
     end
-  end
+  end    
   
   def fetch_pages_from_path(path)
     options = {:class => GroupParticipation, :path => path}
