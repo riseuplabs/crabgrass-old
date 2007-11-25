@@ -6,13 +6,14 @@
     <td> <b><%= year %> </b></td>
     <% '1'.upto('12') do |month| -%>
       <td> 
-      <% if @months.detect{|a|a['year'] == year and a['month'] == month}  -%>
-        <% parsed = parse_filter_path(params[:path])
-        if parsed.first_arg_for('month').to_i == month.to_i or (parsed.first_arg_for('month') == nil and month.to_i == @current_month)
+      <% if @months.detect {|a| a['year'] == year and a['month'] == month}  -%>
+        <%
+        if @parsed.first_arg_for('year').to_i == year.to_i and @parsed.first_arg_for('month').to_i == month.to_i
           klass = 'invert'
         else
           klass = ''
-        end -%>
+        end
+        -%>
         <%= link_to month, {:path => 'month/' + month + '/year/' + year}, :class => klass %> 
       <% else %>
         <%= month  %> 

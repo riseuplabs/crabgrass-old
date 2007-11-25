@@ -60,15 +60,19 @@ class GroupsController < ApplicationController
       @current_year = (Date.today).year 
       @start_year = @months[0]['year'] || @current_year.to_s
       @current_month = (Date.today).month
-      path = params[:path] || []
-      parsed = parse_filter_path(params[:path])
-      unless parsed.keyword?('month')
-        path << 'month' << @current_month
+
+      @path = params[:path] || []
+      @parsed = parse_filter_path(params[:path])
+      unless @parsed.keyword?('month')
+        @path << 'month' << @months.last['month'] #@current_month
+        @parsed << [ 'month', @months.last['month'] ]
       end
-      unless parsed.keyword?('year')
-        path << 'year' << @current_year
+      unless @parsed.keyword?('year')
+        @path << 'year' << @months.last['year'] #@current_year
+        @parsed << [ 'year', @months.last['year'] ]
       end
-      @pages, @sections = fetch_pages_from_path(path)
+
+      @pages, @sections = fetch_pages_from_path(@path)
     end
   end
   
