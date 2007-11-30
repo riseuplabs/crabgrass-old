@@ -1,8 +1,10 @@
 <div id="assets" style='margin-top: 4px'>
   <%= assets = @page.assets.collect { |asset|
     "<div class='sideline' id='asset_#{asset.id}'>" +
-    link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'asset', :action => 'destroy', :id => asset.id}}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id), :style => "padding-right: 6px;;"}) + 
-    link_to_icon(truncate(asset.filename, 20), asset.small_icon, asset.public_filename) +
+      "<span id='asset_#{asset.id}_delete' style='padding-right: 6px; background: transparent url('#{image_path('spinner.gif')}') no-repeat;'>" + 
+        link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'asset', :action => 'destroy', :id => asset.id}, :confirm => 'are you sure you want to delete this file?', :before => "$('asset_#{asset.id}_delete').update('#{escape_javascript(image_tag('spinner.gif'))}')", :after => "$('asset_#{asset.id}_delete').update('#{escape_javascript(image_tag('actions/trash.png'))}')"}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id)}) + 
+      "</span>" + 
+      link_to_icon(truncate(asset.filename, 20), asset.small_icon, asset.public_filename) +
     "</div>"
   }.join("\n") %>
 <% if logged_in? -%>

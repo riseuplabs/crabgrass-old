@@ -27,11 +27,11 @@ class AssetController < ApplicationController
       format.js do
         render :update do |page|
           page.remove "asset_#{@asset.id}"
-          page.alert "Attachment deleted"
+          page.alert "file deleted"
         end
       end
       format.html do
-        message(:success => "Attachment deleted") 
+        message(:success => "file deleted") 
         redirect_to(page_url(@asset.page))
       end
     end
