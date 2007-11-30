@@ -103,7 +103,6 @@ require 'acts_like_date_or_time'
 
 FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist'
 
-r = `svn info | grep Revision | sed "s/Revision: //"`
-SVN_REVISION = r.empty? ? nil : r.strip
+SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
 
 require "#{RAILS_ROOT}/vendor/enhanced_migrations-1.2.0/lib/enhanced_migrations.rb"
