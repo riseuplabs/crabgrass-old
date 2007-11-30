@@ -110,3 +110,9 @@ div.sidesubarea textarea, div.sidesubarea select {
   width: 190px;
 }
 
+#assets div.busy {
+  background: transparent url(/images/spinner.gif) no-repeat 9px;
+}
+#assets div.busy span {
+  visibility: hidden;
+}

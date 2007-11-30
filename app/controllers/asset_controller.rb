@@ -24,12 +24,7 @@ class AssetController < ApplicationController
   def destroy
     @asset.destroy
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.remove "asset_#{@asset.id}"
-          page.alert "file deleted"
-        end
-      end
+      format.js { render :nothing => true }
       format.html do
         message(:success => "file deleted") 
         redirect_to(page_url(@asset.page))
