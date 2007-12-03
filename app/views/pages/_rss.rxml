@@ -35,7 +35,7 @@ xml.rss(:version=>"2.0"){
       xml.item do
         xml.title(item.title)
         if item.instance_of? Tool::TextDoc
-          xml.description(item.data.body_html)
+          xml.description(item.data.body)
         else
           xml.description(item.summary)
         end
