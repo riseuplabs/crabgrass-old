@@ -36,10 +36,10 @@ class AssetController < ApplicationController
 
   def fetch_asset
     @thumb = nil
-    @asset = Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
-    @asset = @asset.versions[params[:version].to_i - 1] if params[:version]
-    if @asset && @asset.image? && params[:filename] && params[:format] && @asset.filename != "#{params[:filename]}.#{params[:format]}"
-      thumb = @asset.thumbnails.detect {|a| a.filename == "#{params[:filename]}.#{params[:format]}"}
+    @asset = Asset.find_version(params[:id], params[:version]) if params[:version]
+    @asset ||= Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
+    if @asset && @asset.image? && (filename = params[:filename].first) && filename != @asset.filename
+      thumb = @asset.thumbnails.detect {|a| filename == a.filename }
       render(:text => "Not found", :status => :not_found) and return unless thumb
       @thumb = thumb.thumbnail.to_sym
       @asset.create_or_update_thumbnail(@asset.full_filename,@thumb,Asset.attachment_options[:thumbnails][@thumb]) unless File.exists? thumb.full_filename

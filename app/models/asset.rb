@@ -8,47 +8,49 @@ class Asset < ActiveRecord::Base
     pages.first || parent_page
   end
 
-  before_update :copy_asset #XXX: must be declared before has_attachment, order of hooks is important!!!
-  before_destroy :destroy_versions
-  has_attachment :storage => :file_system, :max_size => 3.megabytes,
-    :thumbnails => {:thumb => "22x22>", :preview => "128x128>"}
-  validates_as_attachment
-  attr_reader :old_filename
-
   ## versions #########################################
   
-  acts_as_versioned
+  # both this class and the versioned class use attachment_fu
+  acts_as_versioned do
+    def self.included(klass)
+      klass.has_attachment :storage => :file_system, :max_size => 3.megabytes,
+        :thumbnails => {:thumb => "22x22>", :preview => "128x128>"}
+      klass.validates_as_attachment
+    end
+  end
+
+  # when cloning a model, we need to set the new versions file data
+  def clone_versioned_model_with_file_data(orig_model, new_model)
+    clone_versioned_model_without_file_data(orig_model, new_model)
+    return if orig_model.new_record?
+    new_model.temp_data = orig_model.temp_data || (File.read(orig_model.full_filename) if File.exists?(orig_model.full_filename))
+  end
+  alias_method_chain :clone_versioned_model, :file_data
+
+  def destroy_file_with_versions_directory
+    FileUtils.rm_rf(File.join(full_dirpath, 'versions'))
+    destroy_file_without_versions_directory
+  end
+  alias_method_chain :destroy_file, :versions_directory
   
   versioned_class.class_eval do
-    delegate :page, :is_public?, :partitioned_path, :to => :asset
+    delegate :page, :is_public?, :small_icon, :big_icon, :icon, :to => :asset
     def public_filename(thumbnail = nil)
       "/assets/#{asset.id}/versions/#{version}/#{thumbnail_name_for(thumbnail)}"
     end
     def full_filename(thumbnail = nil)
+      version = self.version || parent.version
       File.join(@@file_storage, *partitioned_path('versions', version.to_s, thumbnail_name_for(thumbnail)))
     end
-    def image?
-      Asset.image? content_type
+    def attachment_path_id
+      asset.attachment_path_id if asset
     end
-
-    ## reimplemented attachment_fu - perhaps a better way? ##
-=begin
-    # don't quite have this yet
-    with_options :foreign_key => 'parent_id' do |m|
-      m.has_many :thumbnails, :class_name => 'Asset::Version' # must be a better way for this
-      m.belongs_to :parent, :class_name => 'Asset::Version'
+    def asset_with_parent
+      asset_without_parent || parent.asset
     end
-=end
-
-    # Gets the thumbnail name for a filename.  'foo.jpg' becomes 'foo_thumbnail.jpg'
-    def thumbnail_name_for(thumbnail = nil)
-      return filename if thumbnail.blank?
-      ext = nil
-      basename = filename.gsub /\.\w+$/ do |s|                                                              ext = s; ''
-      end
-      "#{basename}_#{thumbnail}#{ext}"
-    end
+    alias_method_chain :asset, :parent
   end
+
 
   ## methods #########################################
   
@@ -95,8 +97,13 @@ class Asset < ActiveRecord::Base
     File.dirname(full_filename)
   end
 
-  def suffix
-    filename.sub(/^.*\.(.+)$/,'.\\1')
+  def extname
+    File.extname(filename)
+  end
+  alias :suffix :extname
+
+  def basename
+    File.basename(filename, File.extname(filename))
   end
   
   def big_icon
@@ -187,16 +194,4 @@ class Asset < ActiveRecord::Base
     'application/pgp-signature' => 'lock',
     'application/pgp-keys' => 'lock'
   }
-  
-  private
-  def copy_asset
-    if old_filename
-      version_dir = FileUtils.mkdir_p File.join(full_dirpath, 'versions', "#{version - 1}")
-      FileUtils.cp old_filename, version_dir
-    end
-  end
-  
-  def destroy_versions
-    FileUtils.rm_rf File.join(full_dirpath, 'versions')
-  end
 end

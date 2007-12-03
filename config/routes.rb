@@ -11,8 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   ##### ASSET ROUTES ######################################
   
   map.with_options :controller => 'asset', :action => 'show' do |m|
-    m.asset_version 'assets/:id/versions/:version/:filename.:format'
-    m.assets 'assets/:id/:filename.:format'
+    m.asset_version 'assets/:id/versions/:version/*filename'
+    m.assets 'assets/:id/*filename'
   end
 
   # unobtrusive javascript

@@ -45,10 +45,28 @@
   link_to_function("view versions", "$('versions').toggle()")
   ) %></p>
 
+<style>
+  td.busy {
+    background: transparent url(/images/spinner.gif) no-repeat;
+  }
+  td.busy span {
+    visibility: hidden;
+  }
+</style>
 <div id="versions" style="display: none;">
-  <% @asset.versions.each do |version| -%>
-  <%= link_to_unless version.version == @asset.version, "#{version.version}: #{version.filename}", version.public_filename %>
+  <table>
+  <% @asset.versions.reverse.each do |version| -%>
+  <tr id="asset_<%= @asset.id %>_version_<%= version.version %>">
+    <td>
+      <% unless version.version == @asset.version %>
+      <span><%= link_to_remote(image_tag('actions/trash.png'), {:url => direct_url(:page_id => @page.id, :action => :destroy_version, :id => version.version, :controller => 'tool/asset'), :confirm => 'are you sure you want to delete this version?', :before => "$($(this).up('td')).addClassName('busy')", :failure => "$($(this).up('td')).removeClassName('busy')"}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => @asset.id)}) %></span>
+      <% end %>
+    </td>
+    <td><%= version.image? ? image_tag(version.public_filename(:thumb)) : image_tag(version.small_icon) %></td>
+    <td><%= link_to_unless version.version == @asset.version, "#{version.version}: #{version.filename}", version.public_filename %></td>
+  </tr>
   <% end -%>
+  </table>
 </div>
 <br/>
 
