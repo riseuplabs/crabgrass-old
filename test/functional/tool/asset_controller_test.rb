@@ -15,6 +15,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     FileUtils.mkdir_p(Asset.file_storage)
     FileUtils.mkdir_p(Asset.public_storage)
+    User.current = nil
   end
 
   def teardown

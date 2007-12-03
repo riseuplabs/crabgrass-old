@@ -19,7 +19,7 @@ class Tool::TasklistControllerTest < Test::Unit::TestCase
     assert_equal Task::Task.find(2).position, 2
     assert_equal Task::Task.find(3).position, 3
 
-    xhr :post, :sort, :page_id => 21, :id => 0, :sort_list_21_pending => ["3","2","1"]
+    xhr :post, :sort, :controller => "tool/tasklist", :page_id => 21, :id => 0, :sort_list_21_pending => ["3","2","1"]
 
     assert_equal Task::Task.find(1).position, 3
     assert_equal Task::Task.find(2).position, 2
@@ -36,9 +36,9 @@ class Tool::TasklistControllerTest < Test::Unit::TestCase
     assert_equal tasks[5].position, 2
     assert_equal tasks[6].position, 3
 
-    xhr :post, :sort, :page_id => 21, :id => 0, :sort_list_21_pending => ["1","3"]
+    xhr :post, :sort, :controller => "tool/tasklist", :page_id => 21, :id => 0, :sort_list_21_pending => ["1","3"]
     @controller = Tool::TasklistController.new
-    xhr :post, :sort, :page_id => 22, :id => 0, :sort_list_22_pending => ["4","5","2","6"]
+    xhr :post, :sort, :controller => "tool/tasklist", :page_id => 22, :id => 0, :sort_list_22_pending => ["4","5","2","6"]
 
     tasks = Task::Task.find(1,2,3,4,5,6).index_by {|t| t.id}
     assert_equal tasks[1].position, 1
