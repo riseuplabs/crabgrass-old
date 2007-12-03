@@ -31,7 +31,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     assert File.exists?(version_filename = page.data.find_version(1).full_filename)
     
     @controller.stubs(:login_required).returns(true)
-    post :destroy_version, :page_id => page.id, :version => 1
+    post :destroy_version, :controller => "tool/asset", :page_id => page.id, :id => 1
     assert_redirected_to @controller.page_url(page)
     assert File.exists?(page.data.full_filename)
     assert !File.exists?(version_filename)
