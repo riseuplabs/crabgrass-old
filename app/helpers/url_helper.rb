@@ -14,6 +14,9 @@ module UrlHelper
     end
     display_name ||= name
     display_name = options[:text] % display_name if options[:text]
+    if options[:show_full_name] and arg.full_name
+      display_name += " - " + arg.full_name
+    end
     action = options[:action] || 'show'
     if action == 'show'
       path = "/#{name}"
