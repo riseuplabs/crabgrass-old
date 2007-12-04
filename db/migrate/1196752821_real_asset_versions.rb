@@ -6,6 +6,7 @@ class RealAssetVersions < ActiveRecord::Migration
                  else
                    version.full_filename
                  end
+      next unless File.exists?(filename)
       Asset::Version.attachment_options[:thumbnails].each do |suffix, size|
         version.create_or_update_thumbnail(filename, suffix, *size)
       end
