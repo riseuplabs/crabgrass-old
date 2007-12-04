@@ -17,6 +17,7 @@ class PersonController < ApplicationController
   end
   
   def show
+    params[:path] ||= "descending/updated_at"
     search
   end
 
