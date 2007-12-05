@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
+  before_filter :pre_clean
   before_filter :breadcrumbs, :context
   around_filter :set_timezone
   
@@ -83,6 +84,10 @@ class ApplicationController < ActionController::Base
   
   private
   
+  def pre_clean
+    User.current = nil
+  end
+
   def set_timezone
     TzTime.zone = logged_in? && current_user.time_zone ? TimeZone[current_user.time_zone] : TimeZone[DEFAULT_TZ]
     yield
