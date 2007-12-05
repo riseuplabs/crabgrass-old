@@ -75,6 +75,10 @@ class SocialUser < AuthenticatedUser
     def <<(*dummy)
       raise Exception.new("don't call << on user.groups");
     end
+    def delete(*records)
+      super(*records)
+      proxy_owner.update_membership_cache
+    end
   end
     
   # all groups, including groups we have indirect access to (ie committees and networks)
