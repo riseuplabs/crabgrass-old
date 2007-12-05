@@ -49,6 +49,8 @@ class Asset < ActiveRecord::Base
       asset_without_parent || parent.asset
     end
     alias_method_chain :asset, :parent
+    # fixes warning: toplevel constant Asset referenced by Asset::Asset
+    Asset = ::Asset
   end
 
 
