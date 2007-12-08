@@ -8,44 +8,13 @@
 
 <div class='workarea'>
 
-<% form_tag :action => 'create' do -%>
-
-  <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
-
-  <p>
-    <label for="group_name"><b>Name</b><br>This name how you will refer to this group in links and URLs. It must only contain alphanumeric characters.</label><br/>
-    <% if @parent -%>
-      <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
-      <script>
-        document.getElementById('group_short_name').focus()
-      </script>
-    <% else -%>
-      <%= text_field 'group', 'name' %>
-      <script>
-        document.getElementById('group_name').focus()
-      </script>
-    <% end -%>
-  </p>
-
-  <p>
-    <label for="group_full_name">
-      <b>Full name</b><br/>
-      A descriptive name used for display
-    </label><br/>
-    <%= text_field 'group', 'full_name'  %>
-  </p>
-
-  <p>
-    <label for="group_summary">
-      <b>Summary</b><br/>
-      <%= 'Brief information regarding this %s.' / @group_type %>  
-    </label><br/>
-    <%= text_field 'group', 'summary'  %>
-  </p>
+<%= start_form_tag({:action => "create"},:id => "createform") %>
+  <%= render :partial => 'form' %>
 
   <%= submit_tag "Create" %>
 
-<% end -%>
+<%= end_form_tag %>
+<%= javascript_tag "Form.focusFirstElement('createform');" %>
 
 </div> <!-- end work area -->
 

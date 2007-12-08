@@ -1,14 +1,44 @@
 <!--[form:group]-->
-<p><label for="group_name">Short name (must only contain alphanumeric characters)</label><br/>
-<%= text_field 'group', 'name'  %></p>
+<%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 
-<p><label for="group_full_name">Full name</label><br/>
-<%= text_field 'group', 'full_name'  %></p>
+<div id='title_text' class='h1' style=''>
+  <%= '%s Info' / @group_type.capitalize %>
+  <%= image_tag 'actions/beehive.png' %>
+</div>
 
-<p><label for="group_summary">Group Summary</label><br/>
-<%= text_field 'group', 'summary'  %></p>
+<p>
+  <label for="group_name"><b>Name</b><br>This name how you will refer to this group in links and URLs. It must only contain alphanumeric characters.</label><br/>
+  <% if @parent -%>
+    <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
+  <% else -%>
+    <%= text_field 'group', 'name' %>
+  <% end -%>
+</p>
+
+<p>
+  <label for="group_full_name">
+    <b>Full name</b><br/>
+    A descriptive name used for display
+  </label><br/>
+  <%= text_field 'group', 'full_name'  %>
+</p>
+
+<p>
+  <label for="group_summary">
+    <b>Summary</b><br/>
+    <%= 'Brief information regarding this %s.' / @group_type %>  
+  </label><br/>
+  <%= text_area 'group', 'summary', :rows => 4, :cols => 60  %>
+</p>
+
 
 <% if not committee? -%>
+
+<div id='title_text' class='h1' style=''>
+Group Privacy Settings
+  <%= image_tag 'actions/lock.png' %>
+</div>
+
 <p><%= check_box :group, :publicly_visible_group %>
 <label for="group_visible"><b>Make Group Publicly Visible</b></label>
 <br>
