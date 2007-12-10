@@ -1,9 +1,0 @@
-2006-03-02  Benjamin Mako Hill  <mako@atdot.cc>
-
-	* IRV support was added. The code and the test were written by
-	Alexis Darrasse <alexis@ortsa.com>. Thanks Alexis!
-
-2006-01-27  Benjamin Mako Hill  <mako@atdot.cc>
-
-	* Initial version released.
-
