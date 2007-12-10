@@ -7,13 +7,18 @@
   <%= spinner('progress', :show => true) %> <%= 'Saving...' %>
   </div>
   <div id='instructions'>
-<%= 'Click and drag to arrange the possibilities in order of your preference.'.t  if @possibles.any? %>
+<%= 'Click and drag to arrange the possibilities in order of your preference.'.t  %>
   </div>
 </div>
 
+
 <ul id='sort_list' class='possible_list plainlist'>
-  <%= render :partial => 'possible', :collection => @possibles %>
+  <%= render :partial => 'possible', :collection => @possibles_voted %>
+  <li id='possible_unordered'> <%= "Not yet ranked, or tied for last" %> </li>
+  <%= render :partial => 'possible', :collection => @possibles_unvoted %>
 </ul>
+
+
 
 <ul class='possible_list plainlist'>
   <li id='add_possible_link'><%= render :partial => 'new_possible'%></li>

@@ -32,6 +32,13 @@ ul.possible_list li:hover .edit {
   display: inline;
 }
 
+
+li#possible_unordered {
+  color: #666;
+  margin-left: -2px;
+  border-bottom: 2px solid #000;
+}
+
 li#add_possible_link {
   margin-top: 2em;
   background: #eee;

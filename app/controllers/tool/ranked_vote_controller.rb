@@ -1,6 +1,33 @@
 
 $: << "#{RAILS_ROOT}/lib/rubyvote/lib"
-require 'condorcet'
+require 'election'
+require 'positional'
+
+# add rank calculation functions to BordaResult class
+# should this go in its own function?
+class BordaResult
+  def rank(possible)
+    @ranks ||= calculate_ranks
+	  return @ranks[possible]  		
+  end
+  
+  
+  private 
+
+  def calculate_ranks
+  	ranks = {}
+    rank = 0
+    previous_points = -1
+    ranked_candidates.each do |candidate|
+      rank += 1 if points[candidate] != previous_points
+      ranks[candidate] = rank
+      previous_points = points[candidate]
+    end
+    return ranks
+  	
+  end
+
+end
 
 class Tool::RankedVoteController < Tool::BaseController
 
@@ -10,18 +37,25 @@ class Tool::RankedVoteController < Tool::BaseController
     redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
 
     array_of_votes, @who_voted_for = build_vote_arrays    
-    @result = CloneproofSSDVote.new( array_of_votes ).result
-    @possibles = @poll.possibles.sort_by do |possible|
-      @result.rank_of_candidate(possible.name) || 10000
-    end
-    @winners = @possibles.select{|p| @result.winners.include? p.name}
+    @result = BordaVote.new( array_of_votes ).result
+    @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
   end
 
   def edit
-    @possibles = @poll.possibles.sort_by do |pos|
-      default_for_unvoted = @poll.possibles.size + rand(@poll.possibles.size)
-      pos.value_by_user(current_user, default_for_unvoted)
+    @possibles_voted = []
+    @possibles_unvoted = []
+
+    @poll.possibles.each do |pos| 
+      if pos.vote_by_user(current_user)		
+        @possibles_voted << pos	
+      else
+        @possibles_unvoted << pos 
+      end 
     end
+
+    @possibles_voted = @possibles_voted.sort_by { |pos| pos.value_by_user(current_user) }
+
+
   end
     
   # ajax or post
@@ -54,10 +88,12 @@ class Tool::RankedVoteController < Tool::BaseController
     
     @poll.delete_votes_by_user(current_user)
     ids = params[sort_list_key[0]]
-    @poll.possibles.each do |possible|
-      rank = ids.index( possible.id.to_s )
-      possible.votes.create :user => current_user, :value => rank if rank
+    ids.each_with_index do |id, rank|
+      break if id == 'unordered'
+      possible = @poll.possibles.find(id)
+      possible.votes.create :user => current_user, :value => rank
     end
+
     render :nothing => true
   end
   
@@ -101,7 +137,7 @@ class Tool::RankedVoteController < Tool::BaseController
     possibles.each do |possible|
       possible.votes.each do |vote|
         hash[vote.user.name] ||= []
-        hash[vote.user.name] << [possible.name, vote.value]
+        hash[vote.user.name] << [possible.id, vote.value]
       end  
     end
        
@@ -132,3 +168,4 @@ class Tool::RankedVoteController < Tool::BaseController
   end
 
 end
+
