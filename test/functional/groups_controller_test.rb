@@ -49,6 +49,7 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_template 'show'
     
     get :show, :id => groups(:private_group).name
+    assert_response :not_found
     assert_template 'not_found'
 #    assert_template 'dispatch/not_found'
   end
@@ -59,6 +60,7 @@ class GroupsControllerTest < Test::Unit::TestCase
 
     assert_response :success
     assert_template 'create'
+    assert_select "form#createform"
   end
 
   def test_create
@@ -151,6 +153,42 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_template 'archive'
     
     get :archive, :id => groups(:private_group).name
+    assert_response :not_found
     assert_template 'not_found'
+  end
+
+  def test_member_of_committee_but_not_of_group_cannot_access_group_pages
+    User.current = nil
+    g = Group.create :name => 'riseup'
+    c = Committee.create :name => 'outreach', :parent => g
+    g.committees << c
+    u = User.create! :login => 'user', :password => 'password', :password_confirmation => 'password'
+    assert u.id
+    c.memberships.create :user => u
+    c.save
+    u.reload
+
+    Page.icon 'icon.png' #to avoid a warning
+    group_page = Page.create :title => 'a group page', :public => false
+    group_page.add(g, :access => :admin)
+    group_page.save
+    committee_page = Page.create :title => 'a committee page', :public => false, :group => c
+    committee_page.add(c, :access => :admin)
+    committee_page.save
+
+    @controller.stubs(:current_user).returns(u)
+    @controller.stubs(:logged_in?).returns(true)
+    @controller.instance_variable_set(:@group, c)
+    assert @controller.may_admin_group?
+
+    get :show
+    assert_response :success
+    assert_template 'show'
+    assert_select "h4", "New Pages"
+    assert_select "a[href=?]", @controller.page_url(committee_page)
+
+    @controller.instance_variable_set(:@group, g)
+    get :show
+    assert_select "a[href=?]", @controller.page_url(group_page), false
   end
 end

@@ -223,7 +223,7 @@ class GroupsController < ApplicationController
       @group_type = @group.class.to_s.downcase
       return true
     else
-      render :template => 'dispatch/not_found'
+      render :template => 'dispatch/not_found', :status => :not_found
       return false
     end
   end

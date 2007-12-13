@@ -42,7 +42,7 @@ class DispatchController < ApplicationController
       find_controller.process(request, response)
     rescue NameError
       @user = current_user
-      render :action => "not_found"
+      render :action => "not_found", :status => :not_found
     end
   end
 

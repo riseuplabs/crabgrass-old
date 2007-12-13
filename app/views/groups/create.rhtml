@@ -8,12 +8,12 @@
 
 <div class='workarea'>
 
-<%= start_form_tag({:action => "create"},:id => "createform") %>
+<% form_tag({:action => "create"},:id => "createform") do %>
   <%= render :partial => 'form' %>
 
   <%= submit_tag "Create" %>
 
-<%= end_form_tag %>
+<% end %>
 <%= javascript_tag "Form.focusFirstElement('createform');" %>
 
 </div> <!-- end work area -->
