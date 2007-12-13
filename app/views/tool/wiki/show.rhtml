@@ -20,19 +20,8 @@ div.wikiedit a:hover {text-decoration: underline;}
 <% end %>
 
 <div class='wiki'>
+  <%= render :partial => 'wiki_edit_controls' if @wiki.body_html.length > 3000 %>
   <%= @diffhtml || @wiki.body_html %>
-  <div class='wikiedit'><span>
-   <% if @wiki.editable_by? current_user -%>
-     <%= link_to '<u>e</u>dit', page_url(@page,:action=>'edit'), :accesskey => 'e' %>
-   <% else -%>
-     locked by <%= link_to_user(@wiki.locked_by_id) %>
-     (<%= link_to 'break_lock', page_url(@page,:action=>'break_lock'), :method => :post %>)
-   <% end %>
-   &nbsp;
-   <%= link_to 'versions', page_url(@page,:action=>'versions') %>
-   &nbsp;
-   <%= link_to 'last change', page_url(@page, :action=>'diff', :id => "#{@wiki.version.to_i-1}-#{@wiki.version}") if @wiki.version > 1 %>
-  </span></div>
-  <br style='clear: both' />
+  <%= render :partial => 'wiki_edit_controls' %>
 </div><!-- end wiki -->
 

@@ -32,9 +32,13 @@ class Tool::WikiController < Tool::BaseController
     old_id, new_id = params[:id].split('-')
     @old = @wiki.find_version(old_id)
     @new = @wiki.find_version(new_id)
-    @old_markup = @old.body || ''
-    @new_markup = @new.body || ''
+    @old_markup = @old.body_html || ''
+    @new_markup = @new.body_html || ''
     @difftext = html_diff( @old_markup , @new_markup)
+  end
+
+  def print
+    render :layout => "printer-friendly"
   end
   
   def preview
