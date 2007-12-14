@@ -1,3 +1,5 @@
+require 'mocha/parameter_matchers/base'
+
 module Mocha
   
   module ParameterMatchers
@@ -18,14 +20,15 @@ module Mocha
       AllOf.new(*matchers)
     end
     
-    class AllOf # :nodoc:
+    class AllOf < Base # :nodoc:
       
       def initialize(*matchers)
         @matchers = matchers
       end
     
-      def ==(parameter)
-        @matchers.all? { |matcher| matcher == parameter }
+      def matches?(available_parameters)
+        parameter = available_parameters.shift
+        @matchers.all? { |matcher| matcher.matches?([parameter]) }
       end
       
       def mocha_inspect

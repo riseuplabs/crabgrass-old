@@ -1,5 +1,6 @@
 require 'mocha/infinite_range'
-require 'mocha/pretty_parameters'
+require 'mocha/method_matcher'
+require 'mocha/parameters_matcher'
 require 'mocha/expectation_error'
 require 'mocha/return_values'
 require 'mocha/exception_raiser'
@@ -11,46 +12,6 @@ module Mocha # :nodoc:
   # Methods on expectations returned from Mock#expects, Mock#stubs, Object#expects and Object#stubs.
   class Expectation
   
-    # :stopdoc:
-    
-    class AlwaysEqual
-      def ==(other)
-        true
-      end
-    end
-  
-    attr_reader :method_name, :backtrace
-
-    def initialize(mock, method_name, backtrace = nil)
-      @mock, @method_name = mock, method_name
-      @expected_count = 1
-      @parameters, @parameter_block = AlwaysEqual.new, nil
-      @invoked_count, @return_values = 0, ReturnValues.new
-      @backtrace = backtrace || caller
-      @yield_parameters = YieldParameters.new
-      @final_expectation = false
-    end
-    
-    def match?(method_name, *arguments)
-      return false unless @method_name == method_name
-      if @parameter_block then
-        return false unless @parameter_block.call(*arguments)
-      else
-        return false unless (@parameters == arguments)
-      end
-      return true
-    end
-    
-    def invocations_allowed?
-      if @expected_count.is_a?(Range) then
-        @invoked_count < @expected_count.last
-      else
-        @invoked_count < @expected_count
-      end
-    end
-
-    # :startdoc:
-    
     # :call-seq: times(range) -> expectation
     #
     # Modifies expectation so that the number of calls to the expected method must be within a specific +range+.
@@ -187,9 +148,9 @@ module Mocha # :nodoc:
       self
     end
   
-    # :call-seq: with(*arguments, &parameter_block) -> expectation
+    # :call-seq: with(*expected_parameters, &matching_block) -> expectation
     #
-    # Modifies expectation so that the expected method must be called with specified +arguments+.
+    # Modifies expectation so that the expected method must be called with +expected_parameters+.
     #   object = mock()
     #   object.expects(:expected_method).with(:param1, :param2)
     #   object.expected_method(:param1, :param2)
@@ -201,7 +162,7 @@ module Mocha # :nodoc:
     #   # => verify fails
     # May be used with parameter matchers in Mocha::ParameterMatchers.
     #
-    # If a +parameter_block+ is given, the block is called with the parameters passed to the expected method.
+    # If a +matching_block+ is given, the block is called with the parameters passed to the expected method.
     # The expectation is matched if the block evaluates to +true+.
     #   object = mock()
     #   object.expects(:expected_method).with() { |value| value % 4 == 0 }
@@ -212,9 +173,8 @@ module Mocha # :nodoc:
     #   object.expects(:expected_method).with() { |value| value % 4 == 0 }
     #   object.expected_method(17)
     #   # => verify fails
-    def with(*arguments, &parameter_block)
-      @parameters, @parameter_block = arguments, parameter_block
-      class << @parameters; def to_s; join(', '); end; end
+    def with(*expected_parameters, &matching_block)
+      @parameters_matcher = ParametersMatcher.new(expected_parameters, &matching_block)
       self
     end
   
@@ -263,7 +223,7 @@ module Mocha # :nodoc:
     end
     
     # :call-seq: returns(value) -> expectation
-    # :call-seq: returns(*values) -> expectation
+    #            returns(*values) -> expectation
     #
     # Modifies expectation so that when the expected method is called, it returns the specified +value+.
     #   object = mock()
@@ -339,6 +299,56 @@ module Mocha # :nodoc:
     
     # :stopdoc:
     
+    def in_sequence(*sequences)
+      sequences.each { |sequence| sequence.constrain_as_next_in_sequence(self) }
+      self
+    end
+    
+    attr_reader :backtrace
+
+    def initialize(mock, expected_method_name, backtrace = nil)
+      @mock = mock
+      @method_matcher = MethodMatcher.new(expected_method_name)
+      @parameters_matcher = ParametersMatcher.new
+      @ordering_constraints = []
+      @expected_count, @invoked_count = 1, 0
+      @return_values = ReturnValues.new
+      @yield_parameters = YieldParameters.new
+      @backtrace = backtrace || caller
+    end
+    
+    def add_ordering_constraint(ordering_constraint)
+      @ordering_constraints << ordering_constraint
+    end
+    
+    def in_correct_order?
+      @ordering_constraints.all? { |ordering_constraint| ordering_constraint.allows_invocation_now? }
+    end
+    
+    def matches_method?(method_name)
+      @method_matcher.match?(method_name)
+    end
+    
+    def match?(actual_method_name, *actual_parameters)
+      @method_matcher.match?(actual_method_name) && @parameters_matcher.match?(actual_parameters) && in_correct_order?
+    end
+    
+    def invocations_allowed?
+      if @expected_count.is_a?(Range) then
+        @invoked_count < @expected_count.last
+      else
+        @invoked_count < @expected_count
+      end
+    end
+
+    def satisfied?
+      if @expected_count.is_a?(Range) then
+        @invoked_count >= @expected_count.first
+      else
+        @invoked_count >= @expected_count
+      end
+    end
+  
     def invoke
       @invoked_count += 1
       if block_given? then
@@ -352,27 +362,19 @@ module Mocha # :nodoc:
     def verify
       yield(self) if block_given?
       unless (@expected_count === @invoked_count) then
-        error = ExpectationError.new(error_message(@expected_count, @invoked_count))
-        error.set_backtrace(filtered_backtrace)
+        error = ExpectationError.new(error_message(@expected_count, @invoked_count), backtrace)
         raise error
       end
     end
     
-    def mocha_lib_directory
-      File.expand_path(File.join(File.dirname(__FILE__), "..")) + File::SEPARATOR
-    end
-    
-    def filtered_backtrace
-      backtrace.reject { |location| Regexp.new(mocha_lib_directory).match(File.expand_path(location)) }
-    end
-  
     def method_signature
-      return "#{method_name}" if @parameters.__is_a__(AlwaysEqual)
-      "#{@method_name}(#{PrettyParameters.new(@parameters).pretty})"
+      signature = "#{@mock.mocha_inspect}.#{@method_matcher.mocha_inspect}#{@parameters_matcher.mocha_inspect}"
+      signature << "; #{@ordering_constraints.map { |oc| oc.mocha_inspect }.join("; ")}" unless @ordering_constraints.empty?
+      signature
     end
     
     def error_message(expected_count, actual_count)
-      "#{@mock.mocha_inspect}.#{method_signature} - expected calls: #{expected_count.mocha_inspect}, actual calls: #{actual_count}"
+      "#{method_signature} - expected calls: #{expected_count.mocha_inspect}, actual calls: #{actual_count}"
     end
   
     # :startdoc:

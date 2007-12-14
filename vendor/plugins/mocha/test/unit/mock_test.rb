@@ -24,31 +24,32 @@ class MockTest < Test::Unit::TestCase
   
   def test_should_not_stub_everything_by_default
     mock = Mock.new
-    assert_equal false, mock.stub_everything
+    assert_equal false, mock.everything_stubbed
   end
   
   def test_should_stub_everything
-    mock = Mock.new(stub_everything = true)
-    assert_equal true, mock.stub_everything
+    mock = Mock.new
+    mock.stub_everything
+    assert_equal true, mock.everything_stubbed
   end
   
   def test_should_display_object_id_for_mocha_inspect_if_mock_has_no_name
     mock = Mock.new
-    assert_match Regexp.new("^#<Mock:0x[0-9A-Fa-f]{1,8}>$"), mock.mocha_inspect
+    assert_match Regexp.new("^#<Mock:0x[0-9A-Fa-f]{1,12}>$"), mock.mocha_inspect
   end
   
   def test_should_display_name_for_mocha_inspect_if_mock_has_name
-    mock = Mock.new(false, 'named_mock')
+    mock = Mock.new('named_mock')
     assert_equal "#<Mock:named_mock>", mock.mocha_inspect
   end
 
   def test_should_display_object_id_for_inspect_if_mock_has_no_name
     mock = Mock.new
-    assert_match Regexp.new("^#<Mock:0x[0-9A-Fa-f]{1,8}>$"), mock.inspect
+    assert_match Regexp.new("^#<Mock:0x[0-9A-Fa-f]{1,12}>$"), mock.inspect
   end
   
   def test_should_display_name_for_inspect_if_mock_has_name
-    mock = Mock.new(false, 'named_mock')
+    mock = Mock.new('named_mock')
     assert_equal "#<Mock:named_mock>", mock.inspect
   end
 
@@ -113,7 +114,8 @@ class MockTest < Test::Unit::TestCase
   end
   
   def test_should_not_raise_error_if_stubbing_everything
-    mock = Mock.new(stub_everything = true)
+    mock = Mock.new
+    mock.stub_everything
     result = nil
     assert_nothing_raised(ExpectationError) do
       result = mock.unexpected_method
@@ -158,7 +160,7 @@ class MockTest < Test::Unit::TestCase
     mock = Mock.new
     mock.expects(:expected_method).with(1)
     exception = assert_raise(ExpectationError) { mock.expected_method(2) }
-    assert_equal "#{mock.mocha_inspect}.expected_method(2) - expected calls: 0, actual calls: 1\nSimilar expectations:\nexpected_method(1)", exception.message
+    assert_equal "#{mock.mocha_inspect}.expected_method(2) - expected calls: 0, actual calls: 1\nSimilar expectations:\n#{mock.mocha_inspect}.expected_method(1)", exception.message
   end
   
   def test_should_pass_block_through_to_expectations_verify_method
@@ -313,4 +315,5 @@ class MockTest < Test::Unit::TestCase
       assert_match(/which responds like mocha_inspect/, e.message)
     end
   end
+  
 end

@@ -38,7 +38,7 @@ class AutoVerifyTest < Test::Unit::TestCase
   
   def test_should_build_stub_that_stubs_all_methods
     stub = test_case.stub_everything
-    assert stub.stub_everything
+    assert stub.everything_stubbed
   end
   
   def test_should_add_expectations_to_stub_that_stubs_all_methods
@@ -78,7 +78,11 @@ class AutoVerifyTest < Test::Unit::TestCase
     mocks = Array.new(3) do
       mock = Object.new
       mock.define_instance_accessor(:verify_called)
-      mock.define_instance_method(:verify) { self.verify_called = true }
+      class << mock
+        def verify(&block)
+          self.verify_called = true
+        end
+      end
       mock
     end
     test_case.replace_instance_method(:mocks)  { mocks }
@@ -117,6 +121,10 @@ class AutoVerifyTest < Test::Unit::TestCase
   def test_should_create_named_stub_that_stubs_all_methods
     stub = test_case.stub_everything('named_stub')
     assert_equal '#<Mock:named_stub>', stub.mocha_inspect
+  end
+  
+  def test_should_build_sequence
+    assert_not_nil test_case.sequence('name')
   end
   
 end
