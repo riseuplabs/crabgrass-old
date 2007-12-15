@@ -16,10 +16,11 @@
 	</li>
 <% end -%> 
 
-Not yet ranked:
-<ul>
-<% @possibles_unvoted.each do |possible| -%>
- <div><%= possible_name(possible) %></div>
-
+<% if @possibles_unvoted.any? %>
+  You have not ranked:
+  <ul>
+  <% @possibles_unvoted.each do |possible| -%>
+    <div><%= possible_name(possible) %></div>
+  <% end -%>
 <% end -%>
 </ul>
