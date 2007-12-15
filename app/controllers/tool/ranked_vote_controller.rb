@@ -32,16 +32,10 @@ end
 class Tool::RankedVoteController < Tool::BaseController
 
   stylesheet 'vote'
-      
-  def show
-    redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
-
-    array_of_votes, @who_voted_for = build_vote_arrays    
-    @result = BordaVote.new( array_of_votes ).result
-    @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
-  end
-
-  def edit
+  before_filter :fetch_poll
+	before_filter :find_possibles, :only => [:show, :edit] 
+     
+  def find_possibles #edit
     @possibles_voted = []
     @possibles_unvoted = []
 
@@ -54,10 +48,16 @@ class Tool::RankedVoteController < Tool::BaseController
     end
 
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.value_by_user(current_user) }
-
-
   end
-    
+  
+  def show
+    redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
+
+    array_of_votes, @who_voted_for = build_vote_arrays    
+    @result = BordaVote.new( array_of_votes ).result
+    @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+  end
+
   # ajax or post
   def add_possible
     return if request.get?
@@ -161,7 +161,6 @@ class Tool::RankedVoteController < Tool::BaseController
     current_user.may?(:admin, @page)
   end  
   
-  before_filter :fetch_poll
   def fetch_poll
     @poll = @page.data if @page
     true

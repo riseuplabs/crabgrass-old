@@ -14,7 +14,7 @@
 
 <ul id='sort_list' class='possible_list plainlist'>
   <%= render :partial => 'possible', :collection => @possibles_voted %>
-  <li id='possible_unordered'> <%= "Not yet ranked, or tied for last" %> </li>
+  <li id='possible_unordered'> <%= " Things below this line are not yet ranked/tied for last." %> </li>
   <%= render :partial => 'possible', :collection => @possibles_unvoted %>
 </ul>
 
