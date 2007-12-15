@@ -13,8 +13,16 @@
 
 
 <ul id='sort_list' class='possible_list plainlist'>
-  <%= render :partial => 'possible', :collection => @possibles_voted %>
-  <li id='possible_unordered'> <%= " Things below this line are not yet ranked/tied for last." %> </li>
+  <% if @possibles_voted.any? %>
+     <%= render :partial => 'possible', :collection => @possibles_voted %>
+  <% # the following is a quick attempt to make the ui clearer when no votes have been cast,
+     # it should be improved by a more advanced developer. It requires a page reload to add or remove the blank lines.
+     #
+     # one possibility is to have a numbered list, with blanks if the user has not voted on everything yet
+    else %>
+    <br /><br />
+  <% end %>
+  <li id='possible_unordered'> <%= "Things below this line are not yet ranked/tied for last. Move options above this line to vote for them." %> </li>
   <%= render :partial => 'possible', :collection => @possibles_unvoted %>
 </ul>
 
