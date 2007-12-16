@@ -33,6 +33,9 @@ FLOW = {
  :contacts => '2',
 }.freeze
 
+# do this early because environments/*.rb need it
+require 'crabgrass_config'
+
 Rails::Initializer.run do |config|
   config.load_paths += %w(associations discussion chat).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
