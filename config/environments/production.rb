@@ -31,3 +31,5 @@ ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
 # in production mode, compress css and js files and page cache the result
 MAKE_ASSET_BUNDLES = true
 
+# set cookies to 'secure'; prevent some kinds of session-stealing attacks
+Crabgrass::Config.https_only = true
