@@ -16,7 +16,7 @@ class AccountController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      redirect_back_or_default(:controller => '/me', :action => 'index')
+      redirect_to params[:redirect] || {:controller => '/me', :action => 'index'}
     else
       flash[:error] = "Username or password is incorrect"
     end
@@ -28,7 +28,7 @@ class AccountController < ApplicationController
     @user.save!
     self.current_user = @user
     send_welcome_message(current_user)
-    redirect_back_or_default(:controller => '/account', :action => 'welcome')
+    redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
@@ -39,7 +39,7 @@ class AccountController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/account', :action => 'index')
+    redirect_to :controller => '/account', :action => 'index'
   end
 
   def welcome

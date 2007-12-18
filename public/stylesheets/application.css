@@ -62,8 +62,7 @@ table#masthead {
 table#masthead td {
   vertical-align: bottom;
 }
-div#masthead-image {
-  float: right;
+#masthead-image {
   background: url(/riseup/riseup.net.png) no-repeat;
   width: 166px;
   height: 30px;

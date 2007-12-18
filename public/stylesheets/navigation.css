@@ -208,3 +208,14 @@ div.iconbox a {
    
 /* .pagination li.nextpage {} */
 
+/*** login menu box ***/
+
+span#top-login-form label {
+  color: #FFF;
+  font-size: 9px;
+}
+
+span#top-login-form input {
+  width: 8em;
+  font-size: 9px;
+}

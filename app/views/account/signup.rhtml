@@ -24,6 +24,9 @@
 <%= f.password_field :password_confirmation %></p>
 
 <p><%= submit_tag 'Sign up' %></p>
+
+<%= hidden_field_tag 'redirect', params[:redirect] %>
+
 <% end -%>
 </div>
 </div>

@@ -29,7 +29,14 @@
 <%= check_box_tag 'remember_me' %></p>
 -->
 
+<%= hidden_field_tag 'redirect', params[:redirect] %>
+
 <% end -%>
+
+<div align='right'>
+  <%= link_to 'Sign up for a new account'.t, { :action => 'signup', :redirect => params[:redirect] } %>
+</div>
+
 <div><%# flash[:error] %></div>
 <div align='right'>
   <%# link_to 'I forgot my password'.t, :controller => 'forms', :action => 'password'%>

@@ -76,10 +76,9 @@ class AssetController < ApplicationController
   end
 
   def access_denied
-    store_location
     message :error => 'You do not have sufficient permission to access that file' if logged_in?
     message :error => 'Please login to access that file.' unless logged_in?
-    redirect_to :controller => '/account', :action => 'login'
+    redirect_to :controller => '/account', :action => 'login', :redirect => @request.request_uri
   end
   
   
