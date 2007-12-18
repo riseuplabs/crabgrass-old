@@ -5,11 +5,11 @@
   <td style="text-align:left;">						
     <table><tr>
       <td>
-        <%= photo @profile $>
+        <%= photo @profile %>
       </td>
       <td>
         <h2><%= @profile.full_name %></h2>
-        <div><%= [@profile.organization, @profile.title].reject(&:blank?).join(', ') %></div>
+        <div><%= [@profile.organization, @profile.role].reject(&:blank?).join(', ') %></div>
       </td>
     </tr></table>
   </td>
@@ -42,7 +42,7 @@
       </dd>
     <% end -%>
   <% end -%>
-  <% @profile.locations.each do |address| -%>
+  <% @profile.locations.each do |location| -%>
     <dt><%= _('Location') -%>:</dt>
     <dd>
       <%= h(location.street) %> <em><%= h(_(location.location_type)) %></em>
@@ -73,7 +73,7 @@
   <% end -%>
   <% unless @profile.notes.empty? -%>
     <% @profile.notes.each do |note| -%>
-      <dt><%= _(note.type) -%>:</dt>
+      <dt><%= _(note.note_type) -%>:</dt>
       <dd>
         <%=h note.body %>
       </dd>

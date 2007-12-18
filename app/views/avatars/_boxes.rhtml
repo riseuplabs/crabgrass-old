@@ -12,7 +12,7 @@
 <% (groups || people || []).each do |e| -%>
 <%  url = url_for_group(e) if e.is_a? Group
     url = url_for_user(e) if e.is_a? User
-    online = e.respond_to?(:online) && e.online? ? 'online' : ''
+    online = e.respond_to?(:online?) && e.online? ? 'online' : ''
 -%>
   <div class='iconbox <%=side%> <%=online%>'>
     <%= link_to avatar_for(e, 'xsmall', :class=>'iconbox'), url %>
