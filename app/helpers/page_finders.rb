@@ -464,7 +464,7 @@ module PageFinders
         path << value[1]
       end
     end
-    path.join('/')
+    return path.collect{|i|CGI.escape i}.join('/')
   end
   
   # returns a hash of options (conditions, joins, sorts, etc),
