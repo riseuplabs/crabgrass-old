@@ -12,6 +12,10 @@ require File.join(File.dirname(__FILE__), 'boot')
 SITE_NAME = 'riseup.net'
 SECTION_SIZE = 29 # the default size for pagination sections
 
+AVAILABLE_PAGE_CLASSES = %w[
+  Message Discussion TextDoc RateMany RankedVote TaskList Asset
+]
+
 ### END CUSTOM OPTIONS
 ########################################################################
 
@@ -83,6 +87,8 @@ Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
 end
 # a static array of tool classes:
 TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
+
+AVAILABLE_PAGE_CLASSES.collect!{|i|Tool.const_get(i)}.freeze
 
 #### ASSETS ########################
 
