@@ -1,13 +1,15 @@
-<%= Formy.tabs do |f|
-  f.tab do |t|
-    t.label 'Show results'.t
-    t.link page_url(@page, :action => 'show')
-    t.selected params[:action] == 'show'
-  end
-  f.tab do |t|
-    t.label 'Edit my vote'.t
-    t.link page_url(@page, :action => 'edit')
-    t.selected params[:action] == 'edit'
+<%= if logged_in?
+  Formy.tabs do |f|
+    f.tab do |t|
+      t.label 'Show results'.t
+      t.link page_url(@page, :action => 'show')
+      t.selected params[:action] == 'show'
+    end
+    f.tab do |t|
+      t.label 'Edit my vote'.t
+      t.link page_url(@page, :action => 'edit')
+      t.selected params[:action] == 'edit'
+    end
   end
 end
 %>

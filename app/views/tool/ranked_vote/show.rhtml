@@ -16,7 +16,7 @@
 	</li>
 <% end -%> 
 
-<% if @possibles_unvoted.any? %>
+<% if logged_in? and @possibles_unvoted.any? %>
   You have not ranked:
   <ul>
   <% @possibles_unvoted.each do |possible| -%>
