@@ -54,9 +54,16 @@
   <li>
     <span><%= link_to "Logout".t, :controller => '/account', :action => 'logout' %></span>
   </li>
+  <li>
+    <span id="top-login-form">
+      <label>
+        (logged in as <%= current_user.display_name %>)
+      </label>
+    </span>
+  </li>
   <% else -%>  
   <li>
-    <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || @request.request_uri }, { :onclick => "$('top-login-form').toggle(); return false;" } %></span>
+    <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || @request.request_uri }, { :onclick => "$('top-login-form').toggle(); Field.focus('login'); return false;" } %></span>
   </li>
   <li>
     <span id="top-login-form" style="display: none;">

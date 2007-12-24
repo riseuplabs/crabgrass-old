@@ -25,7 +25,7 @@ div#login_right{
 
 /**login form **/
 
-#loginform {
+div#loginformbox {
 	width: 15em;
 	text-align: left;
 	padding: 1em 1em 1em 1em;

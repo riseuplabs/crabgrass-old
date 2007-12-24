@@ -1,5 +1,5 @@
-<div id="loginform">
-<% form_tag :controller => 'account', :action => 'login' do -%>
+<div id="loginformbox">
+<% form_tag({:controller => 'account', :action => 'login'}, :id => "loginform") do -%>
 <table>
 <tr>
   <td>
@@ -20,10 +20,6 @@
 </tr>
 </table>
 
-<script>
-  document.getElementById('login').focus();
-</script>
-
 <!-- Uncomment this if you want this functionality
 <p><label for="remember_me">Remember me:</label>
 <%= check_box_tag 'remember_me' %></p>
@@ -32,6 +28,8 @@
 <%= hidden_field_tag 'redirect', params[:redirect] %>
 
 <% end -%>
+
+<%= javascript_tag "Form.focusFirstElement('loginform');" %>
 
 <div align='right'>
   <%= link_to 'Sign up for a new account'.t, { :action => 'signup', :redirect => params[:redirect] } %>
