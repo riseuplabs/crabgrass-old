@@ -1,6 +1,7 @@
 # http://www.hervalfreire.com/blog/2007/05/11/faster-pagination-reloaded/
 
 module PaginationHelper  
+  include PageUrlHelper
 
   def windowed_pagination_links(pagingEnum, options)  
     link_to_current_page = options[:link_to_current_page]  
