@@ -1,5 +1,6 @@
 module UrlHelper
-
+  # if you pass optins[:full_name] = true, committees will have the string
+  # "group+committee" (default does not include leading "group+")
   def name_and_path_for_group(arg,options={})
     if arg.instance_of? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
@@ -8,7 +9,11 @@ module UrlHelper
       name = arg
     elsif arg.is_a? Committee
       name = arg.name
-      display_name = arg.display_name
+      if options[:full_name]
+        display_name = arg.full_name
+      else
+        display_name = arg.display_name
+      end
     elsif arg.is_a? Group
       name = arg.name
     end
