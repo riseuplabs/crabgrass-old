@@ -1,9 +1,10 @@
 <!--[form:group]-->
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 
-<div id='title_text' class='h1' style=''>
+<div class='titlebox h1' >
+<div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
   <%= '%s Info' / @group_type.capitalize %>
-  <%= image_tag 'actions/beehive.png' %>
+</div>
 </div>
 
 <p>
@@ -34,9 +35,10 @@
 
 <% if not committee? -%>
 
-<div id='title_text' class='h1' style=''>
+<div class='titlebox h1' >
+<div style='padding: 8px; background: url(/images/actions/lock.png) no-repeat 100% 50%'>
 Group Privacy Settings
-  <%= image_tag 'actions/lock.png' %>
+</div>
 </div>
 
 <p><%= check_box :group, :publicly_visible_group %>

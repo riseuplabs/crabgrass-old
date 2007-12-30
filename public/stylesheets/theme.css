@@ -39,7 +39,7 @@ div.sideline a {
 
 /* title and info panel */
 
-#titlebox {
+#titlebox, .titlebox {
   background: #E6F2FF;
   border: 2px solid white;
 }
