@@ -254,14 +254,14 @@ module ActiveRecord
           # TODO: make this dynamic so this function can be
           # used over any set of classes (instead of just User, Group)
           if record.instance_of? User
-            if User.exists?(['login = ? and id <> ?', value, record.id])
+            if User.exists?(['login = ? and id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
             if Group.exists?({:name => value})
               record.errors.add(attr_name, 'is already taken')
             end
           elsif record.instance_of? Group
-            if Group.exists?(['name = ? and id <> ?', value, record.id])
+            if Group.exists?(['name = ? and id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end
             if User.exists?({:login => value})

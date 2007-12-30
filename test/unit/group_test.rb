@@ -22,9 +22,26 @@ class GroupTest < Test::Unit::TestCase
     assert_equal 0, g.users.size, 'there should be no users'
   end
 
-  def test_name
+  def test_missing_name
     g = Group.create
     assert !g.valid?, 'group with no name should not be valid'
+  end
+
+  def test_duplicate_name
+    g1 = Group.create :name => 'fruits'
+    assert g1.valid?, 'group should be valid'
+
+    g2 = Group.create :name => 'fruits'
+    assert g2.valid? == false, 'group should not be valid'
+  end
+
+  def test_try_to_create_group_with_same_name_as_user
+    u = User.find(1)
+    assert u.login, 'user should be valid'
+
+    g = Group.create :name => u.login
+    assert g.valid? == false, 'group should not be valid'
+    assert g.save == false, 'group should fail to save'
   end
 
   def test_associations

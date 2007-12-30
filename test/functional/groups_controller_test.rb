@@ -77,6 +77,23 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_equal num_groups + 1, Group.count
   end
 
+  def test_create_fails_when_name_is_taken
+    login_as :gerrard
+
+    num_groups = Group.count
+    post :create, :group => {:name => 'test-create-group'}
+    assert_equal num_groups + 1, Group.count, "should have created a new group"
+
+    num_groups = Group.count
+    post :create, :group => {:name => 'test-create-group'}
+    assert_equal num_groups, Group.count,
+                 "should not create group with name of an existing group"
+
+    post :create, :group => {:name => User.find(1).login}
+    assert_equal num_groups, Group.count,
+                 "should not create group with name of an existing user"
+  end
+
   def test_edit
     login_as :blue
     get :edit, :id => groups(:rainbow).name
