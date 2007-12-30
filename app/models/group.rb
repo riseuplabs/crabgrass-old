@@ -128,6 +128,12 @@ class Group < ActiveRecord::Base
     end  
   end
   
+  def may_be_pestered_by?(user)
+    return true if user.member_of?(self)
+    return true if publicly_visible_group
+    return false
+  end
+  
   # whenever the structure of this group has changed 
   # (ie a committee or network has been added or removed)
   # this function should be called to update each user's

@@ -31,4 +31,20 @@ class GroupTest < Test::Unit::TestCase
     assert check_associations(Group)
   end
 
+  def test_cant_pester_private_group
+    g = Group.create :name => 'riseup', :publicly_visible_group => false    
+    u = User.create :login => 'user'
+    
+    assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
+    assert u.may_pester?(g) == false, 'should not be able to pester private group'
+  end
+
+  def test_can_pester_public_group
+    g = Group.create :name => 'riseup', :publicly_visible_group => true
+    u = User.create :login => 'user'
+    
+    assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
+    assert u.may_pester?(g) == true, 'should be able to pester private group'
+  end
+
 end

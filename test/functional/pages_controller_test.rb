@@ -27,4 +27,17 @@ class PagesControllerTest < Test::Unit::TestCase
       end
     end
   end
+  
+  def test_add_access
+    login_as :orange
+# i don't think this test is working correctly --af    
+    post :access, :id => 1, :add_name => "public_group"
+    assert :success
+    assert_nil flash[:error], 'adding access to public group'
+    
+#    post :access, :id => 1, :add_name => "private_group12"
+#    assert :success
+#    assert_equal 'you do not have permission to do that', flash[:error],
+#                  'adding access to private group'
+  end
 end

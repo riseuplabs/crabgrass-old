@@ -99,5 +99,27 @@ class CommitteeTest < Test::Unit::TestCase
     assert c.may?(:view, committee_page), "should be able to view committee page"
     assert !c.may?(:view, group_page), "should not be able to view group page"
   end
+  
+  def test_cant_pester_private_committee
+    g = Group.create :name => 'riseup', :publicly_visible_committees => false
+    c = Committee.create :name => 'outreach'
+    g.committees << c
+    
+    u = User.create :login => 'user'
+    
+    assert c.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
+    assert u.may_pester?(c) == false, 'should not be able to pester committee of group with private committees'
+  end
+
+  def test_can_pester_public_committee
+    g = Group.create :name => 'riseup', :publicly_visible_group => true, :publicly_visible_committees => true
+    c = Committee.create :name => 'outreach'
+    g.committees << c
+    
+    u = User.create :login => 'user'
+    
+    assert c.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
+    assert u.may_pester?(c) == true, 'should be able to pester committee of group with public committees'
+  end
 end
 

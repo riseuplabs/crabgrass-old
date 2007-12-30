@@ -171,8 +171,12 @@ class SocialUser < AuthenticatedUser
   ## person/group, like invite them to things, send them notices, etc.
   ## 
 
+  def may_be_pestered_by?(user)
+    return true
+  end
+
   def may_pester?(entity)
-    true
+    entity.may_be_pestered_by? self
   end
 
   def stranger_to?(user)

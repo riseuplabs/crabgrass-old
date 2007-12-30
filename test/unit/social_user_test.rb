@@ -215,8 +215,16 @@ class SocialUserTest < Test::Unit::TestCase
                  'wrong groups'
     assert_equal correct_all_group_ids.sort.collect { |i| Group.find(i)}, u.all_groups.sort_by {|x| x.id},
                  'wrong groups (all)'    
-   end
+  end
 
+  def test_pestering
+    u1 = create_user :login => 'pest'
+    u2 = create_user :login => 'af'
+  
+    assert u1.may_pester?(u2), 'pest can pester me'
+    assert u2.may_be_pestered_by?(u1), 'i can be pestered by the pest'
+  end
+  
   protected
     def create_user(options = {})
       User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))

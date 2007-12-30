@@ -50,5 +50,12 @@ class Committee < Group
     parent_name_change
   end
  
+  ####################################################################
+  ## relationships to users
+  def may_be_pestered_by?(user)
+    return true if user.member_of?(self)
+    return true if parent and parent.publicly_visible_committees
+    return false
+  end
   
 end
