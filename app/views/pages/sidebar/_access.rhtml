@@ -1,6 +1,6 @@
 <%
 checked      = @page.public? ? "CHECKED" : ""
-disabled     = (logged_in? and current_user.may?(:admin, @page)) ? '' : DISABLED
+disabled     = (logged_in? and current_user.may?(:admin, @page)) ? "" : "DISABLED"
 -%>
 <div class='sidesubhead'>
 <%= image_tag 'actions/wrench.png' %> admin
