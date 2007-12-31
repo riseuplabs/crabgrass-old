@@ -1,5 +1,8 @@
 /*** USER INTERFACE ELEMENTS ***/
 
+/** drag & drop **/
+.handle {cursor: move;}
+
 /** things that look like buttons **/
 
 form input[type=submit], form input[type=button], a.button {

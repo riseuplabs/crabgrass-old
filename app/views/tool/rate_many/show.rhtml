@@ -1,6 +1,5 @@
 <% content_for :style do %>
 ul.possibles li {
-  padding: 2px;
   list-style: none;
   background: #eee;
   margin: 5px 0;
@@ -21,64 +20,37 @@ ul.possibles input[type=radio] {
   vertical-align: top;
 }
 ul.possibles span {opacity: 0.25}
+div#new_possible {background: #eee; padding: 1em; margin: 1em;}
 <% end %>
 
 <p>
 
-<% form_tag(page_url(@page,:action=>'vote')) do -%>
 
-<div style="text-align: right">
-<%= submit_tag 'Save my choices' if @poll.possibles.any? %>
-</div>
+<% form_tag(page_xurl(@page,:action=>'vote')) do -%>
+	<div id='non-ajax-form' style="text-align: right">
+	<%= submit_tag 'Save my choices' if @possibles.any? %>
+	</div>
+	<ul id='sort_list' class='possibles plainlist'>
 
-<ul class='possibles'>
-<% @poll.possibles.each do |possible| %>
-  <%
-  vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
-  vote ||= Poll::Vote.new
-  allvotes = {}
-  possible.votes.each do |v|
-    (allvotes[map(v.value)] ||= []) << v.user.login
-  end
-  %>
-  <li style="background-color: #<%=possible.color%>" >
-    <div style="float:right; width:5em; text-align:right;">
-       <%= link_to "delete", page_url(@page, :action=>'destroy_possible', :possible => possible) %>
-    </div>
-    <h2><%=h possible.name %></h2>  
-    <table>
-      <tr>
-        <td><label><%= radio_button_tag "vote[#{possible.id}]", map('good'), 'good' == map(vote.value) %>good</label></td>
-        <td> <span>&mdash;</span> <%= allvotes['good'].to_sentence if allvotes['good'] %></td>
-      </tr>
-      <tr>
-        <td><label><%= radio_button_tag "vote[#{possible.id}]", map('ok'), 'ok' == map(vote.value) %>ok</label></td>
-        <td> <span>&mdash;</span> <%= allvotes['ok'].to_sentence if allvotes['ok'] %>    </td>
-      </tr>
-      <tr>
-        <td><label><%= radio_button_tag "vote[#{possible.id}]", map('bad'), 'bad' == map(vote.value) %>bad</label></td>
-        <td> <span>&mdash;</span> <%= allvotes['bad'].to_sentence if allvotes['bad'] %>  </td>
-      </tr>
-      <tr>
-        <td><label><%= radio_button_tag "vote[#{possible.id}]", map('no'), 'no' == map(vote.value) %>no!</label></td>
-        <td> <span>&mdash;</span> <%= allvotes['no'].to_sentence if allvotes['no'] %>    </td>
-      </tr>
-    </table>
-  </li>
-<% end %>
-</ul>
+<% @possibles.each do |possible| -%>
+<%= render :partial => 'possible', :locals => {:possible => possible} %>
+<% end -%>
 
-<div style="text-align: right">
-<%= submit_tag 'Save my choices' if @poll.possibles.any? %>
-</div>
-
+	</ul>
 <% end %>
 
+<div id='new_possible'>
+<%= render :partial => 'new_possible'%>
+</div> 
 
+<!--
 <% form_tag(page_url(@page,:action=>'new_possible')) do -%>
   Create a new possibility:</br>
   <%= text_field 'possible','name' %>
   <%= submit_tag "Create" %>
 <% end %>
+-->
 
 </p>
+<%= sortable_element 'sort_list', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
+<%= javascript_tag "Element.hide('non-ajax-form')" %>

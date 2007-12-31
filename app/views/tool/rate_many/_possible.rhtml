@@ -1,0 +1,14 @@
+<%
+# this partial handles one line item in a list of possibles.
+
+#possible_id        = "possible_#{possible.id}"
+#possible_edit_id   = "#{possible_id}_edit"
+#possible_show_id   = "#{possible_id}_show"
+#spinner_edit       = "#{possible_id}_edit"
+#form_id            = "possible_form_#{possible.id}"
+-%>
+
+<li id='possible_<%=possible.id%>' class='handle'>
+<%= render :partial => 'possible_show', :locals => {:possible => possible} %>
+</li>
+

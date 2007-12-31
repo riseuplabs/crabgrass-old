@@ -1,0 +1,8 @@
+# adds a newly created task to the bottom of the possibles
+page.insert_html :bottom, 'sort_list', :partial => 'possible', :locals => {:possible => @possible}
+
+# makes sure the new one is sortable
+page.sortable 'sort_list', :handle => 'handle', :url => page_xurl(@page, :action=>'sort'), 
+  :loading => "Element.show('progress');Element.hide('instructions')",
+  :complete => "Element.hide('progress'); Element.show('instructions')"
+

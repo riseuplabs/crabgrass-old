@@ -1,10 +1,12 @@
 
 class Poll::Possible < ActiveRecord::Base
 
+	acts_as_list
   belongs_to :poll
   has_many :votes, :dependent => :destroy
   format_attribute :description  
   validates_presence_of :name
+  
   
   # rails doesn't let you serialize instances of auto loaded classes
   # see the bug here: http://dev.rubyonrails.org/ticket/7537

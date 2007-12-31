@@ -1,0 +1,61 @@
+<%
+
+# this html is its own partial because it is used by both
+# _possible.rhtml and update_possible.rjs
+
+## DOM STUFF
+
+possible_id        = "possible_#{possible.id}"
+details_id         = "#{possible_id}_details"
+possible_show_id   = "#{possible_id}_show"
+possible_edit_id   = "#{possible_id}_edit"
+possible_edit_form = "#{possible_edit_id}_form"
+edit_url           = page_xurl(@page, :action=>'edit_possible', :id=>possible.id)
+edit_function      = remote_function(:url => edit_url)
+edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
+             "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
+
+## LOGIC STUFF
+
+vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
+vote ||= Poll::Vote.new
+@allvotes = {}
+possible.votes.each do |v|
+  (@allvotes[map(v.value)] ||= []) << v.user.login
+end
+  
+-%>
+<div style="background-color: #<%=possible.color%>; padding: 2px;" >
+  <div id='<%=possible_show_id%>'>
+    <div style="float:right; width:5em; text-align:right;">
+       <%= link_to "delete", page_url(@page, :action=>'destroy_possible', :possible => possible) %>
+    </div>
+    
+    <div class='name'>
+      <h2>
+        <% if possible.description.any? -%>
+          <%= link_to_function possible.name, "Element.toggle('#{details_id}')", :class => 'dotted' %>
+        <% else -%>
+          <%=h possible.name %>
+        <% end -%>
+        <%= spinner(possible_id) %>
+      </h2>
+      <%# link_to_function(image_tag('actions/pencil.png'), edit_click, :class => 'edit') -%>
+    </div>
+    <div class='indent possible_details' id="<%=details_id%>" style='display: none'>
+      <%= possible.description_html %>
+    </div>
+    <table>
+     <%= button_row(possible, vote, 'good') %>
+     <%= button_row(possible, vote, 'ok') %>
+     <%= button_row(possible, vote, 'bad') %>
+     <%= button_row(possible, vote, 'no') %>
+    </table>
+  </div>
+  <!--
+  <div id='<%=possible_edit_id%>' class='indent possible_edit' style='display: none'>
+    <%# spinner(spinner_edit, :show=>true) -%> <%= 'Loading...'.t %>
+  </div>
+  -->
+</div>
+

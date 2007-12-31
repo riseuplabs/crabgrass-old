@@ -7,7 +7,6 @@ class Tool::BaseController < ApplicationController
   
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
-  skip_before_filter :login_required
   append_before_filter :setup_default_view
   append_after_filter :update_participation
   

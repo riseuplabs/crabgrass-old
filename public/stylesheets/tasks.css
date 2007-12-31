@@ -5,7 +5,7 @@ ul.task_list {
   list-style-type: none;
   padding: 0;
 }
-span.handle {cursor: move;}
+
 li.task {
   clear: left;
 }
