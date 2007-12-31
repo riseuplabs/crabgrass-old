@@ -39,9 +39,18 @@ class Group < ActiveRecord::Base
   ## about this group
 
   validates_handle :name
-  before_validation_on_create :clean_name  
-  def clean_name
-    write_attribute(:name, read_attribute(:name).downcase) if read_attribute(:name)
+  before_validation :clean_names
+
+  def clean_names
+    t_name = read_attribute(:name)
+    if t_name
+      write_attribute(:name, t_name.downcase)
+    end
+    
+    t_name = read_attribute(:full_name)
+    if t_name
+      write_attribute(:full_name, t_name.gsub(/[&<>]/,''))
+    end
   end
 
   # the code shouldn't call find_by_name directly, because the group name

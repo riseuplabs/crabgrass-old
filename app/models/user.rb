@@ -29,10 +29,15 @@ class User < SocialUser
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   validates_handle :login
-  before_validation_on_create :clean_login
+  before_validation :clean_names
   
-  def clean_login
+  def clean_names
     write_attribute(:login, (read_attribute(:login)||'').downcase)
+    
+    t_name = read_attribute(:display_name)
+    if t_name
+      write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
+    end
   end
 
   after_save :update_name
