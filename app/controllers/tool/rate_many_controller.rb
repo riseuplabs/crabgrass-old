@@ -2,7 +2,7 @@ class Tool::RateManyController < Tool::BaseController
   before_filter :fetch_poll
     
   def show
-  	@possibles = @poll.possibles.sort_by{|p| p.position }
+  	@possibles = @poll.possibles.sort_by{|p| p.position||0 }
   end
   
   # ajax or post
