@@ -27,6 +27,11 @@ class MeController < ApplicationController
   end
   
   def dashboard
+  end
+
+  def counts
+    return false unless request.xhr?
+
     options = options_for_pages_viewable_by(current_user, :flow => [:membership,:contacts])
     path = "/type/request/pending/not_created_by/#{current_user.id}"
     @request_count = count_pages(options, path)
@@ -34,7 +39,15 @@ class MeController < ApplicationController
     @unread_count = count_pages(options_for_inbox, 'unread')
     @pending_count = count_pages(options_for_inbox, 'pending')
     
-    @pages = find_pages(options_for_me,'descending/updated_at/ascending/group_name/limit/40')
+    render :layout => false
+  end
+
+  def page_list
+    return false unless request.xhr?
+    
+    @pages = find_pages(options_for_me,'descending/updated_at/ascending/group_name/limit/40')  
+    
+    render :layout => false
   end
   
   def files

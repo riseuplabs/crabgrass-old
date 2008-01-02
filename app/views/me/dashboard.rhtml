@@ -12,7 +12,9 @@ A dashboard of interesting stuff. <%= link_to 'create page &raquo;', {:controlle
 
 <style>div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}</style>
 
-<%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages} %>
-<%= link_to 'more &raquo;', me_url(:action => 'search') + "/descending/updated_at" %>
+<div id='page_list'>
+<%= link_to 'Search recently updated pages', me_url(:action => 'search') + "/descending/updated_at" %>
+<%= javascript_tag remote_function( :update => "page_list", :url => { :action => :page_list }) %>
+</div>
 
 </div>
