@@ -1,8 +1,8 @@
 <% page.created_at ||= Time.now; page.updated_at ||= Time.now -%>
 <tr class='<%= cycle 'odd', 'even' %>'>
-  <td><%= page_list_cell(page, :owner_with_icon) %></td>
+  <td><%= page_list_owner_with_icon(page) %></td>
   <td>&nbsp;&nbsp;&nbsp;</td>
-  <td><%= page_list_cell(page, :icon) %></td>
+  <td><%= page_icon(page) %></td>
   <td><%= page_list_cell(page, :title) %></td>
   <td>
     <% if page.updated_at > page.created_at + 1.hour -%>

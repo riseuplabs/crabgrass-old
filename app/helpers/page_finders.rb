@@ -652,8 +652,8 @@ module PageFinders
     else
       { :class      => Page,
         :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ?)",
-#        :values     => [current_user.all_group_ids, current_user.id] }    
-        :values     => [current_user.groups.collect {|g| g.id}, current_user.id] }    
+        :values     => [current_user.all_group_ids, current_user.id] }    
+#        :values     => [current_user.groups.collect {|g| g.id}, current_user.id] }    
     end
   end
   

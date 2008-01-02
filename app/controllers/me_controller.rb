@@ -31,7 +31,6 @@ class MeController < ApplicationController
     path = "/type/request/pending/not_created_by/#{current_user.id}"
     @request_count = count_pages(options, path)
     
-    options = options_for_inbox
     @unread_count = count_pages(options_for_inbox, 'unread')
     @pending_count = count_pages(options_for_inbox, 'pending')
     

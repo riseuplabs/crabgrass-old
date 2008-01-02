@@ -74,6 +74,12 @@ module UrlHelper
   end
   
   def link_to_group(arg, options={})
+    if arg.is_a? Integer
+      @group_cache ||= {}
+      @group_cache[arg] ||= Group.find(arg)
+      arg = @group_cache[arg]
+    end
+    
     display_name, path = name_and_path_for_group(arg,options)
     style = options[:style] || ''
     if options[:avatar]
