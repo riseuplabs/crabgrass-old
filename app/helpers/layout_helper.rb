@@ -78,8 +78,8 @@ module LayoutHelper
   # JAVASCRIPT
   
   def need_extra_javascript?
-    #@javascript_extra
-    true
+    @javascript_extra
+    #true
   end
 
   def get_unobtrusive_javascript

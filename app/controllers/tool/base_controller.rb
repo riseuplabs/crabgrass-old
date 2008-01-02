@@ -18,6 +18,8 @@ class Tool::BaseController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
+
+    @javascript_extra = true
   end  
     
   # the form to create this type of page
