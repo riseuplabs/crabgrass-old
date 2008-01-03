@@ -63,7 +63,7 @@
   </li>
   <% else -%>  
   <li>
-    <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || @request.request_uri }, { :onclick => "$('top-login-form').toggle(); Field.focus('login'); return false;" } %></span>
+    <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('top-login-form').toggle(); Field.focus('login'); return false;" } %></span>
   </li>
   <li>
     <span id="top-login-form" style="display: none;">
@@ -73,7 +73,7 @@
         <label for="password"><%=_("Password")%></label>
         <%= password_field_tag 'password' %>
         <%= submit_tag _('Log in') %>
-        <%= hidden_field_tag 'redirect', params[:redirect] || @request.request_uri %>
+        <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
       <% end -%>
     </span>
   </li>

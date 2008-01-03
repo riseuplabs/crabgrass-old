@@ -26,7 +26,7 @@ class Tool::EventController < Tool::BaseController
     @page.attributes = params[:page]
     @event.attributes = params[:event]
     if @page.save and @event.save
-      return redirect_to page_url(@page)
+      return redirect_to(page_url(@page))
     else
       message :object => @page
     end
@@ -53,7 +53,7 @@ class Tool::EventController < Tool::BaseController
       @event = ::Event.new params[:event]
       @page.data = @event
       if @page.save
-        return redirect_to page_url(@page)
+        return redirect_to(page_url(@page))
       else
         message :object => @page
       end

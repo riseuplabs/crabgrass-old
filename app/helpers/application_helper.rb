@@ -167,7 +167,7 @@ module ApplicationHelper
     elsif column == :owner
       return (page.group_name || page.created_by_login)
     elsif column == :owner_with_icon
-      return page_list_owner_with_icon page
+      return page_list_owner_with_icon(page)
     else
       return page.send(column)
     end

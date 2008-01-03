@@ -79,7 +79,7 @@ module AuthenticatedSystem
         accepts.html do
           message :error => 'You do not have sufficient permission to perform that action.' if logged_in?
           message :error => 'Please login to perform that action.' unless logged_in?
-          redirect_to :controller => '/account', :action => 'login', :redirect => @request.request_uri
+          redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
         end
         accepts.xml do
           headers["Status"]           = "Unauthorized"
