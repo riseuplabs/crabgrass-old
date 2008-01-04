@@ -153,15 +153,30 @@ class GroupsControllerTest < Test::Unit::TestCase
 #    post :invite, :user => 'blue'
   end
   
-  def test_archive
+  def test_archive_not_logged_in
+    get :archive, :id => groups(:private_group).name
+    assert_response :not_found, 'private group, not logged in, should not be found'
+    
+    get :archive, :id => groups(:public_group).name
+    assert_response :success, 'public group, not logged in, should be found'
+    assert assigns(:group).valid?
+  end
+  
+  def test_archive_logged_in
     login_as :blue
+
     get :archive, :id => groups(:rainbow).name
-
-    assert_response :success
+    assert_response :success, 'logged in, member of group should succeed'
     assert_template 'archive'
+    assert_not_nil assigns(:months)
+    assert assigns(:group).valid?
+    
+    get :archive, :id => groups(:public_group).name
+    assert_response :success, 'public group, logged in, should be found'
+    assert assigns(:group).valid?
 
-#    assert_not_nil assigns(:months)
-#    assert assigns(:group).valid?
+    get :archive, :id => groups(:private_group).name
+    assert_response :not_found, 'private group, logged in, should not be found'
   end
 
   def test_archive_when_not_logged_in

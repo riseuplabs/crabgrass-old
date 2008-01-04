@@ -51,7 +51,7 @@ class GroupsController < ApplicationController
      "JOIN user_participations ON pages.id = user_participations.id " +
      "WHERE group_participations.group_id = #{@group.id} "
     unless may_admin_group?
-      sql += " AND (pages.public = 1#{' OR user_participations.user_id = ' + current_user.id if logged_in?}) "
+      sql += " AND (pages.public = 1#{' OR user_participations.user_id = %d' % current_user.id if logged_in?}) "
     end
     sql += "GROUP BY year, month ORDER BY year, month"
     @months = Page.connection.select_all(sql)
