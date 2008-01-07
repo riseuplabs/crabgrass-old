@@ -72,7 +72,7 @@ class GroupsController < ApplicationController
         @parsed << [ 'year', @months.last['year'] ]
       end
 
-      @pages, @sections = Pages.find_and_paginate_by_path(@path, options_for_group(@group))
+      @pages, @sections = Page.find_and_paginate_by_path(@path, options_for_group(@group))
     end
   end
   
@@ -81,7 +81,7 @@ class GroupsController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to groups_url(:id => @group, :action => 'search') + path   
     else
-      @pages, @sections = Pages.find_and_paginate_by_path(params[:path], options_for_group(@group))
+      @pages, @sections = Page.find_and_paginate_by_path(params[:path], options_for_group(@group))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
       else
@@ -97,12 +97,12 @@ class GroupsController < ApplicationController
   def tags
     tags = params[:path] || []
     path = tags.collect{|a|['tag',a]}.flatten
-    @pages, @sections = Pages.find_and_paginate_by_path(path, options_for_group(@group))
+    @pages, @sections = Page.find_and_paginate_by_path(path, options_for_group(@group))
   end
 
   def tasks
     @stylesheet = 'tasks'
-    @pages, @sections = Pages.find_and_paginate_by_path('type/task/pending',@path, options_for_group(@group))
+    @pages, @sections = Page.find_and_paginate_by_path('type/task/pending',@path, options_for_group(@group))
     @task_lists = @pages.collect{|part|part.page.data}
   end
 
