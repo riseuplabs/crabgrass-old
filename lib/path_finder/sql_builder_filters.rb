@@ -58,7 +58,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
           date = TzTime.local(year, month, day)
        end
     end
-    @conditions << "pages.#{date_field} >= ?"
+    @conditions << "pages.#{@date_field} >= ?"
     @values << date.to_s(:db)
   end
 
@@ -69,7 +69,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
        year, month, day = date.split('-')
        date = TzTime.local(year, month, day)
      end
-     @conditions << "pages.#{date_field} <= ?"
+     @conditions << "pages.#{@date_field} <= ?"
      @values << date.to_s(:db)
   end
   
@@ -112,13 +112,13 @@ class PathFinder::SqlBuilder < PathFinder::Builder
   # this is a grossly inefficient method
   def filter_month(month)
     offset = TzTime.zone.utc_offset
-    @conditions << "MONTH(DATE_ADD(pages.`#{date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
+    @conditions << "MONTH(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     @values << month.to_i
   end
 
   def filter_year(year)
     offset = TzTime.zone.utc_offset
-    @conditions << "YEAR(DATE_ADD(pages.`#{date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
+    @conditions << "YEAR(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     @values << year.to_i
   end
   
