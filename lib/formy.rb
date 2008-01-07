@@ -1,25 +1,69 @@
-#####################################################
-#
-# FORMY -- a form creator for rails
-#
-# <%=
-# form :option => value do
-#   title "My Form"
-#   label "Mail Client"
-#   row :option => value do
-#     info "info about this row"
-#     label "row label"
-#     input text_field('object','method')
-#   end
-# end
-# %>
+=begin
 
-# a form consistants of a tree of elements. 
-# each element may contain other elements. 
-# in the close method of each element, the element
-# must render its contents to its local string buffer. 
-# the parent element then uses that buffer when doing
-# its own rendering.
+FORMY -- a form creator for rails
+
+<%=
+ form :option => value do
+   title "My Form"
+   label "Mail Client"
+   row :option => value do
+     info "info about this row"
+     label "row label"
+     input text_field('object','method')
+   end
+ end
+%>
+
+A form consistants of a tree of elements. 
+Each element may contain other elements. 
+In the close method of each element, the element
+must render its contents to its local string buffer. 
+the parent element then uses that buffer when doing
+its own rendering.
+
+Examples
+===================================================
+
+Javascript Tabs
+---------------
+
+the rules for javascript tabs:
+(1) the dom id passed to t.show_tab() must match the dom id 
+    of the div to be shown.
+(2) the div must have the class tab-content
+    in order for it to be hidden. (the class tap-area is
+    optional, it does the styling).
+(3) whichever tab you make selected by default should
+    also have its area visible by default, and the others hidden.
+
+<%= Formy.tabs do |f|
+  f.tab do |t|
+    t.label 'Tab One'
+    t.show_tab 'tab-one-div'
+    t.selected true
+  end
+  f.tab do |t|
+    t.label 'Tab Two'
+    t.show_tab 'tab-two-div'
+    t.selected false
+  end
+  f.tab do |t|
+    t.label 'Ajax Link'
+    t.click remote_function(:url=>{:action => 'ajaxy_thing'})
+    t.selected false
+  end
+end
+%>
+
+<div class='tab-content tab-area' id='tab-one-div'>
+  <%= render :partial => 'something/good' %>
+</div>
+
+<div class='tab-content tab-area' id='tab-two-div' style='display:none'>
+  <%= render :partial => 'something/better' %>
+</div>
+
+=end
 
 module Formy
   # <% _erbout << "foo" %>
@@ -204,16 +248,23 @@ module Formy
   end
   
   #### TAB CLASSES ##################################################
-    
-  class Tabset < Root    
+      
+  class Tabset < Root 
     class Tab < Element
-      element_attr :label, :link, :selected, :icon
+      element_attr :label, :link, :selected, :icon, :show_tab, :click
+      
       def close
-        javascript = "id='@id' href='#' onclick='showtab(event.target)'"
-        #hash = url_to_hash(@link)
         selected = 'selected' if "#{@selected}" == "true"
         style = @icon ? "background: url(/images/#{@icon}) no-repeat center left" : ''
-        puts "<li class='tab #{selected}'><a class='tab-link #{selected}' style='#{style}' href='#{@link}'>#{@label}</a></li>"
+        if @click
+          puts %Q[<li class="tab #{selected}"><a class="tab-link #{selected}" style="#{style}" href="javascript:void(0)" onclick="#{@click}">#{@label}</a></li>]
+        elsif @show_tab
+          click = %Q[show_tab(event.target, $('%s'))] % @show_tab
+          id = @show_tab + '_link'
+          puts %Q[<li class="tab %s"><a id="%s" class="tab-link %s" style="%s" href="javascript:void(0)" onclick="%s">%s</a></li>] % [selected, id, selected, style, click, @label]
+        else
+          puts "<li class='tab #{selected}'><a class='tab-link #{selected}' style='#{style}' href='#{@link}'>#{@label}</a></li>"
+        end
         super
       end
     end
