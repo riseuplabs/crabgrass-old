@@ -2,7 +2,7 @@ require 'path_finder/sql_builder'
 
 class PathFinder::SqlBuilder < PathFinder::Builder
 
-  private
+  protected
   
   def filter_unread
     @conditions << 'viewed = ?'
