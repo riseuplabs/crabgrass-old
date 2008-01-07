@@ -32,5 +32,5 @@ ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
 MAKE_ASSET_BUNDLES = true
 
 # set cookies to 'secure'; prevent some kinds of session-stealing attacks
-#Crabgrass::Config.https_only = true
+Crabgrass::Config.https_only = true
 
