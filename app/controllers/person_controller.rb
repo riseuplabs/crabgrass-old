@@ -22,18 +22,17 @@ class PersonController < ApplicationController
   end
 
   def search
-    options = options_for_page_participation_by(@user)
-    @pages, @sections = find_and_paginate_pages options, params[:path]  
+    options = options_for_participation_by(@user)
+    @pages, @sections = Page.find_and_paginate_by_path params[:path], options
     @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
   end
 
   def tasks
     @stylesheet = 'tasks'
-    options = options_for_page_participation_by(@user)
+    options = options_for_participation_by(@user)
     options[:conditions] += " AND user_participations.resolved = ?"
     options[:values] << false
-    options[:path] = ['type','task-list']
-    @pages = find_pages(options)
+    @pages = Page.find_by_path(['type','task-list'], options)
     @task_lists = @pages.collect{|p|p.data}
   end
     

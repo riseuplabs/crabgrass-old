@@ -72,7 +72,7 @@ class GroupsController < ApplicationController
         @parsed << [ 'year', @months.last['year'] ]
       end
 
-      @pages, @sections = fetch_pages_from_path(@path)
+      @pages, @sections = Pages.find_and_paginate_by_path(@path, options_for_group(@group))
     end
   end
   
@@ -81,7 +81,7 @@ class GroupsController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to groups_url(:id => @group, :action => 'search') + path   
     else
-      @pages, @sections = fetch_pages_from_path(params[:path])
+      @pages, @sections = Pages.find_and_paginate_by_path(params[:path], options_for_group(@group))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
       else
@@ -97,12 +97,12 @@ class GroupsController < ApplicationController
   def tags
     tags = params[:path] || []
     path = tags.collect{|a|['tag',a]}.flatten
-    @pages, @sections = fetch_pages_from_path(path)
+    @pages, @sections = Pages.find_and_paginate_by_path(path, options_for_group(@group))
   end
 
   def tasks
     @stylesheet = 'tasks'
-    @pages, @sections = fetch_pages_from_path(['type','task','pending'])
+    @pages, @sections = Pages.find_and_paginate_by_path('type/task/pending',@path, options_for_group(@group))
     @task_lists = @pages.collect{|part|part.page.data}
   end
 
@@ -228,32 +228,6 @@ class GroupsController < ApplicationController
     end
   end
   
-=begin
-  def authorized?
-    post_allowed_always = %w(create)
-    get_allowed_always  = post_allowed_always
-    post_allowed_if_visible = %w(archive search tags tasks create) + post_allowed_always
-    get_allowed_if_visible  = %w(show members) + post_allowed_if_visible
-
-    if request.get? and get_allowed_always.include? params[:action]
-      return true
-    elsif request.post? and post_allowed_always.include? params[:action]
-      return true
-    end
-  
-    if may_admin_group?
-      return true
-    elsif @group.publicly_visible_group or (@group.parent and @group.parent.publicly_visible_group)
-      if request.get? and get_allowed_if_visible.include? params[:action]
-        return true
-      elsif request.post? and post_allowed_if_visible.include? params[:action]
-        return true
-      end
-    end
-    render :action => 'not_found'
-    return false
-  end
-=end
   def authorized?
     non_members_post_allowed = %w(archive search tags tasks create)
     non_members_get_allowed = %w(show members) + non_members_post_allowed
@@ -265,21 +239,5 @@ class GroupsController < ApplicationController
       return(logged_in? and current_user.member_of? @group)
     end
   end    
-  
-  def fetch_pages_from_path(path)
-    options = {:class => GroupParticipation, :path => path}
-    if logged_in?
-      # the group's pages that we also have access to
-      # we might not be in a group, but still have access one of the group's
-      # pages via our membership in another group.
-      options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
-      options[:values]     = [@group.id, current_user.all_group_ids, current_user.id, true]
-    else
-      # the group's public pages
-      options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
-      options[:values]     = [@group.id, true]
-    end
-    find_and_paginate_pages options
-  end
   
 end

@@ -1,6 +1,6 @@
 <h4>New Pages</h4>
 <% 
-  pages = find_pages(options_for_group(@group),'/descending/created_at/limit/10')
+  pages = Page.find_by_path('/descending/created_at/limit/10',options_for_group(@group))
   columns = [:icon, :title, :created_by, :created_at, :contributors_count]
 -%>
 <%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>

@@ -1,6 +1,7 @@
-<% for i in 1..25 %>
+<% for i in 1..40 %>
 grouppage_<%=i%>:
-  page_id: <%= i %>
-  group_id: <%= 3 %>
+  page_id: <%= rand(99)+1 %>
+  group_id: <%= rand(3)+1 %>
   access: 1
 <% end %>
+

@@ -1,28 +1,12 @@
-<%#
-
-notes
------
-
-Example usage:
-
-  render :partial => "pages/list/row", :collection => pages, :locals {:columns => columns}
-
-The collection we are passed might be an array of Pages, or an array of UserParticipations or GroupParticipations. Why? Because some queries are much easier if Pages is not the main table.
-
-So, we need to display different information depending on whether
-we have user or group participation data (upart or gpart).
-
--%>
 <%
+=begin
+  Example usage:
+  render :partial => "pages/list/row", :collection => pages, :locals {:columns => columns}
+=end
   columns ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
-  page = upart = gpart = nil
-  if row.instance_of? UserParticipation
-    page = row.page; upart = row
-  elsif row.instance_of? GroupParticipation
-    page = row.page; gpart = row
-  else
-    page = row
-  end
+  page = row
+  upart = page.flag[:user_participation]
+  gpart = page.flag[:group_participation]
   color = cycle('shade-odd', 'shade-even')
 -%>
 <tr class="<%= color %> <%= 'unread' if upart and !upart.viewed? %>">

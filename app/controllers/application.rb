@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   include PageUrlHelper
   include UrlHelper
   include ContextHelper
-  include PageFinders
   include TimeHelper
+
+  include PathFinder::Options
       
   # don't allow passwords in the log file.
   filter_parameter_logging "password"

@@ -123,7 +123,7 @@ class DispatchController < ApplicationController
   end
   
   def find_page_by_id(id)
-    Page.find_by_id(id, :include => includes )
+    Page.find_by_id(id.to_i, :include => includes )
   end
   
   # almost every page is fetched using this function
@@ -144,12 +144,11 @@ class DispatchController < ApplicationController
   
   def find_pages_with_unknown_context(name)
     if logged_in?
-      options = options_for_pages_viewable_by( current_user )
+      options = options_for_me
     else
-      options = options_for_public_pages 
+      options = options_for_public_pages
     end
-    options[:path] = ["name",name]
-    find_pages options
+    Page.find_by_path ["name",name], options
   end
   
   def controller_for_list_of_pages(name)

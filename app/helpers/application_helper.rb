@@ -1,14 +1,15 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
     
-  include PageUrlHelper
+  include PageUrlHelper         # provides page_url() and page_xurl()
   include UrlHelper
-  include Formy
+  include Formy                 # helps create forms
   include LayoutHelper
   include LinkHelper
-  include PaginationHelper
+  include PaginationHelper      # creates windowed pagination links
   include TimeHelper
-  
+  include PathFinder::Options   # for Page.find_by_path options
+    
   # display flash messages with appropriate styling
   def display_messages()
     return "" unless flash[:notice] || flash[:error] || flash[:update]
@@ -149,7 +150,7 @@ module ApplicationHelper
         return( link_to 'discuss'.t, page_url(page.links.first) )
       end
     elsif column == :title
-      return page_list_title(page, column, participation)
+      return page_list_title(page, column, participation)    
     elsif column == :updated_by or column == :updated_by_login
       return( page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;')
     elsif column == :created_by or column == :created_by_login

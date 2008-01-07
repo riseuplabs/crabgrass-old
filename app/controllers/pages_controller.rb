@@ -42,12 +42,11 @@ class PagesController < ApplicationController
   def search
     unless @pages
       if logged_in?
-        options = options_for_pages_viewable_by(current_user)
+        options = options_for_me
       else
         options = options_for_public_pages
       end
-      options.merge!( {:class => Page, :path => params[:path]} )
-      @pages, @page_sections = find_and_paginate_pages(options)
+      @pages, @page_sections = Page.find_and_paginate_by_path(params[:path], options)
     end
   end
 
@@ -56,7 +55,6 @@ class PagesController < ApplicationController
   # Tool::BaseController (or overridden by the particular tool). 
   def create
   end
- 
      
   def tag
     return unless request.xhr?

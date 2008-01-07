@@ -1,7 +1,5 @@
 module GroupsHelper
 
-  include PageFinders
-
   def may_admin_group?
     logged_in? and current_user.member_of? @group
   end

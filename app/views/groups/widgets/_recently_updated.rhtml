@@ -1,6 +1,6 @@
 <h4>Recently Updated</h4>
 <%
-  pages = find_pages(options_for_group(@group),'/changed/descending/updated_at/limit/10')
+  pages = Page.find_by_path('/changed/descending/updated_at/limit/10',options_for_group(@group))
   columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
 -%>
 <%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>

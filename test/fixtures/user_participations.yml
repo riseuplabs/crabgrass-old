@@ -8,11 +8,10 @@ c:
   page_id: 3
   user_id: 5
 
-# 20 pages
-<% for i in 1..25 %>
-  <% people = (1..15).to_a.sort{rand(2)} %>
-  # each page has 5 people
-  <% for j in 1..5 %>
+<% for i in 1..100 %>
+  <% people = (1..13).to_a.sort{rand(2)} %>
+  # each page has 1 to 5 people
+  <% for j in 1..(rand(5)+1) %>
 userpage_<%=i%>_<%=j%>:
   page_id: <%= i %>
   user_id: <%= people.pop %>

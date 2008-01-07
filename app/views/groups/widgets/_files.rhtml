@@ -1,6 +1,6 @@
 <h4>Files</h4>
 <%
-  pages = find_pages(options_for_group(@group),'/type/asset')
+  pages = Page.find_by_path('/type/asset',options_for_group(@group))
   columns = [:icon, :title, :created_by, :created_at]
 %>
 <%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>

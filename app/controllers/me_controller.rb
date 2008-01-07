@@ -13,8 +13,7 @@ class MeController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to me_url(:action => 'search') + path   
     else
-      options = options_for_pages_viewable_by(current_user)
-      @pages, @sections = find_and_paginate_pages(options, params[:path])
+      @pages, @sections = Page.find_and_paginate_by_path(params[:path], options_for_me)
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :group, :created_by, :created_at, :contributors_count]
       else
@@ -31,28 +30,22 @@ class MeController < ApplicationController
 
   def counts
     return false unless request.xhr?
-
-    options = options_for_pages_viewable_by(current_user, :flow => [:membership,:contacts])
+    options = options_for_me(:flow => [:membership,:contacts])
     path = "/type/request/pending/not_created_by/#{current_user.id}"
-    @request_count = count_pages(options, path)
-    
-    @unread_count = count_pages(options_for_inbox, 'unread')
-    @pending_count = count_pages(options_for_inbox, 'pending')
-    
+    @request_count = Page.count_by_path(path, options)
+    @unread_count  = Page.count_by_path('unread',  options_for_inbox)
+    @pending_count = Page.count_by_path('pending', options_for_inbox)
     render :layout => false
   end
 
   def page_list
     return false unless request.xhr?
-    
-    @pages = find_pages(options_for_me,'descending/updated_at/ascending/group_name/limit/40')  
-    
+    @pages = Page.find_by_path('descending/updated_at/ascending/group_name/limit/40', options_for_me)
     render :layout => false
   end
   
   def files
-    options = options_for_pages_viewable_by(current_user)
-    @pages = find_pages(options, 'type/asset')
+    @pages = Page.find_by_path('type/asset', options_for_me)
     @assets = @pages.collect {|page| page.data }
   end
 
@@ -61,8 +54,7 @@ class MeController < ApplicationController
     filter = params[:id] || 'my-pending'
     if filter =~ /^all-(.*)/
       completed = $1 == 'completed'
-      options = options_for_pages_viewable_by(current_user)
-      @pages = find_pages(options, 'type/task')
+      @pages = Page.find_by_path('type/task', options_for_me)
       @task_lists = @pages.collect{|page|page.data}
       @show_user = 'all'
       @show_status = completed ? 'completed' : 'pending'
@@ -70,7 +62,7 @@ class MeController < ApplicationController
       # show tasks from a particular group
       groupid = $1
       options = options_for_pages_viewable_by(current_user)
-      @pages = find_pages(options, "type/task/group/#{groupid}")
+      @pages = Page.find_by_path("type/task/group/#{groupid}", options_for_me)
       @task_lists = @pages.collect{|page|page.data}
       @show_user = 'all'
       @show_status = 'pending'

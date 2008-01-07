@@ -41,14 +41,14 @@ end
 
 %>
 
-<% for i in 1..20 %>
+<% for i in 1..100 %>
 page<%=i%>:
   id: <%=i%>
   title: "<%= garble(5..50) %>"
   summary: "<%= garble(40..300) %>"
-<% updated = rand(32); created = updated + rand(32) %>
-  updated_at: "<%= updated.days.ago.to_s(:db) %>"
-  created_at: "<%= created.days.ago.to_s(:db) %>"
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 <% if rand(3) == 0 %>
   starts_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
 <% end %>
@@ -64,17 +64,18 @@ page<%=i%>:
   group_id: <%= 3 %>
   group_name: rainbow
   type: Tool::Discussion
+  public: <%= rand(4) == 0 %>
 <% end %>
 
 tasklist1:
-  id: 21
+  id: 200
   title: a task list
   type: Tool::TaskList
   data_type: Task::TaskList
   data_id: 1
   created_by_id: 1
 tasklist2:
-  id: 22
+  id: 201
   title: another task list
   type: Tool::TaskList
   data_type: Task::TaskList
@@ -82,7 +83,7 @@ tasklist2:
   created_by_id: 1
   created_by_id: 4
 event1:
-  id: 23
+  id: 202
   title : an event
   starts_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
@@ -96,7 +97,7 @@ event1:
   updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
 event2:
-  id: 24
+  id: 203
   title : other event
   starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
@@ -110,7 +111,7 @@ event2:
   updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
 event3:
-  id: 25
+  id: 204
   title : one other event
   starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
@@ -124,7 +125,13 @@ event3:
   updated_at: "<%= updated.days.ago.to_s(:db) %>"
   created_at: "<%= created.days.ago.to_s(:db) %>"
 hello:
-  id: 26
+  id: 205
   title: hello
   type: Tool::Message
+flow_test:
+  id: 206
+  title: flow test
+  type: Tool::Discussion
+  flow: 1
+  public: 1
 

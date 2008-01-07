@@ -1,7 +1,5 @@
 module MeHelper
 
-  include PageFinders
-
   def task_link(text, id, default=false)
     if default and params[:id].empty?
       selected = 'selected'

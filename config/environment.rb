@@ -24,17 +24,17 @@ AVAILABLE_PAGE_CLASSES = %w[
 
 # levels of page access
 ACCESS = {
- :admin => '1',
- :change => '2',
- :edit => '2', 
- :view => '3',
- :read => '3'
+ :admin => 1,
+ :change => 2,
+ :edit => 2, 
+ :view => 3,
+ :read => 3
 }.freeze
 
 # types of page flows
 FLOW = {
- :membership => '1',
- :contacts => '2',
+ :membership => 1,
+ :contacts => 2,
 }.freeze
 
 # do this early because environments/*.rb need it
@@ -78,6 +78,7 @@ require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
 require "#{RAILS_ROOT}/lib/extends_like_edge.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
 require "#{RAILS_ROOT}/lib/misc.rb"
+require "#{RAILS_ROOT}/lib/path_finder.rb"
 
 #### TOOLS #########################
 

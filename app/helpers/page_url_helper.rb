@@ -24,7 +24,7 @@ module PageUrlHelper
     elsif page.group_name
       path = page_path(page.group_name, page.name_url, options)
     elsif page.created_by_id
-      path = page_path(page.created_by.login, page.friendly_url, options)
+      path = page_path(page.created_by_login, page.friendly_url, options)
     else
       path = page_path('page', page.friendly_url, options)
     end
