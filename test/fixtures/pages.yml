@@ -94,8 +94,8 @@ event1:
   updated_by_id: 9
   group_id: <%= 3 %>
   group_name: rainbow
-  updated_at: "<%= updated.days.ago.to_s(:db) %>"
-  created_at: "<%= created.days.ago.to_s(:db) %>"
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 event2:
   id: 203
   title : other event
@@ -108,8 +108,8 @@ event2:
   updated_by_id:  9
   group_id: <%= 3 %>
   group_name: rainbow
-  updated_at: "<%= updated.days.ago.to_s(:db) %>"
-  created_at: "<%= created.days.ago.to_s(:db) %>"
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 event3:
   id: 204
   title : one other event
@@ -122,8 +122,8 @@ event3:
   updated_by_id:  4
   group_id: <%= 3 %>
   group_name: rainbow
-  updated_at: "<%= updated.days.ago.to_s(:db) %>"
-  created_at: "<%= created.days.ago.to_s(:db) %>"
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 hello:
   id: 205
   title: hello

@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 require 'tool/asset_controller'
-require 'mocha'
 
 # Re-raise errors caught by the controller.
 class Tool::AssetController; def rescue_action(e) raise e end; end
@@ -23,6 +22,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy_version
+    User.current = nil
     asset = Asset.create :uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')
     page = create_page :data => asset
     page.data.uploaded_data = fixture_file_upload(File.join('files','photos.png'), 'image/png')
@@ -30,7 +30,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     assert File.exists?(page.data.full_filename)
     assert File.exists?(version_filename = page.data.find_version(1).full_filename)
     
-    @controller.stubs(:login_required).returns(true)
+    @controller.stubs(:login_or_public_page_required).returns(true)
     post :destroy_version, :controller => "tool/asset", :page_id => page.id, :id => 1
     assert_redirected_to @controller.page_url(page)
     assert File.exists?(page.data.full_filename)
