@@ -1,0 +1,1 @@
+page.replace_html 'wiki-area', :partial => 'wiki/show'

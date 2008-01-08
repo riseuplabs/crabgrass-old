@@ -20,21 +20,20 @@
       <div><%= link_to_user current_user %></div>  
     </div> 
   </td>
-  <td class="post-body" id="reply">
+  <td class="post-body" id="reply"><div class='spaced-out'>
   <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
   <% url = url_for(:controller => '/posts', :action => 'create') %>
   <% form_for :post, :url => url do |f| -%>
-    <%= f.text_area :body, :rows => 8, :cols => 60, :class => 'post_body' %>
+    <div class='textarea-wrapper'><%= f.text_area :body, :rows => 8, :cols => 60, :class => 'post_body' %></div>
     <%= hidden_field_tag('page_id', @page.id) %>
     <%= hidden_field_tag('paging', @page.discussion.last_page) %>
     <%= hidden_field_tag('from', params[:from] || 'groups' ) %>
     <%= hidden_field_tag('from_id', params[:from_id] || params[:group_name] ) %>
-    <br/>
 
     <div style="float: left"><%= submit_tag "Post Message", :name => 'post_message' %></div>
     <div style="text-align: right"><a  href="javascript:quickRedReference();">formatting reference</a></div>
   <% end -%>
-  </td>
+  </div></td>
 </tr>
 
 <tr class="post-spacer-bottom <%=color%>">

@@ -3,9 +3,8 @@
   :complete => hide_spinner('sending_notify'),
   :html => {:id => 'page_notify_form'}) do -%>
 
-
-<b><%= 'Send this page to'.t %>:</b><br/>
-<%= text_area_tag 'to', '', :rows => 3, :id => 'to' %><br/>
+<b><%= 'Send this page to'.t %>:</b>
+<div class='textarea-wrapper'><%= text_area_tag 'to', '', :rows => 3, :id => 'to' %></div>
 
 <%= select_tag('people_drop',
       options_for_select( [['people...','']] + @page.users.to_select(:cut_name, :name)),
@@ -15,8 +14,8 @@
       :onchange => '$("to").value += $("group_drop").value + "\n"') %>
 
 <div style='padding:4px 0'>
-<b><%= 'Optional message'.t %>:</b><br/>
-<%= text_area_tag 'message', '', :id => 'message', :rows => 6 %><br/>
+<b><%= 'Optional message'.t %>:</b>
+<div class='textarea-wrapper'><%= text_area_tag 'message', '', :id => 'message', :rows => 6 %></div>
 </div>
 
 <%= button_to_function 'Cancel', show_notify_click %>

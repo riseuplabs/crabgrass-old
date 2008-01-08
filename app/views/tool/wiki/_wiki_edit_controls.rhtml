@@ -1,4 +1,4 @@
-<div class='wikiedit'><span>
+<div class='edit-tab'><span>
   <% if @wiki.editable_by? current_user -%>
     <%= link_to '<u>e</u>dit', page_url(@page,:action=>'edit'), :accesskey => 'e' %>
   <% else -%>

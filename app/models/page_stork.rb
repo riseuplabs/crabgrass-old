@@ -121,7 +121,7 @@ class PageStork
   end
     
   def self.wiki(options)
-    user = options.delete(:user).cast! User
+    user = (options.delete(:user).cast! User if options[:user])
     group = options.delete(:group).cast! Group
     name = options.delete(:name).cast! String
     page = Tool::TextDoc.new do |p|

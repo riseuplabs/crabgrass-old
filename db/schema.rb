@@ -118,24 +118,18 @@ ActiveRecord::Schema.define(:version => 1199056420) do
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
 
   create_table "groups", :force => true do |t|
-    t.column "name",                           :string
-    t.column "full_name",                      :string
-    t.column "summary",                        :string
-    t.column "url",                            :string
-    t.column "type",                           :string
-    t.column "parent_id",                      :integer
-    t.column "admin_group_id",                 :integer
-    t.column "council",                        :boolean
-    t.column "created_at",                     :datetime
-    t.column "updated_at",                     :datetime
-    t.column "avatar_id",                      :integer
-    t.column "private_home_id",                :integer
-    t.column "public_home_id",                 :integer
-    t.column "style",                          :string
-    t.column "accept_new_membership_requests", :boolean
-    t.column "publicly_visible_group",         :boolean
-    t.column "publicly_visible_committees",    :boolean
-    t.column "publicly_visible_members",       :boolean
+    t.column "name",           :string
+    t.column "full_name",      :string
+    t.column "summary",        :string
+    t.column "url",            :string
+    t.column "type",           :string
+    t.column "parent_id",      :integer
+    t.column "admin_group_id", :integer
+    t.column "council",        :boolean
+    t.column "created_at",     :datetime
+    t.column "updated_at",     :datetime
+    t.column "avatar_id",      :integer
+    t.column "style",          :string
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -286,30 +280,44 @@ ActiveRecord::Schema.define(:version => 1199056420) do
   add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
 
   create_table "profiles", :force => true do |t|
-    t.column "entity_id",    :integer
-    t.column "entity_type",  :string
-    t.column "language",     :string,   :limit => 5
-    t.column "all",          :boolean
-    t.column "stranger",     :boolean
-    t.column "peer",         :boolean
-    t.column "friend",       :boolean
-    t.column "foe",          :boolean
-    t.column "name_prefix",  :string
-    t.column "first_name",   :string
-    t.column "middle_name",  :string
-    t.column "last_name",    :string
-    t.column "name_suffix",  :string
-    t.column "nickname",     :string
-    t.column "role",         :string
-    t.column "organization", :string
-    t.column "created_at",   :datetime
-    t.column "updated_at",   :datetime
-    t.column "birthday",     :string,   :limit => 8
-    t.column "layout_type",  :string
-    t.column "layout_data",  :text
+    t.column "entity_id",              :integer
+    t.column "entity_type",            :string
+    t.column "language",               :string,   :limit => 5
+    t.column "stranger",               :boolean
+    t.column "peer",                   :boolean
+    t.column "friend",                 :boolean
+    t.column "foe",                    :boolean
+    t.column "name_prefix",            :string
+    t.column "first_name",             :string
+    t.column "middle_name",            :string
+    t.column "last_name",              :string
+    t.column "name_suffix",            :string
+    t.column "nickname",               :string
+    t.column "role",                   :string
+    t.column "organization",           :string
+    t.column "created_at",             :datetime
+    t.column "updated_at",             :datetime
+    t.column "birthday",               :string,   :limit => 8
+    t.column "fof",                    :boolean
+    t.column "summary",                :string
+    t.column "wiki_id",                :integer
+    t.column "photo_id",               :integer
+    t.column "layout_id",              :integer
+    t.column "may_see",                :boolean
+    t.column "may_see_committees",     :boolean
+    t.column "may_see_networks",       :boolean
+    t.column "may_see_members",        :boolean
+    t.column "may_request_membership", :boolean
+    t.column "membership_policy",      :integer
+    t.column "may_see_groups",         :boolean
+    t.column "may_see_contacts",       :boolean
+    t.column "may_request_contact",    :boolean
+    t.column "may_pester",             :boolean
+    t.column "may_burden",             :boolean
+    t.column "may_spy",                :boolean
   end
 
-  add_index "profiles", ["entity_id", "entity_type", "language", "all", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+  add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
 
   create_table "ratings", :force => true do |t|
     t.column "rating",        :integer,                :default => 0

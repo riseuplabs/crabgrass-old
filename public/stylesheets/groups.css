@@ -44,3 +44,39 @@ div.group-entry img {
   margin-left: 10px;
   margin-top: -2px;
 }
+
+/** group activity list **/
+table.activity {
+  border-collapse: collapse;
+}
+table.activity td.top {
+  padding-top: 7px;
+  padding-left: 3px;
+}
+table.activity td.bottom {
+  padding-bottom: 7px;
+  padding-left: 3px;
+  font-size: 0.8em;
+}
+table.activity tbody.odd {
+  background-color: #f2f2f2;
+}
+table.activity tbody.even {
+  background-color: white;
+}
+table.activity th {
+  padding-top: 10px; 
+  text-align: left;
+}
+
+/** group landing layout **/
+
+div.landing-main-column {
+  margin-right: 22em;
+}
+
+div.landing-side-column {
+  width: 20em;
+  float: right;
+}
+

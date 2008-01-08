@@ -1,59 +1,84 @@
 <%
 
-@today = []
-@yesterday = []
-@week = []
-@later = []
- 
-page = @pages.shift
+=begin
+
+This partial takes an array of pages and displays them grouped by
+when they were updated. For example, all the pages updated yesterday
+are grouped together.
+
+Local variables that can be passed in:
+
+  * :pages -- an array of pages to be shown. Must be storted by updated_at
+  * :style -- an symbol that tells this partial how to look.
+
+Available styles:
+
+  * :normal -- the default
+  * :brief_no_group -- a shorter display, with no group info.
+  
+=end
+
+today = []
+yesterday = []
+week = []
+later = []
+pages ||= @pages
+style ||= :normal
+
+pages = array_of_pages(pages)
+page = pages.shift
+
 while page and after_local_day_start?(page.updated_at)
-  @today << page
-  page = @pages.shift
+  today << page
+  page = pages.shift
 end
 
 while page and after_local_yesterday_start?(page.updated_at)
-  @yesterday << page
-  page = @pages.shift
+  yesterday << page
+  page = pages.shift
 end
 
 while page and after_local_week_start?(page.updated_at)
-  @week << page
-  page = @pages.shift
+  week << page
+  page = pages.shift
 end
 
 while page
-  @later << page
-  page = @pages.shift
+  later << page
+  page = pages.shift
 end
 
 -%>
-
 <table class='activity'>
-<% if @today.any? -%>
-  <tr><th colspan='30'><h4 class='landing'>Today</h4></td></tr>
-  <% @today.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+<% if today.any? -%>
+  <% reset_cycle 'activity_entry_cycle' -%>
+  <tr><th colspan='30'><h4 class='landing'>Today</h4></th></tr>
+  <% today.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
 <% end -%>
 
-<% if @yesterday.any? -%>
-  <tr><th colspan='30'><h4 class='landing'>Yesterday</h4></td></tr>
-  <% @yesterday.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+<% if yesterday.any? -%>
+  <% reset_cycle 'activity_entry_cycle' -%>
+  <tr><th colspan='30'><h4 class='landing'>Yesterday</h4></th></tr>
+  <% yesterday.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
 <% end -%>
 
-<% if @week.any? -%>
-  <tr><th colspan='30'><h4 class='landing'>This Past Week</h4></td></tr>
-  <% @week.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+<% if week.any? -%>
+  <% reset_cycle 'activity_entry_cycle' -%>
+  <tr><th colspan='30'><h4 class='landing'>This Past Week</h4></th></tr>
+  <% week.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
 <% end -%>
 
-<% if @later.any? -%>
-  <tr><th colspan='30'><h4 class='landing'>Later</h4></td></tr>
-  <% @later.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page} %>
+<% if later.any? -%>
+  <% reset_cycle 'activity_entry_cycle' -%>
+  <tr><th colspan='30'><h4 class='landing'>Later</h4></th></tr>
+  <% later.each do |page| -%>
+    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
 <% end -%>
 

@@ -11,18 +11,19 @@ function quickRedReference() {
   );
 }
 
-function showtab(tab) {
-  tabs = document.getElementsByClassName("tab-link");
+function show_tab(tab_link, tab_content) {
+  tabs = [document.getElementsByClassName("tab"),document.getElementsByClassName("tab-link")].flatten();
   for(i = 0; i < tabs.length; i++) {
-    Element.removeClassName(tabs[i].id, 'selected');
+    Element.removeClassName(tabs[i], 'selected');
   }
   tabs = document.getElementsByClassName("tab-content");
   for(i = 0; i < tabs.length; i++) {
-    Element.hide(tabs[i].id);
+    Element.hide(tabs[i]);
   }
-  Element.addClassName(tab.id, 'selected');
-  Element.show(tab.id+"-content");
-  tab.blur();
+  Element.addClassName(tab_link, 'selected');
+  Element.addClassName(tab_link.ancestors().first(), 'selected');
+  Element.show(tab_content);
+  tab_link.blur();
   return false;
 }
 

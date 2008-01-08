@@ -5,7 +5,7 @@ require 'groups_controller'
 class GroupsController; def rescue_action(e) raise e end; end
 
 class GroupsControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships
+  fixtures :groups, :users, :memberships, :profiles
 
   include UrlHelper
 
@@ -49,9 +49,8 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_template 'show'
     
     get :show, :id => groups(:private_group).name
-    assert_response :not_found
-    assert_template 'not_found'
-#    assert_template 'dispatch/not_found'
+    assert_response :success
+    assert_template 'show_nothing'
   end
 
   def test_get_create
@@ -152,16 +151,7 @@ class GroupsControllerTest < Test::Unit::TestCase
 # i'm not sure how to write tests  --af
 #    post :invite, :user => 'blue'
   end
-  
-  def test_archive_not_logged_in
-    get :archive, :id => groups(:private_group).name
-    assert_response :not_found, 'private group, not logged in, should not be found'
     
-    get :archive, :id => groups(:public_group).name
-    assert_response :success, 'public group, not logged in, should be found'
-    assert assigns(:group).valid?
-  end
-  
   def test_archive_logged_in
     login_as :blue
 
@@ -176,17 +166,16 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert assigns(:group).valid?
 
     get :archive, :id => groups(:private_group).name
-    assert_response :not_found, 'private group, logged in, should not be found'
+    assert_template 'show_nothing', 'private group, logged in, should not be found'
   end
 
-  def test_archive_when_not_logged_in
+  def test_archive_not_logged_in
     get :archive, :id => groups(:public_group).name    
     assert_response :success
     assert_template 'archive'
     
     get :archive, :id => groups(:private_group).name
-    assert_response :not_found
-    assert_template 'not_found'
+    assert_template 'show_nothing'
   end
 
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
@@ -216,7 +205,7 @@ class GroupsControllerTest < Test::Unit::TestCase
     get :show
     assert_response :success
     assert_template 'show'
-    assert_select "h4", "New Pages"
+    assert_select "h4", "Today"
     assert_select "a[href=?]", @controller.page_url(committee_page)
 
     @controller.instance_variable_set(:@group, g)

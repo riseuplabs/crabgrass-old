@@ -1,37 +1,23 @@
-<% if logged_in? and (current_user.member_of?(@group) or @group.publicly_visible_group) -%>
-
 <%
-  @title = render :partial => 'groups/widgets/infopanel'
-%>
+ # set @title variable used by the layout
+ @title = render :partial => 'groups/widgets/infopanel'
+-%>
 
 <div class='landing'>
 
-<div class='group_widget section'>
-  <%= render :partial => 'groups/widgets/recently_created' %>
+<div class='landing-side-column'>
+  <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages, :style => :brief_no_group} %>
 </div>
 
-<div class='group_widget section'>
-  <%= render :partial => 'groups/widgets/recently_updated' %>
-</div>
-
-<div class='group_widget section'>
-  <%= render :partial => 'groups/widgets/files' %>
-</div>
-
-<div class='group_widget section'>
-  <%= render :partial => 'groups/widgets/homepage' %>
-</div>
-
-</div>
-
-<% elsif @group.publicly_visible_group -%>
-
-<div class='group_widget section'>
-  <%= render :partial => 'groups/widgets/homepage' %>
-</div>
-
+<div class='landing-main-column'>
+<% if @access == :public -%>
+  <div class='wiki'>
+    <%= @profile.wiki.body_html %>
+  </div>
 <% else -%>
-
-This group does not have a public profile.
-
+  <%= render :partial => 'wiki/show' %>
 <% end -%>
+</div>
+
+</div>
+

@@ -1,7 +1,6 @@
 <% @entity ||= @group || @user -%>
-<% @public ||= @entity.profile_with_access(:all) || @entity.profiles.create(:all => true) -%>
-<% @private ||= @entity.profile_with_access(:friend) || @entity.profiles.create(:friend => true) -%>
-
+<% @public ||= @entity.profiles.public -%>
+<% @private ||= @entity.profiles.private -%>
 <%= Formy.tabs('class' => 'left') do |f|
   f.tab do |t|
     t.label 'Settings'.t

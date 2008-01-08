@@ -9,7 +9,6 @@ class GroupsController < ApplicationController
   prepend_before_filter :find_group, :except => ['list','create','index']
   
   before_filter :login_required,
-#    :only => [:create, :edit, :edit_public_home, :edit_private_home, :destroy, :update]
     :except => [:list, :index, :show, :search, :archive, :tags]
     
   verify :method => :post,
@@ -31,7 +30,17 @@ class GroupsController < ApplicationController
   end
 
   def show
-#    redirect_to :action => 'not_found' unless (@group.parent and @group.parent.publicly_visible_group) or @group.publicly_visible_group or may_admin_group?
+    if logged_in? and current_user.member_of?(@group)
+      @access = :private
+    elsif @group.publicly_visible_group
+      @access = :public
+    else
+      return render(:template => 'groups/show_nothing')
+    end
+    
+    @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
+    @profile = @group.profiles.send(@access)
+    @profile.create_wiki unless @profile.wiki
   end
 
   def visualize
@@ -150,33 +159,7 @@ class GroupsController < ApplicationController
       end
     end
   end
-  
-  # login required
-  def edit_public_home
-    unless @group.public_home
-      page = Page.make :wiki, :group => @group, :user => current_user, :name => 'public home', :body => 'new public home'
-      page.save!
-      @group.public_home_id = page.data_id
-      @group.save!
-    else
-      page = @group.public_home.page
-    end
-    redirect_to page_url(page, :action => 'edit')
-  end
-  
-  # login required
-  def edit_private_home
-    unless @group.private_home
-      page = Page.make :wiki, :group => @group, :user => current_user, :name => 'private home', :body => 'new private home'
-      page.save!
-      @group.private_home_id = page.data_id
-      @group.save!
-    else
-      page = @group.private_home.page
-    end
-    redirect_to page_url(page, :action => 'edit')
-  end
-  
+    
   # login required
   # post required
   def update
@@ -223,7 +206,7 @@ class GroupsController < ApplicationController
       @group_type = @group.class.to_s.downcase
       return true
     else
-      render :template => 'dispatch/not_found', :status => :not_found
+      render :template => 'groups/show_nothing'
       return false
     end
   end

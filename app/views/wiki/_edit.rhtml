@@ -1,0 +1,29 @@
+<div id='wiki-error-area'></div>
+
+<%= Formy.tabs do |f|
+  f.tab do |t|
+    t.label 'Private Homepage'.t
+    t.show_tab area_id(:private)
+    t.selected true
+  end
+  f.tab do |t|
+    t.label 'Public Homepage'.t
+    t.show_tab area_id(:public)
+    t.selected false
+  end
+  f.tab do |t|
+    t.label 'Close Editor'.t + " &raquo; " + spinner('wiki-close')
+    t.click remote_function(:url=>wiki_action('done'), :loading=>show_spinner('wiki-close'))
+    t.selected false
+  end
+end
+%>
+<div class='tab-content tab-area' id='<%=area_id(:private)%>'>
+  <%= render :partial => 'wiki/edit_area', :locals => {:wiki => @private, :access => :private} %>
+</div>
+
+<div class='tab-content tab-area' id='<%=area_id(:public)%>' style='display:none'>
+  <%= render :partial => 'wiki/edit_area', :locals => {:wiki => @public, :access => :public} %>
+</div>
+
+

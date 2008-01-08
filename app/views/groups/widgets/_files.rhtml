@@ -1,8 +1,0 @@
-<h4>Files</h4>
-<%
-  pages = Page.find_by_path('/type/asset',options_for_group(@group))
-  columns = [:icon, :title, :created_by, :created_at]
-%>
-<%= render :partial => 'pages/list/table', :locals => {:pages => pages, :columns => columns} %>
-
-<%= link_to 'more &raquo;', groups_url(:id => @group, :action => 'search') + "/type/asset" %>

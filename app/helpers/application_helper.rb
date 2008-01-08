@@ -218,5 +218,21 @@ module ApplicationHelper
       list_heading column.to_s.t, column.to_s
     end    
   end
+
+  #
+  # Often when you run a page search, you will get an array of UserParticipation
+  # or GroupParticipation objects. 
+  #
+  # This method will convert the array to Pages if they are not.
+  #
+  def array_of_pages(pages)
+    if pages
+      if pages.first.is_a? Page
+        return pages
+      else
+        return pages.collect{|p|p.page}
+      end
+    end
+  end
   
 end

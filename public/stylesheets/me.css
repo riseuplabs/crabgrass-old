@@ -9,7 +9,7 @@ table.activity tr.odd {
   background-color: #F2F2F2;
 }
 table.activity tr.even {
- background-color: white;
+  background-color: white;
 }
 table.activity th {
   padding-top: 20px; 
