@@ -1,0 +1,13 @@
+profile_for_public_group:
+  id: 1
+  entity_type: "Group"
+  entity_id: 1000
+  may_see: true
+  stranger: true
+profile_for_private_group:
+  id: 2
+  entity_type: "Group"
+  entity_id: 2000
+  may_see: false
+  stranger: true
+

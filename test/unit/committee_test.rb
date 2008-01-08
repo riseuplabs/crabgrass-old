@@ -112,7 +112,9 @@ class CommitteeTest < Test::Unit::TestCase
   end
 
   def test_can_pester_public_committee
-    g = Group.create :name => 'riseup', :publicly_visible_group => true, :publicly_visible_committees => true
+    g = Group.create :name => 'riseup'
+    g.publicly_visible_group = true
+    g.publicly_visible_committees = true
     c = Committee.create :name => 'outreach'
     g.committees << c
     

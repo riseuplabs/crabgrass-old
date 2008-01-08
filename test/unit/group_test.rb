@@ -7,10 +7,10 @@ class GroupTest < Test::Unit::TestCase
     g = Group.create :name => 'fruits'
     u = users(:blue)
     assert_equal 0, g.users.size, 'there should be no users'
-	assert_raises(Exception, '<< should raise exception not allowed') do
+    assert_raises(Exception, '<< should raise exception not allowed') do
       g.users << u
-	end
-	g.memberships.create :user => u
+    end
+    g.memberships.create :user => u
     g.memberships.create :user_id => users(:red).id, :page_id => 1
 
     assert u.member_of?(g), 'user should be member of group'
@@ -49,7 +49,8 @@ class GroupTest < Test::Unit::TestCase
   end
 
   def test_cant_pester_private_group
-    g = Group.create :name => 'riseup', :publicly_visible_group => false    
+    g = Group.create :name => 'riseup'
+    g.publicly_visible_group = false
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -57,7 +58,8 @@ class GroupTest < Test::Unit::TestCase
   end
 
   def test_can_pester_public_group
-    g = Group.create :name => 'riseup', :publicly_visible_group => true
+    g = Group.create :name => 'riseup'
+    g.publicly_visible_group = true
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'

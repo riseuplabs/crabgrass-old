@@ -117,7 +117,14 @@ class SocialUser < AuthenticatedUser
       group_ids.include?(group.id)
     end
   end
-  
+
+  # eventually, we will have group admins.
+  # for now, we can just make this return true
+  # for all members
+  def may_admin?(group)
+    member_of?(group)
+  end
+    
   def check_duplicate_memberships(membership)
     raise AssociationError.new('you cannot have duplicate membership') if self.group_ids.include?(membership.group_id)
   end
@@ -194,14 +201,19 @@ class SocialUser < AuthenticatedUser
   end
   
   def relationship_to(user)
+    relationships_to(user).first
+  end
+  def relationships_to(user)
     return :stranger unless user
-    (@relationships ||= {})[user.login] ||= if friend_of?(user) || user == self
-      :friend
-    elsif peer_of?(user)
-      :peer
-    else
-      :stranger
-    end
+    (@relationships ||= {})[user.login] ||= get_relationships_to(user)
+  end
+  def get_relationships_to(user)
+    ret = []
+    ret << :friend   if friend_of?(user)
+    ret << :peer     if peer_of?(user)
+#   ret << :fof      if fof_of?(user)
+    ret << :stranger if ret.empty?
+    ret
   end
   
   ######################################################################

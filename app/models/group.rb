@@ -61,16 +61,7 @@ class Group < ActiveRecord::Base
   end
 
   belongs_to :avatar
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile'
-
-  def profile_visible_by(user)
-    # TODO: filter on language too
-    # TODO: combine profiles if multiple matches
-    profiles.find(:first, :conditions => [in_user_terms(relationship_to(user)) + ' = ?',true])
-  end
-
-  belongs_to :public_home, :class_name => 'Wiki', :foreign_key => 'public_home_id'
-  belongs_to :private_home, :class_name => 'Wiki', :foreign_key => 'private_home_id'
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile', :extend => Profile::Methods
   
   has_many :tags, :finder_sql => %q[
     SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
@@ -122,20 +113,29 @@ class Group < ActiveRecord::Base
   end
 
   def relationship_to(user)
-    if user == self || user.member_of?(self)
-      :member
-    else
-      :stranger
-    end
+    relationships_to(user).first
+  end
+  def relationships_to(user)
+    return [:stranger] unless user
+    (@relationships ||= {})[user.login] ||= get_relationships_to(user)
+  end
+  def get_relationships_to(user)
+    ret = []
+#   ret << :admin    if ...
+    ret << :member   if user.member_of?(self)
+#   ret << :peer     if ...
+    ret << :stranger if ret.empty?
+    ret
   end
   
-  def in_user_terms(relationship)
-    case relationship
-      when :member; 'contact'
-      when :ally; 'peer'
-      when :stranger; 'stranger'
-    end  
-  end
+# maps a user <-> group relationship to user <-> language
+#  def in_user_terms(relationship)
+#    case relationship
+#      when :member;   'friend'
+#      when :ally;     'peer'
+#      else; relationship.to_s
+#    end  
+#  end
   
   def may_be_pestered_by?(user)
     return true if user.member_of?(self)
@@ -228,7 +228,40 @@ class Group < ActiveRecord::Base
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
 #  has_and_belongs_to_many :categories
-   
+  
+  ######################################################
+  ## temp stuff for profile transition
+  ## should be removed eventually
+    
+  def publicly_visible_group
+    profiles.public.may_see?
+  end
+  def publicly_visible_group=(val)
+    profiles.public.update_attribute :may_see, val
+  end
+
+  def publicly_visible_committees
+    profiles.public.may_see_committees?
+  end
+  def publicly_visible_committees=(val)
+    profiles.public.update_attribute :may_see_committees, val
+  end
+
+  def publicly_visible_members
+    profiles.public.may_see_members?
+  end
+  def publicly_visible_members=(val)
+    profiles.public.update_attribute :may_see_members, val
+  end
+
+  def accept_new_membership_requests
+    profiles.public.may_request_membership?
+  end
+  def accept_new_membership_requests=(val)
+    profiles.public.update_attribute :may_request_membership, val
+  end
+
+
   protected
   
   after_save :update_name
