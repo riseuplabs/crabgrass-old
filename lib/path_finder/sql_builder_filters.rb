@@ -152,8 +152,8 @@ class PathFinder::SqlBuilder < PathFinder::Builder
   
   def filter_tag(tag_name)
     if tag = Tag.find_by_name(tag_name)
-      tag_count += 1
-      @conditions << "taggings#{tag_count}.tag_id = ?"
+      @tag_count += 1
+      @conditions << "taggings#{@tag_count}.tag_id = ?"
       @values << tag.id
     else
       @conditions << "FALSE"
