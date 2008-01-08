@@ -37,8 +37,9 @@ class Tool::RequestController < Tool::BaseController
       me_context
       add_context 'requests', url_for(:controller => 'requests')
     elsif @page.flow == FLOW[:membership]
-      group_context @page.group
-      add_context 'membership', url_for(:controller => 'membership', :id => @page.group)
+      @group = @page.group
+      group_context 'small'
+      add_context 'membership', url_for(:controller => 'membership', :id => @page.group, :action => 'list')
     else
       super
     end
