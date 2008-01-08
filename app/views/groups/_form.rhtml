@@ -8,20 +8,20 @@
 </div>
 
 <p>
-  <label for="group_name"><b>Name</b><br>This name how you will refer to this group in links and URLs. It must only contain alphanumeric characters.</label><br/>
+  <label for="group_full_name">
+    <b>Full name</b><br/>
+    A descriptive name used for display.
+  </label><br/>
+  <%= text_field 'group', 'full_name'  %>
+</p>
+
+<p>
+  <label for="group_name"><b>Link Name</b><br>This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.</label><br/>
   <% if @parent -%>
     <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
   <% else -%>
     <%= text_field 'group', 'name' %>
   <% end -%>
-</p>
-
-<p>
-  <label for="group_full_name">
-    <b>Full name</b><br/>
-    A descriptive name used for display
-  </label><br/>
-  <%= text_field 'group', 'full_name'  %>
 </p>
 
 <p>
@@ -41,13 +41,13 @@ Group Privacy Settings
 </div>
 </div>
 
-<p><%= check_box :group, :publicly_visible_group %>
+<p><%= check_box :group, :publicly_visible_group, :onclick => "show_or_hide_vis_opts();" %>
 <label for="group_visible"><b>Make Group Publicly Visible</b></label>
 <br>
 Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
 </p>
 
-<div style='margin-left: 2em'>
+<div id='visible_group_options' style='margin-left: 2em'>
 
   <p><%= check_box :group, :publicly_visible_committees %>
   <label for="group_visible"><b>Make Committees Publicly Visible</b></label>
@@ -92,4 +92,15 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
 
 
 <!--[eoform:group]-->
+
+<% # this is probably not the rails way to do javascript.  someone teach me.  --af
+   # i put this at the end of the file, so that group_publicly_visible_group exists
+   # in time for the function to show/hide it correctly -%>
+<script type="text/javascript">
+function show_or_hide_vis_opts() {
+  if ($('group_publicly_visible_group').checked) { $('visible_group_options').show(); }
+  else { $('visible_group_options').hide(); }
+}
+show_or_hide_vis_opts();
+</script>
 
