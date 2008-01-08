@@ -43,6 +43,25 @@ form.link input[type=submit], input[type=submit].link {
   display: inline;
 }
 
+/** general form styling **/
+
+textarea, input[type=text], input[type=password], input[type=file], select {
+  border: 1px solid #666;
+  background: #fff url(/images/shadows/small-top-a.png) 0 -1px repeat-x;
+  padding: 4px;
+}
+select {padding: 1px;}
+textarea:focus, input[type=text]:focus, input[type=password]:focus {
+  background: #ffe url(/images/shadows/small-top-a.png) 0 -1px repeat-x;
+  border: 1px solid #000;
+}
+div.textarea-wrapper {
+  padding-right: 10px;
+}
+.spaced-out textarea, .spaced-out input, .spaced-out select {
+  margin: 4px 0;
+}
+
 /** common reusable elements **/
 
 a.dotted {
@@ -84,6 +103,12 @@ div.right-big {
 a.selected {font-weight: bold;}
 
 /** horizontal Formy tabs **/
+
+div.tab-area {
+  border: 1px solid #999;
+  border-top: 0;
+  padding: 10px;
+}
 
 ul.tabset {
   list-style-type: none;
@@ -176,5 +201,23 @@ tr.page-list-heading th.selected a {
   color: white;
 }
 
+/** little side tabs that are for editing something (like on wikis) **/
 
+div.edit-tab {
+  float: left;
+  margin: 10px;
+  margin-left: -20px;
+}
+div.edit-tab span {
+  background: #C2D4FF;
+  padding: 4px 16px;
+  border: 1px solid #ADBDE3;
+  border-left: 0;
+}
+div.edit-tab a {
+  color: #669;
+  font-weight: bold;
+  text-decoration: none;
+}
+div.edit-tab a:hover {text-decoration: underline;}
 
