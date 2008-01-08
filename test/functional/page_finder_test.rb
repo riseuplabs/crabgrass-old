@@ -150,6 +150,29 @@ class PageFinderTest < Test::Unit::TestCase
     assert_equal flow_page.id, pages.first.id, 'find with flow condition should return :flow_test'
   end
 
+  def test_tagging
+    login(:blue)
+    user = users(:blue)
+    
+    name = 'test page'
+    page = Tool::TextDoc.new do |p|
+      p.title = name.titleize
+      p.name = name.nameize
+      p.created_by = user
+    end
+    page.add(user)
+    page.add(groups(:rainbow))
+    page.tag_with("pig fish elephant")
+    page.save!
+    
+    pages = Page.find_by_path('/tag/fish/', @controller.options_for_group(groups(:rainbow)))   
+    assert_equal page.id, pages.first.id, 'find by tag should return correct page'
+    
+    pages = Page.find_by_path('/tag/fish/', @controller.options_for_me)
+    assert_equal page.id, pages.first.id, 'find by tag should return correct page, for me'
+  end
+
+
   protected
   
   def login(user = :blue)

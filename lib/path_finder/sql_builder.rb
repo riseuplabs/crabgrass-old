@@ -94,7 +94,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     end
     
     # helpful for debuggin tests:
-    #puts sql.join("\n")
+    # puts sql.join("\n")
     
     sql.join("\n")
   end
@@ -136,6 +136,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
       unions = @union.collect do |union|
         uwhere = sql_for_where(union[:conditions],union[:values])
         ujoins = sql_for_joins(uwhere)
+        ujoins = [ujoins,joins].join(' ') if joins
         uwhere = [uwhere,where].join(' AND ') if where
         { :joins => ujoins, :where => uwhere }
       end   
