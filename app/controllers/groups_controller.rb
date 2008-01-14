@@ -111,8 +111,8 @@ class GroupsController < ApplicationController
 
   def tasks
     @stylesheet = 'tasks'
-    @pages, @sections = Page.find_and_paginate_by_path('type/task/pending',@path, options_for_group(@group))
-    @task_lists = @pages.collect{|part|part.page.data}
+    @pages, @sections = Page.find_and_paginate_by_path('type/task/pending', options_for_group(@group))
+    @task_lists = @pages.collect{|page|page.data}
   end
 
   # login required
