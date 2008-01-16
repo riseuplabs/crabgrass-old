@@ -56,4 +56,3 @@ class Profile::Location < ActiveRecord::Base
   end
 
 end
-

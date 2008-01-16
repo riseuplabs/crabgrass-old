@@ -15,10 +15,8 @@ Order of profile presidence (user sees the first one that matches):
 
 =end
 
-module Profile
+class Profile::Profile < ActiveRecord::Base
 
-class Profile < ActiveRecord::Base
- 
   ### relationship to user or group #########################################
   
   belongs_to :entity, :polymorphic => true
@@ -97,5 +95,3 @@ class Profile < ActiveRecord::Base
   end
     
 end # class
-
-end # module

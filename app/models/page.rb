@@ -241,13 +241,6 @@ class Page < ActiveRecord::Base
     TOOLS.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
   end 
 
-  before_create :single_table_inheritance_hack
-  def single_table_inheritance_hack
-    self.type = self.class.to_s
-    # ^^^^^ to work around bug in rails with namespaced
-    # models. see http://dev.rubyonrails.org/ticket/7630
-  end
-
   #######################################################################
   ## DENORMALIZATION
 

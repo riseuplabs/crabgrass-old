@@ -21,4 +21,3 @@ class Profile::Website < ActiveRecord::Base
   end
   
 end
-

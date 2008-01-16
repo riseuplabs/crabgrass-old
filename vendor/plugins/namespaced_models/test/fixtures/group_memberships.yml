@@ -1,0 +1,12 @@
+jonathan_plonkers:
+  id: 1
+  person_id: 1
+  group_id: 1
+  type: Group::Membership
+  
+david_plonkers_special:
+  id: 2
+  person_id: 2
+  group_id: 1
+  type: Group::SpecialMembership
+  

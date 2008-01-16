@@ -1,0 +1,8 @@
+NamespacedModels
+================
+
+Fix use of nested models using STI and polymorphism by storing the fully qualified class name in the database.
+
+This plugin is loosely based on work done by loobmedia. See http://dev.rubyonrails.org/ticket/6792 for more details.
+
+Any problems, questions, comments etc... feel free to send an email to me at jonathan.viney@gmail.com

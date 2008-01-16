@@ -17,4 +17,3 @@ class Profile::EmailAddress < ActiveRecord::Base
   end
   
 end
-
