@@ -53,10 +53,22 @@ table.activity td.top {
   padding-top: 7px;
   padding-left: 3px;
 }
+table.activity td.top a{
+  text-decoration: none;
+}
+table.activity td.top a:hover {
+  text-decoration: underline;
+}
 table.activity td.bottom {
   padding-bottom: 7px;
   padding-left: 3px;
   font-size: 0.8em;
+}
+table.activity td.bottom a{
+  text-decoration: none;
+}
+table.activity td.bottom a:hover {
+  text-decoration: underline;
 }
 table.activity tbody.odd {
   background-color: #f2f2f2;

@@ -3,7 +3,10 @@ table.activity {
 }
 table.activity td a, table.activity td {
   padding: 5px;
-  
+  text-decoration: none;
+}
+table.activity td a:hover {
+  text-decoration: underline;
 }
 table.activity tr.odd {
   background-color: #F2F2F2;

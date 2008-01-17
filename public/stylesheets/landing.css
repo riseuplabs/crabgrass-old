@@ -29,6 +29,20 @@ div.landing h4 {
   border-bottom: 1px solid #ccc;
 }
 
+div.landing h5 {
+  font-family: arial;
+  font-size: 1.8em;
+  font-weight: normal;
+  color: #333;
+  margin: 0 0 3px 0;
+  border-top: 1px solid #ccc;     
+  background-color: #e6f2ff;
+  padding-top: 4px;
+  padding-right: 0px;
+  padding-bottom: 4px;
+}
+
+
 div#info_panel {
 }
 div#info_panel td {

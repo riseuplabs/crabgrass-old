@@ -6,13 +6,15 @@
 <div class='landing'>
 
 <div class='landing-side-column'>
+  <h5>Group Pages</h5>
   <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages, :style => :brief_no_group} %>
 </div>
 
 <div class='landing-main-column'>
-<% if @access == :public -%>
+  <h5>Group Wiki</h5>
+  <% if @access == :public -%>
   <div class='wiki'>
-    <%= @profile.wiki.body_html %>
+  <%= @profile.wiki.body_html %>
   </div>
 <% else -%>
   <%= render :partial => 'wiki/show' %>
