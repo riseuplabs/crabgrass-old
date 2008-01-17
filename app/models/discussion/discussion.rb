@@ -5,7 +5,7 @@ class Discussion < ActiveRecord::Base
   belongs_to :page
     
   # relationship with posts   
-  has_many :posts, :order => 'posts.created_at', :dependent => :destroy do
+  has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => '::Post' do
     def last
       @last_post ||= find(:first, :order => 'posts.created_at desc')
     end
