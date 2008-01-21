@@ -1,0 +1,81 @@
+<hr/>
+<h1><%= @header %></h1>
+
+<table>
+<tr>
+  <td>
+    Pages created
+  </td>
+  <td>
+    <%= @pages_created %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    Users who created pages
+  </td>
+  <td>
+    <%= @page_creators %>
+  </td>
+</tr>
+<tr>
+  <td>
+    Pages updated
+  </td>
+  <td>
+    <%= @pages_updated %>
+  </td>
+</tr>
+<tr>
+  <td>
+    Users who updated pages
+  </td>
+  <td>
+    <%= @page_updaters %>
+  </td>
+</tr>
+<tr>
+  <td>
+    Wikis updated
+  </td>
+  <td>
+    <%= @wikis_updated %>
+  </td>
+</tr>
+<tr>
+  <td>
+    Users created
+  </td>
+  <td>
+    <%= @users_created %>
+  </td>
+</tr>
+<tr>
+  <td>
+    Users logged in
+  </td>
+  <td>
+    <%= @users_logged_in %>
+    (<%= (@users_logged_in.to_i * 100 ) / @total_users.to_i %>% of all users)
+  </td>
+</tr>
+<tr>
+  <td>
+    Groups created
+  </td>
+  <td>
+    <%= @groups_created %>
+  </td>
+</tr>
+<tr>
+  <td>
+    Group membership size (number of groups)
+  </td>
+  <td>
+    <%= @membership_counts.collect{|i|i.join(' (')+')'}.join('<br>') %>
+  </td>
+</tr>
+<table>
+
+<hr/>
