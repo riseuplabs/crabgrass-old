@@ -35,6 +35,7 @@ class Tool::TasklistControllerTest < Test::Unit::TestCase
     assert_equal tasks[4].position, 1
     assert_equal tasks[5].position, 2
     assert_equal tasks[6].position, 3
+    assert_not_equal tasks[2].task_list_id, tasks[4].task_list_id
 
     xhr :post, :sort, :controller => "tool/tasklist", :page_id => 21, :id => 0, :sort_list_21_pending => ["1","3"]
     @controller = Tool::TasklistController.new
@@ -47,6 +48,6 @@ class Tool::TasklistControllerTest < Test::Unit::TestCase
     assert_equal tasks[4].position, 1
     assert_equal tasks[5].position, 2
     assert_equal tasks[6].position, 4
-    assert_equal tasks[2].task_list_id, 2
+    assert_equal tasks[2].task_list_id, tasks[4].task_list_id
   end
 end
