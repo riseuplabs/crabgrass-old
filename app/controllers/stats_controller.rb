@@ -17,10 +17,10 @@ class StatsController < ApplicationController
   protected
   
   def stats_since(time)
-    @pages_created = Page.count 'id', :conditions => ['created_at > ?', time]
-    @page_creators = Page.count_by_sql ["SELECT count(DISTINCT created_by_id) FROM pages WHERE created_at > ?", time]
-    @pages_updated = Page.count 'id', :conditions => ['updated_at > ?', time]
-    @page_updaters = Page.count_by_sql ["SELECT count(DISTINCT updated_by_id) FROM pages WHERE updated_at > ?", time]
+    @pages_created = Page.count 'id', :conditions => ['created_at > ? AND flow IS NULL', time]
+    @page_creators = Page.count_by_sql ["SELECT count(DISTINCT created_by_id) FROM pages WHERE created_at > ? AND FLOW IS NULL", time]
+    @pages_updated = Page.count 'id', :conditions => ['updated_at > ? AND flow IS NULL', time]
+    @page_updaters = Page.count_by_sql ["SELECT count(DISTINCT updated_by_id) FROM pages WHERE updated_at > ? AND FLOW IS NULL", time]
     @wikis_updated = Wiki.count 'id', :conditions => ['updated_at > ?', time]
 
     @users_created = User.count 'id', :conditions => ['created_at > ?', time]
