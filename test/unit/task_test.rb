@@ -23,5 +23,12 @@ class TaskTest < Test::Unit::TestCase
     assert check_associations(Task::Task)
     assert check_associations(Task::TasksUser)
   end
+
+  def test_include_associations
+    assert_nothing_raised do
+      Task::TaskList.find(:first, :include => [:tasks, :completed, :pending])
+      Task::Task.find(:first, :include => :task_list)
+    end
+  end
   
 end

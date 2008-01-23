@@ -7,6 +7,10 @@ class AvatarsController < ApplicationController
   caches_page :show
  
   def create 
+    unless params[:image] && params[:image][:data]
+      message(:error => "no image uploaded") && render(:nothing => true, :layout => true)
+      return
+    end
     group = Group.find params[:group_id] if params[:group_id]
     user  = User.find params[:user_id] if params[:user_id]
     thing = group || user

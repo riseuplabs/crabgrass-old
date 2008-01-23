@@ -63,18 +63,18 @@ class ProfileController < ApplicationController
     return true unless params[:id]
     @profile = Profile::Profile.find params[:id]
     @entity = @profile.entity
-    if @entity.is_a?(User) and current_user == @entity
+    if @entity.is_a?(User)
       @user = @entity
     elsif @entity.is_a?(Group)
       @group = @entity
     else
-      raise Exception.new('could not determine entity type')
+      raise Exception.new("could not determine entity type for profile: #{@profile.inspect}")
     end
   end
   
   # always have access to self
   def authorized?
-    if @user
+    if @user and current_user == @user
       return true
     elsif @group
       return true if action_name == 'show'

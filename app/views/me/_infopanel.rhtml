@@ -29,7 +29,8 @@
   <%= image_tag 'emblems/wand.png' %> <%= pending_request_link %><br/>
   <%= image_tag 'emblems/glasses.png' %> <%= unread_inbox_link %><br/>
   <%= image_tag 'emblems/pending.png' %> <%= pending_inbox_link %>
-<%= javascript_tag remote_function(:update => "counts", :url => { :action => :counts }) %>
+  <%= javascript_tag remote_function(:update => "counts", :url => { :action => :counts }) %>
+</td>
 </tr>
 
 </table>

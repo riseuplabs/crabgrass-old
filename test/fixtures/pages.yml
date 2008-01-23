@@ -56,11 +56,11 @@ page<%=i%>:
   resolved: false
 <% end %>
 <%# user = User.find(rand(11)+3) %>
-  created_by_login: <%= 'unknown' %>
-  created_by_id: <%= rand(11)+3 %>
+  created_by_login: quentin
+  created_by_id: 1
 <%# user = User.find(rand(11)+3) %>  
-  updated_by_login: <%= 'unknown' %>
-  updated_by_id: <%= rand(11)+3 %>
+  updated_by_login: aaron
+  updated_by_id: 2
   group_id: <%= 3 %>
   group_name: rainbow
   type: Tool::Discussion

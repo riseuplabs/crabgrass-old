@@ -15,8 +15,11 @@ class MeControllerTest < Test::Unit::TestCase
   end
 
   # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_tasks
+    login_as(:quentin)
+    assert_nothing_raised do
+      get :tasks
+    end
   end
   
 end

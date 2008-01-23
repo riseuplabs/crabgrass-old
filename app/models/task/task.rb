@@ -1,6 +1,6 @@
 class Task::Task < ActiveRecord::Base
   
-  belongs_to :task_list 
+  belongs_to :task_list, :class_name => 'Task::TaskList', :foreign_key => 'task_list_id'
   has_and_belongs_to_many :users, :foreign_key => 'task_id'
   acts_as_list :scope => :task_list
   format_attribute :description
