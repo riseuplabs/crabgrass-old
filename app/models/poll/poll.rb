@@ -2,7 +2,7 @@ class Poll::Poll < ActiveRecord::Base
   has_many :pages, :as => :data
   def page; pages.first; end
     
-  has_many :possibles, :dependent => :destroy
+  has_many :possibles, :dependent => :destroy, :class_name => 'Poll::Possible'
   def possible
     possibles.first || possibles.build
   end
