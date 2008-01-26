@@ -40,7 +40,8 @@ class GroupsController < ApplicationController
     
     @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
     @profile = @group.profiles.send(@access)
-    @profile.create_wiki unless @profile.wiki
+    
+    @wiki = private_or_public_wiki()
   end
 
   def visualize
@@ -186,6 +187,18 @@ class GroupsController < ApplicationController
   end  
      
   protected
+  
+  # returns a private wiki if it exists, a public one otherwise
+  def private_or_public_wiki
+    if @access == :private and (@profile.wiki.nil? or @profile.wiki.body == '' or @profile.wiki.body.nil?)
+      public_profile = @group.profiles.public
+      public_profile.create_wiki unless public_profile.wiki
+      public_profile.wiki
+    else
+      @profile.create_wiki unless @profile.wiki
+      @profile.wiki
+    end
+  end
   
   def choose_layout
      return 'application' if ['list','index', 'create'].include? params[:action]

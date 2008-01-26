@@ -45,6 +45,12 @@ class WikiController < ApplicationController
   def done
     @private.unlock
     @public.unlock
+    
+    if @private.body.nil? or @private.body == ''
+      @wiki = @public
+    else
+      @wiki = @private
+    end
   end
 
   protected

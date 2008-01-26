@@ -1,15 +1,15 @@
+<% select_private = !(@private.body.nil? or @private.body == '') -%>
 <div id='wiki-error-area'></div>
-
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label 'Private Homepage'.t
     t.show_tab area_id(:private)
-    t.selected true
+    t.selected select_private
   end
   f.tab do |t|
     t.label 'Public Homepage'.t
     t.show_tab area_id(:public)
-    t.selected false
+    t.selected !select_private
   end
   f.tab do |t|
     t.label 'Close Editor'.t + " &raquo; " + spinner('wiki-close')
@@ -18,11 +18,11 @@
   end
 end
 %>
-<div class='tab-content tab-area' id='<%=area_id(:private)%>'>
+<div class='tab-content tab-area' id='<%=area_id(:private)%>' style='<%= select_private ? '' : 'display:none' %>'>
   <%= render :partial => 'wiki/edit_area', :locals => {:wiki => @private, :access => :private} %>
 </div>
 
-<div class='tab-content tab-area' id='<%=area_id(:public)%>' style='display:none'>
+<div class='tab-content tab-area' id='<%=area_id(:public)%>' style='<%= select_private ? 'display:none' : ''%>'>
   <%= render :partial => 'wiki/edit_area', :locals => {:wiki => @public, :access => :public} %>
 </div>
 
