@@ -87,7 +87,15 @@ module UrlHelper
   def link_to_group(arg, options={})
     if arg.is_a? Integer
       @group_cache ||= {}
-      @group_cache[arg] ||= Group.find(arg)
+      # hacky fix for error when a page persists after it's group is deleted --af
+      if not @group_cache[arg]
+        if Group.exists?(arg)
+          Group.find(arg)
+        else
+          return ""
+        end
+      end
+      # end hacky fix
       arg = @group_cache[arg]
     end
     
