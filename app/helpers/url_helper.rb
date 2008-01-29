@@ -90,7 +90,7 @@ module UrlHelper
       # hacky fix for error when a page persists after it's group is deleted --af
       if not @group_cache[arg]
         if Group.exists?(arg)
-          Group.find(arg)
+          @group_cache[arg] = Group.find(arg)
         else
           return ""
         end
