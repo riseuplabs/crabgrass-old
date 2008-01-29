@@ -25,7 +25,7 @@
 
 <p><%= submit_tag 'Sign up' %></p>
 
-<%= hidden_field_tag 'redirect', params[:redirect] %>
+<%= hidden_field_tag 'redirect', params[:redirect] if params[:redirect] %>
 
 <% end -%>
 </div>
