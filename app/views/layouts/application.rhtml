@@ -50,18 +50,30 @@
   <%= yield %>
 </div>
 
-<div id="footer">
+<div id="footer" align="center">
+
+<table>
+ <tr>
+  <td valign="bottom">
   <div style="text-align: center; margin:0 auto;">
-    <a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a> |
-    <a href='https://we.riseup.net/crabgrass-dev/bugs'>bugs</a> |
-    <a href='https://we.riseup.net/crabgrass-dev/feature-requests'>feature requests</a> |
-    <a href='https://we.riseup.net/crabgrass/table-of-contents'>help</a>
+    <a href='https://we.riseup.net/crabgrass-dev/get-involved'>Get involved</a> &nbsp;
+    <a href='https://we.riseup.net/crabgrass-dev/bugs'>Bugs</a> &nbsp;
+    <a href='https://we.riseup.net/crabgrass-dev/feature-requests'>Feature requests</a> &nbsp;
+    <a href='https://we.riseup.net/crabgrass/table-of-contents'>Help</a>
   </div>
-  <div style="text-align: center; font-size: 9px; padding-bottom: 3em;">
-  <% if SVN_REVISION -%>
-    <a href="http://code.autistici.org/trac/crabgrass/log/trunk">crabgrass r<%= SVN_REVISION %></a>
-  <% end -%>
-  </div>
+  </td>
+  <td><div style='margin: 0 auto; width: 73px; padding-left: 1em;'>
+	<div id="a.imglink" style='text-align: right; font-size: .7em; border; margin-bottom: -18px; margin-right: 3px;'>
+	<% if SVN_REVISION -%>
+    <a class="noline" href="http://code.autistici.org/trac/crabgrass/log/trunk"> r<%= SVN_REVISION %>
+  	<% end -%>
+	</div>
+	<img src='/images/crabgrass-xsmall.png' align='center'/></a>
+	</div>
+  </td>
+ </tr>
+</table>
+  
 </div><!-- end footer -->
 
 </div><!-- end container -->
