@@ -112,7 +112,7 @@ div#page-holder div.header {
   padding: 3px;
 }
 div#page-list {
-  margin: 0 0 1em 13em;
+  margin: 0 0 1em 11em;
 }
 table.page-list a {text-decoration: none;}
 table.page-list a:hover {text-decoration: underline;}
@@ -134,9 +134,11 @@ span.newpage {
 
 div#folders {
   float: left;
-  width: 12em;
+  width: 8em;
   margin-left: 4px;
-  xbackground: #eee;
+  background: #E6F2FF;
+  outline: 1px solid #cccccc;
+  padding: 2px 4px 8px 10px;
 }
 div#folders ul {
   padding: 0; margin: 0 0 0 1em;
@@ -149,10 +151,16 @@ div#folders li {
 div#folders li.first {
   xborder-top: 1px solid #ccc
 }
-div#folders li a, div#folders li span {
+div#folders li a {
   text-decoration: none;
   display: block;
-  padding: 2px;
+  padding: 1px;
+  margin: 0;
+}
+div#folders li span {
+  text-decoration: none;
+  display: block;
+  padding: 8px 2px 2px 2px;
   margin: 0;
 }
 div#folders li a.selected {
@@ -165,8 +173,11 @@ div#folders li a:hover {
   outline: 1px solid #cca;
 }
 div#folders li img {
-  vertical-align: top;
-  border: 0;
+  vertical-align: bottom;
+  outline: 0px;
+  width: 17px; height: 17px;
+  padding: 0px 4px 0px 0px;
+  border: 0px;
 }
 
 /** tool formatting **/

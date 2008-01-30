@@ -5,24 +5,25 @@
   users_text ||= "contacts"
 %>
 <ul style="margin: 0">
+  <li><span>View</span></li>
   <li class='first'><%= folder_link 'all', 'all', 'earth.png' %></li>
-  <li><%= folder_link 'vital', 'vital', 'heart.png' %></li>
+<!--<li><%= folder_link 'vital', 'vital', 'heart.png' %></li> -->
   <li><%= folder_link 'unread'.t,   'unread',  'glasses.png' %></li>
   <li><%= folder_link 'pending'.t,  'pending', 'pending.png' %></li>
 <!-- <li><%= folder_link 'upcoming'.t, 'upcoming', 'time.png' %></li> -->
   <li><%= folder_link 'starred'.t, 'starred', 'star.png' %></li>
-  <li><span><%=folder_icon('types.png')%> types</span></li>
-  <li><ul>
+  <li><span>Page Types</span></li>
+  <li>
      <li><%= folder_link 'discussion','type/discussion', 'pages/discussion.png' %></li>
-     <li><%= folder_link 'message','type/message', 'pages/message.png' %></li>
-     <li><%= folder_link 'wiki','type/wiki', 'pages/wiki.png' %></li>
-     <li><%= folder_link 'poll','type/poll', 'pages/rate-many.png' %></li>
-     <li><%= folder_link 'vote','type/vote', 'pages/ballot.png' %></li>
-     <li><%= folder_link 'task list','type/task', 'pages/task-list.png' %></li>
      <li><%= folder_link 'event','type/event', 'pages/date.png' %></li>
-  </ul></li>
+     <li><%= folder_link 'message','type/message', 'pages/message.png' %></li>
+     <li><%= folder_link 'poll','type/poll', 'pages/rate-many.png' %></li>
+     <li><%= folder_link 'task list','type/task', 'pages/task-list.png' %></li>
+	 <li><%= folder_link 'vote','type/vote', 'pages/ballot.png' %></li>
+     <li><%= folder_link 'wiki','type/wiki', 'pages/wiki.png' %></li>
+  </li>
 <!--
-  <li><span><%=folder_icon('calendar.png')%> dates</span></li>
+  <li><span ><%=folder_icon('calendar.png')%> dates</span></li>
   <li><ul>
      <li><%= folder_link 'this week',   'ago/0/7',   'date.png' %></li>
      <li><%= folder_link 'this month',  'ago/0/32',  'date.png' %></li>
