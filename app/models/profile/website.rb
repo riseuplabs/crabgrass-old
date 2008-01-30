@@ -6,7 +6,7 @@ class Profile::Website < ActiveRecord::Base
   validates_presence_of :site_title
   validates_presence_of :site_url
 
-  belongs_to :profile
+  belongs_to :profile, :class_name => 'Profile::Profile'
 
   before_save :transform_url
   after_save {|record| record.profile.save if record.profile}

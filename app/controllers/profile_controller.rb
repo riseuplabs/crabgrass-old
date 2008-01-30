@@ -1,6 +1,6 @@
 class ProfileController < ApplicationController
 
-  #before_filter :login_required, :except => ['show', 'add_location', ... etc]
+  before_filter :login_required
   prepend_before_filter :fetch_profile
   layout :choose_layout
   stylesheet 'profile'
@@ -74,6 +74,7 @@ class ProfileController < ApplicationController
   
   # always have access to self
   def authorized?
+    #XXX: @user is always set by context, i think this logic is flawed
     if @user and current_user == @user
       return true
     elsif @group

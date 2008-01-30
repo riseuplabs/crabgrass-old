@@ -3,7 +3,7 @@
 =end
 
 class Profile::Location < ActiveRecord::Base
-  belongs_to  :profile
+  belongs_to  :profile, :class_name => 'Profile::Profile'
 
   before_save :set_geocode
   after_save {|record| record.profile.save if record.profile}
