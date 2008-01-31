@@ -124,10 +124,6 @@ module ApplicationHelper
    ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
   end
  
-  def logged_in?
-    controller.logged_in?
-  end
-  
   def once?(key)
     @called_before ||= {}
     return false if @called_before[key]
