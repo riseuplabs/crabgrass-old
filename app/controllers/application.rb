@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging "password"
   
   before_filter :pre_clean
+  around_filter :rescue_authentication_errors
   before_filter :breadcrumbs, :context
   around_filter :set_timezone
   session :session_secure => true if Crabgrass::Config.https_only
@@ -94,5 +95,11 @@ class ApplicationController < ActionController::Base
     TzTime.zone = logged_in? && current_user.time_zone ? TimeZone[current_user.time_zone] : TimeZone[DEFAULT_TZ]
     yield
     TzTime.reset!
+  end
+
+  def rescue_authentication_errors
+    yield
+  rescue PermissionDenied
+    access_denied
   end
 end
