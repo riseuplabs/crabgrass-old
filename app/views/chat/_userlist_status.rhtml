@@ -1,0 +1,14 @@
+<% for c_user in @channel.channels_users %>
+  <% if c_user.typing? %>
+    $('typing-<%= c_user.user_id%>').show();
+  <% else %>
+    $('typing-<%= c_user.user_id%>').hide();
+  <% end %>
+  
+  <% if @channel.active_channel_users.include? c_user %>
+    $('away-<%= c_user.user_id%>').hide();
+  <% else %>
+    $('away-<%= c_user.user_id%>').show();
+  <% end %>
+<% end %>
+

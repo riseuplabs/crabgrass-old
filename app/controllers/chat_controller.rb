@@ -7,6 +7,7 @@
 #
 
 class ChatController < ApplicationController
+  include ChatHelper
  
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user
@@ -25,7 +26,7 @@ class ChatController < ApplicationController
     @channel.destroy_old_messages
     unless @channel.users.include?(@user)
       user_joins_channel(@user, @channel)
-      @channel.users.push_with_attributes(@user, { :last_seen => Time.now })
+      record_user_action :not_typing
     end
     @messages = @channel.latest_messages
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
@@ -55,35 +56,29 @@ class ChatController < ApplicationController
       user_say_in_channel(@user, @channel, message)
       @message = Message.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
     end
+
+    record_user_action :just_finished_typing
+ 
     render :layout => false
+  end
+
+  def user_is_typing
+    return false unless request.xhr?
+    record_user_action :typing
+    render :nothing => true
   end
   
   # Get the latest messages since the user last got any
-  def get_latest_messages
+  def poll_channel_for_updates
     return false unless request.xhr?
+
+    # get latest messages, update id of last seen message
     session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
-    render :layout => false
-  end
-  
-  # Get a list of users for the channel and clean up any who left
-  def get_user_list
-    return false unless request.xhr?
     
-    # Tell the database we're still alive
-    @channel.users.delete(@user)
-    @channel.users.push_with_attributes(@user, { :last_seen => Time.now })
+    record_user_action :not_typing
     
-    # Announce any users who just left
-    if @channel.users_just_left
-      for user in @channel.users_just_left
-        user_leaves_channel(user, @channel)
-      end
-    end
-    
-    # Do a clean up of users in the channel
-    @channel.users.cleanup
     render :layout => false
   end
   
@@ -102,6 +97,7 @@ class ChatController < ApplicationController
         end
       end
     end
+
     true
   end
 
@@ -129,12 +125,17 @@ class ChatController < ApplicationController
   end
   
   def sanitize(say)
-#    say.gsub!(/\</, '&lt;')
-#    say.gsub!(/\>/, '&gt;')
+# we'll use GreenCloth to process the say string --- 
+# this makes links clickable, and allows inline images, 
+# and can easily be extended to use smilies, etc...
+#
+# the only trick is that GreenCloth returns the text wrapped
+# in a paragraph block (<p> stuff </p>), and things will
+# look funny if we don't strip that off
     say  = GreenCloth.new(say).to_html
     say.gsub!(/^<p>/, '')
     say.gsub!(/<\/p>$/, '')
-    say
+    return say
   end
   
   def breadcrumbs

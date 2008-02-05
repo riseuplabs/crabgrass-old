@@ -1,5 +1,5 @@
 <% content_for :style do %>
-@import url(/stylesheets/chat.css);
+  @import url(/stylesheets/chat.css);
 <% end %>
 
 <div id="userlist">
@@ -14,21 +14,49 @@
   </div>
 </div>
 
-<%= javascript_tag "$('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight;" %>
+<%= javascript_tag scroll_conversation_script %>
+<%= javascript_tag set_time_and_name_script %>
 
-<%= form_remote_tag :url => { :controller => 'chat', :action => 'say', :id => @channel }, :loading => "$('entryfield').value = ''; $('entryfield').focus;", :complete => "eval(request.responseText)" %>
-<table id="typebox" cellpadding='0' cellspacing='0'>
-<tr>
-  <td width="1%" id='handle'><%= current_user.login %></td>
-  <td width="99%">
-    <% default_text = "Type your messages here and press enter...".t -%>
-    <input id="entryfield" type="text" name="message" value="<%=default_text%>"
-      onclick="if ($('entryfield').value == '<%=default_text%>') {$('entryfield').clear();}"/>
-    <input type="submit" value="Say" style="display: none;" />
-  </td>
-</tr>
-</table>
+<%= # handle input by posting it and also sending it to the server 
+form_remote_tag :url => { :controller => 'chat',
+                          :action => 'say',
+                          :id => @channel },
+                :loading => %( msg = '<div class="message" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
+                             $('entryfield').value = ''; 
+                             $('entryfield').focus;
+                             new Insertion.Bottom('stage', msg);
+                             $('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight; ),
+                :complete => "eval(request.responseText)"
+%>
+  <table id="typebox" cellpadding='0' cellspacing='0'>
+  <tr>
+    <td width="1%" id='handle'><%= current_user.login %></td>
+    <td width="99%">
+      <% default_text = "Type your messages here and press enter...".t -%>
+      <input id="entryfield" type="text" name="message" value="<%=default_text%>"
+        onclick="if ($('entryfield').value == '<%=default_text%>') {$('entryfield').clear();}"
+        />
+      <input type="submit" value="Say" style="display: none;" />
+    </td>
+  </tr>
+  </table>
 <%= end_form_tag %>
 
-<%= periodically_call_remote :url => { :controller => 'chat', :action => 'get_latest_messages', :id => @channel}, :frequency => 2, :complete => "eval(request.responseText)" %>
-<%= periodically_call_remote :url => { :controller => 'chat', :action => 'get_user_list', :id => @channel}, :frequency => 30, :update => 'userlist' %>
+<%= # poll server every wait_time seconds for new messages
+wait_time = 3
+periodically_call_remote :url => { :controller => 'chat',
+                                   :action => 'poll_channel_for_updates',
+                                   :id => @channel},
+                         :frequency => wait_time,
+                         :complete => "eval(request.responseText)"
+#                         :update => 'userlist'
+%>
+
+<%= # update server if user has been typing
+wait_time = 6
+observe_field(:entryfield,
+              :frequency => wait_time,
+              :url => { :controller => 'chat',
+                        :action => 'user_is_typing',
+                        :id => @channel })
+%>

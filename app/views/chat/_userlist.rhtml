@@ -1,3 +1,13 @@
-<% for user in @channel.users %>
-  <div class="user"><%= avatar_for user, 'xsmall' %> <%= link_to_user user %></div>
+<% for c_user in @channel.channels_users %>
+  <div class="user">
+  <%= avatar_for c_user.user, 'xsmall' %>
+  <%= link_to_user c_user.user %>
+  <span id="typing-<%= c_user.user_id %>" style="display: none;"> (typing) </span>
+  <span id="away-<%= c_user.user_id %>" style="display: none;"> (away) </span>
+  </div>
 <% end %>
+
+<script type="text/javascript">
+<%= render :partial => 'chat/userlist_status' %>
+</script>
+

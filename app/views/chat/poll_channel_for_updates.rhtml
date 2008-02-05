@@ -1,0 +1,13 @@
+<% 
+# insert new messages if any have been generated
+for message in @messages %>
+  <% next if message.sender_id == @user.id %>
+  new Insertion.Bottom('stage', '<%= escape_javascript message_content(message) %>');
+<% end %>
+
+<%= scroll_conversation_script %>
+
+<%= set_time_and_name_script %>
+
+<%= render :partial => 'chat/userlist_status' %>
+
