@@ -15,7 +15,16 @@ module ChatHelper
   end
   
   def scroll_conversation_script
-    %($('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight;)
+    %(if ($('conversation').scrollTop > $('conversation').scrollHeight - 1.5* $('conversation').clientHeight)
+        { $('conversation').scrollTop = $('conversation').scrollHeight - $('conversation').clientHeight; })
+  end
+  
+  # this isn't working yet, but is more in the rails way, using JavascriptGenerator
+  def scroll_conversation
+    conv = page[:conversation]
+    if conv.scrollTop > conv.scrollHeight - 2*conv.clientHeight
+      conv.scrollTop = conv.scrollHeight - conv.clientHeight
+    end
   end
   
   def insert_message_script(message)

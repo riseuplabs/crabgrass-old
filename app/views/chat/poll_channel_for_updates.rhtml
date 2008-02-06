@@ -5,7 +5,7 @@ for message in @messages %>
   new Insertion.Bottom('stage', '<%= escape_javascript message_content(message) %>');
 <% end %>
 
-<%= scroll_conversation_script %>
+<%= scroll_conversation_script if @messages.length > 0 %>
 
 <%= set_time_and_name_script %>
 
