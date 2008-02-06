@@ -270,7 +270,7 @@ use these values.
   def update_membership_cache(membership=nil)
     direct, all = get_group_ids
     peer = get_peer_ids(direct)
-    update_these_attributes :version => version+1,
+    update_attributes :version => version+1,
       :direct_group_id_cache => direct,
       :all_group_id_cache    => all,
       :peer_id_cache         => peer
@@ -290,7 +290,7 @@ use these values.
   
   def update_contacts_cache()
     friend,foe = get_contact_ids
-    update_these_attributes :version => version+1,
+    update_attributes :version => version+1,
       :friend_id_cache => friend,
       :foe_id_cache    => foe
   end
@@ -360,7 +360,7 @@ use these values.
     else
       ids = []
     end
-    update_these_attributes :version => version+1, :tag_id_cache => ids
+    update_attributes :version => version+1, :tag_id_cache => ids
   end
 
 end
