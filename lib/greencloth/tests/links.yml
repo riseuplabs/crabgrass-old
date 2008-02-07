@@ -16,4 +16,7 @@ out: <p>this is a <a href="/an/absolute/path">link to</a> in some text</p>
 ---
 in: "[link to -> /-dashes/in/the/link-]"
 out: <p><a href="/-dashes/in/the/link-">link to</a></p>
+---
+in: "links [with_underscores] should keep underscore"
+out: <p>links <a href="/page/with_underscores">with_underscores</a> should keep underscore</p>
 

@@ -65,7 +65,7 @@ module Util
   # - replace spaces with hypens
   # 
   def nameize(text)
-    text.strip.downcase.gsub(/[^-a-z0-9 \+]/,'').gsub(/[ ]+/,'-') if text
+    text.strip.downcase.gsub(/[^-a-z0-9_ \+]/,'').gsub(/[ ]+/,'-') if text
   end
 
   # from actionview texthelper
