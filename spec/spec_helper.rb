@@ -21,7 +21,10 @@ Spec::Runner.configure do |config|
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
 
-  config.mock_with :mocha
+  #config.mock_with :mocha
+  def create_valid_page
+    @page = Page.create :title => 'valid_page'
+  end
 end
 
 def asset_fixture_path(filename)

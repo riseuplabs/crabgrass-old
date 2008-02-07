@@ -7,25 +7,25 @@ describe Page do
   end
 
   it "should make a friendly url from a nameized title and id" do
-    @page.stubs(:id).returns('111')
+    @page.stub!(:id).and_return('111')
     @page.friendly_url.should == 'this-is-a-very-fine-test-page+111'
   end
 
   it "should not consider the unique name taken if it's not" do
-    @page.stubs(:name).returns('a page name')
-    Page.stubs(:find).returns(nil)
+    @page.stub!(:name).and_return('a page name')
+    Page.stub!(:find).and_return(nil)
     @page.name_taken?.should == false
   end
 
   it "should not consider the unique name taken if it's our own" do
-    @page.stubs(:name).returns('a page name')
-    Page.stubs(:find).returns(@page)
+    @page.stub!(:name).and_return('a page name')
+    Page.stub!(:find).and_return(@page)
     @page.name_taken?.should == false
   end
 
   it "should consider name taken if another page has this name in the group namespace" do
-    @page.stubs(:name).returns('a page name')
-    Page.stubs(:find).returns(stub(:name => 'a page name'))
+    @page.stub!(:name).and_return('a page name')
+    Page.stub!(:find).and_return(stub(:name => 'a page name'))
     @page.name_taken?.should == true
   end
 
@@ -50,27 +50,71 @@ describe Page do
   end
 
   it "should not be valid if the name has changed to an existing name" do
-    @page.stubs(:name_modified?).returns(true)
-    @page.stubs(:name_taken?).returns(true)
+    @page.stub!(:name_modified?).and_return(true)
+    @page.stub!(:name_taken?).and_return(true)
     @page.should_not be_valid
     @page.should have(1).error_on(:name)
   end
 
   it "should resolve user participations when resolving" do
-    up1 = up2 = mock()
-    up1.expects(:update_attribute).with(:resolved, true)
-    up2.expects(:update_attribute).with(:resolved, true)
-    @page.stubs(:user_participations).returns([up1, up2])
-    @page.expects(:update_attribute).with(:resolved, true)
+    up1 = mock_model( UserParticipation, :resolved= => nil, :save => nil )
+    up2 = mock_model( UserParticipation, :resolved= => nil, :save => nil )
+    up1.should_receive(:resolved=).with( true)
+    up2.should_receive(:resolved=).with( true)
+    @page.stub!(:user_participations).and_return([up1, up2])
+    @page.should_receive(:save)
+    @page.should_receive(:resolved=)
     @page.resolve
   end
 
   it "should unresolve user participations when unresolving" do
-    up1 = up2 = mock()
-    up1.expects(:update_attribute).with(:resolved, false)
-    up2.expects(:update_attribute).with(:resolved, false)
-    @page.stubs(:user_participations).returns([up1, up2])
-    @page.expects(:update_attribute).with(:resolved, false)
+    up1 = mock_model( UserParticipation, :resolved= => nil, :save => nil )
+    up2 = mock_model( UserParticipation, :resolved= => nil, :save => nil )
+    up1.should_receive(:resolved=).with(false)
+    up2.should_receive(:resolved=).with(false)
+    @page.stub!(:user_participations).and_return([up1, up2])
+    @page.should_receive(:resolved=).with(false)
     @page.unresolve
+  end
+
+  describe "when saving tags" do
+    it "accepts tag_with calls" do
+      @page.should respond_to(:tag_with)
+    end
+    it "gives back the tags we give it" do
+      @page.tag_with( "noodles soup")
+      @page.tags.should include("noodles")
+    end
+    it "read tags with tag_list" do
+      @page.tag_with "noodles soup"
+      @page.tag_list.should include("soup")
+    end
+  end
+
+  describe "when finding by path" do
+    it "finds by tag" do
+      p = Page.create :title => 'page1'
+      p.tag_with 'tag1'
+      pages = Page.find_by_path("/tag/tag1")
+      pages.should include(p)
+    end
+
+    it "finds by multiple tags" do
+      p = Page.create :title => 'page1'
+      p.tag_with 'tag1 tag2'
+      p2 = Page.create :title => 'page2'
+      p2.tag_with 'tag2 tag3'
+      p3 = Page.create :title => 'page3'
+      p3.tag_with 'tag3 tag4'
+
+      pages = Page.find_by_path("/tag/tag1/tag/tag2")
+      pages.should include(p)
+      pages.should_not include(p3)
+      pages.each do |page|
+        page.tags.should include('tag1')
+        page.tags.should include('tag2')
+        page.tags.should_not include('tag4')
+      end
+    end
   end
 end

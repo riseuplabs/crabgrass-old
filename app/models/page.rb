@@ -64,7 +64,7 @@ class Page < ActiveRecord::Base
       up.resolved = value
       up.save
     end
-    resolved = value
+    self.resolved=value
     save
   end  
 
