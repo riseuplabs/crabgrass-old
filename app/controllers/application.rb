@@ -30,20 +30,6 @@ class ApplicationController < ActionController::Base
     @js_behaviours.to_s
   end
   
-  # rails lazy loading does work well with namespaced classes, so we help it along: 
-  def get_tool_class(tool_class_str)
-    klass = Module
-    tool_class_str = tool_class_str.to_s
-    tool_class_str.split('::').each do |const|
-       klass = klass.const_get(const)
-    end
-    unless klass.superclass == Page
-      raise Exception.new('page type is not a subclass of page')
-    else
-      return klass
-    end
-  end
-
   def handle_rss(locals)
     if params[:path].any? and 
         (params[:path].include? 'rss' or params[:path].include? '.rss')

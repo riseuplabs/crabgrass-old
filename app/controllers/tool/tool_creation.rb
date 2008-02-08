@@ -43,7 +43,7 @@ module Tool::ToolCreation
   
   def get_page_type
     raise Exception.new('page type required') unless params[:id]
-    return get_tool_class( Page.display_name_to_class(params[:id]) )
+    return Page.display_name_to_class(params[:id])
   end
 
 end
