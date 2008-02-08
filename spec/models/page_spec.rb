@@ -82,10 +82,12 @@ describe Page do
       @page.should respond_to(:tag_with)
     end
     it "gives back the tags we give it" do
+      @page.save
       @page.tag_with( "noodles soup")
-      @page.tags.should include("noodles")
+      @page.tag_list.should include("noodles")
     end
     it "read tags with tag_list" do
+      @page.save
       @page.tag_with "noodles soup"
       @page.tag_list.should include("soup")
     end
@@ -111,9 +113,9 @@ describe Page do
       pages.should include(p)
       pages.should_not include(p3)
       pages.each do |page|
-        page.tags.should include('tag1')
-        page.tags.should include('tag2')
-        page.tags.should_not include('tag4')
+        page.tag_list.should include('tag1')
+        page.tag_list.should include('tag2')
+        page.tag_list.should_not include('tag4')
       end
     end
   end

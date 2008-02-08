@@ -2,7 +2,7 @@
 
 <%= @group.tags.collect {|tag|
   path = (params[:path]||[]).dup
-  t = tag.to_s
+  t = tag.name
   if path.include? t
     path.delete(t)
     klass = 'invert'

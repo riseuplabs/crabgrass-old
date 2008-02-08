@@ -9,10 +9,8 @@ describe Group do
     @page = create_valid_page
     @group.save!
     @group.pages << @page
-    @group.save!
     @page.tag_with 'crackers ninjas'
-    @page.save!
-    @group.tags.should include('ninjas')
+    @group.tags.map(&:name).should include('ninjas')
   end
 
 end

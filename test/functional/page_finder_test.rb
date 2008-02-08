@@ -160,6 +160,7 @@ class PageFinderTest < Test::Unit::TestCase
       p.name = name.nameize
       p.created_by = user
     end
+    page.save
     page.add(user)
     page.add(groups(:rainbow))
     page.tag_with("pig fish elephant")

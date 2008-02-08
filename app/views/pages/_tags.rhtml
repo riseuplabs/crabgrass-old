@@ -1,3 +1,4 @@
+<%= content_tag("div", @error, :class => "error") if @error %>
 <% if @page.tags.any? -%>
 <%= @page.tags.collect{|tag| link_to tag.name, "/me/search/tag/#{tag.name}" }.join(" ") %>
 <%= link_to_function(image_tag('actions/pencil.png'), "Element.toggle($('tag-form')); Element.toggle($('tags'))") if logged_in? %>

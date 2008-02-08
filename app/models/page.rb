@@ -8,7 +8,6 @@
 
 class Page < ActiveRecord::Base
   acts_as_modified
-  acts_as_taggable
 
   extend PathFinder::FindByPath
   

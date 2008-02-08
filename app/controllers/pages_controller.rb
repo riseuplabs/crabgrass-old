@@ -58,9 +58,10 @@ class PagesController < ApplicationController
      
   def tag
     return unless request.xhr?
-    tags = Tag.parse(params[:tag_list])
-    @page.tag_with(tags.uniq.join(' '))
+    @page.tag_with(params[:tag_list])
     @page.save
+  rescue Tag::Error => @error
+  ensure
     render :partial => "pages/tags"
   end
     
