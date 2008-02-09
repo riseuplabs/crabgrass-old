@@ -5,7 +5,7 @@ class Tool::RateMany < Page
   controller 'rate_many'
   model Poll::Poll
   icon 'rate-many.png'
-  class_display_name 'Straw Poll'
+  class_display_name 'approval vote'
   class_description "Approve or disapprove of each possibility."
   class_group 'poll'
     
