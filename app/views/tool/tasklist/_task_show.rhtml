@@ -11,7 +11,18 @@ task.users.each do |user|
 end
 -%>
     <div class='name'>
+      <%= friendly_date(task.updated_at) if task.updated_at? -%>
+
       <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
+
+      <% if @upart and @upart.viewed_at? and task.created_at? %>
+        <% if @upart.viewed_at < task.created_at - 1.minute %>
+          <%= "(new)"  -%>
+        <% elsif @upart.viewed_at < task.updated_at - 1.minute%>
+          <%= "(modified)" -%>
+        <% end %>
+      <% end %>
+      
       <% if task.description.any? -%>
         <span><%= link_to_function h(task.name), "Element.toggle('#{details_id}')" %></span>
       <% else -%>

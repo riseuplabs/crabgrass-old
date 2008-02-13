@@ -1,6 +1,6 @@
 
 class Tool::TasklistController < Tool::BaseController
-  before_filter :fetch_task_list
+  before_filter :fetch_task_list, :fetch_user_participation
   after_filter :update_participations,
     :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   stylesheet 'tasks'
@@ -112,4 +112,7 @@ class Tool::TasklistController < Tool::BaseController
     @list = @page.data
   end
   
+  def fetch_user_participation
+    @upart = @page.participation_for_user(current_user) if @page and current_user
+  end
 end
