@@ -13,7 +13,7 @@ end
     <div class='name'>
       <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
       <% if task.description.any? -%>
-        <span><%= link_to_function task.name, "Element.toggle('#{details_id}')" %></span>
+        <span><%= link_to_function h(task.name), "Element.toggle('#{details_id}')" %></span>
       <% else -%>
         <%=h task.name %>
       <% end %>
