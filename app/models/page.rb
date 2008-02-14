@@ -233,11 +233,11 @@ class Page < ActiveRecord::Base
   # lets us convert from a url pretty name to the actual class.
   def self.display_name_to_class(display_name)
     dn = display_name.nameize
-    TOOLS.detect{|t|t.class_display_name.nameize == dn if t.class_display_name}
+    Page.subclasses.detect{|t|t.class_display_name.nameize == dn if t.class_display_name}
   end 
   # return an array of page classes that are members of class_group
   def self.class_group_to_class_names(class_group)
-    TOOLS.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
+    Page.subclasses.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
   end 
 
   #######################################################################
