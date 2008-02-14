@@ -11,12 +11,6 @@ class AssetController < ApplicationController
 
   def create
     if @asset.save
-#      if params[:title] || params[:tag_list]
-#        params[:page] = {:title => params[:title]}
-#        @page = build_new_page
-#        @page.data = @asset
-#        @page.save
-#      end
       return redirect_to(page_url(@asset.page))
     end
   end

@@ -37,7 +37,7 @@ class Tool::EventController < Tool::BaseController
     @page_class = Tool::Event
     @event = ::Event.new   
     if request.post?
-      @page = build_new_page @page_class
+      @page = create_new_page @page_class
 
       d = params[:date_start].split("/")
       params[:date_start] = [d[1], d[0], d[2]].join("/")

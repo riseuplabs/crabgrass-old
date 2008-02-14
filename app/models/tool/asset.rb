@@ -32,6 +32,6 @@ class Tool::Asset < Page
 
   # title is the filename if title hasn't been set
   def title
-    self['title'] || self.data.filename.nameize
+    self['title'] || (self.data.filename.nameize if self.data && self.data.filename)
   end
 end
