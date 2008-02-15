@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Group do
   before do
+    User.current = nil
     @group = Group.new :name => 'banditos_for_bush'
   end
 

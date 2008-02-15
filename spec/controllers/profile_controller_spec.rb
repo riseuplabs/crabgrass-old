@@ -20,13 +20,24 @@ describe ProfileController do
 
   it "should allow group admin to edit group profile" do
     @group = mock_model(Group)
-    stub_login {|u| u.should_receive(:may_admin?).and_return(true) }
+    stub_login {|u| u.should_receive(:member_of?).with(@group).and_return(true) }
     setup_profile do |p| 
       p.should_receive(:entity).and_return(@group)
     end
 
     get :edit, :id => @profile.id
     response.should be_success
+  end
+
+  it "should not allow non group admin to edit group profile" do
+    @group = mock_model(Group)
+    stub_login {|u| u.should_receive(:member_of?).with(@group).and_return(false) }
+    setup_profile do |p|
+      p.should_receive(:entity).and_return(@group)
+    end
+
+    get :edit, :id => @profile.id
+    response.should_not be_success
   end
 
   protected

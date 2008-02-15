@@ -74,12 +74,11 @@ class ProfileController < ApplicationController
   
   # always have access to self
   def authorized?
-    #XXX: @user is always set by context, i think this logic is flawed
-    if @user and current_user == @user
+    if @entity.is_a?(User) and current_user == @entity
       return true
-    elsif @group
+    elsif @entity.is_a?(Group)
       return true if action_name == 'show'
-      return true if logged_in? and current_user.member_of?(@group)
+      return true if logged_in? and current_user.member_of?(@entity)
       return false
     elsif action_name =~ /add_/
      return true # TODO: this is the right way to do this
