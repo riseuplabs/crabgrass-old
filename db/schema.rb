@@ -43,6 +43,13 @@ ActiveRecord::Schema.define(:version => 1202880178) do
   add_index "assets", ["version"], :name => "index_assets_version"
   add_index "assets", ["page_id"], :name => "index_assets_page_id"
 
+  create_table "auto_summaries", :force => true do |t|
+    t.column "page_id",   :integer
+    t.column "body",      :text
+    t.column "body_html", :text
+    t.column "delta",     :boolean
+  end
+
   create_table "avatars", :force => true do |t|
     t.column "data",   :binary
     t.column "public", :boolean, :default => false
@@ -219,6 +226,7 @@ ActiveRecord::Schema.define(:version => 1202880178) do
     t.column "flow",               :integer
     t.column "starts_at",          :datetime
     t.column "ends_at",            :datetime
+    t.column "delta",              :boolean
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"

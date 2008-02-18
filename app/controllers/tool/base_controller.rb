@@ -41,7 +41,7 @@ class Tool::BaseController < ApplicationController
     return(redirect_to page_url(@page, :action => :show)) unless request.post?
     @page.title = params[:page][:title]
     @page.name = params[:page][:name].to_s.nameize if params[:page][:name].any?
-    if @page.save
+    if @page.save_with_after_commit_callback
       redirect_to page_url(@page, :action => 'show')
     else
       message :object => @page

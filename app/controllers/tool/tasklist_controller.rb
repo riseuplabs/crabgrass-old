@@ -107,7 +107,7 @@ class Tool::TasklistController < Tool::BaseController
     return true unless @page
     unless @page.data
       @page.data = Task::TaskList.create
-      @page.save
+      current_user.updated @page
     end
     @list = @page.data
   end

@@ -10,7 +10,7 @@ class Tool::RateManyController < Tool::BaseController
     return if request.get?
     @possible = @poll.possibles.create params[:possible]
     if @poll.valid? and @possible.valid?
-      @page.unresolve
+      @page.unresolve # update modified_at, auto_summary, and make page unresolved for other participants
       redirect_to page_url(@page) unless request.xhr?
     else
       @poll.possibles.delete(@possible)
@@ -29,7 +29,10 @@ class Tool::RateManyController < Tool::BaseController
     return unless @poll
     possible = @poll.possibles.find(params[:possible])
     possible.destroy
-    redirect_to page_url(@page, :action => 'show')
+    
+    current_user.updated @page # update modified date, and auto_summary, but do not make it unresolved
+
+    redirect_to page_url(@page, :action => 'show')    
   end
   
   def vote_one

@@ -223,7 +223,7 @@ class User < SocialUser
     page.updated_at = now
     page.updated_by = self
     page.changed :updated_by
-    page.save
+    page.save_with_after_commit_callback
   end
     
 end

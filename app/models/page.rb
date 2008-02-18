@@ -282,4 +282,37 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
+  #####################################################################
+  ## Things related to the page to index with sphinx
+  has_one :auto_summary, :dependent => :destroy
+  
+  before_save :update_auto_summary
+  def update_auto_summary
+    if self.data
+      self.auto_summary = AutoSummary.create :body => self.data.auto_summary
+    end
+  end
+
+  define_index do |index|
+    index.delta = true
+
+    index.includes.name
+    index.includes.title
+#    index.includes.summary
+    index.includes.auto_summary.body
+#    index.includes.auto_summary.type
+    index.includes.discussion.posts.body.as.comments
+#    index.includes.tags.name
+    
+    index.includes.user_participations.user_id
+    index.includes.group_participations.group_id
+    index.includes.created_by_id
+    
+    index.includes.resolved
+    index.includes.public
+    
+#    index.has.created_at
+#    index.has.updated_at
+  end
+
 end
