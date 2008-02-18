@@ -104,6 +104,9 @@ class Wiki < ActiveRecord::Base
     end  
   end  
 
+  def auto_summary
+    self.body
+  end
   
   ##### RENDERING #################################
   

@@ -7,6 +7,10 @@ class Poll::Poll < ActiveRecord::Base
     possibles.first || possibles.build
   end
   
+  def auto_summary
+    self.possibles.collect { |pos| "#{pos.name} --- #{pos.description}" }.join "\n"
+  end
+  
   has_many :votes, :finder_sql => 
     'SELECT votes.* FROM votes ' +
     'JOIN possibles ON possibles.id = votes.possible_id ' +

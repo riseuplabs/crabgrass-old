@@ -8,6 +8,10 @@ class Asset < ActiveRecord::Base
     pages.first || parent_page
   end
 
+  def auto_summary
+    # TODO: extract a text summary if that makes sense for this document type
+  end
+
   ## versions #########################################
   
   # both this class and the versioned class use attachment_fu

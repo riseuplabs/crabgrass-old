@@ -12,5 +12,9 @@ class Task::TaskList < ActiveRecord::Base
   
   has_many :pages, :as => :data
   def page; pages.first; end
+
+  def auto_summary
+    self.tasks.collect { |task| "#{task.name} --- #{task.description}" }.join "\n"
+  end
   
 end
