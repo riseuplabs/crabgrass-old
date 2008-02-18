@@ -1,0 +1,81 @@
+== Thinking Sphinx
+
+This plugin both generates configurations for Sphinx, and allows searching of the Sphinx indexes. It has been heavily influenced by the Ultrasphinx plugin from Cloudburst, LLC, as well as the Sphinx Client API by Dmytro Shteflyuk and Alexy Kovyrin. The client used in this, however, is my own Riddle[http:riddle.freelancing-gods.com].
+
+Some of the code will be quite familiar, as much of the learning of how to interact with Sphinx came from those two projects. I've aimed to keep this project distinct where possible, though, and also preferred convention over configuration for much of the settings. (Granted, it's *my* convention, but hopefully it works for others). For custom settings in configuration, just add values to config/sphinx.yml for each environment (see Configuration#build[link:classes/ThinkingSphinx/Configuration.html] for more details).
+
+The searching is getting closer and closer to being complete - you can order results on attributes (not fields - that's a limitation of Sphinx), and if you specify an <tt>:include</tt> parameter, like in a <tt>find</tt> call, it will pass that through to the resulting <tt>find</tt> call under the hood. No grouping yet, though.
+
+There is also some support for a delta index - there must be a boolean <tt>delta</tt> field in the model's database table - which will create a second index for that model, with the latest changes to records (instead of having to do a major index more often).
+
+Any questions, comments or suggestions can be sent to pat at freelancing-gods dot com.
+
+== Coming Soon
+
+* Result grouping
+
+== Installation
+
+Nothing too tricky, just the usual plugin installation routine:
+
+  script/plugin install http://rails-oceania.googlecode.com/svn/patallan/thinking_sphinx
+
+== Examples
+
+=== Configuring indexes for models
+
+This is what prompted me to write this plugin - the ability to use fields from associations that might be several levels deep in the object hierarchy. So, you'll need to put this code (well, something similar) in your model files:
+
+  define_index do |index|
+    # model has an attribute 'name'
+    index.includes.name
+    # model has an association :articles, which has an attribute 'content'
+    index.includes.articles.content
+    # model has an association :articles, which has an association :tags, which has an attribute 'name'
+    index.includes.articles.tags.name
+    # model has an association :author, which has attributes 'first_name' and 'last_name'
+    index.includes.author(:first_name, :last_name).as.author
+    # model has an attribute created_at
+    index.has.created_at
+    # model has an attribute updated_at
+    index.has.updated_at
+    # model has a delta index
+    index.delta = true
+  end
+
+Better examples can be found at the {define_index}[link:classes/ThinkingSphinx/ActiveRecord.html#M000004] method.
+
+Please note attributes can only be taken from the base model, not from the associations - and, according to Sphinx's requirements, they must be only integers, floats, or timestamps (ThinkingSphinx will convert datetimes to timestamps for you).
+
+Delta indexes keep track of any changes since the proper index has occurred. This means there's two indexes per model, with the smaller delta one updated after changes to models. All in the background, though - but don't use this as a reason to not run a proper index regularly - the advantage of a delta index only exists if that delta is kept small.
+
+I've written this plugin in a way that hopefully avoids the need to edit sphinx config files. If you find that's not the case, let me know.
+
+=== Starting/Stopping/Indexing Sphinx
+
+The names of the rake tasks are pretty self-explanatory
+
+  rake thinking_sphinx:start
+  rake thinking_sphinx:stop
+  rake thinking_sphinx:restart
+  rake thinking_sphinx:index
+
+These are all accessible via an abbreviated namespace as follows:
+
+  rake ts:start
+  rake ts:stop
+  rake ts:restart
+  rake ts:index
+
+=== Searching
+
+Currently, there's two ways of searching - conditions hash, or straight text:
+
+  User.search :conditions => {:name => "Pat"}
+  User.search "Pat" # looks at all fields
+  User.search "Pat", :page => (params[:page] || 1)
+  User.search :conditions => "Pat", :include => :comments, :order => "created_at DESC"
+
+Pagination is done by default - just pass through a :page parameter to access a page beyond the first. If the will_paginate plugin is also installed, you can use their helper with the results returned by the search call.
+
+Copyright (c) 2007 Pat Allan, released under the MIT license
