@@ -23,7 +23,7 @@ module PathFinder
       options[:limit]   = pages_per_section
       options[:offset]  = offset
       #puts options[:values].inspect
-      pages = PathFinder::Builder.find_pages(:sql, path, options)
+      pages = PathFinder::Builder.find_pages(options[:method], path, options)
       #puts options[:values].inspect
       count = count_by_path(path, options.dup.merge(:offset => nil, :limit => nil))  
       page_sections = ActionController::Pagination::Paginator.new(

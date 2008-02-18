@@ -154,14 +154,6 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     }
   end
 
-  def cleanup_path(path)
-    if path.is_a? String
-      path.split('/') 
-    elsif path.is_a? Array
-      path
-    end
-  end
-  
   ##########################################################
   ### UTILITY METHODS (called by build_query_hash)
   

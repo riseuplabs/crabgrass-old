@@ -10,6 +10,9 @@ class PathFinder::Builder
     if method == :sql
       builder = PathFinder::SqlBuilder.new(path, options)
     end
+    if method == :sphinx
+      builder = PathFinder::SphinxBuilder.new(path, options)
+    end
     builder.find_pages()
   end
 
@@ -69,7 +72,7 @@ class PathFinder::Builder
   }.freeze
 
   # path keyword => order weight
-  # this with a lower weight show up sooner in the path
+  # things with a lower weight show up sooner in the path
   PATH_ORDER = {
     'month' => 1,
     'year' => 2,
@@ -83,8 +86,11 @@ class PathFinder::Builder
   }.freeze
 
   public
-
-  def find_args_hash()
+  def initialize(path, options)
+    # overridden by sub classes
+  end
+  
+  def build_query_hash()
     # overridden by sub classes
   end
   
@@ -96,6 +102,7 @@ class PathFinder::Builder
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
       args = filter.slice(1..-1) # remove first element.
+      y [filter, filter_method, args]
       self.send(filter_method, *args) if self.respond_to? filter_method
     end
   end
@@ -157,6 +164,16 @@ class PathFinder::Builder
     end
     return path.collect{|i|CGI.escape i}.join('/')
   end
+
+  # make sure that path is an array, not a '/' delimited string
+  def cleanup_path(path)
+    if path.is_a? String
+      path.split('/') 
+    elsif path.is_a? Array
+      path
+    end
+  end
+  
   
 end
 

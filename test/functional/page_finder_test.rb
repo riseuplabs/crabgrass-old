@@ -132,9 +132,11 @@ class PageFinderTest < Test::Unit::TestCase
     pages = limit(pages,10)
     reference_ids = page_ids(pages)
 
+    options = @controller.options_for_me(:section => 1, :section_size => 10)
+    options[:method] = :sql
     pages, sections = Page.find_by_path(
       '/descending/updated_at/',
-      @controller.options_for_me(:section => 1, :section_size => 10)
+      options
     )
     path_ids = page_ids(pages)
     

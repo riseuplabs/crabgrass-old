@@ -11,7 +11,9 @@ module PathFinder::Options
    
   def default_find_options
     { :controller => get_controller,
-      :section => (params[:section] ? params[:section].to_i : nil ) }
+      :section => (params[:section] ? params[:section].to_i : nil ),
+      :user_id => current_user.id,
+      :group_ids => current_user.all_group_ids }
   end
 
   # this module might be included in helpers and it might be included
