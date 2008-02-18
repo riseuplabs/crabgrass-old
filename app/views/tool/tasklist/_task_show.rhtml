@@ -16,9 +16,9 @@ end
       <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
 
       <% if @upart and @upart.viewed_at? and task.created_at? %>
-        <% if @upart.viewed_at < task.created_at - 1.minute %>
+        <% if @upart.viewed_at < task.created_at - 10.seconds %>
           <%= "(new)"  -%>
-        <% elsif @upart.viewed_at < task.updated_at - 1.minute%>
+        <% elsif @upart.viewed_at < task.updated_at - 10.seconds%>
           <%= "(modified)" -%>
         <% end %>
       <% end %>
