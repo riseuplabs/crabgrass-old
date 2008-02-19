@@ -22,6 +22,8 @@ module PathFinder
       
       options[:limit]   = pages_per_section
       options[:offset]  = offset
+      options[:method] ||= :sql
+
       #puts options[:values].inspect
       pages = PathFinder::Builder.find_pages(options[:method], path, options)
       #puts options[:values].inspect

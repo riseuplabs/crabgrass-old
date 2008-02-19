@@ -59,7 +59,7 @@ class PagesController < ApplicationController
   def tag
     return unless request.xhr?
     @page.tag_with(params[:tag_list])
-    @page.save_with_after_commit_callback
+    @page.save
   rescue Tag::Error => @error
   ensure
     render :partial => "pages/tags"
@@ -76,7 +76,7 @@ class PagesController < ApplicationController
       message :error => "You don't have permission to create a page for that group"
     else
       page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
-      page.save_with_after_commit_callback
+      page.save
       redirect_to page_url(page)
       return
     end
@@ -143,7 +143,7 @@ class PagesController < ApplicationController
           message :error => 'group or user not found'
         end
       end
-      @page.save_with_after_commit_callback
+      @page.save
     end
   end
 
@@ -174,7 +174,7 @@ class PagesController < ApplicationController
       @page.remove(@page.group)
       @page.add(group)
       @page.group = group
-      @page.save_with_after_commit_callback
+      @page.save
       clear_referer(@page)
     end
     redirect_to page_url(@page)

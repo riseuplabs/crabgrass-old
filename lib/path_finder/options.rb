@@ -10,10 +10,15 @@ module PathFinder::Options
   private
    
   def default_find_options
-    { :controller => get_controller,
-      :section => (params[:section] ? params[:section].to_i : nil ),
-      :user_id => current_user.id,
-      :group_ids => current_user.all_group_ids }
+    options = { :controller => get_controller,
+      :section => (params[:section] ? params[:section].to_i : nil )}
+    if logged_in?
+      options[:user_id] = current_user.id
+      options[:group_ids] = current_user.all_group_ids
+    else
+      options[:public] = true
+    end
+    options
   end
 
   # this module might be included in helpers and it might be included
