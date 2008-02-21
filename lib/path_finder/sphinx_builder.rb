@@ -27,10 +27,10 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   # page finding. It all starts here.
   #
   def find_pages
-puts "applying filters from path"
+#puts "applying filters from path"
     apply_filters_from_path( @path )
 
-    y @args_for_find #NOTE: this dumps args_for_find as YAML
+    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
 #    @args_for_find[:conditions] = "test"
     Page.find Page.search_for_ids(@args_for_find)
   end

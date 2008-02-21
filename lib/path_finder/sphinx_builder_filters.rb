@@ -75,7 +75,7 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   end
   
   def filter_text(text)
-    y @args_for_find
+    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
     @args_for_find[:conditions] = text + " " + @args_for_find[:conditions]
   end
 
