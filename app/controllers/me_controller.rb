@@ -13,9 +13,7 @@ class MeController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to me_url(:action => 'search') + path   
     else
-      options = options_for_me
-      options[:method] = :sphinx
-      @pages, @sections = Page.find_and_paginate_by_path(params[:path], options)
+      @pages, @sections = Page.find_and_paginate_by_path(params[:path], options_for_me)
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :group, :created_by, :created_at, :contributors_count]
       else
@@ -71,9 +69,9 @@ class MeController < ApplicationController
     elsif filter =~ /^my-(.*)/
       # show my completed or pending tasks
       completed = $1 == 'completed'
-      include = [:pages, {:tasks => :users}] # eager load all we will need to show the tasks.
-      conditions = ['users.id = ? AND tasks.completed = ?', current_user.id, completed]
-      @task_lists = Task::TaskList.find(:all, :conditions => conditions, :include => include)
+      included = [:pages, {:tasks => :users}] # eager load all we will need to show the tasks.
+      conditions = ['users.id = ? AND tasks.completed_at ?', current_user.id, (completed ? 'IS NOT NULL' : 'IS NULL')]
+      @task_lists = Task::TaskList.find(:all, :conditions => conditions, :include => included)
       @show_user = current_user
       @show_status = completed ? 'completed' : 'pending'
     end
