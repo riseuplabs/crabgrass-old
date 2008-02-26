@@ -18,7 +18,9 @@ users.uniq!
   :loading  => show_spinner(task_edit_id), 
   :html => {:id => form_id}) do -%>
   <%= text_field 'task', 'name', :size => 50 %><br/>
-  <%= text_area 'task', 'description', :size => '50x4' %><br/>
+  <%= text_area  'task', 'description', :size => '50x4' %><br/>
+  Due:
+  <%= calendar_date_select_tag 'task[due_at]', task.due_at.to_date.to_formatted_s( :long ) %><br />
   <%= collection_multiple_select('task', 'user_ids', users, :id, :login, :outer_class=>'plainlist floatlist') %>
   <br style='clear:left'/>
   <p>

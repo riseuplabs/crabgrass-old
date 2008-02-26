@@ -8,5 +8,23 @@ class Task::Task < ActiveRecord::Base
   def group_name
     task_list.page.group_name
   end
+
+  def completed=(is_completed)
+    if is_completed
+      self.completed_at = Time.now
+    else
+      self.completed_at = nil
+    end
+  end
+
+  def completed
+    completed_at && completed_at < Time.now
+  end
+  alias :completed? :completed
+
+  def past_due?
+    !completed? && due_at && due_at.to_date < Date.today
+  end
+  alias :overdue? :past_due?
   
 end

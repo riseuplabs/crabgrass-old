@@ -5,10 +5,10 @@ class Task::TaskList < ActiveRecord::Base
     :order => "position", :dependent => :destroy, :include => :users
 
   has_many :completed, :class_name => 'Task::Task', :foreign_key => 'task_list_id',
-    :order => "position", :conditions => ['tasks.completed = ?', true], :include => :users
+    :order => "position", :conditions => '!isnull(tasks.completed_at)', :include => :users
     
   has_many :pending, :class_name => 'Task::Task', :foreign_key => 'task_list_id',
-    :order => "position", :conditions => ['tasks.completed = ?', false], :include => :users
+    :order => "position", :conditions => 'isnull(tasks.completed_at)', :include => :users
   
   has_many :pages, :as => :data
   def page; pages.first; end

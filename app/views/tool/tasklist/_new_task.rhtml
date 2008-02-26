@@ -22,6 +22,8 @@
    <%= text_field 'task', 'name', :size => 50 %><br/>
    detail:<br/>
    <%= text_area 'task', 'description', :size => '50x4' %><br/>
+   due:<br/>
+   <%= calendar_date_select_tag 'task[due_at]' %><br/>
    assign to:<br/>
    <%= collection_multiple_select('task', 'user_ids', users, :id, :login, :outer_class=>'plainlist floatlist') %>
    <br style='clear:left'/>

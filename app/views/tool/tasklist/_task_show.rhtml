@@ -11,23 +11,26 @@ task.users.each do |user|
 end
 -%>
     <div class='name'>
-      <%= friendly_date(task.updated_at) if task.updated_at? -%>
+      <div class='<%= 'past_due' if task.past_due? %>'>
+        <%= friendly_date(task.updated_at) if task.updated_at? -%>
 
-      <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
+        <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
 
-      <% if @upart and @upart.viewed_at? and task.created_at? %>
-        <% if @upart.viewed_at < task.created_at - 10.seconds %>
-          <%= "(new)"  -%>
-        <% elsif @upart.viewed_at < task.updated_at - 10.seconds%>
-          <%= "(modified)" -%>
+        <% if @upart and @upart.viewed_at? and task.created_at? %>
+          <% if @upart.viewed_at < task.created_at - 10.seconds %>
+            <%= "(new)"  -%>
+          <% elsif @upart.viewed_at < task.updated_at - 10.seconds%>
+            <%= "(modified)" -%>
+          <% end %>
         <% end %>
-      <% end %>
-      
-      <% if task.description.any? -%>
-        <span><%= link_to_function h(task.name), "Element.toggle('#{details_id}')" %></span>
-      <% else -%>
-        <%=h task.name %>
-      <% end %>
+        
+        <% if task.description.any? -%>
+          <span><%= link_to_function h(task.name), "Element.toggle('#{details_id}')" %></span>
+        <% else -%>
+          <%=h task.name %>
+        <% end %>
+        <span class="status"><%= _("Past Due") if task.past_due? %></span>
+      </div>
     </div>
     <div class='indent task_details' id="<%=details_id%>" style='display: none'>
       <%= task.description_html %>

@@ -17,3 +17,6 @@
 <%= sortable_element 'sort_list_completed', :handle => 'handle', :url => page_xurl(@page, :action=>'sort') %>
 
 </div> <!-- end task tool -->
+<% content_for :javascript do %>
+  <%=  calendar_date_select_includes "silver" %>
+<% end %>
