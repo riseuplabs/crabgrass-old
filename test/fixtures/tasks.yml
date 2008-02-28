@@ -6,7 +6,7 @@
   name: <%= task_name %>
   description: <%= task_name %> description
   description_html: <p><%= task_name %> description</p>
-  completed: false
+  completed_at: nil
   position: <%= n %>
 <% end %>
 <% 4.upto(6) do |n| %>
@@ -17,6 +17,6 @@
   name: <%= task_name %>
   description: <%= task_name %> description
   description_html: <p><%= task_name %> description</p>
-  completed: false
+  completed_at: nil 
   position: <%= n-3 %>
 <% end %>
