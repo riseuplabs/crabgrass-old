@@ -47,6 +47,7 @@ Rails::Initializer.run do |config|
   
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
+#  config.active_record.observers = :user_observer
 
 #  config.action_controller.session_store = :p_store
   
@@ -116,5 +117,10 @@ FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'pl
 SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
 
 require "#{RAILS_ROOT}/vendor/enhanced_migrations-1.2.0/lib/enhanced_migrations.rb"
+
+#include all files in the initializers folder ( TODO remove in Rails 2 branch )
+Dir.entries( "#{RAILS_ROOT}/config/initializers/" ).each do |filename |
+  require "#{RAILS_ROOT}/config/initializers/#{filename}" if filename =~ /\.rb$/ 
+end
 
 require 'tagging_extensions'

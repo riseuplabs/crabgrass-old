@@ -40,6 +40,13 @@ Spec::Runner.configure do |config|
   def create_valid_page
     @page = Page.create :title => 'valid_page'
   end
+
+  def create_valid_user
+    valid_user = User.new :login => "jones", :email => "aviary@birdcage.com", :password => "joke", :password_confirmation => "joke"
+    valid_user.profiles.build :first_name => "Plus", :last_name => "Ca Change", :friend => true
+    valid_user.save!
+    valid_user
+  end
 end
 
 def asset_fixture_path(filename)

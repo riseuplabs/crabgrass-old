@@ -1,5 +1,4 @@
-
-class User < SocialUser  
+class User < ActiveRecord::Base
 
   acts_as_modified
   
@@ -11,7 +10,7 @@ class User < SocialUser
 
   # this is a hack to get 'has_many :profiles' to polymorph
   # on User instead of AuthenticatedUser
-  def self.base_class; User; end
+  #def self.base_class; User; end
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   validates_handle :login
@@ -225,5 +224,36 @@ class User < SocialUser
     page.changed :updated_by
     page.save
   end
+
+  def self.find_for_forget(email)
+    find :first, :conditions => ['email = ?', email]
+  end
+
+  def forgot_password
+    @forgotten_password = true
+    self.make_password_reset_code
+  end
+
+  def reset_password
+    update_attribute :password_reset_code, nil
+    @reset_password = true
+  end
+
+  #user observer uses these methods
+  def recently_forgot_password?
+    @forgotten_password
+  end
+
+  def recently_reset_password?
+    @reset_password
+  end
+
+  protected
+    def make_password_reset_code
+      self.password_reset_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+    end
+  
     
 end
+#this should load in config/enviranment.rb
+#UserObserver.instance.instance_eval { add_observer! User }
