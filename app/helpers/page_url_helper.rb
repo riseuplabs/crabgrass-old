@@ -19,7 +19,7 @@ module PageUrlHelper
   # 
   def page_url(page,options={})
     options.delete(:action) if options[:action] == 'show' and not options[:id]
-    if @group and page.group_ids.include?(@group.id)
+    if @group and @group.is_a?(Group) and page.group_ids.include?(@group.id)
       path = page_path(@group.name, page.name_url, options)
     elsif page.group_name
       path = page_path(page.group_name, page.name_url, options)
