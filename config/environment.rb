@@ -55,6 +55,8 @@ Rails::Initializer.run do |config|
   config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
+  config.to_prepare { load_initializers } 
+
 end
 
 
@@ -117,10 +119,12 @@ FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'pl
 SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
 
 require "#{RAILS_ROOT}/vendor/enhanced_migrations-1.2.0/lib/enhanced_migrations.rb"
-
-#include all files in the initializers folder ( TODO remove in Rails 2 branch )
-Dir.entries( "#{RAILS_ROOT}/config/initializers/" ).each do |filename |
-  require "#{RAILS_ROOT}/config/initializers/#{filename}" if filename =~ /\.rb$/ 
+def load_initializers
+  #include all files in the initializers folder ( TODO remove in Rails 2 branch )
+  Dir.entries( "#{RAILS_ROOT}/config/initializers/" ).each do |filename |
+    require "#{RAILS_ROOT}/config/initializers/#{filename}" if filename =~ /\.rb$/ 
+  end
 end
+load_initializers
 
 require 'tagging_extensions'
