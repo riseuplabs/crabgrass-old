@@ -31,3 +31,4 @@ config.action_mailer.raise_delivery_errors = false
 # don't compress asset bundles (javascript and css) when in development mode.
 # otherwise, they will get recompressed on every page load!
 MAKE_ASSET_BUNDLES =  false
+

@@ -1,5 +1,10 @@
 class User < ActiveRecord::Base
 
+  include AuthenticatedUser
+  include CrabgrassDispatcher::Validations
+  include SocialUser
+
+  validates_handle :login
   acts_as_modified
   
   #########################################################    
@@ -76,33 +81,5 @@ class User < ActiveRecord::Base
   end
 
 
-  def self.find_for_forget(email)
-    find :first, :conditions => ['email = ?', email]
-  end
-
-  def forgot_password
-    @forgotten_password = true
-    self.make_password_reset_code
-  end
-
-  def reset_password
-    update_attribute :password_reset_code, nil
-    @reset_password = true
-  end
-
-  #user observer uses these methods
-  def recently_forgot_password?
-    @forgotten_password
-  end
-
-  def recently_reset_password?
-    @reset_password
-  end
-
-  protected
-    def make_password_reset_code
-      self.password_reset_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
-    end
-  
     
 end

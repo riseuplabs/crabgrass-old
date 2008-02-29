@@ -41,6 +41,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
   map.connect '', :controller => "account"
+  map.login   'account/login',   :controller => 'account',   :action => 'login'
+  map.forgot_password '/forgot_password',     :controller => 'passwords',   :action =>  'new'
+  map.reset_password  '/reset_password/:id',  :controller => 'passwords',   :action =>  'edit'
   
   # used for ajax calls to make a direct request bypassing the dispatcher
   map.direct 'page-direct/:page_id/:action/:id/:controller', :controller => /.*/

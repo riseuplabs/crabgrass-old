@@ -33,10 +33,11 @@
 
 <div align='center'>
   <%= link_to 'Need a new account?'.t, { :action => 'signup', :redirect => params[:redirect] } %>
+  <br />
+  <%= link_to _('I forgot my password'), forgot_password_path %>
 </div>
 
 <div><%# flash[:error] %></div>
 <div align='right'>
-  <%# link_to 'I forgot my password'.t, :controller => 'forms', :action => 'password'%>
 </div>
 </div> <!-- end login -->

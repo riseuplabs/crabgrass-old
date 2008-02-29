@@ -28,7 +28,7 @@ module LayoutHelper
     (
       [@html_title] +
       (@context||[]).collect{|b|truncate(b[0])}.reverse +
-      [SITE_NAME]
+      [Crabgrass::Config.site_name]
     ).compact.join(' - ')
   end
     

@@ -22,6 +22,12 @@
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= f.password_field :password_confirmation %></p>
 
+<p><label for="email">Your Email</label><br/>
+<%= f.text_field :email%>
+<br />
+<span class="comment"><%= _("Optional: used if you forget your password") %></span>
+</p>
+
 <p><%= submit_tag 'Sign up' %></p>
 
 <%= hidden_field_tag 'redirect', params[:redirect] if params[:redirect] %>

@@ -30,29 +30,26 @@ module AuthenticatedUser
 
   def self.included(base)
     base.extend   ClassMethods
+    base.instance_eval do
+      # a class attr which is set to the currently logged in user
+      cattr_accessor :current
+      
+      # Virtual attribute for the unencrypted password
+      attr_accessor :password
+
+      validates_presence_of     :login
+      validates_presence_of     :password,                   :if => :password_required?
+      validates_presence_of     :password_confirmation,      :if => :password_required?
+      validates_length_of       :password, :within => 4..40, :if => :password_required?
+      validates_confirmation_of :password,                   :if => :password_required?
+      validates_format_of       :login, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
+      validates_length_of       :login, :within => 3..40
+      validates_uniqueness_of   :login, :case_sensitive => false
+      before_save :encrypt_password
+    end
   end
   module ClassMethods
-    def self.extended( base )
-      base.instance_eval do
-        # a class attr which is set to the currently logged in user
-        cattr_accessor :current
-        
-        # Virtual attribute for the unencrypted password
-        attr_accessor :password
-
-        validates_presence_of     :login
-        validates_presence_of     :password,                   :if => :password_required?
-        validates_presence_of     :password_confirmation,      :if => :password_required?
-        validates_length_of       :password, :within => 4..40, :if => :password_required?
-        validates_confirmation_of :password,                   :if => :password_required?
-        validates_format_of       :login, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
-        validates_length_of       :login, :within => 3..40
-        validates_uniqueness_of   :login, :case_sensitive => false
-        before_save :encrypt_password
-      end
-    end
-
-
+    
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     def authenticate(login, password)
       u = find_by_login(login) # need to get the salt
@@ -62,6 +59,10 @@ module AuthenticatedUser
     # Encrypts some data with the salt.
     def encrypt(password, salt)
       Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+    end
+
+    def find_for_forget(email)
+      find :first, :conditions => ['email = ?', email]
     end
 
   end
@@ -92,6 +93,26 @@ module AuthenticatedUser
     save(false)
   end
 
+  #methods used for password reminders
+  def forgot_password
+    @forgotten_password = true
+    self.make_password_reset_code
+  end
+
+  def reset_password
+    update_attribute :password_reset_code, nil
+    @reset_password = true
+  end
+
+  #user observer uses these methods
+  def recently_forgot_password?
+    @forgotten_password
+  end
+
+  def recently_reset_password?
+    @reset_password
+  end
+
   protected
     # before filter 
     def encrypt_password
@@ -103,5 +124,10 @@ module AuthenticatedUser
     def password_required?
       crypted_password.blank? || !password.blank?
     end
+
+    def make_password_reset_code
+      self.password_reset_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+    end
+  
 end
 
