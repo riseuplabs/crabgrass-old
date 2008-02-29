@@ -30,7 +30,7 @@ require 'crabgrass_config'
 ### BEGIN CUSTOM OPTIONS
 
 Crabgrass::Config.site_name         = 'riseup.net' 
-Crabgrass::Config.application_host  = 'we.riseup.net'
+Crabgrass::Config.host  = 'we.riseup.net'
 Crabgrass::Config.email_sender      = 'crabgrass-system@riseup.net'
 
 SECTION_SIZE = 29 # the default size for pagination sections
