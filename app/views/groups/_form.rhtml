@@ -3,7 +3,7 @@
 
 <div class='titlebox h1' >
 <div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
-  <%= '%s Info' / @group_type.capitalize %>
+  <%= '%s Info' / group_type.capitalize %>
 </div>
 </div>
 
@@ -27,7 +27,7 @@
 <p>
   <label for="group_summary">
     <b>Summary</b><br/>
-    <%= 'Brief information regarding this %s.' / @group_type %>  
+    <%= 'Brief information regarding this %s.' / group_type %>  
   </label><br/>
   <%= text_area 'group', 'summary', :rows => 4, :cols => 60  %>
 </p>

@@ -1,8 +1,8 @@
 <% if @parent -%>
-  <% @group_type = 'committee'.t -%>
+  <% group_type = 'committee'.t -%>
   <h1>New committee for group <%= @parent.name %></h1>
 <% else %>
-  <% @group_type = 'group'.t -%>
+  <% group_type = 'group'.t -%>
   <h1>New group</h1>
 <% end %>
 

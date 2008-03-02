@@ -122,7 +122,6 @@ class MembershipController < ApplicationController
   def fetch_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
     if @group
-      @group_type = @group.class.to_s.downcase
       return true
     else
       render :action => 'not_found'

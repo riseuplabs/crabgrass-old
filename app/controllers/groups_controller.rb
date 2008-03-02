@@ -146,6 +146,13 @@ class GroupsController < ApplicationController
       else
         message :object => @group
       end
+    else #create placeholder objects to base the form off
+      if @parent
+        @group = Committee.new
+        @group.parent = @parent
+      else
+        @group = Group.new
+      end
     end
   end
 
@@ -216,7 +223,6 @@ class GroupsController < ApplicationController
   def find_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
     if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or may_admin_group?) ##committees need to be handled better
-      @group_type = @group.class.to_s.downcase
       return true
     else
       render :template => 'groups/show_nothing'

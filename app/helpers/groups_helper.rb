@@ -33,10 +33,14 @@ module GroupsHelper
     end
   end
 
+  def group_type
+    @group.class.to_s.downcase if @group
+  end
+
   def leave_group_link
     if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size > 1
 #    if @group.users.uniq.size > 1 and logged_in? and @group.users.include? current_user
-	    link_to "leave #{@group_type}".t, url_for(:controller => 'membership', :action => 'leave', :id => @group)
+	    link_to "leave #{group_type}".t, url_for(:controller => 'membership', :action => 'leave', :id => @group)
 	    #, :confirm => "Are you sure you want to leave this %s?".t % @group_type
 		end
   end
@@ -44,7 +48,7 @@ module GroupsHelper
   def destroy_group_link
     if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size == 1
 #    if @group.users.uniq.size == 1 and logged_in? and @group.users.include? current_user
-          post_to "destroy #{@group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % @group_type
+          post_to "destroy #{group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
     end
   end
     
