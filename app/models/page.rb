@@ -315,4 +315,5 @@ class Page < ActiveRecord::Base
 #    index.has.updated_at
   end
 
+
 end
