@@ -1,0 +1,19 @@
+jonathan:
+  id: 1
+  type: Person
+  name: Jonathan
+  country: New Zealand
+  birthdate: 2004-01-01
+  lucky_number: 55
+  school_id: 1
+
+richard:
+  id: 2
+  type: Person
+  name: Richard
+  
+student:
+  id: 3
+  type: Student
+  name: Mr Student
+  

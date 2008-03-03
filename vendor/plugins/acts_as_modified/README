@@ -1,0 +1,41 @@
+= acts_as_modified
+
+If you find this plugin useful, please consider a donation to show your support!
+
+  http://www.paypal.com/cgi-bin/webscr?cmd=_send-money
+  
+  Email address: jonathan.viney@gmail.com
+  
+== Instructions
+
+This plugin lets you track attribute changes to an ActiveRecord object.
+
+== Installation
+
+  script/plugin install http://svn.viney.net.nz/things/rails/plugins/acts_as_modified
+  
+== Usage
+
+  class Person < ActiveRecord::Base
+    acts_as_modified
+  end
+  
+  p = Person.find(1)
+  p.name # => "Jonathan"
+  p.modified? # => false
+  p.name = "David"
+  p.modified? # => true
+  p.name_modified? # => true
+  
+See ActiveRecord::Acts::Modified::InstanceMethods for details of the all the methods that are available.
+  
+== Help
+
+Feel free to email with any problems, suggestions, bugs etc...
+
+  jonathan dot viney @ gmail . com
+  christopher dot k dot hall @ gmail . com
+  
+== Credit
+
+Based on the original acts_as_modified plugin by Chris Hall.

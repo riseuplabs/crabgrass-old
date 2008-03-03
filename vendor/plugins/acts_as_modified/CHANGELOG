@@ -1,0 +1,23 @@
+[17 Jun 07]
+
+* Fix compatibility with Ruby < 1.8.6
+
+[11 Jun 07]
+
+* Reimplement using instance variables rather than a hash. API unchanged.
+
+[7 Jun 07]
+
+* Make modified? return true for new records
+
+* Pass :except to name attributes whose modification should not cause modified to be true
+
+* Allow acts_as_modified to be redeclared on subclasses
+
+[29 Mar 07]
+
+* Fix compatibility with Ruby 1.8.6
+
+[13 Dec 06]
+
+* Make plugin compatible with models that define a primary key attribute other than id.

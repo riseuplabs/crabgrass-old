@@ -16,9 +16,10 @@ required:
   gem install rmagick
   gem install tzinfo
 
-optional for sphinx:
-  to be written
-  
+optional for ferret:
+  apt-get install ruby1.8-dev build-essential
+  gem install ferret
+
 optional for latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
   gem install open4
@@ -52,6 +53,11 @@ acts_as_modified
 
 Lets you test which properties have been modified of an activerecord.
 
+acs_as_taggable
+----------------
+
+Provides tagging. Should be replaced with act_as_taggable_on_steriods or has_many_polymorph.
+
 acts_as_versioned
 ------------------
 
@@ -61,30 +67,6 @@ attachment_fu
 ---------------
 
 Used for assets. Makes it much easier to work with uploaded data.
-
-bundled_assets
---------------
-
-This plugin allows us to have many css and javascript files, with lots of comments, and it will combine them and compress them when in production mode. This makes the stylesheets reabable, easy to edit, and much faster.
-
-For this to work, the stylesheet and javascript tags should look like this:
-
-<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type="text/css" media="screen" charset="utf-8" />
-
-<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>
-
-http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
-
-NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
-
-has_many_polymorph
-------------------
-
-Lets you have a polymorphic has_many. Normally, only belongs_to are polymorphic.
-Currently, Crabgrass only uses this for tags, but it could be useful for many
-other things.
-
-script/plugin install svn://rubyforge.org/var/svn/polymorphs/has_many_polymorphs
 
 multiple_select
 ---------------
@@ -104,6 +86,21 @@ For example:
 </div>
 <% end -%>
 
+bundled_assets
+--------------
+
+This plugin allows us to have many css and javascript files, with lots of comments, and it will combine them and compress them when in production mode. This makes the stylesheets reabable, easy to edit, and much faster.
+
+For this to work, the stylesheet and javascript tags should look like this:
+
+<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type="text/css" media="screen" charset="utf-8" />
+
+<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>
+
+http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
+
+NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
+
 tztime
 ------
 for easy-ish handling of user timezones
@@ -117,6 +114,12 @@ OTHER PLUGINS
 ========================
 
 plugins that are optional or that we do not currently use
+
+has_many_polymorphs
+-------------------
+
+http://blog.evanweaver.com/articles/2006/06/02/has_many_polymorphs
+script/plugin install svn://rubyforge.org/var/svn/polymorphs/has_many_polymorphs
 
 ez-where
 ------------------
@@ -133,6 +136,8 @@ tzinfo: required by tzinfo_timezone + tztime
 redcloth: greencloth derives from redcloth
 
 rmagick: used to scale avatars and build thumbnails
+
+ferret: indexed full text searches.
 
 open4: used by latex renderer (optional)
 

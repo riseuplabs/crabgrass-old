@@ -1,0 +1,49 @@
+CsrfKiller
+==========
+
+This plugin helps protect against possible CSRF attacks.  If you don't know what a Cross Site Request Forgery attack is, check these links:
+
+* http://isc.sans.org/diary.html?storyid=1750
+* http://en.wikipedia.org/wiki/Cross-site_request_forgery
+
+This plugin works by extending all forms created with #form_tag (including #form_for, #form_remote_tag, and #remote_form_for) by adding
+a token unique to each session id.  It also adds a filter that checks all non-GET requests for the existence of this token.  This should
+ensure that all non-GET actions have been correctly submitted from a form on your site.
+
+Keep in mind, this is NOT a silver-bullet, plug 'n' play, warm security blanket for your rails application.  There are a few guidelines you
+should follow:
+
+ * Keep your GET requests safe and idempotent.  More reading material:
+   * http://www.xml.com/pub/a/2002/04/24/deviant.html
+   * http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.1
+ * Make sure the session cookies that Rails creates are non-persistent.  Check in Firefox and look for "Expires: at end of session"
+
+I'd also like to make it clear, that for now this plugin should be considered experimental.  Don't install it and think that everything is
+hunky dory.  Test your stuff and send back patches or bug reports!
+
+USAGE
+==========
+
+  class FooController < ApplicationController
+    verify_token :secret => 'my-little-pony', :except => :index
+  end
+
+If you are using the cookie session store, you can take advantage of its own secret key by leaving the :secret option off:
+
+  class FooController < ApplicationController
+    # uses cookie session store
+    verify_token :except => :index
+  end
+
+See CsrfKiller module for details.
+
+TESTING
+===========
+
+The TestSession class has no @dbman value, so I add this snippet to my test_helper.rb:
+
+  ActionController::TestSession.class_eval do
+    def dbman
+      @dbman ||= CGI::Session::CookieStore.new(nil, 'secret' => 'csrf-killer')
+    end
+  end

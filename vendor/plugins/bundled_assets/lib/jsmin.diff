@@ -1,0 +1,13 @@
+Index: jsmin.rb
+===================================================================
+--- jsmin.rb (revision 283)
++++ jsmin.rb (revision 284)
+@@ -180,7 +180,7 @@
+                 end
+             when "\n"
+                 case ($theA)
+-                when "}","]",")","+","-","\"","\\"
++                when "}","]",")","+","-","\"","\\", "'", '"'
+                     action(1)
+                 else
+                     if (isAlphanum($theA))

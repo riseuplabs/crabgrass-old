@@ -1,0 +1,9 @@
+2007-11-05  Sean Soper <sean.soper@revolutionhealth.com>
+ * Ripping out of plugems architecture to make this into a standard plugin
+
+2007-11-01  Sean Soper <sean.soper@revolutionhealth.com>
+ * Fixed bug where an empty migrations_info table would create a non-parseable schema.rb
+ * Made plugin database independent
+ * Added capability to step through migrations using VERSION=[previous, next, first and last]
+ * dump_schema_information now returns all migrations, not just latest (credit to François Beausolei at http://blog.teksol.info/2007/11/1/enhanced-migrations-plugin-enhancement) 
+ * Added tests which use SQLite and a task (enhanced_migrations:clean_sqlite_db) to the harness's rakefile to help with testing

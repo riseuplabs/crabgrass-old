@@ -1,0 +1,19 @@
+Description:
+    The flex_image generator creates stubs for a new FlexImage model.
+
+    The generator takes a model name as its argument.  The model name may be
+    given in CamelCase or under_score and should not be suffixed with 'Model'.
+
+    The generator creates a model class in app/models, a test suite in
+    test/unit, test fixtures in test/fixtures/singular_name.yml, and a migration
+    in db/migrate.
+
+Example:
+    ./script/generate flex_image ProductImage
+
+    This will create a ProductImage model:
+        Model:      app/models/product_image.rb
+        Test:       test/unit/product_image_test.rb
+        Fixtures:   test/fixtures/product_images.yml
+        Migration:  db/migrate/XXX_add_product_images.rb
+

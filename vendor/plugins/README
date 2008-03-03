@@ -1,0 +1,36 @@
+plugins required by crabgrass
+-----------------------------
+
+acts_as_taggable
+  used for tagging pages
+
+acts_as_versioned
+  used for wiki versions
+
+flex_image
+  used to render and cache avatar thumbnails
+
+nested_layouts
+  add simple layout nesting ability.
+
+multiple_select
+  ui widget that lets you easily create a bunch of check boxes
+  from a habtm relationship.
+
+utility plugins
+---------------
+
+annotate_models
+  adds rake annotate_models
+
+
+currently unused
+----------------
+
+white_list
+  lets you disallow unsafe html tags, currently not used.
+
+browser_filters
+  unused
+  
+  
