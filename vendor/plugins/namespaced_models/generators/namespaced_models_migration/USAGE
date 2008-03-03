@@ -1,5 +1,0 @@
-Description:
-    Generates a migration to store full nested class names in the database.
-
-Examples:
-    ./script/generate namespaced_models_migration
