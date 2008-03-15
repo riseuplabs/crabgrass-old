@@ -50,6 +50,16 @@ class Tool::BaseController < ApplicationController
     end
   end
 
+  # ajax
+  def summary
+    @page.summary = params[:page][:summary]
+    @page.save
+
+    render :update do |page|
+      page.replace 'summary', :partial => 'pages/summary'
+    end
+  end
+
   protected
 
   def choose_layout

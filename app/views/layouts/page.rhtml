@@ -6,6 +6,7 @@
   <div id='titlebox'>
     <div id='breadcrumbs'><%= link_to_breadcrumbs %></div>
     <%= render :partial => 'pages/title' -%>
+    <%= render :partial => 'pages/summary' -%>
   </div>
   <%= yield %>
   <%= render :partial => 'posts/list' if @show_posts %>  

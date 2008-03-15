@@ -40,6 +40,20 @@ div#title_text:hover span#title_edit_link {
 div#title_text span {
 }
 
+/* summary */
+div#summary_text span#summary_edit_link {
+  font-size: 8pt;
+  opacity: 0;
+}
+div#summary_text:hover span#summary_edit_link {
+  opacity: 1;
+}
+#summary_editor {
+  margin-top: 15px;
+}
+div#summary_text span {
+}
+
 /* posts */
 div#posts {
   margin-top: 1em
