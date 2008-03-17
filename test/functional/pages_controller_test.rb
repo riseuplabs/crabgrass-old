@@ -5,7 +5,7 @@ require 'pages_controller'
 class PagesController; def rescue_action(e) raise e end; end
 
 class PagesControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users
+  fixtures :pages, :users, :user_participations, :groups, :group_participations, :memberships, :profiles
 
   def setup
     @controller = PagesController.new
@@ -29,15 +29,30 @@ class PagesControllerTest < Test::Unit::TestCase
   end
   
   def test_add_access
-    login_as :orange
-# i don't think this test is working correctly --af    
-#    post :access, :id => 1, :add_name => "public_group"
-#    assert :success
-#    assert_nil flash[:error], 'adding access to public group'
+    pg = Page.find(1)
+    assert pg, 'page should exist'
+
+    user = User.find_by_login('orange')
+    assert user, 'user should exist'
+    assert user.may?(:admin, pg), 'user should be able to admin page'
+    login = login_as(:orange)
+    assert_equal login, 5, 'should login as user 5'
+ 
+    group = Group.find_by_name('public_group_everyone_can_see')
+    assert group, 'group should exist'
+    assert !group.may?(:admin, pg), 'public group should not have access to page'
+
+    post 'access', :id => pg.id, :add_name => group.name
+    assert user.may_pester?(group), 'user should be able to pester pub group'
+    pg.reload
+    assert group.may?(:admin, pg), 'public group should have access to page'
     
-#    post :access, :id => 1, :add_name => "private_group12"
-#    assert :success
-#    assert_equal 'you do not have permission to do that', flash[:error],
-#                  'adding access to private group'
+    group_private = Group.find_by_name('private_group_not_everyone_can_see')   
+    assert group, 'private group should exist'
+    assert !group_private.may?(:admin, pg), 'private group should not have access to page originally'
+ 
+    post 'access', :id => pg.id, :add_name => group_private.name
+    pg.reload
+    assert !group_private.may?(:admin, pg), 'private group should still not have access to page'
   end
 end
