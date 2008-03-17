@@ -13,11 +13,21 @@ class Tool::BaseControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_set_summary
-    login_as :quentin
-    # there is something wrong with the following line...
-    xhr :post, :summary, :page_id => 1, :summary => "new summary"
-    
-    assert_equal Page.find(1).summary, "new summary"
+  def test_set_title
+    login_as(:orange)
+    post :title, :page_id => 1, :page => {:title => "new title"}
+    assert_equal "new title", Page.find(1).title
   end
+
+  def test_set_summary_ajax
+    login_as :orange
+    xhr :post, :summary, :page_id => 1, :page => {:summary => "new summary"}    
+    assert_equal "new summary", Page.find(1).summary
+  end
+
+#  def test_set_summary_without_ajax
+#    login_as :orange
+#    post :summary, :page_id => 1, :page => {:summary => "new summary"}    
+#    assert_equal "new summary", Page.find(1).summary
+#  end
 end
