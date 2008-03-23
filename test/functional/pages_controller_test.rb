@@ -29,30 +29,61 @@ class PagesControllerTest < Test::Unit::TestCase
   end
   
   def test_add_access
-    pg = Page.find(1)
-    assert pg, 'page should exist'
+    page = Page.find(1)
+    assert page, 'page should exist'
 
     user = User.find_by_login('orange')
     assert user, 'user should exist'
-    assert user.may?(:admin, pg), 'user should be able to admin page'
+    assert user.may?(:admin, page), 'user should be able to admin page'
     login = login_as(:orange)
     assert_equal login, 5, 'should login as user 5'
  
     group = Group.find_by_name('public_group_everyone_can_see')
     assert group, 'group should exist'
-    assert !group.may?(:admin, pg), 'public group should not have access to page'
+    assert !group.may?(:admin, page), 'public group should not have access to page'
 
-    post 'access', :id => pg.id, :add_name => group.name
+    post 'access', :id => page.id, :add_name => group.name
     assert user.may_pester?(group), 'user should be able to pester pub group'
-    pg.reload
-    assert group.may?(:admin, pg), 'public group should have access to page'
+    page.reload
+    assert group.may?(:admin, page), 'public group should have access to page'
     
     group_private = Group.find_by_name('private_group_not_everyone_can_see')   
     assert group, 'private group should exist'
-    assert !group_private.may?(:admin, pg), 'private group should not have access to page originally'
+    assert !group_private.may?(:admin, page), 'private group should not have access to page originally'
  
-    post 'access', :id => pg.id, :add_name => group_private.name
-    pg.reload
-    assert !group_private.may?(:admin, pg), 'private group should still not have access to page'
+    post 'access', :id => page.id, :add_name => group_private.name
+    page.reload
+    assert !group_private.may?(:admin, page), 'private group should still not have access to page'
   end
+  
+
+  def test_remove_from_my_inbox
+    login_as :blue
+    get :create  # need this to make @controller.current_user = blue
+    user = @controller.current_user
+    
+    name = 'my new page'
+    page = Tool::TextDoc.new do |p|
+      p.title = name.titleize
+      p.name = name.nameize
+      p.created_by = user
+    end
+    page.save
+    page.add(user)
+    page.save!
+    
+    assert user.may?(:admin, page), "blue should have access to new wiki"
+    
+    inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
+    assert_equal page.id, inbox_pages.first.id, "new wiki should be first thing in blue's inbox"
+    
+    post 'remove_from_my_pages', :id => page.id
+    page.reload
+    
+    inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
+    assert inbox_pages.find {|p| p.id == page.id} == nil, "new wiki should not be in blue's inbox"
+    
+    assert user.may?(:admin, page), "blue should still have access to new wiki"
+  end
+  
 end

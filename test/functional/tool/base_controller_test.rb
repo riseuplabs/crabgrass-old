@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/base_controller'
+#require 'tool/base_controller'
 
 # Re-raise errors caught by the controller.
 class Tool::BaseController; def rescue_action(e) raise e end; end

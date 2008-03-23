@@ -98,7 +98,7 @@ class PageFinderTest < Test::Unit::TestCase
     assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
   end
 
-  def test_inbox_count
+  def test_unread_inbox_count
     login(:blue)
     user = users(:blue)
     
