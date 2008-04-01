@@ -84,7 +84,9 @@ class AddPermissionsToProfiles < ActiveRecord::Migration
       profile.save!
     end
     
+    remove_index :profiles, :name => :profiles_index
     remove_column :profiles, :all
+    add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
     remove_column :profiles, :layout_type
     remove_column :profiles, :layout_data
     remove_column :groups, :publicly_visible_group

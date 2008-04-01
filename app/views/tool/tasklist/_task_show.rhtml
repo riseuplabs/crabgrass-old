@@ -4,7 +4,7 @@ details_id   = "#{task_id}_details"
 links = []
 task.users.each do |user|
   if user == current_user
-    links << link_to(current_user.login, me_url(:action => 'tasks', :id => nil))
+    links << link_to(current_user.login, :controller => 'my_tasks', :action => nil, :id => nil)
   else
     links << link_to_user(user, :action => 'tasks')
   end

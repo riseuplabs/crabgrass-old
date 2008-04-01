@@ -22,6 +22,10 @@ class Asset < ActiveRecord::Base
       klass.validates_as_attachment
     end
   end
+  def save_version_on_create_with_thumbnails_excluded
+    save_version_on_create_without_thumbnails_excluded unless parent_id
+  end
+  alias_method_chain :save_version_on_create, :thumbnails_excluded
 
   # when cloning a model, we need to set the new versions file data
   def clone_versioned_model_with_file_data(orig_model, new_model)

@@ -1,0 +1,27 @@
+<div class='tabinfo'>
+Task lists I have access to. 
+<%= link_to 'create new task list &raquo;', create_page_url(Tool::TaskList) %>
+</div>
+
+<div class='columns'>
+  <div class='left-small'>
+    <div>
+      <span>My tasks</span>
+      <%= task_link('pending', :action => 'pending', :selected => ['pending','index']) %>
+      <%= task_link('completed', :action => 'completed') %>
+    </div>
+    <% if @user.groups %>
+    <div>
+      <span>Tasks for</span>
+      <% @user.groups.each do |g| -%>
+        <%= task_link(g.name, :action => 'group', :id => g.id) %>
+      <% end -%>
+    </div>
+    <% end -%>
+  </div>
+  <div class='right-big'><table><tr><td>
+    <%= render :partial => 'tool/tasklist/external_list_tasks' %>
+    </td></tr></table>
+  </div>
+</div>
+

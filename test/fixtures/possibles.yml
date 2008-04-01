@@ -1,5 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first:
   id: 1
+  poll_id: 1
+  name: possibility one
+  description: desc of first possibility
+  
 another:
   id: 2
+  poll_id: 1
+  name: possibility two
+  description: desc of 2nd possiblity

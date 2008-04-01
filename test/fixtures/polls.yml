@@ -1,5 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+first_poll:
   id: 1
+  
 another:
   id: 2

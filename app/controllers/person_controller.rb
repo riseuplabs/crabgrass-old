@@ -32,7 +32,7 @@ class PersonController < ApplicationController
     options = options_for_participation_by(@user)
     options[:conditions] += " AND user_participations.resolved = ?"
     options[:values] << false
-    @pages = Page.find_by_path(['type','task-list'], options)
+    @pages = Page.find_by_path('type/task', options)
     @task_lists = @pages.collect{|p|p.data}
   end
     

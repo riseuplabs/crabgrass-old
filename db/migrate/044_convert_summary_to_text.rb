@@ -1,10 +1,10 @@
 class ConvertSummaryToText < ActiveRecord::Migration
   def self.up
-    execute "ALTER TABLE `pages` MODIFY `summary` TEXT"
+    change_column :pages, :summary, :text
   end
 
   def self.down
-    execute "ALTER TABLE `pages` MODIFY `summary` VARCHAR(255) default NULL"
+    change_column :pages, :summary, :text
   end
 end
 

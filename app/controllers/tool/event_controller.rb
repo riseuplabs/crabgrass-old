@@ -53,6 +53,7 @@ class Tool::EventController < Tool::BaseController
       @event = ::Event.new params[:event]
       @page.data = @event
       if @page.save
+        add_participants!(@page, params)
         return redirect_to(page_url(@page))
       else
         message :object => @page

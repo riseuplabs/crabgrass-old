@@ -1,5 +1,5 @@
 class PasswordsController < ApplicationController
-  skip_before_filter :login_required, :only => [:new, :create]
+  before_filter :login_required, :except => [:new, :create]
   verify :method => :post, :only => [:create, :update], :redirect_to => :edit
 
   # Enter email address to recover password
@@ -8,10 +8,10 @@ class PasswordsController < ApplicationController
 
   # Forgot password action
   def create
-    #return unless request.post?
+    return render(:nothing) unless request.post?
     #FIXME is this safe?
     if @user = User.find_for_forget(params[:email])
-      @user.forgot_password
+      @user.forgot_password # TODO: email the result to :email (?)
       @user.save
       flash[:notice] = "A password reset link has been sent to your email."
       redirect_to login_path
@@ -72,3 +72,4 @@ class PasswordsController < ApplicationController
   end
 
 end
+

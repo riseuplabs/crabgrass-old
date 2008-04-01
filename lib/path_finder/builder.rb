@@ -102,7 +102,7 @@ class PathFinder::Builder
     filters.each do |filter|
       filter_method = "filter_#{filter[0].gsub('-','_')}"
       args = filter.slice(1..-1) # remove first element.
-      RAILS_DEFAULT_LOGGER.debug [filter, filter_method, args].to_yaml
+      #RAILS_DEFAULT_LOGGER.debug [filter, filter_method, args].to_yaml
       self.send(filter_method, *args) if self.respond_to? filter_method
     end
   end

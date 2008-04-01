@@ -1,42 +1,44 @@
 module Tool::ToolCreation
 
   def create_new_page(page_class=nil)
-    groups    = get_groups
-    users     = get_users
     page_type = page_class || get_page_type
-    
     Page.transaction do
       page = page_type.create params[:page].merge({:created_by_id => current_user.id})
-      groups.each do |group|
-        page.add(group, :access => :admin)
-        users += group.users if params[:announce]
+      if page.valid?
+        add_participants!(page, params)
+        page.tag_with(params[:tag_list]) if params[:tag_list]
       end
-      users.uniq.each do |u|
-        if u.member_of? groups
-          page.add(u)
-        else
-          page.add(u, :access=>:admin)
-        end
-      end
-      page.tag_with(params[:tag_list]) if params[:tag_list]
       page
     end
   end
 
   protected
-  
-  def get_groups
-    if params[:group_name].any?
-      group = Group.get_by_name params[:group_name]
-      raise Exception.new('no such group %s' % params[:group_name]) if group.nil?
-      [group]
-    elsif params[:group_id].any?
-      group = Group.find_by_id params[:group_id]
-      raise Exception.new('no such group') if group.nil?
-      [group]
-    else
-      []
+
+  def add_participants!(page, options={})
+    users     = get_users
+    if (group = get_group(options))
+      page.add(group, :access => :admin)
+      users += group.users if options[:announce]
     end
+    users.uniq.each do |u|
+      if u.member_of? group
+        page.add(u)
+      else
+        page.add(u, :access=>:admin)
+      end
+    end
+  end
+
+  def get_groups
+    [get_group(params)]
+  end
+
+  def get_group(options = {})
+    return unless options[:group_name].any? or options[:group_id].any?
+    if options[:group_name]
+      return Group.get_by_name(options[:group_name]) || raise(Exception.new('no such group %s' % options[:group_name]))
+    end
+    Group.find_by_id(options[:group_id])
   end
   
   def get_users

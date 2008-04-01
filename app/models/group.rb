@@ -1,40 +1,32 @@
-# == Schema Information
-# Schema version: 24
-#
-# Table name: groups
-#
-#  id             :integer(11)   not null, primary key
-#  name           :string(255)   
-#  summary        :string(255)   
-#  url            :string(255)   
-#  type           :string(255)   
-#  parent_id      :integer(11)   
-#  admin_group_id :integer(11)   
-#  council        :boolean(1)    
-#  created_at     :datetime      
-#  updated_at     :datetime      
-#  avatar_id      :integer(11)   
+=begin
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.string   "full_name"
+    t.string   "summary"
+    t.string   "url"
+    t.string   "type"
+    t.integer  "parent_id"
+    t.integer  "admin_group_id"
+    t.boolean  "council"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "avatar_id"
+    t.string   "style"
+  end
 
-
-#  group.name       => string
-#  group.summary    => string
-#  group.url        => string
-#  group.council    => boolean
-#  group.created_on => date
-#  group.updated_on => time
-#  group.children   => groups
-#  group.parent     => group
-#  group.admin_group  => nil or group
-#  group.nodes      => nodes
-#  group.users      => users
-#  group.picture    => picture
-
+  associations:
+  group.children   => groups
+  group.parent     => group
+  group.admin_group  => nil or group
+  group.users      => users
+=end
 
 class Group < ActiveRecord::Base
 
   #track_changes :name
   acts_as_modified
-
+  attr_accessible :name, :full_name, :short_name, :summary
+  
   ####################################################################
   ## about this group
 
@@ -64,11 +56,18 @@ class Group < ActiveRecord::Base
   belongs_to :avatar
   has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile', :extend => Profile::Methods
   
-  has_many :tags, :finder_sql => %q[
-    SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
-    WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
-      (SELECT pages.id FROM pages INNER JOIN group_participations ON pages.id = group_participations.page_id
-      WHERE group_participations.group_id = #{id})]
+  # TODO: this is really really horrible.
+  has_many :tags,
+    :finder_sql => %q[
+      SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
+      WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
+        (SELECT pages.id FROM pages INNER JOIN group_participations ON pages.id = group_participations.page_id
+        WHERE group_participations.group_id = #{id})],
+    :counter_sql => %q[
+      SELECT COUNT(DISTINCT tags.id) FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
+      WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
+        (SELECT pages.id FROM pages INNER JOIN group_participations ON
+         pages.id = group_participations.page_id WHERE group_participations.group_id = #{id})]
   
   # name stuff
   def to_param; name; end
@@ -141,6 +140,7 @@ class Group < ActiveRecord::Base
   def may_be_pestered_by?(user)
     return true if user.member_of?(self)
     return true if publicly_visible_group
+    return parent.may_be_pestered_by?(user) if parent && parent.publicly_visible_committees
     return false
   end
   

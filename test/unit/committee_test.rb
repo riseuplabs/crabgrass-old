@@ -120,8 +120,8 @@ class CommitteeTest < Test::Unit::TestCase
     
     u = User.create :login => 'user'
     
-    assert c.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
-    assert u.may_pester?(c) == true, 'should be able to pester committee of group with public committees'
+    assert c.may_be_pestered_by?(u), 'should be able to be pestered by user'
+    assert u.may_pester?(c), 'should be able to pester committee of group with public committees'
   end
 end
 

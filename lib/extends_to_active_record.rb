@@ -45,7 +45,7 @@ ActiveRecord::Base.class_eval do
   #
   # class_inheritable_accessor is very close to what we want. However, when
   # an attr is defined with class_inheritable_accessor, the accessor is not
-  # called when it appears in a class definition, and I don't understand why.
+  # called when it appears in a subclass definition, and I don't understand why.
   #
   def self.class_attribute(*keywords)
     for word in keywords
@@ -148,10 +148,10 @@ class ActionView::Base
 # i really want to be able to use link_to(:id => 'group+name') and not have
 # it replace '+' with some ugly '%2B' character.
 
-  alias_method :rails_link_to, :link_to
-  def link_to(name, options = {}, html_options = nil, *parameters_for_method_reference)
-     rails_link_to(name, options, html_options, parameters_for_method_reference).sub('%2B','+')
+  def link_to_with_pretty_plus_signs(*args)
+    link_to_without_pretty_plus_signs(*args).sub('%2B','+')
   end
+  alias_method_chain :link_to, :pretty_plus_signs
   
 end
 

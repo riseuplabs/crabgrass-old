@@ -22,14 +22,14 @@
 class AddLockingToWiki < ActiveRecord::Migration
   def self.up
     rename_column :wikis, :version, :lock_version
-    execute "ALTER TABLE `wikis` ALTER COLUMN `lock_version` SET DEFAULT 0"
+    change_column :wikis, :lock_version, :integer, :default => 0
     add_column :wikis, :locked_at, :datetime
     add_column :wikis, :locked_by_id, :integer
   end
 
   def self.down
     rename_column :wikis, :lock_version, :version
-    execute "ALTER TABLE `wikis` ALTER COLUMN `version` DROP DEFAULT"
+    change_column :wikis, :version, :integer
     remove_column :wikis, :locked_at
     remove_column :wikis, :locked_by_id
   end

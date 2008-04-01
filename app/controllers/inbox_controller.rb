@@ -8,9 +8,11 @@ class InboxController < ApplicationController
     if request.post?
       update
     else
+      params[:path] ||= []
       path = params[:path]
       path = ['starred','or','unread','or','pending'] if path.first == 'vital'
       path << 'descending' << 'updated_at'
+
       @pages, @sections = Page.find_and_paginate_by_path(path, options_for_inbox)
       add_user_participations(@pages)
       handle_rss  :title => 'Crabgrass Inbox', :link => '/me/inbox',

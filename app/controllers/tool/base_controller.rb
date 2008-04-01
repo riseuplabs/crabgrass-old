@@ -1,7 +1,7 @@
 # super class controller for all page types
 
 class Tool::BaseController < ApplicationController
-  include ToolCreation
+  include Tool::ToolCreation
 
   layout :choose_layout
   

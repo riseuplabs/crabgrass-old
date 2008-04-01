@@ -1,36 +1,118 @@
-plugins required by crabgrass
------------------------------
+PLUGINS
+==========================================================
 
-acts_as_taggable
-  used for tagging pages
+ActiveRecord Plugins
+--------------------
+
+acts_as_list:
+  once part of rails core.
+
+acts_as_modified_edge:
+  lets you test which properties have been modified of an activerecord.
+
+acts_as_rateable
+  adds ratings to activerecords. Used to rate comments.
+
+acts_as_tree
+  once part of rails core.
 
 acts_as_versioned
-  used for wiki versions
+  used to do wiki versioning.
+
+has_many_polymorphs
+  allows polymorphic has_many. Used for tagging.
+
+namespaced_models
+  fixes bugs with namespaced models.
+
+  
+Media Plugins
+-------------
+
+attachment_fu
+  helps with uploaded assets
 
 flex_image
-  used to render and cache avatar thumbnails
+  like attachment_fu, should be replaced, currently used for avatars.
 
-nested_layouts
-  add simple layout nesting ability.
+ruby-svg
+  hooks to draw svg, used for experimental page contribution rendering.
+
+UI Plugins
+----------
+
+calendar_date_select
+  javascript calendar widget 
+
+classic_pagination
+  once part of rails core.
 
 multiple_select
-  ui widget that lets you easily create a bunch of check boxes
-  from a habtm relationship.
+  widget for habtm checkboxes and selection tree.
 
-utility plugins
+mested_layouts
+  lets you enclose one layout in another.
+
+text_editor_helper
+  formatting buttons for textareas.
+
+bundled_assets
+  bundle and compress many js and css files into one.
+  see below for more notes.
+
+will_paginate
+  pagination should be moved over to this
+  
+Testing Plugins
 ---------------
 
-annotate_models
-  adds rake annotate_models
+mocha
+  a library for mocking and stubbing
 
+rspec
+  a behaviour driven development framework
 
-currently unused
-----------------
+spider_test
+  crawls the views.
 
-white_list
-  lets you disallow unsafe html tags, currently not used.
+webrat
+  write acceptance tests for rails ui
 
-browser_filters
-  unused
+Core Plugins
+------------
+
+thinking_sphinx
+  full text searching.
+
+tztime & tzinfo_timezone
+  for easy-ish handling of user timezones
   
-  
+PLUGIN NOTES
+===========================================================
+
+bundled_assets
+--------------
+
+This plugin allows us to have many css and javascript files, with lots of comments, and it will combine them and compress them when in production mode. This makes the stylesheets reabable, easy to edit, and much faster.
+
+For this to work, the stylesheet and javascript tags should look like this:
+
+<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type="text/css" media="screen" charset="utf-8" />
+
+<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>
+
+http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
+
+NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
+
+nested_layouts
+--------------
+
+Lets us have layouts that nest inside other layouts. Very useful.
+For example:
+
+<% inside_layout 'application' do -%>
+<div class='custom'>
+  <%= yield %>
+</div>
+<% end -%>

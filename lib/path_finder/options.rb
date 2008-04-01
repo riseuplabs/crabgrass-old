@@ -104,17 +104,18 @@ module PathFinder::Options
 
   def options_for_group(group, args={})
     options = {}
+    group_id = group.is_a?(Group) ? group.id : group.to_i
     if logged_in?
       # the group's pages that current_user also has access to
       # this means: the group must have a group participation and one of the following
       # must be true... the page is public, we have a user participation for it, or a group
       # that we are a member of has a group participation for the page.
       options[:conditions] = "(group_participations.group_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?))"
-      options[:values]     = [group.id, current_user.all_group_ids, current_user.id, true]
+      options[:values]     = [group_id, current_user.all_group_ids, current_user.id, true]
     else
       # the group's public pages
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
-      options[:values]     = [group.id, true]
+      options[:values]     = [group_id, true]
     end
     default_find_options.merge(options).merge(args)
   end

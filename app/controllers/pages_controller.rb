@@ -38,7 +38,7 @@ class PagesController < ApplicationController
 
   ##############################################################
   ## PUBLIC ACTIONS
-  
+=begin # do we ever use this action?  
   def search
     unless @pages
       if logged_in?
@@ -49,6 +49,7 @@ class PagesController < ApplicationController
       @pages, @page_sections = Page.find_and_paginate_by_path(params[:path], options)
     end
   end
+=end
 
   # a simple form to allow the user to select which type of page
   # they want to create. the actual create form is handled by
@@ -191,6 +192,7 @@ class PagesController < ApplicationController
   
   ##############################################
   ## page participation modifications
+  # should these get moved to a user_participations_controller?
   
   def remove_from_my_pages
     @upart.destroy

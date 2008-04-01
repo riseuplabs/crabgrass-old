@@ -5,7 +5,7 @@ If you remove <b><%= @user.name %></b> as a contact, you will not be able to see
 
 <p>Are you sure you wish to break contact with <b><%= @user.name %></b>?</p>
 
-<% form_for :action => 'add' do -%>
+<% form_tag :action => 'remove' do -%>
 <%= submit_tag 'Cancel', :name => 'cancel' %>
 <%= submit_tag 'Remove Contact', :name => 'remove' %>
 <% end %>

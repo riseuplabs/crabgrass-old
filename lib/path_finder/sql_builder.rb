@@ -78,7 +78,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
         union_sql << 'WHERE %s' % union[:where] if union[:where]
         union_sql.join(" ")
       end
-      sql << "(" + unions.join(') UNION (') + ')' 
+      sql << unions.join(' UNION ')
     else
       sql << "SELECT %s"   % query[:select]
       sql << "FROM pages"

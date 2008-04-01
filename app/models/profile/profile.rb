@@ -68,7 +68,7 @@ class Profile::Profile < ActiveRecord::Base
     }
     
     profile_params.stringify_keys!
-    params = profile_params.limit_keys_to(valid_params)
+    params = profile_params.allow(valid_params)
     # save nil if value is an empty string:
     params.each do |key,value|
       params[key] = nil unless value.any?

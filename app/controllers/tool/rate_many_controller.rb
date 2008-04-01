@@ -1,6 +1,7 @@
 class Tool::RateManyController < Tool::BaseController
   before_filter :fetch_poll
-    
+  javascript :extra
+  
   def show
   	@possibles = @poll.possibles.sort_by{|p| p.position||0 }
   end

@@ -8,7 +8,12 @@ blue2:
 blue3:
   group_id: 3
   user_id: 4
-
+blue4:
+  group_id: 1000
+  user_id: 4
+blue5:
+  group_id: 2000
+  user_id: 4
 # group 1
 
 one:
@@ -33,6 +38,15 @@ f:
   group_id: 3
   user_id: 9
   
+# rainbows warm committee
+# blue and quentin are on it
+fa:
+  group_id: 31
+  user_id: 1
+fb:
+  group_id: 31
+  user_id: 4
+
 # animals
 
 g:

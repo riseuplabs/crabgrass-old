@@ -26,6 +26,12 @@ class ProfileTest < Test::Unit::TestCase
 
   end
   
+  def test_public_private
+    user = users(:green)
+    assert_not_equal nil, user.profiles.public.id, 'should have a public profile'
+    assert_not_equal nil, user.profiles.private.id, 'should have a private profile'
+  end
+  
   def test_permissions
     blue = users(:blue)
     red = users(:red)

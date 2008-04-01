@@ -60,6 +60,8 @@ class MembershipController < ApplicationController
   ###### ADMIN ACTIONS #########################################################
 
   def update
+    return redirect_to(:action => 'list', :id => @group) unless request.post?
+
     if @group.committee? and params[:group]
       new_ids = params[:group][:user_ids]
       @group.memberships.each do |m|  
@@ -71,8 +73,8 @@ class MembershipController < ApplicationController
         @group.memberships.create(:user => u) if u.member_of?(@group.parent) and not u.direct_member_of?(@group)
       end
       message :success => 'member list updated'
-      redirect_to :action => 'list', :id => @group
     end
+    redirect_to :action => 'list', :id => @group
   end
 
   def invite
@@ -121,10 +123,10 @@ class MembershipController < ApplicationController
   prepend_before_filter :fetch_group
   def fetch_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
-    if @group
+    if @group and (@group.publicly_visible_members or (@group.committee? and @group.parent.publicly_visible_members) or current_user.member_of? @group) ##committees need to be handled better
       return true
     else
-      render :action => 'not_found'
+      render :action => 'show_nothing'
       return false
     end
   end
@@ -135,6 +137,8 @@ class MembershipController < ApplicationController
   end
   
   def authorized?
+    return ((logged_in? and current_user.member_of? @group) or @group.profiles.public.may_see_members?) if params[:action] == 'list'
+    
     non_members_post_allowed = %w(join)
     non_members_get_allowed = %w(list) + non_members_post_allowed
     if request.get? and non_members_get_allowed.include? params[:action]

@@ -29,6 +29,7 @@ class PageStork
         r.name = 'Add user %s to group %s?'.t % link(user, group)
       end
     end
+    page.save
     page.add(group)
     page.add(group.users)
   end
@@ -42,6 +43,7 @@ class PageStork
       p.flow = FLOW[:membership]
       p.resolved = false
     end
+    page.save
     page.add(user, :access => :admin)
     page.add(group, :access => :admin)
     if options[:message].any?
@@ -63,6 +65,7 @@ class PageStork
         r.name = 'Join group %s?'.t % link(group)
       end
     end
+    page.save
     page.add(user, :access => :admin)
   end
 
@@ -76,6 +79,7 @@ class PageStork
       p.flow = FLOW[:membership]
       p.resolved = false
     end
+    page.save
     page.add(group, :access => :admin)
     page.add(user, :access => :admin)
     if options[:message].any?
@@ -96,6 +100,7 @@ class PageStork
       end
       p.flow = FLOW[:contacts]
     end
+    page.save
     page.add(contact, :access => :admin)
     #if options[:message].any?
     #  page.build_post(options[:message],user)
@@ -112,6 +117,7 @@ class PageStork
       i.flow = FLOW[:contacts]
       i.resolved = false
     end
+    info.save
     info.add(user, :access => :admin)
     info.add(contact, :access => :admin)
     if options[:message].any?
@@ -129,6 +135,7 @@ class PageStork
       p.name = name.nameize
       p.created_by = user
     end
+    page.save
     page.add(group)
     if options[:body]
       page.data = Wiki.new(:body => options[:body], :page => page)
@@ -148,6 +155,7 @@ class PageStork
       post.user = from 
       p.discussion.posts << post 
     end 
+    page.save
     page.add(from, :access => :admin) 
     page.add(to, :access => :admin) 
     page 
@@ -160,6 +168,7 @@ class PageStork
 	e.title = options[:title]
 	e.created_by = user
     end
+    page.save
     page.add(group)
     page
   end

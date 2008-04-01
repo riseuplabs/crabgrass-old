@@ -1,9 +1,12 @@
 CRABGRASS
 =========================================================
 
-Crabgrass is a software libre web application designed for group and network organizing, and tailored to the needs of the global justice movement. The long term goal is to provide the technical tools to facilitate active, confederal, and directly democratic social change networks.
+Crabgrass is a software libre web application designed for group and network
+organizing, and tailored to the needs of the global justice movement. The long
+term goal is to provide the technical tools to facilitate active, confederal,
+and directly democratic social change networks.
 
-INSTALL
+INSTALL FOR DEVELOPMENT
 =========================================================
 
 debian/ubuntu
@@ -12,13 +15,7 @@ debian/ubuntu
 required:
   apt-get install rubygems
   gem install -y rails
-  gem install redcloth
-  gem install rmagick
-  gem install tzinfo
-
-optional for ferret:
-  apt-get install ruby1.8-dev build-essential
-  gem install ferret
+  gem install redcloth rmagick tzinfo ruby-debug
 
 optional for latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
@@ -31,114 +28,38 @@ set up your database:
   edit config/database.yml
   mysqladmin create crabgrass
   rake db:migrate
+  rake db:fixtures:load
+
+INSTALL FOR PRODUCTION
+==========================================================
+
+To be written...
 
 logger:
-  By default production.rb is set to use SyslogLogger.
-  Either comment this out or 'gem install SyslogLogger'
+  You can run analysis on the logs using pl_analyze
+  if the SyslogLogger gem is installed. 
 
-
-PLUGINS
+FURTHER READING
 =========================================================
 
-flex_image
-------------------
+vendor/plugins/README: details on each plugin.
 
-see http://beautifulpixel.com/flex_image/index.html
-ruby script/plugin install http://beautifulpixel.com/svn/plugins/flex_image/
-sudo apt-get install librmagick-ruby1.8
-some feature overlap with attachment_fu. We should probably phase this out.
-
-acts_as_modified
-------------------
-
-Lets you test which properties have been modified of an activerecord.
-
-acs_as_taggable
-----------------
-
-Provides tagging. Should be replaced with act_as_taggable_on_steriods or has_many_polymorph.
-
-acts_as_versioned
-------------------
-
-Versioning for wikis and other things.
-
-attachment_fu
----------------
-
-Used for assets. Makes it much easier to work with uploaded data.
-
-multiple_select
----------------
-
-Adds fun helpers for has_and_belongs_to_many associations, such as
-a bunch of text boxes or a selection tree.
-
-nested_layouts
---------------
-
-Lets us have layouts that nest inside other layouts. Very useful.
-For example:
-
-<% inside_layout 'application' do -%>
-<div class='custom'>
-  <%= yield %>
-</div>
-<% end -%>
-
-bundled_assets
---------------
-
-This plugin allows us to have many css and javascript files, with lots of comments, and it will combine them and compress them when in production mode. This makes the stylesheets reabable, easy to edit, and much faster.
-
-For this to work, the stylesheet and javascript tags should look like this:
-
-<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type="text/css" media="screen" charset="utf-8" />
-
-<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>
-
-http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
-
-NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
-
-tztime
-------
-for easy-ish handling of user timezones
-
-tzinfo_timezone
----------------
-
-required by tztime
-
-OTHER PLUGINS
-========================
-
-plugins that are optional or that we do not currently use
-
-has_many_polymorphs
--------------------
-
-http://blog.evanweaver.com/articles/2006/06/02/has_many_polymorphs
-script/plugin install svn://rubyforge.org/var/svn/polymorphs/has_many_polymorphs
-
-ez-where
-------------------
-
-script/plugin install svn://rubyforge.org/var/svn/ez-where
-provides a nice way to do complex queries. 
-
-
-GEMS
+GEMS INFO
 =========================================================
 
-tzinfo: required by tzinfo_timezone + tztime
+tzinfo
+  required by tzinfo_timezone + tztime
 
-redcloth: greencloth derives from redcloth
+redcloth
+  greencloth derives from redcloth
 
-rmagick: used to scale avatars and build thumbnails
+rmagick
+  used to scale avatars and build thumbnails
 
-ferret: indexed full text searches.
+open4
+  used by latex renderer (optional)
 
-open4: used by latex renderer (optional)
+SyslogLogger
+  improved logging (optional)
 
-SyslogLogger: improved logging (optional)
+

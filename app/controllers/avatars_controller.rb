@@ -2,8 +2,8 @@
 # expire_page avatar_url(:id => @avatar)
 #
 
-class AvatarsController < ApplicationController
-
+class AvatarsController < ActionController::Base
+  session :off
   caches_page :show
  
   def create 

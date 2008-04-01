@@ -54,6 +54,7 @@ class Page < ActiveRecord::Base
       
   validates_presence_of :title
   validates_associated :data
+  validates_associated :discussion
 
   def unresolve
     resolve(false)
@@ -210,6 +211,15 @@ class Page < ActiveRecord::Base
     end
     self
   end
+
+  #extracted and refactored from the above
+  def add_new_user(user, attributes={})
+    attributes[:access] = ACCESS[attributes[:access]] if attributes[:access]
+    attributes[:notice] = [attributes[:notice].flatten] if attributes[:notice]
+    with_scope(:create => attributes.merge(:resolved => resolved?)) { users << user }
+    changed :users
+  end
+
       
   # remove a group or user participation from this page
   def remove(entity)
@@ -293,6 +303,28 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def self.default_index(index)
+    index.delta = true
+    index.includes.name
+    index.includes.title
+#    index.includes.summary
+    index.includes.auto_summary.body
+#    index.includes.auto_summary.type
+    index.includes.discussion.posts.body.as.comments
+#    index.includes.tags.name
+    
+    index.includes.user_participations.user_id
+    index.includes.group_participations.group_id
+    index.includes.created_by_id
+    
+    index.includes.resolved
+    index.includes.public
+    
+#    index.has.created_at
+#    index.has.updated_at
+  end
+  
+=begin    
   define_index do |index|
     index.delta = true
 
@@ -314,5 +346,6 @@ class Page < ActiveRecord::Base
 #    index.has.created_at
 #    index.has.updated_at
   end
+=end
 
 end

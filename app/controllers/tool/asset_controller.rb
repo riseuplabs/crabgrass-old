@@ -17,6 +17,7 @@ class Tool::AssetController < Tool::BaseController
         @page.title = @asset.basename
       end
       if @page.save
+        add_participants!(@page, params)
         return redirect_to(page_url(@page))
       else
         message :object => @page
@@ -35,7 +36,7 @@ class Tool::AssetController < Tool::BaseController
   end
 
   def destroy_version
-    asset_version = @page.data.find_version(params[:id])
+    asset_version = @page.data.versions.find_by_version(params[:id])
     asset_version.destroy
     respond_to do |format|
       format.html do

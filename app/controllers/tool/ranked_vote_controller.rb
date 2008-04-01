@@ -30,10 +30,10 @@ class BordaResult
 end
 
 class Tool::RankedVoteController < Tool::BaseController
-
-  stylesheet 'vote'
   before_filter :fetch_poll
-	before_filter :find_possibles, :only => [:show, :edit] 
+  before_filter :find_possibles, :only => [:show, :edit] 
+  stylesheet 'vote'
+  javascript :extra
      
   def show
     redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?

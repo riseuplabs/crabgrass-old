@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'ruby-debug'
 
 class AssetTest < Test::Unit::TestCase
   fixtures :groups
@@ -17,10 +18,14 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_versions_has_attachments
+    assert_equal 0, Asset::Version.count
     @asset = Asset.create :uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')
+    assert_equal 3, Asset::Version.count
     @asset.uploaded_data = fixture_file_upload(File.join('files','photos.png'), 'image/png')
     @asset.save
-    @version = @asset.versions.first
+    assert_equal 6, Asset::Version.count
+    versions = @asset.versions
+    @version = versions.first
     assert_equal @version.class, Asset::Version
     assert_equal @version.filename, 'image.png'
     assert_equal @version.thumbnail_name_for(:thumb), 'image_thumb.png'
@@ -31,7 +36,9 @@ class AssetTest < Test::Unit::TestCase
     assert_equal(File.read(RAILS_ROOT + '/test/fixtures/files/image.png'), File.read(@version.full_filename), 'version asset data should be the same as the original')
 
     assert File.exists?(@version.full_filename(:thumb))
-    assert_equal @version.thumbnails.size, @asset.thumbnails.size
+    asset_thumbnails = @asset.thumbnails
+    version_thumbnails = @version.thumbnails
+    assert_equal version_thumbnails.length, asset_thumbnails.length, "version: #{@version.thumbnails.length} thumbnails, asset: #{@asset.thumbnails.length} thumbnails"
 
     [nil, *@version.attachment_options[:thumbnails].keys].each do |thumb|
       assert(File.exists?(@version.full_filename(thumb)), "#{@version.full_filename(thumb)} should exist")

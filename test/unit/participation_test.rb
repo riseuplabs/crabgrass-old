@@ -16,7 +16,7 @@ class ParticipationTest < Test::Unit::TestCase
     p = pages(:page1)
     p.updated_at = Time.now
     p.save
-    user = users(:orange)
+    user = users(:red)
     part = p.participation_for_user user
     assert !part.viewed_at
     user.viewed(p)

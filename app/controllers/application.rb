@@ -21,8 +21,8 @@ class ApplicationController < ActionController::Base
   protected
   
   # let controllers set a custom stylesheet in their class definition
-  def self.stylesheet(cssfile=nil)
-    write_inheritable_attribute "stylesheet", cssfile if cssfile
+  def self.stylesheet(*css_files)
+    write_inheritable_attribute "stylesheet", css_files if css_files.any?
     read_inheritable_attribute "stylesheet"
   end
   
@@ -30,6 +30,12 @@ class ApplicationController < ActionController::Base
     @js_behaviours.to_s
   end
   
+  # let controllers require extra javascript
+  def self.javascript(mode=nil)
+    write_inheritable_attribute "javascript", mode if mode
+    read_inheritable_attribute "javascript"
+  end
+    
   def handle_rss(locals)
     if params[:path].any? and 
         (params[:path].include? 'rss' or params[:path].include? '.rss')

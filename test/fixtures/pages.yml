@@ -67,6 +67,17 @@ page<%=i%>:
   public: <%= rand(4) == 0 %>
 <% end %>
 
+ranked_vote:
+  id: 190
+  title: a ranked vote
+  type: Tool::RankedVote
+  data_type: Poll::Poll
+  data_id: 1
+  created_by_id: 1
+  created_by_login: quentin
+  updated_by_id: 3
+  updated_by_login: gerrard
+
 tasklist1:
   id: 200
   title: a task list
@@ -74,14 +85,20 @@ tasklist1:
   data_type: Task::TaskList
   data_id: 1
   created_by_id: 1
+  created_by_login: quentin
+  updated_by_id: 3
+  updated_by_login: gerrard
 tasklist2:
   id: 201
   title: another task list
   type: Tool::TaskList
   data_type: Task::TaskList
   data_id: 2
-  created_by_id: 1
   created_by_id: 4
+  created_by_login: blue
+  updated_by_id: 5
+  updated_by_login: orange
+  resolved: false
 event1:
   id: 202
   title : an event
@@ -135,3 +152,13 @@ flow_test:
   flow: 1
   public: 1
 
+wiki:
+  id: 210
+  title: test wiki
+  type: Tool::TextDoc
+  data_type: Wiki
+  data_id: 1
+  created_by_id: 1
+  created_by_login: quentin
+  updated_by_id: 3
+  updated_by_login: gerrard

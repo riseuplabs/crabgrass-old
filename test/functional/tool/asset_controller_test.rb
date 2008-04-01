@@ -21,6 +21,28 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     FileUtils.rm_rf(File.dirname(Asset.public_storage))
   end
 
+  def test_show
+    asset = Asset.create :uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')
+    page = create_page :data => asset
+    page.data.uploaded_data = fixture_file_upload(File.join('files','photos.png'), 'image/png')
+    page.data.save
+    assert File.exists?(page.data.full_filename)
+    assert File.exists?(version_filename = page.data.versions.find_by_version(1).full_filename)
+
+    @controller.stubs(:login_or_public_page_required).returns(true)
+    post :show, :page_id => page.id, :id => 1
+    assert_response :success
+    assert_template 'show'
+  end
+  
+  def test_create
+    # TODO: figure out what create action is supposed to do and then write this test
+  end
+  
+  def test_destroy
+    # TODO: figure out what destroy action is supposed to do and then write this test
+  end
+  
   def test_destroy_version
     User.current = nil
     asset = Asset.create :uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')
@@ -28,7 +50,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     page.data.uploaded_data = fixture_file_upload(File.join('files','photos.png'), 'image/png')
     page.data.save
     assert File.exists?(page.data.full_filename)
-    assert File.exists?(version_filename = page.data.find_version(1).full_filename)
+    assert File.exists?(version_filename = page.data.versions.find_by_version(1).full_filename)
     
     @controller.stubs(:login_or_public_page_required).returns(true)
     post :destroy_version, :controller => "tool/asset", :page_id => page.id, :id => 1

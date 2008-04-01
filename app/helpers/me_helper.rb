@@ -1,14 +1,4 @@
 module MeHelper
-
-  def task_link(text, id, default=false)
-    if default and params[:id].empty?
-      selected = 'selected'
-    else
-      selected = id == params[:id] ? 'selected' : ''
-    end
-    url = url_for :controller => 'me', :action => 'tasks', :id => id
-    link_to text, url, :class => "tasklink #{selected}"
-  end
   
   def pending_request_link
     s = @request_count == 1 ? '' : 's'

@@ -6,7 +6,7 @@ class Channel < ActiveRecord::Base
 
   has_many :users, :order => 'login asc', :through => :channels_users do
     def push_with_attributes(user, join_attrs)
-      ChannelsUser.with_scope(:create => join_attrs) { self << user }
+      ChannelsUser.create join_attrs.merge(:user => user, :channel => proxy_owner)
     end
 #    def cleanup
 #      connection.execute("DELETE FROM channels_users WHERE last_seen < DATE_SUB(\'#{ Time.now.strftime("%Y-%m-%d %H:%M:%S") }\', INTERVAL 1 MINUTE) OR last_seen IS NULL")

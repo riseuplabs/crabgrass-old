@@ -86,11 +86,18 @@ class Array
 end
 
 class Hash
-  # returns a copy of the hash, limited to keys that are in the specified array
-  def limit_keys_to(keys)
-    reject{|key,value| !keys.include?(key)}
+  # returns a copy of the hash,
+  # limited to the specified keys
+  def allow(*keys)
+    if keys.first.is_a? Array
+      keys = keys.first
+    end
+    hsh = {}
+    keys.each do |key|
+      value = self[key] || self[key.to_s] || self[key.to_sym]
+      hsh[key] = value if value
+    end
+    hsh
   end
 end
-
-
 

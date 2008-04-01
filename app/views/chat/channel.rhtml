@@ -1,3 +1,16 @@
+<%
+remote_url = {:controller => 'chat', :action => 'say', :id => @channel}
+
+loading_command = %(
+  msg = '<div class="message" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
+  $('entryfield').value = ''; 
+  $('entryfield').focus;
+  new Insertion.Bottom('stage', msg);
+  $('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight; )
+
+complete = "eval(request.responseText)"
+%>
+
 <% content_for :style do %>
   @import url(/stylesheets/chat.css);
 <% end %>
@@ -40,7 +53,7 @@ form_remote_tag :url => { :controller => 'chat',
     </td>
   </tr>
   </table>
-<%= end_form_tag %>
+<% end -%>
 
 <%= # poll server every wait_time seconds for new messages
 wait_time = 3

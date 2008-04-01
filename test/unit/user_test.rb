@@ -10,13 +10,13 @@ class UserTest < Test::Unit::TestCase
 
   ## ensure that a user and a group cannot have the same handle
   def test_namespace
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       u = create_user(:login => 'groups')
       assert u.errors.on(:login)
     end
   
     g = Group.create :name => 'robot-overlord'
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       u = create_user(:login => 'robot-overlord')
       assert u.errors.on(:login)
     end

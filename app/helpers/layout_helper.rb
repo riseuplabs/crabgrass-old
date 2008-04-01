@@ -74,17 +74,28 @@ module LayoutHelper
     'http://' + controller.request.host_with_port
   end
   
+  def optional_stylesheet
+    stylesheet_link_tag(*(stylesheet.to_a+[:cache => true])) if stylesheet
+  end
+    
   ############################################
   # JAVASCRIPT
   
+  def optional_javascript
+    javascript_include_tag('effects', 'dragdrop', 'controls', :cache => true) if need_extra_javascript?
+  end
+    
   def need_extra_javascript?
-    @javascript_extra
-    #true
+    if @javascript
+      @javascript == :extra
+    else
+      controller.class.javascript == :extra
+    end
   end
 
-  def get_unobtrusive_javascript
-    controller.get_unobtrusive_javascript
-  end
+#  def get_unobtrusive_javascript
+#    controller.get_unobtrusive_javascript
+# end
   
   ############################################
   # BANNER

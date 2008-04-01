@@ -1,0 +1,11 @@
+mj_bad:
+  id: 1
+  title: Bad
+  artist: Michael Jackson
+  rating: 8
+  
+mbv_loveless:
+  id: 2
+  title: Loveless
+  artist: My Bloody Valentine
+  rating: 10

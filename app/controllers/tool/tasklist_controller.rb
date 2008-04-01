@@ -4,6 +4,7 @@ class Tool::TasklistController < Tool::BaseController
   after_filter :update_participations,
     :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   stylesheet 'tasks'
+  javascript :extra
   
   def show 
   end

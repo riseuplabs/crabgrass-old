@@ -77,12 +77,12 @@ class DispatchController < ApplicationController
       return controller_for_groups if @group
       return controller_for_people if @user
       raise NameError.new
-    elsif page_handle =~ / (\d+)$/ || page_handle =~ /^(\d+)$/
+    elsif page_handle =~ /[ +](\d+)$/ || page_handle =~ /^(\d+)$/
       # if page handle ends with [:space:][:number:] or entirely just numbers
       # then find by page id. (the url actually looks like "my-page+52", but
       # pluses are interpreted as spaces). find by id will always return a
       #  globally unique page so we can ignore context
-      @page = find_page_by_id( $~[0] )
+      @page = find_page_by_id( $~[1] )
     elsif @group
       # find just pages with the name that are owned by the group
       # no group should have multiple pages with the same name

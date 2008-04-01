@@ -35,6 +35,7 @@ class GroupsController < ApplicationController
     elsif @group.publicly_visible_group
       @access = :public
     else
+      @group = nil
       return render(:template => 'groups/show_nothing')
     end
     
@@ -55,8 +56,17 @@ class GroupsController < ApplicationController
   end
 
   def archive
-    sql = "SELECT MONTH(pages.created_at) AS month, " + 
-     "YEAR(pages.created_at) AS year, count(pages.id) " +
+    #XXX: this belongs in the model
+    case Page.connection.adapter_name
+    when "SQLite"
+      dates = "strftime('%m', created_at) AS month, strftime('%Y', created_at) AS year"
+    when "MySQL"
+      dates = "MONTH(pages.created_at) AS month, YEAR(pages.created_at) AS year"
+    else
+      raise "#{Article.connection.adapter_name} is not yet supported here"
+    end
+
+    sql = "SELECT #{dates}, count(pages.id) " +
      "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
      "JOIN user_participations ON pages.id = user_participations.id " +
      "WHERE group_participations.group_id = #{@group.id} "
@@ -112,6 +122,7 @@ class GroupsController < ApplicationController
 
   def tasks
     @stylesheet = 'tasks'
+    @javascript = :extra
     @pages, @sections = Page.find_and_paginate_by_path('type/task/pending', options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
   end
@@ -124,20 +135,20 @@ class GroupsController < ApplicationController
     if @parent and not current_user.member_of?(@parent)
       message( :error => 'you do not have permission to do that'.t, :later => true )
       redirect_to url_for_group(@parent)
+      return
     end
 
     if request.post?
       if @parent
         @group = Committee.new(params[:group])
-        @group.parent = @parent
       else
         @group = Group.new(params[:group])
       end
-
       if @group.save
         message :success => 'Group was successfully created.'.t
         @group.memberships.create :user => current_user, :group => @group
         if @parent
+          @group.parent = @parent
           @parent.users.each do |u|
             u.clear_cache
           end
@@ -149,7 +160,6 @@ class GroupsController < ApplicationController
     else #create placeholder objects to base the form off
       if @parent
         @group = Committee.new
-        @group.parent = @parent
       else
         @group = Group.new
       end
@@ -158,21 +168,18 @@ class GroupsController < ApplicationController
 
   # login required
   def edit
-    if request.post? 
-      if @group.update_attributes(params[:group])
-        redirect_to :action => 'edit', :id => @group
-        message :success => 'Group was successfully updated.'
-      else
-        message :object => @group
-      end
-    end
   end
-    
+     
   # login required
   # post required
   def update
     @group.update_attributes(params[:group])
-    redirect_to :action => 'show', :id => @group
+    if @group.save
+      redirect_to :action => 'edit', :id => @group
+      message :success => 'Group was successfully updated.'
+    else
+      message :object => @group  
+    end
   end
   
   # login required

@@ -146,9 +146,9 @@ class Wiki < ActiveRecord::Base
   # because default_group_name just uses the primary group's name.
   def self.clear_all_html(group)
     # for wiki's owned by pages
-    Wiki.connection.execute("UPDATE wikis set wikis.body_html = NULL WHERE wikis.id IN (SELECT pages.data_id FROM pages WHERE pages.data_type='Wiki' and pages.group_id = #{group.id.to_i})")
+    Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE data_type='Wiki' and group_id = #{group.id.to_i})")
     # for wiki's owned by groups
-    Wiki.connection.execute("UPDATE wikis set wikis.body_html = NULL WHERE wikis.id IN (SELECT profiles.wiki_id FROM profiles WHERE profiles.entity_id = #{group.id.to_i})")
+    Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = #{group.id.to_i})")
   end
   
   def default_group_name

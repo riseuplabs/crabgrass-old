@@ -5,7 +5,7 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :groups
 
   def setup
     @controller = AccountController.new
@@ -14,9 +14,14 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_login_and_redirect
+    get :login
+    assert_response :success
+    assert_template 'login'
+    
     post :login, :login => 'quentin', :password => 'quentin'
     assert session[:user]
     assert_response :redirect
+    assert_redirected_to :controller => 'me', :action => 'index'
   end
 
   def test_should_fail_login_and_not_redirect
@@ -26,14 +31,14 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_allow_signup
-    assert_difference User, :count do
+    assert_difference 'User.count' do
       create_user
       assert_response :redirect
     end
   end
 
   def test_should_require_login_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:login => nil)
       assert assigns(:user).errors.on(:login)
       assert_response :success
@@ -41,7 +46,7 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_password_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:password => nil)
       assert assigns(:user).errors.on(:password)
       assert_response :success
@@ -49,27 +54,29 @@ class AccountControllerTest < Test::Unit::TestCase
   end
 
   def test_should_require_password_confirmation_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:password_confirmation => nil)
       assert assigns(:user).errors.on(:password_confirmation)
       assert_response :success
     end
   end
 
-  def test_should_not_allow_duplicate_username
-    assert_no_difference User, :count do
-      create_user(:login => 'quentin',
-                  :password => 'quentin',
-                  :password_confirmation => 'quentin')
-      assert assigns(:user).errors.on(:login)
-      assert_response :success
-    end
+  def test_should_not_allow_duplicate_username_or_groupname
+    [ users(:quentin).login, groups(:rainbow).name ].each { |login|
+      assert_no_difference 'User.count', "number of users should not increase when creating #{login}" do
+        create_user(:login => login,
+                    :password => 'passwd',
+                    :password_confirmation => 'passwd')
+        assert assigns(:user).errors.on(:login), "flash should yield error for #{login}"
+        assert_response :success, "response to creating #{login} should be success"
+      end
+    }
   end
 
 =begin
   #currently not required
   def test_should_require_email_on_signup
-    assert_no_difference User, :count do
+    assert_no_difference 'User.count' do
       create_user(:email => nil)
       assert assigns(:user).errors.on(:email)
       assert_response :success

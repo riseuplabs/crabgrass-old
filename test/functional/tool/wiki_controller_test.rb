@@ -5,7 +5,7 @@ require 'tool/wiki_controller'
 class Tool::WikiController; def rescue_action(e) raise e end; end
 
 class Tool::WikiControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users
+  fixtures :pages, :users, :user_participations, :wikis
 
   def setup
     @controller = Tool::WikiController.new
@@ -13,10 +13,21 @@ class Tool::WikiControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
+# TODO: write most tests for this controller
+
+  def test_show
+    login_as :orange
+    get :show, :page_id => pages(:wiki).id
+  end
+  
+  def test_edit
+  end
+
   def test_create
     login_as :quentin
     num_pages = Page.count
-    post :create, :page_type => "Tool::TextDoc", :id => 'wiki', :page => {:title => 'my title'}
+    post :create, :page_class=>"Tool::TextDoc", :id => 'wiki', :group_id=> "", :create => "Create page", :tag_list => "", 
+         :page => {:title => 'my title', :summary => ''}
     assert_response :redirect
     assert_not_nil assigns(:page)
     assert_redirected_to @controller.page_url(assigns(:page))

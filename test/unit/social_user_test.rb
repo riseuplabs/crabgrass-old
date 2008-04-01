@@ -102,7 +102,9 @@ class SocialUserTest < Test::Unit::TestCase
     # u.all_groups.reload
     assert_equal [g], u.all_groups, 'should be one group (all)'
 
-    c = Committee.create :name => 'dumbledores-army', :parent => g
+    c = Committee.new :name => 'dumbledores-army'
+    c.parent = g
+    c.save
     
     assert_equal [g.id], u.group_ids, 'should be one direct group (id)'
 
@@ -177,7 +179,9 @@ class SocialUserTest < Test::Unit::TestCase
     for i in 0..19
       c[i] = []
       for j in 0..committee_cnt[i]
-        c[i][j] = Committee.create :name => 'subgroup-%d-%d' % [i, j], :parent => g[i]
+        c[i][j] = Committee.new( :name => 'subgroup-%d-%d' % [i, j] )
+        c[i][j].parent = g[i]
+        c[i][j].save
       end
     end
     

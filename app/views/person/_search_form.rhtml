@@ -1,6 +1,6 @@
-<%= start_form_tag({:action => "directory"},:id => "searchform") %>
+<% form_tag({:action => "directory"},:id => "searchform") do -%>
 <%= "Search".t %>: <%= text_field_tag 'filter', @filter %>
-<%= end_form_tag %>
+<% end -%>
 <%= javascript_tag "Form.focusFirstElement('searchform');" %>
 
 <%# observe_form "searchform",
@@ -9,3 +9,4 @@
    :complete => "Element.show('search-results')",
    :url => { :action => "search" }
 %>
+

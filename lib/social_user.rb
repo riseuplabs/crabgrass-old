@@ -92,6 +92,7 @@ module SocialUser
 
         #this seems to be the only way to override the A/R created method
         remove_method :all_group_ids
+        remove_method :group_ids
       end
     end
 

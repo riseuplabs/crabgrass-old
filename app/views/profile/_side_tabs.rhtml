@@ -5,7 +5,7 @@
   f.tab do |t|
     t.label 'Settings'.t
     t.icon 'actions/settings.png'
-    t.link( @user ? me_url(:action => 'edit') : url_for_group(@group, :action => 'edit') )
+    t.link( @user ? me_url(:action => 'edit', :id => nil) : url_for_group(@group, :action => 'edit') )
     t.selected params[:action] == 'edit' && params[:controller] == 'me'
   end
   f.tab do |t|

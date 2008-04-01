@@ -6,7 +6,7 @@ module ApplicationHelper
   include Formy                 # helps create forms
   include LayoutHelper
   include LinkHelper
-  include PaginationHelper      # creates windowed pagination links
+  include WindowedPaginationHelper
   include TimeHelper
   include PathFinder::Options   # for Page.find_by_path options
     

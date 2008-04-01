@@ -43,11 +43,6 @@ class MeController < ApplicationController
     @pages = Page.find_by_path('descending/updated_at/ascending/group_name/limit/40', options_for_me)
     render :layout => false
   end
-  
-  def files
-    @pages = Page.find_by_path('type/asset', options_for_me)
-    @assets = @pages.collect {|page| page.data }
-  end
 
   def tasks
     @stylesheet = 'tasks'

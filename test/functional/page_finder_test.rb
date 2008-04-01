@@ -175,6 +175,21 @@ class PageFinderTest < Test::Unit::TestCase
     assert_equal page.id, pages.first.id, 'find by tag should return correct page, for me'
   end
 
+  def test_group_tasks
+    login(:blue)
+    group = groups(:rainbow)
+    
+    gparts = GroupParticipation.find :all, :conditions => ['group_id = ?', group.id]
+    reference_ids = page_ids(gparts) do |page|
+      true if page.instance_of? Tool::TaskList and !page.resolved?
+    end
+    
+    pages = Page.find_by_path('type/task/pending', @controller.options_for_group( groups(:rainbow) ))
+    path_ids = page_ids(pages)
+
+    assert_equal reference_ids, path_ids, "find_by_path should return all of a group's task lists"
+  end
+  
 
   protected
   

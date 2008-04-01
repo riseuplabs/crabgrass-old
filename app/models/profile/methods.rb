@@ -30,12 +30,20 @@ module Profile::Methods
   
   # a shortcut to grab the 'public' profile
   def public
-    @public_profile ||= (find_by_access(:stranger) || create(:stranger => true))
+    @public_profile ||= (find_by_access(:stranger) || create_or_build(:stranger => true))
   end
   
   # a shortcut to grab the 'private' profile
   def private
     @private_profile ||= (find_by_access(:friend) || create(:friend => true))
+  end
+  
+  def create_or_build(args={})
+    if proxy_owner.new_record?
+      build(args)
+    else
+      create(args)
+    end
   end
   
 end

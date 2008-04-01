@@ -1,0 +1,8 @@
+first:
+  id: 1
+  body: the body of the wiki, which is text suitable for running through green cloth
+  lock_version: 1
+
+second:
+  id: 2
+  body: body 2

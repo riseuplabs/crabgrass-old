@@ -5,12 +5,12 @@ class WikiTest < Test::Unit::TestCase
   fixtures :users
     
   def test_creation_group_space
-    g = Group.create :name => 'robots'
+    g = Group.create! :name => 'robots'
 
     a = Tool::TextDoc.create :title => 'x61'
     a.add g; a.save
 
-    b = Tool::TextDoc.new :title => 'x61'
+    b = Tool::TextDoc.create :title => 'x61'
     b.add g;
  
     assert_equal 'x61', a.name, 'name should equal title'

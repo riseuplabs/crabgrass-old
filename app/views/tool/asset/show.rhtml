@@ -7,7 +7,7 @@
 <table cellpadding='4'>
 <tr>
   <td align='right'><b><%= 'created by'.t %>:</b></td>
-  <td><%= h @page.created_by.both_names %></td>
+  <td><%= h @page.created_by.both_names if @page.created_by %></td>
 </tr>
 <tr>
   <td align='right'><b><%= 'created on'.t %>:</b></td>

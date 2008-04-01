@@ -5,3 +5,7 @@ grouppage_<%=i%>:
   access: 1
 <% end %>
 
+rainbow_tasklist:
+  page_id: 201
+  group_id: 3
+

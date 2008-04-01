@@ -1,6 +1,6 @@
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.2.6'
+RAILS_GEM_VERSION = '2.0.2'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -53,6 +53,15 @@ Rails::Initializer.run do |config|
   config.active_record.observers = :user_observer
 
 #  config.action_controller.session_store = :p_store
+  #
+  # Your secret key for verifying cookie session data integrity.
+  # If you change this key, all old sessions will become invalid!
+  # Make sure the secret is at least 30 characters and all random, 
+  # no regular words or you'll be exposed to dictionary attacks.
+  config.action_controller.session = {
+    :session_key => '_crabgrass_session',
+    :secret      => '9ce1ae3f9d26b56cf9fc7682635486898b3450a9e0116ea013a7a14dd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
+  }
   
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
@@ -80,7 +89,7 @@ class AssociationError < Exception; end    # thrown when an activerecord has mad
 
 require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
-require "#{RAILS_ROOT}/lib/extends_like_edge.rb"
+require "#{RAILS_ROOT}/lib/fake_globalize.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
 require "#{RAILS_ROOT}/lib/misc.rb"
 require "#{RAILS_ROOT}/lib/path_finder.rb"
@@ -110,9 +119,6 @@ JAVASCRIPT_VERSION = max_mtime("#{RAILS_ROOT}/public/javascripts/*.js")
 
 ENV['TZ'] = 'UTC' # for Time.now
 DEFAULT_TZ = 'Pacific Time (US & Canada)'
-
-# remove this when we upgrade to new rails:
-require 'acts_like_date_or_time'
 
 #### USER INTERFACE HELPERS ########
 

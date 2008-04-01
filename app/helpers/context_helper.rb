@@ -62,8 +62,12 @@ module ContextHelper
   def group_context(size='large', update_breadcrumbs=true)
     add_context 'groups', groups_url(:action => 'list')
     if @group
-      if @group.instance_of? Committee
-        add_context @group.parent.short_name, groups_url(:id => @group.parent, :action => 'show')
+      if @group.committee?
+        if @group.parent
+          add_context @group.parent.short_name, groups_url(:id => @group.parent, :action => 'show')
+        elsif @parent
+          add_context @parent.short_name, groups_url(:id => @parent, :action => 'show')
+        end
       end
       add_context @group.short_name, url_for_group(@group, :action => 'show')
       set_banner "groups/banner_#{size}", @group.banner_style

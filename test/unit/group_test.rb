@@ -66,4 +66,11 @@ class GroupTest < Test::Unit::TestCase
     assert u.may_pester?(g) == true, 'should be able to pester private group'
   end
 
+  def test_association_callbacks
+    g = Group.create :name => 'callbacks'
+    g.expects(:check_duplicate_memberships)
+    g.expects(:membership_changed)
+    u = users(:blue)
+    g.memberships.create(:user => u)
+  end
 end
