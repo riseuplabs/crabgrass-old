@@ -29,6 +29,15 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     @values << true
   end
 
+  def filter_inbox
+    if @inbox
+      @conditions << 'user_participations.inbox = ?'
+    else
+      @conditions << 'user_parts.inbox = ?'
+    end
+    @values << true
+  end
+
   def filter_attending
     @conditions << 'user_parts.attend = ?'
     @values << true

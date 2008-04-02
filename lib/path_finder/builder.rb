@@ -34,6 +34,7 @@ class PathFinder::Builder
     'interesting' => 0,
     'attending' => 0,
     'watching' => 0,
+    'inbox' => 0,
     'starred' => 0,
     'stars' => 1,    
     'type' => 1,

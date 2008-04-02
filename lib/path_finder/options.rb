@@ -62,8 +62,8 @@ module PathFinder::Options
   
   def options_for_inbox(args={})
     options = {
-      :conditions => 'user_participations.user_id = ?',
-      :values => [current_user.id],
+      :conditions => 'user_participations.user_id = ? AND user_participations.inbox = ?',
+      :values => [current_user.id, true],
       :inbox => true
     }
     default_find_options.merge(options).merge(args)

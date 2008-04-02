@@ -12,6 +12,7 @@ class InboxController < ApplicationController
       path = params[:path]
       path = ['starred','or','unread','or','pending'] if path.first == 'vital'
       path << 'descending' << 'updated_at'
+      path << 'inbox'
 
       @pages, @sections = Page.find_and_paginate_by_path(path, options_for_inbox)
       add_user_participations(@pages)
@@ -38,7 +39,8 @@ class InboxController < ApplicationController
           page = Page.find_by_id(page_id)
           if page
             upart = page.participation_for_user(@user)
-            upart.destroy
+            upart.inbox = false
+            upart.save
           end
         end
       end

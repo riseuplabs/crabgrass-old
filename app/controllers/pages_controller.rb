@@ -195,12 +195,13 @@ class PagesController < ApplicationController
   # should these get moved to a user_participations_controller?
   
   def remove_from_my_pages
-    @upart.destroy
+    @upart.inbox = false
+    @upart.save
     redirect_to from_url(@page)
   end
   
   def add_to_my_pages
-    @page.add(current_user)
+    @page.add(current_user, :inbox => true)
     redirect_to page_url(@page)
   end
   
