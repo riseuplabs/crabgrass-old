@@ -5,7 +5,7 @@
 </tr>
 <tr>
   <td align='right'><b><%= 'To'.t %>:</b></td>
-  <td><%= h @page.users.collect{|u|u.both_names unless u==@page.created_by}.compact.join (', ')%></td>
+  <td><%= h @page.users.collect{|u|u.both_names unless u==@page.created_by}.compact.join(', ')%></td>
 </tr>
 <tr>
   <td align='right'><b><%= 'Date'.t %>:</b></td>
