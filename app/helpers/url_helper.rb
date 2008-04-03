@@ -14,8 +14,10 @@ module UrlHelper
   def name_and_path_for_group(arg,options={})
     if arg.instance_of? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
-      name = Group.find(arg).name
-    elsif arg.instance_of? String
+      arg = Group.find(arg)
+    end
+
+    if arg.instance_of? String
       name = arg
     elsif arg.is_a? Committee
       name = arg.name
