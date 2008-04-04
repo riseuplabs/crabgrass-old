@@ -75,14 +75,14 @@ module LayoutHelper
   end
   
   def optional_stylesheet
-    stylesheet_link_tag(*(stylesheet.to_a+[:cache => true])) if stylesheet
+    stylesheet_link_tag(*(stylesheet.to_a)) if stylesheet
   end
     
   ############################################
   # JAVASCRIPT
   
   def optional_javascript
-    javascript_include_tag('effects', 'dragdrop', 'controls', :cache => true) if need_extra_javascript?
+    javascript_include_tag('effects', 'dragdrop', 'controls') if need_extra_javascript?
   end
     
   def need_extra_javascript?
