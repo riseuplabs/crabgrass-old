@@ -1,4 +1,4 @@
-class ConvertTablesToUnicode < ActiveRecord::Migration
+class ConvertDatabaseToUtf8 < ActiveRecord::Migration
   def self.up
     charset = 'utf8'
     collation = 'utf8_general_ci'
