@@ -28,6 +28,20 @@ class SocialUserTest < Test::Unit::TestCase
     assert !u.member_of?(g), 'user must NOT be a member_of? group'
   end
 
+  def test_various_ways_of_deleting_memberships
+    u1 = create_user :login => 'testy_one'
+    u2 = create_user :login => 'testy_two'
+    g = Group.find 1
+
+    membership1 = g.memberships.create :user => u1
+    membership2 = g.memberships.create :user => u2
+    
+    u1.groups.delete g
+    assert !u1.member_of?(g), 'user1 must NOT be a member_of? group'
+    membership2.destroy
+    assert !u2.member_of?(g), 'user2 must NOT be a member_of? group'
+  end
+
   def test_contacts
     a = users(:red)
     b = users(:green)
