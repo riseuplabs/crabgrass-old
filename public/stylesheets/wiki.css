@@ -61,10 +61,6 @@ div.wiki > h1:first-child {
   margin-top: 0;
 }
 
-div.wiki {
-  overflow: auto
-}
-
 /** inline table formatting */
 
 .wiki table {

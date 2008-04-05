@@ -124,6 +124,79 @@ module Inline
     end
   end
 
+  # I'm over-writing this function (copied from redcloth.reference.rb) 
+  # to make images get their own div with style="overflow: auto;"
+    #
+    # Regular expressions to convert to HTML.
+    #
+    A_HLGN = /(?:(?:<>|<|>|\=|[()]+)+)/
+    A_VLGN = /[\-^~]/
+    C_CLAS = '(?:\([^)]+\))'
+    C_LNGE = '(?:\[[^\]]+\])'
+    C_STYL = '(?:\{[^}]+\})'
+    S_CSPN = '(?:\\\\\d+)'
+    S_RSPN = '(?:/\d+)'
+    A = "(?:#{A_HLGN}?#{A_VLGN}?|#{A_VLGN}?#{A_HLGN}?)"
+    S = "(?:#{S_CSPN}?#{S_RSPN}|#{S_RSPN}?#{S_CSPN}?)"
+    C = "(?:#{C_CLAS}?#{C_STYL}?#{C_LNGE}?|#{C_STYL}?#{C_LNGE}?#{C_CLAS}?|#{C_LNGE}?#{C_STYL}?#{C_CLAS}?)"
+    # PUNCT = Regexp::quote( '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~' )
+    PUNCT = Regexp::quote( '!"#$%&\'*+,-./:;=?@\\^_`|~' )
+    PUNCT_NOQ = Regexp::quote( '!"#$&\',./:;=?@\\`|' )
+    PUNCT_Q = Regexp::quote( '*-_+^~%' )
+    HYPERLINK = '(\S+?)([^\w\s/;=\?]*?)(?=\s|<|$)'
+
+  IMAGE_RE = /
+          (<p>|.|^)            # start of line?
+          \!                   # opening
+          (\<|\=|\>)?          # optional alignment atts
+          (#{C})               # optional style,class atts
+          (?:\. )?             # optional dot-space
+          ([^\s(!]+?)          # presume this is the src
+          \s?                  # optional space
+          (?:\(((?:[^\(\)]|\([^\)]+\))+?)\))?   # optional title
+          \!                   # closing
+          (?::#{ HYPERLINK })? # optional href
+      /x 
+
+    def inline_crabgrass_image( text ) 
+        text.gsub!( IMAGE_RE )  do |m|
+            stln,algn,atts,url,title,href,href_a1,href_a2 = $~[1..8]
+            atts = pba( atts )
+            atts = " src=\"#{ url }\"#{ atts }"
+            atts << " title=\"#{ title }\"" if title
+            atts << " alt=\"#{ title }\"" 
+            # size = @getimagesize($url);
+            # if($size) $atts.= " $size[3]";
+
+            href, alt_title = check_refs( href ) if href
+            url, url_title = check_refs( url )
+
+            out = ''
+
+            # added line here --af
+            out << '<div style="overflow: auto;">'
+            
+            out << "<a#{ shelve( " href=\"#{ href }\"" ) }>" if href
+            out << "<img#{ shelve( atts ) } />"
+            out << "</a>#{ href_a1 }#{ href_a2 }" if href
+            
+            #added another line here --af
+            out << '</div>'
+            
+            if algn 
+                algn = h_align( algn )
+                if stln == "<p>"
+                    out = "<p style=\"float:#{ algn }\">#{ out }"
+                else
+                    out = "#{ stln }<div style=\"float:#{ algn }\">#{ out }</div>"
+                end
+            else
+                out = stln + out
+            end
+
+            out
+        end
+    end
 end
 end
 

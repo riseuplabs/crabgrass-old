@@ -38,7 +38,7 @@ class GreenCloth < RedCloth
     :block_dictionary,
     :inline_crabgrass_link,
     :inline_auto_link_urls,
-    :inline_textile_image,
+    :inline_crabgrass_image,
     :inline_textile_code,
     :inline_textile_span,
     :glyphs_textile
