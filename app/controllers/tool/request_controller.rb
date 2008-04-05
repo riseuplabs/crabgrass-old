@@ -33,7 +33,7 @@ class Tool::RequestController < Tool::BaseController
   
   def context
     # perhaps this could be done better by subclassing RequestController
-    if @page.flow == FLOW[:contacts]
+    if @page.flow == FLOW[:contacts] or (@page.flow == FLOW[:membership] and @page.group.nil?)
       me_context
       add_context 'requests', url_for(:controller => 'requests')
     elsif @page.flow == FLOW[:membership]
