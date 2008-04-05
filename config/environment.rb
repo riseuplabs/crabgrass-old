@@ -52,16 +52,21 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
   config.active_record.observers = :user_observer
 
-#  config.action_controller.session_store = :p_store
+  # currently, crabgrass stores an excessive amount of information in the session
+  # in order to do smart breadcrumbs. These means we cannot use cookie based
+  # sessions because they are too limited in size. If you want to switch to a different
+  # storage container, you need to find a way to disable breadcrumbs as well. 
+  config.action_controller.session_store = :p_store
+
   #
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
-  config.action_controller.session = {
-    :session_key => '_crabgrass_session',
-    :secret      => '9ce1ae3f9d26b56cf9fc7682635486898b3450a9e0116ea013a7a14dd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
-  }
+#  config.action_controller.session = {
+#    :session_key => '_crabgrass_session',
+#    :secret      => #'9ce1ae3f9d26b56cf9fc7682635486898b3450a9e0116ea013a7a14dd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
+#  }
   
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
