@@ -25,7 +25,7 @@ class PersonControllerTest < Test::Unit::TestCase
     get :show, :id => users(:orange).login
     assert_response :success
     assert_template 'show'
-    assert_nil assigns(:pages).find { |p| !users(:dolphin).may?(:view, p) }
+    assert_nil assigns(:pages).find { |p| !(p.public or users(:dolphin).may?(:view, p)) }
   end
 
   def test_search_not_logged_in
@@ -40,7 +40,7 @@ class PersonControllerTest < Test::Unit::TestCase
     get :search, :id => users(:green).login
     assert_response :success
     assert_template 'search'
-    assert_nil assigns(:pages).find { |p| !users(:penguin).may?(:view, p) }
+    assert_nil assigns(:pages).find { |p| !(p.public or users(:penguin).may?(:view, p)) }
   end
 
   def test_tasks_not_logged_in
