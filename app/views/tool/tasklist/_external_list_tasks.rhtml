@@ -22,13 +22,7 @@ for list in @task_lists
     (all_users || t.user_ids.include?(@show_user.id)) && (all_states || t.completed? == completed)
   end
   next unless tasks.any?
-  tasks = tasks.sort do |t1,t2|
-    if t1.completed? == t2.completed?
-       t1.position <=> t2.position
-    else
-      t1.completed? <=> t2.completed?
-    end
-  end
+  tasks = tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]}
 -%>
   <div><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name, :action => 'tasks')})" if @page.group_name %></div>
   <ul id='<%=sort_list_id%>' class='task_list'>

@@ -28,7 +28,10 @@ class MyTasksControllerTest < Test::Unit::TestCase
     get :index
     assert_response :success
     assert_template 'index'
+    
     assert_tag :tag => "li", :attributes => { :id => "task_4" }
+    assert_no_tag :tag => "li", :attributes => { :id => "task_5" }
+    assert_tag :tag => "li", :attributes => { :id => "task_6" }
   end
   
   def test_pending
@@ -46,6 +49,8 @@ class MyTasksControllerTest < Test::Unit::TestCase
     assert_template 'index'
     assert assigns(:pages).length > 0, "there should be a completed task for blue"
     assert_no_tag :tag => "li", :attributes => { :id => "task_4" }
+    assert_tag :tag => "li", :attributes => { :id => "task_5" }
+    assert_no_tag :tag => "li", :attributes => { :id => "task_6" }
   end
 
   def test_group
@@ -53,11 +58,11 @@ class MyTasksControllerTest < Test::Unit::TestCase
     get :group, :id => groups(:rainbow).id
     assert_response :success
     assert_template 'index'
-    assert assigns(:pages).length > 0, "rainbow group has tasks for blue"
+    assert assigns(:pages).length > 0, "rainbow group has tasks"
 
     get :group, :id => groups(:true_levellers).id
     assert_response :success
     assert_template 'index'
-    assert assigns(:pages).length == 0, "true_levellers group has no tasks for blue"
+    assert assigns(:pages).length == 0, "true_levellers group has no tasks"
   end
 end
