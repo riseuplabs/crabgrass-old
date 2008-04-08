@@ -28,7 +28,7 @@ class MyTasksControllerTest < Test::Unit::TestCase
     get :index
     assert_response :success
     assert_template 'index'
-    assert assigns(:pages).length > 0, "there should be pending tasks for blue"
+    assert_tag :tag => "li", :attributes => { :id => "task_4" }
   end
   
   def test_pending
@@ -45,6 +45,7 @@ class MyTasksControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'index'
     assert assigns(:pages).length > 0, "there should be a completed task for blue"
+    assert_no_tag :tag => "li", :attributes => { :id => "task_4" }
   end
 
   def test_group

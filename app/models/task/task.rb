@@ -18,7 +18,7 @@ class Task::Task < ActiveRecord::Base
   end
 
   def completed
-    completed_at && completed_at < Time.now
+    completed_at != nil && completed_at < Time.now
   end
   alias :completed? :completed
 

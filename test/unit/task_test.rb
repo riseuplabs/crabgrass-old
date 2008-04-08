@@ -30,5 +30,14 @@ class TaskTest < Test::Unit::TestCase
       Task::Task.find(:first, :include => :task_list)
     end
   end
+
+  def test_completed
+    list = Task::TaskList.create
+    t = list.tasks.create
+
+    assert_equal false, t.completed?
+    t.completed = true
+    assert_equal true, t.completed
+  end
   
 end
