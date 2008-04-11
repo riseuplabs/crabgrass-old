@@ -39,7 +39,7 @@ class PageStork
     group = options.delete(:group).cast! Group
     page = Tool::RequestDiscussion.new do |p|
       p.title = 'discussion re: request to join %s from %s'.t % [group.name, user.name]
-      p.summary = ('User %s has requested to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the request.'.t) % link(user, group, user, group)
+      p.summary = ('User %s has requested to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the request.'.t) % [user, group, user, group]
       p.flow = FLOW[:membership]
       p.resolved = false
     end
@@ -75,7 +75,7 @@ class PageStork
     from = options.delete(:from).cast! User
     page = Tool::RequestDiscussion.new do |p|
       p.title = 'discussion re: invitation to join group %s'.t % [group.name]
-      p.summary = ('User %s has sent %s an invitation to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % link(from, user, group, group, user)
+      p.summary = ('User %s has sent %s an invitation to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % [from, user, group, group, user]
       p.flow = FLOW[:membership]
       p.resolved = false
     end
@@ -113,7 +113,7 @@ class PageStork
     contact = options.delete(:contact).cast! User
     info = Tool::RequestDiscussion.new do |i|
       i.title = 'discussion re: contact invitation from %s to %s'.t % [user.name, contact.name]
-      i.summary = ('User %s has sent a contact invitation to %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % link(user, contact, user, contact)
+      i.summary = ('User %s has sent a contact invitation to %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % [user, contact, user, contact]
       i.flow = FLOW[:contacts]
       i.resolved = false
     end
