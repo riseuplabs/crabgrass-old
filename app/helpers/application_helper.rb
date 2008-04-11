@@ -12,20 +12,32 @@ module ApplicationHelper
     
   # display flash messages with appropriate styling
   def display_messages()
-    return "" unless flash[:notice] || flash[:error] || flash[:update]
-    if flash[:update]
-      type = "update"
-      message = flash[:update]
-    elsif flash[:notice]
-      type = "info"
-      message = flash[:notice]
-    elsif flash[:error]
-      type = "error"
-      message = flash[:error]
+    message_html = ""
+
+    message_html += content_tag("div", 
+                                image_tag("notice/info.png") +
+                                content_tag("h2", "Notice:") +
+                                h($SYSTEM_MESSAGE),
+                                "class" => "notice info") if $SYSTEM_MESSAGE
+
+    if flash[:update] or flash[:notice] or flash[:error]
+      if flash[:update]
+        type = "update"
+        message = flash[:update]
+      elsif flash[:notice]
+        type = "info"
+        message = flash[:notice]
+      elsif flash[:error]
+        type = "error"
+        message = flash[:error]
+      end
+      img = image_tag("notice/#{type}.png")
+      header = content_tag("h2", message)
+
+      message_html += content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
     end
-    img = image_tag("notice/#{type}.png")
-    header = content_tag("h2", message)
-    content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
+    
+    message_html
   end
   
   # use by ajax

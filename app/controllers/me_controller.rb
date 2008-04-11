@@ -7,6 +7,19 @@ class MeController < ApplicationController
   def index
     redirect_to :action => 'dashboard'
   end
+
+  def set_system_message
+    # hacky way to prevent just anyone from changing system message
+    # TODO: implement system message access control this in a better way
+    if @current_user.id > 10:
+      redirect_to :action => 'dashboard'
+    end
+    
+    if request.post?
+      $SYSTEM_MESSAGE = nil
+      $SYSTEM_MESSAGE = params[:message] unless params[:message].blank?
+    end
+  end
     
   def search
     if request.post?

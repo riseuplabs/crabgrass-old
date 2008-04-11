@@ -1,0 +1,15 @@
+<h1>Enter new system message</h1>
+
+<% form_tag '/me/set_system_message' do %>
+  <p>
+    <b>Message:</b>
+    <%= text_field_tag :message %>
+  </p>
+
+  <p>
+    <%= submit_tag "Create" %>
+  </p>
+<% end %>
+
+<%= update_page_tag { |page| page[:message].focus } %>
+
