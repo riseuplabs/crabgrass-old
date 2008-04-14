@@ -81,6 +81,12 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'show_nothing'
     assert_nil assigns(:access), "should have no access to private group"
+    
+    get :show, :id => groups(:warm).name
+    assert_response :success
+    assert_template 'show_nothing'
+    assert_nil assigns(:access), "should have no access to private group"
+    
   end
   
   def test_archive_logged_in
