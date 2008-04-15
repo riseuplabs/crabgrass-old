@@ -9,14 +9,25 @@ div#leftbar {
   margin-left: 170px;
 }
 div#rightbar {
+  background: #F1F1F1 none repeat scroll 0%;
+  border-bottom: 1px solid #FFFFFF;
+  border-right: 1px solid #FFFFFF;
+  border-top: 1px solid #FFFFFF;
   float: right;
-  width: 210px;
-  margin-right: -231px; /* sidebar width + #main padding + 1px */
+  margin-right: -241px;
+  padding: 12px 6px 8px 12px;
+  width: 200px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
 }
 #maincolumn.rightbar {
   margin-right: 210px;
 }
-
+div.sidesectionright {
+  margin-bottom: 1em;
+  xborder: 1px solid white;
+  xbackground: #eee;
+}
 div.sidesection {
   margin-bottom: 1em;
   border: 1px solid white;
@@ -35,11 +46,19 @@ div#rightbar div.sidesection {
 
   xbackground: #f9f9f9 url(/images/shadows/small-right-a.png) repeat-y right;
 }
-
 div.sidehead {
   font-weight: bold;
   color: white;
   padding: 4px 4px 4px 9px;
+}
+div.sideheadright {
+	background: transparent url(/images/ui/carrot-down.jpg) no-repeat scroll 0px 5px; 
+	color: #999999;
+	font-family: arial, verdana, helvetica, sans-serif;
+	font-size: 0.9em;
+	font-weight: 700;
+	padding-left: 12px;
+	text-transform: uppercase;
 }
 div#leftbar div.sidehead {
   border-right: 0;
@@ -51,53 +70,72 @@ div#rightbar div.sidehead {
   -moz-border-radius-topright: 4px;
   xbackground: #a5cc7a url(/images/shadows/small-topright-a.png) no-repeat top right;
 }
-
-
-div.sideline, div.sidelink {
-  padding: 3px 0 3px 9px;
+a.sidecloseall{
+  margin-left:150px;
+  color: #336699;
+  font-size: 0.7em;
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+a.sidecloseall:hover{
+  text-decoration: underline;
+  color:#0000EE;
+}
+div.sideline {
+  font-size: 12px;
+  padding: 0px 0 3px 14px;
+  color: #919191;
+}
+div.sidelink {
+  font-size: 12px;
+  padding: 1px 0 3px 14px;
+  color: #919191;
 }
 div.sidelink.selected {
   font-weight: bold;
 }
 div.sidelink a, div.sideline a {
   text-decoration: none;
+  color: #336699;
 }
 div.sidelink a:hover, div.sideline a:hover {
   text-decoration: underline;
+  color: #0000EE;
 }
 div.sidelink:hover {
   background: #cdf;
 }
-
-div.sidetail {
-  height: 4px;
+div.tail {
+  height: 2px;
 }
-
 div.sidesection img {
   vertical-align: top;
 }
-
 div.sidesubhead {
-  border-bottom: 1px dotted #999;
+  font-size: 12px;
   padding: 4px;
   padding-bottom: 0px;
   margin-top: 4px;
-  font-weight: bold;
-  color: #666;
+  padding: 0px 0 3px 14px;
+  color: #696969;
 }
-
 a.sidedetails {
+  color: #336699;
   font-size: 0.8em;
-  display: block;
-  text-align: right;
-  padding-right: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+a.sidedetails:hover {
+  text-decoration: underline;
+  color: #0000EE;
 }
 div.sideinfo {
   font-size: 0.9em;
   line-height: 1.2em;
   color: black;
 }
-
 div.sidesubarea {
   padding: 0.5em;
   background: #cdf;
@@ -109,7 +147,6 @@ div.sidesubarea {
 div.sidesubarea textarea, div.sidesubarea select {
   width: 190px;
 }
-
 #assets div.busy {
   background: transparent url(/images/spinner.gif) no-repeat 9px;
 }
