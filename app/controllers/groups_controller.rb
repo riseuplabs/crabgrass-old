@@ -35,7 +35,10 @@ class GroupsController < ApplicationController
     elsif @group.publicly_visible_group
       @access = :public
     else
+#     TODO: make this look identical to the page returned if the group/committee doesn't exist
+#           perhaps it should be handled in the dispatch controller, and this code should never be reached
       @group = nil
+      set_banner "groups/banner_nothing", Style.new(:background_color => "#1B5790", :color => "#eef")
       return render(:template => 'groups/show_nothing')
     end
     
