@@ -6,7 +6,7 @@
 <div class='sidesectionright'>
 
 <div class='sidelink'>
-<% if @upart %>
+<% if @upart and @upart.inbox? %>
   <%= link_to_icon 'remove from my inbox', 'actions/inbox-minus.png', pages_url(@page, :action => 'remove_from_my_pages'), :method => :post %>
 <% else %>
   <%= link_to_icon 'add to my inbox', 'actions/inbox-plus.png', pages_url(@page, :action => 'add_to_my_pages'), :method => :post %>
