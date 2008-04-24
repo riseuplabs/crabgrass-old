@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   def handle_rss(locals)
     # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
     if params[:path].any? and 
-        (params[:path][-1] == 'rss' and params[:path][-2] != 'text')
+        (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
       response.headers['Content-Type'] = 'application/rss+xml'   
       render :partial => '/pages/rss', :locals => locals
     end
