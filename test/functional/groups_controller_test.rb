@@ -269,12 +269,44 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_nil Group.find_by_name('hack-committee').parent
   end
 
-=begin
   def test_update
     login_as :blue
     post :update, :id => groups(:rainbow).name
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => groups(:rainbow).name
+    assert_redirected_to :action => 'edit', :id => groups(:rainbow).name
+    
+    # try changing the visibility settings
+    post :update, :id => groups(:private_group).name,
+            :group => { :publicly_visible_group => "1",
+                        :publicly_visible_members => "1",
+                        :publicly_visible_committees => "1",
+                        :accept_new_membership_requests => "1" }
+    groups(:private_group).reload
+    assert_equal true, groups(:private_group).publicly_visible_group,
+                   "private group should be public now"
+    assert_equal true, groups(:private_group).publicly_visible_committees,
+                   "private group should have public committees now"
+    assert_equal true, groups(:private_group).publicly_visible_members,
+                   "private group should have public membership now"
+    assert_equal true, groups(:private_group).accept_new_membership_requests,
+                   "private group should accept new membership requests"
+
+    # make sure changing back works, too
+    post :update, :id => groups(:private_group).name,
+            :group => { :publicly_visible_group => "0",
+                        :publicly_visible_members => "0",
+                        :publicly_visible_committees => "0",
+                        :accept_new_membership_requests => "0" }
+    groups(:private_group).reload
+    assert_equal false, groups(:private_group).publicly_visible_group,
+                   "private group should be private again"
+    assert_equal false, groups(:private_group).publicly_visible_committees,
+                   "private group should not have public committees now"
+    assert_equal false, groups(:private_group).publicly_visible_members,
+                   "private group should not have public membership now"
+    assert_equal false, groups(:private_group).accept_new_membership_requests,
+                   "private group should not accept new membership requests"
+
     
     # try a sneaky hacker attack
     post :create, :group => {:name => 'hack-committee', :full_name => "hacker!", :summary => ""}
@@ -282,7 +314,7 @@ class GroupsControllerTest < Test::Unit::TestCase
     post :update, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
   end
-=end
+
 
   def test_destroy
     login_as :gerrard
@@ -311,7 +343,7 @@ class GroupsControllerTest < Test::Unit::TestCase
       end
     end
 
-# should we test unlogged in stuff on a private group?
+# should we test unlogged-in stuff on a private group?
 #    [:create, :edit, :destroy, :update].each do |action|
 #      get action, :id => groups(:private_group).name
 #      assert_template 'not_found'
