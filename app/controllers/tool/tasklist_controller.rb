@@ -1,4 +1,3 @@
-
 class Tool::TasklistController < Tool::BaseController
   before_filter :fetch_task_list, :fetch_user_participation
   after_filter :update_participations,

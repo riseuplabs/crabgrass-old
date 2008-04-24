@@ -1,7 +1,8 @@
 <%
+  # TODO: move this code to the controller (?)
   users = []
   users += @page.users if @page.users
-  users += @page.group.users if @page.group
+  users += @page.groups.collect {|g| g.users}.flatten
   users.uniq!
 %>
 
@@ -25,7 +26,9 @@
    due:<br/>
    <%= calendar_date_select_tag 'task[due_at]' %><br/>
    assign to:<br/>
-   <%= collection_multiple_select('task', 'user_ids', users, :id, :login, :outer_class=>'plainlist floatlist') %>
+   <%= collection_multiple_select('task', 'user_ids', users, :id, :login,
+                                  :selected_items => [ current_user.id ],
+                                  :outer_class=>'plainlist floatlist') %>
    <br style='clear:left'/>
    <p>
    <%= submit_tag 'Add Task' %>
