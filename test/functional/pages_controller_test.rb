@@ -64,6 +64,15 @@ class PagesControllerTest < Test::Unit::TestCase
     end
   end
 
+  def test_create_assigns_primary_group
+    login_as :blue
+
+    assert_difference 'Page.count', 1, "should create a new wiki" do
+      post :create_wiki, :name => "new wiki in the private group", :group => groups(:private_group).name
+    end
+    assert_equal groups(:private_group), Page.find(:all).last.group
+  end
+
   def test_notify
     login_as :red
     get :create

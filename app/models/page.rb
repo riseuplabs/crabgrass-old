@@ -209,6 +209,9 @@ class Page < ActiveRecord::Base
     else
       entity.add_page(self,attributes)
     end
+    
+    changed :group
+
     self
   end
 
@@ -222,7 +225,7 @@ class Page < ActiveRecord::Base
 
       
   # remove a group or user participation from this page
-  def remove(entity)
+  def remove(entity)    
     if entity.is_a? Enumerable
       entity.each do |e|
         e.remove_page(self)
@@ -230,6 +233,9 @@ class Page < ActiveRecord::Base
     else
       entity.remove_page(self)
     end
+
+    changed :group
+
   end
 
   
@@ -256,13 +262,13 @@ class Page < ActiveRecord::Base
   before_save :denormalize
   def denormalize
     # denormalize hack follows:
-    if changed? :groups 
+#    if changed? :groups 
       # we use group_participations because self.groups might not
       # reflect current data if unsaved.
       group = (group_participations.first.group if group_participations.any?)
       self.group_name = (group.name if group)
       self.group_id = (group.id if group)
-    end
+#    end
     if changed? :updated_by
       self.updated_by_login = updated_by.login
     end
@@ -291,61 +297,48 @@ class Page < ActiveRecord::Base
   def self.make(function,options={})
     PageStork.send(function, options)
   end
-
+=begin
   #####################################################################
   ## Things related to the page to index with sphinx
-  has_one :auto_summary, :dependent => :destroy
+  has_one :page_index, :dependent => :destroy
   
-  before_save :update_auto_summary
-  def update_auto_summary
-    if self.data
-      self.auto_summary = AutoSummary.create :body => self.data.auto_summary
+  before_save :update_index
+  def update_index
+    self.page_index ||= PageIndex.new
+    self.page_index.body = (data and data.index)
+    self.page_index.class_display_name = class_display_name
+    self.page_index.tags = tag_list
+    self.page_index.save!
+  end
+  
+  define_index do |index|
+    begin
+      index.includes.name
+      index.includes.title
+      index.includes.summary
+ 
+      index.includes.page_index.body 
+      index.includes.page_index.class_display_name
+      index.includes.page_index.tags
+
+      index.includes.discussion.posts.body.as.comments
+      
+      index.includes.user_participations.user_id
+      index.includes.group_participations.group_id
+      index.includes.created_by_id
+      
+      index.includes.resolved
+      index.includes.public
+      
+      index.has.created_at
+      index.has.updated_at
+    
+      index.delta = true
+
+    rescue
+      puts "failed to index page #{self} for sphinx search"
+      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self} for sphinx search"
     end
   end
-
-  def self.default_index(index)
-    index.delta = true
-    index.includes.name
-    index.includes.title
-#    index.includes.summary
-    index.includes.auto_summary.body
-#    index.includes.auto_summary.type
-    index.includes.discussion.posts.body.as.comments
-#    index.includes.tags.name
-    
-    index.includes.user_participations.user_id
-    index.includes.group_participations.group_id
-    index.includes.created_by_id
-    
-    index.includes.resolved
-    index.includes.public
-    
-#    index.has.created_at
-#    index.has.updated_at
-  end
-  
-=begin    
-  define_index do |index|
-    index.delta = true
-
-    index.includes.name
-    index.includes.title
-#    index.includes.summary
-    index.includes.auto_summary.body
-#    index.includes.auto_summary.type
-    index.includes.discussion.posts.body.as.comments
-#    index.includes.tags.name
-    
-    index.includes.user_participations.user_id
-    index.includes.group_participations.group_id
-    index.includes.created_by_id
-    
-    index.includes.resolved
-    index.includes.public
-    
-#    index.has.created_at
-#    index.has.updated_at
-  end
 =end
-
 end
