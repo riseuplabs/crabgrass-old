@@ -1,3 +1,10 @@
+<%
+# it is no end of trouble that the fixtures keep changing!
+# so i am going to seed the random number generator here,
+# and then things will randomly be the same every time we test
+srand(314159265359)
+%>
+
 <% for i in 1..40 %>
 grouppage_<%=i%>:
   page_id: <%= rand(99)+1 %>

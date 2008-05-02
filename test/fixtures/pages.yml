@@ -39,6 +39,10 @@ def garble(range)
   $text_pool.slice(a,b).strip
 end
 
+# it is no end of trouble that the fixtures keep changing!
+# so i am going to seed the random number generator here,
+# and then things will randomly be the same every time we test
+srand(314159265359)
 %>
 
 <% for i in 1..100 %>
@@ -77,6 +81,9 @@ ranked_vote:
   created_by_login: quentin
   updated_by_id: 3
   updated_by_login: gerrard
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
 tasklist1:
   id: 200
@@ -88,6 +95,10 @@ tasklist1:
   created_by_login: quentin
   updated_by_id: 3
   updated_by_login: gerrard
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 tasklist2:
   id: 201
   title: another task list
@@ -99,6 +110,10 @@ tasklist2:
   updated_by_id: 5
   updated_by_login: orange
   resolved: false
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 event1:
   id: 202
   title : an event
@@ -111,8 +126,10 @@ event1:
   updated_by_id: 9
   group_id: <%= 3 %>
   group_name: rainbow
+<% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 event2:
   id: 203
   title : other event
@@ -125,8 +142,10 @@ event2:
   updated_by_id:  9
   group_id: <%= 3 %>
   group_name: rainbow
+<% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 event3:
   id: 204
   title : one other event
@@ -139,18 +158,27 @@ event3:
   updated_by_id:  4
   group_id: <%= 3 %>
   group_name: rainbow
+<% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 hello:
   id: 205
   title: hello
   type: Tool::Message
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 flow_test:
   id: 206
   title: flow test
   type: Tool::Discussion
   flow: 1
   public: 1
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
 wiki:
   id: 210
@@ -162,3 +190,7 @@ wiki:
   created_by_login: quentin
   updated_by_id: 3
   updated_by_login: gerrard
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  

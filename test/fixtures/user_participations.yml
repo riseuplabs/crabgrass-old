@@ -1,3 +1,10 @@
+<%
+# it is no end of trouble that the fixtures keep changing!
+# so i am going to seed the random number generator here,
+# and then things will randomly be the same every time we test
+srand(314159265359)
+%>
+
 <% id = 1 %>
 <% for i in 1..100 %>
   <% people = (1..13).to_a.sort{rand(2)} %>

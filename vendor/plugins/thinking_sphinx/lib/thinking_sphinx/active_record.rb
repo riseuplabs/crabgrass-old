@@ -101,6 +101,10 @@ module ThinkingSphinx
             sphinx.match_mode = options[:match_mode] || :extended
             sphinx.limit      = options[:per_page].nil? ? sphinx.limit : options[:per_page].to_i
             sphinx.offset     = (page - 1) * sphinx.limit
+
+            if options[:filter]
+              sphinx.filters << Riddle::Client::Filter.new(options[:filter], options[:filter_start].to_i..options[:filter_stop].to_i, false)
+            end
             
             if options[:order]
               sphinx.sort_mode  = :extended
@@ -187,10 +191,12 @@ module ThinkingSphinx
         end
         
         def index_delta
-          unless RAILS_ENV == "test"
-            configuration = ThinkingSphinx::Configuration.new
-            system "indexer --config #{configuration.config_file} --rotate #{self.class.name.downcase}_delta"
-          end
+#          unless RAILS_ENV == "test"
+#            configuration = ThinkingSphinx::Configuration.new
+#            system "indexer --config #{configuration.config_file} --rotate #{self.class.name.downcase}_delta"
+#          end
+          configuration = ThinkingSphinx::Configuration.new
+          system "indexer --config #{configuration.config_file} --rotate page_delta"
           true
         end
       end

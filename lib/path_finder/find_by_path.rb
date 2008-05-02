@@ -44,7 +44,8 @@ module PathFinder
       if options[:paginate] or options[:section] or options[:section_size]
         find_and_paginate_by_path(path, options)
       else
-        PathFinder::Builder.find_pages(:sql, path, options)
+        options[:method] ||= :sql
+        PathFinder::Builder.find_pages(options[:method], path, options)
       end
     end
         

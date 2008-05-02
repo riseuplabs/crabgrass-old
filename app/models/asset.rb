@@ -8,7 +8,7 @@ class Asset < ActiveRecord::Base
     pages.first || parent_page
   end
 
-  def auto_summary
+  def index
     # TODO: extract a text summary if that makes sense for this document type
   end
 

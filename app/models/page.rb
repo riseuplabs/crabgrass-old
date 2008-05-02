@@ -297,7 +297,7 @@ class Page < ActiveRecord::Base
   def self.make(function,options={})
     PageStork.send(function, options)
   end
-=begin
+
   #####################################################################
   ## Things related to the page to index with sphinx
   has_one :page_index, :dependent => :destroy
@@ -332,6 +332,7 @@ class Page < ActiveRecord::Base
       
       index.has.created_at
       index.has.updated_at
+      index.has.starts_at
     
       index.delta = true
 
@@ -340,5 +341,4 @@ class Page < ActiveRecord::Base
       RAILS_DEFAULT_LOGGER.warn "failed to index page #{self} for sphinx search"
     end
   end
-=end
 end

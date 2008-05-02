@@ -7,8 +7,8 @@ class Poll::Poll < ActiveRecord::Base
     possibles.first || possibles.build
   end
   
-  def auto_summary
-    self.possibles.collect { |pos| "#{pos.name} --- #{pos.description}" }.join "\n"
+  def index
+    self.possibles.collect { |pos| "#{pos.name}\t#{pos.description}" }.join "\n"
   end
   
   has_many :votes, :finder_sql => 

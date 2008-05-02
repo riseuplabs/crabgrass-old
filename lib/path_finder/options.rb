@@ -11,7 +11,7 @@ module PathFinder::Options
    
   def default_find_options
     options = { :controller => get_controller,
-      :section => (params[:section] ? params[:section].to_i : nil )}
+                :section => (params[:section] ? params[:section].to_i : nil )}
     if logged_in?
       options[:user_id] = current_user.id
       options[:group_ids] = current_user.all_group_ids
@@ -83,6 +83,7 @@ module PathFinder::Options
 
   def options_for_public_pages
     options = {
+      :public => true,
       :conditions => "(pages.public = ?)",
       :values     => [true] }
     default_find_options.merge(options)
@@ -117,6 +118,9 @@ module PathFinder::Options
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
       options[:values]     = [group_id, true]
     end
+    
+    options[:group_id] = group_id
+    
     default_find_options.merge(options).merge(args)
   end
 

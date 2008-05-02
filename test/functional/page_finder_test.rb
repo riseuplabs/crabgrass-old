@@ -20,7 +20,7 @@ require 'set'
 class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :pages, :user_participations, :group_participations
+  fixtures :groups, :users, :memberships, :pages, :user_participations, :group_participations, :taggings, :tags
   
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.
@@ -189,7 +189,112 @@ class PageFinderTest < Test::Unit::TestCase
 
     assert_equal reference_ids, path_ids, "find_by_path should return all of a group's task lists"
   end
-  
+
+
+  ##############################################
+  ### Tests for various search parameters
+  def test_sphinx_searchs
+    login(:blue)
+    user = users(:blue)
+    
+    searches = [ 
+                 ['/pending', Proc.new {|p| p.resolved == false}  ],
+
+                 ['/type/discussion', Proc.new {|p| p.type == "Tool::Discussion"} ],
+                 ['/type/event',      Proc.new {|p| p.type == "Tool::Event"} ],
+                 ['/type/message',    Proc.new {|p| p.type == "Tool::Message"} ],
+                 ['/type/poll',       Proc.new {|p| p.type == "Tool::RateMany"} ],
+                 ['/type/task',       Proc.new {|p| p.type == "Tool::TaskList"} ],
+                 ['/type/vote',       Proc.new {|p| p.type == "Tool::RankedVote"} ],
+                 ['/type/wiki',       Proc.new {|p| p.type == "Tool::TextDoc"} ],
+
+                 ['/person/1', Proc.new {|p| User.find(1).may?(:view,p)} ],
+
+                 ['/group/1', Proc.new {|p| Group.find(1).may?(:view,p)} ],
+
+                 ['/created_by/4',     Proc.new {|p| p.created_by_id == 4} ],
+                 ['/created_by/1',     Proc.new {|p| p.created_by_id == 1} ],
+
+                 ['/not_created_by/1', Proc.new {|p| p.created_by_id != 1} ],
+
+                 ['/tag/pale', Proc.new {|p| p.tag_list.include? "pale"} ],
+                 ['/tag/pale/tag/imperial', Proc.new {|p| p.tag_list.include? "pale" and p.tag_list.include? "imperial"} ],
+                 ['/name/task', Proc.new {|p| p.name and p.name.include? "task"} ],
+                 ['/not_created_by/1', Proc.new {|p| p.created_by_id != 1} ]
+               ]
+
+    searches.each do |search_str, search_code|
+      pages = Page.find_by_path(search_str, @controller.options_for_me.merge(:method => :sphinx))
+      assert_equal Page.find(:all).select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
+                   pages.collect{|p| p.id}.sort, 
+                   "#{search_str} should match results for user"
+    end
+
+    searches.each do |search_str, search_code|
+      pages = Page.find_by_path(search_str, @controller.options_for_group(groups(:rainbow)).merge(:method => :sphinx))
+      assert_equal Page.find(:all).select{|p| search_code.call(p) and groups(:rainbow).may?(:view, p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
+                   pages.collect{|p| p.id}.sort, 
+                   "#{search_str} should match results for group"
+    end
+
+=begin
+    # I'm not sure how to test the delta index; this doesn't seem to work
+    p = Page.create :title => "new pending page"
+    p.add user
+    p.unresolve
+    p.save
+
+    searches.each do |search_str, search_code|
+      pages = Page.find_by_path(search_str, @controller.options_for_me.merge(:method => :sphinx))
+      puts "\n#{pages.length} found for #{search_str}"
+      assert_equal Page.find(:all).select{|p| search_code.call(p)}.collect{|p| p.id}.sort,
+                   pages.collect{|p| p.id}.sort, 
+                   "#{search_str} should match results after pages are added"
+    end
+=end
+  end  
+
+  def test_sphinx_searchs_w_pagination
+    login(:blue)
+    user = users(:blue)
+    
+    searches = [ 
+                 ['/descending/updated_at/limit/10', Proc.new {
+                    Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..9]
+                  }
+                 ],
+                 ['/ascending/updated_at/limit/13', Proc.new {
+                    Page.find(:all, :order => "updated_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..12]
+                  }
+                 ],
+                 ['/descending/created_at/limit/5', Proc.new {
+                    Page.find(:all, :order => "created_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..4]
+                  }
+                 ],
+                 ['/ascending/created_at/limit/15', Proc.new {
+                    Page.find(:all, :order => "created_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..14]
+                  }
+                 ],
+               ]
+
+    searches.each do |search_str, search_code|
+      pages = Page.find_by_path(search_str, @controller.options_for_me.merge(:method => :sphinx))
+      assert_equal search_code.call,
+                   pages.collect{|p| p.id},
+                   "#{search_str} should match results for user"
+    end
+  end
+
+  def test_created_by
+    login(:blue)
+    user = users(:blue)
+    
+    pages = Page.find_by_path('/created_by/1', @controller.options_for_me.merge(:method => :sql))
+#    puts "#{pages.length} created_by/1 pages found"
+    assert_equal pages.sort_by {|p| p.id},
+                 Page.find(:all).select {|p| p.created_by_id == 1 and user.may?(:view, p)},
+                 'created_by/1 should match'
+  end  
 
   protected
   

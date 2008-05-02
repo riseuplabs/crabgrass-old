@@ -18,7 +18,9 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
     conditions << "@group_id #{options[:group_ids].join('|')}" if options[:group_ids]
     conditions << "@public #{options[:public]}" if options[:public]
     @args_for_find = {:conditions => conditions.join(' | ')}
-#current_user.all_group_ids, current_user.id
+
+    @args_for_find[:conditions] << " @group_id #{options[:group_id]}" if options[:group_id]
+
     @path          = cleanup_path(path)
   end
 
@@ -29,10 +31,11 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   def find_pages
 #puts "applying filters from path"
     apply_filters_from_path( @path )
-
-    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
+#    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
 #    @args_for_find[:conditions] = "test"
-    Page.find Page.search_for_ids(@args_for_find)
+#require 'ruby-debug'; debugger
+    @args_for_find[:per_page] ||= 1000
+    Page.search(@args_for_find[:conditions], @args_for_find)
   end
 
   def count_pages

@@ -104,7 +104,7 @@ class Wiki < ActiveRecord::Base
     end  
   end  
 
-  def auto_summary
+  def index
     self.body
   end
   

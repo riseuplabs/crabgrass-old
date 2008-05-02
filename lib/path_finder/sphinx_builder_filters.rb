@@ -4,62 +4,161 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
 
   protected
 
-  def filter_pending
-    # TODO: make resolved pages be reflected immediately in the delta index (currently it is considered both resolved and not resolved until next index)
-    @args_for_find[:conditions] << "@resolved 0"
+  def filter_unread
+    Raise "sphinx cannot search for unread"
   end
 
+  def filter_pending
+    Raise "sphinx cannot search inbox for pending" if @inbox
+    @args_for_find[:conditions] << " @resolved 0"
+  end
   
+  def filter_interesting
+    Raise "sphinx cannot search for interesting"
+  end
+
+  def filter_watching
+    Raise "sphinx cannot search for watching"
+  end
+
+  def filter_inbox
+    Raise "sphinx cannot search for inbox"
+  end
+
+  def filter_attending
+    Raise "sphinx cannot search for attending"
+  end
+
+  def filter_starred
+    Raise "sphinx cannot search for starred"
+  end
+
+  def filter_starts
+    # TODO: check if this has intended effect
+    @date_field = "starts_at"
+  end
+
+  def filter_after(date)
+    if date == 'now'
+       date = Time.now
+    else
+       if date == 'today'
+          date = Time.now.to_date
+       else
+          year, month, day = date.split('-')
+          date = TzTime.local(year, month, day)
+       end
+    end
+    @args_for_find[:filter] = @date_field
+    @args_for_find[:filter_start] = date    
+    @args_for_find[:filter_stop] = date + 100.years
+  end
+
+  def filter_before(date)
+    if date == 'now'
+       date = Time.now
+    else
+       if date == 'today'
+          date = Time.now.to_date
+       else
+          year, month, day = date.split('-')
+          date = TzTime.local(year, month, day)
+       end
+    end
+    @args_for_find[:filter] = @date_field
+    @args_for_find[:filter_start] = date - 100.years
+    @args_for_find[:filter_stop] = date
+  end
+
+  def filter_changed
+    Raise "sphix cannot search for changed"
+  end
+      
+  ### Time finders
+  # dates in database are UTC
+  # we assume the values pass to the finder are local
+  
+  def filter_upcoming
+    @args_for_find[:filter] = "starts_at"
+    @args_for_find[:filter_start] = Time.now
+    @args_for_find[:filter_stop] = Time.now + 100.years
+    @order << 'pages.starts_at DESC' if @order
+  end
+  
+  def filter_ago(near,far)
+    @args_for_find[:filter] = "updated_at"
+    @args_for_find[:filter_start]  = to_local(far.to_i.days.ago)
+    @args_for_find[:filter_stop] = to_local(near.to_i.days.ago)
+  end
+  
+  def filter_created_after(date)
+    year, month, day = date.split('-')
+    date = TzTime.local(year, month, day)
+    @args_for_find[:filter] = "created_at"
+    @args_for_find[:filter_start]  = date
+    @args_for_find[:filter_stop] = date + 100.years
+  end
+  
+  def filter_created_before(date)
+    year, month, day = date.split('-')
+    date = TzTime.local(year, month, day)
+    @args_for_find[:filter] = "created_at"
+    @args_for_find[:filter_start]  = date - 100.years
+    @args_for_find[:filter_stop] = date
+  end
+ 
+  def filter_month(month)
+    offset = TzTime.zone.utc_offset
+    @args_for_find[:filter] = @date_field
+    @args_for_find[:filter_start]  = month
+    @args_for_find[:filter_stop] = month + 1.month
+  end
+
+  def filter_year(year)
+    offset = TzTime.zone.utc_offset
+    @args_for_find[:filter] = @date_field
+    @args_for_find[:filter_start]  = year
+    @args_for_find[:filter_stop] = year + 1.year
+  end
+  
+  ####
+
   def filter_type(page_class_group)
-    @args_for_find[:conditions] << "@type "
-    @args_for_find[:conditions] << Page.class_group_to_class_names(page_class_group).join("|")
+    @args_for_find[:conditions] << " @class_display_name #{page_class_group}"
   end
   
   def filter_person(id)
-    @args_for_find[:conditions] << "@user_id #{id}"
+    @args_for_find[:conditions] << " @user_id #{id}"
   end
   
   def filter_group(id)
-    @args_for_find[:conditions] << "@group_id #{id}"
+    @args_for_find[:conditions] << " @group_id #{id}"
   end
 
   def filter_created_by(id)
-    @args_for_find[:conditions] << "@created_by_id #{id}"
+    @args_for_find[:conditions] << " @created_by_id #{id}"
   end
 
   def filter_not_created_by(id)
-    @args_for_find[:conditions] << "@created_by_id -#{id}"
+    @args_for_find[:conditions] << " @created_by_id -#{id}"
   end
   
   def filter_tag(tag_name)
-    #TODO: implement tagging with has_many_polymorphisms
+    @args_for_find[:conditions] << " @tags #{tag_name}"
   end
   
   def filter_name(name)
-    @args_for_find[:conditions] << "@name #{name}"
+    @args_for_find[:conditions] << " @name #{name}"
   end
   
   #### sorting  ####
-  # when doing UNION, you can only ORDER BY
-  # aliased columns. So, in case we are doing a
-  # union, the sorting will use an alias
   
   def filter_ascending(sortkey)
-    sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    if @aliases and @order
-      # ^^^ these might be nil, like when doing a count where order doesn't matter.
-      @aliases << ["pages.`%s` AS pages_%s" % [sortkey,sortkey]]
-      @order << "pages_%s ASC" % sortkey
-    end
+    @args_for_find[:order] = "#{sortkey} ASC"
   end
   
   def filter_descending(sortkey)
-    sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    if @aliases and @order
-      # ^^^ these might be nil, like when doing a count where order doesn't matter.
-      @aliases << ["pages.`%s` AS pages_%s" % [sortkey,sortkey]]
-      @order << "pages_%s DESC" % sortkey
-    end
+    @args_for_find[:order] = "#{sortkey} DESC"
   end
   
   ### LIMIT ###
@@ -75,7 +174,7 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   end
   
   def filter_text(text)
-    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
+#    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
     @args_for_find[:conditions] = text + " " + @args_for_find[:conditions]
   end
 

@@ -15,6 +15,10 @@ class Event < ActiveRecord::Base
 	    @page = p
 	end
 
+  def index
+    self.description
+  end
+
 	protected
 
 	def default_group_name
