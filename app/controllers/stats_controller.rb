@@ -9,6 +9,7 @@ class StatsController < ApplicationController
   
   
   def usage
+    current_stats
     days_ago = (params[:id]||1).to_i
     stats_since( days_ago.days.ago )
     @header = "Usage in the past %s days" % days_ago
@@ -36,4 +37,8 @@ class StatsController < ApplicationController
     @membership_counts = buckets.sort{|a,b| b <=> a}
   end
   
+  def current_stats
+    @cur_users_logged_in = User.count 'id', :conditions => ['last_seen_at > ?', 15.minutes.ago]
+    @cur_wiki_locks = Wiki.count 'id', :conditions => ["locked_at = ?", true]
+  end
 end
