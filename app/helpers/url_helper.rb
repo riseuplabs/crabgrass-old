@@ -28,8 +28,8 @@ module UrlHelper
       end
     elsif arg.is_a? Group
       name = arg.name
-      if options[:display_name] and arg.full_name
-        display_name = arg.full_name
+      if options[:display_name]
+        display_name = arg.display_name
       end
     end
     display_name ||= name
