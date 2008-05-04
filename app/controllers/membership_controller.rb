@@ -25,14 +25,19 @@ class MembershipController < ApplicationController
   # request to join this group
   def join
     return unless request.post? # just show form on get.
-    
+
+=begin
+# I'm not sure that this is a good idea, but and maybe it is never used
     unless @group.users.any?
+#    require 'ruby-debug'; debugger;
       # if the group has no users, then let the first person join.
       @group.memberships.create :user => current_user
       message :success => 'You are the first person in this group'
       redirect_to :action => 'show', :id => @group
       return
     end
+=end
+
     page = Page.make :request_to_join_group, :user => current_user, :group => @group
     if page.save
       message :success => 'Your request to join this group has been sent.'

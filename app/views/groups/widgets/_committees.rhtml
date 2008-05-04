@@ -1,5 +1,5 @@
-<% if @group.committees.any? -%>
-<%= render :partial => 'avatars/boxes', :locals => {:groups => @group.committees, :side => 'left'} %>
+<% if @committees.any? -%>
+<%= render :partial => 'avatars/boxes', :locals => {:groups => @committees, :side => 'left'} %>
 <% else -%>
 (no committees)
 <% end -%>

@@ -69,11 +69,30 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_template 'show_nothing'
   end
 
+  def test_show_committees_when_logged_in
+    login_as :blue
+    
+    # show a group you belong to
+    get :show, :id => groups(:public_group).name
+    assert_response :success
+    assert_template 'show'
+
+    assert_equal :private, assigns(:access), "should have private access to public group"
+    assert_equal 2, assigns(:committees).length, "should show 2 committee"
+    
+  end
+
   def test_show_public_when_not_logged_in
     get :show, :id => groups(:public_group).name    
     assert_response :success
     assert_template 'show'
     assert_equal :public, assigns(:access), "should have public access to public group"
+    assert_equal 1, assigns(:committees).length, "should show 1 committee"
+    
+    get :show, :id => groups(:public_committee).name
+    assert_response :success
+    assert_template 'show'
+    assert_equal :public, assigns(:access), "should have public access to public committee of public group"
   end
   
   def test_show_private_when_not_logged_in
@@ -85,7 +104,12 @@ class GroupsControllerTest < Test::Unit::TestCase
     get :show, :id => groups(:warm).name
     assert_response :success
     assert_template 'show_nothing'
-    assert_nil assigns(:access), "should have no access to private group"
+    assert_nil assigns(:access), "should have no access to private committee"
+
+    get :show, :id => groups(:private_committee).name
+    assert_response :success
+    assert_template 'show_nothing'
+    assert_nil assigns(:access), "should have no access to private committee of public group"
     
   end
   

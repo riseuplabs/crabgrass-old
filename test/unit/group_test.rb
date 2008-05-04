@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < Test::Unit::TestCase
-  fixtures :groups, :users
+  fixtures :groups, :users, :profiles
 
   def test_memberships
     g = Group.create :name => 'fruits'
@@ -72,5 +72,15 @@ class GroupTest < Test::Unit::TestCase
     g.expects(:membership_changed)
     u = users(:blue)
     g.memberships.create(:user => u)
+  end
+  
+  def test_committee_access
+    g = groups(:public_group)
+    assert_equal [groups(:public_committee)],
+                 g.committees_for(:public).sort_by{|c| c.id},
+                 "should find 1 public committee"
+    assert_equal [groups(:public_committee), groups(:private_committee)].sort_by{|c| c.id},
+                 g.committees_for(:private).sort_by{|c| c.id},
+                 "should find 2 committee with private access"
   end
 end

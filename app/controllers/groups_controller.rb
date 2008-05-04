@@ -44,6 +44,7 @@ class GroupsController < ApplicationController
     
     @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
     @profile = @group.profiles.send(@access)
+    @committees = @group.committees_for @access
     
     @wiki = private_or_public_wiki()
   end

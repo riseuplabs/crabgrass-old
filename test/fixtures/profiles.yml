@@ -4,7 +4,26 @@ profile_for_public_group:
   entity_id: 1000
   may_see: true
   may_see_members: true
+  may_see_committees: true
   stranger: true
+
+profile_for_public_committee:
+  id: 101
+  entity_type: "Group"
+  entity_id: 1001
+  may_see: true
+  may_see_members: true
+  may_request_membership: true
+  stranger: true
+
+profile_for_private_committee:
+  id: 102
+  entity_type: "Group"
+  entity_id: 1002
+  may_see: false
+  may_see_members: false
+  stranger: true
+
 profile_for_private_group:
   id: 2
   entity_type: "Group"
@@ -12,6 +31,7 @@ profile_for_private_group:
   may_see: false
   may_see_members: false
   stranger: true
+
 profile_for_rainbow:
   id: 3
   entity_type: "Group"

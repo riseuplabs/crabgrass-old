@@ -33,7 +33,6 @@
 </p>
 
 
-<% if not committee? -%>
 
 <div class='titlebox h1' >
 <div style='padding: 8px; background: url(/images/actions/lock.png) no-repeat 100% 50%'>
@@ -49,11 +48,13 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
 
 <div id='visible_group_options' style='margin-left: 2em'>
 
+<% if not committee? -%>
   <p><%= check_box :group, :publicly_visible_committees %>
   <label for="group_visible"><b>Make Committees Publicly Visible</b></label>
   <br>
   Committees are viewable by non-members at we.riseup.net/yourgroupname
   </p>
+<% end -%>
 
   <p><%= check_box :group, :publicly_visible_members %>
   <label for="group_visible"><b>Make Members Publicly Visible</b></label>
@@ -67,7 +68,6 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
   A “join group” link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected.
   </p>
 </div>
-<% end -%>
 
 <!--
 <p><label for="group_language">Language</label><br/>

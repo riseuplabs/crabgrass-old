@@ -213,6 +213,19 @@ class Group < ActiveRecord::Base
     ids = ids.join(',')
     Group.connection.select_values("SELECT groups.id FROM groups WHERE parent_id IN (#{ids})").collect{|id|id.to_i}
   end
+  
+  # returns an array of committees visible to appropriate access level
+  def committees_for(access)
+    if access == :private
+      return self.committees
+    elsif access == :public
+      if profiles.public.may_see_committees?
+        return @comittees_for_public ||= self.committees.select {|c| c.profiles.public.may_see?}
+      else
+        return []
+      end
+    end
+  end
     
   # returns a list of group ids for the page namespace
   # (of the group_ids passed in).
