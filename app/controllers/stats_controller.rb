@@ -39,6 +39,6 @@ class StatsController < ApplicationController
   
   def current_stats
     @cur_users_logged_in = User.count 'id', :conditions => ['last_seen_at > ?', 15.minutes.ago]
-    @cur_wiki_locks = Wiki.count 'id', :conditions => ["locked_at = ?", true]
+    @cur_wiki_locks = Wiki.count 'id', :conditions => ["locked_at > ?", 60.minutes.ago]
   end
 end
