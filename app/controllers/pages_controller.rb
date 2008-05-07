@@ -231,6 +231,11 @@ class PagesController < ApplicationController
     
   def destroy
     return unless request.post?
+    
+    # disable destroy pages until we implement better access control
+    message :error => 'delete feature is currently disabled'
+    return
+    
     url = from_url(@page)
     @page.data.destroy if @page.data # can this be in page?
     @page.destroy

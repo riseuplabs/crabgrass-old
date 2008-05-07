@@ -39,9 +39,11 @@ div#new_possible {background: #eee; padding: 1em; margin: 1em;}
 	</ul>
 <% end %>
 
+<% if current_user.may? :edit, @page -%>
 <div id='new_possible'>
 <%= render :partial => 'new_possible'%>
 </div> 
+<% end -%>
 
 <!--
 <% form_tag(page_url(@page,:action=>'new_possible')) do -%>

@@ -1,7 +1,7 @@
 <!-- sidebar -->
 
-<% if logged_in? %>
 <a id="toggle_all" href="javascript:void(0);" class="sidecloseall">close all</a>
+<% if logged_in? %>
 <div class='sideheadright'> actions</div>
 <div class='sidesectionright'>
 
@@ -33,9 +33,11 @@
 </div>
 <% end %>
 
+<!-- Disable deleting pages until we have better access control
 <div class='sidelink'>
   <%= link_to_icon 'destroy this page', 'actions/trash.png', pages_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
 </div>
+-->
 
 <div class='sidelink'>
   <%= link_to_function 'notify...'.t, show_notify_click, :style => icon_style('actions/announce.png'), :title =>'Send page to user inboxes' %>
@@ -68,12 +70,12 @@
 </div> <!-- end section -->
 <% end %>
 
+<% if current_user.may? :edit, @page -%>
 <div class="sideheadright"> administrators  <%= link_to ' (details)', {:controller => 'pages', :action => 'access', :id => @page.id}, :title => 'edit page admins', :class => 'sidedetails' %></div>
 <div class='sidesectionright'>
 <%= render :partial => 'pages/sidebar/administrators' %>
 <div class='tail'></div>
 </div> <!-- end section -->
-
 
 <div class='sideheadright'> access <%= link_to ' (details)', {:controller => 'pages', :action => 'access', :id => @page.id}, :title => 'edit page access', :class => 'sidedetails' %></div>
 <div class='sidesectionright'>
@@ -92,6 +94,7 @@
 <% end %>
 <div class='tail'></div>
 </div> <!-- end section -->
+<% end -%>
 
 <div class='sideheadright'> tags</div>
 <div class='sidesectionright'>

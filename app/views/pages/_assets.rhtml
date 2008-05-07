@@ -1,9 +1,11 @@
 <div id="assets" style='margin-top: 4px'>
   <% @page.assets.each do |asset| -%>
   <div class='sideline' id='asset_<%= asset.id %>'>
+    <% if current_user.may? :edit, @page -%>
     <span id='asset_<%= asset.id %>_delete'>
       <%= link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'asset', :action => 'destroy', :id => asset.id}, :confirm => 'are you sure you want to delete this file?', :before => "$('asset_#{asset.id}').addClassName('busy')", :success => "$('asset_#{asset.id}').remove()", :failure => "$('asset_#{asset.id}').removeClassName('busy')"}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id)}) %>
     </span>
+    <% end -%>
     <%= link_to_icon(truncate(asset.filename, 20), asset.small_icon, asset.public_filename) %>
   </div>
   <% end -%>

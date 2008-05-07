@@ -6,7 +6,7 @@
 <% for post in @posts do -%>
 <%= render :partial => 'posts/post', :locals => {:post => post} %>
 <% end -%>
-<% if logged_in? -%>
+<% if current_user.may? :comment, @page -%>
 <%= render :partial => 'posts/reply' %>
 <% end -%>
 </table>

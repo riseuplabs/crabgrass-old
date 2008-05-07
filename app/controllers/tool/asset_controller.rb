@@ -1,5 +1,6 @@
 class Tool::AssetController < Tool::BaseController
   before_filter :fetch_asset
+  javascript :extra
 
   def show
   end

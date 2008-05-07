@@ -447,8 +447,8 @@ module SocialUser
     # because of participation objects, NOT because the page is public.
     #
     def may!(perm, page)
-      upart = page.participation_for_user(self)
-      return true if upart
+      @upart ||= page.participation_for_user(self)
+      return true if @upart
       gparts = page.participation_for_groups(all_group_ids)
       return true if gparts.any?
       raise PermissionDenied

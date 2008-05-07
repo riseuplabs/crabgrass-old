@@ -28,7 +28,7 @@ end
 <div style="background-color: #<%=possible.color%>; padding: 2px;" >
   <div id='<%=possible_show_id%>'>
     <div style="float:right; width:5em; text-align:right;">
-       <%= link_to "delete", page_url(@page, :action=>'destroy_possible', :possible => possible) %>
+       <%= link_to "delete", page_url(@page, :action=>'destroy_possible', :possible => possible) if current_user.may? :edit, @page%>
     </div>
     
     <div class='name'>
