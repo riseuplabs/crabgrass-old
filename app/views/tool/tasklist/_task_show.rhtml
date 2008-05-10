@@ -12,9 +12,10 @@ end
 -%>
     <div class='name'>
       <div class='<%= 'past_due' if task.past_due? %>'>
-        <%= friendly_date(task.updated_at) if task.updated_at? -%>
+		<span class= 'task_timestamp'><%= friendly_date(task.updated_at) if task.updated_at? -%></span>
+		<span class="status"><%= _("Past Due") if task.past_due? %></span>
 
-        <%= "<b>#{links.join(', ')}:</b>" if links.any? -%>
+        <%= "#{links.join(', ')}:" if links.any? -%>
 
         <% if @upart and @upart.viewed_at? and task.created_at? %>
           <% if @upart.viewed_at < task.created_at - 10.seconds %>
@@ -25,11 +26,11 @@ end
         <% end %>
         
         <% if task.description.any? -%>
-          <span><%= link_to_function h(task.name), "Element.toggle('#{details_id}')" %></span>
+          <span class = 'task_title'><%= link_to_function h(task.name), "Element.toggle('#{details_id}')" %></span>
         <% else -%>
-          <%=h task.name %>
+          <span class = 'task_title'><%=h task.name %></span>
         <% end %>
-        <span class="status"><%= _("Past Due") if task.past_due? %></span>
+        
       </div>
     </div>
     <div class='indent task_details' id="<%=details_id%>" style='display: none'>

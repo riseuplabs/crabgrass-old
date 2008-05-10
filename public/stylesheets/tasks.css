@@ -1,13 +1,26 @@
+div.left-small {
+  background:#E6F2FF none repeat scroll 0%;
+  border: solid 1px lightgrey;
+  float:left;
+  font-size:12px;
+  text-decoration: none;
+  padding: 6px 0px 8px 6px;
+  width:14em;
+}
+div.right-big {
+  margin-left: 13em;
+  text-decoration: none;
+}
+div.task_details p, div.task_details ul {
+  border-bottom: 1px solid lightgrey;
+  color: #88996E;
+  font-size: 12px;
+  margin: 2px 80px 20px 51px;
+  padding: 2px;
+}
 div.task_tool h2 {
   font-size: 1em;
 }
-ul.task_list {
-  list-style-type: none;
-  padding: 0;
-}
-ul.task_list .past_due{
-}
-
 li.task {
   clear: left;
 }
@@ -46,31 +59,44 @@ li.task div.name {
   clear: right;
 }
 li.task div.name span a{
-  color: black;
+  border-bottom: 1px solid #88996E;
+  color: #556B2F;
+  font-size: 14px;
   text-decoration: none;
-  border-bottom: 1px #999 dotted;
-  outline: 0;
 }
 li.task div.indent {
-  margin-left: 6em;
+  margin-left: 2em;
 }
 li.task div.edit {
   padding: 3px;
 }
 li.task .status {
-  font-weight: bold;
-  padding-bottom: 2px;
-  margin-bottom: 2px;
-  border-bottom: 1px #ff1313 solid;
+  color: red;
+  font-variant: small-caps;
+  xbackground:#FF0000 none repeat scroll 0% 50%;
 }
 li#add_task_link {
   background: #eee;
   margin: 0 6em;
   padding: 4px;
 }
-div.task_details p, div.task_details ul {
-  margin: 0;
+span.task_timestamp{
+  color: grey;
+  font-size; 13px
 }
+span.task_title{
+  color: #556B2F;
+  font-size: 14px;
+  text-decoration: none;
+}
+ul.task_list {
+  color: grey;
+  list-style-type: none;
+  padding: 0;
+}
+ul.task_list .past_due{
+}
+
 
 /* optional side links */
 div.left-small div {
@@ -78,10 +104,12 @@ div.left-small div {
 }
 div.left-small div span {
   display: block;
-  background: #eee;
-  border-bottom: 2px solid #ddd;
-  padding: 2px;
+  padding: 0px;
+  font-variant:small-caps;
+  font-size: 13px;
 }
 div.left-small div a {
   display: block;
+  padding: 0px 4px 0px 1px;
+  text-decoration: none;
 }

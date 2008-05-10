@@ -78,6 +78,8 @@ a.noline, a.imglink { text-decoration: none; }
 a.imglink span { text-decoration: underline; }
 img.avatar { vertical-align: middle; } 
 
+a.selected {font-weight: bold;}
+
 ul.plainlist {
   padding: 0; margin: 0;
   list-style: none;
@@ -92,15 +94,7 @@ ul.floatlist li {
   margin-right: 1em;
 }
 
-div.left-small {
-  float: left;
-  width: 10em;
-}
-div.right-big {
-  margin-left: 11em;
-}
 
-a.selected {font-weight: bold;}
 
 /** horizontal Formy tabs **/
 

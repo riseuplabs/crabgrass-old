@@ -6,13 +6,13 @@ Task lists I have access to.
 <div class='columns'>
   <div class='left-small'>
     <div>
-      <span>My tasks</span>
+      <span>My Tasks</span>
       <%= task_link('pending', :action => 'pending', :selected => ['pending','index']) %>
       <%= task_link('completed', :action => 'completed') %>
     </div>
     <% if @user.groups %>
     <div>
-      <span>Tasks for</span>
+      <span>Group Tasks</span>
       <% @user.groups.each do |g| -%>
         <%= task_link(g.name, :action => 'group', :id => g.id) %>
       <% end -%>
