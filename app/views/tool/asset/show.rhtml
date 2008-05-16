@@ -3,7 +3,7 @@
 <% end -%>
 
 <table cellpadding='4'>
-<% if @group.publicly_visible_members or current_user.may? :edit, @page -%>
+<% if current_user.may? :edit, @page -%>
 <tr>
   <td align='right'><b><%= 'created by'.t %>:</b></td>
   <td><%= h @page.created_by.both_names if @page.created_by %></td>
@@ -14,7 +14,7 @@
   <td><%= full_time(@page.created_at) %></td>
 </tr>
 <% if @page.updated_at > @page.created_at -%>
-<% if @group.publicly_visible_members or current_user.may? :edit, @page -%>
+<% if current_user.may? :edit, @page -%>
 <tr>
   <td align='right'><b><%= 'last updated by'.t %>:</b></td>
   <td><%= h @page.updated_by.both_names %></td>
