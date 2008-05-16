@@ -285,17 +285,6 @@ class PageFinderTest < Test::Unit::TestCase
     end
   end
 
-  def test_created_by
-    login(:blue)
-    user = users(:blue)
-    
-    pages = Page.find_by_path('/created_by/1', @controller.options_for_me.merge(:method => :sql))
-#    puts "#{pages.length} created_by/1 pages found"
-    assert_equal pages.sort_by {|p| p.id},
-                 Page.find(:all).select {|p| p.created_by_id == 1 and user.may?(:view, p)},
-                 'created_by/1 should match'
-  end  
-
   protected
   
   def login(user = :blue)
