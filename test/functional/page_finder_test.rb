@@ -193,6 +193,7 @@ class PageFinderTest < Test::Unit::TestCase
 
   ##############################################
   ### Tests for various search parameters
+=begin
   def test_sphinx_searchs
     login(:blue)
     user = users(:blue)
@@ -237,7 +238,7 @@ class PageFinderTest < Test::Unit::TestCase
                    "#{search_str} should match results for group"
     end
 
-=begin
+ =begin
     # I'm not sure how to test the delta index; this doesn't seem to work
     p = Page.create :title => "new pending page"
     p.add user
@@ -251,7 +252,7 @@ class PageFinderTest < Test::Unit::TestCase
                    pages.collect{|p| p.id}.sort, 
                    "#{search_str} should match results after pages are added"
     end
-=end
+ =end
   end  
 
   def test_sphinx_searchs_w_pagination
@@ -284,6 +285,7 @@ class PageFinderTest < Test::Unit::TestCase
                    "#{search_str} should match results for user"
     end
   end
+=end
 
   protected
   
