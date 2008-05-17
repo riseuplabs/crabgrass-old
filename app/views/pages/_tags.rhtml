@@ -1,6 +1,7 @@
 <%= content_tag("div", @error, :class => "error") if @error %>
 <% if @page.tags.any? -%>
-<%= @page.tags.collect{|tag| link_to tag.name, "/groups/tags/#{@page.group.name}/#{tag.name}" }.join(" ") %>
+<% link_path = @page.group ? "/groups/tags/#{@page.group.name}" : "/me/search/tag" -%>
+<%= @page.tags.collect{|tag| link_to tag.name, "#{link_path}/#{tag.name}" }.join(" ") %>
 <%= link_to_function(image_tag('actions/pencil.png'), "Element.toggle($('tag-form')); Element.toggle($('tags'))") if current_user.may? :edit, @page %>
 <% elsif current_user.may? :edit, @page -%>
 <%= link_to_function('Add tags &raquo;', "Element.toggle($('tag-form')); Element.toggle($('tags'))") %>
