@@ -40,12 +40,14 @@ class MembershipControllerTest < Test::Unit::TestCase
 
   def test_join_not_logged_in
     get :join, :id => groups(:rainbow).name
-    assert_response :success
-    assert_template 'show_nothing'
+#    assert_response :success
+#    assert_template 'show_nothing'
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
   end
 
   def test_join_logged_in
-    login_as :dolphin
+    login_as :red
 
     get :join, :id => groups(:private_group).name
     assert_response :success

@@ -128,7 +128,8 @@ class MembershipController < ApplicationController
   prepend_before_filter :fetch_group
   def fetch_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
-    if @group and (@group.publicly_visible_members or (@group.committee? and @group.parent.publicly_visible_members) or current_user.member_of? @group) ##committees need to be handled better
+#here is where it is impossible to join some groups
+    if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or current_user.member_of? @group) ##committees need to be handled better
       return true
     else
       render :action => 'show_nothing'
