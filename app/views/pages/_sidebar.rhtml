@@ -33,11 +33,11 @@
 </div>
 <% end %>
 
-<!-- Disable deleting pages until we have better access control
+<% if @page.created_by == current_user -%>
 <div class='sidelink'>
   <%= link_to_icon 'destroy this page', 'actions/trash.png', pages_url(@page, :action => 'destroy'), :method => 'post', :confirm => 'are you sure you want to delete this page?' %>
 </div>
--->
+<% end -%>
 
 <div class='sidelink'>
   <%= link_to_function 'notify...'.t, show_notify_click, :style => icon_style('actions/announce.png'), :title =>'Send page to user inboxes' %>
