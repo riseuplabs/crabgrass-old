@@ -19,3 +19,7 @@ config.action_controller.perform_caching             = false
 config.action_mailer.delivery_method = :test
 
 MAKE_ASSET_BUNDLES = false
+
+
+# Disable request forgery protection in test environment
+config.action_controller.allow_forgery_protection = false

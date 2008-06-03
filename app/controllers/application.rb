@@ -17,7 +17,9 @@ class ApplicationController < ActionController::Base
   before_filter :breadcrumbs, :context
   around_filter :set_timezone
   session :session_secure => true if Crabgrass::Config.https_only
+  protect_from_forgery :secret => Crabgrass::Config.secret
 
+ 
   protected
   
   # let controllers set a custom stylesheet in their class definition
