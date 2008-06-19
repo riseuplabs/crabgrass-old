@@ -5,7 +5,7 @@ class SocialUserTest < Test::Unit::TestCase
   fixtures :users, :groups, :memberships, :pages
 
   def setup
-    TzTime.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = TimeZone["Pacific Time (US & Canada)"]
   end
 
   def test_memberships

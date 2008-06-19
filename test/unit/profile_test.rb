@@ -5,7 +5,7 @@ class ProfileTest < Test::Unit::TestCase
   fixtures :users, :groups
 
   def setup
-    TzTime.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = TimeZone["Pacific Time (US & Canada)"]
   end
 
   def test_adding_profile
