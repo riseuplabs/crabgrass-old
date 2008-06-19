@@ -51,7 +51,7 @@ describe Page do
   end
 
   it "should not be valid if the name has changed to an existing name" do
-    @page.stub!(:name_modified?).and_return(true)
+    @page.stub!(:name_changed?).and_return(true)
     @page.stub!(:name_taken?).and_return(true)
     @page.should_not be_valid
     @page.should have(1).error_on(:name)

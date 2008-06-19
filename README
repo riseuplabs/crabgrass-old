@@ -15,7 +15,7 @@ debian/ubuntu
 required:
   apt-get install rubygems
   gem install -y rails
-  gem install redcloth rmagick tzinfo ruby-debug
+  gem install RedCloth rmagick tzinfo ruby-debug hpricot
 
 optional for latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
@@ -48,7 +48,7 @@ GEMS INFO
 =========================================================
 
 tzinfo
-  required by tzinfo_timezone + tztime
+  required for timezone support
 
 redcloth
   greencloth derives from redcloth
@@ -62,4 +62,5 @@ open4
 SyslogLogger
   improved logging (optional)
 
-
+hpricot
+  used by the plugin webrat

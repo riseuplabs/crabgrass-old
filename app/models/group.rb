@@ -22,9 +22,6 @@
 =end
 
 class Group < ActiveRecord::Base
-
-  #track_changes :name
-  acts_as_modified
   attr_accessible :name, :full_name, :short_name, :summary
   
   ####################################################################
@@ -280,7 +277,7 @@ class Group < ActiveRecord::Base
   
   after_save :update_name
   def update_name
-    if name_modified?
+    if name_changed?
       update_group_name_of_pages  # update cached group name in pages
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)

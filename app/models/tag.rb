@@ -13,6 +13,7 @@ class Tag < ActiveRecord::Base
   validates_format_of :name, :with => /^[a-zA-Z0-9\_\-]+$/, :message => "can not contain special characters"
   
   # Set up the polymorphic relationship.
+=begin
   has_many_polymorphs :taggables, 
     :from => ([:pages] + TOOLS.map {|t| t.to_s.underscore.pluralize.to_sym}),
     :through => :taggings, 
@@ -24,6 +25,7 @@ class Tag < ActiveRecord::Base
         self.map(&:name).sort.join(Tag::DELIMITER)
       end
     }
+=end
     
   # Callback to strip extra spaces from the tagname before saving it. If you allow tags to be renamed later, you might want to use the <tt>before_save</tt> callback instead.
   def before_create 

@@ -7,8 +7,6 @@
 # 
 
 class Page < ActiveRecord::Base
-  acts_as_modified
-
   extend PathFinder::FindByPath
   
   #######################################################################
@@ -17,7 +15,7 @@ class Page < ActiveRecord::Base
   validates_format_of  :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
 
   def validate
-    if name_modified? and name_taken?
+    if name_changed? and name_taken?
       errors.add 'name', 'is already taken'
     end
   end
@@ -313,31 +311,30 @@ class Page < ActiveRecord::Base
     self.page_index.save!
   end
   
-  define_index do |index|
+  define_index do
     begin
-      index.includes.name
-      index.includes.title
-      index.includes.summary
+      indexes name
+      indexes title
+      indexes summary
  
-      index.includes.page_index.body 
-      index.includes.page_index.class_display_name
-      index.includes.page_index.tags
+      indexes page_index.body 
+      indexes page_index.class_display_name
+      indexes page_index.tags
 
-      index.includes.discussion.posts.body.as.comments
+      indexes discussion.posts.body, :as => :comments
       
-      index.includes.user_participations.user_id
-      index.includes.group_participations.group_id
-      index.includes.created_by_id
+      has user_participations.user_id
+      has group_participations.group_id
+      has created_by_id
       
-      index.includes.resolved
-      index.includes.public
+      indexes resolved
+      indexes public
       
-      index.has.created_at
-      index.has.updated_at
-      index.has.starts_at
+      has created_at
+      has updated_at
+      has starts_at
     
-      index.delta = true
-
+      #index.delta = true
     rescue
       puts "failed to index page #{self} for sphinx search"
       RAILS_DEFAULT_LOGGER.warn "failed to index page #{self} for sphinx search"

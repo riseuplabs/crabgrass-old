@@ -5,7 +5,7 @@ class UserTest < Test::Unit::TestCase
   fixtures :users, :groups, :memberships
 
   def setup
-    TzTime.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = TimeZone["Pacific Time (US & Canada)"]
   end
 
   ## ensure that a user and a group cannot have the same handle

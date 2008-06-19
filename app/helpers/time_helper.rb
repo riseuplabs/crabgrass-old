@@ -39,15 +39,15 @@ module TimeHelper
   end
 
   def to_local(time)
-    TzTime.zone.utc_to_local(time)
+    Time.zone.utc_to_local(time)
   end
     
   def to_utc(time)
-    TzTime.zone.local_to_utc(time)
+    Time.zone.local_to_utc(time)
   end
 
   def local_now
-    TzTime.zone.now
+    Time.zone.now
   end
 
   def after_local_day_start?(utc_time)

@@ -12,7 +12,7 @@ class Tool::Request < Page
   # has its resolved status changed.
   after_save :update_resolved  
   def update_resolved
-    if resolved_modified? and links.any?
+    if resolved_changed? and links.any?
       links.each do |page|
         page.update_attribute(:resolved, self.resolved?)
       end 

@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   include SocialUser
 
   validates_handle :login
-  acts_as_modified
   
   #########################################################    
   # my identity
@@ -31,7 +30,7 @@ class User < ActiveRecord::Base
 
   after_save :update_name
   def update_name
-    if login_modified?
+    if login_changed?
       Page.connection.execute "UPDATE pages SET `updated_by_login` = '#{self.login}' WHERE pages.updated_by_id = #{self.id}"
       Page.connection.execute "UPDATE pages SET `created_by_login` = '#{self.login}' WHERE pages.created_by_id = #{self.id}"
     end
