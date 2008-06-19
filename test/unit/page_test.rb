@@ -105,7 +105,8 @@ class PageTest < Test::Unit::TestCase
     p.save
     assert_equal group.name, p.group_name, 'page should have a denormalized copy of the group name'
   end
-  
+
+=begin  
   def test_page_links
     p1 = create_page :title => 'red fish'
     p2 = create_page :title => 'two fish'
@@ -130,6 +131,7 @@ class PageTest < Test::Unit::TestCase
     p2.destroy
     assert_equal 1, p1.links.length, 'after destroy, links should be removed'
   end
+=end
 
   def test_associations
     assert check_associations(Page)
