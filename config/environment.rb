@@ -42,11 +42,21 @@ AVAILABLE_PAGE_CLASSES = %w[
 ### END CUSTOM OPTIONS
 ########################################################################
 
+CORE_PLUGINS    = %w[acts_as_list acts_as_tree classic_pagination will_paginate browser_filters]
+UI_PLUGINS      = %w[calendar_date_select nested_layouts textile_editor_helper multiple_select validates_as_email]
+GRAPHIC_PLUGINS = %w[ruby-svg-1.0.3 attachment_fu flex_image]
+TESTING_PLUGINS = %w[rspec_on_rails webrat mocha rspec spider_test]
+SKETCHY_PLUGINS = %w[acts_as_versioned has_many_polymorphs acts_as_rateable thinking-sphinx]
+
+ALL_PLUGINS = CORE_PLUGINS + UI_PLUGINS + GRAPHIC_PLUGINS + TESTING_PLUGINS + SKETCHY_PLUGINS
+
 Rails::Initializer.run do |config|
   config.load_paths += %w(associations discussion chat).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
-  
+ 
+#  config.plugins = ALL_PLUGINS - ['will_paginate']
+
   # gems that crabgrass depends on:
   # install with 'sudo rake gems:install'
 #  config.gem 'RedCloth'
@@ -80,15 +90,10 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
 end
 
+# There appears to be something wrong with dirty tracking in rails.
+# Lots of errors if this is enabled:
+ActiveRecord::Base.partial_updates = false
 
-
-#### SESSION HANDLING ##############
-
-#ActionController::Base.session_options[:session_expires] = 3.hours.from_now
-#if File.directory? '/dev/shm/'
-#  ActionController::Base.session_options[:tmpdir] = '/dev/shm/'
-#end
-  
 #### CUSTOM EXCEPTIONS #############
 
 class PermissionDenied < Exception; end    # the user does not have permission to do that.
@@ -121,7 +126,8 @@ AVAILABLE_PAGE_CLASSES.collect!{|i|Tool.const_get(i)}.freeze
 
 #### USER INTERFACE HELPERS ########
 
-FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist'
+
+FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist' if defined? FightTheMelons
 
 SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
 
