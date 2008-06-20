@@ -94,6 +94,8 @@ end
 # Lots of errors if this is enabled:
 ActiveRecord::Base.partial_updates = false
 
+ActiveRecord::Base.store_full_sti_class = true
+
 #### CUSTOM EXCEPTIONS #############
 
 class PermissionDenied < Exception; end    # the user does not have permission to do that.
