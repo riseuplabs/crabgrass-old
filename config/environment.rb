@@ -130,7 +130,5 @@ AVAILABLE_PAGE_CLASSES.collect!{|i|Tool.const_get(i)}.freeze
 FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist' if defined? FightTheMelons
 
 SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
+ 
 
-require "#{RAILS_ROOT}/vendor/enhanced_migrations-1.2.0/lib/enhanced_migrations.rb"
-    
-require 'tagging_extensions'
