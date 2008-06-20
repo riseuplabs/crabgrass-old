@@ -1,6 +1,8 @@
-class ChannelsUser < ActiveRecord::Base
+class ChatChannelsUser < ActiveRecord::Base
 
-  belongs_to :channel
+  set_table_name 'channels_users'
+
+  belongs_to :channel, :class_name => 'ChatChannel', :foreign_key => 'chat_channel_id'
   belongs_to :user
   
   # this function has an n+1 issue, i don't know why

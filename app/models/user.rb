@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   # my identity
 
   belongs_to :avatar
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile', :extend => Profile::Methods
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
 
   # this is a hack to get 'has_many :profiles' to polymorph
   # on User instead of AuthenticatedUser
@@ -82,7 +82,8 @@ class User < ActiveRecord::Base
   #########################################################    
   # my tasks
 
-  has_and_belongs_to_many :tasks, :class_name => 'Task::Task' do
+=begin
+  has_and_belongs_to_many :tasks do
     def pending
       self.find(:all, :conditions => 'completed_at IS NULL')
     end
@@ -93,6 +94,6 @@ class User < ActiveRecord::Base
       self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
-  
+=end
   
 end

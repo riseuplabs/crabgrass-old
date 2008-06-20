@@ -1,7 +1,7 @@
 <% index ||= params[:index] || random_dom_id -%>
 <% dom_id = "profile_note_#{index}" -%>
 <% note_options =  options_for_select(
-     Profile::Note.options,  
+     ProfileNote.options,  
      (note ? note.note_type : nil)
    ) -%>
 <tr id="<%=dom_id%>" class='data_row'>

@@ -1,6 +1,6 @@
 <% index ||= params[:index] || random_dom_id -%>
 <% dom_id = "profile_im_address_#{index}" -%>
-<% im_types = Profile::ImAddress.options -%>
+<% im_types = ProfileImAddress.options -%>
 <% im_types_options = options_for_select im_types, (im_address ? im_address.im_type : nil) -%>
 <tr id="<%= dom_id %>" class='data_row'>
   <td>

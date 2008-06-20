@@ -10,7 +10,7 @@
             <tr>
               <td style="width:80px;padding:0px;" valign="top">
                 <% location_types_options = options_for_select(
-                     Profile::Location.options,
+                     ProfileLocation.options,
                      (location ? location.location_type : nil)
                    ) -%>
                 <%= select_tag_with_id "profile[locations][#{index}][location_type]", location_types_options, {:id => "profile_locations_#{index}_location_type"} %>

@@ -18,42 +18,42 @@ class ProfileController < ApplicationController
   # ajax
   def add_location
     render :update do |page|
-      page.insert_html :bottom, 'profile_locations', :partial => 'location', :locals => {:location => Profile::Location.new}
+      page.insert_html :bottom, 'profile_locations', :partial => 'location', :locals => {:location => ProfileLocation.new}
     end
   end
 
   # ajax
   def add_email_address
     render :update do |page|
-      page.insert_html :bottom, 'profile_email_addresses', :partial => 'email_address', :locals => {:email_address => Profile::EmailAddress.new}
+      page.insert_html :bottom, 'profile_email_addresses', :partial => 'email_address', :locals => {:email_address => ProfileEmailAddress.new}
     end
   end
 
   # ajax
   def add_im_address
     render :update do |page|
-      page.insert_html :bottom, 'profile_im_addresses', :partial => 'im_address', :locals => {:im_address => Profile::ImAddress.new}
+      page.insert_html :bottom, 'profile_im_addresses', :partial => 'im_address', :locals => {:im_address => ProfileImAddress.new}
     end
   end
 
   # ajax
   def add_phone_number
     render :update do |page|
-      page.insert_html :bottom, 'profile_phone_numbers', :partial => 'phone_number', :locals => {:phone_number => Profile::PhoneNumber.new}
+      page.insert_html :bottom, 'profile_phone_numbers', :partial => 'phone_number', :locals => {:phone_number => ProfilePhoneNumber.new}
     end
   end
 
   # ajax
   def add_note
     render :update do |page|
-      page.insert_html :bottom, 'profile_notes', :partial => 'note', :locals => {:note => Profile::Note.new}
+      page.insert_html :bottom, 'profile_notes', :partial => 'note', :locals => {:note => ProfileNote.new}
     end
   end
 
   # ajax
   def add_website
     render :update do |page|
-      page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => Profile::Website.new}
+      page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => ProfileWebsite.new}
     end
   end
 
@@ -61,7 +61,7 @@ class ProfileController < ApplicationController
  
   def fetch_profile
     return true unless params[:id]
-    @profile = Profile::Profile.find params[:id]
+    @profile = Profile.find params[:id]
     @entity = @profile.entity
     if @entity.is_a?(User)
       @user = @entity

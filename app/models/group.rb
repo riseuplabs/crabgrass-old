@@ -51,7 +51,7 @@ class Group < ActiveRecord::Base
   end
 
   belongs_to :avatar
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :class_name => 'Profile::Profile', :extend => Profile::Methods
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
   # TODO: this is really really horrible.
   has_many :tags,

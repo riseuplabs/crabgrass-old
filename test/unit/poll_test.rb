@@ -4,7 +4,7 @@ class PollTest < Test::Unit::TestCase
   fixtures :polls
 
   def test_find_possibles
-    poll = Poll::Poll.create
+    poll = Poll.create
     p1 = poll.possibles.create(:name => 'p1')
     p2 = poll.possibles.create(:name => 'robot_destroyer')
     possibles = poll.possibles.find(:all, :include => {:votes => :user})
@@ -12,7 +12,7 @@ class PollTest < Test::Unit::TestCase
   end
   
   def test_associations
-    assert check_associations(Poll::Poll)
+    assert check_associations(Poll)
   end
 
 end

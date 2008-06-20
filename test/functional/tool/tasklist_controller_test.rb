@@ -23,20 +23,20 @@ class Tool::TasklistControllerTest < Test::Unit::TestCase
 
   def test_sort
     login_as :quentin
-    assert_equal Task::Task.find(1).position, 1
-    assert_equal Task::Task.find(2).position, 2
-    assert_equal Task::Task.find(3).position, 3
+    assert_equal Task.find(1).position, 1
+    assert_equal Task.find(2).position, 2
+    assert_equal Task.find(3).position, 3
 
     xhr :post, :sort, :controller => "tool/tasklist", :page_id => pages(:tasklist1).id, :id => 0, :sort_list_21_pending => ["3","2","1"]
 
-    assert_equal Task::Task.find(1).position, 3
-    assert_equal Task::Task.find(2).position, 2
-    assert_equal Task::Task.find(3).position, 1
+    assert_equal Task.find(1).position, 3
+    assert_equal Task.find(2).position, 2
+    assert_equal Task.find(3).position, 1
   end
 
   def test_multi_list_sort
     login_as :quentin
-    tasks = Task::Task.find(1,2,3,4,5,6).index_by {|t| t.id}
+    tasks = Task.find(1,2,3,4,5,6).index_by {|t| t.id}
     assert_equal tasks[1].position, 1
     assert_equal tasks[2].position, 2
     assert_equal tasks[3].position, 3
@@ -49,7 +49,7 @@ class Tool::TasklistControllerTest < Test::Unit::TestCase
     @controller = Tool::TasklistController.new
     xhr :post, :sort, :controller => "tool/tasklist", :page_id => pages(:tasklist2).id, :id => 0, :sort_list_22_pending => ["4","5","2","6"]
 
-    tasks = Task::Task.find(1,2,3,4,5,6).index_by {|t| t.id}
+    tasks = Task.find(1,2,3,4,5,6).index_by {|t| t.id}
     assert_equal tasks[1].position, 1
     assert_equal tasks[2].position, 3
     assert_equal tasks[3].position, 2

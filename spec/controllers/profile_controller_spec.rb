@@ -51,8 +51,8 @@ describe ProfileController do
   end
 
   def setup_profile
-    @profile = mock_model(Profile::Profile)
+    @profile = mock_model(Profile)
     yield @profile if block_given?
-    Profile::Profile.stub!(:find).and_return(@profile)
+    Profile.stub!(:find).and_return(@profile)
   end
 end

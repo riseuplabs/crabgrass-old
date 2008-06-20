@@ -1,6 +1,6 @@
 <%
   hide = @possibles.any?
-  @possible = Poll::Possible.new
+  @possible = PollPossible.new
 -%>
 <div id="new_possible_link" style='<%= hide ? "" : "display:none" %>'>
   <%= link_to_function 'Add new possibility'.t, 'Element.show("new_possible_form_container"); Element.hide("new_possible_link");' %> 

@@ -52,8 +52,8 @@ class AddPermissionsToProfiles < ActiveRecord::Migration
     add_column :profiles, :may_spy, :boolean      # know if you are logged in
 
     ActiveRecord::Base.record_timestamps = false
-    Profile::Profile.reset_column_information    
-    Profile::Profile.find(:all).each do |profile|
+    Profile.reset_column_information    
+    Profile.find(:all).each do |profile|
       profile.stranger = profile.all?
       profile.save!
     end
@@ -136,8 +136,8 @@ class AddPermissionsToProfiles < ActiveRecord::Migration
     end
 
     add_column :profiles, :all, :boolean
-    Profile::Profile.reset_column_information
-    Profile::Profile.find(:all).each do |profile|
+    Profile.reset_column_information
+    Profile.find(:all).each do |profile|
       profile.all = profile.stranger?
       profile.save!
     end

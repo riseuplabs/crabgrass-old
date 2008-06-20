@@ -15,7 +15,7 @@ class PageMakeTest < Test::Unit::TestCase
     page = Page.make :request_to_join_group, :user => u, :group => g
     page.save # required for associations to be available
     
-    assert_equal Poll::Request, page.data.class
+    assert_equal PollRequest, page.data.class
     assert_equal Actions::AddToGroup, page.data.possible.action.class
     assert g.pages.include?(page),'group must have new page'
     assert page.groups.include?(g),'page must have new group'

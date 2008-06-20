@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Task::Task do
+describe Task do
   before do
-    @task = Task::Task.new
+    @task = Task.new
   end
 
   describe "completed status" do

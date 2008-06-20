@@ -3,7 +3,7 @@ require 'poll/poll'
 class Tool::Request < Page
   
   controller 'request'
-  model      Poll::Poll
+  model      Poll
   icon       'bullhorn.png'
   internal?   true
   class_group 'request'

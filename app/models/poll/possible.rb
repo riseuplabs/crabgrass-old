@@ -1,9 +1,11 @@
 
-class Poll::Possible < ActiveRecord::Base
+class PollPossible < ActiveRecord::Base
 
-	acts_as_list
-  belongs_to :poll, :class_name => 'Poll::Poll', :foreign_key => 'poll_id'
-  has_many :votes, :dependent => :destroy, :class_name => 'Poll::Vote', :foreign_key => 'possible_id'
+  set_table_name 'possibles'
+
+  acts_as_list
+  belongs_to :poll
+  has_many :votes, :dependent => :destroy, :class_name => 'PollVote', :foreign_key => 'possible_id'
   format_attribute :description  
   validates_presence_of :name
   

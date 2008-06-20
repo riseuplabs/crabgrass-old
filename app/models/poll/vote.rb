@@ -1,6 +1,8 @@
-class Poll::Vote < ActiveRecord::Base
+class PollVote < ActiveRecord::Base
 
-  belongs_to :possible, :class_name => 'Poll::Possible', :foreign_key => 'possible_id'
+  set_table_name 'votes'
+
+  belongs_to :possible
   belongs_to :user
   has_many :polls, :finder_sql => 
     'SELECT polls.* FROM polls ' +

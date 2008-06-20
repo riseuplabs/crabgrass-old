@@ -81,7 +81,7 @@ class ProfileTest < Test::Unit::TestCase
   
   
   def test_associations
-    assert check_associations(Profile::Profile)
+    assert check_associations(Profile)
   end
   
 end

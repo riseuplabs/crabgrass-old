@@ -22,7 +22,7 @@ class Tool::TasklistController < Tool::BaseController
       end
       if ids.length > @list.tasks.length
         new_ids = ids.reject {|t| @list.task_ids.include?(t.to_i) }
-        new_ids.each {|id| Task::Task.update(id, :position => ids.index(id)+1, :task_list_id => @list.id) }
+        new_ids.each {|id| Task.update(id, :position => ids.index(id)+1, :task_list_id => @list.id) }
       end
     end
     render :nothing => true
@@ -31,7 +31,7 @@ class Tool::TasklistController < Tool::BaseController
   # ajax only, returns rjs
   def create_task
     return unless request.xhr?
-    @task = Task::Task.new(params[:task])
+    @task = Task.new(params[:task])
     @task.task_list = @list
     @task.save
   end
@@ -106,7 +106,7 @@ class Tool::TasklistController < Tool::BaseController
   def fetch_task_list
     return true unless @page
     unless @page.data
-      @page.data = Task::TaskList.create
+      @page.data = TaskList.create
       current_user.updated @page
     end
     @list = @page.data

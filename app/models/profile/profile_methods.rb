@@ -5,7 +5,7 @@
 
 =end
 
-module Profile::Methods
+module ProfileMethods
 
   # returns the best profile for user to see
   def visible_by(user)

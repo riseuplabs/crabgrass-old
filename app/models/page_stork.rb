@@ -24,7 +24,7 @@ class PageStork
       p.title = 'request to join %s from %s'.t % [group.name, user.login]
       p.resolved = false
       p.flow = FLOW[:membership]
-      p.data = Poll::Request.new do |r|
+      p.data = PollRequest.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
         r.name = 'Add user %s to group %s?'.t % link(user, group)
       end
@@ -60,7 +60,7 @@ class PageStork
       p.title = 'invitation to join group %s'.t % group.name
       p.resolved = false
       p.flow = FLOW[:membership]
-      p.data = Poll::Request.new do |r|
+      p.data = PollRequest.new do |r|
         r.action = Actions::AddToGroup.new(user,group)
         r.name = 'Join group %s?'.t % link(group)
       end
@@ -94,7 +94,7 @@ class PageStork
     page = Tool::Request.new do |p|
       p.title = 'contact invitation from %s to %s'.t % [user.login, contact.login]
       p.resolved = false
-      p.data = Poll::Request.new do |r|
+      p.data = PollRequest.new do |r|
         r.action = Actions::AddToContacts.new(user,contact)
         r.name = 'Add user %s to your contact list?' % link(user)
       end

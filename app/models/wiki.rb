@@ -13,7 +13,7 @@ class Wiki < ActiveRecord::Base
 
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
-  has_one :profile, :class_name => 'Profile::Profile'
+  has_one :profile
   
   acts_as_versioned :version_column => :lock_version
   self.non_versioned_columns << 'locked_by_id' << 'locked_at'

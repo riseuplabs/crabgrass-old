@@ -2,11 +2,11 @@
 
 =end
 
-class Profile::ImAddress < ActiveRecord::Base
+class ProfileImAddress < ActiveRecord::Base
   validates_presence_of :im_type
   validates_presence_of :im_address
 
-  belongs_to :profile, :class_name => 'Profile::Profile', :foreign_key => 'profile_id'
+  belongs_to :profile
 
   after_save {|record| record.profile.save if record.profile}
   after_destroy {|record| record.profile.save if record.profile}

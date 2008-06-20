@@ -3,7 +3,7 @@ require 'poll/poll'
 class Tool::RateMany < Page
 
   controller 'rate_many'
-  model Poll::Poll
+  model Poll
   icon 'rate-many.png'
   class_display_name 'approval vote'
   class_description "Approve or disapprove of each possibility."
@@ -11,7 +11,7 @@ class Tool::RateMany < Page
     
   def initialize(*args)
     super(*args)
-    self.data = Poll::Poll.new
+    self.data = Poll.new
   end
   
 end

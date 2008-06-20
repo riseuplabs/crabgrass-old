@@ -75,7 +75,7 @@ ranked_vote:
   id: 190
   title: a ranked vote
   type: Tool::RankedVote
-  data_type: Poll::Poll
+  data_type: Poll
   data_id: 1
   created_by_id: 1
   created_by_login: quentin
@@ -89,7 +89,7 @@ tasklist1:
   id: 200
   title: a task list
   type: Tool::TaskList
-  data_type: Task::TaskList
+  data_type: TaskList
   data_id: 1
   created_by_id: 1
   created_by_login: quentin
@@ -103,7 +103,7 @@ tasklist2:
   id: 201
   title: another task list
   type: Tool::TaskList
-  data_type: Task::TaskList
+  data_type: TaskList
   data_id: 2
   created_by_id: 4
   created_by_login: blue

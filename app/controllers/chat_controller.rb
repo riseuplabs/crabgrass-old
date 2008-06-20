@@ -48,13 +48,13 @@ class ChatController < ApplicationController
       case command
       when 'me'
         user_action_in_channel(@user, @channel, arguments)
-        @message = Message.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
+        @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
       else
         return false
       end
     else
       user_say_in_channel(@user, @channel, message)
-      @message = Message.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
+      @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
     end
 
     record_user_action :just_finished_typing
@@ -87,13 +87,13 @@ class ChatController < ApplicationController
   # Get channel and user info that most methods use
   def get_channel_and_user
     @user = current_user
-    @channel = Channel.find_by_id(params[:id])
+    @channel = ChatChannel.find_by_id(params[:id])
     unless @channel
       @group = Group.get_by_name(params[:id])
       if @group
-        @channel = Channel.find_by_group_id(@group.id)
+        @channel = ChatChannel.find_by_group_id(@group.id)
         unless @channel
-          @channel = Channel.create(:name => @group.name, :group_id => @group.id)
+          @channel = ChatChannel.create(:name => @group.name, :group_id => @group.id)
         end
       end
     end
@@ -109,19 +109,19 @@ class ChatController < ApplicationController
   def user_say_in_channel(user, channel, say)
     say = sanitize(say)
     #say = say.gsub(":)", "<img src='../images/emoticons/smiley.png' \/>")
-    Message.new(:channel => channel, :content => say, :sender => user).save
+    ChatMessage.new(:channel => channel, :content => say, :sender => user).save
   end
   
   def user_action_in_channel(user, channel, say)
-    Message.new(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action').save
+    ChatMessage.new(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action').save
   end
   
   def user_joins_channel(user, channel)
-    Message.new(:channel => channel, :sender => user, :content => "joins the chatroom", :level => 'sys').save
+    ChatMessage.new(:channel => channel, :sender => user, :content => "joins the chatroom", :level => 'sys').save
   end
   
   def user_leaves_channel(user, channel)
-    Message.new(:channel => channel, :sender => user, :content => "left the chatroom", :level => 'sys').save
+    ChatMessage.new(:channel => channel, :sender => user, :content => "left the chatroom", :level => 'sys').save
   end
   
   def sanitize(say)

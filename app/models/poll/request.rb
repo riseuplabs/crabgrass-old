@@ -1,4 +1,4 @@
-class Poll::Request < Poll::Poll
+class PollRequest < Poll
   
   def vote
     votes.first

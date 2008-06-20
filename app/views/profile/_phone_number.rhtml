@@ -4,7 +4,7 @@
   <td><%= mark_as_primary(phone_number, 'profile', 'phone_number', index) %></td>
   <td style="width:80px;">
     <% phone_types_options = options_for_select(
-         Profile::PhoneNumber.options,  
+         ProfilePhoneNumber.options,  
          (phone_number ? phone_number.phone_number_type : nil)
        ) -%>
     <%= select_tag_with_id "profile[phone_numbers][#{index}][phone_number_type]", phone_types_options, {:id => "profile_phone_numbers_#{index}_phone_number_types"} %>

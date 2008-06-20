@@ -25,7 +25,7 @@ class PageTest < Test::Unit::TestCase
   end
   
   def test_tool
-    assert poll = Poll::Poll.create
+    assert poll = Poll.create
     assert poll.valid?, poll.errors.full_messages
     #poll.pages << @page
     @page.data = poll

@@ -46,12 +46,12 @@ CORE_PLUGINS    = %w[acts_as_list acts_as_tree classic_pagination will_paginate 
 UI_PLUGINS      = %w[calendar_date_select nested_layouts textile_editor_helper multiple_select validates_as_email]
 GRAPHIC_PLUGINS = %w[ruby-svg-1.0.3 attachment_fu flex_image]
 TESTING_PLUGINS = %w[rspec_on_rails webrat mocha rspec spider_test]
-SKETCHY_PLUGINS = %w[acts_as_versioned has_many_polymorphs acts_as_rateable thinking-sphinx]
+SKETCHY_PLUGINS = %w[acts_as_versioned acts_as_rateable thinking-sphinx]
 
 ALL_PLUGINS = CORE_PLUGINS + UI_PLUGINS + GRAPHIC_PLUGINS + TESTING_PLUGINS + SKETCHY_PLUGINS
 
 Rails::Initializer.run do |config|
-  config.load_paths += %w(associations discussion chat).collect do |dir|
+  config.load_paths += %w(associations discussion chat profile task poll).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
  

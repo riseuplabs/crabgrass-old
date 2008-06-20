@@ -45,7 +45,7 @@ class Tool::RateManyControllerTest < Test::Unit::TestCase
     post :add_possible, :page_id => p.id, :possible => {:name => "new option", :description => ""}
     id = assigns(:possible).id
     post :vote_one, :page_id => p.id, :id => id, :value => "2"
-    assert_equal 2, Poll::Possible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
+    assert_equal 2, PollPossible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
   end
   
   # TODO: tests for vote, clear votes, sort

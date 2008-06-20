@@ -60,7 +60,7 @@ module ChatHelper
   end
 
   def num_active_in_channel(group_id)
-    channel = Channel.find_by_group_id(group_id)
+    channel = ChatChannel.find_by_group_id(group_id)
     "(#{channel.active_channel_users.length})" if channel
   end
 

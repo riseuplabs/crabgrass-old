@@ -6,7 +6,7 @@
   users.uniq!
 %>
 
-<% @task = Task::Task.new %>
+<% @task = Task.new %>
 <div id="new-task-link">
   <%= link_to_function 'add task', 'Element.show("new-task-form-container"); Element.hide("new-task-link");' %> 
 </div>

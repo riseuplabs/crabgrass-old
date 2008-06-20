@@ -2,11 +2,14 @@
 
 =end
 
-class Profile::Website < ActiveRecord::Base
+class ProfileWebsite < ActiveRecord::Base
+
+  set_table_name 'websites'
+
   validates_presence_of :site_title
   validates_presence_of :site_url
 
-  belongs_to :profile, :class_name => 'Profile::Profile', :foreign_key => 'profile_id'
+  belongs_to :profile
 
   before_save :transform_url
   after_save {|record| record.profile.save if record.profile}

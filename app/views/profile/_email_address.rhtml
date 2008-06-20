@@ -1,7 +1,7 @@
 <% index ||= params[:index] || random_dom_id -%>
 <% dom_id = "profile_email_address_#{index}" -%>
 <% email_types_options = options_for_select(
-     Profile::EmailAddress.options,
+     ProfileEmailAddress.options,
      (email_address ? email_address.email_type : nil)
    )
 -%>
