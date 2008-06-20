@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class PageTest < Test::Unit::TestCase
 
-  fixtures :pages, :users, :groups
+  fixtures :pages, :users, :groups, :polls
 
   def setup
     @page = create_page :title => 'this is a very fine test page'
@@ -25,15 +25,13 @@ class PageTest < Test::Unit::TestCase
   end
   
   def test_tool
+    page = create_page :title => 'what is for lunch?'
     assert poll = Poll.create
     assert poll.valid?, poll.errors.full_messages
-    #poll.pages << @page
-    @page.data = poll
-    @page.save
-    #poll.save
-    #poll.reload
-    assert_equal poll.pages.first, @page
-    assert_equal @page.data, poll
+    page.data = poll
+    page.save
+    assert_equal poll.page, page
+    assert_equal page.data, poll
   end
 
   def test_discussion
