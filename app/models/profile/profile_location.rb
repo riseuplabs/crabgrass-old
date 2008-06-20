@@ -3,6 +3,9 @@
 =end
 
 class ProfileLocation < ActiveRecord::Base
+
+  set_table_name 'locations'
+
   belongs_to  :profile
 
   before_save :set_geocode

@@ -62,9 +62,9 @@ class Profile < ActiveRecord::Base
   def save_from_params(profile_params)
     valid_params = ['first_name', 'middle_name', 'last_name', 'role', 'organization']
     collections = {
-      'phone_numbers'   => ProfilePhoneNumber,   'locations' => ProfileLocation,
-      'email_addresses' => ProfileEmailAddress,  'websites'  => ProfileWebsite,
-      'im_addresses'    => ProfileImAddress,     'notes'     => ProfileNote
+      'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
+      'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
+      'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote
     }
     
     profile_params.stringify_keys!
