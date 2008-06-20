@@ -14,7 +14,7 @@ class ToolTest < Test::Unit::TestCase
     assert find_base.is_a?(Tool::Message)
 
     assert_nothing_raised do
-      find = Tool::Message.find(new)
+      find = Page.find(new.id)
     end
   end
 

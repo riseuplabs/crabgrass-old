@@ -6,7 +6,8 @@ module Tool::ToolCreation
       page = page_type.create params[:page].merge({:created_by_id => current_user.id})
       if page.valid?
         add_participants!(page, params)
-        page.tag_with(params[:tag_list]) if params[:tag_list]
+        page.tag_list = params[:tag_list] if params[:tag_list]
+        page.save
       end
       page
     end

@@ -79,17 +79,17 @@ describe Page do
   end
 
   describe "when saving tags" do
-    it "accepts tag_with calls" do
-      @page.should respond_to(:tag_with)
+    it "accepts tag_list= calls" do
+      @page.should respond_to('tag_list=')
     end
     it "gives back the tags we give it" do
       @page.save
-      @page.tag_with( "noodles soup")
+      @page.tag_list = "noodles, soup"
       @page.tag_list.should include("noodles")
     end
     it "read tags with tag_list" do
       @page.save
-      @page.tag_with "noodles soup"
+      @page.tag_list = "noodles, soup"
       @page.tag_list.should include("soup")
     end
   end
@@ -97,18 +97,21 @@ describe Page do
   describe "when finding by path" do
     it "finds by tag" do
       p = Page.create :title => 'page1'
-      p.tag_with 'tag1'
+      p.tag_list = 'tag1'
+      p.save
       pages = Page.find_by_path("/tag/tag1")
       pages.should include(p)
     end
 
     it "finds by multiple tags" do
       p = Page.create :title => 'page1'
-      p.tag_with 'tag1 tag2'
+      p.tag_list = 'tag1, tag2'
+      p.save
       p2 = Page.create :title => 'page2'
-      p2.tag_with 'tag2 tag3'
+      p2.tag_list = 'tag2, tag3'
+      p2.save
       p3 = Page.create :title => 'page3'
-      p3.tag_with 'tag3 tag4'
+      p3.tag_list 'tag3, tag4'
 
       pages = Page.find_by_path("/tag/tag1/tag/tag2")
       pages.should include(p)

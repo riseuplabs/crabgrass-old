@@ -165,7 +165,7 @@ class PageFinderTest < Test::Unit::TestCase
     page.save
     page.add(user)
     page.add(groups(:rainbow))
-    page.tag_with("pig fish elephant")
+    page.tag_list = "pig, fish, elephant"
     page.save!
     
     pages = Page.find_by_path('/tag/fish/', @controller.options_for_group(groups(:rainbow)))   

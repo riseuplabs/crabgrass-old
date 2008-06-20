@@ -9,13 +9,15 @@
 class Page < ActiveRecord::Base
   extend PathFinder::FindByPath
   
+  acts_as_taggable_on :tags
+
   #######################################################################
   ## PAGE NAMING
   
   validates_format_of  :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
 
   def validate
-    if name_changed? and name_taken?
+    if (name_changed? or changed?(:group)) and name_taken?
       errors.add 'name', 'is already taken'
     end
   end
@@ -207,9 +209,7 @@ class Page < ActiveRecord::Base
     else
       entity.add_page(self,attributes)
     end
-    
     changed :group
-
     self
   end
 
@@ -253,6 +253,12 @@ class Page < ActiveRecord::Base
   def self.class_group_to_class_names(class_group)
     Page.subclasses.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
   end 
+
+  # this is required until we get rid of namespaced page subclasses (ie Tool::TaskList)
+  before_create :fix_single_table_inheritance
+  def fix_single_table_inheritance
+    self.type = self.class.name
+  end
 
   #######################################################################
   ## DENORMALIZATION
