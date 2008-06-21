@@ -11,7 +11,6 @@
 class Avatar < ActiveRecord::Base
 
   acts_as_fleximage do
-    image_directory = 'public/avatars'
     preprocess_image do |image|
       image.size = '96x96'
       image.crop = true
