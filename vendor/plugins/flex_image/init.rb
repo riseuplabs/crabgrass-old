@@ -4,6 +4,10 @@ require 'base64'
 # Load RMagick
 begin
   require 'RMagick'
+rescue MissingSourceFile => e
+  puts %{ERROR :: FlexImage requires the RMagick gem.  http://rmagick.rubyforge.org/install-faq.html}
+  raise e
+end
 
 # Load dsl_accessor from lib
 require 'dsl_accessor'
@@ -43,8 +47,4 @@ Mime::Type.register "image/jpeg", :jpg
 Mime::Type.register "image/gif", :gif
 Mime::Type.register "image/png", :png
 
-rescue MissingSourceFile => e
-  puts %{ERROR :: FlexImage requires the RMagick gem.  http://rmagick.rubyforge.org/install-faq.html}
-  #raise e
-end
 

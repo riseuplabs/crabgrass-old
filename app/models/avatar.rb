@@ -8,10 +8,16 @@
 #  public :boolean(1)    
 #
 
-class Avatar < FlexImage::Model
-  # limit image size to 96 x 96
-  pre_process_image :size => '96x96', :crop => true
-  
+class Avatar < ActiveRecord::Base
+
+  acts_as_fleximage do
+    image_directory = 'public/avatars'
+    preprocess_image do |image|
+      image.size = '96x96'
+      image.crop = true
+    end
+  end
+    
   def self.pixels(size)
     case size
       when 'tiny';   '12x12'
