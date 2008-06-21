@@ -1,4 +1,4 @@
-<%= if logged_in?
+<%= if logged_in? and current_user.may? :edit, @page
   Formy.tabs do |f|
     f.tab do |t|
       t.label 'Show results'.t
