@@ -50,12 +50,12 @@ class Profile < ActiveRecord::Base
   #belongs_to :photo
   #belongs_to :layout
   
-  has_many   :locations,       :class_name => 'ProfileLocation', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :email_addresses, :class_name => 'ProfileEmailAddress', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :im_addresses,    :class_name => 'ProfileImAddress', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :phone_numbers,   :class_name => 'ProfilePhoneNumber', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :websites,        :class_name => 'ProfileWebsite', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :notes,           :class_name => 'ProfileNote', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :locations,       :class_name => '::ProfileLocation', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :email_addresses, :class_name => '::ProfileEmailAddress', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :im_addresses,    :class_name => '::ProfileImAddress', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :phone_numbers,   :class_name => '::ProfilePhoneNumber', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :websites,        :class_name => '::ProfileWebsite', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :notes,           :class_name => '::ProfileNote', :dependent => :destroy, :order=>"preferred desc"
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.

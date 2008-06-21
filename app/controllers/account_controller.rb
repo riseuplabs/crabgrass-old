@@ -25,7 +25,7 @@ class AccountController < ApplicationController
   def signup
 # FIXME: account creation is currently disabled, while we deal with some issues
     flash[:error] = "Account creation is currently disabled"
-    return render :action => 'login'
+    return( render :action => 'login' )
 
     @user = User.new(params[:user])
     return unless request.post?

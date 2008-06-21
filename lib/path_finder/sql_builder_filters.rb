@@ -1,6 +1,6 @@
 require 'path_finder/sql_builder'
 
-class PathFinder::SqlBuilder < PathFinder::Builder
+module PathFinder::SqlBuilderFilters
 
   protected
   
@@ -61,10 +61,10 @@ class PathFinder::SqlBuilder < PathFinder::Builder
        date = Time.now
     else
        if date == 'today'
-          date = Time.now.to_date
+          date = to_utc(local_now.at_beginning_of_day)
        else
           year, month, day = date.split('-')
-          date = TzTime.local(year, month, day)
+          date = to_utc( Time.in_time_zone(year, month, day) )
        end
     end
     @conditions << "pages.#{@date_field} >= ?"
@@ -76,7 +76,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
        date = Time.now
      else
        year, month, day = date.split('-')
-       date = TzTime.local(year, month, day)
+       date = to_utc Time.in_time_zone(year, month, day)
      end
      @conditions << "pages.#{@date_field} <= ?"
      @values << date.to_s(:db)
@@ -97,8 +97,8 @@ class PathFinder::SqlBuilder < PathFinder::Builder
   end
   
   def filter_ago(near,far)
-    near = to_local(near.to_i.days.ago)
-    far  = to_local(far.to_i.days.ago)
+    near = near.to_i.days.ago
+    far  = far.to_i.days.ago
     @conditions << 'pages.updated_at < ? and pages.updated_at > ? '
     @values << near
     @values << far
@@ -106,27 +106,27 @@ class PathFinder::SqlBuilder < PathFinder::Builder
   
   def filter_created_after(date)
     year, month, day = date.split('-')
-    date = TzTime.local(year, month, day)
+    date = to_utc Time.in_time_zone(year, month, day)
     @conditions << 'pages.created_at > ?'
     @values << date.to_s(:db)
   end
   
   def filter_created_before(date)
     year, month, day = date.split('-')
-    date = TzTime.local(year, month, day)
+    date = to_utc Time.in_time_zone(year, month, day)
     @conditions << 'pages.created_at < ?'
     @values << date.to_s(:db)
   end
  
   # this is a grossly inefficient method
   def filter_month(month)
-    offset = TzTime.zone.utc_offset
+    offset = Time.zone.utc_offset
     @conditions << "MONTH(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     @values << month.to_i
   end
 
   def filter_year(year)
-    offset = TzTime.zone.utc_offset
+    offset = Time.zone.utc_offset
     @conditions << "YEAR(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     @values << year.to_i
   end

@@ -10,6 +10,8 @@ It is called from find_by_path.rb
 
 class PathFinder::SphinxBuilder < PathFinder::Builder
 
+  include PathFinder::SphinxBuilderFilters
+
   public
 
   def initialize(path, options)

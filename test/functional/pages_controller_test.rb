@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'pages_controller'
+require 'set'
 
 # Re-raise errors caught by the controller.
 class PagesController; def rescue_action(e) raise e end; end
@@ -45,8 +46,8 @@ class PagesControllerTest < Test::Unit::TestCase
   def test_tag
     login_as :red
 
-    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1 tag2 tag3"
-    assert_equal "tag1 tag2 tag3", pages(:page1).tag_list
+    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1, tag2, tag3"
+    assert_equal Set.new(["tag1","tag2","tag3"]), Set.new(pages(:page1).tag_list)
   end
   
   def test_create_wiki

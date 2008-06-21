@@ -10,6 +10,8 @@ It is called from find_by_path.rb
 
 class PathFinder::SqlBuilder < PathFinder::Builder
 
+  include PathFinder::SqlBuilderFilters
+  
   public 
   
   attr_accessor :and_clauses # used to build the current clause of the form (x and x)

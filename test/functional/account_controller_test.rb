@@ -30,6 +30,7 @@ class AccountControllerTest < Test::Unit::TestCase
     assert_response :success
   end
 
+=begin
   def test_should_allow_signup
     assert_difference 'User.count' do
       create_user
@@ -73,8 +74,6 @@ class AccountControllerTest < Test::Unit::TestCase
     }
   end
 
-=begin
-  #currently not required
   def test_should_require_email_on_signup
     assert_no_difference 'User.count' do
       create_user(:email => nil)

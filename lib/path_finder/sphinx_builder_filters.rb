@@ -1,6 +1,6 @@
 require 'path_finder/sphinx_builder'
 
-class PathFinder::SphinxBuilder < PathFinder::Builder
+module PathFinder::SphinxBuilderFilters
 
   protected
 
@@ -40,13 +40,13 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
 
   def filter_after(date)
     if date == 'now'
-       date = Time.now
+       date = Time.zone.now
     else
        if date == 'today'
-          date = Time.now.to_date
+          date = to_utc(local_now.at_beginning_of_day)
        else
           year, month, day = date.split('-')
-          date = TzTime.local(year, month, day)
+          date = to_utc Time.in_time_zone(year, month, day)
        end
     end
     @args_for_find[:filter] = @date_field
@@ -59,10 +59,10 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
        date = Time.now
     else
        if date == 'today'
-          date = Time.now.to_date
+          date = Time.zone.now.to_date
        else
           year, month, day = date.split('-')
-          date = TzTime.local(year, month, day)
+          date = to_utc Time.in_time_zone(year, month, day)
        end
     end
     @args_for_find[:filter] = @date_field
@@ -80,20 +80,20 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   
   def filter_upcoming
     @args_for_find[:filter] = "starts_at"
-    @args_for_find[:filter_start] = Time.now
-    @args_for_find[:filter_stop] = Time.now + 100.years
+    @args_for_find[:filter_start] = Time.zone.now
+    @args_for_find[:filter_stop] = Time.zone.now + 100.years
     @order << 'pages.starts_at DESC' if @order
   end
   
   def filter_ago(near,far)
     @args_for_find[:filter] = "updated_at"
-    @args_for_find[:filter_start]  = to_local(far.to_i.days.ago)
-    @args_for_find[:filter_stop] = to_local(near.to_i.days.ago)
+    @args_for_find[:filter_start]  = far.to_i.days.ago
+    @args_for_find[:filter_stop] = near.to_i.days.ago
   end
   
   def filter_created_after(date)
     year, month, day = date.split('-')
-    date = TzTime.local(year, month, day)
+    date = to_utc Time.in_time_zone(year, month, day)
     @args_for_find[:filter] = "created_at"
     @args_for_find[:filter_start]  = date
     @args_for_find[:filter_stop] = date + 100.years
@@ -101,24 +101,23 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   
   def filter_created_before(date)
     year, month, day = date.split('-')
-    date = TzTime.local(year, month, day)
+    date = to_utc Time.in_time_zone(year, month, day)
     @args_for_find[:filter] = "created_at"
     @args_for_find[:filter_start]  = date - 100.years
     @args_for_find[:filter_stop] = date
   end
  
   def filter_month(month)
-    offset = TzTime.zone.utc_offset
+    year = Time.zone.now.year
     @args_for_find[:filter] = @date_field
-    @args_for_find[:filter_start]  = month
-    @args_for_find[:filter_stop] = month + 1.month
+    @args_for_find[:filter_start]  = Time.in_time_zone(year,month)
+    @args_for_find[:filter_stop] = Time.in_time_zone(year,month+1)
   end
 
   def filter_year(year)
-    offset = TzTime.zone.utc_offset
     @args_for_find[:filter] = @date_field
-    @args_for_find[:filter_start]  = year
-    @args_for_find[:filter_stop] = year + 1.year
+    @args_for_find[:filter_start]  = Time.in_time_zone(year)
+    @args_for_find[:filter_stop] = Time.in_time_zone(year + 1)
   end
   
   ####

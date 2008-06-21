@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
   
   def time_zone
-    read_attribute(:time_zone) || DEFAULT_TZ
+    read_attribute(:time_zone) || Time.zone_default
   end
 
   #########################################################    

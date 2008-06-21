@@ -8,13 +8,14 @@ class AvatarsController < ActionController::Base
  
   def create 
     unless params[:image] && params[:image][:data]
-      message(:error => "no image uploaded") && render(:nothing => true, :layout => true)
+      flash[:error] = "no image uploaded"
+      render(:nothing => true, :layout => true)
       return
     end
     group = Group.find params[:group_id] if params[:group_id]
     user  = User.find params[:user_id] if params[:user_id]
     thing = group || user
-    avatar = Avatar.create(:data => params[:image][:data])
+    avatar = Avatar.create(:image_file_data => params[:image][:data])
     if thing.avatar
       for size in %w(xsmall small medium large xlarge)
         expire_page :controller => 'avatar', :action => 'show', :id => avatar, :size => size
