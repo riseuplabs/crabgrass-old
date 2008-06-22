@@ -12,7 +12,7 @@ class MembershipController < ApplicationController
   stylesheet 'groups'
   helper 'groups', 'application'
     
-  before_filter :login_required, :except => ['list']
+  before_filter :login_required
 
   ###### PUBLIC ACTIONS #########################################################
   
@@ -128,13 +128,6 @@ class MembershipController < ApplicationController
   prepend_before_filter :fetch_group
   def fetch_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
-#here is where it is impossible to join some groups
-    if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or current_user.member_of? @group) ##committees need to be handled better
-      return true
-    else
-      render :action => 'show_nothing'
-      return false
-    end
   end
   
   before_filter :setup_sidebar
@@ -143,17 +136,37 @@ class MembershipController < ApplicationController
   end
   
   def authorized?
-    return ((logged_in? and current_user.member_of? @group) or @group.profiles.public.may_see_members?) if params[:action] == 'list'
+    return false unless logged_in?
+
+    return true if current_user.member_of? @group
     
-    non_members_post_allowed = %w(join)
-    non_members_get_allowed = %w(list) + non_members_post_allowed
-    if request.get? and non_members_get_allowed.include? params[:action]
-      return true
-    elsif request.post? and non_members_post_allowed.include? params[:action]
-      return true
+    case params[:action]
+    when 'list'
+      return @group.profiles.public.may_see_members?
+    when 'join'
+      return @group.profiles.public.may_request_membership?
     else
-      return(logged_in? and current_user.member_of? @group)
+      return false
     end
   end
-  
+
+  def access_denied
+    respond_to do |accepts|
+      accepts.html do
+        if logged_in?
+          render :action => 'show_nothing'
+        else
+          flash[:error] = 'Please login to perform that action.'
+          redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
+        end
+      end
+      accepts.xml do
+        headers["Status"]           = "Unauthorized"
+        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+        render :text => "Could't authenticate you", :status => '401 Unauthorized'
+      end
+    end
+    false
+  end  
+
 end

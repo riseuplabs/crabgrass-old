@@ -15,27 +15,32 @@ class MembershipControllerTest < Test::Unit::TestCase
 
   def test_list_when_not_logged_in
     get :list, :id => groups(:public_group).name
-    assert_response :success, "list public_group should succeed"
-    assert_template 'list', "list public_group should return list template"
-    
-    get :list, :id => groups(:private_group).name
-    assert_response :success, "list private_group should succeed"
-    assert_template 'show_nothing', "list private_group should return show_nothing"
+    assert_response :redirect, "login required to list membership of a group"
+#    assert_redirected_to :login, "redirect to login page"
   end
   
   def test_list_when_logged_in
     login_as :red
     get :list, :id => groups(:rainbow).name
-    assert_response :success, "list rainbow should succeed"
+    assert_response :success, "list rainbow should succeed, because user red in group rainbow"
     assert_template 'list', "list rainbow should return list template when logged in"
 
+    groups(:public_group).publicly_visible_members = true
+    groups(:public_group).save!
     get :list, :id => groups(:public_group).name
-    assert_response :success, "list public_group should succeed"
+    assert_response :success, "list public_group should succeed, because membership is public"
     assert_template 'list', "list public_group should return list template"
     
     get :list, :id => groups(:private_group).name
     assert_response :success, "list private_group should succeed"
     assert_template 'show_nothing', "list private_group should return show_nothing"
+
+    groups(:public_group).publicly_visible_members = false
+    groups(:public_group).save!
+
+    get :list, :id => groups(:public_group).name
+    assert_response :success, "list public_group should succeed"
+    assert_template 'show_nothing', "now list public_group should return show_nothing"
   end
 
   def test_join_not_logged_in
@@ -57,6 +62,8 @@ class MembershipControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'show_nothing', "dolphin can't post join :private_group"
 
+    groups(:public_group).accept_new_membership_requests = true
+    groups(:public_group).save!
     get :join, :id => groups(:public_group).name
     assert_response :success
     assert_template 'join'
@@ -66,6 +73,14 @@ class MembershipControllerTest < Test::Unit::TestCase
       assert_response :redirect
       assert_redirected_to :controller => :requests
     end
+
+    groups(:public_group).accept_new_membership_requests = false
+    groups(:public_group).save!
+
+    get :join, :id => groups(:public_group).name
+    assert_response :success, "join public_group should succeed"
+    assert_template 'show_nothing', "now join public_group should return show_nothing"
+
     # TODO:
     # add test for joining a group you are already a member of
     # add tests for joining groups with different levels of privacy
