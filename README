@@ -30,6 +30,8 @@ set up your database:
   rake db:migrate
   rake db:fixtures:load
 
+Also, 'rake --version' must be 8.1 or greater.
+
 INSTALL FOR PRODUCTION
 ==========================================================
 
