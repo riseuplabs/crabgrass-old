@@ -111,8 +111,9 @@ describe Page do
       p2.tag_list = 'tag2, tag3'
       p2.save
       p3 = Page.create :title => 'page3'
-      p3.tag_list 'tag3, tag4'
-
+      p3.tag_list = 'tag3, tag4'
+      p3.save
+      
       pages = Page.find_by_path("/tag/tag1/tag/tag2")
       pages.should include(p)
       pages.should_not include(p3)
