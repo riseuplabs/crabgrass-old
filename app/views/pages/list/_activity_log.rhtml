@@ -76,7 +76,7 @@ end
 
 <% if later.any? -%>
   <% reset_cycle 'activity_entry_cycle' -%>
-  <tr><th colspan='30'><h4 class='landing'>Later</h4></th></tr>
+  <tr><th colspan='30'><h4 class='landing'>Older</h4></th></tr>
   <% later.each do |page| -%>
     <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
