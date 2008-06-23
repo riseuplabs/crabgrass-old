@@ -1,0 +1,64 @@
+Include these files in an <tt>app</tt> directory just like you would in a normal Rails application. If you need to override a method, view or partial, create the corresponding file in your main <tt>app</tt> directory and it will be used instead.
+
+* Controllers & Helpers: See Engines::RailsExtensions::Dependencies for more information.
+* Views: now handled almost entirely by ActionView itself (see Engines::Plugin#add_plugin_view_paths for more information)
+
+See http://api.rails-engines.org/
+
+Plugin assets
+===============================================================================
+
+The engines plugin makes it trivial to share public assets using plugins. 
+To do this, include an "assets" directory within your plugin, and put
+your javascripts, stylesheets and images in subdirectories of that folder:
+
+   my_plugin
+     |- init.rb
+     |- lib/
+     |- assets/
+          |- javascripts/
+          |    |- my_functions.js
+          |
+          |- stylesheets/
+          |    |- my_styles.css
+          |
+          |- images/
+               |- my_face.jpg
+
+Files within the "asset" structure are automatically mirrored into
+a publicly-accessible folder each time your application starts
+(ie app/public/plugin_assets/<plugin name>/)
+
+Using plugin assets in views
+===============================================================================
+
+It's also simple to use Rails' helpers in your views to use plugin assets.
+The default helper methods have been enhanced by the engines plugin to accept
+a :plugin option, indicating the plugin containing the desired asset.
+
+For example, it's easy to use plugin assets in your layouts:
+
+#   <%= stylesheet_link_tag "my_styles", :plugin => "my_plugin", :media => "screen" %>
+#   <%= javascript_include_tag "my_functions", :plugin => "my_plugin" %>
+ 
+... and similarly in views and partials, it's easy to use plugin images:
+
+#   <%= image_tag "my_face", :plugin => "my_plugin" %>
+#   <!-- or -->
+#   <%= image_path "my_face", :plugin => "my_plugin" %>
+
+Where the default helpers allow the specification of more than one file (i.e. the
+javascript and stylesheet helpers), you can do similarly for multiple assets from 
+within a single plugin.
+
+This methods support this :plugin argument:
+
+ * stylesheet_link_tag
+ * javascript_include_tag
+ * image_path
+ * image_tag
+
+Each one of these methods now accepts the key/value pair :plugin => "plugin_name",
+which can be used to specify the originating plugin for any assets.
+
+
