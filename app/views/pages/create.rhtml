@@ -1,10 +1,8 @@
-<%
-%>
-
 <h1 id='create-title'>create a new page</h1>
 
 <div id='listing-of-page-classes' class='workarea'>
 <% AVAILABLE_PAGE_CLASSES.each_with_index do |page_class,i| -%>
+<% page_class = Page.class_name_to_class(page_class) -%>
 <div class="page-class"><div>
   <%= link_to "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}",
     {:controller => 'tool/'+page_class.controller, :action => 'create',

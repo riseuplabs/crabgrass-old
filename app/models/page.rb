@@ -247,12 +247,16 @@ class Page < ActiveRecord::Base
   # lets us convert from a url pretty name to the actual class.
   def self.display_name_to_class(display_name)
     dn = display_name.nameize
-    Page.subclasses.detect{|t|t.class_display_name.nameize == dn if t.class_display_name}
+    PAGE_CLASSES.detect{|t|t.class_display_name.nameize == dn if t.class_display_name}
   end 
   # return an array of page classes that are members of class_group
   def self.class_group_to_class_names(class_group)
-    Page.subclasses.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
+    PAGE_CLASSES.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
   end 
+  # convert from a string representation of a class to the real thing (actually, a proxy)
+  def self.class_name_to_class(class_name)
+    PAGE_CLASSES.detect{|t|t.class_name == class_name}
+  end
 
   # this is required until we get rid of namespaced page subclasses (ie Tool::TaskList)
   before_create :fix_single_table_inheritance

@@ -104,17 +104,14 @@ require "#{RAILS_ROOT}/lib/fake_globalize.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
 require "#{RAILS_ROOT}/lib/misc.rb"
 require "#{RAILS_ROOT}/lib/path_finder.rb"
+require "#{RAILS_ROOT}/lib/page_class_proxy.rb"
 
 #### TOOLS #########################
 
-# pre-load the tools:
 Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
   require toolfile
 end
-# a static array of tool classes:
-TOOLS = Tool.constants.collect{|tool|Tool.const_get(tool)}.freeze
-
-AVAILABLE_PAGE_CLASSES.collect!{|i|Tool.const_get(i)}.freeze
+PAGE_CLASSES = Tool.constants.collect{|tool| PageClassProxy.new(tool) }.freeze
 
 #### ASSETS ########################
 
@@ -122,8 +119,7 @@ AVAILABLE_PAGE_CLASSES.collect!{|i|Tool.const_get(i)}.freeze
 
 #### USER INTERFACE HELPERS ########
 
-
 FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist' if defined? FightTheMelons
 
 SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
- 
+
