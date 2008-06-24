@@ -1,0 +1,18 @@
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="shortcut icon" href="/plugin_assets/riseup_layout/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/plugin_assets/riseup_layout/favicon.png" type="image/x-icon" />
+  <title><%=h title_from_context %></title>
+  <%= stylesheet_link_tag('application', 'page', 'navigation', 'ui', 'errors', 'landing', 'sidebar', 'wiki', :cache => true) %>
+  <%= optional_stylesheet %>
+  <%= stylesheet_link_tag('theme.css', :plugin => 'riseup_layout') %>
+  <%= javascript_include_tag('prototype', 'application', :cache => true) %>
+  <%= optional_javascript %>
+  <!--[if lt IE 7.]>
+    <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+  <![endif] -->
+  <!-- local styles -->
+  <style type="text/css">
+<%= yield :style %>
+<%= theme_styles %>
+  </style>
+

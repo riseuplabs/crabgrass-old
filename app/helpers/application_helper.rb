@@ -128,14 +128,7 @@ module ApplicationHelper
     detail_string = "created:&nbsp;#{created_date}<br/>modified:&nbsp;#{modified_date}"
     link_to_function created_date, %Q[this.replace("#{detail_string}")], :class => 'dotted'
   end
-  
-  # TODO: allow this to be set by the theme
-  def favicon
-   ret = ''
-   ret += '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />'  if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
-   ret += '<link rel="icon" href="/favicon.png" type="image/x-icon" />' if File.exists?("#{RAILS_ROOT}/public/favicon.ico")
-  end
- 
+   
   def once?(key)
     @called_before ||= {}
     return false if @called_before[key]

@@ -313,7 +313,7 @@ module Formy
       sub_element Sidebar::Link
       def close    
         puts "<div class='sidesection'>"
-        puts "<div class='sidehead'>#{@label}</div>"
+        puts "<div class='sidehead'>#{@label}</div>" if @label
         @elements.each {|e| raw_puts e}
         puts "<div class='sidetail'></div>"
         puts "</div>"

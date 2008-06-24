@@ -3,11 +3,11 @@
   selected = 'class="selected"'
 -%>
 
-<ul id="topmenu">
+<ul id="topmenu" class="tabmenu">
   <% if logged_in? -%>
-  <li <%= selected if active == 'me' %> >
+  <li id='menu-me' <%= selected if active == 'me' %> >
     <span><%= link_to 'Me', '/me/dashboard' %></span>
-    <ul>
+    <ul class="submenu">
       <li><%= link_to 'inbox', '/me/inbox', :style => page_icon_style('inbox') %></li>
       <li><%= link_to 'tasks', '/my_tasks', :style => page_icon_style('task-list') %></li>
       <li><%= link_to 'search', '/me/search', :style => page_icon_style('search') %></li>
@@ -22,10 +22,10 @@
     </li>    
   <% end -%>
 
-  <li <%= selected if active == 'people' %> >
+  <li id='menu-people' <%= selected if active == 'people' %> >
     <span><%= link_to "People", people_url %></span>
     <% if logged_in? and current_user.contacts.any? -%>
-    <ul>
+    <ul class="submenu">
       <% current_user.contacts.sort_by {|person| person.login}.each do |person| -%>
       <li><%= link_to_user person, :avatar => 'xsmall', :one_link => true %></li>
       <% end -%>
@@ -36,7 +36,7 @@
   <li <%= selected if active == 'groups' %> >
     <span><%= link_to "Groups", groups_url %></span>
    <% if logged_in? and current_user.groups.any? -%>
-    <ul>
+    <ul class="submenu">
       <% current_user.groups.sort_by {|group| group.name }.each do |group| -%>
       <li><%= link_to_group group, :full_name => true, :avatar => 'xsmall', :one_link => true %></li>
       <% end -%>
@@ -52,13 +52,10 @@
 
   <% if logged_in? -%>
   <li>
-    <span><%= link_to "Logout".t, :controller => '/account', :action => 'logout' %></span>
+    <span><%= link_to "Logout".t + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %></span>
   </li>
   <li>
     <span id="top-login-form">
-      <label>
-        (logged in as <%= current_user.display_name %>)
-      </label>
     </span>
   </li>
   <% else -%>  

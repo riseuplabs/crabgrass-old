@@ -4,38 +4,20 @@
  colors which do not change, such as UI elements, do not go here.
  **/
 
-/* body {background: #e6e6e6;} */
-/*
-body {
-  background: #eee;
+#masthead {
+  background: #5A9ECF;
+  border-top: 1px solid transparent;
 }
-#main {
-  background: url(/images/test/grey-to-light-grey.jpg) repeat-x;
+#masthead h1 {
+  float: right;
+  margin-bottom: -0.5em;
+  color: #047;
 }
-*/
 
 #maincolumn, #tabarea {
   border-color: #999;
 }
 #tabarea {border-top: 1px solid transparent;}
-
-div.sidehead {
-  /* color: #fff; */
-  /* background: #1B5790; */
-  /* background-color: #A5CC7A; */
-  /* background-color: #73B32D; */
-}
-
-div.sidesection {
-  /* background-color: #AFC7DD; */
-  /* background-color: #E9FFD1; */
-  /* background-color: #A5CC7A; */
-  /* background: white url(/images/shadows/small-left-a.png) repeat-y; */
-  /* border-color: white; */
-}
-
-div.sideline a {
-}
 
 /* title and info panel */
 
@@ -44,8 +26,4 @@ div.sideline a {
   border: 2px solid white;
 }
 
-/* banner */
-
-div#banner {border-color: white;}
-#toprule-outer {border-color: black;}
 

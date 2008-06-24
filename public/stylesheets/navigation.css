@@ -3,101 +3,115 @@
 
 /* menu tabs structure */
 
-#topmenu, #topmenu ul {
-  padding: 0; margin: 0;
+#topnav {
+  margin: 6px 0 0 0;
+  line-height: 100%;
+}
+
+#topnav ul {
+  margin: 0 0 0 20px;
+  padding: 0;
+  list-style: none;
+  line-height: 100%;
+  position: relative;
+}
+
+#topnav li {
+  float:left;
+  margin: 0 3px 0 0;
   list-style: none;
 }
-#topmenu li span a {display: block;}
-#topmenu > li {float: left;}
-#topmenu li ul {
-  position: absolute;
-  left: -999em;
-  z-index: 100;
-}
-#topmenu li:hover ul {
-  left: auto;
-}
 
-/* menu tabs styling */
-
-#topmenu > li {
-  margin: 0 4px;
-  position: relative;
-  top: 1px;
-}
-
-#topmenu li ul li {
-  margin: 0 0 -2px 0;
-}
-
-#topmenu a:hover {
-  text-decoration: underline;
-}
-
-/* normal tab */
-#topmenu li span a {
-  color: #fff;
-  text-decoration: none;
-  padding: 2px 6px;
-  font-weight: bold;
-  border: 1px solid transparent;
-  border-bottom: 0; 
-  /* margin-bottom: -1px; */
-}
-
-/* normal tab hover */
-#topmenu li:hover span a {
-  background: #000;
-  color: #fff;
-  xborder-color: #fff;
-/*  -moz-border-radius-topright: 4px;
-  -moz-border-radius-topleft: 4px; */
-}
-
-/* selected tab */
-#topmenu li.selected span a {
-  background: #fff url(/images/shadows/small-top.png) repeat-x top;
-  color: black;
-  border-color: #000;
-}
-
-/* selected tab hover */
-#topmenu li.selected:hover span a {
-  color: white;
-  background: black;
-/*  border-color: #fff; */
-/*  -moz-border-radius-topright: 0px;
-  -moz-border-radius-topleft: 0px; */
-}
-
-/* drop down menu */
-#topmenu li ul {
-  background: #000;
-/*  border: 1px solid white; */
-  padding: 0 4em 2px 0;
-/*  -moz-border-radius-topright: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  -moz-border-radius-bottomright: 4px; */
-}
-/* drop down menu line */
-#topmenu li ul li {
-  padding: 2px 4px;
-}
-/* drop down link */
-#topmenu li ul li a {
-  color: white;
-  font-weight: bold;
-  padding: 4px;
+#topnav a {
+  float: left;
   display: block;
+  background: #047;
+  padding: 4px 10px;
   text-decoration: none;
-}
-/* drop down link hover */
-#topmenu li:hover ul li:hover {
+  font-weight: bold;
+  color: #fff;
+  outline: none;
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-topleft: 4px;
 }
 
-/* the bottom of the tabs */
-#toprule-outer {border-bottom: 1px solid transparent;}
+#topnav a:hover {
+  color: #fff;
+  background-color: #0063AD;
+}
 
+/* Commented Backslash Hack
+   hides rule from IE5-Mac \*/
+#topnav a {float:none;}
+/* End IE5-Mac hack */
+
+#topnav #current {
+}
+
+#topnav #current a {
+  color: #fff;
+  padding-bottom:5px;
+}
+
+ul.tabmenu li a em {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  text-indent: -9999px;
+  right: 8px;
+  top: 11px;
+  background: #057 url(../images/app/droparrow.gif) 5px 6px no-repeat;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+
+ul.tabmenu li a:hover em {
+  background-color: #057;
+}
+
+ul.submenu {
+  display: none;
+}
+
+/** submenus not yet working in core 
+ul.submenu {
+  width: 230px;
+  background: #fff !important;
+  position: absolute;
+  border-bottom: 1px solid #4294CF;
+  border-left: 1px solid #4294CF;
+  border-right: 1px solid #4294CF;
+  top: 33px;
+  left: 0;
+  z-index: 9;
+  display: none;
+}
+
+ul.submenu li {
+  float: none;
+  display: block;
+  border-bottom: 1px solid #eee;
+  margin: 0 6px !important;
+  background-color: #fff;
+}
+
+ul.submenu li a {
+  color: #333;
+  float: none;
+  padding: 6px;
+  background-color: #fff;
+}
+
+ul.submenu li a:hover {
+  background: transparent;
+  color: #058;
+}
+
+**/
 
 /*** banner ***/
 

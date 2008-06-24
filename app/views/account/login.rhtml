@@ -18,26 +18,26 @@
      <%= submit_tag _('Log in') %>
   </td>
 </tr>
-</table>
+<tr>
+  <td>
+    <div align='center'>
 
 <!-- Uncomment this if you want this functionality
 <p><label for="remember_me">Remember me:</label>
 <%= check_box_tag 'remember_me' %></p>
 -->
 
-<%= hidden_field_tag 'redirect', params[:redirect] %>
-
-<% end -%>
-
-<%= javascript_tag "Form.focusFirstElement('loginform');" %>
-
-<div align='center'>
   <%= link_to 'Need a new account?'.t, { :action => 'signup', :redirect => params[:redirect] } %>
 <!--  <br />
   <%= link_to _('I forgot my password'), forgot_password_path %> -->
-</div>
+    </div>
+  </td>
+</tr>
+</table>
 
+<%= hidden_field_tag 'redirect', params[:redirect] %>
+<% end # form -%>
+
+<%= javascript_tag "Form.focusFirstElement('loginform');" %>
 <div><%# flash[:error] %></div>
-<div align='right'>
-</div>
 </div> <!-- end login -->

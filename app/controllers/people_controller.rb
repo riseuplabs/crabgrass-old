@@ -28,7 +28,8 @@ class PeopleController < ApplicationController
   
   def context
     person_context
-    set_banner "people/banner", Style.new(:background_color => "#6E901B", :color => "#E2F0C0")
+    #set_banner "people/banner", Style.new(:background_color => "#6E901B", :color => "#E2F0C0")
+    set_banner "people/banner", Style.new(:color => "#eef", :background_color => "#1B5790")
   end
     
 end

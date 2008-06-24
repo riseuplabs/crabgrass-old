@@ -1,10 +1,11 @@
+<% @leftbar ||= 'me/sidebar' -%>
 <% inside_layout 'application' do -%>
-<!-- begin me -->
-<%= render :partial => 'me/tabs' %>
-<div id='tabarea'>
+<div id='maincolumn' class='leftbar' style="<%=sidebar_space%>">
+  <%= sidebar %>
+  <div id='content'>
   <%= yield %>
-  <p style="clear:both; padding-top: 2em"></p>
-</div> <!-- end tab area -->
-<!-- end me -->
+  </div>
+  <br clear='all' />
+</div>
 <% end -%>
 

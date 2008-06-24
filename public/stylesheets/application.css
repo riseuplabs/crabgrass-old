@@ -51,23 +51,6 @@ body, p, ol, ul, td {
 }
 .normal {font-size: 13px;font-weight:normal;}
 
-
-/** masthead **/
-
-table#masthead {
-  border-collapse: collapse;
-  width: 100%;
-  background: #cc9 url(/riseup/bg-top.png) repeat-x bottom left;
-}
-table#masthead td {
-  vertical-align: bottom;
-}
-#masthead-image {
-  background: url(/riseup/riseup.net.png) no-repeat;
-  width: 166px;
-  height: 30px;
-}
-
 /** utility **/
 
 .clear {clear: both;}

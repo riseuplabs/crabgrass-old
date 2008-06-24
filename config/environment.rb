@@ -28,25 +28,20 @@ FLOW = {
 # do this early because environments/*.rb need it
 require 'crabgrass_config'
 
-Crabgrass::Config.mods_enabled = File.read("#{RAILS_ROOT}/mods/enabled").split("\n")
-Crabgrass::Config.pages_enabled = File.read("#{RAILS_ROOT}/pages/enabled").split("\n")
+MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").freeze
+PAGES_ENABLED = File.read("#{RAILS_ROOT}/config/pages_enabled.list").split("\n").freeze
 
-########################################################################
-### BEGIN CUSTOM OPTIONS
+require "#{RAILS_ROOT}/lib/site.rb"
+Site.load_from_file("#{RAILS_ROOT}/config/sites.yml")
 
-Crabgrass::Config.site_name     = 'riseup.net' 
-Crabgrass::Config.host          = 'we.riseup.net'
-Crabgrass::Config.email_sender  = 'crabgrass-system@riseup.net'
-Crabgrass::Config.secret        = 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
-
-SECTION_SIZE = 29 # the default size for pagination sections
-
-AVAILABLE_PAGE_CLASSES = %w[
-  Message Discussion TextDoc RateMany RankedVote TaskList Asset
-]
-
-### END CUSTOM OPTIONS
-########################################################################
+# legacy configurations that should now be removed and changed to 
+# reference via @site in the code:
+Crabgrass::Config.site_name     = Site.default.name
+Crabgrass::Config.host          = Site.default.domain
+Crabgrass::Config.email_sender  = Site.default.email_sender
+Crabgrass::Config.secret        = Site.default.secret
+SECTION_SIZE = Site.default.pagination_size
+AVAILABLE_PAGE_CLASSES = Site.default.available_page_types.dup
 
 Rails::Initializer.run do |config|
   config.load_paths += %w(associations discussion chat profile task poll).collect do |dir|

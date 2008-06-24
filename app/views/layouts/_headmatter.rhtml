@@ -1,0 +1,17 @@
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon.png" type="image/x-icon" />
+  <title><%=h title_from_context %></title>
+  <%= stylesheet_link_tag('application', 'page', 'navigation', 'ui', 'errors', 'landing', 'sidebar', 'wiki', 'theme', :cache => true) %>
+  <%= optional_stylesheet %>
+  <%= javascript_include_tag('prototype', 'application', :cache => true) %>
+  <%= optional_javascript %>
+  <!--[if lt IE 7.]>
+    <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+  <![endif] -->
+  <!-- local styles -->
+  <style type="text/css">
+<%= yield :style %>
+<%= theme_styles %>
+  </style>
+

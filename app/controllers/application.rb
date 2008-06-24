@@ -11,10 +11,8 @@ class ApplicationController < ActionController::Base
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   
-  before_filter :set_timezone
-  before_filter :pre_clean
+  before_filter :set_timezone, :pre_clean, :breadcrumbs, :context, :fetch_site
   around_filter :rescue_authentication_errors
-  before_filter :breadcrumbs, :context
   session :session_secure => true if Crabgrass::Config.https_only
   protect_from_forgery :secret => Crabgrass::Config.secret
 
@@ -94,5 +92,9 @@ class ApplicationController < ActionController::Base
     yield
   rescue PermissionDenied
     access_denied
+  end
+
+  def fetch_site
+    @site = Site.default
   end
 end

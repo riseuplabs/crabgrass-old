@@ -1,54 +1,49 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/ DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <%= favicon %>
-  <title><%=h title_from_context %></title>
-  <%= stylesheet_link_tag('application', 'page', 'navigation', 'ui', 'errors', 'errors', 'landing', 'sidebar', 'wiki', 'theme', :cache => true) %>
-  <%= optional_stylesheet %>
-  <%= javascript_include_tag('prototype', 'application', :cache => true) %>
-  <%= optional_javascript %>
-  <!--[if lt IE 7.]>
-    <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
-  <![endif] -->
-  <!-- local styles -->
-  <style type="text/css">
-<%= yield :style %>
-<%= theme_styles %>
-  </style>
+  <%= render :partial => 'layouts/headmatter' %>
 </head>
 
 <body class="<%=body_class||=''%>">
+
+<!-- begin #container -->
 <div id="container">
 
-<!-- masthead -->
-<div id="toprule-outer"><div id="toprule">
-<table id="masthead" cellpadding="0" cellspacing="0"><tr>
- <td><%= render 'layouts/menu' %></td>
- <td id='masthead-image'></td>
-</tr></table><!--end masthead -->
-</div></div><!--end toprule -->
+<!-- begin #masthead -->
+<div id="masthead">
+  <%= render :partial => 'layouts/masthead' %>
+</div>
+<!--end #masthead -->
 
 <% if banner -%>
-<!-- banner -->
-
-<div id='banner'>
+<!-- begin #banner -->
+<div id="banner">
   <%= render :partial => banner %>
 </div>
+<!-- end #banner -->
 <% end -%>
 
+<!-- begin #main -->
 <div id="main">
-  <div id='message'>
+  <div id="message">
     <%= display_messages %>
   </div>
   
   <%= yield %>
+
 </div>
+<!-- end #main -->
 
+<!-- begin footer -->
+<div id="footer">
 <%= render 'layouts/footer' %>
+</div>
+<!-- end footer -->
 
-</div><!-- end container -->
+</div> <!-- end #container -->
+
 <%= yield :javascript %>
+
 </body>
 </html>
+

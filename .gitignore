@@ -4,4 +4,4 @@ tmp/**/*
 doc/api
 doc/app
 database.yml
-
+*~

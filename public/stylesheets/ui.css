@@ -3,33 +3,6 @@
 /** drag & drop **/
 .handle {cursor: move;}
 
-/** things that look like buttons **/
-
-form input[type=submit], form input[type=button], a.button {
-  border: 1px solid;
-  border-color: #fff #ccc #bbb #ddd;
-  outline: 1px solid #336;
-  text-decoration: none;
-  color: #000;
-  background: #eee url(/images/blend/24-wb-25.png) 0% 50% repeat-x;
-  padding: 0 6px 1px 6px;
-  cursor: pointer;
-  margin: 1px;
-}
-a.button {
-  padding-bottom: 3px;
-}
-form input[type=submit]:hover, form input[type=button]:hover, a.button:hover {
-  background: #fff url(/images/blend/24-wb-25.png) 0% 50% repeat-x;
-}
-
-form.button-to input {display: inline;}
-form.button-to div {display: inline;}
-form.button-to {
-  padding: 0; margin: 0;
-  display: inline; 
-}
-
 /** things that look like links **/
 
 form.link {display: inline; border: 0; padding: 0; margin: 0}
@@ -41,25 +14,6 @@ form.link input[type=submit], input[type=submit].link {
   background-color:transparent;
   cursor:pointer; 
   display: inline;
-}
-
-/** general form styling **/
-
-textarea, input[type=text], input[type=password], input[type=file], select {
-  border: 1px solid #666;
-  background: #fff url(/images/shadows/small-top-a.png) 0 -1px repeat-x;
-  padding: 4px;
-}
-select {padding: 1px;}
-textarea:focus, input[type=text]:focus, input[type=password]:focus {
-  background: #ffe url(/images/shadows/small-top-a.png) 0 -1px repeat-x;
-  border: 1px solid #000;
-}
-div.textarea-wrapper {
-  padding-right: 10px;
-}
-.spaced-out textarea, .spaced-out input, .spaced-out select {
-  margin: 4px 0;
 }
 
 /** common reusable elements **/
@@ -164,7 +118,8 @@ ul.tabset a.tab-link:hover {
   text-decoration: underline;
 }
 ul.tabset.top a.selected {
-  background: #fff url(/images/shadows/inside-tab.png) repeat-x top;
+  background: white;
+  /* background: #fff url(/images/shadows/inside-tab.png) repeat-x top; */
   outline: 1px solid white;
   color: black;
   height: 2em; /* this is what hides the bottom border */
@@ -207,6 +162,7 @@ div.edit-tab span {
   padding: 4px 16px;
   border: 1px solid #ADBDE3;
   border-left: 0;
+  display: block;
 }
 div.edit-tab a {
   color: #669;
