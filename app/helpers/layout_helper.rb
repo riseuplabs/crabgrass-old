@@ -62,7 +62,10 @@ module LayoutHelper
   # only included if they are needed. a controller can set a custom stylesheet
   # using 'stylesheet' in the class definition, or an action can set @stylesheet.
   # you can't do both at the same time.
-  def stylesheet
+  def optional_stylesheet_tag
+    stylesheet_link_tag(*(optional_stylesheets.to_a))
+  end
+  def optional_stylesheets
     if @stylesheet
       @stylesheet # set for this action
     else
@@ -74,10 +77,36 @@ module LayoutHelper
     'http://' + controller.request.host_with_port
   end
   
-  def optional_stylesheet
-    stylesheet_link_tag(*(stylesheet.to_a)) if stylesheet
+  # crabgrass_stylesheets()
+  # this is the main helper that is in charge of returning all the needed style
+  # elements for HTML>HEAD. There are five (5!) types of stylings:
+  #
+  # (1) default crabgrass stylesheets (for core things like layout)
+  # (2) optional stylesheets (these are stylesheets that are loaded on a
+  #     per-controller or per-action basis.
+  # (3) custom stylesheets (this is an empty stub, to be filled out by mods
+  #     that want to easily insert their own stylesheet)
+  # (4) content_for :style (inline styles set in the views)
+  # (5) theme_styles (dynamic styles set based on database information, like the site or
+  #     the user's customizations).
+  #
+  def crabgrass_stylesheets
+    lines = [];
+    lines << stylesheet_link_tag('application', 'page', 'navigation', 'ui', 'errors', 'landing', 'sidebar', 'wiki', :cache => true)
+    lines << optional_stylesheet_tag
+    lines << custom_stylesheet
+    lines << '<style type="text/css">'
+    lines << @content_for_style
+    lines << theme_styles
+    lines << '</style>'
+    lines.join("\n")
   end
-    
+
+  # a hook to be overridden by mods
+  def custom_stylesheet
+    stylesheet_link_tag('theme')
+  end
+
   ############################################
   # JAVASCRIPT
   
@@ -91,6 +120,16 @@ module LayoutHelper
     else
       controller.class.javascript == :extra
     end
+  end
+
+  def crabgrass_javascripts
+    lines = []
+    lines << javascript_include_tag('prototype', 'application', :cache => true)
+    lines << optional_javascript
+    lines << '<!--[if lt IE 7.]>
+  <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+<![endif] -->'
+    lines.join("\n")
   end
 
 #  def get_unobtrusive_javascript
