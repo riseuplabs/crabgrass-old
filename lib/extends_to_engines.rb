@@ -91,3 +91,27 @@ Engines::Plugin::FileSystemLocator.class_eval do
         end
 end
 
+# The engines plugin dumps way too much stuff to the development log.
+# By default, we want to raise the level to INFO instead of DEBUG,
+# but only for the engines logger, not the default rails one.
+# (this is done in environment.rb)
+module Engines
+  def self.logger
+    @@logger ||= ::RAILS_DEFAULT_LOGGER.dup
+  end
+end
+
+
+=begin
+
+By default, the plugin code files are loaded FIRST, and then the application code.
+This is normally what you want, but in the case of mods, you want the opposite: the
+application code should be loaded first so we can later override it with a plugin.
+
+=end
+
+#module Engines::RailsExtensions::Dependencies
+# moved to engines/lib/engines/rails_extensions/dependencies.rb because
+# it doesn't seem to work here.
+#end
+

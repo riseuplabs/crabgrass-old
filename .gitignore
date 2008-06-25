@@ -5,3 +5,5 @@ doc/api
 doc/app
 database.yml
 *~
+public/plugin_assets/*
+

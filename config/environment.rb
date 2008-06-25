@@ -6,7 +6,6 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
-Engines.code_mixing_file_types = %w(controller)
 
 #### ENUMERATIONS ##############
 
@@ -88,7 +87,12 @@ end
 # Lots of errors if this is enabled:
 ActiveRecord::Base.partial_updates = false
 
+# Store "Tool::Discussion" in database instead of just "Discussion"!
 ActiveRecord::Base.store_full_sti_class = true
+
+# Make engines much less verbose!
+Engines.logger.level = ActiveSupport::BufferedLogger::Severity::INFO
+#Engines.logger.level = ActiveSupport::BufferedLogger::Severity::DEBUG
 
 #### CUSTOM EXCEPTIONS #############
 
