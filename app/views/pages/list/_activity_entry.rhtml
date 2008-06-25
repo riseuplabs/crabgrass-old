@@ -2,7 +2,7 @@
 <% color = cycle 'odd', 'even', :name => 'activity_entry_cycle' -%>
 <% if style == :normal -%>
 <tr class='<%=color%>'>
-  <td><%= page_list_owner_with_icon(page) %></td>
+  <td nowrap><%= page_list_owner_with_icon(page) %></td>
   <td>&nbsp;&nbsp;&nbsp;</td>
   <td><%= page_icon(page) %></td>
   <td><%= page_list_cell(page, :title) %></td>

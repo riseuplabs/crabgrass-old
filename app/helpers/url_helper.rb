@@ -52,11 +52,15 @@ module UrlHelper
   def login_and_path_for_user(arg, options={})
     if arg.is_a? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
-      login = User.find(arg).login 
+      user = User.find(arg)
+      login = user.login 
+      display = user.display_name
     elsif arg.is_a? String
       login = arg
+      display = nil
     elsif arg.is_a? User
       login = arg.login
+      display = arg.display_name
     end
     #link_to login, :controller => '/people', :action => 'show', :id => login if login
     action = options[:action] || 'show'
@@ -65,24 +69,25 @@ module UrlHelper
     else
       path = "/person/#{action}/#{login}"
     end
-    [login, path]
+    [login, path, display]
   end
   
   def url_for_user(arg, options={})
-    login, path = login_and_path_for_user(arg,options)
+    login, path, display = login_and_path_for_user(arg,options)
     path
   end
   
   def link_to_user(arg, options={})
-    login, path = login_and_path_for_user(arg,options)
+    login, path, display_name = login_and_path_for_user(arg,options)
     style = options[:style] || ''
+    label = options[:login] ? login : display_name
     if options[:avatar]
       size = Avatar.pixels(options[:avatar])[0..1].to_i
       padding = size/5 + size
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px; " + style
     end
-    link_to login, path, :class => 'name_link', :style => style
+    link_to label, path, :class => 'name_link', :style => style
   end
 
   # see function name_and_path_for_group for description of options
