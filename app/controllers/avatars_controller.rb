@@ -7,7 +7,7 @@ class AvatarsController < ActionController::Base
   caches_page :show
  
   def create 
-    unless params[:image] && params[:image][:data]
+    unless params[:image]
       flash[:error] = "no image uploaded"
       render(:nothing => true, :layout => true)
       return
@@ -15,7 +15,7 @@ class AvatarsController < ActionController::Base
     group = Group.find params[:group_id] if params[:group_id]
     user  = User.find params[:user_id] if params[:user_id]
     thing = group || user
-    avatar = Avatar.create(:image_file_data => params[:image][:data])
+    avatar = Avatar.create(params[:image])
     if thing.avatar
       for size in %w(xsmall small medium large xlarge)
         expire_page :controller => 'avatar', :action => 'show', :id => avatar, :size => size
@@ -26,18 +26,17 @@ class AvatarsController < ActionController::Base
     thing.save
     redirect_to params[:redirect]
   end
-    
+
   def show
-    image = Avatar.find_by_id params[:id]
-    if image.nil?
+    @image = Avatar.find_by_id params[:id]
+    if @image.nil?
       size = Avatar.pixels(params[:size])
       size.sub!(/^\d\dx/,'')
       filename = "#{File.dirname(__FILE__)}/../../public/images/default/#{size}.jpg"
       send_data(IO.read(filename), :type => 'image/jpeg', :disposition => 'inline')
     else
-      image.resize! :size => Avatar.pixels(params[:size])
-      render_flex_image(image)
+      render :template => 'avatars/show.jpg.flexi'
     end
   end
-  
+
 end

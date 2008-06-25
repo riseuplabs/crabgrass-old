@@ -10,10 +10,9 @@
 
 class Avatar < ActiveRecord::Base
 
-  acts_as_fleximage do
+  acts_as_fleximage(:default_image_path => "/images/default/96.jpg") do
     preprocess_image do |image|
-      image.size = '96x96'
-      image.crop = true
+      image.resize '96x96', :crop => true
     end
   end
     

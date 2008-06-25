@@ -1,0 +1,3 @@
+@image.operate do |image|
+   image.resize Avatar.pixels(params[:size])
+end

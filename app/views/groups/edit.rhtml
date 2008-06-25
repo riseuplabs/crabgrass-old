@@ -11,11 +11,13 @@
 <p>uploaded image will be cropped and stretched to 96 pixels square.</p>
 
 <p>
-<% form_tag({:controller => 'avatars', :action => 'create'}, {:multipart => true}) do -%>
-  <%= hidden_field_tag 'redirect', url_for(:controller=>'groups',:action=>'edit',:id=>@group) %>
-  <%= hidden_field_tag 'group_id', @group.id %>
-  <%= file_field 'image', 'data' %>
-  <%= submit_tag 'Upload' %>
-<% end -%>
+<% @avatar ||= @group.avatar -%>
+<p><% form_for(:image, @avatar, :url => {:controller => 'avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>
+   <%= f.file_field :image_file %><br />
+    or URL: <%= f.text_field :image_file_url %>
+   <%= hidden_field_tag 'redirect', url_for(:controller=>'groups',:action=>'edit',:id=>@group) %>
+   <%= hidden_field_tag 'group_id', @group.id %>
+   <%= submit_tag 'Upload' %>
+<% end -%></p>
 </p>
 
