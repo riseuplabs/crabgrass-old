@@ -6,7 +6,12 @@
 #topnav {
   margin: 6px 0 0 0;
   line-height: 100%;
+  position: absolute; bottom: 0px; /* to position on bottom of #masthead */
 }
+#masthead {
+  position: relative; /* to allow #topnav to position on bottom */
+  height: 50px; /* required because of relative position */
+} 
 
 #topnav ul {
   margin: 0 0 0 20px;
@@ -116,11 +121,10 @@ ul.submenu li a:hover {
 /*** banner ***/
 
 div#banner {
-  padding: 4px 10px;
+  padding: 10px;
   border-bottom: 1px solid transparent;
 }
-div#banner img.avatar_large {padding-right: 10px;}
-div#banner img.avatar_small {padding-right: 4px;}
+div#banner img.avatar {border:1px solid white; margin-right: 7px;}
 div#banner h1, div#banner h3 {padding: 0; margin: 0}
 div#banner table {width: 100%;}
 
