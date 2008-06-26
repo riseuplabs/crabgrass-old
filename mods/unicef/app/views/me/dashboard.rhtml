@@ -1,0 +1,13 @@
+<%
+@pages = Page.find_by_path('descending/updated_at/ascending/group_name/limit/40', options_for_me)
+-%>
+<div class='landing'>
+  <div id='titlebox'>
+    <div id='info_panel' ><%= render :partial => 'infopanel' %></div>
+  </div>
+  <style>div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}</style>
+  <div id='page_list'>
+    <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages} %>
+    <%= link_to 'more &raquo;', me_url(:action => 'search') + "/descending/updated_at" %>
+  </div>
+</div>

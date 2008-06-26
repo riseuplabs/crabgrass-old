@@ -1,0 +1,32 @@
+<%= Formy.sidebar do |f|
+  f.section do |s|
+    s.label 'Me'
+    s.link do |t|
+      t.label 'Dashboard'
+      t.link me_url(:action => 'dashboard')
+      t.selected params[:controller] == 'me' && (params[:action] == 'dashboard' || params[:action] == 'index')
+    end
+    s.link do |t|
+      t.label 'Tasks'
+      t.link url_for(:controller => 'my_tasks', :action => nil)
+      t.selected params[:controller] == 'my_tasks'
+    end
+    s.link do |t|
+      t.label 'Search'
+      t.link me_url(:action => 'search')
+      t.selected params[:action] == 'search'
+    end
+    s.link do |t|
+      t.label 'Create Discussion'
+      t.link url_for(:controller => 'tool/discussion', :action => 'create', :id => 'group-discussion')
+      t.selected false
+    end
+    s.link do |t|
+      t.label 'Create Document'
+      t.link url_for(:controller => 'tool/asset', :action => 'create', :id => 'file')
+      t.selected false
+    end
+  end
+end
+%>
+
