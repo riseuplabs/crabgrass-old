@@ -1,7 +1,6 @@
 <% form_tag(:action => 'update', :id => @group) do -%>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Save changes' %>
-    
 <% end -%>
 
 <h1>Picture</h1>
@@ -13,11 +12,13 @@
 <p>
 <% @avatar ||= @group.avatar -%>
 <p><% form_for(:image, @avatar, :url => {:controller => 'avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>
+   select image file<br />
    <%= f.file_field :image_file %><br />
-    or URL: <%= f.text_field :image_file_url %>
+   or image URL<br />
+   <%= f.text_field :image_file_url %><br />
    <%= hidden_field_tag 'redirect', url_for(:controller=>'groups',:action=>'edit',:id=>@group) %>
    <%= hidden_field_tag 'group_id', @group.id %>
-   <%= submit_tag 'Upload' %>
+   <br /><%= submit_tag 'Upload Image' %>
 <% end -%></p>
 </p>
 
