@@ -1,0 +1,15 @@
+
+#masthead {
+  background: #0099FF url(/plugin_assets/unicef/images/unicef_logo.gif) no-repeat top right;
+  border-top: 1px solid #0099FF;
+  height: 70px;
+}
+
+#titlebox, .titlebox {
+  background: #E6F2FF;
+  border: 2px solid white;
+}
+#maincolumn, #tabarea {
+  border-color: #999;
+}
+
