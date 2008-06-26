@@ -9,16 +9,13 @@ classes of each page type and load the actually class only when we have to.
 
 class PageClassProxy
 
-  attr_accessor :controller
-  attr_accessor :model
-  attr_accessor :icon
-  attr_accessor :class_display_name
-  attr_accessor :class_description
-  attr_accessor :class_group
-  attr_accessor :class_name
+  attr_accessor :controller, :model, :icon
+  attr_accessor :class_display_name, :class_description, :class_group
+  attr_accessor :class_name, :full_class_name
 
   def initialize(page_class_name)
     self.class_name = page_class_name
+    self.full_class_name = "Tool::" + page_class_name
     %w[controller model icon class_display_name class_description class_group].each do |attri|
       self.send(attri+'=',actual_class.send(attri))
     end
@@ -30,6 +27,10 @@ class PageClassProxy
 
   def create(hash)
     actual_class.create(hash)
+  end
+
+  def to_s
+    full_class_name
   end
 
 end
