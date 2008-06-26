@@ -11,10 +11,10 @@
 %>
 
 <% form_tag() do -%>
-<%= select_tag 'search[type]', options_for_select([['all page types',''],['discussions','discussion'],['wikis','wiki'],['polls','poll'],['task lists','task'], ['files','asset'], ['events', 'event']], parsed.arg_for('type') ) %>
+<%= select_tag 'search[type]', options_for_select_page_type(parsed.arg_for('type')) %>
 
 <% if users -%>
-<%= select_tag 'search[person]', "<option value=''>everyone</option>"+
+<%= select_tag 'search[person]', "<option value=''>all people</option>"+
 options_from_collection_for_select(users, "id", "name", parsed.int_for('person')) %>
 <% end -%>
 
@@ -31,4 +31,6 @@ options_from_collection_for_select(groups, "id", "name", parsed.int_for('group')
 </script>
 
 <% end -%>
+
+
 
