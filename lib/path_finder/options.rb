@@ -41,23 +41,34 @@ module PathFinder::Options
         :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
         :values     => [current_user.all_group_ids, current_user.id, true]
       }
+      return default_find_options.merge(options).merge(args)
     else
-      options = {
-        :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ?)",
-        :values     => [current_user.all_group_ids, current_user.id]
-      }
-
-      query1 = {
-        :conditions => "group_parts.group_id IN (?)",
-        :values     => [current_user.all_group_ids]
-      }
-      query2 = {
-        :conditions => "user_parts.user_id = ?",
-        :values     => [current_user.id]
-      }
-      options = {:union => [query1, query2]}
+      lambda {|parsed_path|
+        if parsed_path.keyword?('group') or parsed_path.keyword?('person')
+          # if person or group is in the path, then we must do a query
+          # that joins on both the group_participations table and the user_participations
+          # table.
+          options = {
+            :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ?)",
+            :values     => [current_user.all_group_ids, current_user.id]
+          }
+          default_find_options.merge(options).merge(args)
+        else
+          # since there is no person or group in the path, we can use a union, which is
+          # much faster.
+          query1 = {
+            :conditions => "group_parts.group_id IN (?)",
+            :values     => [current_user.all_group_ids]
+          }
+          query2 = {
+            :conditions => "user_parts.user_id = ?",
+            :values     => [current_user.id]
+          }
+          options = {:union => [query1, query2]}
+          default_find_options.merge(options).merge(args)
+        end
+      } # end lambda
     end
-    default_find_options.merge(options).merge(args)
   end
   
   def options_for_inbox(args={})

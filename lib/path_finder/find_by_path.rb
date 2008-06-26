@@ -15,6 +15,8 @@ module PathFinder
   module FindByPath
   
     def find_and_paginate_by_path(path, options={})
+      options = apply_possible_lambda(path, options)
+
       pages_per_section = options[:section_size] || ::SECTION_SIZE
       current_section   = options[:section] || 1
       offset            = (current_section - 1) * pages_per_section 
@@ -41,6 +43,8 @@ module PathFinder
     end
     
     def find_by_path(path, options={})
+      options = apply_possible_lambda(path, options)
+
       if options[:paginate] or options[:section] or options[:section_size]
         find_and_paginate_by_path(path, options)
       else
@@ -48,7 +52,17 @@ module PathFinder
         PathFinder::Builder.find_pages(options[:method], path, options)
       end
     end
-        
+
+    # if the options argument is really a lambda, then call the lambda with
+    # the path to get the real options hash    
+    def apply_possible_lambda(path, options)
+      if options.is_a? Proc
+        options.call( PathFinder::Builder.parse_filter_path(path) )
+      else
+        options
+      end
+    end
+
   end # FindByPath
 end # PathFinder
 

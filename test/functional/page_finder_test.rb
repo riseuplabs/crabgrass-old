@@ -133,7 +133,6 @@ class PageFinderTest < Test::Unit::TestCase
     reference_ids = page_ids(pages)
 
     options = @controller.options_for_me(:section => 1, :section_size => 10)
-    options[:method] = :sql
     pages, sections = Page.find_by_path(
       '/descending/updated_at/',
       options
@@ -190,6 +189,31 @@ class PageFinderTest < Test::Unit::TestCase
     assert_equal reference_ids, path_ids, "find_by_path should return all of a group's task lists"
   end
 
+  def test_options_for_me
+    login(:blue)
+    user = users(:blue)
+    group = groups(:rainbow)
+    
+    pages = Page.find( :all, :conditions => ['flow IS NULL'] )
+    pages = pages.select do |page|
+      group.may?(:view,page) and user.may?(:view,page)
+    end
+    reference_ids = page_ids(pages)
+    
+    path_ids = page_ids(
+      Page.find_by_path('/group/%s'%group.id, @controller.options_for_me() )
+    )
+
+    (reference_ids - path_ids).each do |pid|
+      puts 'in reference but not in path'
+      debug(Page.find(pid),user)
+    end
+    (path_ids - reference_ids).each do |pid|
+      puts 'in path but not in reference'
+      debug(Page.find(pid),user)
+    end
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+  end
 
   ##############################################
   ### Tests for various search parameters
