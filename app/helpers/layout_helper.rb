@@ -99,8 +99,6 @@ module LayoutHelper
     lines << @content_for_style
     lines << theme_styles
     lines << '</style>'
-    lines << '<!--[if IE 6]><link rel="stylesheet" href="/stylesheets/ie6.css" /><![endif]-->'
-    lines << '<!--[if IE 7]><link rel="stylesheet" href="/stylesheets/ie7.css" /><![endif]-->'
     lines.join("\n")
   end
 
@@ -108,6 +106,7 @@ module LayoutHelper
   def custom_stylesheet
     stylesheet_link_tag('theme')
   end
+
   ############################################
   # JAVASCRIPT
   
@@ -127,9 +126,9 @@ module LayoutHelper
     lines = []
     lines << javascript_include_tag('prototype', 'application', :cache => true)
     lines << optional_javascript
-#    lines << '<!--[if lt IE 7.]>
-#  <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
-#<![endif] -->'
+    lines << '<!--[if lt IE 7.]>
+  <script defer type="text/javascript" src="/javascripts/pngfix.js"></script>
+<![endif] -->'
     lines.join("\n")
   end
 

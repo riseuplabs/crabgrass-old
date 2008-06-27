@@ -1,7 +1,0 @@
-
-/* negative margins are doubled in ie6 */
-div#leftbar {
-  margin-left: -95px;
-  width: 169px;
-}
-
