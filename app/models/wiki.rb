@@ -1,6 +1,6 @@
 =begin
 
-  This is a generic versioned wiki, primarily used by the Tool::TextDoc,
+  This is a generic versioned wiki, primarily used by the WikiPage,
   but also used directly sometimes by other classes (like for Group's
   landing page wiki's).
 

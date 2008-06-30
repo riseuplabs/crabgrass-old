@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/rate_many_controller'
+require 'rate_many_page_controller'
 
 # Re-raise errors caught by the controller.
-class Tool::RateManyController; def rescue_action(e) raise e end; end
+class RateManyPageController; def rescue_action(e) raise e end; end
 
 class Tool::RateManyControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations, :polls, :possibles
 
   def setup
-    @controller = Tool::RateManyController.new
+    @controller = RateManyPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -18,19 +18,19 @@ class Tool::RateManyControllerTest < Test::Unit::TestCase
     login_as :orange
 
     assert_no_difference 'Page.count' do
-      get :create, :id => Tool::RateMany.class_display_name
-      assert_template 'tool/base/create'
+      get :create, :id => RateManyPage.class_display_name
+      assert_template 'base_page/create'
     end
   
-    assert_difference 'Tool::RateMany.count' do
-      post :create, :id => Tool::RateMany.class_display_name, :page => {:title => 'test title'}
+    assert_difference 'RateManyPage.count' do
+      post :create, :id => RateManyPage.class_display_name, :page => {:title => 'test title'}
       assert_response :redirect
     end
     
     p = Page.find(:all)[-1] # most recently created page (?)
     get :show, :page_id => p.id
     assert_response :success
-    assert_template 'tool/rate_many/show'
+    assert_template 'rate_many_page/show'
     
     assert_difference 'p.data.possibles.count' do
       post :add_possible, :page_id => p.id, :possible => {:name => "new option", :description => ""}

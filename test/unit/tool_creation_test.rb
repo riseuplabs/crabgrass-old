@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ToolCreationTest < Test::Unit::TestCase
 
   def test_add_participants
-    @controller = Tool::BaseController.new
+    @controller = BasePageController.new
     page = Page.create(:title => 'add participants page')
     creator = User.new
     member = User.new

@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/message_controller'
+require 'message_page_controller'
 
 # Re-raise errors caught by the controller.
-class Tool::MessageController; def rescue_action(e) raise e end; end
+class MessagePageController; def rescue_action(e) raise e end; end
 
 class Tool::MessageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup
-    @controller = Tool::MessageController.new
+    @controller = MessagePageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -17,18 +17,18 @@ class Tool::MessageControllerTest < Test::Unit::TestCase
     login_as :orange
     
     assert_no_difference 'Page.count' do
-      get :create, :id => Tool::Message.class_display_name
-      assert_template 'tool/message/create'
+      get :create, :id => MessagePage.class_display_name
+      assert_template 'message_page/create'
     end
   
-    assert_difference 'Tool::Message.count' do
-      post :create, :id => Tool::Message.class_display_name, :title => 'test title', :to => 'red', :message => 'hey d00d'
+    assert_difference 'MessagePage.count' do
+      post :create, :id => MessagePage.class_display_name, :title => 'test title', :to => 'red', :message => 'hey d00d'
       assert_response :redirect
     end
     
     p = Page.find(:all)[-1] # most recently created page (?)
     get :show, :page_id => p.id
     assert_response :success
-    assert_template 'tool/message/show'
+    assert_template 'message_page/show'
   end
 end

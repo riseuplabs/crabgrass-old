@@ -1,0 +1,84 @@
+<% if @asset.image? -%>
+  <%= link_to(image_tag(@asset.public_filename(:preview)), @asset.public_filename) %>
+<% end -%>
+
+<table cellpadding='4'>
+<% if current_user.may? :edit, @page -%>
+<tr>
+  <td align='right'><b><%= 'created by'.t %>:</b></td>
+  <td><%= h @page.created_by.both_names if @page.created_by %></td>
+</tr>
+<% end -%>
+<tr>
+  <td align='right'><b><%= 'created on'.t %>:</b></td>
+  <td><%= full_time(@page.created_at) %></td>
+</tr>
+<% if @page.updated_at > @page.created_at -%>
+<% if current_user.may? :edit, @page -%>
+<tr>
+  <td align='right'><b><%= 'last updated by'.t %>:</b></td>
+  <td><%= h @page.updated_by.both_names %></td>
+</tr>
+<% end -%>
+<tr>
+  <td align='right'><b><%= 'last updated on'.t %>:</b></td>
+  <td><%= full_time(@page.updated_at) %></td>
+</tr>
+<% end -%>
+<tr>
+  <td align='right'><b><%= 'file type'.t %>:</b></td>
+  <td><%= @asset.content_type %></td>
+</tr>
+<tr>
+  <td align='right'><b><%= 'size'.t %>:</b></td>
+  <td><%= friendly_size(@asset.size) %></td>
+</tr>
+<% if @asset.image? -%>
+<tr>
+  <td align='right'><b><%= 'dimensions'.t %>:</b></td>
+  <td><%= "#{@asset.width}x#{@asset.height}" %></td>
+</tr>
+<% end -%>
+</table>
+
+<p><%=
+  links = [
+    link_to("download %s" % @asset.filename, @asset.public_filename),
+    link_to_function("view versions", "$('versions').toggle()")
+  ]
+  links.push link_to_function("upload a new version", "$('upload-new').toggle()") if current_user.may? :edit, @page
+
+  link_line links
+%></p>
+
+<style>
+  td.busy {
+    background: transparent url(/images/spinner.gif) no-repeat;
+  }
+  td.busy span {
+    visibility: hidden;
+  }
+</style>
+<div id="versions" style="display: none;">
+  <table>
+  <% @asset.versions.reverse.each do |version| -%>
+  <tr id="asset_<%= @asset.id %>_version_<%= version.version %>">
+    <td>
+      <% if @current_user.may? :edit, @page and version.version < @asset.version %>
+      <span><%= link_to_remote(image_tag('actions/trash.png'), {:url => direct_url(:page_id => @page.id, :action => :destroy_version, :id => version.version, :controller => 'asset_page'), :confirm => 'are you sure you want to delete this version?', :before => "$($(this).up('td')).addClassName('busy')", :failure => "$($(this).up('td')).removeClassName('busy')"}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => @asset.id)}) %></span>
+      <% end %>
+    </td>
+    <td><%= version.image? ? image_tag(version.public_filename(:thumb)) : image_tag(version.small_icon) %></td>
+    <td><%= link_to "#{version.version}: #{version.filename}", version.public_filename %></td>
+  </tr>
+  <% end -%>
+  </table>
+</div>
+<br/>
+
+<div id="upload-new" style="display: none;">
+  <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>
+    <%= file_field_tag 'asset' %>
+    <%= submit_tag 'upload' %>
+  <% end %>
+</div>

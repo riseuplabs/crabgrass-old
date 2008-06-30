@@ -105,7 +105,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    page = Tool::RateMany.create :title => 'short lived'
+    page = RateManyPage.create :title => 'short lived'
     poll_id = page.data.id
     page.destroy
     assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'

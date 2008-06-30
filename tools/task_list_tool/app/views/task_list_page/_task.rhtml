@@ -1,0 +1,47 @@
+<%
+
+# this partial handles one line item in a list of tasks.
+# it is heavy ajax... probably the non-ajax version should be a different partial
+
+checked      = task.completed? ? "CHECKED" : ""
+alt_status   = task.completed? ? "pending" : "complete"
+task_id      = "task_#{task.id}"
+task_edit_id = "#{task_id}_edit"
+task_edit_form = "#{task_edit_id}_form"
+task_show_id = "#{task_id}_show"
+checkbox_id  = "#{task_id}_check"
+spinner_edit = "#{task_id}-edit"
+spinner_done = "#{task_id}-done"
+details_id   = "#{task_id}_details"
+mark_action  = "mark_task_#{alt_status}"
+edit_action  = "edit_task"
+check_click  = "Element.hide('#{checkbox_id}');" +
+               show_spinner(spinner_done) +
+               remote_function(:url => page_xurl(@page, :action=>mark_action, :id=>task.id))
+edit_function = remote_function(:url => page_xurl(@page, :action=>edit_action, :id=>task.id))                
+edit_click   = "$('#{task_show_id}', '#{task_edit_id}').invoke('toggle');" +
+               "if ($('#{task_edit_form}')==null) {#{edit_function}}"
+%>
+
+<li id='<%=task_id%>' class='task'>
+<% if current_user.may? :edit, @page -%>
+  <div class='actions'>
+    <%#link_to_function image_tag('actions/ex.png'), delete_click %>
+    <%=link_to_function image_tag('actions/edit.png'), edit_click %>
+    <span class='handle'><%=image_tag 'actions/change-order-small.png'%></span>
+  </div>
+  <div class='checkbox'>
+    <input type='checkbox' onclick="<%=check_click%>" id='<%=checkbox_id%>' <%= checked %> />
+    &thinsp;<%= spinner(spinner_done) -%>&nbsp;
+  </div>
+<% end -%>
+  <div id='<%=task_show_id%>'>
+<%= render :partial => 'task_list_page/task_show', :locals => {:task => task} %>
+  </div>
+<% if current_user.may? :edit, @page -%>
+  <div id='<%=task_edit_id%>' class='indent task_edit' style='display: none'>
+    <%= spinner(spinner_edit, :show=>true) -%> Loading... 
+    <%# render :partial => 'task_list_page/task_edit', :locals => {:task => task} %>
+  </div>
+<% end -%>
+</li>

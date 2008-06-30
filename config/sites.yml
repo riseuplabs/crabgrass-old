@@ -7,7 +7,7 @@ default:
   available_page_types:
   - Message
   - Discussion
-  - TextDoc
+  - Wiki
   - RateMany
   - RankedVote
   - TaskList

@@ -1,0 +1,63 @@
+This directory stores Crabgrass tools. A tool consists of:
+
+- A model that is a subclass of Page
+- A controller that is a subclass of BasePageController
+- A set of custom views and helpers
+- Anything else the author wants
+
+Tools, in short, are engines (ie plugins enhanced with the 'engines' plugin),
+except that tools are stored in the directory /tools and they are only loaded
+if the directory name appears in config/tools_enabled.list
+
+A tool can do pretty much anything. It can be an entire rails application. 
+However, the typical case is that whenever a Page of the type defined
+in the tool is to be shown, then crabgrass will use the controllers and views
+defined in that tool. 
+
+How does it know? Because of a call like this placed in the init.rb of the tool:
+
+PageClassRegistrar.add(
+  'WikiPage',
+  :controller => 'wiki_page',
+  :model => 'Wiki',
+  :icon => 'wiki.png',
+  :class_display_name => 'wiki',
+  :class_description => 'A free-form text document.',
+  :class_group => 'wiki'
+)
+
+In this example, whenever a page of type WikiPage is displayed, the
+controller WikiPageController will be called (derived from the
+camelcase of :controller). This could live anywhere, but we happen
+to have bundled this controller in the tool under:
+
+   tools/wiki_tool/app/controllers/wiki_page_controller.rb
+
+You should also put this in init.rb:
+
+  self.load_once = false
+
+This will make it so that in development mode the plugin is not only loaded once.
+Without this, you need to restart rails each time you modify a source file in
+the plugin.
+
+Writing tests
+==============
+
+Example:
+
+require 'test/unit'
+# Add your module file here
+require File.dirname(__FILE__) + '/../lib/meta_tag_helper'
+
+class MetaTagTest < Test::Unit::TestCase
+
+  # Explicitly include the module
+  include MetaTagHelper
+
+  def test_end_html_tag
+    assert_equal "</html>", end_html_tag
+  end
+
+end
+

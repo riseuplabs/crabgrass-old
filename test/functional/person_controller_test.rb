@@ -47,7 +47,7 @@ class PersonControllerTest < Test::Unit::TestCase
     get :tasks, :id => users(:blue).login
     assert_response :success
     assert_template 'tasks'
-    assert_nil assigns(:pages).find { |p| !p.is_a?(Tool::TaskList) }
+    assert_nil assigns(:pages).find { |p| !p.is_a?(TaskListPage) }
     assert_nil assigns(:pages).find { |p| !p.public? }
   end
 
@@ -56,7 +56,7 @@ class PersonControllerTest < Test::Unit::TestCase
     get :tasks, :id => users(:purple).login
     assert_response :success
     assert_template 'tasks'
-    assert_nil assigns(:pages).find { |p| !p.is_a?(Tool::TaskList) }
+    assert_nil assigns(:pages).find { |p| !p.is_a?(TaskListPage) }
     assert_nil assigns(:pages).find { |p| !users(:quentin).may?(:view, p) }
   end
 end

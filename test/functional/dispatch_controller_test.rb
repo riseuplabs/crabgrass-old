@@ -19,13 +19,13 @@ class DispatchControllerTest < Test::Unit::TestCase
   def test_find_controller_with_space_and_page_id
     get :dispatch, :_page => 'garble 5'
     assert assigns(:page)
-    assert assigns(:page).is_a?(Tool::Discussion)
+    assert assigns(:page).is_a?(DiscussionPage)
   end
 
   def test_find_controller_with_plus_and_page_id
     get :dispatch, :_page => 'garble+5'
     assert assigns(:page)
-    assert assigns(:page).is_a?(Tool::Discussion)
+    assert assigns(:page).is_a?(DiscussionPage)
   end
 
   # I put this in dispatch_controller_test instead of pages_controller_test

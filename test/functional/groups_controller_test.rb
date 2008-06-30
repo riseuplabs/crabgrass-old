@@ -386,11 +386,10 @@ class GroupsControllerTest < Test::Unit::TestCase
     c.save
     u.reload
 
-    Page.icon 'icon.png' #to avoid a warning
-    group_page = Page.create :title => 'a group page', :public => false
+    group_page = DiscussionPage.create :title => 'a group page', :public => false
     group_page.add(g, :access => :admin)
     group_page.save
-    committee_page = Page.create :title => 'a committee page', :public => false, :group => c
+    committee_page = DiscussionPage.create :title => 'a committee page', :public => false, :group => c
     committee_page.add(c, :access => :admin)
     committee_page.save
 

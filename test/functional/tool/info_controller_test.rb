@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/info_controller'
+require 'info_page_controller'
 
 # Re-raise errors caught by the controller.
-class Tool::InfoController; def rescue_action(e) raise e end; end
+class InfoPageController; def rescue_action(e) raise e end; end
 
 class Tool::InfoControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup
-    @controller = Tool::InfoController.new
+    @controller = InfoPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end

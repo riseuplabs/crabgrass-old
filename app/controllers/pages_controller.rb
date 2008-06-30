@@ -4,27 +4,27 @@ PagesController
 ---------------------------------
 
 This is a controller for managing abstract pages. The display and editing of
-a particular page type (aka tool) are handled by controllers in controllers/tool.
+a particular page type are handled by controllers in the /pages directory.
 
-When should an action be in this controller or in Tool::Base?
+When should an action be in this controller or in BasePageController?
 The general rule is this:
 
    If the action can go in PagesController, then do so.
 
-This means that only stuff specific to a tool should go in the
-tool controllers.
+This means if a particular tool needs to override some default behavior in its
+controller, then that thing should be in BasePageController.
 
 For example, there are two create() actions, one in PagesControllers
-and one in Tool::Base. The one in PagesController handles the first
-step where you choose a page type. The one in Tool::Base handles the
-next step where you enter in data. This step is handled by Tool::Base
+and one in BasePageController. The one in PagesController handles the first
+step where you choose a page type. The one in BasePageController handles the
+next step where you enter in data. This step is handled by BasePageController
 so that each tool can define their own method of creation.
 
 =end
 
 class PagesController < ApplicationController
 
-  helper Tool::BaseHelper
+  helper BasePageHelper
   
   before_filter :login_required, :except => 'search'
   prepend_before_filter :fetch_page
@@ -53,7 +53,7 @@ class PagesController < ApplicationController
 
   # a simple form to allow the user to select which type of page
   # they want to create. the actual create form is handled by
-  # Tool::BaseController (or overridden by the particular tool). 
+  # BasePageController (or overridden by the particular tool). 
   def create
   end
      

@@ -247,21 +247,37 @@ class Page < ActiveRecord::Base
   # lets us convert from a url pretty name to the actual class.
   def self.display_name_to_class(display_name)
     dn = display_name.nameize
-    PAGE_CLASSES.detect{|t|t.class_display_name.nameize == dn if t.class_display_name}
+    (PAGES.detect{|t|t[1].class_display_name.nameize == dn if t[1].class_display_name} || [])[1]
   end 
   # return an array of page classes that are members of class_group
   def self.class_group_to_class_names(class_group)
-    PAGE_CLASSES.collect{|t|t.to_s if t.class_group == class_group and t.class_group}.compact
+    PAGES.collect{|t|t[1].to_s if t[1].class_group == class_group and t[1].class_group}.compact
   end 
   # convert from a string representation of a class to the real thing (actually, a proxy)
   def self.class_name_to_class(class_name)
-    PAGE_CLASSES.detect{|t|t.class_name == class_name}
+    (PAGES.detect{|t|t[1].class_name == class_name or t[1].class_name == "#{class_name}Page" } || [])[1]
   end
 
-  # this is required until we get rid of namespaced page subclasses (ie Tool::TaskList)
-  before_create :fix_single_table_inheritance
-  def fix_single_table_inheritance
-    self.type = self.class.name
+  # this is required until we get rid of namespaced page subclasses
+  #before_create :fix_single_table_inheritance
+  #def fix_single_table_inheritance
+  #  self.type = self.class.name
+  #end
+
+  def icon
+    PAGES[self.class.name].icon
+  end
+  def controller
+    PAGES[self.class.name].controller
+  end
+  def controller_class_name
+    PAGES[self.class.name].controller_class_name
+  end
+  def self.class_display_name
+    PAGES[self.name].class_display_name
+  end
+  def self.class_description
+    PAGES[self.name].class_description
   end
 
   #######################################################################

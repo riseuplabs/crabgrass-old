@@ -9,3 +9,7 @@ public/plugin_assets/*
 db/schema.rb
 db/*.sqlite3
 /assets
+public/avatars
+public/stylesheets/all.css
+public/javascripts/all.js
+

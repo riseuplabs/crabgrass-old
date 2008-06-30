@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/base_controller'
+require 'base_page_controller'
 
 # Re-raise errors caught by the controller.
-class Tool::BaseController; def rescue_action(e) raise e end; end
+class BasePageController; def rescue_action(e) raise e end; end
 
 class Tool::BaseControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup
-    @controller = Tool::BaseController.new
+    @controller = BasePageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -25,7 +25,7 @@ class Tool::BaseControllerTest < Test::Unit::TestCase
     login_as :orange
     
     get :create, :id => 'wiki'
-    assert_template 'tool/base/create'
+    assert_template 'base_page/create'
   
     assert_difference 'Page.count' do
       post :create, :id => 'wiki', :page => { :title => 'test title' }

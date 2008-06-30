@@ -20,7 +20,7 @@ class PageStork
   def self.request_to_join_group(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
-    page = Tool::Request.new do |p|
+    page = RequestPage.new do |p|
       p.title = 'request to join %s from %s'.t % [group.name, user.login]
       p.resolved = false
       p.flow = FLOW[:membership]
@@ -37,7 +37,7 @@ class PageStork
   def self.join_discussion(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
-    page = Tool::RequestDiscussion.new do |p|
+    page = RequestDiscussionPage.new do |p|
       p.title = 'discussion re: request to join %s from %s'.t % [group.name, user.name]
       p.summary = ('User %s has requested to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the request.'.t) % [user.name, group.name, user.name, group.name]
       p.flow = FLOW[:membership]
@@ -56,7 +56,7 @@ class PageStork
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
     from = options.delete(:from).cast! User
-    page = Tool::Request.new do |p|
+    page = RequestPage.new do |p|
       p.title = 'invitation to join group %s'.t % group.name
       p.resolved = false
       p.flow = FLOW[:membership]
@@ -73,7 +73,7 @@ class PageStork
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
     from = options.delete(:from).cast! User
-    page = Tool::RequestDiscussion.new do |p|
+    page = RequestDiscussionPage.new do |p|
       p.title = 'discussion re: invitation to join group %s'.t % [group.name]
       p.summary = ('User %s has sent %s an invitation to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % [from.name, user.name, group.name, group.name, user.name]
       p.flow = FLOW[:membership]
@@ -91,7 +91,7 @@ class PageStork
   def self.request_for_contact(options)
     user = options.delete(:user).cast! User
     contact = options.delete(:contact).cast! User
-    page = Tool::Request.new do |p|
+    page = RequestPage.new do |p|
       p.title = 'contact invitation from %s to %s'.t % [user.login, contact.login]
       p.resolved = false
       p.data = PollRequest.new do |r|
@@ -111,7 +111,7 @@ class PageStork
   def self.contact_discussion(options)
     user = options.delete(:user).cast! User
     contact = options.delete(:contact).cast! User
-    info = Tool::RequestDiscussion.new do |i|
+    info = RequestDiscussionPage.new do |i|
       i.title = 'discussion re: contact invitation from %s to %s'.t % [user.name, contact.name]
       i.summary = ('User %s has sent a contact invitation to %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % [user.name, contact.name, user.name, contact.name]
       i.flow = FLOW[:contacts]
@@ -130,7 +130,7 @@ class PageStork
     user = (options.delete(:user).cast! User if options[:user])
     group = options.delete(:group).cast! Group
     name = options.delete(:name).cast! String
-    page = Tool::TextDoc.new do |p|
+    page = WikiPage.new do |p|
       p.title = name.titleize
       p.name = name.nameize
       p.created_by = user
@@ -146,7 +146,7 @@ class PageStork
   def self.private_message(options) 
     from = options.delete(:from).cast! User 
     to = options.delete(:to) 
-    page = Tool::Message.new do |p| 
+    page = MessagePage.new do |p| 
       p.title = options[:title] || 'Message from %s to %s' % [from.login, to.login] 
       p.created_by = from 
       p.discussion = Discussion.new 
@@ -164,7 +164,7 @@ class PageStork
 	def self.event(options)
     user = options.delete(:user).cast! User
     group = options.delete(:group).cast! Group
-    page = Tool::Event.new do |e|
+    page = EventPage.new do |e|
 	e.title = options[:title]
 	e.created_by = user
     end

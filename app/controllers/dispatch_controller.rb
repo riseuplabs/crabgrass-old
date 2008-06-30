@@ -162,7 +162,7 @@ class DispatchController < ApplicationController
     params[:action] = params[:_page_action] || 'show'
     #params[:id] = page
     params[:controller] = page.controller
-    new_controller("Tool::#{page.controller.camelcase}Controller")
+    new_controller(page.controller_class_name)
   end
   
   def controller_for_groups

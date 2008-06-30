@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Tool::AssetController do
+describe AssetPageController do
   it "should keep the page title as the filename for new versions" do
     @asset = Asset.new :filename => 'pagetitle.gif'
     @page = stub_everything

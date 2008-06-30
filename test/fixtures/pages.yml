@@ -67,14 +67,14 @@ page<%=i%>:
   updated_by_id: 2
   group_id: <%= 3 %>
   group_name: rainbow
-  type: Tool::Discussion
+  type: DiscussionPage
   public: <%= rand(4) == 0 %>
 <% end %>
 
 ranked_vote:
   id: 190
   title: a ranked vote
-  type: Tool::RankedVote
+  type: RankedVotePage
   data_type: Poll
   data_id: 1
   created_by_id: 1
@@ -88,7 +88,7 @@ ranked_vote:
 tasklist1:
   id: 200
   title: a task list
-  type: Tool::TaskList
+  type: TaskListPage
   data_type: TaskList
   data_id: 1
   created_by_id: 1
@@ -102,7 +102,7 @@ tasklist1:
 tasklist2:
   id: 201
   title: another task list
-  type: Tool::TaskList
+  type: TaskListPage
   data_type: TaskList
   data_id: 2
   created_by_id: 4
@@ -119,7 +119,7 @@ event1:
   title : an event
   starts_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  type: Tool::Event
+  type: EventPage
   data_type: Event
   data_id: 1
   created_by_id: 9
@@ -135,7 +135,7 @@ event2:
   title : other event
   starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  type: Tool::Event
+  type: EventPage
   data_type: Event
   data_id: 2
   created_by_id: 9
@@ -151,7 +151,7 @@ event3:
   title : one other event
   starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  type: Tool::Event
+  type: EventPage
   data_type: Event
   data_id: 3
   created_by_id: 4
@@ -165,7 +165,7 @@ event3:
 hello:
   id: 205
   title: hello
-  type: Tool::Message
+  type: MessagePage
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -173,7 +173,7 @@ hello:
 flow_test:
   id: 206
   title: flow test
-  type: Tool::Discussion
+  type: DiscussionPage
   flow: 1
   public: 1
 <% updated = rand(46080); created = updated + rand(46080) %>
@@ -183,7 +183,7 @@ flow_test:
 wiki:
   id: 210
   title: test wiki
-  type: Tool::TextDoc
+  type: WikiPage
   data_type: Wiki
   data_id: 1
   created_by_id: 1

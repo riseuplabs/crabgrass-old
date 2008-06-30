@@ -124,7 +124,7 @@ class PagesControllerTest < Test::Unit::TestCase
     user = @controller.current_user
     
     name = 'my new page'
-    page = Tool::TextDoc.new do |p|
+    page = WikiPage.new do |p|
       p.title = name.titleize
       p.name = name.nameize
       p.created_by = user

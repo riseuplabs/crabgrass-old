@@ -1,6 +1,6 @@
 <div class='tabinfo'>
 Task lists I have access to. 
-<%= link_to 'create new task list &raquo;', create_page_url(Tool::TaskList) %>
+<%= link_to 'create new task list &raquo;', create_page_url(TaskListPage) %>
 </div>
 
 <div class='columns'>
@@ -20,7 +20,7 @@ Task lists I have access to.
     <% end -%>
   </div>
   <div class='right-big'><table><tr><td>
-    <%= render :partial => 'tool/tasklist/external_list_tasks' %>
+    <%= render :partial => 'task_list_page/external_list_tasks' %>
     </td></tr></table>
   </div>
 </div>

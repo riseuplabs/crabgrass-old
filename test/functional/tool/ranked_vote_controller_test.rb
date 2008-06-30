@@ -1,29 +1,29 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/ranked_vote_controller'
+require 'ranked_vote_page_controller'
 
 # Re-raise errors caught by the controller.
-class Tool::RankedVoteController; def rescue_action(e) raise e end; end
+class RankedVotePageController; def rescue_action(e) raise e end; end
 
 class Tool::RankedVoteControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations, :polls, :possibles
 
   def setup
-    @controller = Tool::RankedVoteController.new
+    @controller = RankedVotePageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
     login_as :orange
-    get :create, :id => Tool::RankedVote.class_display_name
+    get :create, :id => RankedVotePage.class_display_name
   end
 
   def test_create_show_add_and_show
     assert_no_difference 'Page.count' do
-      get :create, :id => Tool::RankedVote.class_display_name
-      assert_template 'tool/base/create'
+      get :create, :id => RankedVotePage.class_display_name
+      assert_template 'base_page/create'
     end
   
-    assert_difference 'Tool::RankedVote.count' do
-      post :create, :id => Tool::RankedVote.class_display_name, :page => {:title => 'test title'}
+    assert_difference 'RankedVotePage.count' do
+      post :create, :id => RankedVotePage.class_display_name, :page => {:title => 'test title'}
       assert_response :redirect
     end
     
@@ -38,7 +38,7 @@ class Tool::RankedVoteControllerTest < Test::Unit::TestCase
 
     get :show, :page_id => p.id
     assert_response :success
-    assert_template 'tool/ranked_vote/show'
+    assert_template 'ranked_vote_page/show'
   end
   
   # TODO: tests for sort, update_possible, edit_possible, destroy_possible,

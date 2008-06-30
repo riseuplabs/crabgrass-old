@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/wiki_controller'
+require 'wiki_page_controller'
 
 # Re-raise errors caught by the controller.
 class Tool::WikiController; def rescue_action(e) raise e end; end
@@ -8,7 +8,7 @@ class Tool::WikiControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations, :wikis
 
   def setup
-    @controller = Tool::WikiController.new
+    @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -26,7 +26,7 @@ class Tool::WikiControllerTest < Test::Unit::TestCase
   def test_create
     login_as :quentin
     num_pages = Page.count
-    post :create, :page_class=>"Tool::TextDoc", :id => 'wiki', :group_id=> "", :create => "Create page", :tag_list => "", 
+    post :create, :page_class=>"WikiPage", :id => 'wiki', :group_id=> "", :create => "Create page", :tag_list => "", 
          :page => {:title => 'my title', :summary => ''}
     assert_response :redirect
     assert_not_nil assigns(:page)

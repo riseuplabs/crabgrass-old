@@ -1,0 +1,6 @@
+
+class DiscussionPage < Page
+
+
+end
+

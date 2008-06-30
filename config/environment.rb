@@ -25,10 +25,10 @@ FLOW = {
 }.freeze
 
 # do this early because environments/*.rb need it
-require 'crabgrass_config'
+require 'lib/crabgrass_config'
 
 MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").freeze
-PAGES_ENABLED = File.read("#{RAILS_ROOT}/config/pages_enabled.list").split("\n").freeze
+TOOLS_ENABLED = File.read("#{RAILS_ROOT}/config/tools_enabled.list").split("\n").freeze
 
 require "#{RAILS_ROOT}/lib/site.rb"
 Site.load_from_file("#{RAILS_ROOT}/config/sites.yml")
@@ -43,7 +43,7 @@ SECTION_SIZE = Site.default.pagination_size
 AVAILABLE_PAGE_CLASSES = Site.default.available_page_types.dup
 
 Rails::Initializer.run do |config|
-  config.load_paths += %w(associations discussion chat profile task poll).collect do |dir|
+  config.load_paths += %w(associations discussion chat profile poll task).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
 
@@ -78,7 +78,7 @@ Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
 
   # allow plugins in mods/ and pages/
-  config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/pages"
+  config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
 
   # See Rails::Configuration for more options
 end
@@ -88,11 +88,13 @@ end
 ActiveRecord::Base.partial_updates = false
 
 # Store "Tool::Discussion" in database instead of just "Discussion"!
-ActiveRecord::Base.store_full_sti_class = true
+# ActiveRecord::Base.store_full_sti_class = true
 
 # Make engines much less verbose!
-Engines.logger.level = ActiveSupport::BufferedLogger::Severity::INFO
-#Engines.logger.level = ActiveSupport::BufferedLogger::Severity::DEBUG
+if defined? Engines
+  Engines.logger.level = ActiveSupport::BufferedLogger::Severity::INFO
+  #Engines.logger.level = ActiveSupport::BufferedLogger::Severity::DEBUG
+end
 
 #### CUSTOM EXCEPTIONS #############
 
@@ -106,16 +108,19 @@ require "#{RAILS_ROOT}/lib/extends_to_core.rb"
 require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
 require "#{RAILS_ROOT}/lib/fake_globalize.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
-require "#{RAILS_ROOT}/lib/misc.rb"
 require "#{RAILS_ROOT}/lib/path_finder.rb"
 require "#{RAILS_ROOT}/lib/page_class_proxy.rb"
 
 #### TOOLS #########################
 
-Dir.glob("#{RAILS_ROOT}/app/models/tool/*.rb").each do |toolfile|
-  require toolfile
-end
-PAGE_CLASSES = Tool.constants.collect{|tool| PageClassProxy.new(tool) }.freeze
+# run "rake update_page_classes" every time you add/remove a Page subclass:
+#PAGE_CLASSES = PageClassProxy.load_page_classes
+
+PAGES = PageClassRegistrar.proxies.dup.freeze
+
+#PAGE_CLASSES.each do |pc|
+#  PROXIES[pc.full_class_name] = pc
+#end
 
 #### ASSETS ########################
 
@@ -125,5 +130,9 @@ PAGE_CLASSES = Tool.constants.collect{|tool| PageClassProxy.new(tool) }.freeze
 
 FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist' if defined? FightTheMelons
 
-SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
+if File.exists?('.svn')
+  SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
+else
+  SVN_REVISION = nil
+end
 

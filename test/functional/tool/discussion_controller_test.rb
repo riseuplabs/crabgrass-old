@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'tool/discussion_controller'
+require 'discussion_page_controller'
 
 # Re-raise errors caught by the controller.
-class Tool::DiscussionController; def rescue_action(e) raise e end; end
+class DiscussionPageController; def rescue_action(e) raise e end; end
 
 class Tool::DiscussionControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup
-    @controller = Tool::DiscussionController.new
+    @controller = DiscussionPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -17,12 +17,12 @@ class Tool::DiscussionControllerTest < Test::Unit::TestCase
     login_as :orange
     
     assert_no_difference 'Page.count' do
-      get :create, :id => Tool::Discussion.class_display_name
-      assert_template 'tool/base/create'
+      get :create, :id => DiscussionPage.class_display_name
+      assert_template 'base_page/create'
     end
   
-    assert_difference 'Tool::Discussion.count' do
-      post :create, :id => Tool::Discussion.class_display_name, :page => { :title => 'test discussion' }
+    assert_difference 'DiscussionPage.count' do
+      post :create, :id => DiscussionPage.class_display_name, :page => { :title => 'test discussion' }
       assert_response :redirect
     end
     

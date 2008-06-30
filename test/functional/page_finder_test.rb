@@ -156,7 +156,7 @@ class PageFinderTest < Test::Unit::TestCase
     user = users(:blue)
     
     name = 'test page'
-    page = Tool::TextDoc.new do |p|
+    page = WikiPage.new do |p|
       p.title = name.titleize
       p.name = name.nameize
       p.created_by = user
@@ -180,7 +180,7 @@ class PageFinderTest < Test::Unit::TestCase
     
     gparts = GroupParticipation.find :all, :conditions => ['group_id = ?', group.id]
     reference_ids = page_ids(gparts) do |page|
-      true if page.instance_of? Tool::TaskList and !page.resolved?
+      true if page.instance_of? TaskListPage and !page.resolved?
     end
     
     pages = Page.find_by_path('type/task/pending', @controller.options_for_group( groups(:rainbow) ))
@@ -225,13 +225,13 @@ class PageFinderTest < Test::Unit::TestCase
     searches = [ 
                  ['/pending', Proc.new {|p| p.resolved == false}  ],
 
-                 ['/type/discussion', Proc.new {|p| p.type == "Tool::Discussion"} ],
-                 ['/type/event',      Proc.new {|p| p.type == "Tool::Event"} ],
-                 ['/type/message',    Proc.new {|p| p.type == "Tool::Message"} ],
-                 ['/type/poll',       Proc.new {|p| p.type == "Tool::RateMany"} ],
-                 ['/type/task',       Proc.new {|p| p.type == "Tool::TaskList"} ],
-                 ['/type/vote',       Proc.new {|p| p.type == "Tool::RankedVote"} ],
-                 ['/type/wiki',       Proc.new {|p| p.type == "Tool::TextDoc"} ],
+                 ['/type/discussion', Proc.new {|p| p.type == "DiscussionPage"} ],
+                 ['/type/event',      Proc.new {|p| p.type == "EventPage"} ],
+                 ['/type/message',    Proc.new {|p| p.type == "MessagePage"} ],
+                 ['/type/poll',       Proc.new {|p| p.type == "RateManyPage"} ],
+                 ['/type/task',       Proc.new {|p| p.type == "TaskListPage"} ],
+                 ['/type/vote',       Proc.new {|p| p.type == "RankedVotePage"} ],
+                 ['/type/wiki',       Proc.new {|p| p.type == "WikiPage"} ],
 
                  ['/person/1', Proc.new {|p| User.find(1).may?(:view,p)} ],
 
