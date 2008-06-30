@@ -63,7 +63,7 @@ class PageTest < Test::Unit::TestCase
 
   def test_participations
     user = User.find 3
-	group = Group.find 3
+    group = Group.find 3
     
     # page = build_page :title => 'zebra'
     #        ^^^^^ this doesn't work
@@ -71,8 +71,8 @@ class PageTest < Test::Unit::TestCase
     
     page = create_page :title => 'zebra'
         
-	page.add(user, :star => true)
-	page.add(group)
+    page.add(user, :star => true)
+    page.add(group)
     
     assert page.users.include?(user), 'page must have an association with user'
     assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'    
@@ -88,8 +88,8 @@ class PageTest < Test::Unit::TestCase
     assert user.pages.include?(page), 'user must have an association with page'
     assert group.pages.include?(page), 'group must have an association with page'
 	
-	page.remove(user)
-	page.remove(group)
+    page.remove(user)
+    page.remove(group)
     assert !page.users.include?(user), 'page must NOT have an association with user'
     assert !page.groups.include?(group), 'page must NOT have an association with group'
 	
@@ -97,11 +97,18 @@ class PageTest < Test::Unit::TestCase
   
   def test_denormalized
     user = User.find 3
-	group = Group.find 3
+    group = Group.find 3
     p = create_page :title => 'oak tree'
     p.add(group)
     p.save
     assert_equal group.name, p.group_name, 'page should have a denormalized copy of the group name'
+  end
+
+  def test_destroy
+    page = Tool::RateMany.create :title => 'short lived'
+    poll_id = page.data.id
+    page.destroy
+    assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
 =begin  

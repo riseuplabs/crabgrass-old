@@ -48,7 +48,7 @@ class Page < ActiveRecord::Base
   #######################################################################
   ## RELATIONSHIP TO PAGE DATA
   
-  belongs_to :data, :polymorphic => true
+  belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
   has_many :assets, :dependent => :destroy
       

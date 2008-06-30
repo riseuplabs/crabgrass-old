@@ -46,7 +46,7 @@ class Profile < ActiveRecord::Base
   
   ### collections ########################################################## 
 
-  belongs_to :wiki
+  belongs_to :wiki, :dependent => :destroy
   #belongs_to :photo
   #belongs_to :layout
   
