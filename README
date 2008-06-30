@@ -13,7 +13,7 @@ debian/ubuntu
 --------------
 
 required:
-  apt-get install rubygems
+  apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
   gem install -y rails
   gem install RedCloth rmagick tzinfo ruby-debug hpricot
 
