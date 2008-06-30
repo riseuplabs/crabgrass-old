@@ -39,6 +39,8 @@ module PathFinder
     alias :paginate_by_path :find_and_paginate_by_path
     
     def count_by_path(path, options={})
+      options = apply_possible_lambda(path, options)
+
       PathFinder::Builder.count_pages(:sql, path, options)
     end
     
