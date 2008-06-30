@@ -81,13 +81,17 @@ module UrlHelper
     login, path, display_name = login_and_path_for_user(arg,options)
     style = options[:style] || ''
     label = options[:login] ? login : display_name
-    if options[:avatar]
+    avatar = ''
+    if options[:avatar_as_separate_link] # not used for now
+      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
+    elsif options[:avatar]
       size = Avatar.pixels(options[:avatar])[0..1].to_i
       padding = size/5 + size
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px; " + style
+      ## label = "<div style='float: left; background: url(#{url}) no-repeat; height: #{size}px; width: #{size}px;'></div>" + label ## alternate method to a.background
     end
-    link_to label, path, :class => 'name_link', :style => style
+    avatar + link_to(label, path, :class => 'name_link', :style => style)
   end
 
   # see function name_and_path_for_group for description of options
@@ -108,7 +112,10 @@ module UrlHelper
     
     display_name, path = name_and_path_for_group(arg,options)
     style = options[:style] || ''
-    if options[:avatar]
+    avatar = ''
+    if options[:avatar_as_separate_link] # not used for now
+      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
+    elsif options[:avatar]
       size = Avatar.pixels(options[:avatar])[0..1].to_i
       padding = size/5 + size
       if arg and arg.avatar
@@ -118,7 +125,7 @@ module UrlHelper
       end      
       style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px;" + style
     end
-    link_to display_name, path, :class => 'name_link', :style => style
+    avatar + link_to(display_name, path, :class => 'name_link', :style => style)
   end
 
   def url_for_entity(entity, options={})
