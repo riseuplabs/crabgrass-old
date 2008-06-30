@@ -11,6 +11,7 @@ class GroupsControllerTest < Test::Unit::TestCase
 
   def setup
     @controller = GroupsController.new
+    @controller.fetch_site # why is this necessary?
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end

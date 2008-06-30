@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
   session :session_secure => true if Crabgrass::Config.https_only
   protect_from_forgery :secret => Crabgrass::Config.secret
 
+  def fetch_site
+    @site = Site.default
+  end
  
   protected
   
@@ -94,7 +97,4 @@ class ApplicationController < ActionController::Base
     access_denied
   end
 
-  def fetch_site
-    @site = Site.default
-  end
 end

@@ -12,6 +12,7 @@ class DispatchControllerTest < Test::Unit::TestCase
     @controller = DispatchController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    @controller.fetch_site # why is this necessary?
   end
 
   #really more like a unit test
