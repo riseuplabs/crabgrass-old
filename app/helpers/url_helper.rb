@@ -57,7 +57,7 @@ module UrlHelper
       display = user.display_name
     elsif arg.is_a? String
       login = arg
-      display = nil
+      display = arg
     elsif arg.is_a? User
       login = arg.login
       display = arg.display_name
