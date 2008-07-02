@@ -30,7 +30,7 @@ class AssetController < ApplicationController
 
   def fetch_asset
     @thumb = nil
-    @asset = Asset.find_version(params[:id], params[:version]) if params[:version]
+    @asset = Asset.find(params[:id]).versions.find_by_version(params[:version]) if params[:version]
     @asset ||= Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
     if @asset && @asset.image? && (filename = params[:filename].first) && filename != @asset.filename
       thumb = @asset.thumbnails.detect {|a| filename == a.filename }
