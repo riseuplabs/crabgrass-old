@@ -258,12 +258,6 @@ class Page < ActiveRecord::Base
     (PAGES.detect{|t|t[1].class_name == class_name or t[1].class_name == "#{class_name}Page" } || [])[1]
   end
 
-  # this is required until we get rid of namespaced page subclasses
-  #before_create :fix_single_table_inheritance
-  #def fix_single_table_inheritance
-  #  self.type = self.class.name
-  #end
-
   def icon
     PAGES[self.class.name].icon
   end
@@ -278,6 +272,9 @@ class Page < ActiveRecord::Base
   end
   def self.class_description
     PAGES[self.name].class_description
+  end
+  def self.icon
+    PAGES[self.name].icon
   end
 
   #######################################################################
