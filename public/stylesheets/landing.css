@@ -1,10 +1,10 @@
 /** landing pages **/
 
-div.landing div.section {
+div#titlebox div.section {
   margin-bottom: 1em;
 }
 
-div.landing h3 {
+div#titlebox h3 {
   font-family: arial;
 	font-size: 1.8em;
 	font-weight: normal;
@@ -12,14 +12,14 @@ div.landing h3 {
 	margin: 0 0 3px 0;
 }
 
-div.landing h3 span {
+div#titlebox h3 span {
   font-family: arial;
   color: #666;
   font-size: 0.6em;
   margin-left: 1em;
 }
 
-div.landing h4 {
+div#titlebox h4, h4.landing {
   font-family: arial;
   font-size: 1.4em;
   font-weight: normal;
@@ -29,7 +29,7 @@ div.landing h4 {
   border-bottom: 1px solid #ccc;
 }
 
-div.landing h5 {
+div#titlebox h5, h5.landing {
   font-family: arial;
   font-size: 1.8em;
   font-weight: normal;

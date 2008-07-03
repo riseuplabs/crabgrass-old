@@ -1,0 +1,2 @@
+page.replace_html 'title', :partial => 'title'
+page.replace_html 'message', ''

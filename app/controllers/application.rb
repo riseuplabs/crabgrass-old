@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include UrlHelper
   include ContextHelper
   include TimeHelper
-
+  include ErrorHelper
   include PathFinder::Options
       
   # don't allow passwords in the log file.
@@ -44,29 +44,6 @@ class ApplicationController < ActionController::Base
         (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
       response.headers['Content-Type'] = 'application/rss+xml'   
       render :partial => '/pages/rss', :locals => locals
-    end
-  end
-
-
-  # a one stop shopping function for flash messages
-  def message(opts)    
-    if opts[:success]
-      flash[:notice] = opts[:success]
-    elsif opts[:error]
-      if opts[:later]
-        flash[:error] = opts[:error]
-      else
-        flash.now[:error] = opts[:error]
-      end
-    elsif opts[:object]
-      object = opts[:object]
-      unless object.errors.empty?
-        flash.now[:error] = _("Changes could not be saved.")
-        flash.now[:text] ||= ""
-        flash.now[:text] += content_tag "p", _("There are problems with the following fields") + ":"
-        flash.now[:text] += content_tag "ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) }
-        flash.now[:errors] = object.errors
-      end
     end
   end
   

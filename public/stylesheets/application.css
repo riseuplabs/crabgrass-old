@@ -14,7 +14,7 @@ img   {border:0}
 #breadcrumbs {margin-bottom: 1em;}
 
 #maincolumn, #tabarea {
-  padding: 20px;
+  padding: 0;
   background: white;
   border: 1px solid transparent;
 }
@@ -27,9 +27,11 @@ div.tabinfo {
   margin: 1em;  
 }
 #titlebox {
-  margin: -20px; /* equal to #maincolumn padding */
-  margin-bottom: 20px;
+  margin: 0;
   padding: 10px 20px;
+}
+div#contentbox {
+  margin: 20px;
 }
 #titlebox .h1 {color: #669;}
 

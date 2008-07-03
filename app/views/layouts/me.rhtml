@@ -3,7 +3,10 @@
 <div id='maincolumn' class='leftbar' style="<%=sidebar_space%>">
   <%= sidebar %>
   <div id='content'>
-  <%= yield %>
+    <%= yield :titlebox %>
+    <div id='contentbox'>
+      <%= yield %>
+    </div>
   </div>
   <br clear='all' />
 </div>

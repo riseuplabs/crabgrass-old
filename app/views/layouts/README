@@ -63,8 +63,10 @@ nested inside application layout
     <div id='titlebox'>
       <div id='breadcrumbs'></div>
     </div>
-    yield
-    <div id='posts'></div>
+    <div id='contentbox'>
+      yield
+      <div id='posts'></div>
+    </div>
   </div>
   <br clear='all' />
 </div>

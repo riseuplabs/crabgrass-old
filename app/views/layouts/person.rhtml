@@ -8,7 +8,9 @@
     <% end -%>
     <%= @title if @title %>
   </div>
-  <%= yield %>
+  <div id='contentbox'>
+    <%= yield %>
+  </div>
   <br clear='both' />
 </div>
 <% end -%>

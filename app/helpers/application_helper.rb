@@ -8,56 +8,9 @@ module ApplicationHelper
   include LinkHelper
   include WindowedPaginationHelper
   include TimeHelper
+  include ErrorHelper
   include PathFinder::Options   # for Page.find_by_path options
-    
-  # display flash messages with appropriate styling
-  def display_messages()
-    message_html = ""
-
-    message_html += content_tag("div", 
-                                image_tag("notice/info.png") +
-                                content_tag("h2", "Notice:") +
-                                h($SYSTEM_MESSAGE),
-                                "class" => "notice info") if $SYSTEM_MESSAGE
-
-    if flash[:update] or flash[:notice] or flash[:error]
-      if flash[:update]
-        type = "update"
-        message = flash[:update]
-      elsif flash[:notice]
-        type = "info"
-        message = flash[:notice]
-      elsif flash[:error]
-        type = "error"
-        message = flash[:error]
-      end
-      img = image_tag("notice/#{type}.png")
-      header = content_tag("h2", message)
-
-      message_html += content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
-    end
-    
-    message_html
-  end
-  
-  # use by ajax
-  def notify_errors(title, errors)
-     type = "error"
-     img = image_tag("notice/#{type}.png")
-     header = content_tag("h2", title)
-     text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     content_tag("div", img + header + text, "class" => "notice #{type}")
-  end
- 
-   # use by ajax
-  def notify_infos(title, infos)
-     type = "info"
-     img = image_tag("notice/#{type}.png")
-     header = content_tag("h2", title)
-     text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     content_tag("div", img + header + text, "class" => "notice #{type}")
-  end
- 
+     
   def page_icon(page)
     image_tag "pages/#{page.icon}", :size => "22x22"
   end

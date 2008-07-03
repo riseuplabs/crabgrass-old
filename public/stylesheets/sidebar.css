@@ -3,7 +3,8 @@
 div#leftbar {
   float: left;
   width: 170px;
-  margin-left: -191px; /* sidebar width + #main padding + 1px */
+  margin-left: -171px; /* sidebar width + #main padding + 1px */
+  margin-top: 20px;
 }
 #maincolumn.leftbar {
   margin-left: 170px;
@@ -14,7 +15,7 @@ div#rightbar {
   border-right: 1px solid #FFFFFF;
   border-top: 1px solid #FFFFFF;
   float: right;
-  margin-right: -241px;
+  margin: 20px -221px 0 0;
   padding: 12px 6px 8px 12px;
   width: 200px;
   -moz-border-radius-topright: 4px;
@@ -51,6 +52,12 @@ div.sidehead {
   color: white;
   padding: 4px 4px 4px 9px;
 }
+div.sidelabel { 
+  font-size: 12px;
+  padding: 1px 0 0 14px;
+  color: #666;
+}
+
 div.sideheadright {
 	background: transparent url(/images/ui/carrot-down.jpg) no-repeat scroll 0px 5px; 
 	color: #999999;
@@ -152,4 +159,11 @@ div.sidesubarea textarea, div.sidesubarea select {
 }
 #assets div.busy span {
   visibility: hidden;
+}
+
+div.sidesubsection div.sidelink {
+  padding: 0 0 0 20px;
+}
+div.sidesubsection {
+  padding: 0 0 2px 0;
 }
