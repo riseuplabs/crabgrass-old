@@ -32,22 +32,4 @@ class Tool::BaseControllerTest < Test::Unit::TestCase
       assert_response :redirect
     end
   end
-
-  def test_set_title
-    login_as(:red)
-    post :title, :page_id => 1, :page => {:title => "new title"}
-    assert_equal "new title", Page.find(1).title
-  end
-
-  def test_set_summary_ajax
-    login_as :red
-    xhr :post, :summary, :page_id => 1, :page => {:summary => "new summary"}    
-    assert_equal "new summary", Page.find(1).summary
-  end
-
-  def test_set_summary_without_ajax
-    login_as :red
-    post :summary, :page_id => 1, :page => {:summary => "new summary"}    
-    assert_equal "new summary", Page.find(1).summary
-  end
 end

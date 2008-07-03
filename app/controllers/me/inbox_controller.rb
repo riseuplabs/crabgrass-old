@@ -38,7 +38,11 @@ class Me::InboxController < Me::BaseController
     else
       ## add more actions here later
     end
-    redirect_to :action => nil
+    if params[:path]
+      redirect_to :action => 'search', :path => params[:path]
+    else
+      redirect_to :action => nil, :path => nil
+    end
   end
 
   # post required

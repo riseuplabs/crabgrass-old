@@ -71,7 +71,7 @@ class MembershipControllerTest < Test::Unit::TestCase
     assert_difference 'Page.count', 2, "join request should create 2 pages" do
       post :join, :id => groups(:public_group).name, :message => "Please let me join your progressive organization"
       assert_response :redirect
-      assert_redirected_to :controller => :requests
+      assert_redirected_to :controller => 'me/requests'
     end
 
     groups(:public_group).accept_new_membership_requests = false

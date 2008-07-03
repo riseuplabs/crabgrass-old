@@ -248,6 +248,7 @@ class PagesController < ApplicationController
   def edit_title
   end
 
+  # TODO: make xhr only
   def update_title
     if params[:save]
       @page.title = params[:page][:title]
@@ -257,27 +258,6 @@ class PagesController < ApplicationController
       end
     end
   end
-#    return(redirect_to page_url(@page, :action => :show)) unless request.post?
-#    @page.title = params[:page][:title]
-#    @page.name = params[:page][:name].to_s.nameize if params[:page][:name].any?
-#    if @page.save
-#      redirect_to page_url(@page, :action => 'show')
-#    else
-#      message :object => @page
-#      @page.name = @page.original_name
-#      render :action => 'show'
-#    end
-
-  # ajax
-#  def summary
-#    @page.summary = params[:page][:summary]
-#    @page.save
-#
-#    render :update do |page|
-#      page.replace 'summary', :partial => 'pages/summary'
-#    end
-#  end
-
 
   protected
   

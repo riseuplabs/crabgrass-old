@@ -44,7 +44,7 @@ class MembershipController < ApplicationController
       discussion = Page.make :join_discussion, :user => current_user, :group => @group, :message => params[:message]
       discussion.save
       page.add_link discussion
-      redirect_to url_for(:controller => 'requests')
+      redirect_to url_for(:controller => 'me/requests')
     else
       message :object => page
       render :action => 'show'

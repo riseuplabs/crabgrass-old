@@ -1,15 +1,15 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'me_controller'
+require File.dirname(__FILE__) + '/../../test_helper'
+require 'me/base_controller'
 
 # Re-raise errors caught by the controller.
-class MeController; def rescue_action(e) raise e end; end
+class Me::BaseController; def rescue_action(e) raise e end; end
 
-class MeControllerTest < Test::Unit::TestCase
+class BaseControllerTest < Test::Unit::TestCase
 
   fixtures :users
   
   def setup
-    @controller = MeController.new
+    @controller = Me::BaseController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -24,9 +24,11 @@ class MeControllerTest < Test::Unit::TestCase
     login_as :quentin
     get :index
     assert_response :redirect, "should redirect"
-    assert_redirected_to({:action => 'dashboard'}, "should redirect to account/login")
+    assert_redirected_to({:controller => 'me/dashboard'}, "should redirect to dashboard")
   end
-  
+
+=begin
+  TODO: move to a different test  
   def test_search
     login_as :quentin
 
@@ -46,17 +48,7 @@ class MeControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to 'me/search/text/e'
   end
-  
-  def test_dashboard
-    login_as :quentin
-    get :dashboard
-    assert_response :success
-    assert_template 'dashboard'
-  end
-
-  def test_tasks
-    # TODO: write a functional test for tasks
-  end
+=end
 
   def test_edit
     login_as(:quentin)

@@ -147,4 +147,10 @@ class PagesControllerTest < Test::Unit::TestCase
     assert user.may?(:admin, page), "blue should still have access to new wiki"
   end
   
+  def test_set_title
+    login_as(:red)
+    post :update_title, :id => 1, :page => {:title => "new title"}, :save => 'Save pressed'
+    assert_equal "new title", Page.find(1).title
+  end
+
 end

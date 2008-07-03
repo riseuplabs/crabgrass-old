@@ -1,14 +1,14 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'inbox_controller'
+require File.dirname(__FILE__) + '/../../test_helper'
+require 'me/inbox_controller'
 
 # Re-raise errors caught by the controller.
-class InboxController; def rescue_action(e) raise e end; end
+class Me::InboxController; def rescue_action(e) raise e end; end
 
 class InboxControllerTest < Test::Unit::TestCase
   fixtures :users, :user_participations, :groups, :group_participations, :pages
 
   def setup
-    @controller = InboxController.new
+    @controller = Me::InboxController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -23,17 +23,17 @@ class InboxControllerTest < Test::Unit::TestCase
     login_as :blue
     get :index
     assert_response :success
-    assert_template 'index'
+    assert_template 'list'
     assert assigns(:pages).length > 0
     
     get :index, :path => ['ascending', 'title']
     assert_response :success
-    assert_template 'index'
+    assert_template 'list'
     assert assigns(:pages).length > 0
     
     get :index, :path => ['unread']
     assert_response :success
-    assert_template 'index'
+    assert_template 'list'
     assert assigns(:pages).length > 0
     
   end
@@ -45,7 +45,7 @@ class InboxControllerTest < Test::Unit::TestCase
     
     removed_page_id = assigns(:pages).first.id
     puts assigns(:pages).clear
-    post :index, :page_checked => { removed_page_id.to_s => "checked"}, :remove => true
+    post :update, :page_checked => { removed_page_id.to_s => "checked"}, :remove => true
     assert_nil assigns(:pages).find {|p| p.id == removed_page_id },
                "page #{removed_page_id} shouldn't be in the inbox anymore"
   end
