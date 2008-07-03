@@ -1,15 +1,12 @@
-<div class='tabinfo'>
-A dashboard of interesting stuff.
-</div><br/>
+<% content_for :titlebox do %>
+<div id='titlebox'>
+  <div id='info_panel' >
+    <%= render :partial => 'infopanel' %>
+  </div>
+</div>
+<% end -%>
 
 <div class='landing'>
-
-<div id='titlebox'>
-<div id='info_panel' >
-  <%= render :partial => 'infopanel' %>
-</div>
-</div>
-
 <style>div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}</style>
 
 <div id='page_list'>

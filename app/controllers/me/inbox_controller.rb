@@ -1,24 +1,34 @@
-class InboxController < ApplicationController
+class Me::InboxController < Me::BaseController
  
-  before_filter :login_required
- 
-  layout 'me'
+  def search
+    if request.post?
+      path = build_filter_path(params[:search])
+      if path == '/'
+        redirect_to url_for(:controller => 'me/inbox', :action => nil, :path => nil)
+      else
+        redirect_to url_for(:controller => 'me/inbox', :action => 'search', :path => nil) + path
+      end
+    else
+      list
+    end
+  end
 
   def index
-    if request.post?
-      update
-    else
-      params[:path] ||= []
-      path = params[:path]
-      path = ['starred','or','unread','or','pending'] if path.first == 'vital'
-      path << 'descending' << 'updated_at'
-      path << 'inbox'
+    list
+  end
 
-      @pages, @sections = Page.find_and_paginate_by_path(path, options_for_inbox)
-      add_user_participations(@pages)
-      handle_rss  :title => 'Crabgrass Inbox', :link => '/me/inbox',
-                 :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+  def list
+    path = ['inbox'] + filter_path
+    if parsed_path(path).keyword?('vital')
+      path << ['starred','or','unread','or','pending']
+    elsif !parsed_path(path).sort_arg?
+      path << 'descending' << 'updated_at'
     end
+    @pages, @sections = Page.find_and_paginate_by_path(path, options_for_inbox)
+    add_user_participations(@pages)
+    handle_rss  :title => 'Crabgrass Inbox', :link => '/me/inbox',
+                 :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+    render :action => 'list'
   end
 
   # post required
@@ -28,6 +38,7 @@ class InboxController < ApplicationController
     else
       ## add more actions here later
     end
+    redirect_to :action => nil
   end
 
   # post required
@@ -45,26 +56,10 @@ class InboxController < ApplicationController
         end
       end
     end
-    redirect_to url_for(:controller => 'inbox', :action => 'index', :path => params[:path]) 
   end
   
   protected
-  
-  append_before_filter :fetch_user
-  def fetch_user
-    @user = current_user
-  end
-  
-  # always have access to self
-  def authorized?
-    return true
-  end
-  
-  def context
-    me_context('large')
-    add_context 'inbox'.t, url_for(:controller => 'inbox', :action => 'index')
-  end
-  
+    
   # given an array of pages, find the corresponding user_participation records
   # and associate each participtions with the correct page.
   # afterwards, page.flag[:user_participation] should hold current_user's
@@ -78,4 +73,9 @@ class InboxController < ApplicationController
     end
   end
   
+  def context
+    me_context('large')
+    add_context 'inbox', url_for(:controller => 'me/inbox', :action => params[:action], :path => params[:path])
+  end
+
 end

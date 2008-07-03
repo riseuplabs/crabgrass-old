@@ -1,11 +1,4 @@
-<div class='tabinfo'>
-Under construction: Profile Pages are not yet viewable by other people.
-</div>
-
-<table class='layout'>
-  <tr>
-    <td style='width:17em'><%= render :partial => 'profile/side_tabs' %></td>
-    <td>
+<%= render :partial => @tabs %>
 
 <% if @profile.public? -%>
   This profile is public and will be visible to anyone visiting this website.
@@ -29,8 +22,4 @@ Under construction: Profile Pages are not yet viewable by other people.
 
 <% end -%>
 <!-- end profile form -->
-
-    </td>
-  </tr>
-</table>
 

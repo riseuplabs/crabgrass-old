@@ -1,0 +1,8 @@
+<% content_for :titlebox do -%>
+<div id='titlebox'>Task lists I have access to. <%= link_to 'create new task list &raquo;', create_page_url(TaskListPage) %></div>
+<% end -%>
+
+<%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_page_types => 'false'} %>
+
+<%= render :partial => 'task_list_page/external_list_tasks' %>
+

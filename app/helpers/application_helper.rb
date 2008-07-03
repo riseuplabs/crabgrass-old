@@ -197,4 +197,12 @@ module ApplicationHelper
     options_for_select([['all page types','']] + array, default_selected)
   end
   
+  def options_for_page_states(parsed_path)
+    selected = ''
+    selected = 'pending' if parsed_path.keyword?('pending')
+    selected = 'unread' if parsed_path.keyword?('unread')
+    selected = 'starred' if parsed_path.keyword?('starred')
+    selected = parsed_path.first_arg_for('page_state') if parsed_path.keyword?('page_state')
+    options_for_select(['unread','pending','starred'], selected)
+  end
 end

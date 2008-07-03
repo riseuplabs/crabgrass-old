@@ -1,4 +1,4 @@
-module InboxHelper
+module Me::InboxHelper
 
 
   def folder_icon(image)

@@ -1,0 +1,50 @@
+<%= Formy.sidebar do |f|
+  f.section do |s|
+    s.label 'Me'
+    s.link do |t|
+      t.label 'Dashboard'
+      t.link url_for(:controller => 'me/dashboard', :action => nil, :path => nil)
+      t.selected params[:controller] == 'me/dashboard'
+    end
+    s.link do |t|
+      t.label 'Inbox'
+      t.link url_for(:controller => 'me/inbox', :action => nil, :path => nil)
+      t.selected params[:controller] == 'me/inbox'
+    end
+    s.subsection do |ss|
+      ss.label 'Tasks'
+      ss.link do |t|
+        t.label 'pending'
+        t.link url_for(:controller => 'me/tasks', :action => 'pending', :path => nil)
+        t.selected params[:controller] == 'me/tasks' && params[:action] == 'pending'
+      end
+      ss.link do |t|
+        t.label 'completed'
+        t.link url_for(:controller => 'me/tasks', :action => 'completed', :path => nil)
+        t.selected params[:controller] == 'me/tasks' && params[:action] == 'completed'
+      end
+    end
+    s.link do |t|
+      t.label 'Search'
+      t.link url_for(:controller => 'me/search', :action => nil, :path => nil)
+      t.selected params[:controller] == 'me/search'
+    end
+    s.link do |t|
+      t.label 'Requests'
+      t.link url_for(:controller => 'me/requests', :action => nil)
+      t.selected params[:controller] == 'me/requests'
+    end
+    s.link do |t|
+      t.label 'Settings & Profiles'
+      t.link url_for(:controller => 'me/base', :action => 'edit', :id => nil)
+      t.selected params[:controller] == 'me/base' || params[:controller] == 'profile'
+    end
+    s.link do |t|
+      t.label 'Create Page &raquo;'
+      t.link url_for(:controller => '/pages', :action => 'create')
+      t.selected false
+    end
+  end
+end
+%>
+

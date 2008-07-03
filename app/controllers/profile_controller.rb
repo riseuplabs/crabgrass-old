@@ -87,8 +87,10 @@ class ProfileController < ApplicationController
   
   def choose_layout
     if @user
+      @tabs = 'me/base/profile_tabs'
       return 'me'
     elsif @group
+      @tabs = 'profile/side_tabs'
       return 'group'
     else
       return 'application'

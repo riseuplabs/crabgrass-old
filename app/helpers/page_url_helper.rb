@@ -117,12 +117,11 @@ module PageUrlHelper
     query_string || ""
   end
       
-  def filter_path
-    @path ||= (params[:path] || [])
+  def filter_path(path=nil)
+    @path ||= (path || params[:path] || [])
   end
-  def parsed_path
-    return @parsed_path if @parsed_path
-    @parsed_path ||= controller.parse_filter_path(filter_path)
+  def parsed_path(path=nil)
+    @parsed_path ||= controller.parse_filter_path(path || filter_path)
   end
 
   # used to create the page list headings
@@ -156,21 +155,26 @@ module PageUrlHelper
   # used to create the page list headings
   def page_path_link(text,path='',image=nil)
     hash = params.dup
-    current_path = parsed_path().dup.remove_sort.to_s
-    current_path += '/' if current_path.any? and !current_path.ends_with? '/'
-    hash[:path] = current_path + path
-    #for tags this isn't right:
-    # todo: do not hard code the action here.
-    if params[:controller] == 'groups' && params[:action] == 'show'
-      hash[:action] = 'search'
-    elsif params[:controller] == 'inbox'
-      hash[:action] = 'index'
-    elsif params[:controller] == 'person'
-      hash[:action] = 'search'
-      hash[:id] ||= hash['_context']
-    end
-    hash.delete('_context')
+    new_path = controller.parse_filter_path(path)
+    current_path = controller.parse_filter_path(hash[:path])
+    hash[:path] = current_path.merge(new_path).flatten
+
+    # for tags this isn't right:
+    # TODO: do not hard code the action here.
+    # this is really horrible. the problem is that in some places where 
+    # we display a list of pages we 
+    #if params[:controller] == 'groups' && params[:action] == 'show'
+    #  hash[:action] = 'search'
+    #elsif params[:controller] == 'me/inbox'
+    #  hash[:action] = 'search'
+    #elsif params[:controller] == 'person'
+    #  hash[:action] = 'search'
+    #  hash[:id] ||= hash['_context']
+    #end
+    #hash.delete('_context')
+    hash[:action] = 'search'
     link_to text, hash
+    #hash.inspect
   end
 
   

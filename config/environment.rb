@@ -90,6 +90,13 @@ ActiveRecord::Base.partial_updates = false
 # Store "Tool::Discussion" in database instead of just "Discussion"!
 # ActiveRecord::Base.store_full_sti_class = true
 
+
+#### DEBUGGING #####################
+
+# this will cause classes in lib to be reloaded on each request in
+# development mode. very useful if working on a source file in lib!
+Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+
 # Make engines much less verbose!
 if defined? Engines
   Engines.logger.level = ActiveSupport::BufferedLogger::Severity::INFO

@@ -8,13 +8,20 @@
   end
   path = filter_path
   parsed = parsed_path
-  show_extras ||= false
-  show_page_type ||= true
+
+  # we use strings for boolean so that we can correctly set defaults
+  show_extras ||= 'false'
+  show_page_types ||= 'true'
+  url ||= params.allow(:controller, :action, :id)
 %>
+<%# [show_extras, show_page_types, url].inspect -%>
 
-<% form_tag do -%>
+<div style='text-align:center; line-height: 2.5em;'>
+<% form_tag(url) do -%>
 
+<% if show_page_types == 'true' -%>
 <%= select_tag 'search[type]', options_for_select_page_type(parsed.arg_for('type')) %>
+<% end -%>
 
 <% if users -%>
 <%= select_tag 'search[person]', "<option value=''>all people</option>"+
@@ -26,18 +33,26 @@ options_from_collection_for_select(users, "id", "name", parsed.int_for('person')
 options_from_collection_for_select(groups, "id", "name", parsed.int_for('group')) %>
 <% end -%>
 
-<% if show_extras -%>
-<%= select_month(parsed.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
-<%= select_year(parsed.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
+<% if show_extras == 'true' -%>
+<%# select_month(parsed.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
+<%# select_year(parsed.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
+
+<%= select_tag 'search[page_state]', "<option value=''>all states</option>"+
+options_for_page_states(parsed) %>
+<!--
 <label><%= check_box_tag 'search[pending]', 'true', parsed.keyword?('pending') %> pending</label>
 <label><%= check_box_tag 'search[starred]', 'true', parsed.keyword?('starred') %> starred</label>
+-->
 <% end -%>
 
+<span style='white-space: nowrap'>
 <%= text_field_tag 'search[text]', parsed.arg_for('text'), :size => '20' %>
 <%= submit_tag 'Search' %>
+</span>
+
 <script type="text/javascript">
   Field.focus('search[text]')
 </script>
 
 <% end -%>
-
+</div>

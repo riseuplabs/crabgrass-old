@@ -26,12 +26,12 @@ ActionController::Routing::Routes.draw do |map|
 
   ##### REGULAR ROUTES ####################################
   
-  map.connect 'me/tasks/:action', :controller => 'me/tasks'
-  map.connect 'me/requests/:action/*path', :controller => 'requests'
-  map.connect 'me/inbox/*path', :controller => 'inbox', :action => 'index'
-  map.connect 'me/search/*path', :controller => 'me', :action => 'search'
-  map.connect 'me/dashboard/*path', :controller => 'me', :action => 'dashboard'
-  map.me 'me/:action/:id', :controller => 'me'
+  map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
+  map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
+  map.connect 'me/search/*path',    :controller => 'me/search'
+  map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
+  map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
+  map.me      'me/:action/:id', :controller => 'me/base'
   
   map.people 'people/:action/:id', :controller => 'people'
   map.connect 'person/:action/:id/*path', :controller => 'person'

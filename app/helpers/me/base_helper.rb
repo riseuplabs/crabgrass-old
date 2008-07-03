@@ -1,4 +1,4 @@
-module MeHelper
+module Me::BaseHelper
   
   def pending_request_link
     s = @request_count == 1 ? '' : 's'

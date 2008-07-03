@@ -1,4 +1,4 @@
-module MyTasksHelper
+module Me::TasksHelper
 
   def task_link(text, options={})
     options[:selected] ||= options[:action]

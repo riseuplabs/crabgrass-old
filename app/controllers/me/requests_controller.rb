@@ -10,11 +10,7 @@
 #   from other to groups i am admin of
 #
 
-class RequestsController < ApplicationController
-
-  before_filter :login_required
-  before_filter :fetch_user
-  layout 'me'
+class Me::RequestsController < Me::BaseController
 
   def index
     path = ['descending', 'created_at', 'limit', '20']
@@ -67,20 +63,10 @@ class RequestsController < ApplicationController
     [pages, page_sections, columns]
   end
 
-  protected
-  
-  def authorized?
-    return true # current_user always authorized for me
-  end
-
-  def fetch_user
-    @user = current_user
-  end
-  
   def context
     me_context('small')
-    add_context 'requests', url_for(:controller => 'requests', :action => 'index')
-    add_context params[:action], url_for(:controller => 'requests') unless params[:action] == 'index'
+    add_context 'requests', url_for(:controller => 'me/requests', :action => nil)
+    add_context params[:action], url_for(:controller => 'me/requests') unless (params[:action] == 'index' || params[:action] == nil)
   end
   
 end

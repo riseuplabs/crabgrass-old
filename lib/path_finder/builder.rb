@@ -61,10 +61,13 @@ class PathFinder::Builder
         
     # sorting
     'ascending' => 1,
-    'descending' => 1
+    'descending' => 1,
 #    'recent' => 1,
 #    'old' => 1,
     
+    # pseudo keywords (used to make forms easier)
+    # ie {:page_state => 'unread'}
+    'page_state' => 1
   }.freeze
 
   # path keyword => order weight
@@ -147,7 +150,9 @@ class PathFinder::Builder
     search.each do |pair|
       key, value = pair
       next unless PATH_KEYWORDS[key]
-      if PATH_KEYWORDS[key] == 0
+      if key == 'page_state' # handle special pseudo keyword
+        path << value
+      elsif PATH_KEYWORDS[key] == 0
         path << key if value == 'true'
       elsif PATH_KEYWORDS[key] == 1 and value.any?
         path << key
