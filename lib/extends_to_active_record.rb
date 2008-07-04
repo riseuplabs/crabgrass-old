@@ -72,11 +72,13 @@ class ActionView::Base
 # For ajax, this breaks, and is labelled wontfix
 # http://dev.rubyonrails.org/ticket/3231
 # this hack is an attempt to get around the limitation
+# by disabling the other submit buttons, we ensure that their info
+# doesn't end up in the params of the action.
 
   alias_method :rails_submit_tag, :submit_tag
   def submit_tag(value = "Save changes", options = {})
-    options[:id] = (options[:id] || options[:name] || :commit)
-    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x) { if (x.value != this.value) x.name += '_not_pressed'; else x.name = x.name.gsub('_not_pressed','')}.bind(this))")
+    #options[:id] = (options[:id] || options[:name] || :commit)
+    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))")
     rails_submit_tag(value, options)
   end
   
