@@ -9,7 +9,7 @@ class AssetPageController < BasePageController
   def create
     @page_class = AssetPage
     if request.post?
-      if params[:asset][:uploaded_data].empty?
+      if params[:asset][:uploaded_data] == ""
         flash[:error] = "You must select a file."
         return render :action => 'create'
       end
