@@ -1,3 +1,13 @@
+
+<% content_for :style do %>
+div.asset-page h1 {
+  margin-top: 20px;
+  color: #407aa4;
+  font-size: 1.5em;
+}
+<% end -%>
+
+<div class='asset-page'>
 <table>
 <tr>
 <td style="width: 256px; height: 256px; text-align: center; vertical-align: middle">
@@ -9,6 +19,12 @@
 
   link_line links
 %></p>
+<div id="upload-new" style="display: none;">
+  <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>
+    <%= file_field_tag 'asset' %>
+    <%= submit_tag 'upload' %>
+  <% end %>
+</div>
 </td>
 
 <td>
@@ -24,6 +40,7 @@
 </tr>
 </table>
 
+<br/>
 <h1>History</h1>
 <table class="page-list">
 <tr class="page-list-heading">
@@ -59,9 +76,4 @@
 </style>
 </table>
 
-<div id="upload-new" style="display: none;">
-  <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>
-    <%= file_field_tag 'asset' %>
-    <%= submit_tag 'upload' %>
-  <% end %>
 </div>
