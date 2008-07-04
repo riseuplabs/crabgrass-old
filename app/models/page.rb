@@ -258,24 +258,13 @@ class Page < ActiveRecord::Base
     (PAGES.detect{|t|t[1].class_name == class_name or t[1].class_name == "#{class_name}Page" } || [])[1]
   end
 
-  def icon
-    PAGES[self.class.name].icon
-  end
-  def controller
-    PAGES[self.class.name].controller
-  end
-  def controller_class_name
-    PAGES[self.class.name].controller_class_name
-  end
-  def self.class_display_name
-    PAGES[self.name].class_display_name
-  end
-  def self.class_description
-    PAGES[self.name].class_description
-  end
-  def self.icon
-    PAGES[self.name].icon
-  end
+  def self.icon;        PAGES[self.name].icon; end
+  def      icon;        PAGES[self.class.name].icon; end
+  def self.controller;  PAGES[self.name].controller; end
+  def      controller;  PAGES[self.class.name].controller; end
+  def controller_class_name; PAGES[self.class.name].controller_class_name; end
+  def self.class_display_name; PAGES[self.name].class_display_name; end
+  def self.class_description;  PAGES[self.name].class_description; end
 
   #######################################################################
   ## DENORMALIZATION

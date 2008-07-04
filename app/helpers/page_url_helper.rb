@@ -61,8 +61,6 @@ module PageUrlHelper
   end
 
   def create_page_url(page_class, options={})
-#require 'ruby-debug';debugger;
-#FIXME: page_class.controller is nil, so this is not working
     controller = page_class.controller 
     id = page_class.class_display_name.nameize
     "/#{controller}/create/#{id}" + build_query_string(options)
