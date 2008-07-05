@@ -8,6 +8,11 @@
 
 ActionController::Routing::Routes.draw do |map|  
 
+  ##### PLUGIN ROUTES ######################################
+
+  # uncomment if you enable these plugins:
+  # map.from_plugin :super_admin
+
   ##### ASSET ROUTES ######################################
   
   map.with_options :controller => 'asset', :action => 'show' do |m|

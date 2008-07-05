@@ -1,0 +1,36 @@
+<p>
+  <b>Name:</b>
+  <%=h @group.name %>
+</p>
+
+<p>
+  <b>Full name:</b>
+  <%=h @group.full_name %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%=h @group.summary %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @group.url %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @group.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%=h @group.updated_at %>
+</p>
+<p>
+  <b>Memberships:</b>
+  <%= @group.users.collect{|u| link_to u.login, user_path(u) }.join(' ') %>
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>

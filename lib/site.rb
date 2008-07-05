@@ -7,6 +7,7 @@ class Site
   attr_accessor :secret
   attr_accessor :pagination_size
   attr_accessor :available_page_types
+  attr_accessor :super_admins
 
   # the default site when no others match
   cattr_accessor :default
