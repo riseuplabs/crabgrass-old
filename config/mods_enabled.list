@@ -1,2 +1,10 @@
+## 
+## list of crabgrass mods to be loaded
+## (uncomment the mod name to enable it)
+##
+
 #riseup_layout
 
+## The super_admin mod allows certain 'super admin' to control everything about
+## a particular crabgrass site.
+#super_admin
