@@ -1,2 +1,3 @@
-<div id='preview-area'><%= image_tag('crabgrass.png') %>Hey DOOD</div>
+<%= link_to( image_tag(@asset.thumbnails.first.public_filename), @asset.public_filename ) %>
+
 

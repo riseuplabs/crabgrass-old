@@ -27,11 +27,20 @@ class AssetController < ApplicationController
   end
 
   def generate_preview
-#    @asset = Asset.find(params[:id])
-#    preview = Asset.create(:content_type => 'image/png', :filename => thumbnail_name_for('png'), :temp_path => temp_file)
-#    preview.parent = asset
-#    preview.save!
-    sleep 3
+#        returning find_or_initialize_thumbnail(file_name_suffix) do |thumb|
+#          thumb.attributes = {
+#            :content_type             => content_type,
+#            :filename                 => thumbnail_name_for(file_name_suffix),
+#            :temp_path                => temp_file,
+#            :thumbnail_resize_options => size
+#          }
+    @asset = Asset.find(params[:id])
+    preview = Asset.create(:thumbnail => "preview",
+                           :parent => @asset,
+                           :content_type => 'image/png',
+                           :filename => @asset.thumbnail_name_for("preview") + ".png",
+                           :temp_path => 'public/images/crabgrass.png')
+    preview.save!
   end
 
   protected

@@ -9,7 +9,7 @@ module AssetPageHelper
 #      javascript_tag remote_function( :update => "page_list", :url => { :action => :page_list })
        javascript_tag(remote_function(:update => "preview-area", :url => { :controller => :asset, :action => :generate_preview, :id => asset.id } ))
     elsif asset.has_preview?
-      link_to( image_tag(asset.public_filename(:preview)), asset.public_filename )
+      link_to( image_tag(asset.thumbnails.first.public_filename), asset.public_filename )
     else
       link_to( image_tag(asset.big_icon), asset.public_filename )
     end

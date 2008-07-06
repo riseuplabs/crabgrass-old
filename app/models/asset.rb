@@ -218,7 +218,7 @@ class Asset < ActiveRecord::Base
   end 
 
   def has_preview?
-    self.thumbnail.any? #???
+    self.thumbnails.any? #???
   end
   
   def previewable_types
