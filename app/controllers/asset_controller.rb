@@ -1,6 +1,6 @@
 class AssetController < ApplicationController
 
-  before_filter :public_or_login_required
+  before_filter :public_or_login_required, :except => :generate_preview
   
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
@@ -24,6 +24,14 @@ class AssetController < ApplicationController
         redirect_to(page_url(@asset.page))
       end
     end
+  end
+
+  def generate_preview
+#    @asset = Asset.find(params[:id])
+#    preview = Asset.create(:content_type => 'image/png', :filename => thumbnail_name_for('png'), :temp_path => temp_file)
+#    preview.parent = asset
+#    preview.save!
+    sleep 3
   end
 
   protected

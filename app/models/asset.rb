@@ -1,5 +1,5 @@
 class Asset < ActiveRecord::Base
-
+  
   ## associations #####################################
 
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page'
@@ -204,4 +204,25 @@ class Asset < ActiveRecord::Base
     'application/pgp-signature' => 'lock',
     'application/pgp-keys' => 'lock'
   }
+
+  ##################################################
+  # previews
+
+  @@abiword_content = %w(text/ text/html text/richtext application/rtf application/msword)
+  @@gm_content = %w(application/pdf application/bzpdf application/gzpdf application/postscript application/xpdf)
+  @@rmagick_content = %w(image/jpeg image/pjpeg image/gif image/png image/x-png image/jpg)
+  @@previewable_content = @@rmagick_content + @@gm_content + @@abiword_content
+
+  def may_preview?
+    image? or previewable_types.include?(content_type) 
+  end 
+
+  def has_preview?
+    self.thumbnail.any? #???
+  end
+  
+  def previewable_types
+    @@previewable_content
+  end
+
 end
