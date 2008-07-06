@@ -83,6 +83,10 @@ class Array
       [v, block.call(v)]
     }.flatten]
   end
+
+  def path
+    join('/')
+  end
 end
 
 class Hash

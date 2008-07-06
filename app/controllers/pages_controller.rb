@@ -252,6 +252,7 @@ class PagesController < ApplicationController
   def update_title
     if params[:save]
       @page.title = params[:page][:title]
+      @page.summary = params[:page][:summary]
       @page.name = params[:page][:name].to_s.nameize if params[:page][:name].any?
       unless @page.save
         render :action => 'edit_title'
@@ -259,8 +260,78 @@ class PagesController < ApplicationController
     end
   end
 
+  # send this page with a notice message to any number of recipients. 
+  #
+  # if the recipient is a crabgrass user, then the message
+  # and the page show up in their inbox, and optionally they are alerted
+  # via email if that is their personal settings.
+  # if the recipient is an email address, they get an email with a
+  # magic url that lets them view the page by clicking on a link
+  # and using their email as the password.
+  # 
+  # the sending user must have admin access to send to recipients
+  # who do not already have the ability to view the page.
+  # 
+  # the recipient may be an entire group, in which case we give the
+  # and send to each user individually. 
+  #
+  # you cannot send to users/groups that you cannot pester, unless
+  # the page is private and they already have access.
+  #
+  def send_notice
+    users, groups, emails, errors = parse_recipients(params[:recipients])
+    access = params[:access]
+    msg = params[:message]
+    users_to_email = [] 
+
+    users.each do |user|
+      if current_user.send_page_to(page, user, :access => access, :message => msg)
+        users_to_email << user #if user.wants_notification_email?
+      end
+    end
+    groups.each do |group|
+      users_succeeded = current_user.send_page_to_group(page, group,
+        :access => access, :message => msg)
+      users_succeeded.each do |user|
+        users_to_email << user #if user.wants_notification_email?
+      end
+    end
+    emails.each do |email|
+      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
+    end
+
+    Mailer.deliver_page_notice(users_to_email, msg, mailer_options)
+    message :object => current_user # display any sending errors
+    message :error => error if error # display any parsing errors
+  end
+
   protected
   
+  # called by send_notice
+  def parse_recipients(recipients)
+    users = groups = emails = errors = []
+    if recipients.is_a? Hash
+      to = []
+      recipients.each do |key,value|
+        to << key if value == '1'
+      end
+    elsif recipients.is_a? Array
+      to = recipients
+    end
+    to.each do |entity|
+      if entity =~ RFC822::EmailAddress
+        emails << entity
+      elsif g = Group.get_by_name(entity)
+        groups << g
+      elsif u = User.find_by_login(entity)
+        users << u
+      else
+        errors << '"%s" does not match the name of any users or groups and is not a valid email address' % entity
+      end
+    end
+    [users, groups, emails, errors]
+  end
+
   def authorized?
     # see BaseController::authorized?
     if @page

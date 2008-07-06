@@ -388,6 +388,9 @@ module SocialUser
     def update_tag_cache
       # this query sucks and should be optimized
       # see http://dev.mysql.com/doc/refman/5.0/en/in-subquery-optimization.html
+      # TODO: acts_as_taggable_on includes the user_id in every tagging,
+      # thus making it easy to find all the tags you have made. maybe this is
+      # what we should return here instead?
       if self.id
         ids = Tag.connection.select_values(%Q[
           SELECT tags.id FROM tags
@@ -472,6 +475,7 @@ module SocialUser
     end
     ## called only by add_page
     def update_participation(participation, part_attrs)
+      part_attrs = participation.attributes.merge(part_attrs)
       if part_attrs[:notice]        
         part_attrs[:viewed] = false
         if participation.notice
@@ -557,7 +561,63 @@ module SocialUser
       page.changed :updated_by
       page.save
     end
-  end
+
+    # sends a page to a particular user, granting them access if needed
+    # 
+    # options may include:
+    # * +:message => 'text to send to user'+ (default is empty)
+    # * +:access => 'admin'+ (or one of 'admin', 'edit', 'view'. default is 'view')
+    # TODO actually really make the default 'view', instead of 'admin'
+    def send_page_to(page, user, options={})
+      access = options[:access].to_sym || :admin
+
+      # check & update permissions
+
+      if page.public? and !self.may_pester?(user)
+        errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, user.login]
+        return false
+      elsif !user.may?(access, page)
+        if !self.may?(:admin,page)
+          errors.add_to_base '%s is not allowed to change the access permissions of this page' % self.login
+          return false
+        elsif !self.may_pester?(user)
+          errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, user.login]
+          return false
+        else
+          page.add user, :access => access
+        end
+      end
+
+      # When we get here, the user should have access to the page
+      # and we have confirmed that the current_user may pester them.
+      # If the user may already view the page, then current_user
+      # is always allowed to pester them (except for public pages)
+      
+      # send the message
+      notice = options[:message] ? {:user_login => self.login, :message => options[:message], :time => Time.now} : nil
+      page.add(user, :notice => notice)
+      page.save
+    end
+
+    def send_page_to_group(page, group, options={})
+      access = options[:access].to_sym || :admin
+      unless group.may?(access,page)
+        unless self.may?(:admin,page) and self.may_pester?(group)
+          errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, group.name]
+          return false
+        else
+          page.add group, :access => access
+          page.save
+        end
+      end
+       
+      # when we get here, the group should be able to view the page.
+      group.users.select do |user|
+        send_to_page(page,user,options)
+      end # returns an array of users that succeeded (ie send_to_page returned true)
+    end
+
+  end # end Pages
 
   
   module CacheColumns

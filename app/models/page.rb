@@ -32,6 +32,15 @@ class Page < ActiveRecord::Base
     "#{s}+#{id}"
   end
 
+  # using only knowledge of this page, returns
+  # best guess uri string, sans protocol/host/port.
+  # ie /rainbows/what-a-fine-page+5234
+  def uri
+   return [group_name, name_url].path if group_name
+   return [created_by_login, friendly_url].path if created_by_login
+   return ['page', friendly_url].path
+  end
+
   # returns true if self's unique page name is already in use.
   # what pages are in the namespace? all pages connected to all
   # groups connected to this page (include the group's committees too).
