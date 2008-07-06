@@ -79,8 +79,9 @@ module UrlHelper
   
   def link_to_user(arg, options={})
     login, path, display_name = login_and_path_for_user(arg,options)
-    style = options[:style] || ''
-    label = options[:login] ? login : display_name
+    style = options[:style]                         # allow style override
+    label = options[:login] ? login : display_name  # use display_name for label by default
+    label = options[:label] || label                # allow label override
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
@@ -88,8 +89,8 @@ module UrlHelper
       size = Avatar.pixels(options[:avatar])[0..1].to_i
       padding = size/5 + size
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px; " + style
-      ## label = "<div style='float: left; background: url(#{url}) no-repeat; height: #{size}px; width: #{size}px;'></div>" + label ## alternate method to a.background
+      style = "background: url(#{url}) no-repeat 0% 50%;"
+      style += options[:style] || "padding: 4px 0 4px #{padding}px;"
     end
     avatar + link_to(label, path, :class => 'name_link', :style => style)
   end

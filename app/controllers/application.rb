@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem	
-  include PageUrlHelper
-  include UrlHelper
+  include PageHelper      # various page helpers needed everywhere
+  include UrlHelper       # for user and group urls/links
+  include TimeHelper      # for displaying local and readable times
+  include ErrorHelper     # for displaying errors and messages to the user
+  include PathFinder::Options       # for Page.find_by_path options
   include ContextHelper
-  include TimeHelper
-  include ErrorHelper
-  include PathFinder::Options
       
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
   end
  
   protected
+
+  def mailer_options
+    {:site => @site, :current_user => current_user, :host => request.host,
+     :protocol => request.protocol, :port => request.port_string, :page => @page}
+  end
   
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(*css_files)

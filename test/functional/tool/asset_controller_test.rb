@@ -58,7 +58,8 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     assert File.exists?(page.data.full_filename)
     assert !File.exists?(version_filename)
 
-    AssetPage.any_instance.stubs(:created_by).returns(stub(:both_names => 'a user'))
+    # i don't understand why this line fails:
+    # AssetPage.any_instance.stubs(:created_by).returns(stub(:both_names => 'a user'))
     get :show, :page_id => page.id
     assert_response :success
     assert_equal assigns(:page).data.versions.size, 1

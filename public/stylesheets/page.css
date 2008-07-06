@@ -18,37 +18,6 @@ div.workarea {
 /* title */
 .h1 {font-size: 2em; font-weight: bold; line-height: 1.2em;}
 form .h1 {line-height: 1em; margin:0; padding:0}
-/*
-div#title_text {
-  margin-top: 15px;
-}
-div#title_text span#title_edit_link {
-  font-size: 8pt;
-  opacity: 0;
-}
-div#title_text:hover span#title_edit_link {
-  opacity: 1;
-}
-#title_editor {
-  margin-top: 15px;
-}
-div#title_text span {
-}
-
-div#summary_text span#summary_edit_link {
-  font-size: 8pt;
-  opacity: 0;
-}
-div#summary_text:hover span#summary_edit_link {
-  opacity: 1;
-}
-#summary_editor {
-  margin-top: 15px;
-}
-div#summary_text span {
-}
-*/
-
 
 #title {
   margin-top: 10px;
@@ -75,6 +44,7 @@ table.posts {
 .post-author {
   text-align: right;
   padding: 0 10px 0 10px;
+  height: 32px;
 }
 .post-author div.icon {float: right}
 .post-author div.username, .post-author div.date {margin-right: 38px}

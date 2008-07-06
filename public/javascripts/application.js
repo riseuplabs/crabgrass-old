@@ -55,57 +55,6 @@ function toggleLink(link, text) {
   link.blur();
 }
 
-/* I can't get Element.toggle to work with $$().each, because it returns [element,number]
-   for each element and not element. */
-function mytoggle(element) {
-    Element.toggle(element)
-}
-
-
-/* Script for sidebar open-close */
-var heads=null;
-var open_txt='close all';
-var closed_txt='open all';
-function toggle_sidenav(obj,from_all)
-{
-	$(obj).next('div').toggle();
-	var new_bg=($(obj).next('div').getStyle('display')=='block')?'/images/ui/carrot-down.jpg':'/images/ui/carrot-right.jpg';
-	$(obj).setStyle({backgroundImage:'url('+new_bg+')'});
-	if(from_all==undefined)
-		manage_txt();
-}
-function manage_txt()
-{
-	var ct=0;var open=0;
-	heads.each(function(item){ct++;if(item.next('div').getStyle('display')=='block'){open++;}});
-	if(ct==open){$('toggle_all').innerHTML=open_txt;}
-	if(open==0){$('toggle_all').innerHTML=closed_txt;}
-}
-function toggle_all()
-{
-	heads.each(function(item){
-		if(($('toggle_all').innerHTML==open_txt && item.next('div').getStyle('display')=='block') || ($('toggle_all').innerHTML==closed_txt && item.next('div').getStyle('display')=='none'))
-		{
-			toggle_sidenav(item,{});
-		}
-	});
-	manage_txt();
-}
-Event.observe(window,'load',function(){
-	/* make sure the text is correct */
-	open_txt=$('toggle_all').innerHTML;
-	/* add the handlers to the headers */
-	heads=document.getElementsByClassName('sideheadright',$('rightbar'));
-	heads.each(function(item){
-		Event.observe(item,'click',function(evt){var e=Event.element(evt);toggle_sidenav(e);});
-		Event.observe(item,'mouseover',function(evt){var e=Event.element(evt);e.setStyle({cursor:'pointer'})});
-		Event.observe(item,'mouseout',function(evt){var e=Event.element(evt);e.setStyle({cursor:''})});
-	});
-	/* toggle all button */
-	Event.observe($('toggle_all'),'click',function(evt){toggle_all();});
-})
-
-
 /** menu navigation **/
 
 var SubMenu = Class.create({
