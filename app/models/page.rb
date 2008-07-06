@@ -119,6 +119,14 @@ class Page < ActiveRecord::Base
     user_participations.detect{|p| p.user_id==user.id }
   end
 
+  # a list of the user participation objects, but sorted
+  # by access (higher number is less access permissions)
+  def sorted_participations
+    user_participations.sort do |a,b|
+      (a.access||100) <=> (b.access||100)
+    end
+  end
+
   # used for ferret index
   def user_ids
     user_participations.collect{|upart|upart.user_id}
