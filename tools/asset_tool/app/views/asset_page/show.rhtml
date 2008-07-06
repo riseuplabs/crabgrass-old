@@ -46,6 +46,7 @@ div.asset-page h1 {
 <tr class="page-list-heading">
   <th></th>
   <th></th>
+  <th></th>
   <th class="" nowrap="nowrap">version</th>
   <th class="" nowrap="nowrap">updated on</th>
 </tr>
@@ -57,6 +58,7 @@ div.asset-page h1 {
       <% end -%>
     </td>
     <td><%= version.image? ? image_tag(version.public_filename(:thumb)) : image_tag(version.small_icon) %></td>
+    <td><%= link_to image_tag('actions/down-arrow.png'), version.public_filename %></td> 
     <td><%= link_to "version #{version.version}", version.public_filename %></td>
     <td><%= full_time(version.updated_at) %></td>
   </tr>
