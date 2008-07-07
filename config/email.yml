@@ -1,0 +1,29 @@
+#
+# Outgoing email settings
+# To enable ssl connection, port must be 587.
+# Some SMTP auth requires a domain, which does not have
+# to be a real domain, but it must exist.
+#
+
+production:
+#  delivery_method: :sendmail
+  delivery_method: :smtp
+  smtp_settings:
+    domain: localhost
+    address: mail.riseup.net
+    port: 587
+    authentication: :plain
+    user_name: "xxxxxxxxx"
+    password: "xxxxxxxxx"
+  
+development:
+#  delivery_method: :sendmail
+  delivery_method: :smtp
+  smtp_settings:
+    domain: localhost
+    address: smtp.gmail.com
+    port: 587
+    authentication: :plain
+    user_name: xxxxxx@gmail.com
+    password: xxxxxxx
+

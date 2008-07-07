@@ -43,6 +43,7 @@ SECTION_SIZE = Site.default.pagination_size
 AVAILABLE_PAGE_CLASSES = Site.default.available_page_types.dup
 
 Rails::Initializer.run do |config|
+
   config.load_paths += %w(associations discussion chat profile poll task).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
@@ -80,6 +81,11 @@ Rails::Initializer.run do |config|
   # allow plugins in mods/ and pages/
   config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
 
+  # Deliveries are disabled by default. Do NOT modify this section.
+  # Define your email configuration in email.yml instead.
+  # It will automatically turn deliveries on
+  config.action_mailer.perform_deliveries = false
+
   # See Rails::Configuration for more options
 end
 
@@ -90,18 +96,15 @@ ActiveRecord::Base.partial_updates = false
 # Store "Tool::Discussion" in database instead of just "Discussion"!
 # ActiveRecord::Base.store_full_sti_class = true
 
-
-#### DEBUGGING #####################
-
-# this will cause classes in lib to be reloaded on each request in
-# development mode. very useful if working on a source file in lib!
-Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+#### DEBUGGING ###################
 
 # Make engines much less verbose!
 if defined? Engines
-  Engines.logger.level = ActiveSupport::BufferedLogger::Severity::INFO
-  #Engines.logger.level = ActiveSupport::BufferedLogger::Severity::DEBUG
+  Engines.logger.level = Logger::INFO
 end
+
+#ActiveRecord::Base.logger.level = Logger::DEBUG
+#ActionMailer::Base.logger.level = Logger::DEBUG
 
 #### CUSTOM EXCEPTIONS #############
 
@@ -142,4 +145,5 @@ if File.exists?('.svn')
 else
   SVN_REVISION = nil
 end
+
 
