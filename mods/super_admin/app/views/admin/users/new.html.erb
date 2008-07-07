@@ -12,20 +12,12 @@
     <%= f.text_field :email %>
   </p>
   <p>
-    <%= f.label :crypted_password %><br />
-    <%= f.text_field :crypted_password %>
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
   </p>
   <p>
-    <%= f.label :salt %><br />
-    <%= f.text_field :salt %>
-  </p>
-  <p>
-    <%= f.label :created_at %><br />
-    <%= f.datetime_select :created_at %>
-  </p>
-  <p>
-    <%= f.label :updated_at %><br />
-    <%= f.datetime_select :updated_at %>
+    <%= f.label :password_confirmation %><br />
+    <%= f.text_field :password_confirmation %>
   </p>
   <p>
     <%= f.label :display_name %><br />
@@ -34,10 +26,6 @@
   <p>
     <%= f.label :time_zone %><br />
     <%= f.text_field :time_zone %>
-  </p>
-  <p>
-    <%= f.label :last_seen_at %><br />
-    <%= f.datetime_select :last_seen_at %>
   </p>
   <p>
     <%= f.submit "Create" %>

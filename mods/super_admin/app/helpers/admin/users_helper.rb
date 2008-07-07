@@ -16,6 +16,9 @@ module Admin::UsersHelper
     admin_users_path
   end
 
+  def user_url(arg, options={})
+    admin_user_url(arg, options)
+  end
 end
 
 

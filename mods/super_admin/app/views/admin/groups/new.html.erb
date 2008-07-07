@@ -4,28 +4,16 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :name %><br />
+    <%= f.label :name %> (used for url)<br />
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :full_name %><br />
+    <%= f.label :full_name %> (used for display)<br />
     <%= f.text_field :full_name %>
   </p>
   <p>
     <%= f.label :summary %><br />
     <%= f.text_field :summary %>
-  </p>
-  <p>
-    <%= f.label :url %><br />
-    <%= f.text_field :url %>
-  </p>
-  <p>
-    <%= f.label :created_at %><br />
-    <%= f.datetime_select :created_at %>
-  </p>
-  <p>
-    <%= f.label :updated_at %><br />
-    <%= f.datetime_select :updated_at %>
   </p>
   <p>
     <%= f.submit "Create" %>

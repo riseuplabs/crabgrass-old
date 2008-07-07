@@ -32,5 +32,7 @@ module Admin::GroupsHelper
     admin_group_path
   end
 
-
+  def group_url(arg, options={})
+    admin_group_url(arg, options)
+  end
 end
