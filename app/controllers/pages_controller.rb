@@ -28,6 +28,7 @@ class PagesController < ApplicationController
   
   before_filter :login_required, :except => 'search'
   prepend_before_filter :fetch_page
+  verify :method => :post, :only => [:destroy, :move]
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -160,7 +161,6 @@ class PagesController < ApplicationController
   # we only allow assignments between committees of the same group
   # or between the parent group and a committee.
   def move
-    return unless request.post?
     group = Group.find params[:group_id]
     if group.committee? and @page.group.committee?
       ok = group.parent == @page.group.parent
@@ -229,17 +229,8 @@ class PagesController < ApplicationController
     redirect_to page_url(@page)
   end  
     
-  def destroy
-    return unless request.post?
-    
-    # allow destroy only for pages you've created
-    if @page.created_by != current_user
-      message :error => 'delete feature is currently disabled'
-      return
-    end
-    
+  def destroy   
     url = from_url(@page)
-    @page.data.destroy if @page.data # can this be in page?
     @page.destroy
     redirect_to url
   end
@@ -278,38 +269,44 @@ class PagesController < ApplicationController
   # you cannot send to users/groups that you cannot pester, unless
   # the page is private and they already have access.
   #
-  def send_notice
+  def send_page
+    return unless params[:send]
     users, groups, emails, errors = parse_recipients(params[:recipients])
     access = params[:access]
     msg = params[:message]
     users_to_email = [] 
-
+    # puts [users, groups, emails, errors].inspect
     users.each do |user|
-      if current_user.send_page_to(page, user, :access => access, :message => msg)
-        users_to_email << user #if user.wants_notification_email?
+      if current_user.send_page_to(@page, user, :access => access, :message => msg)
+        users_to_email << user if user.wants_notification_email?
       end
     end
-    groups.each do |group|
-      users_succeeded = current_user.send_page_to_group(page, group,
-        :access => access, :message => msg)
-      users_succeeded.each do |user|
-        users_to_email << user #if user.wants_notification_email?
-      end
+#    groups.each do |group|
+#      users_succeeded = current_user.send_page_to_group(@page, group,
+#        :access => access, :message => msg)
+#      users_succeeded.each do |user|
+#        users_to_email << user if user.wants_notification_email?
+#      end
+#    end
+#    emails.each do |email|
+#      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
+#    end
+    users_to_email.each do |user|
+      puts 'emailing %s' % user.email
+      Mailer.deliver_page_notice(user, msg, mailer_options)
     end
-    emails.each do |email|
-      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
+    unless current_user.valid? and errors.empty?
+      message :object => current_user # display any sending errors
+      message :error => errors # display any parsing errors
+      render :action => 'show_send_page_form'
     end
-
-    Mailer.deliver_page_notice(users_to_email, msg, mailer_options)
-    message :object => current_user # display any sending errors
-    message :error => error if error # display any parsing errors
   end
 
   protected
   
   # called by send_notice
   def parse_recipients(recipients)
-    users = groups = emails = errors = []
+    users = []; groups = []; emails = []; errors = []
     if recipients.is_a? Hash
       to = []
       recipients.each do |key,value|

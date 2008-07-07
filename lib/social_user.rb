@@ -475,7 +475,6 @@ module SocialUser
     end
     ## called only by add_page
     def update_participation(participation, part_attrs)
-      part_attrs = participation.attributes.merge(part_attrs)
       if part_attrs[:notice]        
         part_attrs[:viewed] = false
         if participation.notice
@@ -569,7 +568,7 @@ module SocialUser
     # * +:access => 'admin'+ (or one of 'admin', 'edit', 'view'. default is 'view')
     # TODO actually really make the default 'view', instead of 'admin'
     def send_page_to(page, user, options={})
-      access = options[:access].to_sym || :admin
+      access = (options[:access] || :admin).to_sym
 
       # check & update permissions
 
@@ -600,7 +599,7 @@ module SocialUser
     end
 
     def send_page_to_group(page, group, options={})
-      access = options[:access].to_sym || :admin
+      access = (options[:access] || :admin).to_sym
       unless group.may?(access,page)
         unless self.may?(:admin,page) and self.may_pester?(group)
           errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, group.name]

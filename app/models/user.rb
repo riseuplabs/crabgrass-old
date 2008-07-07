@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates_handle :login
   
   #########################################################    
-  # my identity
+  # USER IDENTITY
 
   belongs_to :avatar
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
@@ -78,6 +78,16 @@ class User < ActiveRecord::Base
   
   def time_zone
     read_attribute(:time_zone) || Time.zone_default
+  end
+
+  #########################################################    
+  # USER SETTINGS
+
+  # returns true if the user wants to receive
+  # and email when someone sends them a page notification
+  # message.
+  def wants_notification_email?
+    self.email.any?
   end
 
   #########################################################    

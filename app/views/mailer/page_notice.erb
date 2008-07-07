@@ -1,14 +1,10 @@
-<%= @current_user.display_name %> (<%= @current_user.login %>) has sent you a page
-<%- if @notice_message -%>
+<%= @from.display_name %> (<%= @from.login %>) has sent you a web page<% if @notice_message.any? -%>
  with the following message:
 
 <%= @notice_message %>
-
-<%- else -%>
-.
-<%- end -%>
+<% else %>.<% end -%>
 
 You may access this page here: 
 
-  <%= url_for(@page.uri)) %>
+  <%= @link %>
 
