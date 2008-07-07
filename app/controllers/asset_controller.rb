@@ -6,7 +6,22 @@ class AssetController < ApplicationController
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
   def show
-    send_file(@asset.full_filename(@thumb), :type => @asset.content_type, :disposition => (@asset.image? ? 'inline' : 'attachment'))
+    filename = params[:filename].first
+    if thumbnail_filename?(filename)
+      thumbnail = @asset.thumbnails.detect {|a| filename == a.filename }
+      render(:text => "Not found", :status => :not_found) and return unless thumbnail
+      thumb_suffix = thumbnail.thumbnail.to_sym # either :thumb or :preview
+      if @asset.image? and !File.exists?(thumbnail.full_filename)
+        @asset.create_or_update_thumbnail(
+          @asset.full_filename,
+          thumb_suffix, # e.g. :preview or :thumb
+          @asset.attachment_options[:thumbnails][thumb_suffix] # e.g. '512x512?>'
+        )
+      end
+      send_file(@asset.full_filename(thumb_suffix), :type => thumbnail.content_type, :disposition => 'inline')
+    else
+      send_file(@asset.full_filename, :type => @asset.content_type, :disposition => (@asset.image? ? 'inline' : 'attachment'))
+    end
   end
 
   def create
@@ -26,35 +41,14 @@ class AssetController < ApplicationController
     end
   end
 
-  def generate_preview
-#        returning find_or_initialize_thumbnail(file_name_suffix) do |thumb|
-#          thumb.attributes = {
-#            :content_type             => content_type,
-#            :filename                 => thumbnail_name_for(file_name_suffix),
-#            :temp_path                => temp_file,
-#            :thumbnail_resize_options => size
-#          }
-    @asset = Asset.find(params[:id])
-    preview = Asset.create(:thumbnail => "preview",
-                           :parent => @asset,
-                           :content_type => 'image/png',
-                           :filename => @asset.thumbnail_name_for("preview") + ".png",
-                           :temp_path => 'public/images/crabgrass.png')
-    preview.save!
-  end
-
   protected
 
   def fetch_asset
     @thumb = nil
     @asset = Asset.find(params[:id]).versions.find_by_version(params[:version]) if params[:version]
     @asset ||= Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
-    if @asset && @asset.image? && (filename = params[:filename].first) && filename != @asset.filename
-      thumb = @asset.thumbnails.detect {|a| filename == a.filename }
-      render(:text => "Not found", :status => :not_found) and return unless thumb
-      @thumb = thumb.thumbnail.to_sym
-      @asset.create_or_update_thumbnail(@asset.full_filename,@thumb,Asset.attachment_options[:thumbnails][@thumb]) unless File.exists? thumb.full_filename
-    end
+    return unless @asset
+
     if @asset.is_public?
       @asset.update_access 
       redirect_to and return false
@@ -69,6 +63,12 @@ class AssetController < ApplicationController
   end
 
   protected
+
+  # guess if we are viewing a thumbnail or the actual asset
+  def thumbnail_filename?(filename)
+    @asset and @asset.may_preview? and filename != @asset.filename
+    # or we could check if filename ends in 'thumb' or 'preview'
+  end
 
   def public_or_login_required
     @asset.page.public? or login_required

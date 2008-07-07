@@ -5,11 +5,13 @@ module AssetPageHelper
 
   def asset_link_with_preview(asset)
     if asset.may_preview? and !asset.has_preview?
-      link_to( image_tag('/images/spinner.gif') + " Creating preview", asset.public_filename ) + 
-#      javascript_tag remote_function( :update => "page_list", :url => { :action => :page_list })
-       javascript_tag(remote_function(:update => "preview-area", :url => { :controller => :asset, :action => :generate_preview, :id => asset.id } ))
+      "<div id='preview-loading'>" + image_tag('/images/spinner-big.gif') + "<br/>" + " generating preview" + "</div>" +
+      javascript_tag(remote_function(:url => page_xurl(@page,:action => 'generate_preview')))
     elsif asset.has_preview?
-      link_to( image_tag(asset.thumbnails.first.public_filename), asset.public_filename )
+      link_to(
+        image_tag(asset.public_filename(:preview)),
+        asset.public_filename
+      )
     else
       link_to( image_tag(asset.big_icon), asset.public_filename )
     end

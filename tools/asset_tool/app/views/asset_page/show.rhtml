@@ -1,29 +1,28 @@
-
 <% content_for :style do %>
 div.asset-page h1 {
   margin-top: 20px;
   color: #407aa4;
   font-size: 1.5em;
 }
+div#preview-area {
+  background: url(/images/background/checkerboard.png);
+  outline: 1px solid #ccc;
+  border: 4px solid white;
+}
+#preview-loading {
+  background: white;
+  padding: 30px;
+  color: #999;
+  font-weight: bold;
+}
 <% end -%>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<div id='preview-area'><%= asset_link_with_preview(@asset) %></div>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+
 
 <div class='asset-page'>
-<table>
+<table cellpadding="10">
 <tr>
-<td style="width: 256px; height: 256px; text-align: center; vertical-align: middle">
-<%= link_to(image_tag(@asset.image? ? @asset.public_filename(:preview) : @asset.big_icon),
-            @asset.public_filename) %>
+<td valign="top" style="width: 256px; height: 256px; text-align: center;">
+<div id='preview-area'><%= asset_link_with_preview(@asset) %></div>
 <p><%=
   links = [ link_to("Download", @asset.public_filename) ]
   links.push link_to_function("Upload new version", "$('upload-new').toggle()") if current_user.may? :edit, @page
@@ -38,7 +37,7 @@ div.asset-page h1 {
 </div>
 </td>
 
-<td>
+<td valign="top">
 <h1>Information</h1>
 <table cellpadding='4'>
 <tr class='page-list-heading'>

@@ -18,7 +18,7 @@ class Asset < ActiveRecord::Base
   acts_as_versioned do
     def self.included(klass)
       klass.has_attachment :storage => :file_system, :max_size => 3.megabytes,
-        :thumbnails => {:thumb => "22x22>", :preview => "128x128>"}
+        :thumbnails => {:thumb => "22x22>", :preview => "512x512>"}
       klass.validates_as_attachment
     end
   end
@@ -212,17 +212,104 @@ class Asset < ActiveRecord::Base
   @@gm_content = %w(application/pdf application/bzpdf application/gzpdf application/postscript application/xpdf)
   @@rmagick_content = %w(image/jpeg image/pjpeg image/gif image/png image/x-png image/jpg)
   @@previewable_content = @@rmagick_content + @@gm_content + @@abiword_content
+  mattr_reader :abiword_content, :gm_content, :rmagick_content, :previewable_content
+
+  ## TODO: test if gm and abiword are installed
+  def generate_non_image_thumbnail
+    ctype = content_type
+    fname = full_filename
+    tmps = []
+
+    # try abiword conversion
+    if abiword_content.include? ctype
+      tmp_pdf = tmp_file_name('preview','pdf')
+      tmps << tmp_pdf
+      system("abiword '#{fname}' --to='#{tmp_pdf}'") # TODO: check how clean full_filename is
+      ctype = 'application/pdf'
+      fname = tmp_pdf
+    end
+
+    # try gm conversion
+    if gm_content.include? ctype
+      tmp_jpg = tmp_file_name('preview','jpg')
+      tmps << tmp_jpg
+      system("gm convert -geometry 512x512 -density 60 '#{fname}'[0] '#{tmp_jpg}'")
+      fname = tmp_jpg
+    end
+    
+    set_thumbnail_image(fname)
+    tmps.each{|f|File.unlink(f)} # remove tmps
+  end
 
   def may_preview?
     image? or previewable_types.include?(content_type) 
   end 
 
   def has_preview?
-    self.thumbnails.any? #???
+    thumbnails.any?
   end
   
   def previewable_types
     @@previewable_content
+  end
+
+  protected
+
+  def tmp_file_name(base, ext)
+    tmp = Tempfile.new(base + random_tempfile_filename)
+    path = tmp.path
+    tmp.close!
+    return path+'.'+ext
+  end
+
+  def set_thumbnail_image(image_tmp_file)
+    # attachment_options[:thumbnails] looks like this: {:thumb => "100x100>", :preview => "512x512>"}
+    attachment_options[:thumbnails].each do |suffix, size|
+      our_create_or_update_thumbnail(image_tmp_file, suffix, *size)
+    end
+  end
+
+  # Just like the attachment_fu create_or_update_thumbnail, but we have replaced
+  # thumbnailable? with may_preview?. If we tried to override thumbnailable, 
+  # attachment_fu would try to generate a thumbnail itself. 
+  # Also, we are hardcoding the content_type to be jpg.
+  def our_create_or_update_thumbnail(temp_file, file_name_suffix, *size)
+    may_preview? || raise(ThumbnailError.new("Don't know how to create a thumbnail of content type '%s'" % content_type))
+    returning find_or_initialize_thumbnail(file_name_suffix) do |thumb|
+      thumb.attributes = {
+        :content_type             => "image/jpg",
+        :filename                 => thumbnail_name_for(file_name_suffix),
+        :temp_path                => temp_file,
+        :thumbnail_resize_options => size
+      }
+      callback_with_args :before_thumbnail_saved, thumb
+      thumb.save!
+    end
+  end
+
+  # normally, all the thumbnails have the same file extension 
+  # as the parent asset. So if you have a ".png", the preview will
+  # be ".png". we need to break this behavior so that a ".pdf"
+  # can have a preview of ".jpg".
+  def thumbnail_name_for_with_hardcoded_ext(thumbnail = nil)
+    return filename if thumbnail.blank?
+    if may_preview? and !image?
+      # not an image, but we can preview, so hardcode the thumbnail ext.
+      basename = filename.gsub /\.\w+$/, ''
+      ext = '.jpg'
+      "#{basename}_#{thumbnail}#{ext}"      
+    else
+      # otherwise, proceed as normal
+      thumbnail_name_for_without_hardcoded_ext(thumbnail)
+    end
+  end
+  alias_method_chain :thumbnail_name_for, :hardcoded_ext
+
+  ## override default destroy_thumbnails
+  def destroy_thumbnails
+    if may_preview? && respond_to?(:parent_id) && parent_id.nil?
+      self.thumbnails.each { |thumbnail| thumbnail.destroy }
+    end
   end
 
 end

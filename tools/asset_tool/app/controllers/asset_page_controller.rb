@@ -2,6 +2,8 @@ class AssetPageController < BasePageController
   before_filter :fetch_asset
   javascript :extra
 
+  include AssetPageHelper
+
   def show
   end
 
@@ -11,7 +13,7 @@ class AssetPageController < BasePageController
     if request.post?
       if params[:asset][:uploaded_data] == ""
         flash[:error] = "You must select a file."
-        return render :action => 'create'
+        return render(:action => 'create')
       end
       
       @page = create_new_page(@page_class)
@@ -50,6 +52,14 @@ class AssetPageController < BasePageController
         redirect_to(page_url(@page))
       end
       format.js { render(:update) {|page| page.visual_effect :fade, "asset_#{asset_version.asset_id}_version_#{asset_version.version}", :duration => 0.5} }
+    end
+  end
+
+  # xhr request
+  def generate_preview
+    @asset.generate_non_image_thumbnail
+    render :update do |page|
+      page.replace_html 'preview-area', asset_link_with_preview(@asset)
     end
   end
 
