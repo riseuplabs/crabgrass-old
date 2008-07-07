@@ -1,14 +1,15 @@
-<h2><%= "Create a new".t %> <b><%= @page_class.class_display_name.t %></b></h2>
 
 <div class='workarea'>
-<%= header_for_page_create(@page_class) %>
+<h2 class= "titlebox h2"><img src="/images/pages/big/package.png" align="middle"> <%= "Create a new".t %> <b><%= @page_class.class_display_name.t %></b></h2>
 
+
+<div id="contentbox">
 <% form_tag({:action => 'create'}, :multipart => true) do %>
 <%= hidden_field_tag 'page_class', @page_class %>
-<table cellpadding='4'>
+<table cellpadding='7'>
 
 <tr>
-  <td class='titlebox h1' colspan="2" >
+  <td class='titlebox h3' colspan="2" >
   <!--div style='padding: 8px; background: url(/images/pages/big/<%=@page_class.icon%>) no-repeat 100% 50%'-->
     <%= 'Page Info' %>
   <!--/div-->
@@ -16,28 +17,28 @@
 </tr>
 
 <tr>
-  <td align='right'><b>file</b></td>
-  <td><%= file_field 'asset', 'uploaded_data' %></td>
+  <td align='right'>File:</td>
+  <td><%= file_field 'asset', 'uploaded_data', :size => 38 %></td>
 </tr>
 
 <tr>
-  <td align='right'><b>title</b></td>
-  <td><%= text_field 'page', 'title', :size => 30 %></td>
+  <td align='right'>Title:</td>
+  <td><%= text_field 'page', 'title', :size => 38 %></td>
 </tr>
 
 <tr>
-  <td align='right'><b>summary</b></td>
+  <td align='right'>Summary:</td>
   <td><%= text_area 'page', 'summary', :size => '30x3' %></td>
 </tr>
 
 <tr>
-  <td align='right'><b>tags</b></td>
-  <td><%= text_field_tag 'tag_list', '', :size => 30 %></td>
+  <td align='right'>Tags:</td>
+  <td><%= text_field_tag 'tag_list', '', :size => 38 %> <br><i>(separate tags using comas)</i></td>
 </tr>
 
 <% if current_user.all_groups.any? -%>
 <tr>
-  <td class='titlebox h1' colspan="2" >
+  <td class='titlebox h3' colspan="2" >
   <!--div style='padding: 8px; background: url(/images/actions/eye.png) no-repeat 100% 50%'-->
     <%= 'Access Info' %>
   <!--/div-->
@@ -45,7 +46,7 @@
 </tr>
 
 <tr>
-  <td align='right'><b>group</b></td>
+  <td align='right'>Group:</td>
   <td>
     <%= select_tag 'group_id', options_for_select(
       [['no one, just me', '']] + current_user.all_groups.to_select(:name), params[:group_id]
@@ -55,12 +56,12 @@
 <% end -%>
 
 <tr>
-  <td align='right' colspan="2">
+  <td align='left' colspan="2">
     <%= submit_tag "Create page".t, :name => 'create' %>
   </td>
 </tr>
 </table>
 <% end %>
-
+</div>
 </div>
 
