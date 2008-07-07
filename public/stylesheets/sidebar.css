@@ -102,7 +102,7 @@ div.sidelink {
 div.sidelink.selected {
   font-weight: bold;
 }
-div.sidelink a, div.sideline a {
+#main div.sidelink a, #main div.sideline a {
   text-decoration: none;
   color: #336699;
 }

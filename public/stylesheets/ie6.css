@@ -11,19 +11,12 @@ div#rightbar {
   margin-right: -110px;
   width: 199px;
 }
-/*
-#titlebox {
-  margin: 0;
-  padding: 10px 20px;
+div.sidelink:hover {
+  /* give the element "layout",
+   * ...for IE6, of course */
+  zoom: 1; 
 }
-div#contentbox {
-  padding: 0 20px;
-}
-#maincolumn.rightbar #content{
-  float: right;
-  width: 100%;
-}
-*/
+
 /* I don't understand why this is needed: it should already be the case!! */
 #maincolumn.rightbar {
   margin-right: 210px;
