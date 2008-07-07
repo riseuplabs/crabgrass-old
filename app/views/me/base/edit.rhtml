@@ -3,22 +3,20 @@
 <%= render :partial => 'profile_tabs' %>
 
   <table><tr>
-  <td><%= avatar_for @user, 'xlarge' %></td>
+  <td valign='top'<%= avatar_for @user, 'xlarge' %></td>
   <td valign='top' style='padding-left: 10px'>
-  <%= link_to_function 'upload image'.t, "Element.show($('uploadimage'))" %>
+  <%= link_to_function 'upload image', "$('uploadimage').show(); this.hide();" %>
   <div id='uploadimage' style='display:none'>
-    <p>
-    Uploaded image will be cropped and stretched to 96 pixels square.
+    Uploaded image will be cropped and stretched to 96 pixels square.<br/><br/>
     <% form_for(:image, @avatar, :url => {:controller => '/avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>
       select image file<br />
-      <%= f.file_field :image_file %><br />
+      <%= f.file_field :image_file %><br /><br />
       or image URL<br />
       <%= f.text_field :image_file_url %><br />
       <%= hidden_field_tag 'redirect', url_for(:controller=>'me/base',:action=>'edit') %>
       <%= hidden_field_tag 'user_id', @user.id %>
       <br /><%= submit_tag 'Upload Image' %>
     <% end -%>
-    </p>
   </div>
   </td></tr></table>
   

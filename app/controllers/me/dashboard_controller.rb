@@ -35,12 +35,7 @@ class Me::DashboardController < Me::BaseController
   
   def context
     me_context('large')
-    unless ['show','index'].include?(params[:action])
-      # url_for is used here instead of me_url so we can include the *path in the link
-      # (it might be a bug in me_url that this is not included, or it might be a bug in url_for
-      # that it is. regardless, we want it.)
-      add_context params[:action], url_for(:controller => 'me', :action => params[:action])
-    end
+    add_context 'dashboard', url_for(:controller => 'me/dashboard', :action => nil)
   end
   
 end

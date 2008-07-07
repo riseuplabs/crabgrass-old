@@ -37,7 +37,7 @@ class Me::BaseController < ApplicationController
       # url_for is used here instead of me_url so we can include the *path in the link
       # (it might be a bug in me_url that this is not included, or it might be a bug in url_for
       # that it is. regardless, we want it.)
-      add_context params[:action], url_for(:controller => 'me', :action => params[:action])
+      add_context params[:action], url_for(:controller => '/me/', :action => params[:action])
     end
   end
   
