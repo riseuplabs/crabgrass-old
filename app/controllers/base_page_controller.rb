@@ -117,8 +117,13 @@ class BasePageController < ApplicationController
     return true if request.xhr?
     @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
-    @user ||= current_user 
-    page_context
+    if !@group and !@user and params[:action] == 'create'
+      @user = current_user     
+      me_context('large')
+      add_context 'create', url_for(:controller => params[:controller], :action => 'create', :id => params[:id])
+    else
+      page_context
+    end
     true
   end
   
