@@ -1,6 +1,7 @@
 class AssetPageController < BasePageController
   before_filter :fetch_asset
   javascript :extra
+  stylesheet 'asset'
 
   include AssetPageHelper
 

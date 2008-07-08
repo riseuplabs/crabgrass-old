@@ -42,7 +42,8 @@ class Asset < ActiveRecord::Base
   alias_method_chain :destroy_file, :versions_directory
   
   versioned_class.class_eval do
-    delegate :page, :is_public?, :small_icon, :big_icon, :icon, :to => :asset
+    delegate :page, :is_public?, :small_icon, :big_icon,
+      :icon, :has_thumbnail?, :may_thumbnail?, :to => :asset
     def public_filename(thumbnail = nil)
       "/assets/#{asset.id}/versions/#{version}/#{thumbnail_name_for(thumbnail)}"
     end
@@ -241,12 +242,14 @@ class Asset < ActiveRecord::Base
     tmps.each{|f|File.unlink(f)} # remove tmps
   end
 
-  def may_preview?
+  def may_thumbnail?
     image? or previewable_types.include?(content_type) 
   end 
 
-  def has_preview?
-    thumbnails.any?
+  # returns true if this asset has thumbnails
+  # this is unfortunately inefficient, because it requires a database query
+  def has_thumbnail?
+    may_thumbnail? and thumbnails.any?
   end
   
   def previewable_types
@@ -270,11 +273,11 @@ class Asset < ActiveRecord::Base
   end
 
   # Just like the attachment_fu create_or_update_thumbnail, but we have replaced
-  # thumbnailable? with may_preview?. If we tried to override thumbnailable, 
+  # thumbnailable? with may_thumbnail?. If we tried to override thumbnailable, 
   # attachment_fu would try to generate a thumbnail itself. 
   # Also, we are hardcoding the content_type to be jpg.
   def our_create_or_update_thumbnail(temp_file, file_name_suffix, *size)
-    may_preview? || raise(ThumbnailError.new("Don't know how to create a thumbnail of content type '%s'" % content_type))
+    may_thumbnail? || raise(ThumbnailError.new("Don't know how to create a thumbnail of content type '%s'" % content_type))
     returning find_or_initialize_thumbnail(file_name_suffix) do |thumb|
       thumb.attributes = {
         :content_type             => "image/jpg",
@@ -292,8 +295,12 @@ class Asset < ActiveRecord::Base
   # be ".png". we need to break this behavior so that a ".pdf"
   # can have a preview of ".jpg".
   def thumbnail_name_for_with_hardcoded_ext(thumbnail = nil)
+    puts '/----------------------------------------------'
+    puts thumbnail.inspect
+    puts self.inspect
+    puts '\----------------------------------------------'
     return filename if thumbnail.blank?
-    if may_preview? and !image?
+    if may_thumbnail? and !image?
       # not an image, but we can preview, so hardcode the thumbnail ext.
       basename = filename.gsub /\.\w+$/, ''
       ext = '.jpg'
@@ -307,7 +314,7 @@ class Asset < ActiveRecord::Base
 
   ## override default destroy_thumbnails
   def destroy_thumbnails
-    if may_preview? && respond_to?(:parent_id) && parent_id.nil?
+    if may_thumbnail? && respond_to?(:parent_id) && parent_id.nil?
       self.thumbnails.each { |thumbnail| thumbnail.destroy }
     end
   end

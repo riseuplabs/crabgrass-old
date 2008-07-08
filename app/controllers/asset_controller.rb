@@ -66,7 +66,7 @@ class AssetController < ApplicationController
 
   # guess if we are viewing a thumbnail or the actual asset
   def thumbnail_filename?(filename)
-    @asset and @asset.may_preview? and filename != @asset.filename
+    @asset and @asset.may_thumbnail? and filename != @asset.filename
     # or we could check if filename ends in 'thumb' or 'preview'
   end
 
