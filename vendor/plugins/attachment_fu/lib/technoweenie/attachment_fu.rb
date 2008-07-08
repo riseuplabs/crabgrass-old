@@ -1,4 +1,5 @@
 require 'mime/types'
+## ^^^ provided by gem "mime-types"
 
 module Technoweenie # :nodoc:
   module AttachmentFu # :nodoc:

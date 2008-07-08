@@ -15,7 +15,7 @@ debian/ubuntu
 required:
   apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
   gem install -y rails
-  gem install RedCloth rmagick tzinfo ruby-debug hpricot
+  gem install RedCloth rmagick tzinfo ruby-debug hpricot mime-types
 
 optional for latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
