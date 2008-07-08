@@ -182,6 +182,7 @@ class Asset < ActiveRecord::Base
     
     'packages/' => 'archive',
     'application/zip' => 'archive',
+    'application/zip-compressed' => 'archive',
     'application/gzip' => 'archive',
     'application/rar' => 'archive',
     'application/deb' => 'archive',
@@ -295,10 +296,10 @@ class Asset < ActiveRecord::Base
   # be ".png". we need to break this behavior so that a ".pdf"
   # can have a preview of ".jpg".
   def thumbnail_name_for_with_hardcoded_ext(thumbnail = nil)
-    puts '/----------------------------------------------'
-    puts thumbnail.inspect
-    puts self.inspect
-    puts '\----------------------------------------------'
+#    puts '/----------------------------------------------'
+#    puts thumbnail.inspect
+#    puts self.inspect
+#    puts '\----------------------------------------------'
     return filename if thumbnail.blank?
     if may_thumbnail? and !image?
       # not an image, but we can preview, so hardcode the thumbnail ext.
