@@ -6,6 +6,7 @@ class AssetController < ApplicationController
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
   def show
+    render(:text => "Not found", :status => :not_found) and return unless @asset
     filename = params[:filename].first
     if thumbnail_filename?(filename)
       thumbnail = @asset.thumbnails.detect {|a| filename == a.filename }
@@ -45,8 +46,11 @@ class AssetController < ApplicationController
 
   def fetch_asset
     @thumb = nil
-    @asset = Asset.find(params[:id]).versions.find_by_version(params[:version]) if params[:version]
-    @asset ||= Asset.find(params[:id], :include => ['pages', 'thumbnails']) if params[:id]
+    if params[:version]
+      @asset = Asset.find(params[:id]).versions.find_by_version(params[:version])
+    else
+      @asset = Asset.find(params[:id], :include => ['pages', 'thumbnails'])
+    end
     return unless @asset
 
     if @asset.is_public?
@@ -71,9 +75,10 @@ class AssetController < ApplicationController
   end
 
   def public_or_login_required
+    return true unless @asset
     @asset.page.public? or login_required
   end
-  
+
   def authorized?
     if @asset
       if action_name == 'show' || action_name == 'version'

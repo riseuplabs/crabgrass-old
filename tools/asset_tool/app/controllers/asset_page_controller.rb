@@ -35,9 +35,11 @@ class AssetPageController < BasePageController
   end
 
   def update
+  require 'ruby-debug'; debugger
     @page.data.uploaded_data = params[:asset]
     @page.data.filename = @page.title + @page.data.suffix
     if @page.data.save
+      @asset.generate_non_image_thumbnail if @asset.may_thumbnail?
       return redirect_to(page_url(@page))
     else
       message :object => @page
