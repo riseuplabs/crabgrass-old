@@ -5,6 +5,7 @@ require 'asset_page_controller'
 class AssetPageController; def rescue_action(e) raise e end; end
 
 class Tool::AssetControllerTest < Test::Unit::TestCase
+  fixtures :users
   Asset.file_storage = "#{RAILS_ROOT}/tmp/assets"
   Asset.public_storage = "#{RAILS_ROOT}/tmp/public/assets"
 
@@ -33,14 +34,54 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     post :show, :page_id => page.id, :id => 1
     assert_response :success
     assert_template 'show'
+    assert_equal asset.full_filename, assigns(:asset).full_filename, "should fetch the correct file"
   end
   
   def test_create
-    # TODO: figure out what create action is supposed to do and then write this test
+    login_as :gerrard
+
+    get 'create'
+    assert_template 'create', "should render asset creation page"
+    
+#    post 'create'
+#    assert_equal "You must select a file.", flash[:error], "shouldn't be able to create an asset page with no asset"
+
+    assert_no_difference 'Asset.count' do
+      post 'create', :asset => {:uploaded_data => ""}
+      assert_equal "You must select a file.", flash[:error], "shouldn't be able to create an asset page with no asset"
+    end
+    
+    assert_difference 'Asset.count', 3, "image file should generate 2 thumbnails" do
+      post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')}
+      assert_response :redirect
+    end
+    
+    assert_difference 'Asset.count', 1, "doc file should not generate thumbnails immediately" do
+      post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','msword.doc'), 'application/msword')}
+      assert_response :redirect
+    end
+
+    assert_difference 'Asset.count', 1, "raw file should not generate thumbnails" do
+      post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','raw_file.bin'), 'default')}
+      assert_response :redirect
+    end
+    
   end
-  
-  def test_destroy
-    # TODO: figure out what destroy action is supposed to do and then write this test
+
+  def test_update
+    login_as :gerrard
+    get 'create'
+    
+    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','gears.jpg'), 'image/jpg')}    
+    assert_difference 'Asset.count', 1, "jpg should version" do
+      post 'update', :page_id => assigns(:page).id, :asset => fixture_file_upload(File.join('files','gears2.jpg'), 'image/jpg')
+    end
+    
+    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','msword.doc'), 'application/msword')}    
+    assert_difference 'Asset.count', 1, "doc should version" do
+      post 'update', :page_id => assigns(:page).id, :asset => fixture_file_upload(File.join('files','msword2.doc'), 'application/msword')
+    end
+    
   end
   
   def test_destroy_version
@@ -64,6 +105,42 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_equal assigns(:page).data.versions.size, 1
   end
+
+  def test_destroy_version_2
+    login_as :gerrard
+    get 'create'
+    post 'create', :page => {:title => "", :summary => ""},
+         :asset => {:uploaded_data => fixture_file_upload(File.join('files','gears.jpg'), 'image/jpg')}    
+    post 'update', :page_id => assigns(:page).id,
+         :asset => fixture_file_upload(File.join('files','gears2.jpg'), 'image/jpg')
+    assert_difference 'Asset.count', -1, "destroy should remove a version" do
+      post :destroy_version,  :page_id => assigns(:page).id, :id => 1
+    end
+  end
+
+  def test_generate_preview
+    login_as :gerrard
+
+    get 'create'
+
+    assert_difference 'Asset.count', 1, "pdf file should not generate thumbnails immediately" do
+      post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','test.pdf'), 'application/pdf')}
+      assert_response :redirect
+    end
+    assert_difference 'Asset.count', 2, "eventually doc file should generate 2 thumbnails" do
+      xhr :post, 'generate_preview', :page_id => assigns(:page).id
+    end
+
+
+    assert_difference 'Asset.count', 1, "doc file should not generate thumbnails immediately" do
+      post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','msword.doc'), 'application/msword')}
+      assert_response :redirect
+    end
+    assert_difference 'Asset.count', 2, "eventually doc file should generate 2 thumbnails" do
+      xhr :post, 'generate_preview', :page_id => assigns(:page).id
+    end
+  end
+
 
   protected
   def create_page(options = {})
