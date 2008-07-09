@@ -1,4 +1,3 @@
-
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 
@@ -7,26 +6,16 @@ require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
 
-#### ENUMERATIONS ##############
-
 # levels of page access
-ACCESS = {
- :admin => 1,
- :change => 2,
- :edit => 2, 
- :view => 3,
- :read => 3
-}.freeze
+ACCESS = {:admin => 1, :change => 2, :edit => 2, :view => 3, :read => 3}.freeze
 
 # types of page flows
-FLOW = {
- :membership => 1,
- :contacts => 2,
-}.freeze
+FLOW = {:membership => 1, :contacts => 2, :deleted => 3}.freeze
 
 # do this early because environments/*.rb need it
-require 'lib/crabgrass_config'
+require 'lib/crabgrass/config'
 
+# get list of mods to enable (before plugins are loaded)
 MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").freeze
 TOOLS_ENABLED = File.read("#{RAILS_ROOT}/config/tools_enabled.list").split("\n").freeze
 
@@ -48,13 +37,6 @@ Rails::Initializer.run do |config|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
 
-  # gems that crabgrass depends on:
-  # install with 'sudo rake gems:install'
-#  config.gem 'RedCloth'
-#  config.gem 'rmagick'
-#  config.gem 'ruby-debug'
-#  config.gem 'hpricot'
-
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
   config.active_record.observers = :user_observer
@@ -65,16 +47,6 @@ Rails::Initializer.run do |config|
   # storage container, you need to find a way to disable breadcrumbs as well. 
   config.action_controller.session_store = :p_store
 
-  #
-  # Your secret key for verifying cookie session data integrity.
-  # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
-  # no regular words or you'll be exposed to dictionary attacks.
-#  config.action_controller.session = {
-#    :session_key => '_crabgrass_session',
-#    :secret      => #'9ce1ae3f9d26b56cf9fc7682635486898b3450a9e0116ea013a7a14dd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
-#  }
-  
   # Make Active Record use UTC-base instead of local time
   config.time_zone = 'UTC'
 
@@ -93,57 +65,6 @@ end
 # Lots of errors if this is enabled:
 ActiveRecord::Base.partial_updates = false
 
-# Store "Tool::Discussion" in database instead of just "Discussion"!
-# ActiveRecord::Base.store_full_sti_class = true
-
-#### DEBUGGING ###################
-
-# Make engines much less verbose!
-if defined? Engines
-  Engines.logger.level = Logger::INFO
-end
-
-#ActiveRecord::Base.logger.level = Logger::DEBUG
-#ActionMailer::Base.logger.level = Logger::DEBUG
-
-#### CUSTOM EXCEPTIONS #############
-
-class PermissionDenied < Exception; end    # the user does not have permission to do that.
-class ErrorMessage < Exception; end        # just show a message to the user.
-class AssociationError < Exception; end    # thrown when an activerecord has made a bad association (for example, duplicate associations to the same object).
-
-#### CORE LIBRARIES ################
-
-require "#{RAILS_ROOT}/lib/extends_to_core.rb"
-require "#{RAILS_ROOT}/lib/extends_to_active_record.rb"
-require "#{RAILS_ROOT}/lib/fake_globalize.rb"
-require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
-require "#{RAILS_ROOT}/lib/path_finder.rb"
-require "#{RAILS_ROOT}/lib/page_class_proxy.rb"
-
-#### TOOLS #########################
-
-# run "rake update_page_classes" every time you add/remove a Page subclass:
-#PAGE_CLASSES = PageClassProxy.load_page_classes
-
+# build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
-
-#PAGE_CLASSES.each do |pc|
-#  PROXIES[pc.full_class_name] = pc
-#end
-
-#### ASSETS ########################
-
-#Asset.file_storage = "/crypt/files"
-
-#### USER INTERFACE HELPERS ########
-
-FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist' if defined? FightTheMelons
-
-if File.exists?('.svn')
-  SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil
-else
-  SVN_REVISION = nil
-end
-
 
