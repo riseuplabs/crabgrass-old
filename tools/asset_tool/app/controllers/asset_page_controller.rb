@@ -35,7 +35,6 @@ class AssetPageController < BasePageController
   end
 
   def update
-  require 'ruby-debug'; debugger
     @page.data.uploaded_data = params[:asset]
     @page.data.filename = @page.title + @page.data.suffix
     if @page.data.save
