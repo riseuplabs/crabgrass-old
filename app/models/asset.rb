@@ -1,5 +1,12 @@
+begin
+  require 'mime/types'
+rescue LoadError => exc
+end
+
 class Asset < ActiveRecord::Base
   
+  include Crabgrass::MimeType
+
   ## associations #####################################
 
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page'
@@ -118,103 +125,16 @@ class Asset < ActiveRecord::Base
   end
   
   def big_icon
-    "mime/big/#{icon}"
+    "mime/big/#{icon_for(content_type)}"
   end
 
   def small_icon
-    "mime/small/#{icon}"
-  end
-  
-  def icon
-    ctype = content_type.to_s.sub(/\/x\-/,'/')  # remove x-
-    cgroup = ctype.sub(/\/.*$/,'/')              # everything after /
-    iconname = @@mime_to_icon_map[ctype] || @@mime_to_icon_map[cgroup] || @@mime_to_icon_map['default']
-    "#{iconname}.png"
+    "mime/small/#{icon_for(content_type)}"
   end
     
-  @@mime_to_icon_map = {
-    'default' => 'default',
-    
-    'text/' => 'text',
-    'text/html' => 'html',
-    'application/rtf' => 'rtf',
-    
-    'application/pdf' => 'pdf',
-    'application/bzpdf' => 'pdf',
-    'application/gzpdf' => 'pdf',
-    'application/postscript' => 'pdf',
-    
-    'text/spreadsheet' => 'spreadsheet',
-    'application/gnumeric' => 'spreadsheet',
-    'application/kspread' => 'spreadsheet',
-        
-    'application/scribus' => 'doc',
-    'application/abiword' => 'doc',
-    'application/kword' => 'doc',
-    
-    'application/msword' => 'msword',
-    'application/mswrite' => 'msword',
-    'application/vnd.ms-powerpoint' => 'mspowerpoint',
-    'application/vnd.ms-excel' => 'msexcel',
-    'application/vnd.ms-access' => 'msaccess',
-    
-    'application/executable' => 'binary',
-    'application/ms-dos-executable' => 'binary',
-    'application/octet-stream' => 'binary',
-    
-    'application/shellscript' => 'shell',
-    'application/ruby' => 'ruby',
-        
-    'application/vnd.oasis.opendocument.spreadsheet' => 'oo-spreadsheet',    
-    'application/vnd.oasis.opendocument.spreadsheet-template' => 'oo-spreadsheet',
-    'application/vnd.oasis.opendocument.formula' => 'oo-spreadsheet',
-    'application/vnd.oasis.opendocument.chart' => 'oo-spreadsheet',
-    'application/vnd.oasis.opendocument.image' => 'oo-graphics',    
-    'application/vnd.oasis.opendocument.graphics' => 'oo-graphics',
-    'application/vnd.oasis.opendocument.graphics-template' => 'oo-graphics',
-    'application/vnd.oasis.opendocument.presentation-template' => 'oo-presentation',
-    'application/vnd.oasis.opendocument.presentation' => 'oo-presentation',
-    'application/vnd.oasis.opendocument.database' => 'oo-database',
-    'application/vnd.oasis.opendocument.text-web' => 'oo-html',
-    'application/vnd.oasis.opendocument.text' => 'oo-text',
-    'application/vnd.oasis.opendocument.text-template' => 'oo-text',
-    'application/vnd.oasis.opendocument.text-master' => 'oo-text',
-    
-    'packages/' => 'archive',
-    'application/zip' => 'archive',
-    'application/zip-compressed' => 'archive',
-    'application/gzip' => 'archive',
-    'application/rar' => 'archive',
-    'application/deb' => 'archive',
-    'application/tar' => 'archive',
-    'application/stuffit' => 'archive',
-    'application/compress' => 'archive',
-        
-    'video/' => 'video',
-
-    'audio/' => 'audio',
-    
-    'image/' => 'image',
-    'image/svg+xml' => 'vector',
-    'image/svg+xml-compressed' => 'vector',
-    'application/illustrator' => 'vector',
-    'image/bzeps' => 'vector',
-    'image/eps' => 'vector',
-    'image/gzeps' => 'vector',
-    
-    'application/pgp-encrypted' => 'lock',
-    'application/pgp-signature' => 'lock',
-    'application/pgp-keys' => 'lock'
-  }
 
   ##################################################
   # previews
-
-  @@abiword_content = %w(text/ text/html text/richtext application/rtf application/msword)
-  @@gm_content = %w(application/pdf application/bzpdf application/gzpdf application/postscript application/xpdf)
-  @@rmagick_content = %w(image/jpeg image/pjpeg image/gif image/png image/x-png image/jpg)
-  @@previewable_content = @@rmagick_content + @@gm_content + @@abiword_content
-  mattr_reader :abiword_content, :gm_content, :rmagick_content, :previewable_content
 
   ## TODO: test if gm and abiword are installed
   def generate_non_image_thumbnail
@@ -223,20 +143,20 @@ class Asset < ActiveRecord::Base
     tmps = []
 
     # try abiword conversion
-    if abiword_content.include? ctype
-      tmp_pdf = tmp_file_name('preview','pdf')
-      tmps << tmp_pdf
-      system("abiword '#{fname}' --to='#{tmp_pdf}'") # TODO: check how clean full_filename is
+    if convertable_by?(ctype, :abiword)
+      output_pdf = tmp_file_name('preview','pdf')
+      tmps << output_pdf
+      run_converter(:abiword, fname, output_pdf)
       ctype = 'application/pdf'
-      fname = tmp_pdf
+      fname = output_pdf
     end
 
     # try gm conversion
-    if gm_content.include? ctype
-      tmp_jpg = tmp_file_name('preview','jpg')
-      tmps << tmp_jpg
-      system("gm convert -geometry 512x512 -density 60 '#{fname}'[0] '#{tmp_jpg}'")
-      fname = tmp_jpg
+    if convertable_by?(ctype, :gm)
+      output_jpg = tmp_file_name('preview','jpg')
+      tmps << output_jpg
+      run_converter(:gm, fname, output_jpg)
+      fname = output_jpg
     end
     
     set_thumbnail_image(fname)
@@ -244,7 +164,7 @@ class Asset < ActiveRecord::Base
   end
 
   def may_thumbnail?
-    image? or previewable_types.include?(content_type) 
+    image? or convertable_by?(content_type, :any)
   end 
 
   # returns true if this asset has thumbnails
@@ -253,8 +173,24 @@ class Asset < ActiveRecord::Base
     may_thumbnail? and thumbnails.any?
   end
   
-  def previewable_types
-    @@previewable_content
+  # override default uploaded_data= in order to be able to 
+  # assign the correct mime-type if we don't pick it up correctly
+  # from the browser. 
+  def uploaded_data=(file_data)
+    return nil if file_data.nil? || file_data.size == 0
+    self.content_type = file_data.content_type
+    if defined?('MIME::Types') and self.content_type == 'application/octet-stream'
+      # ie6 does not accurately report content_type. if the type is generic binary
+      # then use the file extension to guess:
+      self.content_type = MIME::Types.type_for(file_data.original_filename).first
+    end
+    self.filename = file_data.original_filename if respond_to?(:filename)
+    if file_data.is_a?(StringIO)
+      file_data.rewind
+      self.temp_data = file_data.read
+    else
+      self.temp_path = file_data
+    end
   end
 
   protected

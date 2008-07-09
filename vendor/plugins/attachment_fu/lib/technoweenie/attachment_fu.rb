@@ -1,6 +1,3 @@
-require 'mime/types'
-## ^^^ provided by gem "mime-types"
-
 module Technoweenie # :nodoc:
   module AttachmentFu # :nodoc:
     @@default_processors = %w(ImageScience Rmagick MiniMagick Gd2 CoreImage)
@@ -295,10 +292,6 @@ module Technoweenie # :nodoc:
       def uploaded_data=(file_data)
         return nil if file_data.nil? || file_data.size == 0
         self.content_type = file_data.content_type
-        if self.content_type == 'application/octet-stream'
-          # ie6 does not accurately report content_type
-          self.content_type = MIME::Types.type_for(file_data.original_filename).first
-        end
         self.filename     = file_data.original_filename if respond_to?(:filename)
         if file_data.is_a?(StringIO)
           file_data.rewind

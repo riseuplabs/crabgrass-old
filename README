@@ -15,11 +15,17 @@ debian/ubuntu
 required:
   apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
   gem install -y rails
-  gem install RedCloth rmagick tzinfo ruby-debug hpricot mime-types
+  gem install RedCloth rmagick tzinfo
+
+required for running tests:
+  gem install ruby-debug hpricot
 
 optional for latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
   gem install open4
+
+optional for improved mime-type support:
+  gem install mime-types
 
 then check out the code:
   svn co https://code.autistici.org/svn/crabgrass/trunk crabgrass
@@ -49,6 +55,9 @@ vendor/plugins/README: details on each plugin.
 GEMS INFO
 =========================================================
 
+required
+---------
+
 tzinfo
   required for timezone support
 
@@ -56,13 +65,21 @@ redcloth
   greencloth derives from redcloth
 
 rmagick
-  used to scale avatars and build thumbnails
+  Used to scale avatars and build thumbnails.
+
+optional
+--------
 
 open4
-  used by latex renderer (optional)
+  A better way to run open pipes. Used by latex renderer. 
 
 SyslogLogger
-  improved logging (optional)
+  Improved logging that allows for performance
+  analysis of the logs. 
+
+mime-types
+  Used to detect mime-types of uploaded files
+  (when the browser does not correctly report it)
 
 hpricot
-  used by the plugin webrat
+  Required for running tests. Used by the plugin webrat.
