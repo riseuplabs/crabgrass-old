@@ -83,3 +83,20 @@ mime-types
 
 hpricot
   Required for running tests. Used by the plugin webrat.
+  
+ADMINISTRATION
+=========================================================
+
+One goal in Crabgrass system design is to avoid creating
+different levels of privilege for users.  Shall this be
+an egalitarian social network, or shall we build another
+anarchist bureaucracy?  But what about when people need
+a new password, etc?  For now, this administrative stuff
+can be done from the rails console.
+
+Example:  RESETING A PASSWORD
+$ script/console production
+>> u = User.find_for_forget("user's email")
+>> u.password = u.password_confirmation = "new password"
+>> u.save
+
