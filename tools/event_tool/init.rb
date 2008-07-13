@@ -1,5 +1,5 @@
-# Include hook code here
 
+=begin
 PageClassRegistrar.add(
   'EventPage',
   :controller => 'event_page',
@@ -9,6 +9,7 @@ PageClassRegistrar.add(
   :class_description => 'An event added to the personal/group/public calendar.',
   :class_group => 'event'
 )
+=end
 
 #self.override_views = true
 self.load_once = false

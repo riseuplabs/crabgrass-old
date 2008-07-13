@@ -6,8 +6,8 @@ class Site
   attr_accessor :email_sender
   attr_accessor :secret
   attr_accessor :pagination_size
-  attr_accessor :available_page_types
   attr_accessor :super_admins
+  attr_writer   :available_page_types
 
   # the default site when no others match
   cattr_accessor :default
@@ -19,6 +19,12 @@ class Site
       method = key.to_s + '='
       self.send(method,value) if self.respond_to?(method)
     end
+  end
+
+  def available_page_types
+    @available_page_types ||= PAGES.collect.sort_by{|p|p[1].order}.collect{|p|
+      p[1].class_name unless p[1].internal
+    }.compact
   end
 
   def self.load_from_file(filename)

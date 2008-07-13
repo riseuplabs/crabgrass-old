@@ -6,6 +6,8 @@ require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
 
+Dependencies.load_once_paths << "#{RAILS_ROOT}/lib"
+
 # levels of page access
 ACCESS = {:admin => 1, :change => 2, :edit => 2, :view => 3, :read => 3}.freeze
 
@@ -29,7 +31,6 @@ Crabgrass::Config.host          = Site.default.domain
 Crabgrass::Config.email_sender  = Site.default.email_sender
 Crabgrass::Config.secret        = Site.default.secret
 SECTION_SIZE = Site.default.pagination_size
-AVAILABLE_PAGE_CLASSES = Site.default.available_page_types.dup
 
 Rails::Initializer.run do |config|
 

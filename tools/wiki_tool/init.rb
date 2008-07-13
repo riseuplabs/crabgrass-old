@@ -6,7 +6,8 @@ PageClassRegistrar.add(
   :icon => 'wiki.png',
   :class_display_name => 'wiki',
   :class_description => 'A free-form text document.',
-  :class_group => 'wiki'
+  :class_group => 'wiki',
+  :order => 4
 )
 
 #self.override_views = true
