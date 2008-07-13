@@ -5,7 +5,7 @@ require 'asset_page_controller'
 class AssetPageController; def rescue_action(e) raise e end; end
 
 class Tool::AssetControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :groups
   Asset.file_storage = "#{RAILS_ROOT}/tmp/assets"
   Asset.public_storage = "#{RAILS_ROOT}/tmp/public/assets"
 
@@ -67,6 +67,23 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     end
     
   end
+
+  def test_create_in_group
+    login_as :blue
+
+    get 'create'
+
+    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')}, :group_id => groups(:rainbow).id
+    assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group (no title)"
+    assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group (no title)"
+
+    post 'create', :page => {:title => "non-blank title", :summary => ""}, :asset => {:uploaded_data => fixture_file_upload(File.join('files','image.png'), 'image/png')}, :group_id => groups(:rainbow).id
+#require 'ruby-debug'; debugger;
+    assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group (non-blank title)"
+    assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group (non-blank title)"
+  end
+    
+
 
   def test_update
     login_as :gerrard
