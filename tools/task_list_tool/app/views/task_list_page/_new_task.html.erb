@@ -1,0 +1,22 @@
+<% @task = Task.new -%>
+<div id="new-task-link">
+  <%= link_to_function 'add task', show('new-task') + hide('new-task-link') %> 
+</div>
+<div id='new-task' style='display:none'>
+<% form_remote_tag( *options_for_new_task_form ) do -%>
+  description:<br/>
+    <%= text_field 'task', 'name', :class => 'task_name' %><br/>
+  detail:<br/>
+    <%= text_area 'task', 'description', :size => '50x4', :class => 'task_description' %><br/>
+  <!--   due:<br/>
+    <%= calendar_date_select_tag 'task[due_at]' %><br/> -->
+  assign to:<br/>
+    <%= checkboxes_for_assign_people_to_task(@task, [current_user.id]) %>
+    <br style='clear:left'/>
+  <p>
+    <%= submit_tag 'Add Task' %>
+    <%= button_to_function "Done", hide('new-task') + show('new-task-link') %>
+    <%= spinner('new-task') %>
+  </p>
+<% end -%>
+</div> <!-- end new task form -->

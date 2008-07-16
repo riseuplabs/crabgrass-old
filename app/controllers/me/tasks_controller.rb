@@ -2,6 +2,7 @@ class Me::TasksController < Me::BaseController
 
   stylesheet 'me', 'tasks'
   javascript :extra
+  helper 'task_list_page'
 
   # TODO
   # The way this works is incredibly stupid. Basically, we fetch all the task lists
