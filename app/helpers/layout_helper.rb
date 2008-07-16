@@ -133,7 +133,7 @@ module LayoutHelper
       lines << '<script defer type="text/javascript" src="/javascripts/pngfix.js"></script>'
       # prevent flicker on background images in ie6
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
-    lines << '<![endif] -->'
+    lines << '<![endif]-->'
     lines.join("\n")
   end
 
