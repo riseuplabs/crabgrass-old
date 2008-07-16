@@ -50,6 +50,7 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   config.time_zone = 'UTC'
+  config.active_record.default_timezone = :utc
 
   # allow plugins in mods/ and pages/
   config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
