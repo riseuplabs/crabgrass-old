@@ -62,5 +62,22 @@ module TimeHelper
     (local_now.at_beginning_of_day - 7.days) < to_local(utc_time)
   end
   
+  ##############################################
+  ## UI helpers
+
+  def calendar_tag(field_id, date=nil)
+    include_calendar_tags
+    calendar_date_select_tag( date ? date.to_date.to_formatted_s( :long ) : nil )
+  end
+
+  def include_calendar_tags
+    unless @calendar_tags_included
+      @calendar_tags_included = true
+      content_for :end_tags do
+        calendar_date_select_includes "default"
+      end
+    end
+  end
+
 end
 
