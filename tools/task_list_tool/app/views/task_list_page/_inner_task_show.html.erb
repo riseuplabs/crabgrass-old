@@ -1,0 +1,18 @@
+<%# this is the stuff that goes inside the <li></li> -%>
+<%= task_checkbox(task) %><span class='task'><%= task_link_to_people(task) %><%= task_link_to_details(task) %></span>
+<div id='<%=dom_id(task,'details')%>' style='display:none' class='task'>
+  <table>
+    <tr><td colspan="2"><%= task.description_html %></td></tr>
+    <tr>
+      <td>Created: <%= friendly_date(task.created_at) %></td>
+      <td>&nbsp; Completed: <%= friendly_date(task.completed_at) %></td>
+    </tr>
+    <tr><td colspan="2">
+      <%= delete_task_details_button(task) %>
+      <%= close_task_details_button(task) %>
+      <%= edit_task_details_button(task) %>
+      <%= spinner(task) %>
+    </td></tr>
+  </table>
+</div>
+

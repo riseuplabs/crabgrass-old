@@ -1,3 +1,4 @@
-page.remove "task_#{@task.id}"
+page.remove dom_id(@task)
 page.insert_html :bottom, 'sort_list_completed', :partial => 'task', :locals => {:task => @task}
 page.sortable 'sort_list_completed', :handle => 'handle', :url => page_url(@page, :action=>'sort')
+page.hide 'no_completed_tasks'

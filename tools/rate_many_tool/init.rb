@@ -6,7 +6,8 @@ PageClassRegistrar.add(
   :icon => 'rate-many.png',
   :class_display_name => 'approval vote',
   :class_description => 'Approve or disapprove of each possibility.',
-  :class_group => 'poll'
+  :class_group => 'poll',
+  :order => 10
 )
 
 #self.override_views = true

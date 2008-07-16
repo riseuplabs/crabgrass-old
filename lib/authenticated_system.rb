@@ -15,7 +15,11 @@ module AuthenticatedSystem
   def logged_in?
     current_user.is_a?(AuthenticatedUser)
   end
-    
+  
+  def logged_in_since
+    session[:logged_in_since]
+  end
+
   protected 
 
     def update_last_seen_at(user_id)
@@ -26,6 +30,7 @@ module AuthenticatedSystem
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
+      session[:logged_in_since] = Time.now
       @current_user = new_user
     end
     

@@ -19,6 +19,9 @@ module ImageHelper
   ## for example, can be used to change the icon of a link
   ## to be a spinner.
   def set_icon_style(element_id, icon)
+    unless element_id.is_a? String
+      element_id = dom_id(element_id)
+    end
     if icon == 'spinner'
       icon_path = '/images/spinner.gif'
     else
@@ -88,13 +91,17 @@ module ImageHelper
     "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
   end
   def spinner_id(id)
-    "#{id.to_s}_spinner"
+    if id.instance_of? ActiveRecord::Base
+      dom_id(id, 'spinner')
+    else
+      "#{id.to_s}_spinner"
+    end
   end
   def hide_spinner(id)
-    "Element.hide('#{spinner_id(id)}');"
+    "$('%s').hide();" % spinner_id(id)
   end
   def show_spinner(id)
-    "Element.show('#{spinner_id(id)}');"
+    "$('%s').show();" % spinner_id(id)
   end
 
 end

@@ -7,7 +7,7 @@ class TaskListPageController < BasePageController
   
   def show 
   end
-   
+
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -66,12 +66,18 @@ class TaskListPageController < BasePageController
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
     @task.update_attributes(params[:task])
+    render :update do |page|
+      page.replace_html dom_id(@task), :partial => 'inner_task_show', :locals => {:task => @task}
+    end
   end
   
   # ajax only, returns rjs
   def edit_task
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
+    render :update do |page|
+      page.replace_html dom_id(@task), :partial => 'inner_task_edit', :locals => {:task => @task}
+    end
   end
 
   protected
@@ -96,11 +102,9 @@ class TaskListPageController < BasePageController
       user.resolved(@page, (not pending))
     end
     
-    # make sure the page is updated_at this very moment
-#    @page.save 
-    #elijah recommended doing this as follows instead:
-    current_user.updated(@page)
-    true
+    # current_user.updated(@page) <-- if we want the page to become unread on each update
+    @page.save # instead of current_user.updated
+    return true
   end
   
   def fetch_task_list

@@ -1,0 +1,17 @@
+<%# this is the edit form that goes inside the <li></li> -%>
+<%= task_checkbox(task) %><span class='task'><%= task_link_to_people(task) %><%= task_link_to_details(task) %></span>
+<div id='<%=dom_id(task,'details')%>' class='task'>
+<% form_remote_tag( *options_for_task_edit_form(task) ) do -%>
+  <table>
+    <tr><td><%= text_field 'task', 'name', :class => 'task_name' %></td></tr>
+    <tr><td><%= text_area  'task', 'description', :size => '50x4', :class => 'task_description' %></td></tr>
+    <tr><td><%= checkboxes_for_assign_people_to_task(task) %></td></tr>
+    <tr><td>
+      <%= delete_task_edit_button(task) %>
+      <%= close_task_edit_button(task) %>
+      <%= save_task_edit_button(task) %>
+      <%= spinner(task) %>
+    </td></tr>
+  </table>
+<% end %>
+</div>

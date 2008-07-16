@@ -41,5 +41,20 @@ module ApplicationHelper
     return false if @called_before[key]
     @called_before[key]=true
   end
+
+  # produces javascript to hide the given id or object
+  def hide(id, extra=nil)
+    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+    "$('%s').hide();" % id
+  end
+
+  # produces javascript to show the given id or object
+  def show(id, extra=nil)
+    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
+    "$('%s').show();" % id
+  end
   
+  def logged_in_since
+    session[:logged_in_since] || Time.now
+  end
 end

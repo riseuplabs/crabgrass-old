@@ -7,7 +7,8 @@ PageClassRegistrar.add(
   :icon => 'package.png',
   :class_display_name => 'file',
   :class_description => 'an uploaded file',
-  :class_group => 'asset'
+  :class_group => 'asset', 
+  :order => 20
 )
 
 #self.override_views = true

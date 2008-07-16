@@ -23,7 +23,8 @@ class PageClassProxy
 
   attr_accessor :controller, :model, :icon, :controller_class_name
   attr_accessor :class_display_name, :class_description, :class_group
-  attr_accessor :class_name, :full_class_name
+  attr_accessor :class_name, :full_class_name, :internal, :order
+
 #  cattr_accessor :quiet
 
   def initialize(arg=nil)
@@ -36,6 +37,7 @@ class PageClassProxy
       end
       self.full_class_name = self.class_name
       self.controller_class_name = "#{controller.camelcase}Controller"
+      self.order ||= 100
     else
       throw Exception.new('no longer used')
 #      page_class_name = arg
