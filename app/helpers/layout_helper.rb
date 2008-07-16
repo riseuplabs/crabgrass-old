@@ -111,26 +111,25 @@ module LayoutHelper
 
   ############################################
   # JAVASCRIPT
-  
-  def optional_javascript
-    javascript_include_tag('effects', 'dragdrop', 'controls') if need_extra_javascript?
+
+  def optional_javascript_tag
+    javascript_include_tag(*(optional_javascripts.to_a))
   end
-    
-  def need_extra_javascript?
-    if @javascript
-      @javascript == :extra
-    else
-      controller.class.javascript == :extra
+  def optional_javascripts
+    if @javascript  # optional javascript at the action level
+      @javascript
+    else # optional javascript at the controller level
+      controller.class.javascript 
     end
   end
-
+  
   def crabgrass_javascripts
     lines = []
     lines << javascript_include_tag('prototype', 'application', :cache => true)
-    lines << optional_javascript
+    lines << optional_javascript_tag
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
-      lines << '<script defer type="text/javascript" src="/javascripts/pngfix.js"></script>'
+      lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
       # prevent flicker on background images in ie6
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
     lines << '<![endif]-->'
