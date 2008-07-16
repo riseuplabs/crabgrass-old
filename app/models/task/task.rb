@@ -4,7 +4,8 @@ class Task < ActiveRecord::Base
   has_and_belongs_to_many :users, :foreign_key => 'task_id'
   acts_as_list :scope => :task_list
   format_attribute :description
-  
+  validates_presence_of :name
+
   def group_name
     task_list.page.group_name if task_list.page
   end

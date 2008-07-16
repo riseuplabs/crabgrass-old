@@ -11,8 +11,8 @@
 
 <h2>Completed tasks</h2>
 <ul id='sort_list_completed' class='task_list'>
-  <%= render(:partial => 'task', :collection => @list.completed) %>
-  <%= no_completed_tasks(@list.completed.empty?) %>
+<%= render(:partial => 'task', :collection => @list.completed) %>
+<%= no_completed_tasks(@list.completed.empty?) %>
 </ul>
 
 <% content_for :end_tags do %>

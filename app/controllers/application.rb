@@ -29,18 +29,28 @@ class ApplicationController < ActionController::Base
   
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(*css_files)
-    write_inheritable_attribute "stylesheet", css_files if css_files.any?
-    read_inheritable_attribute "stylesheet"
+    if css_files.any?
+      write_inheritable_attribute "stylesheet", css_files
+    else
+      read_inheritable_attribute "stylesheet"
+    end
   end
   
-  def get_unobtrusive_javascript
-    @js_behaviours.to_s
-  end
+#  def get_unobtrusive_javascript
+#    @js_behaviours.to_s
+#  end
   
   # let controllers require extra javascript
-  def self.javascript(mode=nil)
-    write_inheritable_attribute "javascript", mode if mode
-    read_inheritable_attribute "javascript"
+  def self.javascript(*js_files)
+    if js_files.any?
+      if js_files.include? :extra
+        js_files += ['effects', 'dragdrop', 'controls']
+        js_files.delete_if{|i|i==:extra}
+      end
+      write_inheritable_attribute "javascript", js_files
+    else
+      read_inheritable_attribute "javascript"
+    end
   end
     
   def handle_rss(locals)

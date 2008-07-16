@@ -32,6 +32,7 @@ class TaskListPageController < BasePageController
   def create_task
     return unless request.xhr?
     @task = Task.new(params[:task])
+    @task.name = 'untitled' unless @task.name.any?
     @task.task_list = @list
     @task.save
   end
@@ -66,6 +67,7 @@ class TaskListPageController < BasePageController
     return unless request.xhr?
     @task = @list.tasks.find(params[:id])
     @task.update_attributes(params[:task])
+    @task.name = 'untitled' unless @task.name.any?
     render :update do |page|
       page.replace_html dom_id(@task), :partial => 'inner_task_show', :locals => {:task => @task}
     end

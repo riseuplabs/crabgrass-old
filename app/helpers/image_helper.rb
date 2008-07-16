@@ -18,7 +18,7 @@ module ImageHelper
   ## allows you to change the icon style of an element.
   ## for example, can be used to change the icon of a link
   ## to be a spinner.
-  def set_icon_style(element_id, icon)
+  def set_icon_style(element_id, icon, position="0% 50%")
     unless element_id.is_a? String
       element_id = dom_id(element_id)
     end
@@ -27,7 +27,14 @@ module ImageHelper
     else
       icon_path = "/images/#{icon}"
     end
-    "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat 0% 50%"]
+    "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat #{position}"]
+  end
+
+  def add_class_name(element_id, class_name)
+    unless element_id.is_a? String
+      element_id = dom_id(element_id)
+    end
+    "$('%s').addClassName('%s')" % [element_id, class_name]
   end
 
   ## creates an <a> tag with an icon via a background image.
@@ -91,8 +98,8 @@ module ImageHelper
     "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
   end
   def spinner_id(id)
-    if id.instance_of? ActiveRecord::Base
-      dom_id(id, 'spinner')
+    if id.is_a? ActiveRecord::Base
+      id = dom_id(id, 'spinner')
     else
       "#{id.to_s}_spinner"
     end
