@@ -147,7 +147,9 @@ module PageHelper
       selected = select_by_default
       arrow = image_tag('ui/sort-desc.png') if selected
     end
-    "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
+    # FIXME: these links are not working for group archive page, person landing page, me inbox, so I'm removing them --abie 
+    #"<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
+    "<th nowrap class='#{selected ? 'selected' : ''}'>#{text} #{arrow}</th>"
   end
 
   ## used to create the page list headings
