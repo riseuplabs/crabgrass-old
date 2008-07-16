@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ToolCreationTest < Test::Unit::TestCase
 
+  # TODO: make this a functional test
   def test_add_participants
     @controller = BasePageController.new
     page = Page.create(:title => 'add participants page')
