@@ -1,10 +1,16 @@
 ul.task_list li {
   padding: 0; margin: 0;
   list-style: none;
+  padding: 0.35em;
 }
+
+li.task:hover {background: #efefef;}
+li.task.spinning {background: #ffd url(/images/spinner.gif) no-repeat 0.5em 0.5em;}
 input.task_check {
   position: absolute;
+  cursor: default;
 }
+
 input.task_name, textarea.task_description {
   font-family: monospace;
   width: 100%;
@@ -17,6 +23,4 @@ li#add_task_link {
   margin: 0 4em;
   padding: 1em;
 }
-li#add_task_link input.text {
-  width: 90%;
-}
+

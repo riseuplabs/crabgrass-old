@@ -12,7 +12,7 @@ module TaskListPageHelper
     disabled = !current_user.may?(:edit,@page)
     click = remote_function(
       :url => page_xurl(@page, :action => 'mark_task_'+next_state, :id => task.id),
-      :loading => hide(checkbox_id) + set_icon_style(task, 'spinner')
+      :loading => hide(checkbox_id) + add_class_name(task, 'spinning')
     )
     check_box_tag(checkbox_id, '1', checked, :class => 'task_check', :onclick => click, :disabled => disabled)
   end
