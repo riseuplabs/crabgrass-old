@@ -10,7 +10,7 @@
 </div>
 
 <div class='sidelink'>
-<%= link_to 'send message', {:controller => 'tool/message', :action => 'create', :to => @user.login}, :method => 'get' if @user%>
+<%= link_to 'send message', {:controller => 'tool/message_page', :action => 'create', :to => @user.login}, :method => 'get' if @user%>
 </div>
 
 <div class='sidelink'>
