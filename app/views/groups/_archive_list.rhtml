@@ -14,7 +14,7 @@
           klass = ''
         end
         -%>
-        <%= link_to month, {:path => 'month/' + month + '/year/' + year}, :class => klass %> 
+        <%= link_to month, {:path => ['month', month.to_s, 'year', year.to_s]}, :class => klass %> 
       <% else %>
         <%= month  %> 
       <% end -%>
