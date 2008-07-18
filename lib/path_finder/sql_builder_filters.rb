@@ -161,6 +161,8 @@ module PathFinder::SqlBuilderFilters
   
   def filter_tag(tag_name)
     if tag = Tag.find_by_name(tag_name)
+      # TODO:  accept more than 4 tags, or issue a vaild error message
+      return unless @tag_count < 4
       @tag_count += 1
       @conditions << "taggings#{@tag_count}.tag_id = ?"
       @values << tag.id
