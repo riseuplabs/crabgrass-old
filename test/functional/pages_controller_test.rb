@@ -46,8 +46,24 @@ class PagesControllerTest < Test::Unit::TestCase
   def test_tag
     login_as :red
 
-    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1, tag2, tag3"
+    # sometime people use commas and sometimes they don't
+    # so we want to be able to handle a few different behaviors
+    
+    # good user
+    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1 tag2 tag3"
     assert_equal Set.new(["tag1","tag2","tag3"]), Set.new(pages(:page1).tag_list)
+    
+    # multiple spaces
+    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1a  tag2a       tag3a"
+    assert_equal Set.new(["tag1a","tag2a","tag3a"]), Set.new(pages(:page1).reload.tag_list)
+    
+    # non-space delimiters
+    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1b\ttag2b\t\ntag3b\ntag4b\t"
+    assert_equal Set.new(["tag1b","tag2b","tag3b","tag4b"]), Set.new(pages(:page1).reload.tag_list)
+
+    # comma and space delimiters
+    xhr :post, :tag, :id => pages(:page1).id, :tag_list => "tag1c,  tag2c"
+    assert_equal Set.new(["tag1c","tag2c"]), Set.new(pages(:page1).reload.tag_list)
   end
   
   def test_create_wiki

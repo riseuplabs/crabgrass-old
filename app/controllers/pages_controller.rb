@@ -60,7 +60,7 @@ class PagesController < ApplicationController
      
   def tag
     return unless request.xhr?
-    @page.tag_list = params[:tag_list]
+    @page.tag_list = params[:tag_list].gsub(/[ \t\n]/, ',')
     @page.save
   rescue Tag::Error => @error
   ensure
