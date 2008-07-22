@@ -6,6 +6,18 @@ class Task < ActiveRecord::Base
   format_attribute :description
   validates_presence_of :name
 
+  belongs_to :created_by, :class_name => 'User', :foreign_key => 'created_by_id'
+  belongs_to :updated_by, :class_name => 'User', :foreign_key => 'updated_by_id'
+
+  before_create :set_user
+  def set_user
+    if User.current or self.created_by
+      self.created_by ||= User.current
+      self.updated_by = self.created_by
+    end
+    true
+  end
+
   def group_name
     task_list.page.group_name if task_list.page
   end
