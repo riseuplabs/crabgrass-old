@@ -1,4 +1,4 @@
-class AddWatchingAndWaitingToTaskUsers < ActiveRecord::Migration
+class CreateTaskParticipationsAndCopyDataFromTaskUsers < ActiveRecord::Migration
   def self.up
     create_table :task_participations do |t|
       t.boolean :watching
