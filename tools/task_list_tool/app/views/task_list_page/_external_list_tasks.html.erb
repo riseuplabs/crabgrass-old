@@ -4,7 +4,7 @@
   # in these cases, the task lists are often indirectly fetched from the db. 
 
 # local variables
-@show_status ||= 'pending'  # one of pending, completed, both
+@show_status ||= 'pending'  # one of pending, completed, both, created
 @show_user   ||= @user # unless set already, only show tasks for this user.
 @show_user   ||= 'all'
 all_users  = (@show_user == 'all')
@@ -18,8 +18,13 @@ for list in @task_lists
   @page = list.page
 #  sort_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
 #  sortable_lists[sort_list_id] = @page
-  tasks = list.tasks.select do |t|
-    (all_users || t.user_ids.include?(@show_user.id)) && (all_states || t.completed? == completed)
+  case @show_status
+  when 'created'
+    tasks = list.tasks.select { |t| t.created_by_id == @show_user.id }
+  else
+    tasks = list.tasks.select do |t|
+      (all_users || t.user_ids.include?(@show_user.id)) && (all_states || t.completed? == completed)
+    end
   end
   next unless tasks.any?
   tasks = tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]}
