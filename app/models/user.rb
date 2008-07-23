@@ -92,11 +92,10 @@ class User < ActiveRecord::Base
 
   #########################################################    
   # my tasks
-
-=begin
-  has_and_belongs_to_many :tasks do
+  has_many :task_participations, :dependent => :destroy
+  has_many :tasks, :through => :task_participations do
     def pending
-      self.find(:all, :conditions => 'completed_at IS NULL')
+      self.find(:all, :conditions => 'assigned == TRUE AND completed_at IS NULL')
     end
     def completed
       self.find(:all, :conditions => 'completed_at IS NOT NULL')
@@ -105,6 +104,5 @@ class User < ActiveRecord::Base
       self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
-=end
   
 end
