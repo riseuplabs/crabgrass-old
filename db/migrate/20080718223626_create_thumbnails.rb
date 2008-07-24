@@ -16,14 +16,12 @@ class CreateThumbnails < ActiveRecord::Migration
       t.boolean  "failure"
     end
     remove_columns :assets, :parent_id, :thumbnail
-    add_column :assets, :type, :string
   end
 
   def self.down
     drop_table :thumbnails
     add_column :assets, :parent_id, :integer
     add_column :assets, :thumbnail, :string
-    remove_column :assets, :type
   end
 end
 
