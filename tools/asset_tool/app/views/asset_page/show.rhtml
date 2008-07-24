@@ -1,17 +1,11 @@
-<% 
-  download_upload_links = link_line([
-    link_to("Download", @asset.public_filename),
-    (link_to_function("Upload new version", "$('upload-new').toggle()") if current_user.may?(:edit, @page))
-  ])
-%>
 <div id='asset-page'>
 
 <table>
   <tr>
 
     <td class='left'>
-    <div id='preview-wrapper'><div id='preview-area'><%= asset_link_with_preview(@asset) %></div></div>
-    <p><%= download_upload_links %></p>
+    <div id='preview-wrapper'><div id='preview-area' class='<%= preview_area_class(@asset) %>'><%= asset_link_with_preview(@asset) %></div></div>
+    <p><%= download_link %> &nbsp;&nbsp; <%= upload_link %></p>
     <div id="upload-new" style="display: none;">
       <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>
         <%= file_field_tag 'asset' %>
@@ -25,10 +19,12 @@
     <table>
     <tr class='page-list-heading'>
       <td align='right'><b><%= 'Created by' %>:</b></td>
+      <td>&nbsp;</td>
       <td><%= link_to_user(@page.created_by, :avatar => 'xsmall') if @page.created_by %></td>
     </tr>
     <tr>
       <td align='right'><b><%= 'Created on' %>:</b></td>
+      <td>&nbsp;</td>
       <td><%= friendly_date(@page.created_at) %></td>
     </tr>
     </table>

@@ -15,17 +15,11 @@ ActionController::Routing::Routes.draw do |map|
 
   ##### ASSET ROUTES ######################################
   
-  map.with_options :controller => 'asset', :action => 'show' do |m|
-    m.asset_version 'assets/:id/versions/:version/*filename'
-    m.assets 'assets/:id/*filename'
+  map.with_options :controller => 'assets', :action => 'show' do |m|
+    m.connect 'assets/:id/versions/:version/*path'
+    m.connect 'assets/:id/*path'
   end
 
-  # unobtrusive javascript
-  #UJS::routes
-  
-  # bundled_assets plugin:
-  map.connect 'bundles/:version/:names.:ext', :controller => 'assets_bundle', :action => 'fetch', :ext => /css|js/, :names => /[^.]*/
-  
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 

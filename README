@@ -20,7 +20,10 @@ required:
 required for running tests:
   gem install ruby-debug hpricot
 
-optional for latex rendering:
+optional (but necessary for image thumbnails and document previews):
+  apt-get graphicsmagick openoffice.org msttcorefonts
+
+optional for inline latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
   gem install open4
 
@@ -28,11 +31,25 @@ optional for improved mime-type support:
   gem install mime-types
 
 then check out the code:
-  svn co https://code.autistici.org/svn/crabgrass/trunk crabgrass
+  cd ~/development
+  git clone git://labs.riseup.net/crabgrass.git
 
 set up your database:
-  edit config/database.yml
-  mysqladmin create crabgrass
+(1) install the mysql (currently crabgrass only works with mysql)
+    sudo apt-get install mysql-server
+(2) create databases
+    sudo mysqladmin create crabgrass_development
+    sudo mysqladmin create crabgrass_test
+    sudo mysqladmin create crabgrass
+(3) create a config/database.yml file. 
+(4) build the crabgrass database and populate it with test data
+    cd ~/development/crabgrass
+    rake db:schema:load
+    rake db:fixtures:load
+
+upgrading:
+  cd ~/development/crabgrass
+  git pull
   rake db:migrate
   rake db:fixtures:load
 
@@ -87,16 +104,28 @@ hpricot
 ADMINISTRATION
 =========================================================
 
+Via the console
+----------------
+
 One goal in Crabgrass system design is to avoid creating
 different levels of privilege for users.  Shall this be
 an egalitarian social network, or shall we build another
 anarchist bureaucracy?  But what about when people need
-a new password, etc?  For now, this administrative stuff
-can be done from the rails console.
-
+a new password, etc? 
 Example:  RESETING A PASSWORD
 $ script/console production
 >> u = User.find_for_forget("user's email")
 >> u.password = u.password_confirmation = "new password"
 >> u.save
+
+Via super_admin mod
+-------------------
+
+There is a mod that is disabled by default that gives certain users
+a super admin interface. 
+
+(1) Edit config/sites.yml to add which users should be super admins
+(2) Edit config/mods_enabled.list to enable super_admin module
+(3) Edit config/routes.rb and uncomment the super_admin routes
+(4) restart rails, login, and browse to /admin
 

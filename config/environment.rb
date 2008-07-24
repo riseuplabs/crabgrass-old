@@ -6,8 +6,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
 
-Dependencies.load_once_paths << "#{RAILS_ROOT}/lib"
-
 # levels of page access
 ACCESS = {:admin => 1, :change => 2, :edit => 2, :view => 3, :read => 3}.freeze
 
@@ -34,7 +32,7 @@ SECTION_SIZE = Site.default.pagination_size
 
 Rails::Initializer.run do |config|
 
-  config.load_paths += %w(associations discussion chat profile poll task).collect do |dir|
+  config.load_paths += %w(associations discussion chat profile poll task assets).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
 
@@ -70,3 +68,4 @@ ActiveRecord::Base.partial_updates = false
 # build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
 
+Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")

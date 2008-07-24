@@ -111,4 +111,62 @@ module ImageHelper
     "$('%s').show();" % spinner_id(id)
   end
 
+  ##
+  ## ASSET THUMBNAILS
+  ##
+
+  #
+  # creates an img tag for a thumbnail, optionally scaling the image or cropping
+  # the image to meet new dimensions (using html/css, not actually scaling/cropping)
+  #
+  # eg: thumbnail_img_tag(thumb, :crop => '22x22')
+  # 
+  # options:
+  #  * :crop   -- the img is first scaled, then cropped to allow it to
+  #               optimally fit in the cropped space.
+  #  * :scale  -- the img is scaled, preserving proportions 
+  #  * :crop!  -- crop, even if there is no known height and width
+  #
+  def thumbnail_img_tag(thumbnail,options={})
+    return nil unless thumbnail
+    if thumbnail.height and thumbnail.width
+      options[:crop] ||= options[:crop!]
+      if options[:crop] or options[:scale]
+        target_width, target_height = (options[:crop]||options[:scale]).split(/x/).map(&:to_f)
+        if target_width > thumbnail.width and target_height > thumbnail.height
+          # thumbnail is actually _smaller_ than our target area
+          margin_x = ((target_width - thumbnail.width) / 2).round
+          margin_y = ((target_height - thumbnail.height) / 2).round
+          img = image_tag(thumbnail.url, :size => "#{thumbnail.width}x#{thumbnail.height}",
+            :style => "margin: #{margin_y}px #{margin_x}px;")
+          content_tag(:div, img, :style => "height:#{target_height}px;width:#{target_width}px")
+        elsif options[:crop]
+          # extra thumbnail will be hidden by overflow:hidden
+          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
+          ratio  = [1, ratio].min
+          height = (thumbnail.height * ratio).round
+          width  = (thumbnail.width * ratio).round
+          img = image_tag(thumbnail.url, :size => "#{width}x#{height}")
+          content_tag(:div, img,
+           :style => "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
+        elsif options[:scale]
+          # set image tag to use new scale
+          ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
+          height = (thumbnail.height * ratio).round
+          width  = (thumbnail.width * ratio).round
+          image_tag(thumbnail.url, :size => "#{width}x#{height}")
+        end
+      else
+        image_tag(thumbnail.url, :size => "#{thumbnail.width}x#{thumbnail.height}")
+      end
+    elsif options[:crop!]
+      target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
+      img = image_tag(thumbnail.url)
+      content_tag(:div, img, :style => 
+        "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
+    else
+      image_tag(thumbnail.url)
+    end
+  end
+
 end

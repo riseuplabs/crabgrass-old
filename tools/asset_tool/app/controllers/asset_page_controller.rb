@@ -1,6 +1,6 @@
 class AssetPageController < BasePageController
   before_filter :fetch_asset
-  javascript :extra
+#  javascript :extra
   stylesheet 'asset'
 
   include AssetPageHelper
@@ -18,10 +18,11 @@ class AssetPageController < BasePageController
       end
       
       @page = create_new_page(@page_class)
-      @asset = Asset.new params[:asset]
+      @asset = Asset.make params[:asset]
+
       @page.data = @asset
       if @page.title.any?
-        @asset.filename = @page.title + @asset.suffix
+#        @asset.filename = @page.title + @asset.suffix
       else
         @page.title = @asset.basename
       end
@@ -35,11 +36,11 @@ class AssetPageController < BasePageController
   end
 
   def update
-    @page.data.uploaded_data = params[:asset]
-    @page.data.filename = @page.title + @page.data.suffix
-    if @page.data.save
-      @asset.generate_non_image_thumbnail if @asset.may_thumbnail?
-      return redirect_to(page_url(@page))
+    @asset.uploaded_data = params[:asset]
+#    @asset.filename = @page.title + @asset.suffix
+    if @asset.save
+      #@asset.generate_non_image_thumbnail if @asset.may_thumbnail?
+      redirect_to(page_url(@page))
     else
       message :object => @page
     end
@@ -53,13 +54,15 @@ class AssetPageController < BasePageController
         message(:success => "file version deleted")
         redirect_to(page_url(@page))
       end
-      format.js { render(:update) {|page| page.visual_effect :fade, "asset_#{asset_version.asset_id}_version_#{asset_version.version}", :duration => 0.5} }
+      format.js do
+        render(:update) {|page| page.hide "asset_#{asset_version.asset_id}_version_#{asset_version.version}"}
+      end
     end
   end
 
   # xhr request
   def generate_preview
-    @asset.generate_non_image_thumbnail
+    @asset.generate_thumbnails
     render :update do |page|
       page.replace_html 'preview-area', asset_link_with_preview(@asset)
     end

@@ -4,5 +4,5 @@ require "#{RAILS_ROOT}/lib/fake_globalize.rb"
 require "#{RAILS_ROOT}/lib/greencloth/greencloth.rb"
 require "#{RAILS_ROOT}/lib/path_finder.rb"
 require "#{RAILS_ROOT}/lib/page_class_proxy.rb"
-require "#{RAILS_ROOT}/lib/crabgrass/mime_type.rb"
+#require "#{RAILS_ROOT}/lib/media/mime_type.rb"
 
