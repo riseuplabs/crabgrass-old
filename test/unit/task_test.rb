@@ -21,7 +21,7 @@ class TaskTest < Test::Unit::TestCase
   def test_associations
     assert check_associations(TaskList)
     assert check_associations(Task)
-    assert check_associations(TasksUser)
+#    assert check_associations(TaskParticipations)
   end
 
   def test_include_associations
