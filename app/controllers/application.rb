@@ -43,10 +43,6 @@ class ApplicationController < ActionController::Base
   # let controllers require extra javascript
   def self.javascript(*js_files)
     if js_files.any?
-      if js_files.include? :extra
-        js_files += ['effects', 'dragdrop', 'controls']
-        js_files.delete_if{|i|i==:extra}
-      end
       write_inheritable_attribute "javascript", js_files
     else
       read_inheritable_attribute "javascript"

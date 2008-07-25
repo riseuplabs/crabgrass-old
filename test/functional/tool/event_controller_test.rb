@@ -13,14 +13,16 @@ class Tool::EventControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-#  def test_create
-#    login_as :quentin
-#    num_pages = Page.count
-#    post :create, :page_type => "EventPage", :id => 'event', :page => {:title => 'my title event' }
-#    assert_response :success
-#    assert_not_nil assigns(:page)
-#    assert_equal num_pages + 1, Page.count
-#  end
+# this controller does not really even exist yet:
+=begin
+  def test_create
+    login_as :quentin
+    num_pages = Page.count
+    post :create, :page_type => "EventPage", :id => 'event', :page => {:title => 'my title event' }
+    assert_response :success
+    assert_not_nil assigns(:page)
+    assert_equal num_pages + 1, Page.count
+  end
 
   def test_get_create
     login_as :quentin
@@ -35,9 +37,6 @@ class Tool::EventControllerTest < Test::Unit::TestCase
     get :create, {:action => "create", "id"=>"event", "controller"=>"event_page"}
     assert_response 302
   end
+=end
 
-
-  #starts_at < ends_at if all_day is false
-
-  #
 end

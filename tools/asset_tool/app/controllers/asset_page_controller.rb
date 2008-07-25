@@ -8,7 +8,6 @@ class AssetPageController < BasePageController
   def show
   end
 
-  # note, massive duplication both here and in the view
   def create
     @page_class = AssetPage
     if request.post?
@@ -36,10 +35,9 @@ class AssetPageController < BasePageController
   end
 
   def update
-    @asset.uploaded_data = params[:asset]
+    @asset.update_attributes params[:asset]
 #    @asset.filename = @page.title + @asset.suffix
-    if @asset.save
-      #@asset.generate_non_image_thumbnail if @asset.may_thumbnail?
+    if @asset.valid?
       redirect_to(page_url(@page))
     else
       message :object => @page
