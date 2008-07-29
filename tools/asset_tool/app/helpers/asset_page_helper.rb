@@ -10,7 +10,7 @@ module AssetPageHelper
   def asset_link_with_preview(asset)
     thumbnail = asset.thumbnail(:large)
     if thumbnail.nil?
-      link_to( image_tag(asset.big_icon), asset.public_filename )
+      link_to( image_tag(asset.big_icon), asset.url )
     elsif !thumbnail.exists?
       if false and thumbnail.width
         width = thumbnail.width
