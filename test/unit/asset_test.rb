@@ -40,8 +40,8 @@ class AssetTest < Test::Unit::TestCase
     assert_equal "%s/%s/image.png" % [@@public,@asset.id], @asset.public_filename
     assert_equal "%s/%s/image_small.png" % [@@public,@asset.id], @asset.public_thumbnail_filename(:small)
 
-    assert_equal "/assets/%s/image.png" % @asset.id, @asset.url
-    assert_equal "/assets/%s/image_small.png" % @asset.id, @asset.thumbnail_url(:small)
+    assert_equal "/assets/show/%s/image.png" % @asset.id, @asset.url
+    assert_equal "/assets/show/%s/image_small.png" % @asset.id, @asset.thumbnail_url(:small)
   end
   
   def test_single_table_inheritance
@@ -81,14 +81,14 @@ class AssetTest < Test::Unit::TestCase
     #puts @version.thumbdefs.inspect
     #puts @version.thumbnail_filename(:small)
     assert_equal 'image_small.png', @version.thumbnail_filename(:small)
-    assert_equal "/assets/#{@id}/versions/1/image.png", @version.url
+    assert_equal "/assets/show/#{@id}/versions/1/image.png", @version.url
     assert read_file('image.png') == File.read(@version.private_filename), 'version 1 data should match image.png'
 
     @version = @asset.versions.latest
     assert_equal 'ImageAsset', @version.versioned_type
     assert_equal 'photo.jpg', @version.filename
     assert_equal 'photo_small.jpg', @version.thumbnail_filename(:small)
-    assert_equal "/assets/#{@id}/versions/2/photo.jpg", @version.url
+    assert_equal "/assets/show/#{@id}/versions/2/photo.jpg", @version.url
     assert read_file('photo.jpg') == File.read(@version.private_filename), 'version 2 data should match photo.jpg'
   end
 

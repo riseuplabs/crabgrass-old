@@ -15,10 +15,8 @@ ActionController::Routing::Routes.draw do |map|
 
   ##### ASSET ROUTES ######################################
   
-  map.with_options :controller => 'assets', :action => 'show' do |m|
-    m.connect 'assets/:id/versions/:version/*path'
-    m.connect 'assets/:id/*path'
-  end
+  map.connect 'assets/:action/:id/versions/:version/*path', :controller => 'assets'
+  map.connect 'assets/:action/:id/*path',                   :controller => 'assets'
 
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'

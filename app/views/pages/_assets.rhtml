@@ -3,17 +3,17 @@
   <div class='sideline' id='asset_<%= asset.id %>'>
     <% if current_user.may? :edit, @page -%>
     <span id='asset_<%= asset.id %>_delete'>
-      <%= link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'asset', :action => 'destroy', :id => asset.id}, :confirm => 'are you sure you want to delete this file?', :before => "$('asset_#{asset.id}').addClassName('busy')", :success => "$('asset_#{asset.id}').remove()", :failure => "$('asset_#{asset.id}').removeClassName('busy')"}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id)}) %>
+      <%= link_to_remote(image_tag('actions/trash.png'), {:url => {:controller => 'assets', :action => 'destroy', :id => asset.id}, :confirm => 'are you sure you want to delete this file?', :before => "$('asset_#{asset.id}').addClassName('busy')", :success => "$('asset_#{asset.id}').remove()", :failure => "$('asset_#{asset.id}').removeClassName('busy')"}, {:href => url_for(:controller => 'asset', :action => 'destroy', :id => asset.id)}) %>
     </span>
     <% end -%>
-    <%= link_to_icon(truncate(asset.filename, 20), asset.small_icon, asset.public_filename) %>
+    <%= link_to_icon(truncate(asset.filename, 20), asset.small_icon, asset.url) %>
   </div>
   <% end -%>
 <% if logged_in? -%>
   <div class='sidelink'>
     <%= link_to_function "Add attachment &raquo;", "$('upload-form').toggle()" %>
     <div id="upload-form" class='sidesubarea' style="display: none;">
-    <% form_for( :asset, Asset.new(:page_id => @page.id), :url => {:controller => 'asset', :action => 'create'}, :html => {:multipart => true}) do |f| -%>
+    <% form_for( :asset, Asset.new(:page_id => @page.id), :url => {:controller => 'assets', :action => 'create'}, :html => {:multipart => true}) do |f| -%>
     <%= f.hidden_field 'page_id' %>
     file: <%= f.file_field 'uploaded_data', :size=>11 %>
     title: <%= text_field_tag 'asset_title', '', :style => 'width:90%'  %>

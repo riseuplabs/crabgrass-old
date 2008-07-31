@@ -2,7 +2,15 @@ class AssetsController < ApplicationController
 
   before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
+  prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
+  def initialize_asset
+    @asset = Asset.new params[:asset]
+    message(:error => "Invalid file") and redirect_to(:back) and return false unless @asset.valid?
+    @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
+    true
+  end
+  
   def show
     if @asset.public?
       @asset.update_access

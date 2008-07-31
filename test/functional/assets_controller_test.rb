@@ -5,6 +5,7 @@ require 'assets_controller'
 class AssetsController; def rescue_action(e) raise e end; end
 
 class AssetsControllerTest < Test::Unit::TestCase
+  fixtures :users, :pages, :user_participations
   @@private = Media::AssetStorage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = Media::AssetStorage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
@@ -48,11 +49,27 @@ class AssetsControllerTest < Test::Unit::TestCase
   end
   
   def test_create
-    # TODO: figure out what create action is supposed to do and then write this test
+    login_as :blue
+    
+    assert_difference 'Page.find(1).assets.length' do
+      post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
+    end
+
+    assert_difference 'Page.find(1).assets.length' do
+      post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
+    end
   end
   
   def test_destroy
-    # TODO: figure out what destroy action is supposed to do and then write this test
+    login_as :blue
+    
+    assert_difference 'Page.find(1).assets.length' do
+      post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
+    end
+
+    assert_difference 'Page.find(1).assets.length', -1 do
+      post 'destroy', :id => assigns(:asset).id
+    end
   end
 
   protected
