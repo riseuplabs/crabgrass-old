@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080725030420) do
+ActiveRecord::Schema.define(:version => 20080723045752) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(:version => 20080725030420) do
     t.integer  "size",         :limit => 11
     t.integer  "width",        :limit => 11
     t.integer  "height",       :limit => 11
+    t.string   "type"
     t.integer  "page_id",      :limit => 11
     t.datetime "created_at"
     t.integer  "version",      :limit => 11
-    t.string   "type"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -198,10 +198,6 @@ ActiveRecord::Schema.define(:version => 20080725030420) do
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
   add_index "messages", ["sender_id"], :name => "index_messages_channel"
-
-  create_table "migrations_info", :force => true do |t|
-    t.datetime "created_at"
-  end
 
   create_table "page_indices", :force => true do |t|
     t.integer "page_id",            :limit => 11
