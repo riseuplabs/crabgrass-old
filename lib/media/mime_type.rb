@@ -9,11 +9,11 @@ module Media
   module MimeType
 
     def self.mime_group(mime_type)
-      mime_type.sub(/\/.*$/,'/')      # remove everything after /
+      mime_type.sub(/\/.*$/,'/') if mime_type     # remove everything after /
     end
 
     def self.simple(mime_type)
-      mime_type.to_s.sub(/\/x\-/,'/')  # remove x-
+      mime_type.to_s.sub(/\/x\-/,'/') if mime_type # remove x-
     end
 
     def self.lookup(mime_type,field)
@@ -43,7 +43,7 @@ module Media
     
     def self.mime_type_from_extension(ext)
       ext = File.extname(ext).gsub('.','') if ext =~ /\./
-      EXTENSIONS[ext] || ((MIME::Types.type_for('.'+ext).first||MIME::Type.new('application/octet-stream')).content_type if defined?('MIME::Types'))
+      EXTENSIONS[ext] || ((MIME::Types.type_for('.'+ext).first||MIME::Type.new('application/octet-stream')).content_type if defined?(MIME::Types))
     end
    
     EXT = 0; ICON = 1; ASSET_CLASS = 2

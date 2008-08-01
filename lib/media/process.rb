@@ -95,7 +95,7 @@ module Media
     end
 
     def self.simple(mime_type)
-      mime_type.gsub(/\/x\-/,'/')  # remove x-
+      mime_type.gsub(/\/x\-/,'/') if mime_type # remove x-
     end
 
   end
