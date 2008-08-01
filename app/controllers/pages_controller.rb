@@ -186,7 +186,7 @@ class PagesController < ApplicationController
   def update_public
     @page.update_attribute(:public, ('true' == params[:public]))
     current_user.updated @page
-    # in the future, indicate that the page was changed by making it public
+    # in the future, indicate that the way page was changed was by making it public
     render :nothing => true
   end
   

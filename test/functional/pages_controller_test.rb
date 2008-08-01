@@ -133,6 +133,29 @@ class PagesControllerTest < Test::Unit::TestCase
 #    assert users(:penguin).may?(:admin, page), 'user penguin should have access to page'
   end
   
+  def test_update_public
+    login_as(:blue)
+    # blue can edit page 1
+
+    xhr :post, :update_public, :public => 'true', :id => 1
+    assert_equal true, Page.find(1).public?
+    
+    xhr :post, :update_public, :public => 'null', :id => 1
+    assert_equal false, Page.find(1).public?
+    
+    
+    # and what if the page has an attachment?
+    @asset = Asset.create :uploaded_data => upload_data('photo.jpg'), :page_id => 1
+    @asset.save
+
+    xhr :post, :update_public, :public => 'true', :id => 1
+    assert_equal true, Page.find(1).public?
+    
+    xhr :post, :update_public, :public => 'null', :id => 1
+    assert_equal false, Page.find(1).public?
+    
+  end
+  
 
   def test_remove_from_my_inbox
     login_as :blue
