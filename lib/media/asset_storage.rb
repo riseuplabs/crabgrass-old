@@ -46,7 +46,7 @@ module Media # :nodoc:
 
     @@private_storage = "#{RAILS_ROOT}/assets"
     @@public_storage = "#{RAILS_ROOT}/public/assets"
-    @@public_url_path = "/assets/show"
+    @@public_url_path = "/assets"
     mattr_accessor :private_storage, :public_storage, :public_url_path
 
     def self.included(base) #:nodoc:
