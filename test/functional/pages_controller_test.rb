@@ -11,12 +11,22 @@ class PagesControllerTest < Test::Unit::TestCase
            :pages, :profiles,
            :taggings, :tags
 
+  @@private = Media::AssetStorage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
+  @@public = Media::AssetStorage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+
   def setup
     @controller = PagesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    FileUtils.mkdir_p(@@private)
+    FileUtils.mkdir_p(@@public)
   end
 
+  def teardown
+    FileUtils.rm_rf(@@private)
+    FileUtils.rm_rf(@@public)
+  end
+  
   # cases to test:
   # not_logged in
   #  public pages
