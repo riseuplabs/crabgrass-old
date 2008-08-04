@@ -8,7 +8,7 @@
     <p><%= download_link %> &nbsp;&nbsp; <%= upload_link %></p>
     <div id="upload-new" style="display: none;">
       <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>
-        <%= file_field_tag 'asset' %>
+        <%= file_field_tag 'asset[uploaded_data]' %>
         <%= submit_tag 'upload' %>
       <% end %>
     </div>
