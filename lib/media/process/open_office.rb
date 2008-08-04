@@ -6,7 +6,7 @@ module Media::Process
     def to_sym; :open_office; end
 
     def available?
-      return false unless OPENOFFICE_COMMAND.any? and File.exists?(OPENOFFICE_COMMAND)
+      return false unless PYTHON_COMMAND.any? and OPENOFFICE_COMMAND.any? and File.exists?(OPENOFFICE_COMMAND)
       unless daemon_running?
         try_starting_daemon
         sleep 1
@@ -33,7 +33,7 @@ module Media::Process
     def run(options)
       # TODO: pick which python to use. on some platforms, we may need to run
       # an openoffice specific python.
-      arguments = ['python', OPENOFFICE_COMMAND, options[:in], options[:out]]
+      arguments = [PYTHON_COMMAND, OPENOFFICE_COMMAND, options[:in], options[:out]]
       success, output = cmd(*arguments)
       return success
     end

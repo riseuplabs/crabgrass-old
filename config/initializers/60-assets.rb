@@ -1,5 +1,6 @@
 
 GM_COMMAND = `which gm`.chomp unless defined? GM_COMMAND
+PYTHON_COMMAND = `which python`.chomp unless defined? PYTHON_COMMAND
 
 if `which openoffice`.any?
   OPENOFFICE_DAEMON_PORT = 8100
