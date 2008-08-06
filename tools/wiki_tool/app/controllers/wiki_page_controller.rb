@@ -30,8 +30,8 @@ class WikiPageController < BasePageController
   
   def diff
     old_id, new_id = params[:id].split('-')
-    @old = @wiki.find_version(old_id)
-    @new = @wiki.find_version(new_id)
+    @old = @wiki.versions.find_by_version(old_id)
+    @new = @wiki.versions.find_by_version(new_id)
     @old_markup = @old.body_html || ''
     @new_markup = @new.body_html || ''
     @difftext = html_diff( @old_markup , @new_markup)
@@ -76,12 +76,13 @@ class WikiPageController < BasePageController
     end
   end
   
-  # save the wiki, and make a new version only if the last
-  # version was not recently saved by current_user
+  # save the wiki
+  # (used to make a new version only if the last
+  # version was not recently saved by current_user, but i have commented this out --af)
   def save_revision(wiki)
     if wiki.recent_edit_by?(current_user)
       wiki.save_without_revision
-      wiki.find_version(wiki.version).update_attributes(:body => wiki.body, :body_html => wiki.body_html, :updated_at => Time.now)
+      wiki.versions.find_by_version(wiki.version).update_attributes(:body => wiki.body, :body_html => wiki.body_html, :updated_at => Time.now)
     else
       wiki.user = current_user
       wiki.save

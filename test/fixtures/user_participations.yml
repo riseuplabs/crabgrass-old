@@ -58,11 +58,11 @@ tasklist24:
 ranked_vote_orange:
   id: <%= id+=1 %>
   page_id: 190
-  user: 5
+  user_id: 5
 
 wiki_orange:
   id: <%= id+=1 %>
   page_id: 210
-  user: 5
+  user_id: 5
 
 
