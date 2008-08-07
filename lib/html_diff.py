@@ -21,11 +21,11 @@ def textDiff(a, b):
 			# @@ need to do something more complicated here
 			# call textDiff but not for html, but for some html... ugh
 			# gonna cop-out for now
-			out.append('<del class="diff modified">'+''.join(a[e[1]:e[2]]) + '</del><ins class="diff modified">'+''.join(b[e[3]:e[4]])+"</ins>")
+			out.append('<del class="diffmod">'+''.join(a[e[1]:e[2]]) + '</del><ins class="diffmod">'+''.join(b[e[3]:e[4]])+"</ins>")
 		elif e[0] == "delete":
-			out.append('<del class="diff">'+ ''.join(a[e[1]:e[2]]) + "</del>")
+			out.append('<del class="diffmod">'+ ''.join(a[e[1]:e[2]]) + "</del>")
 		elif e[0] == "insert":
-			out.append('<ins class="diff">'+''.join(b[e[3]:e[4]]) + "</ins>")
+			out.append('<ins class="diffins">'+''.join(b[e[3]:e[4]]) + "</ins>")
 		elif e[0] == "equal":
 			out.append(''.join(b[e[3]:e[4]]))
 		else: 

@@ -311,10 +311,53 @@ module HTMLDiff
     end
 
   end # of class Diff Builder
+
+require 'tempfile'
   
   def html_diff(a, b)
-    DiffBuilder.new(a, b).build
+# old way:
+#    DiffBuilder.new(a, b).build
+
+#require 'ruby-debug'; debugger
+
+# new way:
+
+# TODO: clean up this temp file usage
+# see lib/media/temp_file_array.rb for an example
+# should we cache the diff results (?)
+    f1 = Tempfile.new("a")
+    f1.write a
+    f1.close
+          
+    f2 = Tempfile.new("b")
+    f2.write b
+    f2.close
+
+    arguments = [PYTHON_COMMAND, HTML_DIFF_COMMAND, f1.path, f2.path]
+    success, output = cmd(*arguments)
+    return output
   end
+
+
+# TODO: clean up the way we call external python code  
+#  cattr_accessor :log_to_stdout_when
+
+  def cmd(*args)
+    cmdstr = Escape.shell_command(args)
+    log cmdstr
+#    if log_to_stdout_when == :never
+#      output = `#{cmdstr} 2>/dev/null`
+#    else
+      output = `#{cmdstr}`
+#    end
+    return [$?.success?, output]
+  end
+
+  def log(*args)
+    ActiveRecord::Base.logger.info "HTML_Diff --- " + args.join(' ')
+    puts args.join(' ') #if log_to_stdout_when == :always
+  end
+
 
 end
 

@@ -10,6 +10,7 @@ ins.diffmod, ins.diffins {
   background-color: #cfc;
   text-decoration: none;
   color: #000;
+  padding: .1em;
 }
 
 /* http://longren.org/2006/09/27/wrapping-text-inside-pre-tags */

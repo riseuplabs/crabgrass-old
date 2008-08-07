@@ -66,7 +66,19 @@ class WikiPageControllerTest < Test::Unit::TestCase
   end
   
   def test_diff
-    # TODO:  write test
+    login_as :orange
+
+    (1..5).each do |i|
+      pages(:wiki).data.body = "text %d for the wiki" / i
+      pages(:wiki).data.save
+    end
+    pages(:wiki).data.versions.reload
+
+    post :diff, :page_id => pages(:wiki).id, :id => "4-5"
+    assert_template 'diff'
+    assert_equal assigns(:wiki).versions.reload.find_by_version(4).body_html, assigns(:old_markup)
+    assert_equal assigns(:wiki).versions.reload.find_by_version(5).body_html, assigns(:new_markup)
+    assert_not_nil assigns(:difftext)
   end
 
   def test_print

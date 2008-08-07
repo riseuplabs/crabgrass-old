@@ -77,8 +77,6 @@ class WikiPageController < BasePageController
   end
   
   # save the wiki
-  # (used to make a new version only if the last
-  # version was not recently saved by current_user, but i have commented this out --af)
   def save_revision(wiki)
     if wiki.recent_edit_by?(current_user)
       wiki.save_without_revision
