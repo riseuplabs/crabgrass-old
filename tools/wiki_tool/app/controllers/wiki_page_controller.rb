@@ -8,8 +8,7 @@ class WikiPageController < BasePageController
       return
     end
     if @upart and !@upart.viewed? and @wiki.version > 1
-      last_seen = @wiki.first_since( @upart.viewed_at )
-      @diffhtml = html_diff(last_seen.body_html,@wiki.body_html) if last_seen
+      @last_seen = @wiki.first_since( @upart.viewed_at )
     end
   end
 
@@ -35,6 +34,9 @@ class WikiPageController < BasePageController
     @old_markup = @old.body_html || ''
     @new_markup = @new.body_html || ''
     @difftext = html_diff( @old_markup , @new_markup)
+
+    # output diff html only for ajax requests
+    render :text => @difftext if request.xhr?
   end
 
   def print
