@@ -97,7 +97,7 @@ class Wiki < ActiveRecord::Base
 
     if recent_edit_by?(params[:user])
       save_without_revision
-      find_version(version).update_attributes(:body => body, :body_html => body_html, :updated_at => Time.now)
+      versions.find_by_version(version).update_attributes(:body => body, :body_html => body_html, :updated_at => Time.now)
     else
       user = params[:user]
       save!
