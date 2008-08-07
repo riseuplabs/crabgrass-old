@@ -62,7 +62,25 @@ class WikiPageControllerTest < Test::Unit::TestCase
   end
 
   def test_version
-    # TODO:  write test
+    login_as :orange
+
+    (1..5).each do |i|
+      pages(:wiki).data.body = "text %d for the wiki" / i
+      pages(:wiki).data.save
+    end
+    pages(:wiki).data.versions.reload
+
+    # should find any version in 2..6
+    (2..6).each do |i|
+      get :version, :page_id => pages(:wiki).id, :id => i
+      assert_template 'version'
+      assert_equal i, assigns(:version).version
+    end
+    
+    # should fail gracefully for non-existant version
+    get :version, :page_id => pages(:wiki).id, :id => 7
+    assert_template 'version'
+    assert_nil assigns(:version)
   end
   
   def test_diff
@@ -82,15 +100,24 @@ class WikiPageControllerTest < Test::Unit::TestCase
   end
 
   def test_print
-    # TODO:  write test
+    login_as :orange
+
+    get :print, :page_id => pages(:wiki).id
+    assert_template 'print'    
   end
   
   def test_preview
-    # TODO:  write test
+    # TODO:  write action and test
   end
   
   def test_break_lock
-    # TODO:  write test
+    login_as :orange
+
+    pages(:wiki).data.lock(Time.now, users(:orange))
+    
+    get :break_lock, :page_id => pages(:wiki).id
+    assert_equal nil, pages(:wiki).data.reload.locked?
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'show')
   end
 
 end
