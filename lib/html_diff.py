@@ -21,16 +21,34 @@ def textDiff(a, b):
 			# @@ need to do something more complicated here
 			# call textDiff but not for html, but for some html... ugh
 			# gonna cop-out for now
-			out.append('<del class="diffmod">'+''.join(a[e[1]:e[2]]) + '</del><ins class="diffmod">'+''.join(b[e[3]:e[4]])+"</ins>")
+			out.append(list2html(a[e[1]:e[2]],'<del class="diffmod">','</del>') + list2html(b[e[3]:e[4]],'<ins class="diffmod">','</ins>'))
 		elif e[0] == "delete":
-			out.append('<del class="diffmod">'+ ''.join(a[e[1]:e[2]]) + "</del>")
+			out.append(list2html(a[e[1]:e[2]],'<del class="diffmod">','</del>'))
 		elif e[0] == "insert":
-			out.append('<ins class="diffins">'+''.join(b[e[3]:e[4]]) + "</ins>")
+			out.append(list2html(b[e[3]:e[4]],'<ins class="diffins">','</ins>'))
 		elif e[0] == "equal":
-			out.append(''.join(b[e[3]:e[4]]))
+			out.append(list2html(b[e[3]:e[4]],'',''))
 		else: 
 			raise "Um, something's broken. I didn't expect a '" + `e[0]` + "'."
 	return ''.join(out)
+
+def list2html(l, start_tag, end_tag):
+  mode = 'tag'
+  out = ''
+  for x in l:
+    if x[0] == '<':
+      if mode == 'char':
+        out += end_tag
+        mode = 'tag'
+      out += x
+    else:
+      if mode == 'tag':
+        out += start_tag
+        mode = 'char'
+      out += x
+  if mode == 'char':
+    out += end_tag
+  return out
 
 def html2list(x, b=0):
 	mode = 'char'

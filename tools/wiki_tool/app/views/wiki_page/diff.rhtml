@@ -2,8 +2,7 @@
 pre.diff code{
     padding: 0px;
 }
-pre.diff {
-    display: block;
+div.diff {
     background: #f4f4f4;
     border: 1px solid #ddd;
     padding: 8px 20px;
@@ -24,22 +23,22 @@ pre.diff {
 
 <p>
 Comparing changes from 
-<span style='background-color: #ddd; padding: 1px 4px;' >version <%= @old.version %></span>
+<span style='background-color: #fcc; padding: 1px 4px;' >version <%= @old.version %></span>
 to
 <span style='background-color: #cfc; padding: 1px 4px;'>version <%= @new.version %></span>
 
 <p>
 <% if @old.version.to_i != 1 %>
-<%= link_to 'prev change', page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
+<%= link_to '« prev change', page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
 <% else %>
-prev change
+« prev change
 <% end %>
 <% if @wiki.versions.last.version != @new.version %>
-<%= link_to 'next change', page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
+<%= link_to 'next change »', page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
 <% else %>
-next change
+next change »
 <% end %>
 </p>
 
-<pre class='diff'><%= @difftext %></pre>
+<div class='diff'><%= @difftext %></div>
 </p>
