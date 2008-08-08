@@ -52,7 +52,7 @@ class Wiki < ActiveRecord::Base
   
   # returns true if the last version was created recently by this same author.
   def recent_edit_by?(author)
-    (user == author) && (updated_at + 30.minutes > Time.now) if updated_at
+    (user == author) && (updated_at > 10.minutes.ago) if updated_at
   end 
   
   # returns first version since @time@
