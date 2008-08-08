@@ -3,13 +3,26 @@ class WikiPageController < BasePageController
   append_before_filter :fetch_wiki
   
   def show
-    unless @wiki.version > 0
-      redirect_to page_url(@page, :action => 'edit')
-      return
-    end
     if @upart and !@upart.viewed? and @wiki.version > 1
       @last_seen = @wiki.first_since( @upart.viewed_at )
     end
+  end
+
+  def create
+    @page_class = WikiPage
+    if request.post?
+      @page = create_new_page(@page_class)
+      if @page.valid?
+        fetch_wiki
+        @wiki.lock Time.now, current_user
+        @page.save # attach the new wiki to the page
+
+        return redirect_to(page_url(@page, :action => 'edit'))
+      else
+        message :object => @page
+      end
+    end
+    render :template => 'base_page/create'
   end
 
   def edit
