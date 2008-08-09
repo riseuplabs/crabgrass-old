@@ -22,9 +22,9 @@ module TaskListPageHelper
     id = dom_id(task, 'details')
     name = task.name
     if logged_in?
-      if logged_in_since < task.created_at
+      if task.created_at and logged_in_since < task.created_at
         name += content_tag(:b," (new)")
-      elsif logged_in_since < task.updated_at
+      elsif task.updated_at and logged_in_since < task.updated_at
         name += content_tag(:b," (modified)")
       end
     end
