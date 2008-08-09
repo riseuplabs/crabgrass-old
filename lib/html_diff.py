@@ -33,6 +33,8 @@ def textDiff(a, b):
 	return ''.join(out)
 
 def list2html(l, start_tag, end_tag):
+  """takes list l (of text and html tags) and turns it into a string,
+  wrapping all of the text blocks in the tags given by start_tag and end_tag"""
   mode = 'tag'
   out = ''
   for x in l:
