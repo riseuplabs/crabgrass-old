@@ -21,7 +21,9 @@ required for running tests:
   gem install ruby-debug hpricot
 
 optional (but necessary for image thumbnails and document previews):
-  apt-get graphicsmagick openoffice.org msttcorefonts
+  apt-get graphicsmagick openoffice.org-headless msttcorefonts
+  OpenOffice should be at least version 2.4 or greater
+  (if you are running etch: apt-get -t etch-backports install openoffice.org-headless)
 
 optional for inline latex rendering:
   apt-get install graphicsmagick texlive gs-gpl
@@ -54,6 +56,12 @@ upgrading:
   rake db:fixtures:load
 
 Also, 'rake --version' must be 8.1 or greater.
+
+mysqladmin -u root -p create crabgrass
+
+GRANT USAGE ON *.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
+GRANT ALL PRIVILEGES ON crabgrass.* TO 'crabgrass'@'localhost';
+flush privileges;
 
 INSTALL FOR PRODUCTION
 ==========================================================
