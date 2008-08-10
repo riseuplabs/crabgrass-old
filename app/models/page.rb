@@ -10,6 +10,9 @@ class Page < ActiveRecord::Base
   extend PathFinder::FindByPath
   
   acts_as_taggable_on :tags
+  def set_tag_list(str)
+    self.tag_list = (str||'').gsub(/[ \t\n]/, ',')
+  end
 
   #######################################################################
   ## PAGE NAMING
