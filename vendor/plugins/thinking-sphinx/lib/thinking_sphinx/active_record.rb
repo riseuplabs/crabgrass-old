@@ -10,9 +10,8 @@ module ThinkingSphinx
   module ActiveRecord
     def self.included(base)
       base.class_eval do
+        class_inheritable_array :indexes
         class << self
-          attr_accessor :indexes
-          
           # Allows creation of indexes for Sphinx. If you don't do this, there
           # isn't much point trying to search (or using this plugin at all,
           # really).
@@ -65,10 +64,10 @@ module ThinkingSphinx
           def define_index(&block)
             return unless ThinkingSphinx.define_indexes?
             
-            @indexes ||= []
+            self.indexes ||= []
             index = Index.new(self, &block)
             
-            @indexes << index
+            self.indexes << index
             unless ThinkingSphinx.indexed_models.include?(self.name)
               ThinkingSphinx.indexed_models << self.name
             end
@@ -77,6 +76,8 @@ module ThinkingSphinx
               before_save   :toggle_delta
               after_commit  :index_delta
             end
+            
+            after_destroy :toggle_deleted
             
             index
           end
@@ -110,6 +111,31 @@ module ThinkingSphinx
       ::ActiveRecord::Associations::HasManyThroughAssociation.send(
         :include, ThinkingSphinx::ActiveRecord::HasManyAssociation
       )
+    end
+    
+    def in_core_index?
+      @in_core_index ||= self.class.search_for_id(self.id, "#{self.class.name.downcase}_core")
+    end
+    
+    def toggle_deleted
+      return unless ThinkingSphinx.updates_enabled?
+      
+      config = ThinkingSphinx::Configuration.new
+      client = Riddle::Client.new config.address, config.port
+      
+      client.update(
+        "#{self.class.indexes.first.name}_core",
+        ['sphinx_deleted'],
+        {self.id => 1}
+      ) if self.in_core_index?
+      
+      client.update(
+        "#{self.class.indexes.first.name}_delta",
+        ['sphinx_deleted'],
+        {self.id => 1}
+      ) if ThinkingSphinx.deltas_enabled? &&
+        self.class.indexes.any? { |index| index.delta? } &&
+        self.delta?
     end
   end
 end

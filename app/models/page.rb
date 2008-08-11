@@ -332,7 +332,6 @@ class Page < ActiveRecord::Base
   ## Things related to the page to index with sphinx
   has_one :page_index, :dependent => :destroy
   
-=begin
 #TODO: figure out if this is making things super SLOW, and if so can it be fixed?
   before_save :update_index
   def update_index
@@ -372,5 +371,4 @@ class Page < ActiveRecord::Base
       RAILS_DEFAULT_LOGGER.warn "failed to index page #{self} for sphinx search"
     end
   end
-=end
 end
