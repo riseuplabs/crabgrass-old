@@ -15,7 +15,8 @@ debian/ubuntu
 required:
   apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
   gem install -y rails
-  gem install RedCloth rmagick tzinfo
+  gem install RedCloth -v 3.0.4 
+  gem install rmagick tzinfo
 
 required for running tests:
   gem install ruby-debug hpricot
