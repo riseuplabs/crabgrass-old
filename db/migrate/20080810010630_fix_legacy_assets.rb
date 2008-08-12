@@ -1,6 +1,9 @@
 class FixLegacyAssets < ActiveRecord::Migration
   def self.up
     ActiveRecord::Base.record_timestamps = false
+
+    ### ASSET PAGES
+
     pages = AssetPage.find :all
     pages.each do |page|
       asset = page.data
@@ -35,10 +38,39 @@ class FixLegacyAssets < ActiveRecord::Migration
       end
       asset.create_thumbnail_records
     end
+
+    ### ATTACHMENTS
+
+    assets = Asset.find :all
+    assets.each do |asset|
+      asset.without_revision do
+        newfilename = asset.filename.gsub('_','-')
+        if asset.filename != newfilename
+          puts 'rename %s --> %s' % [asset.filename, newfilename]
+          asset.filename = newfilename
+          asset.save
+        end
+      end
+      asset.versions.each do |v|
+        if !File.exists?(v.private_filename)
+          v.destroy
+          puts 'destroying version %s of asset %s: no file %s' % [v.version, asset.id, v.private_filename]
+        else
+          newfilename = v.filename.gsub('_','-')
+          if v.filename != newfilename
+            puts 'rename %s --> %s' % [v.filename, newfilename]
+            v.filename = newfilename
+            v.save
+          end
+        end
+      end
+    end
+
   end
 
   def self.down
     # nope
   end
 end
+
 
