@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080723045752) do
+ActiveRecord::Schema.define(:version => 20080813192928) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20080723045752) do
     t.datetime "updated_at"
     t.integer  "avatar_id",      :limit => 11
     t.string   "style"
+    t.integer  "language_id",    :limit => 11
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -155,6 +156,15 @@ ActiveRecord::Schema.define(:version => 20080723045752) do
   end
 
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
+
+  create_table "languages", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "languages", ["name", "code"], :name => "languages_index", :unique => true
 
   create_table "links", :id => false, :force => true do |t|
     t.integer "page_id",       :limit => 11
@@ -303,7 +313,6 @@ ActiveRecord::Schema.define(:version => 20080723045752) do
   create_table "profiles", :force => true do |t|
     t.integer  "entity_id",              :limit => 11
     t.string   "entity_type"
-    t.string   "language",               :limit => 5
     t.boolean  "stranger"
     t.boolean  "peer"
     t.boolean  "friend"
@@ -336,9 +345,10 @@ ActiveRecord::Schema.define(:version => 20080723045752) do
     t.boolean  "may_pester"
     t.boolean  "may_burden"
     t.boolean  "may_spy"
+    t.integer  "language_id",            :limit => 11
   end
 
-  add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+  add_index "profiles", ["entity_id", "entity_type", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
 
   create_table "ratings", :force => true do |t|
     t.integer  "rating",        :limit => 11, :default => 0
@@ -448,7 +458,6 @@ ActiveRecord::Schema.define(:version => 20080723045752) do
     t.datetime "remember_token_expires_at"
     t.string   "display_name"
     t.string   "time_zone"
-    t.string   "language",                  :limit => 5
     t.integer  "avatar_id",                 :limit => 11
     t.datetime "last_seen_at"
     t.integer  "version",                   :limit => 11, :default => 0
@@ -459,6 +468,7 @@ ActiveRecord::Schema.define(:version => 20080723045752) do
     t.binary   "peer_id_cache"
     t.binary   "tag_id_cache"
     t.string   "password_reset_code",       :limit => 40
+    t.integer  "language_id",               :limit => 11
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

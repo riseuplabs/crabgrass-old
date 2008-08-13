@@ -17,6 +17,8 @@ Order of profile presidence (user sees the first one that matches):
 
 class Profile < ActiveRecord::Base
 
+  belongs_to :language
+
   ### relationship to user or group #########################################
   
   belongs_to :entity, :polymorphic => true

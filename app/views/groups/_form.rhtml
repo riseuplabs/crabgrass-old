@@ -25,6 +25,14 @@
 </p>
 
 <p>
+  <label for="group_language">
+    <b>Language</b><br/>
+    <%= 'The main language of this %s.' / group_type %>
+  </label>
+<%= select 'group', 'language_id', Language.find(:all).collect {|l| [ l.name, l.id ] }, { :include_blank => true }  %></p>
+
+
+<p>
   <label for="group_summary">
     <b>Summary</b><br/>
     <%= 'Brief information regarding this %s.' / group_type %>  
