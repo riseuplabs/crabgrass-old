@@ -332,43 +332,60 @@ class Page < ActiveRecord::Base
   ## Things related to the page to index with sphinx
   has_one :page_index, :dependent => :destroy
   
-#TODO: figure out if this is making things super SLOW, and if so can it be fixed?
   before_save :update_index
   def update_index
     self.page_index ||= PageIndex.new
-    self.page_index.body = (data and data.index)
+    # store text version of user_ids and group_ids for sql full text search
+    # page_index.user_ids_str = "xx13xx xx21xx" # or something, each word needs to be at least 4 chars (?)
+    # page_index.group_ids_str = "xx13xx xx21xx" # or something, each word needs to be at least 4 chars (?)
+    
+    # previously, we would pass this indexing fuction off to page.data,
+    # but i think it is classier to have the page subclasses override the index_data method
+    # page_index.body = (data and data.index)
+    self.page_index.body = index_data
     self.page_index.class_display_name = class_display_name
-    self.page_index.tags = tag_list
+    self.page_index.tags = tag_list.join(', ')
+
     self.page_index.save!
   end
+
+  # subclasses should override this method as appropriate,
+  # for example WikiPage will return wiki.body,
+  # and TaskListPage will merge all of the tasks associated with it.
+  # Maybe AssetPage will extract the text of a word document
+  def index_data    
+    ""
+  end
+
   
   define_index do
     begin
-      indexes name
-      indexes title
-      indexes summary
+      indexes :name
+      indexes :title
+      indexes :summary
  
-      indexes page_index.body 
-      indexes page_index.class_display_name
-      indexes page_index.tags
+      indexes page_index.body, :as => :body
+      indexes page_index.class_display_name, :as => :class
+      indexes page_index.tags, :as => :tags
 
       indexes discussion.posts.body, :as => :comments
       
-      has user_participations.user_id
-      has group_participations.group_id
-      has created_by_id
+      has user_participations.user_id, :as => :user_ids
+      has group_participations.group_id, :as => :group_ids
+      has :created_by_id
       
-      indexes resolved
-      indexes public
+      indexes :resolved
+      indexes :public
       
-      has created_at
-      has updated_at
-      has starts_at
+      has :created_at
+      has :updated_at
+      has :starts_at
     
-      #index.delta = true
-    rescue
-      puts "failed to index page #{self} for sphinx search"
-      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self} for sphinx search"
+      index.delta = true
+# TODO: figure out if this exception handling is slowing down saving or indexing
+#    rescue
+#      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
     end
   end
+
 end

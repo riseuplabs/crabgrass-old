@@ -7,10 +7,6 @@ class Poll < ActiveRecord::Base
     possibles.first || possibles.build
   end
   
-  def index
-    self.possibles.collect { |pos| "#{pos.name}\t#{pos.description}" }.join "\n"
-  end
-  
   has_many :votes, :finder_sql => 
     'SELECT votes.* FROM votes ' +
     'JOIN possibles ON possibles.id = votes.possible_id ' +

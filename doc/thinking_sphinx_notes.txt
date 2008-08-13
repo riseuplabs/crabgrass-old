@@ -1,0 +1,52 @@
+Notes on sphinx search in crabgrass
+===================================
+
+There needs to be something akin to a page_index for the sql search that elijah want to use
+
+The most recent version of thinking sphinx does not need this, though, since we can make different indexes for different subclasses of page
+
+It might be classiest have the subclasses do their own indices, instead of having a page_index model
+The current page types:
+* asset
+* core
+** discussion
+** info
+** message
+** request
+** request discussion
+* event
+* ranked vote
+* rate many
+* task list
+* wiki
+
+Benefits:
+* Good code encapsulation
+
+Drawbacks:
+* Might lead to duplicate code
+* Not as flexible
+* Does not work with current thinking_sphinx (probably the index rake task is not looking in the tools/tool/app/model dir)
+
+Federated Search
+----------------
+
+It would be really really beautiful if there were many crabgrass installs and a single interface to all of them.  Then people can keep their sensitive data in the server of their choice, and one server going down will not destroy the system.  Search will be a challenge in this setting.
+
+One way it could work is to use ajax.  The search page could serve results from the "primary" server, and also fire off requests for the same search to be performed on the federated servers.  Then a little javascript magic on the client side could assemble these results into a single list (possibly with google-jstemplate).  Pagination would be a challenge.
+
+
+
+Work Log
+--------
+
+Abie, 2008 08
+Mon, Aug 11:
+* Meet to discuss dev process
+
+Tues, Aug 12:  
+* Made issues pages, as we agreed, to outline scope of work for this phase
+* Upgraded Sphinx to 0.9.8, which turned out to be straight forward
+
+Wed, Aug 13:
+* Write, test code in page model, and page subclasses 10 (10 AM - 12 PM)

@@ -9,9 +9,5 @@ class TaskList < ActiveRecord::Base
   
   has_many :pages, :as => :data
   def page; pages.first; end
-
-  def index
-    self.tasks.collect { |task| "#{task.name}\t#{task.description}" }.join "\n"
-  end
   
 end

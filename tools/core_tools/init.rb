@@ -1,4 +1,9 @@
-
+PageClassRegistrar.add(
+  'Page',
+  :controller => 'page',
+  :class_display_name => 'basic page'
+)
+  
 PageClassRegistrar.add(
   'DiscussionPage',
   :controller => 'discussion_page',
