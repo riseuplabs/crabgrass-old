@@ -5,17 +5,18 @@ describe "ThinkingSphinx::ActiveRecord::Delta" do
     before :each do
       Person.stub_method(:write_inheritable_array => true)
     end
+
+    # This spec only passes with ActiveRecord 2.0.2 or earlier.
+    # it "should add callbacks" do
+    #   Person.after_commit :toggle_delta
+    #   
+    #   Person.should have_received(:write_inheritable_array).with(
+    #     :after_commit, [:toggle_delta]
+    #   )
+    # end
     
-    after :each do
-      Person.unstub_method(:write_inheritable_array)
-    end
-    
-    it "should add callbacks" do
-      Person.after_commit :toggle_delta
-      
-      Person.should have_received(:write_inheritable_array).with(
-        :after_commit, [:toggle_delta]
-      )
+    it "should have an after_commit method by default" do
+      Person.instance_methods.should include("after_commit")
     end
   end
   
@@ -149,12 +150,10 @@ describe "ThinkingSphinx::ActiveRecord::Delta" do
       ThinkingSphinx.stub_method(:deltas_enabled? => true)
       
       @person = Person.new
-      @person.stub_method(:system => true)
-    end
-    
-    after :each do
-      ThinkingSphinx::Configuration.unstub_method(:environment)
-      ThinkingSphinx.unstub_method(:deltas_enabled?)
+      @person.stub_method(:system => true, :in_core_index? => false)
+      
+      @client = Riddle::Client.stub_instance(:update => true)
+      Riddle::Client.stub_method(:new => @client)
     end
     
     it "shouldn't index if delta indexing is disabled" do
@@ -163,9 +162,19 @@ describe "ThinkingSphinx::ActiveRecord::Delta" do
       @person.send(:index_delta)
       
       @person.should_not have_received(:system)
+      @client.should_not have_received(:update)
+    end
+    
+    it "shouldn't index if index updating is disabled" do
+      ThinkingSphinx.stub_method(:updates_enabled? => false)
+      
+      @person.send(:index_delta)
+      
+      @person.should_not have_received(:system)
     end
     
     it "shouldn't index if the environment is 'test'" do
+      ThinkingSphinx.unstub_method(:deltas_enabled?)
       ThinkingSphinx::Configuration.stub_method(:environment => "test")
       
       @person.send(:index_delta)
@@ -179,6 +188,20 @@ describe "ThinkingSphinx::ActiveRecord::Delta" do
       @person.should have_received(:system).with(
         "indexer --config #{ThinkingSphinx::Configuration.new.config_file} --rotate person_delta"
       )
+    end
+    
+    it "shouldn't update the deleted attribute if not in the index" do
+      @person.send(:index_delta)
+      
+      @client.should_not have_received(:update)
+    end
+    
+    it "should update the deleted attribute if in the core index" do
+      @person.stub_method(:in_core_index? => true)
+      
+      @person.send(:index_delta)
+      
+      @client.should have_received(:update)
     end
   end
 end

@@ -1,6 +1,7 @@
 require 'active_record'
+require 'active_record/connection_adapters/mysql_adapter'
+require 'active_record/connection_adapters/postgresql_adapter'
 require 'yaml'
-require 'spec/fixtures/models'
 
 class SphinxHelper
   attr_accessor :host, :username, :password
@@ -31,7 +32,7 @@ class SphinxHelper
     )
     # ActiveRecord::Base.logger = nil
     
-    structure = File.open("spec/fixtures/structure.sql") { |f| f.read }
+    structure = File.open("spec/fixtures/structure.sql") { |f| f.read.chomp }
     structure.split(';').each { |table|
       ActiveRecord::Base.connection.execute table
     }

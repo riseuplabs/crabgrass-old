@@ -48,14 +48,14 @@ module ThinkingSphinx
         # get access down the associations tree.
         # 
         #   indexes :id, :as => :my_id
+        #   indexes :name, :sortable => true
         #   indexes first_name, last_name, :sortable => true
-        #   indexes name, :sortable => true
         #   indexes users.posts.content, :as => :post_content
         #   indexes users(:id), :as => :user_ids
         #
-        # Keep in mind that if any keywords for Ruby methods - such as id -
-        # clash with your column names, you need to use the symbol version (see
-        # the first and last examples above).
+        # Keep in mind that if any keywords for Ruby methods - such as id or 
+        # name - clash with your column names, you need to use the symbol
+        # version (see the first, second and last examples above).
         #
         # If you specify multiple columns (example #2), a field will be created
         # for each. Don't use the :as option in this case. If you want to merge
@@ -71,6 +71,13 @@ module ThinkingSphinx
         # limitations on whether they're symbols or methods or what level of
         # associations they come from.
         # 
+        # Adding SQL Fragment Fields
+        #
+        # You can also define a field using an SQL fragment, useful for when
+        # you would like to index a calculated value.
+        #
+        #   indexes "age < 18", :as => :minor
+        #
         def indexes(*args)
           options = args.extract_options!
           args.each do |columns|
@@ -115,6 +122,14 @@ module ThinkingSphinx
         # This allows you to filter on any of the values tied to a specific
         # record. Might be best to read through the Sphinx documentation to get
         # a better idea of that though.
+        # 
+        # Adding SQL Fragment Attributes
+        #
+        # You can also define an attribute using an SQL fragment, useful for
+        # when you would like to index a calculated value. Don't forget to set
+        # the type of the attribute though:
+        #
+        #   indexes "age < 18", :as => :minor, :type => :boolean
         # 
         # If you're creating attributes for latitude and longitude, don't
         # forget that Sphinx expects these values to be in radians.
@@ -171,6 +186,9 @@ module ThinkingSphinx
         # geo-related search.
         #
         #   set_property :latitude_attr => "lt", :longitude => "lg"
+        # 
+        # Please don't forget to add a boolean field named 'delta' to your
+        # model's database table if enabling the delta index for it.
         # 
         def set_property(*args)
           options = args.extract_options!
