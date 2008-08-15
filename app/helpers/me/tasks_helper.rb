@@ -1,5 +1,7 @@
 module Me::TasksHelper
 
+=begin
+  # this method is out-of-date and unused
   def task_link(text, options={})
     options[:selected] ||= options[:action]
     if options[:selected].to_a.include?(params[:action])
@@ -10,5 +12,6 @@ module Me::TasksHelper
     url = url_for :controller => 'my_tasks', :action => options[:action], :id => options[:id]
     link_to text, url, :class => "tasklink #{selected}"
   end
+=end
 
 end
