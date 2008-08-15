@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # uncomment if you enable these plugins:
   # map.from_plugin :super_admin
+  # map.from_plugin :gibberize
 
   ##### ASSET ROUTES ######################################
   
