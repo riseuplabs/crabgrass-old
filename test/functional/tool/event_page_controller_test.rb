@@ -4,7 +4,7 @@ require 'event_page_controller'
 # Re-raise errors caught by the controller.
 class EventPageController; def rescue_action(e) raise e end; end
 
-class Tool::EventControllerTest < Test::Unit::TestCase
+class Tool::EventPageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users
 
   def setup

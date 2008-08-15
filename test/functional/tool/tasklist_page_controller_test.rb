@@ -4,7 +4,7 @@ require 'task_list_page_controller'
 # Re-raise errors caught by the controller.
 class TaskListPageController; def rescue_action(e) raise e end; end
 
-class Tool::TasklistControllerTest < Test::Unit::TestCase
+class Tool::TasklistPageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :task_lists, :tasks, :user_participations
 
   def setup
