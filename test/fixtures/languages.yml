@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+en:
   name: English
   code: en_US
 
-two:
+es:
   name: Español
   code: es_ES
 
-three:
+pt:
   name: Português
   code: pt_BR

@@ -6,7 +6,7 @@ class Me::BaseController; def rescue_action(e) raise e end; end
 
 class BaseControllerTest < Test::Unit::TestCase
 
-  fixtures :users
+  fixtures :users, :languages
   
   def setup
     @controller = Me::BaseController.new
@@ -52,7 +52,6 @@ class BaseControllerTest < Test::Unit::TestCase
 
   def test_edit
     login_as(:quentin)
-    
     get :edit
     assert_response :success
     assert_template 'edit'
@@ -73,10 +72,10 @@ class BaseControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => :edit
     assert_equal 'email@example.com', User.find(users(:quentin).id).email, "email for quentin should have changed"
     
-    post :edit, :user => {:language => 'en-us'}
+    post :edit, :user => {:language_id => languages(:pt).id}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal 'en-us', User.find(users(:quentin).id).language, "language for quentin should have changed"
+    assert_equal languages(:pt), User.find(users(:quentin).id).language, "language for quentin should have changed"
     
     post :edit, :user => {:time_zone => 'Samoa'}
     assert_response :redirect
