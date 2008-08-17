@@ -1,15 +1,13 @@
 module LayoutHelper
 
   ##########################################
-  # BREADCRUMBS and CONTEXT
-  
-  def bread
-    @breadcrumbs
-  end
+  # DISPLAYING BREADCRUMBS and CONTEXT
   
   def link_to_breadcrumbs
     if @breadcrumbs and @breadcrumbs.length > 1
-      @breadcrumbs.collect{|b| link_to b[0],b[1]}.join ' &raquo; ' 
+      content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :id => 'breadcrumbs')
+    else
+      ""
     end
   end
   
@@ -61,17 +59,18 @@ module LayoutHelper
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included if they are needed. a controller can set a custom stylesheet
   # using 'stylesheet' in the class definition, or an action can set @stylesheet.
-  # you can't do both at the same time.
   def optional_stylesheet_tag
-    stylesheet_link_tag(*(optional_stylesheets.to_a))
+    stylesheet_link_tag(*( [controller.class.stylesheet, @stylesheet].flatten.compact ))
   end
-  def optional_stylesheets
-    if @stylesheet
-      @stylesheet # set for this action
-    else
-      controller.class.stylesheet # set for this controller
-    end
-  end
+#  def optional_stylesheets
+#    [controller.class.stylesheet, @stylesheet].flatten
+    # set for this controller
+    #if @stylesheet
+    #  @stylesheet # set for this action
+    #else
+    #  controller.class.stylesheet # set for this controller
+    #end
+#  end
   
   def http_plain
     'http://' + controller.request.host_with_port
@@ -92,23 +91,89 @@ module LayoutHelper
   #
   def crabgrass_stylesheets
     lines = [];
-    lines << stylesheet_link_tag('application', 'page', 'navigation', 'ui', 'errors', 'landing', 'sidebar', 'wiki', :cache => true)
+
+    lines << stylesheet_link_tag(
+      'core/00_reset',
+      'core/01_column_spacing',
+
+      'core/02_banner',
+      'core/02_header',
+      'core/02_top_menu',
+
+      'core/03_main_column',
+      'core/03_side_columns',
+
+      'core/04_footer',
+      'core/04_popups',
+
+      :cache => 'core'
+    )
+
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
+    lines << context_styles
     lines << @content_for_style
-    lines << theme_styles
     lines << '</style>'
-    lines << '<!--[if IE 6]><link rel="stylesheet" href="/stylesheets/ie6.css" /><![endif]-->'
-    lines << '<!--[if IE 7]><link rel="stylesheet" href="/stylesheets/ie7.css" /><![endif]-->'
-    lines << custom_stylesheet
+    lines << stylesheet_link_tag('ie/icons_gif')
+    # ^^^ i would like to do this only for ie, but that doesn't seem to work
+    lines << '<!--[if IE 6]>'
+    lines << stylesheet_link_tag('ie/ie6')
+#    lines << stylesheet_link_tag('ie/icons_gif')
+    lines << '<![endif]-->'
+    lines << '<!--[if IE 7]>'
+    lines << stylesheet_link_tag('ie/ie7')
+#    lines << stylesheet_link_tag('ie/icons_gif')
+    lines << '<![endif]-->'
+    lines << theme_styles
     lines.join("\n")
   end
 
-  # a hook to be overridden by mods
-  def custom_stylesheet
-    stylesheet_link_tag('theme')
+  def theme_styles
+    # TODO: make this method return a stylesheet specific to the @site.
+    stylesheet_link_tag(
+      'theme/10_general',
+
+      'theme/11_columns',
+      'theme/11_header',
+
+      'theme/12_errors',
+
+      'theme/15_tables', 
+      'theme/15_pagination',
+#      'theme/15_icons_png',
+
+      'theme/17_ui',
+      'theme/17_tabs',
+     
+      :cache => 'theme'
+    )
   end
 
+  # support for holygrail layout:
+  
+  # returns the style elements need in the <head> for the holygrail layouts. 
+  def holygrail_stylesheets
+    lines = []
+    lines << stylesheet_link_tag('holygrail/common')
+    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
+    lines << '<!--[if lt IE 7]>
+<style media="screen" type="text/css">.col1 {width:100%;}</style>
+<![endif]-->' # this line is important!
+    lines.join("\n")
+  end
+
+  def type_of_column_layout
+    @layout_type ||= if @left_column.any? and @right_column.any?
+      'three'
+    elsif !@left_column.any? and !@right_column.any?
+      'one'
+    elsif @left_column.any?
+      'left'
+    elsif @right_column.any?
+      'right'
+    end
+  end
+  
   ############################################
   # JAVASCRIPT
 
@@ -152,7 +217,7 @@ module LayoutHelper
 
   # banner stuff
   def banner_style
-    "background: #{@banner_style.background_color}; color: #{@banner_style.color};"
+    "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
   end  
   def banner_background
     @banner_style.background_color
@@ -160,12 +225,12 @@ module LayoutHelper
   def banner_foreground
     @banner_style.color
   end
-  def banner
-    @banner_partial
-  end
-  
+#  def banner
+#    @banner_partial
+#  end
+
   ############################################
-  # CUSTOM THEME
+  # CONTEXT STYLES
   
   def background_color
     "#ccc"
@@ -176,22 +241,45 @@ module LayoutHelper
   end
 
   # return all the custom css which might apply just to this one group
-  def theme_styles
+  def context_styles
     style = []
-     if banner
-       style << 'body {background-color: %s}' % background_color
-       style << '#main {background: %s}' % background if background
+     if @banner
+#       style << 'body {background-color: %s}' % background_color
+#       style << '#main {background: %s}' % background if background
 #       style << 'div.sidehead {background: %s;}' % banner_background
-       style << 'div.sidehead {background: %s;}' % '#bbb'
+#       style << 'div.sidehead {background: %s;}' % '#bbb'
        style << '#banner {%s}' % banner_style
        style << '#banner a.name_link {color: %s; text-decoration: none;}' %
                 banner_foreground
        style << '#topmenu li.selected span a {background: %s; color: %s}' %
                 [banner_background, banner_foreground]
-      
-       #xmain {background: #fff url(/images/shadows/small-top.png) repeat-x top;}
      end
     style.join("\n")
+  end
+
+  ###########################################
+  # LAYOUT STRUCTURE
+
+  # builds and populates a table with the specified number of columns
+  def column_layout(cols, items)
+    lines = []
+    count = items.size
+    rows = (count.to_f / cols).ceil
+    lines << '<table>'
+    for r in 1..rows
+      lines << ' <tr>'
+      for c in 1..cols
+         cell = ((r-1)*cols)+(c-1)
+         next unless items[cell]
+         lines << "  <td valign='top'>"
+         lines << '  %s' % items[cell]
+         #lines << "r%s c%s i%s" % [r,c,cell]
+         lines << '  </td>'
+      end
+      lines << ' </tr>'
+    end
+    lines << '</table>'
+    lines.join("\n")
   end
 
 end

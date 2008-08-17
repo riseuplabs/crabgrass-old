@@ -1,14 +1,15 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
     
-  include PageHelper      # various page helpers needed everywhere
-  include UrlHelper       # for user and group urls/links
-  include Formy           # helps create forms
-  include LayoutHelper    # used in layouts
-  include LinkHelper      # for making buttons
-  include TimeHelper      # for displaying local and readable times
-  include ErrorHelper     # for displaying errors and messages to the user
-  include ImageHelper     # icons, avatars, spinners, etc.
+  include PageHelper       # various page helpers needed everywhere
+  include UrlHelper        # for user and group urls/links
+  include Formy            # helps create forms
+  include LayoutHelper     # used in layouts
+  include LinkHelper       # for making buttons
+  include TimeHelper       # for displaying local and readable times
+  include ErrorHelper      # for displaying errors and messages to the user
+  include ImageHelper      # icons, avatars, spinners, etc.
+  include JavascriptHelper # helpers that produce javascript
   include PathFinder::Options       # for Page.find_by_path options
   include WindowedPaginationHelper  # deprecated, should be using will_paginate
 
@@ -27,34 +28,41 @@ module ApplicationHelper
       '%s B' % bytes
     end
   end
-  
-  def created_modified_date(created, modified=nil)
-    return friendly_date(created) unless modified and modified != created
-    created_date = friendly_date(created)
-    modified_date = friendly_date(modified)
-    detail_string = "created:&nbsp;#{created_date}<br/>modified:&nbsp;#{modified_date}"
-    link_to_function created_date, %Q[this.replace("#{detail_string}")], :class => 'dotted'
-  end
    
   def once?(key)
     @called_before ||= {}
     return false if @called_before[key]
     @called_before[key]=true
   end
-
-  # produces javascript to hide the given id or object
-  def hide(id, extra=nil)
-    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
-    "$('%s').hide();" % id
-  end
-
-  # produces javascript to show the given id or object
-  def show(id, extra=nil)
-    id = dom_id(id,extra) if id.is_a?(ActiveRecord::Base)
-    "$('%s').show();" % id
-  end
   
   def logged_in_since
     session[:logged_in_since] || Time.now
   end
+
+  def options_for_indented_select(container, selected = nil)
+    container = container.to_a if Hash === container
+    options_for_select = container.inject([]) do |options, element|
+      text, value = option_text_and_value(element)
+      selected_attribute = ' selected="selected"' if option_value_selected?(value, selected)
+      options << %(<option class="indented" value="#{html_escape(value.to_s)}"#{selected_attribute}>#{html_escape(text.to_s)}</option>)
+    end
+    options_for_select.join("\n")
+  end
+  def option_section(label)
+    %(<option class='section' value='' disabled='disabled'>#{label}</option>)
+  end
+  def option_empty(label='')
+    %(<option value=''>#{label}</option>)
+  end
+
+  # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
+  # Only need this helper once, it will provide an interface to convert a block into a partial.
+  # 1. Capture is a Rails helper which will 'capture' the output of a block into a variable
+  # 2. Merge the 'body' variable into our options hash
+  # 3. Render the partial with the given options hash. Just like calling the partial directly.
+  def block_to_partial(partial_name, options = {}, &block)
+    options.merge!(:body => capture(&block))
+    concat(render(:partial => partial_name, :locals => options), block.binding)
+  end
+
 end

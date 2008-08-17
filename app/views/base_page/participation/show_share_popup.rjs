@@ -1,0 +1,7 @@
+page.select('.popup_holder').each do |value|
+  value.hide
+end
+page.show 'share_holder'
+page.replace_html 'share_holder', :partial => 'base_page/participation/share_popup'
+page.replace_html 'message', display_messages
+

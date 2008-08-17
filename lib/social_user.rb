@@ -462,6 +462,9 @@ module SocialUser
     ## this method is not called directly. instead, page.add(user)
     ## should be used.
     ##
+    ## TODO: delete the user_participation row if it is not really needed
+    ## anymore (ie, the user won't lose access by deleted it, and inbox,
+    ## watch, star are all false, and the user has not contributed.)
     def add_page(page, part_attrs)
       part_attrs = part_attrs.dup
       part_attrs[:notice] = [part_attrs[:notice]] if part_attrs[:notice]
@@ -525,6 +528,7 @@ module SocialUser
       page.participation_for_user(self) || page.user_participations.build(:user_id => self.id) 
     end
     
+    # TODO: make this not save the page.
     # should be called when a user writes to a page
     # or resolves a page.
     # options:
@@ -567,9 +571,9 @@ module SocialUser
     # * +:message => 'text to send to user'+ (default is empty)
     # * +:access => 'admin'+ (or one of 'admin', 'edit', 'view'. default is 'view')
     # TODO actually really make the default 'view', instead of 'admin'
-    def send_page_to(page, user, options={})
+    def share_page_with_user(page, user, options={})
       access = (options[:access] || :admin).to_sym
-
+      
       # check & update permissions
 
       if page.public? and !self.may_pester?(user)
@@ -598,7 +602,7 @@ module SocialUser
       page.save
     end
 
-    def send_page_to_group(page, group, options={})
+    def share_page_with_group(page, group, options={})
       access = (options[:access] || :admin).to_sym
       unless group.may?(access,page)
         unless self.may?(:admin,page) and self.may_pester?(group)

@@ -1,17 +1,28 @@
 <%# locals: wiki, access (one of :public or :private) %>
-<div class='wiki'>
-  <%= wiki.body_html %>
-</div>
-<% spinner_id = 'preview-spinner-%s' % rand(1000000) -%>
-<div class='formbox'>
-  <% form_remote_tag(
-       :url => wiki_action('edit_area', :access => access),
-       :loading => show_spinner(spinner_id)) do -%>
-   <div>
-     <%= submit_tag 'Edit', :name => 'edit' %>
-     <%= submit_tag 'Close', :name => 'close' %>
-     <%= spinner(spinner_id) %>
-   </div>
-  <% end -%>
+<div style='position:relative'> <!-- so params[height] will work -->
+  <div class='wiki'>
+    <%= wiki.body_html %>
+  </div>
+  <% spinner_id = 'preview-spinner-%s' % rand(1000000) -%>
+  <div class='formbox'>
+    <% form_remote_tag(
+         :url => wiki_action('edit_area', :access => access),
+         :loading => show_spinner(spinner_id),
+         :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"  # BUG: NOT USED!
+     ) do -%>
+     <div>
+       <%= submit_to_remote('edit', 'Edit', 
+         :url => wiki_action('edit_area', :access => access),
+         :loading => show_spinner(spinner_id),
+         :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"  # firefox=>layerY, ie=>offsetY
+       ) %>
+       <%# submit_tag 'Edit', :name => 'edit'
+         #   ^^ this is replaced by a submit_to_remote because of bug in form_remote_tag
+         #      where it doesn't pick up :with -%>
+       <%= submit_tag 'Close', :name => 'close' %>
+       <%= spinner(spinner_id) %>
+     </div>
+    <% end -%>
+  </div>
 </div>
 

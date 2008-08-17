@@ -1,18 +1,13 @@
-<% content_for :titlebox do %>
-<div id='titlebox'>
-  <div id='info_panel' >
-    <%= render :partial => 'infopanel' %>
-  </div>
-</div>
+<% content_for :style do -%>
+div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}
 <% end -%>
+<% @title_box = render :partial => 'infopanel' -%>
 
 <div class='landing'>
-<style>div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}</style>
-
-<div id='page_list'>
-<%= link_to 'Search recently updated pages', me_url(:action => 'search') + "/descending/updated_at" %>
-<%= javascript_tag "new Insertion.Top('page_list', '" + image_tag('spinner.gif') + " Loading recently updated pages<br/>');" %>
-<%= javascript_tag remote_function( :update => "page_list", :url => { :action => :page_list }) %>
+  <div id='page_list'>
+    <%= link_to 'Search recently updated pages', me_url(:action => 'search') + "/descending/updated_at" %>
+    <%= javascript_tag "new Insertion.Top('page_list', '" + image_tag('spinner.gif') + " Loading recently updated pages<br/>');" %>
+    <%= javascript_tag remote_function( :update => "page_list", :url => { :action => :page_list }) %>
+  </div>
 </div>
 
-</div>

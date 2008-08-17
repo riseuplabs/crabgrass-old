@@ -8,7 +8,7 @@ including join requests.
 =end
 
 class MembershipController < ApplicationController
-  layout 'groups'
+
   stylesheet 'groups'
   helper 'groups', 'application'
     
@@ -132,7 +132,8 @@ class MembershipController < ApplicationController
   
   before_filter :setup_sidebar
   def setup_sidebar
-    @leftbar = 'sidebar'
+    @left_column = render_to_string :partial => 'sidebar'
+    @title_box = render_to_string :partial => 'title_box'
   end
   
   def authorized?

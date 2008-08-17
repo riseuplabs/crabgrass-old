@@ -1,4 +1,7 @@
-<% form_remote_tag :url => pages_url(@page, :action => 'update_title'), :before => show_spinner('save_title') do %>
+<% form_remote_tag(
+     :url => {:controller => 'base_page/title', :action => 'update', :page_id => @page},
+     :before => show_spinner('save_title')
+) do %>
 
 <p>
   page title<br/>

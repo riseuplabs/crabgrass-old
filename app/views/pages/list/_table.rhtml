@@ -26,12 +26,12 @@ checkbox ||= false
 
 
 -%>
-<table class='page-list'>
+<table>
 <% unless pages.any? -%>
   <tr><td colspan="10">no pages</td></tr>
 <% else -%>
 <% if heading -%>
-  <tr class='page-list-heading'>
+  <tr class='heading'>
   <% columns.each do |column| -%>
     <%= page_list_heading(column) %>
   <% end -%>

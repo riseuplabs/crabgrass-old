@@ -5,7 +5,6 @@
 class ContactController < ApplicationController
 
   before_filter :login_required
-  layout 'person'  
   
   def add
     if request.post?

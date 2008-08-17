@@ -1,11 +1,11 @@
 <!--[form:group]-->
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 
-<div class='titlebox h1' >
+<h2 class='section'>
 <div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
-  <%= '%s Info' / group_type.capitalize %>
+  <%= '%s Info' % group_type.capitalize %>
 </div>
-</div>
+</h2>
 
 <p>
   <label for="group_full_name">
@@ -32,13 +32,15 @@
   <%= text_area 'group', 'summary', :rows => 4, :cols => 60  %>
 </p>
 
+  <%= submit_tag 'Save changes' %>
 
+<br/><br/>
 
-<div class='titlebox h1' >
+<h2 class='section'>
 <div style='padding: 8px; background: url(/images/actions/lock.png) no-repeat 100% 50%'>
 Group Privacy Settings
 </div>
-</div>
+</h2>
 
 <p><%= check_box :group, :publicly_visible_group, :onclick => "show_or_hide_vis_opts();" %>
 <label for="group_visible"><b>Make Group Publicly Visible</b></label>
@@ -69,6 +71,8 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
   </p>
 </div>
 
+  <%= submit_tag 'Save changes' %>
+
 <!--
 <p><label for="group_language">Language</label><br/>
 <%# text_field 'group', 'language'  %></p>
@@ -93,9 +97,9 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
 
 <!--[eoform:group]-->
 
-<% # this is probably not the rails way to do javascript.  someone teach me.  --af
-   # i put this at the end of the file, so that group_publicly_visible_group exists
-   # in time for the function to show/hide it correctly -%>
+<%# this is probably not the rails way to do javascript.  someone teach me.  --af
+  # i put this at the end of the file, so that group_publicly_visible_group exists
+  # in time for the function to show/hide it correctly -%>
 <script type="text/javascript">
 function show_or_hide_vis_opts() {
   if ($('group_publicly_visible_group').checked) { $('visible_group_options').show(); }

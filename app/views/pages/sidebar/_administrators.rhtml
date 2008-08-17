@@ -1,9 +1,0 @@
-<div class='sidesubhead'>
-<% @page.groups.each do |g| -%>
-  <%= link_to_group g, :avatar => 'tiny', :style => 'width:10em' %>
-<% end -%>
-<% @page.users_with_access.each do |u| -%>
-  <%= link_to_user u, :avatar => 'tiny' %>
-<% end -%>
-</div>
-

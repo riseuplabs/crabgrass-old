@@ -1,0 +1,6 @@
+page.replace_html 'message', display_messages
+page.select('input[type=submit]').each do |submit|
+  submit.disabled = false
+end
+page.hide('popup_spinner')
+

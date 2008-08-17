@@ -1,23 +1,39 @@
 <% unless logged_in? -%>
-
-  This user does not have public profile.
-
+  <%= render :partial => 'profile/show', :locals => {:profile => @user.profiles.public} %>
 <% else -%>
-
-<p>
-<b>Groups:</b>
-<% group_count = 0 -%>
-<% @user.groups.each do |g| %>
-  <% if g.publicly_visible_members or current_user.member_of? g %>
-    <%= link_to(g.name, :controller => 'groups', :action => 'show', :id => g) %>
-    <% group_count += 1 -%>
+  <% if @user.friend_of?(current_user) -%>
+    <%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user} %>
+  <% else -%>
+    <%= link_to 'add to my contacts', url_for(:controller => 'contact', :action => 'add', :id => @user) %>
   <% end -%>
-<% end -%>
-<% if group_count == 0 %>
-<%= 'none'.t %>
-<% end %>
-</p>
 
-<%= render :partial => 'pages/list/table', :locals => {:heading => true} %>
-
+  <h1>Profile</h1>
+  <%= render( :partial => 'profile/show',
+     :locals => {:profile => @user.profiles.visible_by(current_user)} )%>
+  <% if @user.friend_of?(current_user) or @user.peer_of?(current_user) -%>
+    <h1>Groups</h1>
+    <ul>
+      <% group_count = 0 -%>
+      <% @user.groups.each do |g| %>
+        <% if g.publicly_visible_members or current_user.member_of? g %>
+          <li>
+            <%= link_to(g.display_name, :controller => 'groups', :action => 'show', :id => g) %>
+          </li>
+          <% group_count += 1 -%>
+        <% end -%>
+      <% end -%>
+      <% if group_count == 0 %>
+        <li><%= 'none'.t %></li>
+      <% end %>
+    </ul>
+    <h1>Activity</h1>
+    <p>
+      <b>tasks:</b><br/>
+      <%= link_to 'tasks assigned to %s' %@user.display_name, url_for_user(@user, :action => 'tasks') %>
+    </p>
+    <p>
+      <b>pages participated in:</b><br/>
+      <%= render :partial => 'pages/list/table', :locals => {:heading => true} %>
+    </p>
+  <% end -%>
 <% end -%>

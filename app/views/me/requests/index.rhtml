@@ -1,6 +1,6 @@
-<div class='tabinfo'> 
-All contact requests and memberhip requests, including requests created by you and requests for you to approve.
-</div>
+<% @title_box = capture do %>
+  All contact requests and memberhip requests, including requests created by you and requests for you to approve.
+<% end %>
 
 <h2>my requests</h2>
 <%= render :partial => 'pages/list/table', :locals => {:pages => @my_pages, :sections => @my_sections, :columns => @my_columns} %>

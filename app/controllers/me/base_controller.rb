@@ -1,7 +1,6 @@
 class Me::BaseController < ApplicationController
  
   before_filter :login_required
-  layout 'me'
   stylesheet 'me'
 
   def index
@@ -26,6 +25,11 @@ class Me::BaseController < ApplicationController
     @user = current_user
   end
   
+  before_filter :load_partials
+  def load_partials
+   @left_column = render_to_string :partial => 'me/sidebar'
+  end
+
   # always have access to self
   def authorized?
     return true

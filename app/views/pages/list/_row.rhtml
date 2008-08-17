@@ -7,7 +7,7 @@
   page = row
   upart = page.flag[:user_participation]
   gpart = page.flag[:group_participation]
-  color = cycle('shade-odd', 'shade-even')
+  color = cycle('odd', 'even')
 -%>
 <tr class="<%= color %> <%= 'unread' if upart and !upart.viewed? %>">
 <% columns.each do |column| -%>

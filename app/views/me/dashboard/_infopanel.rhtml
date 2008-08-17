@@ -1,7 +1,7 @@
 <table>
 <tr>
   <td width="50%">
-    <h3>Contacts</h3>
+    <h2>Contacts</h2>
 
 <% if current_user.contacts.any? -%>
   <%= render :partial => 'avatars/boxes', :locals => {:people => current_user.contacts, :side => 'left'} %>
@@ -12,7 +12,7 @@
 
   </td>
   <td width="50%" class='right'>
-    <h3>Groups</h3>
+    <h2>Groups</h2>
     
 <% if current_user.groups.any? -%>
   <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.groups, :side => 'left'} %>

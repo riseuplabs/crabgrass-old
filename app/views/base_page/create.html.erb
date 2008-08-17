@@ -1,20 +1,19 @@
-
-
-<div class='workarea'>
-<h2 class= "titlebox h2"><%= "Create a new".t %> <%= @page_class.class_display_name.t %></h2>
+<% @title_box = capture do -%>
+<%= link_to_breadcrumbs %>
+<h1>
+  <%= image_tag('/images/pages/big/%s' % @page_class.icon) %>
+  <%= "Create a new".t %> <%= @page_class.class_display_name.t %>
+</h1>
+<% end -%>
 	
-<!-- <%= header_for_page_create(@page_class) %> -->
-
-
-<div id="contentbox">
 <% form_tag(:action => 'create') do %>
+
 <%= hidden_field_tag 'page_class', @page_class %>
 <table cellpadding='7'>
-
 <tr>
-  <td class='titlebox h3' colspan="2" >
+  <td colspan="2" >
   <!--div style='padding: 8px; background: url(/images/pages/big/<%=@page_class.icon%>) no-repeat 100% 50%'-->
-    <%= 'Page Info' %>
+    <h2 class='section'><%= 'Page Info' %></h2>
   <!--/div-->
   </td>
 </tr>
@@ -38,9 +37,9 @@
 
 <% if current_user.all_groups.any? -%>
 <tr>
-  <td class='titlebox h3' colspan="2" >
+  <td colspan="2" >
   <!--div style='padding: 8px; background: url(/images/actions/eye.png) no-repeat 100% 50%'-->
-    <%= 'Access Info' %>
+    <h2 class='section'><%= 'Access Info' %></a>
   <!--/div-->
   </td>
 </tr>
@@ -59,13 +58,12 @@
 </tr>
 <% end -%>
 
-
 <tr>
   <td align='left' colspan="2">
     <%= submit_tag "Create page".t, :name => 'create' %>
   </td>
 </tr>
 </table>
+
 <% end %>
-</div>
-</div>
+

@@ -1,0 +1,18 @@
+<div class='h1'>
+  <%= icon_for @asset if @asset %> <%=h @page.title %>
+</div>
+<div id='summary'>
+  <%=h @page.summary %>
+</div>
+<% if current_user.may? :edit, @page -%>
+<div id='title_edit_link'>
+  <%= spinner('edit_title') -%>
+  <%= link_to_remote(
+    'edit title',
+    { :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id},
+      :loading => show_spinner('edit_title') },
+    :style => icon_style('actions/pencil.png')
+  ) %>
+</div>
+<% end -%>
+

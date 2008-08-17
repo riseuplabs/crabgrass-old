@@ -1,0 +1,58 @@
+<div id='page_sidebar'>
+  <div class='wing'>
+
+    <h2>actions</h2>
+    <% if logged_in? -%>
+      <ul class='side_list'>
+        <%= watch_line %>
+        <%= star_line %>
+      </ul>
+      <hr/>
+      <ul class='side_list'>
+        <%= share_line %>
+        <%= public_line %>
+      </ul>
+      <hr/>
+      <ul class='side_list'>
+        <%= destroy_page_line %>
+        <%= move_line %>
+        <%= details_line %>
+      </ul>
+    <% end -%>
+
+    <h2>tags</h2>
+    <div class='tags'>
+      <%= page_tags %>
+    </div>
+    <ul class='side_list'>
+      <%= edit_tags_line %>
+    </ul>
+
+    <h2>attachments</h2>
+    <div class='attachments'>
+      <%= page_attachments %>
+    </div>
+    <ul class='side_list'>
+      <%= edit_attachments_line %>
+    </ul>
+
+    <% if @page.group_participations.any? -%>
+      <h2>groups</h2>
+      <ul class='side_list'>
+        <% @page.sorted_group_participations.each do |group_part| %>
+          <li><%= link_to_group_participation(group_part) %></li>
+        <% end -%>
+      </ul>
+    <% end -%>
+
+    <% if @page.user_participations.any? -%>
+      <h2>people</h2>
+      <ul class='side_list'>
+        <% @page.sorted_participations.each do |user_part| %>
+          <li><%= link_to_user_participation(user_part) %></li>
+        <% end -%>
+      </ul>
+    <% end -%>
+
+  </div>
+</div>

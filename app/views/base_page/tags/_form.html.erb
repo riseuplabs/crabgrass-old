@@ -1,0 +1,20 @@
+<% form_remote_tag(*options_for_edit_tag_form) do -%>
+  <% if( @page.tags.any? ) %>
+    <% @page.tags.sort_by{|t|t.name}.each do |tag| %>
+      <%= remove_tag_link( tag ) %>
+    <% end %>
+  <% else %>
+    <p>no tags</p>
+  <% end %>
+
+  <p>Add one or more tags, separated by commas:</p>
+  <p>
+    <%= text_field_tag( 'add', '', { :size => 20 } ) %>
+    <%= submit_tag 'Add', :name => 'add' %>
+    <%= submit_tag 'Done', :name => 'close' %>
+    <%= spinner('tag') %>
+  </p>
+
+<% end %>
+
+<%= javascript_tag "Form.focusFirstElement('edit_tag_form');" %>

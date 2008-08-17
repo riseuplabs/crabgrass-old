@@ -1,8 +1,8 @@
 <% page.created_at ||= Time.now; page.updated_at ||= Time.now -%>
 <% color = cycle 'odd', 'even', :name => 'activity_entry_cycle' -%>
 <% if style == :normal -%>
-<tr class='<%=color%>'>
-  <td nowrap><%= page_list_owner_with_icon(page) %></td>
+<tr class='<%=color%> one'>
+  <td nowrap='nowrap'><%= page_list_owner_with_icon(page) %></td>
   <td>&nbsp;&nbsp;&nbsp;</td>
   <td><%= page_icon(page) %></td>
   <td><%= page_list_cell(page, :title) %></td>
@@ -16,13 +16,13 @@
 </tr>
 <% elsif style == :brief_no_group -%>
 <tbody class='<%=color%>'>
-<tr>
-  <td class='top'><%= page_list_cell(page, :icon) %></td>
-  <td class='top'><%= page_list_cell(page, :title) %></td>
+<tr class='top'>
+  <td><%= page_list_cell(page, :icon) %></td>
+  <td><%= page_list_cell(page, :title) %></td>
 </tr>
-<tr>
-  <td class='bottom'>&nbsp;</td>
-  <td class='bottom'>
+<tr class='bottom'>
+  <td>&nbsp;</td>
+  <td>
     <% if page.updated_at > page.created_at + 1.hour -%>
       Updated by <%= link_to_user(page.updated_by_login) %> <%= time_ago_in_words(page.updated_at) %> ago.
     <% else -%>

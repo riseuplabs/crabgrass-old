@@ -47,7 +47,7 @@ module ContextHelper
   end
   
   def set_banner(partial, style)
-    @banner_partial = partial
+    @banner = render_to_string :partial => partial
     @banner_style = style
   end
 
@@ -134,6 +134,9 @@ module ContextHelper
 
   #################################################
   ## HELPER FUNCTIONS
+  ## not called anywhere except from here
+
+  private
 
   def referer
     @referer ||= get_referer

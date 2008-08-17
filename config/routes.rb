@@ -37,6 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.groups  'groups/:action/:id', :controller => 'groups'
   map.group   'groups/:action/:id', :controller => 'groups'
   map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|archive|calendar|search/
+
     
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
@@ -44,15 +45,13 @@ ActionController::Routing::Routes.draw do |map|
   map.login   'account/login',   :controller => 'account',   :action => 'login'
   map.forgot_password '/forgot_password',     :controller => 'passwords',   :action =>  'new'
   map.reset_password  '/reset_password/:id',  :controller => 'passwords',   :action =>  'edit'
-  
-  # used for ajax calls to make a direct request bypassing the dispatcher
-  map.direct 'page-direct/:page_id/:action/:id/:controller', :controller => /.*/
- 
+
+  # handle all the namespaced base_page controllers:
+  map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
+
   # typically, this is the default route
   map.connect ':controller/:action/:id'
  
-  # a generic route for tool controllers 
-  map.connect 'tool/:controller/:action/:id'
 
   ##### DISPATCHER ROUTES ###################################
   

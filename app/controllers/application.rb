@@ -7,20 +7,40 @@ class ApplicationController < ActionController::Base
   include ErrorHelper     # for displaying errors and messages to the user
   include PathFinder::Options       # for Page.find_by_path options
   include ContextHelper
-      
+  include ActionView::Helpers::TagHelper
+
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
-  
-  before_filter :set_timezone, :pre_clean, :breadcrumbs, :context, :fetch_site
+  before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
   session :session_secure => true if Crabgrass::Config.https_only
   protect_from_forgery :secret => Crabgrass::Config.secret
+  layout 'default'
 
+  protected
+
+  before_filter :fetch_site
   def fetch_site
     @site = Site.default
   end
- 
-  protected
+
+  before_filter :header_hack_for_ie6
+  def header_hack_for_ie6
+    #
+    # the default http header cache-control in rails is:
+    #    Cache-Control: "private, max-age=0, must-revalidate"
+    # on some versions of ie6, this break the back button.
+    # so, for ie6, we set it to:
+    #    Cache-Control: "max-age=Sun Aug 10 15:18:40 -0700 2008, private"
+    # (where the date specified is right now)
+    #
+    expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
+  end
+
+  before_filter :load_template_defaults
+  def load_template_defaults
+    @footer = render_to_string :partial => 'layouts/footer'
+  end
 
   def mailer_options
     {:site => @site, :current_user => current_user, :host => request.host,
@@ -57,11 +77,7 @@ class ApplicationController < ActionController::Base
       render :partial => '/pages/rss', :locals => locals
     end
   end
-  
-  def content_tag(tag, content)
-    "<#{tag}>#{content}</#{tag}>"
-  end
-   
+     
   # some helpers we include in controllers. this allows us to 
   # grab the controller that will work in a view context and a
   # controller context.
