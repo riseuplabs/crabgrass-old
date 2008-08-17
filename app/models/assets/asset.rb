@@ -95,7 +95,7 @@ class Asset < ActiveRecord::Base
     # delegate call to thumbdefs to our original Asset subclass. 
     # eg: Asset::Version#thumbdefs --> ImageAsset.thumbdefs
     def thumbdefs
-      versioned_type.constantize.class_thumbdefs
+      versioned_type.constantize.class_thumbdefs if versioned_type
     end
 
     def type_as_parent

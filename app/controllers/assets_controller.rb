@@ -15,7 +15,11 @@ class AssetsController < ApplicationController
     if @asset.public?
       @asset.update_access
       @asset.generate_thumbnails
-      redirect_to # redirect to the same url again, but next time they will get the symlinks 
+      if @asset.thumbnails.any?
+        redirect_to # redirect to the same url again, but next time they will get the symlinks 
+      else
+        return not_found
+      end
     else
       path = params[:path].first
       if thumb_name_from_path(path)

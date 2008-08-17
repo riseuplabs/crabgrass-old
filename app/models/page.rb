@@ -193,6 +193,14 @@ class Page < ActiveRecord::Base
     group_participations.detect{|gpart| gpart.group_id == group.id}
   end
 
+  # a list of the group participation objects, but sorted
+  # by access (higher number is less access permissions)
+  def sorted_group_participations
+    group_participations.sort do |a,b|
+      (a.access||100) <=> (b.access||100)
+    end
+  end
+
   #######################################################################
   ## RELATIONSHIP TO OTHER PAGES
   
@@ -278,13 +286,33 @@ class Page < ActiveRecord::Base
     (PAGES.detect{|t|t[1].class_name == class_name or t[1].class_name == "#{class_name}Page" } || [])[1]
   end
 
-  def self.icon;        PAGES[self.name].icon; end
-  def      icon;        PAGES[self.class.name].icon; end
-  def self.controller;  PAGES[self.name].controller; end
-  def      controller;  PAGES[self.class.name].controller; end
-  def controller_class_name; PAGES[self.class.name].controller_class_name; end
-  def self.class_display_name; PAGES[self.name].class_display_name; end
-  def self.class_description;  PAGES[self.name].class_description; end
+  def self.class_definition
+    PAGES[self.name] || PageClassProxy.new
+  end
+  def class_definition
+    PAGES[self.class.name] || PageClassProxy.new
+  end
+  def self.icon
+    class_definition.icon
+  end
+  def icon
+    class_definition.icon
+  end
+  def self.controller
+    class_definition.controller
+  end
+  def controller
+    class_definition.controller
+  end
+  def controller_class_name
+    class_definition.controller_class_name
+  end
+  def self.class_display_name
+    class_definition.class_display_name
+  end
+  def self.class_description
+    class_definition.class_description
+  end
 
   #######################################################################
   ## DENORMALIZATION
