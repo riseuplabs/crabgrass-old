@@ -1,0 +1,90 @@
+/* tables */
+
+.pretty table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.pretty table td, .pretty table th {
+  padding: 3px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.pretty table td img {
+  vertical-align: bottom;
+}
+.pretty table tr.odd {
+  background-color: #F2F2F2;
+}
+.pretty table tr.even {
+ background-color: white;
+}
+.pretty table th {
+  background: #ddd;
+}
+.pretty table tr.unread {
+  font-weight: bold;
+}
+.pretty table a {text-decoration: none;}
+.pretty table a:hover {text-decoration: underline;}
+
+.pretty tr.heading th {
+  text-align: left;
+  font-size: 0.85em;
+  background: #ddd; /*url(/images/ui/list-head-light.png) repeat-x 50% 0%; */
+  border-color: #bbb;
+  border-top: 1px solid #bbb;
+}
+.pretty tr.heading th img {
+  vertical-align: bottom;
+}
+.pretty tr.heading th a {
+  color: #333;
+}
+.pretty tr.heading th.selected {
+  background: #888; /* url(/images/ui/list-head-dark.png) repeat-x 50% 0%; */
+}
+.pretty tr.heading th.selected a {
+  color: white;
+}
+
+/** page activity list **/
+table.activity {
+  border-collapse: collapse;
+}
+table.activity td a {
+  text-decoration: none;
+}
+table.activity td a.name_link {
+  padding: 10px;
+}
+table.activity td a:hover {
+  text-decoration: underline;
+}
+table.activity tr.odd {
+  background-color: #f2f2f2;
+}
+table.activity tr.even {
+  background-color: white;
+}
+table.activity tr.one td {
+  padding: 4px;
+}
+table.activity th {
+  text-align: left;
+  padding: 0.75em 0 0 0;
+}
+
+/* multi-line page activity list **/
+
+table.activity tr.top td {
+  padding: 4px 0 0 4px;
+  vertical-align: top;
+}
+table.activity tr.bottom td {
+  font-size: 0.8em;
+}
+table.activity tbody.odd {
+  background-color: #f2f2f2;
+}
+table.activity tbody.even {
+  background-color: white;
+}

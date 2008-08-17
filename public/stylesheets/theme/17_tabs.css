@@ -1,0 +1,88 @@
+ul.tabset {
+  overflow:hidden;
+}
+
+/* left */
+ul.tabset.left {
+  list-style: none;
+  padding: 0 20px 0 0;
+}
+ul.tabset.left li.tab {
+  border: 1px solid transparent;
+}
+ul.tabset.left li.tab.selected {
+  background: #eef;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+ul.tabset.left li.tab:hover {
+  background: #ffc;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+ul.tabset.left a.tab-link {
+  display: block;
+  text-decoration: none;
+  padding: 1.5em;
+  padding-left: 56px;
+}
+ul.tabset a.tab-link:hover {
+  text-decoration: underline;
+}
+
+/* top */
+ul.tabset.top {
+  list-style: none;
+  font-size: 0.8em;
+  background: url(/images/grey9.png) repeat-x bottom;
+  padding: 0 0 0 0.75em;
+}
+ul.tabset.top li {
+  height: 1.7em; /* must equal a.height + a.vertical-padding */
+  padding: 2px;
+}
+ul.tabset.top li.tab {
+  float: left;
+  padding: 1px; /* to make space for invisible white outline of a.tab-link */
+  margin: 0;
+}
+ul.tabset.top li.tab.selected {
+  border: 1px solid #999;
+}
+ul.tabset.top a.tab-link {
+  /* outline: 1px solid white; this is to remove dotted outline when link is clicked */
+  display: block;
+  text-decoration: none;
+  padding: 0 1em;
+}
+ul.tabset a.tab-link:hover {
+  text-decoration: underline;
+}
+ul.tabset.top a.selected {
+  background: white;
+  outline: 1px solid white;
+  color: black;
+  height: 2em; /* this is what hides the bottom border */
+}
+
+/** little side tabs that are for editing something (like on wikis) **/
+
+div.edit-tab {
+  float: left;
+  margin: 10px;
+  margin-left: -20px;
+}
+div.edit-tab span {
+  background: #C2D4FF;
+  padding: 4px 16px;
+  border: 1px solid #ADBDE3;
+  border-left: 0;
+  display: block;
+}
+div.edit-tab a {
+  color: #669;
+  font-weight: bold;
+  text-decoration: none;
+}
+div.edit-tab a:hover {text-decoration: underline;}
+

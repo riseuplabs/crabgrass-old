@@ -4,56 +4,28 @@ div#titlebox div.section {
   margin-bottom: 1em;
 }
 
-div#titlebox h3 {
-  font-family: arial;
-	font-size: 1.8em;
-	font-weight: normal;
-	color: #333;
-	margin: 0 0 3px 0;
-}
-
-div#titlebox h3 span {
-  font-family: arial;
-  color: #666;
-  font-size: 0.6em;
-  margin-left: 1em;
-}
-
-div#titlebox h4, h4.landing {
-  font-family: arial;
-  font-size: 1.4em;
-  font-weight: normal;
-  color: #333;
-  padding: 0 0 4px 0;
-  margin: 0;
-  border-bottom: 1px solid #ccc;
-}
-
-div#titlebox h5, h5.landing {
-  font-family: arial;
-  font-size: 1.8em;
-  font-weight: normal;
-  color: #333;
-  margin: 0 0 3px 0;
-  border-top: 1px solid #ccc;     
-  background-color: #e6f2ff;
-  padding-top: 4px;
-  padding-right: 0px;
-  padding-bottom: 4px;
-}
-
-
 div#info_panel {
 }
 div#info_panel td {
   vertical-align: top;
-  padding: 20px 20px 20px 0;
+  padding: 10px 20px 20px 0;
 }
 div#info_panel td.right {
-  padding: 20px 0px 20px 20px;
+  padding: 10px 0px 20px 20px;
   border-left: 1px solid #ccc;
 }
 div#info_panel td.thin {
   padding: 4px;
+}
+
+/** group landing layout **/
+
+div.landing-main-column {
+  margin-right: 22em;
+}
+
+div.landing-side-column {
+  width: 20em;
+  float: right;
 }
 

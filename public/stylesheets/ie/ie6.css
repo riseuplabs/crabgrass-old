@@ -1,0 +1,12 @@
+/* get hover to work in ie */
+body {behavior:url("/javascripts/ie/csshover.htc");}
+
+ul.side_list li {
+  height: 1%;
+}
+input.check {
+  margin-top: 2px;
+}
+ul.side_list a {
+  padding: 1px 0 1px 26px;
+}

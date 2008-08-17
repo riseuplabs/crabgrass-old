@@ -1,0 +1,55 @@
+/* error field */
+
+div.fieldWithErrors {
+  border: 2px solid red;
+  display: table-cell;
+}
+div.fieldWithErrors + div.fieldWithErrors {display:none;}
+input[type="hidden"] {display:none}
+
+/* top notice area */
+
+div#message {
+  float: left;
+  width: 100%;
+  background: #eee;
+}
+
+div.notice {
+  padding: 1em 4em 0 4em;
+}
+div.notice h2 {
+  font-weight: bold;
+  padding: 0.5em;
+  background-color: #ccc;
+  border-bottom: 1px solid #999;
+  margin: 0;
+}
+div.notice h2 img {
+  vertical-align: middle;
+}
+
+div.error {
+  border: 2px solid red;
+  color: #900;
+  background-color: #fafafa;
+}
+div.info {
+  border: 2px solid green;
+  color: #090;
+  background-color: #fafafa;
+}
+div.update {
+  border: 2px solid blue;
+  color: #009;
+  background-color: #fafafa;
+}
+div.notice p, div.notice li {
+  color: black;
+  margin-left: 2em;
+}
+
+/* inline error messages */
+/* div.error {
+  color: red;
+} */

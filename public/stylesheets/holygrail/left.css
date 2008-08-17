@@ -1,0 +1,31 @@
+/* 2 column left menu settings */
+.leftmenu {
+  background:#cfc;
+}
+.leftmenu .colright {
+  float:left;
+  width:200%;
+  position:relative;
+  left:12em;
+  background:#fff;
+}
+.leftmenu .col1wrap {
+  float:right;
+  width:50%;
+  position:relative;
+	right:12em;
+	padding-bottom:1em;
+}
+.leftmenu .col1 {
+  margin:0 1em 0 13em;
+  position:relative;
+  right:100%;
+  overflow:hidden;
+}
+.leftmenu .col2 {
+  float:left;
+  width:10em;
+  position:relative;
+  right:11em;
+}
+

@@ -1,0 +1,25 @@
+<div class="colmask holygrail">
+  <%# render :partial => 'layouts/messages'  # not sure where to put this %>
+  <div class="colmid">
+    <div class="colleft">
+      <div class="col1wrap">
+        <div class="col1">
+<!-- Column 1 start -->
+<%= yield %>
+<!-- Column 1 end -->
+        </div>
+      </div>
+      <div class="col2">
+<!-- Column 2 start -->
+<%= @left_column %>
+<!-- Column 2 end -->
+      </div>
+      <div class="col3">
+<!-- Column 3 start -->
+<%= @right_column %>
+<!-- Column 3 end -->
+      </div>
+    </div>
+  </div>
+</div>
+

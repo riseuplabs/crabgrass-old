@@ -1,0 +1,8 @@
+	/* 1 column full page settings */
+	.fullpage {
+	    background:#fff;
+	}
+	.fullpage .col1 {
+        margin:0 1em;
+	}
+

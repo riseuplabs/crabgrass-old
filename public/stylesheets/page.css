@@ -1,19 +1,10 @@
-/** page layout **/
-
-div#page {
-  margin-right: 170px; /* set to #sidebar.width */
-}
+/*
 div#breadcrumbs {
   margin: -10px;
   padding: 5px;
   padding-left: 10px;
 }
-div.workarea {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 10px; 
-}
-
+*/
 
 /* title */
 .h1 {font-size: 2em; font-weight: bold; line-height: 1.2em;}
@@ -26,173 +17,41 @@ form .h2 {line-height:2em; margin:0; padding:1;}
 form .h3 {line-height:.5em; margin:0; padding:1}
 
 
-#title {
+/* #title {
   margin-top: 10px;
   position: relative;
-}
-#title #title_edit_link {
+} */
+div#title_edit_link {
   display: none;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
 }
-div#title:hover #title_edit_link {
+div.title_box:hover #title_edit_link {
   display: block;
 }
 
-/* posts */
-div#posts {
-  margin-top: 20px;
+/* attachment formatting */
+a.asset div {
+  border: 1px solid white;
+  outline: 1px solid #999;
+  margin: 0 5px 5px 0;
+  background: white;
 }
-table.posts {
-  width: 100%;
-  border-top: 1px solid #ccc;
+a.asset div:hover {
+  border: 1px solid #cdf;
+  outline: 1px solid black;
 }
-.post-author {
-  text-align: right;
-  padding: 0 10px 0 10px;
-  height: 32px;
-}
-.post-author div.icon {float: right}
-.post-author div.username, .post-author div.date {margin-right: 38px}
-td.post-body {
-  border-left: 1px solid #ccc;
-  padding: 0 10px;
-}
-td.post-body div.negativespace {
-  margin: -16px 0;
-}
-.post-body p {overflow: auto;}
-tr.post td {
-  vertical-align: top;
-}
-tr.post-spacer-bottom td {line-height: 10px; border-bottom: 1px solid #ccc;}
-tr.post-spacer-top td {line-height: 10px;}
-
-.shade-even {background-color: #fff;}
-.shade-odd {background-color: #f3f3f3;} 
-
-textarea.post_body {width: 100%}
-
-
-.post_action_icon {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  display: none;
-}
-td:hover .post_action_icon {
-  display: block;
-}
-
-/** page creation **/
-
-div.page-class {
-  margin-bottom: 4px;
-}
-div.page-class div:hover {
-  background: #ffc;
-  outline: 1px solid #cc9;
-}
-div.page-class .page-link {
-  text-decoration: none;
-  padding: 20px 0 20px 58px;
-  display: block;
+a.asset {
   outline: 0;
 }
 
-/** page list **/
-
-div#page-holder {
-}
-div#page-holder div.header {
-  font-weight: bold;
-  background: #ccc;
-  margin-bottom: 0.5em;
-  color: white;
-  padding: 3px;
-}
-div#page-list {
-  margin: 0 0 1em 11em;
-}
-table.page-list a {text-decoration: none;}
-table.page-list a:hover {text-decoration: underline;}
-table.page-list {
-  width: 100%;
-  border-bottom: 1px solid #ccc;
-}
-table.page-list tr td {
-  border-top: 1px solid #eee;
-  padding: 1px;
-}
-table.page-list tr.unread {
-  font-weight: bold;
-}
-span.newpage {
-  font-weight: bold;
-  color: #5cd75c; 
-}
-
-div#folders {
-  float: left;
-  width: 8em;
-  margin-left: 4px;
-  background: #E6F2FF;
-  outline: 1px solid #cccccc;
-  padding: 2px 4px 8px 10px;
-}
-div#folders ul {
-  padding: 0; margin: 0 0 0 1em;
-  list-style: none;
-}
-div#folders li {
-  margin: 0; padding: 0;
-  xoutline: 1px solid #ccc;
-}
-div#folders li.first {
-  xborder-top: 1px solid #ccc
-}
-div#folders li a {
-  text-decoration: none;
-  display: block;
-  padding: 1px;
-  margin: 0;
-}
-div#folders li span {
-  text-decoration: none;
-  display: block;
-  padding: 8px 2px 2px 2px;
-  margin: 0;
-}
-div#folders li a.selected {
-  background: #eef;
-  font-weight: bold;
-  outline: 1px solid #dde;
-}
-div#folders li a:hover {
-  background: #ffc;
-  outline: 1px solid #cca;
-}
-div#folders li img {
-  vertical-align: bottom;
-  outline: 0px;
-  width: 17px; height: 17px;
-  padding: 0px 4px 0px 0px;
-  border: 0px;
-}
 
 /** tool formatting **/
 
+/* 
 div.formbox textarea {
   width: 100%;
 }
+*/
 
-/** tool creation **/
-
-table.create td {
-  vertical-align: top;
-  padding: 4px;
-}
-table.create td input {
-  margin-bottom: 0.5em;
-}

@@ -1,0 +1,51 @@
+/* holy grail 3 column settings */
+.holygrail {
+  background:#CDEAFF;    	/* Right column background colour */
+}
+.holygrail .colmid {
+  float:left;
+  width:200%;
+  margin-left:-12em; 		/* Width of right column */
+  position:relative;
+  right:100%;
+  background:#fff;    	/* Centre column background colour */
+}
+.holygrail .colleft {
+  float:left;
+  width:100%;
+  margin-left:-50%;
+  position:relative;
+  left:24em;         		/* Left column width + right column width */
+  background:#cfc;    	/* Left column background colour */
+}
+.holygrail .col1wrap {
+  float:left;
+  width:50%;
+  position:relative;
+  right:12em;        		/* Width of left column */
+  padding-bottom:1em; 	/* Centre column bottom padding. Leave it out if it's zero */
+}
+.holygrail .col1 {
+  margin:0 13em;     		/* Centre column side padding:
+                         	Left padding = left column width + centre column left padding width
+                         	Right padding = right column width + centre column right padding width */
+  position:relative;
+  left:200%;
+  overflow:hidden;
+}
+.holygrail .col2 {
+  float:left;
+  float:right;			/* This overrides the float:left above */
+  width:10em;        		/* Width of left column content (left column width minus left and right padding) */
+  position:relative;
+  right:1em;         		/* Width of the left-had side padding on the left column */
+}
+.holygrail .col3 {
+  float:left;
+  float:right;			/* This overrides the float:left above */
+  width:10em;        		/* Width of right column content (right column width minus left and right padding) */
+  margin-right:3em;  		/* Width of right column right-hand padding + left column left and right padding */
+  position:relative;
+  left:50%;
+}
+
