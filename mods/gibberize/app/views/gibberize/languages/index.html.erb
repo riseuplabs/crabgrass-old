@@ -1,0 +1,22 @@
+<h1>Listing languages</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+  </tr>
+
+<% for language in @languages %>
+  <tr>
+    <td><%=h language.code %></td>
+    <td><%=h language.name %></td>
+    <td><%= link_to 'Show', language %></td>
+    <td><%= link_to 'Edit', edit_language_path(language) %></td>
+    <td><%= link_to 'Destroy', language, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New language', new_language_path %>

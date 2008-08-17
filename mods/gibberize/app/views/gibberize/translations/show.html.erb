@@ -1,0 +1,9 @@
+<p>
+  <b>Text:</b>
+  <%=h @translation.text %>
+</p>
+
+<%= render :partial => 'translations', :locals => { :translations => [@translation] } %>
+
+<%= link_to 'Edit', edit_translation_path(@translation) %> |
+<%= link_to 'Back', translations_path %>

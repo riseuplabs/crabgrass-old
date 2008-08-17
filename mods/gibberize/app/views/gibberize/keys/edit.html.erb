@@ -1,0 +1,17 @@
+<h1>Editing key</h1>
+
+<%= error_messages_for :key %>
+
+<% form_for(@key) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @key %> |
+<%= link_to 'Back', keys_path %>

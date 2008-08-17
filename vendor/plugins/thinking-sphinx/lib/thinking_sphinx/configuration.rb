@@ -1,29 +1,38 @@
+require 'erb'
+
 module ThinkingSphinx
   # This class both keeps track of the configuration settings for Sphinx and
   # also generates the resulting file for Sphinx to use.
   # 
   # Here are the default settings, relative to RAILS_ROOT where relevant:
   #
-  # config file::      config/#{environment}.sphinx.conf
-  # searchd log file:: log/searchd.log
-  # query log file::   log/searchd.query.log
-  # pid file::         log/searchd.#{environment}.pid
-  # searchd files::    db/sphinx/#{environment}/
-  # address::          0.0.0.0 (all)
-  # port::             3312
-  # allow star::       false
-  # mem limit::        64M
-  # max matches::      1000
-  # morphology::       stem_en
-  # charset type::     utf-8
-  # charset table::    nil
+  # config file::           config/#{environment}.sphinx.conf
+  # searchd log file::      log/searchd.log
+  # query log file::        log/searchd.query.log
+  # pid file::              log/searchd.#{environment}.pid
+  # searchd files::         db/sphinx/#{environment}/
+  # address::               127.0.0.1
+  # port::                  3312
+  # allow star::            false
+  # min prefix length::     1
+  # min infix length::      1
+  # mem limit::             64M
+  # max matches::           1000
+  # morphology::            stem_en
+  # charset type::          utf-8
+  # charset table::         nil
+  # ignore chars::          nil
+  # html strip::            false
+  # html remove elements::  ''
   #
   # If you want to change these settings, create a YAML file at
   # config/sphinx.yml with settings for each environment, in a similar
   # fashion to database.yml - using the following keys: config_file,
   # searchd_log_file, query_log_file, pid_file, searchd_file_path, port,
-  # allow_star, mem_limit, max_matches, morphology, charset_type,
-  # charset_table. I think you've got the idea.
+  # allow_star, min_prefix_len, min_infix_len, mem_limit, max_matches,
+  # morphology, charset_type, charset_table, ignore_chars, html_strip,
+  # html_remove_elements. I think you've got
+  # the idea.
   # 
   # Each setting in the YAML file is optional - so only put in the ones you
   # want to change.
@@ -34,8 +43,10 @@ module ThinkingSphinx
   # 
   class Configuration
     attr_accessor :config_file, :searchd_log_file, :query_log_file,
-      :pid_file, :searchd_file_path, :address, :port, :allow_star, :mem_limit,
-      :max_matches, :morphology, :charset_type, :charset_table, :app_root
+      :pid_file, :searchd_file_path, :address, :port, :allow_star,
+      :min_prefix_len, :min_infix_len, :mem_limit, :max_matches, :morphology,
+      :charset_type, :charset_table, :ignore_chars, :html_strip,
+      :html_remove_elements, :app_root
     
     attr_reader :environment
     
@@ -47,18 +58,24 @@ module ThinkingSphinx
       self.app_root          = Merb.root  if defined?(Merb)
       self.app_root        ||= app_root
       
-      self.config_file       = "#{app_root}/config/#{environment}.sphinx.conf"
-      self.searchd_log_file  = "#{app_root}/log/searchd.log"
-      self.query_log_file    = "#{app_root}/log/searchd.query.log"
-      self.pid_file          = "#{app_root}/log/searchd.#{environment}.pid"
-      self.searchd_file_path = "#{app_root}/db/sphinx/#{environment}/"
-      self.port              = 3312
-      self.allow_star        = false
-      self.mem_limit         = "64M"
-      self.max_matches       = 1000
-      self.morphology        = "stem_en"
-      self.charset_type      = "utf-8"
-      self.charset_table     = nil
+      self.config_file          = "#{self.app_root}/config/#{environment}.sphinx.conf"
+      self.searchd_log_file     = "#{self.app_root}/log/searchd.log"
+      self.query_log_file       = "#{self.app_root}/log/searchd.query.log"
+      self.pid_file             = "#{self.app_root}/log/searchd.#{environment}.pid"
+      self.searchd_file_path    = "#{self.app_root}/db/sphinx/#{environment}"
+      self.address              = "127.0.0.1"
+      self.port                 = 3312
+      self.allow_star           = false
+      self.min_prefix_len       = 1
+      self.min_infix_len        = 1
+      self.mem_limit            = "64M"
+      self.max_matches          = 1000
+      self.morphology           = "stem_en"
+      self.charset_type         = "utf-8"
+      self.charset_table        = nil
+      self.ignore_chars         = nil
+      self.html_strip           = false
+      self.html_remove_elements = ""
       
       parse_config
     end
@@ -80,7 +97,7 @@ module ThinkingSphinx
     def build(file_path=nil)
       load_models
       file_path ||= "#{self.config_file}"
-      database_confs = YAML.load(File.open("#{app_root}/config/database.yml"))
+      database_confs = YAML::load(ERB.new(IO.read("#{app_root}/config/database.yml")).result)
       database_confs.symbolize_keys!
       database_conf  = database_confs[environment.to_sym]
       database_conf.symbolize_keys!
@@ -94,6 +111,7 @@ indexer
 
 searchd
 {
+  address = #{self.address}
   port = #{self.port}
   log = #{self.searchd_log_file}
   query_log = #{self.query_log_file}
@@ -107,111 +125,27 @@ searchd
         ThinkingSphinx.indexed_models.each do |model|
           model           = model.constantize
           sources         = []
+          delta_sources   = []
           prefixed_fields = []
           infixed_fields  = []
           
           model.indexes.each_with_index do |index, i|
-            # Set up associations and joins
-            index.link!
+            file.write index.to_config(i, database_conf, charset_type)
             
-            attr_sources = index.attributes.collect { |attrib|
-              attrib.to_sphinx_clause
-            }.join("\n  ")
-            
-            adapter = case database_conf[:adapter]
-            when "postgresql"
-              "pgsql"
-            when "mysql"
-              "mysql"
-            else
-              raise "Unsupported Database Adapter: Sphinx only supports MySQL and PosgreSQL"
-            end
-            
-            file.write <<-SOURCE
-
-source #{model.name.downcase}_#{i}_core
-{
-  type = #{adapter}
-  sql_host = #{database_conf[:host] || "localhost"}
-  sql_user = #{database_conf[:username]}
-  sql_pass = #{database_conf[:password]}
-  sql_db   = #{database_conf[:database]}
-
-  sql_query_pre    = #{charset_type == "utf-8" && adapter == "mysql" ? "SET NAMES utf8" : ""}
-  sql_query_pre    = #{index.to_sql_query_pre}
-  sql_query        = #{index.to_sql.gsub(/\n/, ' ')}
-  sql_query_range  = #{index.to_sql_query_range}
-  sql_query_info   = #{index.to_sql_query_info}
-  #{attr_sources}
-}
-            SOURCE
-            
-            if index.delta?
-              file.write <<-SOURCE
-
-source #{model.name.downcase}_#{i}_delta : #{model.name.downcase}_#{i}_core
-{
-  sql_query_pre    = #{charset_type == "utf-8" && adapter == "mysql" ? "SET NAMES utf8" : ""}
-  sql_query        = #{index.to_sql(:delta => true).gsub(/\n/, ' ')}
-  sql_query_range  = #{index.to_sql_query_range :delta => true}
-}
-              SOURCE
-            end
-            sources << "#{model.name.downcase}_#{i}_core"
+            create_array_accum if index.adapter == :postgres
+            sources << "#{model.indexes.first.name}_#{i}_core"
+            delta_sources << "#{model.indexes.first.name}_#{i}_delta" if index.delta?
           end
           
           source_list = sources.collect { |s| "source = #{s}" }.join("\n")
-          delta_list  = source_list.gsub(/_core$/, "_delta")
-          file.write <<-INDEX
-
-index #{model.name.downcase}_core
-{
-  #{source_list}
-  morphology = #{self.morphology}
-  path = #{self.searchd_file_path}/#{model.name.downcase}_core
-  charset_type = #{self.charset_type}
-  INDEX
-          unless self.charset_table.nil?
-            file.write <<-INDEX
-  charset_table  = #{self.charset_table}
-            INDEX
+          delta_list  = delta_sources.collect { |s| "source = #{s}" }.join("\n")
+          
+          file.write core_index_for_model(model, source_list)
+          unless delta_list.blank?
+            file.write delta_index_for_model(model, delta_list)
           end
           
-          if self.allow_star
-            file.write <<-INDEX
-  enable_star    = 1
-  min_prefix_len = 1
-            INDEX
-          end
-          
-          file.write("}\n")
-          
-          if model.indexes.any? { |index| index.delta? }
-            file.write <<-INDEX
-
-index #{model.name.downcase}_delta : #{model.name.downcase}_core
-{
-  #{delta_list}
-  path = #{self.searchd_file_path}/#{model.name.downcase}_delta
-}
-
-index #{model.name.downcase}
-{
-  type = distributed
-  local = #{model.name.downcase}_core
-  local = #{model.name.downcase}_delta
-  charset_type = #{self.charset_type}
-}
-            INDEX
-          else
-            file.write <<-INDEX
-index #{model.name.downcase}
-{
-  type = distributed
-  local = #{model.name.downcase}_core
-}
-            INDEX
-          end
+          file.write distributed_index_for_model(model)
         end
       end
     end
@@ -221,8 +155,9 @@ index #{model.name.downcase}
     # messy dependencies issues).
     # 
     def load_models
-      Dir["#{app_root}/app/models/**/*.rb"].each do |file|
-        model_name = file.gsub(/^.*\/([\w_]+)\.rb/, '\1')
+      base = "#{app_root}/app/models/"
+      Dir["#{base}**/*.rb"].each do |file|
+        model_name = file.gsub(/^#{base}([\w_\/\\]+)\.rb/, '\1')
         
         next if model_name.nil?
         next if ::ActiveRecord::Base.send(:subclasses).detect { |model|
@@ -231,6 +166,9 @@ index #{model.name.downcase}
         
         begin
           model_name.camelize.constantize
+        rescue LoadError
+          model_name.gsub!(/.*[\/\\]/, '')
+          retry
         rescue NameError
           next
         end
@@ -246,11 +184,94 @@ index #{model.name.downcase}
       path = "#{app_root}/config/sphinx.yml"
       return unless File.exists?(path)
       
-      conf = YAML.load(File.open(path))[environment]
+      conf = YAML::load(ERB.new(IO.read(path)).result)[environment]
       
       conf.each do |key,value|
         self.send("#{key}=", value) if self.methods.include?("#{key}=")
       end unless conf.nil?
+    end
+    
+    def core_index_for_model(model, sources)
+      output = <<-INDEX
+
+index #{model.indexes.first.name}_core
+{
+#{sources}
+path = #{self.searchd_file_path}/#{model.indexes.first.name}_core
+charset_type = #{self.charset_type}
+INDEX
+      
+      morphology  = model.indexes.inject(self.morphology) { |morph, index|
+        index.options[:morphology] || morph
+      }
+      output += "  morphology     = #{morphology}\n"         unless morphology.blank?
+      output += "  charset_table  = #{self.charset_table}\n" unless self.charset_table.nil?
+      output += "  ignore_chars   = #{self.ignore_chars}\n"  unless self.ignore_chars.nil?
+      
+      if self.allow_star
+        output += "  enable_star    = 1\n"
+        output += "  min_prefix_len = #{self.min_prefix_len}\n"
+        output += "  min_infix_len  = #{self.min_infix_len}\n"
+      end
+      
+      output += "  html_strip     = 1\n" if self.html_strip
+      output += "  html_remove_elements = #{self.html_remove_elements}\n" unless self.html_remove_elements.blank?
+
+      unless model.indexes.collect(&:prefix_fields).flatten.empty?
+        output += "  prefix_fields = #{model.indexes.collect(&:prefix_fields).flatten.join(', ')}\n"
+      end
+      
+      unless model.indexes.collect(&:infix_fields).flatten.empty?
+        output += "  infix_fields  = #{model.indexes.collect(&:infix_fields).flatten.join(', ')}\n"
+      end
+      
+      output + "}\n"
+    end
+    
+    def delta_index_for_model(model, sources)
+      <<-INDEX
+index #{model.indexes.first.name}_delta : #{model.indexes.first.name}_core
+{
+  #{sources}
+  path = #{self.searchd_file_path}/#{model.indexes.first.name}_delta
+}
+      INDEX
+    end
+    
+    def distributed_index_for_model(model)
+      sources = ["local = #{model.indexes.first.name}_core"]
+      if model.indexes.any? { |index| index.delta? }
+        sources << "local = #{model.indexes.first.name}_delta"
+      end
+      
+      <<-INDEX
+index #{model.indexes.first.name}
+{
+  type = distributed
+  #{ sources.join("\n  ") }
+  charset_type = #{self.charset_type}
+}
+      INDEX
+    end
+    
+    def create_array_accum
+      ::ActiveRecord::Base.connection.execute "begin"
+      ::ActiveRecord::Base.connection.execute "savepoint ts"
+      begin
+        ::ActiveRecord::Base.connection.execute <<-SQL
+          CREATE AGGREGATE array_accum (anyelement)
+          (
+              sfunc = array_append,
+              stype = anyarray,
+              initcond = '{}'
+          );
+        SQL
+      rescue
+        raise unless $!.to_s =~ /already exists with same argument types/
+        ::ActiveRecord::Base.connection.execute "rollback to savepoint ts"
+      end
+      ::ActiveRecord::Base.connection.execute "release savepoint ts"
+      ::ActiveRecord::Base.connection.execute "commit"
     end
   end
 end

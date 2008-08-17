@@ -95,6 +95,10 @@ module ThinkingSphinx
       (parent ? parent.ancestors : []) << self
     end
     
+    def has_column?(column)
+      @reflection.klass.column_names.include?(column.to_s)
+    end
+    
     private
     
     # Returns all the objects that could be currently instantiated from a
@@ -122,16 +126,16 @@ module ThinkingSphinx
       options[:class_name]    = klass.name
       options[:foreign_key] ||= "#{ref.name}_id"
       
-      foreign_type = klass.connection.quote_column_name ref.options[:foreign_type]
+      quoted_foreign_type = klass.connection.quote_column_name ref.options[:foreign_type]
       case options[:conditions]
       when nil
-        options[:conditions] = "::ts_join_alias::.#{foreign_type} = '#{klass.name}'"
+        options[:conditions] = "::ts_join_alias::.#{quoted_foreign_type} = '#{klass.name}'"
       when Array
-        options[:conditions] << "::ts_join_alias::.#{foreign_type} = '#{klass.name}'"
+        options[:conditions] << "::ts_join_alias::.#{quoted_foreign_type} = '#{klass.name}'"
       when Hash
-        options[:conditions].merge!(foreign_type => klass.name)
+        options[:conditions].merge!(ref.options[:foreign_type] => klass.name)
       else
-        options[:conditions] << " AND ::ts_join_alias::.#{foreign_type} = '#{klass.name}'"
+        options[:conditions] << " AND ::ts_join_alias::.#{quoted_foreign_type} = '#{klass.name}'"
       end
       
       options

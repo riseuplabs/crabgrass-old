@@ -4,7 +4,7 @@ require 'ranked_vote_page_controller'
 # Re-raise errors caught by the controller.
 class RankedVotePageController; def rescue_action(e) raise e end; end
 
-class Tool::RankedVoteControllerTest < Test::Unit::TestCase
+class Tool::RankedVotePageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations, :polls, :possibles
 
   def setup

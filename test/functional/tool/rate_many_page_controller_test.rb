@@ -4,7 +4,7 @@ require 'rate_many_page_controller'
 # Re-raise errors caught by the controller.
 class RateManyPageController; def rescue_action(e) raise e end; end
 
-class Tool::RateManyControllerTest < Test::Unit::TestCase
+class Tool::RateManyPageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations, :polls, :possibles
 
   def setup

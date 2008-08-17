@@ -27,6 +27,8 @@ class Group < ActiveRecord::Base
   ####################################################################
   ## about this group
 
+  belongs_to :language
+
   include CrabgrassDispatcher::Validations
   validates_handle :name
   before_validation :clean_names

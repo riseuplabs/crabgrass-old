@@ -1,0 +1,34 @@
+Gibberize
+==========
+
+This crabgrass mod allow add a translation user interface to crabgrass.
+
+Usage
+=======
+
+edit config/routes.rb
+  map.from_plugin :gibberize
+
+Specify the logins you want to be translators in sites.yml:
+
+<begin>
+default:
+  name: crabgrass
+  domain: localhost
+  email_sender: 'crabgrass-system@localhost'
+  secret: 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
+  pagination_size: 29
+  translators:
+  - sally
+  - bob
+<end>
+
+restart rails and browse to: http://localhost:3000/gibberize
+
+Credits
+=======
+
+The Gibberize mod is based on Gibberize <http://code.autistici.org/project/gibberize>
+and the SuperAdmin mod.
+Turned into a mod by Pietro Ferrari <pietro@riseup.net>
+

@@ -4,7 +4,7 @@ require 'info_page_controller'
 # Re-raise errors caught by the controller.
 class InfoPageController; def rescue_action(e) raise e end; end
 
-class Tool::InfoControllerTest < Test::Unit::TestCase
+class Tool::InfoPageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup

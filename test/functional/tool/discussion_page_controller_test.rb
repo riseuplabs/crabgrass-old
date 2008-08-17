@@ -4,7 +4,7 @@ require 'discussion_page_controller'
 # Re-raise errors caught by the controller.
 class DiscussionPageController; def rescue_action(e) raise e end; end
 
-class Tool::DiscussionControllerTest < Test::Unit::TestCase
+class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup

@@ -23,5 +23,12 @@ class AssetPage < Page
   def title
     self['title'] || (self.data.filename.nameize if self.data && self.data.filename)
   end
+
+  # Return string of Asset text, for the full text search index
+  def index_data
+    # TODO: (Issue #76) If asset includes indexable text, extract it and return it as a string 
+    ""
+  end
+
 end
 

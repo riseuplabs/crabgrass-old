@@ -1,0 +1,13 @@
+<table>
+  <tr>
+    <th>Key</th> <th>Language</th> <th>Translation</th> <th>Created</th>
+  </tr>
+  <% for translation in translations -%>
+    <tr>
+      <td><%= translation.key.link_html %></td>
+      <td><%= translation.language.link_html %></td>
+      <td><%= translation.link_html %></td>
+      <td><%=h time_ago_in_words(translation.created_at) %> ago</td>
+    </tr>
+  <% end -%>
+</table>

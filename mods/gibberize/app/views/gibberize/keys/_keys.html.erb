@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th>Key</th> 
+    <% for language in languages -%>
+      <th><%= language.link_html %></th> 
+    <% end -%>
+  </tr>
+  <% for key in keys -%>
+    <tr>
+      <td><%= key.link_html %></td>
+      <% for language in languages -%>
+        <td><%=h Translation.best_guess(key, language) %> (<%=h key.translations.count(:conditions => {:language_id => language}) -%>)</td>
+      <% end -%>
+    </tr>
+  <% end -%>
+</table>

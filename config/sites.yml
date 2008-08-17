@@ -6,6 +6,10 @@ default:
   pagination_size: 29
 #  super_admins:
 #  - blue
+#  translators:
+#  - blue
+  default_language:
+  - english
   available_page_types:
   - Message
   - Discussion

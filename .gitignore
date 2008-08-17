@@ -1,12 +1,15 @@
 log/*.log
+log/searchd.*
 tmp/**/*
 .DS_Store
+config/*.sphinx.conf
 doc/api
 doc/app
 database.yml
 *~
 public/plugin_assets/*
 db/*.sqlite3
+db/sphinx
 /assets
 public/avatars
 public/stylesheets/all.css

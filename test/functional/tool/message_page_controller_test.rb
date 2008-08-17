@@ -4,7 +4,7 @@ require 'message_page_controller'
 # Re-raise errors caught by the controller.
 class MessagePageController; def rescue_action(e) raise e end; end
 
-class Tool::MessageControllerTest < Test::Unit::TestCase
+class Tool::MessagePageControllerTest < Test::Unit::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup

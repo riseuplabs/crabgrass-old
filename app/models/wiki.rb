@@ -100,10 +100,6 @@ class Wiki < ActiveRecord::Base
     end  
   end  
 
-  def index
-    self.body
-  end
-  
   ##### RENDERING #################################
   
   # lazy rendering of body_html:
