@@ -1,32 +1,31 @@
-<div class='sidesection'>
-<div class='sidehead'>Navigation</div>
-<div class='sidelink'>
-  <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %>
-</div>
-<div class='sidelink'>
-  <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %>
-</div>
-<div class='sidelink'>  
-  <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %>
-</div>
-<div class='sidelink'>
-  <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %>
-</div>
-<div class='sidetail'></div>
-</div>
+<div class='wing'>
+<h3>Navigation</h3>
+<ul class='side_list'>
+  <li>
+   <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %>
+  </li>
+  <li>
+    <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %>
+  </li>
+  <li>
+    <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %>
+  </li>
+  <li>
+    <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %>
+  </li>
+</ul>
 
-<div class='sidesection'>
-<div class='sidehead'>Actions</div>
-<% if logged_in? and current_user.member_of?(@group) -%>
-<div class='sidelink'>
-  <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %>
-</div>
-<% unless committee? -%>
-<div class='sidelink'>
-  <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %>
-</div>
-<% end -%>
-<% end -%>
-<div class='sidetail'></div>
-</div>
+<h3>Actions</h3>
+<ul class='side_list'>
+  <% if logged_in? and current_user.member_of?(@group) -%>
+    <li>
+      <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %>
+    </li>
+    <% unless committee? -%>
+    <li>
+      <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %>
+    </li>
+    <% end -%>
+  <% end -%>
+</ul>
 

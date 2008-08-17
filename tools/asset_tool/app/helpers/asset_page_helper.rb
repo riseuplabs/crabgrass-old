@@ -1,11 +1,4 @@
 module AssetPageHelper
-  def icon_for(asset)
-    image_tag asset.big_icon, :style => 'vertical-align: middle'
-  end
-
-  def mini_icon_for(asset)
-    image_tag asset.small_icon, :style => 'vertical-align: middle'
-  end
 
   def asset_link_with_preview(asset)
     thumbnail = asset.thumbnail(:large)

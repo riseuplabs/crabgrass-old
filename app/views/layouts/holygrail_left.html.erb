@@ -1,0 +1,18 @@
+<div class="colmask leftmenu">
+  <div class="colright">
+    <%# render :partial => 'layouts/messages' %>
+    <div class="col1wrap">
+      <div class="col1">
+<!-- main column start -->
+<%= yield %>
+<!-- main column end -->
+      </div>
+    </div>
+    <div class="col2">
+<!-- left column start -->
+<%= @left_column %>
+<!-- left column end -->
+        </div>
+    </div>
+</div>
+

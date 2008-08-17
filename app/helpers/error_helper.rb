@@ -1,18 +1,31 @@
 module ErrorHelper
 
+  ##
+  ## GENERATING NOTICES
+  ##
+
+  #
   # a one stop shopping function for flash messages
+  # usage:
+  # message :object => @user
+  # message :error => 'you messed up good'
+  # message :success => 'yeah, you rock'
+  #
+  ## TODO: destroy with helper, replace with flash_message
+  ## and flash_message_now
   def message(opts)    
     if opts[:success]
       flash[:notice] = opts[:success]
     elsif opts[:error]
+      flash[:type] = 'error'
       if opts[:later]
-        flash[:error] = opts[:error]
+        flash[:error] = opts[:error].to_s
       else
-        flash.now[:error] = opts[:error]
+        flash.now[:error] = opts[:error].to_s
       end
     elsif opts[:object]
       object = opts[:object]
-      unless object.errors.empty?
+      unless object.errors.empty?        
         flash.now[:error] = _("Changes could not be saved.")
         flash.now[:text] ||= ""
         flash.now[:text] += content_tag "p", _("There are problems with the following fields") + ":"
@@ -22,73 +35,100 @@ module ErrorHelper
     end
   end
 
+  # options:
+  # :title
+  # :object | :success | :error
+  def add_flash_message(options, flsh)
+    flsh[:text] ||= ""
+    flsh[:title] = options[:title] || flsh[:title]
+    if options[:object]
+      object = options[:object]
+      unless object.errors.empty?        
+        flsh[:type] = 'error'
+        flsh[:text] += content_tag :p, "There are problems with the following fields" + ":"
+        flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
+      end
+    elsif options[:error] and options[:error].any?
+      flsh[:type] = 'error'
+      flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg| content_tag :li, msg}
+    elsif options[:success] and options[:success].any?
+      flsh[:type] = 'info'
+      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, msg}
+    end
+  end
+
+  def flash_message(options)
+    add_flash_message(options, flash)
+  end
+
+  def flash_message_now(options)
+    add_flash_message(options, flash.now)
+  end
+
+  ##
+  ## DISPLAYING NOTICES
+  ##
+
   # like message() but can be used in rjs templates
   # it uses javascript to rewrite the message area
   # page.replace_html 'message', message_text(:object => @page) unless @page.valid?
-  def message_text(opts)
-    lines = []
-    type = 'info'
-    if opts[:object]
-      object = opts[:object]
-      unless object.errors.empty?
-        type = 'error'
-        lines << content_tag("h2", _("Changes could not be saved."))
-        lines << content_tag("p", _("There are problems with the following fields") + ":")
-        lines << content_tag("ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) })
-      end
-    end
-    content_tag("div", lines.join("\n"), "class" => "notice #{type}")
+  def message_text(option)
+    add_flash_message(options, flash)
+    display_messages
+#    lines = []
+#    type = 'info'
+#    if opts[:object]
+#      object = opts[:object]
+#      unless object.errors.empty?
+#        type = 'error'
+#        title = "Changes could not be saved."
+#        text = content_tag(:p, "There are problems with the following fields" + ":")
+#        text += content_tag(:ul, object.errors.full_messages.collect { |msg| content_tag("li", msg) })
+#      end
+#    end
+#    build_notice_area(type, title, text)
   end
 
 
   # display flash messages with appropriate styling
   def display_messages()
-    message_html = ""
-
-    message_html += content_tag("div", 
-                                image_tag("notice/info.png") +
-                                content_tag("h2", "Notice:") +
-                                h($SYSTEM_MESSAGE),
-                                "class" => "notice info") if $SYSTEM_MESSAGE
-
-    if flash[:update] or flash[:notice] or flash[:error]
-      if flash[:update]
-        type = "update"
-        message = flash[:update]
-      elsif flash[:notice]
-        type = "info"
-        message = flash[:notice]
-      elsif flash[:error]
-        type = "error"
-        message = flash[:error]
-      end
-      img = image_tag("notice/#{type}.png")
-      header = content_tag("h2", message)
-
-      message_html += content_tag("div", img + header + flash[:text].to_s, "class" => "notice #{type}")
+    return "" unless flash[:type]
+    unless flash[:title]
+      flash[:title] =  "Changes could not be saved" if flash[:type] == 'error'
+      flash[:title] =  "Changes saved" if flash[:type] == 'info'
     end
-    
-    message_html
+    build_notice_area(flash[:type], flash[:title], flash[:text])
   end
-  
+
   # use by ajax
+  ## TODO: remove, replace with message_text()
   def notify_errors(title, errors)
-     type = "error"
-     img = image_tag("notice/#{type}.png")
-     header = content_tag("h2", title)
      text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     content_tag("div", img + header + text, "class" => "notice #{type}")
+     build_notice_area('error', title, text)
   end
  
    # use by ajax
+  ## TODO: remove, replace with message_text()
   def notify_infos(title, infos)
-     type = "info"
-     img = image_tag("notice/#{type}.png")
-     header = content_tag("h2", title)
      text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     content_tag("div", img + header + text, "class" => "notice #{type}")
+     build_notice_area('info', title, text)
   end
 
+  private
+  
+  def build_notice_area(type, title, text)
+    img = image_tag("notice/#{type}.png")
+    header = content_tag(:h2, img + title)
+    content_tag(
+     :div, 
+     content_tag(
+       :div,
+       header + text,
+       :class => type
+     ),
+     :class => 'notice'
+   )
+  end
 
 end
 

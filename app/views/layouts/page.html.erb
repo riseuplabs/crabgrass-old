@@ -1,0 +1,18 @@
+<% inside_layout 'holygrail' do -%>
+
+<% if @title_box.any? -%>
+<div class='title_box'>
+  <%= link_to_breadcrumbs %>
+  <%= @title_box %>
+</div>
+<% end -%>
+<div class='content_box'>
+  <%= yield %>
+  <%= render :partial => 'posts/list' if @show_posts %>
+</div>
+
+<% end -%>
+
+
+
+

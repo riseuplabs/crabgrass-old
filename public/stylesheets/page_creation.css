@@ -1,0 +1,23 @@
+/** page creation **/
+
+div.page-class {
+  margin-bottom: 4px;
+}
+div.page-class div:hover {
+  background: #ffc;
+  outline: 1px solid #cc9;
+}
+div.page-class .page-link {
+  text-decoration: none;
+  padding: 20px 0 20px 58px;
+  display: block;
+  outline: 0;
+}
+
+table.create td {
+  vertical-align: top;
+  padding: 4px;
+}
+table.create td input {
+  margin-bottom: 0.5em;
+}

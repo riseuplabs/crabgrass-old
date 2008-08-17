@@ -1,4 +1,86 @@
-<%= Formy.sidebar do |f|
+<div class='wing'>
+
+<h2>My Pages</h2>
+<ul class='side_list'>
+
+  <li class='small_icon dashboard_icon'><%= link_to_active(
+    'Dashboard',
+    '/me/dashboard',
+    params[:controller] == 'me/dashboard'
+  ) %></li>
+
+  <li class='small_icon inbox_icon'><%= link_to_active(
+    'Inbox',
+    '/me/inbox',
+    params[:controller] == 'me/inbox'
+  ) %></li>
+
+<!--  <li class='small_icon watch_icon'><a href='#'>Watching for Updates</a></li> -->
+
+  <li class='small_icon search_icon'><%= link_to_active(
+    'Search',
+    '/me/search',
+    params[:controller] == 'me/search'
+  ) %></li>
+
+
+  <li class='small_icon create_icon'><a href='/pages/create'>Create Page</a></li>
+
+</ul>
+
+<h2>Tasks</h2>
+<ul class='side_list'>
+  <li class='small_icon task_pending_icon'><%= link_to_active(
+    'Pending',
+    '/me/tasks/pending',
+    params[:controller] == 'me/tasks' && params[:action] == 'pending'
+  ) %></li>
+  <li class='small_icon task_completed_icon'><%= link_to_active(
+    'Completed',
+    '/me/tasks/completed',
+    params[:controller] == 'me/tasks' && params[:action] == 'completed'
+  ) %></li>
+</ul>
+
+<h2>Requests</h2>
+<ul class='side_list'>
+
+  <li class='small_icon to_me_icon'><%= link_to_active(
+    'To Me',
+    '/me/requests',
+    params[:controller] == 'me/requests'
+  ) %></li>
+
+  <li class='small_icon from_me_icon'><%= link_to_active(
+    'From Me',
+    '/me/requests',
+    params[:controller] == 'me/requests'
+  ) %></li>
+</ul>
+
+<h2>Options</h2>
+<ul class='side_list'>
+  <li class='small_icon settings_icon'><%= link_to_active(
+    'Settings',
+    '/me/edit',
+    params[:controller] == 'me/base'
+  ) %></li>
+  <li class='small_icon public_profile_icon'><%= link_to_active(
+    'Public Profile',
+    '/profile/edit/public',
+    params[:controller] == 'profile' && params[:action] == 'edit' && params[:id] == 'public'
+  ) %></li>
+  <li class='small_icon private_profile_icon'><%= link_to_active(
+    'Private Profile',
+    '/profile/edit/private',
+    params[:controller] == 'profile' && params[:action] == 'edit' && params[:id] == 'private'
+  ) %></li>
+</ul>
+
+</div>
+
+
+<%# Formy.sidebar do |f|
   f.section do |s|
     s.label 'Me'
     s.link do |t|

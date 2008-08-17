@@ -17,8 +17,8 @@ production:
     password: "xxxxxxxxx"
   
 development:
-#  delivery_method: :sendmail
-  delivery_method: :smtp
+  delivery_method: :sendmail
+#  delivery_method: :smtp
   smtp_settings:
     domain: localhost
     address: smtp.gmail.com

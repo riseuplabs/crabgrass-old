@@ -1,0 +1,27 @@
+/* set the font */
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+.normal {font-size: 13px;font-weight:normal;}
+
+body {
+  background: #000;
+}
+
+/* the grey background */
+.colmask,
+.holygrail .colleft,
+.holygrail .colmid,
+.leftmenu .colright, 
+.rightmenu .colleft {
+  background: #ccc url(/images/background/grey.png) repeat-x;
+}
+
+div#footer {
+  color: white;
+  background-color: black;
+}
+
+

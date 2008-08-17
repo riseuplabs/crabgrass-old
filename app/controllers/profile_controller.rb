@@ -2,7 +2,7 @@ class ProfileController < ApplicationController
 
   before_filter :login_required
   prepend_before_filter :fetch_profile
-  layout :choose_layout
+  #layout :choose_layout
   stylesheet 'profile'
   
   def show
@@ -61,7 +61,13 @@ class ProfileController < ApplicationController
  
   def fetch_profile
     return true unless params[:id]
-    @profile = Profile.find params[:id]
+    if params[:id] == 'public'
+      @profile = current_user.profiles.public
+    elsif params[:id] == 'private'
+      @profile = current_user.profiles.private
+    else
+      @profile = Profile.find params[:id]
+    end
     @entity = @profile.entity
     if @entity.is_a?(User)
       @user = @entity
@@ -85,22 +91,19 @@ class ProfileController < ApplicationController
     end
   end
   
-  def choose_layout
+  before_filter :setup_layout
+  def setup_layout
     if @user
-      @tabs = 'me/base/profile_tabs'
-      return 'me'
+      #@tabs = 'me/base/profile_tabs'
+      @left_column = render_to_string :partial => 'me/sidebar'
     elsif @group
-      @tabs = 'profile/side_tabs'
-      return 'group'
-    else
-      return 'application'
+      #@tabs = 'profile/side_tabs'
     end
   end
   
   def context
     me_context('large')
-    add_context 'inbox'.t, url_for(:controller => 'inbox', :action => 'index')
+    @banner = render_to_string :partial => 'me/banner'
   end
-  
-  
+
 end

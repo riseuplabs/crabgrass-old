@@ -1,0 +1,80 @@
+<%
+  active = first_context()
+  selected = 'class="selected"'
+-%>
+<ul id="top_menu">
+  <% if logged_in? -%>
+  <li id='menu_me'>
+    <span><%= link_to_active 'Me', '/me/dashboard', active == 'me' %></span>
+    <ul class="submenu">
+      <li><%= link_to 'inbox', '/me/inbox', :style => page_icon_style('inbox') %></li>
+      <li><%= link_to 'tasks', '/me/tasks', :style => page_icon_style('task-list') %></li>
+      <li><%= link_to 'search', '/me/search', :style => page_icon_style('search') %></li>
+      <li><%= link_to 'requests', '/me/requests', :style => page_icon_style('request') %></li>
+      <li><%= link_to 'edit&nbsp;profile', '/me/edit', :style => page_icon_style('settings') %></li>
+      <li><%= link_to 'new&nbsp;page', '/pages/create', :style => page_icon_style('add') %></li>
+    </ul>
+  </li>
+  <% else -%>
+    <li>
+      <span><%= link_to_active "Home", '/', params[:controller]=='account' %></span>
+    </li>    
+  <% end -%>
+
+  <li id='menu_people' >
+    <span><%= link_to_active "People", people_url, active == 'people' %></span>
+    <% if logged_in? and current_user.contacts.any? -%>
+    <ul class="submenu">
+      <% current_user.contacts.sort_by {|person| person.login}.each do |person| -%>
+      <li><%= link_to_user person, :avatar => 'xsmall', :one_link => true %></li>
+      <% end -%>
+    </ul>
+    <% end -%>
+  </li>
+
+  <li id='menu_groups'>
+    <span><%= link_to_active "Groups", groups_url, active == 'groups' %></span>
+   <% if logged_in? and current_user.groups.any? -%>
+    <ul class="submenu">
+      <% current_user.groups.sort_by {|group| group.name }.each do |group| -%>
+      <li><%= link_to_group group, :full_name => true, :avatar => 'xsmall', :one_link => true %></li>
+      <% end -%>
+    </ul>
+    <% end -%>
+  </li>
+
+  <% if logged_in? -%>
+  <li>
+    <span><%= link_to_active "Chat", '/chat', active == 'chat' %></span>
+  </li>
+  <% end -%>
+
+  <% if logged_in? -%>
+  <li>
+    <span><%= link_to_active "Logout".t + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %></span>
+  </li>
+  <li>
+    <span id="top-login-form">
+    </span>
+  </li>
+  <% else -%>  
+  <li>
+    <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('top-login-form').toggle(); Field.focus('login'); return false;" } %></span>
+  </li>
+  <li>
+    <span id="top-login-form" style="display: none; color:black;">
+      <% form_tag :controller => 'account', :action => 'login' do -%>
+        <label for="username"><%=_("Username")%></label>
+        <%= text_field_tag 'login' %>
+        <label for="password"><%=_("Password")%></label>
+        <%= password_field_tag 'password' %>
+        <%= submit_tag _('Log in') %>
+        <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
+      <% end -%>
+    </span>
+  </li>
+  <% end -%>  
+</ul>
+<div style='clear: both;'></div>
+
+

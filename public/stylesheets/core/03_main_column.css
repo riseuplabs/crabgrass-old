@@ -1,0 +1,31 @@
+/* the main column */
+
+div.content_box {
+  padding:1.5em;
+}
+
+div.breadcrumbs {
+  margin: -10px;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.title_box h1, .title_box form .h1 {
+  padding: 0; margin: 4px 0;
+}
+
+div.title_box {
+  margin: 0;
+  padding: 10px 20px;
+  position: relative;
+}
+div.title_box .title_box_edit_link {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+div.title_box:hover .title_box_edit_link {
+  display: block;
+}
+

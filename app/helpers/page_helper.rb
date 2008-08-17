@@ -49,7 +49,7 @@ module PageHelper
   # controller. intended for use with ajax calls. 
   def page_xurl(page,options={})
     hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => page.controller}
-    direct_url(hash.merge(options))
+    url_for(hash.merge(options))
   end
   
   # a helper for links that are destined for the PagesController, not the

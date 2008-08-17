@@ -3,7 +3,7 @@ require 'svg/svg'
 class GroupsController < ApplicationController
   include GroupsHelper
   
-  layout :choose_layout
+  #layout :choose_layout
   stylesheet 'groups'
   
   prepend_before_filter :find_group, :except => ['list','create','index']
@@ -30,6 +30,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @stylesheet = 'landing'
     if logged_in? and current_user.member_of?(@group)
       @access = :private
     elsif @group.publicly_visible_group
@@ -225,10 +226,10 @@ class GroupsController < ApplicationController
     end
   end
   
-  def choose_layout
-     return 'application' if ['list','index', 'create'].include? params[:action]
-     return 'groups'
-  end
+  #def choose_layout
+  #   return 'application' if ['list','index', 'create'].include? params[:action]
+  #   return 'groups'
+  #end
   
   def context
     group_context
@@ -241,6 +242,7 @@ class GroupsController < ApplicationController
   def find_group
     @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
     if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or may_admin_group?) ##committees need to be handled better
+      @left_column = render_to_string(:partial => 'sidebar')
       return true
     else
       render :template => 'groups/show_nothing'

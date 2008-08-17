@@ -124,4 +124,21 @@ Element.toggle($('#{element}'));return false;">#{showlabel}</a>]
 html_options))
   end
   
+  # just like link_to, but sets the <a> tag to have class 'active'
+  # if last argument is true or if the url is in the form of a hash
+  # and the current params match this hash.
+  def link_to_active(link_label, url_hash, active=nil)
+    if url_hash.is_a? Hash and active.nil?
+      url_hash[:action] = 'index' if url_hash[:action].nil?
+      selected = url_hash.inject(true) do |selected, p|
+        param, value = p
+        selected and params[param] == value
+      end
+      selected_class = selected ? 'active' : ''
+    else
+      selected_class = active ? 'active' : ''
+    end
+    link_to(link_label,url_hash, :class => selected_class)
+  end
+
 end

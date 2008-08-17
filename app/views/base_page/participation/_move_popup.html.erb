@@ -1,0 +1,42 @@
+<%
+ def to_select(arry)
+   arry.sort_by{|x|x.short_name}.collect {|x|[x.short_name.to_s,x.id.to_s]}
+ end
+
+ group = @page.group
+ if group 
+   if group.committee?
+     committees = to_select(group.parent.committees) + [[group.parent.short_name,group.parent.id]]
+   else
+     committees = to_select(group.committees)
+   end
+   if committees.any?
+     committee_options = option_section('committees') + options_for_indented_select(committees)
+   else
+     committee_options = ''
+   end
+ else
+   committee_options = ''
+ end
+
+ groups = to_select(current_user.groups)
+ if groups.any?
+   selected = group ? group.id.to_s : ''
+   group_options = option_section('groups') + options_for_indented_select(groups, selected)
+ else
+   group_options = ''
+ end
+-%>
+<% popup('Move This Page', :id => 'move_popup', :style => 'width: 25em') do -%>
+  <% form_tag(:controller => 'base_page/participation', :action => 'move', :page_id => @page.id) do -%>
+    Move this page to a different group:
+    <p>
+      <%= select_tag 'group_id', committee_options + group_options %>
+    </p>
+    <p>
+      <%= submit_tag 'Cancel', :name => 'cancel' %>
+      <%= submit_tag 'Move', :name => 'move' %>
+    </p>
+  <% end -%>
+<% end -%>
+

@@ -1,0 +1,39 @@
+<% popup('Edit Attachments', :id => 'assets_popup', :style => 'width: 40em') do -%>
+  <p>
+    <h4>Current Attachments</h4>
+    <table width='100%' cellpadding='4'>
+      <% if @page.assets.any? -%>
+        <%= asset_rows -%>
+      <% else -%>
+       <tr><td>(none)</td></tr>
+      <% end -%>
+    </table>
+  </p>
+  <p>
+    <h4>Add New Attachment</h4>
+    <% form_for( :asset, Asset.new(:page_id => @page.id), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
+      <%= f.hidden_field 'page_id' %>
+      <table>
+        <tr>
+          <td align='right'>File: </td><td><%= f.file_field 'uploaded_data', :size => '20' %></td>
+        </tr>
+        <tr>
+          <!-- <td align='right'>Title: </td><td><%= text_field_tag 'asset_title', '',:style => 'width:98%'  %></td> -->
+        </tr>
+        <tr>
+          <td colspan='2' align='right'><%= submit_tag 'Upload Attachment' %></td>
+        </tr>
+      </table>
+    <% end -%>
+  </p>
+  <p>
+    <% form_remote_tag(
+      :url => {:controller => 'base_page/assets', :action => 'close', :page_id => @page.id},
+      :loading => show_spinner('popup')) do -%>
+         <%= submit_tag 'Close', :name => 'close' %>
+         <%= spinner 'popup' %>
+    <% end -%>
+  </p>
+
+<% end -%>
+

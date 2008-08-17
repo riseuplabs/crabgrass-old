@@ -12,7 +12,11 @@ function quickRedReference() {
 }
 
 function show_tab(tab_link, tab_content) {
-  tabs = [document.getElementsByClassName("tab"),document.getElementsByClassName("tab-link")].flatten();
+  tabs = document.getElementsByClassName("tab");
+  for(i = 0; i < tabs.length; i++) {
+    Element.removeClassName(tabs[i], 'selected');
+  }
+  tabs = document.getElementsByClassName("tab-link");
   for(i = 0; i < tabs.length; i++) {
     Element.removeClassName(tabs[i], 'selected');
   }

@@ -3,16 +3,11 @@
 PagesController
 ---------------------------------
 
-This is a controller for managing abstract pages. The display and editing of
-a particular page type are handled by controllers in the /pages directory.
+If you have an actual page, then the controller that controls it is BasePageController
+or one of the many subclasses of this controller (one for each page type). 
 
-When should an action be in this controller or in BasePageController?
-The general rule is this:
-
-   If the action can go in PagesController, then do so.
-
-This means if a particular tool needs to override some default behavior in its
-controller, then that thing should be in BasePageController.
+This controller, on the other hand, is for cases when we don't have an actual
+page or you don't know the page type in question.
 
 For example, there are two create() actions, one in PagesControllers
 and one in BasePageController. The one in PagesController handles the first
@@ -56,17 +51,9 @@ class PagesController < ApplicationController
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool). 
   def create
+    @stylesheet = 'page_creation'
   end
-     
-  def tag
-    return unless request.xhr?
-    @page.set_tag_list params[:tag_list]
-    @page.save
-  rescue Tag::Error => @error
-  ensure
-    render :partial => "pages/tags"
-  end
-    
+         
   # for quickly creating a wiki
   def create_wiki
     group = Group.get_by_name(params[:group])
@@ -83,40 +70,6 @@ class PagesController < ApplicationController
       return
     end
     render :text => '', :layout => 'application'
-  end
-
-
-  # send an announcement to users about this page.
-  # in other words, send to their inbox.
-  # requires: login, view access
-  def notify
-    @errors = []; @infos = []
-    params[:to].split(/\s+/).each do |name|
-      next unless name.any?
-      entity = Group.get_by_name(name) || User.find_by_login(name)
-      if entity.nil?
-        @errors << "'%s' is not the name of a group or a person." / name
-        next
-      end
-      if @page.public?
-        unless current_user.may_pester?(entity)
-          @errors << "%s is not allowed to notify %s.".t % [current_user.login, entity.name]
-          next
-        end
-      else
-        unless entity.may?(:view, @page)
-          @errors << "%s is not allowed to view this page." / entity.name
-          next
-        end
-      end
-      notice = params[:message] ? {:user_login => current_user.login, :message => params[:message], :time => Time.now} : nil
-      if entity.instance_of? Group
-        @page.add(entity.users - [current_user], :notice => notice) if entity.users.any?
-      elsif entity.instance_of? User
-        @page.add(entity, :notice => notice)
-      end
-      @infos << name
-    end
   end
 
   def access
@@ -156,179 +109,9 @@ class PagesController < ApplicationController
   def history
   
   end
-
-  # assigns a page to a different group. 
-  # we only allow assignments between committees of the same group
-  # or between the parent group and a committee.
-  def move
-    group = Group.find params[:group_id]
-    if group.committee? and @page.group.committee?
-      ok = group.parent == @page.group.parent
-    elsif group.committee? and !@page.group.committee?
-      ok = @page.group.committees.include? group
-    elsif !group.committee? and @page.group.committee?
-      ok = group.committees.include? @page.group
-    else
-      ok = false
-    end
-    if ok
-      @page.remove(@page.group)
-      @page.add(group)
-      @page.group = group
-      @page.save
-      clear_referer(@page)
-    end
-    redirect_to page_url(@page)
-  end
-
-
-  # only works with xhr for now.
-  def update_public
-    @page.update_attribute(:public, ('true' == params[:public]))
-    current_user.updated @page
-    # in the future, indicate that the way page was changed was by making it public
-    render :nothing => true
-  end
-  
-  ##############################################
-  ## page participation modifications
-  # should these get moved to a user_participations_controller?
-  
-  def remove_from_my_pages
-    @upart.inbox = false
-    @upart.save
-    redirect_to from_url(@page)
-  end
-  
-  def add_to_my_pages
-    @page.add(current_user, :inbox => true)
-    redirect_to page_url(@page)
-  end
-  
-  def make_resolved
-    @upart.resolved = true
-    @upart.save
-    redirect_to page_url(@page)
-  end
-  
-  def make_unresolved
-    @upart.resolved = false
-    @upart.save
-    redirect_to page_url(@page)
-  end  
-  
-  def add_star
-    @upart.star = true
-    @upart.save
-    redirect_to page_url(@page)
-  end
-  
-  def remove_star
-    @upart.star = false
-    @upart.save
-    redirect_to page_url(@page)
-  end  
-    
-  def destroy   
-    url = from_url(@page)
-    @page.destroy
-    redirect_to url
-  end
-
-  # return the edit title form via rjs
-  def edit_title
-  end
-
-  # TODO: make xhr only
-  def update_title
-    if params[:save]
-      @page.title = params[:page][:title]
-      @page.summary = params[:page][:summary]
-      @page.name = params[:page][:name].to_s.nameize if params[:page][:name].any?
-      unless @page.save
-        render :action => 'edit_title'
-      end
-    end
-  end
-
-  # send this page with a notice message to any number of recipients. 
-  #
-  # if the recipient is a crabgrass user, then the message
-  # and the page show up in their inbox, and optionally they are alerted
-  # via email if that is their personal settings.
-  # if the recipient is an email address, they get an email with a
-  # magic url that lets them view the page by clicking on a link
-  # and using their email as the password.
-  # 
-  # the sending user must have admin access to send to recipients
-  # who do not already have the ability to view the page.
-  # 
-  # the recipient may be an entire group, in which case we give the
-  # and send to each user individually. 
-  #
-  # you cannot send to users/groups that you cannot pester, unless
-  # the page is private and they already have access.
-  #
-  def send_page
-    return unless params[:send]
-    users, groups, emails, errors = parse_recipients(params[:recipients])
-    access = params[:access]
-    msg = params[:message]
-    users_to_email = [] 
-    # puts [users, groups, emails, errors].inspect
-    users.each do |user|
-      if current_user.send_page_to(@page, user, :access => access, :message => msg)
-        users_to_email << user if user.wants_notification_email?
-      end
-    end
-#    groups.each do |group|
-#      users_succeeded = current_user.send_page_to_group(@page, group,
-#        :access => access, :message => msg)
-#      users_succeeded.each do |user|
-#        users_to_email << user if user.wants_notification_email?
-#      end
-#    end
-#    emails.each do |email|
-#      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
-#    end
-    users_to_email.each do |user|
-      puts 'emailing %s' % user.email
-      Mailer.deliver_page_notice(user, msg, mailer_options)
-    end
-    unless current_user.valid? and errors.empty?
-      message :object => current_user # display any sending errors
-      message :error => errors # display any parsing errors
-      render :action => 'show_send_page_form'
-    end
-  end
-
+        
   protected
   
-  # called by send_notice
-  def parse_recipients(recipients)
-    users = []; groups = []; emails = []; errors = []
-    if recipients.is_a? Hash
-      to = []
-      recipients.each do |key,value|
-        to << key if value == '1'
-      end
-    elsif recipients.is_a? Array
-      to = recipients
-    end
-    to.each do |entity|
-      if entity =~ RFC822::EmailAddress
-        emails << entity
-      elsif g = Group.get_by_name(entity)
-        groups << g
-      elsif u = User.find_by_login(entity)
-        users << u
-      else
-        errors << '"%s" does not match the name of any users or groups and is not a valid email address' % entity
-      end
-    end
-    [users, groups, emails, errors]
-  end
-
   def authorized?
     # see BaseController::authorized?
     if @page

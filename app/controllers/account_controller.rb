@@ -1,6 +1,6 @@
 class AccountController < ApplicationController
 
-  stylesheet 'login'
+  stylesheet 'account'
 
   def index
     if logged_in?

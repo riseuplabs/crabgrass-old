@@ -77,11 +77,20 @@ module UrlHelper
     path
   end
   
+  # creates a link to a user, with or without the avatar.
+  # avatars are displayed as background images, with padding
+  # set on the <a> tag to make room for the image.
+  # accepts:
+  #  :avatar => [:small | :medium | :large]
+  #  :label -- override display_name as the link text
+  #  :style -- override the default style
+  #  :class -- override the default class of the link (name_link)
   def link_to_user(arg, options={})
     login, path, display_name = login_and_path_for_user(arg,options)
     style = options[:style]                         # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
+    klass = options[:class] || 'name_link'
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
@@ -89,10 +98,14 @@ module UrlHelper
       size = Avatar.pixels(options[:avatar])[0..1].to_i
       padding = size/5 + size
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      style = "background: url(#{url}) no-repeat 0% 50%;"
-      style += options[:style] || "padding: 4px 0 4px #{padding}px;"
+      if style
+        style = "background-image: url(#{url});" + style
+      else
+        padding = size/5 + size
+        style = "background: url(#{url}) no-repeat 0% 50%; padding: 4px 0 4px #{padding}px;"
+      end
     end
-    avatar + link_to(label, path, :class => 'name_link', :style => style)
+    avatar + link_to(label, path, :class => klass, :style => style)
   end
 
   # see function name_and_path_for_group for description of options
@@ -112,7 +125,8 @@ module UrlHelper
     end
     
     display_name, path = name_and_path_for_group(arg,options)
-    style = options[:style] || ''
+    style = options[:style]
+    klass = options[:class] || 'name_link'
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
@@ -123,10 +137,15 @@ module UrlHelper
         url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       else
         url = avatar_url(:id => 0, :size => options[:avatar])
-      end      
-      style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px;" + style
+      end
+      if style
+        style = "background-image: url(#{url})" + style
+      else
+        padding = size/5 + size
+        style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px"
+      end
     end
-    avatar + link_to(display_name, path, :class => 'name_link', :style => style)
+    avatar + link_to(display_name, path, :class => klass, :style => style)
   end
 
   def url_for_entity(entity, options={})
@@ -135,6 +154,23 @@ module UrlHelper
     elsif entity.is_a? Group
       url_for_group(entity, options)
     end
+  end
+
+  ##
+  ## TAGGING
+  ##
+
+  def tag_link(tag, group_name=nil, user_name=nil)
+    name = CGI.escape tag.name
+    if group_name  
+      link_path = "/groups/tags/#{group_name}/#{name}"
+    elsif user_name 
+      link_path = "/people/tags/#{user_name}/#{name}"
+    else
+      link_path = "/me/search/tag/#{name}"
+    end
+    link_to h(tag.name), link_path
+
   end
 
 end

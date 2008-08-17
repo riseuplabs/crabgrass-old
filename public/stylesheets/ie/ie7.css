@@ -1,0 +1,11 @@
+/* allows for checkbox and link to the on the same line */
+ul.side_list a.check {
+  display: inline;
+  line-height: 1.9em;
+}
+input.check {
+  margin-top: 0px;
+}
+ul.side_list a {
+  padding: 1px 0 1px 26px;
+}

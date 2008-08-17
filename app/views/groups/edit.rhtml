@@ -1,9 +1,12 @@
 <% form_tag(:action => 'update', :id => @group) do -%>
   <%= render :partial => 'form' %>
-  <%= submit_tag 'Save changes' %>
 <% end -%>
 
-<h1>Picture</h1>
+<br/>
+
+<h2 class='section'><div style='padding: 8px;'>
+  Picture
+</div></h2>
 
 <%= avatar_for @group, 'xlarge' %>
 

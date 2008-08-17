@@ -1,0 +1,48 @@
+/*** login menu box ***/
+
+span#top-login-form label {
+  color: #FFF;
+  font-size: 9px;
+}
+
+span#top-login-form input {
+  width: 8em;
+  font-size: 9px;
+}
+
+div.popup {
+  background: #efefef;
+  border: 4px solid #666;
+  z-index: 100;
+  /* this looks better, but might get cut off on really short pages: */
+  position: absolute;
+  right: 12.5em;
+  top: -32px;
+/* this is more compatible: */
+/*  float: right;
+  margin-right: 2em;
+*/
+}
+div.popup h1 {
+  background: #ccc;
+  color: white;
+  padding: 10px;
+  margin: 0;
+  border-bottom: 1px solid #aaa;
+}
+
+/* required to get the popups to be positioned correctly: */
+.wing li {
+  position: relative;
+}
+
+div.popup_arrow {
+  height: 24px;
+  width: 12px;
+  background: url(/images/ui/wedge_right.png);
+  position: absolute;
+  top: 28px;
+  right: -16px;
+}
+
+

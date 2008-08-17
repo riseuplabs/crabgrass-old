@@ -9,7 +9,6 @@ see PeopleController.
 =end
 
 class PersonController < ApplicationController
-  layout 'person'
   
   def initialize(options={})
     super()

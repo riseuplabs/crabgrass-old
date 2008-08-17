@@ -1,0 +1,7 @@
+page.select('.popup_holder').each do |value|
+  value.hide
+end
+page.show 'tags_holder'
+page.replace_html 'tags_holder', :partial => 'base_page/tags/popup'
+#page.replace_html 'message', display_messages
+

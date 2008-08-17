@@ -144,7 +144,8 @@ module Media
       'application/pgp-signature' => [nil,:lock,nil],
       'application/pgp-keys'      => [nil,:lock,nil]
     }.freeze
-    
+   
+    # TODO: add openoffice!!! 
     EXTENSIONS = {
       'jpg' => 'image/jpeg',
       'png' => 'image/png',

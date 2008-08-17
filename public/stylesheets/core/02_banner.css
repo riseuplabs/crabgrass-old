@@ -1,0 +1,78 @@
+div#banner {
+  clear: both;
+  margin: 0;
+  padding: 0; 
+  text-align: left;
+}
+div#bannercontent {
+  padding: 10px;
+}
+div#banner img.avatar {
+  border: 1px solid white;
+  margin: 0 7px 0 0;
+  vertical-align: bottom;
+}
+div#banner h1, div#banner h3 {
+  padding: 0; margin: 0
+}
+div#banner a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+div#banner a:hover {
+  text-decoration: underline;
+}
+
+/* icon boxes */
+div.iconboxes {
+}
+div.iconboxes img {
+  border:1px solid white;
+}
+div.online img {
+  border:1px solid yellow;
+}
+
+div.iconboxes div.iconbox {
+  position: relative;
+  width: 24px; height: 24px;
+  float: right;
+  margin: 2px;
+}
+div.iconboxes div.iconbox.left {
+  float: left;
+}
+div.iconboxes div.hover {
+  display: none;
+}
+div.iconboxes div.iconbox:hover div.hover {
+  display: inline;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  background: white;
+  color: black;
+  z-index: 100;
+  width: 34px; height: 34px;
+}
+div.iconbox div.hover div.text {
+  position: absolute;
+  width: 20em;
+  right: 0px;
+  top: 45px
+}
+div.iconbox.left div.hover div.text {
+  left: 0px;
+}
+div.iconbox div.hover div.text span {
+  background: #eee;
+  border: 1px solid white;
+  padding: 3px;
+}
+div.iconbox a {
+  text-decoration: none;
+  color: black;
+}
+
+

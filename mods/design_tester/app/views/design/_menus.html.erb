@@ -1,0 +1,7 @@
+<%# this is a totally silly partial to created links to the test data directories %>
+<ul id='top_menu'>
+<% Dir.glob(File.dirname(__FILE__)+'/*/').each do |dir|%>
+  <li><%= link_to_active File.basename(dir), :action => nil, :data => File.basename(dir) %></li>
+<% end %>
+</ul>
+

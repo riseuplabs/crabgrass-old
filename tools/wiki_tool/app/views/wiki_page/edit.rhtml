@@ -4,8 +4,7 @@
 
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
-   <%= textile_editor 'wiki', 'body', :size => '80x35' %>
-   <%# :size => '80x20' %>
+   <fieldset><%= textile_editor 'wiki', 'body' %></fieldset>
    <div>
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
      <%= submit_tag 'Save', :name => 'save' %>

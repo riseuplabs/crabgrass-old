@@ -2,14 +2,13 @@
 
 This is the controller that all page controllers are based on.
 
-Actions should go here if a page controller may want to override
-the default behavior. Otherwise, page stuff goes in pages_controller.rb
-
 =end
 
 class BasePageController < ApplicationController
+
   layout :choose_layout
-  
+  stylesheet 'page', 'post'
+
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   append_before_filter :setup_default_view
@@ -26,6 +25,10 @@ class BasePageController < ApplicationController
 
     @javascript_extra = true
   end  
+
+  ##
+  ## CREATION
+  ## 
     
   # the form to create this type of page
   # can be overridden by the subclasses
@@ -39,13 +42,32 @@ class BasePageController < ApplicationController
         message :object => @page
       end
     end
+    @stylesheet = 'page_creation'
     render :template => 'base_page/create'
+  end
+
+  def destroy
+    url = from_url(@page)
+    @page.destroy
+    redirect_to url
   end
   
   protected
 
+  def authorized?
+    if @page
+      if params[:action] == 'show_popup'
+        return true
+      else
+        current_user.may?(:admin, @page)
+      end
+    else
+      true
+    end
+  end
+
   def choose_layout
-    return 'application' if params[:action] == 'create'
+    return 'default' if params[:action] == 'create'
     return 'page'
   end
   
@@ -56,14 +78,20 @@ class BasePageController < ApplicationController
   end
   
   def setup_default_view
-    @show_posts = (%w(show title).include?params[:action]) # default, only show comment posts for the 'show' action
-    @show_reply = @posts.any? # by default, don't show the reply box if there are no posts
-    @show_attach = false
-    @show_tags = true
-    @show_links = true
-    @sidebar = true
-    @html_title = @page.title if @page
-    setup_view # allow subclass to override view
+    if request.get?
+      setup_view        # allow subclass to override view defaults
+      @show_posts       = params[:action] == 'show' if @show_posts.nil?
+      @show_reply       = @posts.any? if @show_reply.nil?
+      @show_attachments = true if @show_attachments.nil?
+      @show_tags        = true if @show_tags.nil? 
+      @html_title       = @page.title if @page
+      unless params[:action] == 'create'
+        @title_box        = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil?
+      end
+      if params[:action] == 'show' or params[:action] == 'edit'
+        @right_column     = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+      end
+    end
     true
   end
   
@@ -78,16 +106,7 @@ class BasePageController < ApplicationController
       return login_required
     end
   end
-  
-  # this needs to be fleshed out for each action
-  def authorized?
-    if @page
-      current_user.may?(:admin, @page)
-    else
-      true
-    end
-  end
-  
+    
   def fetch_page_data
     return true unless @page or params[:page_id]
     unless @page
@@ -96,20 +115,17 @@ class BasePageController < ApplicationController
       # and need to grab the page here.
       @page = Page.find(params[:page_id])
     end
-    return true if request.xhr?
-    if logged_in?
-      # grab the current user's participation from memory
-      @upart = @page.participation_for_user(current_user) if logged_in?
-    else
-      @upart = nil
+    # grab the current user's participation from memory
+    @upart = (@page.participation_for_user(current_user) if logged_in?)
+
+    unless request.xhr?
+      @page.discussion ||= Discussion.new    
+      disc = @page.discussion
+      current_page = params[:posts] || disc.last_page
+      @post_paging = Paginator.new self, disc.posts.count, disc.per_page, current_page
+      @posts = disc.posts.find(:all, :include => 'ratings', :limit => disc.per_page, :offset => @post_paging.current.offset)
+      @post = Post.new
     end
-    @page.discussion = Discussion.new unless @page.discussion
-    
-    disc = @page.discussion
-    current_page = params[:posts] || disc.last_page
-    @post_paging = Paginator.new self, disc.posts.count, disc.per_page, current_page
-    @posts = disc.posts.find(:all, :include => 'ratings', :limit => disc.per_page, :offset => @post_paging.current.offset)
-    @post = Post.new
     true
   end
       

@@ -5,6 +5,20 @@ rescue LoadError => exc
 end
 
 
+## can be used to create assets from a script instead of uploaded from a browser:
+## asset = Asset.make :uploaded_data => FileData.new('/path/to/file')
+class FileData < String
+  attr_accessor :size, :original_filename, :content_type
+  def initialize(filename)
+    super(filename)
+    self.size = 1
+    self.original_filename = filename
+    self.content_type = Media::MimeType.mime_type_from_extension(filename)
+  end
+end
+
+
+
 module Media
   module Attachable
 

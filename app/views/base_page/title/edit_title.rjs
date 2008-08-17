@@ -1,0 +1,3 @@
+page.replace_html 'title', :partial => 'base_page/title/edit_title'
+page.replace_html 'message', message_text(:object => @page) unless @page.valid?
+

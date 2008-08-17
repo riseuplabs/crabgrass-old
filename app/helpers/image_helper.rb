@@ -18,6 +18,7 @@ module ImageHelper
   ## allows you to change the icon style of an element.
   ## for example, can be used to change the icon of a link
   ## to be a spinner.
+  ## TODO: get rid of this, use class based icons instead
   def set_icon_style(element_id, icon, position="0% 50%")
     unless element_id.is_a? String
       element_id = dom_id(element_id)
@@ -28,13 +29,6 @@ module ImageHelper
       icon_path = "/images/#{icon}"
     end
     "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat #{position}"]
-  end
-
-  def add_class_name(element_id, class_name)
-    unless element_id.is_a? String
-      element_id = dom_id(element_id)
-    end
-    "$('%s').addClassName('%s')" % [element_id, class_name]
   end
 
   ## creates an <a> tag with an icon via a background image.
@@ -89,8 +83,8 @@ module ImageHelper
   ## SPINNER
   ##
   ## spinners are animated gifs that are used to show progress.
-  ## these helpers let you create, show, and hide the spinners.
-  ##
+  ## see JavascriptHelper for showing and hiding spinners.
+  ## 
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
@@ -104,13 +98,7 @@ module ImageHelper
       "#{id.to_s}_spinner"
     end
   end
-  def hide_spinner(id)
-    "$('%s').hide();" % spinner_id(id)
-  end
-  def show_spinner(id)
-    "$('%s').show();" % spinner_id(id)
-  end
-
+  
   ##
   ## ASSET THUMBNAILS
   ##
@@ -127,19 +115,19 @@ module ImageHelper
   #  * :scale  -- the img is scaled, preserving proportions 
   #  * :crop!  -- crop, even if there is no known height and width
   #
-  def thumbnail_img_tag(thumbnail,options={})
-    return nil unless thumbnail
-    if thumbnail.height and thumbnail.width
+  def thumbnail_img_tag(asset, thumbnail_name,options={})
+    thumbnail = asset.thumbnail(thumbnail_name)
+    if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]
       if options[:crop] or options[:scale]
         target_width, target_height = (options[:crop]||options[:scale]).split(/x/).map(&:to_f)
         if target_width > thumbnail.width and target_height > thumbnail.height
           # thumbnail is actually _smaller_ than our target area
-          margin_x = ((target_width - thumbnail.width) / 2).round
-          margin_y = ((target_height - thumbnail.height) / 2).round
+          margin_x = ((target_width - thumbnail.width) / 2)
+          margin_y = ((target_height - thumbnail.height) / 2)
           img = image_tag(thumbnail.url, :size => "#{thumbnail.width}x#{thumbnail.height}",
-            :style => "margin: #{margin_y}px #{margin_x}px;")
-          content_tag(:div, img, :style => "height:#{target_height}px;width:#{target_width}px")
+            :style => "padding: #{margin_y}px #{margin_x}px;")
+          content_tag(:div, img, :style => "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
@@ -161,12 +149,31 @@ module ImageHelper
       end
     elsif options[:crop!]
       target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
-      img = image_tag(thumbnail.url)
+      img = thumbnail_or_icon(asset, thumbnail, target_width, target_height)
       content_tag(:div, img, :style => 
         "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
     else
-      image_tag(thumbnail.url)
+      thumbnail_or_icon(asset, thumbnail)
     end
   end
 
+  def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil)
+    if thumbnail
+      image_tag(thumbnail.url)
+    else
+      mini_icon_for(asset, width, height)
+    end
+  end
+
+  def icon_for(asset)
+    image_tag asset.big_icon, :style => 'vertical-align: middle'
+  end
+
+  def mini_icon_for(asset, width=nil, height=nil)
+    if width.nil? or height.nil?
+      image_tag asset.small_icon, :style => 'vertical-align: middle;'
+    else
+      image_tag asset.small_icon, :style => "padding: #{(height-22)/2}px #{(width-22)/2}px;"
+    end
+  end
 end

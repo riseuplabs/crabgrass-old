@@ -80,18 +80,31 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      respond_to do |accepts|
-        accepts.html do
-          message :error => 'You do not have sufficient permission to perform that action.' if logged_in?
-          message :error => 'Please login to perform that action.' unless logged_in?
-          redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
+      if logged_in?
+        flash_message :title => 'Permission denied',
+          :error => 'You do not have sufficient permission to perform that action.'
+      else
+        flash_message :title => 'Login required',
+          :success => 'Please login to perform that action.'
+      end
+
+      respond_to do |format|
+        format.js do 
+          render :update do |page|
+            page.replace_html 'message', display_messages
+          end
         end
-        accepts.xml do
+        format.xml do
           headers["Status"]           = "Unauthorized"
           headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => "Could't authenticate you", :status => '401 Unauthorized'
+          render :text => "Could not authenticate you", :status => '401 Unauthorized'
+        end
+        format.html do
+          redirect_to :controller => '/account', :action => 'login',
+            :redirect => request.request_uri
         end
       end
+
       false
     end  
     

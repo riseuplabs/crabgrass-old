@@ -122,7 +122,7 @@ module TaskListPageHelper
       :html     => {:action => page_url(@page, :action=>'create_task'), :id => 'new-task-form'}, # non-ajax fallback
       :loading  => show_spinner('new-task'),
       :complete => hide_spinner('new-task'),
-      :success => "$('new-task-form').reset()"
+      :success => reset_form('new-task-form')
     }]
   end
 

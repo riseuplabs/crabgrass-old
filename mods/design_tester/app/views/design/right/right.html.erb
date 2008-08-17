@@ -1,0 +1,56 @@
+<div class='wing'>
+
+<ul class='side_list'>
+  <li class='' id='checkbox_li_watch'>
+    <%= dummy_checkbox('watch', 'watch for updates') %>
+  </li>
+  <li class='small_icon add_star_icon'>
+    <%= link_to('add star', '#') %>
+  </li>
+</ul>
+<hr/>
+<ul class='side_list'>
+  <li class='small_icon share_icon'>
+    <%= link_to('share page', '#') %>
+  </li>
+  <li class='' id='checkbox_li_public'>
+    <%= dummy_checkbox('public', 'public') %>
+  </li>
+</ul>
+<hr/>
+<ul class='side_list'>
+  <li class='small_icon delete_icon'>
+    <%= link_to('delete page', '#') %>
+  </li>
+  <li class='small_icon move_icon'>
+    <%= link_to('move page', '#') %>
+  </li>
+  <li class='small_icon info_icon'>
+    <%= link_to('details', '#') %>
+  </li>
+</ul>
+
+<h2>tags</h2>
+<div class='tags'><a href='#'>red</a> <a href='#'>orange</a> <a href='#'>yellow</a> <a href='#'>green</a> <a href='#'>blue</a> <a href='#'>indigo</a> <a href='#'>violet</a></div>
+
+<% if @page.group_participations.any? -%>
+<h2>groups</h2>
+<ul class='side_list'>
+<% @page.sorted_group_participations.each do |group_part| %>
+  <li><%= link_to_group_participation(group_part) %></li>
+<% end -%>
+</ul>
+<% end -%>
+
+<% if @page.user_participations.any? -%>
+<h2>people</h2>
+<ul class='side_list'>
+<% @page.sorted_participations.each do |user_part| %>
+  <li><%= link_to_user_participation(user_part) %></li>
+<% end -%>
+</ul>
+<% end -%>
+
+
+
+</div>
