@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" >
+<head>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon.png" type="image/x-icon" />
+  <title><%=h title_from_context %></title>
+  <!-- begin styling -->
+  <%= holygrail_stylesheets %>
+  <%= crabgrass_stylesheets %>
+  <!-- end styling -->
+  <%= crabgrass_javascripts %>
+</head>
+<body>
+
+<div id="header">
+  <div id='masthead'>
+  <h1 id='site_title'><%= @site.name %></h1>
+<%= render :partial => 'design/menus' %>
+  </div>
+	<div id="banner"><div id='bannercontent'><%= @banner %></div></div>
+</div>
+
+<%= render :partial => 'layouts/messages' %>
+<%= render :file => 'layouts/holygrail_'+type_of_column_layout %>
+
+<div id="footer"><div id='footercontent'>
+  <%= @footer %>
+</div></div>
+
+</body>
+</html>
+
