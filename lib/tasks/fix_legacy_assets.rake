@@ -1,5 +1,13 @@
-class FixLegacyAssets < ActiveRecord::Migration
-  def self.up
+#
+# This task is supposed to help upgrading from attachmentfu style assets to the
+# new asset system. Great caution should be used when runnning this migration!!
+# It is destructive, and may have many bugs!
+#
+
+
+namespace :cg do
+  desc "attempts to convert from the old asset system to the new asset system"
+  task(:fix_legacy_assets) do
     ActiveRecord::Base.record_timestamps = false
 
     ### ASSET PAGES
@@ -67,10 +75,4 @@ class FixLegacyAssets < ActiveRecord::Migration
     end
 
   end
-
-  def self.down
-    # nope
-  end
 end
-
-
