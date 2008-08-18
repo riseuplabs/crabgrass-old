@@ -374,6 +374,15 @@ class Page < ActiveRecord::Base
     self.page_index.class_display_name = class_display_name
     self.page_index.tags = tag_list.join(', ')
 
+    # the page_index table has a column of text describing what entities have
+    # access to this page.  in the future, we might want several columns, for
+    # full access, edit access, and comment access.
+    self.page_index.entities = []
+    self.page_index.entities << "public" if public?
+    self.page_index.entities += group_ids.collect { |id| "group_#{id}" } if group_ids
+    self.page_index.entities += user_ids.collect { |id| "user_#{id}"  }  if user_ids
+    self.page_index.entities = self.page_index.entities.join(" ")
+    
     self.page_index.save!
   end
 
@@ -393,17 +402,15 @@ class Page < ActiveRecord::Base
       indexes :summary
  
       indexes page_index.body, :as => :body
-      indexes page_index.class_display_name, :as => :class
+      indexes page_index.class_display_name, :as => :class_display_name
       indexes page_index.tags, :as => :tags
+      indexes page_index.entities, :as => :entities
 
       indexes discussion.posts.body, :as => :comments
       
-      has user_participations.user_id, :as => :user_ids
-      has group_participations.group_id, :as => :group_ids
       has :created_by_id
       
       indexes :resolved
-      indexes :public
       
       has :created_at
       has :updated_at
