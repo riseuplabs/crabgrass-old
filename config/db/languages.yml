@@ -1,0 +1,12 @@
+en:
+  name: English
+  code: en_US
+
+es:
+  name: Español
+  code: es_ES
+
+pt:
+  name: Português
+  code: pt_BR
+

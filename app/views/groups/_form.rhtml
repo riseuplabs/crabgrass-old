@@ -29,7 +29,8 @@
     <b>Language</b><br/>
     <%= 'The main language of this %s.' / group_type %>
   </label>
-<%= select 'group', 'language_id', Language.find(:all).collect {|l| [ l.name, l.id ] }, { :include_blank => true }  %></p>
+  <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
+</p>
 
 
 <p>

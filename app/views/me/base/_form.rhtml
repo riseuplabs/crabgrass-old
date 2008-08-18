@@ -12,7 +12,7 @@
 <%= text_field 'user', 'email'  %></p>
 
 <p><label for="user_language">Language</label><br/>
-<%= select 'user', 'language_id', Language.find(:all).collect {|l| [ l.name, l.id ] }, { :include_blank => true }  %></p>
+<%= select 'user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p>
 
 <p><label for="user_time_zone">Time Zone</label><br/>
 <%= time_zone_select 'user', 'time_zone' %></p>
