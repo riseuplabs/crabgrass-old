@@ -13,15 +13,10 @@ span#top-login-form input {
 div.popup {
   background: #efefef;
   border: 4px solid #666;
-  z-index: 100;
-  /* this looks better, but might get cut off on really short pages: */
+  z-index: 101;
   position: absolute;
-  right: 12.5em;
   top: -32px;
-/* this is more compatible: */
-/*  float: right;
-  margin-right: 2em;
-*/
+  right: 4px;
 }
 div.popup h1 {
   background: #ccc;
@@ -29,11 +24,6 @@ div.popup h1 {
   padding: 10px;
   margin: 0;
   border-bottom: 1px solid #aaa;
-}
-
-/* required to get the popups to be positioned correctly: */
-.wing li {
-  position: relative;
 }
 
 div.popup_arrow {
@@ -45,4 +35,9 @@ div.popup_arrow {
   right: -16px;
 }
 
+div#popup_holder {
+  position: absolute;
+  z-index: 100;
+  display: none;
+}
 

@@ -27,7 +27,7 @@
    group_options = ''
  end
 -%>
-<% popup('Move This Page', :id => 'move_popup', :style => 'width: 25em') do -%>
+<% popup('Move This Page', :id => 'move_popup', :style => '') do -%>
   <% form_tag(:controller => 'base_page/participation', :action => 'move', :page_id => @page.id) do -%>
     Move this page to a different group:
     <p>

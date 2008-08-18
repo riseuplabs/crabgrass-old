@@ -151,6 +151,15 @@ module BasePageHelper
   ## SIDEBAR POPUP LINES
   ## 
 
+  # used by ajax show_popup.rjs templates
+  def popup_holder_style
+    page_width, page_height = params[:page].split('x')
+    object_x, object_y      = params[:position].split('x')
+    right = page_width.to_i - object_x.to_i
+    top   = object_y.to_i
+    "display: block; right: #{right}px; top: #{top}px;"
+  end
+
   # creates a <a> tag with an ajax link to show a sidebar popup
   # and change the icon of the enclosing <li> to be spinning
   # required options:
@@ -170,6 +179,7 @@ module BasePageHelper
         :page_id => @page.id,
         :name => options[:name]
        },
+      :with => "absolutePositionParams(this)",
       :loading => replace_class_name(li_id, options[:icon], 'spinner_icon'),
       :complete => replace_class_name(li_id, 'spinner_icon', options[:icon])
     )
@@ -179,9 +189,9 @@ module BasePageHelper
   def popup_line(options)
     name = options[:name]
     li_id     = "#{name}_li"
-    holder_id = "#{name}_holder"
+    #holder_id = "#{name}_holder"
     link = show_popup_link(options)
-    link = %(<div id="#{holder_id}" class="popup_holder"></div>) + link
+    #link = %(<div id="#{holder_id}" class="popup_holder"></div>) + link
     content_tag :li, link, :class => "small_icon #{options[:icon]}", :id => li_id
   end
 

@@ -1,6 +1,11 @@
 /* get hover to work in ie */
 body {behavior:url("/javascripts/ie/csshover.htc");}
 
+/* make the comments table smaller */
+/*table.posts {
+  width: 100%;
+}*/
+
 ul.side_list li {
   height: 1%;
 }
@@ -9,4 +14,17 @@ input.check {
 }
 ul.side_list a {
   padding: 1px 0 1px 26px;
+}
+
+div.content_box {
+}
+
+.leftmenu .col1, .rightmenu .col1 {
+  margin: 0.5em 1.5em 1.5em 14.5em;
+}
+.holygrail .col1 {
+  margin: 0.5em 11em;
+}
+.fullpage .col1 {
+  margin: 0.5em;
 }

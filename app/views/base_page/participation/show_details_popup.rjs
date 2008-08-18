@@ -1,7 +1,4 @@
-page.select('.popup_holder').each do |value|
-  value.hide
-end
-page.show 'details_holder'
-page.replace_html 'details_holder', :partial => 'base_page/participation/details_popup'
+page.replace_html 'popup_holder', :partial => 'base_page/participation/details_popup'
+page['popup_holder'].setStyle( popup_holder_style )
 page.replace_html 'message', display_messages
 
