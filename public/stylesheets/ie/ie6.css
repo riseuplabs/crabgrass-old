@@ -1,10 +1,9 @@
 /* get hover to work in ie */
 body {behavior:url("/javascripts/ie/csshover.htc");}
 
-/* make the comments table smaller */
-/*table.posts {
-  width: 100%;
-}*/
+div.content_box {
+  height: 1%; /* ie hack so that tables don't spill the margins */
+}
 
 ul.side_list li {
   height: 1%;
@@ -19,6 +18,14 @@ ul.side_list a {
 div.content_box {
 }
 
+/* pages */
+
+td.post-body div.negativespace {
+  margin: -4px 0 -16px 0;
+}
+
+/* layout */
+
 .leftmenu .col1, .rightmenu .col1 {
   margin: 0.5em 1.5em 1.5em 14.5em;
 }
@@ -28,3 +35,5 @@ div.content_box {
 .fullpage .col1 {
   margin: 0.5em;
 }
+
+

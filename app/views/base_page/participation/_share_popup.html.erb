@@ -1,3 +1,35 @@
+<%
+
+@user_options = []
+if @page.users.any?
+  @user_options << '<optgroup label="%s">' % 'page contributors'
+  @user_options << options_for_select(@page.users.to_select(:cut_name, :name))
+  @user_options << '</optgroup>'
+end
+if current_user.contacts.any?
+  @user_options << '<optgroup label="%s">' % 'my contacts'
+  @user_options << options_for_select(current_user.contacts.to_select(:cut_name, :name))
+  @user_options << '</optgroup>'
+end
+if @user_options.length < 10 
+  @user_options << '<optgroup label="%s">' % 'my peers'
+  @user_options << options_for_select(current_user.peers.to_select(:cut_name, :name))
+  @user_options << '</optgroup>'
+end
+
+@group_options = []
+if @page.namespace_groups.any?
+  @group_options << '<optgroup label="%s">' % 'groups with access to this page'
+  @group_options << options_for_select(@page.namespace_groups.to_select(:cut_name, :name))
+  @user_options << '</optgroup>'
+end
+if @current_user.groups.any?
+  @group_options << '<optgroup label="%s">' % 'my groups'
+  @group_options << options_for_select(current_user.groups.to_select(:cut_name, :name))
+  @user_options << '</optgroup>'
+end
+
+%>
 <% popup('Share This Page', :id => 'share_popup', :style => '') do -%>
 
   <% form_remote_tag(
@@ -8,11 +40,11 @@
     <p><b><%= 'Share this page with' %>:</b></p>
     <p><%= text_area_tag 'recipients', '', :rows => 5, :cols => 60, :id => 'recipients' %></p>
     <%= select_tag('people_drop',
-        option_empty('add person:') + options_for_select(@page.users.to_select(:cut_name, :name)),
-        :onchange => '$("recipients").value += $("people_drop").value + "\n"') %>
+        option_empty('add person:') + @user_options.join("\n"),
+        :onchange => 'if ($("people_drop").value) {$("recipients").value += $("people_drop").value + "\n"}') %>
     <%= select_tag('group_drop',
-        option_empty('add group:') + options_for_select(@page.namespace_groups.to_select(:cut_name, :name)),
-        :onchange => '$("recipients").value += $("group_drop").value + "\n"') %>
+        option_empty('add group:') + @group_options.join("\n"),
+        :onchange => 'if ($("group_drop").value) {$("recipients").value += $("group_drop").value + "\n"}') %>
     <p><b><%= 'Optional message' %>:</b></p>
     <%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
     <p>

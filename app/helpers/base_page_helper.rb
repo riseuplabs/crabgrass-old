@@ -99,11 +99,11 @@ module BasePageHelper
   def star_line
     if @upart and @upart.star?
       icon = 'full_star_icon'
-      link = link_to('remove star', {:controller => 'participation',
+      link = link_to('remove star', {:controller => 'base_page/participation',
         :action => 'remove_star', :page_id => @page.id}, :method => 'post')
     else
       icon = 'empty_star_icon'
-      link = link_to('add star', {:controller => 'participation', 
+      link = link_to('add star', {:controller => 'base_page/participation', 
         :action => 'add_star', :page_id => @page.id}, :method => 'post')
     end
     content_tag :li, link, :class => "small_icon #{icon}"
@@ -135,12 +135,7 @@ module BasePageHelper
   def page_attachments
     if @page.assets.any?
       items = @page.assets.collect do |asset|
-        link_to(
-          thumbnail_img_tag(asset, :small, :crop! => '36x36'),
-          asset.url,
-          :class => 'asset',
-          :title => asset.filename
-        )
+        link_to_asset(asset, :small, :crop! => '36x36')
       end
       content_tag :div, column_layout(3, items), :class => 'side_indent'
     end

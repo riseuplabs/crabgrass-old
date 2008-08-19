@@ -13,7 +13,7 @@
 .col2 h2, .col3 h2, .col2 h3, .col3 h3 {
   text-transform: uppercase;
   font-size: 0.9em;
-  font-weight: heavy;
+  font-weight: bold;
   letter-spacing: 0.05em;
   margin: 1em 0 0 0;
 }

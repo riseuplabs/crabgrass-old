@@ -15,21 +15,4 @@ div#title_edit_link {
   right: 10px;
 }
 div.title_box:hover #title_edit_link {
-  display: block;
-}
-
-/* attachment formatting */
-a.asset div {
-  border: 1px solid white;
-  outline: 1px solid #999;
-  margin: 0 5px 5px 0;
-  background: white;
-}
-a.asset div:hover {
-  border: 1px solid #cdf;
-  outline: 1px solid black;
-}
-a.asset {
-  outline: 0;
-}
-
+  display: 

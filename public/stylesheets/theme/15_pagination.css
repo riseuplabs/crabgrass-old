@@ -24,7 +24,7 @@
 .pagination a:hover, .pagination a:active {
   border: 1px solid #2b66a5;
   color: #000;
-  background-color: lightyellow;
+  background-color: #ffffe0;
   text-decoration: none;
 }
 
