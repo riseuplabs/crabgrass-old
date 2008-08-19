@@ -617,8 +617,8 @@ module SocialUser
        
       # when we get here, the group should be able to view the page.
       group.users.select do |user|
-        send_to_page(page,user,options)
-      end # returns an array of users that succeeded (ie send_to_page returned true)
+        self.may_pester?(user)
+      end # returns an array of users that might get a message
     end
 
   end # end Pages
