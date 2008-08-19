@@ -2697,7 +2697,7 @@ document.viewport = {
     $w('width height').each(function(d) {
       var D = d.capitalize();
       dimensions[d] = (B.WebKit && !document.evaluate) ? self['inner' + D] :
-        (B.Opera) ? document.body['client' + D] : document.documentElement['client' + D];
+        (B.Opera || B.IE) ? document.body['client' + D] : document.documentElement['client' + D];
     });
     return dimensions;
   },

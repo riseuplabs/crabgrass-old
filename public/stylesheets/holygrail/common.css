@@ -75,8 +75,7 @@ body {
   clear:both;
   float:left;
   width:100%;    /* width of whole page */
-  /* overflow:hidden; */ /* This chops off any overhanging divs */
-  /* ^^ did i break anything by commenting this out? must not hide overflow for popups to work! */
+  overflow:hidden; /* This chops off any overhanging divs */
 }
 /* Footer styles */
 #footer {

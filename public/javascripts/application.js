@@ -84,3 +84,22 @@ document.observe('dom:loaded', function() {
   new SubMenu("menu-people");
 });
 
+
+
+/** finding position **/
+
+function absolutePosition(obj) {
+  var curleft = curtop = 0;
+  if (obj.offsetParent) {
+    do {
+      curleft += obj.offsetLeft;
+      curtop += obj.offsetTop;
+    } while (obj = obj.offsetParent);
+  }
+  return [curleft,curtop];
+}
+function absolutePositionParams(obj) {
+  obj_dims = absolutePosition(obj);
+  page_dims = document.viewport.getDimensions();
+  return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
+}

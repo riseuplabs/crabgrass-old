@@ -16,6 +16,11 @@ img.avatar { vertical-align: middle; }
 
 a.selected {font-weight: bold;}
 
+/** drag & drop **/
+.handle {cursor: move;}
+
+/** list **/
+
 ul.plainlist {
   padding: 0; margin: 0;
   list-style: none;
@@ -102,5 +107,20 @@ h4.section {
   -webkit-border-top-right-radius: 2px;
   -moz-border-radius-topright: 4px;
   -moz-border-radius-topleft: 4px;
+}
+
+/** thumbnails **/
+a.thumbnail {
+  display:block;
+  overflow:hidden;
+  outline: 0;
+  background: white;
+  border: 1px solid white;
+  outline: 1px solid #999;
+  margin: 0 5px 5px 0;
+}
+a.thumbnail:hover {
+  border: 1px solid #cdf;
+  outline: 1px solid black;
 }
 

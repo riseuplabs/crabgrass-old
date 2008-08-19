@@ -115,6 +115,7 @@ module ImageHelper
   #  * :scale  -- the img is scaled, preserving proportions 
   #  * :crop!  -- crop, even if there is no known height and width
   #
+
   def thumbnail_img_tag(asset, thumbnail_name,options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
@@ -127,7 +128,6 @@ module ImageHelper
           margin_y = ((target_height - thumbnail.height) / 2)
           img = image_tag(thumbnail.url, :size => "#{thumbnail.width}x#{thumbnail.height}",
             :style => "padding: #{margin_y}px #{margin_x}px;")
-          content_tag(:div, img, :style => "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
@@ -135,8 +135,6 @@ module ImageHelper
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
           img = image_tag(thumbnail.url, :size => "#{width}x#{height}")
-          content_tag(:div, img,
-           :style => "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
         elsif options[:scale]
           # set image tag to use new scale
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
@@ -150,11 +148,25 @@ module ImageHelper
     elsif options[:crop!]
       target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
       img = thumbnail_or_icon(asset, thumbnail, target_width, target_height)
-      content_tag(:div, img, :style => 
-        "overflow:hidden;height:#{target_height}px;width:#{target_width}px")
     else
       thumbnail_or_icon(asset, thumbnail)
     end
+  end
+
+  # links to an asset with a thumbnail preview
+  def link_to_asset(asset, thumbnail_name, options={})
+    thumbnail = asset.thumbnail(thumbnail_name)
+    img = thumbnail_img_tag(asset, thumbnail_name,options)
+    if size = (options[:crop]||options[:scale]||options[:crop!])
+      target_width, target_height = size.split(/x/).map(&:to_f)
+    elsif thumbnail.width and thumbnail.height
+      target_width = thumbnail.width
+      target_height = thumbnail.height
+    end  
+#    target_width += 2  # for border
+#    target_height += 2
+    style = "height:#{target_height}px;width:#{target_width}px"
+    link_to img, asset.url, :class => 'thumbnail', :title => asset.filename, :style => style
   end
 
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil)
@@ -173,7 +185,7 @@ module ImageHelper
     if width.nil? or height.nil?
       image_tag asset.small_icon, :style => 'vertical-align: middle;'
     else
-      image_tag asset.small_icon, :style => "padding: #{(height-22)/2}px #{(width-22)/2}px;"
+      image_tag asset.small_icon, :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
     end
   end
 end

@@ -15,7 +15,7 @@ class RequestPageController < BasePageController
       message :text => 'request approved'
       redirect_to from_url(@page)
     else  
-      message :object => @request
+      flash_message_now :object => @request
     end
   end
   
@@ -25,7 +25,7 @@ class RequestPageController < BasePageController
       message :text => 'request rejected'
       redirect_to from_url(@page)
     else  
-      message :object => @request
+      flash_message_now :object => @request
     end
   end
   

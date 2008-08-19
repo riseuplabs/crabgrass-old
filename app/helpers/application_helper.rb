@@ -39,18 +39,6 @@ module ApplicationHelper
     session[:logged_in_since] || Time.now
   end
 
-  def options_for_indented_select(container, selected = nil)
-    container = container.to_a if Hash === container
-    options_for_select = container.inject([]) do |options, element|
-      text, value = option_text_and_value(element)
-      selected_attribute = ' selected="selected"' if option_value_selected?(value, selected)
-      options << %(<option class="indented" value="#{html_escape(value.to_s)}"#{selected_attribute}>#{html_escape(text.to_s)}</option>)
-    end
-    options_for_select.join("\n")
-  end
-  def option_section(label)
-    %(<option class='section' value='' disabled='disabled'>#{label}</option>)
-  end
   def option_empty(label='')
     %(<option value=''>#{label}</option>)
   end

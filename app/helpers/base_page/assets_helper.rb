@@ -3,13 +3,10 @@ module BasePage::AssetsHelper
   # TODO: fix styles so that we don't have to force no padding here
   def asset_row(asset)
     content_tag(:td, 
-      link_to(thumbnail_img_tag(asset, :small), asset.url, :class => 'plain', :style => 'padding:0;'),
-      :style => 'vertical-align:top; width: 1%;' 
+      link_to_asset(asset, :small), :style => 'width: 1%'
     ) +
     content_tag(:td,
-      link_to( h(asset.filename), asset.url, :style => 'padding:0') +
-      remove_asset_link(asset),
-      :style => 'vertical-align:top;'
+      link_to( h(asset.filename), asset.url) + '&nbsp;' + remove_asset_link(asset)
     )
   end
 

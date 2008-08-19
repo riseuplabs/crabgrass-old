@@ -1,11 +1,3 @@
-/*
-div#breadcrumbs {
-  margin: -10px;
-  padding: 5px;
-  padding-left: 10px;
-}
-*/
-
 /* title */
 .h1 {font-size: 2em; font-weight: bold; line-height: 1.2em;}
 form .h1 {line-height: 1em; margin:0; padding:0}
@@ -16,11 +8,6 @@ form .h2 {line-height:2em; margin:0; padding:1;}
 .h3 {font-size: 1.5em; font-weight: normal; line-height: 1.2em;}
 form .h3 {line-height:.5em; margin:0; padding:1}
 
-
-/* #title {
-  margin-top: 10px;
-  position: relative;
-} */
 div#title_edit_link {
   display: none;
   position: absolute;
@@ -28,30 +15,4 @@ div#title_edit_link {
   right: 10px;
 }
 div.title_box:hover #title_edit_link {
-  display: block;
-}
-
-/* attachment formatting */
-a.asset div {
-  border: 1px solid white;
-  outline: 1px solid #999;
-  margin: 0 5px 5px 0;
-  background: white;
-}
-a.asset div:hover {
-  border: 1px solid #cdf;
-  outline: 1px solid black;
-}
-a.asset {
-  outline: 0;
-}
-
-
-/** tool formatting **/
-
-/* 
-div.formbox textarea {
-  width: 100%;
-}
-*/
-
+  display: 

@@ -554,6 +554,7 @@ module SocialUser
         else
           party.resolved = options[:all_resolved] || party.resolved?
           party.viewed = false
+          party.inbox = true if party.watch?
         end
         party.save      
       end

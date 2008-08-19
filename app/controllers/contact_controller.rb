@@ -17,7 +17,7 @@ class ContactController < ApplicationController
         disc.add_link page
         redirect_to url_for_user(@user)
       else
-        message :object => page
+        flash_message_now :object => page
       end
     else
       Page.find :all, :conditions => {:flow => FLOW[:contacts]}      

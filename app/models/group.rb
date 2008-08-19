@@ -22,12 +22,10 @@
 =end
 
 class Group < ActiveRecord::Base
-  attr_accessible :name, :full_name, :short_name, :summary
+  attr_accessible :name, :full_name, :short_name, :summary, :language
   
   ####################################################################
   ## about this group
-
-  belongs_to :language
 
   include CrabgrassDispatcher::Validations
   validates_handle :name

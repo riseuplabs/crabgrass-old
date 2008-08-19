@@ -99,11 +99,11 @@ module BasePageHelper
   def star_line
     if @upart and @upart.star?
       icon = 'full_star_icon'
-      link = link_to('remove star', {:controller => 'participation',
+      link = link_to('remove star', {:controller => 'base_page/participation',
         :action => 'remove_star', :page_id => @page.id}, :method => 'post')
     else
       icon = 'empty_star_icon'
-      link = link_to('add star', {:controller => 'participation', 
+      link = link_to('add star', {:controller => 'base_page/participation', 
         :action => 'add_star', :page_id => @page.id}, :method => 'post')
     end
     content_tag :li, link, :class => "small_icon #{icon}"
@@ -135,12 +135,7 @@ module BasePageHelper
   def page_attachments
     if @page.assets.any?
       items = @page.assets.collect do |asset|
-        link_to(
-          thumbnail_img_tag(asset, :small, :crop! => '36x36'),
-          asset.url,
-          :class => 'asset',
-          :title => asset.filename
-        )
+        link_to_asset(asset, :small, :crop! => '36x36')
       end
       content_tag :div, column_layout(3, items), :class => 'side_indent'
     end
@@ -150,6 +145,15 @@ module BasePageHelper
   ##
   ## SIDEBAR POPUP LINES
   ## 
+
+  # used by ajax show_popup.rjs templates
+  def popup_holder_style
+    page_width, page_height = params[:page].split('x')
+    object_x, object_y      = params[:position].split('x')
+    right = page_width.to_i - object_x.to_i
+    top   = object_y.to_i
+    "display: block; right: #{right}px; top: #{top}px;"
+  end
 
   # creates a <a> tag with an ajax link to show a sidebar popup
   # and change the icon of the enclosing <li> to be spinning
@@ -170,6 +174,7 @@ module BasePageHelper
         :page_id => @page.id,
         :name => options[:name]
        },
+      :with => "absolutePositionParams(this)",
       :loading => replace_class_name(li_id, options[:icon], 'spinner_icon'),
       :complete => replace_class_name(li_id, 'spinner_icon', options[:icon])
     )
@@ -179,9 +184,9 @@ module BasePageHelper
   def popup_line(options)
     name = options[:name]
     li_id     = "#{name}_li"
-    holder_id = "#{name}_holder"
+    #holder_id = "#{name}_holder"
     link = show_popup_link(options)
-    link = %(<div id="#{holder_id}" class="popup_holder"></div>) + link
+    #link = %(<div id="#{holder_id}" class="popup_holder"></div>) + link
     content_tag :li, link, :class => "small_icon #{options[:icon]}", :id => li_id
   end
 

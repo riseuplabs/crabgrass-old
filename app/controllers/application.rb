@@ -50,7 +50,8 @@ class ApplicationController < ActionController::Base
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(*css_files)
     if css_files.any?
-      write_inheritable_attribute "stylesheet", css_files
+      sheets = css_files + (read_inheritable_attribute("stylesheet") || [])
+      write_inheritable_attribute "stylesheet", sheets
     else
       read_inheritable_attribute "stylesheet"
     end

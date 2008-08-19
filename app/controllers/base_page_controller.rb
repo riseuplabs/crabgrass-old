@@ -39,7 +39,7 @@ class BasePageController < ApplicationController
       if @page.valid?
         return redirect_to(page_url(@page))
       else
-        message :object => @page
+        flash_message_now :object => @page
       end
     end
     @stylesheet = 'page_creation'

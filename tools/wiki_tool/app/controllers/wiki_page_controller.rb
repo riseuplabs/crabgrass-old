@@ -19,7 +19,7 @@ class WikiPageController < BasePageController
 
         return redirect_to(page_url(@page, :action => 'edit'))
       else
-        message :object => @page
+        flash_message_now :object => @page
       end
     end
     render :template => 'base_page/create'
@@ -80,7 +80,7 @@ class WikiPageController < BasePageController
         @wiki.unlock
         redirect_to page_url(@page, :action => 'show')
       else
-        message :object  => @wiki
+        flash_message_now :object => @wiki
       end
     rescue ActiveRecord::StaleObjectError
       # this exception is created by optimistic locking. 
