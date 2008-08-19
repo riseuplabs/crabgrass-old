@@ -13,7 +13,7 @@
         <span><%= destroy_version_link(version) %></span>
       <% end -%>
     </td>
-    <td><%= link_to_asset(version.thumbnails, :small, :crop! => '32x32') %></td>
+    <td><%= link_to_asset(version, :small, :crop! => '32x32') %></td>
     <td><%= link_to "version #{version.version}", version.url %></td>
     <td><%= full_time(version.updated_at) %></td>
   </tr>
