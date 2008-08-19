@@ -29,29 +29,7 @@ module LayoutHelper
       [@site.name]
     ).compact.join(' - ')
   end
-    
-  #########################################
-  # SIDEBAR 
-  
-  def leftbar 
-    @leftbar ? "<div id='leftbar'>\n#{render :partial => @leftbar}</div>\n" : ''
-  end
-  
-  def rightbar
-    @rightbar ? "<div id='rightbar'>\n#{render :partial => @rightbar}</div>\n" : ''
-  end
-
-  def sidebar
-    leftbar + rightbar
-  end
-  
-  def sidebar_space
-    style = ''
-    style += "margin-left: 0;" unless @leftbar
-    style += "margin-right: 0;" unless @rightbar
-    style
-  end
-    
+      
   ###########################################
   # STYLESHEET
   
@@ -61,21 +39,8 @@ module LayoutHelper
   # using 'stylesheet' in the class definition, or an action can set @stylesheet.
   def optional_stylesheet_tag
     stylesheet_link_tag(*( [controller.class.stylesheet, @stylesheet].flatten.compact ))
-  end
-#  def optional_stylesheets
-#    [controller.class.stylesheet, @stylesheet].flatten
-    # set for this controller
-    #if @stylesheet
-    #  @stylesheet # set for this action
-    #else
-    #  controller.class.stylesheet # set for this controller
-    #end
-#  end
-  
-  def http_plain
-    'http://' + controller.request.host_with_port
-  end
-  
+  end 
+ 
   # crabgrass_stylesheets()
   # this is the main helper that is in charge of returning all the needed style
   # elements for HTML>HEAD. There are five (5!) types of stylings:
@@ -207,10 +172,6 @@ module LayoutHelper
     lines << '<![endif]-->'
     lines.join("\n")
   end
-
-#  def get_unobtrusive_javascript
-#    controller.get_unobtrusive_javascript
-# end
   
   ############################################
   # BANNER
@@ -225,9 +186,6 @@ module LayoutHelper
   def banner_foreground
     @banner_style.color
   end
-#  def banner
-#    @banner_partial
-#  end
 
   ############################################
   # CONTEXT STYLES
@@ -244,10 +202,6 @@ module LayoutHelper
   def context_styles
     style = []
      if @banner
-#       style << 'body {background-color: %s}' % background_color
-#       style << '#main {background: %s}' % background if background
-#       style << 'div.sidehead {background: %s;}' % banner_background
-#       style << 'div.sidehead {background: %s;}' % '#bbb'
        style << '#banner {%s}' % banner_style
        style << '#banner a.name_link {color: %s; text-decoration: none;}' %
                 banner_foreground
