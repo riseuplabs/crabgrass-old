@@ -67,8 +67,8 @@ module SocialUser
         has_many :memberships, :foreign_key => 'user_id',
           :dependent => :destroy,
           :before_add => :check_duplicate_memberships,
-          :after_add => :update_membership_cache,
-          :after_remove => :update_membership_cache
+          :after_add => [:update_membership_cache, :clear_peer_cache_of_my_peers],
+          :after_remove => [:clear_peer_cache_of_my_peers, :update_membership_cache]
         
         has_many :groups, :foreign_key => 'user_id', :through => :memberships do
           def <<(*dummy)
@@ -76,6 +76,7 @@ module SocialUser
           end
           def delete(*records)
             super(*records)
+            proxy_owner.clear_peer_cache_of_my_peers
             proxy_owner.update_membership_cache
           end
         end
@@ -314,6 +315,19 @@ module SocialUser
         :direct_group_id_cache => direct,
         :all_group_id_cache    => all,
         :peer_id_cache         => peer
+    end
+
+    #
+    # When our membership changes, we need to clear the peer cache of all
+    # the users who might have their peer info change. To do so, this method
+    # must be called in two places:
+    #   1) after a new membership is created
+    #   2) before a membership is destroyed
+    #
+    def clear_peer_cache_of_my_peers(membership=nil)
+      if peer_id_cache.any?
+        self.class.connection.execute "UPDATE users SET peer_id_cache = NULL WHERE id IN (#{peer_id_cache.join(',')})"
+      end
     end
 
     # This should be called if a change in relationships has potentially

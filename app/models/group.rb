@@ -85,14 +85,23 @@ class Group < ActiveRecord::Base
   ####################################################################
   ## relationships to users
 
-  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
-    
+  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'   
+
   has_many :memberships, :dependent => :destroy,
     :before_add => :check_duplicate_memberships,
-    :after_add => :membership_changed, :after_remove => :membership_changed  
+    :after_add => :membership_changed,
+    :after_remove => :membership_changed
+
   has_many :users, :through => :memberships do
     def <<(*dummy)
       raise Exception.new("don't call << on group.users");
+    end
+    def delete(*records)
+      super(*records)
+      records.each do |user|
+        user.clear_peer_cache_of_my_peers
+        user.update_membership_cache
+      end
     end
   end
   
@@ -107,6 +116,7 @@ class Group < ActiveRecord::Base
   def membership_changed(membership)
     @user_ids = nil
     membership.user.update_membership_cache
+    membership.user.clear_peer_cache_of_my_peers
   end
 
   def relationship_to(user)
