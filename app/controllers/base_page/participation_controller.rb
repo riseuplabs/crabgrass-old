@@ -63,7 +63,7 @@ class BasePage::ParticipationController < ApplicationController
       redirect_to page_url(@page)
     elsif params[:group_id].any?
       group = Group.find params[:group_id]
-      @page.remove(@page.group)
+      @page.remove(@page.group) if @page.group
       @page.add(group)
       @page.group = group
       @page.save
