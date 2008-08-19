@@ -160,7 +160,7 @@ class GroupsController < ApplicationController
         end
         redirect_to url_for_group(@group)
       else
-        message :object => @group
+        flash_message_now :object => @group
       end
     else #create placeholder objects to base the form off
       if @parent
@@ -190,7 +190,7 @@ class GroupsController < ApplicationController
       redirect_to :action => 'edit', :id => @group
       message :success => 'Group was successfully updated.'
     else
-      message :object => @group  
+      flash_message_now :object => @group  
     end
   end
   

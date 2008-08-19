@@ -28,7 +28,7 @@ class EventPageController < BasePageController
     if @page.save and @event.save
       return redirect_to(page_url(@page))
     else
-      message :object => @page
+      flash_message_now :object => @page
     end
   end
 
@@ -56,7 +56,7 @@ class EventPageController < BasePageController
         add_participants!(@page, params)
         return redirect_to(page_url(@page))
       else
-        message :object => @page
+        flash_message_now :object => @page
       end
     end
   end

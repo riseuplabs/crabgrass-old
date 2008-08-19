@@ -46,7 +46,7 @@ class MembershipController < ApplicationController
       page.add_link discussion
       redirect_to url_for(:controller => 'me/requests')
     else
-      message :object => page
+      flash_message_now :object => page
       render :action => 'show'
     end
   end

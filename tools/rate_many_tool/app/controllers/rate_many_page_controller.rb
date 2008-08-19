@@ -15,8 +15,8 @@ class RateManyPageController < BasePageController
       redirect_to page_url(@page) unless request.xhr?
     else
       @poll.possibles.delete(@possible)
-      message :object => @possible unless @possible.valid?
-      message :object => @poll unless @poll.valid?
+      flash_message_now :object => @possible unless @possible.valid?
+      flash_message_now :object => @poll unless @poll.valid?
       if request.post? 
         render :action => 'show'
       else

@@ -13,7 +13,7 @@ class Me::BaseController < ApplicationController
         redirect_to :action => 'edit'
         message :success => 'Your profile was successfully updated.'
       else
-        message :object => @user
+        flash_message_now :object => @user
       end
     end
   end
