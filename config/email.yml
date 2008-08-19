@@ -1,6 +1,6 @@
 #
 # Outgoing email settings
-# To enable ssl connection, port must be 587.
+# To enable ssl connection, port must be 587 or 465.
 # Some SMTP auth requires a domain, which does not have
 # to be a real domain, but it must exist.
 #
@@ -17,8 +17,8 @@ production:
     password: "xxxxxxxxx"
   
 development:
-  delivery_method: :sendmail
-#  delivery_method: :smtp
+#  delivery_method: :sendmail
+  delivery_method: :smtp
   smtp_settings:
     domain: localhost
     address: smtp.gmail.com
