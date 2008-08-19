@@ -16,7 +16,7 @@ module AssetPageHelper
       javascript = javascript_tag(remote_function(:url => page_xurl(@page,:action => 'generate_preview')))
       content_tag(:div, '', :id=>'preview-loading', :style => style) + javascript
     else
-      link_to( thumbnail_img_tag(thumbnail), asset.url )
+      link_to_asset(asset, :large)
     end
   end
 
