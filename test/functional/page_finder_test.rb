@@ -217,7 +217,7 @@ class PageFinderTest < Test::Unit::TestCase
 
   ##############################################
   ### Tests for various search parameters
-=begin
+
   def test_sphinx_searchs
     login(:blue)
     user = users(:blue)
@@ -249,8 +249,11 @@ class PageFinderTest < Test::Unit::TestCase
                ]
 
     searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, @controller.options_for_me.merge(:method => :sphinx))
-      assert_equal Page.find(:all).select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
+      options = { :user_id => users(:blue).id, :group_ids => users(:blue).all_group_ids, :controller => @controller, :method => :sphinx }
+#require 'ruby-debug'; debugger
+
+      pages = Page.find_by_path(search_str, options)
+      assert_equal Page.all.select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
                    pages.collect{|p| p.id}.sort, 
                    "#{search_str} should match results for user"
     end
@@ -262,7 +265,7 @@ class PageFinderTest < Test::Unit::TestCase
                    "#{search_str} should match results for group"
     end
 
- =begin
+=begin
     # I'm not sure how to test the delta index; this doesn't seem to work
     p = Page.create :title => "new pending page"
     p.add user
@@ -276,7 +279,7 @@ class PageFinderTest < Test::Unit::TestCase
                    pages.collect{|p| p.id}.sort, 
                    "#{search_str} should match results after pages are added"
     end
- =end
+=end
   end  
 
   def test_sphinx_searchs_w_pagination
@@ -302,14 +305,15 @@ class PageFinderTest < Test::Unit::TestCase
                  ],
                ]
 
+    options = { :user_id => users(:blue).id, :group_ids => users(:blue).all_group_ids, :controller => @controller, :method => :sphinx }
+
     searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, @controller.options_for_me.merge(:method => :sphinx))
+      pages = Page.find_by_path(search_str, options)
       assert_equal search_code.call,
                    pages.collect{|p| p.id},
                    "#{search_str} should match results for user"
     end
   end
-=end
 
   protected
   
