@@ -359,7 +359,8 @@ class Page < ActiveRecord::Base
   #####################################################################
   ## Things related to the page to index with sphinx
   has_one :page_index, :dependent => :destroy
-  
+=begin  ### commented out so that unicef doesn't have to deal with setting up sphinx
+### TODO: make sphinx code fail gracefully if searchd is not running  
   before_save :update_index
   def update_index
     self.page_index ||= PageIndex.new
@@ -415,5 +416,5 @@ class Page < ActiveRecord::Base
 #      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
     end
   end
-
+=end
 end
