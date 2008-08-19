@@ -15,7 +15,7 @@ class BasePage::AssetsController < ApplicationController
     @asset = Asset.new params[:asset]
     @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
     @asset.save
-    flash_flash_message_now :object => @asset
+    flash_message_now :object => @asset
     redirect_to page_url(@asset.page)
   end
 
