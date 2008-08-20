@@ -7,7 +7,7 @@ module Crabgrass::StringExt
     args = [underscore.tr(' ', '_').to_sym] if args.empty?
     return brackets_without_translation(*args) unless args.first.is_a? Symbol
     self # delete this line and remove the comment bellow in order to add the desired functionality.
-    #I18n.translate(args.first, :default => self)
+    #::I18n.translate(args.first, :default => self)
   end
 
   def self.included(base)
