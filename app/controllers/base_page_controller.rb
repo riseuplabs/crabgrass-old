@@ -12,7 +12,6 @@ class BasePageController < ApplicationController
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   append_before_filter :setup_default_view
-  append_after_filter :update_participation
   
   # if the page controller is call by our custom DispatchController, 
   # objects which have already been loaded will be passed to the tool
@@ -71,10 +70,21 @@ class BasePageController < ApplicationController
     return 'page'
   end
   
-  def update_participation
-    if logged_in? and @page and params[:action] == 'show'
-      current_user.viewed(@page)
+  before_filter :update_viewed
+  def update_viewed
+    if @upart and @page and params[:action] == 'show'
+      @upart.viewed_at = Time.now
+      @upart.notice = nil
+      @upart.viewed = true
     end
+    true
+  end
+  
+  after_filter :save_if_needed
+  def save_if_needed
+    @upart.save if @upart and @upart.changed?
+    @page.save if @page and @page.changed?
+    true
   end
   
   def setup_default_view

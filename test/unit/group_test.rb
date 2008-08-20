@@ -69,7 +69,7 @@ class GroupTest < Test::Unit::TestCase
   def test_association_callbacks
     g = Group.create :name => 'callbacks'
     g.expects(:check_duplicate_memberships)
-    g.expects(:membership_changed)
+    g.expects(:update_membership_cache)
     u = users(:blue)
     g.memberships.create(:user => u)
   end

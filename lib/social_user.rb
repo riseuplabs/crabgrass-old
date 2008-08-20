@@ -488,7 +488,7 @@ module SocialUser
       else
         self.create_participation(page, part_attrs)
       end  
-      page.changed :users
+      page.updated_by_id_will_change!
     end
     ## called only by add_page
     def update_participation(participation, part_attrs)
@@ -522,17 +522,9 @@ module SocialUser
     
     def remove_page(page)
       page.users.delete(self)
-      page.changed :users
+      page.updated_by_id_will_change!
     end
-    
-    # should be called when a user visits a page
-    # we only update user_participation if it already exists
-    def viewed(page)
-      part = page.participation_for_user(self)
-      return unless part
-      part.update_attributes(:viewed_at => Time.now, :notice => nil, :viewed => true)
-    end
-    
+       
     # set resolved status vis-à-vis self.
     def resolved(page, resolved_flag)
       find_or_build_participation(page).update_attributes :resolved => resolved_flag
@@ -542,12 +534,15 @@ module SocialUser
       page.participation_for_user(self) || page.user_participations.build(:user_id => self.id) 
     end
     
-    # TODO: make this not save the page.
-    # should be called when a user writes to a page
-    # or resolves a page.
+    # This should be called when a user modifies a page and that modification
+    # should trigger a notification to page watchers. Also, if a page state changes
+    # from pending to resolved, we also update everyone's user participation.
+    # The page is not saved here, because it might still get more changes.
+    # An after_filter should finally save the page if it has not already been saved.
+    #
     # options:
-    #  - resolved: user's participation is resolved with this page
-    #  - all_resolved: everyone's participation is resolved.
+    #  :resolved -- user's participation is resolved with this page
+    #  :all_resolved -- everyone's participation is resolved.
     #
     def updated(page, options={})
       # create self's participation if it does not exist
@@ -576,8 +571,6 @@ module SocialUser
       page.resolved = options[:all_resolved] || page.resolved?
       page.updated_at = now
       page.updated_by = self
-      page.changed :updated_by
-      page.save
     end
 
     # sends a page to a particular user, granting them access if needed

@@ -20,8 +20,8 @@ class BasePage::ParticipationController < ApplicationController
   # Requires :admin access
   def update_public
     @page.public = ('true' == params[:public])
+    @page.updated_by = current_user
     @page.save
-    # current_user.updated @page
     render :template => 'base_page/participation/reset_public_line'
   end
 
@@ -66,6 +66,7 @@ class BasePage::ParticipationController < ApplicationController
       @page.remove(@page.group) if @page.group
       @page.add(group)
       @page.group = group
+      current_user.updated(@page)
       @page.save
       clear_referer(@page)
       redirect_to page_url(@page)      

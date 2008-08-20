@@ -12,10 +12,12 @@ class BasePage::TagsController < ApplicationController
       return
     elsif params[:add]
       @page.tag_list.add(params[:add], :parse => true)
+      @page.updated_by = current_user
       @page.save
       render :template => 'base_page/reset_sidebar'
     elsif params[:remove]
       @page.tag_list.remove(params[:remove])
+      @page.updated_by = current_user
       @page.save
       render :nothing => true
     end

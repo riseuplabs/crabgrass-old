@@ -11,8 +11,10 @@ class BasePage::AssetsController < ApplicationController
     render :template => 'base_page/reset_sidebar'
   end
 
+  ## TODO: notify page watcher that an attachment has been added?
   def create
     @asset = Asset.new params[:asset]
+    @asset.page = @page
     @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
     @asset.save
     flash_message :object => @asset
@@ -25,7 +27,7 @@ class BasePage::AssetsController < ApplicationController
       format.js {render :nothing => true }
       format.html do
         flash_message(:success => "attachment deleted") 
-        redirect_to(page_url(@asset.page))
+        redirect_to(page_url(@page))
       end
     end
   end
