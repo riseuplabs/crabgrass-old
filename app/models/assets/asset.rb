@@ -39,6 +39,7 @@ class Asset < ActiveRecord::Base
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include Media::Attachable
+  validates_presence_of :filename
 
   ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
