@@ -127,9 +127,11 @@ class BasePage::ParticipationController < ApplicationController
   #    emails.each do |email|
   #      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
   #    end
-      users_to_email.each do |user|
-        puts 'emailing %s' % user.email
-        Mailer.deliver_page_notice(user, msg, mailer_options)
+      if params[:send_emails]
+        users_to_email.each do |user|
+          logger.info '----------------- emailing %s' % user.email
+          Mailer.deliver_page_notice(user, msg, mailer_options)
+        end
       end
       unless current_user.valid?
         flash_message_now :object => current_user # display any sending errors
