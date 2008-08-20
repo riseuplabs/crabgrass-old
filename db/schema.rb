@@ -14,8 +14,10 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
     t.integer  "version",        :limit => 11
+    t.integer  "parent_id",      :limit => 11
     t.string   "content_type"
     t.string   "filename"
+    t.string   "thumbnail"
     t.integer  "size",           :limit => 11
     t.integer  "width",          :limit => 11
     t.integer  "height",         :limit => 11
@@ -26,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
   end
 
   add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["parent_id"], :name => "index_asset_versions_parent_id"
   add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
   add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
 
@@ -35,10 +38,10 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
     t.integer  "size",         :limit => 11
     t.integer  "width",        :limit => 11
     t.integer  "height",       :limit => 11
+    t.string   "type"
     t.integer  "page_id",      :limit => 11
     t.datetime "created_at"
     t.integer  "version",      :limit => 11
-    t.string   "type"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -139,7 +142,7 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
     t.datetime "updated_at"
     t.integer  "avatar_id",      :limit => 11
     t.string   "style"
-    t.string   "language",       :limit => 5
+    t.integer  "language_id",    :limit => 11
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -347,10 +350,10 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
     t.boolean  "may_pester"
     t.boolean  "may_burden"
     t.boolean  "may_spy"
-    t.string   "language",               :limit => 5
+    t.integer  "language_id",            :limit => 11
   end
 
-  add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+  add_index "profiles", ["entity_id", "entity_type", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
 
   create_table "ratings", :force => true do |t|
     t.integer  "rating",        :limit => 11, :default => 0
@@ -411,13 +414,6 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
   add_index "tasks", ["task_list_id"], :name => "index_tasks_task_list_id"
   add_index "tasks", ["task_list_id", "position"], :name => "index_tasks_completed_positions"
 
-  create_table "tasks_users", :id => false, :force => true do |t|
-    t.integer "user_id", :limit => 11
-    t.integer "task_id", :limit => 11
-  end
-
-  add_index "tasks_users", ["user_id", "task_id"], :name => "index_tasks_users_ids"
-
   create_table "thumbnails", :force => true do |t|
     t.integer "parent_id",    :limit => 11
     t.string  "parent_type"
@@ -477,7 +473,7 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
     t.binary   "peer_id_cache"
     t.binary   "tag_id_cache"
     t.string   "password_reset_code",       :limit => 40
-    t.string   "language",                  :limit => 5
+    t.integer  "language_id",               :limit => 11
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

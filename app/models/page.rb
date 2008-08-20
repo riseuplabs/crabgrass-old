@@ -416,7 +416,7 @@ class Page < ActiveRecord::Base
       has :updated_at
       has :starts_at
     
-      index.delta = true
+      set_property :delta => true
 # TODO: figure out if this exception handling is slowing down saving or indexing
 #    rescue
 #      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"

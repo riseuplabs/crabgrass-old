@@ -46,7 +46,7 @@ options_for_page_states(parsed) %>
 <% end -%>
 
 <span style='white-space: nowrap'>
-<%= text_field_tag 'search[text]', parsed.arg_for('text'), :size => '20' %>
+<%= text_field_tag 'search[text]', parsed.arg_for('text').gsub('+',' '), :size => '20' %>
 <%= submit_tag 'Search' %>
 </span>
 

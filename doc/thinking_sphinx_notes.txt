@@ -50,3 +50,52 @@ Tues, Aug 12:
 
 Wed, Aug 13:
 * Write, test code in page model, and page subclasses 10 (10 AM - 12 PM)
+
+
+Talking w Elijah Aug 19:
+========================
+
+Currently, we have several functions to build options:
+  options_for_me
+  options_for_inbox
+  options_for_group
+
+Maybe we should combine these all into one function
+<code>
+# options_for accepts several types
+# accepted types:
+#   :me
+#   :inbox
+#   :group
+def options_for(type,options)
+  if use_sphinx and sphinx_builder.handle_options(type)
+    sphinx_builder.options_for(type, options)
+  else
+    sql_builder.options_for(type,options)
+  end
+end
+
+sphinx
+  def handle_options(type)
+    return false if type == :inbox
+  end
+end
+</code>
+
+
+currently, we have an entities column in the page_index table.  The model might look like this:
+@@ page_index.entities = "public user_1 user_2 group_1 group_100"
+
+Then we can say things like
+@@ Page.search :conditions => {:entities => "(user_1 | group_1 | group_100) & group_2" }
+
+Thinking Sphinx doesn't make it easy to do an "OR" across attributes; this code produces an "AND"
+@@ Page.search :conditions => {:group_ids => "1", :user_ids => '1'}
+
+ts does have a way to exclude thing ("NAND")
+@@ Page.search :conditions => {:group_ids => "1", :user_ids => '1'}, :without => {:created_by => 2}
+
+There is some risk that matches will be "too smart for their own good".  If sphinx were to match user_5612 to a search for user_561 because they are close to the same, this would be bad for security.  Will it do this?  Initial tests suggest not.  The relevant documentation is not enlightening.
+  http://www.sphinxsearch.com/doc.html#extended-syntax
+
+
