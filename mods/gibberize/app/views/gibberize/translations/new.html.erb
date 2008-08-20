@@ -5,12 +5,13 @@
 <% form_for(@translation) do |f| %>
   <p>
     <b>Key</b><br />
-    <%= f.collection_select(:key_id, @keys, :id, :name) %>
+    <%= h @translation.key.name %>
+    <%= hidden_field(:translation, :key_id) %>
   </p>
 
   <p>
     <b>Language</b><br />
-    <%= f.collection_select(:language_id, @languages, :id, :name) %>
+    <%= f.collection_select(:language_id, @translation.key.untranslated_languages, :id, :name) %>
   </p>
 
   <p>
@@ -66,5 +67,6 @@
 <% end %>
 
 <!-- %= update_page_tag { |page| page[:translation_text].focus } % -->
+<! --%= link_to 'Back', translations_path % --> 
 
-<%= link_to 'Back', translations_path %>
+<%= link_to 'Back', @translation.key %>

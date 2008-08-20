@@ -89,6 +89,11 @@ module AuthenticatedSystem
       end
 
       respond_to do |format|
+        # rails defaults to first format if params[:format] is not set
+        format.html do
+          redirect_to :controller => '/account', :action => 'login',
+            :redirect => request.request_uri
+        end
         format.js do 
           render :update do |page|
             page.replace_html 'message', display_messages
@@ -98,10 +103,6 @@ module AuthenticatedSystem
           headers["Status"]           = "Unauthorized"
           headers["WWW-Authenticate"] = %(Basic realm="Web Password")
           render :text => "Could not authenticate you", :status => '401 Unauthorized'
-        end
-        format.html do
-          redirect_to :controller => '/account', :action => 'login',
-            :redirect => request.request_uri
         end
       end
 

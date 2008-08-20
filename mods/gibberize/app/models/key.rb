@@ -17,4 +17,8 @@ class Key < ActiveRecord::Base
   def link_html
     "<a href=\"/keys/#{ id }\">#{ name }</a>"
   end
+
+  def untranslated_languages
+    Language.find(:all) - self.languages
+  end
 end
