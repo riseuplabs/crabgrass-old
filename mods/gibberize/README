@@ -30,6 +30,9 @@ Run Gibberize Migrations:
 $ ./script/generate plugin_migration
 $ rake db:migrate
 
+In development mode you may want to load Gibberize fixtures:
+$ rake db:fixtures:plugins:load
+
 restart rails and browse to: http://localhost:3000/gibberize
 
 Credits
