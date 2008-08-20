@@ -32,7 +32,7 @@ class MembershipController < ApplicationController
 #    require 'ruby-debug'; debugger;
       # if the group has no users, then let the first person join.
       @group.memberships.create :user => current_user
-      message :success => 'You are the first person in this group'
+      flash_message :success => 'You are the first person in this group'
       redirect_to :action => 'show', :id => @group
       return
     end
@@ -40,7 +40,7 @@ class MembershipController < ApplicationController
 
     page = Page.make :request_to_join_group, :user => current_user, :group => @group
     if page.save
-      message :success => 'Your request to join this group has been sent.'
+      flash_message :success => 'Your request to join this group has been sent.'
       discussion = Page.make :join_discussion, :user => current_user, :group => @group, :message => params[:message]
       discussion.save
       page.add_link discussion
@@ -58,7 +58,7 @@ class MembershipController < ApplicationController
     return unless request.post? # show form on get
     
     current_user.groups.delete(@group)
-    message :success => 'You have been removed from %s' / @group.name
+    flash_message :success => 'You have been removed from %s' / @group.name
     redirect_to url_for_group(@group)
   end
   
@@ -77,7 +77,7 @@ class MembershipController < ApplicationController
         u = User.find(id)
         @group.memberships.create(:user => u) if u.member_of?(@group.parent) and not u.direct_member_of?(@group)
       end
-      message :success => 'member list updated'
+      flash_message :success => 'member list updated'
     end
     redirect_to :action => 'list', :id => @group
   end
@@ -106,7 +106,7 @@ class MembershipController < ApplicationController
     if wrong.any?
       message :later => true, :error => "These invites could not be sent because the user names don't exist: " + wrong.join(', ')
     elsif sent.any?
-      message :success => 'Invites sent: ' + sent.join(', ')
+      flash_message :success => 'Invites sent: ' + sent.join(', ')
     end
     redirect_to :action => 'list', :id => @group
   end

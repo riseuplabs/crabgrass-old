@@ -58,11 +58,11 @@ class PagesController < ApplicationController
   def create_wiki
     group = Group.get_by_name(params[:group])
     if !logged_in?
-      message :error => 'You must first login.'
+      flash_message :error => 'You must first login.'
     elsif group.nil?
-      message :error => 'Group does not exist.'
+      flash_message :error => 'Group does not exist.'
     elsif !current_user.member_of?(group)
-      message :error => "You don't have permission to create a page for that group"
+      flash_message :error => "You don't have permission to create a page for that group"
     else
       page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
       page.save
@@ -85,17 +85,17 @@ class PagesController < ApplicationController
           if current_user.may_pester? group
             @page.add group, :access => access
           else
-            message :error => 'you do not have permission to do that'
+            flash_message :error => 'you do not have permission to do that'
           end
         elsif user = User.find_by_login(params[:add_name])
           if current_user.may_pester? user
             @page.remove user
             @page.add user, :access => access
           else
-            message :error => 'you do not have permission to do that'
+            flash_message :error => 'you do not have permission to do that'
           end
         else
-          message :error => 'group or user not found'
+          flash_message :error => 'group or user not found'
         end
       end
       @page.save
