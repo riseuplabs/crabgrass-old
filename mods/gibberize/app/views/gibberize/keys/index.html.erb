@@ -1,4 +1,4 @@
-<h1>Listing keys</h1>
+<h1>Listing translation keys</h1>
 
 <table>
   <tr>
@@ -8,13 +8,13 @@
 <% for key in @keys %>
   <tr>
     <td><%=h key.name %></td>
-    <td><%= link_to 'Show', key %></td>
+    <td><%= link_to 'Translate', key %></td>
     <td><%= link_to 'Edit', edit_key_path(key) %></td>
-    <td><%= link_to 'Destroy', key, :confirm => 'Are you sure?', :method => :delete %></td>
+    <!-- td><%= link_to 'Destroy', key, :confirm => 'Are you sure?', :method => :delete %></td -->
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New key', new_key_path %>
+<%= link_to 'New translation key', new_key_path %>

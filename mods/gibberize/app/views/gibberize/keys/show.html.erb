@@ -3,11 +3,19 @@
   <%=h @key.name %>
 </p>
 
-<%= render :partial => 'gibberize/translations/translations', :locals => { :translations => @key.translations } %>
+<p>
+  <b>already translated to:</b>
+  <% @key.translations.each do |t| %>
+  <%= link_to h(t.language.name), edit_translation_path(t) %>
+  <% end %> 
+</p>
+
 
 <% for language in @languages -%>
-  <%= link_to "Translate to #{ language.name }", :controller => :translations, :action => :new, :key => @key.id, :language => language.id %><br/>
+  <%= link_to("Translate to #{ language.name }", :controller => :translations, :action => :new, :key => @key.id, :language => language.id) unless @key.languages.include?(language) %>
 <% end -%>
+
+<br/><br/>
 
 <%= link_to 'Edit', edit_key_path(@key) %> |
 <%= link_to 'Back', keys_path %>

@@ -5,8 +5,8 @@
   <% for translation in translations -%>
     <tr>
       <td><%= translation.key.link_html %></td>
-      <td><%= translation.language.link_html %></td>
       <td><%= translation.link_html %></td>
+      <td><%= translation.language.name %></td>
       <td><%=h time_ago_in_words(translation.created_at) %> ago</td>
     </tr>
   <% end -%>
