@@ -15,6 +15,7 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
 
   def test_create_without_login
     get :create, :id => 'wiki'
+    assert_response :redirect
     assert_redirected_to :controller => 'account', :action => 'login'
     
     post :create, :id => 'wiki'
@@ -25,7 +26,8 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
     login_as :orange
     
     get :create, :id => 'wiki'
-    assert_template 'base_page/create'
+    assert_response :success
+#    assert_template 'base_page/create'
   
     assert_difference 'Page.count' do
       post :create, :id => 'wiki', :page => { :title => 'test title' }

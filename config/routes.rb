@@ -52,6 +52,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # typically, this is the default route
   map.connect ':controller/:action/:id'
+  # This default route was added in Rails 1.2, but we did not add it then;
+  # Do we want it?
+  # map.connect ':controller/:action/:id.:format'
  
 
   ##### DISPATCHER ROUTES ###################################
