@@ -18,6 +18,7 @@ a.selected {font-weight: bold;}
 
 /** drag & drop **/
 .handle {cursor: move;}
+.not_handle {cursor: default;}
 
 /** list **/
 
