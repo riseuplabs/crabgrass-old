@@ -17,9 +17,6 @@ module LinkHelper
 # The normal built in function. do :class => 'button' or :class => 'link' to 
 # change how it looks.
 # 
-# submit_button
-# looks like a button, but is a link so that we can add accesskeys.
-#
 # submit_link
 # a link which will submit the form.
 #
@@ -62,11 +59,7 @@ module LinkHelper
   
   
   ### SUBMITS ###
-  
-  def submit_button(label, options={})
-    submit_link(label, {:class => 'button'}.merge(options))
-  end
-    
+
   def submit_link(label, options={})
     name = options.delete(:name) || 'commit'
     value = options.delete(:value) || label
@@ -112,11 +105,6 @@ accesskey}.merge(html_options) )
     label.gsub!(/\[(.)\]/, '<u>\1</u>')
     /<u>(.)<\/u>/.match(label).to_a[1]
   end
-    
-  def link_show_hide(showlabel, hidelabel, element)
-    %Q[<a href="javascript:void(0);" onclick="toggleLink(this,'#{hidelabel}');
-Element.toggle($('#{element}'));return false;">#{showlabel}</a>]
-  end  
   
   def post_to(label, options={}, html_options={})
     accesskey = shortcut_key label

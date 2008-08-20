@@ -18,8 +18,8 @@ p#inbox_buttons {
 </div>
 
 <p id='inbox_buttons'>
-  <%= function_button '[T]oggle selection'.t, "$('inbox_form').getInputs('checkbox').invoke('click')" %>  
-  <%= submit_button '[R]emove from inbox'.t, :name => 'remove' %>  
+  <%= link_to_function 'Toggle Selection', "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %>
+  <%= submit_link 'Remove from inbox'.t, :name => 'remove' %> 
 </p>
   
 <% end # form -%>
