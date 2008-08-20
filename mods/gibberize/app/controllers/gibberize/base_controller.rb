@@ -5,7 +5,7 @@ class Gibberize::BaseController < ActionController::Base
 
   layout 'gibberize'
   helper 'gibberize/keys', 'gibberize/languages', 'gibberize/translations', 'gibberize/base'
-  before_filter :login_required, :default_language
+  before_filter :login_required
 
   include Gibberize::KeysHelper
   include Gibberize::LanguagesHelper
@@ -21,9 +21,5 @@ class Gibberize::BaseController < ActionController::Base
   def authorized?
     @site = Site.default
     @site.translators and @site.translators.include?(current_user.login)
-  end
-
-  def default_language
-    Language.find_by_name(Site.default.default_language)
   end
 end
