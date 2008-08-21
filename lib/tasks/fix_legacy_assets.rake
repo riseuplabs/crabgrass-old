@@ -7,7 +7,7 @@
 
 namespace :cg do
   desc "attempts to convert from the old asset system to the new asset system"
-  task(:fix_legacy_assets) do
+  task(:fix_legacy_assets => :environment) do
     ActiveRecord::Base.record_timestamps = false
 
     ### ASSET PAGES

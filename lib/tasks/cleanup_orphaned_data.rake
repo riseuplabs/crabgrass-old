@@ -14,7 +14,7 @@ task.
 
 namespace :cg do
   desc "removes page data that should have been deleted."
-  task(:cleanup_orphaned_data) do 
+  task(:cleanup_orphaned_data => :environment) do 
     [TaskList, Poll, Asset].each do |data_class|
       data_class.find(:all).each do |data|
         if data.pages.empty? and data.page.nil?
