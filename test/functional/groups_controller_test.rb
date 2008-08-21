@@ -11,7 +11,6 @@ class GroupsControllerTest < Test::Unit::TestCase
 
   def setup
     @controller = GroupsController.new
-#    @controller.fetch_site # why is this necessary?
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
@@ -95,7 +94,7 @@ class GroupsControllerTest < Test::Unit::TestCase
 #    assert_template 'show'
     assert_equal :public, assigns(:access), "should have public access to public committee of public group"
   end
-  
+
   def test_show_private_when_not_logged_in
     get :show, :id => groups(:private_group).name
     assert_response :success
@@ -411,4 +410,5 @@ class GroupsControllerTest < Test::Unit::TestCase
     get :show
     assert_select "a[href=?]", @controller.page_url(group_page), false
   end
+
 end
