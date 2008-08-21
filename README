@@ -1,86 +1,178 @@
 CRABGRASS
-=========================================================
+========================================================
 
 Crabgrass is a software libre web application designed for group and network
 organizing, and tailored to the needs of the global justice movement. The long
 term goal is to provide the technical tools to facilitate active, confederal,
 and directly democratic social change networks.
 
-INSTALL FOR DEVELOPMENT
-=========================================================
+Further reading:
+* for plugin details, see vendor/plugins/README
+* for more information on crabgrass, visit https://we.riseup.net/crabgrass
 
-debian/ubuntu
+INSTALL FOR DEVELOPMENT
+========================================================
+
+grab the code
 --------------
 
-required:
-  apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
-  gem install -y rails --no-ri --no-rdoc
-  gem install RedCloth -v 3.0.4 --no-ri --no-rdoc
-  gem install rmagick tzinfo --no-ri --no-rdoc
+To get a copy of the most recent code:
 
-required for running tests:
-  gem install ruby-debug hpricot
+/--
+cd ~/development
+git clone git://labs.riseup.net/crabgrass.git
+\--
 
-optional (but necessary for image thumbnails and document previews):
-  apt-get graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
-  OpenOffice should be at least version 2.4 or greater
-  (if you are running etch:
-     apt-get -t etch-backports install openoffice.org openoffice.org-headless)
+See https://labs.riseup.net/code for information on releases.
 
-optional for inline latex rendering:
-  apt-get install graphicsmagick texlive gs-gpl
-  gem install open4 --no-ri --no-rdoc
+install the requirements
+------------------------
 
-optional for improved mime-type support:
-  gem install mime-types --no-ri --no-rdoc
+These packages are required:
 
-then check out the code:
-  cd ~/development
-  git clone git://labs.riseup.net/crabgrass.git
+/--
+apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
+gem install -y rails --no-ri --no-rdoc
+gem install RedCloth -v 3.0.4 --no-ri --no-rdoc
+gem install rmagick tzinfo --no-ri --no-rdoc
+\--
 
-set up your database:
-(1) install the mysql (currently crabgrass only works with mysql)
-    sudo apt-get install mysql-server
-(2) create databases
-    sudo mysqladmin create crabgrass_development
-    sudo mysqladmin create crabgrass_test
-    sudo mysqladmin create crabgrass
-(3) create a config/database.yml file. 
-(4) build the crabgrass database and populate it with test data
-    cd ~/development/crabgrass
-    rake db:schema:load
-    rake db:fixtures:load
+These packages are optional, but necessary for image thumbnails
+and document previews:
 
-upgrading:
-  cd ~/development/crabgrass
-  git pull
-  rake db:migrate
-  rake db:fixtures:load
+/--
+apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
+gem install mime-types --no-ri --no-rdoc
+\--
+
+Graphicsmagick is needed for building thumbnails. OfficeOffice is needed for
+previewing Microsoft Office and OpenOffice documents. The mime-types gem is use
+to overcome a file uploading bug in ie6. OpenOffice should be at least version
+2.4 or greater. If you are running etch, you can install the backport
+of openoffice:
+
+/--
+apt-get -t etch-backports install openoffice.org openoffice.org-headless
+\--
+
+These packages are need for running tests:
+
+/--
+gem install ruby-debug hpricot --no-ri --no-rdoc
+\--
+
+If you want to be able to include latex markup in wiki pages:
+
+/--
+apt-get install graphicsmagick texlive gs-gpl
+gem install open4 --no-ri --no-rdoc
+\--
+
+setup mysql database
+--------------------
+
+Crabgrass only works with mysql (although most tests may be run from sqlite).
+
+Install mysql and create the databases:
+
+/--
+apt-get install mysql-server
+mysqladmin -u root -p create crabgrass create crabgrass_development create crabgrass_test
+\--
+
+There is a sample database configuration file in the 'config' directory of the
+crabgrass application. Use that to create a config/database.yml file. For some
+linux distributions, you may need to specify a socket file for mysql like so:
+"socket: /var/run/mysqld/mysqld.sock". You can probably figure out what socket
+to use by running "ps -ef | grep mysql".
+
+The final step is to load the crabgrass schema and populate it with test data:
+
+/--
+cd ~/development/crabgrass
+rake db:schema:load
+rake db:fixtures:load
+rake cg:load_default_data
+\--
+
+To upgrade the crabgrass database after pulling in new code:
+
+/--
+cd ~/development/crabgrass
+git pull
+rake db:migrate
+rake db:fixtures:load
+rake cg:load_default_data
+\--
 
 Also, 'rake --version' must be 8.1 or greater.
 
-mysqladmin -u root -p create crabgrass
+run crabgrass
+-------------
 
+/--
+cd ~/development/crabgrass
+script/server
+\--
+
+This will run crabgrass in development mode, which is probably what you want. If
+you don’t want to use webbrick (the mini-web-server that comes with rails) you
+can install the mongrel gem or debian package. If installed, script/server will
+pick them instead.
+
+Once the server is running, just point your web browser at http://localhost:3000.
+
+INSTALL FOR PRODUCTION
+========================================================
+
+For installing on a production server, most everything is the same
+as a development setup except for these differences.
+
+For development work, there is not much need to create a database user for
+crabgrass. For deployment, however, this is a typical permissions setup:
+
+/--
 GRANT USAGE ON *.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
 GRANT ALL PRIVILEGES ON crabgrass.* TO 'crabgrass'@'localhost';
 flush privileges;
+\--
 
-INSTALL FOR PRODUCTION
-==========================================================
+Edit config/database.yml accordingly. 
 
-To be written...
+To create the production database is the same as for development, except
+that we don't want to load the test fixture data:
 
-logger:
-  You can run analysis on the logs using pl_analyze
-  if the SyslogLogger gem is installed. 
+/--
+cd ~/development/crabgrass
+rake db:schema:load RAILS_ENV=production
+rake cg:load_default_data RAILS_ENV=production
+\--
 
-FURTHER READING
-=========================================================
+You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
+gem is installed.
 
-vendor/plugins/README: details on each plugin.
+There is an example capistrano deploy.rb in the config directory.
+
+To run in production mode:
+
+/--
+export RAILS_ENV=production
+script/server
+\--
+
+TROUBLESHOOTING
+========================================================
+
+If you get:
+
+/--
+extconf.rb:11:in `require': no such file to load -- mkmf (LoadError)
+\--
+
+...then you need also to install ruby1.8-dev.
 
 GEMS INFO
-=========================================================
+========================================================
 
 required
 ---------
@@ -112,21 +204,24 @@ hpricot
   Required for running tests. Used by the plugin webrat.
   
 ADMINISTRATION
-=========================================================
+========================================================
 
 Via the console
 ----------------
 
-One goal in Crabgrass system design is to avoid creating
-different levels of privilege for users.  Shall this be
-an egalitarian social network, or shall we build another
-anarchist bureaucracy?  But what about when people need
-a new password, etc? 
+One goal in Crabgrass system design is to avoid creating different levels of
+privilege for users.  Shall this be an egalitarian social network, or shall we
+build another anarchist bureaucracy? But what about when people need a new
+password, etc? 
+
 Example:  RESETING A PASSWORD
+
+/--
 $ script/console production
 >> u = User.find_for_forget("user's email")
 >> u.password = u.password_confirmation = "new password"
 >> u.save
+\--
 
 Via super_admin mod
 -------------------
@@ -138,4 +233,5 @@ a super admin interface.
 (2) Edit config/mods_enabled.list to enable super_admin module
 (3) Edit config/routes.rb and uncomment the super_admin routes
 (4) restart rails, login, and browse to /admin
+
 
