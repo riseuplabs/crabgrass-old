@@ -72,10 +72,10 @@ class BaseControllerTest < Test::Unit::TestCase
     assert_redirected_to :action => :edit
     assert_equal 'email@example.com', User.find(users(:quentin).id).email, "email for quentin should have changed"
     
-    post :edit, :user => {:language_id => languages(:pt).id}
+    post :edit, :user => {:language => "de_DE"}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal languages(:pt), User.find(users(:quentin).id).language, "language for quentin should have changed"
+    assert_equal "de_DE", User.find(users(:quentin).id).language, "language for quentin should have changed"
     
     post :edit, :user => {:time_zone => 'Samoa'}
     assert_response :redirect
