@@ -48,6 +48,9 @@ end
     <p><b><%= 'Optional message' %>:</b></p>
     <%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
     <p>
+      <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.' %></label>
+    </p>
+    <p>
       <%= submit_tag 'Cancel', :name => 'cancel' %>
       <%= submit_tag 'Share', :name => 'share' %>
       <%= spinner 'popup' %>

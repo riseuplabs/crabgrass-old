@@ -34,29 +34,21 @@ function show_tab(tab_link, tab_content) {
 // submits a form, from the onclick of a link. 
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
 function submit_form(link, name, value) {
-  form = link.ancestors().find(function(e) {
-    return e.nodeName == 'FORM';
-  })
-  e = document.createElement("input");
-  e.name = name;
-  e.type = "hidden";
-  e.value = value;
-  form.appendChild(e);
-  if (form.onsubmit) {
-    form.onsubmit(); // for ajax forms.
-  } else {
-    form.submit();
+  e = link;
+  while(e = e.parentNode){if(e.tagName == 'FORM'){break}}
+  if (e) {
+    form = e;
+    input = document.createElement("input");
+    input.name = name;
+    input.type = "hidden";
+    input.value = value;
+    form.appendChild(input);
+    if (form.onsubmit) {
+      form.onsubmit(); // for ajax forms.
+    } else {
+      form.submit();
+    }
   }
-}
-
-function toggleLink(link, text) {
-  if ( link.innerHTML != text )  {
-    link.oldInnerHTML = link.innerHTML;
-    link.innerHTML = text;    
-  } else {
-    link.innerHTML = link.oldInnerHTML;
-  }
-  link.blur();
 }
 
 /** menu navigation **/

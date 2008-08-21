@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
   #layout :choose_layout
   stylesheet 'groups'
   
-  prepend_before_filter :find_group, :except => ['list','create','index']
+  before_filter :find_group, :except => ['list','create','index']
   
   before_filter :login_required,
     :except => [:list, :index, :show, :search, :archive, :tags]
@@ -150,7 +150,7 @@ class GroupsController < ApplicationController
         @group = Group.new(params[:group])
       end
       if @group.save
-        message :success => 'Group was successfully created.'.t
+        flash_message :success => 'Group was successfully created.'.t
         @group.memberships.create :user => current_user, :group => @group
         if @parent
           @group.parent = @parent
@@ -188,7 +188,7 @@ class GroupsController < ApplicationController
     
     if @group.save
       redirect_to :action => 'edit', :id => @group
-      message :success => 'Group was successfully updated.'
+      flash_message :success => 'Group was successfully updated.'
     else
       flash_message_now :object => @group  
     end
@@ -198,7 +198,7 @@ class GroupsController < ApplicationController
   # post required
   def destroy
     if @group.users.uniq.size > 1 or @group.users.first != current_user
-      message :error => 'You can only delete a group if you are the last member'
+      flash_message :error => 'You can only delete a group if you are the last member'
       redirect_to :action => 'show', :id => @group
     else
       parent = @group.parent

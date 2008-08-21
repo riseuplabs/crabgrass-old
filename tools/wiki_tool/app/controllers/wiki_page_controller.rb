@@ -85,9 +85,9 @@ class WikiPageController < BasePageController
     rescue ActiveRecord::StaleObjectError
       # this exception is created by optimistic locking. 
       # it means that @wiki has change since we fetched it from the database
-      message :error => "locking error. can't save your data, someone else has saved new changes first."
+      flash_message :error => "locking error. can't save your data, someone else has saved new changes first."
     rescue ErrorMessage => exc
-      message :error => exc.to_s
+      flash_message :error => exc.to_s
     end
   end
   

@@ -26,7 +26,7 @@ module RateManyPageHelper
     )
     %Q+
     <tr>
-      <td><label>#{button}#{value.t}</label></td>
+      <td><label class='not_handle'>#{button}#{value.t}</label></td>
       <td><span>&mdash;</span> #{voters_list}</td>
     </tr>
     +

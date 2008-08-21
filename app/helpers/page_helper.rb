@@ -188,7 +188,7 @@ module PageHelper
     if column == :icon
       return page_icon(page)
     elsif column == :checkbox
-      check_box('page_checked', page.id, {}, 'checked', '')
+      check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
     elsif column == :discuss
       if page.links.any?
         return( link_to 'discuss'.t, page_url(page.links.first) )

@@ -28,6 +28,39 @@ class SocialUserTest < Test::Unit::TestCase
     assert !u.member_of?(g), 'user must NOT be a member_of? group'
   end
 
+  def test_peers
+    group = groups(:animals)
+    u1 = users(:red)
+    u2 = users(:kangaroo)
+
+    assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'
+    assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
+
+    m = group.memberships.create :user => u1
+    u1.reload; u2.reload
+
+    assert u1.peer_of?(u2), 'user with membership change (red) should have other user (kangaroo) as a peer'
+    assert u2.peer_of?(u1), 'other user (kangaroo) should have user with membership change (red) as a peer.'
+
+    u1.groups.delete group
+    u1.reload; u2.reload
+
+    assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'
+    assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
+
+    u1.memberships.create :group => group
+    u1.reload; u2.reload
+
+    assert u1.peer_of?(u2), 'user with membership change (red) should have other user (kangaroo) as a peer'
+    assert u2.peer_of?(u1), 'other user (kangaroo) should have user with membership change (red) as a peer.'
+
+    group.users.delete u1
+    u1.reload; u2.reload
+
+    assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'
+    assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
+  end
+
   def test_various_ways_of_deleting_memberships
     u1 = create_user :login => 'testy_one'
     u2 = create_user :login => 'testy_two'

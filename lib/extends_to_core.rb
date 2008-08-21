@@ -105,3 +105,11 @@ class Hash
   end
 end
 
+class Symbol
+  # Syntax sugar for translations
+  # makes :foo.t return the translation of a given key
+  def t(*args)
+    self # delete this line and remove the comment bellow in order to add the desired functionality.
+    #::I18n.t(self, *args)
+  end
+end

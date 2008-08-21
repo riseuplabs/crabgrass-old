@@ -25,7 +25,7 @@ class AssetsController < ApplicationController
       if thumb_name_from_path(path)
         thumb = @asset.thumbnail( thumb_name_from_path(path) )
         return not_found unless thumb
-        thumb.generate unless File.exists?(thumb.private_filename)
+        thumb.generate
         send_file(thumb.private_filename, :type => thumb.content_type, :disposition => disposition(thumb))
       else
         send_file(@asset.private_filename, :type => @asset.content_type, :disposition => disposition(@asset))
@@ -87,8 +87,8 @@ class AssetsController < ApplicationController
   end
 
   def access_denied
-    message :error => 'You do not have sufficient permission to access that file' if logged_in?
-    message :error => 'Please login to access that file.' unless logged_in?
+    flash_message :error => 'You do not have sufficient permission to access that file' if logged_in?
+    flash_message :error => 'Please login to access that file.' unless logged_in?
     redirect_to :controller => '/account', :action => 'login', :redirect => @request.request_uri
   end
   

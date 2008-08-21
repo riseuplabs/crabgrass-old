@@ -21,7 +21,7 @@ class Thumbnail < ActiveRecord::Base
 
   # returns the thumbnail object that we depend on, if any.
   def depends_on
-    parent.thumbnail(thumbdef.depends, true)
+    @depends ||= parent.thumbnail(thumbdef.depends, true)
   end
 
   # finds or initializes a Thumbnail
@@ -32,8 +32,10 @@ class Thumbnail < ActiveRecord::Base
   end
 
   # generates the thumbnail file for this thumbnail object
-  def generate
+  def generate(force=false)
+    return if File.exists?(self.private_filename) and !force
     if depends_on
+      depends_on.generate
       input_type  = depends_on.content_type
       input_file  = depends_on.private_filename
     else
@@ -60,6 +62,7 @@ class Thumbnail < ActiveRecord::Base
   # so, when our dimensions change, update the versioned thumb as well.
   def set_dimensions(dims)
     self.width, self.height = dims
+    self.failure = false
     self.save
     if vthumb = versioned()
       vthumb.width, vthumb.height = dims

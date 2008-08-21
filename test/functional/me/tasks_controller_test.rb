@@ -26,7 +26,7 @@ class MeTasksControllerTest < Test::Unit::TestCase
     login_as :blue
     get :pending
     assert_response :success
-    assert_template 'list'
+#    assert_template 'list'
     assert assigns(:pages).length > 0, "there should be pending tasks for blue"
   end
 
@@ -34,7 +34,7 @@ class MeTasksControllerTest < Test::Unit::TestCase
     login_as :blue
     get :completed
     assert_response :success
-    assert_template 'list'
+#    assert_template 'list'
     assert assigns(:pages).length > 0, "there should be a completed task for blue"
     assert_no_tag :tag => "li", :attributes => { :id => "task_4" }
     assert_tag :tag => "li", :attributes => { :id => "task_5" }

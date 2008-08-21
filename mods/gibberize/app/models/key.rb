@@ -1,5 +1,6 @@
 class Key < ActiveRecord::Base
   has_many :translations
+  has_many :languages, :through => :translations
 
   # count number of translations for each key in given language
   # 
@@ -15,5 +16,9 @@ class Key < ActiveRecord::Base
 
   def link_html
     "<a href=\"/keys/#{ id }\">#{ name }</a>"
+  end
+
+  def untranslated_languages
+    Language.find(:all) - self.languages
   end
 end

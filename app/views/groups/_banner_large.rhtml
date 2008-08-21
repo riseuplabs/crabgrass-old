@@ -1,9 +1,10 @@
-<% if committee? -%>
+<% if committee?
+     @parent ||= @group.parent -%>
 <table>
 <tr>
   <td align='left'>
-    <%= avatar_for @group.parent, 'xsmall' %>
-    <b><%= link_to_group @group.parent %></b>
+    <%= avatar_for @parent, 'xsmall' %>
+    <b><%= link_to_group @parent %></b>
   </td>
 </tr>
 <tr>

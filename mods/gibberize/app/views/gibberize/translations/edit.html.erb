@@ -2,6 +2,16 @@
 
 <%= error_messages_for :translation %>
 
+  <p>
+    <b>Key</b><br />
+    <%= h @translation.key.name %>
+  </p>
+
+  <p>
+    <b>Language</b><br />
+    <%= h @translation.language.name %>
+  </p>
+
 <% form_for(@translation) do |f| %>
   <p>
     <b>Text</b><br />
@@ -13,5 +23,7 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @translation %> |
-<%= link_to 'Back', translations_path %>
+<! -- %= link_to 'Show', @translation %>
+<!-- %= link_to 'Back', translations_path % -->
+
+<%= link_to 'Back', @translation.key %>

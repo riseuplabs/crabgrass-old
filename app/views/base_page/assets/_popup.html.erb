@@ -11,8 +11,7 @@
   </p>
   <p>
     <h4>Add New Attachment</h4>
-    <% form_for( :asset, Asset.new(:page_id => @page.id), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
-      <%= f.hidden_field 'page_id' %>
+    <% form_for( :asset, Asset.new(), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
       <table>
         <tr>
           <td align='right'>File: </td><td><%= f.file_field 'uploaded_data', :size => '20' %></td>

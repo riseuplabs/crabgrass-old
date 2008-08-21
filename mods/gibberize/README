@@ -9,7 +9,7 @@ Usage
 edit config/routes.rb
   map.from_plugin :gibberize
 
-Specify the logins you want to be translators in sites.yml:
+Specify the logins you want to be translators in config/sites.yml:
 
 <begin>
 default:
@@ -22,6 +22,16 @@ default:
   - sally
   - bob
 <end>
+
+Uncomment gibberize on config/mods_enabled.list
+
+Run Gibberize Migrations:
+
+$ ./script/generate plugin_migration
+$ rake db:migrate
+
+In development mode you may want to load Gibberize fixtures:
+$ rake db:fixtures:plugins:load
 
 restart rails and browse to: http://localhost:3000/gibberize
 

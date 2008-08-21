@@ -41,6 +41,8 @@ This tells Rails to generate links to the following four hosts: assets0.example.
 =end
 
 require 'ftools'
+require 'pathname'
+
 module Media # :nodoc:
   module AssetStorage
 
@@ -52,6 +54,11 @@ module Media # :nodoc:
     def self.included(base) #:nodoc:
       base.before_update :rename_file
       base.after_destroy :destroy_file
+    end
+
+    def self.make_required_dirs
+      FileUtils.mkdir_p(@@private_storage) unless File.exists?(@@private_storage)
+      FileUtils.mkdir_p(@@public_storage) unless File.exists?(@@public_storage)
     end
 
     ##
@@ -197,7 +204,10 @@ module Media # :nodoc:
     # creates a symlink from the private asset storage to a publicly accessible directory
     def add_symlink
       unless File.exists?(File.dirname(public_filename))
-        FileUtils.ln_s(File.dirname(private_filename), File.dirname(public_filename))
+        private_path = Pathname.new(private_filename).realpath.dirname
+        public_path  = Pathname.new(public_filename).dirname
+        public_to_private = private_path.relative_path_from(public_path.dirname)
+        FileUtils.ln_s(public_to_private, public_path)
       end
     end
 

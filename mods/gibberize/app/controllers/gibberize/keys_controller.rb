@@ -13,7 +13,7 @@ class Gibberize::KeysController < Gibberize::BaseController
   # GET /keys/1
   # GET /keys/1.xml
   def show
-    @key = Key.find(params[:id])
+    @key = Key.find(params[:id], :include => :translations)
     @languages = Language.find(:all)
 
     respond_to do |format|

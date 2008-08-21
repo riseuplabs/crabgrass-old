@@ -20,7 +20,7 @@ class Page < ActiveRecord::Base
   validates_format_of  :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
 
   def validate
-    if (name_changed? or changed?(:group)) and name_taken?
+    if (name_changed? or group_id_changed?) and name_taken?
       errors.add 'name', 'is already taken'
     end
   end
@@ -237,18 +237,8 @@ class Page < ActiveRecord::Base
     else
       entity.add_page(self,attributes)
     end
-    changed :group
     self
   end
-
-  #extracted and refactored from the above
-  def add_new_user(user, attributes={})
-    attributes[:access] = ACCESS[attributes[:access]] if attributes[:access]
-    attributes[:notice] = [attributes[:notice].flatten] if attributes[:notice]
-    with_scope(:create => attributes.merge(:resolved => resolved?)) { users << user }
-    changed :users
-  end
-
       
   # remove a group or user participation from this page
   def remove(entity)    
@@ -259,9 +249,7 @@ class Page < ActiveRecord::Base
     else
       entity.remove_page(self)
     end
-
-    changed :group
-
+    entity
   end
 
   
@@ -320,28 +308,26 @@ class Page < ActiveRecord::Base
   before_save :denormalize
   def denormalize
     # denormalize hack follows:
-#    if changed? :groups 
-      # we use group_participations because self.groups might not
-      # reflect current data if unsaved.
-      group = (group_participations.first.group if group_participations.any?)
-      self.group_name = (group.name if group)
-      self.group_id = (group.id if group)
-#    end
-    if changed? :updated_by
-      self.updated_by_login = updated_by.login
+    if group_participations.any?
+      group = group_participations.first.group
+      self.group_name = group.name
+      self.group_id = group.id
+    end
+    if updated_by_id_changed?
+      self.updated_by_login = (updated_by.login if updated_by)
     end
     true
   end
   
   # used to mark stuff that has been changed.
   # so that we know we need to update other stuff when saving.
-  def changed(what)
-    @changed ||= {}
-    @changed[what] = true
+  def dirty(what)
+    @dirty ||= {}
+    @dirty[what] = true
   end
-  def changed?(what)
-    @changed ||= {}
-    @changed[what]
+  def dirty?(what)
+    @dirty ||= {}
+    @dirty[what]
   end
 
   #######################################################################
@@ -359,7 +345,8 @@ class Page < ActiveRecord::Base
   #####################################################################
   ## Things related to the page to index with sphinx
   has_one :page_index, :dependent => :destroy
-  
+=begin  ### commented out so that unicef doesn't have to deal with setting up sphinx
+### TODO: make sphinx code fail gracefully if searchd is not running  
   before_save :update_index
   def update_index
     self.page_index ||= PageIndex.new
@@ -422,5 +409,5 @@ class Page < ActiveRecord::Base
 #      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
     end
   end
-
+=end
 end

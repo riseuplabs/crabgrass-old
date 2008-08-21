@@ -20,8 +20,8 @@ class BasePage::ParticipationController < ApplicationController
   # Requires :admin access
   def update_public
     @page.public = ('true' == params[:public])
+    @page.updated_by = current_user
     @page.save
-    # current_user.updated @page
     render :template => 'base_page/participation/reset_public_line'
   end
 
@@ -66,6 +66,7 @@ class BasePage::ParticipationController < ApplicationController
       @page.remove(@page.group) if @page.group
       @page.add(group)
       @page.group = group
+      current_user.updated(@page)
       @page.save
       clear_referer(@page)
       redirect_to page_url(@page)      
@@ -126,9 +127,11 @@ class BasePage::ParticipationController < ApplicationController
   #    emails.each do |email|
   #      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
   #    end
-      users_to_email.each do |user|
-        puts 'emailing %s' % user.email
-        Mailer.deliver_page_notice(user, msg, mailer_options)
+      if params[:send_emails]
+        users_to_email.each do |user|
+          logger.info '----------------- emailing %s' % user.email
+          Mailer.deliver_page_notice(user, msg, mailer_options)
+        end
       end
       unless current_user.valid?
         flash_message_now :object => current_user # display any sending errors

@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  before_filter :fetch_site
+  prepend_before_filter :fetch_site
   def fetch_site
     @site = Site.default
   end

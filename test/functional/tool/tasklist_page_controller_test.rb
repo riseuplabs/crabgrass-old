@@ -18,7 +18,7 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
     
     get :show, :page_id => pages(:tasklist1)
     assert_response :success
-    assert_template 'task_list_page/show'
+#    assert_template 'task_list_page/show'
   end
 
   def test_sort

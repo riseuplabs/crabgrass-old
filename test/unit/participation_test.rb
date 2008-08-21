@@ -12,23 +12,12 @@ class ParticipationTest < Test::Unit::TestCase
     assert check_associations(UserParticipation)
   end
 
-  def test_viewed
-    p = pages(:page1)
-    p.updated_at = Time.now
-    p.save
-    user = users(:red)
-    part = p.participation_for_user user
-    assert !part.viewed_at
-    user.viewed(p)
-    part.reload
-    assert part.viewed_at
-  end
-
   def test_name_changed
     u = users(:orange)
     p = Page.create :title => 'hello'
     assert p.valid?, 'page should be valid'
     u.updated(p)
+    p.save
     assert_equal 'orange', p.updated_by_login, 'cached updated_by_login should be "orange"'
     u.login = 'banana'
     u.save

@@ -67,8 +67,8 @@ module SocialUser
         has_many :memberships, :foreign_key => 'user_id',
           :dependent => :destroy,
           :before_add => :check_duplicate_memberships,
-          :after_add => :update_membership_cache,
-          :after_remove => :update_membership_cache
+          :after_add => [:update_membership_cache, :clear_peer_cache_of_my_peers],
+          :after_remove => [:clear_peer_cache_of_my_peers, :update_membership_cache]
         
         has_many :groups, :foreign_key => 'user_id', :through => :memberships do
           def <<(*dummy)
@@ -76,6 +76,7 @@ module SocialUser
           end
           def delete(*records)
             super(*records)
+            proxy_owner.clear_peer_cache_of_my_peers
             proxy_owner.update_membership_cache
           end
         end
@@ -316,6 +317,19 @@ module SocialUser
         :peer_id_cache         => peer
     end
 
+    #
+    # When our membership changes, we need to clear the peer cache of all
+    # the users who might have their peer info change. To do so, this method
+    # must be called in two places:
+    #   1) after a new membership is created
+    #   2) before a membership is destroyed
+    #
+    def clear_peer_cache_of_my_peers(membership=nil)
+      if peer_id_cache.any?
+        self.class.connection.execute "UPDATE users SET peer_id_cache = NULL WHERE id IN (#{peer_id_cache.join(',')})"
+      end
+    end
+
     # This should be called if a change in relationships has potentially
     # invalidated the cache. For example, adding or removing a commmittee.
     # This only updates the database: if you want to update the in-memory
@@ -474,7 +488,7 @@ module SocialUser
       else
         self.create_participation(page, part_attrs)
       end  
-      page.changed :users
+      page.updated_by_id_will_change!
     end
     ## called only by add_page
     def update_participation(participation, part_attrs)
@@ -508,17 +522,9 @@ module SocialUser
     
     def remove_page(page)
       page.users.delete(self)
-      page.changed :users
+      page.updated_by_id_will_change!
     end
-    
-    # should be called when a user visits a page
-    # we only update user_participation if it already exists
-    def viewed(page)
-      part = page.participation_for_user(self)
-      return unless part
-      part.update_attributes(:viewed_at => Time.now, :notice => nil, :viewed => true)
-    end
-    
+       
     # set resolved status vis-à-vis self.
     def resolved(page, resolved_flag)
       find_or_build_participation(page).update_attributes :resolved => resolved_flag
@@ -528,12 +534,15 @@ module SocialUser
       page.participation_for_user(self) || page.user_participations.build(:user_id => self.id) 
     end
     
-    # TODO: make this not save the page.
-    # should be called when a user writes to a page
-    # or resolves a page.
+    # This should be called when a user modifies a page and that modification
+    # should trigger a notification to page watchers. Also, if a page state changes
+    # from pending to resolved, we also update everyone's user participation.
+    # The page is not saved here, because it might still get more changes.
+    # An after_filter should finally save the page if it has not already been saved.
+    #
     # options:
-    #  - resolved: user's participation is resolved with this page
-    #  - all_resolved: everyone's participation is resolved.
+    #  :resolved -- user's participation is resolved with this page
+    #  :all_resolved -- everyone's participation is resolved.
     #
     def updated(page, options={})
       # create self's participation if it does not exist
@@ -562,8 +571,6 @@ module SocialUser
       page.resolved = options[:all_resolved] || page.resolved?
       page.updated_at = now
       page.updated_by = self
-      page.changed :updated_by
-      page.save
     end
 
     # sends a page to a particular user, granting them access if needed
@@ -617,8 +624,8 @@ module SocialUser
        
       # when we get here, the group should be able to view the page.
       group.users.select do |user|
-        send_to_page(page,user,options)
-      end # returns an array of users that succeeded (ie send_to_page returned true)
+        self.may_pester?(user)
+      end # returns an array of users that might get a message
     end
 
   end # end Pages

@@ -85,14 +85,23 @@ class Group < ActiveRecord::Base
   ####################################################################
   ## relationships to users
 
-  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'
-    
+  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'   
+
   has_many :memberships, :dependent => :destroy,
     :before_add => :check_duplicate_memberships,
-    :after_add => :membership_changed, :after_remove => :membership_changed  
+    :after_add => :update_membership_cache,
+    :after_remove => :update_membership_cache
+
   has_many :users, :through => :memberships do
     def <<(*dummy)
       raise Exception.new("don't call << on group.users");
+    end
+    def delete(*records)
+      super(*records)
+      records.each do |user|
+        user.clear_peer_cache_of_my_peers
+        user.update_membership_cache
+      end
     end
   end
   
@@ -100,13 +109,16 @@ class Group < ActiveRecord::Base
     @user_ids ||= memberships.collect{|m|m.user_id}
   end
 
+  # association callback
   def check_duplicate_memberships(membership)
     membership.user.check_duplicate_memberships(membership)
   end
 
-  def membership_changed(membership)
+  # association callback
+  def update_membership_cache(membership)
     @user_ids = nil
     membership.user.update_membership_cache
+    membership.user.clear_peer_cache_of_my_peers
   end
 
   def relationship_to(user)
@@ -163,12 +175,12 @@ class Group < ActiveRecord::Base
 
   def add_page(page, attributes)
     page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
-    page.changed :groups
+    page.group_id_will_change!
   end
 
   def remove_page(page)
     page.groups.delete(self)
-    page.changed :groups
+    page.group_id_will_change!
   end
   
   def may?(perm, page)
