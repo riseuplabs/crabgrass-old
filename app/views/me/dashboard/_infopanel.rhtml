@@ -1,24 +1,24 @@
 <table>
 <tr>
   <td width="50%">
-    <h2>Contacts</h2>
+    <h2><%= "Contacts"[:contacts] %></h2>
 
 <% if current_user.contacts.any? -%>
   <%= render :partial => 'avatars/boxes', :locals => {:people => current_user.contacts, :side => 'left'} %>
   <br style='clear:both'/>
 <% else -%>
-  (you have no personal contacts)
+  <%= "(you have no personal contacts)"[:no_contacts] %>
 <% end -%>
 
   </td>
   <td width="50%" class='right'>
-    <h2>Groups</h2>
+    <h2><%= "Groups"[:groups] %></h2>
     
 <% if current_user.groups.any? -%>
   <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.groups, :side => 'left'} %>
   <br style='clear:both'/>
 <% else -%>
-  (not a member of any groups)
+  <%= "(not a member of any groups)"[:no_groups] %>
 <% end -%>
     
   </td>

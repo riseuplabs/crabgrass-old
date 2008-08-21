@@ -4,7 +4,7 @@ p#inbox_buttons {
 }
 <% end -%>
 <% @title_box = capture do -%>
-  Inbox of pages I am actively participating in or watching for changes.
+<%=  "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %>
 <% end -%>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
@@ -18,8 +18,8 @@ p#inbox_buttons {
 </div>
 
 <p id='inbox_buttons'>
-  <%= link_to_function 'Toggle Selection', "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %>
-  <%= submit_link 'Remove from inbox'.t, :name => 'remove' %> 
+  <%= link_to_function 'Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %>
+  <%= submit_link 'Remove from inbox'[:remove_from_inbox], :name => 'remove' %> 
 </p>
   
 <% end # form -%>
