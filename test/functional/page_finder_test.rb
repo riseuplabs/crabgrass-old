@@ -218,6 +218,22 @@ class PageFinderTest < Test::Unit::TestCase
   ##############################################
   ### Tests for various search parameters
 
+  SPHINX_DEBUG_NOTES = "
+To make thinking_sphinx tests pass, following the following steps:
+0. Make sure all migrations have run
+  rake db:migrate
+1. Make the development database match the test database
+  rake db:schema:load
+  rake db:fixtures:load
+2. Update the page_index table
+  rake cg:update_page_index
+3. Index the data with sphinx and start the search daemon
+  rake ts:index
+  rake ts:start
+4. Run the tests
+  rake test:functionals
+"
+  
   def test_sphinx_searchs
     login(:blue)
     user = users(:blue)
@@ -255,14 +271,14 @@ class PageFinderTest < Test::Unit::TestCase
       pages = Page.find_by_path(search_str, options)
       assert_equal Page.all.select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
                    pages.collect{|p| p.id}.sort, 
-                   "#{search_str} should match results for user"
+                   "#{search_str} should match results for user" + PageFinderTest::SPHINX_DEBUG_NOTES
     end
 
     searches.each do |search_str, search_code|
       pages = Page.find_by_path(search_str, @controller.options_for_group(groups(:rainbow)).merge(:method => :sphinx))
       assert_equal Page.find(:all).select{|p| search_code.call(p) and groups(:rainbow).may?(:view, p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
                    pages.collect{|p| p.id}.sort, 
-                   "#{search_str} should match results for group"
+                   "#{search_str} should match results for group" + PageFinderTest::SPHINX_DEBUG_NOTES
     end
 
 =begin
@@ -311,7 +327,7 @@ class PageFinderTest < Test::Unit::TestCase
       pages = Page.find_by_path(search_str, options)
       assert_equal search_code.call,
                    pages.collect{|p| p.id},
-                   "#{search_str} should match results for user"
+                   "#{search_str} should match results for user" + PageFinderTest::SPHINX_DEBUG_NOTES
     end
   end
 
