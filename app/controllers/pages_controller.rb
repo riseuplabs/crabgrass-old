@@ -21,9 +21,8 @@ class PagesController < ApplicationController
 
   helper BasePageHelper
   
-  before_filter :login_required, :except => 'search'
+  before_filter :login_required
   prepend_before_filter :fetch_page
-  verify :method => :post, :only => [:destroy, :move]
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -34,18 +33,6 @@ class PagesController < ApplicationController
 
   ##############################################################
   ## PUBLIC ACTIONS
-=begin # do we ever use this action?  
-  def search
-    unless @pages
-      if logged_in?
-        options = options_for_me
-      else
-        options = options_for_public_pages
-      end
-      @pages, @page_sections = Page.find_and_paginate_by_path(params[:path], options)
-    end
-  end
-=end
 
   # a simple form to allow the user to select which type of page
   # they want to create. the actual create form is handled by
@@ -58,18 +45,17 @@ class PagesController < ApplicationController
   def create_wiki
     group = Group.get_by_name(params[:group])
     if !logged_in?
-      flash_message :error => 'You must first login.'
-    elsif group.nil?
-      flash_message :error => 'Group does not exist.'
-    elsif !current_user.member_of?(group)
-      flash_message :error => "You don't have permission to create a page for that group"
+      # should never reach this code, because of before_filter :login_required
+      flash_message :error => "You must first login."
+    elsif group.nil? or !current_user.member_of?(group)
+      flash_message :error => "Group does not exist or you do not have permission to create a page for that group"
     else
       page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
       page.save
       redirect_to page_url(page)
       return
     end
-    render :text => '', :layout => 'application'
+    render :text => ''
   end
 
   def access
