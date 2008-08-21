@@ -105,6 +105,7 @@ class Hash
   end
 end
 
+=begin
 class Symbol
   # Syntax sugar for translations
   # makes :foo.t return the translation of a given key
@@ -113,3 +114,4 @@ class Symbol
     #::I18n.t(self, *args)
   end
 end
+=end
