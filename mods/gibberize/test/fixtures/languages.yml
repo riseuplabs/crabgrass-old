@@ -17,6 +17,6 @@ es:
 pt:
   id: 3
   code: pt_BR
-  name: Español
+  name: Português
   updated_at: "<%= 100.minutes.ago.to_s(:db) %>"
   created_at: "<%= 150.minutes.ago.to_s(:db) %>"
