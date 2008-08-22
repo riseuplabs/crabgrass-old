@@ -14,14 +14,13 @@ module TimeHelper
     return nil unless times.any?
 
     time  = times.compact.max
-    local = to_local(time)
-    today = local_now.to_date
-    date  = local.to_date
+    today = Time.zone.today
+    date  = time.to_date
     
     if date == today
-      str = local.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
+      str = time.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
     elsif today > date and (today-date) < 7
-      str = local.strftime("%A")
+      str = time.strftime("%A")
     elsif date.year != today.year
       str = date.loc("%d/%b/%Y")
     else
@@ -31,16 +30,15 @@ module TimeHelper
   end
   
   # formats a time, in full detail
-  # for example: Sunday July/3/2007 2:13PM
+  # for example: Sunday July/3/2007 2:13PM PST
   def full_time(time)
-    time = to_local time
-    #'%s %s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M'), time.period.abbreviation]
-    '%s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M')]
+    time.strftime('%a %b %d %H:%M:%S %Z %Y')
+    #'%s %s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M'), time.]
   end
 
-  def to_local(time)
-    Time.zone.utc_to_local(time)
-  end
+#  def to_local(time)
+#    Time.zone.utc_to_local(time)
+#  end
     
   def to_utc(time)
     Time.zone.local_to_utc(time)
@@ -50,16 +48,16 @@ module TimeHelper
     Time.zone.now
   end
 
-  def after_local_day_start?(utc_time)
-    local_now.at_beginning_of_day < to_local(utc_time)
+  def after_day_start?(time)
+    local_now.at_beginning_of_day < time
   end
   
-  def after_local_yesterday_start?(utc_time)
-    local_now.yesterday.at_beginning_of_day < to_local(utc_time)
+  def after_yesterday_start?(time)
+    local_now.yesterday.at_beginning_of_day < time
   end
 
-  def after_local_week_start?(utc_time)
-    (local_now.at_beginning_of_day - 7.days) < to_local(utc_time)
+  def after_week_start?(time)
+    (local_now.at_beginning_of_day - 7.days) < time
   end
   
   ##############################################

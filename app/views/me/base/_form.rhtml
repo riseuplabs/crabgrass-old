@@ -15,7 +15,7 @@
 <%= select 'user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p>
 
 <p><label for="user_time_zone">Time Zone</label><br/>
-<%= time_zone_select 'user', 'time_zone' %></p>
+<%= time_zone_select 'user', 'time_zone', nil, :include_blank => true %></p>
 
 <!--
 <p><label for="user_website">Website</label><br/>

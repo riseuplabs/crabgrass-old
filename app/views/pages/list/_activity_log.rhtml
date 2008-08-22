@@ -28,17 +28,17 @@ style ||= :normal
 pages = array_of_pages(pages)
 page = pages.shift
 
-while page and after_local_day_start?(page.updated_at)
+while page and after_day_start?(page.updated_at)
   today << page
   page = pages.shift
 end
 
-while page and after_local_yesterday_start?(page.updated_at)
+while page and after_yesterday_start?(page.updated_at)
   yesterday << page
   page = pages.shift
 end
 
-while page and after_local_week_start?(page.updated_at)
+while page and after_week_start?(page.updated_at)
   week << page
   page = pages.shift
 end
