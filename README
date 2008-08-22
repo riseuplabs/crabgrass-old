@@ -7,6 +7,9 @@ term goal is to provide the technical tools to facilitate active, confederal,
 and directly democratic social change networks.
 
 Further reading:
+* for running the sphinx search daemon, see doc/SPHINX_README
+* for adminstration notes, see doc/ADMIN_README
+* for details about what the gems are used for, see doc/GEMS_README
 * for plugin details, see vendor/plugins/README
 * for more information on crabgrass, visit https://we.riseup.net/crabgrass
 
@@ -170,68 +173,5 @@ extconf.rb:11:in `require': no such file to load -- mkmf (LoadError)
 \--
 
 ...then you need also to install ruby1.8-dev.
-
-GEMS INFO
-========================================================
-
-required
----------
-
-tzinfo
-  required for timezone support
-
-redcloth
-  greencloth derives from redcloth
-
-rmagick
-  Used to scale avatars and build thumbnails.
-
-optional
---------
-
-open4
-  A better way to run open pipes. Used by latex renderer. 
-
-SyslogLogger
-  Improved logging that allows for performance
-  analysis of the logs. 
-
-mime-types
-  Used to detect mime-types of uploaded files
-  (when the browser does not correctly report it)
-
-hpricot
-  Required for running tests. Used by the plugin webrat.
   
-ADMINISTRATION
-========================================================
-
-Via the console
-----------------
-
-One goal in Crabgrass system design is to avoid creating different levels of
-privilege for users.  Shall this be an egalitarian social network, or shall we
-build another anarchist bureaucracy? But what about when people need a new
-password, etc? 
-
-Example:  RESETING A PASSWORD
-
-/--
-$ script/console production
->> u = User.find_for_forget("user's email")
->> u.password = u.password_confirmation = "new password"
->> u.save
-\--
-
-Via super_admin mod
--------------------
-
-There is a mod that is disabled by default that gives certain users
-a super admin interface. 
-
-(1) Edit config/sites.yml to add which users should be super admins
-(2) Edit config/mods_enabled.list to enable super_admin module
-(3) Edit config/routes.rb and uncomment the super_admin routes
-(4) restart rails, login, and browse to /admin
-
 

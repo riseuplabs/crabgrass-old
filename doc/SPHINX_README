@@ -1,0 +1,58 @@
+SPHINX
+========================================
+
+Sphinx is a reverse index that runs in the background and handles full text
+searches. 
+
+Without sphinx installed and the sphinx search daemon running, full text searches
+will not work and searching will fall back to dumb mysql searches.
+
+installing sphinx
+------------------
+
+check http://www.sphinxsearch.com/downloads for the latest version
+
+/--
+wget http://www.sphinxsearch.com/downloads/sphinx-xxxxxx.tar.gz
+tar xzvf sphinx-xxxxxx.tar.gz
+cd sphinx-xxxxxxx
+sudo apt-get install libmysqlclient15-dev
+./configure
+make
+sudo make install
+\--
+
+indexing crabgrass pages
+------------------------
+
+/---
+cd ~/development/crabgrass
+rake ts:index
+rake cg:update_page_index
+\---
+
+running sphinx
+--------------
+
+Start the sphinx search daemon:
+
+/--
+cd ~/development/crabgrass
+rake ts:start
+\--
+
+running sphinx in production
+----------------------------
+
+Crabgrass uses delta indexes. This makes it faster to get new changes in the database,
+but only so long as the delta index is small. So, you need to clear out the delta index
+by reindexing all the records on a regular basis:
+
+Set up a cron job to do this nightly:
+
+/--
+cd /usr/apps/crabgrass/current
+rake ts:index
+\--
+
+
