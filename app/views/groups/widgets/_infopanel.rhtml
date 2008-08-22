@@ -1,13 +1,13 @@
 <div id='info_panel' class='landing'>
 <table>
 <tr>
-  <td width="50%">
+  <td style='width:50%'>
     <% if @group.publicly_visible_members or may_admin_group? %>
       <h2>Members <span><%= @group.users.count %> members</span></h2>
       <%= render :partial => 'groups/widgets/members' %>
     <% end -%>
     </td>
-  <td rowspan='2' width="50%" class='right'>
+  <td rowspan='2' style='width:50%' class='right'>
     <h2>Group Information</h2>
 <%= render :partial => 'groups/widgets/info' %>
   </td>

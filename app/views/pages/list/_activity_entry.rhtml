@@ -1,6 +1,7 @@
 <% page.created_at ||= Time.now; page.updated_at ||= Time.now -%>
 <% color = cycle 'odd', 'even', :name => 'activity_entry_cycle' -%>
 <% if style == :normal -%>
+<tbody class='<%=color%>'>
 <tr class='<%=color%> one'>
   <td nowrap='nowrap'><%= page_list_owner_with_icon(page) %></td>
   <td>&nbsp;&nbsp;&nbsp;</td>
@@ -14,6 +15,7 @@
     <% end -%>
   </td>
 </tr>
+</tbody>
 <% elsif style == :brief_no_group -%>
 <tbody class='<%=color%>'>
 <tr class='top'>

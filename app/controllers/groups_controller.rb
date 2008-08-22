@@ -2,7 +2,8 @@ require 'svg/svg'
 
 class GroupsController < ApplicationController
   include GroupsHelper
-  
+  helper 'task_list_page' # remove when tasks are in a separate controller
+
   #layout :choose_layout
   stylesheet 'groups'
   
