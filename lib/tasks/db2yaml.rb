@@ -61,5 +61,5 @@ trans.each do |lang,translations|
   translations.each do |key, translation|
     buffer << "#{key}: #{translation}\n"
   end
-  File.open('lang/' + lang, 'w') {|f| f.write(buffer) }
+  File.open('lang/' + lang[0,2] + '.yml', 'w') {|f| f.write(buffer) }
 end

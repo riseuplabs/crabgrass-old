@@ -1,0 +1,67 @@
+# Localization dictionary for the 'Gibberish' plugin (crabgrass)
+
+# -- _sidebar.html.erb:
+my_pages: My Pages
+dashboard: Dashboard
+inbox: Inbox
+watching: Watching for Updates
+search: Search
+create_page: Create Page
+tasks: Tasks
+pending: Pending
+completed: Completed
+requests: Requests
+to_me: To Me
+from_me: From Me
+options: Options
+settings: Settings
+public_profile: Public Profile
+private_profile: Private Profile
+
+# -- _form.rhtml:
+username: Username
+display_name: Display name
+email: Email
+language: Language
+time_zone: Time Zone
+password: Password
+password_confirmation: Password confirmation
+
+# -- _profile_tabs.html.erb:
+
+# -- edit.rhtml:
+settings_for: Settings for {user_display_name}
+upload_image: upload image
+uploaded_image_cropped: Uploaded image will be cropped and stretched to 96 pixels square.
+select_image_file: select image file
+or_image_url: or image URL
+save_changes: Save changes
+
+# -- _infopanel.rhtml:
+contacts: Contacts
+no_contacts: (you have no personal contacts)
+groups: Groups
+no_groups: (not a member of any groups)
+
+# -- index.html.erb:
+search_recently_updated: Search recently updated pages
+loading_recently_updated: Loading recently updated pages
+
+# -- list.html.erb:
+inbox_description: Inbox of pages I am actively participating in or watching for changes.
+toggle_selection: Toggle Selection
+remove_from_inbox: Remove from inbox
+
+# -- index.rhtml:
+requests_description: All contact requests and membership requests, including requests created by you and requests for you to approve.
+my_requests: my requests
+membership_requests: membership requests
+contact_requests: contact requests
+
+# -- index.html.erb:
+search_description: Search through all pages you have access to.
+
+# -- list.html.erb:
+tasks_description: Task lists I have access to.
+create_task_list: create new task list
+
