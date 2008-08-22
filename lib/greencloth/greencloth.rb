@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'redcloth'
+gem 'RedCloth', '~> 3.0'
 
 # greencloth code:
 $: << '..'

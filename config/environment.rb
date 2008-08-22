@@ -1,3 +1,6 @@
+require 'rubygems'          # make sure we grab
+gem 'RedCloth', '~> 3.0'    # redcloth from version 3 series
+
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 
