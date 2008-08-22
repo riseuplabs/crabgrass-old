@@ -25,6 +25,9 @@ module PathFinder
       options[:limit]   = pages_per_section
       options[:offset]  = offset
       options[:method] ||= :sql
+      if !sphinx_running?
+        options[:method] = :sql
+      end
 
       #puts options[:values].inspect
       pages = PathFinder::Builder.find_pages(options[:method], path, options)
