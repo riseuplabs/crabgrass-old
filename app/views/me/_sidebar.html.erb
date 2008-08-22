@@ -9,7 +9,7 @@
     params[:controller] == 'me/dashboard'
   ) %></li>
 
-  <li class='small_icon inbox_icon'><%= link_to_active(
+  <li id='inbox_line' class='small_icon inbox_icon'><%= link_to_active(
     'Inbox',
     '/me/inbox',
     params[:controller] == 'me/inbox'
@@ -45,7 +45,7 @@
 <h2>Requests</h2>
 <ul class='side_list'>
 
-  <li class='small_icon to_me_icon'><%= link_to_active(
+  <li id='requests_line' class='small_icon to_me_icon'><%= link_to_active(
     'To Me',
     '/me/requests',
     params[:controller] == 'me/requests'

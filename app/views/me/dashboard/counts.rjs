@@ -1,0 +1,7 @@
+if @unread_count > 0
+  page.replace_html 'inbox_line', link_to('Inbox (%i)' % @unread_count, '/me/inbox')
+end
+if @request_count > 0
+  page.replace_html 'requests_line', link_to('To Me (%i)' % @request_count, '/me/requests')
+end
+

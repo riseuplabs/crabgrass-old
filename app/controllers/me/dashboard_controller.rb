@@ -10,7 +10,7 @@ class Me::DashboardController < Me::BaseController
     path = "/type/request/pending/not_created_by/#{current_user.id}"
     @request_count = Page.count_by_path(path, options)
     @unread_count  = Page.count_by_path('unread',  options_for_inbox)
-    @pending_count = Page.count_by_path('pending', options_for_inbox)
+    #@pending_count = Page.count_by_path('pending', options_for_inbox)
     render :layout => false
   end
 
