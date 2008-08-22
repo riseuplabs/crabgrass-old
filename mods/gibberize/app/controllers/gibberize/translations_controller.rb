@@ -70,7 +70,7 @@ class Gibberize::TranslationsController < Gibberize::BaseController
     respond_to do |format|
       if @translation.update_attributes(params[:translation])
         flash[:notice] = 'Translation was successfully updated.'
-        format.html { redirect_to(@translation) }
+        format.html { redirect_to :controller => :keys, :action => :show, :id => @translation.key }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -1,4 +1,4 @@
-class Gibberize::BaseController < ActionController::Base
+class Gibberize::BaseController < ApplicationController
 
   include ErrorHelper
   include AuthenticatedSystem
@@ -11,15 +11,12 @@ class Gibberize::BaseController < ActionController::Base
   include Gibberize::LanguagesHelper
   include Gibberize::TranslationsHelper
 
-  protect_from_forgery :secret => Crabgrass::Config.secret
-
   def index
   end
 
   protected
 
   def authorized?
-    @site = Site.default
     @site.translators and @site.translators.include?(current_user.login)
   end
 end

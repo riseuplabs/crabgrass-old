@@ -4,6 +4,13 @@ class Translation < ActiveRecord::Base
 
   validates_presence_of :key, :language, :text
 
+
+  def validate_on_create
+    if Key.find(key_id).languages.include?(Language.find(language_id))
+      errors.add("language_id", "already has a translation")
+    end
+  end
+
   def self.best_guess(key, language)
     t = Translation.find(:first, :conditions => {:key_id => key, :language_id => language})
     t.text if t
