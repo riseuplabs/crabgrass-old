@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
-  around_filter :rescue_authentication_errors
+  around_filter :rescue_authentication_errors #, :set_language
   session :session_secure => true if Crabgrass::Config.https_only
   protect_from_forgery :secret => Crabgrass::Config.secret
   layout 'default'
@@ -100,6 +100,12 @@ class ApplicationController < ActionController::Base
     yield
   rescue PermissionDenied
     access_denied
+  end
+
+  # get the user language from the user profile or use the site default one
+  # deal with the fact that Gibberish only works with lang codes and not locales
+  def set_language
+    Gibberish.use_language(session[:language]) { yield }
   end
 
 end

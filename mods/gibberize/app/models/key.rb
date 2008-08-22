@@ -2,6 +2,8 @@ class Key < ActiveRecord::Base
   has_many :translations
   has_many :languages, :through => :translations
 
+  validates_uniqueness_of :name
+
   # count number of translations for each key in given language
   # 
   # example: 

@@ -10,7 +10,7 @@ module PathFinder::SphinxBuilderFilters
 
   def filter_pending
     Raise "sphinx cannot search inbox for pending" if @inbox
-    @args_for_find[:conditions] << " @resolved 0"
+    @args_for_find[:conditions][:resolved] = 0
   end
   
   def filter_interesting
@@ -71,7 +71,7 @@ module PathFinder::SphinxBuilderFilters
   end
 
   def filter_changed
-    Raise "sphix cannot search for changed"
+    Raise "sphinx cannot search for changed"
   end
       
   ### Time finders
@@ -123,41 +123,50 @@ module PathFinder::SphinxBuilderFilters
   ####
 
   def filter_type(page_class_group)
-    @args_for_find[:conditions] << " @class_display_name #{page_class_group}"
+    @args_for_find[:conditions][:class_display_name] = page_class_group
   end
   
   def filter_person(id)
-    @args_for_find[:conditions] << " @user_id #{id}"
+    @args_for_find[:conditions][:entities] ||= ""
+    @args_for_find[:conditions][:entities] += " & user_#{id}"
   end
   
   def filter_group(id)
-    @args_for_find[:conditions] << " @group_id #{id}"
+    @args_for_find[:conditions][:entities] ||= ""
+    @args_for_find[:conditions][:entities] += " & group_#{id}"
   end
 
   def filter_created_by(id)
-    @args_for_find[:conditions] << " @created_by_id #{id}"
+    @args_for_find[:conditions][:created_by_id] ||= ""
+    @args_for_find[:conditions][:created_by_id] += " #{id}"
   end
 
   def filter_not_created_by(id)
-    @args_for_find[:conditions] << " @created_by_id -#{id}"
+    @args_for_find[:without] ||= {}
+    @args_for_find[:without][:created_by_id] ||= ""
+    @args_for_find[:without][:created_by_id] += " #{id}"
   end
   
   def filter_tag(tag_name)
-    @args_for_find[:conditions] << " @tags #{tag_name}"
+    @args_for_find[:conditions][:tags] ||= ""
+    @args_for_find[:conditions][:tags] += " #{tag_name}"
   end
   
   def filter_name(name)
-    @args_for_find[:conditions] << " @name #{name}"
+    @args_for_find[:conditions][:name] ||= ""
+    @args_for_find[:conditions][:name] += " #{name}"
   end
   
   #### sorting  ####
   
   def filter_ascending(sortkey)
-    @args_for_find[:order] = "#{sortkey} ASC"
+    @args_for_find[:order] ||= ""
+    @args_for_find[:order] += " #{sortkey} ASC"
   end
   
   def filter_descending(sortkey)
-    @args_for_find[:order] = "#{sortkey} DESC"
+    @args_for_find[:order] ||= ""
+    @args_for_find[:order] += " #{sortkey} DESC"
   end
   
   ### LIMIT ###
@@ -169,12 +178,12 @@ module PathFinder::SphinxBuilderFilters
     end
 
     @args_for_find[:per_page] = limit.to_i if limit
-    @args_for_find[:page] = offset.to_i / limit.to_i if offset and limit
+    @args_for_find[:page] = 1 + (offset.to_i / limit.to_i) if offset and limit
   end
   
   def filter_text(text)
 #    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
-    @args_for_find[:conditions] = text + " " + @args_for_find[:conditions]
+    @search_text += " #{text}"
   end
 
 end

@@ -1,5 +1,5 @@
 <% content_for :titlebox do -%>
-<div id='titlebox'>Task lists I have access to. <%= link_to 'create new task list &raquo;', create_page_url(TaskListPage) %></div>
+<div id='titlebox'><%= "Task lists I have access to."[:tasks_description] <%= link_to 'create new task list'[:create_task_list] + '&raquo;', create_page_url(TaskListPage) %></div>
 <% end -%>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_page_types => 'false'} %>

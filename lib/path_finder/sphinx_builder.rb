@@ -14,14 +14,27 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
 
   public
 
+  # this builds the sphinx find conditions,
+  # which limit the search results to pages
+  # which are visible to the public, the current_user,
+  # or the current group
+  #
+  # based on what is hashed into options
+  #
+  # TODO: replace this with a function which takes a user, and extracts
+  # the entity information from that.  (is this sufficiently expressive?)
   def initialize(path, options)
-    conditions = []
-    conditions << "@user_id #{options[:user_id]}" if options[:user_id]
-    conditions << "@group_id #{options[:group_ids].join('|')}" if options[:group_ids]
-    conditions << "@public #{options[:public]}" if options[:public]
-    @args_for_find = {:conditions => conditions.join(' | ')}
+    entities = []
+    entities << "public" if options[:public]
+    entities << "user_#{options[:user_id]}" if options[:user_id]
+    options[:group_ids].each { |gid| entities << "group_#{gid}" }
+    entity_str = entities.join(" | ")
 
-    @args_for_find[:conditions] << " @group_id #{options[:group_id]}" if options[:group_id]
+    entity_str = "( #{entity_str} ) & group_#{options[:group_id]}" if options[:group_id]
+
+    @args_for_find = { :conditions => {:entities => entity_str } }
+    
+    @search_text = ""
 
     @path          = cleanup_path(path)
   end
@@ -37,7 +50,7 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
 #    @args_for_find[:conditions] = "test"
 #require 'ruby-debug'; debugger
     @args_for_find[:per_page] ||= 1000
-    Page.search(@args_for_find[:conditions], @args_for_find)
+    Page.search @search_text, @args_for_find
   end
 
   def count_pages

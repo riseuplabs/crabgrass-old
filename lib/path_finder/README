@@ -4,8 +4,8 @@ PATH FINDER
 A module to find crabgrass pages.
 
 This module handles all the complicated code that makes page queries work.
-Currently, it only handles SQL queries. Eventually, we should swap the
-backend out and use ferret queries.
+Currently, it handles SQL and sphinx queries. Eventually, we have plans to
+improve the SQL queries using a clever full text search approach.
 
 builder.rb      -- the class that converts between a path and actual
                    database conditions.

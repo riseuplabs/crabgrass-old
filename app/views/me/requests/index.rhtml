@@ -1,18 +1,18 @@
 <% @title_box = capture do %>
-  All contact requests and memberhip requests, including requests created by you and requests for you to approve.
+<%= "All contact requests and membership requests, including requests created by you and requests for you to approve."[:requests_description] %>
 <% end %>
 
-<h2>my requests</h2>
+<h2><%= "my requests"[:my_requests] %></h2>
 <%= render :partial => 'pages/list/table', :locals => {:pages => @my_pages, :sections => @my_sections, :columns => @my_columns} %>
 <%= link_to 'more &raquo;', url_for(:action => 'mine') + "/descending/created_at" %>
 
 
-<h2>membership requests</h2>
+<h2><%= "membership requests"[:membership_requests] %>membership requests</h2>
 <%= render :partial => 'pages/list/table', :locals => {:pages => @membership_pages, :sections => @membership_sections, :columns => @membership_columns} %>
 <%= link_to 'more &raquo;', url_for(:action => 'memberships') + "/descending/created_at" %>
 
 
-<h2>contact requests</h2>
+<h2><%= "contact requests"[:contact_requests] %></h2>
 <%= render :partial => 'pages/list/table', :locals => {:pages => @contact_pages, :sections => @contact_sections, :columns => @contact_columns} %>
 <%= link_to 'more &raquo;', url_for(:action => 'contacts') + "/descending/created_at" %>
 

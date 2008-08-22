@@ -1,5 +1,5 @@
 <% @title_box = capture do -%>
-  Search through all pages you have access to.
+<%= "Search through all pages you have access to."[:search_description] %>
 <% end %>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups} %>

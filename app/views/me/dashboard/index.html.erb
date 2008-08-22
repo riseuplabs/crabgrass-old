@@ -5,8 +5,8 @@ div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}
 
 <div class='landing'>
   <div id='page_list'>
-    <%= link_to 'Search recently updated pages', me_url(:action => 'search') + "/descending/updated_at" %>
-    <%= javascript_tag "new Insertion.Top('page_list', '" + image_tag('spinner.gif') + " Loading recently updated pages<br/>');" %>
+    <%= link_to 'Search recently updated pages'[:search_recently_updated], me_url(:action => 'search') + "/descending/updated_at" %>
+    <%= javascript_tag "new Insertion.Top('page_list', '" + image_tag('spinner.gif') + " " + "Loading recently updated pages"[:loading_recently_updated] + "<br/>');" %>
     <%= javascript_tag remote_function( :update => "page_list", :url => { :action => :page_list }) %>
   </div>
 </div>
