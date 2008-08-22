@@ -57,7 +57,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
     # save twice, since the behavior is different if current_user has recently saved the wiki
     (1..2).each do |i|
       str = "text %d for the wiki" / i
-      post :edit, :page_id => pages(:wiki).id, :wiki => {:body => str, :version => i}
+      post :edit, :page_id => pages(:wiki).id, :save => true, :wiki => {:body => str, :version => i}
       assert_equal str, assigns(:wiki).body
       assert_equal nil, pages(:wiki).data.locked?, "saving the edit should unlock wiki"
     end
@@ -123,7 +123,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
     
     get :break_lock, :page_id => pages(:wiki).id
     assert_equal nil, pages(:wiki).data.reload.locked?
-    assert_redirected_to @controller.page_url(assigns(:page), :action => 'show')
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
   end
 
 end

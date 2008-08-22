@@ -20,6 +20,12 @@ class Wiki < ActiveRecord::Base
     
   #### LOCKING #######################
   
+  # a word about timezones:
+  # to get an attribute in UTC, you must do:
+  #   wiki.locked_at_before_type_cast 
+  # otherwise, the times reported by active record objects
+  # are always local.
+
   LOCKING_PERIOD = 60.minutes
 
   def lock(time, locked_by)
@@ -30,8 +36,8 @@ class Wiki < ActiveRecord::Base
     end
   end
 
-  def unlock
-    lock(nil,nil)
+  def unlock(user=nil)
+    lock(nil,nil) if user.nil? or locked_by == user
   end
    
   def lock_duration(time)
@@ -39,7 +45,7 @@ class Wiki < ActiveRecord::Base
   end  
   
   def locked?(comparison_time=nil)
-    comparison_time ||= Time.now
+    comparison_time ||= Time.zone.now
     locked_at + LOCKING_PERIOD > comparison_time unless locked_at.nil?
   end
 
@@ -52,7 +58,7 @@ class Wiki < ActiveRecord::Base
   
   # returns true if the last version was created recently by this same author.
   def recent_edit_by?(author)
-    (user == author) && (updated_at > 10.minutes.ago) if updated_at
+    (user == author) && (updated_at < 20.minutes.ago) if updated_at
   end 
   
   # returns first version since @time@
@@ -95,7 +101,7 @@ class Wiki < ActiveRecord::Base
       save_without_revision
       versions.find_by_version(version).update_attributes(:body => body, :body_html => body_html, :updated_at => Time.now)
     else
-      user = params[:user]
+      self.user = params[:user]
       save!
     end  
   end  

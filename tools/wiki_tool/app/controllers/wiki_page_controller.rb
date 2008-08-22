@@ -27,15 +27,18 @@ class WikiPageController < BasePageController
 
   def edit
     if params[:cancel]
+      cancel
+    elsif params[:break_lock]
       @wiki.unlock
-      return(redirect_to page_url(@page, :action => 'show'))
-    elsif request.post?
-      save_edits
+      lock
+      @wiki.body = params[:wiki][:body]
+    elsif request.post? and params[:save]
+      save
     elsif request.get?
-      @wiki.lock(Time.now, current_user)
+      lock
     end
   end
-  
+
   def version
     @version = @wiki.versions.find_by_version(params[:id])
   end
@@ -62,50 +65,42 @@ class WikiPageController < BasePageController
   
   def break_lock
     @wiki.unlock
-    redirect_to page_url(@page, :action => 'show')
+    redirect_to page_url(@page, :action => 'edit')
   end
     
   protected
-  
-  def save_edits
+
+  def cancel
+    @wiki.unlock(current_user)
+    redirect_to page_url(@page, :action => 'show')
+  end
+
+  def save
     begin
-      @wiki.body = params[:wiki][:body]
-      if @wiki.version > params[:wiki][:version].to_i
-        raise ErrorMessage.new("can't save your data, someone else has saved new changes first.")
-      elsif not @wiki.editable_by? current_user
-        raise ErrorMessage.new("can't save your data, someone else has locked the page.")
-      end
-      if save_revision(@wiki)
-        current_user.updated(@page)
-        @wiki.unlock
-        redirect_to page_url(@page, :action => 'show')
-      else
-        flash_message_now :object => @wiki
-      end
+      @wiki.smart_save!( params[:wiki].merge(:user => current_user) )
+      @wiki.unlock(current_user)
+      redirect_to page_url(@page, :action => 'show')
     rescue ActiveRecord::StaleObjectError
       # this exception is created by optimistic locking. 
       # it means that @wiki has change since we fetched it from the database
-      flash_message :error => "locking error. can't save your data, someone else has saved new changes first."
+      flash_message_now :error => "locking error. can't save your data, someone else has saved new changes first."
     rescue ErrorMessage => exc
-      flash_message :error => exc.to_s
+      flash_message_now :error => exc.to_s
     end
-  end
-  
-  # save the wiki
-  def save_revision(wiki)
-    if wiki.recent_edit_by?(current_user)
-      wiki.save_without_revision
-      wiki.versions.find_by_version(wiki.version).update_attributes(:body => wiki.body, :body_html => wiki.body_html, :updated_at => Time.now)
-    else
-      wiki.user = current_user
-      wiki.save
-    end  
+  end 
+
+  def lock
+    if @wiki.editable_by? current_user
+      @locked_for_me = false # not locked for ourselves
+      @wiki.lock(Time.now, current_user)
+    end
   end
   
   def fetch_wiki
     return true unless @page
     @page.data ||= Wiki.new(:body => 'new page', :page => @page)
     @wiki = @page.data
+    @locked_for_me = !@wiki.editable_by?(current_user) if logged_in?
   end
   
   def setup_view

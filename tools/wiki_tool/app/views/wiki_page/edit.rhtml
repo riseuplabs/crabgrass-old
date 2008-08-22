@@ -1,19 +1,20 @@
 <% @show_posts = false %>
-
+<% locked_error_message %>
 <div class='formbox'>
-
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
    <fieldset><%= textile_editor 'wiki', 'body' %></fieldset>
    <div>
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
-     <%= submit_tag 'Save', :name => 'save' %>
+     <% if @locked_for_me -%>
+       <%= submit_tag 'Break Lock', :name => 'break_lock' %>
+     <% else -%>
+       <%= submit_tag 'Save', :name => 'save' %>
+     <% end -%>
      <%# submit_tag 'Save minor edit', :name => 'save_minor' %>
      <%= submit_tag 'Cancel', :name => 'cancel' %>
-
    </div>
     <%= textile_editor_initialize -%>
   <% end -%>
-
 </div>
 

@@ -32,9 +32,9 @@ class WikiController < ApplicationController
   def save
     return render(:action => 'done') if params[:cancel]
     begin
-      @wiki.smart_save!(:body => params[:body],
+      @wiki.smart_save!(:body => params[:body], 
         :user => current_user, :version => params[:version])
-      @wiki.unlock
+      @wiki.unlock(current_user)
     rescue Exception => exc
      @message = exc.to_s
       return render(:action => 'error')
@@ -43,8 +43,8 @@ class WikiController < ApplicationController
   
   # unlock everything and show the rendered wiki
   def done
-    @private.unlock
-    @public.unlock
+    @private.unlock(current_user)
+    @public.unlock(current_user)
     
     if @private.body.nil? or @private.body == ''
       @wiki = @public
