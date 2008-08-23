@@ -11,8 +11,10 @@ public/plugin_assets/*
 db/*.sqlite3
 db/sphinx
 /assets
-public/avatars
+public/avatars/*/*
+!public/avatars/0/*
 public/stylesheets/all.css
 public/javascripts/all.js
 public/assets/*
+
 
