@@ -23,4 +23,5 @@
 .small_icon.public_profile_icon {background-image: url(/images/icons/small_png/profile.png)}
 .small_icon.private_profile_icon {background-image: url(/images/icons/small_png/profile_private.png)}
 
-span.admin {padding-right: 16px; background: url(/images/icons/small_png/tiny_wrench.png) no-repeat 100% 60%}
+span.admin {padding-right: 16px; background: url(/images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
+span.edit {padding-right: 16px; background: url(/images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}

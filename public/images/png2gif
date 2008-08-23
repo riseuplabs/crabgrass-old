@@ -14,7 +14,7 @@ Dir.chdir(images_dir) do
           gif_file = '../' + dir.sub('png','gif') + png_file.sub('png','gif')
           putc '.'; STDOUT.flush;
           width, height = `gm identify -format '%wx%h' #{png_file}`.gsub(/\s/,'').split('x')
-          system('gm', 'composite', png_file, '../../white.png', '-geometry', "#{width}x#{height}", 'temp_file.png')
+          system('gm', 'composite', png_file, '../white.png', '-geometry', "#{width}x#{height}", 'temp_file.png')
           system('gm', 'convert', 'temp_file.png', '-transparent', '#fff', gif_file)
           File.unlink('temp_file.png')
         end
