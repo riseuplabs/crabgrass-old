@@ -25,7 +25,7 @@ module PathFinder
       options[:limit]   = pages_per_section
       options[:offset]  = offset
       options[:method] ||= :sql
-      if !sphinx_running?
+      if !ThinkingSphinx.updates_enabled?
         options[:method] = :sql
       end
 
