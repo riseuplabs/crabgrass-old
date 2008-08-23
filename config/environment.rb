@@ -9,12 +9,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
 
-# levels of page access
-ACCESS = {:admin => 1, :change => 2, :edit => 2, :view => 3, :read => 3}.freeze
-
-# types of page flows
-FLOW = {:membership => 1, :contacts => 2, :deleted => 3}.freeze
-
 # do this early because environments/*.rb need it
 require 'lib/crabgrass/config'
 

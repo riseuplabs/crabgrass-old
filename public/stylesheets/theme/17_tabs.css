@@ -36,6 +36,7 @@ ul.tabset.top {
   font-size: 0.8em;
   background: url(/images/grey9.png) repeat-x bottom;
   padding: 0 0 0 0.75em;
+  margin: 0;
 }
 ul.tabset.top li {
   height: 1.7em; /* must equal a.height + a.vertical-padding */
@@ -63,6 +64,12 @@ ul.tabset.top a.selected {
   outline: 1px solid white;
   color: black;
   height: 2em; /* this is what hides the bottom border */
+}
+.tab-area {
+  background-color: white;
+  padding: 1em;
+  border: 1px solid #999;
+  border-top: 0;
 }
 
 /** little side tabs that are for editing something (like on wikis) **/

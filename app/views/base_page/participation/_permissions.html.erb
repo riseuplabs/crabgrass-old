@@ -1,0 +1,51 @@
+<div class='pretty'>
+  <table cellpadding='5'>
+    <tr>
+      <th align='left'>name</th>
+      <th align='left'>access</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+    <%- if @page.group_participations.any? -%>
+      <tr class='<%=cycle "odd","even"%>'>
+        <td colspan='4'><i><%= "groups"[:groups] %></i></td>
+      </tr>
+    <%- end -%>
+    <%- @page.group_participations.each do |gpart| -%>
+      <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(gpart) %>'>
+        <td>&nbsp;&nbsp;<%= link_to_group(gpart.group_id) %></td>
+        <td><%= access_sym_to_str gpart.access_sym %></td>
+        <td><%= link_to_remove_group_participation(gpart) %></td>
+        <td style='width:20px'><%=spinner(dom_id(gpart))%></td>
+      </tr>
+    <%- end -%>
+    <%- if @page.users_with_access.any? -%>
+      <tr class='<%=cycle "odd","even"%>'>
+        <td colspan='4'><i><%= "users"[:users] %></i></td>
+      </tr>
+    <%- end -%>
+    <%- @page.sorted_participations.each do |upart| -%>
+      <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(upart) %>'>
+        <td>&nbsp;&nbsp;<%= link_to_user(upart.user_id) %></td>
+        <td><%= access_sym_to_str upart.access_sym %></td>
+        <td><%= link_to_remove_user_participation(upart) %></td>
+        <td style='width:20px'><%=spinner(dom_id(upart))%></td>
+      </tr>
+    <%- end -%>
+  </table>
+</div>
+
+<p>
+  <%- form_remote_tag(
+    :url => {:controller => 'participation', :action => 'create', :page_id => @page.id},
+    :loading => show_spinner('permissions')
+  ) do -%>
+    User or group name:<br/>
+    <%= text_field_tag 'add_names','',:size=>17 %>
+    <%= select_page_access 'access' %></br>
+    <%= submit_tag 'Grant Access', :name => 'add' %>
+    <%= spinner 'permissions' %>
+  <%- end -%>
+  <%= javascript_tag "Field.focus('add_names')" %>
+</p>
+

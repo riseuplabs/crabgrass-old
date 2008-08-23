@@ -8,35 +8,55 @@ BasePageController
 module BasePageHelper
 
   def header_for_page_create(page_class)
-    %Q[
-    <div class='page-class'>
-      <span class='page-link' style='background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'><b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}</span>
-    </div>
-    ]
+    style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
+    text = "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}"
+    content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
   end
 
-  def return_to_page(page)
-    '<p>' + 
-    link_to('&laquo; return to <b>%s</b>' % @page.title, page_url(@page)) +
-    "</p>\n"
+#  def return_to_page(page)
+#    '<p>' + 
+#    link_to('&laquo; return to <b>%s</b>' % @page.title, page_url(@page)) +
+#    "</p>\n"
+#  end
+  
+  def select_page_access(name)
+    select_tag name, options_for_select([['Coordinator'[:coordinator],'admin'],['Contributor'[:contributor],'edit'],['Viewer'[:viewer],'view']])
   end
-  
-  
 
+  def access_sym_to_str(sym)
+    if sym == :admin
+      content_tag :span, "Coordinator"[:coordinator], :class=>sym
+    elsif sym == :edit
+      "Contributor"[:contributor]
+    elsif sym == :view
+      "Viewer"[:viewer]
+    end
+  end
 
   def link_to_user_participation(upart)
-    klass = upart.access ? 'admin' : 'viewer'
+    klass = upart.access_sym
     label = '<span class="%s">%s</span>' % [klass, upart.user.display_name]
     link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)
-    klass = gpart.access ? 'admin' : 'viewer'
+    klass = gpart.access_sym
     label = '<span class="%s">%s</span>' % [klass, gpart.group.display_name]
     link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
-  ## 
+  def link_to_remove_user_participation(upart)
+    unless upart.user_id == @page.created_by_id
+      link_to_remote('remove'[:remove], :url => {:controller => 'base_page/participation', :action => 'destroy', :page_id => @page.id, :upart_id => upart.id}, :loading => show_spinner(dom_id(upart)))
+    end
+  end
+
+  def link_to_remove_group_participation(gpart)
+    unless gpart.group_id == @page.group_id
+      link_to_remote('remove'[:remove], :url => {:controller => 'base_page/participation', :action => 'destroy', :page_id => @page.id, :gpart_id => gpart.id}, :loading => show_spinner(dom_id(gpart)))
+    end
+  end
+
   ## POSTS HELPERS
   ## (posts are handled by a seperate controller, but all the views for
   ##  posts use this helper)

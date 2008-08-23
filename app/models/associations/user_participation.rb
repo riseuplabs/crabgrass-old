@@ -18,5 +18,10 @@ class UserParticipation < ActiveRecord::Base
   belongs_to :page
   belongs_to :user
   serialize :notice
+
+  def access_sym
+    ACCESS_TO_SYM[self.access]
+  end
+
 end
 

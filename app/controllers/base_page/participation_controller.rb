@@ -46,10 +46,6 @@ class BasePage::ParticipationController < ApplicationController
     @upart = @page.participation_for_user(current_user)
     render :template => 'base_page/participation/reset_watch_line'
   end
-  
-  def details
-    render :template => 'base_page/reset_sidebar'
-  end
 
   def show_popup
     render :template => 'base_page/participation/show_' + params[:name] + '_popup'
@@ -142,6 +138,46 @@ class BasePage::ParticipationController < ApplicationController
       render :template => 'base_page/reset_sidebar'
     end
   end
+
+  ##
+  ## PAGE DETAILS
+  ## participation and access
+  ##
+
+  def close_details
+    render :template => 'base_page/reset_sidebar'
+  end
+
+  def create
+    users, groups, emails, errors = parse_recipients(params[:add_names])
+    (users+groups).each do |thing|
+      @page.add(thing, :access => params[:access].to_sym)
+    end
+    render :update do |page|
+      page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
+      page.hide spinner_id('permissions')
+    end
+  end
+  
+  ## technically, we should probably not destroy the participations
+  ## however, since currently the existance of a participation means
+  ## view access, then we need to destory them to remove access. 
+  def destroy
+    @upart = UserParticipation.find params[:upart_id] if params[:upart_id]
+    if @upart and @upart.user_id != @page.created_by_id
+      @upart.destroy
+    end
+
+    @gpart = GroupParticipation.find params[:gpart_id] if params[:gpart_id]
+    if @gpart and @gpart.group_id != @page.group_id
+      @gpart.destroy
+    end
+
+    render :update do |page|
+      page.hide dom_id(@upart || @gpart)
+    end
+  end
+
   
   protected
   
@@ -176,7 +212,7 @@ class BasePage::ParticipationController < ApplicationController
 
 
   def authorized?
-    if ['update_public', 'move'].include? params[:action]
+    if ['update_public', 'move', 'create','destroy'].include? params[:action]
       current_user.may? :admin, @page
     else
       current_user.may? :view, @page
