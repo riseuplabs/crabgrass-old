@@ -109,7 +109,8 @@ module LayoutHelper
 
       'theme/17_ui',
       'theme/17_tabs',
-     
+      'theme/17_wiki',
+
       :cache => 'theme'
     )
   end

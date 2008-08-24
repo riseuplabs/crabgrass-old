@@ -1,44 +1,23 @@
-<% content_for :style do  %>
-pre.diff code{
-    padding: 0px;
-}
-div.diff {
-    background: #f4f4f4;
-    border: 1px solid #ddd;
-    padding: 8px 20px;
-    margin: 15px 0px;
-}
-/* http://longren.org/2006/09/27/wrapping-text-inside-pre-tags */
-/* Browser specific (not valid) styles to make preformatted text wrap */
-pre.diff { 
- white-space: pre-wrap;       /* css-3 */
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-<% end %>
-
 <%= return_to_page(@page) %>
 
 <p>
-Comparing changes by <b><%= link_to_user(@new.user_id)%></b> at <i><%= full_time @new.updated_at %></i> from 
+  Comparing changes by <b><%= link_to_user(@new.user_id)%></b> at <i><%= full_time @new.updated_at %></i> from 
 <span style='background-color: #fcc; padding: 1px 4px;' >version <%= @old.version %></span>
 to
 <span style='background-color: #cfc; padding: 1px 4px;'>version <%= @new.version %></span>
+</p>
 
 <p>
 <% if @old.version.to_i != 1 %>
-<%= link_to '« prev change', page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
+  <%= link_to '« prev change', page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
 <% else %>
-« prev change
+  « prev change
 <% end %>
-<% if @wiki.versions.last.version != @new.version %>
-<%= link_to 'next change »', page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
+<% if @wiki.version != @new.version %>
+  <%= link_to 'next change »', page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
 <% else %>
-next change »
+  next change »
 <% end %>
 </p>
 
-<div class='diff'><%= @difftext %></div>
-</p>
+<div class='diff wiki'><%= @difftext %></div>

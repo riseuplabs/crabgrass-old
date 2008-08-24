@@ -2,18 +2,6 @@
 /* anything with wiki formatted text should have the class 'wiki'
    or the class 'post' */
 
-del.diffmod, del.diffins {
-  color: #999;
-  background-color: #fcc;
-  padding: 1px 4px;
-}
-ins.diffmod, ins.diffins {
-  background-color: #cfc;
-  text-decoration: none;
-  color: #000;
-  padding: 1px 4px;
-}
-
 /* http://longren.org/2006/09/27/wrapping-text-inside-pre-tags */
 /* Browser specific (not valid) styles to make preformatted text wrap */
 
@@ -30,9 +18,6 @@ ins.diffmod, ins.diffins {
   border: solid 1px;
   border-color: #FFE8A9;
   padding: 0.5em;
-/*  background: #FCEDD7;
-  color: #4C3B23;
-   */
 }
 .wiki div.codetitle, .post div.codetitle {
   background: #FFE8A9;
@@ -59,7 +44,7 @@ ins.diffmod, ins.diffins {
   margin-top: 0.75em;
 }
 
-div.wiki > h1:first-child {
+.wiki h1:first-child, .wiki h2:first-child {
   margin-top: 0;
 }
 
@@ -80,5 +65,27 @@ div.wiki > h1:first-child {
 }
 .wiki th {
   background: #ddd;
+}
+
+
+/** diff **/
+
+div.diff {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 8px 20px;
+  margin: 15px 0px;
+}
+div.diff p {
+  margin: 0;
+}
+del.diffmod, del.diffins {
+  color: #999;
+  background-color: #ddd;
+}
+ins.diffmod, ins.diffins {
+  background-color: #cfc;
+  text-decoration: none;
+  color: #000;
 }
 
