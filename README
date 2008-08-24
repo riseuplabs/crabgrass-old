@@ -10,6 +10,7 @@ Further reading:
 * for running the sphinx search daemon, see doc/SPHINX_README
 * for adminstration notes, see doc/ADMIN_README
 * for details about what the gems are used for, see doc/GEMS_README
+* for multilingual support, see doc/MULTILINGUAL_README
 * for plugin details, see vendor/plugins/README
 * for more information on crabgrass, visit https://we.riseup.net/crabgrass
 
