@@ -90,6 +90,7 @@ module LayoutHelper
 #    lines << stylesheet_link_tag('ie/icons_gif')
     lines << '<![endif]-->'
     lines << theme_styles
+    lines << mod_styles
     lines.join("\n")
   end
 
@@ -113,6 +114,15 @@ module LayoutHelper
 
       :cache => 'theme'
     )
+  end
+
+  # to be overridden by mods, if they want.
+  def mod_styles
+    ""
+  end
+  def favicon_link
+    %q[<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/favicon.png" type="image/x-icon" />]
   end
 
   # support for holygrail layout:
