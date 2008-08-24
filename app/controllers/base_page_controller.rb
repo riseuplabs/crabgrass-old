@@ -57,6 +57,8 @@ class BasePageController < ApplicationController
     if @page
       if params[:action] == 'show_popup'
         return true
+      elsif params[:action] == 'show'
+        current_user.may?(:view, @page)
       else
         current_user.may?(:admin, @page)
       end
@@ -109,6 +111,7 @@ class BasePageController < ApplicationController
   def setup_view
   end
   
+  # don't require a login for public pages
   def login_or_public_page_required
     if action_name == 'show' and @page and @page.public?
       true

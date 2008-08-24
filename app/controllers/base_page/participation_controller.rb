@@ -13,7 +13,7 @@ class BasePage::ParticipationController < ApplicationController
   before_filter :login_required
   verify :method => :post, :only => [:move]
 
-  helper 'base_page'
+  helper 'base_page', 'base_page/participation'
 
   # TODO: add non-ajax version
   # TODO: send a 'made public' message to watchers
@@ -60,7 +60,7 @@ class BasePage::ParticipationController < ApplicationController
     elsif params[:group_id].any?
       group = Group.find params[:group_id]
       @page.remove(@page.group) if @page.group
-      @page.add(group)
+      @page.add(group, :access => :admin)
       @page.group = group
       current_user.updated(@page)
       @page.save
@@ -104,7 +104,7 @@ class BasePage::ParticipationController < ApplicationController
         render :template => 'base_page/show_errors'
         return
       end
-      access = :admin # params[:access]
+      access = (params[:access] || :view).to_sym
       msg = params[:message]
       users_to_email = [] 
       # puts [users, groups, emails, errors].inspect
@@ -203,7 +203,7 @@ class BasePage::ParticipationController < ApplicationController
         groups << g
       elsif u = User.find_by_login(entity)
         users << u
-      else
+      elsif entity.any?
         errors << '"%s" does not match the name of any users or groups and is not a valid email address' % entity
       end
     end

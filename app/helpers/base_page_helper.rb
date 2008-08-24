@@ -13,48 +13,18 @@ module BasePageHelper
     content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
   end
 
-#  def return_to_page(page)
-#    '<p>' + 
-#    link_to('&laquo; return to <b>%s</b>' % @page.title, page_url(@page)) +
-#    "</p>\n"
-#  end
+  def return_to_page(page)
+    content_tag(:p, link_to('&laquo; ' + 'return to'[:return_to] + ' <b>%s</b>' % @page.title, page_url(@page)))
+  end
   
-  def select_page_access(name)
-    select_tag name, options_for_select([['Coordinator'[:coordinator],'admin'],['Contributor'[:contributor],'edit'],['Viewer'[:viewer],'view']])
-  end
-
-  def access_sym_to_str(sym)
-    if sym == :admin
-      content_tag :span, "Coordinator"[:coordinator], :class=>sym
-    elsif sym == :edit
-      "Contributor"[:contributor]
-    elsif sym == :view
-      "Viewer"[:viewer]
-    end
-  end
-
   def link_to_user_participation(upart)
-    klass = upart.access_sym
-    label = '<span class="%s">%s</span>' % [klass, upart.user.display_name]
+    label = content_tag :span, upart.user.display_name, :class => upart.access_sym
     link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)
-    klass = gpart.access_sym
-    label = '<span class="%s">%s</span>' % [klass, gpart.group.display_name]
+    label = content_tag :span, gpart.group.display_name, :class => gpart.access_sym
     link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
-  end
-
-  def link_to_remove_user_participation(upart)
-    unless upart.user_id == @page.created_by_id
-      link_to_remote('remove'[:remove], :url => {:controller => 'base_page/participation', :action => 'destroy', :page_id => @page.id, :upart_id => upart.id}, :loading => show_spinner(dom_id(upart)))
-    end
-  end
-
-  def link_to_remove_group_participation(gpart)
-    unless gpart.group_id == @page.group_id
-      link_to_remote('remove'[:remove], :url => {:controller => 'base_page/participation', :action => 'destroy', :page_id => @page.id, :gpart_id => gpart.id}, :loading => show_spinner(dom_id(gpart)))
-    end
   end
 
   ## POSTS HELPERS
@@ -89,7 +59,7 @@ module BasePageHelper
   end  
 
   def popup(title, options = {}, &block)
-    block_to_partial('base_page/popup_template', {:style=>'', :id=>''}.merge(options).merge(:title => title), &block)
+    block_to_partial('base_page/popup_template', {:style=>'', :id=>'', :width=>''}.merge(options).merge(:title => title), &block)
   end
 
   ##

@@ -64,7 +64,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   
   def test_remove_watch
     login_as :blue
-    get :details, :page_id => 1 # need to get something to set up session variable
+    post :add_star, :page_id => 1 # need to get something to set up session variable
     user = @controller.current_user
     
     name = 'my new page'
@@ -74,7 +74,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
       p.created_by = user
     end
     page.save
-    page.add(user)
+    page.add(user, :access => :admin)
     page.save!
     
     assert user.may?(:admin, page), "blue should have access to new wiki"

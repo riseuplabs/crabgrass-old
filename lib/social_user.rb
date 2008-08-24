@@ -309,6 +309,7 @@ module SocialUser
     # set the id caches to non-nil in this method unless we want to
     # recurse forever.
     def update_membership_cache(membership=nil)
+      clear_access_cache
       direct, all = get_group_ids
       peer = get_peer_ids(direct)
       update_attributes :version => version+1,
@@ -443,34 +444,55 @@ module SocialUser
       end
     end
 
+    # this method gets called a lot
     def may?(perm, page)
       begin
-        return may!(perm,page)
+        may!(perm,page)
       rescue PermissionDenied
-        return false
+        false
       end
     end
     
+    def may!(perm,page)
+      ((@access||={})[page.id] ||= {})[perm] ||= calculate_access!(perm,page)
+    end
+
     # basic permissions:
     #   :view or :read -- user can see the page.
     #   :edit or :change -- user can participate.
     #   :admin -- user can destroy the page, change access.
     # conditional permissions:
     #   :comment -- sometimes viewers can comment and sometimes only participates can.
-    #
-    # this is still a basic stub.
+    #   (NOT SUPPORTED YET)
     #
     # :view should only return true if the user has access to view the page
     # because of participation objects, NOT because the page is public.
     #
-    def may!(perm, page)
-      upart ||= page.participation_for_user(self)
-      return true if upart
+    def calculate_access!(perm, page)
+      perm = :edit if perm == :comment
+      upart = page.participation_for_user(self)
       gparts = page.participation_for_groups(all_group_ids)
-      return true if gparts.any?
+      if upart or gparts.any?
+        parts = []
+        parts += gparts if gparts.any?
+        parts += [upart] if upart
+        part_with_best_access = parts.min {|a,b|
+          (a.access||100) <=> (b.access||100)
+        }
+        # allow :view if the participation exists at all
+        return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+      end
       raise PermissionDenied
     end
-    
+
+    # zeros out the in-memory page access cache
+    # generally, this is called for you, but must be called manually 
+    # in the case where page access was via a group and that group loses
+    # page access.
+    def clear_access_cache
+      @access = nil
+    end
+
     ##
     ## makes self a participant of a page. 
     ## this method is not called directly. instead, page.add(user)
@@ -480,6 +502,7 @@ module SocialUser
     ## anymore (ie, the user won't lose access by deleted it, and inbox,
     ## watch, star are all false, and the user has not contributed.)
     def add_page(page, part_attrs)
+      clear_access_cache
       part_attrs = part_attrs.dup
       part_attrs[:notice] = [part_attrs[:notice]] if part_attrs[:notice]
       participation = page.participation_for_user(self)
@@ -521,6 +544,7 @@ module SocialUser
     end
     
     def remove_page(page)
+      clear_access_cache
       page.users.delete(self)
       page.updated_by_id_will_change!
     end

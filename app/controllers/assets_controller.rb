@@ -77,7 +77,7 @@ class AssetsController < ApplicationController
   def authorized?
     if @asset
       if action_name == 'show' || action_name == 'version'
-        current_user.may?(:read, @asset.page)
+        current_user.may?(:view, @asset.page)
       elsif action_name == 'create' || action_name == 'destroy'
         current_user.may?(:edit, @asset.page)
       end
@@ -89,7 +89,7 @@ class AssetsController < ApplicationController
   def access_denied
     flash_message :error => 'You do not have sufficient permission to access that file' if logged_in?
     flash_message :error => 'Please login to access that file.' unless logged_in?
-    redirect_to :controller => '/account', :action => 'login', :redirect => @request.request_uri
+    redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
   end
   
   def thumb_name_from_path(path)

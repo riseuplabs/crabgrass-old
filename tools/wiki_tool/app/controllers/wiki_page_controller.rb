@@ -1,12 +1,10 @@
 class WikiPageController < BasePageController
   include HTMLDiff
   append_before_filter :fetch_wiki
-  
-  def show
-    if @upart and !@upart.viewed? and @wiki.version > 1
-      @last_seen = @wiki.first_since( @upart.viewed_at )
-    end
-  end
+
+  ##
+  ## ACCESS: no restriction
+  ##
 
   def create
     @page_class = WikiPage
@@ -24,18 +22,14 @@ class WikiPageController < BasePageController
     end
     render :template => 'base_page/create'
   end
+  
+  ##
+  ## ACCESS: public or :view
+  ##
 
-  def edit
-    if params[:cancel]
-      cancel
-    elsif params[:break_lock]
-      @wiki.unlock
-      lock
-      @wiki.body = params[:wiki][:body]
-    elsif request.post? and params[:save]
-      save
-    elsif request.get?
-      lock
+  def show
+    if @upart and !@upart.viewed? and @wiki.version > 1
+      @last_seen = @wiki.first_since( @upart.viewed_at )
     end
   end
 
@@ -58,11 +52,26 @@ class WikiPageController < BasePageController
   def print
     render :layout => "printer-friendly"
   end
-  
-  def preview
-    # not yet
+
+  ##
+  ## ACCESS: :edit
+  ##
+
+  def edit
+    if params[:cancel]
+      cancel
+    elsif params[:break_lock]
+      @wiki.unlock
+      lock
+      @wiki.body = params[:wiki][:body]
+    elsif request.post? and params[:save]
+      save
+    elsif request.get?
+      lock
+    end
   end
-  
+
+  # TODO: make post only    
   def break_lock
     @wiki.unlock
     redirect_to page_url(@page, :action => 'edit')
@@ -105,6 +114,20 @@ class WikiPageController < BasePageController
   
   def setup_view
     @show_attach = true
+  end
+
+  def authorized?
+    if @page
+      if %w(show print diff version).include? params[:action]
+        @page.public? or current_user.may?(:view, @page)
+      elsif %w(edit break_lock).include? params[:action]
+        current_user.may?(:edit, @page)
+      else
+        current_user.may?(:admin, @page)
+      end
+    else
+      true
+    end
   end
   
 end

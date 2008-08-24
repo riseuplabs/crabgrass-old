@@ -174,7 +174,12 @@ class Group < ActiveRecord::Base
   end
 
   def add_page(page, attributes)
-    page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
+    participation = page.participation_for_group(self)
+    if participation
+      participation.update_attributes(attributes)
+    else
+      page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
+    end
     page.group_id_will_change!
   end
 

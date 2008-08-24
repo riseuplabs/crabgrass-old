@@ -22,7 +22,9 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
   end
 
   def test_sort
-    login_as :quentin
+    login_as :blue
+    pages(:tasklist1).add(users(:blue), :access => :admin)
+
     assert_equal Task.find(1).position, 1
     assert_equal Task.find(2).position, 2
     assert_equal Task.find(3).position, 3
@@ -35,7 +37,10 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
   end
 
   def test_multi_list_sort
-    login_as :quentin
+    login_as :blue
+    pages(:tasklist1).add(users(:blue), :access => :admin)
+    pages(:tasklist2).add(users(:blue), :access => :admin)
+
     tasks = Task.find(1,2,3,4,5,6).index_by {|t| t.id}
     assert_equal tasks[1].position, 1
     assert_equal tasks[2].position, 2
@@ -60,7 +65,8 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
   end
   
   def test_create_task
-    login_as :quentin
+    login_as :blue
+    pages(:tasklist1).add(users(:blue), :access => :admin)
     assert_difference 'pages(:tasklist1).data.tasks.count' do
       xhr :post, :create_task, :controller => "task_list_page", :page_id => pages(:tasklist1).id, :task => {:name => "new task", :user_ids => ["5"], :description => "new task description"}
     end

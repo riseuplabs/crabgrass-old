@@ -45,6 +45,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
 
   def test_edit
     login_as :orange
+    pages(:wiki).add users(:orange), :access => :edit
     get :edit, :page_id => pages(:wiki).id
     assert_equal true, assigns(:wiki).locked?, "editing a wiki should lock it"
     assert_equal users(:orange).id, assigns(:wiki).locked_by.id, "should be locked by orange"
@@ -65,6 +66,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
 
   def test_version
     login_as :orange
+    pages(:wiki).add users(:orange), :access => :view
 
     (1..5).each do |i|
       pages(:wiki).data.body = "text %d for the wiki" / i
@@ -118,11 +120,15 @@ class WikiPageControllerTest < Test::Unit::TestCase
   
   def test_break_lock
     login_as :orange
+    page = pages(:wiki)
+    user = users(:orange)
+    page.add(user, :access => :admin)
 
-    pages(:wiki).data.lock(Time.now, users(:orange))
+    wiki = pages(:wiki).data   
+    wiki.lock(Time.now, user)
     
-    get :break_lock, :page_id => pages(:wiki).id
-    assert_equal nil, pages(:wiki).data.reload.locked?
+    post :break_lock, :page_id => pages(:wiki).id
+    assert_equal nil, wiki.reload.locked?
     assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
   end
 

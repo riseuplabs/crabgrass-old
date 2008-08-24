@@ -16,6 +16,8 @@ class AssetsControllerTest < Test::Unit::TestCase
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
     Media::Process::Base.log_to_stdout_when = :on_error
+
+    Page.find(1).add users(:blue), :access => :admin
   end
 
   def teardown
@@ -24,8 +26,11 @@ class AssetsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
+    login_as :blue
+
     @asset = Asset.create :uploaded_data => upload_data('photo.jpg')
     @page = create_page :data => @asset
+    @page.add( users(:blue), :access => :admin )
     @asset.uploaded_data = upload_data('image.png')
     @asset.save
 
@@ -57,6 +62,24 @@ class AssetsControllerTest < Test::Unit::TestCase
 
     assert_difference 'Page.find(1).assets.length' do
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
+    end
+  end
+
+  def test_permissions
+    login_as :blue
+
+    @user = users(:blue)
+    @page = create_page
+
+    assert !@user.may?(:edit, @page), 'user should not have write access to the page'
+    
+    post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
+    assert_redirected_to :controller => "/account", :action => "login"
+
+    @page.add(@user, :access => :edit)
+    assert @user.may?(:edit, @page), 'user should have write access to the page'
+    assert_difference('Page.find(%i).assets.length' % @page.id) do
+      post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
     end
   end
   
