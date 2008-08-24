@@ -126,6 +126,7 @@ module UrlHelper
     
     display_name, path = name_and_path_for_group(arg,options)
     style = options[:style]
+    label = options[:label] || display_name
     klass = options[:class] || 'name_link'
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
@@ -145,7 +146,7 @@ module UrlHelper
         style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px"
       end
     end
-    avatar + link_to(display_name, path, :class => klass, :style => style)
+    avatar + link_to(label, path, :class => klass, :style => style)
   end
 
   def url_for_entity(entity, options={})

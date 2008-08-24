@@ -12,21 +12,14 @@ function quickRedReference() {
 }
 
 function show_tab(tab_link, tab_content) {
-  tabs = document.getElementsByClassName("tab");
-  for(i = 0; i < tabs.length; i++) {
-    Element.removeClassName(tabs[i], 'selected');
-  }
-  tabs = document.getElementsByClassName("tab-link");
-  for(i = 0; i < tabs.length; i++) {
-    Element.removeClassName(tabs[i], 'selected');
-  }
-  tabs = document.getElementsByClassName("tab-content");
-  for(i = 0; i < tabs.length; i++) {
-    Element.hide(tabs[i]);
-  }
-  Element.addClassName(tab_link, 'selected');
-  Element.addClassName(tab_link.ancestors().first(), 'selected');
-  Element.show(tab_content);
+  $$('ul.tabset.top a').each( function(elem) {
+    elem.removeClassName('selected');
+  })
+  $$('.tab-content').each( function(elem) {
+    elem.hide();
+  })
+  tab_link.addClassName('selected');
+  tab_content.show();
   tab_link.blur();
   return false;
 }

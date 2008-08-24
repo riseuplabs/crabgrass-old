@@ -145,6 +145,8 @@ module Formy
   end
   
   class Element
+    include ActionView::Helpers::TagHelper
+
     def initialize(form,options={})
       @base = form
       @options = options
@@ -232,7 +234,7 @@ module Formy
       return e.send(word,args) if args
       return e.send(word) 
     end
-    
+
   end
   
   class Root < Element
@@ -251,20 +253,25 @@ module Formy
       
   class Tabset < Root 
     class Tab < Element
-      element_attr :label, :link, :selected, :icon, :show_tab, :click
+      element_attr :label, :link, :selected, :icon, :show_tab, :click, :id, :style
       
       def close
         selected = 'selected' if "#{@selected}" == "true"
-        style = @icon ? "background: url(/images/#{@icon}) no-repeat center left" : ''
+        style = @style
+        style ||= @icon ? "background: url(/images/#{@icon}) no-repeat center left" : nil
+        id = @id
+        onclick = @click
+        href = @link
         if @click
-          puts %Q[<li class="tab #{selected}"><a class="tab-link #{selected}" style="#{style}" href="javascript:void(0)" onclick="#{@click}">#{@label}</a></li>]
+          href = "javascript:void(0)"
         elsif @show_tab
-          click = %Q[show_tab(event.target, $('%s'))] % @show_tab
+          onclick = "show_tab(this, $('%s'))" % @show_tab
           id = @show_tab + '_link'
-          puts %Q[<li class="tab %s"><a id="%s" class="tab-link %s" style="%s" href="javascript:void(0)" onclick="%s">%s</a></li>] % [selected, id, selected, style, click, @label]
-        else
-          puts "<li class='tab #{selected}'><a class='tab-link #{selected}' style='#{style}' href='#{@link}'>#{@label}</a></li>"
+          href = "javascript:void(0)"
         end
+        link = content_tag :a, @label, :class => selected, :style => style,
+           :id => id, :onclick => onclick, :href => href
+        puts content_tag(:li, link, :class => 'tab')
         super
       end
     end
@@ -277,12 +284,14 @@ module Formy
     
     def open
       super
+      puts "<div style='height:1%'>" # this is to force hasLayout in ie
       puts "<ul class='tabset #{@options['class']}'>"
     end
     
     def close
       @elements.each {|e| raw_puts e}
       puts "<li></li></ul>"
+      puts "</div>"
       super
     end  
         

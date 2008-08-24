@@ -1,19 +1,17 @@
 <%# locals: wiki, access (one of :public or :private) -%>
 <% spinner_id = 'save-spinner-%s' % rand(1000000) -%>
 <% rows = [ 20, (params[:height]||0).to_i/16 ].max  # 16 here is a magic number. it might have to change if the font size of the wiki text changes. -%>
-<div class='formbox spaced-out'>
-  <% form_remote_tag(
-       :url => wiki_action('save', :access => access),
-       :loading => show_spinner(spinner_id)
-     ) do -%>
-   <%= hidden_field_tag 'version', wiki.version %>
-   <fieldset><%= text_area_tag 'body', wiki.body, :rows => rows %></fieldset>
-   <div>
-     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
-     <%= submit_tag 'Save', :name => 'save' %>
-     <%= submit_tag 'Cancel', :name => 'cancel' %>
-     <%= spinner(spinner_id) %>
-   </div>
-  <% end -%>
-</div>
+<% form_remote_tag(
+     :url => wiki_action('save', :access => access),
+     :loading => show_spinner(spinner_id)
+  ) do -%>
+  <%= hidden_field_tag 'version', wiki.version %>
+  <fieldset><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80 %></fieldset>
+  <div>
+    <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
+    <%= submit_tag 'Save', :name => 'save' %>
+    <%= submit_tag 'Cancel', :name => 'cancel' %>
+    <%= spinner(spinner_id) %>
+  </div>
+<% end -%>
 

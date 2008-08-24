@@ -32,44 +32,41 @@ ul.tabset a.tab-link:hover {
 
 /* top */
 ul.tabset.top {
+  margin: 0; padding: 0;
+  clear:left; float:left;
+  width:100%;
+  height: 1%;
   list-style: none;
   font-size: 0.8em;
   background: url(/images/grey9.png) repeat-x bottom;
-  padding: 0 0 0 0.75em;
-  margin: 0;
 }
 ul.tabset.top li {
-  height: 1.7em; /* must equal a.height + a.vertical-padding */
-  padding: 2px;
+  display:inline;
 }
-ul.tabset.top li.tab {
-  float: left;
-  padding: 1px; /* to make space for invisible white outline of a.tab-link */
-  margin: 0;
+ul.tabset.top a {
+  display:block;
+  float:left;
+  text-align:center;
+  text-decoration:none;
+  position:relative;
+  left:15px;
+  line-height:1.3em;
+  padding: 5px 10px;
 }
-ul.tabset.top li.tab.selected {
-  border: 1px solid #999;
-}
-ul.tabset.top a.tab-link {
-  /* outline: 1px solid white; this is to remove dotted outline when link is clicked */
-  display: block;
-  text-decoration: none;
-  padding: 0 1em;
-}
-ul.tabset a.tab-link:hover {
+ul.tabset a:hover {
   text-decoration: underline;
 }
 ul.tabset.top a.selected {
   background: white;
-  outline: 1px solid white;
-  color: black;
-  height: 2em; /* this is what hides the bottom border */
+  border: 1px solid #999;
+  border-bottom: 0;
 }
 .tab-area {
   background-color: white;
   padding: 1em;
   border: 1px solid #999;
   border-top: 0;
+  clear:left;
 }
 
 /** little side tabs that are for editing something (like on wikis) **/

@@ -16,7 +16,7 @@ div.popup {
   z-index: 101;
   position: absolute;
   top: -32px;
-  right: 4px;
+  right: 20px;
 }
 div.popup h1 {
   background: #ccc;
@@ -27,12 +27,12 @@ div.popup h1 {
 }
 
 div.popup_arrow {
-  height: 24px;
-  width: 12px;
+  height: 29px;
+  width: 15px;
   background: url(/images/ui/wedge_right.png);
   position: absolute;
-  top: 28px;
-  right: -16px;
+  top: 24px;
+  right: -19px;
 }
 
 div#popup_holder {
@@ -40,4 +40,27 @@ div#popup_holder {
   z-index: 100;
   display: none;
 }
+
+div.popup fieldset {
+  background: white;
+  padding: 1em;
+  border: 1px solid #999;
+  margin-top: 16px;
+}
+div.popup legend {
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: bold;
+  border: 1px solid #999;
+  border-bottom: 0px;
+  background: white;
+  margin-top: -16px;
+  padding: 0 10px;
+}
+div.popup blockquote {
+  margin: 0;
+  padding: 2em;
+}
+
+
 

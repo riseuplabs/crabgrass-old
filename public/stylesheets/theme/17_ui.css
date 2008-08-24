@@ -51,7 +51,7 @@ fieldset {
 }
 fieldset textarea {
   width: 100%;
-  max-width: 60em;
+  max-width: 80em;
 }
 
 /* tags */

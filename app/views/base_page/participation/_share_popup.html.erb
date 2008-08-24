@@ -30,33 +30,36 @@ if @current_user.groups.any?
 end
 
 %>
-<% popup('Share This Page', :id => 'share_popup', :style => '') do -%>
-
+<% popup('Share This Page', :id => 'share_popup', :width => '40em') do -%>
   <% form_remote_tag(
     :url => {:controller => 'base_page/participation', :action => 'share', :page_id => @page.id},
     :loading => show_spinner('popup'),
     :html => {:id => 'share_page_form'}) do -%>
 
-    <p><b><%= 'Share this page with' %>:</b></p>
-    <p><%= text_area_tag 'recipients', '', :rows => 5, :cols => 60, :id => 'recipients' %></p>
-    <%= select_tag('people_drop',
+    <fieldset>
+      <legend><%= 'Share this page with'[:share_page_recipients] %></legend>
+      <p><%= text_area_tag 'recipients', '', :rows => 5, :cols => 60, :id => 'recipients' %></p>
+      <%= select_tag('people_drop',
         option_empty('add person:') + @user_options.join("\n"),
         :onchange => 'if ($("people_drop").value) {$("recipients").value += $("people_drop").value + "\n"}') %>
-    <%= select_tag('group_drop',
+      <%= select_tag('group_drop',
         option_empty('add group:') + @group_options.join("\n"),
         :onchange => 'if ($("group_drop").value) {$("recipients").value += $("group_drop").value + "\n"}') %>
-    <p><b><%= 'Optional message' %>:</b></p>
-    <%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
-    <p>
-      <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.' %></label>
-    </p>
-    <p>
-      <%= submit_tag 'Share', :name => 'share' %>
-      <%= submit_tag 'Close', :name => 'cancel' %>
-      <%= spinner 'popup' %>
-    </p>
-
+    </fieldset><br/>
+    <fieldset>
+      <legend><%= 'Options'[:options] %></legend>
+      <%- if current_user.may?(:admin,@page) -%>
+      <%= 'Grant Access'[:grant_access] %>: <%= select_page_access 'access' %><br/>
+      <%- end -%>
+      <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.' %></label><br/>
+    </fieldset><br/>
+    <fieldset>
+      <legend><%= 'Message (optional)'[:share_page_message] %></legend>
+      <%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
+    </fieldset><br/>
+    <%= submit_tag 'Share', :name => 'share' %>
+    <%= submit_tag 'Close', :name => 'cancel' %>
+    <%= spinner 'popup' %>
   <% end -%>
-
 <% end -%>
 

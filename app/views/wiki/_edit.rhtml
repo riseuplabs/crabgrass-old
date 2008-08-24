@@ -12,8 +12,10 @@
     t.selected !select_private
   end
   f.tab do |t|
-    t.label 'Close Editor'.t + " &raquo; " + spinner('wiki-close')
-    t.click remote_function(:url=>wiki_action('done'), :loading=>show_spinner('wiki-close'))
+    t.label 'Close Editor'.t # + " &raquo; " + spinner('wiki-close')
+    t.click remote_function(:url=>wiki_action('done'), :loading=>set_icon_style('wiki_close', 'spinner', position="100% 50%"))
+    t.id 'wiki_close'
+    t.style 'padding-right: 22px'
     t.selected false
   end
 end

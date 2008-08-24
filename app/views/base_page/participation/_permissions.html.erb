@@ -35,6 +35,7 @@
   </table>
 </div>
 
+<% if current_user.may?(:admin, @page) -%>
 <p>
   <%- form_remote_tag(
     :url => {:controller => 'participation', :action => 'create', :page_id => @page.id},
@@ -42,10 +43,10 @@
   ) do -%>
     User or group name:<br/>
     <%= text_field_tag 'add_names','',:size=>17 %>
-    <%= select_page_access 'access' %></br>
+    <%= select_page_access 'access' %>
     <%= submit_tag 'Grant Access', :name => 'add' %>
     <%= spinner 'permissions' %>
   <%- end -%>
   <%= javascript_tag "Field.focus('add_names')" %>
 </p>
-
+<% end -%>

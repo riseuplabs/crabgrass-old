@@ -1,6 +1,6 @@
 <% popup('Edit Attachments', :id => 'assets_popup', :style => '') do -%>
-  <p>
-    <h4>Current Attachments</h4>
+  <fieldset>
+    <legend>Current Attachments</legend>
     <table width='100%' cellpadding='4'>
       <% if @page.assets.any? -%>
         <%= asset_rows -%>
@@ -8,9 +8,9 @@
        <tr><td>(none)</td></tr>
       <% end -%>
     </table>
-  </p>
-  <p>
-    <h4>Add New Attachment</h4>
+  </fieldset><br/>
+  <fieldset>
+    <legend>Add New Attachment</legend>
     <% form_for( :asset, Asset.new(), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
       <table>
         <tr>
@@ -24,7 +24,7 @@
         </tr>
       </table>
     <% end -%>
-  </p>
+  </fieldset>
   <p>
     <% form_remote_tag(
       :url => {:controller => 'base_page/assets', :action => 'close', :page_id => @page.id},
