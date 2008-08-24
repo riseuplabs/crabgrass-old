@@ -42,12 +42,4 @@ class Task < ActiveRecord::Base
   end
   alias :overdue? :past_due?
   
-  # not thread safe, but neither is rails
-  # http://blog.evanweaver.com/articles/2006/12/26/hacking-activerecords-automatic-timestamps/
-  def self.skip_update_timestamp 
-    self.record_timestamps = false
-    yield
-    self.record_timestamps = true
-  end
-
 end

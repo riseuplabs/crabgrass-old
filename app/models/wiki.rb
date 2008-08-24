@@ -26,12 +26,14 @@ class Wiki < ActiveRecord::Base
   # otherwise, the times reported by active record objects
   # are always local.
 
-  LOCKING_PERIOD = 60.minutes
+  LOCKING_PERIOD = 120.minutes
 
   def lock(time, locked_by)
     without_locking do
       without_revision do
-        update_attributes(:locked_at => time, :locked_by => locked_by)
+        without_timestamps do
+          update_attributes(:locked_at => time, :locked_by => locked_by)
+        end
       end
     end
   end
@@ -58,7 +60,7 @@ class Wiki < ActiveRecord::Base
   
   # returns true if the last version was created recently by this same author.
   def recent_edit_by?(author)
-    (user == author) && (updated_at < 20.minutes.ago) if updated_at
+    (user == author) and updated_at and (updated_at > 30.minutes.ago)
   end 
   
   # returns first version since @time@

@@ -61,6 +61,16 @@ ActiveRecord::Base.class_eval do
       end_eval
     end
   end
+
+  # see http://blog.evanweaver.com/articles/2006/12/26/hacking-activerecords-automatic-timestamps/
+  # only works because rails is not thread safe. 
+  # but a thread safe version could be written.
+  def without_timestamps
+    self.class.record_timestamps = false
+    yield
+    self.class.record_timestamps = true
+  end
+
 end
 
 

@@ -18,7 +18,7 @@ class TaskListPageController < BasePageController
       ids = params[sort_list_key[0]]
       @list.tasks.each do |task|
         i = ids.index( task.id.to_s )
-        Task.skip_update_timestamp do 
+        task.without_timestamps do 
           task.update_attribute('position',i+1) if i
         end
       end
