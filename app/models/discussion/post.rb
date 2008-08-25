@@ -24,10 +24,6 @@ class Post < ActiveRecord::Base
   validates_presence_of :discussion, :user, :body  
 
   ## methods ################################################
-
-  def editable_by?(user)
-    true
-  end
   
   # used for default group, if present, to set for any embedded links
   def group_name
