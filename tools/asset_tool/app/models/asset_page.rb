@@ -26,8 +26,11 @@ class AssetPage < Page
 
   # Return string of Asset text, for the full text search index
   def index_data
-    # TODO: (Issue #76) If asset includes indexable text, extract it and return it as a string 
-    ""
+    return unless self.asset.is_a? DocAsset
+
+    thumbnail = self.asset.thumbnail(:txt)
+    thumbnail.generate
+    File.open(thumbnail.private_filename).readlines rescue ""
   end
 
 end

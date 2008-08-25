@@ -311,6 +311,8 @@ test database
 
   def test_sphinx_search_text_doc
     return if not sphinx_working?
+    
+    # TODO: write this test
   end
   
   def test_sphinx_searchs_w_pagination
