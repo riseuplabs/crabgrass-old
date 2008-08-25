@@ -4,6 +4,7 @@ namespace :thinking_sphinx do
   task :app_env do
     Rake::Task[:environment].invoke if defined?(RAILS_ROOT)
     Rake::Task[:merb_env].invoke    if defined?(Merb)
+    ThinkingSphinx.updates_enabled = true  # force enable of sphinx, since crabgrass initializers might have turned off sphinx if the daemon was not running.
   end
   
   desc "Start a Sphinx searchd daemon using Thinking Sphinx's settings"

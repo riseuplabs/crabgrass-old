@@ -597,59 +597,73 @@ module SocialUser
       page.updated_by = self
     end
 
-    # sends a page to a particular user, granting them access if needed
+    # 
+    # share a page with another user
+    # 
+    # see check_share_permissions!() for when a user may share a page.
+    # also, we don't grant new permissions if the user already has the permissions
+    # via a group membership.
     # 
     # options may include:
     # * +:message => 'text to send to user'+ (default is empty)
-    # * +:access => 'admin'+ (or one of 'admin', 'edit', 'view'. default is 'view')
-    # TODO actually really make the default 'view', instead of 'admin'
-    def share_page_with_user(page, user, options={})
-      access = (options[:access] || :admin).to_sym
-      
-      # check & update permissions
+    # * +:access => 'admin'+ (or one of 'admin', 'edit', 'view', nil. default is nil)
+    #   nil means do not grant additional access more than the user already has
+    #
+    def share_page_with_user!(page, user, options={})     
+      check_share_permissions!(page,user,options)
+      attrs = {}
 
-      if page.public? and !self.may_pester?(user)
-        errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, user.login]
-        return false
-      elsif !user.may?(access, page)
-        if !self.may?(:admin,page)
-          errors.add_to_base '%s is not allowed to change the access permissions of this page' % self.login
-          return false
-        elsif !self.may_pester?(user)
-          errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, user.login]
-          return false
-        else
-          page.add user, :access => access
-        end
+      if options[:message]
+        attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
+      end
+      if options[:access] and !user.may?(options[:access],page)
+        attrs[:access] = options[:access]
       end
 
-      # When we get here, the user should have access to the page
-      # and we have confirmed that the current_user may pester them.
-      # If the user may already view the page, then current_user
-      # is always allowed to pester them (except for public pages)
-      
-      # send the message
-      notice = options[:message] ? {:user_login => self.login, :message => options[:message], :time => Time.now} : nil
-      page.add(user, :notice => notice)
-      page.save
+      page.add(user, attrs)
     end
 
-    def share_page_with_group(page, group, options={})
-      access = (options[:access] || :admin).to_sym
+    #
+    # check that self may pester user and has admin access if sharing requires
+    # granting new access. 
+    #
+    def check_share_permissions!(page,user,options)
+      if page.public? and !self.may_pester?(user)
+        raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] %  user.login)
+      elsif options[:access].nil?
+        if !user.may?(:view,page)
+          raise PermissionDenied.new('%s is not allowed to view this page. They must be granted greater access first.'[:share_msg_grant_required] % user.login)
+        end
+      elsif !user.may?(options[:access], page)
+        if !self.may?(:admin,page)
+          raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_msg_permission_denied])
+        elsif !self.may_pester?(user)
+          raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] % user.login)
+        end
+      end
+    end
+
+    def share_page_with_group!(page, group, options={})
+      access = (options[:access] || :view).to_sym  # always attempt to grant some access
       unless group.may?(access,page)
         unless self.may?(:admin,page) and self.may_pester?(group)
-          errors.add_to_base '%s is not allowed to send a page to %s' % [self.login, group.name]
-          return false
+          raise PermissionDenied.new('Your not allowed to share this page with %s'[:share_msg_pester_denied] % group.name)
         else
           page.add group, :access => access
-          page.save
         end
       end
        
       # when we get here, the group should be able to view the page.
-      group.users.select do |user|
+      users_to_pester = group.users.select do |user|
         self.may_pester?(user)
-      end # returns an array of users that might get a message
+      end
+      if options[:message]
+        attrs = {:notice => {:user_login => self.login, :message => options[:message], :time => Time.now}}
+        users_to_pester.each do |user|
+          page.add user, attrs
+        end
+      end
+      users_to_pester # returns users to pester so they can get an email, maybe.
     end
 
   end # end Pages

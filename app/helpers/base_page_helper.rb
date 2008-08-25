@@ -153,6 +153,14 @@ module BasePageHelper
   #  :name  -- the name of the popup
   # optional:
   #  :controller -- controller to call show_popup on
+  #
+  # NOTE: before you change the wacky way this works, be warned of this...
+  # The right column has overflow:hidden set. This means that the popup
+  # cannot be in the right column, or when it appears the window will not
+  # get bigger to show the whole popup, but it will just get clipped. 
+  # overflow:hidden is required for holygrail layout to work in ie.
+  # hence, absolutePositionParams()...  :(
+  #
   def show_popup_link(options)
     li_id = options[:name] + '_li'
     options[:controller] ||= options[:name]

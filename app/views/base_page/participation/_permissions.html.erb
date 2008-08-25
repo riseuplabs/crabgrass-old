@@ -24,7 +24,7 @@
         <td colspan='4'><i><%= "users"[:users] %></i></td>
       </tr>
     <%- end -%>
-    <%- @page.sorted_participations.each do |upart| -%>
+    <%- @page.sorted_user_participations.each do |upart| -%>
       <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(upart) %>'>
         <td>&nbsp;&nbsp;<%= link_to_user(upart.user_id) %></td>
         <td><%= access_sym_to_str upart.access_sym %></td>
@@ -39,11 +39,12 @@
 <p>
   <%- form_remote_tag(
     :url => {:controller => 'participation', :action => 'create', :page_id => @page.id},
-    :loading => show_spinner('permissions')
+    :loading => show_spinner('permissions'),
+    :complete => hide_spinner('permissions')
   ) do -%>
     User or group name:<br/>
     <%= text_field_tag 'add_names','',:size=>17 %>
-    <%= select_page_access 'access' %>
+    <%= select_page_access 'access', false %>
     <%= submit_tag 'Grant Access', :name => 'add' %>
     <%= spinner 'permissions' %>
   <%- end -%>

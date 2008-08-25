@@ -76,8 +76,7 @@ class BasePage::ParticipationController < ApplicationController
   # share this page with a notice message to any number of recipients. 
   #
   # if the recipient is a user name, then the message and the page show up in
-  # user's, and optionally they are alerted via email if that is their personal
-  # settings.
+  # user's inbox, and optionally they are alerted via email.
   #
   # if the recipient is an email address, an email is sent to the address with a
   # magic url that lets the recipient view the page by clicking on a link
@@ -87,55 +86,64 @@ class BasePage::ParticipationController < ApplicationController
   # who do not already have the ability to view the page.
   # 
   # the recipient may be an entire group, in which case we grant access
-  # and send to each user individually. 
+  # to the group and send emails to each user in the group.
   #
   # you cannot share to users/groups that you cannot pester, unless
   # the page is private and they already have access.
   #
   def share
+    if params[:cancel]
+      close_popup and return
+    end
     begin
-      if params[:cancel]
-        render :template => 'base_page/reset_sidebar'
-        return
-      end
-      users, groups, emails, errors = parse_recipients(params[:recipients])
-      unless errors.empty?
-        flash_message_now :title => 'Could not understand some recipients. Please try again.', :error => errors
-        render :template => 'base_page/show_errors'
-        return
-      end
-      access = (params[:access] || :view).to_sym
+      users, groups, emails = parse_recipients!(params[:recipients])
+
+      access = params[:access].any? ? params[:access].to_sym : nil
       msg = params[:message]
-      users_to_email = [] 
-      # puts [users, groups, emails, errors].inspect
+      users_to_email = []
+
+      ## add users to page
       users.each do |user|
-        if current_user.share_page_with_user(@page, user, :access => access, :message => msg)
+        if current_user.share_page_with_user!(@page, user, :access => access, :message => msg)
           users_to_email << user if user.wants_notification_email?
         end
       end
+
+      ## add groups to page
       groups.each do |group|
-        users_succeeded = current_user.share_page_with_group(@page, group,
+        users_succeeded = current_user.share_page_with_group!(@page, group,
           :access => access, :message => msg)
         users_succeeded.each do |user|
           users_to_email << user if user.wants_notification_email?
         end
       end
-  #    emails.each do |email|
-  #      Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
-  #    end
+
+      ## send access granted emails (TODO)
+      # emails.each do |email|
+      #   Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
+      # end
+
+      ## send notification emails
       if params[:send_emails]
         users_to_email.each do |user|
           logger.info '----------------- emailing %s' % user.email
           Mailer.deliver_page_notice(user, msg, mailer_options)
         end
       end
-      unless current_user.valid?
-        flash_message_now :object => current_user # display any sending errors
-      end
-      render :template => 'base_page/reset_sidebar'
-    rescue Exception => error
-      flash_message_now :title => 'Error: ' + error.class.to_s, :error => error.to_s
-      render :template => 'base_page/reset_sidebar'
+
+      # success!!
+      @page.save
+      close_popup
+
+    rescue PermissionDenied => exc
+      flash_message_now :title => 'Permission Denied'[:permission_denied], :error => exc
+      show_error_message
+    rescue ErrorMessages => exc
+      flash_message_now :title => exc.title, :error => exc.errors
+      show_error_message
+    rescue Exception => exc
+      flash_message_now :title => 'Error: ' + exc.class.to_s, :error => exc.to_s
+      show_error_message
     end
   end
 
@@ -145,17 +153,25 @@ class BasePage::ParticipationController < ApplicationController
   ##
 
   def close_details
-    render :template => 'base_page/reset_sidebar'
+    close_popup
   end
 
+  # create or update a user_participation object, granting new access. 
   def create
-    users, groups, emails, errors = parse_recipients(params[:add_names])
-    (users+groups).each do |thing|
-      @page.add(thing, :access => params[:access].to_sym)
-    end
-    render :update do |page|
-      page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
-      page.hide spinner_id('permissions')
+    begin
+      users, groups, emails = parse_recipients!(params[:add_names])
+      (users+groups).each do |thing|
+        @page.add(thing, :access => params[:access].to_sym)
+      end
+      render :update do |page|
+        page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
+      end
+    rescue ErrorMessages => exc
+      flash_message_now :title => exc.title, :error => exc.errors
+      show_error_message
+    rescue Exception => exc
+      flash_message_now :title => 'Error: ' + exc.class.to_s, :error => exc.to_s
+      show_error_message
     end
   end
   
@@ -181,10 +197,18 @@ class BasePage::ParticipationController < ApplicationController
   
   protected
   
+  def close_popup
+    render :template => 'base_page/reset_sidebar'
+  end
+
+  def show_error_message
+    render :template => 'base_page/show_errors'
+  end
+
   # called by share()
   # parses a list of recipients, turning them into email, user, or group
   # objects as appropriate.
-  def parse_recipients(recipients)
+  def parse_recipients!(recipients)
     users = []; groups = []; emails = []; errors = []
     if recipients.is_a? Hash
       to = []
@@ -207,7 +231,12 @@ class BasePage::ParticipationController < ApplicationController
         errors << '"%s" does not match the name of any users or groups and is not a valid email address' % entity
       end
     end
-    [users, groups, emails, errors]
+
+    unless errors.empty?
+      raise ErrorMessages.new('Could not understand some recipients.', errors)
+    end
+
+    [users, groups, emails]
   end
 
 

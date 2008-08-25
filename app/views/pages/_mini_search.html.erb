@@ -1,0 +1,7 @@
+<% form_tag('/me/search/') do %>
+ <%= text_field_tag('search[text]', '') %>
+ <%= hidden_field_tag('search[group]', @group.id) if @group %>
+ <%= hidden_field_tag('search[person]', @user.id) if @user %>
+ <%= submit_tag 'search' %>
+<% end %>
+

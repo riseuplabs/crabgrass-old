@@ -53,4 +53,10 @@ module ApplicationHelper
     concat(render(:partial => partial_name, :locals => options), block.binding)
   end
 
+  def mini_search_form(options={})
+    unless params[:action] == 'search' or params[:controller] =~ /search|inbox/
+      render :partial => 'pages/mini_search', :locals => options
+    end
+  end
+
 end

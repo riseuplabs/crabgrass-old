@@ -48,12 +48,13 @@ module ErrorHelper
         flsh[:text] += content_tag :p, "There are problems with the following fields" + ":"
         flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
       end
-    elsif options[:error] and options[:error].any?
+    elsif options[:error] and options[:error].to_s.any?
       flsh[:type] = 'error'
-      flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg| content_tag :li, msg}
+      errors = options[:error].is_a?(Enumerable) ? options[:error] : [options[:error].to_s]
+      flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
     elsif options[:success] and options[:success].any?
       flsh[:type] = 'info'
-      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, msg}
+      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
     end
   end
 

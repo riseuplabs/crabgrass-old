@@ -30,7 +30,7 @@ class PageStork
       end
     end
     page.save
-    page.add(group)
+    page.add(group, :access => :admin)
     page.add(group.users)
   end
   
@@ -136,7 +136,7 @@ class PageStork
       p.created_by = user
     end
     page.save
-    page.add(group)
+    page.add(group, :access => :admin)
     if options[:body]
       page.data = Wiki.new(:body => options[:body], :page => page)
     end
@@ -169,7 +169,7 @@ class PageStork
 	e.created_by = user
     end
     page.save
-    page.add(group)
+    page.add(group, :access => :admin)
     page
   end
 	

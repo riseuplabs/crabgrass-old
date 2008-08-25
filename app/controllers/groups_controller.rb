@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   #layout :choose_layout
   stylesheet 'groups'
   
-  before_filter :find_group, :except => ['list','create','index']
+  prepend_before_filter :find_group, :except => ['list','create','index']
   
   before_filter :login_required,
     :except => [:list, :index, :show, :search, :archive, :tags]

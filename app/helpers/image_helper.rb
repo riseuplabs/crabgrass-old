@@ -159,12 +159,13 @@ module ImageHelper
     img = thumbnail_img_tag(asset, thumbnail_name,options)
     if size = (options[:crop]||options[:scale]||options[:crop!])
       target_width, target_height = size.split(/x/).map(&:to_f)
-    elsif thumbnail.width and thumbnail.height
+    elsif thumbnail and thumbnail.width and thumbnail.height
       target_width = thumbnail.width
       target_height = thumbnail.height
+    else
+      target_width = 32;
+      target_height = 32;     
     end  
-#    target_width += 2  # for border
-#    target_height += 2
     style = "height:#{target_height}px;width:#{target_width}px"
     link_to img, asset.url, :class => 'thumbnail', :title => asset.filename, :style => style
   end
