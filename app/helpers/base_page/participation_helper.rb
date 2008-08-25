@@ -1,7 +1,9 @@
 module BasePage::ParticipationHelper
 
-  def select_page_access(name)
-    select_tag name, options_for_select([['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']])
+  def select_page_access(name, blank=true)
+    options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
+    options = [['(' + 'no change'[:no_change] + ')','']] + options if blank
+    select_tag name, options_for_select(options)
   end
 
   def access_sym_to_str(sym)

@@ -131,12 +131,21 @@ class Page < ActiveRecord::Base
     user_participations.detect{|p| p.user_id==user.id }
   end
 
-  # a list of the user participation objects, but sorted
-  # by access (higher number is less access permissions)
-  def sorted_participations
-    user_participations.sort do |a,b|
-      (a.access||100) <=> (b.access||100)
-    end
+  # A list of the user participations, with the following properties:
+  # * sorted first by access level
+  # * sorted second by username
+  # * limited to users who have access OR changed_at set
+  def sorted_user_participations
+    self.users # make sure all users are fetched
+    user_participations.select {|upart|
+      upart.access or upart.changed_at
+    }.sort {|a,b|
+      if a.access == b.access
+        a.user.login <=> b.user.login
+      else
+        (a.access||100) <=> (b.access||100)
+      end
+    }
   end
 
   # used for ferret index

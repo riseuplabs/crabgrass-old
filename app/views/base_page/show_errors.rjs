@@ -4,3 +4,11 @@ page.select('input[type=submit]').each do |submit|
 end
 page.hide('popup_spinner')
 
+# push the popup down to make room for the error message...
+# (i can't believe this actually works, although it is slightly off alignment in ie)
+page << [
+  "holder = $('popup_holder');",
+  "holder.originalHeight = holder.originalHeight || holder.offsetTop;",
+  "holder.setStyle('top:' + ($('message').clientHeight+holder.originalHeight) + 'px');"
+].join("\n")
+
