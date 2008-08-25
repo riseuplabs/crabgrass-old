@@ -5,11 +5,6 @@
   <td align='right'>
     <%= render :partial => 'avatars/boxes', :locals => {:users => current_user.contacts.online, :side => 'right'} %>
   </td>
-  <td>
-    <%= link_to 'en', '?lang=en' %>
-    <%= link_to 'es', '?lang=es' %>
-    <%= link_to 'pt', '?lang=pt' %>
-  </td>
   <td align='right'>
     <%= mini_search_form %>
   </td>
