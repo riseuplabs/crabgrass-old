@@ -57,7 +57,7 @@ class String
     s = Iconv.iconv(translation_to, translation_from, self).to_s
     s.titleize
   end
-end 
+end
 
 class Array
   # creates an array suitable for options_for_select
@@ -105,13 +105,4 @@ class Hash
   end
 end
 
-=begin
-class Symbol
-  # Syntax sugar for translations
-  # makes :foo.t return the translation of a given key
-  def t(*args)
-    self # delete this line and remove the comment bellow in order to add the desired functionality.
-    #::I18n.t(self, *args)
-  end
-end
-=end
+
