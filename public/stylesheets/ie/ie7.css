@@ -50,3 +50,10 @@ div.popup blockquote {
   margin-left: -18px;
 }
 
+/* minisearch */
+
+form.minisearch input.minisearch_submit[type=submit] {
+  border: 0px;
+  margin: 0 0 -1px 0;
+}
+

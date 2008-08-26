@@ -62,3 +62,23 @@ div.edit-tab {
 div.edit-tab span {
 }
 
+/* minisearch */
+
+input.minisearch_text {
+  border: 0;
+}
+input.minisearch_submit {
+  border: 0;
+  background: #999;
+  color: white;
+  margin-bottom: -1px;
+}
+input.minisearch_submit:hover {
+  background: #666;
+}
+form.minisearch {
+  margin: 0;
+  border: 1px solid #000;
+  background: white;
+}
+
