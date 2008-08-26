@@ -11,15 +11,19 @@ class ApplicationController < ActionController::Base
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
+
+  # the order of these filters matters. change with caution.
+  before_filter :fetch_site
+  around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
-  around_filter :rescue_authentication_errors, :set_language
+  around_filter :rescue_authentication_errors
+
   session :session_secure => true if Crabgrass::Config.https_only
   protect_from_forgery :secret => Crabgrass::Config.secret
   layout 'default'
 
   protected
 
-  prepend_before_filter :fetch_site
   def fetch_site
     @site = Site.default
   end
@@ -109,15 +113,21 @@ class ApplicationController < ActionController::Base
     # once we are sure we destroy/recreate session on login we can remove
     # this corner case
     if !logged_in?
-      default_language = Language.find_by_name(@site.default_language)
-      Gibberish.use_language(default_language.code[0,2].to_sym) { yield }
+      if default_language = Language.find_by_name(@site.default_language)
+        Gibberish.use_language(default_language.code[0,2].to_sym) { yield }
+      else
+        yield
+      end
     elsif current_user.language
       session[:language] ||= current_user.language[0,2].to_sym
       Gibberish.use_language(session[:language]) { yield }
     else
-      default_language = Language.find_by_name(@site.default_language)
-      session[:language] ||= default_language.code[0,2].to_sym
-      Gibberish.use_language(session[:language]) { yield }
+      if default_language = Language.find_by_name(@site.default_language)
+        session[:language] ||= default_language.code[0,2].to_sym
+        Gibberish.use_language(session[:language]) { yield }
+      else
+        yield
+      end
     end
   end
 
