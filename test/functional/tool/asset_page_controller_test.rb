@@ -40,7 +40,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     get 'create'
     assert_no_difference 'Asset.count' do
       post 'create', :asset => {:uploaded_data => ""}
-      assert_not_nil flash[:error], "shouldn't be able to create an asset page with no asset"
+      assert_equal 'error', flash[:type], "shouldn't be able to create an asset page with no asset"
     end
     
     assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do
