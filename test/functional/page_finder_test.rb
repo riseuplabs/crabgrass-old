@@ -219,22 +219,33 @@ class PageFinderTest < Test::Unit::TestCase
   ### Tests for various search parameters
 
   SPHINX_DEBUG_NOTES = "
-To make thinking_sphinx tests pass, following the following steps:
-0. Make sure all migrations have run
-  rake db:migrate
-1. Make the development database match the test database
-  rake db:schema:load
-  rake db:fixtures:load
-2. Update the page_index table
-  rake cg:update_page_index
-3. Index the data with sphinx and start the search daemon
-  rake ts:index
-  rake ts:start
-4. Run the tests
+To make thinking_sphinx tests work, try the following steps:
+0. Run the functional test (which might fail), to populate the
+test database
   rake test:functionals
+1. Update the page_index table, index the data with sphinx and start the search daemon
+  rake RAILS_ENV=test cg:update_page_index ts:index ts:start
+3. Run the tests
+  rake test:functionals
+
 "
+  @@warning_printed = false
+  
+  def sphinx_working?
+    if not ThinkingSphinx.updates_enabled?
+      unless @@warning_printed
+        puts "\n\nSphinx Search doesn't seem to be running:" + PageFinderTest::SPHINX_DEBUG_NOTES
+        @@warning_printed = true
+      end
+      return false
+    else
+      return true
+    end
+  end  
   
   def test_sphinx_searchs
+    return if not sphinx_working?
+    
     login(:blue)
     user = users(:blue)
     
@@ -298,7 +309,15 @@ To make thinking_sphinx tests pass, following the following steps:
 =end
   end  
 
+  def test_sphinx_search_text_doc
+    return if not sphinx_working?
+    
+    # TODO: write this test
+  end
+  
   def test_sphinx_searchs_w_pagination
+    return if not sphinx_working?
+
     login(:blue)
     user = users(:blue)
     
