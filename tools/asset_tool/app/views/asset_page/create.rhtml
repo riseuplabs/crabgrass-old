@@ -1,67 +1,49 @@
+<div class='create_page'>
 
-<div class='workarea'>
-<h2 class= "titlebox h2"><img src="/images/pages/big/package.png" align="middle"> <%= "Create a new".t %> <b><%= @page_class.class_display_name.t %></b></h2>
+<h1 class="section">
+  <img src="/images/pages/big/package.png">
+  <%= "Create a new".t %>
+  <b><%= @page_class.class_display_name.t %></b>
+</h1>
 
-
-<div id="contentbox">
 <% form_tag({:action => 'create'}, :multipart => true) do %>
-<%= hidden_field_tag 'page_class', @page_class %>
-<table cellpadding='7'>
-
-<tr>
-  <td class='titlebox h3' colspan="2" >
-  <!--div style='padding: 8px; background: url(/images/pages/big/<%=@page_class.icon%>) no-repeat 100% 50%'-->
-    <%= 'Page Info' %>
-  <!--/div-->
-  </td>
-</tr>
-
-<tr>
-  <td align='right'>File:</td>
-  <td><%= file_field 'asset', 'uploaded_data', :size => 38 %></td>
-</tr>
-
-<tr>
-  <td align='right'>Title:</td>
-  <td><%= text_field 'page', 'title', :size => 38 %></td>
-</tr>
-
-<tr>
-  <td align='right'>Summary:</td>
-  <td><%= text_area 'page', 'summary', :size => '30x3' %></td>
-</tr>
-
-<tr>
-  <td align='right'>Tags:</td>
-  <td><%= text_field_tag 'tag_list', '', :size => 38 %> <i>(separate tags using commas)</i></td>
-</tr>
-
-<% if current_user.all_groups.any? -%>
-<tr>
-  <td class='titlebox h3' colspan="2" >
-  <!--div style='padding: 8px; background: url(/images/actions/eye.png) no-repeat 100% 50%'-->
-    <%= 'Access Info' %>
-  <!--/div-->
-  </td>
-</tr>
-
-<tr>
-  <td align='right'>Group:</td>
-  <td>
-    <%= select_tag 'group_id', options_for_select(
-      [['no one, just me', '']] + current_user.all_groups.to_select(:name), params[:group_id]
-    ) %>
-  </td>
-</tr>
-<% end -%>
-
-<tr>
-  <td align='left' colspan="2">
-    <%= submit_tag "Create page".t, :name => 'create' %>
-  </td>
-</tr>
-</table>
+  <%= hidden_field_tag 'page_class', @page_class %>
+  <table>
+    <tr>
+      <td class='label'><%= 'File'.t %></td>
+      <td><%= file_field 'asset', 'uploaded_data', :size => 38 %></td>
+    </tr>
+    <tr>
+      <td class='label'><%= 'Title'.t %></td>
+      <td><%= text_field 'page', 'title', :size => 38 %></td>
+    </tr>
+    <tr>
+      <td class='label'><%= 'Summary'.t %></td>
+      <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
+    </tr>
+    <tr>
+      <td class='label'><%= 'Tags'.t %></td>
+      <td>
+        <%= text_field_tag 'tag_list', '', :size => 38 %><br/>
+        <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
+      </td>
+    </tr>
+    <% if current_user.all_groups.any? -%>
+    <tr>
+      <td class='label'><%= 'Group'.t %></td>
+      <td>
+        <%= select_tag 'group_id', options_for_select(
+          [['no one, just me', '']] + current_user.all_groups.to_select(:name), params[:group_id]
+        ) %>
+      </td>
+    </tr>
+    <% end -%>
+    <tr>
+      <td align='left' colspan="2">
+        <%= submit_tag "Create page".t, :name => 'create' %>
+      </td>
+    </tr>
+  </table>
 <% end %>
-</div>
-</div>
 
+</div>

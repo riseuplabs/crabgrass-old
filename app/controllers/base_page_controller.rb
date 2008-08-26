@@ -53,17 +53,20 @@ class BasePageController < ApplicationController
   
   protected
 
+  # returns true if params[:action] matches one of the args
+  def action?(*actions)
+    actions.include?(params[:action].to_sym)
+  end
+
   def authorized?
-    if @page
-      if params[:action] == 'show_popup'
-        return true
-      elsif params[:action] == 'show'
-        current_user.may?(:view, @page)
-      else
-        current_user.may?(:admin, @page)
-      end
-    else
+    if @page.nil?
       true
+    elsif action?(:show_popup)
+      true
+    elsif action?(:show)
+      current_user.may?(:view, @page)
+    else
+      current_user.may?(:admin, @page)
     end
   end
 

@@ -28,6 +28,7 @@
       <%= edit_tags_line %>
     </ul>
 
+    <%- if @show_attach -%>
     <h2>attachments</h2>
     <div class='attachments'>
       <%= page_attachments %>
@@ -35,6 +36,7 @@
     <ul class='side_list'>
       <%= edit_attachments_line %>
     </ul>
+    <%- end -%>
 
     <% if @page.group_participations.any? -%>
       <h2>groups</h2>

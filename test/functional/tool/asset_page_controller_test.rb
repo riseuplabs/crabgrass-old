@@ -38,14 +38,9 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     login_as :gerrard
 
     get 'create'
-#    assert_template 'create', "should render asset creation page"
-    
-#    post 'create'
-#    assert_equal "You must select a file.", flash[:error], "shouldn't be able to create an asset page with no asset"
-
     assert_no_difference 'Asset.count' do
       post 'create', :asset => {:uploaded_data => ""}
-      assert_equal "You must select a file.", flash[:error], "shouldn't be able to create an asset page with no asset"
+      assert_not_nil flash[:error], "shouldn't be able to create an asset page with no asset"
     end
     
     assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do

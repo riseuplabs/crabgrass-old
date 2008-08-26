@@ -70,7 +70,7 @@ fieldset textarea {
 
 /* sections */
 
-h2.section, h3.section, h4.section {
+h1.section, h2.section, h3.section, h4.section {
   font-family: arial;
   font-size: 1.4em;
   font-weight: normal;
@@ -81,7 +81,12 @@ h2.section, h3.section, h4.section {
   -moz-border-radius: 4px;
   webkit-border-radius: 2px;
 }
-
+h1.section {
+  font-size: 2em;
+}
+h1.section img {
+  vertical-align: middle;
+}
 h4.section {
   font-size: 1em;
   font-weight: bold;
