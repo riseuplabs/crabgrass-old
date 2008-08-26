@@ -51,14 +51,13 @@ module LayoutHelper
   # elements for HTML>HEAD. There are five (5!) types of stylings:
   #
   # (1) default crabgrass stylesheets (for core things like layout)
-  # (2) optional stylesheets (these are stylesheets that are loaded on a
+  # (2) theme_styles (core css, but for making things pretty).
+  # (3) optional stylesheets (these are stylesheets that are loaded on a
   #     per-controller or per-action basis.
-  # (3) custom stylesheets (this is an empty stub, to be filled out by mods
-  #     that want to easily insert their own stylesheet)
-  # (4) content_for :style (inline styles set in the views)
-  # (5) theme_styles (dynamic styles set based on database information, like the site or
-  #     the user's customizations).
-  #
+  # (4) context styles (style changes based on context)
+  # (5) content_for :style (inline styles set in the views)
+  # (6) mod styles (so that mods can insert their own styles after everthing else)
+
   def crabgrass_stylesheets
     lines = [];
 
@@ -78,23 +77,20 @@ module LayoutHelper
 
       :cache => 'core'
     )
-
+    lines << theme_styles
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
     lines << context_styles
     lines << @content_for_style
     lines << '</style>'
-    lines << stylesheet_link_tag('ie/icons_gif')
-    # ^^^ i would like to do this only for ie, but that doesn't seem to work
     lines << '<!--[if IE 6]>'
     lines << stylesheet_link_tag('ie/ie6')
-#    lines << stylesheet_link_tag('ie/icons_gif')
+    lines << stylesheet_link_tag('ie/icons_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
     lines << stylesheet_link_tag('ie/ie7')
-#    lines << stylesheet_link_tag('ie/icons_gif')
+    lines << stylesheet_link_tag('ie/icons_gif')
     lines << '<![endif]-->'
-    lines << theme_styles
     lines << mod_styles
     lines.join("\n")
   end
@@ -111,7 +107,7 @@ module LayoutHelper
 
       'theme/15_tables', 
       'theme/15_pagination',
-#      'theme/15_icons_png',
+      'theme/15_icons_png',
 
       'theme/17_ui',
       'theme/17_tabs',
