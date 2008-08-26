@@ -165,5 +165,6 @@ form.minisearch {
   float: right;
   padding-left: 4px;
   background: white;
+  white-space: nowrap;
 }
 

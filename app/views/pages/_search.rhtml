@@ -13,6 +13,12 @@
   show_extras ||= 'false'
   show_page_types ||= 'true'
   url ||= params.allow(:controller, :action, :id)
+
+  group_id = parsed.int_for('group')
+  if group_id
+    group = Group.find_by_id(group_id)
+    groups += [group] if group
+  end
 %>
 <%# [show_extras, show_page_types, url].inspect -%>
 

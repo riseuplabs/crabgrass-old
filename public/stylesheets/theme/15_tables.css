@@ -4,7 +4,7 @@
   border-collapse: collapse;
   width: 100%;
 }
-.pretty table td, .pretty table th {
+.pretty table td {
   padding: 3px;
   border-bottom: 1px solid #e6e6e6;
 }
@@ -19,6 +19,8 @@
 }
 .pretty table th {
   background: #ddd;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
 }
 .pretty table tr.unread {
   font-weight: bold;
@@ -88,3 +90,4 @@ table.activity tbody.odd {
 table.activity tbody.even {
   background-color: white;
 }
+
