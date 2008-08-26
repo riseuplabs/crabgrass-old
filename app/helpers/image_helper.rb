@@ -167,7 +167,8 @@ module ImageHelper
       target_height = 32;     
     end  
     style = "height:#{target_height}px;width:#{target_width}px"
-    link_to img, asset.url, :class => 'thumbnail', :title => asset.filename, :style => style
+    klass = options[:class] || 'thumbnail'
+    link_to img, asset.url, :class => klass, :title => asset.filename, :style => style
   end
 
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil)

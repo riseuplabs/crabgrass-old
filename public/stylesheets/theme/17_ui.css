@@ -70,7 +70,7 @@ fieldset textarea {
 
 /* sections */
 
-h2.section, h3.section, h4.section {
+h1.section, h2.section, h3.section, h4.section {
   font-family: arial;
   font-size: 1.4em;
   font-weight: normal;
@@ -81,7 +81,12 @@ h2.section, h3.section, h4.section {
   -moz-border-radius: 4px;
   webkit-border-radius: 2px;
 }
-
+h1.section {
+  font-size: 2em;
+}
+h1.section img {
+  vertical-align: middle;
+}
 h4.section {
   font-size: 1em;
   font-weight: bold;
@@ -110,6 +115,20 @@ h4.section {
   -moz-border-radius-topleft: 4px;
 }
 
+.round_left {
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-bottomleft: 4px;
+}
+
+.round_right {
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
+}
+
 /** thumbnails **/
 a.thumbnail {
   display:block;
@@ -123,5 +142,28 @@ a.thumbnail {
 a.thumbnail:hover {
   border: 1px solid #cdf;
   outline: 1px solid black;
+}
+
+
+/* minisearch */
+
+form.minisearch input[type=text] {
+  border: 0;
+  background: #fff;
+}
+form.minisearch input[type=submit] {
+  border: 1px solid white;
+  background: #888;
+  color: white;
+  margin-left: -6px;
+}
+form.minisearch input[type=submit]:hover {
+  background: #555;
+}
+form.minisearch {
+  border: 1px solid #000;
+  float: right;
+  padding-left: 4px;
+  background: white;
 }
 

@@ -152,10 +152,14 @@ class Asset < ActiveRecord::Base
 
   # eg: 'image/jpg' --> ImageAsset
   def self.class_for_mime_type(mime)
-    Media::MimeType.asset_class_from_mime_type(mime).constantize
+    if mime
+      Media::MimeType.asset_class_from_mime_type(mime).constantize
+    else
+      Asset
+    end
   end
   def self.mime_type_from_data(file_data)
-    return nil unless file_data
+    return nil unless file_data and file_data.any?
     mime = file_data.content_type
     if mime == 'application/octet-stream'
       mime = Media::MimeType.mime_type_from_extension(file_data.original_filename)

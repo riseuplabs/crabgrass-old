@@ -10,15 +10,17 @@ class AssetPageController < BasePageController
 
   def create
     @page_class = AssetPage
+    @stylesheet = 'page_creation'
     if request.post?
-      if params[:asset][:uploaded_data] == ""
-        flash[:error] = "You must select a file."
-        return render(:action => 'create')
+      @asset = Asset.make params[:asset]
+      #raise @asset.errors.inspect
+      unless @asset.valid?
+        @asset.errors.add('uploaded_data', 'required') unless params[:asset][:uploaded_data].any?
+        flash_message_now :object => @asset
+        return
       end
       
       @page = create_new_page(@page_class)
-      @asset = Asset.make params[:asset]
-
       @page.data = @asset
       if @page.title.any?
 #        @asset.filename = @page.title + @asset.suffix
@@ -62,12 +64,24 @@ class AssetPageController < BasePageController
   def generate_preview
     @asset.generate_thumbnails
     render :update do |page|
-      page.replace_html 'preview-area', asset_link_with_preview(@asset)
+      page.replace_html 'preview_area', asset_link_with_preview(@asset)
     end
   end
 
   protected
   
+  def authorized?
+    if @page.nil?
+      true
+    elsif action?(:update)
+      current_user.may?(:edit,@page)
+    elsif action?(:generate_preview, :show)
+      @page.public? or current_user.may?(:view,@page)
+    else
+      current_user.may?(:admin, @page)
+    end  
+  end
+ 
   def fetch_asset
     @asset = @page.data if @page
   end

@@ -359,6 +359,7 @@ class Page < ActiveRecord::Base
   before_save :async_update_index
   
   def async_update_index
+    return true unless ::BACKGROUND
     begin
       MiddleMan.worker(:indexing_worker).async_update_page_index(:arg => self.id)
     rescue BackgrounDRb::NoServerAvailable => err

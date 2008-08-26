@@ -1,0 +1,46 @@
+td.busy {
+  background: transparent url(/images/spinner.gif) no-repeat;
+}
+td.busy span {
+  visibility: hidden;
+}
+
+div#preview_area {
+  border: 4px solid white;
+  text-align: center;
+}
+div#preview_area a {
+  display:block;
+}
+.checkerboard {
+  background: url(/images/background/checkerboard.png);
+}
+div#preview_wrapper {
+  border: 1px solid #ccc;
+}
+div#upload_new {
+  margin-top: 10px;
+}
+#asset_page .pretty table td {
+  padding: 4px;
+}
+h2.section {
+  margin-bottom: 0.5em;
+}
+/* doesn't work with enclosing a being a block. too bad, this is fun. */
+/* div#preview_area img {
+  width: 100%;
+  height: 100%;
+} */
+
+div#asset_page div.left {
+  float:left;
+  text-align: center;
+  margin-bottom: 16px;
+  margin-right: 16px;
+}
+div#asset_page div.right {
+  float:left;
+}
+
+

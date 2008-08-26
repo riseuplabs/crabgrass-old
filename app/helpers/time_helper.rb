@@ -22,9 +22,9 @@ module TimeHelper
     elsif today > date and (today-date) < 7
       str = time.strftime("%A")
     elsif date.year != today.year
-      str = date.loc("%d/%b/%Y")
+      str = date.strftime("%d/%b/%Y")
     else
-      str = date.loc('%d/%b')
+      str = date.strftime('%d/%b')
     end
     "<label title='#{ full_time(time) }'>#{str}</label>"
   end
@@ -33,7 +33,6 @@ module TimeHelper
   # for example: Sunday July/3/2007 2:13PM PST
   def full_time(time)
     time.strftime('%a %b %d %H:%M:%S %Z %Y')
-    #'%s %s %s %s' % [time.loc('%A'), time.loc('%d/%b/%Y'), time.loc('%I:%M'), time.]
   end
 
 #  def to_local(time)

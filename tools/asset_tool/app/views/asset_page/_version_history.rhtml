@@ -1,22 +1,20 @@
-<table class="page-list">
-
-  <tr class="page-list-heading">
+<div class='pretty'><table>
+  <tr>
     <th></th><th></th>
-    <th nowrap="nowrap">version</th>
-    <th nowrap="nowrap">updated on</th>
+    <th nowrap="nowrap"><%= 'version'.t %></th>
+    <th nowrap="nowrap"><%= 'updated'.t %></th>
   </tr>
-
 <% @asset.versions.reverse.each do |version| -%>
-  <tr class="<%= cycle('shade-odd', 'shade-even') %>" id="asset_<%= @asset.id %>_version_<%= version.version %>">
+  <tr class="<%= cycle('odd', 'even') %>" id="asset_<%= @asset.id %>_version_<%= version.version %>">
     <td>
       <% if @current_user.may?(:edit, @page) and version.version < @asset.version -%>
         <span><%= destroy_version_link(version) %></span>
       <% end -%>
     </td>
     <td><%= link_to_asset(version, :small, :crop! => '32x32') %></td>
-    <td><%= link_to "version #{version.version}", version.url %></td>
-    <td><%= full_time(version.updated_at) %></td>
+    <td nobreak='nobreak'><%= link_to "version #{version.version}", version.url %></td>
+    <td><%= friendly_date(version.updated_at) %></td>
   </tr>
 <% end -%>
 </table>
-
+</div>

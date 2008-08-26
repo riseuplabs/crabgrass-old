@@ -14,10 +14,15 @@ div.page-class .page-link {
   outline: 0;
 }
 
-table.create td {
-  vertical-align: top;
-  padding: 4px;
+.create_page td {
+  padding: 8px;
 }
-table.create td input {
-  margin-bottom: 0.5em;
+.create_page td.label {
+  font-weight: bold;
+  text-align: right;
+}
+.create_page input[type=text],
+.create_page textarea {
+  width: 25em;
+  font-family: serif; font-size: 1em;
 }
