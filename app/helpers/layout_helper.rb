@@ -42,7 +42,8 @@ module LayoutHelper
   # only included if they are needed. a controller can set a custom stylesheet
   # using 'stylesheet' in the class definition, or an action can set @stylesheet.
   def optional_stylesheet_tag
-    stylesheet_link_tag(*( [controller.class.stylesheet, @stylesheet].flatten.compact ))
+    sheets = [controller.class.stylesheet, @stylesheet].flatten.compact.collect{|i| 'as_needed/' + i}
+    stylesheet_link_tag(*sheets)
   end 
  
   # crabgrass_stylesheets()
