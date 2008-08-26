@@ -118,7 +118,7 @@ class ApplicationController < ActionController::Base
       else
         yield
       end
-    elsif current_user.language
+    elsif !current_user.language.empty?
       Gibberish.use_language(current_user.language[0,2].to_sym) { yield }
     else
       if default_language = Language.find_by_name(@site.default_language)
