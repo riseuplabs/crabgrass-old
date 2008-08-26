@@ -1,6 +1,10 @@
-<% popup('Page Details', :id => 'details_popup', :style => '') do -%>
+<% popup('Page Details', :id => 'details_popup', :width => "40em") do -%>
 
-  <div style='width:40em'></div>
+    <table><tr>
+      <td><b><%= 'Created'.t %>:</b> <%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
+      <td>&nbsp;&nbsp;&nbsp;</td>
+      <td><b><%= 'Updated'.t %>:</b> <%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
+    </tr></table><br/>
 
     <%= render :partial => 'base_page/participation/details_tabs' -%>
     <div class='tab-content tab-area' id='permissions_tab'>
