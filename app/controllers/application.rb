@@ -119,12 +119,10 @@ class ApplicationController < ActionController::Base
         yield
       end
     elsif current_user.language
-      session[:language] ||= current_user.language[0,2].to_sym
-      Gibberish.use_language(session[:language]) { yield }
+      Gibberish.use_language(current_user.language[0,2].to_sym) { yield }
     else
       if default_language = Language.find_by_name(@site.default_language)
-        session[:language] ||= default_language.code[0,2].to_sym
-        Gibberish.use_language(session[:language]) { yield }
+        Gibberish.use_language(default_language.code[0,2].to_sym) { yield }
       else
         yield
       end
