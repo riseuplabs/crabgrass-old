@@ -90,4 +90,12 @@ class Gibberize::TranslationsController < Gibberize::BaseController
       format.xml  { head :ok }
     end
   end
+
+  def translation_file
+    language = Language.find_by_code(params[:id])
+    translations = Translation.find(:all, :conditions => ["language_id = ?", language.id])
+    @buffer = String.new
+    translations.each {|t| @buffer << "#{t.key.name}: #{t.text}\n"}
+    render :layout => false
+  end
 end

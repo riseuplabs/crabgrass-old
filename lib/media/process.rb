@@ -40,7 +40,7 @@ module Media
     }.freeze
 
     CONTENT_TYPES_PRODUCED_BY = {
-      :open_office => %w(application/pdf),
+      :open_office => %w(application/pdf text/plain),
       :graphic_magick => %w(application/pdf image/jpeg image/pjpeg
         image/gif image/png image/jpg image/tiff)
     }.freeze

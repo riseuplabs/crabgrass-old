@@ -105,8 +105,20 @@ class ApplicationController < ActionController::Base
   # get the user language from the user profile or use the site default one
   # deal with the fact that Gibberish only works with lang codes and not locales
   def set_language
-    session[:language] = params[:lang].to_sym if params[:lang]
-    Gibberish.use_language(session[:language]) { yield }
+    # if user is not logged in we query the db on every page load
+    # once we are sure we destroy/recreate session on login we can remove
+    # this corner case
+    if !logged_in?
+      default_language = Language.find_by_name(@site.default_language)
+      Gibberish.use_language(default_language.code[0,2].to_sym) { yield }
+    elsif current_user.language
+      session[:language] ||= current_user.language[0,2].to_sym
+      Gibberish.use_language(session[:language]) { yield }
+    else
+      default_language = Language.find_by_name(@site.default_language)
+      session[:language] ||= default_language.code[0,2].to_sym
+      Gibberish.use_language(session[:language]) { yield }
+    end
   end
 
 end

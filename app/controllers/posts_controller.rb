@@ -10,6 +10,7 @@ class PostsController < ApplicationController
       @page.build_post(@post,current_user)
       @post.save!
       current_user.updated(@page)
+      @page.save
       respond_to do |wants|
         wants.html {
           redirect_to page_url(@page)#, :anchor => @page.discussion.posts.last.dom_id)

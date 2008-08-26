@@ -356,7 +356,17 @@ class Page < ActiveRecord::Base
   has_one :page_index, :dependent => :destroy
 
 ### TODO: make sphinx code fail gracefully if searchd is not running  
-  before_save :update_index
+  before_save :async_update_index
+  
+  def async_update_index
+    begin
+      MiddleMan.worker(:indexing_worker).async_update_page_index(:arg => self.id)
+    rescue BackgrounDRb::NoServerAvailable => err
+      logger.error "Warning: #{err}; performing synchronous update of page index"
+      update_index
+    end
+  end
+  
   def update_index
     self.page_index ||= PageIndex.new
     # store text version of user_ids and group_ids for sql full text search

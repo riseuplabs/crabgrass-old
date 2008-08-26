@@ -36,6 +36,9 @@ class WikiPageController < BasePageController
   def version
     @version = @wiki.versions.find_by_version(params[:id])
   end
+
+  def versions
+  end
   
   def diff
     old_id, new_id = params[:id].split('-')
@@ -88,6 +91,7 @@ class WikiPageController < BasePageController
     begin
       @wiki.smart_save!( params[:wiki].merge(:user => current_user) )
       @wiki.unlock(current_user)
+      current_user.updated(@page)
       redirect_to page_url(@page, :action => 'show')
     rescue ActiveRecord::StaleObjectError
       # this exception is created by optimistic locking. 
@@ -118,7 +122,7 @@ class WikiPageController < BasePageController
 
   def authorized?
     if @page
-      if %w(show print diff version).include? params[:action]
+      if %w(show print diff version versions).include? params[:action]
         @page.public? or current_user.may?(:view, @page)
       elsif %w(edit break_lock).include? params[:action]
         current_user.may?(:edit, @page)
