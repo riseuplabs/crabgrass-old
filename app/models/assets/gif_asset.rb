@@ -7,9 +7,9 @@
 class GifAsset < Asset
 
   define_thumbnails(
-    :small =>  {:size => '64x64>',   :ext => 'png'},
-    :medium => {:size => '200x200>', :ext => 'png'},
-    :large =>  {:size => '500x500>', :ext => 'png'}
+    :small  => {:size => '64x64>',   :ext => 'png', :title => 'Small Thumbnail'}, 
+    :medium => {:size => '200x200>', :ext => 'png', :title => 'Medium Thumbnail'}, 
+    :large  => {:size => '500x500>', :ext => 'png', :title => 'Large Thumbnail'}  
   )
 
 end

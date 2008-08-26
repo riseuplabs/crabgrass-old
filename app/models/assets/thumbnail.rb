@@ -15,8 +15,10 @@ class Thumbnail < ActiveRecord::Base
 
   after_destroy :rm_file
   def rm_file
-    fname = parent.private_thumbnail_filename(filename)
-    FileUtils.rm(fname) if File.exists?(fname)
+    unless thumbdef.proxy and parent.content_type == thumbdef.mime_type
+      fname = parent.private_thumbnail_filename(filename)
+      FileUtils.rm(fname) if File.exists?(fname) and File.file?(fname)
+    end
   end
 
   # returns the thumbnail object that we depend on, if any.
@@ -33,9 +35,9 @@ class Thumbnail < ActiveRecord::Base
 
   # generates the thumbnail file for this thumbnail object
   def generate(force=false)
-    return if File.exists?(self.private_filename) and !force
+    return if !force and File.exists?(private_filename) and File.size(private_filename) > 0
     if depends_on
-      depends_on.generate
+      depends_on.generate(force)
       input_type  = depends_on.content_type
       input_file  = depends_on.private_filename
     else
@@ -71,8 +73,18 @@ class Thumbnail < ActiveRecord::Base
   end
 
   def versioned
-    asset = parent.versions.detect{|v|v.version == parent.version}
-    asset.thumbnail(self.name) if asset
+    if !parent.is_version?
+      asset = parent.versions.detect{|v|v.version == parent.version}
+      asset.thumbnail(self.name) if asset
+    end
+  end
+
+  def small_icon
+    "mime/small/#{Media::MimeType.icon_for(content_type)}"
+  end
+
+  def title
+    thumbdef.title || Media::MimeType.description_from_mime_type(content_type)
   end
 
   # delegate path stuff to the parent

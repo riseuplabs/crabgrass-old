@@ -66,6 +66,10 @@ class Asset < ActiveRecord::Base
     def small_icon
       "mime/small/#{Media::MimeType.icon_for(content_type)}"
     end
+
+    def format_description
+      Media::MimeType.description_from_mime_type(content_type)
+    end
   end
 
   ##

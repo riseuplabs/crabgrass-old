@@ -45,24 +45,28 @@ module Media
       ext = File.extname(ext).gsub('.','') if ext =~ /\./
       EXTENSIONS[ext] || ((MIME::Types.type_for('.'+ext).first||MIME::Type.new('application/octet-stream')).content_type if defined?(MIME::Types))
     end
+
+    def self.description_from_mime_type(mime_type)
+      lookup(mime_type,DESCRIPTION) || lookup(mime_group(mime_type),DESCRIPTION) || lookup('default',DESCRIPTION)
+    end
    
-    EXT = 0; ICON = 1; ASSET_CLASS = 2
+    EXT = 0; ICON = 1; ASSET_CLASS = 2; DESCRIPTION = 3;
     MIME_TYPES = {
-      # mime_type       => [file_extension, icon, asset_class]
-      'default'         => [nil,'default',:asset],
+      # mime_type       => [file_extension, icon, asset_class, description]
+      'default'         => [nil,'default',:asset,'Unknown'],
       
-      'text/'           => [:txt,:html,:doc_asset],
-      'text/html'       => [:html,:html,:doc_asset],
-      'application/rtf' => [:rtf,:rtf,:doc_asset],
-      'text/rtf'        => [:rtf,:rtf,:doc_asset],
+      'text/'           => [:txt,:html,:doc_asset, 'Text'],
+      'text/html'       => [:html,:html,:doc_asset, 'Webpage'],
+      'application/rtf' => [:rtf,:rtf,:doc_asset, 'Rich Text'],
+      'text/rtf'        => [:rtf,:rtf,:doc_asset, 'Rich Text'],
       'text/sgml'       => [:sgml,:xml,nil],
       'text/xml'        => [:xml,:xml,nil],
-      'text/csv'        => [:csv,:csv,:doc_asset],
-      'text/comma-separated-values' => [:csv,:csv,:doc_asset],
+      'text/csv'        => [:csv,:spreadsheet,:doc_asset, 'Comma Separated Values'],
+      'text/comma-separated-values' => [:csv,:spreadsheet,:doc_asset, 'Comma Separated Values'],
 
-      'application/pdf'   => [:pdf,:pdf,:image_asset],
-      'application/bzpdf' => [:pdf,:pdf,:image_asset],
-      'application/gzpdf' => [:pdf,:pdf,:image_asset],
+      'application/pdf'   => [:pdf,:pdf,:image_asset, 'Portable Document Format'],
+      'application/bzpdf' => [:pdf,:pdf,:image_asset, 'Portable Document Format'],
+      'application/gzpdf' => [:pdf,:pdf,:image_asset, 'Portable Document Format'],
       'application/postscript' => [:ps,:pdf,:image_asset],
       
       'text/spreadsheet'     => [:txt,:spreadsheet,:doc_asset],
@@ -74,19 +78,19 @@ module Media
       'application/kword'   => [:kwd,:doc,:doc_asset],
       
 
-      'application/msword'     => [:doc,:msword,:doc_asset],
-      'application/mswrite'    => [:doc,:msword,:doc_asset],
-      'application/powerpoint' => [:ppt,:mspowerpoint,:doc_asset],
-      'application/excel'      => [:xls,:msexcel,:doc_asset],
-      'application/access'     => [nil, :msaccess, :doc_asset],
-      'application/vnd.ms-msword'     => [:doc,:msword,:doc_asset],
-      'application/vnd.ms-mswrite'    => [:doc,:msword,:doc_asset],
-      'application/vnd.ms-powerpoint' => [:ppt,:mspowerpoint,:doc_asset],
-      'application/vnd.ms-excel'      => [:xls,:msexcel,:doc_asset],
-      'application/vnd.ms-access'     => [nil, :msaccess, :doc_asset],
-      'application/msword-template'     => [:doc,:msword,:doc_asset],
-      'application/excel-template'      => [:xlt,:msexcel,:doc_asset],
-      'application/powerpoint-template' => [:pot,:mspowerpoint,:doc_asset],
+      'application/msword'     => [:doc,:msword,:text_asset,'MS Word'],
+      'application/mswrite'    => [:doc,:msword,:text_asset,'MS Write'],
+      'application/powerpoint' => [:ppt,:mspowerpoint,:doc_asset,'MS Powerpoint'],
+      'application/excel'      => [:xls,:msexcel,:spreadsheet_asset,'MS Excel'],
+      'application/access'     => [nil, :msaccess, :doc_asset,'MS Access'],
+      'application/vnd.ms-msword'     => [:doc,:msword,:text_asset,'MS Word'],
+      'application/vnd.ms-mswrite'    => [:doc,:msword,:text_asset,'MS Write'],
+      'application/vnd.ms-powerpoint' => [:ppt,:mspowerpoint,:doc_asset,'MS Powerpoint'],
+      'application/vnd.ms-excel'      => [:xls,:msexcel,:spreadsheet_asset,'MS Excel'],
+      'application/vnd.ms-access'     => [nil, :msaccess, :doc_asset,'MS Access'],
+      'application/msword-template'     => [:doc,:msword,:text_asset,'MS Word Template'],
+      'application/excel-template'      => [:xlt,:msexcel,:spreadsheet_asset,'MS Excel Template'],
+      'application/powerpoint-template' => [:pot,:mspowerpoint,:doc_asset,'MS Powerpoint Template'],
 
       'application/executable'        => [nil,:binary,nil],
       'application/ms-dos-executable' => [nil,:binary,nil],
@@ -95,21 +99,21 @@ module Media
       'application/shellscript' => [:sh,:shell,nil],
       'application/ruby'        => [:rb,:ruby,nil],
           
-      'application/vnd.oasis.opendocument.spreadsheet'  => [:odp,:oo_spreadsheet,:doc_asset],
-      'application/vnd.oasis.opendocument.formula'      => [nil,:oo_spreadsheet,:doc_asset],
-      'application/vnd.oasis.opendocument.chart'        => [nil,:oo_spreadsheet,:doc_asset],
+      'application/vnd.oasis.opendocument.spreadsheet'  => [:ods,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
+      'application/vnd.oasis.opendocument.formula'      => [nil,:oo_spreadsheet,:spreadsheet_asset],
+      'application/vnd.oasis.opendocument.chart'        => [nil,:oo_spreadsheet,:spreadsheet_asset],
       'application/vnd.oasis.opendocument.image'        => [nil,:oo_graphics, :doc_asset],
       'application/vnd.oasis.opendocument.graphics'     => [:odg,:oo_graphics, :doc_asset],
-      'application/vnd.oasis.opendocument.presentation' => [:odp,:oo_presentation,:doc_asset],
+      'application/vnd.oasis.opendocument.presentation' => [:odp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
       'application/vnd.oasis.opendocument.database'     => [:odf,:oo_database,:doc_asset],
       'application/vnd.oasis.opendocument.text-web'     => [:html,:oo_html,:doc_asset],
-      'application/vnd.oasis.opendocument.text'         => [:txt,:oo_text,:doc_asset],
-      'application/vnd.oasis.opendocument.text-template'=> [:txt,:oo_text,:doc_asset],
-      'application/vnd.oasis.opendocument.text-master'  => [:txt,:oo_text,:doc_asset],
+      'application/vnd.oasis.opendocument.text'         => [:odt,:oo_text,:doc_asset, 'OpenDocument Text'],
+      'application/vnd.oasis.opendocument.text-master'  => [:odm,:oo_text,:doc_asset],
 
       'application/vnd.oasis.opendocument.presentation-template' => [:otp,:oo_presentation,:doc_asset],
       'application/vnd.oasis.opendocument.graphics-template'     => [:otg,:oo_graphics,:doc_asset],
-      'application/vnd.oasis.opendocument.spreadsheet-template'  => [:otp,:oo_spreadsheet,:doc_asset],
+      'application/vnd.oasis.opendocument.spreadsheet-template'  => [:ots,:oo_spreadsheet,:spreadsheet_asset],
+      'application/vnd.oasis.opendocument.text-template'         => [:ott,:oo_text,:doc_asset],
 
       'packages/'        => [nil,:archive,nil],
       'multipart/zip'    => [:zip,:archive,nil],
@@ -145,35 +149,19 @@ module Media
       'application/pgp-keys'      => [nil,:lock,nil]
     }.freeze
    
-    # TODO: add openoffice!!! 
+    # override result of MIME::Types
+    # useful for when MIME::Types fails or is ambiguous
     EXTENSIONS = {
       'jpg' => 'image/jpeg',
       'png' => 'image/png',
       'txt' => 'text/plain',
       'flv' => 'video/flv',
-      'pdf' => 'application/pdf'
+      'pdf' => 'application/pdf',
+      'odt' => 'application/vnd.oasis.opendocument.text',
+      'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+      'odp' => 'application/vnd.oasis.opendocument.presentation'
     }.freeze
 
-=begin
-    MAP_ICON_TO_MIME_GROUP = {
-      :pdf => :image,
-      'image' => :image,
-      'text' => :doc,
-      :rtf => :doc,
-      'spreadsheet' => :doc,
-      :doc => :doc,
-      'msword' => :doc,
-      'mspowerpoint' => :doc,
-      'msexcel' => :doc,
-      'spreadsheet' => :doc,
-      'oo-spreadsheet' => :doc,
-      'oo-graphics' => :doc,
-      'oo-presentation' => :doc,
-      'oo-html' => :doc,
-      'oo-spreadsheet' => :doc,
-      'oo-text' => :doc
-    }.freeze
-=end
-
+   
   end
 end
