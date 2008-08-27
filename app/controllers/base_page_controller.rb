@@ -137,9 +137,19 @@ class BasePageController < ApplicationController
     unless request.xhr?
       @page.discussion ||= Discussion.new    
       disc = @page.discussion
-      current_page = params[:posts] || disc.last_page
-      @post_paging = Paginator.new self, disc.posts.count, disc.per_page, current_page
-      @posts = disc.posts.find(:all, :include => 'ratings', :limit => disc.per_page, :offset => @post_paging.current.offset)
+
+      # NOTE: the following pagination might be confusing for users:
+      # page one will be the most recent comments,
+      # but the most recent comment will be at the bottom
+      # of the list.  Previous code is left below, commented out, in case we
+      # want to switch back to the old way.
+      
+      # Old Way:
+      # current_page = params[:posts] || disc.last_page
+      # @posts = Post.paginate_by_discussion_id(disc.id, :order => "created_at ASC", :page => current_page, :per_page => disc.per_page, :include => :ratings)
+      
+      # New Way:
+      @posts = Post.paginate_by_discussion_id(disc.id, :order => "created_at DESC", :page => params[:posts], :per_page => disc.per_page, :include => :ratings).reverse
       @post = Post.new
     end
     true
@@ -212,3 +222,4 @@ class BasePageController < ApplicationController
   end
 
 end
+
