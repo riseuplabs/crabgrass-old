@@ -14,9 +14,8 @@ class Me::SearchController < Me::BaseController
       
       if parsed_path.keyword? 'text'
         begin
-        client = Riddle::Client.new("127.0.0.1", 3313)
-        
-        # @pages.collect {|page| page.page_index.body } # + page.page_index.discussion (once it exists)
+        config = ThinkingSphinx::Configuration.new
+        client = Riddle::Client.new config.address, config.port
         
         results = client.excerpts(
             :docs             => @pages.collect {|page| page.page_index.body},
