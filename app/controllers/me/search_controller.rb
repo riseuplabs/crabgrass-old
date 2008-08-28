@@ -33,7 +33,7 @@ class Me::SearchController < Me::BaseController
             @excerpts[@pages[i].id] = result
           end
         rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
-          puts "Error: #{err}."
+          RAILS_DEFAULT_LOGGER.warn "failed to extract keywords from sphinx search: #{err}."
         end
       end
       

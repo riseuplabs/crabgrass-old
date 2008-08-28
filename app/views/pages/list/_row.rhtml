@@ -33,10 +33,12 @@
 <% end -%>
 
 <% if excerpts[page.id].any? -%>
-<tr class="<%= color %> page_info" >
-  <td colspan='100'>
+<tr class="<%= color %> search_excerpt" style="color: rgb(102, 102, 102);" >
+  <td></td>
+  <td colspan='4'>
     <%= excerpts[page.id] %>
   </td>
+  <td></td>
 </tr>
 <% end -%>
 
