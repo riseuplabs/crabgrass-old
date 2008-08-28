@@ -8,7 +8,8 @@ class WikiPage < Page
 
   # Return string of all tasks, for the full text search index
   def index_data
-    data.body if data
+    return "" unless data and data.body
+    data.body
   end
   
 end
