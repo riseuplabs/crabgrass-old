@@ -402,8 +402,8 @@ class Page < ActiveRecord::Base
   end
   
   def index_discussion
-    return "" unless discussion
-    discussion.posts.collect {|p| p.user and p.body ? "#{p.user.login}: #{p.body} /" : ""}.join(' ')
+    return "" unless self.discussion
+    self.discussion.posts.collect {|p| p.user and p.body ? "#{p.user.login}: #{p.body} /" : ""}.join(' ')
   end
   
   define_index do
