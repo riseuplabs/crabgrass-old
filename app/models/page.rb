@@ -403,7 +403,7 @@ class Page < ActiveRecord::Base
   
   def index_discussion
     return "" unless discussion
-    discussion.posts.collect {|p| "#{p.user.login}: #{p.body} /"}.join(' ')
+    discussion.posts.collect {|p| "#{p.user.login if p.user}: #{p.body} /"}.join(' ')
   end
   
   define_index do
