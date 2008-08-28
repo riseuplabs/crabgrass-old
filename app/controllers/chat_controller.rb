@@ -8,7 +8,7 @@
 
 class ChatController < ApplicationController
   include ChatHelper
- 
+  stylesheet 'chat' 
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user
   
