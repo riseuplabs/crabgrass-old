@@ -431,7 +431,7 @@ class Page < ActiveRecord::Base
       has :group_id
       has :starts_at
     
-      set_property :delta => true
+#      set_property :delta => true
 # TODO: figure out if this exception handling is slowing down saving or indexing
 #    rescue
 #      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
