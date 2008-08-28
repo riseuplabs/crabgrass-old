@@ -178,7 +178,7 @@ module PathFinder::SphinxBuilderFilters
     end
 
     @args_for_find[:per_page] = limit.to_i if limit
-    @args_for_find[:page] = 1 + (offset.to_i / limit.to_i) if offset and limit
+    @args_for_find[:page] ||= 1 + (offset.to_i / limit.to_i) if offset and limit
   end
   
   def filter_text(text)

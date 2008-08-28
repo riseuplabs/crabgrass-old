@@ -21,8 +21,8 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     @conditions  = []
     @order       = []
     @aliases     = []
-    @limit       = options[:limit]
-    @offset      = options[:offset]
+    @per_page    = options[:per_page]
+    @page        = options[:page]
     @tag_count   = 0
     @or_clauses  = []
     @and_clauses = []
@@ -46,7 +46,7 @@ class PathFinder::SqlBuilder < PathFinder::Builder
   # page finding. It all starts here.
   #
   def find_pages
-    Page.find_by_sql sql_for_find
+    Page.paginate_by_sql sql_for_find, :page => @page, :per_page => @per_page
   end
 
   def count_pages
@@ -89,11 +89,6 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     end
 
     sql << 'ORDER BY %s' % query[:order] if query[:order]
-    if query[:offset]
-      sql << 'LIMIT %s, %s' % [query[:offset],query[:limit]]
-    elsif query[:limit]
-      sql << 'LIMIT %s' % query[:limit]
-    end
     
     # helpful for debuggin tests:
     # puts sql.join("\n")

@@ -6,7 +6,7 @@ class Me::SearchController < Me::BaseController
       redirect_to me_url(:action => 'search') + path   
     else
       return unless params[:path].any?
-      @pages, @sections = Page.find_and_paginate_by_path(params[:path], options_for_me(:method => :sphinx))
+      @pages = Page.find_by_path(params[:path], options_for_me(:method => :sphinx))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :group, :created_by, :created_at, :contributors_count]
       else

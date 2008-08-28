@@ -126,6 +126,9 @@ module PageHelper
   # set member variable @path beforehand if you want 
   # the links to take it into account instead of params[:path]
   def list_heading(text, action, select_by_default=false)
+    return "<th nowrap>#{text}</th>" unless 
+      %(created_at created_by_id updated_at updated_by_id group_id title starts_at).include? action 
+
     path = filter_path
     parsed = parsed_path
     selected = false
@@ -148,8 +151,8 @@ module PageHelper
       arrow = image_tag('ui/sort-desc.png') if selected
     end
     # FIXME: these links are not working for group archive page, person landing page, me inbox, so I'm removing them --abie 
-    #"<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
-    "<th nowrap class='#{selected ? 'selected' : ''}'>#{text} #{arrow}</th>"
+    "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
+    #"<th nowrap class='#{selected ? 'selected' : ''}'>#{text} #{arrow}</th>"
   end
 
   ## used to create the page list headings
@@ -173,7 +176,7 @@ module PageHelper
     #  hash[:id] ||= hash['_context']
     #end
     #hash.delete('_context')
-    hash[:action] = 'search'
+#    hash[:action] = 'search'
     link_to text, hash
     #hash.inspect
   end
@@ -242,13 +245,13 @@ module PageHelper
   
   def page_list_heading(column=nil)
     if column == :group or column == :group_name
-      list_heading 'group'.t, 'group_name'
+      list_heading 'group'.t, 'group_id'
     elsif column == :icon or column == :checkbox or column == :discuss
       "<th></th>"
     elsif column == :updated_by or column == :updated_by_login
-      list_heading 'updated by'.t, 'updated_by_login'
+      list_heading 'updated by'.t, 'updated_by_id'
     elsif column == :created_by or column == :created_by_login
-      list_heading 'created by'.t, 'created_by_login'
+      list_heading 'created by'.t, 'created_by_id'
     elsif column == :updated_at
       list_heading 'updated'.t, 'updated_at'
     elsif column == :created_at

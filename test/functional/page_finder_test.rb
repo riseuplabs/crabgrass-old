@@ -132,11 +132,8 @@ class PageFinderTest < Test::Unit::TestCase
     pages = limit(pages,10)
     reference_ids = page_ids(pages)
 
-    options = @controller.options_for_me(:section => 1, :section_size => 10)
-    pages, sections = Page.find_by_path(
-      '/descending/updated_at/',
-      options
-    )
+    options = @controller.options_for_me(:page => 1, :per_page => 10)
+    pages = Page.find_by_path('/descending/updated_at/', options)
     path_ids = page_ids(pages)
     
     assert_equal reference_ids, path_ids, 'pagination pages should match'
@@ -242,13 +239,8 @@ test database
       return true
     end
   end  
-  
-  def test_sphinx_searchs
-    return if not sphinx_working?
-    
-    login(:blue)
-    user = users(:blue)
-    
+
+  def try_many_sphinx_searches(user)
     searches = [ 
                  ['/pending', Proc.new {|p| p.resolved == false}  ],
 
@@ -276,37 +268,42 @@ test database
                ]
 
     searches.each do |search_str, search_code|
-      options = { :user_id => users(:blue).id, :group_ids => users(:blue).all_group_ids, :controller => @controller, :method => :sphinx }
-#require 'ruby-debug'; debugger
-
-      pages = Page.find_by_path(search_str, options)
-      assert_equal Page.all.select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
-                   pages.collect{|p| p.id}.sort, 
-                   "#{search_str} should match results for user" + PageFinderTest::SPHINX_DEBUG_NOTES
+      pages = Page.find_by_path(search_str, @controller.options_for_me(:method => :sphinx))
+      assert_equal Page.all(:order => "updated_at DESC").select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}[0,20],
+                   pages.collect{|p| p.id}, 
+                   "#{search_str} should match results for user"
     end
 
     searches.each do |search_str, search_code|
       pages = Page.find_by_path(search_str, @controller.options_for_group(groups(:rainbow)).merge(:method => :sphinx))
       assert_equal Page.find(:all).select{|p| search_code.call(p) and groups(:rainbow).may?(:view, p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
                    pages.collect{|p| p.id}.sort, 
-                   "#{search_str} should match results for group" + PageFinderTest::SPHINX_DEBUG_NOTES
+                   "#{search_str} should match results for group"
     end
+  end  
+
+  def test_sphinx_searches
+    return if not sphinx_working?
+    
+    login(:blue)
+    user = users(:blue)
+    
+    try_many_sphinx_searches user
 
 =begin
-    # I'm not sure how to test the delta index; this doesn't seem to work
-    p = Page.create :title => "new pending page"
-    p.add user
-    p.unresolve
-    p.save
-
-    searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, @controller.options_for_me.merge(:method => :sphinx))
-      puts "\n#{pages.length} found for #{search_str}"
-      assert_equal Page.find(:all).select{|p| search_code.call(p)}.collect{|p| p.id}.sort,
-                   pages.collect{|p| p.id}.sort, 
-                   "#{search_str} should match results after pages are added"
+    # the following test is not yet working
+    ThinkingSphinx.deltas_enabled = true # will this make delta index active?
+    # add some pages, and make sure that they appear in the sphinx search results
+    (1..10).each do |i|
+      p = Page.create :title => "new pending page #{i}"
+      p.add user
+      p.unresolve
+      p.save
     end
+
+    try_many_sphinx_searches user
 =end
+
   end  
 
   def test_sphinx_search_text_doc
@@ -323,19 +320,19 @@ test database
     
     searches = [ 
                  ['/descending/updated_at/limit/10', Proc.new {
-                    Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..9]
+                    Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,10]
                   }
                  ],
                  ['/ascending/updated_at/limit/13', Proc.new {
-                    Page.find(:all, :order => "updated_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..12]
+                    Page.find(:all, :order => "updated_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,13]
                   }
                  ],
                  ['/descending/created_at/limit/5', Proc.new {
-                    Page.find(:all, :order => "created_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..4]
+                    Page.find(:all, :order => "created_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,5]
                   }
                  ],
                  ['/ascending/created_at/limit/15', Proc.new {
-                    Page.find(:all, :order => "created_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0..14]
+                    Page.find(:all, :order => "created_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,15]
                   }
                  ],
                ]
@@ -346,7 +343,7 @@ test database
       pages = Page.find_by_path(search_str, options)
       assert_equal search_code.call,
                    pages.collect{|p| p.id},
-                   "#{search_str} should match results for user" + PageFinderTest::SPHINX_DEBUG_NOTES
+                   "#{search_str} should match results for user when paginated"
     end
   end
 

@@ -24,7 +24,7 @@ class Me::InboxController < Me::BaseController
     elsif !parsed_path(path).sort_arg?
       path << 'descending' << 'updated_at'
     end
-    @pages, @sections = Page.find_and_paginate_by_path(path, options_for_inbox)
+    @pages = Page.find_by_path(path, options_for_inbox)
     add_user_participations(@pages)
     handle_rss  :title => 'Crabgrass Inbox', :link => '/me/inbox',
                  :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')

@@ -405,22 +405,24 @@ class Page < ActiveRecord::Base
   define_index do
     begin
       indexes :name
-      indexes :title
+      indexes :title, :sortable => true
       indexes :summary
  
       indexes page_index.body, :as => :body
-      indexes page_index.class_display_name, :as => :class_display_name
+      indexes page_index.class_display_name, :as => :class_display_name, :sortable => true
       indexes page_index.tags, :as => :tags
       indexes page_index.entities, :as => :entities
 
       indexes discussion.posts.body, :as => :comments
       
-      has :created_by_id
       
       indexes :resolved
       
       has :created_at
+      has :created_by_id
       has :updated_at
+      has :updated_by_id
+      has :group_id
       has :starts_at
     
       set_property :delta => true
