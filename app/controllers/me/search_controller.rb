@@ -14,7 +14,7 @@ class Me::SearchController < Me::BaseController
       
       if parsed_path.keyword? 'text'
         begin
-        client = Riddle::Client.new("localhost", 3313)
+        client = Riddle::Client.new("127.0.0.1", 3313)
         
         # @pages.collect {|page| page.page_index.body } # + page.page_index.discussion (once it exists)
         
@@ -33,7 +33,7 @@ class Me::SearchController < Me::BaseController
           results.each_with_index do |result, i|
             @excerpts[@pages[i].id] = result
           end
-        rescue Riddle::VersionError, Riddle::ResponseError => err
+        rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
           puts "Error: #{err}."
         end
       end
