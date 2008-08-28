@@ -419,7 +419,7 @@ class Page < ActiveRecord::Base
 
       # indexing is really slow on we.riseup
       # is this slowing down the indexing?
-      indexes discussion.posts.body, :as => :comments
+#      indexes discussion.posts.body, :as => :comments
       
       
       indexes :resolved
