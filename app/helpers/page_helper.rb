@@ -127,7 +127,7 @@ module PageHelper
   # the links to take it into account instead of params[:path]
   def list_heading(text, action, select_by_default=false)
     return "<th nowrap>#{text}</th>" unless 
-      %(created_at created_by_id updated_at updated_by_id group_id title starts_at).include? action 
+      %(created_at created_by_login updated_at updated_by_login group_name title starts_at).include? action 
 
     path = filter_path
     parsed = parsed_path
@@ -245,13 +245,13 @@ module PageHelper
   
   def page_list_heading(column=nil)
     if column == :group or column == :group_name
-      list_heading 'group'.t, 'group_id'
+      list_heading 'group'.t, 'group_name'
     elsif column == :icon or column == :checkbox or column == :discuss
       "<th></th>"
     elsif column == :updated_by or column == :updated_by_login
-      list_heading 'updated by'.t, 'updated_by_id'
+      list_heading 'updated by'.t, 'updated_by_login'
     elsif column == :created_by or column == :created_by_login
-      list_heading 'created by'.t, 'created_by_id'
+      list_heading 'created by'.t, 'created_by_login'
     elsif column == :updated_at
       list_heading 'updated'.t, 'updated_at'
     elsif column == :created_at

@@ -32,7 +32,10 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
   def find_pages
     apply_filters_from_path( @path )
     @args_for_find[:order] ||= "updated_at DESC"
-    Page.search @search_text, @args_for_find
+    pages = PageIndex.search @search_text, @args_for_find.merge(:include => :page)
+
+    # pages has all of the will_paginate magic included, it just needs to actually have the pages
+    pages.each_with_index {|page_index, i| pages[i] = page_index.page if page_index}
   end
 
   ######################################################################

@@ -1,17 +1,13 @@
 class Me::SearchController < Me::BaseController
 
   def index
-#    require 'ruby-debug'; debugger
     if request.post?
       path = build_filter_path(params[:search])
       redirect_to me_url(:action => 'search') + path   
     else
-#      return unless params[:path].any?
       @pages = Page.find_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page]))
       
-      # if there was a text string in the search, generate extracts for the results
-      # require 'ruby-debug'; debugger
-      
+      # if there was a text string in the search, generate extracts for the results      
       if parsed_path.keyword? 'text'
         begin
         config = ThinkingSphinx::Configuration.new
@@ -20,7 +16,7 @@ class Me::SearchController < Me::BaseController
         results = client.excerpts(
             :docs             => @pages.collect {|page| page.page_index.body},
             :words            => parsed_path.search_text,
-            :index            => "page_core",
+            :index            => "page_index_core",
             :before_match     => "<b>",
             :after_match      => "</b>",
             :chunk_separator  => " ... ",

@@ -20,7 +20,8 @@ require 'set'
 class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :pages, :user_participations, :group_participations, :taggings, :tags
+  fixtures :groups, :users, :memberships, :pages, :page_indices,
+   :user_participations, :group_participations, :taggings, :tags
   
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.

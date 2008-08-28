@@ -373,11 +373,22 @@ class Page < ActiveRecord::Base
     # store text version of user_ids and group_ids for sql full text search
     # page_index.user_ids_str = "xx13xx xx21xx" # or something, each word needs to be at least 4 chars (?)
     # page_index.group_ids_str = "xx13xx xx21xx" # or something, each word needs to be at least 4 chars (?)
+
+    self.page_index.title      = self.title.capitalize
+    self.page_index.resolved   = self.resolved
+    self.page_index.page_created_at = self.created_at
+    self.page_index.page_created_by_id = self.created_by_id
+    self.page_index.page_created_by_login = self.created_by_login
+    self.page_index.page_updated_at = self.updated_at
+    self.page_index.page_updated_by_login = self.updated_by_login
+    self.page_index.starts_at  = self.starts_at
+    self.page_index.group_name      = self.group_name
+
     
     # previously, we would pass this indexing fuction off to page.data,
     # but i think it is classier to have the page subclasses override the index_data method
     # page_index.body = (data and data.index)
-    self.page_index.body = index_data + index_discussion
+    self.page_index.body = index_frontmatter + index_data + index_discussion
     self.page_index.class_display_name = class_display_name
     self.page_index.tags = tag_list.join(', ')
 
@@ -397,7 +408,7 @@ class Page < ActiveRecord::Base
   # for example WikiPage will return wiki.body,
   # and TaskListPage will merge all of the tasks associated with it.
   # Maybe AssetPage will extract the text of a word document
-  def index_data    
+  def index_data
     ""
   end
   
@@ -405,7 +416,15 @@ class Page < ActiveRecord::Base
     return "" unless self.discussion
     self.discussion.posts.collect {|p| p.user and p.body ? "#{p.user.login}: #{p.body} /" : ""}.join(' ')
   end
-  
+
+  def index_frontmatter
+    return "#{self.name}\n#{self.title}\n#{self.summary}"
+  end
+
+
+=begin  
+  # this indexing is really slow, perhaps due to the join with page_index
+  # let's index that directly, as it is much faster
   define_index do
     begin
       indexes :name
@@ -437,5 +456,6 @@ class Page < ActiveRecord::Base
 #      RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
     end
   end
+=end
 
 end
