@@ -23,4 +23,11 @@ class Key < ActiveRecord::Base
   def untranslated_languages
     Language.find(:all) - self.languages
   end
+
+  def default_translation
+    default_language = Language.find_by_name("English")
+    default = nil
+    self.translations.each {|t| default = t if t.language == default_language}
+    default
+  end
 end
