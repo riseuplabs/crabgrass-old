@@ -8,6 +8,36 @@ class Me::SearchController < Me::BaseController
     else
 #      return unless params[:path].any?
       @pages = Page.find_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page]))
+      
+      # if there was a text string in the search, generate extracts for the results
+      # require 'ruby-debug'; debugger
+      
+      if parsed_path.keyword? 'text'
+        begin
+        client = Riddle::Client.new("localhost", 3313)
+        
+        # @pages.collect {|page| page.page_index.body } # + page.page_index.discussion (once it exists)
+        
+        results = client.excerpts(
+            :docs             => @pages.collect {|page| page.page_index.body},
+            :words            => parsed_path.search_text,
+            :index            => "page_core",
+            :before_match     => "<b>",
+            :after_match      => "</b>",
+            :chunk_separator  => " ... ",
+            :limit            => 400,
+            :around           => 15
+          )
+  
+          @excerpts = {}
+          results.each_with_index do |result, i|
+            @excerpts[@pages[i].id] = result
+          end
+        rescue Riddle::VersionError, Riddle::ResponseError => err
+          puts "Error: #{err}."
+        end
+      end
+      
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :group, :created_by, :created_at, :contributors_count]
       else

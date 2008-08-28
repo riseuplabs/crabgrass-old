@@ -19,7 +19,8 @@ checkbox: show a checkbox next to every page row
 -%>
 <%
 pages ||= @pages
-pages.total_pages if pages #pages should come from a call to Page.paginate, which will add the total_pages method to the array
+#pages.total_pages if pages #pages should come from a call to Page.paginate, which will add the total_pages method to the array
+excerpts ||= @excerpts
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 heading ||= false
 checkbox ||= false
@@ -37,7 +38,7 @@ hide_pagination_controls ||= false
   <% end -%>
   </tr>
 <% end -%>
-<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox} %>
+<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox, :excerpts => excerpts} %>
 <% end -%>
 </table>
 

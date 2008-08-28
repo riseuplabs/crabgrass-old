@@ -5,6 +5,8 @@
 =end
   columns ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
   page = row
+  excerpts ||= {}  # when the page list has relevant excerpts, they are hashed by page.id
+                  # e.g. excerpts[page.id] = "the <b>revolution</b> will be televised"
   upart = page.flag[:user_participation]
   gpart = page.flag[:group_participation]
   color = cycle('odd', 'even')
@@ -14,6 +16,7 @@
   <td><%= page_list_cell(page, column, upart || gpart) %></td>
 <% end -%>
 </tr>
+
 <% if upart and upart.notice -%>
 <% upart.notice.each do |notice| -%>
 <% next unless notice.is_a? Hash %>
@@ -27,5 +30,13 @@
   </td>
 </tr>
 <% end -%>
+<% end -%>
+
+<% if excerpts[page.id].any? -%>
+<tr class="<%= color %> page_info" >
+  <td colspan='100'>
+    <%= excerpts[page.id] %>
+  </td>
+</tr>
 <% end -%>
 

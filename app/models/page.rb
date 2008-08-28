@@ -377,7 +377,7 @@ class Page < ActiveRecord::Base
     # previously, we would pass this indexing fuction off to page.data,
     # but i think it is classier to have the page subclasses override the index_data method
     # page_index.body = (data and data.index)
-    self.page_index.body = index_data
+    self.page_index.body = index_data + index_discussion
     self.page_index.class_display_name = class_display_name
     self.page_index.tags = tag_list.join(', ')
 
@@ -400,7 +400,11 @@ class Page < ActiveRecord::Base
   def index_data    
     ""
   end
-
+  
+  def index_discussion
+    return "" unless discussion
+    discussion.posts.collect {|p| "#{p.user.login}: #{p.body} /"}.join(' ')
+  end
   
   define_index do
     begin
@@ -413,6 +417,8 @@ class Page < ActiveRecord::Base
       indexes page_index.tags, :as => :tags
       indexes page_index.entities, :as => :entities
 
+      # indexing is really slow on we.riseup
+      # is this slowing down the indexing?
       indexes discussion.posts.body, :as => :comments
       
       
