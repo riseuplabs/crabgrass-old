@@ -52,6 +52,7 @@ FILTER_MAP = {
     "doc": { FAMILY_TEXT: "MS Word 97" },
     "rtf": { FAMILY_TEXT: "Rich Text Format" },
     "txt": { FAMILY_TEXT: "Text" },
+    "csv": { FAMILY_SPREADSHEET: "Text - txt - csv (StarCalc)"},
     "ods": { FAMILY_SPREADSHEET: "calc8" },
     "xls": { FAMILY_SPREADSHEET: "MS Excel 97" },
     "odp": { FAMILY_PRESENTATION: "impress8" },

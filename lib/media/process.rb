@@ -13,7 +13,9 @@ module Media
     PRIORITY = [:open_office, :graphic_magick].freeze
 
     CONTENT_TYPES_CONSUMED_BY = {
-      :open_office => %w(text/plain text/html text/richtext application/rtf
+      :open_office => %w(
+        text/plain text/html text/richtext application/rtf
+        text/csv text/comma-separated-values
         application/msword application/mswrite application/powerpoint
         application/excel application/access application/vnd.ms-msword
         application/vnd.ms-mswrite application/vnd.ms-powerpoint
@@ -40,7 +42,7 @@ module Media
     }.freeze
 
     CONTENT_TYPES_PRODUCED_BY = {
-      :open_office => %w(application/pdf text/plain),
+      :open_office => %w(application/pdf) + CONTENT_TYPES_CONSUMED_BY[:open_office],
       :graphic_magick => %w(application/pdf image/jpeg image/pjpeg
         image/gif image/png image/jpg image/tiff)
     }.freeze

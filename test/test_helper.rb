@@ -1,3 +1,9 @@
+begin
+  require 'ruby-debug'
+rescue LoadError => exc
+  # no ruby debug installed
+end
+
 ENV["RAILS_ENV"] = "test"
 $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")

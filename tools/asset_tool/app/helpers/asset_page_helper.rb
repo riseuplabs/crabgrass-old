@@ -5,12 +5,13 @@ module AssetPageHelper
     if thumbnail.nil?
       link_to( image_tag(asset.big_icon), asset.url )
     elsif !thumbnail.exists?
-      if false and thumbnail.width
-        width = thumbnail.width
-        height = thumbnail.height
-      else
-        width, height = thumbnail.thumbdef.size.split /[x><]/
-      end
+      #if false and thumbnail.width
+      #  width = thumbnail.width
+      #  height = thumbnail.height
+      #else
+      #  width, height = thumbnail.thumbdef.size.split /[x><]/
+      #end
+      width, height = [353,500]
       style = "height:#{height}px; width:#{width}px;"
       style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
       javascript = javascript_tag(remote_function(:url => page_xurl(@page,:action => 'generate_preview')))
@@ -25,7 +26,7 @@ module AssetPageHelper
   end
 
   def upload_link
-    image_tag('actions/upload.png', :size => '32x32', :style => 'vertical-align: middle;') + link_to_function("Upload new version", "$('upload-new').toggle()") if current_user.may?(:edit, @page)
+    image_tag('actions/upload.png', :size => '32x32', :style => 'vertical-align: middle;') + link_to_function("Upload new version", "$('upload_new').toggle()") if current_user.may?(:edit, @page)
   end
 
   def destroy_version_link(version)

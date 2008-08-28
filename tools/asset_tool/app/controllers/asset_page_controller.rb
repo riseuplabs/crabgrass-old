@@ -68,6 +68,14 @@ class AssetPageController < BasePageController
     end
   end
 
+  def regenerate
+    @asset.thumbnails.each do |tn|
+      tn.generate(true)
+    end
+    @asset.versions.latest.clone_files_from(@asset)
+    redirect_to page_url(@page, :action => 'show')
+  end
+
   protected
   
   def authorized?
