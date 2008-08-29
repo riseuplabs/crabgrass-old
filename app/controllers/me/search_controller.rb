@@ -14,7 +14,7 @@ class Me::SearchController < Me::BaseController
         client = Riddle::Client.new config.address, config.port
         
         results = client.excerpts(
-            :docs             => @pages.collect {|page| page.page_index.body},
+            :docs             => @pages.collect {|page| page.page_index ? page.page_index.body : ""},
             :words            => parsed_path.search_text,
             :index            => "page_index_core",
             :before_match     => "<b>",
