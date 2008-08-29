@@ -6,7 +6,8 @@
 <p>
   <b>already translated to:</b>
   <% @key.translations.each do |t| %>
-  <%= link_to h(t.language.name), edit_translation_path(t) %>
+  <% outdated = t.updated_at < @key.default_translation.updated_at ? " (outdated)" : "" %>
+  <%= link_to h(t.language.name + outdated), edit_translation_path(t) %>
   <% end %> 
 </p>
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080818190745) do
+ActiveRecord::Schema.define(:version => 20080828211205) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -54,6 +54,25 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
   create_table "avatars", :force => true do |t|
     t.binary  "image_file_data"
     t.boolean "public",          :default => false
+  end
+
+  create_table "bdrb_job_queues", :force => true do |t|
+    t.binary   "args"
+    t.string   "worker_name"
+    t.string   "worker_method"
+    t.string   "job_key"
+    t.integer  "taken",          :limit => 11
+    t.integer  "finished",       :limit => 11
+    t.integer  "timeout",        :limit => 11
+    t.integer  "priority",       :limit => 11
+    t.datetime "submitted_at"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "archived_at"
+    t.string   "tag"
+    t.string   "submitter_info"
+    t.string   "runner_info"
+    t.string   "worker_key"
   end
 
   create_table "categories", :force => true do |t|
@@ -211,12 +230,21 @@ ActiveRecord::Schema.define(:version => 20080818190745) do
   end
 
   create_table "page_indices", :force => true do |t|
-    t.integer "page_id",            :limit => 11
-    t.text    "body"
-    t.boolean "delta"
-    t.string  "class_display_name"
-    t.string  "tags"
-    t.text    "entities"
+    t.integer  "page_id",               :limit => 11
+    t.text     "body"
+    t.boolean  "delta"
+    t.string   "class_display_name"
+    t.string   "tags"
+    t.text     "entities"
+    t.string   "title"
+    t.boolean  "resolved"
+    t.datetime "page_created_at"
+    t.string   "page_created_by_login"
+    t.integer  "page_created_by_id",    :limit => 11
+    t.datetime "page_updated_at"
+    t.string   "page_updated_by_login"
+    t.string   "group_name"
+    t.datetime "starts_at"
   end
 
   create_table "page_tools", :force => true do |t|

@@ -28,7 +28,8 @@
       <%= edit_tags_line %>
     </ul>
 
-    <%- if @show_attach -%>
+    <%- #this is a very bad way to be doing this, but for now it works: -%>
+    <%- unless @page.is_a? AssetPage -%>
     <h2>attachments</h2>
     <div class='attachments'>
       <%= page_attachments %>

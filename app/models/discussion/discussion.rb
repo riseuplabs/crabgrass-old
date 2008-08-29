@@ -35,7 +35,7 @@ class Discussion < ActiveRecord::Base
   def paged?() posts.count > per_page end
   
   def last_page
-    (posts.count.to_f / per_page.to_f).ceil.to_i
+    (posts.count.to_f / per_page.to_f + 1).floor.to_i
   end
 
 #  def editable_by?(user)

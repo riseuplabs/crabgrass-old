@@ -10,9 +10,13 @@ Thumbdef options:
  * :depends    -- specifies the name of a thumbnail that must be created first.
                   if :depends is specified it is used as the source file for this
                   thumbnail instead of the main asset.
-
+ * :proxy      -- suppose you need other thumbnails to depend on a thumbnail of 
+                  of type odt, but the main asset might be an odt... setting 
+                  proxy to true will make it so that we use the main asset
+                  file instead of generating a new one (but only if the mime
+                  types match).
+ * :title      -- some descriptive text for the kids.
 =end
-
 
 
 module Media
@@ -26,7 +30,7 @@ module Media
     end
     
     class ThumbDef
-      attr_accessor :size, :name, :ext, :mime_type, :depends
+      attr_accessor :size, :name, :ext, :mime_type, :depends, :proxy, :title
       def initialize(name, hsh)
         self.name = name
         hsh.each {|key,value| self.send("#{key}=",value)}
@@ -75,12 +79,17 @@ module Media
 
       # returns the relative filename of a thumbnail given its name
       # thumbnail filenames always have a "_" (THUMBNAIL_SEPARATOR)
-      # eg. thumbnail_filename(:small) --> "myfile~small.jpg"
+      # eg. thumbnail_filename(:small) --> "myfile_small.jpg"
       def thumbnail_filename(name)
         return name if name =~ /#{THUMBNAIL_SEPARATOR}/  # we might have been passed an already resolved thumbnail_filename
         thumbdef = name if name.is_a? ThumbDef
         thumbdef ||= thumbdefs[name.to_sym]
-        "#{self.basename}#{THUMBNAIL_SEPARATOR}#{thumbdef.name}.#{thumbdef.ext}" if thumbdef
+        return nil unless thumbdef
+        if thumbdef.proxy and thumbdef.mime_type == self.content_type
+          self.filename
+        else
+          "#{self.basename}#{THUMBNAIL_SEPARATOR}#{thumbdef.name}.#{thumbdef.ext}" if thumbdef
+        end
       end
 
       # populate self.thumbnails
@@ -94,14 +103,15 @@ module Media
       def generate_thumbnails(force = false)
         thumb_done = {}
         thumbnails.each do |thumb|
-          if !thumb_done[thumb.name] and (!thumb.exists? or force)
-            if thumb.depends_on and !thumb.depends_on.exists?
-              thumb.depends_on.generate
-              thumb_done[thumb.depends_on.name] = true
-            end
-            thumb.generate
-            thumb_done[thumb.name] = true          
-          end
+          thumb.generate(force)
+#          if !thumb_done[thumb.name] and (!thumb.exists? or force)
+#            if thumb.depends_on and !thumb.depends_on.exists?
+#              thumb.depends_on.generate
+#              thumb_done[thumb.depends_on.name] = true
+#            end
+#            thumb.generate
+#            thumb_done[thumb.name] = true          
+#          end
         end
         if versions.latest
           # might as well update the thumbnails of our corresponding version

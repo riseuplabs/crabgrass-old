@@ -1,5 +1,5 @@
-<%#
-
+<%
+=begin
 a partial to display a list of pages in a table, one page per row.
 
 arguments
@@ -15,15 +15,16 @@ columns: what columns to display. default is
 heading: show heading if set to true.
 
 checkbox: show a checkbox next to every page row
+=end
 -%>
 <%
-
 pages ||= @pages
-sections ||= @sections
+#pages.total_pages if pages #pages should come from a call to Page.paginate, which will add the total_pages method to the array
+excerpts ||= @excerpts
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 heading ||= false
 checkbox ||= false
-
+hide_pagination_controls ||= false
 
 -%>
 <table>
@@ -37,9 +38,11 @@ checkbox ||= false
   <% end -%>
   </tr>
 <% end -%>
-<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox} %>
+<%= render :partial => "pages/list/row", :collection => pages, :locals => {:columns => columns, :checkbox => checkbox, :excerpts => excerpts} %>
 <% end -%>
 </table>
 
-<%= pagination 'section', sections %>
+<%= if pages.any? and not hide_pagination_controls
+      will_paginate pages, :renderer => DispatchLinkRenderer
+    end %>
 

@@ -3,17 +3,17 @@
 <% end %>
 
 <h2><%= "my requests"[:my_requests] %></h2>
-<%= render :partial => 'pages/list/table', :locals => {:pages => @my_pages, :sections => @my_sections, :columns => @my_columns} %>
+<%= render :partial => 'pages/list/table', :locals => {:pages => @my_pages, :sections => @my_sections, :columns => @my_columns, :hide_pagination_controls => true} %>
 <%= link_to 'more &raquo;', url_for(:action => 'mine') + "/descending/created_at" %>
 
 
-<h2><%= "membership requests"[:membership_requests] %>membership requests</h2>
-<%= render :partial => 'pages/list/table', :locals => {:pages => @membership_pages, :sections => @membership_sections, :columns => @membership_columns} %>
+<h2><%= "membership requests"[:membership_requests] %></h2>
+<%= render :partial => 'pages/list/table', :locals => {:pages => @membership_pages, :sections => @membership_sections, :columns => @membership_columns, :hide_pagination_controls => true} %>
 <%= link_to 'more &raquo;', url_for(:action => 'memberships') + "/descending/created_at" %>
 
 
 <h2><%= "contact requests"[:contact_requests] %></h2>
-<%= render :partial => 'pages/list/table', :locals => {:pages => @contact_pages, :sections => @contact_sections, :columns => @contact_columns} %>
+<%= render :partial => 'pages/list/table', :locals => {:pages => @contact_pages, :sections => @contact_sections, :columns => @contact_columns, :hide_pagination_controls => true} %>
 <%= link_to 'more &raquo;', url_for(:action => 'contacts') + "/descending/created_at" %>
 
 

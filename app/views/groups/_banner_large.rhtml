@@ -1,29 +1,31 @@
-<% if committee?
-     @parent ||= @group.parent -%>
-<table>
-<tr>
-  <td align='left'>
-    <%= avatar_for @parent, 'xsmall' %>
-    <b><%= link_to_group @parent %></b>
-  </td>
-</tr>
-<tr>
-  <td align='left' valign='top'>
-    <div id='l-shape'></div>
-    <%= avatar_for @group, 'small' %>
-    <b><%= link_to_group @group %></b> <%=h @group.summary %>
-  </td>
-</tr>
-</table>
+<% if committee? -%>
+  <%- @parent ||= @group.parent -%>
+  <table>
+  <tr>
+    <td align='left'>
+      <%= avatar_for @parent, 'xsmall' %>
+      <b><%= link_to_group @parent %></b>
+    </td>
+  </tr>
+  <tr>
+    <td align='left' valign='top' style='width:99%'>
+      <div id='l-shape'></div>
+      <%= avatar_for @group, 'small' %>
+      <b><%= link_to_group @group %></b> <%=h @group.summary %>
+    </td>
+    <td align='right'>
+      <%= mini_search_form %>
+    </td>
+  </tr>
+  </table>
 <% else -%>
-<table>
-<tr>
-  <td rowspan='2'><%= avatar_for @group, 'large' %></td>
-  <td style='width:99%'><h1><%= link_to_group @group, :display_name => true %></h1></td>
-  <td align='right'>
-    <%= mini_search_form %>
-  </td>
-</tr>
-
-</table>
+  <table>
+  <tr>
+    <td rowspan='2'><%= avatar_for @group, 'large' %></td>
+    <td style='width:99%'><h1><%= link_to_group @group, :display_name => true %></h1></td>
+    <td align='right'>
+      <%= mini_search_form %>
+    </td>
+  </tr>
+  </table>
 <% end -%>

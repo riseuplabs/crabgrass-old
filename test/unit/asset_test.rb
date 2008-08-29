@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'ruby-debug'
 
 class AssetTest < Test::Unit::TestCase
   fixtures :groups
@@ -10,6 +9,7 @@ class AssetTest < Test::Unit::TestCase
   def setup
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
+    #Media::Process::Base.log_to_stdout_when = :always
     Media::Process::Base.log_to_stdout_when = :on_error
   end
 
@@ -163,6 +163,25 @@ class AssetTest < Test::Unit::TestCase
     assert_equal start_thumb_count+9, end_thumb_count, 'there should be exactly 9 more thumbnail objects'   
   end
 
+  def test_type_changes
+    @asset = Asset.make :uploaded_data => upload_data('bee.jpg')
+    assert_equal 'ImageAsset', @asset.type
+    assert_equal 3, @asset.thumbnails.count
+    
+    # change to TextAsset
+    @asset.uploaded_data = upload_data('msword.doc')
+    @asset.save
+    assert_equal 'TextAsset', @asset.type
+    assert_equal 6, @asset.thumbnails.count
+    
+    # change back
+    @asset = Asset.find(@asset.id)
+    @asset.uploaded_data = upload_data('bee.jpg')
+    @asset.save
+    assert_equal 'ImageAsset', @asset.type
+    assert_equal 3, @asset.thumbnails.count
+  end
+
   def test_dimensions
     @asset = Asset.make :uploaded_data => upload_data('photo.jpg')
     assert_equal 500, @asset.width, 'width must match file'
@@ -186,8 +205,8 @@ class AssetTest < Test::Unit::TestCase
 
   def test_doc
     @asset = Asset.make :uploaded_data => upload_data('msword.doc')
-    assert_equal DocAsset, @asset.class, 'asset should be a DocAsset'
-    assert_equal 'DocAsset', @asset.versions.earliest.versioned_type, 'version should by of type DocAsset'
+    assert_equal TextAsset, @asset.class, 'asset should be a TextdocAsset'
+    assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextdocAsset'
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal false, thumb.failure?, 'generating thumbnail "%s" should have succeeded' % thumb.name
