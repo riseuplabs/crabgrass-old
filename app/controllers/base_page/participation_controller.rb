@@ -96,53 +96,14 @@ class BasePage::ParticipationController < ApplicationController
       close_popup and return
     end
     begin
-      users, groups, emails = parse_recipients!(params[:recipients])
-
-      access = params[:access].any? ? params[:access].to_sym : nil
-      msg = params[:message]
-      users_to_email = []
-
-      ## add users to page
-      users.each do |user|
-        if current_user.share_page_with_user!(@page, user, :access => access, :message => msg)
-          users_to_email << user if user.wants_notification_email?
-        end
-      end
-
-      ## add groups to page
-      groups.each do |group|
-        users_succeeded = current_user.share_page_with_group!(@page, group,
-          :access => access, :message => msg)
-        users_succeeded.each do |user|
-          users_to_email << user if user.wants_notification_email?
-        end
-      end
-
-      ## send access granted emails (TODO)
-      # emails.each do |email|
-      #   Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
-      # end
-
-      ## send notification emails
-      if params[:send_emails]
-        users_to_email.each do |user|
-          logger.info '----------------- emailing %s' % user.email
-          Mailer.deliver_page_notice(user, msg, mailer_options)
-        end
-      end
-
-      # success!!
-      @page.save
+      access     = params[:access].any? ? params[:access].to_sym : nil
+      recipients = params[:recipients]
+      options    = {:access => access, :message => params[:message],
+                    :send_emails => params[:send_emails]}
+      current_user.share_page_with!(@page, recipients, options)
       close_popup
-
-    rescue PermissionDenied => exc
-      flash_message_now :title => 'Permission Denied'[:permission_denied], :error => exc
-      show_error_message
-    rescue ErrorMessages => exc
-      flash_message_now :title => exc.title, :error => exc.errors
-      show_error_message
     rescue Exception => exc
-      flash_message_now :title => 'Error: ' + exc.class.to_s, :error => exc.to_s
+      flash_message_now :exception => exc
       show_error_message
     end
   end
@@ -166,11 +127,8 @@ class BasePage::ParticipationController < ApplicationController
       render :update do |page|
         page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
       end
-    rescue ErrorMessages => exc
-      flash_message_now :title => exc.title, :error => exc.errors
-      show_error_message
     rescue Exception => exc
-      flash_message_now :title => 'Error: ' + exc.class.to_s, :error => exc.to_s
+      flash_message_now :exception => exc
       show_error_message
     end
   end
@@ -205,41 +163,6 @@ class BasePage::ParticipationController < ApplicationController
     render :template => 'base_page/show_errors'
   end
 
-  # called by share()
-  # parses a list of recipients, turning them into email, user, or group
-  # objects as appropriate.
-  def parse_recipients!(recipients)
-    users = []; groups = []; emails = []; errors = []
-    if recipients.is_a? Hash
-      to = []
-      recipients.each do |key,value|
-        to << key if value == '1'
-      end
-    elsif recipients.is_a? Array
-      to = recipients
-    elsif recipients.is_a? String
-      to = recipients.split(/[\s,]/)
-    end
-    to.each do |entity|
-      if entity =~ RFC822::EmailAddress
-        emails << entity
-      elsif g = Group.get_by_name(entity)
-        groups << g
-      elsif u = User.find_by_login(entity)
-        users << u
-      elsif entity.any?
-        errors << '"%s" does not match the name of any users or groups and is not a valid email address' % entity
-      end
-    end
-
-    unless errors.empty?
-      raise ErrorMessages.new('Could not understand some recipients.', errors)
-    end
-
-    [users, groups, emails]
-  end
-
-
   def authorized?
     if ['update_public', 'move', 'create','destroy'].include? params[:action]
       current_user.may? :admin, @page
@@ -250,11 +173,7 @@ class BasePage::ParticipationController < ApplicationController
   
   prepend_before_filter :fetch_page
   def fetch_page
-    if params[:id]
-      # not yet used:
-      #@upart = UserParticipation.find_by_id(params[:id])
-      #@page = @upart.page
-    elsif params[:page_id]
+    if params[:page_id]
       @page = Page.find_by_id(params[:page_id])
       @upart = @page.participation_for_user(current_user)
     end

@@ -1,9 +1,17 @@
 class User < ActiveRecord::Base
 
-  include AuthenticatedUser
-  include CrabgrassDispatcher::Validations
-  include SocialUser
+  # core user extenstions
+  include UserExtension::Cache      # should come first
+  include UserExtension::Socialize  # user <--> user
+  include UserExtension::Organize   # user <--> groups
+  include UserExtension::Sharing    # user <--> pages
+  include UserExtension::Tags       # user <--> tags
 
+  # acts_as_authenticated
+  include UserExtension::AuthenticatedUser
+
+  # custom validation
+  include CrabgrassDispatcher::Validations
   validates_handle :login
   
   #########################################################    
