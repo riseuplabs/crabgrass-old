@@ -26,7 +26,7 @@ class AssetPage < Page
 
   # Return string of Asset text, for the full text search index
   def index_data
-    return unless self.asset.is_a? DocAsset
+    return "" unless self.asset and self.asset.is_a? DocAsset and self.asset.thumbnail(:txt)
 
     thumbnail = self.asset.thumbnail(:txt)
     thumbnail.generate

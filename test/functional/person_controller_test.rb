@@ -5,12 +5,14 @@ require 'person_controller'
 class PersonController; def rescue_action(e) raise e end; end
 
 class PersonControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :pages, :page_indices
   
   def setup
     @controller = PersonController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    
+    Page.all.each {|p| p.update_index}
   end
 
   def test_show_not_logged_in

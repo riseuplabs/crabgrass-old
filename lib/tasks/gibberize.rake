@@ -19,7 +19,7 @@ namespace :cg do
             out << "# -- #{File.basename(path)}:\n"
             matches.each do |m|
               m[2] = m[0].underscore.tr(' ', '_').gsub(/(\.|\!|\?)+$/, '') if m[2] == '.t'
-              out << "#{m[2]}: #{m[0]}\n" unless (keys.include?(m[2]) || m[2].nil?)
+              out << "#{m[2]}: #{m[0]}\n" unless (keys.include?(m[2]) || m[2].nil? || m[2] =~ /^(\_|\+)/)
               keys << m[2]
             end
             out << "\n"

@@ -30,6 +30,14 @@ class PathFinder::ParsedPath < Array
   def args_for(word)
     keyword?(word)
   end
+
+  # returns the search text, if any
+  # ie returns "glorious revolution" if path == "/text/glorious+revolution"
+  def search_text
+    element = keyword? 'text'
+    return nil unless element
+    return element[1].gsub('+', ' ')
+  end
   
   # returns true if arg is the value for a sort keyword
   # ie sort_arg('created_at') is true if path == /ascending/created_at

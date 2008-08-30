@@ -100,7 +100,7 @@ module PathFinder::Options
     default_find_options.merge(options)
   end
   
-  def options_for_participation_by(user)
+  def options_for_participation_by(user, args={})
     options = {}
     if logged_in?
       # the person's pages that we also have access to
@@ -111,7 +111,7 @@ module PathFinder::Options
       options[:conditions] = "user_participations.user_id = ? AND pages.public = ?"
       options[:values]     = [user.id, true]
     end
-    default_find_options.merge(options)
+    default_find_options.merge(options).merge(args)
   end
 
   def options_for_group(group, args={})

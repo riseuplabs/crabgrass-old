@@ -1,12 +1,38 @@
 class Me::SearchController < Me::BaseController
 
-  def index   
+  def index
     if request.post?
       path = build_filter_path(params[:search])
       redirect_to me_url(:action => 'search') + path   
     else
-      return unless params[:path].any?
-      @pages, @sections = Page.find_and_paginate_by_path(params[:path], options_for_me(:method => :sphinx))
+      @pages = Page.find_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page]))
+      
+      # if there was a text string in the search, generate extracts for the results      
+      if parsed_path.keyword? 'text'
+        begin
+        config = ThinkingSphinx::Configuration.new
+        client = Riddle::Client.new config.address, config.port
+        
+        results = client.excerpts(
+            :docs             => @pages.collect {|page| page.page_index ? page.page_index.body : ""},
+            :words            => parsed_path.search_text,
+            :index            => "page_index_core",
+            :before_match     => "<b>",
+            :after_match      => "</b>",
+            :chunk_separator  => " ... ",
+            :limit            => 400,
+            :around           => 15
+          )
+  
+          @excerpts = {}
+          results.each_with_index do |result, i|
+            @excerpts[@pages[i].id] = result
+          end
+        rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
+          RAILS_DEFAULT_LOGGER.warn "failed to extract keywords from sphinx search: #{err}."
+        end
+      end
+      
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :group, :created_by, :created_at, :contributors_count]
       else
