@@ -51,7 +51,6 @@ class PagesController < ApplicationController
       redirect_to page_url(page)
     else
       page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
-      page.save
       redirect_to page_url(page)
     end
   end

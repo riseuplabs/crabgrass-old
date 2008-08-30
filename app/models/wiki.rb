@@ -15,7 +15,8 @@ class Wiki < ActiveRecord::Base
   has_many :pages, :as => :data
   has_one :profile
   
-  acts_as_versioned :version_column => :lock_version, :if => :save_new_version
+  acts_as_versioned :if => :save_new_version?
+
   self.non_versioned_columns << 'locked_by_id' << 'locked_at'
 
   #### LOCKING #######################
@@ -58,10 +59,10 @@ class Wiki < ActiveRecord::Base
   
   ##### VERSIONING #############################
 
-  # only save a new version if the body has changed.  
-  def save_new_version
-    #self.body_changed?
-    false
+  # only save a new version if the body has changed
+  # and was not previously nil
+  def save_new_version?
+    self.body_changed? and self.body_was.any?
   end
   
   # returns true if the last version was created recently by this same author.
@@ -74,10 +75,6 @@ class Wiki < ActiveRecord::Base
     return nil unless time
     versions.first :conditions => ["updated_at <= :time", {:time => time}],
       :order => "updated_at DESC"
-  end
-
-  def version
-    lock_version.to_i
   end
 
   ##### SAVING ####################################
@@ -122,22 +119,21 @@ class Wiki < ActiveRecord::Base
   # and if it doesn't exist already.
   def body_html
     html = read_attribute(:body_html)
-    unless html
-      without_revision do
-        without_timestamps do
-          html = format_wiki_text(body)
-          update_attribute(:body_html,html)
-        end
+    if body and not html
+      without_timestamps do
+        html = format_wiki_text(body)
+        self.body_html = html
+        self.save_without_revision!
       end
     end
     return html    
   end
-  
+ 
   def body=(value)
     write_attribute(:body, value)
-    write_attribute(:body_html, format_wiki_text(value))
+    write_attribute(:body_html, format_wiki_text(body))
   end
- 
+  
   # called internally
   def format_wiki_text(text)
     if text
@@ -147,7 +143,7 @@ class Wiki < ActiveRecord::Base
     end
   end
  
-  
+
   ##### RELATIONSHIP TO GROUPS ###################
   
   # clears the rendered html. this is called
@@ -183,5 +179,5 @@ class Wiki < ActiveRecord::Base
   def page=(p)
     @page = p
   end
-  
+
 end

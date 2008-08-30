@@ -130,21 +130,20 @@ class PageStork
     user = (options.delete(:user).cast! User if options[:user])
     group = options.delete(:group).cast! Group
     name = options.delete(:name).cast! String
-    page = WikiPage.new do |p|
+    page = WikiPage.create do |p|
       p.title = name.titleize
       p.name = name.nameize
       p.created_by = user
+      p.data = Wiki.create(:user => user)
     end
-    page.data = Wiki.create(:user => user)
     if group
       user.may_pester!(group)
-      page.save!
       page.add(group, :access => :admin)
       page.add(user, :access => :admin) unless user.member_of? group
     else
-      page.save!
       page.add(user, :access => :admin)
     end
+    page.save!
     return page
   end
   
