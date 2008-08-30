@@ -207,6 +207,8 @@ module AssetExtension # :nodoc:
         real_private_path = Pathname.new(private_filename).realpath.dirname
         real_public_path  = Pathname.new(public_storage).realpath
         public_to_private = real_private_path.relative_path_from(real_public_path)
+        real_public_path += "#{path_id}"
+        #puts "FileUtils.ln_s(#{public_to_private}, #{real_public_path})"
         FileUtils.ln_s(public_to_private, real_public_path)
       end
     end

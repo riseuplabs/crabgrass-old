@@ -116,7 +116,8 @@ class AssetTest < Test::Unit::TestCase
     @asset = Asset.create :uploaded_data => upload_data('image.png')
     assert @asset.public?
     @asset.update_access
-    assert File.exists?(@asset.public_filename), 'public file should exist'
+ 
+    assert File.exists?(@asset.public_filename), 'public file "%s" should exist' % @asset.public_filename
     assert File.symlink?(File.dirname(@asset.public_filename)), 'dir of public file should be a symlink'
     @asset.instance_eval do
       def public?
