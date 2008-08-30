@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080828211205) do
+ActiveRecord::Schema.define(:version => 20080830111231) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -233,7 +233,6 @@ ActiveRecord::Schema.define(:version => 20080828211205) do
     t.integer  "page_id",               :limit => 11
     t.text     "body"
     t.boolean  "delta"
-    t.string   "class_display_name"
     t.string   "tags"
     t.text     "entities"
     t.string   "title"
@@ -245,6 +244,7 @@ ActiveRecord::Schema.define(:version => 20080828211205) do
     t.string   "page_updated_by_login"
     t.string   "group_name"
     t.datetime "starts_at"
+    t.string   "type"
   end
 
   create_table "page_tools", :force => true do |t|
@@ -548,7 +548,7 @@ ActiveRecord::Schema.define(:version => 20080828211205) do
     t.text     "body_html"
     t.datetime "updated_at"
     t.integer  "user_id",      :limit => 11
-    t.integer  "lock_version", :limit => 11, :default => 0
+    t.integer  "version",      :limit => 11
     t.datetime "locked_at"
     t.integer  "locked_by_id", :limit => 11
   end
