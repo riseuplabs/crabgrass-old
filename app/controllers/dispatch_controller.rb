@@ -116,11 +116,17 @@ class DispatchController < ApplicationController
     # for now, every time we fetch a page we suck in all the groups and users
     # associated with the page. we only do this for GET requests, because
     # otherwise it is likely that we will not need the included data.
-    if request.get?
-      [{:user_participations => :user}, {:group_participations => :group}]
-    else
-      return default
-    end
+    
+    # update: i think this is a big waste of time. checking the logs, group
+    # and user participations are fetched independently despite this attempt
+    # at including them with the page query -elijah
+
+    #if request.get?
+    #  [{:user_participations => :user}, {:group_participations => :group}]
+    #else
+    #  return default
+    #end
+    nil
   end
   
   def find_page_by_id(id)
@@ -132,15 +138,15 @@ class DispatchController < ApplicationController
   # if that fails, then we resort to searching the entire
   # page namespace.
   def find_page_by_group_and_name(group, name)
-    page = group.pages.find(:first, :conditions => ['pages.name = ?',name], :include => includes)
+    page = group.pages.find(:first, :conditions => ['pages.name = ?',name])
     return page if page
     ids = Group.namespace_ids(group.id)
-    Page.find(:first, :conditions => ['pages.name = ? AND group_participations.group_id IN (?)', name, ids], :include => includes(:group_participation))
+    Page.find(:first, :conditions => ['pages.name = ? AND group_participations.group_id IN (?)', name, ids], :joins => :group_participations)
   end
 
   
   def find_pages_by_user_and_name(user, name)
-    user.pages.find(:all, :conditions => ['pages.name = ?',name], :include => includes)
+    user.pages.find(:all, :conditions => ['pages.name = ?',name])
   end
   
   def find_pages_with_unknown_context(name)
