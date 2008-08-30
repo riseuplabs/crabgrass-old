@@ -255,9 +255,6 @@ class SocialUserTest < Test::Unit::TestCase
       end
     end
 
-#    u.clear_cache
-#    u.reload
-
     assert_equal correct_group_ids.sort, u.group_ids.sort,
                  'wrong groups (ids)'
     assert_equal correct_all_group_ids.sort, u.all_group_ids.sort,
@@ -269,11 +266,15 @@ class SocialUserTest < Test::Unit::TestCase
   end
 
   def test_pestering
-    u1 = create_user :login => 'pest'
-    u2 = create_user :login => 'afk'
-  
-    assert u1.may_pester?(u2), 'pest can pester me'
-    assert u2.may_be_pestered_by?(u1), 'i can be pestered by the pest'
+    assert users(:kangaroo).stranger_to?(users(:green)), 'must be strangers'
+    assert !users(:kangaroo).may_pester?(users(:green)), 'strangers should not be able to pester'
+
+    assert users(:red).peer_of?(users(:green)), 'must be peers'
+    assert !users(:red).may_pester?(users(:green)), 'peers should be able to pester'
+
+    users(:green).profiles.public.may_pester = true
+    users(:green).profiles.public.save
+    assert users(:kangaroo).may_pester?(users(:green)), 'should be able to pester if set in profile'
   end
   
   protected
