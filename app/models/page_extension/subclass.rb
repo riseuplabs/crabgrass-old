@@ -52,6 +52,9 @@ module PageExtension::Subclass
     def controller
       class_definition.controller
     end
+    def controller_class_name
+      class_definition.controller_class_name
+    end
   end
 
   module ClassMethods
@@ -65,6 +68,7 @@ module PageExtension::Subclass
     end
      
     # return an array of page classes that are members of class_group
+    # eg: 'poll' -> ['RateManyPage', 'RankedVotePage']
     def class_group_to_class_names(class_group)
       PAGES.collect{|t|
         t[1].to_s if t[1].class_group == class_group and t[1].class_group

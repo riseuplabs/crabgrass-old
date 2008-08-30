@@ -12,26 +12,26 @@ class AssetPageController < BasePageController
     @page_class = AssetPage
     @stylesheet = 'page_creation'
     if request.post?
-      @asset = Asset.make params[:asset]
-      #raise @asset.errors.inspect
-      unless @asset.valid?
-        @asset.errors.add('uploaded_data', 'required') unless params[:asset][:uploaded_data].any?
-        flash_message_now :object => @asset
-        return
-      end
-      
-      @page = create_new_page(@page_class)
-      @page.data = @asset
-      if @page.title.any?
-#        @asset.filename = @page.title + @asset.suffix
-      else
-        @page.title = @asset.basename
-      end
-      if @page.save
-        add_participants!(@page, params)
-        return redirect_to(page_url(@page))
-      else
-        flash_message_now :object => @page
+      begin
+        # create asset
+        @asset = Asset.make params[:asset]
+        unless @asset.valid?
+          @asset.errors.add('uploaded_data', 'required') unless params[:asset][:uploaded_data].any?
+          flash_message_now :object => @asset
+          return
+        end
+        
+        # create page
+        @page = create_new_page(@page_class)
+        @page.data = @asset
+        unless @page.title.any?
+          @page.title = @asset.basename
+        end
+        if @page.save
+          return redirect_to(page_url(@page))
+        end
+      rescue Exception => exc
+        flash_message_now :exception => exc
       end
     end
   end

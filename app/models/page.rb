@@ -234,7 +234,7 @@ class Page < ActiveRecord::Base
     # but i think it is classier to have the page subclasses override the index_data method
     # page_index.body = (data and data.index)
     self.page_index.body = index_frontmatter + index_data + index_discussion
-    self.page_index.class_display_name = class_display_name
+    self.page_index.type = type
     self.page_index.tags = tag_list.join(', ')
 
     # the page_index table has a column of text describing what entities have

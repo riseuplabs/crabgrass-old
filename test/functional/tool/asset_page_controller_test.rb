@@ -38,13 +38,14 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     login_as :gerrard
 
     get 'create'
+
     assert_no_difference 'Asset.count' do
       post 'create', :asset => {:uploaded_data => ""}
       assert_equal 'error', flash[:type], "shouldn't be able to create an asset page with no asset"
     end
     
     assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do
-      post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+      post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
       assert_response :redirect
     end
     
@@ -55,13 +56,10 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
 
     get 'create'
 
-    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :group_id => groups(:rainbow).id
-    assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group (no title)"
-    assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group (no title)"
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :group_id => groups(:rainbow).id
+    assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group"
+    assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group"
 
-    post 'create', :page => {:title => "non-blank title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :group_id => groups(:rainbow).id
-    #assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group (non-blank title)"
-    assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group (non-blank title)"
   end
 
 
@@ -69,7 +67,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     login_as :gerrard
     get 'create'
     
-    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}    
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}    
     assert_difference 'Asset::Version.count', 1, "jpg should version" do
       post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
     end    
@@ -77,7 +75,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
   
   def test_destroy_version
     login_as :gerrard
-    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
     @asset = assigns(:asset)
     @version_filename = @asset.versions.find_by_version(1).private_filename
     post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
@@ -97,7 +95,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
 
   def test_destroy_version_2
     login_as :gerrard
-    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
     post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
     assert_difference 'Asset::Version.count', -1, "destroy should remove a version" do
       post :destroy_version,  :page_id => assigns(:page).id, :id => 1
@@ -107,7 +105,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
   def test_generate_preview
     login_as :gerrard
 
-    post 'create', :page => {:title => "", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
 
     assert_difference 'Thumbnail.count', 0, "the first time an asset is shown, it should call generate preview" do
       xhr :post, 'generate_preview', :page_id => assigns(:page).id

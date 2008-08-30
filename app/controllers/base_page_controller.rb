@@ -174,11 +174,22 @@ class BasePageController < ApplicationController
     true
   end
   
+  ##
+  ## default page creation methods used by tool controllers
+  ##
+  
   def get_page_type(param=nil)
     param ||= params[:id]
     raise ErrorMessage.new('page type required') unless param
     return Page.display_name_to_class(param)
   end
 
+  def create_new_page(page_class)
+     page_class.create(params[:page].merge(
+       :user => current_user,
+       :share_with => Group.find_by_id(params[:group_id]),
+       :access => :admin
+     ))  
+  end
 end
 

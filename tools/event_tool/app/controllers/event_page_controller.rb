@@ -37,7 +37,7 @@ class EventPageController < BasePageController
     @page_class = EventPage
     @event = Event.new
     if request.post?
-      @page = create_new_page @page_class
+      @page = @page_class.create(params[:page])
 
       d = params[:date_start].split("/")
       params[:date_start] = [d[1], d[0], d[2]].join("/")

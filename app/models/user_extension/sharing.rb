@@ -202,6 +202,7 @@ module UserExtension::Sharing
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
+    #debugger
     users, groups, emails = parse_recipients!(recipients)
     users_to_email = []
 
@@ -317,7 +318,7 @@ module UserExtension::Sharing
         end
       end
     elsif group
-      unless group.may?(access,page)
+      unless group.may?(options[:access],page)
         unless self.may?(:admin,page) and self.may_pester?(group)
           raise PermissionDenied.new('Your not allowed to share this page with %s'[:share_msg_pester_denied] % group.name)
         end
@@ -330,16 +331,19 @@ module UserExtension::Sharing
   def parse_recipients!(recipients)
     users = []; groups = []; emails = []; errors = []
     if recipients.is_a? Hash
-      to = []
+      entities = []
       recipients.each do |key,value|
-        to << key if value == '1'
+        entities << key if value == '1'
       end
     elsif recipients.is_a? Array
-      to = recipients
+      entities = recipients
     elsif recipients.is_a? String
-      to = recipients.split(/[\s,]/)
+      entities = recipients.split(/[\s,]/)
+    else
+      entities = [recipients]
     end
-    to.each do |entity|
+    
+    entities.each do |entity|
       if entity.is_a? Group
         groups << entity
       elsif entity.is_a? User
