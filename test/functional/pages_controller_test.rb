@@ -11,8 +11,8 @@ class PagesControllerTest < Test::Unit::TestCase
            :pages, :profiles,
            :taggings, :tags
 
-  @@private = Media::AssetStorage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = Media::AssetStorage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
+  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
     @controller = PagesController.new

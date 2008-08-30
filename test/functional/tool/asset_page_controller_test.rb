@@ -6,8 +6,8 @@ class AssetPageController; def rescue_action(e) raise e end; end
 
 class Tool::AssetControllerTest < Test::Unit::TestCase
   fixtures :users, :groups
-  @@private = Media::AssetStorage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = Media::AssetStorage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
+  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
     @controller = AssetPageController.new

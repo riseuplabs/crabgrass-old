@@ -12,5 +12,5 @@ end
 
 THUMBNAIL_SEPARATOR = '_'
 
-Media::AssetStorage.make_required_dirs
+AssetExtension::Storage.make_required_dirs
 
