@@ -2,12 +2,15 @@
 
 Methods to find pages, for class Page.
 
-find_and_paginate_by_path()
-this is the wiz-bang main function for finding and paginating pages.
-see find_pages() if you don't need to paginate.
-we are paginating pages, so the term page is ambiguous.
-it could mean a Page from the pages table, or it could mean a page of things
-when paginating. i have tried to use the term 'section' instead of a page for the latter.
+Page.find_and_paginate_by_path()
+  this is the wiz-bang main function for finding and paginating pages.
+
+Page.find_by_path()
+  if you don't need to paginate.
+
+See lib/path_finder/README
+
+We are paginating pages, so the term page is ambiguous. It could mean a Page from the pages table, or it could mean a page of things when paginating. I have tried to use the term 'section' instead of a page for the latter.
 
 =end
 
