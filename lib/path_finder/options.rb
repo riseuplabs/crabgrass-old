@@ -10,11 +10,9 @@ module PathFinder::Options
   private
    
   def default_find_options
-    options = { :controller => get_controller,
-                :section => (params[:section] ? params[:section].to_i : nil )}
+    options = { :controller => get_controller }
     if logged_in?
-      options[:user_id] = current_user.id
-      options[:group_ids] = current_user.all_group_ids
+      options.merge :user_id => current_user.id, :group_ids => current_user.all_group_ids
     else
       options[:public] = true
     end
@@ -36,6 +34,9 @@ module PathFinder::Options
   # all the pages that I have access to
   # include public pages only if args includes :public
   def options_for_me(args={})
+    # options for sphinx come from default_find_options
+    
+    # options for sql
     if args[:public]
       options = {
         :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
@@ -80,18 +81,6 @@ module PathFinder::Options
     default_find_options.merge(options).merge(args)
   end
   
-  
-=begin
-  # is this used? 
-  def options_for_viewable_by(user, args={})
-    options = {
-      :conditions => "(group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)",
-      :values     => [user.all_group_ids, user.id, true]
-    }
-    default_find_options.merge(options).merge(args)
-  end
-=end
-
   def options_for_public_pages
     options = {
       :public => true,
@@ -101,7 +90,11 @@ module PathFinder::Options
   end
   
   def options_for_participation_by(user, args={})
-    options = {}
+  
+    # options for sphinx
+    options = { :public => true, :other_user_id => user.id }
+    
+    # options for sql
     if logged_in?
       # the person's pages that we also have access to
       options[:conditions] = "user_participations.user_id = ? AND (group_parts.group_id IN (?) OR user_parts.user_id = ? OR pages.public = ?)"
@@ -115,8 +108,12 @@ module PathFinder::Options
   end
 
   def options_for_group(group, args={})
-    options = {}
     group_id = group.is_a?(Group) ? group.id : group.to_i
+    
+    # options for sphinx
+    options = { :public => true, :group_id => group_id }
+
+    # options for sql
     if logged_in?
       # the group's pages that current_user also has access to
       # this means: the group must have a group participation and one of the following
@@ -129,8 +126,6 @@ module PathFinder::Options
       options[:conditions] = "group_participations.group_id = ? AND pages.public = ?"
       options[:values]     = [group_id, true]
     end
-    
-    options[:group_id] = group_id
     
     default_find_options.merge(options).merge(args)
   end

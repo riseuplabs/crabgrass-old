@@ -52,6 +52,7 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
     @entities_str = entities.join(" | ")
 
     @entities_str = "( #{@entities_str} ) & group_#{options[:group_id]}" if options[:group_id]
+    @entities_str = "( #{@entities_str} ) & user_#{options[:other_user_id]}" if options[:other_user_id]
     
     @entities_str
   end
