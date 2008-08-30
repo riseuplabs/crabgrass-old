@@ -15,9 +15,9 @@ class Wiki < ActiveRecord::Base
   has_many :pages, :as => :data
   has_one :profile
   
-  acts_as_versioned :version_column => :lock_version
+  acts_as_versioned :version_column => :lock_version, :if => :save_new_version
   self.non_versioned_columns << 'locked_by_id' << 'locked_at'
-    
+
   #### LOCKING #######################
   
   # a word about timezones:
@@ -57,6 +57,12 @@ class Wiki < ActiveRecord::Base
   end
   
   ##### VERSIONING #############################
+
+  # only save a new version if the body has changed.  
+  def save_new_version
+    #self.body_changed?
+    false
+  end
   
   # returns true if the last version was created recently by this same author.
   def recent_edit_by?(author)
@@ -66,7 +72,8 @@ class Wiki < ActiveRecord::Base
   # returns first version since @time@
   def first_since(time)
     return nil unless time
-    versions.first :conditions => ["updated_at <= :time", {:time => time}], :order => "updated_at DESC"
+    versions.first :conditions => ["updated_at <= :time", {:time => time}],
+      :order => "updated_at DESC"
   end
 
   def version
@@ -84,7 +91,7 @@ class Wiki < ActiveRecord::Base
   #   ActiveRecord::StaleObjectError
   #   ErrorMessage
   #
-  
+   
   def smart_save!(params)
     self.body = params[:body]
     if params[:version] and version > params[:version].to_i
@@ -116,8 +123,12 @@ class Wiki < ActiveRecord::Base
   def body_html
     html = read_attribute(:body_html)
     unless html
-      html = format_wiki_text(body)
-      update_attribute(:body_html,html)
+      without_revision do
+        without_timestamps do
+          html = format_wiki_text(body)
+          update_attribute(:body_html,html)
+        end
+      end
     end
     return html    
   end

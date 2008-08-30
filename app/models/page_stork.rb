@@ -135,10 +135,15 @@ class PageStork
       p.name = name.nameize
       p.created_by = user
     end
-    page.save
-    page.add(group, :access => :admin)
-    if options[:body]
-      page.data = Wiki.new(:body => options[:body], :page => page)
+    page.data = Wiki.create(:user => user)
+    if group
+      user.may_pester!(group)
+      page.save!
+      page.add(group, :access => :admin)
+      page.add(user, :access => :admin) unless user.member_of? group
+    else
+      page.save!
+      page.add(user, :access => :admin)
     end
     return page
   end
