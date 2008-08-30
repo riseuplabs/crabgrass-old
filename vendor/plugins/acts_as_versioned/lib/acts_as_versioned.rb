@@ -66,7 +66,7 @@ module ActiveRecord #:nodoc:
     #
     # See ActiveRecord::Acts::Versioned::ClassMethods#acts_as_versioned for configuration options
     module Versioned
-      CALLBACKS = [:set_new_version, :save_version_on_create, :save_version?]
+      CALLBACKS = [:set_new_version, :save_version, :save_version?]
       def self.included(base) # :nodoc:
         base.extend ClassMethods
       end
@@ -214,8 +214,7 @@ module ActiveRecord #:nodoc:
               end
             end
             before_save  :set_new_version
-            after_create :save_version_on_create
-            after_update :save_version
+            after_save   :save_version
             after_save   :clear_old_versions
 
             unless options[:if_changed].nil?
@@ -271,18 +270,16 @@ module ActiveRecord #:nodoc:
           base.extend ClassMethods
         end
 
-        # Saves a version of the model if applicable
-        def save_version
-          save_version_on_create if save_version?
-        end
-
         # Saves a version of the model in the versioned table.  This is called in the after_save callback by default
-        def save_version_on_create
-          rev = self.class.versioned_class.new
-          clone_versioned_model(self, rev)
-          rev.version = send(self.class.version_column)
-          rev.send("#{self.class.versioned_foreign_key}=", id)
-          rev.save
+        def save_version
+          if @saving_version
+            @saving_version = nil
+            rev = self.class.versioned_class.new
+            clone_versioned_model(self, rev)
+            rev.version = send(self.class.version_column)
+            rev.send("#{self.class.versioned_foreign_key}=", id)
+            rev.save
+          end
         end
 
         # Clears old revisions if a limit is set with the :limit option in <tt>acts_as_versioned</tt>.
@@ -330,7 +327,7 @@ module ActiveRecord #:nodoc:
         end
         
         def altered?
-          track_altered_attributes ? (version_if_changed.map(&:to_s) - changed).length == 0 : changed?
+          track_altered_attributes ? (version_if_changed.map(&:to_s) - changed).length < version_if_changed.length : changed?
         end
 
         # Clones a model.  Used when saving a new version or reverting a model's version.
@@ -389,6 +386,7 @@ module ActiveRecord #:nodoc:
         protected
           # sets the new version before saving, unless you're using optimistic locking.  In that case, let it take care of the version.
           def set_new_version
+            @saving_version = new_record? || save_version?
             self.send("#{self.class.version_column}=", next_version) if new_record? || (!locking_enabled? && save_version?)
           end
 
