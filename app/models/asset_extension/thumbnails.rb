@@ -19,8 +19,8 @@ Thumbdef options:
 =end
 
 
-module Media
-  module HasThumbnails
+module AssetExtension
+  module Thumbnails
 
     def self.included(base)
       base.extend(ClassMethods)

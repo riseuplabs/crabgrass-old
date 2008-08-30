@@ -11,15 +11,15 @@ Assets use a lot of classes to manage a particular uploaded file:
   have many thumbnails. 
 
   Additionally, three modules are included by Asset:
-    Media::Attachable      -- handles uploading data
-    Media::AssetStorage   -- handles where/how data is stored
-    Media::HasThumbnails  -- handles the creation of the thumbnails
+    AssetExtension::Upload      -- handles uploading data
+    AssetExtension::Storage     -- handles where/how data is stored
+    AssetExtension::Thumbnails  -- handles the creation of the thumbnails
 
   Asset::Versions have the latter two included as well.
 
   Additional modules used by assets:
-    Media::MimeType    -- where all the mime magicky stuff happens, including
-                          determining which Asset subclass to create.
+    Media::MimeType -- where all the mime magicky stuff happens, including
+                       determining which Asset subclass to create.
     Media::Process  -- processors for creating thumbnails.
 
 TODO:
@@ -38,7 +38,7 @@ class Asset < ActiveRecord::Base
 
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
-  include Media::Attachable
+  include AssetExtension::Upload
   validates_presence_of :filename
 
   ##
@@ -47,8 +47,8 @@ class Asset < ActiveRecord::Base
 
   acts_as_versioned do 
     def self.included(base)
-      base.send :include, Media::AssetStorage
-      base.send :include, Media::HasThumbnails
+      base.send :include, AssetExtension::Storage
+      base.send :include, AssetExtension::Thumbnails
       base.has_many :thumbnails, :class_name => '::Thumbnail', :dependent => :destroy, :finder_sql => POLYMORPH_AS_PARENT
       base.define_thumbnails( {} ) # root Asset class has no thumbnails
     end

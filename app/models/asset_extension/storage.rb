@@ -43,8 +43,8 @@ This tells Rails to generate links to the following four hosts: assets0.example.
 require 'ftools'
 require 'pathname'
 
-module Media # :nodoc:
-  module AssetStorage
+module AssetExtension # :nodoc:
+  module Storage
 
     @@private_storage = "#{RAILS_ROOT}/assets"
     @@public_storage = "#{RAILS_ROOT}/public/assets"

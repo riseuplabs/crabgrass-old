@@ -19,8 +19,8 @@ end
 
 
 
-module Media
-  module Attachable
+module AssetExtension
+  module Upload
 
     def self.included(base)
 
