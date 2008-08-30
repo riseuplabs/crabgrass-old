@@ -147,12 +147,22 @@ class Group < ActiveRecord::Base
 #  end
   
   def may_be_pestered_by?(user)
-    return true if user.member_of?(self)
-    return true if publicly_visible_group
-    return parent.may_be_pestered_by?(user) if parent && parent.publicly_visible_committees
-    return false
+    begin
+      may_be_pestered_by!(user)
+    rescue PermissionDenied
+      false
+    end
   end
   
+  def may_be_pestered_by!(user)
+    if user.member_of?(self) or publicly_visible_group or (parent and parent.publicly_visible_committees and parent.may_be_pestered_by?(user))
+      return true
+    else
+      raise PermissionDenied.new('You not allowed to share with %s'[:pester_denied] % self.name)
+    end
+  end
+
+
   # whenever the structure of this group has changed 
   # (ie a committee or network has been added or removed)
   # this function should be called to update each user's
