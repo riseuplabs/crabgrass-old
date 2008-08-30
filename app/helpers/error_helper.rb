@@ -117,6 +117,8 @@ module ErrorHelper
         add_flash_message(flsh, :title => exc.title, :error => exc.errors)
       elsif exc.is_a? ErrorMessage
         add_flash_message(flsh, :title => 'Error'[:alert_error], :error => exc.to_s)
+      elsif exc.is_a? ActiveRecord::RecordInvalid
+        add_flash_message(flsh, :object => exc.record)
       else
         add_flash_message(flsh, :title => 'Error'[:alert_error] + ': ' + exc.class.to_s, :error => exc.to_s)
       end
