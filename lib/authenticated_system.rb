@@ -13,7 +13,7 @@ module AuthenticatedSystem
   # Returns true or false if the user is logged in.
   # Preloads @current_user with the user model if they're logged in.
   def logged_in?
-    current_user.is_a?(AuthenticatedUser)
+    current_user.is_a?(UserExtension::AuthenticatedUser)
   end
   
   def logged_in_since
