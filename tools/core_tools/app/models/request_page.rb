@@ -1,5 +1,4 @@
 class RequestPage < Page 
-  internal?   true
   
   # update the resolved status of all linked pages if a request
   # has its resolved status changed.
