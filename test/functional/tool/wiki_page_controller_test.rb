@@ -11,6 +11,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
     @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    HTMLDiff.log_to_stdout = false # set to true for debugging
   end
 
   def test_show

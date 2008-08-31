@@ -1,7 +1,12 @@
 require 'tempfile'
 
 module HTMLDiff
-  def html_diff(a, b)
+  
+  def self.log_to_stdout=(value)
+   @@log_to_stdout = value
+  end
+
+  def self.diff(a, b)
 
     f1 = Tempfile.new("crabgrass-diff-a")
     f1.write a
@@ -19,16 +24,16 @@ module HTMLDiff
     return output
   end
 
-  def cmd(*args)
+  def self.cmd(*args)
     cmdstr = Escape.shell_command(args)
     log cmdstr
     output = `#{cmdstr}`
     return [$?.success?, output]
   end
 
-  def log(*args)
+  def self.log(*args)
     ActiveRecord::Base.logger.info "HTML_Diff --- " + args.join(' ')
-    puts args.join(' ') #if log_to_stdout_when == :always
+    puts args.join(' ') if @@log_to_stdout
   end
 
 end

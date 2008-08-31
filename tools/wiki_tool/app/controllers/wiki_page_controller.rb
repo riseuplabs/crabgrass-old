@@ -1,5 +1,4 @@
 class WikiPageController < BasePageController
-  include HTMLDiff
   append_before_filter :fetch_wiki
 
   ##
@@ -49,7 +48,7 @@ class WikiPageController < BasePageController
     @new = @wiki.versions.find_by_version(new_id)
     @old_markup = @old.body_html || ''
     @new_markup = @new.body_html || ''
-    @difftext = html_diff( @old_markup , @new_markup)
+    @difftext = HTMLDiff.diff( @old_markup , @new_markup)
 
     # output diff html only for ajax requests
     render :text => @difftext if request.xhr?
