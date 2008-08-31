@@ -15,7 +15,7 @@ class Thumbnail < ActiveRecord::Base
 
   after_destroy :rm_file
   def rm_file
-    unless thumbdef.proxy and parent.content_type == thumbdef.mime_type
+    unless proxy?
       fname = parent.private_thumbnail_filename(filename)
       FileUtils.rm(fname) if File.exists?(fname) and File.file?(fname)
     end
@@ -35,6 +35,7 @@ class Thumbnail < ActiveRecord::Base
 
   # generates the thumbnail file for this thumbnail object
   def generate(force=false)
+    return if proxy?
     return if !force and File.exists?(private_filename) and File.size(private_filename) > 0
     if depends_on
       depends_on.generate(force)
@@ -50,6 +51,7 @@ class Thumbnail < ActiveRecord::Base
     process_chain = Media::Process::Chain.new(input_type, output_type)
     if process_chain.run(input_file, output_file, thumbdef)
       # success
+
       if Media::Process.has_dimensions?(output_type)
         set_dimensions Media::Process.dimensions(output_file)
       end
@@ -110,6 +112,15 @@ class Thumbnail < ActiveRecord::Base
 
   def ok?
     not failure?
+  end
+
+  # returns true if this thumbnail is a proxy AND
+  # the main asset file is the same content type as
+  # this thumbnail. 
+  # when true, we skip all processing of this thumbnail
+  # and just proxy to the main asset.
+  def proxy?
+    thumbdef.proxy and parent.content_type == thumbdef.mime_type
   end
 end
 
