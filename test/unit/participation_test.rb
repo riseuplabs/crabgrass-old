@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ParticipationTest < Test::Unit::TestCase
 
-  fixtures :users, :pages, :user_participations
+  fixtures :groups, :users, :pages, :user_participations
 
   def setup
     Time.zone = TimeZone["Pacific Time (US & Canada)"]
@@ -25,9 +25,32 @@ class ParticipationTest < Test::Unit::TestCase
     assert_equal 'banana', p.updated_by_login, 'cached updated_by_login should be "banana"'
   end
     
-  protected
-    def create_user(options = {})
-      User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
-    end
+  def test_participations
+    user = User.find 4
+    group = Group.find 3
+    
+    page = Page.create :title => 'zebra'
+        
+    page.add(user, :star => true, :access => :admin)
+    page.add(group, :access => :admin)
+    page.save! # save required after .add()
+
+    assert user.may?(:admin,page), 'user must be able to admin page'
+    assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'
+    assert user.pages.include?(page), 'user must have an association with page'
+    assert group.pages.include?(page), 'group must have an association with page'
+
+    # page.users and page.groups are not updated until a reload 
+    page.reload
+    assert page.users.include?(user), 'page must have an association with user'
+    assert page.groups.include?(group), 'page must have an association with group'
+	
+    page.remove(user)
+    page.remove(group)
+    page.save!
+    assert !page.users.include?(user), 'page must NOT have an association with user'
+    assert !page.groups.include?(group), 'page must NOT have an association with group'	
+  end
+
 end
 

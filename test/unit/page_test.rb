@@ -60,40 +60,6 @@ class PageTest < Test::Unit::TestCase
     #assert user.pages_updated.first == @page
     
   end
-
-  def test_participations
-    user = User.find 3
-    group = Group.find 3
-    
-    # page = build_page :title => 'zebra'
-    #        ^^^^^ this doesn't work
-    # assertions only work if the page is saved first.
-    
-    page = create_page :title => 'zebra'
-        
-    page.add(user, :star => true)
-    page.add(group)
-    
-    assert page.users.include?(user), 'page must have an association with user'
-    assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'    
-    assert page.groups.include?(group), 'page must have an association with group'
-    assert user.pages.include?(page), 'user must have an association with page'
-    assert group.pages.include?(page), 'group must have an association with page'
-    
-    page.save
-    page.reload
-    assert page.users.include?(user), 'page must have an association with user'
-    assert page.user_participations.find_by_user_id(user.id).star == true, 'user association attributes must be set'
-    assert page.groups.include?(group), 'page must have an association with group'
-    assert user.pages.include?(page), 'user must have an association with page'
-    assert group.pages.include?(page), 'group must have an association with page'
-	
-    page.remove(user)
-    page.remove(group)
-    assert !page.users.include?(user), 'page must NOT have an association with user'
-    assert !page.groups.include?(group), 'page must NOT have an association with group'
-	
-  end
   
   def test_denormalized
     user = User.find 3
