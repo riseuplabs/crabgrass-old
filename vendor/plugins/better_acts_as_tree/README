@@ -1,3 +1,20 @@
+better_acts_as_tree
+===================
+
+This is a slight modification of the standard acts_as_tree to allow whatever
+options you pass to acts_as_tree to be passed on to the has_many :children
+association that acts_as_tree creates.
+
+This allows you to do this, for example:
+
+class Node < ActiveRecord::Base
+  acts_as_tree :after_add => :after_add_callback
+  
+  def after_add_callback
+    ....
+  end
+end
+
 acts_as_tree
 ============
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080831003129) do
+ActiveRecord::Schema.define(:version => 20080901002452) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20080831003129) do
     t.integer  "avatar_id",      :limit => 11
     t.string   "style"
     t.string   "language",       :limit => 5
+    t.integer  "version",        :limit => 11, :default => 0
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"

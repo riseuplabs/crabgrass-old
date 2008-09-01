@@ -84,6 +84,10 @@ module UserExtension
       end
     end
 
+    def increment_group_version(membership)
+      membership.group.increment!(:version)
+    end
+
     # This should be called if a change in relationships has potentially
     # invalidated the cache. For example, adding or removing a commmittee.
     # This only updates the database: if you want to update the in-memory

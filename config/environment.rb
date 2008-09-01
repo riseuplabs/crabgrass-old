@@ -43,6 +43,9 @@ Rails::Initializer.run do |config|
   # storage container, you need to find a way to disable breadcrumbs as well. 
   config.action_controller.session_store = :p_store
 
+  # store fragments on disk, we might have a lot of them.
+  config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
+
   # Make Active Record use UTC-base instead of local time
   config.time_zone = 'UTC'
   config.active_record.default_timezone = :utc

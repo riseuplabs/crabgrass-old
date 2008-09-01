@@ -1,7 +1,11 @@
 <% content_for :style do -%>
 div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}
 <% end -%>
-<% @title_box = render :partial => 'infopanel' -%>
+<%- @title_box = capture do -%>
+  <%- cache(me_cache_key) do -%>
+    <%= render :partial => 'infopanel' %>
+  <%- end -%>
+<%- end -%>
 
 <div class='landing'>
   <div id='page_list'>
