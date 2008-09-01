@@ -89,8 +89,8 @@ class Group < ActiveRecord::Base
 
   has_many :memberships, :dependent => :destroy,
     :before_add => :check_duplicate_memberships,
-    :after_add => :update_membership_cache,
-    :after_remove => :update_membership_cache
+    :after_add => :update_membership,
+    :after_remove => :update_membership
 
   has_many :users, :through => :memberships do
     def <<(*dummy)
@@ -102,6 +102,7 @@ class Group < ActiveRecord::Base
         user.clear_peer_cache_of_my_peers
         user.update_membership_cache
       end
+      proxy_owner.increment!(:version)
     end
   end
   
@@ -115,8 +116,9 @@ class Group < ActiveRecord::Base
   end
 
   # association callback
-  def update_membership_cache(membership)
+  def update_membership(membership)
     @user_ids = nil
+    self.increment!(:version)
     membership.user.update_membership_cache
     membership.user.clear_peer_cache_of_my_peers
   end
@@ -162,16 +164,6 @@ class Group < ActiveRecord::Base
     end
   end
 
-
-  # whenever the structure of this group has changed 
-  # (ie a committee or network has been added or removed)
-  # this function should be called to update each user's
-  # membership cache.
-  def update_membership_caches
-    users.each do |u|
-      u.update_membership_cache
-    end
-  end
   
   ####################################################################
   ## relationship to pages
@@ -220,8 +212,13 @@ class Group < ActiveRecord::Base
 #  has_many :federations
 #  has_many :networks, :through => :federations
 
-  # committees are children! they must respect their parent group.  
-  acts_as_tree :order => 'name'
+  # Committees are children! They must respect their parent group. 
+  # This uses better_acts_as_tree, which allows callbacks.
+  acts_as_tree(
+    :order => 'name',
+    :after_add => :org_structure_changed,
+    :after_remove => :org_structure_changed
+  )
   alias :committees :children
     
   # returns an array of all children ids and self id (but not parents).
@@ -262,6 +259,17 @@ class Group < ActiveRecord::Base
     parent_ids = Group.connection.select_values("SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})").collect{|id|id.to_i}
     return ([ids] + committee_ids(ids) + parent_ids + committee_ids(parent_ids)).flatten.uniq
   end
+
+  # whenever the structure of this group has changed 
+  # (ie a committee or network has been added or removed)
+  # this function is run. 
+  def org_structure_changed(child)
+    users.each do |u|
+      u.update_membership_cache
+    end
+    increment!(:version)
+  end
+
   
 #  has_and_belongs_to_many :locations,
 #    :class_name => 'Category'
@@ -308,7 +316,7 @@ class Group < ActiveRecord::Base
       update_group_name_of_pages  # update cached group name in pages
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c| c.parent_name_change }
+      committees.each {|c| c.parent_name_changed }
     end
   end
    

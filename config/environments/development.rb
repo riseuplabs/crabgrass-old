@@ -11,6 +11,8 @@ config.whiny_nils = true
 # Show full error reports and disable caching
 config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
+
+# set this to true to play with view caching:
 config.action_controller.perform_caching             = false
 
 # Do care if the mailer can't send

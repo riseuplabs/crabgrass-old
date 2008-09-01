@@ -25,8 +25,14 @@ module UserExtension::Organize
       has_many :memberships, :foreign_key => 'user_id',
         :dependent => :destroy,
         :before_add => :check_duplicate_memberships,
-        :after_add => [:update_membership_cache, :clear_peer_cache_of_my_peers],
-        :after_remove => [:clear_peer_cache_of_my_peers, :update_membership_cache]
+        :after_add => [
+          :update_membership_cache,
+          :clear_peer_cache_of_my_peers,
+          :increment_group_version],
+        :after_remove => [
+          :clear_peer_cache_of_my_peers,
+          :update_membership_cache,
+          :increment_group_version]
       
       has_many :groups, :foreign_key => 'user_id', :through => :memberships do
         def <<(*dummy)
@@ -34,6 +40,9 @@ module UserExtension::Organize
         end
         def delete(*records)
           super(*records)
+          records.each do |group|
+            group.increment!(:version)
+          end
           proxy_owner.clear_peer_cache_of_my_peers
           proxy_owner.update_membership_cache
         end

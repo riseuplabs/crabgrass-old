@@ -4,6 +4,7 @@ require 'rubygems'
 require 'active_record'
 
 $:.unshift File.dirname(__FILE__) + '/../lib'
+require File.dirname(__FILE__) + '/../lib/active_record/acts/tree'
 require File.dirname(__FILE__) + '/../init'
 
 class Test::Unit::TestCase
@@ -54,6 +55,14 @@ end
 class RecursivelyCascadedTreeMixin < Mixin
   acts_as_tree :foreign_key => "parent_id"
   has_one :first_child, :class_name => 'RecursivelyCascadedTreeMixin', :foreign_key => :parent_id
+end
+
+class TreeMixinWithCallback < Mixin
+  attr_accessor :after_add_called
+  acts_as_tree :foreign_key => "parent_id", :after_add => :after_add_callback
+  def after_add_callback(child)
+    self.after_add_called = true
+  end
 end
 
 class TreeTest < Test::Unit::TestCase
@@ -146,7 +155,17 @@ class TreeTest < Test::Unit::TestCase
     assert_equal [@root_child1, @root_child2], @root_child2.self_and_siblings
     assert_equal [@root1, @root2, @root3], @root2.self_and_siblings
     assert_equal [@root1, @root2, @root3], @root3.self_and_siblings
-  end           
+  end
+
+  def test_callbacks
+    @callback_root = TreeMixinWithCallback.create!
+    @callback_child = TreeMixinWithCallback.create!
+    @callback_root.children << @callback_child
+    assert @callback_root.after_add_called, 'association callback should have been called'
+  end
+
+  def add_callback
+  end
 end
 
 class TreeTestWithEagerLoading < Test::Unit::TestCase
