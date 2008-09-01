@@ -1,0 +1,54 @@
+ASSETS
+========================================
+
+For image thumbnails and document previews, you need the following
+
+/--
+apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
+gem install mime-types --no-ri --no-rdoc
+\--
+
+Graphicsmagick is needed for building thumbnails. OfficeOffice is needed for
+previewing Microsoft Office and OpenOffice documents. The mime-types gem is use
+to overcome a file uploading bug in ie6. OpenOffice should be at least version
+2.4 or greater. If you are running etch, you can install the backport
+of openoffice:
+
+/--
+apt-get -t etch-backports install openoffice.org openoffice.org-headless
+\--
+
+
+ocropus + Tesseract
+
+I had an idea to do OCR on pdfs, for sight-impaired users, but it is a bigger project than
+expected.  Here are the notes on installing the pieces which will probably be needed.  This
+will also permit full text seaching of pdfs.
+
+/-- Installing Tesseract
+# from http://sites.google.com/site/ocropus/install-02
+# Use of pre-packaged versions of Tesseract (e.g. Debian or Ubuntu tesseract-dev package) is not supported right now
+
+svn co http://tesseract-ocr.googlecode.com/svn/trunk/ tesseract-ocr
+cd tesseract-ocr
+./configure    # CXXFLAGS="-fPIC -O2" ./configure if you want Python later
+make
+sudo make install                                # installs in /usr/local
+\--
+
+/-- Installing required packages to build ocropus
+sudo apt-get install ftjam libpng12-dev libjpeg62-dev libtiff4-dev
+\--
+
+/-- Installing ocropus
+# from http://sites.google.com/site/ocropus/install
+wget http://ocropus.googlecode.com/files/ocropus-0.2.tar.gz
+tar xvfz ocropus-0.2.tar.gz
+./configure    # CXXFLAGS="-fPIC -O2" ./configure if you want Python later
+jam             # do not use boost jam!
+sudo jam install 
+\--
+
+The issue now is that there is not a single command which makes ocropus eat a pdf
+file.  I think the approach will have to be covert the pdf to pngs, and have ocropus eat
+the pngs.  Not too hard, but not something I'm up for today.

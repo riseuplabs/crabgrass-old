@@ -58,6 +58,8 @@ of openoffice:
 /--
 apt-get -t etch-backports install openoffice.org openoffice.org-headless
 \--
+For more details, see docs/ASSETS_README.
+
 
 To use full-text searching, you need to build and install sphinx search http://www.sphinxsearch.com/downloads.html (debian package coming soon).  For more details, see doc/SPHINX_README.
 
