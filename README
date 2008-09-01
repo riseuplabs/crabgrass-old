@@ -59,6 +59,14 @@ of openoffice:
 apt-get -t etch-backports install openoffice.org openoffice.org-headless
 \--
 
+To use full-text searching, you need to build and install sphinx search http://www.sphinxsearch.com/downloads.html (debian package coming soon).  For more details, see doc/SPHINX_README.
+
+For search to do asynchronous index generation, you need BackgrounDRb to work,
+which requires the chronic and packet gems:
+@@ sudo gem install chronic packet 
+and then should start the backgroundrb daemon
+@@ script/backgroundrb start
+
 These packages are need for running tests:
 
 /--
