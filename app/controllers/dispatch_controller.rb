@@ -153,7 +153,7 @@ class DispatchController < ApplicationController
     if logged_in?
       options = options_for_me
     else
-      options = options_for_public_pages
+      options = options_for_public
     end
     Page.find_by_path ["name",name], options
   end

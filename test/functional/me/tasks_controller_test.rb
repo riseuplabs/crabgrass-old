@@ -7,7 +7,7 @@ class Me::TasksController; def rescue_action(e) raise e end; end
 class MeTasksControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
-           :pages, :page_indices, :tasks, :task_participations, :task_lists
+           :pages, :tasks, :task_participations, :task_lists
 
   def setup
     @controller = Me::TasksController.new

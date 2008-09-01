@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080830111231) do
+ActiveRecord::Schema.define(:version => 20080831003129) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -44,35 +44,9 @@ ActiveRecord::Schema.define(:version => 20080830111231) do
   add_index "assets", ["version"], :name => "index_assets_version"
   add_index "assets", ["page_id"], :name => "index_assets_page_id"
 
-  create_table "auto_summaries", :force => true do |t|
-    t.integer "page_id",   :limit => 11
-    t.text    "body"
-    t.text    "body_html"
-    t.boolean "delta"
-  end
-
   create_table "avatars", :force => true do |t|
     t.binary  "image_file_data"
     t.boolean "public",          :default => false
-  end
-
-  create_table "bdrb_job_queues", :force => true do |t|
-    t.binary   "args"
-    t.string   "worker_name"
-    t.string   "worker_method"
-    t.string   "job_key"
-    t.integer  "taken",          :limit => 11
-    t.integer  "finished",       :limit => 11
-    t.integer  "timeout",        :limit => 11
-    t.integer  "priority",       :limit => 11
-    t.datetime "submitted_at"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "archived_at"
-    t.string   "tag"
-    t.string   "submitter_info"
-    t.string   "runner_info"
-    t.string   "worker_key"
   end
 
   create_table "categories", :force => true do |t|
@@ -229,22 +203,29 @@ ActiveRecord::Schema.define(:version => 20080830111231) do
     t.datetime "created_at"
   end
 
-  create_table "page_indices", :force => true do |t|
-    t.integer  "page_id",               :limit => 11
+  create_table "page_terms", :force => true do |t|
+    t.integer  "page_id",            :limit => 11
+    t.string   "page_type"
+    t.text     "access_ids"
     t.text     "body"
-    t.boolean  "delta"
+    t.text     "comments"
     t.string   "tags"
-    t.text     "entities"
     t.string   "title"
     t.boolean  "resolved"
-    t.datetime "page_created_at"
-    t.string   "page_created_by_login"
-    t.integer  "page_created_by_id",    :limit => 11
-    t.datetime "page_updated_at"
-    t.string   "page_updated_by_login"
+    t.integer  "rating",             :limit => 11
+    t.integer  "contributors_count", :limit => 11
+    t.integer  "flow",               :limit => 11
     t.string   "group_name"
+    t.string   "created_by_login"
+    t.string   "updated_by_login"
+    t.integer  "group_id",           :limit => 11
+    t.integer  "created_by_id",      :limit => 11
+    t.integer  "updated_by_id",      :limit => 11
     t.datetime "starts_at"
-    t.string   "type"
+    t.datetime "ends_at"
+    t.datetime "page_updated_at"
+    t.datetime "page_created_at"
+    t.boolean  "delta"
   end
 
   create_table "page_tools", :force => true do |t|
@@ -278,7 +259,6 @@ ActiveRecord::Schema.define(:version => 20080830111231) do
     t.integer  "flow",               :limit => 11
     t.datetime "starts_at"
     t.datetime "ends_at"
-    t.boolean  "delta"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"

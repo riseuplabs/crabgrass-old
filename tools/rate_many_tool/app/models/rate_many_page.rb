@@ -6,7 +6,7 @@ class RateManyPage < Page
   end
   
   # Return string of all rate_many possibiles, for the full text search index
-  def index_data
+  def body_terms
     return "" unless data and data.possibles
     data.possibles.collect { |pos| "#{pos.name}\t#{pos.description}" }.join "\n"
   end

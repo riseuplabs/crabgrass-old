@@ -84,4 +84,40 @@ class Test::Unit::TestCase
   end    
 =end
 
+  ##
+  ## SPHINX HELPERS
+  ##
+
+  def print_sphinx_hints
+    @@sphinx_hints_printed ||= false
+    unless @@sphinx_hints_printed
+      puts "\nTo make thinking_sphinx tests work, try the following steps:
+  rake RAILS_ENV=test db:test:prepare db:fixtures:load
+  rake RAILS_ENV=test cg:update_page_terms ts:index ts:start
+  rake test:functionals
+See also doc/SPHINX_README"
+      @@sphinx_hints_printed = true
+    end
+
+  end
+
+  def sphinx_working?(test_name="")
+    if `which searchd`.empty?
+      print '(skipping %s: sphinx not installed)' % test_name
+      print_sphinx_hints
+      false
+    elsif !sphinx_running?
+      print '(skipping %s: sphinx not running)' % test_name
+      print_sphinx_hints
+      false
+    elsif !ThinkingSphinx.updates_enabled?
+      print '(skipping %s: sphinx updated disabled)' % test_name
+      print_sphinx_hints
+      false
+    else
+      true
+    end
+  end
+
+
 end

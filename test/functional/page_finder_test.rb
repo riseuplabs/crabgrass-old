@@ -20,7 +20,7 @@ require 'set'
 class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :pages, :page_indices,
+  fixtures :groups, :users, :memberships, :pages,
    :user_participations, :group_participations, :taggings, :tags
   
   def setup
@@ -93,7 +93,7 @@ class PageFinderTest < Test::Unit::TestCase
       true if current_user.may?(:view,page) or page.public?
     end
     
-    pages = Page.find_by_path('/',@controller.options_for_participation_by(user))
+    pages = Page.find_by_path('/',@controller.options_for_user(user))
     path_ids = page_ids(pages)
    
     assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
@@ -211,141 +211,6 @@ class PageFinderTest < Test::Unit::TestCase
       debug(Page.find(pid),user)
     end
     assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
-  end
-
-  ##############################################
-  ### Tests for various search parameters
-
-  SPHINX_DEBUG_NOTES = "
-To make thinking_sphinx tests work, try the following steps:
-0. Run the functional test (which might fail), to populate the
-test database
-  rake test:functionals
-1. Update the page_index table, index the data with sphinx and start the search daemon
-  rake RAILS_ENV=test cg:update_page_index ts:index ts:start
-3. Run the tests
-  rake test:functionals
-
-"
-  @@warning_printed = false
-  
-  def sphinx_working?
-    if not ThinkingSphinx.updates_enabled?
-      unless @@warning_printed
-        puts "\n\nSphinx Search doesn't seem to be running:" + PageFinderTest::SPHINX_DEBUG_NOTES
-        @@warning_printed = true
-      end
-      return false
-    else
-      return true
-    end
-  end  
-
-  def try_many_sphinx_searches(user)
-    searches = [ 
-                 ['/pending', Proc.new {|p| p.resolved == false}  ],
-
-                 ['/type/discussion', Proc.new {|p| p.type == "DiscussionPage"} ],
-                 ['/type/event',      Proc.new {|p| p.type == "EventPage"} ],
-                 ['/type/message',    Proc.new {|p| p.type == "MessagePage"} ],
-                 ['/type/poll',       Proc.new {|p| p.type == "RateManyPage"} ],
-                 ['/type/task',       Proc.new {|p| p.type == "TaskListPage"} ],
-                 ['/type/vote',       Proc.new {|p| p.type == "RankedVotePage"} ],
-                 ['/type/wiki',       Proc.new {|p| p.type == "WikiPage"} ],
-
-                 ['/person/1', Proc.new {|p| User.find(1).may?(:view,p)} ],
-
-                 ['/group/1', Proc.new {|p| Group.find(1).may?(:view,p)} ],
-
-                 ['/created_by/4',     Proc.new {|p| p.created_by_id == 4} ],
-                 ['/created_by/1',     Proc.new {|p| p.created_by_id == 1} ],
-
-                 ['/not_created_by/1', Proc.new {|p| p.created_by_id != 1} ],
-
-                 ['/tag/pale', Proc.new {|p| p.tag_list.include? "pale"} ],
-                 ['/tag/pale/tag/imperial', Proc.new {|p| p.tag_list.include? "pale" and p.tag_list.include? "imperial"} ],
-                 ['/name/task', Proc.new {|p| p.name and p.name.include? "task"} ],
-                 ['/not_created_by/1', Proc.new {|p| p.created_by_id != 1} ]
-               ]
-
-    searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, @controller.options_for_me(:method => :sphinx))
-      assert_equal Page.all(:order => "updated_at DESC").select{|p| search_code.call(p) and user.may?(:view, p)}.collect{|p| p.id}[0,20],
-                   pages.collect{|p| p.id}, 
-                   "#{search_str} should match results for user"
-    end
-
-    searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, @controller.options_for_group(groups(:rainbow)).merge(:method => :sphinx))
-      assert_equal Page.find(:all).select{|p| search_code.call(p) and groups(:rainbow).may?(:view, p) and user.may?(:view, p)}.collect{|p| p.id}.sort,
-                   pages.collect{|p| p.id}.sort, 
-                   "#{search_str} should match results for group"
-    end
-  end  
-
-  def test_sphinx_searches
-    return if not sphinx_working?
-    
-    login(:blue)
-    user = users(:blue)
-    
-    try_many_sphinx_searches user
-
-=begin
-    # the following test is not yet working
-    ThinkingSphinx.deltas_enabled = true # will this make delta index active?
-    # add some pages, and make sure that they appear in the sphinx search results
-    (1..10).each do |i|
-      p = Page.create :title => "new pending page #{i}"
-      p.add user
-      p.unresolve
-      p.save
-    end
-
-    try_many_sphinx_searches user
-=end
-
-  end  
-
-  def test_sphinx_search_text_doc
-    return if not sphinx_working?
-    
-    # TODO: write this test
-  end
-  
-  def test_sphinx_searchs_w_pagination
-    return if not sphinx_working?
-
-    login(:blue)
-    user = users(:blue)
-    
-    searches = [ 
-                 ['/descending/updated_at/limit/10', Proc.new {
-                    Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,10]
-                  }
-                 ],
-                 ['/ascending/updated_at/limit/13', Proc.new {
-                    Page.find(:all, :order => "updated_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,13]
-                  }
-                 ],
-                 ['/descending/created_at/limit/5', Proc.new {
-                    Page.find(:all, :order => "created_at DESC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,5]
-                  }
-                 ],
-                 ['/ascending/created_at/limit/15', Proc.new {
-                    Page.find(:all, :order => "created_at ASC").select{|p| user.may?(:view, p)}.collect{|p| p.id}[0,15]
-                  }
-                 ],
-               ]
-
-    options = { :user_id => users(:blue).id, :group_ids => users(:blue).all_group_ids, :controller => @controller, :method => :sphinx }
-
-    searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, options)
-      assert_equal search_code.call,
-                   pages.collect{|p| p.id},
-                   "#{search_str} should match results for user when paginated"
-    end
   end
 
   protected

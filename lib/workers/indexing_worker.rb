@@ -4,9 +4,9 @@ class IndexingWorker < BackgrounDRb::MetaWorker
     # this method is called, when worker is loaded for the first time
   end
 
-  def update_page_index(page_id)
-    logger.info 'updating page index'
-    Page.find(page_id).update_index
+  def update_page_terms(page_id)
+    logger.info 'updating page terms'
+    Page.find(page_id).update_page_terms
   end
 end
 

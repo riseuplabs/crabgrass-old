@@ -18,33 +18,36 @@ module PathFinder
   module FindByPath
   
     def find_by_path(path, options={})
-      options = apply_possible_lambda(path, options)
+      query_method  = resolve_method(options)
+      query_options = resolve_options(query_method, path, options)
+      builder = PathFinder.get_builder(options[:method]).new(path, query_options)
+      builder.find_pages
+    end
+    
+    def count_by_path(path, options={})
+      query_method  = resolve_method(options)
+      query_options = resolve_options(query_method, path, options)
+      builder = PathFinder.get_builder(options[:method]).new(path, query_options)
+      builder.count_pages
+    end
 
-      per_page           = options[:per_page] || ::SECTION_SIZE
-      page               = options[:page] || 1
-      controller         = options[:controller]
+    private
+    
+    def resolve_options(query_method, path, options)
+      if options[:callback]
+        path = PathFinder::Builder.parse_filter_path(path)
+        return PathFinder.get_options_module(query_method).send(options[:callback],path,options)
+      else
+        return options
+      end
+    end
+
+    def resolve_method(options)
       options[:method] ||= :sql
       if !ThinkingSphinx.updates_enabled?
         options[:method] = :sql
       end
-
-      PathFinder::Builder.find_pages(options[:method], path, options)
-    end
-    
-    def count_by_path(path, options={})
-      options = apply_possible_lambda(path, options)
-
-      PathFinder::Builder.count_pages(:sql, path, options)
-    end
-    
-    # if the options argument is really a lambda, then call the lambda with
-    # the path to get the real options hash    
-    def apply_possible_lambda(path, options)
-      if options.is_a? Proc
-        options.call( PathFinder::Builder.parse_filter_path(path) )
-      else
-        options
-      end
+      options[:method]
     end
 
   end # FindByPath

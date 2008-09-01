@@ -66,6 +66,7 @@ class User < ActiveRecord::Base
       name
     end
   end
+  alias :to_s :both_names   # used for indexing
 
   def cut_name
     name[0..20]

@@ -1,7 +1,16 @@
 
 module PathFinder
 
-class Error < RuntimeError; end
+  def self.get_options_module(sym)
+    PathFinder.const_get('%sOptions'%sym.to_s.capitalize)
+  end
+  
+  def self.get_builder(sym)
+    PathFinder.const_get('%sBuilder'%sym.to_s.capitalize)
+  end
+
+  class Error < RuntimeError
+  end
 
 end
 

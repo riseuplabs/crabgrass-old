@@ -7,7 +7,7 @@ class WikiPage < Page
   end
 
   # Return string of all tasks, for the full text search index
-  def index_data
+  def body_terms
     return "" unless data and data.body
     data.body
   end
