@@ -1,7 +1,11 @@
 module GroupsHelper
 
   include WikiHelper
-  
+
+  def group_cache_key(group)
+    params.merge(:version => group.version, :updated_at => group.updated_at)
+  end
+
   def may_admin_group?
     logged_in? and current_user.member_of? @group
   end
