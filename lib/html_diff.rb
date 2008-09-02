@@ -1,10 +1,7 @@
 require 'tempfile'
 
-module HTMLDiff
-  
-  def self.log_to_stdout=(value)
-   @@log_to_stdout = value
-  end
+class HTMLDiff
+  cattr_accessor :log_to_stdout
 
   def self.diff(a, b)
 
@@ -33,7 +30,7 @@ module HTMLDiff
 
   def self.log(*args)
     ActiveRecord::Base.logger.info "HTML_Diff --- " + args.join(' ')
-    puts args.join(' ') if @@log_to_stdout
+    puts args.join(' ') if log_to_stdout
   end
 
 end
