@@ -1,0 +1,21 @@
+<br/>
+<br/>
+<br/>
+
+<script type='text/javascript' src='/embed/swfobject.js'></script>
+
+  <div id='preview'><%= @asset.filename %></div>
+
+<script type='text/javascript'>
+  var s1 = new SWFObject('/embed/player.swf','ply','470','60','9','#ffffff');
+  s1.addParam('allowfullscreen','false');
+  s1.addParam('allowscriptaccess','always');
+  s1.addParam('wmode','opaque');
+  s1.addParam('flashvars','file=<%= @asset.url %>');
+  s1.write('preview');
+</script>
+
+<br/>
+<br/>
+<br/>
+

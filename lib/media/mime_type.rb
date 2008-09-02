@@ -130,7 +130,7 @@ module Media
 
       'video/' => [nil,:video,nil,'Video'],
 
-      'audio/' => [nil,:audio,nil,'Audio'],
+      'audio/' => [nil,:audio,:audio_asset,'Audio'],
       
       'image/'                   => [nil,:image,:image_asset,'Image'],
       'image/jpeg'               => [:jpg,:image,:image_asset],

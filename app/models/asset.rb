@@ -130,6 +130,12 @@ class Asset < ActiveRecord::Base
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page(); pages.first || parent_page; end
 
+  # some asset subclasses (like AudioAsset) will display using flash
+  # they should override this method to say which partial will render this code
+  def embedding_partial
+    nil
+  end
+  
   ##
   ## ACCESS
   ##
