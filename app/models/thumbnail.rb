@@ -51,14 +51,15 @@ class Thumbnail < ActiveRecord::Base
     process_chain = Media::Process::Chain.new(input_type, output_type)
     if process_chain.run(input_file, output_file, thumbdef)
       # success
-
       if Media::Process.has_dimensions?(output_type)
         set_dimensions Media::Process.dimensions(output_file)
       end
+      self.failure = false
     else
       # failure
-      self.update_attribute(:failure, true)
+      self.failure = true
     end
+    save if changed?
   end
 
   # by the time we figure out what the thumbnail dimensions are,
@@ -67,7 +68,6 @@ class Thumbnail < ActiveRecord::Base
   def set_dimensions(dims)
     self.width, self.height = dims
     self.failure = false
-    self.save
     if vthumb = versioned()
       vthumb.width, vthumb.height = dims
       vthumb.save

@@ -10,8 +10,10 @@ module Media
     # either be readable by another processor or will be the ultimate target content type.
     #
 
-    PRIORITY = [:open_office, :graphic_magick].freeze
+    PRIORITY = [:open_office, :graphic_magick, :ffmpeg].freeze
 
+    ## see `ffmpeg -formats`
+ 
     CONTENT_TYPES_CONSUMED_BY = {
       :open_office => %w(
         text/plain text/html text/richtext application/rtf
@@ -38,13 +40,15 @@ module Media
       ),
       :graphic_magick => %w(application/pdf application/bzpdf application/gzpdf
         application/postscript application/xpdf image/jpeg image/pjpeg image/gif
-        image/png image/x-png image/jpg image/tiff)
+        image/png image/x-png image/jpg image/tiff),
+      :ffmpeg => %w(audio/ogg audio/mpeg)
     }.freeze
 
     CONTENT_TYPES_PRODUCED_BY = {
       :open_office => %w(application/pdf) + CONTENT_TYPES_CONSUMED_BY[:open_office],
       :graphic_magick => %w(application/pdf image/jpeg image/pjpeg
-        image/gif image/png image/jpg image/tiff)
+        image/gif image/png image/jpg image/tiff),
+      :ffmpeg => %w(audio/ogg audio/mpeg)
     }.freeze
 
     # a hash of previewable mime/types (eg 'image/png' => true)

@@ -1,6 +1,7 @@
 
 GM_COMMAND = `which gm`.chomp unless defined? GM_COMMAND
 PYTHON_COMMAND = `which python`.chomp unless defined? PYTHON_COMMAND
+FFMPEG_COMMAND = `which ffmpeg`.chomp unless defined? FFMPEG_COMMAND
 
 if `which openoffice`.any?
   OPENOFFICE_DAEMON_PORT = 8100
@@ -11,6 +12,9 @@ else
 end
 
 THUMBNAIL_SEPARATOR = '_'
+
+# uncomment this to print out what the hell the processors are doing.
+# Media::Process::Base.log_to_stdout_when = :always
 
 AssetExtension::Storage.make_required_dirs
 

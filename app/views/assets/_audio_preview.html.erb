@@ -1,17 +1,27 @@
 <br/>
 <br/>
 <br/>
-
+<% 
+  ## TODO: don't show the player unless there is a suitable
+  ## format that can be played.
+  if @asset.thumbnail(:mp3)
+    mp3_file = @asset.thumbnail(:mp3).filename
+    mp3_url  = @asset.thumbnail(:mp3).url
+  else
+    mp3_file = @asset.filename
+    mp3_url  = @asset.url
+  end
+%>
 <script type='text/javascript' src='/embed/swfobject.js'></script>
 
-  <div id='preview'><%= @asset.filename %></div>
+  <div id='preview'><%= mp3_file %></div>
 
 <script type='text/javascript'>
-  var s1 = new SWFObject('/embed/player.swf','ply','470','60','9','#ffffff');
+  var s1 = new SWFObject('/embed/player.swf','ply','250','60','9','#ffffff');
   s1.addParam('allowfullscreen','false');
   s1.addParam('allowscriptaccess','always');
   s1.addParam('wmode','opaque');
-  s1.addParam('flashvars','file=<%= @asset.url %>');
+  s1.addParam('flashvars','file=<%= mp3_url %>');
   s1.write('preview');
 </script>
 

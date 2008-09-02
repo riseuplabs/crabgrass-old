@@ -6,5 +6,10 @@ class AudioAsset < Asset
     'assets/audio_preview'
   end
 
+  define_thumbnails(
+    :ogg => {:ext => 'ogg', :title => 'Ogg Audio', :proxy => true}, 
+    :mp3 => {:ext => 'mp3', :title => 'MP3 Audio', :proxy => true}
+  )
+
 end
 

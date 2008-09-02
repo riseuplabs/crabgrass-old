@@ -1,7 +1,18 @@
 ASSETS
 ========================================
 
-For image thumbnails and document previews, you need the following
+image thumbnails
+----------------
+
+For image thumbnails you need the following
+
+apt-get install graphicsmagick
+gem install mime-types --no-ri --no-rdoc
+
+document previews
+------------------
+
+To build image thumbnails of office documents, install:
 
 /--
 apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
@@ -18,8 +29,35 @@ of openoffice:
 apt-get -t etch-backports install openoffice.org openoffice.org-headless
 \--
 
+audio encoding
+--------------
+
+Embedded flash players can only play mp3 and mp4 audio. Unfortuntely, the ffmpeg
+that is packaged for debian and ubuntu won't convert audio files to these formats.
+
+ffmpeg, however, normally can convert to these formats, using all GPL code.
+You 'just' have to download the latest source and build ffmpeg yourself:
+
+For ubuntu gutsy:
+/--
+sudo apt-get install liba52-dev libdts-dev libgsm1-dev libvorbis-dev libxvidcore4 libxvidcore-dev libdc1394-dev libfaac-dev liblame-dev libx264-dev libfaad-dev libtheora-dev libsdl1.2-dev 
+wget http://ffmpeg.mplayerhq.hu/ffmpeg-export-snapshot.tar.bz2
+tar jxvf ffmpeg-export-snapshot.tar.bz2
+cd ffmpeg-export-*
+./configure --prefix=/usr --disable-debug --enable-shared --enable-gpl --enable-postproc --enable-swscale --enable-pthreads --enable-x11grab --enable-liba52 --enable-libdc1394 --enable-libfaac --enable-libfaad --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libxvid
+make
+sudo checkinstall
+\--
+
+The problem with building ffmpeg, of course, is that it relies on a ton of
+libraries and the package names are always changing. Good luck.
+
+See also https://wiki.ubuntu.com/ffmpeg
+
+For debian: http://xen.dk/en/2007/12/21/ffmpeg-debian-etch
 
 ocropus + Tesseract
+---------------------
 
 I had an idea to do OCR on pdfs, for sight-impaired users, but it is a bigger project than
 expected.  Here are the notes on installing the pieces which will probably be needed.  This
