@@ -26,6 +26,7 @@ module Media::Process
     # being written by another thread
     #
     def run(source_file, target_file, thumbdef)
+      raise Errno::ENOENT.new(source_file) unless File.exists?(source_file)
       success = false
       open_read_lock(source_file) do 
         if open_write_lock_nonblocking(target_file) {

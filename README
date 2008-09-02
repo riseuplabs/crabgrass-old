@@ -58,6 +58,16 @@ of openoffice:
 /--
 apt-get -t etch-backports install openoffice.org openoffice.org-headless
 \--
+For more details, see docs/ASSETS_README.
+
+
+To use full-text searching, you need to build and install sphinx search http://www.sphinxsearch.com/downloads.html (debian package coming soon).  For more details, see doc/SPHINX_README.
+
+For search to do asynchronous index generation, you need BackgrounDRb to work,
+which requires the chronic and packet gems:
+@@ sudo gem install chronic packet 
+and then should start the backgroundrb daemon
+@@ script/backgroundrb start
 
 These packages are need for running tests:
 
@@ -163,6 +173,19 @@ To run in production mode:
 export RAILS_ENV=production
 script/server
 \--
+
+clean out cached files
+-----------------------
+
+By default, crabgrass will store fragment caches in tmp/cache when running in
+production mode. These cache files are not expired automatically, but old cache
+files can be safely deleted... should be!
+
+It is probably a good idea to run this once in a while:
+
+  tmpreaper 7d /usr/apps/crabgrass/tmp/cache
+
+On debian, the package name is 'tmpreaper'
 
 TROUBLESHOOTING
 ========================================================

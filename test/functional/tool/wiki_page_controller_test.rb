@@ -11,6 +11,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
     @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    HTMLDiff.log_to_stdout = false # set to true for debugging
   end
 
   def test_show
@@ -33,12 +34,21 @@ class WikiPageControllerTest < Test::Unit::TestCase
   
   def test_create
     login_as :quentin
+    
+    assert_no_difference 'Page.count' do
+      post 'create', :page => {:title => nil}
+      assert_equal 'error', flash[:type], "page title should be required"
+    end
+    
     assert_difference 'Page.count' do
       post :create, :page_class=>"WikiPage", :id => 'wiki', :group_id=> "", :create => "Create page", :tag_list => "", 
            :page => {:title => 'my title', :summary => ''}
       assert_response :redirect
       assert_not_nil assigns(:page)
-      assert_equal true, assigns(:wiki).locked?, "the wiki should be locked by the creator"
+      assert_not_nil assigns(:page).data
+      # i don't think the wiki needs to be locked at creation.
+      # it will be locked soon enough when on the :edit action
+      #assert_equal true, assigns(:page).data.locked?, "the wiki should be locked by the creator"
       assert_redirected_to @controller.page_url(assigns(:page), :action=>'edit')
     end
   end
@@ -68,24 +78,24 @@ class WikiPageControllerTest < Test::Unit::TestCase
     login_as :orange
     pages(:wiki).add users(:orange), :access => :view
 
+    # create versions
     (1..5).each do |i|
       pages(:wiki).data.body = "text %d for the wiki" / i
       pages(:wiki).data.save
     end
-    pages(:wiki).data.versions.reload
+    
+    pages(:wiki).data.versions.reload    
 
-    # should find any version in 2..6
-    (2..6).each do |i|
+    # find versions
+    (1..5).each do |i|
       get :version, :page_id => pages(:wiki).id, :id => i
       assert_response :success
-#      assert_template 'version'
       assert_equal i, assigns(:version).version
     end
     
     # should fail gracefully for non-existant version
-    get :version, :page_id => pages(:wiki).id, :id => 7
+    get :version, :page_id => pages(:wiki).id, :id => 6
     assert_response :success
-#    assert_template 'version'
     assert_nil assigns(:version)
   end
   

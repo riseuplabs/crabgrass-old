@@ -339,7 +339,10 @@ module ThinkingSphinx
         
         # normal attribute filters
         client.filters += options[:with].collect { |attr,val|
-          Riddle::Client::Filter.new attr.to_s, filter_value(val)
+          ### hey, check it out: hack for crabgrass...
+          ### strip _:digit: from end of attribute to allow duplicate attribute
+          ### filters (which would not be possible with an hash key).
+          Riddle::Client::Filter.new attr.to_s.sub(/_\d$/,''), filter_value(val)
         } if options[:with]
         
         # exclusive attribute filters

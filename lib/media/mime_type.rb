@@ -130,7 +130,7 @@ module Media
 
       'video/' => [nil,:video,nil,'Video'],
 
-      'audio/' => [nil,:audio,nil,'Audio'],
+      'audio/' => [nil,:audio,:audio_asset,'Audio'],
       
       'image/'                   => [nil,:image,:image_asset,'Image'],
       'image/jpeg'               => [:jpg,:image,:image_asset],
@@ -149,13 +149,22 @@ module Media
       'application/pgp-keys'      => [nil,:lock,nil,'Crypt']
     }.freeze
    
-    # override result of MIME::Types
-    # useful for when MIME::Types fails or is ambiguous
+    #
+    # This extension mapping is used to force certain mime types.
+    # Usually, firefox does pretty good at reporting the correct mime-type,
+    # but IE always fails (firefox fails on ogg). So, we use the MIME::Types
+    # gem to try to get the correct mime from the extension. Sometimes, however,
+    # even this doesn't work. This able will force certain types when
+    # MIME::Types fails or is ambiguous
+    # 
     EXTENSIONS = {
       'jpg' => 'image/jpeg',
       'png' => 'image/png',
       'txt' => 'text/plain',
       'flv' => 'video/flv',
+      'ogg' => 'audio/ogg',
+      'oga' => 'audio/ogg',
+      'ogv' => 'vidoe/ogg',
       'pdf' => 'application/pdf',
       'odt' => 'application/vnd.oasis.opendocument.text',
       'ods' => 'application/vnd.oasis.opendocument.spreadsheet',

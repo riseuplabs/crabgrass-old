@@ -10,6 +10,11 @@
           <td><%= friendly_date(@page.created_at) %></td>
         </tr>
         <tr>
+          <td align='right'><b><%= 'File size'.t %>:</b></td>
+          <td>&nbsp;</td>
+          <td><%= friendly_size(@asset.size) %></td>
+        </tr>
+        <tr>
           <td align='right'><b><%= 'Format'.t %>:</b></td>
           <td>&nbsp;</td>
           <td><%= @asset.format_description.t %> (<%=@asset.ext%>)</td>

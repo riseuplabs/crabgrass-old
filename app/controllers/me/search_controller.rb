@@ -8,26 +8,9 @@ class Me::SearchController < Me::BaseController
       @pages = Page.find_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page]))
       
       # if there was a text string in the search, generate extracts for the results      
-      if parsed_path.keyword? 'text'
+      if parsed_path.keyword? 'text' and @pages.any?
         begin
-        config = ThinkingSphinx::Configuration.new
-        client = Riddle::Client.new config.address, config.port
-        
-        results = client.excerpts(
-            :docs             => @pages.collect {|page| page.page_index.body},
-            :words            => parsed_path.search_text,
-            :index            => "page_index_core",
-            :before_match     => "<b>",
-            :after_match      => "</b>",
-            :chunk_separator  => " ... ",
-            :limit            => 400,
-            :around           => 15
-          )
-  
-          @excerpts = {}
-          results.each_with_index do |result, i|
-            @excerpts[@pages[i].id] = result
-          end
+          @excerpts = extract_excerpts(@pages)
         rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
           RAILS_DEFAULT_LOGGER.warn "failed to extract keywords from sphinx search: #{err}."
         end
@@ -59,6 +42,28 @@ class Me::SearchController < Me::BaseController
   def context
     me_context('large')
     add_context 'search', url_for(:controller => 'me/search', :action => nil)
+  end
+
+  def extract_excerpts(pages)
+    config = ThinkingSphinx::Configuration.new
+    client = Riddle::Client.new config.address, config.port
+
+    results = client.excerpts(
+      :docs             => pages.collect {|page| page.page_terms ? page.page_terms.body : ""},
+      :words            => parsed_path.search_text,
+      :index            => "page_terms_core",
+      :before_match     => "<b>",
+      :after_match      => "</b>",
+      :chunk_separator  => " ... ",
+      :limit            => 400,
+      :around           => 15
+    )
+  
+    excerpts = {}
+    results.each_with_index do |result, i|
+      excerpts[pages[i].id] = result
+    end
+    return excerpts
   end
     
 end

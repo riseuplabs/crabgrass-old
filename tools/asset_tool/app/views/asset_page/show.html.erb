@@ -1,7 +1,13 @@
 <div id='asset_page' style='height:1%'>
 
     <div class='left'>
-      <div id='preview_wrapper'><div id='preview_area' class='<%= preview_area_class(@asset) %>'><%= asset_link_with_preview(@asset) %></div></div>
+      <div id='preview_wrapper'><div id='preview_area' class='<%= preview_area_class(@asset) %>'>
+      <%= if @asset.embedding_partial.any?
+            render :partial => @asset.embedding_partial
+          else
+            asset_link_with_preview(@asset) 
+          end %>
+      </div></div>
       <p><%= download_link %> &nbsp;&nbsp; <%= upload_link %></p>
       <div id="upload_new" style="display: none;">
         <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>

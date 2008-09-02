@@ -10,25 +10,42 @@ will not work and searching will fall back to dumb mysql searches.
 installing sphinx
 ------------------
 
-check http://www.sphinxsearch.com/downloads for the latest version
+check http://www.sphinxsearch.com/downloads.html for the latest version
 
 /--
 wget http://www.sphinxsearch.com/downloads/sphinx-xxxxxx.tar.gz
 tar xzvf sphinx-xxxxxx.tar.gz
 cd sphinx-xxxxxxx
 sudo apt-get install libmysqlclient15-dev
-./configure
+./configure -sysconfdir=/etc
 make
 sudo make install
 \--
+
+or, instead of @sudo make install@ you can try @sudo checkinstall@ to install as
+a debian package.
+
+configuring sphinx
+------------------
+
+Edit config/sphinx.yml to change any options you need to. 
+
+To test to see if sphinx is installed and working, you can try to build the
+config file. Generally, this is done for you, but it is good for testing:
+
+/-------
+rake ts:config
+\-------
+
+If you don't get any errors, then things are probably working.
 
 indexing crabgrass pages
 ------------------------
 
 /---
 cd ~/development/crabgrass
+rake cg:update_page_terms
 rake ts:index
-rake cg:update_page_index
 \---
 
 running sphinx

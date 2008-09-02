@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AssetTest < Test::Unit::TestCase
   fixtures :groups
 
-  @@private = Media::AssetStorage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = Media::AssetStorage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
+  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
     FileUtils.mkdir_p(@@private)
@@ -116,7 +116,8 @@ class AssetTest < Test::Unit::TestCase
     @asset = Asset.create :uploaded_data => upload_data('image.png')
     assert @asset.public?
     @asset.update_access
-    assert File.exists?(@asset.public_filename), 'public file should exist'
+ 
+    assert File.exists?(@asset.public_filename), 'public file "%s" should exist' % @asset.public_filename
     assert File.symlink?(File.dirname(@asset.public_filename)), 'dir of public file should be a symlink'
     @asset.instance_eval do
       def public?

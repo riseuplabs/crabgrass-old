@@ -30,3 +30,7 @@ mime-types
 hpricot
   Required for running tests. Used by the plugin webrat.
 
+chronic
+packet
+  Required for BackgrounDRB, which is used for asynchronous page indexing with
+  sphinx search

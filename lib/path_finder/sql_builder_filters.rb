@@ -208,12 +208,12 @@ module PathFinder::SqlBuilderFilters
   
   ### LIMIT ###
   def filter_limit(limit)
-    offset = nil
-    if limit.instance_of? Array 
+    offset = 0
+    if limit.instance_of? String 
       limit, offset = limit.split('-')
     end
     @per_page = limit.to_i if limit
-    @page = (offset.to_f / limit.to_f + 1).floor.to_i if @per_page > 0 and offset
+    @page = ((offset.to_f/limit.to_f) + 1).floor.to_i if @per_page > 0
   end
 
   def filter_per_page(per_page)

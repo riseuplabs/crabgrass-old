@@ -1,14 +1,19 @@
+# options -------------------------------------------
+# config file::      config/#{environment}.sphinx.conf
+# searchd log file:: log/searchd.log
+# query log file::   log/searchd.query.log
+# pid file::         log/searchd.#{environment}.pid
+# searchd files::    db/sphinx/#{environment}/
+# allow star::       false
+
 development:
-    # config file::      config/#{environment}.sphinx.conf
-    # searchd log file:: log/searchd.log
-    # query log file::   log/searchd.query.log
-    # pid file::         log/searchd.#{environment}.pid
-    # searchd files::    db/sphinx/#{environment}/
-    # allow star::       false
-  port::             3312
-  address::          localhost
+  port: 3312
+  address: localhost
   
 test:
-  port:             3313
-  address:          localhost
-  
+  port: 3313
+  address: localhost
+
+#production:
+#  config: /etc/sphinx/sphinx.conf
+

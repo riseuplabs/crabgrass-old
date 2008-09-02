@@ -10,10 +10,11 @@ module ProfileMethods
   # returns the best profile for user to see
   def visible_by(user)
     if user
-      find_by_access(*(proxy_owner.relationships_to(user) + [:stranger]))
+      profile = find_by_access(*(proxy_owner.relationships_to(user) + [:stranger]))
     else
-      find_by_access :stranger
+      profile = find_by_access :stranger
     end
+    return profile || Profile.new
   end
 
   # returns the first profile that matches one of the access symbols in *arg

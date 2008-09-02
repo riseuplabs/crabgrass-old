@@ -26,7 +26,7 @@ class Committee < Group
   #end
 
   # called when the parent's name has change
-  def parent_name_change
+  def parent_name_changed
     name = short_name
     update_attribute(:name, name)
   end
@@ -47,9 +47,10 @@ class Committee < Group
   # name includes the parent's name.
   def parent=(p)
     update_attribute(:parent_id, p.id)
-    parent_name_change
+    parent_name_changed
+    parent.org_structure_changed(self)
   end
- 
+
   ####################################################################
   ## relationships to users
   def may_be_pestered_by?(user)

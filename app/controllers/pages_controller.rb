@@ -44,18 +44,15 @@ class PagesController < ApplicationController
   # for quickly creating a wiki
   def create_wiki
     group = Group.get_by_name(params[:group])
-    if !logged_in?
-      # should never reach this code, because of before_filter :login_required
-      flash_message :error => "You must first login."
-    elsif group.nil? or !current_user.member_of?(group)
-      flash_message :error => "Group does not exist or you do not have permission to create a page for that group"
+    if group.nil? or !current_user.member_of?(group)
+      flash_message_now :error => "Group does not exist or you do not have permission to create a page for that group"
+      render :text => '', :layout => 'default'
+    elsif page = group.pages.find_by_name(params[:name])
+      redirect_to page_url(page)
     else
       page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
-      page.save
       redirect_to page_url(page)
-      return
     end
-    render :text => ''
   end
 
   def access

@@ -18,4 +18,8 @@ module Me::BaseHelper
       :controller => 'inbox', :action => 'index', :path => 'pending'
   end
   
+  def me_cache_key
+    params.merge(:user_id => current_user.id, :version => current_user.version)
+  end
+
 end

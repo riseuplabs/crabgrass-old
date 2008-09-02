@@ -9,7 +9,9 @@ see PeopleController.
 =end
 
 class PersonController < ApplicationController
-  
+
+  helper 'task_list_page'
+
   def initialize(options={})
     super()
     @user = options[:user]   # the user context, if any
@@ -21,17 +23,17 @@ class PersonController < ApplicationController
   end
 
   def search
-    options = options_for_participation_by(@user, :page => params[:page], :method => :sphinx)
+    options = options_for_user(@user, :page => params[:page])
     @pages = Page.find_by_path params[:path], options
     @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
   end
 
   def tasks
     @stylesheet = 'tasks'
-    options = options_for_participation_by(@user)
-    options[:conditions] += " AND user_participations.resolved = ?"
-    options[:values] << false
-    @pages = Page.find_by_path('type/task', options)
+    options = options_for_user(@user)
+    #options[:conditions] += " AND user_participations.resolved = ?"
+    #options[:values] << false
+    @pages = Page.find_by_path('type/task/pending', options)
     @task_lists = @pages.collect{|p|p.data}
   end
     

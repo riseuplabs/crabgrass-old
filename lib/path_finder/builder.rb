@@ -6,18 +6,6 @@ An abstract super class of SqlBuilder and FerretBuilder
 
 class PathFinder::Builder
 
-  def self.find_pages(method, path, options)
-    self.builder(method, path, options).find_pages()
-  end
-
-  def self.count_pages(method, path, options)
-    self.builder(method,path,options).count_pages()
-  end
-
-  def self.builder(method,path,options)
-    PathFinder.const_get('%sBuilder'%method.to_s.capitalize).new(path, options)
-  end
-
   # path keyword => number of arguments required for the keyword.
   PATH_KEYWORDS = {
     # boolean

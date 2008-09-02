@@ -1,10 +1,3 @@
-#
-# body          :text
-# body_html     :text
-# created_at    :datetime
-# updated_at    :datetime
-#
-
 class Post < ActiveRecord::Base
 
   acts_as_rateable
@@ -29,5 +22,10 @@ class Post < ActiveRecord::Base
   def group_name
     discussion.page.group_name
   end
-  
+
+  # used for indexing
+  def to_s
+    "#{user} #{body}"
+  end
 end
+

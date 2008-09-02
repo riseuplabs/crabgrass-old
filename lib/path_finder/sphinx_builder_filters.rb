@@ -5,37 +5,44 @@ module PathFinder::SphinxBuilderFilters
   protected
 
   def filter_unread
-    Raise "sphinx cannot search for unread"
+    raise Exception.new("sphinx cannot search for unread")
   end
 
   def filter_pending
-    Raise "sphinx cannot search inbox for pending" if @inbox
-    @args_for_find[:conditions][:resolved] = 0
+    @conditions[:resolved] = 0
   end
   
   def filter_interesting
-    Raise "sphinx cannot search for interesting"
+    raise Exception.new("sphinx cannot search for interesting")
   end
 
   def filter_watching
-    Raise "sphinx cannot search for watching"
+    raise Exception.new("sphinx cannot search for watching")
   end
 
   def filter_inbox
-    Raise "sphinx cannot search for inbox"
+    raise Exception.new("sphinx cannot search for inbox")
   end
 
   def filter_attending
-    Raise "sphinx cannot search for attending"
+    raise Exception.new("sphinx cannot search for attending")
   end
 
   def filter_starred
-    Raise "sphinx cannot search for starred"
+    raise Exception.new("sphinx cannot search for starred")
   end
 
+  def filter_changed
+    raise Exception.new("sphinx cannot search for changed")
+  end
+      
+  ### Time finders
+  # dates in database are UTC
+  # we assume the values pass to the finder are local
+  
+
   def filter_starts
-    # TODO: check if this has intended effect
-    @date_field = "starts_at"
+    @date_field = :starts_at
   end
 
   def filter_after(date)
@@ -49,9 +56,7 @@ module PathFinder::SphinxBuilderFilters
           date = to_utc Time.in_time_zone(year, month, day)
        end
     end
-    @args_for_find[:filter] = @date_field
-    @args_for_find[:filter_start] = date    
-    @args_for_find[:filter_stop] = date + 100.years
+    @conditions[@date_field] = range(date, date+100.years)
   end
 
   def filter_before(date)
@@ -65,126 +70,108 @@ module PathFinder::SphinxBuilderFilters
           date = to_utc Time.in_time_zone(year, month, day)
        end
     end
-    @args_for_find[:filter] = @date_field
-    @args_for_find[:filter_start] = date - 100.years
-    @args_for_find[:filter_stop] = date
+    @conditions[@date_field] = range(date-100.years, date)
   end
 
-  def filter_changed
-    Raise "sphinx cannot search for changed"
-  end
-      
-  ### Time finders
-  # dates in database are UTC
-  # we assume the values pass to the finder are local
-  
   def filter_upcoming
-    @args_for_find[:filter] = "starts_at"
-    @args_for_find[:filter_start] = Time.zone.now
-    @args_for_find[:filter_stop] = Time.zone.now + 100.years
-    @order << 'pages.starts_at DESC' if @order
+    @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
+    @order << 'pages.starts_at DESC'
   end
   
   def filter_ago(near,far)
-    @args_for_find[:filter] = "updated_at"
-    @args_for_find[:filter_start]  = far.to_i.days.ago
-    @args_for_find[:filter_stop] = near.to_i.days.ago
+    @conditions[:page_updated_at] = range(far.to_i.days.ago, near.to_i.days.ago)
   end
   
   def filter_created_after(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
-    @args_for_find[:filter] = "created_at"
-    @args_for_find[:filter_start]  = date
-    @args_for_find[:filter_stop] = date + 100.years
+    @conditions[:page_created_at] = range(date, date + 100.years)
   end
   
   def filter_created_before(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
-    @args_for_find[:filter] = "created_at"
-    @args_for_find[:filter_start]  = date - 100.years
-    @args_for_find[:filter_stop] = date
+    @conditions[:page_created_at] = range(date - 100.years, date)
   end
  
   def filter_month(month)
     year = Time.zone.now.year
-    @args_for_find[:filter] = @date_field
-    @args_for_find[:filter_start]  = Time.in_time_zone(year,month)
-    @args_for_find[:filter_stop] = Time.in_time_zone(year,month+1)
+    @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
   end
 
   def filter_year(year)
-    @args_for_find[:filter] = @date_field
-    @args_for_find[:filter_start]  = Time.in_time_zone(year)
-    @args_for_find[:filter_stop] = Time.in_time_zone(year + 1)
+    @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
   end
   
   ####
 
   def filter_type(page_class_group)
-    @args_for_find[:conditions][:class_display_name] = page_class_group
+    @conditions[:page_type] = Page.class_group_to_class_names(page_class_group).join(' ')
   end
   
   def filter_person(id)
-    @args_for_find[:conditions][:entities] ||= ""
-    @args_for_find[:conditions][:entities] += " & user_#{id}"
+    @with[access_ids_key] = Page.access_ids_for(:user_ids => [id])
   end
   
   def filter_group(id)
-    @args_for_find[:conditions][:entities] ||= ""
-    @args_for_find[:conditions][:entities] += " & group_#{id}"
+    @with[access_ids_key] = Page.access_ids_for(:group_ids => [id])
   end
 
   def filter_created_by(id)
-    @args_for_find[:conditions][:created_by_id] ||= ""
-    @args_for_find[:conditions][:created_by_id] += " #{id}"
+    @conditions[:created_by_id] ||= ""
+    @conditions[:created_by_id] += " #{id}"
   end
 
   def filter_not_created_by(id)
-    @args_for_find[:without] ||= {}
-    @args_for_find[:without][:created_by_id] ||= ""
-    @args_for_find[:without][:created_by_id] += " #{id}"
+    @without[:created_by_id] ||= ""
+    @without[:created_by_id] += " #{id}"
   end
   
   def filter_tag(tag_name)
-    @args_for_find[:conditions][:tags] ||= ""
-    @args_for_find[:conditions][:tags] += " #{tag_name}"
+    @conditions[:tags] ||= ""
+    @conditions[:tags] += " #{tag_name}"
   end
   
   def filter_name(name)
-    @args_for_find[:conditions][:name] ||= ""
-    @args_for_find[:conditions][:name] += " #{name}"
+    @conditions[:name] ||= ""
+    @conditions[:name] += " #{name}"
   end
   
   #### sorting  ####
   
   def filter_ascending(sortkey)
-    @args_for_find[:order] ||= ""
-    @args_for_find[:order] += " #{sortkey} ASC"
+    if sortkey == 'updated_at' or sortkey == 'created_at'
+      sortkey = 'page_' + sortkey
+    end
+    @order << " #{sortkey} ASC"
   end
   
   def filter_descending(sortkey)
-    @args_for_find[:order] ||= ""
-    @args_for_find[:order] += " #{sortkey} DESC"
+    if sortkey == 'updated_at' or sortkey == 'created_at'
+      sortkey = 'page_' + sortkey
+    end
+    @order <<" #{sortkey} DESC"
   end
   
   ### LIMIT ###
   
   def filter_limit(limit)
-    offset = nil
-    if limit.instance_of? Array 
+    offset = 0
+    if limit.instance_of? String 
       limit, offset = limit.split('-')
     end
-
-    @args_for_find[:per_page] = limit.to_i if limit
-    @args_for_find[:page] ||= 1 + (offset.to_i / limit.to_i) if offset and limit
+    @per_page = limit.to_i if limit
+    @page = ((offset.to_f/limit.to_f) + 1).floor.to_i if @per_page > 0
   end
   
   def filter_text(text)
-#    RAILS_DEFAULT_LOGGER.debug @args_for_find.to_yaml
     @search_text += " #{text}"
   end
 
+  ### HELPER ###
+
+  def range(min,max)
+    min.to_i..max.to_i
+  end
 end
 

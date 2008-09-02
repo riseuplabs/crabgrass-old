@@ -32,13 +32,18 @@ class BasePageController < ApplicationController
   # the form to create this type of page
   # can be overridden by the subclasses
   def create
-    @page_class = Page.display_name_to_class(params[:id])
+    @page_class = get_page_type
     if request.post?
-      @page = create_new_page(@page_class)
-      if @page.valid?
-        return redirect_to(page_url(@page))
-      else
+      begin
+        @page = @page_class.create(params[:page].merge(
+          :user => current_user,
+          :share_with => params[:recipients],
+          :access => :admin
+        ))
+        return redirect_to(page_url(@page)) if @page.valid?
         flash_message_now :object => @page
+      rescue Exception => exc
+        flash_message_now :exception => exc
       end
     end
     @stylesheet = 'page_creation'
@@ -169,57 +174,22 @@ class BasePageController < ApplicationController
     true
   end
   
-  ##############################################################
-  ## Page Creation
-
-  def create_new_page(page_class=nil)
-    page_type = page_class || get_page_type
-    Page.transaction do
-      page = page_type.create params[:page].merge({:created_by_id => current_user.id})
-      if page.valid?
-        add_participants!(page, params)
-        page.set_tag_list params[:tag_list]
-        page.save
-      end
-      page
-    end
-  end
-
-  def add_participants!(page, options={})
-    users     = get_users
-    if (group = get_group(options))
-      page.add(group, :access => :admin)
-      users += group.users if options[:announce]
-    end
-    users.uniq.each do |u|
-      if u.member_of? group
-        page.add(u)
-      else
-        page.add(u, :access=>:admin)
-      end
-    end
-  end
-
-  def get_groups
-    [get_group(params)]
-  end
-
-  def get_group(options = {})
-    return unless options[:group_name].any? or options[:group_id].any?
-    if options[:group_name]
-      return Group.get_by_name(options[:group_name]) || raise(Exception.new('no such group %s' % options[:group_name]))
-    end
-    Group.find_by_id(options[:group_id])
-  end
+  ##
+  ## default page creation methods used by tool controllers
+  ##
   
-  def get_users
-    [current_user]    
-  end
-  
-  def get_page_type
-    raise Exception.new('page type required') unless params[:id]
-    return Page.display_name_to_class(params[:id])
+  def get_page_type(param=nil)
+    param ||= params[:id]
+    raise ErrorMessage.new('page type required') unless param
+    return Page.display_name_to_class(param)
   end
 
+  def create_new_page(page_class)
+     page_class.create(params[:page].merge(
+       :user => current_user,
+       :share_with => Group.find_by_id(params[:group_id]),
+       :access => :admin
+     ))  
+  end
 end
 

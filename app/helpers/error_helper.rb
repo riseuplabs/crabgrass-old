@@ -35,35 +35,12 @@ module ErrorHelper
     end
   end
 
-  # options:
-  # :title
-  # :object | :success | :error
-  def add_flash_message(options, flsh)
-    flsh[:text] ||= ""
-    flsh[:title] = options[:title] || flsh[:title]
-    if options[:object]
-      object = options[:object]
-      unless object.errors.empty?        
-        flsh[:type] = 'error'
-        flsh[:text] += content_tag :p, "There are problems with the following fields" + ":"
-        flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
-      end
-    elsif options[:error] and options[:error].to_s.any?
-      flsh[:type] = 'error'
-      errors = options[:error].is_a?(Enumerable) ? options[:error] : [options[:error].to_s]
-      flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
-    elsif options[:success] and options[:success].any?
-      flsh[:type] = 'info'
-      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
-    end
-  end
-
   def flash_message(options)
-    add_flash_message(options, flash)
+    add_flash_message(flash, options)
   end
 
   def flash_message_now(options)
-    add_flash_message(options, flash.now)
+    add_flash_message(flash.now, options)
   end
 
   ##
@@ -74,29 +51,16 @@ module ErrorHelper
   # it uses javascript to rewrite the message area
   # page.replace_html 'message', message_text(:object => @page) unless @page.valid?
   def message_text(option)
-    add_flash_message(options, flash)
+    add_flash_message(flash, options)
     display_messages
-#    lines = []
-#    type = 'info'
-#    if opts[:object]
-#      object = opts[:object]
-#      unless object.errors.empty?
-#        type = 'error'
-#        title = "Changes could not be saved."
-#        text = content_tag(:p, "There are problems with the following fields" + ":")
-#        text += content_tag(:ul, object.errors.full_messages.collect { |msg| content_tag("li", msg) })
-#      end
-#    end
-#    build_notice_area(type, title, text)
   end
-
 
   # display flash messages with appropriate styling
   def display_messages()
     return "" unless flash[:type]
     unless flash[:title]
-      flash[:title] =  "Changes could not be saved" if flash[:type] == 'error'
-      flash[:title] =  "Changes saved" if flash[:type] == 'info'
+      flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
+      flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
     end
     build_notice_area(flash[:type], flash[:title], flash[:text])
   end
@@ -130,6 +94,51 @@ module ErrorHelper
      :class => 'notice'
    )
   end
+
+  #
+  # parses options to build the appropriate objects in the particular flash
+  # (flash or flash.now)
+  # 
+  # this method should not be called directly. intead use flash_message and
+  # flash_message_now
+  #
+  # options:
+  # :title
+  # :object | :success | :error | :exception
+  #
+  def add_flash_message(flsh, options)
+    flsh[:text] ||= ""
+    flsh[:title] = options[:title] || flsh[:title]
+    if options[:exception]
+      exc = options[:exception]
+      if exc.is_a? PermissionDenied
+        add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied], :error => exc)
+      elsif exc.is_a? ErrorMessages
+        add_flash_message(flsh, :title => exc.title, :error => exc.errors)
+      elsif exc.is_a? ErrorMessage
+        add_flash_message(flsh, :title => 'Error'[:alert_error], :error => exc.to_s)
+      elsif exc.is_a? ActiveRecord::RecordInvalid
+        add_flash_message(flsh, :object => exc.record)
+      else
+        add_flash_message(flsh, :title => 'Error'[:alert_error] + ': ' + exc.class.to_s, :error => exc.to_s)
+      end
+    elsif options[:object]
+      object = options[:object]
+      unless object.errors.empty?        
+        flsh[:type] = 'error'
+        flsh[:text] += content_tag :p, "There are problems with the following fields"[:alert_field_errors] + ":"
+        flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
+      end
+    elsif options[:error] and options[:error].to_s.any?
+      flsh[:type] = 'error'
+      errors = options[:error].is_a?(Enumerable) ? options[:error] : [options[:error].to_s]
+      flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
+    elsif options[:success] and options[:success].any?
+      flsh[:type] = 'info'
+      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
+    end
+  end
+
 
 end
 

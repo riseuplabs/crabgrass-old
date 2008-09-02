@@ -13,8 +13,14 @@ class CommitteeTest < Test::Unit::TestCase
     g = Group.create :name => 'riseup'
     c1 = Committee.create :name => 'finance'
     c2 = Committee.create :name => 'food'
-    g.committees << c1
-    g.committees << c2
+
+    assert_difference 'Group.find(%d).version'%g.id do
+      g.committees << c1
+    end
+    assert_difference 'Group.find(%d).version'%g.id do
+      g.committees << c2
+    end
+
     g.reload
     assert_equal 2, g.committees.count, 'there should be two committees'
     assert_equal g, c1.parent, "committee's parent should match group"

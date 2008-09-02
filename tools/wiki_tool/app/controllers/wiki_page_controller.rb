@@ -1,5 +1,4 @@
 class WikiPageController < BasePageController
-  include HTMLDiff
   append_before_filter :fetch_wiki
 
   ##
@@ -9,26 +8,29 @@ class WikiPageController < BasePageController
   def create
     @page_class = WikiPage
     if request.post?
-      @page = create_new_page(@page_class)
-      if @page.valid?
-        fetch_wiki
-        @wiki.lock Time.now, current_user
-        @page.save # attach the new wiki to the page
-
-        return redirect_to(page_url(@page, :action => 'edit'))
-      else
-        flash_message_now :object => @page
+      begin
+        @page = create_new_page(@page_class)
+        if @page.valid?
+          @page.update_attribute(:data, Wiki.create(:user => current_user))
+          return redirect_to(page_url(@page, :action => 'edit'))
+        else
+          flash_message_now :object => @page
+        end
+      rescue Exception => exc
+        flash_message_now :exception => exc
       end
     end
     render :template => 'base_page/create'
   end
-  
+
   ##
   ## ACCESS: public or :view
   ##
 
   def show
-    if @upart and !@upart.viewed? and @wiki.version > 1
+    if @wiki.body.empty?
+      redirect_to page_url(@page,:action=>'edit')
+    elsif @upart and !@upart.viewed? and @wiki.version > 1
       @last_seen = @wiki.first_since( @upart.viewed_at )
     end
   end
@@ -46,7 +48,7 @@ class WikiPageController < BasePageController
     @new = @wiki.versions.find_by_version(new_id)
     @old_markup = @old.body_html || ''
     @new_markup = @new.body_html || ''
-    @difftext = html_diff( @old_markup , @new_markup)
+    @difftext = HTMLDiff.diff( @old_markup , @new_markup)
 
     # output diff html only for ajax requests
     render :text => @difftext if request.xhr?
@@ -92,6 +94,7 @@ class WikiPageController < BasePageController
       @wiki.smart_save!( params[:wiki].merge(:user => current_user) )
       @wiki.unlock(current_user)
       current_user.updated(@page)
+      #@page.save
       redirect_to page_url(@page, :action => 'show')
     rescue ActiveRecord::StaleObjectError
       # this exception is created by optimistic locking. 
@@ -111,7 +114,6 @@ class WikiPageController < BasePageController
   
   def fetch_wiki
     return true unless @page
-    @page.data ||= Wiki.new(:body => 'new page', :page => @page)
     @wiki = @page.data
     @locked_for_me = !@wiki.editable_by?(current_user) if logged_in?
   end
