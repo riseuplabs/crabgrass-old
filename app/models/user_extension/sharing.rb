@@ -202,9 +202,12 @@ module UserExtension::Sharing
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
-    #debugger
+
     users, groups, emails = parse_recipients!(recipients)
     users_to_email = []
+    send_emails    = options.delete(:send_emails)
+    mailer_options = options.delete(:mailer_options)
+    message        = options[:message]
 
     ## add users to page
     users.each do |user|
@@ -227,10 +230,10 @@ module UserExtension::Sharing
     # end
 
     ## send notification emails
-    if options[:send_emails]
+    if send_emails and mailer_options
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_page_notice(user, msg, mailer_options)
+        Mailer.deliver_page_notice(user, message, mailer_options)
       end
     end
 
@@ -279,8 +282,9 @@ module UserExtension::Sharing
 
   def share_page_with_group!(page, group, options={})
     options[:access] ||= :view
+
     may_share!(page,group,options)
-    page.add group, options
+    page.add group, :access => options[:access]
 
     # when we get here, the group should be able to view the page.
     users_to_pester = group.users.select do |user|

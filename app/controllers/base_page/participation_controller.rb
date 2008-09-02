@@ -96,10 +96,13 @@ class BasePage::ParticipationController < ApplicationController
       close_popup and return
     end
     begin
-      access     = params[:access].any? ? params[:access].to_sym : nil
       recipients = params[:recipients]
-      options    = {:access => access, :message => params[:message],
-                    :send_emails => params[:send_emails]}
+      options = {
+        :access => (params[:access].any? ? params[:access].to_sym : nil),
+        :message => params[:message],
+        :send_emails => params[:send_emails],
+        :mailer_options => mailer_options
+      }
       current_user.share_page_with!(@page, recipients, options)
       close_popup
     rescue Exception => exc

@@ -75,7 +75,7 @@ class SocialUserTest < Test::Unit::TestCase
     assert !users(:kangaroo).may_pester?(users(:green)), 'strangers should not be able to pester'
 
     assert users(:red).peer_of?(users(:green)), 'must be peers'
-    assert !users(:red).may_pester?(users(:green)), 'peers should be able to pester'
+    assert users(:red).may_pester?(users(:green)), 'peers should be able to pester'
 
     users(:green).profiles.public.may_pester = true
     users(:green).profiles.public.save
