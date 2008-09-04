@@ -1,7 +1,11 @@
 Getting the UI to appear localized
 ----------------------------------
 
-To enable UI localization, edit this file, removing any languages you don't
+All crabgrass localizations are stored in RAILS_ROOT/lang/*.yml. The
+name of the file is the code of the language. These localizations
+will not appear for the user until they are enabled in the database.
+
+To do this, edit this file, removing any languages you don't
 want supported:
 
   config/db/languages.yml
@@ -9,6 +13,9 @@ want supported:
 Then run this command:
 
   rake cg:load_default_data RAILS_ENV=production
+
+This will populate the languages table in the database. Now the files
+in lang/*.yml will get picked up.
 
 
 Getting multi-byte character encoding to work
@@ -19,7 +26,7 @@ In order to store multibyte unicode, run this:
   rake cg:convert_to_unicode RAILS_ENV=production
 
 Now you should be able to store arabic, chinese, hebrew, etc.
-This task only works with mysql.
+This task only works with mysql. You should only have to do this once.
 
 
 Editing crabgrass UI translations

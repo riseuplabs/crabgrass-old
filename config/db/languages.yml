@@ -1,3 +1,12 @@
+ar:
+  name: العربية
+  code: ar_EG
+  rtl: true
+
+de:
+  name: Deutsch
+  code: de_DE
+
 en:
   name: English
   code: en_US
@@ -6,7 +15,31 @@ es:
   name: Español
   code: es_ES
 
+fr:
+  name: Français
+  code: fr_FR
+
+hi:
+  name: हिंदी
+  code: hi_IN
+
+pl:
+  name: Polski
+  code: pl_PL
+
 pt:
   name: Português
   code: pt_BR
+
+ru:
+  name: Pyccĸий
+  code: ru_RU
+
+sw:
+  name: Kiswahili
+  code: sw_SW
+
+zh:
+  name: 中文
+  code: zh_CN
 
