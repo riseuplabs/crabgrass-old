@@ -43,10 +43,10 @@ class PageTerms < ActiveRecord::Base
   end
 
   def updated_at=(value)
-    page_updated_at = value
+    write_attribute(:page_updated_at, value)
   end
   def created_at=(value)
-    page_created_at = value
+    write_attribute(:page_created_at, value)
   end
 
 end

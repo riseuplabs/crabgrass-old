@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'groups_controller'
-
+#showlog
 # Re-raise errors caught by the controller.
 class GroupsController; def rescue_action(e) raise e end; end
 
 class GroupsControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :profiles, :pages, :group_participations, :user_participations, :tasks
+  fixtures :groups, :users, :memberships, :profiles, :pages, :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 
@@ -150,11 +150,12 @@ class GroupsControllerTest < Test::Unit::TestCase
 
   def test_search
     login_as :blue
-    
+
     get :search, :id => groups(:rainbow).name
     assert_response :success
 #    assert_template 'search'
     assert_not_nil assigns(:pages)
+
     assert assigns(:pages).length > 0, "should have some search results"
     
     get :search, :id => groups(:rainbow).name, :path => 'type/discussion'

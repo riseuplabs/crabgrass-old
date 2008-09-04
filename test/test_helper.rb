@@ -11,6 +11,16 @@ require 'test_help'
 
 module Tool; end
 
+#
+# put this at the top of your test, before the class def, to see 
+# the logs printed to stdout. useful for tracking what sql is called when.
+# probably way too much information unless run with -n to limit the test.
+# ie: ruby test/unit/page_test.rb -n test_destroy
+#
+def showlog
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+end
+
 class Test::Unit::TestCase
 
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -38,7 +48,7 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
 
   include AuthenticatedTestHelper
-    
+  
   # make sure the associations are at least defined properly
   def check_associations(m)
     @m = m.new
@@ -91,9 +101,10 @@ class Test::Unit::TestCase
   def print_sphinx_hints
     @@sphinx_hints_printed ||= false
     unless @@sphinx_hints_printed
-      puts "\nTo make thinking_sphinx tests work, try the following steps:
-  rake RAILS_ENV=test db:test:prepare db:fixtures:load
-  rake RAILS_ENV=test cg:update_page_terms ts:index ts:start
+# cg:update_page_terms
+      puts "\nTo make thinking_sphinx tests not skip, try the following steps:
+  rake RAILS_ENV=test db:test:prepare db:fixtures:load  # (should not be necessary, but always a good first step)
+  rake RAILS_ENV=test ts:index ts:start                 # (needed to build the sphinx index and start searchd)
   rake test:functionals
 See also doc/SPHINX_README"
       @@sphinx_hints_printed = true
@@ -103,15 +114,15 @@ See also doc/SPHINX_README"
 
   def sphinx_working?(test_name="")
     if `which searchd`.empty?
-      print '(skipping %s: sphinx not installed)' % test_name
+      print 'skip' #(skipping %s: sphinx not installed)' % test_name
       print_sphinx_hints
       false
     elsif !sphinx_running?
-      print '(skipping %s: sphinx not running)' % test_name
+      print 'skip' #'(skipping %s: sphinx not running)' % test_name
       print_sphinx_hints
       false
     elsif !ThinkingSphinx.updates_enabled?
-      print '(skipping %s: sphinx updated disabled)' % test_name
+      print 'skip' #'(skipping %s: sphinx updated disabled)' % test_name
       print_sphinx_hints
       false
     else

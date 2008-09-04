@@ -70,9 +70,34 @@ ActiveRecord::Base.class_eval do
     yield
     self.class.record_timestamps = true
   end
-
 end
 
+# 
+# What is going on here!?
+# We have a table that needs to be MyISAM and it needs a fulltext index.
+# This is not possible in the normal schema.rb file, so this little hack
+# inserts the correct raw SQL to make it happen if there is an index
+# with a name that matches /fulltext/
+#
+module ActiveRecord
+  class SchemaDumper #:nodoc:
+    # modifies index support for MySQL full text indexes
+    def indexes(table, stream)
+      indexes = @connection.indexes(table)
+      indexes.each do |index|
+        if index.name=~/fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
+          stream.puts %(  execute "ALTER TABLE #{index.table} ENGINE = MyISAM")
+          stream.puts %(  execute "CREATE FULLTEXT INDEX #{index.name} ON #{index.table} (#{index.columns.join(',')})")
+        else
+          stream.print "  add_index #{index.table.inspect}, #{index.columns.inspect}, :name => #{index.name.inspect}"
+          stream.print ", :unique => true" if index.unique
+          stream.puts
+        end
+      end
+      stream.puts unless indexes.empty?
+    end
+  end
+end
 
 class ActionView::Base
 

@@ -1,4 +1,4 @@
-module PathFinder::SqlOptions
+module PathFinder::Sql::Options
 
   def self.options_for_me(path, options)
     currentuser = options[:current_user]

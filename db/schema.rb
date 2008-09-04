@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080901002452) do
+ActiveRecord::Schema.define(:version => 20080903043715) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -228,6 +228,10 @@ ActiveRecord::Schema.define(:version => 20080901002452) do
     t.datetime "page_created_at"
     t.boolean  "delta"
   end
+
+  add_index "page_terms", ["page_id"], :name => "page_id"
+  execute "ALTER TABLE page_terms ENGINE = MyISAM"
+  execute "CREATE FULLTEXT INDEX idx_fulltext ON page_terms (access_ids,tags)"
 
   create_table "page_tools", :force => true do |t|
     t.integer "page_id",   :limit => 11

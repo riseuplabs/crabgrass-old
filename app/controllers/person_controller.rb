@@ -24,7 +24,7 @@ class PersonController < ApplicationController
 
   def search
     options = options_for_user(@user, :page => params[:page])
-    @pages = Page.find_by_path params[:path], options
+    @pages = Page.paginate_by_path params[:path], options
     @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
   end
 

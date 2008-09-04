@@ -10,8 +10,6 @@ improve the SQL queries using a clever full text search approach.
 builder.rb      -- the class that converts between a path and actual
                    database conditions.
 
-sql_builder.rb  -- a Builder with specific filters defined for sql databases.
-
 parsed_path.rb  -- a subclass of Array used to represent a query filter path
                    that has been parsed.
                    
@@ -21,11 +19,18 @@ options.rb      -- a module included in all controllers to help build
 find_by_path.rb -- a module that is included by Page to add the 
                    find_by_path and count_by_path methods.
 
+Additionally, there are three backends:
+
+* SQL: for a generic sql database
+* MySQL: for a mysql database will fulltext index on page_terms
+* Sphinx: for fulltext searching of page body content.
+
+Each of these backends is defined in x_builder.rb, x_builder_filters.rb, and x_options.rb
+
 Why all this sillyness? 
 
 (1) makes it easy to switch back and forth between urls and actual queries
-(2) makes it so that we can switch later to ferret without touching any of
-    the main code.
+(2) makes it so that we can switch storage backends without changing application logic.
 (3) finding pages is way complicated, and it is nice to have all that
     logic hidden away.
 
