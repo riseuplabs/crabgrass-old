@@ -68,8 +68,7 @@ by reindexing all the records on a regular basis:
 Set up a cron job to do this nightly:
 
 /--
-cd /usr/apps/crabgrass/current
-rake ts:index
+cd /usr/apps/crabgrass/current && rake ts:index RAILS_ENV=production
 \--
 
 
