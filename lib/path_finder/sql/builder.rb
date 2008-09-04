@@ -8,10 +8,10 @@ It is called from find_by_path.rb
 
 =end
 
-class PathFinder::SqlBuilder < PathFinder::Builder
-
-  include PathFinder::SqlBuilderFilters
+class PathFinder::Sql::Builder < PathFinder::Builder
   
+  include PathFinder::Sql::BuilderFilters
+
   public 
   
   attr_accessor :and_clauses # used to build the current clause of the form (x and x)
@@ -21,14 +21,20 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     @conditions  = []
     @order       = []
     @aliases     = []
-    @per_page    = options[:per_page]
-    @page        = options[:page]
     @tag_count   = 0
     @or_clauses  = []
     @and_clauses = []
     @date_field  = 'created_at'
     @inbox       = options[:inbox]
+
+    # paginating (count required)
+    @per_page    = options[:per_page] || SECTION_SIZE
+    @page        = options[:page]     || 1
+    # limiting   (count not required)
+    @limit       = options[:limit]
+    @offset      = options[:offset]
     
+
     @path        = cleanup_path(path)
     @and_clauses << [options[:conditions].dup] if options[:conditions]
     @values      = options[:values] ? options[:values].dup : []
@@ -41,15 +47,15 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     end
   end
 
-  #
-  # Here it is folks!! The main function that handles all the
-  # page finding. It all starts here.
-  #
-  def find_pages
+  def paginate
     Page.paginate_by_sql sql_for_find, :page => @page, :per_page => @per_page
   end
 
-  def count_pages
+  def find
+    Page.find_by_sql sql_for_find
+  end
+
+  def count
     @order = nil
     @aliases = nil
     if @union
@@ -89,7 +95,12 @@ class PathFinder::SqlBuilder < PathFinder::Builder
     end
 
     sql << 'ORDER BY %s' % query[:order] if query[:order]
-    
+    if query[:offset]
+      sql << 'LIMIT %s, %s' % [query[:offset],query[:limit]]
+    elsif query[:limit]
+      sql << 'LIMIT %s' % query[:limit]
+    end
+
     # helpful for debuggin tests:
     # puts sql.join("\n")
     

@@ -1,4 +1,4 @@
-module PathFinder::SphinxOptions
+module PathFinder::Mysql::Options
 
   def self.options_for_me(path, options)
     options
@@ -29,4 +29,5 @@ module PathFinder::SphinxOptions
      :secondary_group_ids => [group_id]
     })
   end
+
 end

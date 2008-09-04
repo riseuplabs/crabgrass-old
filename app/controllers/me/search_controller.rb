@@ -5,7 +5,7 @@ class Me::SearchController < Me::BaseController
       path = build_filter_path(params[:search])
       redirect_to me_url(:action => 'search') + path   
     else
-      @pages = Page.find_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page]))
+      @pages = Page.paginate_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page]))
       
       # if there was a text string in the search, generate extracts for the results      
       if parsed_path.keyword? 'text' and @pages.any?

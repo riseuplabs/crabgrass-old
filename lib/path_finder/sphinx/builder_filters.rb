@@ -1,6 +1,5 @@
-require 'path_finder/sphinx_builder'
 
-module PathFinder::SphinxBuilderFilters
+module PathFinder::Sphinx::BuilderFilters
 
   protected
 

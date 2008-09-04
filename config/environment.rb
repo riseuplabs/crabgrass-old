@@ -33,6 +33,9 @@ Rails::Initializer.run do |config|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
 
+  # this is required because we have a mysql specific fulltext index.
+  config.active_record.schema_format = :sql
+
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
   config.active_record.observers = :user_observer
@@ -40,7 +43,8 @@ Rails::Initializer.run do |config|
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based
   # sessions because they are too limited in size. If you want to switch to a different
-  # storage container, you need to find a way to disable breadcrumbs as well. 
+  # storage container, you need to disable breadcrumbs or store them someplace else,
+  # like an in-memory temporary table. 
   config.action_controller.session_store = :p_store
 
   # store fragments on disk, we might have a lot of them.

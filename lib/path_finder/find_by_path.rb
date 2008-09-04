@@ -1,38 +1,35 @@
-=begin
-
-Methods to find pages, for class Page.
-
-Page.find_and_paginate_by_path()
-  this is the wiz-bang main function for finding and paginating pages.
-
-Page.find_by_path()
-  if you don't need to paginate.
-
-See lib/path_finder/README
-
-We are paginating pages, so the term page is ambiguous. It could mean a Page from the pages table, or it could mean a page of things when paginating. I have tried to use the term 'section' instead of a page for the latter.
-
-=end
+# TODO: put some rdoc notes here
 
 module PathFinder
   module FindByPath
-  
+
+    # TODO: move readme stuff here  
     def find_by_path(path, options={})
-      query_method  = resolve_method(options)
-      query_options = resolve_options(query_method, path, options)
-      builder = PathFinder.get_builder(options[:method]).new(path, query_options)
-      builder.find_pages
+      builder(path, options).find
     end
-    
+
+    # See options for find_by_path.
+    # Additionally accepts options :page and :per_page.
+    # We are paginating pages, so the term page is ambiguous. In options, :page
+    # and :per_page are used for pagination, and don't refer to the type of pages
+    # that we are finding.
+    def paginate_by_path(path, options={})
+      builder(path, options).paginate
+    end
+
+    # see options for find_by_path
     def count_by_path(path, options={})
-      query_method  = resolve_method(options)
-      query_options = resolve_options(query_method, path, options)
-      builder = PathFinder.get_builder(options[:method]).new(path, query_options)
-      builder.count_pages
+      builder(path, options).count
     end
 
     private
-    
+
+    def builder(path, options)
+      query_method  = resolve_method(options)
+      query_options = resolve_options(query_method, path, options)
+      PathFinder.get_builder(query_method).new(path, query_options)
+    end
+
     def resolve_options(query_method, path, options)
       if options[:callback]
         path = PathFinder::Builder.parse_filter_path(path)
@@ -43,9 +40,9 @@ module PathFinder
     end
 
     def resolve_method(options)
-      options[:method] ||= :sql
-      if !ThinkingSphinx.updates_enabled?
-        options[:method] = :sql
+      options[:method] ||= :mysql
+      if !ThinkingSphinx.updates_enabled? and options[:method] == :sphinx
+        options[:method] = :mysql
       end
       options[:method]
     end

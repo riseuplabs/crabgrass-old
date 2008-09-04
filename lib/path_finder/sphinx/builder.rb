@@ -8,9 +8,9 @@ It is called from find_by_path.rb
 
 =end
 
-class PathFinder::SphinxBuilder < PathFinder::Builder
+class PathFinder::Sphinx::Builder < PathFinder::Builder
 
-  include PathFinder::SphinxBuilderFilters
+  include PathFinder::Sphinx::BuilderFilters
 
   private
   
@@ -49,12 +49,12 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
     @path         = cleanup_path(path)   
     @per_page    = options[:per_page] || SECTION_SIZE
     @page        = options[:page] || 1
-  end
 
-  def find_pages
     apply_filters_from_path( @path )
     @order = "page_updated_at DESC" unless @order.any?
+  end
 
+  def find
     # puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
     page_terms = PageTerms.search @search_text, :with => @with, :without => @without, 
@@ -64,5 +64,16 @@ class PathFinder::SphinxBuilder < PathFinder::Builder
     # page_terms has all of the will_paginate magic included, it just needs to actually have the pages
     page_terms.each_with_index {|pt, i| page_terms[i] = pt.page if pt}
   end
+
+  def paginate
+    find # sphinx search *always* paginates
+  end
+
+  def count
+    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without, 
+      :conditions => @conditions, :page => @page, :per_page => @per_page,
+      :order => @order, :include => :page).size
+  end
+
 
 end

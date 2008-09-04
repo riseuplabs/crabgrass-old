@@ -1,0 +1,356 @@
+HERE ARE SOME RANDOM NOTES ABOUT THE CRABGRASS DATABASE
+
+Very Useful Links
+===========================================
+
+Links
+* how to index for joins: http://hackmysql.com/case4
+* http://blog.evanweaver.com/articles/2007/02/12/table-indexes-in-rails/
+* http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html
+* great article: http://20bits.com/2007/04/10/10-tips-for-optimizing-mysql-queries-that-dont-suck/
+
+Reference:
+* Understand the different joins: http://en.wikipedia.org/wiki/Join_(SQL)
+
+Mysql Manual:
+* http://dev.mysql.com/doc/refman/5.1/en/create-index.html
+
+Database ToDos
+===========================================
+
+Limit the length indexes. For example, if we are going to sort on title a lot, 
+and we index title, there is no benefit of indexes the entire field, because it
+could be big. Instead, index the first 8 characters, or whatever. This takes up
+way less space.
+
+
+The Painful Query
+============================================
+
+This is the query that we have to make a lot. It is the query to get list pages
+from group 4 that we also have access to. It is also really slow, and I don't
+know how to make it faster. The "painful query" has been replaced by the fulltext
+query.
+
+DISTINCT pages.* FROM pages
+  LEFT OUTER JOIN group_participations ON group_participations.page_id = pages.id
+  LEFT OUTER JOIN user_participations user_parts ON user_parts.page_id = pages.id
+  LEFT OUTER JOIN group_participations group_parts ON group_parts.page_id = pages.id
+WHERE 
+  group_participations.group_id = 4
+  AND (group_parts.group_id IN (1,2,3,4) OR user_parts.user_id = 1 OR pages.public = 1)
+  AND (pages.flow IS NULL) 
+
+
+The Fulltext Query
+==================================================
+
+Instead of "The Painful Query" we are trying a fulltext strategy.
+The basic idea is to do a fulltext index on a text field that has all the 
+user ids and group ids denormalized from the user_participations and
+group_participations tables. For good measure, we have also thrown in tags.
+
+http://dev.mysql.com/doc/refman/5.0/en/fulltext-search.html
+
+class ConvertPageTermsToMyIsam < ActiveRecord::Migration
+  def self.up
+    connection = ActiveRecord::Base.connection
+    connection.execute 'ALTER TABLE page_terms ENGINE = MyISAM'
+    connection.execute 'CREATE FULLTEXT INDEX idx_fulltext ON page_terms(access_ids, tags)'
+    add_index :page_terms, :page_id, :name => :page_id
+  end
+
+  def self.down
+    # it is unsupported operation to convert a MyISAM table to a InnoDB table.
+    remove_index :page_terms, :name => :page_id
+    remove_index :page_terms, :name => :idx_fulltext
+  end
+end
+
+What a typical query looks like:
+
+SELECT * FROM pages
+JOIN page_terms ON pages.id = page_terms.page_id
+WHERE
+  MATCH(page_terms.access_ids)
+  AGAINST('+(0001 0011 0081) +(0082)' IN BOOLEAN MODE)
+;
+
+
+variable                     value    fulltext filter on
+current_user.id user_id      1        0011
+current_user.all_group_ids   [1, 2]   0081 0082
+public?                      true     0001 
+
+examples (using the data from the table above)
+-------------------------------------------------
+
+(1) Find all the pages of group 1 that I can see.
+group_id = 1 => 0081
+(user_id OR public OR (one of my_group_ids)) AND (group_id)
++(0001 0011 0081 0082) +(0081) 
+
+(2) Find all the pages of user 2 that I can see.
+other_user_id = 2 => 0012
+(user_id OR public OR (one of group_ids)) AND (other_user_id)
++(0001 0011 0081 0082) +(0012) 
+
+(3) Find all the pages of group 1 that user 2 has participated in
+(user_id OR public OR (one of group_ids)) AND (other_user_id) AND (group_id)
++(0001 0011 0081 0082) +(0012) +(0081)
+
+(4) Find all the pages of shared by group 3 and 4 
++(0001 0011 0081 0082) +(0083) +(0084)
+
+
+INDEXES
+===========================================================
+
+Multi-column indexes
+-----------------------------------------------------
+
+Rules for indexes:
+
+(1) Only one index is used per table for a particularly query. This is why multicolumn indexes can be very useful.
+(2) In multicolumn indexes, you can only leave off the later columns in the WHERE for the index to be used.
+(3) In multicolumn indexes, rule #2 applies to every OR term! Also, every OR term must use the index or the index is not used at all.
+
+Suppose multicolumn index on (index_part1, index_part2, index_part3)
+
+Uses index:
+(1)  WHERE index_part1='hello'
+(2)  WHERE index_part1='hello' AND index_part2=5
+
+Uses degraded index:
+(3)  WHERE index_part1='hello' AND index_part3=5
+     this is optimized at #1, the index_part3 is not used.
+
+Uses no index at all:
+(4)  WHERE index_part2=1 AND index_part3=2
+     (missing index_part1, so the index can't be used)
+(5)  WHERE index_part1=1 OR A=10
+     (not all OR terms use the index, so it can't be used.)
+(6)  WHERE index_part1=1 OR index_part2=10
+     (second OR term can't use an index, so no index is used)
+
+
+From manual:
+
+If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to find rows. For example, if you have a three-column index on (col1, col2, col3), you have indexed search capabilities on (col1), (col1, col2), and (col1, col2, col3).
+
+MySQL cannot use an index if the columns do not form a leftmost prefix of the index. Suppose that you have the SELECT statements shown here:
+
+SELECT * FROM tbl_name WHERE col1=val1;
+SELECT * FROM tbl_name WHERE col1=val1 AND col2=val2;
+
+SELECT * FROM tbl_name WHERE col2=val2;
+SELECT * FROM tbl_name WHERE col2=val2 AND col3=val3;
+
+If an index exists on (col1, col2, col3), only the first two queries use the index. The third and fourth queries do involve indexed columns, but (col2) and (col2, col3) are not leftmost prefixes of (col1, col2, col3). 
+
+
+Testing Indexes
+-----------------
+
+def benchmark
+  cur = Time.now
+  result = yield
+  print "#{cur = Time.now - cur} seconds"
+  puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)" rescue puts ""
+  $last_benchmark = cur
+  result
+end
+
+ActiveRecord::Migration.add_index :topics, :title
+benchmark { Topic.find(:all, :limit => 1000, :order => "title asc"); nil }
+
+ActiveRecord::Migration.remove_index :topics, :title
+benchmark { Topic.find(:all, :limit => 1000, :order => "title asc"); nil }
+
+
+Join table indexing for rails
+-----------------------------
+
+suppose a many to many situation like so:
+  users <> memberships <> groups
+
+class User
+  has_many :memberships
+  has_many :groups, :through => :memberships
+end
+
+class Membership
+  belongs_to :group
+  belongs_to :user
+end
+
+class Group
+  has_many :memberships
+  has_many :users, :through => :memberships
+end
+
+Very common. What index should be used on memberships?
+
+There are four options:
+
+add_index :memberships, :user_id, :name => :user
+add_index :memberships, :group_id, :name => :group
+add_index :memberships, [:group_id, :user_id], :name => :gu
+add_index :memberships, [:user_id, :group_id], :name => :ug
+
+Which one to use?
+
+code               index used, in order of preference
+user.groups        :ug, :user,  :gu
+group.users        :gu, :group, :ug
+
+the corresponding sql:
+
+SELECT groups.* FROM groups INNER JOIN memberships ON groups.id = memberships.group_id WHERE ((memberships.user_id = 4))
+SELECT users.* FROM users INNER JOIN memberships ON users.id = memberships.user_id WHERE ((memberships.group_id = 3))
+
+For optimal speed, the join table would have two composite indexes, one with
+group_id first and one with user_id first. This way, the where condition is
+indexed and the result is in the index so the records never have to be loaded.
+
+The second option of two non-composite indexes is pretty good too.
+The association in each direction will use the index for the WHERE, and pull 
+the records for the join condition.
+
+The third option of one composite index is what everyone does. This confuses me. 
+Half the time, this will work great. The other half, the composite index will fail
+for the WHERE clause, right? EXPLAIN still says it is using an index, but it also
+reports more rows. I think it is just using the index for the join, not the WHERE.
+
+
+CRABGRASS INDEXES
+==============================================
+
+chat
+------------------
+
+  add_index "channels", ["group_id"], :name => "index_channels_group_id"
+  add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
+  add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
+  add_index "messages", ["sender_id"], :name => "index_messages_channel"
+
+
+join tables
+------------------
+
+  add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
+  add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
+  add_index "links", ["page_id", "other_page_id"], :name => "index_links_page_and_other_page"
+  add_index "memberships", ["group_id", "user_id", "page_id"], :name => "index_memberships"
+  add_index "page_tools", ["page_id", "tool_id"], :name => "index_page_tools"
+
+page stuff
+------------------
+
+  add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+  add_index "posts", ["discussion_id", "created_at"], :name => "index_posts_on_discussion_id"
+  add_index "ratings", ["user_id"], :name => "fk_ratings_user"
+  add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
+
+  add_index "pages", ["name"], :name => "index_pages_on_name"
+  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
+  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
+  add_index "pages", ["group_id"], :name => "index_page_group_id"
+  add_index "pages", ["type"], :name => "index_pages_on_type"
+  add_index "pages", ["flow"], :name => "index_pages_on_flow"
+  add_index "pages", ["public"], :name => "index_pages_on_public"
+  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
+  add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
+  add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
+  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
+  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
+
+profiles
+---------------------------
+
+common sql
+  
+  SELECT * FROM `profiles` WHERE (`profiles`.entity_id = 4 AND `profiles`.entity_type = 'User')
+
+  SELECT * FROM `profiles` WHERE (`profiles`.entity_id = 4 AND `profiles`.entity_type = 'User' AND (profiles.`stranger` = 1)) ORDER BY foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC LIMIT 1
+
+  SELECT * FROM `profiles` WHERE (`profiles`.entity_id = 4 AND `profiles`.entity_type = 'User' AND (profiles.`friend` = 1)) ORDER BY foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC LIMIT 1
+
+current indexes
+
+  add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
+  add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
+  add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
+  add_index "locations", ["profile_id"], :name => "locations_profile_id_index"
+  add_index "phone_numbers", ["profile_id"], :name => "phone_numbers_profile_id_index"
+  add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
+  add_index "websites", ["profile_id"], :name => "websites_profile_id_index"
+
+what should happen
+
+  remove_index "profiles", :name => "profiles_index"
+  can we sort on a bitfield? if so, replace columns stranger, peer, friend, foe with a bitfield called 'relationship'
+    CREATE INDEX entity ON profiles (entity_id, entity_type(1), relationship, language(5));
+  otherwise:
+    CREATE INDEX entity ON profiles (entity_id, entity_type(1), language(5));
+    
+tags
+---------------------------
+
+  add_index "taggings", ["tag_id"], :name => "tag_id_index"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "taggable_id_index"
+  add_index "tags", ["name"], :name => "tags_name"
+
+groups
+---------------------------
+
+  add_index "groups", ["name"], :name => "index_groups_on_name"
+  add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
+
+  add_index "languages", ["name", "code"], :name => "languages_index", :unique => true
+
+tool data
+---------------------------
+
+  add_index "possibles", ["poll_id"], :name => "index_possibles_poll_id"
+  add_index "votes", ["possible_id"], :name => "index_votes_possible"
+  add_index "votes", ["possible_id", "user_id"], :name => "index_votes_possible_and_user"
+
+  add_index "tasks", ["task_list_id"], :name => "index_tasks_task_list_id"
+  add_index "tasks", ["task_list_id", "position"], :name => "index_tasks_completed_positions"
+  add_index "tasks_users", ["user_id", "task_id"], :name => "index_tasks_users_ids"
+
+  add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
+  add_index "wiki_versions", ["wiki_id", "updated_at"], :name => "index_wiki_versions_with_updated_at"
+  add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
+  add_index "wikis", ["locked_by_id"], :name => "index_wikis_locked_by_id"
+
+assets
+---------------------------
+
+  should thumbnails.parent_id have an index?
+  add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
+  add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
+
+  add_index "assets", ["version"], :name => "index_assets_version"
+  add_index "assets", ["page_id"], :name => "index_assets_page_id"
+
+
+users
+---------------------------
+
+  add_index "user_participations", ["page_id"], :name => "index_user_participations_page"
+  add_index "user_participations", ["user_id"], :name => "index_user_participations_user"
+  add_index "user_participations", ["page_id", "user_id"], :name => "index_user_participations_page_user"
+  add_index "user_participations", ["viewed"], :name => "index_user_participations_viewed"
+  add_index "user_participations", ["watch"], :name => "index_user_participations_watch"
+  add_index "user_participations", ["star"], :name => "index_user_participations_star"
+  add_index "user_participations", ["resolved"], :name => "index_user_participations_resolved"
+  add_index "user_participations", ["attend"], :name => "index_user_participations_attend"
+
+  add_index "users", ["login"], :name => "index_users_on_login"
+  add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
+
+

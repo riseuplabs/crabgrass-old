@@ -134,7 +134,7 @@ class PageFinderTest < Test::Unit::TestCase
     reference_ids = page_ids(pages)
 
     options = @controller.options_for_me(:page => 1, :per_page => 10)
-    pages = Page.find_by_path('/descending/updated_at/', options)
+    pages = Page.paginate_by_path('/descending/updated_at/', options)
     path_ids = page_ids(pages)
     
     assert_equal reference_ids, path_ids, 'pagination pages should match'
@@ -188,6 +188,7 @@ class PageFinderTest < Test::Unit::TestCase
   end
 
   def test_options_for_me
+
     login(:blue)
     user = users(:blue)
     group = groups(:rainbow)
@@ -201,16 +202,47 @@ class PageFinderTest < Test::Unit::TestCase
     path_ids = page_ids(
       Page.find_by_path('/group/%s'%group.id, @controller.options_for_me() )
     )
-
+    
     (reference_ids - path_ids).each do |pid|
-      puts 'in reference but not in path'
+      puts 'in reference but not in path: id=%s'%pid
       debug(Page.find(pid),user)
     end
     (path_ids - reference_ids).each do |pid|
-      puts 'in path but not in reference'
+      puts 'in path but not in reference: id=%s'%pid
       debug(Page.find(pid),user)
     end
     assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+  end
+
+  
+  def test_stress
+    # normally, we don't run this test because it takes too long.
+    # run like so: ruby page_finder_test -n test_stress
+    # and comment out this next line:
+    return true
+    pages = []
+    groups = []
+    login(:blue)
+    user = users(:blue)
+
+    puts 'creating and joining groups: '
+    1000.times do |i|
+      group = Group.create(:name => "group#{i}")
+      group.memberships.create(:user => user)
+      groups << group
+      page = Page.create(:title => "page#{i}")
+      page.add(group)
+      page.page_terms.update_attribute(:access_ids, page.access_ids)
+      print group.id
+      print " "
+      STDOUT.flush
+    end
+     
+    puts 'finding pages: '
+    groups.each do |group|
+      benchmark{ pages = Page.find_by_path('', @controller.options_for_group(group) ) }
+      assert_equal 1, pages.size, "group id = %s" % group.id
+    end
   end
 
   protected
@@ -274,6 +306,16 @@ class PageFinderTest < Test::Unit::TestCase
   def limit(pages,limit)
     pages[0..(limit-1)]
   end
+
+  def benchmark
+    cur = Time.now
+    result = yield
+    print "#{cur = Time.now - cur} seconds"
+    puts " (#{(cur / $last_benchmark * 100).to_i - 100}% change)" rescue puts ""
+    $last_benchmark = cur
+    result
+  end
+
 
   def debug(page, user)
    puts '------ page ------'

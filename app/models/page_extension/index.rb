@@ -39,6 +39,29 @@ module PageExtension::Index
       id_array += args[:user_ids].collect  {|id| "%04d" % "1#{id}"} if args[:user_ids]
       return id_array
     end
+
+    # converts a tag list array into a tag list array suitable for searching
+    # a fulltext index with (no spaces, at least four characters, prefix with _ if numeric).
+    # example:
+    #   ['blue fish', 'tv', '12', '1234'] => ['blue_fish', '__tv', '__12', '_1234']
+    def searchable_tag_list(tags)
+      tags.map do |s|
+        ("%4s" % s).gsub(/\s|^(\d)/,'_\1')
+      end
+    end
+
+    def with_deltas_disabled
+      if block_given?
+        previous_deltas_enabled = ThinkingSphinx.deltas_enabled?
+        begin
+          ThinkingSphinx.deltas_enabled = false
+          yield
+        ensure
+          ThinkingSphinx.deltas_enabled = previous_deltas_enabled
+        end
+      end
+    end 
+
   end 
     
   module InstanceMethods    
@@ -46,6 +69,12 @@ module PageExtension::Index
     def update_page_terms_in_background
       if ::BACKGROUND
         begin
+          # first, immediately update access, because that needs to always be up to date.
+          Page.with_deltas_disabled do 
+            terms = (self.page_terms ||= PageTerms.new(:page_id => self.id))
+            terms.update_attribute(:access_ids, access_ids)
+          end
+          # fire off background task
           MiddleMan.worker(:indexing_worker).async_update_page_terms(:arg => self.id)
         rescue BackgrounDRb::NoServerAvailable => err
           logger.error "Warning: #{err}; performing synchronous update of page index"
@@ -57,23 +86,18 @@ module PageExtension::Index
     end
   
     def update_page_terms
-      terms = (self.page_terms ||= PageTerms.new)
+      terms = (self.page_terms ||= PageTerms.new(:page_id => self.id))
 
       # attributes
-      fields = %w[starts_at ends_at created_by_id updated_by_id group_id
-                  created_by_login updated_by_login group_name resolved
-                  flow contributors_count]
-      fields.each do |field|
+      %w[updated_at created_at starts_at ends_at created_by_id updated_by_id group_id
+      created_by_login updated_by_login group_name resolved
+      flow contributors_count].each do |field|
         terms.send("#{field}=",self.send(field))
       end
-      terms.page_updated_at = self.updated_at
-      terms.page_created_at = self.created_at 
 
       # text
-      terms.title     = title.capitalize # start with capital letter for sorting
-      # TODO: read this note http://www.sphinxsearch.com/doc.html#charsets
-      # then figure out how to do this for tags
-      terms.tags      = tag_list.join(',')
+      terms.title     = title.capitalize + ' ' + tag_list.join(' ') # start with capital letter for sorting
+      terms.tags      = Page.searchable_tag_list(tag_list).join(' ')
       terms.body      = summary_terms + body_terms
       terms.comments  = comment_terms
       terms.page_type = type
@@ -86,16 +110,11 @@ module PageExtension::Index
     
     # :nodoc:
     def access_ids
-      access_ids_for(
+      Page.access_ids_for(
         :public => public?,
         :group_ids => group_ids,
         :user_ids => user_ids
       ).join(' ')
-    end
-
-    # :nodoc:
-    def access_ids_for(hsh)
-      Page.access_ids_for(hsh)
     end
 
     # Returns the text to be included in teh body of the page index.

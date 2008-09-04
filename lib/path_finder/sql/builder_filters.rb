@@ -1,6 +1,5 @@
-require 'path_finder/sql_builder'
 
-module PathFinder::SqlBuilderFilters
+module PathFinder::Sql::BuilderFilters
 
   protected
   
@@ -212,8 +211,8 @@ module PathFinder::SqlBuilderFilters
     if limit.instance_of? String 
       limit, offset = limit.split('-')
     end
-    @per_page = limit.to_i if limit
-    @page = ((offset.to_f/limit.to_f) + 1).floor.to_i if @per_page > 0
+    @limit = limit.to_i if limit
+    @offset = offset.to_i if offset
   end
 
   def filter_per_page(per_page)
