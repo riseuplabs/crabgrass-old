@@ -35,6 +35,13 @@
   <i>(separate tags using commas)</i></td>
 </tr>
 
+<% if @site.available_page_types.include?("Collection") %>
+<tr>
+  <td align='right'>Add to Collection</td>
+  <td><%= select_collection %>
+</tr>
+<% end %>
+
 <% if current_user.all_groups.any? -%>
 <tr>
   <td colspan="2" >

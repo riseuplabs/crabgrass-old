@@ -1,0 +1,23 @@
+<%
+# access_keys is a flag which allows us to have two edit control blocks
+# one at top and one at bottom of wiki, without confusing the browser
+# by having the same accesskey set twice
+access_keys ||= false
+%>
+
+<div class='edit-tab'><span>
+  <% if !@locked_for_me -%>
+    <%= link_to('<u>e</u>dit', page_url(@page,:action=>'edit'), access_keys ? {:accesskey => 'e'} : nil) %>
+  <% else -%>
+    locked by <%= link_to_user(@wiki.locked_by_id) %>
+    (<%= link_to 'break lock', page_url(@page,:action=>'break_lock'), :method => :post %>)
+  <% end %>
+  &nbsp;
+  <%= link_to('<u>p</u>rint', page_url(@page, :action=>'print'), access_keys ? {:accesskey => 'p'} : nil) %>
+  &nbsp;
+  <!-- %= link_to 'versions', page_url(@page,:action=>'versions') % -->
+  &nbsp;
+  <!-- %= link_to 'last change', page_url(@page, :action=>'diff', :id => "#{@wiki.version.to_i-1}-#{@wiki.version}") if @wiki.version > 1 % -->
+</span></div>
+<br style='clear: both' />
+
