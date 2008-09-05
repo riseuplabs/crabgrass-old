@@ -8,7 +8,7 @@ namespace :cg do
   namespace :l10n do
 
     # This tasks extracts strings and its translation keys and dumps them
-    # on 'lang/default.yml'. It's a bit of a hack, so check that  file before
+    # on 'lang/defaults_from_source.yml'. It's a bit of a hack, so check that  file before
     # loading the defaults into your db.
     desc "Extract all texts prepared to be translated from Crabgrass source"
     task (:extract_keys) do
@@ -19,7 +19,7 @@ namespace :cg do
             out << "# -- #{File.basename(path)}:\n"
             matches.each do |m|
               m[2] = m[0].underscore.tr(' ', '_').gsub(/(\.|\!|\?)+$/, '') if m[2] == '.t'
-              out << "#{m[2]}: #{m[0]}\n" unless (keys.include?(m[2]) || m[2].nil? || m[2] =~ /^(\_|\+)/)
+              out << "#{m[2].gsub(/\%s/, '').gsub(/\_\_/, '_').gsub(/^\_|\_$/, '')}: #{m[0]}\n" unless (keys.include?(m[2]) || m[2].nil? || m[2] =~ /^(\_|\+)/)
               keys << m[2]
             end
             out << "\n"
@@ -31,8 +31,9 @@ namespace :cg do
      puts "\nProcessed #{count} files and dumped YAML into #{RAILS_ROOT}/lang/default.yml"
     end
 
-    # This tasks loads strings and its translation keys from 'lang/default.yml'.
+    # This tasks loads strings and its translation keys from 'lang/defaults_from_source.yml'.
     # It's a bit of a hack, so check that file before running this task.
+    # Crabgrass development is in English, so this goes to the English "transation".
     desc "Load default values form Crabgrass source to be transated"
     task (:load_keys => :environment) do
       keys_hash = YAML::load_file(File.join(RAILS_ROOT, 'lang', 'default.yml'))
@@ -43,5 +44,43 @@ namespace :cg do
         t = Translation.create(:text => v, :key => key, :language => default_language)
       end
     end
+
+    # This taks get translations from the database and write to YAML files
+    desc "Get translations from the database and write to YAML files"
+    task(:extract_translations => :environment) do
+      # Language model is not being overridden by Gibberize mod.
+      # So we have to redefine it here.
+      class Language < ActiveRecord::Base; has_many :translations; end
+
+      # Ensure we have lang dir
+      FileUtils.mkdir_p File.join(RAILS_ROOT, 'lang')
+
+      # Get all available languages
+      languages = Language.find :all
+
+      # write a YAML file per language with the translations
+      languages.each do |l|
+        buffer = []
+        l.translations.each do |t|
+          buffer << "#{t.key.name}: #{t.text}\n"
+        end
+        File.open('lang/' + l.code + '.yml', 'w') {|f| f.write(buffer) }
+      end
+      puts "\nYAML files written to 'lang' directory\n"
+    end
+
+    # This tasks loads strings and its translation keys from 'lang/*.yml'.
+    desc "Load translations from YAML files in the 'lang' directory"
+    task (:load_translations => :environment) do
+      Dir["#{RAILS_ROOT}/lang/*.yml"].sort.each do |lang_file|
+        lang_code = File.basename(lang_file).split('.')[0]
+        keys_hash = YAML::load_file(lang_file)
+        keys_hash.each do |k,v|
+          key = Key.find_by_name(k)
+          t = Translation.create(:text => v, :key => key, :language => language)
+        end if language = Language.find_by_code(lang_code)
+      end
+    end
+
   end
 end
