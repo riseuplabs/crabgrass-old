@@ -25,7 +25,6 @@ module PageExtension::Groups
   # we use group_participations. This way, we will have
   # current data even if a group is added and the page
   # has not yet been saved.
-  # used extensively, and by ferret.
   def group_ids
     group_participations.collect{|gpart|gpart.group_id}
   end

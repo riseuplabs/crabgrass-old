@@ -1,18 +1,13 @@
 <div id="posts">
-
-<%= will_paginate_posts %>
-
-<table border="0" cellspacing="0" cellpadding="0" class="posts">
-<% for post in @posts do -%>
-<%= render :partial => 'posts/post', :locals => {:post => post} %>
-<% end -%>
-
-<tr><td colspan="2"><%= will_paginate_posts %></tr></td>
-
-<% if current_user.may? :comment, @page -%>
-<%= render :partial => 'posts/reply' %>
-<% end -%>
-</table>
-
-
+  <%= pagination_links(@posts, 'posts') %>
+  <table border="0" cellspacing="0" cellpadding="0" class="posts">
+    <%- for post in @posts do -%>
+      <%= render :partial => 'posts/post', :locals => {:post => post} %>
+    <%- end -%>
+    <tr><td colspan="2"><%= pagination_links(@posts, 'posts') %></td></tr>
+    <%- if current_user.may? :comment, @page -%>
+      <%= render :partial => 'posts/reply' %>
+    <%- end -%>
+  </table>
 </div>
+
