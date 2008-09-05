@@ -216,25 +216,5 @@ module BasePageHelper
      popup_line(:name => 'details', :label => 'details', :icon => 'details_icon', :controller => 'participation')
   end
 
-  ## COLLECTIONS HELPERS
-
-  def select_collection(type=:any)
-    if type == :any
-      klass = 'Collection'
-    elsif type == :photos
-      klass = 'Gallery'
-    elsif type == :files
-      klass = 'Folder'
-    end
-
-    unless params[:group_id].empty?
-      group = Group.find(params[:group_id]) 
-      collections = group.pages.select{|p| p if p.type == klass}
-    else
-      collections = current_user.pages.select{|p| p if p.type == klass}
-    end
-
-    select('page', 'collection_id', collections.to_select(:title), { :include_blank => true })
-  end
 
 end

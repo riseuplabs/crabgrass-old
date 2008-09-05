@@ -127,7 +127,8 @@ class Page < ActiveRecord::Base
   def add_link(page)
     links << page unless links.include?(page)
   end
-
+   
+ 
   #######################################################################
   ## RELATIONSHIP TO ENTITIES
     
@@ -194,20 +195,6 @@ class Page < ActiveRecord::Base
 
   def self.make(function,options={})
     PageStork.send(function, options)
-  end
-
-  #######################################################################
-  ## COLLECTIONS
-
-  # This defines the relationship between any Page and a Collection Page
-  has_many :collection_pages
-  has_many :collections, :through => :collection_pages
-
-  # Verify if a collection_id was given to this page and add the page to the Collection
-  after_save :add_to_collection
-  def add_to_collection
-    collection = Collection.find(self.collection_id) if attribute_present?("collection_id")
-    collection.pages << self unless collection.pages.include?(self)
   end
 
 end
