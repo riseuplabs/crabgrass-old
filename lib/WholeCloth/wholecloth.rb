@@ -1,9 +1,7 @@
 require 'rubygems'
-require 'RedCloth/lib/redcloth'#modified redcloth 4
+require "#{RAILS_ROOT}/lib/WholeCloth/RedCloth/lib/redcloth"#modified redcloth 4
 
-$: << '..'
 
-module Wholecloth; end
 class WholeCloth < RedCloth::TextileDoc
   
   MARKDOWN_BQ_RE = /(^ *> ?.+$(.+\n)*\n*)+/m

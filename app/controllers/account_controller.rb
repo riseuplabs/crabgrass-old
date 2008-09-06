@@ -43,7 +43,7 @@ class AccountController < ApplicationController
   end
 
   def welcome
-    render :text => GreenCloth.new(WELCOME_TEXT_MARKUP).to_html, :layout => 'default'
+    render :text => WholeCloth.new(WELCOME_TEXT_MARKUP).to_html, :layout => 'default'
   end
   
   protected

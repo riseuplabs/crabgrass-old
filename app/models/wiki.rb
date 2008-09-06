@@ -137,7 +137,7 @@ class Wiki < ActiveRecord::Base
   # called internally
   def format_wiki_text(text)
     if text
-      GreenCloth.new(text, default_group_name).to_html
+      WholeCloth.new(text, default_group_name).to_html
     else
       "<p></p>"
     end
@@ -148,7 +148,7 @@ class Wiki < ActiveRecord::Base
   
   # clears the rendered html. this is called
   # when a group's name is changed or some other event happens
-  # which might affect how the html is rendered by greencloth.
+  # which might affect how the html is rendered by wholecloth.
   # this only clears the primary group's wikis, which should be fine
   # because default_group_name just uses the primary group's name.
   def self.clear_all_html(group)
