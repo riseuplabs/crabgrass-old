@@ -105,10 +105,11 @@ class BasePageController < ApplicationController
       @show_attachments = true if @show_attachments.nil?
       @show_tags        = true if @show_tags.nil? 
       @html_title       = @page.title if @page
+      @show_right_column ||= false
       unless params[:action] == 'create'
         @title_box        = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil?
       end
-      if params[:action] == 'show' or params[:action] == 'edit'
+      if params[:action] == 'show' or params[:action] == 'edit' or @show_right_column
         @right_column     = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
       end
     end

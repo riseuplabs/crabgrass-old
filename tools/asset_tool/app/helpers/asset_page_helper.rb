@@ -11,7 +11,7 @@ module AssetPageHelper
       #else
       #  width, height = thumbnail.thumbdef.size.split /[x><]/
       #end
-      width, height = [353,500]
+      width, height = [300,300]
       style = "height:#{height}px; width:#{width}px;"
       style += "background: white url(/images/spinner-big.gif) no-repeat 50% 50%;"
       javascript = javascript_tag(remote_function(:url => page_xurl(@page,:action => 'generate_preview')))
