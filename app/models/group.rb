@@ -147,6 +147,9 @@ class Group < ActiveRecord::Base
 #      else; relationship.to_s
 #    end  
 #  end
+
+  ####################################################################
+  ## permissions
   
   def may_be_pestered_by?(user)
     begin
@@ -162,6 +165,19 @@ class Group < ActiveRecord::Base
     else
       raise PermissionDenied.new('You not allowed to share with %s'[:pester_denied] % self.name)
     end
+  end
+
+  # if user has +access+ to group, return true.
+  # otherwise, raise PermissionDenied
+  def has_access!(access, user)
+    if access == :admin
+      ok = user.member_of?(self)
+    elsif access == :edit
+      ok = user.member_of?(self)
+    elsif access == :view
+      ok = user.member_of?(self) or profiles.public.may_see?
+    end
+    ok or raise PermissionDenied.new
   end
 
   

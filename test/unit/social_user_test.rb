@@ -41,33 +41,8 @@ class SocialUserTest < Test::Unit::TestCase
     assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
   end
 
-  def test_contacts
-    a = users(:red)
-    b = users(:green)
-    
-    assert !a.contacts.include?(b), 'no contact yet'
-    a.contacts << b
-    assert a.contacts.include?(b), 'should be contact'
-    a.reload
-    assert a.friend_id_cache.include?(b.id), 'friend id cache should be updated'
-    a.contacts.delete(b)
-    assert !a.contacts.include?(b), 'no contact now'
-  end
-
-  def test_duplicate_contacts
-    a = users(:red)
-    b = users(:green)
-    
-    a.contacts << b
-    assert_raises(AssociationError) do
-      a.contacts << b
-    end
-    assert_equal 1, Contact.count(:conditions => ['user_id = ? and contact_id = ?', a.id, b.id]), 'should be only be one contact, but there are really two'
-  end
-
   def test_associations
     assert check_associations(User)
-    assert check_associations(Contact)
   end  
 
   def test_pestering

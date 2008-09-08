@@ -28,52 +28,6 @@ module UserExtension::Sharing
     end
   end
 
-  ##
-  ## PERMISSIONS
-  ##
-
-  # this method gets called a lot
-  # ex) current_user.may?(:admin,@page)
-  def may?(perm, page)
-    begin
-      may!(perm,page)
-    rescue PermissionDenied
-      false
-    end
-  end
-  
-  def may!(perm,page)
-    ((@access||={})[page.id] ||= {})[perm] ||= calculate_access!(perm,page)
-  end
-
-  # basic permissions:
-  #   :view or :read -- user can see the page.
-  #   :edit or :change -- user can participate.
-  #   :admin -- user can destroy the page, change access.
-  # conditional permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   (NOT SUPPORTED YET)
-  #
-  # :view should only return true if the user has access to view the page
-  # because of participation objects, NOT because the page is public.
-  #
-  def calculate_access!(perm, page)
-    perm = :edit if perm == :comment
-    upart = page.participation_for_user(self)
-    gparts = page.participation_for_groups(all_group_ids)
-    if upart or gparts.any?
-      parts = []
-      parts += gparts if gparts.any?
-      parts += [upart] if upart
-      part_with_best_access = parts.min {|a,b|
-        (a.access||100) <=> (b.access||100)
-      }
-      # allow :view if the participation exists at all
-      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
-    end
-    raise PermissionDenied.new
-  end
-
   # zeros out the in-memory page access cache
   # generally, this is called for you, but must be called manually 
   # in the case where page access was via a group and that group loses

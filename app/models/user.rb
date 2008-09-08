@@ -113,5 +113,32 @@ class User < ActiveRecord::Base
       self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  # Returns true if self has the specified level of access on the protected thing.
+  # Thing may be anything that defines the method:
+  #
+  #    has_access!(access_sym, user)
+  #
+  # Currently, this includes Page and Group.
+  #
+  # this method gets called a lot (ie current_user.may?(:admin,@page)) so 
+  # we in-memory cache the result.
+  #
+  def may?(perm, protected_thing)
+    begin
+      may!(perm, protected_thing)
+    rescue PermissionDenied
+      false
+    end
+  end
+  
+  def may!(perm, protected_thing)
+    @access ||= {}
+    (@access["#{protected_thing.class}.{protected_thing.id}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+  end
   
 end

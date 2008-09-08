@@ -45,15 +45,15 @@ module UserExtension::Socialize
   def reciprocate_add(other_user)
     unless other_user.contacts.include?(self)
       other_user.contacts << self 
-      update_contacts_cache
     end
+    update_contacts_cache
   end
   
   def reciprocate_remove(other_user)
     if other_user.contacts.include?(self)
       other_user.contacts.delete(self)
-      update_contacts_cache
     end
+    update_contacts_cache
   end
 
   ## PERMISSIONS

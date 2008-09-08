@@ -11,7 +11,7 @@ class GroupTest < Test::Unit::TestCase
       g.users << u
     end
     g.memberships.create :user => u
-    g.memberships.create :user_id => users(:red).id, :page_id => 1
+    g.memberships.create :user_id => users(:red).id
 
     assert u.member_of?(g), 'user should be member of group'
     

@@ -1,5 +1,0 @@
-
-class RequestDiscussionPage < Page
-  
-end
-
