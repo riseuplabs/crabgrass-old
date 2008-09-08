@@ -1,7 +1,8 @@
 
-GM_COMMAND = `which gm`.chomp unless defined? GM_COMMAND
-PYTHON_COMMAND = `which python`.chomp unless defined? PYTHON_COMMAND
-FFMPEG_COMMAND = `which ffmpeg`.chomp unless defined? FFMPEG_COMMAND
+GM_COMMAND       = `which gm`.chomp       unless defined? GM_COMMAND
+PYTHON_COMMAND   = `which python`.chomp   unless defined? PYTHON_COMMAND
+FFMPEG_COMMAND   = `which ffmpeg`.chomp   unless defined? FFMPEG_COMMAND
+INKSCAPE_COMMAND = `which inkscape`.chomp unless defined? INKSCAPE_COMMAND
 
 if `which openoffice`.any?
   OPENOFFICE_DAEMON_PORT = 8100

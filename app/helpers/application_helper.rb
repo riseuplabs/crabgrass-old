@@ -59,8 +59,8 @@ module ApplicationHelper
     end
   end
 
-  def will_paginate_posts
-    will_paginate @posts, :param_name => :posts, :renderer => DispatchLinkRenderer, :prev_label => "&laquo; Newer"[:newer], :next_label => "Older &raquo;"[:older]
+  def pagination_links(things, param_name='page')
+    will_paginate things, :param_name => param_name, :renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev".t, :next_label => "%s &raquo;" % "next".t
   end
 
 end

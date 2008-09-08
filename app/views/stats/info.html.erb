@@ -1,0 +1,65 @@
+<style>
+table td {padding: 8px;}
+</style>
+
+<h1>Sphinx</h1>
+
+<table>
+  <tr>
+    <td>searchd running?</td>
+    <td><%= sphinx_running? ? 'true' : 'false' %></td>
+  </tr>
+  <tr>
+    <td>searchd process id</td>
+    <td><%= sphinx_pid %></td>
+  </tr>
+  <tr>
+    <td>updates enabled?</td>
+    <td><%= ThinkingSphinx.updates_enabled?.inspect %></td>
+  </tr>
+  <tr>
+    <td>delta index enabled?</td>
+    <td><%= ThinkingSphinx.deltas_enabled?.inspect %></td>
+  </tr>
+  <% if sphinx_running? and !ThinkingSphinx.updates_enabled? %>
+  <tr>
+    <td>tips</td>
+    <td>Sphinx searchd is running, but sphinx updates and searching in crabgrass are disabled. This probably means that searchd was not running when crabgrass was started. Try restarting crabgrass now.</td>
+  </tr>
+  <% end %>
+ 
+</table>
+
+<h1>BackgrounDRb</h1>
+
+<table>
+  <tr>
+    <td>enabled?</td>
+    <td><%= BACKGROUND.inspect %></td>
+  </tr>
+  <% unless BACKGROUND %>
+  <tr>
+    <td>problem</td>
+    <td><%= BACKGROUND_RB_EXCEPTION %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h1>Media Processors</h1>
+
+<table>
+  <tr>
+    <td>GraphicMagick</td>
+    <td><%= GM_COMMAND.any? ? GM_COMMAND : 'disabled' %></td>
+  </tr>
+  <tr>
+    <td>ffmpeg</td>
+    <td><%= FFMPEG_COMMAND.any? ? FFMPEG_COMMAND : 'disabled' %></td>
+  </tr>
+  <tr>
+    <td>OpenOffice</td>
+    <td><%= OPENOFFICE_COMMAND ? OPENOFFICE_DAEMON_COMMAND : 'disabled' %></td>
+  </tr>
+</table>
+
+

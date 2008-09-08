@@ -51,6 +51,7 @@
 /** page activity list **/
 table.activity {
   border-collapse: collapse;
+  color: #666;
 }
 table.activity td a {
   text-decoration: none;
@@ -81,8 +82,13 @@ table.activity tr.top td {
   padding: 4px 0 0 4px;
   vertical-align: top;
 }
+table.activity tr.top td img {
+  vertical-align:bottom;
+}
 table.activity tr.bottom td {
+  padding: 0 4px 4px 4px;
   font-size: 0.8em;
+  vertical-align: top;
 }
 table.activity tbody.odd {
   background-color: #f2f2f2;
@@ -90,4 +96,3 @@ table.activity tbody.odd {
 table.activity tbody.even {
   background-color: white;
 }
-

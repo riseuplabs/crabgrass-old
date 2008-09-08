@@ -56,6 +56,22 @@ See also https://wiki.ubuntu.com/ffmpeg
 
 For debian: http://xen.dk/en/2007/12/21/ffmpeg-debian-etch
 
+SVG previews
+---------------
+
+# apt-get install inkscape
+
+Creating a new preview processor
+--------------------------------
+
+(1) Create a new Processor subclass in lib/media/process
+(2) Modify lib/media/process.rb to configure what mime-types the
+    processor can read and generate
+    You MUST modify at least these:
+    PRIORITY, CONTENT_TYPES_CONSUMED_BY, CONTENT_TYPES_PRODUCED_BY
+(3) Modify config/initializers/assets.rb to define the constant
+    for what executable is used in your processor.
+
 ocropus + Tesseract
 ---------------------
 

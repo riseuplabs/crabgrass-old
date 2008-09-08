@@ -30,10 +30,23 @@ Run Gibberize Migrations:
 $ ./script/generate plugin_migration
 $ rake db:migrate
 
+Populate the gibberize database with the contents of RAILS_ROOT/lang/*.yml:
+
+$ this doesn't exist yet.
+
+restart rails and browse to: http://localhost:3000/gibberize
+
+
+Running Gibberize in development mode
+=====================================
+
+Suppose you make a change to the text of crabgrass and now you want this
+key to appear in gibberize. You can manually add the key in the gibberize
+ui, or you can do this to auto-popuplate the database with detected keys:
+
 In development mode you may want to load Gibberize fixtures:
 $ rake db:fixtures:plugins:load
 
-restart rails and browse to: http://localhost:3000/gibberize
 
 Credits
 =======

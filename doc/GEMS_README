@@ -7,9 +7,6 @@ required
 tzinfo
   required for timezone support
 
-redcloth
-  greencloth derives from redcloth
-
 rmagick
   Used to scale avatars and build thumbnails.
 

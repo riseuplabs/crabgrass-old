@@ -10,6 +10,8 @@ class SwitchToActsAsTaggableOn < ActiveRecord::Migration
     add_column :taggings, :tagger_id, :integer
     add_column :taggings, :tagger_type, :string
 
+    Tagging.connection.execute "UPDATE taggings SET context = 'tags'"
+
     remove_index "taggings", :name => "fk_taggings_taggable"
 
     add_index :taggings, :tag_id, :name => 'tag_id_index'
@@ -28,3 +30,4 @@ class SwitchToActsAsTaggableOn < ActiveRecord::Migration
     add_index "taggings", ["taggable_type", "taggable_id"], :name => "fk_taggings_taggable"
   end
 end
+

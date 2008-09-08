@@ -229,6 +229,14 @@ module PageHelper
     end
   end
   
+  def page_list_updated_or_created(page)
+    field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
+    label    = field == 'updated_at' ? 'updated'.t : 'created'.t
+    username = link_to_user(page.updated_by_login)
+    date     = friendly_date(page.send(field))
+    content_tag :span, "%s &bull; %s &bull; %s" % [label, username, date]
+  end
+
   def page_list_title(page, column, participation = nil)
     title = link_to(page.title, page_url(page))
     if participation and participation.instance_of? UserParticipation

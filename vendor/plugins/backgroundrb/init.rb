@@ -10,5 +10,6 @@ begin
   ::BACKGROUND=true
 rescue LoadError => exc
   ::BACKGROUND=false
+  ::BACKGROUND_RB_EXCEPTION = exc.to_s.freeze
 end
 

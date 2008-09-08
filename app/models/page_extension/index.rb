@@ -71,8 +71,8 @@ module PageExtension::Index
         begin
           # first, immediately update access, because that needs to always be up to date.
           Page.with_deltas_disabled do 
-            terms = (self.page_terms ||= PageTerms.new(:page_id => self.id))
-            terms.update_attribute(:access_ids, access_ids)
+            terms = (self.page_terms || self.create_page_terms)
+            PageTerms.update_all("access_ids = '%s'" % self.access_ids, 'id = %i' % terms.id)
           end
           # fire off background task
           MiddleMan.worker(:indexing_worker).async_update_page_terms(:arg => self.id)
@@ -86,7 +86,7 @@ module PageExtension::Index
     end
   
     def update_page_terms
-      terms = (self.page_terms ||= PageTerms.new(:page_id => self.id))
+      terms = (self.page_terms ||= self.build_page_terms)
 
       # attributes
       %w[updated_at created_at starts_at ends_at created_by_id updated_by_id group_id

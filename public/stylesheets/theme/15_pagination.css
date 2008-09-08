@@ -1,17 +1,6 @@
 .pagination {
-  padding: 5px 0;
-}
-
-.pagination ul {
-  margin: 0; 
-  padding: 0;
-  text-align: left; /*Set to "right" to right align pagination interface*/
-}
-
-.pagination li {
-  list-style-type: none;
-  display: inline;
-  padding-bottom: 1px;
+  padding: 1em 0;
+  text-align: center;
 }
 
 .pagination a, .pagination a:visited {
@@ -19,6 +8,7 @@
   border: 1px solid #9aafe5;
   text-decoration: none;
   color: #2e6ab1;
+  
 }
 
 .pagination a:hover, .pagination a:active {
@@ -28,16 +18,17 @@
   text-decoration: none;
 }
 
-.pagination li.currentpage {
+.pagination span.current {
   padding: 0 5px 1px 5px;
-  border: 1px solid navy;
+  border: 1px solid black;
   background-color: #2e6ab1;
   color: #FFF;
 }
   
-.pagination li.disablepage {
+.pagination span.disabled {
   padding: 0 5px 1px 5px;
   border: 1px solid #929292;
   color: #929292;
 }
    
+
