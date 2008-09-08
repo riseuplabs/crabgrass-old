@@ -58,7 +58,7 @@ def row(text)
 <tr>
   <td class='code'><pre>#{text.gsub('<','&lt;').gsub("\n","<span class='light'>&crarr;</span>\n")}</pre></td>
   <td><b>&rarr;</b></td>
-  <td class='rendered wiki'>#{GreenCloth.new(text).to_html}</td>
+  <td class='rendered wiki'>#{WholeCloth.new(text).to_html}</td>
 </tr>
   )
 end

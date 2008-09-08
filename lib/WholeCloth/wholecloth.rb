@@ -1,10 +1,10 @@
-require 'rubygems'
-require "#{RAILS_ROOT}/lib/WholeCloth/RedCloth/lib/redcloth"#modified redcloth 4
 
+require 'rubygems'
+require File.join(File.expand_path(File.dirname(__FILE__)), "RedCloth", "lib", "redcloth")#modified redcloth 4
 
 class WholeCloth < RedCloth::TextileDoc
   
-  MARKDOWN_BQ_RE = /(^ *> ?.+$(.+\n)*\n*)+/m
+  MARKDOWN_BQ_RE = /(^ *> ?.+$(.+\n)*\n*)+/
     
   def crabgrass_markdown_bq( text )
     text.gsub!( MARKDOWN_BQ_RE ) do |blk|
@@ -86,11 +86,11 @@ class WholeCloth < RedCloth::TextileDoc
       [^=!:'"/]|               # leading punctuation, or
       ^                        # beginning of line
     )
-    (						   #(b)	
+    (               #(b)  
       (?:https?://)|           # protocol spec, or
       (?:www\.)                # www.*
     )
-    (						   #(c)
+    (               #(c)
       [-\w]+                   # subdomain or domain
       (?:\.[-\w]+)*            # remaining subdomains or domain
       (?::\d+)?                # port
@@ -110,30 +110,39 @@ class WholeCloth < RedCloth::TextileDoc
         d = a[0..0]
         c.chop! #omnomnomnom
       end
-        text = truncate c, 42
-        url = %(#{b=="www."?"http://www.":b}#{c})
-        link = %(<a href="#{url}">#{text}</a>) 
-        link_placeholder = bypass_filter("#{link}")
-        "#{a}#{link_placeholder}#{d}"
+      text = truncate c, 42
+      url = %(#{b=="www."?"http://www.":b}#{c})
+      link = %(<a href="#{url}">#{text}</a>) 
+      link_placeholder = bypass_filter("#{link}")
+      "#{a}#{link_placeholder}#{d}"
       end
     end
   end
+  
+  SETEXT_RE = /^(.+?)\n([=-])[=-]* *$/m
+  def crabgrass_setext_header(text)
+    text.gsub!(SETEXT_RE) do
+      tag = $2=="=" ? "h1" : "h2"
+      "<#{ tag }>#{ $1 }</#{ tag }>"
+    end
+  end
+  
   OFFTAG_RE = /\{wholecloth#([\d]+)\}/#matches $1 to id
   def initialize(string, default_group_name = 'page')
     @offtag_list = []
-	@default_group = default_group_name
+    @default_group = default_group_name
     string.gsub!(OFFTAG_RE,'')#filter out phony offtags
     super( string, [:hard_breaks, :sanitize_html] )
   end
  
   def to_html(*options, &block)
     @block = block
-    options += [:crabgrass_offtags, :crabgrass_link, :crabgrass_auto_link, :crabgrass_code, :crabgrass_markdown_bq]
+    options += [:crabgrass_offtags, :crabgrass_link, :crabgrass_auto_link, :crabgrass_code, :crabgrass_markdown_bq, :crabgrass_setext_header]
     html = super(*options)
-	html.gsub!(OFFTAG_RE) do |m|
-	  @offtag_list[$1.to_i-1]#replace offtag with the corresponding entry
-	end
-	html
+    html.gsub!(OFFTAG_RE) do |m|
+    @offtag_list[$1.to_i-1]#replace offtag with the corresponding entry
+  end
+  html
   end
   
   def bypass_filter(text)
@@ -142,11 +151,11 @@ class WholeCloth < RedCloth::TextileDoc
   end
   
   def htmlesc( str, mode )
-	str.gsub!( '&', '&amp;' )
-	str.gsub!( '"', '&quot;' ) if mode != :noQuotes
-	str.gsub!( "'", '&#039;' ) if mode == :Quotes
-	str.gsub!( '<', '&lt;')
-	str.gsub!( '>', '&gt;')
+  str.gsub!( '&', '&amp;' )
+  str.gsub!( '"', '&quot;' ) if mode != :noQuotes
+  str.gsub!( "'", '&#039;' ) if mode == :Quotes
+  str.gsub!( '<', '&lt;')
+  str.gsub!( '>', '&gt;')
   end
   
   ##############################################
@@ -193,23 +202,3 @@ class WholeCloth < RedCloth::TextileDoc
     text.length > length ? text[0...l] + truncate_string : text
   end
 end
-
-
-=begin
-#the first two lines should become links, valid greencloth syntax
-#the third one is valid redcloth syntax, but should not become a link under greencloth rules
-#the fourth one is just confusing syntax...but should become a link
-test_text = %q[
-one [fish1 -> one] 
-two [fish2]
-red "fish3":three
-blue ["fish4":four]
-]
-
-html = WholeCloth.new(test_text,'mygroup').to_html() do |link|
-  puts 'got link "%s"' % link
-  rand(2) == 0 ? true : false
-end
-
-puts html
-=end

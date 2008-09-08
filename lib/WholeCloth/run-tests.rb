@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-#$: << '..'
-require 'wholecloth'
+require File.join(File.expand_path(File.dirname(__FILE__), 'wholecloth'))
 require 'yaml'
 
 i = 0
