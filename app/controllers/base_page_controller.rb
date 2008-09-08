@@ -35,11 +35,7 @@ class BasePageController < ApplicationController
     @page_class = get_page_type
     if request.post?
       begin
-        @page = @page_class.create(params[:page].merge(
-          :user => current_user,
-          :share_with => params[:recipients],
-          :access => :admin
-        ))
+        @page = create_new_page(@page_class)
         return redirect_to(page_url(@page)) if @page.valid?
         flash_message_now :object => @page
       rescue Exception => exc

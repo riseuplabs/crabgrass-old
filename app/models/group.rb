@@ -218,8 +218,14 @@ class Group < ActiveRecord::Base
   # this is still a basic stub. see User.may!
   def may!(perm, page)
     gparts = page.participation_for_groups(group_and_committee_ids)
-    return true if gparts.any?
-    raise PermissionDenied
+    if gparts.any?
+      part_with_best_access = gparts.min {|a,b|
+        (a.access||100) <=> (b.access||100)
+      }
+      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+    else
+      raise PermissionDenied.new
+    end
   end
 
   ####################################################################

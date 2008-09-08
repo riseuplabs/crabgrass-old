@@ -150,14 +150,15 @@ module UserExtension::Sharing
   ##
 
   # valid options:
-  #  :access -- one of nil, :admin, :edit, :view
+  #  :access -- one of nil, :admin, :edit, :view (nil will remove access)
+  #  :grant_access -- like :access, but is only used to improve access, not remove it.
   #  :message -- text message to send
   #  :send_emails -- true or false. send email to recipients?
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
 
-    users, groups, emails = parse_recipients!(recipients)
+    users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
     send_emails    = options.delete(:send_emails)
     mailer_options = options.delete(:mailer_options)
@@ -198,7 +199,7 @@ module UserExtension::Sharing
   # raise an exception of there are any problems with sharing.
   def may_share_page_with!(page,recipients,options)
     return true unless recipients
-    users, groups, emails = parse_recipients!(recipients)
+    users, groups, emails = Page.parse_recipients!(recipients)
     users.each do |user|
       self.may_share!(page, user, options)
     end
@@ -214,10 +215,7 @@ module UserExtension::Sharing
   # also, we don't grant new permissions if the user already has the permissions
   # via a group membership.
   # 
-  # options may include:
-  # * +:message => 'text to send to user'+ (default is empty)
-  # * +:access => 'admin'+ (or one of 'admin', 'edit', 'view', nil. default is nil)
-  #   nil means do not grant additional access more than the user already has
+  # see share_page_with!() for options
   #
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
@@ -227,18 +225,27 @@ module UserExtension::Sharing
       attrs[:notice] = {:user_login => self.login,
         :message => options[:message], :time => Time.now}
     end
-    if options[:access] and !user.may?(options[:access],page)
+
+    if options.key?(:access) # might be nil
       attrs[:access] = options[:access]
+    else
+      options[:grant_access] ||= :view
+      unless user.may?(options[:grant_access], page)
+        attrs[:grant_access] = options[:grant_access] || :view
+      end
     end
 
     page.add(user, attrs)
   end
 
   def share_page_with_group!(page, group, options={})
-    options[:access] ||= :view
-
     may_share!(page,group,options)
-    page.add group, :access => options[:access]
+    if options.key?(:access) # might be nil
+      page.add group, :access => options[:access]
+    else
+      options[:grant_access] ||= :view
+      page.add group, :grant_access => options[:grant_access]
+    end
 
     # when we get here, the group should be able to view the page.
     users_to_pester = group.users.select do |user|
@@ -261,14 +268,15 @@ module UserExtension::Sharing
   def may_share!(page,entity,options)
     user  = entity if entity.is_a? User
     group = entity if entity.is_a? Group
+    access = options[:access] || options[:grant_access] || :view
     if user
       if page.public? and !self.may_pester?(user)
         raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] %  user.login)
-      elsif options[:access].nil?
+      elsif access.nil?
         if !user.may?(:view,page)
           raise PermissionDenied.new('%s is not allowed to view this page. They must be granted greater access first.'[:share_msg_grant_required] % user.login)
         end
-      elsif !user.may?(options[:access], page)
+      elsif !user.may?(access, page)
         if !self.may?(:admin,page)
           raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_msg_permission_denied])
         elsif !self.may_pester?(user)
@@ -276,52 +284,12 @@ module UserExtension::Sharing
         end
       end
     elsif group
-      unless group.may?(options[:access],page)
+      unless group.may?(access,page)
         unless self.may?(:admin,page) and self.may_pester?(group)
           raise PermissionDenied.new('Your not allowed to share this page with %s'[:share_msg_pester_denied] % group.name)
         end
       end
     end
-  end
-
-  # parses a list of recipients, turning them into email, user, or group
-  # objects as appropriate.
-  def parse_recipients!(recipients)
-    users = []; groups = []; emails = []; errors = []
-    if recipients.is_a? Hash
-      entities = []
-      recipients.each do |key,value|
-        entities << key if value == '1'
-      end
-    elsif recipients.is_a? Array
-      entities = recipients
-    elsif recipients.is_a? String
-      entities = recipients.split(/[\s,]/)
-    else
-      entities = [recipients]
-    end
-    
-    entities.each do |entity|
-      if entity.is_a? Group
-        groups << entity
-      elsif entity.is_a? User
-        users << entity
-      elsif entity =~ RFC822::EmailAddress
-        emails << entity
-      elsif g = Group.get_by_name(entity)
-        groups << g
-      elsif u = User.find_by_login(entity)
-        users << u
-      elsif entity.any?
-        errors << '"%s" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found] % entity.name
-      end
-    end
-
-    unless errors.empty?
-      raise ErrorMessages.new('Could not understand some recipients.', errors)
-    end
-
-    [users, groups, emails]
   end
 
 

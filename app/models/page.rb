@@ -169,7 +169,6 @@ class Page < ActiveRecord::Base
     
   # add a group or user participation to this page
   def add(entity, attributes={})
-    attributes[:access] = ACCESS[attributes[:access]] if attributes[:access]
     if entity.is_a? Enumerable
       entity.each do |e|
         e.add_page(self,attributes)
