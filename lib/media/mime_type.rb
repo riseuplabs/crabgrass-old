@@ -137,8 +137,8 @@ module Media
       'image/png'                => [:png,:image,:png_asset],
       'image/gif'                => [:png,:image,:gif_asset],
 
-      'image/svg+xml'            => [:svg,:vector,:image_asset,'Vector Image'],
-      'image/svg+xml-compressed' => [:svg,:vector,:image_asset,'Vector Image'],
+      'image/svg+xml'            => [:svg,:vector,:svg_asset,'Vector Image'],
+      'image/svg+xml-compressed' => [:svg,:vector,:svg_asset,'Vector Image'],
       'application/illustrator'  => [:ai,:vector,:image_asset,'Vector Image'],
       'image/bzeps'              => [:bzeps,:vector,:image_asset,'Vector Image'],
       'image/eps'                => [:eps,:vector,:image_asset,'Vector Image'],
