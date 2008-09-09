@@ -98,7 +98,7 @@ class BasePage::ParticipationController < ApplicationController
     begin
       recipients = params[:recipients]
       options = {
-        :access => (params[:access].any? ? params[:access].to_sym : nil),
+        :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
         :message => params[:message],
         :send_emails => params[:send_emails],
         :mailer_options => mailer_options
@@ -123,7 +123,7 @@ class BasePage::ParticipationController < ApplicationController
   # create or update a user_participation object, granting new access. 
   def create
     begin
-      users, groups, emails = parse_recipients!(params[:add_names])
+      users, groups, emails = Page.parse_recipients!(params[:add_names])
       (users+groups).each do |thing|
         @page.add(thing, :access => params[:access].to_sym)
       end

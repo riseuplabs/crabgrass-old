@@ -20,6 +20,7 @@ module ApplicationHelper
 
   ## coverts bytes into something more readable 
   def friendly_size(bytes)
+    return unless bytes
     if bytes > 1.megabyte
       '%s MB' % (bytes / 1.megabyte)
     elsif bytes > 1.kilobyte

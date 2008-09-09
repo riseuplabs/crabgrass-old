@@ -147,6 +147,9 @@ class Group < ActiveRecord::Base
 #      else; relationship.to_s
 #    end  
 #  end
+
+  ####################################################################
+  ## permissions
   
   def may_be_pestered_by?(user)
     begin
@@ -162,6 +165,19 @@ class Group < ActiveRecord::Base
     else
       raise PermissionDenied.new('You not allowed to share with %s'[:pester_denied] % self.name)
     end
+  end
+
+  # if user has +access+ to group, return true.
+  # otherwise, raise PermissionDenied
+  def has_access!(access, user)
+    if access == :admin
+      ok = user.member_of?(self)
+    elsif access == :edit
+      ok = user.member_of?(self)
+    elsif access == :view
+      ok = user.member_of?(self) or profiles.public.may_see?
+    end
+    ok or raise PermissionDenied.new
   end
 
   
@@ -202,8 +218,14 @@ class Group < ActiveRecord::Base
   # this is still a basic stub. see User.may!
   def may!(perm, page)
     gparts = page.participation_for_groups(group_and_committee_ids)
-    return true if gparts.any?
-    raise PermissionDenied
+    if gparts.any?
+      part_with_best_access = gparts.min {|a,b|
+        (a.access||100) <=> (b.access||100)
+      }
+      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+    else
+      raise PermissionDenied.new
+    end
   end
 
   ####################################################################

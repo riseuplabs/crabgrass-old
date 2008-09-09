@@ -1,3 +1,8 @@
+in: |-
+  > this is a quote
+  
+  this should not be in blockquote
+out: "<blockquote>\n<p>this is a quote</p>\n</blockquote>\n<p>this should not be in blockquote</p>"
 ---
 in: |-
   here is a regular paragraph
@@ -6,8 +11,7 @@ in: |-
   > and lasts for two lines
   
   another regular paragraph
-out: "<p>here is a regular paragraph</p>\n<blockquote>\n<p>this one is a blockquote<br />\n\tand lasts for two lines</p>\n<p>another regular paragraph</p>\n</blockquote>"
-
+out: "<p>here is a regular paragraph</p>\n<blockquote>\n<p>this one is a blockquote<br />\n\tand lasts for two lines</p>\n</blockquote>\n<p>another regular paragraph</p>"
 ---
 in: |-
   > here is a paragraph
@@ -16,7 +20,7 @@ in: |-
   >> within it.
   >
   > what do you think about that?
-out: "<blockquote>\n<p>here is a paragraph</p>\n<p>&gt; with a nested paragraph<br />\n\t&gt; within it.</p>\n<p>what do you think about that?</p>\n</blockquote>"
+out: "<blockquote>\n<p>here is a paragraph</p>\n</blockquote>\n<p>&gt;<br />\n<blockquote><br />\n\t&gt; with a nested paragraph<br />\n\t&gt; within it.</p>\n</blockquote>\n<p>&gt;<br />\n<blockquote><br />\n\twhat do you think about that?</p>\n</blockquote>"
 ---
 in: |
   > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
@@ -40,5 +44,4 @@ in: |
   >
   > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
   id sem consectetuer libero luctus adipiscing.
-out: "<blockquote>\n<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br />\n\tconsectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br />\n\tVestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>\n<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br />\n\tid sem consectetuer libero luctus adipiscing.</p>\n</blockquote>"
-
+out: "<blockquote>\n<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</p>\n</blockquote>\n<p>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br />\nVestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.<br />\n&gt;<br />\n<blockquote><br />\n\tDonec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</p>\n</blockquote>\n<p>id sem consectetuer libero luctus adipiscing.</p>"

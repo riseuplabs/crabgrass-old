@@ -1,3 +1,6 @@
+name: headers
+in: "header one\n=====\nheader two\n----"
+out: "<h1>header one</h1>\n<h2>header two</h2>"
 --- 
 name: paragraphs
 desc: Textile looks for paragraphs in your text.  Paragraphs are separated by one blank line. Every paragraph is translated as an HTML paragraph.

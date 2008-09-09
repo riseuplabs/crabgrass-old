@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'latex_controller'
-require 'greencloth/util'
+require 'zlib'
+require 'base64'
 
 # Re-raise errors caught by the controller.
 class LatexController; def rescue_action(e) raise e end; end

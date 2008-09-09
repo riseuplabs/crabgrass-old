@@ -99,6 +99,9 @@ class Page < ActiveRecord::Base
     post.user = user
     return post
   end
+
+  #######################################################################
+  ## PAGE ACCESS CONTROL
   
   ## update attachment permissions
   after_save :update_access
@@ -106,6 +109,38 @@ class Page < ActiveRecord::Base
     assets.each { |asset| asset.update_access }
   end
   
+  # This method should never be called directly. It should only be called
+  # from User#may?()
+  #
+  # basic permissions:
+  #   :view  -- user can see the page.
+  #   :edit  -- user can participate.
+  #   :admin -- user can destroy the page, change access.
+  # conditional permissions:
+  #   :comment -- sometimes viewers can comment and sometimes only participates can.
+  #   (NOT SUPPORTED YET)
+  #
+  # :view should only return true if the user has access to view the page
+  # because of participation objects, NOT because the page is public.
+  #
+  def has_access!(perm, user)
+    perm = :edit if perm == :comment
+    upart = self.participation_for_user(user)
+    gparts = self.participation_for_groups(user.all_group_ids)
+    if upart or gparts.any?
+      parts = []
+      parts += gparts if gparts.any?
+      parts += [upart] if upart
+      part_with_best_access = parts.min {|a,b|
+        (a.access||100) <=> (b.access||100)
+      }
+      # allow :view if the participation exists at all
+      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+    end
+    raise PermissionDenied.new
+  end
+
+
   #######################################################################
   ## RELATIONSHIP TO OTHER PAGES
   
@@ -134,7 +169,6 @@ class Page < ActiveRecord::Base
     
   # add a group or user participation to this page
   def add(entity, attributes={})
-    attributes[:access] = ACCESS[attributes[:access]] if attributes[:access]
     if entity.is_a? Enumerable
       entity.each do |e|
         e.add_page(self,attributes)

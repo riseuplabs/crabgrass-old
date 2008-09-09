@@ -1,0 +1,39 @@
+WholeCloth
+==========
+WholeCloth is derived from RedCloth, the defacto text to html converter for ruby.
+
+Deployment
+----------
+You need to compile RedCloth, as it is written in C. 
+/--
+cd WholeCloth/RedCloth
+rake compile
+\--
+
+Development
+-----------
+To run the all the tests:
+/--
+ruby run-tests.rb
+\--
+or a specific set of tests:
+/--
+ruby run-tests.rb tests/basic.yml
+\--
+
+RedCloth is built on Ragel, a state machine language for C. As such, you have to compile it. To do so, go into the RedCloth subdirectory and run:
+/--
+rake compile
+\--
+
+Changes from RedCloth
+-------------------
+These changes were made to the redcloth ragel source:
+*
+
+These syntax changes are made in wholecloth.rb:
+*
+
+WholeCloth Syntax
+-----------------
+

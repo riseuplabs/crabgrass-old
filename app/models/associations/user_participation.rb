@@ -23,5 +23,23 @@ class UserParticipation < ActiveRecord::Base
     ACCESS_TO_SYM[self.access]
   end
 
+  # can only be used to increase access, not remove it.
+  def grant_access=(value)
+    value = ACCESS[value.to_sym] if value.is_a?(Symbol) or value.is_a?(String)
+    if value
+      if read_attribute(:access)
+        write_attribute(:access, [value,read_attribute(:access)].min )
+      else
+        write_attribute(:access, value)
+      end
+    end
+  end
+
+  # can be used to add or remove access
+  def access=(value)
+    value = ACCESS[value] if value.is_a? Symbol
+    write_attribute(:access, value)
+  end
+
 end
 

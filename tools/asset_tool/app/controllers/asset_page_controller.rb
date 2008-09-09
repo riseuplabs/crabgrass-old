@@ -6,6 +6,7 @@ class AssetPageController < BasePageController
   include AssetPageHelper
 
   def show
+    redirect_to page_url(@page, :action => 'error') unless @asset
   end
 
   def create

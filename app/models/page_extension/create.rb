@@ -57,6 +57,46 @@ module PageExtension::Create
       end
     end # create
     
+    # parses a list of recipients, turning them into email, user, or group
+    # objects as appropriate.
+    def parse_recipients!(recipients)
+      users = []; groups = []; emails = []; errors = []
+      if recipients.is_a? Hash
+        entities = []
+        recipients.each do |key,value|
+          entities << key if value == '1'
+        end
+      elsif recipients.is_a? Array
+        entities = recipients
+      elsif recipients.is_a? String
+        entities = recipients.split(/[\s,]/)
+      else
+        entities = [recipients]
+      end
+      
+      entities.each do |entity|
+        if entity.is_a? Group
+          groups << entity
+        elsif entity.is_a? User
+          users << entity
+        elsif entity =~ RFC822::EmailAddress
+          emails << entity
+        elsif g = Group.get_by_name(entity)
+          groups << g
+        elsif u = User.find_by_login(entity)
+          users << u
+        elsif entity.any?
+          errors << '"%s" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found] % entity.name
+        end
+      end
+
+      unless errors.empty?
+        raise ErrorMessages.new('Could not understand some recipients.', errors)
+      end
+
+      [users, groups, emails]
+    end # parse_recipients!
+
   end # ClassMethods   
 end # PageExtension::Create
 

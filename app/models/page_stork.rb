@@ -16,115 +16,6 @@ class PageStork
       "<b>#{a}</b>"
     end
   end
-  
-  def self.request_to_join_group(options)
-    user = options.delete(:user).cast! User
-    group = options.delete(:group).cast! Group
-    page = RequestPage.new do |p|
-      p.title = 'request to join %s from %s'.t % [group.name, user.login]
-      p.resolved = false
-      p.flow = FLOW[:membership]
-      p.data = PollRequest.new do |r|
-        r.action = Actions::AddToGroup.new(user,group)
-        r.name = 'Add user %s to group %s?'.t % link(user, group)
-      end
-    end
-    page.save
-    page.add(group, :access => :admin)
-    page.add(group.users)
-  end
-  
-  def self.join_discussion(options)
-    user = options.delete(:user).cast! User
-    group = options.delete(:group).cast! Group
-    page = RequestDiscussionPage.new do |p|
-      p.title = 'discussion re: request to join %s from %s'.t % [group.name, user.name]
-      p.summary = ('User %s has requested to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the request.'.t) % [user.name, group.name, user.name, group.name]
-      p.flow = FLOW[:membership]
-      p.resolved = false
-    end
-    page.save
-    page.add(user, :access => :admin)
-    page.add(group, :access => :admin)
-    if options[:message].any?
-      page.build_post(options[:message],user)
-    end
-    page
-  end
-  
-  def self.invite_to_join_group(options)
-    user = options.delete(:user).cast! User
-    group = options.delete(:group).cast! Group
-    from = options.delete(:from).cast! User
-    page = RequestPage.new do |p|
-      p.title = 'invitation to join group %s'.t % group.name
-      p.resolved = false
-      p.flow = FLOW[:membership]
-      p.data = PollRequest.new do |r|
-        r.action = Actions::AddToGroup.new(user,group)
-        r.name = 'Join group %s?'.t % link(group)
-      end
-    end
-    page.save
-    page.add(user, :access => :admin)
-  end
-
-  def self.invite_discussion(options)
-    user = options.delete(:user).cast! User
-    group = options.delete(:group).cast! Group
-    from = options.delete(:from).cast! User
-    page = RequestDiscussionPage.new do |p|
-      p.title = 'discussion re: invitation to join group %s'.t % [group.name]
-      p.summary = ('User %s has sent %s an invitation to join group %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % [from.name, user.name, group.name, group.name, user.name]
-      p.flow = FLOW[:membership]
-      p.resolved = false
-    end
-    page.save
-    page.add(group, :access => :admin)
-    page.add(user, :access => :admin)
-    if options[:message].any?
-      page.build_post(options[:message],from)
-    end
-    page
-  end
-
-  def self.request_for_contact(options)
-    user = options.delete(:user).cast! User
-    contact = options.delete(:contact).cast! User
-    page = RequestPage.new do |p|
-      p.title = 'contact invitation from %s to %s'.t % [user.login, contact.login]
-      p.resolved = false
-      p.data = PollRequest.new do |r|
-        r.action = Actions::AddToContacts.new(user,contact)
-        r.name = 'Add user %s to your contact list?' % link(user)
-      end
-      p.flow = FLOW[:contacts]
-    end
-    page.save
-    page.add(contact, :access => :admin)
-    #if options[:message].any?
-    #  page.build_post(options[:message],user)
-    #end
-    page
-  end
-  
-  def self.contact_discussion(options)
-    user = options.delete(:user).cast! User
-    contact = options.delete(:contact).cast! User
-    info = RequestDiscussionPage.new do |i|
-      i.title = 'discussion re: contact invitation from %s to %s'.t % [user.name, contact.name]
-      i.summary = ('User %s has sent a contact invitation to %s.'.t + ' ' + 'Both %s and %s have access to this page, so you can use this space discuss the invitation.'.t) % [user.name, contact.name, user.name, contact.name]
-      i.flow = FLOW[:contacts]
-      i.resolved = false
-    end
-    info.save
-    info.add(user, :access => :admin)
-    info.add(contact, :access => :admin)
-    if options[:message].any?
-      info.build_post(options[:message],user)
-    end
-    info
-  end
     
   def self.wiki(options)
     user = (options.delete(:user).cast! User if options[:user])
@@ -164,18 +55,6 @@ class PageStork
     page.add(to, :access => :admin) 
     page 
   end
-  
-	def self.event(options)
-    user = options.delete(:user).cast! User
-    group = options.delete(:group).cast! Group
-    page = EventPage.new do |e|
-	e.title = options[:title]
-	e.created_by = user
-    end
-    page.save
-    page.add(group, :access => :admin)
-    page
-  end
-	
+  	
 end
 

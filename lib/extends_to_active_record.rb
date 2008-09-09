@@ -70,14 +70,25 @@ ActiveRecord::Base.class_eval do
     yield
     self.class.record_timestamps = true
   end
+
 end
 
 # 
 # What is going on here!?
-# We have a table that needs to be MyISAM and it needs a fulltext index.
-# This is not possible in the normal schema.rb file, so this little hack
-# inserts the correct raw SQL to make it happen if there is an index
-# with a name that matches /fulltext/
+# Crabgrass requires MyISAM for certain tables and the ability to add fulltext
+# indexes. Additionally, since we are tied to mysql, we might as well be able
+# to use it properly and specify the index length.
+#
+# These are not possible in the normal schema.rb file, so this little hack
+# will insert the correct raw MySQL specific SQL commands into schema.rb
+# in the following cases:
+# 
+#  * if the index name matches /fulltext/, then the index is created as a
+#    fulltext index and table is converted to be MyISAM.
+#  * if the index name ends with a number, we assume this is the length of
+#    the index. if the index is composite, then we assume there are multiple
+#    length suffixes.
+#    eg: idx_name_and_language_5_2 => CREATE INDEX ... (name(5),country(2))
 #
 module ActiveRecord
   class SchemaDumper #:nodoc:
@@ -85,9 +96,20 @@ module ActiveRecord
     def indexes(table, stream)
       indexes = @connection.indexes(table)
       indexes.each do |index|
-        if index.name=~/fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
+        if index.name =~ /fulltext/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
           stream.puts %(  execute "ALTER TABLE #{index.table} ENGINE = MyISAM")
           stream.puts %(  execute "CREATE FULLTEXT INDEX #{index.name} ON #{index.table} (#{index.columns.join(',')})")
+        elsif index.name =~ /\d+$/ and @connection.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)
+          lengths = index.name.match(/(_\d+)+$/).to_s.split('_').select(&:any?)
+          index_parts = []
+          index.columns.size.times do |i|
+            if lengths[i] == '0'
+              index_parts << index.columns[i]
+            else
+              index_parts << index.columns[i] + '(' + lengths[i] + ')'
+            end
+          end
+          stream.puts %(  execute "CREATE INDEX #{index.name} ON #{index.table} (#{index_parts.join(',')})")
         else
           stream.print "  add_index #{index.table.inspect}, #{index.columns.inspect}, :name => #{index.name.inspect}"
           stream.print ", :unique => true" if index.unique
