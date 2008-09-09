@@ -1,14 +1,23 @@
 /*** login menu box ***/
 
-span#top-login-form label {
-  color: #FFF;
-  font-size: 9px;
+#login_popup {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: 5px solid #333;
+  height: 2em;
+  width: 33em;
+  background: #999;
+  padding: 1em;
+  color: white;
+}
+#login_popup input {
+  width: 5em;
+  margin-right: 1em;
+  border: 1px solid black;
 }
 
-span#top-login-form input {
-  width: 8em;
-  font-size: 9px;
-}
+/* sidebar popups */
 
 div.popup {
   background: #efefef;
