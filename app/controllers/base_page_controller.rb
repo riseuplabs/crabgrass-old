@@ -76,7 +76,7 @@ class BasePageController < ApplicationController
     return 'page'
   end
   
-  before_filter :update_viewed
+  after_filter :update_viewed
   def update_viewed
     if @upart and @page and params[:action] == 'show'
       @upart.viewed_at = Time.now

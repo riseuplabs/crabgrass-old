@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class PageSharingTest < Test::Unit::TestCase
 
-  fixtures :pages, :users, :groups, :memberships
+  fixtures :pages, :users, :groups, :memberships, :user_participations
 
   def setup
   end
@@ -22,6 +22,22 @@ class PageSharingTest < Test::Unit::TestCase
     assert group.may?(:admin, page), 'group should still be able to admin group'
   end
   
+  def test_page_update
+    page = pages(:wiki)
+    assert page.user_participations.size > 1
+    page.user_participations.each do |up|
+      up.update_attribute(:viewed, true)
+    end
+
+    user = page.users.first
+    user.updated(page)
+
+    page = Page.find(page.id)
+    page.user_participations.each do |up|
+      assert_equal(false, up.viewed, 'should not be viewed') unless up.user == user
+    end
+  end
+
   protected
   
   def create_page(options = {})

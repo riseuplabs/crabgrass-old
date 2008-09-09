@@ -14,7 +14,7 @@ class ParticipationTest < Test::Unit::TestCase
 
   def test_name_changed
     u = users(:orange)
-    p = Page.create :title => 'hello'
+    p = Page.create :title => 'hello', :user => u
     assert p.valid?, 'page should be valid'
     u.updated(p)
     p.save

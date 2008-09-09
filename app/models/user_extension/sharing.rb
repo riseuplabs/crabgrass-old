@@ -117,6 +117,8 @@ module UserExtension::Sharing
   #  :all_resolved -- everyone's participation is resolved.
   #
   def updated(page, options={})
+    raise PermissionDenied.new unless self.may?(:edit, page)
+
     # create self's participation if it does not exist
     find_or_build_participation(page)
 
