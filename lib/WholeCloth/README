@@ -28,12 +28,17 @@ rake compile
 
 Changes from RedCloth
 -------------------
-These changes were made to the redcloth ragel source:
-*
+These syntax changes were made by modifying RedCloth/ext/redcloth_scan/redcloth_inline.rl:
+* Disabled redcloth style links e.g. "google":google.com
+* require spaces for @ code tags, e.g. @ blah blah @ instead of @blah blah@
+Changes made in redcloth_scan.rl:
+* Disabled 'link aliases'
 
-These syntax changes are made in wholecloth.rb:
-*
+These syntax changes were made in wholecloth.rb:
+* Crabgrass style links [google -> google.com]
+* Autolinks
+* Crabgrass style code blocks, like in this document
+* Markdown blockquotes
+* Setext headers
 
-WholeCloth Syntax
------------------
-
+Also some html elements were added to the whitelist in RedCloth/lib/redcloth/formatters/html.rb
