@@ -1,5 +1,5 @@
 <%# this is the stuff that goes inside the <li></li> -%>
-<%= task_checkbox(task) %><span class='task'><%= task_link_to_people(task) %><%= task_link_to_details(task) %></span>
+<%= task_checkbox(task) %><span class='task'><%= task_link_to_details(task) %></span> <span class='task_people'><%= task_link_to_people(task) %></span>
 <div id='<%=dom_id(task,'details')%>' style='display:none' class='task'>
   <table>
     <tr><td colspan="2"><%= task.description_html %></td></tr>

@@ -1,7 +1,6 @@
 <%
-  # this is used by "external" views/controllers to display a list of tasks.
+  # this is a template to be used by controllers other than TaskListPageController.
   # for example, from people, groups, me. 
-  # in these cases, the task lists are often indirectly fetched from the db. 
 
 # local variables
 @show_status ||= 'pending'  # one of pending, completed, both, created
@@ -10,14 +9,11 @@
 all_users  = (@show_user == 'all')
 all_states = (@show_status == 'both')
 completed  = (@show_status == 'completed')
-#sortable_lists = {}
 -%>
 <%
 for list in @task_lists
   next unless list
   @page = list.page
-#  sort_list_id = "sort_list_#{@page.id}_pending" # must begin with 'sort_list_'
-#  sortable_lists[sort_list_id] = @page
   case @show_status
   when 'created'
     tasks = list.tasks.select { |t| t.created_by_id == @show_user.id }
@@ -31,13 +27,11 @@ for list in @task_lists
 -%>
   <ul><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name, :action => 'tasks')})" if @page.group_name %></ul>
   <ul id='<%#sort_list_id%>' class='task_list'>
-    <%= render :partial => 'task_list_page/task', :collection => tasks %>
+    <%= render :partial => 'task_list_page/task', :collection => tasks, :locals => {:sortable => false} %>
   </ul>
 <% end -%>
 
 <%# this is just here so that we don't get an ajax error when a task is marked completed or pending -%>
 <ul id='sort_list_completed' style='display:none'><li id='no_completed_tasks'></li></ul>
 <ul id='sort_list_pending' style='display:none'><li id='no_pending_tasks'></li></ul>
-
-<%# sortable_lists.collect {|id, page| sortable_element id, :handle => 'handle', :url => page_xurl(page, :action=>'sort'), :containment => sortable_lists.keys } %>
 

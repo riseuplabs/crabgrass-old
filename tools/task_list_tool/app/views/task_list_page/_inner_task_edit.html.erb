@@ -5,7 +5,7 @@
   <table>
     <tr><td><%= text_field 'task', 'name', :class => 'task_name' %></td></tr>
     <tr><td><%= text_area  'task', 'description', :size => '50x4', :class => 'task_description' %></td></tr>
-    <tr><td><%= checkboxes_for_assign_people_to_task(task) %></td></tr>
+    <tr><td><%= checkboxes_for_assign_people_to_task(task, task.user_ids) %></td></tr>
     <tr><td>
       <%= delete_task_edit_button(task) %>
       <%= close_task_edit_button(task) %>

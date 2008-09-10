@@ -29,4 +29,5 @@ grouppage_<%=i%>:
 rainbow_tasklist:
   page_id: 201
   group_id: 3
+  access: 1
 
