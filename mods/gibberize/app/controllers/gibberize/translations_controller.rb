@@ -26,15 +26,19 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   def new
 #    @translation = Translation.wanted_from current_user
     @translation = Translation.new
-    @translation.key = Key.find(params[:key]) if params[:key]
-    @translation.language = Language.find(params[:language]) if params[:language]
+    @key = Key.find(params[:key]) if params[:key]
+    @language = Language.find(params[:language]) if params[:language]
 
-    @languages = Language.find(:all)
-    @keys = Key.find(:all)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @translation }
+    if @key.languages.include? @language
+      @translation = @key.translations.select{|t| t if t.language == @language} 
+      redirect_to :action => :edit, :id => @translation
+    else
+      @translation.key = @key
+      @translation.language = @language
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @translation }
+      end
     end
   end
 

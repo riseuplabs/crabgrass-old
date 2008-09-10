@@ -3,7 +3,7 @@ class Gibberize::KeysController < Gibberize::BaseController
   # GET /keys.xml
   def index
     @keys = Key.find(:all)
-
+    @language = Language.find(params[:language]) if params[:language]
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @keys }
