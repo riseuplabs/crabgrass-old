@@ -106,6 +106,10 @@ class Page < ActiveRecord::Base
     (@associations_to_save ||= []) << assn
   end
 
+  def association_changed?
+    @associations_to_save.any?
+  end
+
   after_save :save_associations
   def save_associations
     return true unless @associations_to_save

@@ -51,11 +51,16 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   end
 
   def test_add_star
-  # TODO: Write this test
+    login_as(:blue)
+    post :add_star, :page_id => 1
+    assert Page.find(1).participation_for_user(users(:blue)).star?
   end
   
   def test_remove_star
-  # TODO: Write this test
+    login_as(:blue)
+    Page.find(1).participation_for_user(users(:blue)).update_attribute(:star, false)
+    post :remove_star, :page_id => 1
+    assert !Page.find(1).participation_for_user(users(:blue)).star?
   end
   
   def test_add_watch

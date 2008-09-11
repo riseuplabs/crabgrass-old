@@ -11,6 +11,7 @@ This is a controller for managing participations with a page
 class BasePage::ParticipationController < ApplicationController
 
   before_filter :login_required
+
   verify :method => :post, :only => [:move]
 
   helper 'base_page', 'base_page/participation'
@@ -183,4 +184,12 @@ class BasePage::ParticipationController < ApplicationController
     true
   end
   
+  after_filter :save_page
+  def save_page
+    if @page and (@page.changed? or @page.association_changed?)
+      @page.save
+    end
+    true
+  end
+
 end
