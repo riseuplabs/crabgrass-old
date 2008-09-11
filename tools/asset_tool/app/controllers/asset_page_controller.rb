@@ -13,6 +13,7 @@ class AssetPageController < BasePageController
     @page_class = AssetPage
     @stylesheet = 'page_creation'
     if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
       begin
         # create asset
         @asset = Asset.make params[:asset]

@@ -25,7 +25,7 @@
     <tr>
       <td class='label'><%= 'Tags'.t %></td>
       <td>
-        <%= text_field_tag 'tag_list', '', :size => 38 %><br/>
+        <%= text_field 'page', 'tag_list', :size => 38 %><br/>
         <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
       </td>
     </tr>
@@ -40,8 +40,9 @@
     </tr>
     <% end -%>
     <tr>
-      <td align='left' colspan="2">
-        <%= submit_tag "Create page".t, :name => 'create' %>
+      <td align='right' colspan="2">
+        <%= submit_tag '&laquo; ' + "Back".t, :name => 'cancel' %>
+        <%= submit_tag "Create page".t + ' &raquo;', :name => 'create' %>
       </td>
     </tr>
   </table>

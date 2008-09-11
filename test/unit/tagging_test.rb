@@ -51,4 +51,14 @@ class TaggingTest < Test::Unit::TestCase
     assert user.tags.include?(page.tags.first), user.tags.inspect
   end
 
+  def test_create_with_tags
+    page = nil
+    assert_nothing_raised do 
+      page = DiscussionPage.create! :title => 'tag me!', :tag_list => 'one,two,three'
+    end  
+    assert page.tag_list.include?('one')
+    page = Page.find(page.id)
+    assert page.tag_list.include?('one')
+  end
+
 end

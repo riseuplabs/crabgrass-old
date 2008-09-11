@@ -34,6 +34,7 @@ class BasePageController < ApplicationController
   def create
     @page_class = get_page_type
     if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
       begin
         @page = create_new_page!(@page_class)
         return redirect_to(page_url(@page))
