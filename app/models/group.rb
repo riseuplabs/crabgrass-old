@@ -81,7 +81,6 @@ class Group < ActiveRecord::Base
   def network?; instance_of? Network; end
   def normal?; instance_of? Group; end  
   
-
   ####################################################################
   ## relationships to users
 
@@ -128,6 +127,7 @@ class Group < ActiveRecord::Base
   end
   def relationships_to(user)
     return [:stranger] unless user
+    return [:stranger] if user.is_a? UnauthenticatedUser
     (@relationships ||= {})[user.login] ||= get_relationships_to(user)
   end
   def get_relationships_to(user)
@@ -191,19 +191,24 @@ class Group < ActiveRecord::Base
     end
   end
 
+  #
+  # create a group_participation between a group and a page
+  # 
   def add_page(page, attributes)
     participation = page.participation_for_group(self)
     if participation
       participation.update_attributes(attributes)
     else
-      page.group_participations.create attributes.merge(:page_id => page.id, :group_id => id)
+      page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
     end
     page.group_id_will_change!
+    page.association_will_change(:groups)
   end
 
   def remove_page(page)
     page.groups.delete(self)
     page.group_id_will_change!
+    page.association_will_change(:groups)
   end
   
   def may?(perm, page)
@@ -301,6 +306,7 @@ class Group < ActiveRecord::Base
   ## temp stuff for profile transition
   ## should be removed eventually
     
+
   def publicly_visible_group
     profiles.public.may_see?
   end

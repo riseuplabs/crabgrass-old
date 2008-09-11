@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TaggingTest < Test::Unit::TestCase
-  fixtures :pages
+  fixtures :pages, :users
   def setup
     @objs = Page.find(:all, :limit => 2)
     
@@ -32,5 +32,23 @@ class TaggingTest < Test::Unit::TestCase
     assert_equal result2, Page.find_tagged_with("seasonal", :on => :tags).map(&:id).sort
     assert_equal result2, Page.find_tagged_with(["seasonal", "lager"], :on => :tags).map(&:id).sort
   end
-    
+  
+  def test_users_tag_cache
+    user = User.create :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx'
+    page = Page.create :title => 'hi'
+    page.tag_list = 'one, two'
+    page.save!
+
+    assert !page.users.include?(user)
+    assert user.tags.empty?
+
+    page.add(user)
+    page.save!
+
+    user.update_tag_cache  ## TODO: make this work without calling this manually.
+    user.reload            ##
+
+    assert user.tags.include?(page.tags.first), user.tags.inspect
+  end
+
 end

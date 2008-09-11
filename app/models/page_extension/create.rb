@@ -5,6 +5,7 @@ module PageExtension::Create
     #  include InstanceMethods
     #end
   end
+
   #
   # special magic page create
   #
@@ -19,8 +20,12 @@ module PageExtension::Create
   # if anything goes wrong, an exception is raised, so watch out.
   # see UserExtension::Sharing#may_share_page_with!
   #
+  # There are two versions create!() and create(). Both might throw exceptions
+  # caused by bad sharing, but the first one will also throw exceptions if the
+  # attributes don't validate.  
+  # 
   module ClassMethods
-    def create(attributes = {}, &block)
+    def create!(attributes = {}, &block)
       if attributes.is_a?(Array)
         # act like normal create
         super(attributes, &block)
@@ -33,32 +38,50 @@ module PageExtension::Create
         attributes[:updated_by] ||= user
         Page.transaction do
           page = new(attributes)
-          if user
+          #if user
             # grant user admin access, so that we may share.
-            page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
+            ##page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
             # test sharing before page.save
-            user.may_share_page_with!(page, recipients, :access => access)
-          end
+            ##user.may_share_page_with!(page, recipients, :access => access)
+          #end
           yield(page) if block_given?
-          page.save
-          if user and page.valid?
-            # do actual sharing after page.save
-            user.share_page_with!(page, recipients, :access => access)
-            # remove user's admin access if it is redundant
-            user_is_admin_via_group = page.groups_with_access(:admin).detect do |group|
-              user.member_of?(group)
+          if user
+            #page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
+            if recipients
+              user.share_page_with!(page, recipients, :access => access)
             end
-            if user_is_admin_via_group
-              page.add(user, :access => nil)
+            unless user.may_admin?(page)
+              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
             end
           end
+          page.save!
+          #if user and page.valid?
+            # do actual sharing after page.save
+            ##user.share_page_with!(page, recipients, :access => access)
+            # remove user's admin access if it is redundant
+            #user_is_admin_via_group = page.groups_with_access(:admin).detect do |group|
+            #  user.member_of?(group)
+            #end
+            #if user_is_admin_via_group
+            #  page.add(user, :access => nil)
+            #end
+          #end
           page
         end # transaction
       end
     end # create
     
+    def create(attributes={}, &block)
+      begin
+        create!(attributes, &block)
+      rescue ActiveRecord::RecordInvalid => exc
+        exc.record
+      end
+    end
+
     # parses a list of recipients, turning them into email, user, or group
     # objects as appropriate.
+    # returns array [users, groups, emails]
     def parse_recipients!(recipients)
       users = []; groups = []; emails = []; errors = []
       if recipients.is_a? Hash
@@ -86,7 +109,7 @@ module PageExtension::Create
         elsif u = User.find_by_login(entity)
           users << u
         elsif entity.any?
-          errors << '"%s" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found] % entity.name
+          errors << '"%s" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found] % entity
         end
       end
 

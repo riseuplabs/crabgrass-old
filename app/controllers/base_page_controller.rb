@@ -35,10 +35,10 @@ class BasePageController < ApplicationController
     @page_class = get_page_type
     if request.post?
       begin
-        @page = create_new_page(@page_class)
-        return redirect_to(page_url(@page)) if @page.valid?
-        flash_message_now :object => @page
+        @page = create_new_page!(@page_class)
+        return redirect_to(page_url(@page))
       rescue Exception => exc
+        @page = exc.record
         flash_message_now :exception => exc
       end
     end
@@ -53,11 +53,6 @@ class BasePageController < ApplicationController
   end
   
   protected
-
-  # returns true if params[:action] matches one of the args
-  def action?(*actions)
-    actions.include?(params[:action].to_sym)
-  end
 
   def authorized?
     if @page.nil?
@@ -172,8 +167,8 @@ class BasePageController < ApplicationController
     return Page.display_name_to_class(param)
   end
 
-  def create_new_page(page_class)
-     page_class.create(params[:page].merge(
+  def create_new_page!(page_class)
+     page_class.create!(params[:page].merge(
        :user => current_user,
        :share_with => Group.find_by_id(params[:group_id]),
        :access => :admin

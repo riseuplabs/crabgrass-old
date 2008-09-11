@@ -19,6 +19,7 @@ class Page < ActiveRecord::Base
 
   acts_as_taggable_on :tags
 
+
   #######################################################################
   ## PAGE NAMING
   
@@ -97,7 +98,27 @@ class Page < ActiveRecord::Base
     self.discussion.posts << post
     post.discussion = self.discussion
     post.user = user
+    association_will_change(:posts)
     return post
+  end
+
+  def association_will_change(assn)
+    (@associations_to_save ||= []) << assn
+  end
+
+  after_save :save_associations
+  def save_associations
+    return true unless @associations_to_save
+    @associations_to_save.uniq.each do |assn|
+      if assn == :posts
+        discussion.posts.each {|post| post.save!}
+      elsif assn == :users
+        user_participations.each {|up| up.save! if up.changed?}
+      elsif assn == :groups
+        group_participations.each {|gp| gp.save! if gp.changed?}
+      end
+    end
+    true
   end
 
   #######################################################################
@@ -106,7 +127,10 @@ class Page < ActiveRecord::Base
   ## update attachment permissions
   after_save :update_access
   def update_access
-    assets.each { |asset| asset.update_access }
+    if public_changed?
+      assets.each { |asset| asset.update_access }
+    end
+    true
   end
   
   # This method should never be called directly. It should only be called
@@ -127,6 +151,7 @@ class Page < ActiveRecord::Base
     perm = :edit if perm == :comment
     upart = self.participation_for_user(user)
     gparts = self.participation_for_groups(user.all_group_ids)
+    allowed = false
     if upart or gparts.any?
       parts = []
       parts += gparts if gparts.any?
@@ -135,9 +160,13 @@ class Page < ActiveRecord::Base
         (a.access||100) <=> (b.access||100)
       }
       # allow :view if the participation exists at all
-      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+      allowed = ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
     end
-    raise PermissionDenied.new
+    if allowed
+      return true
+    else
+      raise PermissionDenied.new
+    end
   end
 
 

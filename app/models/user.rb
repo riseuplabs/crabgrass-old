@@ -137,8 +137,20 @@ class User < ActiveRecord::Base
   end
   
   def may!(perm, protected_thing)
+    return true if protected_thing.new_record?
     @access ||= {}
-    (@access["#{protected_thing.class}.{protected_thing.id}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+    (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+  end
+
+  # as special call used in special places:
+  # This should only be called if you know
+  # for sure that you can't use user.may?(:admin,thing)
+  def may_admin?(thing)
+    begin
+      thing.has_access!(:admin,self)
+    rescue PermissionDenied
+      false
+    end
   end
   
 end

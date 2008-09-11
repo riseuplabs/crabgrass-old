@@ -55,9 +55,9 @@ module UserExtension::Sharing
     if participation
       self.update_participation(participation, part_attrs)
     else
-      self.create_participation(page, part_attrs)
+      self.build_participation(page, part_attrs)
     end  
-    page.updated_by_id_will_change!
+    page.association_will_change(:users)
   end
   ## called only by add_page
   def update_participation(participation, part_attrs)
@@ -71,7 +71,7 @@ module UserExtension::Sharing
         end
       end
     end
-    participation.update_attributes(part_attrs)
+    participation.attributes = part_attrs
   end
   ## called only by update_participation
   def repeat_notice?(current_notices, new_notice)
@@ -81,10 +81,11 @@ module UserExtension::Sharing
     end
   end
   ## called only by add_page
-  def create_participation(page, part_attrs)
+  def build_participation(page, part_attrs)
     # user_participations.build doesn't update the pages.users
-    # until it is saved, so we use create instead
-    page.user_participations.create(part_attrs.merge(
+    # until it is saved. If you need an updated users list, then
+    # use user_participations directly.
+    page.user_participations.build(part_attrs.merge(
       :page_id => page.id, :user_id => id,
       :resolved => page.resolved?))
   end
@@ -95,6 +96,7 @@ module UserExtension::Sharing
     clear_access_cache
     page.users.delete(self)
     page.updated_by_id_will_change!
+    page.association_will_change(:users)
   end
      
   # set resolved status vis-à-vis self.
@@ -193,8 +195,6 @@ module UserExtension::Sharing
         Mailer.deliver_page_notice(user, message, mailer_options)
       end
     end
-
-    page.save
   end
 
   # just like share_page_with, but don't do any actual sharing, just

@@ -21,15 +21,40 @@ class PageSharingTest < Test::Unit::TestCase
 
     assert group.may?(:admin, page), 'group should still be able to admin group'
   end
+
+  def test_add_page
+    user = users(:kangaroo)
+    page = nil
+    assert_nothing_raised do
+      page = Page.create!(:title => 'fun fun')
+    end
+
+    page.add(user, :access => :edit)
+    
+    # sadly, page.users is not updated yet.    
+    assert !page.users.include?(user), 'it would be nice if we could do this'
+
+    assert_nothing_raised do
+      page.save!
+    end
+    assert page.users.include?(user), 'page.users should be updated'
+
+    assert_raises PermissionDenied do 
+      user.may!(:admin, page)
+    end 
+  end
   
   def test_page_update
     page = pages(:wiki)
+    user = users(:blue)
+    page.add(user, :access => :admin)
+    page.save!
+
     assert page.user_participations.size > 1
     page.user_participations.each do |up|
       up.update_attribute(:viewed, true)
     end
 
-    user = page.users.first
     user.updated(page)
 
     page = Page.find(page.id)

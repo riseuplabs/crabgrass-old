@@ -94,10 +94,10 @@ class CommitteeTest < Test::Unit::TestCase
     c.memberships.create :user => u
     c.save
 
-    group_page = Page.create :title => 'a group page', :public => false
+    group_page = Page.create! :title => 'a group page', :public => false
     group_page.add(g, :access => :admin)
     group_page.save
-    committee_page = Page.create :title => 'a committee page', :public => false, :group => c
+    committee_page = Page.create! :title => 'a committee page', :public => false, :group => c
     committee_page.add(c, :access => :admin)
     committee_page.save
 

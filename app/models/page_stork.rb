@@ -21,7 +21,7 @@ class PageStork
     user = (options.delete(:user).cast! User if options[:user])
     group = options.delete(:group).cast! Group
     name = options.delete(:name).cast! String
-    page = WikiPage.create do |p|
+    page = WikiPage.create! do |p|
       p.title = name.titleize
       p.name = name.nameize
       p.created_by = user
@@ -41,19 +41,11 @@ class PageStork
   def self.private_message(options) 
     from = options.delete(:from).cast! User 
     to = options.delete(:to) 
-    page = MessagePage.new do |p| 
-      p.title = options[:title] || 'Message from %s to %s' % [from.login, to.login] 
-      p.created_by = from 
-      p.discussion = Discussion.new 
-      post = Post.new(:body => options[:body]) 
-      post.discussion = p.discussion 
-      post.user = from 
-      p.discussion.posts << post 
-    end 
-    page.save
-    page.add(from, :access => :admin) 
-    page.add(to, :access => :admin) 
-    page 
+    page = MessagePage.create!(:user => from, :share_with => to) do |p| 
+      p.title = options[:title]
+      p.build_post(options[:body], from)
+    end
+    page
   end
   	
 end

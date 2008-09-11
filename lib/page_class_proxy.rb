@@ -49,8 +49,12 @@ class PageClassProxy
     str.split('::').inject(Object) {|x,y| x.const_get(y) }
   end
 
-  def create(hash)
-    actual_class.create(hash)
+  def create(hash, &block)
+    actual_class.create(hash, &block)
+  end
+
+  def create!(hash, &block)
+    actual_class.create!(hash, &block)
   end
 
   def to_s

@@ -98,13 +98,6 @@ module UserExtension::Organize
       group_ids.include?(group.id)
     end
   end
-
-  # eventually, we will have group admins.
-  # for now, we can just make this return true
-  # for all members
-  def may_admin?(group)
-    member_of?(group)
-  end
     
   def check_duplicate_memberships(membership)
     raise AssociationError.new('you cannot have duplicate membership') if self.group_ids.include?(membership.group_id)

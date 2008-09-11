@@ -77,7 +77,9 @@ class AssetsControllerTest < Test::Unit::TestCase
     assert_redirected_to :controller => "/account", :action => "login"
 
     @page.add(@user, :access => :edit)
+    @page.save
     assert @user.may?(:edit, @page), 'user should have write access to the page'
+
     assert_difference('Page.find(%i).assets.length' % @page.id) do
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
     end

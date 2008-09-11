@@ -9,14 +9,11 @@ class WikiPageController < BasePageController
     @page_class = WikiPage
     if request.post?
       begin
-        @page = create_new_page(@page_class)
-        if @page.valid?
-          @page.update_attribute(:data, Wiki.create(:user => current_user))
-          return redirect_to(page_url(@page, :action => 'edit'))
-        else
-          flash_message_now :object => @page
-        end
+        @page = create_new_page!(@page_class)
+        @page.update_attribute(:data, Wiki.create(:user => current_user))
+        return redirect_to(page_url(@page, :action => 'edit'))
       rescue Exception => exc
+        @page = exc.record
         flash_message_now :exception => exc
       end
     end
