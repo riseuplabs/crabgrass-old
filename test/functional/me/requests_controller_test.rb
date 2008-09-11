@@ -15,43 +15,15 @@ class RequestsControllerTest < Test::Unit::TestCase
 
   # TODO: Add fixtures for requests to make results in all of these categories
 
-  def test_index
+  def test_from_me
     login_as :blue
-    get :index
+    get :from_me
     assert_response :success
-#    assert_template 'index'
-    assert_not_nil assigns(:my_pages)
-  end
-
-  def test_mine
-    login_as :blue
-    get :mine, :path => []
-    assert_response :success
-#    assert_template 'more'
-#    assert_not_nil assigns(:pages)
   end
   
-  def test_contacts
+  def test_to_me
     login_as :blue
-    get :contacts, :path => []
+    get :to_me
     assert_response :success
-#    assert_template 'more'
-#    assert_not_nil assigns(:pages)
-  end
-
-  def test_memberships
-    login_as :blue
-    get :memberships, :path => []
-    assert_response :success
-#    assert_template 'more'
-#    assert_not_nil assigns(:pages)
-  end
-
-  def test_more
-    login_as :blue
-    get :more
-    assert_response :success
-#    assert_template 'more'
-#    assert_not_nil assigns(:pages)
   end
 end

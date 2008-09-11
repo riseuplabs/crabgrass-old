@@ -10,10 +10,23 @@ class RequestToFriend < Request
   
   validates_format_of :recipient_type, :with => /User/
 
+  def validate_on_create
+    if Contact.find_by_user_id_and_contact_id(created_by_id, recipient_id)
+      errors.add_to_base('Contact already exists')
+    end
+    if RequestToFriend.find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
+      errors.add_to_base('Request already exists for %s'[:request_exists_error] % recipient.name)
+    end
+  end
+
   def requestable_required?() false end
 
   def may_create?(user)
     true
+  end
+
+  def may_destroy?(user)
+    user == recipient or user == created_by
   end
 
   def may_approve?(user)
@@ -26,6 +39,10 @@ class RequestToFriend < Request
 
   def after_approval
     recipient.contacts << created_by
+  end
+
+  def description
+    "%s would like to be the contact of %s"[:request_to_friend_description] % [user_span(created_by), user_span(recipient)]
   end
 
 end

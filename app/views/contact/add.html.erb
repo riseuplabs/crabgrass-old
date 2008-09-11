@@ -1,0 +1,13 @@
+<% @title_box = capture do -%>
+  <%= link_to_breadcrumbs %>
+  <h1><%=h "Send contact invitation to %s"[:send_contacts_title] % @user.display_name%></h1>
+<% end -%>
+
+<blockquote>
+  <p><%= :add_contact_info.t %></p>
+  <%- form_tag(:controller => 'contact', :action => 'add', :id => @user) do -%>
+    <%= submit_tag 'Send contact invitation'[:send_contact_button], :name => 'send' %>
+    <%= submit_tag 'Cancel'.t, :name => 'cancel' %>
+  <% end -%>
+</blockquote>
+

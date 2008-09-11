@@ -7,7 +7,7 @@ module GroupsHelper
   end
 
   def may_admin_group?
-    logged_in? and current_user.member_of? @group
+    logged_in? and current_user.may?(:admin, @group)
   end
     
   def committee?
@@ -30,9 +30,11 @@ module GroupsHelper
         return
       elsif current_user.member_of? @group
         # if you are an indirect member of this group then (1) it is a committee and (2) you are a member of the group containing it, so you may add yourself to the committee from the edit page.  This may not be true when networks are implemented.
-        link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'list', :id => @group)
-      elsif @group.accept_new_membership_requests
-        link_to "join #{@group_type}".t, url_for(:controller => 'membership', :action => 'join', :id => @group)
+        link_to "join %s"[:join_group] % @group_type, 
+          url_for(:controller => 'membership', :action => 'list', :id => @group)
+      elsif @group.profiles.visible_by(current_user).may_request_membership?
+        link_to "join %s"[:join_group] % @group_type, 
+         url_for(:controller => '/requests', :action => 'create_join', :group_id => @group.id)
       end
     end
   end
@@ -43,9 +45,7 @@ module GroupsHelper
 
   def leave_group_link
     if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size > 1
-#    if @group.users.uniq.size > 1 and logged_in? and @group.users.include? current_user
-	    link_to "leave #{group_type}".t, url_for(:controller => 'membership', :action => 'leave', :id => @group)
-	    #, :confirm => "Are you sure you want to leave this %s?".t % @group_type
+	    link_to_active("leave %s"[:leave_group] % group_type, {:controller => 'membership', :action => 'leave', :id => @group.name})
 		end
   end
   
@@ -68,21 +68,21 @@ module GroupsHelper
   
   def more_members_link
     if may_admin_group?
-      link_to 'edit'.t, url_for(:controller => 'membership', :action => 'list', :id => @group)
-    else
-      link_to 'view all'.t, url_for(:controller => 'membership', :action => 'list', :id => @group)
+      link_to_active 'edit'.t, {:controller => 'membership', :action => 'list', :id => @group.name}
+    elsif @group.profiles.visible_by(current_user).may_see_members?
+      link_to_active 'view all'.t, {:controller => 'membership', :action => 'list', :id => @group.name}
     end
   end
   
   def invite_link
     if may_admin_group?
-      link_to 'send invites'.t, url_for(:controller => 'membership', :action => 'invite', :id => @group)
+      link_to_active('send invites'.t, {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
     end
   end
 
   def requests_link
     if may_admin_group?
-      link_to 'view requests'.t, url_for(:controller => 'membership', :action => 'requests', :id => @group)
+      link_to_active('view requests'.t, {:controller => 'requests', :action => 'list', :group_id => @group.id})
     end
   end
   

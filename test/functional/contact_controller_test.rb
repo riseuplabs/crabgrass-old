@@ -15,11 +15,15 @@ class ContactControllerTest < Test::Unit::TestCase
 
   def test_add
     login_as :quentin
+
+    assert !users(:quentin).friend_of?(users(:iguana))
+    assert users(:iguana).profiles.visible_by(users(:quentin)).may_request_contact?
+
     get :add, :id => users(:iguana).login
     assert_response :success 
     
-    assert_difference 'Page.count', 2, "should have created a contact request page and discussion page" do
-      post :add, :id => users(:iguana).login, :message => ''
+    assert_difference 'RequestToFriend.count' do
+      post :add, :id => users(:iguana).login, :message => '', :send => true
     end
   end
   
@@ -30,13 +34,10 @@ class ContactControllerTest < Test::Unit::TestCase
     
     assert_no_difference 'users(:blue).contacts.count' do
       post :remove, :id => users(:orange).login, :cancel => true
-      assert_response :redirect
-      assert_redirected_to @controller.url_for_user(users(:orange))
     end
     
     assert_difference 'users(:blue).contacts.count', -1 do
-      post :remove, :id => users(:orange).login
-      assert_response :redirect
+      post :remove, :id => users(:orange).login, :remove => true
     end
   end
 end

@@ -26,6 +26,10 @@ class RequestToJoinUsViaEmail < Request
     user == recipient
   end
 
+  def may_destroy?(user)
+    user.may?(:admin, group)
+  end
+
   def may_view?(user)
     may_create?(user) or may_approve?(user)
   end
@@ -34,6 +38,10 @@ class RequestToJoinUsViaEmail < Request
   # and that account is set to recipient.
   def after_approval
     group.memberships.create :user => recipient, :group => group
+  end
+
+  def description
+    "%s was invited to join %s"[:request_to_join_us_via_email_description] % [email, group_span(group)]
   end
 
   ##

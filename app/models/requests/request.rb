@@ -41,9 +41,29 @@ class Request < ActiveRecord::Base
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
 
-  named_scope :pending, :conditions => [ "requests.state = ? OR messages.state IS NULL", "pending" ]
+  named_scope :having_state, lambda { |state|
+    {:conditions => [ "requests.state = ?", state]}
+  }
+  named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
   named_scope :by_updated_at, :order => 'updated_at DESC'
+  named_scope :created_by, lambda { |user|
+    {:conditions => {:created_by_id => user.id}}
+  }
+  named_scope :to_user, lambda { |user|
+    {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type IN ('Group','Network','Committee'))", user.id, user.group_ids.join(',')]}
+  }
+  named_scope :to_group, lambda { |group|
+    {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, (group.type||'Group')]}
+  }
+  named_scope :from_group, lambda { |group|
+    {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, (group.type||'Group')]}
+  }
+
+  before_validation_on_create :set_default_state
+  def set_default_state
+    self.state = "pending" # needed despite FSM so that validations on create will work.
+  end
 
   def validate
     unless may_create?(created_by)
@@ -51,24 +71,32 @@ class Request < ActiveRecord::Base
     end
   end
 
-  def approve_by!(user)
+  # state one of 'approved' 'rejected'
+  # user the person doing the change
+
+  def set_state!(newstate, user)
+    command = newstate == 'approved' ? 'approve' : 'reject'
+
     if new_record?
       raise Exception.new('record must be saved first')
     end
 
     self.approved_by = user
-    approve! # FSM call
+    self.send(command + '!') # FSM call, eg approve!()
 
-    unless state == 'approved'
-      raise PermissionDenied.new('%s is not allowed to approve the request.'.t % user.name)
+    unless self.state == newstate
+      raise PermissionDenied.new("%s is not allowed to #{command} the request.".t % user.name)
     end
     save!
   end
 
+
+  def approve_by!(user)
+    set_state!('approved',user)
+  end
+
   def reject_by!(user)
-    self.approved_by = user
-    reject! # FSM call
-    save!
+    set_state!('rejected',user)
   end
 
   # triggered by FSM
@@ -80,7 +108,10 @@ class Request < ActiveRecord::Base
   ## to be overridden by subclasses
   ##
 
+  def description() end
+
   def may_create?(user)  false end
+  def may_destroy?(user) false end
   def may_approve?(user) false end
   def may_view?(user)    false end
 
@@ -117,6 +148,18 @@ class Request < ActiveRecord::Base
   end
   event :ignore do
     transitions :from => :pending,  :to => :ignored,  :guard => :approval_allowed
+  end
+
+  ##
+  ## MISC
+  ##
+  
+  # used by subclass's description()
+  def user_span(user)
+    '<span class="user">%s</span>' % user.name
+  end
+  def group_span(group)
+    '<span class="group">%s</span>' % group.name
   end
 
 #  after_create :notify_recipient

@@ -1,0 +1,20 @@
+<% @title_box = capture do -%>
+  <%= link_to_breadcrumbs %>
+  <h1><%=h "Send invitations to join %s"[:send_invites_title] % @group.display_name %></h1>
+<% end -%>
+
+<blockquote>
+  <p><%= :invite_info.t % group_type.t %></p>
+  <%- form_tag(:controller => '/requests', :action => 'create_invite', :group_id => @group.id) do -%>
+    <p>
+      <%= text_area_tag 'recipients', params[:recipients], :rows => 2, :cols => 50 %>
+    </p>
+    <!-- <p><%= "Optional message".t%>:<br/>
+      <%# text_area_tag 'message', params[:message], :rows => 2, :cols => 50 %>
+    </p> -->
+    <%= submit_tag 'Send invites'[:send_invites_button], :name => 'send' %>
+    <%= submit_tag 'Cancel'.t, :name => 'cancel' %>
+  <% end -%>
+</blockquote>
+
+

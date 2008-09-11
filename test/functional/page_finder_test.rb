@@ -53,7 +53,7 @@ class PageFinderTest < Test::Unit::TestCase
     end
     path_ids = page_ids(Page.find_by_path('/', @controller.options_for_group(group)))
     
-    assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal (difference = %s)' % (reference_ids - path_ids) 
   end
 
   def test_dashboard
@@ -96,7 +96,7 @@ class PageFinderTest < Test::Unit::TestCase
     pages = Page.find_by_path('/',@controller.options_for_user(user))
     path_ids = page_ids(pages)
    
-    assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal'
   end
 
   def test_unread_inbox_count
@@ -144,7 +144,7 @@ class PageFinderTest < Test::Unit::TestCase
     dont_login
     
     flow_page = pages(:flow_test)
-    pages = Page.find_by_path('/',:flow => :membership)
+    pages = Page.find_by_path('/',:flow => :deleted)
     assert_not_nil pages, 'find with flow condition should return one page'
     assert_equal flow_page.id, pages.first.id, 'find with flow condition should return :flow_test'
   end

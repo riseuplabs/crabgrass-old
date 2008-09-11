@@ -1,21 +1,7 @@
 <div class='wing'>
-<h3>Navigation</h3>
-<ul class='side_list'>
-  <li>
-   <%= link_to 'search', groups_url(:action => 'search', :id => @group, :path => nil) %>
-  </li>
-  <li>
-    <%= link_to 'archive', groups_url(:action => 'archive', :id => @group, :path => nil) %>
-  </li>
-  <li>
-    <%= link_to 'tags', groups_url(:action => 'tags', :id => @group) %>
-  </li>
-  <li>
-    <%= link_to 'tasks', groups_url(:action => 'tasks', :id => @group) %>
-  </li>
-</ul>
+<%= render :partial => 'groups/side_navigation' %>
 
-<h3>Actions</h3>
+<h3><%= 'Actions'.t %></h3>
 <ul class='side_list'>
   <% if logged_in? and current_user.member_of?(@group) -%>
     <li>

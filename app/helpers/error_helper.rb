@@ -135,6 +135,7 @@ module ErrorHelper
       flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
     elsif options[:success] and options[:success].any?
       flsh[:type] = 'info'
+      flsh[:text] += content_tag :p, options[:text] if options[:text]
       flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
     end
   end

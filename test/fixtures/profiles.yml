@@ -41,3 +41,13 @@ profile_for_rainbow:
   may_request_membership: false
   stranger: true
 
+profile_for_animals:
+  id: 4
+  entity_type: "Group"
+  entity_id: 2
+  may_see: true
+  may_see_members: false
+  may_request_membership: true
+  stranger: true
+
+

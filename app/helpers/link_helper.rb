@@ -116,11 +116,15 @@ html_options))
   # if last argument is true or if the url is in the form of a hash
   # and the current params match this hash.
   def link_to_active(link_label, url_hash, active=nil)
+    if url_hash.is_a? Hash
+      params[:controller] = '/' + params[:controller] unless params[:controller] =~ /^\//
+      url_hash[:controller] = '/' + url_hash[:controller] unless url_hash[:controller] =~ /^\//
+    end
     if url_hash.is_a? Hash and active.nil?
       url_hash[:action] = 'index' if url_hash[:action].nil?
       selected = url_hash.inject(true) do |selected, p|
         param, value = p
-        selected and params[param] == value
+        selected and params[param].to_s == value.to_s
       end
       selected_class = selected ? 'active' : ''
     else

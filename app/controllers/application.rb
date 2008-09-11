@@ -51,6 +51,12 @@ class ApplicationController < ActionController::Base
      :protocol => request.protocol, :port => request.port_string, :page => @page}
   end
   
+  # returns true if params[:action] matches one of the args.
+  # useful in authorized?() methods.
+  def action?(*actions)
+    actions.include?(params[:action].to_sym)
+  end
+
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(*css_files)
     if css_files.any?
@@ -128,6 +134,17 @@ class ApplicationController < ActionController::Base
         yield
       end
     end
+  end
+ 
+  ## handy way to get back where we came from
+  def store_back_url(url=nil)
+    url ||= referer
+    session[:where_we_came_from] = url
+  end
+  def redirect_to_back_url
+    url = session[:where_we_came_from]
+    session[:where_we_came_from] = nil
+    redirect_to url
   end
 
 end

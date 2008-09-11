@@ -45,16 +45,14 @@
 <h2><%= "Requests"[:requests] %></h2>
 <ul class='side_list'>
 
-  <li id='requests_line' class='small_icon to_me_icon'><%= link_to_active(
+  <li id='to_me_line' class='small_icon to_me_icon'><%= link_to_active(
     'To Me'[:to_me],
-    '/me/requests',
-    params[:controller] == 'me/requests'
+    {:controller => '/me/requests', :action => 'to_me'}
   ) %></li>
 
-  <li class='small_icon from_me_icon'><%= link_to_active(
+  <li id='from_me_line' class='small_icon from_me_icon'><%= link_to_active(
     'From Me'[:from_me],
-    '/me/requests',
-    params[:controller] == 'me/requests'
+    {:controller => '/me/requests', :action => 'from_me'}
   ) %></li>
 </ul>
 

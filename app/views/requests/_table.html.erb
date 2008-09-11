@@ -1,0 +1,29 @@
+<% approvable = true if approvable.nil? -%>
+<% destroyable = false if destroyable.nil? -%>
+<div class='pretty'>
+  <table>
+    <tr>
+      <th>created by</th>
+      <th>date</th>
+      <th>description</th>
+      <th>state</th>
+      <%- if approvable or destroyable -%>
+        <th>action</th>
+      <%- end -%>
+    </tr>
+    <%- requests.each do |request| -%>
+      <tr>
+        <td><%= link_to_user(request.created_by) %></td>
+        <td><%= friendly_date(request.created_at) %></td>
+        <td><%= expand_description(request) %></td>
+        <td><%= request.state.t %></td>
+        <%- if approvable -%>
+          <td><%= request_action_links(request) %></td>
+        <%- elsif destroyable -%>
+          <td><%= request_destroy_link(request) %></td>
+        <%- end -%>
+      </tr>
+    <%- end -%>
+  </table>
+</div>
+

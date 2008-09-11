@@ -1,32 +1,11 @@
-<%= Formy.sidebar do |f|
-  f.section do |s|
-    s.label 'membership'
-    if join_group_link
-      s.link do |l|
-        l.link     join_group_link
-        l.selected params[:action] == 'join'
-      end
-    end
-    if leave_group_link
-      s.link do |l|
-        l.link     leave_group_link
-        l.selected params[:action] == 'leave'
-      end
-    end
-    if invite_link
-      s.link do |l|
-        l.link     invite_link
-        l.selected params[:action] == 'invite'
-      end
-    end
-    if requests_link
-      s.link do |l|
-        l.link     requests_link
-        l.selected params[:action] == 'requests'
-      end
-    end
-  end
-end
-%>
-
-<%= render :partial => 'groups/sidenav' %>
+<div class='wing'>
+  <h3><%= 'Membership'.t %></h3>
+  <ul class='side_list'>
+    <%= content_tag(:li, more_members_link) if more_members_link %>
+    <%= content_tag(:li, join_group_link) if join_group_link %>
+    <%= content_tag(:li, leave_group_link) if leave_group_link %>
+    <%= content_tag(:li, invite_link) if invite_link %>
+    <%= content_tag(:li, requests_link) if requests_link %>
+  </ul>
+<%= render :partial => 'groups/side_navigation' %>
+</div>
