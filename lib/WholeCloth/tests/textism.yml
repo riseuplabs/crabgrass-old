@@ -417,7 +417,7 @@ in: |-
   This isn't code.
   
   
-out: "<h3>Coding</h3>\n<p>This <code>is some code, \"isn't it\"</code>. Watch those quote marks! Now for some preformatted text:</p>\n<p><code>$text = str_replace(\"&lt;p&gt;%::%&lt;/p&gt;\",\"\",$text);\n    $text = str_replace(\"%::%&lt;/p&gt;\",\"\",$text);\n    $text = str_replace(\"%::%\",\"\",$text);</code></p>\n<p>This isn&#8217;t code.</p>"
+out: "<h3>Coding</h3>\n<p>This <code>is some code, \"isn't it\"</code>. Watch those quote marks! Now for some preformatted text:</p>\n<p><pre class='code'>$text = str_replace(\"&lt;p&gt;%::%&lt;/p&gt;\",\"\",$text);\n    $text = str_replace(\"%::%&lt;/p&gt;\",\"\",$text);\n    $text = str_replace(\"%::%\",\"\",$text);</pre></p>\n<p>This isn&#8217;t code.</p>"
 
 ---
 name: hard break

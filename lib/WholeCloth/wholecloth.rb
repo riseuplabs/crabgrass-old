@@ -163,21 +163,28 @@ class WholeCloth < RedCloth::TextileDoc
 
   # changed from redcloth values
   OFFTAGS = /(code|pre)/
-  OFFTAG_MATCH = /(?:(<\/#{ OFFTAGS }>)|(<#{ OFFTAGS }[^>]*>))(.*?)(<\/?\4>|\Z)/mi#the key is the backreference for matching the closing tag
+  OFFTAG_MATCH = /(.?)(?:(<\/#{ OFFTAGS }>)|(<#{ OFFTAGS }[^>]*>))(.*?)(<\/?\5>|\Z)/mi
+  #OFFTAG_MATCH = /(?:(<\/#{ OFFTAGS }>)|(<#{ OFFTAGS }[^>]*>))(.*?)(<\/?\4>|\Z)/mi
+  # the key is the backreference for matching the closing tag
   
-  def crabgrass_offtags( text, inline=false )
+  def crabgrass_offtags( text )
     text.gsub!( OFFTAG_MATCH ) do |line|
-      tag        = $3  # eg '<code>'
-      codebody   = $5  # eg 'there'
-      bypass_filter( format_block_code(tag, codebody) )
+      leading_character = $1
+      tag        = $4  # eg '<code>'
+      codebody   = $6  # eg 'there'
+      leading_character + bypass_filter( format_block_code(tag, codebody, leading_character) )
     end
   end
   
-  def format_block_code(tag, body)
+  def format_block_code(tag, body, leading_character='')
     tag.match /<(#{ OFFTAGS })\s*([^>]*)\s*>/
     tagname, arg = $1, $3
-    if $1 == 'code' then htmlesc(body, :noQuotes) end
-    ret = "<#{tagname}>#{body.strip}</#{tagname}>"
+    if (leading_character.any? and leading_character!="\n") or tagname == 'pre'
+      ret = "<#{tagname}>#{body.strip}</#{tagname}>"
+    else
+      htmlesc(body, :noQuotes)
+      ret = "<pre class='code'>#{body.strip}</pre>"
+    end
     if arg.any?
       ret = "<div class=\"#{tagname}title\">#{arg}</div>\n#{ret}"
     end
