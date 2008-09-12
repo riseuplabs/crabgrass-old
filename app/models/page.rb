@@ -115,7 +115,7 @@ class Page < ActiveRecord::Base
     return true unless @associations_to_save
     @associations_to_save.uniq.each do |assn|
       if assn == :posts
-        discussion.posts.each {|post| post.save!}
+        discussion.posts.each {|post| post.save! if post.changed?}
       elsif assn == :users
         user_participations.each {|up| up.save! if up.changed?}
       elsif assn == :groups

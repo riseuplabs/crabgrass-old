@@ -8,9 +8,8 @@ class PostsController < ApplicationController
       current_user.may!(:comment, @page)
       @post = Post.new params[:post]
       @page.build_post(@post,current_user)
-      @post.save!
       current_user.updated(@page)
-      @page.save
+      @page.save!
       respond_to do |wants|
         wants.html {
           redirect_to page_url(@page)#, :anchor => @page.discussion.posts.last.dom_id)
