@@ -1,7 +1,7 @@
-class CreateNewRequestSystem < ActiveRecord::Migration
+class RequestDiscussionPage < Page; end
+class RequestPage < Page; end
 
-  class RequestDiscussionPage < Page; end
-  class RequestPage < Page; end
+class CreateNewRequestSystem < ActiveRecord::Migration
 
   def self.up
     # fix memberships table:
@@ -10,6 +10,9 @@ class CreateNewRequestSystem < ActiveRecord::Migration
     add_column    :memberships, :admin, :boolean, :default => false
     add_index     :memberships, [:group_id, :user_id], :name => :gu
     add_index     :memberships, [:user_id, :group_id], :name => :ug
+
+    # run 'rake ts:index' after this is done
+    ThinkingSphinx.updates_enabled = false
    
     # destroy page-based request system
     RequestPage.destroy_all
