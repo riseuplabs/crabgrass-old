@@ -119,7 +119,7 @@ class WholeCloth < RedCloth::TextileDoc
     end
   end
   
-  SETEXT_RE = /^(.+?)\n([=-])[=-]* *$/m
+  SETEXT_RE = /^(.+?)\r?\n([=-])[=-]* */
   def crabgrass_setext_header(text)
     text.gsub!(SETEXT_RE) do
       tag = $2=="=" ? "h1" : "h2"

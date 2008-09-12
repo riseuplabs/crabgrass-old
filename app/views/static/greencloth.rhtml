@@ -16,7 +16,6 @@ body {
 }
 td.header {
  color: #999;
- font-size: 1.3em;
  border-left: 4px solid #ccc;
  padding-left: 0.5em;
 }
@@ -112,15 +111,21 @@ END
 
   header('Blockquotes') +
   row(<<END) +
-Blockquotes are indented text.
+Blockquotes are used to inset a block of quoted text.
+
 bq. This is a blockquote.
 
 > this is also a blockquote
 > in 'email' style.
 
-  this is a blockquote
-  that is formed by starting the
-  paragraph with spaces.
+You can extend blockquotes for multiple paragraphs by using bq.. (note the double dots):
+
+bq.. "There’s a time when the operation of the machine becomes so odious, makes you so sick at heart, that you can't take part, you can’t even passively take part, and you’ve got to put your bodies upon the gears and upon the wheels, upon the levers, upon all the apparatus, and you’ve got to make it stop!
+
+And you’ve got to indicate to the people who run it, to the people who own it, that unless you’re free, the machine will be prevented from working at all!"
+
+p. Multiple paragraph blockquotes are ended with p.
+
 END
 
   header('Formatting') +
@@ -199,17 +204,28 @@ end
 @@ a single code block line
 END
 
-  header('Hanging Indent') +
-  row(<<END) 
-If you have a single line of text
-  followed by some indented text,
-  It will have a hanging indent.
-END
+#  header('Definition Lists') +
+#  row(<<END) +
+#- coffee := Hot and black
+#- tea := Also hot, but a little less black
+#- milk :=
+#Nourishing beverage for baby cows.
+#
+#Cold drink that goes great with cookies. =:
+#END
 
+#  header('Hanging Indent') +
+#  row(<<END) 
+#If you have a single line of text
+#  followed by some indented text,
+#  It will have a hanging indent.
+#END
+
+ ""
 %>
 
 <tr><td colspan='4'>
-For more details, see the <a href="http://hobix.com/textile/quick.html">quick guide to textile</a>. Not all textile options work with GreenCloth.
+For more details, see the <a href="http://redcloth.org/textile">official RedCloth textile reference</a>. Not all RedCloth options work with GreenCloth.
 </td></tr>
 </table>
 
