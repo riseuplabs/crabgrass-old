@@ -24,7 +24,6 @@ class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
     assert_difference 'DiscussionPage.count' do
       post :create, :id => DiscussionPage.class_display_name, :page => { :title => 'test discussion', :tag_list => 'humma, yumma' }
     end
-    p assigns(:page).tag_list
     page = assigns(:page)
     assert page
     assert page.tag_list.include?('humma')
@@ -32,7 +31,6 @@ class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
     assert_response :redirect
 
     get :show
-    p assigns(:page).tag_list
     assert_response :success
   end
 
