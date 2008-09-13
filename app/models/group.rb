@@ -192,17 +192,20 @@ class Group < ActiveRecord::Base
   end
 
   #
-  # create a group_participation between a group and a page
+  # build or modify a group_participation between a group and a page
+  # return the group_participation object, which must be saved for
+  # changes to take effect.
   # 
   def add_page(page, attributes)
     participation = page.participation_for_group(self)
     if participation
-      participation.update_attributes(attributes)
+      participation.attributes = attributes
     else
-      page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
+      participation = page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
     end
     page.group_id_will_change!
     page.association_will_change(:groups)
+    return participation
   end
 
   def remove_page(page)

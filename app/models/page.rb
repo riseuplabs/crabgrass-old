@@ -203,13 +203,12 @@ class Page < ActiveRecord::Base
   # add a group or user participation to this page
   def add(entity, attributes={})
     if entity.is_a? Enumerable
-      entity.each do |e|
+      entity.collect do |e|
         e.add_page(self,attributes)
       end
     else
       entity.add_page(self,attributes)
     end
-    self
   end
       
   # remove a group or user participation from this page

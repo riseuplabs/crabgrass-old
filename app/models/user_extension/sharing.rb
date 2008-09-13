@@ -40,7 +40,10 @@ module UserExtension::Sharing
   ## USER PARTICIPATIONS
   ##
 
-  # makes self a participant of a page. 
+  # makes or updates a user_participation object for a page.
+  # returns the user_participation, which must be saved for changed
+  # to take effect
+  #
   # this method is not called directly. instead, page.add(user)
   # should be used.
   #
@@ -55,10 +58,12 @@ module UserExtension::Sharing
     if participation
       self.update_participation(participation, part_attrs)
     else
-      self.build_participation(page, part_attrs)
+      participation = self.build_participation(page, part_attrs)
     end  
     page.association_will_change(:users)
+    participation
   end
+
   ## called only by add_page
   def update_participation(participation, part_attrs)
     if part_attrs[:notice]        
@@ -159,6 +164,11 @@ module UserExtension::Sharing
   #  :message -- text message to send
   #  :send_emails -- true or false. send email to recipients?
   #
+  # The needed user_participation and group_partication objects will get saved
+  # unless page is modified, in which case they will not get saved.
+  # (assuming that page.save will get called eventually, which will then save
+  # the new participation objects)
+  #
   def share_page_with!(page, recipients, options)
     return true unless recipients
 
@@ -185,14 +195,14 @@ module UserExtension::Sharing
 
     ## send access granted emails (TODO)
     # emails.each do |email|
-    #   Mailer.deliver_page_notice_with_url_access(email, msg, mailer_options)
+    #   Mailer::page.deliver_share_notice_with_url_access(email, msg, mailer_options)
     # end
 
     ## send notification emails
     if send_emails and mailer_options
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_page_notice(user, message, mailer_options)
+        Mailer.deliver_share_notice(user, message, mailer_options)
       end
     end
   end
@@ -237,17 +247,19 @@ module UserExtension::Sharing
       end
     end
 
-    page.add(user, attrs)
+    upart = page.add(user, attrs)
+    upart.save! unless page.changed?
   end
 
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
     if options.key?(:access) # might be nil
-      page.add group, :access => options[:access]
+      gpart = page.add(group, :access => options[:access])
     else
       options[:grant_access] ||= :view
-      page.add group, :grant_access => options[:grant_access]
+      gpart = page.add(group, :grant_access => options[:grant_access])
     end
+    gpart.save! unless page.changed?
 
     # when we get here, the group should be able to view the page.
     users_to_pester = group.users.select do |user|
@@ -257,7 +269,8 @@ module UserExtension::Sharing
       attrs = {:notice => {:user_login => self.login,
         :message => options[:message], :time => Time.now}}
       users_to_pester.each do |user|
-        page.add user, attrs
+        upart = page.add(user, attrs)
+        upart.save! unless page.changed?
       end
     end
     users_to_pester # returns users to pester so they can get an email, maybe.

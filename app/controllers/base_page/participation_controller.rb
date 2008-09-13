@@ -28,23 +28,23 @@ class BasePage::ParticipationController < ApplicationController
 
   # post
   def add_star
-    @page.add(current_user, :star => true)
+    @page.add(current_user, :star => true).save!
     redirect_to page_url(@page)
   end
   def remove_star
-    @page.add(current_user, :star => false)
+    @page.add(current_user, :star => false).save!
     redirect_to page_url(@page)
   end
 
   # xhr
   def add_watch
-    @page.add(current_user, :watch => true)
-    @upart = @page.participation_for_user(current_user)
+    @upart = @page.add(current_user, :watch => true)
+    @upart.save!
     render :template => 'base_page/participation/reset_watch_line'
   end
   def remove_watch
-    @page.add(current_user, :watch => false)
-    @upart = @page.participation_for_user(current_user)
+    @upart = @page.add(current_user, :watch => false)
+    @upart.save!
     render :template => 'base_page/participation/reset_watch_line'
   end
 
@@ -126,7 +126,7 @@ class BasePage::ParticipationController < ApplicationController
     begin
       users, groups, emails = Page.parse_recipients!(params[:add_names])
       (users+groups).each do |thing|
-        @page.add(thing, :access => params[:access].to_sym)
+        @page.add(thing, :access => params[:access].to_sym).save!
       end
       render :update do |page|
         page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
@@ -184,12 +184,12 @@ class BasePage::ParticipationController < ApplicationController
     true
   end
   
-  after_filter :save_page
-  def save_page
-    if @page and (@page.changed? or @page.association_changed?)
-      @page.save
-    end
-    true
-  end
+  #after_filter :save_page
+  #def save_page
+  #  if @page and (@page.changed? or @page.association_changed?)
+  #    @page.save
+  #  end
+  #  true
+  #end
 
 end
