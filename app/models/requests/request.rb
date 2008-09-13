@@ -162,9 +162,10 @@ class Request < ActiveRecord::Base
     '<span class="group">%s</span>' % group.name
   end
 
-#  after_create :notify_recipient
-#  def notify_recipient
-#    UserMailer.deliver_message_received(self) if recipient && recipient.receives_email_on('messages')
-#  end
+  #after_create :notify_recipient
+  #def notify_recipient
+  #  Mailer::Request.deliver_request_created(self) if recipient && recipient.receives_email_on('messages')
+  #end
+
 end
 

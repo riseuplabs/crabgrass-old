@@ -7,7 +7,7 @@ class RequestsController < ApplicationController
   #stylesheet 'groups'
   helper 'groups', 'application'
     
-  before_filter :login_required
+  before_filter :login_required, :except => [:accept]
  
   def list
     if @group
@@ -92,14 +92,25 @@ class RequestsController < ApplicationController
     end
 
     begin
-      users, groups, email = Page.parse_recipients!(params[:recipients])
-      reqs = []
-      unless users.any?
+      users, groups, emails = Page.parse_recipients!(params[:recipients])
+      reqs = []; mailers = []
+      unless users.any? or emails.any?
         raise ErrorMessage.new('recipient required'.t)
       end
       users.each do |user|
         reqs << RequestToJoinUs.create(:created_by => current_user,
           :recipient => user, :requestable => @group)
+      end
+      emails.each do |email|
+        req = RequestToJoinUsViaEmail.create(:created_by => current_user,
+          :email => email, :requestable => @group)
+        begin
+          Mailer.deliver_request_to_join_us!(req, mailer_options)
+          reqs << req
+        rescue Exception => exc
+          flash_message_now :text => "#{'Could not deliver email'.t} (#{email}):", :exception => exc
+          req.destroy
+        end
       end
       if reqs.detect{|req|!req.valid?}
         reqs.each do |req|
@@ -112,14 +123,59 @@ class RequestsController < ApplicationController
           end
         end
       else
-        flash_message :success => '%d invitations sent'[:invites_sent] % reqs.size
+        flash_message_now :success => '%d invitations sent'[:invites_sent] % reqs.size
         params[:recipients] = ""
       end
     rescue Exception => exc
       flash_message_now :exception => exc
     end
   end
+
+  ##
+  ## email responses
+  ##
   
+  def accept
+    code = params[:path][0]
+    email = params[:path][1].gsub('_at_','@')
+    redeem_url = url_for(:controller => 'requests', :action => 'redeem',
+     :email => email, :code => code) 
+
+    @request = RequestToJoinUsViaEmail.find_by_code_and_email(code,email)
+   
+    if @request
+      if @request.state != 'pending'
+        @error = "Invite has already been redeemed"[:invite_redeemed]
+      elsif logged_in?
+        redirect_to redeem_url
+      else
+        @login_url = url_for({
+          :controller => 'account', :action => 'login',
+          :redirect => redeem_url
+        })
+        @register_url = url_for({
+          :controller => 'account', :action => 'signup',
+          :redirect => redeem_url
+        })
+      end
+    end
+
+    rescue Exception => exc
+      flash_message_now :exception => exc
+  end
+
+  # redeem the invite after first login or register
+  def redeem
+    email = params[:email]
+    code  = params[:code]
+    request = RequestToJoinUsViaEmail.redeem_code!(current_user, code, email)
+    request.approve_by!(current_user)
+    flash_message :success => 'You have joined group %s'[:join_group_success] % request.group.name
+    redirect_to '/me/dashboard'
+    rescue Exception => exc
+      flash_message_now :exception => exc    
+  end
+
   protected
     
   def context
@@ -128,8 +184,6 @@ class RequestsController < ApplicationController
       add_context 'membership', url_for(:controller=>'membership', :action => 'list', :id => @group)
     elsif @user
       user_context
-    else
-      me_context
     end
   end
   
@@ -162,6 +216,8 @@ class RequestsController < ApplicationController
       @request.may_approve?(current_user)
     elsif action?(:destroy) and @request
       @request.may_destroy?(current_user)
+    elsif action?(:redeem)
+      true
     else
       false
     end

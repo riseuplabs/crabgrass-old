@@ -1,4 +1,5 @@
-class UserMailer < ActionMailer::Base
+module Mailers::User
+
   def forgot_password(user)
     setup_email(user)
     @subject += _('You have requested a change of password')
@@ -11,11 +12,13 @@ class UserMailer < ActionMailer::Base
   end
 
   protected
-    def setup_email(user)
-      @recipients   = "#{user.email}"
-      @from         = Crabgrass::Config.email_sender
-      @subject      = Crabgrass::Config.site_name + ": " 
-      @sent_on      = Time.now
-      @body[:user]  = user
-    end
+
+  def setup_email(user)
+    @recipients   = "#{user.email}"
+    @from         = Crabgrass::Config.email_sender
+    @subject      = Crabgrass::Config.site_name + ": " 
+    @sent_on      = Time.now
+    @body[:user]  = user
+  end
+
 end

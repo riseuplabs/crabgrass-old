@@ -1,0 +1,20 @@
+<% @title_box = content_tag :h1, 'Accept invitation to join group'.t %>
+
+<% if @error %>
+  <blockquote><h2>
+    <%= @error %>
+  </h2></blockquote>
+<% elsif @request and @request.pending? %>
+  <%= :invite_accept_info.t %>
+  <blockquote><h2>
+    <%= link_to 'I already have an account'.t, @login_url %>
+  </h2></blockquote>
+  <blockquote><h2>
+    <%= link_to 'I need to register a new account'.t, @register_url %>
+  </h2></blockquote>
+<% else %>
+  <blockquote><h2>
+    <%= 'Error'.t %>: <%= 'Invite not found'.t %>
+  </h2></blockquote>
+<% end  %>
+
