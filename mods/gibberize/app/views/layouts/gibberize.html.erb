@@ -14,7 +14,7 @@
   <div class='toplink'><%= link_to "Logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %> </div>
   <div class='toplink'><%= link_to "Exit gibberize", :controller => '/me' %> </div>
   <h1><%= link_to 'Crabgrass Translation Panel', '/gibberize' %></h1>
-<%= link_to 'languages', languages_path %> <%= link_to 'translation keys', keys_path %>
+<%= link_to 'Edit Languages', languages_path %>
 </div>
 <div id='content'>
   <%= flash_notice %>

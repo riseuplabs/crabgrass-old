@@ -1,4 +1,9 @@
-<h1>Listing translation keys</h1>
+<%= "<h1>Listing #{@adjective} keys in #{@language.name}</h1>" %>
+
+<p>
+<%= link_to "untranslated", :controller => :keys, :language => @language %>,
+<%= link_to "translated", :controller => :keys, :language => @language, :translated => true %>,
+<%= link_to "all", :controller => :keys, :language => @language, :all => true %>
 
 <table>
   <tr>
@@ -8,13 +13,7 @@
 <% for key in @keys %>
   <tr>
     <td><%=h key.name %></td>
-<% if @language %>
     <td><%= link_to 'Translate', :controller => :translations, :action => :new, :key => key, :language => @language %></td>
-<% else %>
-    <td><%= link_to 'Translate', key %></td>
-<% end %>
-    <td><%= link_to 'Edit', edit_key_path(key) %></td>
-    <!-- td><%= link_to 'Destroy', key, :confirm => 'Are you sure?', :method => :delete %></td -->
   </tr>
 <% end %>
 </table>
