@@ -40,8 +40,8 @@ class AssetPageController < BasePageController
 
   def update
     @asset.update_attributes params[:asset]
-#    @asset.filename = @page.title + @asset.suffix
     if @asset.valid?
+      current_user.updated(@page)
       redirect_to(page_url(@page))
     else
       flash_message_now :object => @page

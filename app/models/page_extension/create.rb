@@ -38,15 +38,8 @@ module PageExtension::Create
         attributes[:updated_by] ||= user
         Page.transaction do
           page = new(attributes)
-          #if user
-            # grant user admin access, so that we may share.
-            ##page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
-            # test sharing before page.save
-            ##user.may_share_page_with!(page, recipients, :access => access)
-          #end
           yield(page) if block_given?
           if user
-            #page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
             if recipients
               user.share_page_with!(page, recipients, :access => access)
             end
@@ -55,17 +48,6 @@ module PageExtension::Create
             end
           end
           page.save!
-          #if user and page.valid?
-            # do actual sharing after page.save
-            ##user.share_page_with!(page, recipients, :access => access)
-            # remove user's admin access if it is redundant
-            #user_is_admin_via_group = page.groups_with_access(:admin).detect do |group|
-            #  user.member_of?(group)
-            #end
-            #if user_is_admin_via_group
-            #  page.add(user, :access => nil)
-            #end
-          #end
           page
         end # transaction
       end

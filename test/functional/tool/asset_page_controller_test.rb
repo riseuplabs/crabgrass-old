@@ -59,20 +59,30 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :group_id => groups(:rainbow).id
     assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group"
     assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group"
-
+    
   end
 
 
   def test_update
     login_as :gerrard
-    get 'create'
     
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}    
+    get 'create'
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    
     assert_difference 'Asset::Version.count', 1, "jpg should version" do
       post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
-    end    
+    end
   end
   
+  def test_updated_by
+    page = AssetPage.create(:title => 'hi', :user => users(:blue), :share_with => users(:kangaroo), :access => 'edit', :data => Asset.make(:uploaded_data => upload_data('photo.jpg')))
+    assert_equal users(:blue).id, page.updated_by_id
+
+    login_as :kangaroo
+    post 'update', :page_id => page.id, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    assert_equal 'kangaroo', page.reload.updated_by_login
+  end
+
   def test_destroy_version
     login_as :gerrard
     post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
