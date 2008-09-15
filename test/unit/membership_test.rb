@@ -97,8 +97,7 @@ class MembershipTest < Test::Unit::TestCase
     assert_equal [g], u.all_groups, 'should be one group (all)'
 
     c = Committee.new :name => 'dumbledores-army'
-    c.parent = g
-    c.save
+    g.add_committee!(c)
     
     assert_equal [g.id], u.group_ids, 'should be one direct group (id)'
 
@@ -159,7 +158,7 @@ class MembershipTest < Test::Unit::TestCase
 
   def test_create_many_groups_and_committees_join_some
     u = create_user
-    max_committees_per_group = 5
+    max_committees_per_group = 3
     max_groups = 10
     correct_group_ids = []    
     correct_all_group_ids = []
@@ -169,8 +168,8 @@ class MembershipTest < Test::Unit::TestCase
     max_groups.times do |i|
       group = Group.create(:name => ('group-%d' % i))
       groups << group
-      (rand(max_committees_per_group)).times do |j|
-        group.committees << Committee.create( :name => ('subgroup-%d-%d' % [i, j]) )
+      (rand(max_committees_per_group+1)).times do |j|
+        group.add_committee! Committee.create( :name => ('subgroup-%d-%d' % [i, j]) )
       end
     end
     

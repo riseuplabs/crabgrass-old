@@ -123,12 +123,12 @@ module UserExtension
         committee = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
           WHERE groups.parent_id IN (#{direct.join(',')})
+          AND groups.is_council = 0
         ])
         network = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
-          INNER JOIN federations ON groups.id = federations.network_id
-          WHERE federations.group_id IN (#{direct.join(',')})
-          AND (groups.type = 'Network')
+          INNER JOIN federatings ON groups.id = federatings.network_id
+          WHERE federatings.group_id IN (#{direct.join(',')})
         ])
       else
         committee, network = [],[]
@@ -180,6 +180,18 @@ module UserExtension
     end
 
     module ClassMethods
+
+      # takes an array of user ids and NULLs out the membership cache
+      # of those users. however, the peer cache is not NULLed.
+      def clear_membership_cache(ids)
+        return unless ids.any?
+        self.connection.execute(%Q[
+          UPDATE users SET 
+          direct_group_id_cache = NULL, all_group_id_cache = NULL
+          WHERE id IN (#{ ids.join(',') })
+        ])
+      end
+
       ## serialize_as
       ## ---------------------------------
       ##

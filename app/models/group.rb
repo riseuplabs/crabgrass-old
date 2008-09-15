@@ -171,7 +171,7 @@ class Group < ActiveRecord::Base
   # otherwise, raise PermissionDenied
   def has_access!(access, user)
     if access == :admin
-      ok = user.member_of?(self)
+      ok = user.member_of?(self.council)
     elsif access == :edit
       ok = user.member_of?(self)
     elsif access == :view
@@ -239,8 +239,9 @@ class Group < ActiveRecord::Base
   ####################################################################
   ## relationship to other groups
 
-#  has_many :federations
-#  has_many :networks, :through => :federations
+  has_many :federatings
+  has_many :networks, :through => :federatings
+  belongs_to :council, :class_name => 'Group'
 
   # Committees are children! They must respect their parent group. 
   # This uses better_acts_as_tree, which allows callbacks.
@@ -250,7 +251,39 @@ class Group < ActiveRecord::Base
     :after_remove => :org_structure_changed
   )
   alias :committees :children
-    
+
+  # Adds a new committee or makes an existing committee be the council (if
+  # the make_council argument is set). No other method of adding committees
+  # should be used.
+  def add_committee!(committee, make_council=false)
+    committee.parent_id = self.id
+    committee.parent_name_changed
+    if make_council
+      if council
+        council.update_attribute(:is_council, false)
+      end
+      self.council = committee
+      committee.is_council = true  
+    end
+    committee.save!
+    self.org_structure_changed
+    self.save!
+    self.committees.reset
+  end
+
+  # Removes a committee. No other method should be used.
+  def remove_committee!(committee)
+    committee.parent_id = nil
+    if council_id == committee.id
+      self.council_id = nil
+      committee.is_council = false
+    end
+    committee.save!
+    self.org_structure_changed
+    self.save!
+    self.committees.reset
+  end
+
   # returns an array of all children ids and self id (but not parents).
   # this is used to determine if a group has access to a page.
   def group_and_committee_ids
@@ -262,7 +295,9 @@ class Group < ActiveRecord::Base
     ids = [ids] unless ids.instance_of? Array
     return [] unless ids.any?
     ids = ids.join(',')
-    Group.connection.select_values("SELECT groups.id FROM groups WHERE parent_id IN (#{ids})").collect{|id|id.to_i}
+    Group.connection.select_values(
+      "SELECT groups.id FROM groups WHERE parent_id IN (#{ids})"
+    ).collect{|id|id.to_i}
   end
   
   # returns an array of committees visible to appropriate access level
@@ -278,32 +313,32 @@ class Group < ActiveRecord::Base
     end
   end
     
-  # returns a list of group ids for the page namespace
-  # (of the group_ids passed in).
-  # wtf does this mean? for each group id, we get the ids
+  # Returns a list of group ids for the page namespace of every group id
+  # passed in. wtf does this mean? for each group id, we get the ids
   # of all its relatives (parents, children, siblings).
   def self.namespace_ids(ids)
     ids = [ids] unless ids.instance_of? Array
     return [] unless ids.any?
     ids = ids.join(',')
-    parent_ids = Group.connection.select_values("SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})").collect{|id|id.to_i}
+    parent_ids = Group.connection.select_values(
+      "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
+    ).collect{|id|id.to_i}
     return ([ids] + committee_ids(ids) + parent_ids + committee_ids(parent_ids)).flatten.uniq
   end
 
   # whenever the structure of this group has changed 
   # (ie a committee or network has been added or removed)
-  # this function is run. 
-  def org_structure_changed(child)
-    users.each do |u|
-      u.update_membership_cache
-    end
-    increment!(:version)
+  # this function should be called. Afterward, a save is required.
+  def org_structure_changed(child=nil)
+    User.clear_membership_cache(user_ids)
+    self.version += 1 # increment!(:version)
   end
 
-  
-#  has_and_belongs_to_many :locations,
-#    :class_name => 'Category'
-#  has_and_belongs_to_many :categories
+  alias_method :real_council, :council
+  def council(reload=false)
+    real_council(reload) || self
+  end
+
   
   ######################################################
   ## temp stuff for profile transition

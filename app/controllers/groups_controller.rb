@@ -154,10 +154,7 @@ class GroupsController < ApplicationController
         flash_message :success => 'Group was successfully created.'.t
         @group.memberships.create :user => current_user, :group => @group
         if @parent
-          @group.parent = @parent
-          @parent.users.each do |u|
-            u.clear_cache
-          end
+          @parent.add_committee!(@group)
         end
         redirect_to url_for_group(@group)
       else

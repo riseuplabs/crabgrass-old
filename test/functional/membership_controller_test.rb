@@ -66,11 +66,10 @@ class MembershipControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :action => 'list', :id => groups(:warm).name
 
-    assert users(:blue).direct_member_of?(groups(:warm))
-    assert users(:quentin).direct_member_of?(groups(:warm))
-#    assert !users(:red).direct_member_of?(groups(:warm)), "red should not be in committee"
+    assert users(:blue).direct_member_of?(groups(:cold))
+    assert users(:green).direct_member_of?(groups(:cold))
 
-    post :update, :id => groups(:warm).name, :group => {:user_ids => [users(:red).id.to_s]}, :commit => "Save"
+    post :update, :id => groups(:cold).name, :group => {:user_ids => [users(:red).id.to_s]}, :commit => "Save"
 
     assert users(:red).direct_member_of?(groups(:warm)), "red should be in committee"
   end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080910214455) do
+ActiveRecord::Schema.define(:version => 20080915045315) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -104,12 +104,15 @@ ActiveRecord::Schema.define(:version => 20080910214455) do
     t.string  "location"
   end
 
-  create_table "federations", :force => true do |t|
-    t.integer "group_id",     :limit => 11
-    t.integer "network_id",   :limit => 11
-    t.integer "council_id",   :limit => 11
-    t.integer "delegates_id", :limit => 11
+  create_table "federatings", :force => true do |t|
+    t.integer "group_id",      :limit => 11
+    t.integer "network_id",    :limit => 11
+    t.integer "council_id",    :limit => 11
+    t.integer "delegation_id", :limit => 11
   end
+
+  add_index "federatings", ["group_id", "network_id"], :name => "gn"
+  add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
   create_table "group_participations", :force => true do |t|
     t.integer "group_id", :limit => 11
@@ -125,15 +128,15 @@ ActiveRecord::Schema.define(:version => 20080910214455) do
     t.string   "summary"
     t.string   "url"
     t.string   "type"
-    t.integer  "parent_id",      :limit => 11
-    t.integer  "admin_group_id", :limit => 11
-    t.boolean  "council"
+    t.integer  "parent_id",  :limit => 11
+    t.integer  "council_id", :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "avatar_id",      :limit => 11
+    t.integer  "avatar_id",  :limit => 11
     t.string   "style"
-    t.string   "language",       :limit => 5
-    t.integer  "version",        :limit => 11, :default => 0
+    t.string   "language",   :limit => 5
+    t.integer  "version",    :limit => 11, :default => 0
+    t.boolean  "is_council",               :default => false
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"

@@ -11,8 +11,6 @@ class PageAccessTest < Test::Unit::TestCase
     user  = users(:red)
     group = groups(:rainbow)
     
-    assert_equal 1, user.groups.size, "for this test, red should be a member of only one group"
-    
     page = create_page :title => 'private page'
 
     assert !user.may?(:view, page), 'user should NOT be able to view page'

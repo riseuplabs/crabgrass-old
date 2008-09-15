@@ -102,13 +102,15 @@ CREATE TABLE `events` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `federations` (
+CREATE TABLE `federatings` (
   `id` int(11) NOT NULL auto_increment,
   `group_id` bigint(11) default NULL,
   `network_id` bigint(11) default NULL,
   `council_id` bigint(11) default NULL,
-  `delegates_id` bigint(11) default NULL,
-  PRIMARY KEY  (`id`)
+  `delegation_id` bigint(11) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `gn` (`group_id`,`network_id`),
+  KEY `ng` (`network_id`,`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `group_participations` (
@@ -128,14 +130,14 @@ CREATE TABLE `groups` (
   `url` varchar(255) default NULL,
   `type` varchar(255) default NULL,
   `parent_id` bigint(11) default NULL,
-  `admin_group_id` bigint(11) default NULL,
-  `council` tinyint(1) default NULL,
+  `council_id` bigint(11) default NULL,
   `created_at` datetime default NULL,
   `updated_at` datetime default NULL,
   `avatar_id` bigint(11) default NULL,
   `style` varchar(255) default NULL,
   `language` varchar(5) default NULL,
   `version` bigint(11) default '0',
+  `is_council` tinyint(1) default '0',
   PRIMARY KEY  (`id`),
   KEY `index_groups_on_name` (`name`),
   KEY `index_groups_parent_id` (`parent_id`)
@@ -403,16 +405,16 @@ CREATE TABLE `ratings` (
 
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL auto_increment,
-  `created_by_id` int(11) default NULL,
-  `approved_by_id` int(11) default NULL,
-  `recipient_id` int(11) default NULL,
+  `created_by_id` bigint(11) default NULL,
+  `approved_by_id` bigint(11) default NULL,
+  `recipient_id` bigint(11) default NULL,
   `recipient_type` varchar(5) default NULL,
   `email` varchar(255) default NULL,
   `code` varchar(8) default NULL,
-  `requestable_id` int(11) default NULL,
+  `requestable_id` bigint(11) default NULL,
   `requestable_type` varchar(10) default NULL,
-  `shared_discussion_id` int(11) default NULL,
-  `private_discussion_id` int(11) default NULL,
+  `shared_discussion_id` bigint(11) default NULL,
+  `private_discussion_id` bigint(11) default NULL,
   `state` varchar(10) default NULL,
   `type` varchar(255) default NULL,
   `created_at` datetime default NULL,
@@ -689,6 +691,8 @@ INSERT INTO schema_migrations (version) VALUES ('20080904213700');
 INSERT INTO schema_migrations (version) VALUES ('20080907063057');
 
 INSERT INTO schema_migrations (version) VALUES ('20080910214455');
+
+INSERT INTO schema_migrations (version) VALUES ('20080915045315');
 
 INSERT INTO schema_migrations (version) VALUES ('21');
 

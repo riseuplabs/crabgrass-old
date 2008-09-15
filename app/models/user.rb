@@ -142,9 +142,15 @@ class User < ActiveRecord::Base
     (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
   end
 
-  # as special call used in special places:
-  # This should only be called if you know
-  # for sure that you can't use user.may?(:admin,thing)
+  # zeros out the in-memory page access cache. generally, this is called for
+  # you, but must be called manually in the case where page access was via a
+  # group and that group loses page access.
+  def clear_access_cache
+    @access = nil
+  end
+
+  # as special call used in special places: This should only be called if you
+  # know for sure that you can't use user.may?(:admin,thing)
   def may_admin?(thing)
     begin
       thing.has_access!(:admin,self)
