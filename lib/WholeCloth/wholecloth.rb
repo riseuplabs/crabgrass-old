@@ -3,7 +3,8 @@ require 'rubygems'
 require File.join(File.expand_path(File.dirname(__FILE__)), "RedCloth", "lib", "redcloth")#modified redcloth 4
 
 class WholeCloth < RedCloth::TextileDoc
-  
+
+  # blockquotes  
   MARKDOWN_BQ_RE = /(^ *> ?.+$(.+\n)*\n*)+/
     
   def crabgrass_markdown_bq( text )
@@ -25,7 +26,8 @@ class WholeCloth < RedCloth::TextileDoc
             end
         end
     end
-  
+
+  # code blocks  
   CG_CODE_BEGIN = Regexp::quote('/--')
   CG_CODE_END = Regexp::quote('\--')
   CRABGRASS_MULTI_LINE_CODE_RE = /^#{CG_CODE_BEGIN}( +[^\n]*)?(\n.*\n)#{CG_CODE_END}(\n|$)/m
@@ -39,6 +41,7 @@ class WholeCloth < RedCloth::TextileDoc
     end
   end
   
+  # hyperlinks internal to crabgrass
   CRABGRASS_LINK_RE = /
     (^|.)         # start of line or any character
     \[            # begin [
@@ -78,6 +81,7 @@ class WholeCloth < RedCloth::TextileDoc
     end
   end
   
+  # hyperlinks to external pages
   URL_CHAR = '\w' + Regexp::quote('+%$*\'()-~')
   URL_PUNCT = Regexp::quote(',.;:!')
   AUTO_LINK_RE = %r{
