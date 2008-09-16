@@ -41,6 +41,24 @@ class WholeCloth < RedCloth::TextileDoc
     end
   end
   
+  # embedded objects
+  # for now, use the !object! notation, analogous to embedding images
+  #
+  # this code will get the whitelist and images right,
+  # but fail silently if thing to embed is not on whitelist,
+  # which could be improved in the future
+  EMBEDDED_OBJECT_WHITELIST = [
+    /!(<embed src="http:\/\/blip.tv\/play\/.{0,10}" type="application\/x-shockwave-flash" width=".{2,4}" height=".{2,4}" allowscriptaccess=".{1,6}" allowfullscreen=".{1,6}"><\/embed>)!/,
+    /!(<object width=".{2,4}" height=".{2,4}"><param name="movie" value="http:\/\/www\.youtube\.com\/.{1,35}"><\/param><param name=".{1,25}" value=".{1,10}"><\/param><embed src="http:\/\/www\.youtube\.com\/.{1,35}" type="application\/x-shockwave-flash" allowfullscreen=".{2,15}" width=".{2,4}" height=".{2,4}"><\/embed><\/object>)!/,
+    ]
+  def crabgrass_embedded_object( text )
+    EMBEDDED_OBJECT_WHITELIST.each do |embedded_object_re|
+      text.gsub!( embedded_object_re ) do |blk|
+        bypass_filter( $1 )
+      end
+    end
+  end
+  
   # hyperlinks internal to crabgrass
   CRABGRASS_LINK_RE = /
     (^|.)         # start of line or any character
@@ -141,7 +159,7 @@ class WholeCloth < RedCloth::TextileDoc
  
   def to_html(*options, &block)
     @block = block
-    options += [:crabgrass_offtags, :crabgrass_link, :crabgrass_auto_link, :crabgrass_code, :crabgrass_markdown_bq, :crabgrass_setext_header]
+    options += [:crabgrass_offtags, :crabgrass_link, :crabgrass_auto_link, :crabgrass_embedded_object, :crabgrass_code, :crabgrass_markdown_bq, :crabgrass_setext_header]
     html = super(*options)
     html.gsub!(OFFTAG_RE) do |m|
     @offtag_list[$1.to_i-1]#replace offtag with the corresponding entry
