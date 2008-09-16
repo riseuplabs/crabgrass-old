@@ -6,14 +6,13 @@ Choose a language to translate Crabgrass into:
   <tr>
     <th>Code</th>
     <th>Name</th>
-    <th>&nbsp;</th>
   </tr>
 
 <% for language in @languages %>
   <tr>
     <td><%=h language.code %></td>
     <td><%=h language.name %></td>
-    <td><%= link_to 'translate', :controller => :keys, :language => language.id %></td>
+    <td><%= link_to 'Translate', :controller => :keys, :language => language %></td>
   </tr>
 <% end %>
 </table>

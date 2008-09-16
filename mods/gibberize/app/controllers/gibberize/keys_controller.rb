@@ -3,7 +3,15 @@ class Gibberize::KeysController < Gibberize::BaseController
   # GET /keys.xml
   def index
     @keys = Key.find(:all)
-    @language = Language.find(params[:language]) if params[:language]
+    @language = Language.find(params[:language])
+    @adjective = "all"
+    if !(params[:all] or params[:translated])
+      @keys = @keys.select{|k| k unless k.languages.include?(@language)}
+      @adjective = "untranslated"
+    elsif params[:translated]
+      @keys = @keys.select{|k| k if k.languages.include?(@language)}
+      @adjective = "translated"
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @keys }

@@ -55,7 +55,7 @@ class Gibberize::TranslationsController < Gibberize::BaseController
     respond_to do |format|
       if @translation.save
         flash[:notice] = 'Translation was successfully created.'
-        format.html { redirect_to :controller => :keys, :action => :show, :id => @translation.key }
+        format.html { redirect_to :controller => :keys, :language => @translation.language }
         format.xml  { render :xml => @translation, :status => :created, :location => @translation }
       else
         @languages = Language.find(:all)
@@ -74,7 +74,7 @@ class Gibberize::TranslationsController < Gibberize::BaseController
     respond_to do |format|
       if @translation.update_attributes(params[:translation])
         flash[:notice] = 'Translation was successfully updated.'
-        format.html { redirect_to :controller => :keys, :action => :show, :id => @translation.key }
+        format.html { redirect_to :controller => :keys, :language => @translation.language }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
