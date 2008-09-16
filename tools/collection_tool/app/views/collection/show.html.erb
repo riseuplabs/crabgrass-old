@@ -1,0 +1,12 @@
+<div class='wiki'>
+  <%= render :partial => 'collection_edit_controls' if @pages.size > 10 and current_user.may? :edit, @page %>
+  <div id='wiki_html'>
+
+<% for page in @pages %>
+<%= "<p>" + link_to(h(page.title), page_url(page)) + "</p>" %>
+<% end %>
+
+  </div>
+  <%= render :partial => 'collection_edit_controls', :locals => {:access_keys => true} if current_user.may? :edit, @page %>
+
+</div><!-- end collection -->

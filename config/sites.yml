@@ -18,4 +18,4 @@ default:
   - RankedVote
   - TaskList
   - Asset
-
+  - Collection

@@ -177,26 +177,16 @@ class Page < ActiveRecord::Base
   #######################################################################
   ## RELATIONSHIP TO OTHER PAGES
   
-  # reciprocal links between pages
-  has_and_belongs_to_many :links,
-    :class_name => "Page",
-    :join_table => "links",
-    :association_foreign_key => "other_page_id",
-    :foreign_key => "page_id",
-    :uniq => true,
-    :after_add => :reciprocate_add,
-    :after_remove => :reciprocate_remove
-  def reciprocate_add(other_page)
-    other_page.links << self unless other_page.links.include?(self)
+  # links between pages
+  has_many :links, :foreign_key => 'to'
+  has_many :collections, :through => :links, :foreign_key => 'to'
+
+  # If you pass a collection_id to a Page the Page will be added to the Collection.
+  def collection_id=(id)
+    collection = Collection.find id
+    collection.add_page self
   end
-  def reciprocate_remove(other_page)
-    other_page.links.delete(self) rescue nil
-  end
-  def add_link(page)
-    links << page unless links.include?(page)
-  end
-   
- 
+
   #######################################################################
   ## RELATIONSHIP TO ENTITIES
     
