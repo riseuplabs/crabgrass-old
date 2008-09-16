@@ -1,7 +1,5 @@
 <%- @title_box = capture do -%>
-  <%- cache(group_cache_key(@group)) do -%>
-    <%= render :partial => 'groups/widgets/infopanel' %>
-  <%- end -%>
+ <%= render :partial => 'groups/widgets/infopanel' %>
 <%- end -%>
 
 <div class='landing'>

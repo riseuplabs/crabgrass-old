@@ -2,24 +2,28 @@
 <table>
 <tr>
   <td style='width:50%'>
-    <% if @group.publicly_visible_members or may_admin_group? %>
+    <%- if @group.publicly_visible_members or may_admin_group? %>
       <h2>Members <span><%= @group.users.count %> members</span></h2>
-      <%= render :partial => 'groups/widgets/members' %>
-    <% end -%>
-    </td>
+      <%- cache(group_cache_key(@group, :what => 'members')) do -%>
+        <%= render :partial => 'groups/widgets/members' %>
+      <%- end -%>
+    <%- end -%>
+  </td>
   <td rowspan='2' style='width:50%' class='right'>
     <h2>Group Information</h2>
-<%= render :partial => 'groups/widgets/info' %>
+    <%= render :partial => 'groups/widgets/info' %>
   </td>
 </tr>
 <tr>
   <td>
-    <% if not @group.committee? and 
-         (@group.publicly_visible_committees or may_admin_group?) -%>
-    <h2>Committees</h2>
-<%= render :partial => 'groups/widgets/committees' %>
+    <% if not @group.committee? and (@group.publicly_visible_committees or may_admin_group?) -%>
+      <h2>Committees</h2>
+      <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
+        <%= render :partial => 'groups/widgets/committees' %>
+      <%- end -%>
     <% end -%>
   </td>
 </tr>
 </table>
 </div>
+

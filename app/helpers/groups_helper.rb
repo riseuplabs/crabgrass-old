@@ -2,8 +2,8 @@ module GroupsHelper
 
   include WikiHelper
 
-  def group_cache_key(group)
-    params.merge(:version => group.version, :updated_at => group.updated_at)
+  def group_cache_key(group, options={})
+    params.merge(:version => group.version, :updated_at => group.updated_at).merge(options)
   end
 
   def may_admin_group?
