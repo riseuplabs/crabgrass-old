@@ -1,15 +1,21 @@
 class UnauthenticatedUser
-  def may?(perm, page)
-    if self.respond_to?(method = "may_#{perm}?")
-      return self.send(method, page)
-    end
-    false
+  def login
+   'anonymous'.t
   end
+  alias :name :login
+  alias :display_name :login
 
-  def may_view?(page)
-    return page.public?
+  def may?(access,thing)
+    if thing.is_a? Page
+      if access == :view
+        thing.public?
+      else
+        false
+      end
+    else
+      false
+    end
   end
-  alias :may_read? :may_view?
 
   def member_of?(group)
     false

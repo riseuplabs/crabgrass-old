@@ -35,18 +35,22 @@ ActionController::Routing::Routes.draw do |map|
   map.people 'people/:action/:id', :controller => 'people'
   map.connect 'person/:action/:id/*path', :controller => 'person'
   
-  map.groups  'groups/:action/:id', :controller => 'groups'
-  map.group   'groups/:action/:id', :controller => 'groups'
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|archive|calendar|search/
+  map.groups   'groups/:action/:id', :controller => 'groups'
+  map.group    'group/:action/:id', :controller => 'group'
+  map.networks 'networks/:action/:id', :controller => 'networks'
+  map.network  'network/:action/:id', :controller => 'network'
+  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search/
 
-    
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
   map.connect '', :controller => "account"
   map.login   'account/login',   :controller => 'account',   :action => 'login'
+
+  # routes in emails:
   map.forgot_password '/forgot_password',     :controller => 'passwords',   :action =>  'new'
   map.reset_password  '/reset_password/:id',  :controller => 'passwords',   :action =>  'edit'
-
+  map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
+  
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
 

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < Test::Unit::TestCase
-  fixtures :groups, :users, :profiles
+  fixtures :groups, :users, :profiles, :memberships
 
   def test_memberships
     g = Group.create :name => 'fruits'
@@ -11,7 +11,7 @@ class GroupTest < Test::Unit::TestCase
       g.users << u
     end
     g.memberships.create :user => u
-    g.memberships.create :user_id => users(:red).id, :page_id => 1
+    g.memberships.create :user_id => users(:red).id
 
     assert u.member_of?(g), 'user should be member of group'
     
@@ -42,10 +42,6 @@ class GroupTest < Test::Unit::TestCase
     g = Group.create :name => u.login
     assert g.valid? == false, 'group should not be valid'
     assert g.save == false, 'group should fail to save'
-  end
-
-  def test_associations
-    assert check_associations(Group)
   end
 
   def test_cant_pester_private_group
@@ -83,4 +79,34 @@ class GroupTest < Test::Unit::TestCase
                  g.committees_for(:private).sort_by{|c| c.id},
                  "should find 2 committee with private access"
   end
+
+  def test_councils
+    group = groups(:rainbow)
+    committee = groups(:cold)
+    blue = users(:blue)
+    red  = users(:red)
+
+    assert_equal committee.parent, group
+    assert blue.direct_member_of?(committee)
+    assert !red.direct_member_of?(committee)
+    
+    assert red.may?(:admin, group)
+    assert blue.may?(:admin, group)
+
+    assert_nothing_raised do
+      group.add_committee!(committee, true)
+    end
+ 
+    red.reload
+    blue.reload
+
+    assert !red.may_admin?(group)
+    assert !red.may?(:admin, group)
+    assert blue.may?(:admin, group)   
+  end
+
+  def test_associations
+    assert check_associations(Group)
+  end
+
 end

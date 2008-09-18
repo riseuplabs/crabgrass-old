@@ -60,7 +60,9 @@ module ContextHelper
   # group, person, or page context. 
 
   def group_context(size='large', update_breadcrumbs=true)
-    add_context 'groups', groups_url(:action => 'list')
+    return network_context(size, update_breadcrumbs) if @group and @group.is_a? Network
+
+    add_context 'groups'.t, groups_url(:action => 'list')
     if @group
       if @group.committee?
         if @group.parent
@@ -70,13 +72,22 @@ module ContextHelper
         end
       end
       add_context @group.short_name, url_for_group(@group, :action => 'show')
-      set_banner "groups/banner_#{size}", @group.banner_style
+      set_banner "group/banner_#{size}", @group.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
   
+  def network_context(size='large', update_breadcrumbs=true)
+    add_context 'networks'.t, networks_url(:action => 'list')
+    if @group
+      add_context @group.short_name, url_for_group(@group)
+      set_banner "group/banner_#{size}", @group.banner_style
+    end
+    breadcrumbs_from_context if update_breadcrumbs
+  end
+
   def person_context(size='large', update_breadcrumbs=true)
-    add_context 'people', people_url
+    add_context 'people'.t, people_url
     if @user
       add_context @user.login, url_for_user(@user, :action => 'show')
       set_banner "person/banner_#{size}", @user.banner_style
@@ -94,8 +105,6 @@ module ContextHelper
 
   def page_context
     if @page
-      # the context rules when there is a @page are copied from page_url_helper.rb
-      # see comments on page_url for the details.
       if @group and @page.group_ids.include?(@group.id)
         group_context('small', false)
       elsif @page.group_name

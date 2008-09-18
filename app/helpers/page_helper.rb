@@ -48,7 +48,7 @@ module PageHelper
   # like page_url, but it returns a direct URL that bypasses the dispatch
   # controller. intended for use with ajax calls. 
   def page_xurl(page,options={})
-    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => page.controller}
+    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => '/' + page.controller}
     url_for(hash.merge(options))
   end
   
@@ -317,10 +317,14 @@ module PageHelper
   end
 
   ## Link to the action for the form to create a page of a particular type.
-  def create_page_url(page_class, options={})
-    controller = page_class.controller 
-    id = page_class.class_display_name.nameize
-    "/#{controller}/create/#{id}" + build_query_string(options)
+  def create_page_url(page_class=nil, options={})
+    if page_class
+      controller = page_class.controller 
+      id = page_class.class_display_name.nameize
+      "/#{controller}/create/#{id}" + build_query_string(options)
+    else
+      url_for(:controller => '/pages', :action => 'create')
+    end
   end
 
 #  def create_page_link(text,options={})

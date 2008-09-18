@@ -1,0 +1,12 @@
+<% @title_box = capture do -%>
+  <%= link_to_breadcrumbs %>
+  <h1><%= "Approve contact request".t %></h1>
+<% end -%>
+
+<blockquote>
+  <p><%= :approve_contact_info.t %></p>
+  <%- form_tag(:controller => '/requests', :action => 'approve', :id => @past_request) do -%>
+    <%= submit_tag 'Approve contact request'.t, :name => 'approve' %>
+  <% end -%>
+</blockquote>
+

@@ -1,0 +1,37 @@
+<%
+  # this is a template to be used by controllers other than TaskListPageController.
+  # for example, from people, groups, me. 
+
+# local variables
+@show_status ||= 'pending'  # one of pending, completed, both, created
+@show_user   ||= @user # unless set already, only show tasks for this user.
+@show_user   ||= 'all'
+all_users  = (@show_user == 'all')
+all_states = (@show_status == 'both')
+completed  = (@show_status == 'completed')
+-%>
+<%
+for list in @task_lists
+  next unless list
+  @page = list.page
+  case @show_status
+  when 'created'
+    tasks = list.tasks.select { |t| t.created_by_id == @show_user.id }
+  else
+    tasks = list.tasks.select do |t|
+      (all_users || t.user_ids.include?(@show_user.id)) && (all_states || t.completed? == completed)
+    end
+  end
+  next unless tasks.any?
+  tasks = tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]}
+-%>
+  <ul><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name, :action => 'tasks')})" if @page.group_name %></ul>
+  <ul id='<%#sort_list_id%>' class='task_list'>
+    <%= render :partial => 'task_list_page/task', :collection => tasks, :locals => {:sortable => false} %>
+  </ul>
+<% end -%>
+
+<%# this is just here so that we don't get an ajax error when a task is marked completed or pending -%>
+<ul id='sort_list_completed' style='display:none'><li id='no_completed_tasks'></li></ul>
+<ul id='sort_list_pending' style='display:none'><li id='no_pending_tasks'></li></ul>
+

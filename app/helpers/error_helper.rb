@@ -108,19 +108,20 @@ module ErrorHelper
   #
   def add_flash_message(flsh, options)
     flsh[:text] ||= ""
+    flsh[:text] += content_tag(:p, options[:text]) if options[:text]
     flsh[:title] = options[:title] || flsh[:title]
     if options[:exception]
       exc = options[:exception]
       if exc.is_a? PermissionDenied
-        add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied], :error => exc)
+        add_flash_message(flsh, :text => options[:text], :title => 'Permission Denied'[:alert_permission_denied], :error => exc)
       elsif exc.is_a? ErrorMessages
-        add_flash_message(flsh, :title => exc.title, :error => exc.errors)
+        add_flash_message(flsh, :text => options[:text], :title => exc.title, :error => exc.errors)
       elsif exc.is_a? ErrorMessage
-        add_flash_message(flsh, :title => 'Error'[:alert_error], :error => exc.to_s)
+        add_flash_message(flsh, :text => options[:text], :title => 'Error'[:alert_error], :error => exc.to_s)
       elsif exc.is_a? ActiveRecord::RecordInvalid
-        add_flash_message(flsh, :object => exc.record)
+        add_flash_message(flsh, :text => options[:text], :object => exc.record)
       else
-        add_flash_message(flsh, :title => 'Error'[:alert_error] + ': ' + exc.class.to_s, :error => exc.to_s)
+        add_flash_message(flsh, :text => "#{:error.t}: #{exc.class}", :error => exc.to_s)
       end
     elsif options[:object]
       object = options[:object]
@@ -135,6 +136,7 @@ module ErrorHelper
       flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
     elsif options[:success] and options[:success].any?
       flsh[:type] = 'info'
+      flsh[:text] += content_tag :p, options[:text] if options[:text]
       flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
     end
   end

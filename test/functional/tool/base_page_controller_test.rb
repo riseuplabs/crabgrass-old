@@ -27,7 +27,6 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
     
     get :create, :id => 'wiki'
     assert_response :success
-#    assert_template 'base_page/create'
   
     assert_difference 'Page.count' do
       post :create, :id => 'wiki', :page => { :title => 'test title' }

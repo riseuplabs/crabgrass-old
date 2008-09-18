@@ -30,9 +30,14 @@ ul.side_list a {
   text-decoration: none;
   display: block;
   padding: 2px 0 2px 26px;
+  color: #336699;
 }
 ul.side_list a.active {
   font-weight: bold;
+}
+
+ul.side_list a.visited {
+  color: #336699;
 }
 
 ul.side_list li {

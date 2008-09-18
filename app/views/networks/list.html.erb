@@ -1,0 +1,7 @@
+<% if logged_in? -%>
+<%= link_to_icon 'Create a new %s'.t % 'network'.t, 'actions/plus.png', :action => 'create' %>
+<% end %>
+
+<%= render :partial => 'group', :collection => @networks %>
+
+<br style='clear:both' />

@@ -5,32 +5,28 @@ ActiveRecord Plugins
 --------------------
 
 acts_as_list:
-  once part of rails core.
-
-acts_as_modified_edge:
-  lets you test which properties have been modified of an activerecord.
+  Once part of rails core. Lets you have an ordered list of things.
+  Used by tasks.
 
 acts_as_rateable
-  adds ratings to activerecords. Used to rate comments.
+  Adds ratings to activerecords. Used to rate comments.
 
-acts_as_tree
-  once part of rails core.
+acts_as_state_machine
+  Makes an active_record into a simple state machine. Used by requests.  
+
+better_acts_as_tree
+  A slightly modified version of standard acts as tree. 
+  This modification allows association callbacks. 
 
 acts_as_versioned
   used to do wiki versioning.
 
-has_many_polymorphs
-  allows polymorphic has_many. Used for tagging.
-
-namespaced_models
-  fixes bugs with namespaced models.
-
+will_paginate
+  Adds paginate() to activerecord. 
+  
   
 Media Plugins
 -------------
-
-attachment_fu
-  helps with uploaded assets
 
 flex_image
   like attachment_fu, should be replaced, currently used for avatars.
@@ -44,9 +40,6 @@ UI Plugins
 calendar_date_select
   javascript calendar widget 
 
-classic_pagination
-  once part of rails core.
-
 multiple_select
   widget for habtm checkboxes and selection tree.
 
@@ -56,13 +49,6 @@ mested_layouts
 text_editor_helper
   formatting buttons for textareas.
 
-bundled_assets
-  bundle and compress many js and css files into one.
-  see below for more notes.
-
-will_paginate
-  pagination should be moved over to this
-  
 Testing Plugins
 ---------------
 
@@ -84,26 +70,9 @@ Core Plugins
 thinking_sphinx
   full text searching.
 
-tztime & tzinfo_timezone
-  for easy-ish handling of user timezones
-  
+
 PLUGIN NOTES
 ===========================================================
-
-bundled_assets
---------------
-
-This plugin allows us to have many css and javascript files, with lots of comments, and it will combine them and compress them when in production mode. This makes the stylesheets reabable, easy to edit, and much faster.
-
-For this to work, the stylesheet and javascript tags should look like this:
-
-<link rel="stylesheet" href="/bundles/layout,styles,search-tag.css" type="text/css" media="screen" charset="utf-8" />
-
-<script src="/bundles/prototype,tools.js" type="text/javascript" charset="utf-8"></script>
-
-http://stuff.artweb-design.de/svn/plugins/rails/bundled_assets
-
-NOTE: starting with rails 2.0, there will be a :compress option for stylesheet_link_tag, so this plugin will be largely unneeded, although its ability to bundle might still be worth the while.
 
 nested_layouts
 --------------

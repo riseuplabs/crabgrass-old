@@ -1,18 +1,19 @@
-<% @title_box = capture do %>
-  <% if @parent -%>
-    <% group_type = 'committee'.t -%>
-    <h1>New committee for group <%= @parent.name %></h1>
-  <% else %>
-    <% group_type = 'group'.t -%>
-    <h1>New group</h1>
-  <% end %>
+<% @title_box = capture do -%>
+  <h1>
+    <%- if @group_type == 'Committee' -%>
+      <%= 'New committee for group %s'.t % @parent.name %>
+    <%- elsif @group_type == 'Network' -%>
+      <%= 'New network'.t %>
+    <%- elsif @group_type == 'Group' -%>
+      <%= 'New group'.t %>
+    <%- end -%>
+  </h1>
 <% end %>
 
-<% form_tag({:action => "create"},:id => "createform") do %>
-  <%= render :partial => 'form' %>
-
+<% form_tag({:action => "create", :id => group_type},:id => "createform") do %>
+  <%= render(:partial => 'group/form', :locals => {:submit => false}) %>
+  <%= render(:partial => 'networks/initial_membership_form') if group_type == 'network' %>
   <%= submit_tag "Create" %>
-
 <% end %>
 <%= javascript_tag "Form.focusFirstElement('createform');" %>
 

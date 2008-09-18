@@ -5,7 +5,7 @@ require 'task_list_page_controller'
 class TaskListPageController; def rescue_action(e) raise e end; end
 
 class Tool::TasklistPageControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users, :task_lists, :tasks, :user_participations
+  fixtures :pages, :users, :task_lists, :tasks
 
   def setup
     @controller = TaskListPageController.new
@@ -13,7 +13,7 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_show
+  def text_show
     login_as :quentin
     
     get :show, :page_id => pages(:tasklist1)
@@ -23,23 +23,31 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
 
   def test_sort
     login_as :blue
-    pages(:tasklist1).add(users(:blue), :access => :admin)
 
-    assert_equal Task.find(1).position, 1
-    assert_equal Task.find(2).position, 2
-    assert_equal Task.find(3).position, 3
+    @user = users(:blue)
+    @page = pages(:tasklist1)
+    @page.add(@user, :access => :admin)
+    @page.save!
+    
+    assert_equal 1, Task.find(1).position
+    assert_equal 2, Task.find(2).position
+    assert_equal 3, Task.find(3).position
 
-    xhr :post, :sort, :controller => "task_list_page", :page_id => pages(:tasklist1).id, :id => 0, :sort_list_21_pending => ["3","2","1"]
+    xhr :post, :sort, :controller => "task_list_page", :page_id => @page.id, :id => 0, :sort_list_pending => ["3","2","1"]
+    assert_response :success
 
-    assert_equal Task.find(1).position, 3
-    assert_equal Task.find(2).position, 2
-    assert_equal Task.find(3).position, 1
+    assert_equal 3, Task.find(1).position
+    assert_equal 2, Task.find(2).position
+    assert_equal 1, Task.find(3).position
   end
 
-  def test_multi_list_sort
+  def text_multi_list_sort
     login_as :blue
+
     pages(:tasklist1).add(users(:blue), :access => :admin)
     pages(:tasklist2).add(users(:blue), :access => :admin)
+    pages(:tasklist1).save!
+    pages(:tasklist2).save!
 
     tasks = Task.find(1,2,3,4,5,6).index_by {|t| t.id}
     assert_equal tasks[1].position, 1
@@ -64,9 +72,10 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
     assert_equal tasks[2].task_list_id, tasks[4].task_list_id
   end
   
-  def test_create_task
+  def text_create_task
     login_as :blue
     pages(:tasklist1).add(users(:blue), :access => :admin)
+    pages(:tasklist1).save!
     assert_difference 'pages(:tasklist1).data.tasks.count' do
       xhr :post, :create_task, :controller => "task_list_page", :page_id => pages(:tasklist1).id, :task => {:name => "new task", :user_ids => ["5"], :description => "new task description"}
     end

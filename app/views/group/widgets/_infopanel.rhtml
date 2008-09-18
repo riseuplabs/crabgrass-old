@@ -1,0 +1,29 @@
+<div id='info_panel' class='landing'>
+<table>
+<tr>
+  <td style='width:50%'>
+    <%- if @group.publicly_visible_members or may_admin_group? %>
+      <%- cache(group_cache_key(@group, :what => 'members')) do -%>
+        <h2>Members <span><%= @group.users.size + @group.groups.size %> members</span></h2>
+        <%= render :partial => 'group/widgets/members' %>
+      <%- end -%>
+    <%- end -%>
+  </td>
+  <td rowspan='2' style='width:50%' class='right'>
+    <h2>Group Information</h2>
+    <%= render :partial => 'group/widgets/info' %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <% if not @group.committee? and (@group.publicly_visible_committees or may_admin_group?) -%>
+      <h2>Committees</h2>
+      <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
+        <%= render :partial => 'group/widgets/committees' %>
+      <%- end -%>
+    <% end -%>
+  </td>
+</tr>
+</table>
+</div>
+

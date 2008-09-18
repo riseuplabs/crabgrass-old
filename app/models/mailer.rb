@@ -1,32 +1,44 @@
 =begin
 
+Multiple recipients
+-------------------
+
 It would be much much more efficient to send all the emails in one blast,
 using multiple recipients or bcc. However, this makes the social network
 data available to anyone intercepting a single email. BCC is better, but
 we might as well address each email to each person individually.
 
+Mailer options
+--------------
+
+There are various tricks you can use to get around the fact that mailers
+are models and don't have access to the request or the session. 
+
+In our case, we can't use the: the mailer needs to know that request and
+sessiond data, because there might be multiple sites, each with their own
+domain, running on the same instances of rails. 
+
+So, we have ApplicationController#mailer_options(). This bundles up everything
+from the session that is needed for the mailer to get the domain and the
+protocol right. 
+
+Every call to deliver should include as its last argument the mailer_options.
+For example:
+   
+   Mailer::Page.deliver_page_notice(user, message, mailer_options)
+
+Then, every mailer method should do this as its first line:
+
+   setup(options)
+
+
 =end
 
 class Mailer < ActionMailer::Base
   include ActionController::UrlWriter
-
-#  def lost_password(token)
-#    #set_language_if_valid(token.user.language)
-#    recipients token.user.mail
-#    subject += 'password reset'
-#    body :token => token,
-#         :url => url_for(:controller => 'account', :action => 'lost_password', :token => token.value)
-#  end  
-
-  # Send an email letting the user know that a page has been 'sent' to them.
-  def page_notice(user, notice_message, options)
-    setup(options)
-    recipients user.email
-    from "%s <%s>" % [@current_user.display_name, @site.email_sender]
-    subject 'check out "%s"' % @page.title
-    body({ :page => @page, :notice_message => notice_message, :from => @current_user,
-     :to => user, :link => link(@page.uri) })
-  end
+  include Mailers::Page
+  include Mailers::User
+  include Mailers::Request
 
   protected
 
@@ -44,11 +56,6 @@ class Mailer < ActionMailer::Base
     @port = default_url_options[:port] = options[:port]
     @protocol = default_url_options[:protocol] = options[:protocol]
     default_url_options[:only_path] = false
-
-    #recipients options[:recipients] || (@user.email if @user)
-    #from       options[:from] || @site.email_sender
-    #subject    options[:subject] || ("[%s] " % @site.name)
-    #body       :user  => @user
   end
 
 end

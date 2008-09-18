@@ -16,5 +16,6 @@ public/avatars/*/*
 public/stylesheets/all.css
 public/javascripts/all.js
 public/assets/*
-
+*.o
+*.so
 

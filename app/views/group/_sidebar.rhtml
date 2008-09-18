@@ -1,0 +1,17 @@
+<div class='wing'>
+<%= render :partial => 'group/side_navigation' %>
+
+<h3><%= 'Actions'.t %></h3>
+<ul class='side_list'>
+  <% if logged_in? and current_user.member_of?(@group) -%>
+    <li>
+      <%= link_to 'create page', {:controller => '/pages', :action => 'create', :group_id => @group.id} %>
+    </li>
+    <% unless committee? -%>
+    <li>
+      <%= link_to 'join chat', :controller => 'chat', :action => 'channel', :id => @group.name %>
+    </li>
+    <% end -%>
+  <% end -%>
+</ul>
+</div>

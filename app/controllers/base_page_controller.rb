@@ -34,15 +34,12 @@ class BasePageController < ApplicationController
   def create
     @page_class = get_page_type
     if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
       begin
-        @page = @page_class.create(params[:page].merge(
-          :user => current_user,
-          :share_with => params[:recipients],
-          :access => :admin
-        ))
-        return redirect_to(page_url(@page)) if @page.valid?
-        flash_message_now :object => @page
+        @page = create_new_page!(@page_class)
+        return redirect_to(page_url(@page))
       rescue Exception => exc
+        @page = exc.record
         flash_message_now :exception => exc
       end
     end
@@ -57,11 +54,6 @@ class BasePageController < ApplicationController
   end
   
   protected
-
-  # returns true if params[:action] matches one of the args
-  def action?(*actions)
-    actions.include?(params[:action].to_sym)
-  end
 
   def authorized?
     if @page.nil?
@@ -80,7 +72,7 @@ class BasePageController < ApplicationController
     return 'page'
   end
   
-  before_filter :update_viewed
+  after_filter :update_viewed
   def update_viewed
     if @upart and @page and params[:action] == 'show'
       @upart.viewed_at = Time.now
@@ -105,10 +97,11 @@ class BasePageController < ApplicationController
       @show_attachments = true if @show_attachments.nil?
       @show_tags        = true if @show_tags.nil? 
       @html_title       = @page.title if @page
+      @show_right_column ||= false
       unless params[:action] == 'create'
         @title_box        = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil?
       end
-      if params[:action] == 'show' or params[:action] == 'edit'
+      if params[:action] == 'show' or params[:action] == 'edit' or @show_right_column
         @right_column     = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
       end
     end
@@ -175,8 +168,8 @@ class BasePageController < ApplicationController
     return Page.display_name_to_class(param)
   end
 
-  def create_new_page(page_class)
-     page_class.create(params[:page].merge(
+  def create_new_page!(page_class)
+     page_class.create!(params[:page].merge(
        :user => current_user,
        :share_with => Group.find_by_id(params[:group_id]),
        :access => :admin

@@ -19,6 +19,7 @@ class Page < ActiveRecord::Base
 
   acts_as_taggable_on :tags
 
+
   #######################################################################
   ## PAGE NAMING
   
@@ -97,52 +98,107 @@ class Page < ActiveRecord::Base
     self.discussion.posts << post
     post.discussion = self.discussion
     post.user = user
+    association_will_change(:posts)
     return post
   end
+
+  def association_will_change(assn)
+    (@associations_to_save ||= []) << assn
+  end
+
+  def association_changed?
+    @associations_to_save.any?
+  end
+
+  after_save :save_associations
+  def save_associations
+    return true unless @associations_to_save
+    @associations_to_save.uniq.each do |assn|
+      if assn == :posts
+        discussion.posts.each {|post| post.save! if post.changed?}
+      elsif assn == :users
+        user_participations.each {|up| up.save! if up.changed?}
+      elsif assn == :groups
+        group_participations.each {|gp| gp.save! if gp.changed?}
+      end
+    end
+    true
+  end
+
+  #######################################################################
+  ## PAGE ACCESS CONTROL
   
   ## update attachment permissions
   after_save :update_access
   def update_access
-    assets.each { |asset| asset.update_access }
+    if public_changed?
+      assets.each { |asset| asset.update_access }
+    end
+    true
   end
   
+  # This method should never be called directly. It should only be called
+  # from User#may?()
+  #
+  # basic permissions:
+  #   :view  -- user can see the page.
+  #   :edit  -- user can participate.
+  #   :admin -- user can destroy the page, change access.
+  # conditional permissions:
+  #   :comment -- sometimes viewers can comment and sometimes only participates can.
+  #   (NOT SUPPORTED YET)
+  #
+  # :view should only return true if the user has access to view the page
+  # because of participation objects, NOT because the page is public.
+  #
+  def has_access!(perm, user)
+    perm = :edit if perm == :comment
+    upart = self.participation_for_user(user)
+    gparts = self.participation_for_groups(user.all_group_ids)
+    allowed = false
+    if upart or gparts.any?
+      parts = []
+      parts += gparts if gparts.any?
+      parts += [upart] if upart
+      part_with_best_access = parts.min {|a,b|
+        (a.access||100) <=> (b.access||100)
+      }
+      # allow :view if the participation exists at all
+      allowed = ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+    end
+    if allowed
+      return true
+    else
+      raise PermissionDenied.new
+    end
+  end
+
+
   #######################################################################
   ## RELATIONSHIP TO OTHER PAGES
   
-  # reciprocal links between pages
-  has_and_belongs_to_many :links,
-    :class_name => "Page",
-    :join_table => "links",
-    :association_foreign_key => "other_page_id",
-    :foreign_key => "page_id",
-    :uniq => true,
-    :after_add => :reciprocate_add,
-    :after_remove => :reciprocate_remove
-  def reciprocate_add(other_page)
-    other_page.links << self unless other_page.links.include?(self)
+  # links between pages
+  has_many :links, :foreign_key => 'to'
+  has_many :collections, :through => :links, :foreign_key => 'to'
+
+  # If you pass a collection_id to a Page the Page will be added to the Collection.
+  def collection_id=(id)
+    collection = Collection.find id
+    collection.add_page self
   end
-  def reciprocate_remove(other_page)
-    other_page.links.delete(self) rescue nil
-  end
-  def add_link(page)
-    links << page unless links.include?(page)
-  end
-   
- 
+
   #######################################################################
   ## RELATIONSHIP TO ENTITIES
     
   # add a group or user participation to this page
   def add(entity, attributes={})
-    attributes[:access] = ACCESS[attributes[:access]] if attributes[:access]
     if entity.is_a? Enumerable
-      entity.each do |e|
+      entity.collect do |e|
         e.add_page(self,attributes)
       end
     else
       entity.add_page(self,attributes)
     end
-    self
   end
       
   # remove a group or user participation from this page

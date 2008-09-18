@@ -39,13 +39,28 @@ f:
   user_id: 9
   
 # rainbows warm committee
-# blue and quentin are on it
-fa:
+# members: red, orange, yellow
+warm_red:
   group_id: 31
-  user_id: 1
-fb:
+  user_id: 8
+warm_orange:
   group_id: 31
+  user_id: 5
+warm_yellow:
+  group_id: 31
+  user_id: 7
+
+# rainbows cold committee
+# members: green, blue, purple
+cold_green:
+  group_id: 32
+  user_id: 9
+cold_blue:
+  group_id: 32
   user_id: 4
+cold_purple:
+  group_id: 32
+  user_id: 6
 
 # animals
 

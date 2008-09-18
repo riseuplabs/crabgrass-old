@@ -16,6 +16,7 @@ class TaskListPageController < BasePageController
     sort_list_key = params.keys.grep(/^sort_list_/)
     if sort_list_key.any?
       ids = params[sort_list_key[0]]
+      ids.reject!{|i|i.to_i == 0} # only allow integers
       @list.tasks.each do |task|
         i = ids.index( task.id.to_s )
         task.without_timestamps do 
@@ -123,4 +124,16 @@ class TaskListPageController < BasePageController
   def fetch_user_participation
     @upart = @page.participation_for_user(current_user) if @page and current_user
   end
+
+  def authorized?
+    if @page.nil?
+      true
+    elsif action?(:show)
+      current_user.may?(:view, @page)
+    elsif action?(:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task, :edit_task, :sort)
+      current_user.may?(:edit, @page)
+    end
+  end
+
+
 end

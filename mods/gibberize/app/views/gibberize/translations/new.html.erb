@@ -11,7 +11,8 @@
 
   <p>
     <b>Language</b><br />
-    <%= f.collection_select(:language_id, @translation.key.untranslated_languages, :id, :name) %>
+    <%= h @translation.language.name %>
+    <%= hidden_field(:translation, :language_id) %>
   </p>
 
   <p>

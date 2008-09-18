@@ -13,13 +13,24 @@ table.members td a {padding: 4px;}
 
 <h2>current <%=group_type%> members</h2>
 
-<table class='members'>
-<tr>
-  <th>User</th>
-  <th>Joined</th>
-  <th>&nbsp;</th>
-</tr>
-<%= render :partial => 'membership', :collection => @group.memberships %>
+<% if @group.memberships.any? %>
+  <table>
+  <tr>
+    <th>User</th>
+    <th>Joined</th>
+  </tr>
+  <%= render :partial => 'membership', :collection => @group.memberships %>
+  </table>
+  <br/>
+<% end -%>
 
-</table>
+<% if @group.federatings.any? %>
+  <table>
+  <tr>
+    <th>Group</th>
+    <th>Joined</th>
+  </tr>
+  <%= render :partial => 'federating', :collection => @group.federatings %>
+  </table>
+<% end -%>
 

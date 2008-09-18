@@ -13,6 +13,45 @@ Order of profile presidence (user sees the first one that matches):
  (4) fof      /  or might be see 'public' profile
  (5) stranger } the 'public' profile
 
+  create_table "profiles", :force => true do |t|
+    t.integer  "entity_id",              :limit => 11
+    t.string   "entity_type"
+    t.boolean  "stranger"
+    t.boolean  "peer"
+    t.boolean  "friend"
+    t.boolean  "foe"
+    t.string   "name_prefix"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "name_suffix"
+    t.string   "nickname"
+    t.string   "role"
+    t.string   "organization"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "birthday",               :limit => 8
+    t.boolean  "fof"
+    t.string   "summary"
+    t.integer  "wiki_id",                :limit => 11
+    t.integer  "photo_id",               :limit => 11
+    t.integer  "layout_id",              :limit => 11
+    t.boolean  "may_see"
+    t.boolean  "may_see_committees"
+    t.boolean  "may_see_networks"
+    t.boolean  "may_see_members"
+    t.boolean  "may_request_membership"
+    t.integer  "membership_policy",      :limit => 11
+    t.boolean  "may_see_groups"
+    t.boolean  "may_see_contacts"
+    t.boolean  "may_request_contact"
+    t.boolean  "may_pester"
+    t.boolean  "may_burden"
+    t.boolean  "may_spy"
+    t.string   "language",               :limit => 5
+  end
+
+
 =end
 
 class Profile < ActiveRecord::Base

@@ -10,5 +10,19 @@ module WikiPageHelper
     end
   end
 
+  def load_lasted_change_diff
+   javascript_tag(
+     remote_function(
+       :update => 'wiki_html',
+       :url => {
+         :controller => :wiki_page,
+         :action => :diff,
+         :page_id => @page.id,
+         :id => "%d-%d" % [@last_seen.version, @wiki.version]
+       }
+     )
+   )
+  end
+
 end
 

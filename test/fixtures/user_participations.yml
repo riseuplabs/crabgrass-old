@@ -38,45 +38,60 @@ blue_page1:
   id: <%= id+=1 %>
   page_id: 1
   user_id: 4
-
+  access: 1
 red_page1:
   id: <%= id+=1 %>
   page_id: 1
   user_id: 8
+  access: 1
 red_page2:
   id: <%= id+=1 %>
   page_id: 2
   user_id: 8
+  access: 1
 red_page3:
   id: <%= id+=1 %>
   page_id: 3
   user_id: 8
-
+  access: 1
 tasklist11:
   id: <%= id+=1 %>
   page_id: 200
   user_id: 1
+  access: 1
 tasklist21:
   id: <%= id+=1 %>
   page_id: 201
   user_id: 1
+  access: 1
 tasklist14:
   id: <%= id+=1 %>
   page_id: 200
   user_id: 4
+  access: 1
 tasklist24:
   id: <%= id+=1 %>
   page_id: 201
   user_id: 4
-  
+  access: 1  
 ranked_vote_orange:
   id: <%= id+=1 %>
   page_id: 190
   user_id: 5
-
+  access: 1
 wiki_orange:
   id: <%= id+=1 %>
   page_id: 210
   user_id: 5
-
+  access: 1
+wiki_red:
+  id: <%= id+=1 %>
+  page_id: 210
+  user_id: 8
+  access: 1
+wiki_blue:
+  id: <%= id+=1 %>
+  page_id: 210
+  user_id: 4
+  access: 1
 

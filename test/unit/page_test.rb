@@ -9,6 +9,20 @@ class PageTest < Test::Unit::TestCase
     # @page_tool_count = @page.tools.length
   end
 
+  def test_unique_names
+    user = users(:red)
+    group = groups(:rainbow)
+    
+    assert_nothing_raised do
+      p1 = WikiPage.create!(:title => 'title', :name => 'unique', :share_with => group, :user => user)
+    end
+
+    assert_raises ActiveRecord::RecordInvalid, 'duplicate names should not be allowed' do
+      p2 = WikiPage.create!(:title => 'title', :name => 'unique', :share_with => group, :user => user)
+    end
+  end
+
+
   # this is a test if we are using has_many_polymorphic
   # currently, we are using a single belongs_to that is polymorphic
   # for the relationship from page -> tool. 

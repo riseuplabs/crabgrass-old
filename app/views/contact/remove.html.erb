@@ -1,0 +1,13 @@
+<% @title_box = capture do -%>
+  <%= link_to_breadcrumbs %>
+  <h1><%=h "Remove contact %s"[:remove_contact] % @user.display_name%></h1>
+<% end -%>
+
+<blockquote>
+  <p><%= :remove_contact_info.t %></p>
+  <%- form_tag(:controller => 'contact', :action => 'remove', :id => @user) do -%>
+    <%= submit_tag 'Remove Contact'[:remove_contact_button], :name => 'remove' %>
+    <%= submit_tag 'Cancel'.t, :name => 'cancel' %>
+  <% end -%>
+</blockquote>
+

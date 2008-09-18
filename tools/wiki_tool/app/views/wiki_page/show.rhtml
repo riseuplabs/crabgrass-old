@@ -5,9 +5,5 @@
   </div>
   <%= render :partial => 'wiki_edit_controls', :locals => {:access_keys => true} if current_user.may? :edit, @page %>
 </div><!-- end wiki -->
-<%= javascript_tag remote_function( :update => 'wiki_html',
-                                    :url => { :controller => :wiki_page, 
-                                              :action => :diff,
-                                              :page_id => @page.id,
-                                              :id => "%d-%d" / [@last_seen.version, @wiki.version] }) if @last_seen %>
+<%= load_lasted_change_diff if @last_seen %>
 

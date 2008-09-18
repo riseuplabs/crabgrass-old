@@ -1,0 +1,12 @@
+<% @title_box = content_tag :h1, 'tasks' %>
+
+<div>
+  <b>pending tasks.</b>
+  <%= link_to 'create new task list &raquo;', create_page_url(TaskListPage, :group_id => @group.id) %>
+</div>
+
+<p>
+<%= render :partial => 'tasks/list' %>
+</p>
+
+

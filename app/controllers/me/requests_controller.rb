@@ -12,62 +12,31 @@
 
 class Me::RequestsController < Me::BaseController
 
-  def index
-    path = ['descending', 'created_at', 'limit', '10']
-    @my_pages, @my_sections, @my_columns = my_req_list(path.dup)
-    @contact_pages, @contact_sections, @contact_columns = contact_req_list(path.dup)
-    @membership_pages, @membership_sections, @membership_columns = membership_req_list(path.dup)
+  helper 'requests'
+
+  def from_me
+    @requests = Request.created_by(current_user).having_state(params[:state]).by_created_at.paginate(:page => params[:page])
   end
 
-  def mine
-    @pages, @columns = my_req_list(params[:path])
-    render :action => 'more'
+  def to_me
+    @requests = Request.to_user(current_user).having_state(params[:state]).by_created_at.paginate(:page => params[:page])
   end
-  
-  def contacts
-    @pages, @columns = contact_req_list(params[:path])
-    render :action => 'more'
-  end
-
-  def memberships
-    @pages, @columns = membership_req_list(params[:path])
-    render :action => 'more'
-  end
-
-  def more
-    @pages, @columns = my_req_list unless @pages.any?
-  end
-  
+    
   protected
-
-  def my_req_list(path=[])
-    path << 'created_by' << current_user.id
-    options = options_for_me(:flow => [:contacts,:membership], :page => params[:page])
-    pages = Page.find_by_path(path, options)
-    columns = [:title, :created_at, :contributors_count]
-    [pages, columns]
-  end
   
-  def contact_req_list(path=[])
-    path << 'not_created_by' << current_user.id << 'type' << 'request'
-    options = options_for_me(:flow => :contacts)
-    pages = Page.find_by_path(path, options)
-    columns = [:title, :discuss, :created_by, :created_at, :contributors_count]
-    [pages, columns]
-  end
-
-  def membership_req_list(path=[])
-    path << 'not_created_by' << current_user.id << 'type' << 'request'
-    options = options_for_me(:flow => :membership)
-    pages = Page.find_by_path(path, options)
-    columns = [:title, :group, :discuss, :created_by, :created_at, :contributors_count]
-    [pages, columns]
+  before_filter :default_state
+  def default_state
+    params[:state] ||= 'pending'
   end
 
   def context
     me_context('small')
     add_context 'requests', url_for(:controller => 'me/requests', :action => nil)
-    add_context params[:action], url_for(:controller => 'me/requests') unless (params[:action] == 'index' || params[:action] == nil)
+    if action?(:to_me)
+      add_context "to me".t, url_for(:controller => '/me/requests', :action => 'to_me')
+    elsif action?(:from_me)
+      add_context "from me".t, url_for(:controller => '/me/requests', :action => 'from_me')
+    end
   end
   
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080904213700) do
+ActiveRecord::Schema.define(:version => 20080915045315) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -104,12 +104,15 @@ ActiveRecord::Schema.define(:version => 20080904213700) do
     t.string  "location"
   end
 
-  create_table "federations", :force => true do |t|
-    t.integer "group_id",     :limit => 11
-    t.integer "network_id",   :limit => 11
-    t.integer "council_id",   :limit => 11
-    t.integer "delegates_id", :limit => 11
+  create_table "federatings", :force => true do |t|
+    t.integer "group_id",      :limit => 11
+    t.integer "network_id",    :limit => 11
+    t.integer "council_id",    :limit => 11
+    t.integer "delegation_id", :limit => 11
   end
+
+  add_index "federatings", ["group_id", "network_id"], :name => "gn"
+  add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
   create_table "group_participations", :force => true do |t|
     t.integer "group_id", :limit => 11
@@ -125,15 +128,15 @@ ActiveRecord::Schema.define(:version => 20080904213700) do
     t.string   "summary"
     t.string   "url"
     t.string   "type"
-    t.integer  "parent_id",      :limit => 11
-    t.integer  "admin_group_id", :limit => 11
-    t.boolean  "council"
+    t.integer  "parent_id",  :limit => 11
+    t.integer  "council_id", :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "avatar_id",      :limit => 11
+    t.integer  "avatar_id",  :limit => 11
     t.string   "style"
-    t.string   "language",       :limit => 5
-    t.integer  "version",        :limit => 11, :default => 0
+    t.string   "language",   :limit => 5
+    t.integer  "version",    :limit => 11, :default => 0
+    t.boolean  "is_council",               :default => false
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -182,11 +185,12 @@ ActiveRecord::Schema.define(:version => 20080904213700) do
   create_table "memberships", :force => true do |t|
     t.integer  "group_id",   :limit => 11
     t.integer  "user_id",    :limit => 11
-    t.integer  "page_id",    :limit => 11
     t.datetime "created_at"
+    t.boolean  "admin",                    :default => false
   end
 
-  add_index "memberships", ["group_id", "user_id", "page_id"], :name => "index_memberships"
+  add_index "memberships", ["group_id", "user_id"], :name => "gu"
+  add_index "memberships", ["user_id", "group_id"], :name => "ug"
 
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
@@ -357,8 +361,8 @@ ActiveRecord::Schema.define(:version => 20080904213700) do
     t.integer  "membership_policy",      :limit => 11
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact"
-    t.boolean  "may_pester"
+    t.boolean  "may_request_contact",                  :default => true
+    t.boolean  "may_pester",                           :default => true
     t.boolean  "may_burden"
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
@@ -376,6 +380,30 @@ ActiveRecord::Schema.define(:version => 20080904213700) do
 
   add_index "ratings", ["user_id"], :name => "fk_ratings_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
+
+  create_table "requests", :force => true do |t|
+    t.integer  "created_by_id",         :limit => 11
+    t.integer  "approved_by_id",        :limit => 11
+    t.integer  "recipient_id",          :limit => 11
+    t.string   "recipient_type",        :limit => 5
+    t.string   "email"
+    t.string   "code",                  :limit => 8
+    t.integer  "requestable_id",        :limit => 11
+    t.string   "requestable_type",      :limit => 10
+    t.integer  "shared_discussion_id",  :limit => 11
+    t.integer  "private_discussion_id", :limit => 11
+    t.string   "state",                 :limit => 10
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  execute "CREATE INDEX created_by_0_2 ON requests (created_by_id,state(2))"
+  execute "CREATE INDEX recipient_0_2_2 ON requests (recipient_id,recipient_type(2),state(2))"
+  execute "CREATE INDEX requestable_0_2_2 ON requests (requestable_id,requestable_type(2),state(2))"
+  add_index "requests", ["code"], :name => "code"
+  add_index "requests", ["created_at"], :name => "created_at"
+  add_index "requests", ["updated_at"], :name => "updated_at"
 
   create_table "taggings", :force => true do |t|
     t.integer  "taggable_id",   :limit => 11

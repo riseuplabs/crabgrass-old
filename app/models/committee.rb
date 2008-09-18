@@ -27,8 +27,7 @@ class Committee < Group
 
   # called when the parent's name has change
   def parent_name_changed
-    name = short_name
-    update_attribute(:name, name)
+    self.name = short_name
   end
   
   # custom name setter so that we can ensure that the parent's
@@ -43,12 +42,8 @@ class Committee < Group
   end
   alias_method :short_name=, :name=
   
-  # custom setter so that we can ensure that the the committee's
-  # name includes the parent's name.
   def parent=(p)
-    update_attribute(:parent_id, p.id)
-    parent_name_changed
-    parent.org_structure_changed(self)
+    raise 'call group.add_committee! instead'
   end
 
   ####################################################################

@@ -113,5 +113,50 @@ class User < ActiveRecord::Base
       self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  # Returns true if self has the specified level of access on the protected thing.
+  # Thing may be anything that defines the method:
+  #
+  #    has_access!(access_sym, user)
+  #
+  # Currently, this includes Page and Group.
+  #
+  # this method gets called a lot (ie current_user.may?(:admin,@page)) so 
+  # we in-memory cache the result.
+  #
+  def may?(perm, protected_thing)
+    begin
+      may!(perm, protected_thing)
+    rescue PermissionDenied
+      false
+    end
+  end
+  
+  def may!(perm, protected_thing)
+    return true if protected_thing.new_record?
+    @access ||= {}
+    (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+  end
+
+  # zeros out the in-memory page access cache. generally, this is called for
+  # you, but must be called manually in the case where page access was via a
+  # group and that group loses page access.
+  def clear_access_cache
+    @access = nil
+  end
+
+  # as special call used in special places: This should only be called if you
+  # know for sure that you can't use user.may?(:admin,thing)
+  def may_admin?(thing)
+    begin
+      thing.has_access!(:admin,self)
+    rescue PermissionDenied
+      false
+    end
+  end
   
 end

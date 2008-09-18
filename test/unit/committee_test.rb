@@ -15,10 +15,10 @@ class CommitteeTest < Test::Unit::TestCase
     c2 = Committee.create :name => 'food'
 
     assert_difference 'Group.find(%d).version'%g.id do
-      g.committees << c1
+      g.add_committee!(c1)
     end
     assert_difference 'Group.find(%d).version'%g.id do
-      g.committees << c2
+      g.add_committee!(c2)
     end
 
     g.reload
@@ -30,34 +30,44 @@ class CommitteeTest < Test::Unit::TestCase
     assert_nil Committee.find_by_name('food'), 'committee should die with group'
   end
 
+  def test_destroy_group
+    assert_nothing_raised do
+      Group.find(groups(:warm).id)
+    end
+    groups(:rainbow).destroy
+    assert_raises ActiveRecord::RecordNotFound, 'committee should be destroyed' do
+      Group.find(groups(:warm).id)
+    end
+  end
+
   def test_membership
     g = Group.create :name => 'riseup'
     c1 = Committee.create :name => 'finance'
     c2 = Committee.create :name => 'food'
-    g.committees << c1
-    g.committees << c2
-    u = users(:kangaroo)
+    g.add_committee!(c1)
+    g.add_committee!(c2)
+    user = users(:kangaroo)
     
-   
-    assert(!u.member_of?(g), 'user should not be member yet')
-    u.memberships.create :group => g
+    assert(!user.member_of?(g), 'user should not be member yet')
 
-    assert u.member_of?(g), 'user should be member of group'
-    assert u.member_of?(c1), 'user should also be a member of committee'
-    assert(u.direct_member_of?(g), 'user should be a direct member of the group')
-    assert(!u.direct_member_of?(c1), 'user should not be a direct member of the committee')
-    u.groups.delete(g)
+    user.memberships.create :group => g
+    user.update_membership_cache
 
-    assert(!u.member_of?(g), 'user should not be member of group after being removed')
-    assert(!u.member_of?(c1), 'user should not be a member of committee')
+    assert user.member_of?(g), 'user should be member of group'
+    assert user.member_of?(c1), 'user should also be a member of committee'
+    assert(user.direct_member_of?(g), 'user should be a direct member of the group')
+    assert(!user.direct_member_of?(c1), 'user should not be a direct member of the committee')
+    user.groups.delete(g)
+
+    assert(!user.member_of?(g), 'user should not be member of group after being removed')
+    assert(!user.member_of?(c1), 'user should not be a member of committee')
                
   end
   
   def test_naming
     g = Group.create :name => 'riseup'
     c = Committee.new :name => 'outreach'
-    c.parent = g
-    c.save
+    g.add_committee!(c)
     assert_equal 'riseup+outreach', c.full_name, 'committee full name should be in the form <groupname>+<committeename>'
     c.name = 'legal'
     c.save
@@ -72,16 +82,7 @@ class CommitteeTest < Test::Unit::TestCase
     g = Committee.create
     assert !g.valid?, 'committee with no name should not be valid'
   end
-  
-  def test_assignment
-    # we should be able to assign a parent even when the committee
-    # has no name    
-    parent = Group.create :name => 'parent'
-    c = Committee.new
-    c.parent = parent
-    ## TODO: add a assert_raises nothing here
-  end
-  
+    
   def test_associations
     assert check_associations(Committee)
   end
@@ -89,15 +90,15 @@ class CommitteeTest < Test::Unit::TestCase
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
     g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach'
-    g.committees << c
+    g.add_committee!(c)
     u = User.create :login => 'user'
     c.memberships.create :user => u
     c.save
 
-    group_page = Page.create :title => 'a group page', :public => false
+    group_page = Page.create! :title => 'a group page', :public => false
     group_page.add(g, :access => :admin)
     group_page.save
-    committee_page = Page.create :title => 'a committee page', :public => false, :group => c
+    committee_page = Page.create! :title => 'a committee page', :public => false, :group => c
     committee_page.add(c, :access => :admin)
     committee_page.save
 
@@ -109,7 +110,7 @@ class CommitteeTest < Test::Unit::TestCase
   def test_cant_pester_private_committee
     g = Group.create :name => 'riseup', :publicly_visible_committees => false
     c = Committee.create :name => 'outreach'
-    g.committees << c
+    g.add_committee!(c)
     
     u = User.create :login => 'user'
     
@@ -122,7 +123,7 @@ class CommitteeTest < Test::Unit::TestCase
     g.publicly_visible_group = true
     g.publicly_visible_committees = true
     c = Committee.create :name => 'outreach'
-    g.committees << c
+    g.add_committee!(c)
     
     u = User.create :login => 'user'
     

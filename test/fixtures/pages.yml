@@ -190,7 +190,7 @@ flow_test:
   id: 206
   title: flow test
   type: DiscussionPage
-  flow: 1
+  flow: 3
   public: 1
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"

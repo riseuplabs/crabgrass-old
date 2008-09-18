@@ -1,3 +1,18 @@
-This is the crabgrass translation panel.
+This is the Crabgrass translation panel.
 
-<%= link_to 'Translate Crabgrass', keys_path %>
+Choose a language to translate Crabgrass into:
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+  </tr>
+
+<% for language in @languages %>
+  <tr>
+    <td><%=h language.code %></td>
+    <td><%=h language.name %></td>
+    <td><%= link_to 'Translate', :controller => :keys, :language => language %></td>
+  </tr>
+<% end %>
+</table>

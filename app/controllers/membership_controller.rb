@@ -1,16 +1,10 @@
-=begin
-Membership Controller
----------------------
-
-All the relationships between users and groups are managed by this controller,
-including join requests.
-
-=end
+# Membership Controller
+# All the relationships between users and groups are managed by this controller,
 
 class MembershipController < ApplicationController
 
   stylesheet 'groups'
-  helper 'groups', 'application'
+  helper 'group', 'application'
     
   before_filter :login_required
 
@@ -20,45 +14,20 @@ class MembershipController < ApplicationController
     
   end
   
-  ###### USER ACTIONS #########################################################
-  
-  # request to join this group
-  def join
-    return unless request.post? # just show form on get.
-
-=begin
-# I'm not sure that this is a good idea, but and maybe it is never used
-    unless @group.users.any?
-#    require 'ruby-debug'; debugger;
-      # if the group has no users, then let the first person join.
-      @group.memberships.create :user => current_user
-      flash_message :success => 'You are the first person in this group'
-      redirect_to :action => 'show', :id => @group
-      return
-    end
-=end
-
-    page = Page.make :request_to_join_group, :user => current_user, :group => @group
-    if page.save
-      flash_message :success => 'Your request to join this group has been sent.'
-      discussion = Page.make :join_discussion, :user => current_user, :group => @group, :message => params[:message]
-      discussion.save
-      page.add_link discussion
-      redirect_to url_for(:controller => 'me/requests')
-    else
-      flash_message_now :object => page
-      render :action => 'show'
-    end
-  end
-  
   ###### MEMBER ACTIONS #########################################################
   
   # leave this group
   def leave
     return unless request.post? # show form on get
     
-    current_user.groups.delete(@group)
+    @group.remove_user!(current_user)
     flash_message :success => 'You have been removed from %s' / @group.name
+    redirect_to url_for_group(@group)
+  end
+  
+  # used only in the special case when you have admin access to a group that you are not yet directly a member of
+  def join
+    @group.add_user!(current_user)
     redirect_to url_for_group(@group)
   end
   
@@ -81,43 +50,7 @@ class MembershipController < ApplicationController
     end
     redirect_to :action => 'list', :id => @group
   end
-
-  def invite
-    return unless request.post? # form on get
     
-    wrong = []
-    sent = []
-    params[:users].split(/\s/).each do |login|
-      next if login.empty?
-      if user = User.find_by_login(login)
-        page = Page.make :invite_to_join_group, :group => @group,
-          :user => user, :from => current_user
-        if page.save
-          discussion = Page.make :invite_discussion, :group => @group,
-            :user => user, :from => current_user, :message => params[:message]
-          discussion.save
-          page.add_link discussion
-        end
-        sent << login
-      else
-        wrong << login
-      end
-    end
-    if wrong.any?
-      message :later => true, :error => "These invites could not be sent because the user names don't exist: " + wrong.join(', ')
-    elsif sent.any?
-      flash_message :success => 'Invites sent: ' + sent.join(', ')
-    end
-    redirect_to :action => 'list', :id => @group
-  end
-  
-  def requests
-    path = 'descending/created_at'
-    options = options_for_group(@group, :flow => :membership)
-    @pages = Page.find_by_path(path, options)
-    @columns = [:title, :created_by, :created_at, :contributors_count]
-  end
-  
   protected
     
   def context
@@ -138,16 +71,12 @@ class MembershipController < ApplicationController
   
   def authorized?
     return false unless logged_in?
-
-    return true if current_user.member_of? @group
-    
-    case params[:action]
-    when 'list'
-      return @group.profiles.public.may_see_members?
-    when 'join'
-      return @group.profiles.public.may_request_membership?
+    if action?(:list)
+      return current_user.may?(:admin,@group) || @group.profiles.visible_by(current_user).may_see_members?
+    elsif action?(:join)
+      return current_user.may?(:admin,@group)
     else
-      return false
+      return current_user.member_of?(@group)
     end
   end
 

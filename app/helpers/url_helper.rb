@@ -10,42 +10,50 @@ module UrlHelper
   # substituted in for %s, and the display name will be "boop group_name beep"
   #
   # If options[:action] is not included it is assumed to be show, and otherwise
-  # the the link goes to "/groups/action/group_name'
-  def name_and_path_for_group(arg,options={})
+  # the the link goes to "/group/action/group_name'
+  def name_and_url_for_group(arg,options={})
     if arg.instance_of? Integer
-      # this assumes that at some point simple id based finds will be cached in memcached
       arg = Group.find(arg)
-    end
-
-    if arg.instance_of? String
+    elsif arg.instance_of? String
       name = arg
-    elsif arg.is_a? Committee
+    elsif arg.is_a? Group
+      controller = arg.class.name.downcase
       name = arg.name
       if options[:full_name]
         display_name = arg.full_name
+      elsif options[:short_name]
+        display_name = arg.name
       else
         display_name = arg.display_name
       end
-    elsif arg.is_a? Group
-      name = arg.name
-      if options[:display_name]
-        display_name = arg.display_name
-      end
     end
+
     display_name ||= name
     display_name = options[:text] % display_name if options[:text]
     action = options[:action] || 'show'
-    if action == 'show'
-      path = "/#{name}"
+    if options[:path]
+      if options[:path].is_a? String
+        path = options[:path].split('/')
+      elsif options[:path].is_a? Array
+        path = options[:path]
+      end
+      path = path.select(&:any?)
     else
-      path = "/groups/#{action}/#{name}"
+      path = nil
     end
-    [display_name, path]  
+
+    if action == 'show'
+      url = "/#{name}"
+    else
+      controller ||= 'group'
+      url = {:controller => controller, :action => action, :id => name}
+      url[:path] = path if path
+    end
+    [display_name, url]  
   end
 
   def url_for_group(arg, options={})
-    display_name, path = name_and_path_for_group(arg,options)
-    path
+    name_and_url_for_group(arg,options)[1]
   end
 
   # arg might be a user object, a user id, or the user's login
@@ -113,6 +121,7 @@ module UrlHelper
     if arg.is_a? Integer
       @group_cache ||= {}
       # hacky fix for error when a page persists after it's group is deleted --af
+      # what is this trying to do? --e
       if not @group_cache[arg]
         if Group.exists?(arg)
           @group_cache[arg] = Group.find(arg)
@@ -124,7 +133,7 @@ module UrlHelper
       arg = @group_cache[arg]
     end
     
-    display_name, path = name_and_path_for_group(arg,options)
+    display_name, path = name_and_url_for_group(arg,options)
     style = options[:style]
     label = options[:label] || display_name
     klass = options[:class] || 'name_link'

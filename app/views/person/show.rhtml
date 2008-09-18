@@ -2,9 +2,9 @@
   <%= render :partial => 'profile/show', :locals => {:profile => @user.profiles.public} %>
 <% else -%>
   <% if @user.friend_of?(current_user) -%>
-    <%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user} %>
-  <% else -%>
-    <%= link_to 'add to my contacts', url_for(:controller => 'contact', :action => 'add', :id => @user) %>
+    <%= link_to 'remove from my contacts'.t, {:controller => 'contact', :action => 'remove', :id => @user} %>
+  <% elsif @user.profiles.visible_by(current_user).may_request_contact? -%>
+    <%= link_to 'add to my contacts', {:controller => 'contact', :action => 'add', :id => @user} %>
   <% end -%>
 
   <h1>Profile</h1>

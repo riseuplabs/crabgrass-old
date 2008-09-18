@@ -6,12 +6,14 @@ class AssetPageController < BasePageController
   include AssetPageHelper
 
   def show
+    redirect_to page_url(@page, :action => 'error') unless @asset
   end
 
   def create
     @page_class = AssetPage
     @stylesheet = 'page_creation'
     if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
       begin
         # create asset
         @asset = Asset.make params[:asset]
@@ -21,16 +23,16 @@ class AssetPageController < BasePageController
           return
         end
         
-        # create page
-        @page = create_new_page(@page_class)
-        @page.data = @asset
-        unless @page.title.any?
-          @page.title = @asset.basename
-        end
-        if @page.save
-          return redirect_to(page_url(@page))
-        end
+        params[:page][:title] = @asset.basename unless params[:page][:title].any?
+        @page = @page_class.create!(params[:page].merge(
+          :user => current_user,
+          :share_with => Group.find_by_id(params[:group_id]),
+          :access => :admin,
+          :data => @asset
+        ))  
+        redirect_to(page_url(@page))
       rescue Exception => exc
+        @page = exc.record
         flash_message_now :exception => exc
       end
     end
@@ -38,8 +40,8 @@ class AssetPageController < BasePageController
 
   def update
     @asset.update_attributes params[:asset]
-#    @asset.filename = @page.title + @asset.suffix
     if @asset.valid?
+      current_user.updated(@page)
       redirect_to(page_url(@page))
     else
       flash_message_now :object => @page

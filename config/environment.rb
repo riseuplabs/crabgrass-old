@@ -29,7 +29,7 @@ SECTION_SIZE = Site.default.pagination_size
 
 Rails::Initializer.run do |config|
 
-  config.load_paths += %w(associations discussion chat profile poll task assets).collect do |dir|
+  config.load_paths += %w(assets associations discussion chat profile poll task requests).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
   end
 

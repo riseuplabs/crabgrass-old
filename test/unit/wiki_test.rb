@@ -47,7 +47,10 @@ class WikiTest < Test::Unit::TestCase
     end
 
   end
-   
+  
+  def test_wiki_page
+  end
+
   def test_associations
     assert check_associations(Wiki)
   end

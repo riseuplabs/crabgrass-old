@@ -6,5 +6,5 @@ ACCESS_EDIT = 2
 ACCESS_VIEW = 3
 
 # types of page flows
-FLOW = {:membership => 1, :contacts => 2, :deleted => 3}.freeze
+FLOW = {:deleted => 3}.freeze
 

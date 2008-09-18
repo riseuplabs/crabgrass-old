@@ -1,0 +1,12 @@
+<% @title_box = capture do -%>
+  <%= link_to_breadcrumbs %>
+  <h1><%=h "Requests for %s"[:group_requests] % @group.display_name %></h1>
+<% end -%>
+
+<h2>incoming</h2>
+<%= render :partial => 'requests/table', :locals => {:requests => @incoming} %>
+
+<h2>outgoing</h2>
+<%= render :partial => 'requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
+
+<%= pagination_links(@outgoing) %>

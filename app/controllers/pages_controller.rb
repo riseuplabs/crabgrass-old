@@ -54,44 +54,6 @@ class PagesController < ApplicationController
       redirect_to page_url(page)
     end
   end
-
-  def access
-    if request.post?
-      if params[:remove_group]
-        @page.remove(Group.find_by_id(params[:remove_group]))
-      elsif params[:remove_user]
-        @page.remove(User.find_by_id(params[:remove_user]))
-      # maybe we shouldn't allow removal of last entity (?) -- now handled in view -af
-      elsif params[:add_name]
-        access = params[:access] || :admin
-        if group = Group.get_by_name(params[:add_name])
-          if current_user.may_pester? group
-            @page.add group, :access => access
-          else
-            flash_message :error => 'you do not have permission to do that'
-          end
-        elsif user = User.find_by_login(params[:add_name])
-          if current_user.may_pester? user
-            @page.remove user
-            @page.add user, :access => access
-          else
-            flash_message :error => 'you do not have permission to do that'
-          end
-        else
-          flash_message :error => 'group or user not found'
-        end
-      end
-      @page.save
-    end
-  end
-
-  def participation
-    
-  end
-  
-  def history
-  
-  end
         
   protected
   

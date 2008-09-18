@@ -1,0 +1,20 @@
+<h3><%= 'Navigation'.t %></h3>
+<ul class='side_list'>
+  <li>
+   <%= link_to_active 'home'.t, '/'+@group.name, params[:_context] == @group.name %>
+  </li>
+
+  <li>
+   <%= link_to_active 'search'.t, url_for_group(@group,:action => 'search') %>
+  </li>
+  <li>
+    <%= link_to_active 'archive'.t, url_for_group(@group, :action => 'archive') %>
+  </li>
+  <li>
+    <%= link_to_active 'tags'.t, url_for_group(@group, :action => 'tags') %>
+  </li>
+  <li>
+    <%= link_to_active 'tasks'.t, url_for_group(@group, :action => 'tasks') %>
+  </li>
+</ul>
+

@@ -96,7 +96,9 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   end
 
   def find
-    Page.find :all, options_for_find
+    options = options_for_find
+    #puts "Page.find(:all, #{options.inspect})"
+    Page.find :all, options
   end
 
   def paginate
@@ -168,6 +170,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     if flow.nil?
       @conditions << 'pages.flow IS NULL'
     elsif flow.instance_of? Symbol
+      raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
       @conditions << 'pages.flow = ?'
       @values << FLOW[flow]
     elsif flow.instance_of? Array

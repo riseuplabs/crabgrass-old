@@ -6,6 +6,13 @@
 
 module PageExtension::Users
 
+  # when we save, we want the users association to relect whatever changes have
+  # been made to user_participations
+  def reset_users
+    self.users.reset
+    true
+  end
+
   def self.included(base)
     base.instance_eval do
 
@@ -22,7 +29,8 @@ module PageExtension::Users
           find(:all, :conditions => 'changed_at IS NOT NULL')
         end
       end
-
+      
+      after_save :reset_users
     end
   end
 
@@ -58,7 +66,7 @@ module PageExtension::Users
     }
   end
 
-  # used for ferret index
+  # used for sphinx index
   def user_ids
     user_participations.collect{|upart|upart.user_id}
   end

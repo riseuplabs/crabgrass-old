@@ -20,6 +20,7 @@ module ApplicationHelper
 
   ## coverts bytes into something more readable 
   def friendly_size(bytes)
+    return unless bytes
     if bytes > 1.megabyte
       '%s MB' % (bytes / 1.megabyte)
     elsif bytes > 1.kilobyte
@@ -62,5 +63,9 @@ module ApplicationHelper
   def pagination_links(things, param_name='page')
     will_paginate things, :param_name => param_name, :renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev".t, :next_label => "%s &raquo;" % "next".t
   end
-
+  
+  def options_for_my_groups(selected=nil)
+    options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
+  end
+  
 end

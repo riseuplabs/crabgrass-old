@@ -19,14 +19,17 @@ class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
     assert_no_difference 'Page.count' do
       get :create, :id => DiscussionPage.class_display_name
       assert_response :success
-#      assert_template 'base_page/create'
     end
   
     assert_difference 'DiscussionPage.count' do
-      post :create, :id => DiscussionPage.class_display_name, :page => { :title => 'test discussion' }
-      assert_response :redirect
+      post :create, :id => DiscussionPage.class_display_name, :page => { :title => 'test discussion', :tag_list => 'humma, yumma' }
     end
-    
+    page = assigns(:page)
+    assert page
+    assert page.tag_list.include?('humma')
+    assert Page.find(page.id).tag_list.include?('humma')
+    assert_response :redirect
+
     get :show
     assert_response :success
   end

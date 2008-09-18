@@ -1,6 +1,9 @@
 in: do you like my @ function @?
 out: <p>do you like my <code>function</code>?</p>
 ---
+in: do you like my <code>function</code>?
+out: <p>do you like my <code>function</code>?</p>
+---
 in: 'This is an empty dictionary: @ {} @'
 out: '<p>This is an empty dictionary: <code>{}</code></p>'
 ---
@@ -16,7 +19,7 @@ in: |-
   _a_ < _b_
   </code>
 out: |-
-  <p><code>_a_ &lt; _b_</code></p>
+  <p><pre class='code'>_a_ &lt; _b_</pre></p>
 ---
 in: |-
   <code /etc/resolv.conf>
@@ -24,7 +27,7 @@ in: |-
   </code>
 out: |-
   <p><div class="codetitle">/etc/resolv.conf</div>
-  <code>nameserver 127.0.0.1</code></p>
+  <pre class='code'>nameserver 127.0.0.1</pre></p>
 ---
 in: what about <pre> __inline__</pre> this?
 out: <p>what about <pre>__inline__</pre> this?</p>
@@ -45,7 +48,7 @@ in: |-
   this is some really nice code
   \--
 out: |-
-  <p><code>this is some really nice code</code></p>
+  <p><pre class='code'>this is some really nice code</pre></p>
 ---
 in: |-
   /-- a little note
@@ -54,8 +57,8 @@ in: |-
   \--
 out: |-
   <p><div class="codetitle">a little note</div>
-  <code>this is some really nice code
-  and it continues</code></p>
+  <pre class='code'>this is some really nice code
+  and it continues</pre></p>
 ---
 in: |-
   <code>one fish</code>
@@ -64,24 +67,24 @@ in: |-
   
   <code>red fish</code>
 out: |-
-  <p><code>one fish</code></p>
-  <p><code>two fish</code></p>
-  <p><code>red fish</code></p>
+  <p><pre class='code'>one fish</pre></p>
+  <p><pre class='code'>two fish</pre></p>
+  <p><pre class='code'>red fish</pre></p>
 ---
 in: |-
   @@ a single line of code
 out: |-
-  <p><code>a single line of code</code></p>
+  <p><pre class='code'>a single line of code</pre></p>
 ---
 in: |-
   @@ a line of code with html <b>in it</b>
 out: |-
-  <p><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;</code></p>
+  <p><pre class='code'>a line of code with html &lt;b&gt;in it&lt;/b&gt;</pre></p>
 ---
 in: |-
   /--
   a line of code with html <b>in it</b>
   \--
 out: |-
-  <p><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;</code></p>
+  <p><pre class='code'>a line of code with html &lt;b&gt;in it&lt;/b&gt;</pre></p>
 

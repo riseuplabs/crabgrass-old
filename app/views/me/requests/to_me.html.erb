@@ -1,0 +1,9 @@
+<% @title_box = capture do -%>
+  <%= link_to_breadcrumbs %>
+  <h1><%= "Requests to me".t %></h1>
+<% end -%>
+
+<%= render :partial => 'requests/table', :locals => {:requests => @requests, :approvable => true} %>
+
+<%= pagination_links(@requests) %>
+
