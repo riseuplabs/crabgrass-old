@@ -4,8 +4,7 @@
 
 class RequestsController < ApplicationController
 
-  #stylesheet 'groups'
-  helper 'groups', 'application'
+  helper 'group', 'application'
     
   before_filter :login_required, :except => [:accept]
  
@@ -93,13 +92,22 @@ class RequestsController < ApplicationController
 
     begin
       users, groups, emails = Page.parse_recipients!(params[:recipients])
+      if @group.is_a? Network
+        users = []; emails = []
+      else
+        groups = []
+      end
       reqs = []; mailers = []
-      unless users.any? or emails.any?
+      unless users.any? or emails.any? or groups.any?
         raise ErrorMessage.new('recipient required'.t)
       end
       users.each do |user|
         reqs << RequestToJoinUs.create(:created_by => current_user,
           :recipient => user, :requestable => @group)
+      end
+      groups.each do |group|
+        reqs << RequestToJoinOurNetwork.create(:created_by=>current_user,
+          :recipient => group, :requestable => @group)
       end
       emails.each do |email|
         req = RequestToJoinUsViaEmail.create(:created_by => current_user,

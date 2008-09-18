@@ -1,6 +1,6 @@
 <% @title_box = capture do -%>
   <%= link_to_breadcrumbs %>
-  <h1><%=h "Requests for group %s"[:group_requests] % @group.display_name %></h1>
+  <h1><%=h "Requests for %s"[:group_requests] % @group.display_name %></h1>
 <% end -%>
 
 <h2>incoming</h2>

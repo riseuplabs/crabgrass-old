@@ -4,7 +4,8 @@
 <% end -%>
 
 <blockquote>
-  <p><%= :invite_info.t % group_type.t %> <br/> <i>(<%= :recipient_tip.t %>)</i></p>
+  <p><%= group_type == 'network' ? :network_invite_info.t : :invite_info.t % group_type.t %>
+  <br/> <i>(<%= :recipient_tip.t %>)</i></p>
   <%- form_tag(:controller => '/requests', :action => 'create_invite', :group_id => @group.id) do -%>
     <p>
       <%= text_area_tag 'recipients', params[:recipients], :rows => 2, :cols => 50 %>

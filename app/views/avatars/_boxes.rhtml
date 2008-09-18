@@ -4,12 +4,12 @@
   #
 -%>
 <%
-  side ||= 'right' 
-  groups ||= nil
-  people ||= nil
+  side = 'right' if side.nil? 
+  groups = [] if groups.nil?
+  people = [] if people.nil?
 %>
 <div class='iconboxes'>
-<% (groups || people || []).each do |e| -%>
+<% (groups + people).each do |e| -%>
 <%  url = url_for_group(e) if e.is_a? Group
     url = url_for_user(e) if e.is_a? User
     online = e.respond_to?(:online?) && e.online? ? 'online' : ''

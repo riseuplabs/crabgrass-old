@@ -9,6 +9,17 @@ class NetworkTest < Test::Unit::TestCase
     end
   end
 
+  def test_member_of
+    user = users(:blue)
+    group = groups(:animals)
+    network = groups(:cnt)
+    assert !user.direct_member_of?(network)
+    assert user.member_of?(group)
+    assert network.groups.include?(group)
+    assert user.member_of?(network)
+    assert user.all_group_ids.include?(network.id)
+  end
+
   def test_add_whole_groups
     network = groups(:fai)
     group1 = groups(:animals)

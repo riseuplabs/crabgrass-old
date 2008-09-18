@@ -35,11 +35,12 @@ ActionController::Routing::Routes.draw do |map|
   map.people 'people/:action/:id', :controller => 'people'
   map.connect 'person/:action/:id/*path', :controller => 'person'
   
-  map.groups  'groups/:action/:id', :controller => 'groups'
-  map.group   'groups/:action/:id', :controller => 'groups'
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /tags|archive|calendar|search/
+  map.groups   'groups/:action/:id', :controller => 'groups'
+  map.group    'group/:action/:id', :controller => 'group'
+  map.networks 'networks/:action/:id', :controller => 'networks'
+  map.network  'network/:action/:id', :controller => 'network'
+  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search/
 
-    
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
   map.connect '', :controller => "account"

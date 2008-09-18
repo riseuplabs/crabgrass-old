@@ -1,5 +1,5 @@
 <%- @title_box = capture do -%>
- <%= render :partial => 'groups/widgets/infopanel' %>
+ <%= render :partial => 'group/widgets/infopanel' %>
 <%- end -%>
 
 <div class='landing'>
@@ -19,4 +19,4 @@
   </div>
 </div>
 
-<link rel="alternate" href="/groups/search/<%= @group.name %>/rss" title="RSS Feed" type="application/rss+xml" />
+<link rel="alternate" href="/group/search/<%= @group.name %>/rss" title="RSS Feed" type="application/rss+xml" />

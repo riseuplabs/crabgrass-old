@@ -4,7 +4,7 @@
 class MembershipController < ApplicationController
 
   stylesheet 'groups'
-  helper 'groups', 'application'
+  helper 'group', 'application'
     
   before_filter :login_required
 
@@ -20,8 +20,14 @@ class MembershipController < ApplicationController
   def leave
     return unless request.post? # show form on get
     
-    current_user.groups.delete(@group)
+    @group.remove_user!(current_user)
     flash_message :success => 'You have been removed from %s' / @group.name
+    redirect_to url_for_group(@group)
+  end
+  
+  # used only in the special case when you have admin access to a group that you are not yet directly a member of
+  def join
+    @group.add_user!(current_user)
     redirect_to url_for_group(@group)
   end
   
@@ -65,13 +71,12 @@ class MembershipController < ApplicationController
   
   def authorized?
     return false unless logged_in?
-    return true if current_user.member_of? @group
     if action?(:list)
-      return @group.profiles.visible_by(current_user).may_see_members?
+      return current_user.may?(:admin,@group) || @group.profiles.visible_by(current_user).may_see_members?
     elsif action?(:join)
-      return @group.profiles.visible_by(current_user).may_request_membership?
+      return current_user.may?(:admin,@group)
     else
-      return false
+      return current_user.member_of?(@group)
     end
   end
 

@@ -6,8 +6,8 @@
     t.string   "url"
     t.string   "type"
     t.integer  "parent_id"
-    t.integer  "admin_group_id"
-    t.boolean  "council"
+    t.integer  "council_id"
+    t.boolean  "is_council"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "avatar_id"
@@ -17,12 +17,28 @@
   associations:
   group.children   => groups
   group.parent     => group
-  group.admin_group  => nil or group
+  group.council  => nil or group
   group.users      => users
 =end
 
 class Group < ActiveRecord::Base
   attr_accessible :name, :full_name, :short_name, :summary, :language
+
+  ##
+  ## FINDERS
+  ## 
+
+  # finds groups that user may see
+  named_scope :visible_by, lambda { |user|
+    select = 'DISTINCT groups.*'
+    # ^^ another way to solve duplicates would be to put profiles.friend = true in other side of OR
+    joins = "LEFT OUTER JOIN profiles ON profiles.entity_id = groups.id AND profiles.entity_type = 'Group'"
+    {:select => select, :joins => joins, :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, user.all_group_ids]}
+  }
+
+  # finds groups that are of type Group (but not Committee or Network)
+  named_scope :only_groups, :conditions => 'groups.type IS NULL'
+
   
   ####################################################################
   ## about this group
@@ -84,8 +100,6 @@ class Group < ActiveRecord::Base
   ####################################################################
   ## relationships to users
 
-  has_one :admin_group, :class_name => 'Group', :foreign_key => 'admin_group_id'   
-
   has_many :memberships, :dependent => :destroy,
     :before_add => :check_duplicate_memberships,
     :after_add => :update_membership,
@@ -139,6 +153,20 @@ class Group < ActiveRecord::Base
     ret
   end
   
+  # this is the preferred way to add users to a group.
+  # all other methods are deprecated.
+  def add_user!(user)
+    memberships.create! :user => user
+  end
+  
+  # this is the preferred way to remove users from a grou.
+  # all other methods are deprecated.
+  def remove_user!(user)
+    membership = memberships.detect{|m|m.user_id == user.id}
+    raise ErrorMessage.new('no such membership') unless membership
+    membership.destroy
+  end
+  
 # maps a user <-> group relationship to user <-> language
 #  def in_user_terms(relationship)
 #    case relationship
@@ -175,12 +203,11 @@ class Group < ActiveRecord::Base
     elsif access == :edit
       ok = user.member_of?(self)
     elsif access == :view
-      ok = user.member_of?(self) or profiles.public.may_see?
+      ok = user.member_of?(self) || profiles.public.may_see?
     end
     ok or raise PermissionDenied.new
   end
 
-  
   ####################################################################
   ## relationship to pages
   
@@ -339,6 +366,8 @@ class Group < ActiveRecord::Base
     real_council(reload) || self
   end
 
+  # overridden for Networks
+  def groups() [] end
   
   ######################################################
   ## temp stuff for profile transition

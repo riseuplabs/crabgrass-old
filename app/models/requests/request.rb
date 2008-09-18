@@ -51,13 +51,13 @@ class Request < ActiveRecord::Base
     {:conditions => {:created_by_id => user.id}}
   }
   named_scope :to_user, lambda { |user|
-    {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type IN ('Group','Network','Committee'))", user.id, user.group_ids.join(',')]}
+    {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.group_ids.join(',')]}
   }
   named_scope :to_group, lambda { |group|
-    {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, (group.type||'Group')]}
+    {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, 'Group']}
   }
   named_scope :from_group, lambda { |group|
-    {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, (group.type||'Group')]}
+    {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, 'Group']}
   }
 
   before_validation_on_create :set_default_state

@@ -1,9 +1,9 @@
-<!--[form:group]-->
+<% submit = true if submit.nil? %>
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 
 <h2 class='section'>
 <div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
-  <%= '%s Info' % group_type.capitalize %>
+  <%= '%s Info'[:group_info] % group_type.capitalize.t %>
 </div>
 </h2>
 
@@ -12,7 +12,7 @@
     <b>Full name</b><br/>
     A descriptive name used for display.
   </label><br/>
-  <%= text_field 'group', 'full_name'  %>
+  <%= text_field 'group', 'full_name', :size => 30  %>
 </p>
 
 <p>
@@ -27,7 +27,7 @@
 <p>
   <label for="group_language">
     <b>Language</b><br/>
-    <%= 'The main language of this %s.' / group_type %>
+    <%= 'The main language of this %s.'[:group_language] % group_type %>
   </label>
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
 </p>
@@ -36,23 +36,23 @@
 <p>
   <label for="group_summary">
     <b>Summary</b><br/>
-    <%= 'Brief information regarding this %s.' / group_type %>  
+    <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
   </label><br/>
-  <%= text_area 'group', 'summary', :rows => 4, :cols => 60  %>
+  <%= text_field 'group', 'summary', :size => 30, :maxlength => 256  %>
 </p>
 
-  <%= submit_tag 'Save changes' %>
+  <%= submit_tag 'Save changes'.t if submit %>
 
 <br/><br/>
 
 <h2 class='section'>
 <div style='padding: 8px; background: url(/images/actions/lock.png) no-repeat 100% 50%'>
-Group Privacy Settings
+<%= '%s Privacy Settings'[:group_privacy_settings] % group_type.capitalize %>
 </div>
 </h2>
 
 <p><%= check_box :group, :publicly_visible_group, :onclick => "show_or_hide_vis_opts();" %>
-<label for="group_visible"><b>Make Group Publicly Visible</b></label>
+<label for="group_visible"><b><%= 'Make %s Publicly Visible'[:group_publicly_visible] % group_type.capitalize %></b></label>
 <br>
 Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
 </p>
@@ -61,7 +61,7 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
 
 <% if not committee? -%>
   <p><%= check_box :group, :publicly_visible_committees %>
-  <label for="group_visible"><b>Make Committees Publicly Visible</b></label>
+  <label for="group_visible"><b><%= 'Make Committees Publicly Visible'[:committee_publicly_visible] %></b></label>
   <br>
   Committees are viewable by non-members at we.riseup.net/yourgroupname
   </p>
@@ -80,29 +80,7 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
   </p>
 </div>
 
-  <%= submit_tag 'Save changes' %>
-
-<!--
-<p><label for="group_language">Language</label><br/>
-<%# text_field 'group', 'language'  %></p>
-
-<p><label for="group_website">Website</label><br/>
-<%# text_field 'group', 'website'  %></p>
-
-<p><label for="group_location">Location</label><br/>
-<%# text_field 'group', 'location'  %></p>
-
-<p><label for="group_year_founded">Year Founded</label><br/>
-<%# text_field 'group', 'year_founded'  %></p>
--->
-<!--
-<p><label for="group_public_description">Public Description</label><br/>
-<%# text_area 'group', 'public_description', :rows => 10  %></p>
-
-<p><label for="group_private_description">Private Description</label><br/>
-<%# text_area 'group', 'private_description', :rows => 10  %></p>
--->
-
+  <%= submit_tag 'Save changes'.t if submit%>
 
 <!--[eoform:group]-->
 

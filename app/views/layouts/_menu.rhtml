@@ -43,6 +43,10 @@
     <% end -%>
   </li>
 
+  <li id='menu_networks'>
+    <span><%= link_to_active "Networks".t, networks_url, active == 'networks' %></span>
+  </li>
+
   <% if logged_in? -%>
   <li>
     <span><%= link_to_active "Chat".t, '/chat', active == 'chat' %></span>

@@ -7,7 +7,7 @@
 #
 class RequestToJoinUs < Request
   
-  validates_format_of :requestable_type, :with => /Group|Committee|Network/
+  validates_format_of :requestable_type, :with => /Group/
   validates_format_of :recipient_type, :with => /User/
 
   def validate_on_create

@@ -2,6 +2,8 @@ join_request_info: 'You will not become a member of this group until your reques
 
 invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %s."
 
+network_invite_info: "Enter the names of the groups you would like to invite to join this network."
+
 recipient_tip: "Seperate recipients with commas, spaces, or new lines."
 
 add_contact_info: "When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact."

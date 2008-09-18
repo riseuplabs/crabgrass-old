@@ -50,4 +50,27 @@ profile_for_animals:
   may_request_membership: true
   stranger: true
 
+profile_for_cnt:
+  id: 5
+  entity_type: "Group"
+  entity_id: 3001
+  may_see: true
+  may_see_members: false
+  may_request_membership: true
+  stranger: true
+  
+profile_for_cnt:
+  id: 6
+  entity_type: "Group"
+  entity_id: 3002
+  may_see: true
+  may_see_members: false
+  may_request_membership: true
+  stranger: true
+
+profile_for_warm:
+  id: 7
+  entity_type: "Group"
+  entity_id: 31
+  stranger: true
 

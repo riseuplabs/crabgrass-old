@@ -19,7 +19,7 @@
    <%= f.file_field :image_file %><br />
    or image URL<br />
    <%= f.text_field :image_file_url %><br />
-   <%= hidden_field_tag 'redirect', url_for(:controller=>'groups',:action=>'edit',:id=>@group) %>
+   <%= hidden_field_tag 'redirect', group_url(:action=>'edit',:id=>@group) %>
    <%= hidden_field_tag 'group_id', @group.id %>
    <br /><%= submit_tag 'Upload Image' %>
 <% end -%></p>

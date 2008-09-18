@@ -40,7 +40,7 @@ class DispatchController < ApplicationController
   def dispatch
     begin
       find_controller.process(request, response)
-    rescue NameError
+    rescue ActiveRecord::RecordNotFound
       @user = current_user
       @site = Site.default
       render :action => "not_found", :status => :not_found
@@ -65,6 +65,7 @@ class DispatchController < ApplicationController
   def find_controller
     page_handle = params[:_page]
     context = params[:_context]
+
     if context
       if context =~ /\ /
         # we are dealing with a committee!
@@ -75,9 +76,9 @@ class DispatchController < ApplicationController
     end
 
     if page_handle.nil?
-      return controller_for_groups if @group
+      return controller_for_group(@group) if @group
       return controller_for_people if @user
-      raise NameError.new
+      raise ActiveRecord::RecordNotFound.new
     elsif page_handle =~ /[ +](\d+)$/ || page_handle =~ /^(\d+)$/
       # if page handle ends with [:space:][:number:] or entirely just numbers
       # then find by page id. (the url actually looks like "my-page+52", but
@@ -102,7 +103,7 @@ class DispatchController < ApplicationController
       end
     end
 
-    raise NameError.new unless @page
+    raise ActiveRecord::RecordNotFound.new unless @page
     return controller_for_page(@page)
   end
   
@@ -172,10 +173,15 @@ class DispatchController < ApplicationController
     new_controller(page.controller_class_name)
   end
   
-  def controller_for_groups
+  def controller_for_group(group)
     params[:action] = 'show'
-    params[:controller] = 'groups'
-    new_controller('GroupsController')
+    if group.instance_of? Network
+      params[:controller] = 'network'
+      new_controller('NetworkController')
+    else
+      params[:controller] = 'group'
+      new_controller('GroupController')
+    end
   end
   
   def controller_for_people

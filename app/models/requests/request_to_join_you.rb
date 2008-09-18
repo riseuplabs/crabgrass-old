@@ -7,7 +7,7 @@
 #
 class RequestToJoinYou < Request
   
-  validates_format_of :recipient_type, :with => /Group|Committee|Network/
+  validates_format_of :recipient_type, :with => /Group/
 
   def validate_on_create
     if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)

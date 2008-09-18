@@ -3,15 +3,15 @@
 <tr>
   <td style='width:50%'>
     <%- if @group.publicly_visible_members or may_admin_group? %>
-      <h2>Members <span><%= @group.users.count %> members</span></h2>
       <%- cache(group_cache_key(@group, :what => 'members')) do -%>
-        <%= render :partial => 'groups/widgets/members' %>
+        <h2>Members <span><%= @group.users.size + @group.groups.size %> members</span></h2>
+        <%= render :partial => 'group/widgets/members' %>
       <%- end -%>
     <%- end -%>
   </td>
   <td rowspan='2' style='width:50%' class='right'>
     <h2>Group Information</h2>
-    <%= render :partial => 'groups/widgets/info' %>
+    <%= render :partial => 'group/widgets/info' %>
   </td>
 </tr>
 <tr>
@@ -19,7 +19,7 @@
     <% if not @group.committee? and (@group.publicly_visible_committees or may_admin_group?) -%>
       <h2>Committees</h2>
       <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
-        <%= render :partial => 'groups/widgets/committees' %>
+        <%= render :partial => 'group/widgets/committees' %>
       <%- end -%>
     <% end -%>
   </td>

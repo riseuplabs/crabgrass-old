@@ -49,28 +49,24 @@ public_group:
   id: 1000
   name: public_group_everyone_can_see
   summary: The public group that everyone can see
-#  publicly_visible_group: true
 public_committee:
   id: 1001
   parent_id: 1000
   name: public_group_everyone_can_see+public_committee
   summary: The public committee of the public group that everyone can see
   type: Committee
-#  publicly_visible_group: true
 private_committee:
   id: 1002
   parent_id: 1000
   name: public_group_everyone_can_see+private_committee
   summary: The private committee of the public group that everyone can see
   type: Committee
-#  publicly_visible_group: false
 
 
 private_group:
   id: 2000
   name: private_group_not_everyone_can_see
   summary: The private group that not everyone can see
-#  publicly_visible_group: false
 
 cnt:
   id: 3001

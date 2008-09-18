@@ -1,23 +1,17 @@
 <% if logged_in? -%>
-
-<%= link_to_icon 'Create a new group', 'actions/plus.png', :action => 'create' %>
-
-<h1>My groups</h1>
-<div class='workarea' >
-<% if current_user.groups %>
-<%= render :partial => 'group', :collection => current_user.groups %>
-<% else %>
-<%=  'You have no groups'.t %>
-<% end %>
-<br class='clear' />
-</div>
-
+  <%= link_to_icon 'Create a new group', 'actions/plus.png', :action => 'create' %>
+  <%- unless params[:page] %>
+    <h1><%= 'My groups'.t %></h1>
+    <%- if current_user.groups -%>
+      <%= render :partial => 'group', :collection => current_user.groups %>
+    <%- else -%>
+      <%= 'You have no groups'.t %>
+    <%- end -%>
+    <br style='clear:both' />
+  <%- end -%>
 <% end -%>
 
-<h1 style='clear:both'>All groups</h1>
-<div class='workarea'>
-<%= render :partial => 'group', :collection => @groups.select {|g| g.publicly_visible_group } %>
-<br class='clear' />
-</div>
-
+<h1 style='clear:both'><%= 'All groups'.t %></h1>
+<%= render :partial => 'group', :collection => @groups %>
 <br style='clear:both' />
+<%= pagination_links(@groups) %>
