@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080915045315) do
+ActiveRecord::Schema.define(:version => 20080918080439) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -105,10 +105,11 @@ ActiveRecord::Schema.define(:version => 20080915045315) do
   end
 
   create_table "federatings", :force => true do |t|
-    t.integer "group_id",      :limit => 11
-    t.integer "network_id",    :limit => 11
-    t.integer "council_id",    :limit => 11
-    t.integer "delegation_id", :limit => 11
+    t.integer  "group_id",      :limit => 11
+    t.integer  "network_id",    :limit => 11
+    t.integer  "council_id",    :limit => 11
+    t.integer  "delegation_id", :limit => 11
+    t.datetime "created_at"
   end
 
   add_index "federatings", ["group_id", "network_id"], :name => "gn"
