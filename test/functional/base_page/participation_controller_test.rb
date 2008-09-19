@@ -97,6 +97,18 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     assert user.may?(:admin, page), "blue should still have access to new wiki"
   end
   
+  def test_destroy
+    owner = users(:blue)
+    friend = users(:red)
+    page = Page.create! :title => 'robot tea party', :user => owner, :share_with => friend
+
+    login_as :blue
+    post :destroy, :page_id => page.id, :upart_id => page.user_participations.detect{|up|up.user==friend}.id
+
+    page = Page.find(page.id)
+    assert_equal [owner.id], page.user_ids
+  end
+
   def test_details
   # TODO: Write this test
   end
