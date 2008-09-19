@@ -1,0 +1,34 @@
+--- 
+assets_001: 
+  content_type: image/jpeg
+  size: "100266"
+  type: ImageAsset
+  page_id: 
+  id: "1"
+  version: "1"
+  height: "500"
+  filename: bee.jpg
+  created_at: 2008-09-19 06:15:53
+  width: "333"
+assets_002: 
+  content_type: image/jpeg
+  size: "107459"
+  type: ImageAsset
+  page_id: 
+  id: "2"
+  version: "1"
+  height: "321"
+  filename: photo.jpg
+  created_at: 2008-09-19 06:16:19
+  width: "500"
+assets_003: 
+  content_type: image/jpeg
+  size: "51636"
+  type: ImageAsset
+  page_id: 
+  id: "3"
+  version: "1"
+  height: "475"
+  filename: crabgrass.jpg
+  created_at: 2008-09-19 07:26:44
+  width: "482"

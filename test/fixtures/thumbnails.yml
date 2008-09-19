@@ -1,0 +1,232 @@
+--- 
+thumbnails_020: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "23"
+  height: "197"
+  filename: crabgrass_medium.jpg
+  parent_id: "3"
+  failure: 
+  width: "200"
+thumbnails_019: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "22"
+  height: "63"
+  filename: crabgrass_small.jpg
+  parent_id: "3"
+  failure: 
+  width: "64"
+thumbnails_008: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "8"
+  height: "128"
+  filename: photo_medium.jpg
+  parent_id: "2"
+  failure: "0"
+  width: "200"
+thumbnails_021: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "24"
+  height: "475"
+  filename: crabgrass_large.jpg
+  parent_id: "3"
+  failure: 
+  width: "482"
+thumbnails_010: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "10"
+  height: "41"
+  filename: photo_small.jpg
+  parent_id: "2"
+  failure: 
+  width: "64"
+thumbnails_009: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "9"
+  height: "321"
+  filename: photo_large.jpg
+  parent_id: "2"
+  failure: "0"
+  width: "500"
+thumbnails_011: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "11"
+  height: "128"
+  filename: photo_medium.jpg
+  parent_id: "2"
+  failure: 
+  width: "200"
+thumbnails_012: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "12"
+  height: "321"
+  filename: photo_large.jpg
+  parent_id: "2"
+  failure: 
+  width: "500"
+thumbnails_001: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "1"
+  height: "64"
+  filename: bee_small.jpg
+  parent_id: "1"
+  failure: 
+  width: "43"
+thumbnails_013: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "16"
+  height: "64"
+  filename: bee_small.jpg
+  parent_id: "3"
+  failure: 
+  width: "43"
+thumbnails_002: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "2"
+  height: "200"
+  filename: bee_medium.jpg
+  parent_id: "1"
+  failure: 
+  width: "133"
+thumbnails_014: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "17"
+  height: "200"
+  filename: bee_medium.jpg
+  parent_id: "3"
+  failure: 
+  width: "133"
+thumbnails_003: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "3"
+  height: "500"
+  filename: bee_large.jpg
+  parent_id: "1"
+  failure: 
+  width: "333"
+thumbnails_015: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "18"
+  height: "500"
+  filename: bee_large.jpg
+  parent_id: "3"
+  failure: 
+  width: "333"
+thumbnails_004: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "4"
+  height: "64"
+  filename: bee_small.jpg
+  parent_id: "1"
+  failure: 
+  width: "43"
+thumbnails_016: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "19"
+  height: "63"
+  filename: crabgrass_small.jpg
+  parent_id: "3"
+  failure: "0"
+  width: "64"
+thumbnails_005: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "5"
+  height: "200"
+  filename: bee_medium.jpg
+  parent_id: "1"
+  failure: 
+  width: "133"
+thumbnails_017: 
+  name: medium
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "20"
+  height: "197"
+  filename: crabgrass_medium.jpg
+  parent_id: "3"
+  failure: "0"
+  width: "200"
+thumbnails_006: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: Asset::Version
+  id: "6"
+  height: "500"
+  filename: bee_large.jpg
+  parent_id: "1"
+  failure: 
+  width: "333"
+thumbnails_018: 
+  name: large
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "21"
+  height: "475"
+  filename: crabgrass_large.jpg
+  parent_id: "3"
+  failure: "0"
+  width: "482"
+thumbnails_007: 
+  name: small
+  content_type: image/jpeg
+  size: 
+  parent_type: ImageAsset
+  id: "7"
+  height: "41"
+  filename: photo_small.jpg
+  parent_id: "2"
+  failure: "0"
+  width: "64"

@@ -151,7 +151,7 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to 'group/search/rainbow/text/e'
     assert_not_nil assigns(:pages)
-    assert assigns(:pages).length > 0, "should have some search results when filter for discussions"
+    assert assigns(:pages).length > 0, "should have some search results when filter for text"
   end
 
   def test_search_when_not_logged_in

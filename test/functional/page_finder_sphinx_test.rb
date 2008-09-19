@@ -12,7 +12,7 @@ require 'set'
 class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderSphinxTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :pages,
+  fixtures :groups, :users, :memberships, :pages, :page_terms,
    :user_participations, :group_participations, :taggings, :tags
   
   def setup
@@ -52,6 +52,7 @@ class PageFinderSphinxTest < Test::Unit::TestCase
     ]
 
     searches.each do |search_str, search_code|
+      #puts 'trying... %s' % search_str
       sphinx_pages = Page.find_by_path(
         search_str, @controller.options_for_me(:method => :sphinx, :per_page => 1000)
       )
@@ -62,6 +63,7 @@ class PageFinderSphinxTest < Test::Unit::TestCase
     end
 
     searches.each do |search_str, search_code|
+      #puts 'trying... %s' % search_str
       sphinx_pages = Page.find_by_path(
         search_str, @controller.options_for_group(groups(:rainbow), :method => :sphinx, :per_page => 1000)
       )
