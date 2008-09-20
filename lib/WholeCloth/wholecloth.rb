@@ -28,16 +28,14 @@ class WholeCloth < RedCloth::TextileDoc
     end
 
   # code blocks  
-  CG_CODE_BEGIN = Regexp::quote('/--')
-  CG_CODE_END = Regexp::quote('\--')
-  CRABGRASS_MULTI_LINE_CODE_RE = /^#{CG_CODE_BEGIN}( +[^\n]*)?(\n.*\n)#{CG_CODE_END}(\n|$)/m
+  CRABGRASS_MULTI_LINE_CODE_RE = /^\/--( +[^\n\r]*)?([\n\r]+.*?[\n\r]+)\\--([\n\r]+|$)/m
   CRABGRASS_SINGLE_LINE_CODE_RE = /^@@( )(.*)$/
   CRABGRASS_CODE_RE = Regexp::union(CRABGRASS_MULTI_LINE_CODE_RE, CRABGRASS_SINGLE_LINE_CODE_RE)
   def crabgrass_code( text )
     text.gsub!( CRABGRASS_CODE_RE ) do |blk|
       body = $2||$5
       note = $1||$4  
-      bypass_filter( format_block_code("<code #{note}>", body) )
+      bypass_filter( format_block_code("<code #{note}>", body) ) + "\n"
     end
   end
   
@@ -159,7 +157,7 @@ class WholeCloth < RedCloth::TextileDoc
  
   def to_html(*options, &block)
     @block = block
-    options += [:crabgrass_offtags, :crabgrass_link, :crabgrass_auto_link, :crabgrass_embedded_object, :crabgrass_code, :crabgrass_markdown_bq, :crabgrass_setext_header]
+    options += [:crabgrass_offtags, :crabgrass_code, :crabgrass_link, :crabgrass_auto_link, :crabgrass_embedded_object, :crabgrass_markdown_bq, :crabgrass_setext_header]
     html = super(*options)
     html.gsub!(OFFTAG_RE) do |m|
     @offtag_list[$1.to_i-1]#replace offtag with the corresponding entry
@@ -205,10 +203,10 @@ class WholeCloth < RedCloth::TextileDoc
       ret = "<#{tagname}>#{body.strip}</#{tagname}>"
     else
       htmlesc(body, :noQuotes)
-      ret = "<pre class='code'>#{body.strip}</pre>"
+      ret = "<pre class='code'>#{body.strip}</pre>\n"
     end
     if arg.any?
-      ret = "<div class=\"#{tagname}title\">#{arg}</div>\n#{ret}"
+      ret = "<div class=\"#{tagname}title\">#{arg}</div>\n"
     end
     ret
   end
