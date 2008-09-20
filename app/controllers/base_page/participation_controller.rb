@@ -105,6 +105,7 @@ class BasePage::ParticipationController < ApplicationController
         :mailer_options => mailer_options
       }
       current_user.share_page_with!(@page, recipients, options)
+      @page.save!
       close_popup
     rescue Exception => exc
       flash_message_now :exception => exc
@@ -128,6 +129,7 @@ class BasePage::ParticipationController < ApplicationController
       (users+groups).each do |thing|
         @page.add(thing, :access => params[:access].to_sym).save!
       end
+      @page.save!
       render :update do |page|
         page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
       end
@@ -141,18 +143,20 @@ class BasePage::ParticipationController < ApplicationController
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access. 
   def destroy
-    @upart = UserParticipation.find params[:upart_id] if params[:upart_id]
-    if @upart and @upart.user_id != @page.created_by_id
-      @upart.destroy
+    upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
+    if upart and upart.user_id != @page.created_by_id
+      @page.remove(upart.user) # this is the only way users should be removed.
+      @page.save!
     end
 
-    @gpart = GroupParticipation.find params[:gpart_id] if params[:gpart_id]
-    if @gpart and @gpart.group_id != @page.group_id
-      @gpart.destroy
+    gpart = (GroupParticipation.find(params[:gpart_id]) if params[:gpart_id])
+    if gpart and gpart.group_id != @page.group_id
+      @page.remove(gpart.group) # this is the only way groups should be removed.
+      @page.save!
     end
 
     render :update do |page|
-      page.hide dom_id(@upart || @gpart)
+      page.hide dom_id(upart || gpart)
     end
   end
 
@@ -184,12 +188,4 @@ class BasePage::ParticipationController < ApplicationController
     true
   end
   
-  #after_filter :save_page
-  #def save_page
-  #  if @page and (@page.changed? or @page.association_changed?)
-  #    @page.save
-  #  end
-  #  true
-  #end
-
 end

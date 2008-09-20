@@ -51,6 +51,15 @@ class ParticipationTest < Test::Unit::TestCase
     assert !page.users.include?(user), 'page must NOT have an association with user'
     assert !page.groups.include?(group), 'page must NOT have an association with group'	
   end
+  
+  def test_ids_update
+    user = users(:blue)
+    page = Page.create! :title => 'robot tea party', :user => user
+    assert_equal [user.id], page.user_ids
+    page.remove(user)
+    page.save!
+    assert_equal [], page.user_ids
+  end
 
 end
 

@@ -46,8 +46,8 @@ require 'pathname'
 module AssetExtension # :nodoc:
   module Storage
 
-    @@private_storage = "#{RAILS_ROOT}/assets"
-    @@public_storage = "#{RAILS_ROOT}/public/assets"
+    @@private_storage = ASSET_PRIVATE_STORAGE # \ set in environments/*.rb
+    @@public_storage  = ASSET_PUBLIC_STORAGE  # /
     @@public_url_path = "/assets"
     mattr_accessor :private_storage, :public_storage, :public_url_path
 

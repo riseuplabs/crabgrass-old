@@ -94,6 +94,7 @@ module UserExtension::Sharing
     page.users.delete(self)
     page.updated_by_id_will_change!
     page.association_will_change(:users)
+    page.user_participations.reset
   end
      
   # set resolved status vis-à-vis self.

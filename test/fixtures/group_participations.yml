@@ -31,3 +31,18 @@ rainbow_tasklist:
   group_id: 3
   access: 1
 
+animals_asset1:
+  page_id: 211
+  group_id: 2
+  access: 1
+
+animals_asset2:
+  page_id: 212
+  group_id: 2
+  access: 1
+
+animals_asset3:
+  page_id: 213
+  group_id: 2
+  access: 1
+

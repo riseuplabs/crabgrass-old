@@ -239,6 +239,7 @@ class Group < ActiveRecord::Base
     page.groups.delete(self)
     page.group_id_will_change!
     page.association_will_change(:groups)
+    page.group_participations.reset
   end
   
   def may?(perm, page)

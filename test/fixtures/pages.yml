@@ -96,7 +96,7 @@ ranked_vote:
   created_by_login: quentin
   updated_by_id: 3
   updated_by_login: gerrard
-<% updated = rand(46080); created = updated + rand(46080) %>
+<% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
@@ -110,7 +110,7 @@ tasklist1:
   created_by_login: quentin
   updated_by_id: 3
   updated_by_login: gerrard
-<% updated = rand(46080); created = updated + rand(46080) %>
+<% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
@@ -126,7 +126,7 @@ tasklist2:
   updated_by_login: orange
   resolved: false
   public: 1
-<% updated = rand(46080); created = updated + rand(46080) %>
+<% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
@@ -209,4 +209,86 @@ wiki:
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-  
+
+##
+## ASSETS
+##
+
+asset1: 
+  group_name: animals
+  name: 
+  created_by_login: blue
+  updated_by_id: "4"
+  public: 
+  resolved: "1"
+  title: bee
+  data_type: Asset
+  type: AssetPage
+  starts_at: 
+  updated_by_login: blue
+  group_id: "2"
+  message_count: "0"
+  created_by_id: "4"
+  id: "211"
+  summary: ""
+  flow: 
+  posts_count: "0"
+  ends_at: 
+  contributors_count: "0"
+  data_id: "1"
+<% updated = rand(4320); created = updated + rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+asset2: 
+  group_name: animals
+  name: 
+  created_by_login: blue
+  updated_by_id: "4"
+  public: 
+  resolved: "1"
+  title: sunset
+  data_type: Asset
+  type: AssetPage
+  starts_at: 
+  updated_by_login: blue
+  group_id: "2"
+  message_count: "0"
+  created_by_id: "4"
+  id: "212"
+  summary: ""
+  flow: 
+  posts_count: "0"
+  ends_at: 
+  contributors_count: "0"
+  data_id: "2"
+<% updated = rand(4320); created = updated + rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+asset3: 
+  group_name: animals
+  name: 
+  created_by_login: blue
+  updated_by_id: "4"
+  public: 
+  resolved: "1"
+  title: crabgrass
+  data_type: Asset
+  type: AssetPage
+  starts_at: 
+  updated_by_login: blue
+  group_id: "2"
+  message_count: "0"
+  created_by_id: "4"
+  id: "213"
+  summary: ""
+  flow: 
+  posts_count: "0"
+  ends_at: 
+  contributors_count: "0"
+  data_id: "3"
+<% updated = rand(4320); created = updated + rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
