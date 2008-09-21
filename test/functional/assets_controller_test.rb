@@ -5,7 +5,8 @@ require 'assets_controller'
 class AssetsController; def rescue_action(e) raise e end; end
 
 class AssetsControllerTest < Test::Unit::TestCase
-  fixtures :users, :pages, :user_participations
+  fixtures :users, :pages, :user_participations, :assets
+  
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 

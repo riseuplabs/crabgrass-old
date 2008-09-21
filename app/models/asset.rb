@@ -42,6 +42,31 @@ class Asset < ActiveRecord::Base
   validates_presence_of :filename
 
   ##
+  ## FINDERS
+  ##
+
+  # Use page_terms to find what assets the user has access to. Note that it is
+  # necessary to match against both access_ids and tags, since the index only
+  # works if both fields are included.
+  named_scope :visible_to_user, lambda { |user|
+    access_ids = "+(%s)" % Page.access_ids_for(
+      :user_ids => [user.id], :group_ids => user.group_ids
+    ).join(' ')
+    { :select => 'assets.*', :joins => :page_terms,
+      :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_ids]
+    }
+  }
+
+  named_scope :not_attachment, :conditions => ['is_attachment = ?',false]
+
+  named_scope :most_recent, :order => 'updated_at DESC'
+
+  # one of :image, :audio, :video, :document
+  named_scope :media_type, lambda {|type|
+    {:conditions => ["is_#{type} = ?",true]}
+  }
+
+  ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
   ## 
 
@@ -71,6 +96,8 @@ class Asset < ActiveRecord::Base
       Media::MimeType.description_from_mime_type(content_type)
     end
   end
+   self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
+     'is_image' << 'is_audio' << 'is_video' << 'is_document'
 
   ##
   ## DEFINE THE CLASS Asset::Version
@@ -130,10 +157,19 @@ class Asset < ActiveRecord::Base
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page(); pages.first || parent_page; end
 
+  belongs_to :page_terms
+
   # some asset subclasses (like AudioAsset) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
     nil
+  end
+
+  before_save :update_is_attachment
+  def update_is_attachment
+    if page_id_changed?
+      self.is_attachment = true if page_id
+    end
   end
   
   ##
@@ -152,14 +188,21 @@ class Asset < ActiveRecord::Base
   ## ASSET CREATION
   ##
 
-  # auto-determine the appropriate Asset class from the file_data.
+  # Auto-determine the appropriate Asset class from the file_data, and calls
+  # create on that class.
   # eg. Asset.make(attributes) ---> ImageAsset.create(attributes)
   #     if attributes contains an image file.
   def self.make(attributes = nil)
-     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-     asset_class.create(attributes)
+    asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
+    asset_class.create(attributes)
   end
 
+  # like make(), but builds the asset in memory and does not save it.
+  def self.build(attributes = nil)
+    asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
+    asset_class.new(attributes)
+  end
+  
   # eg: 'image/jpg' --> ImageAsset
   def self.class_for_mime_type(mime)
     if mime
@@ -181,5 +224,35 @@ class Asset < ActiveRecord::Base
   def set_default_type
     self.type ||= 'Asset'  # make Asset the default type so Asset::Version.versioned_type will be accurate.
   end
+
+  ##
+  ## MEDIA TYPES
+  ## (to be overridden by subclasses)
+  ##
+
+  # Converts the boolean media flags to a list of integers.
+  # This is used for sphinx indexing.
+  def media_flag_enums
+    ret = []
+    ret << MEDIA_TYPE[:audio] if is_audio?
+    ret << MEDIA_TYPE[:video] if is_video?
+    ret << MEDIA_TYPE[:image] if is_image?
+    ret << MEDIA_TYPE[:document] if is_document?
+    ret.join ' '
+  end
+
+  before_save :reset_media_flags
+  def reset_media_flags
+    if content_type_changed? 
+      is_audio = false
+      is_video = false
+      is_image = false
+      is_document = false
+      update_media_flags()
+    end
+  end
+
+  # to be overridden by subclasses
+  def update_media_flags() end
 
 end

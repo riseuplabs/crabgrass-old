@@ -8,3 +8,11 @@ ACCESS_VIEW = 3
 # types of page flows
 FLOW = {:deleted => 3}.freeze
 
+# enum of media types
+MEDIA_TYPE = {
+  :image => 1, 
+  :audio => 2,
+  :video => 3,
+  :document => 4
+}.freeze
+

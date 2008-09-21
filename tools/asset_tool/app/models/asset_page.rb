@@ -1,4 +1,3 @@
-
 class AssetPage < Page
 
   def icon
@@ -31,6 +30,20 @@ class AssetPage < Page
     thumbnail = self.asset.thumbnail(:txt)
     thumbnail.generate unless File.exists?(thumbnail.private_filename)
     File.open(thumbnail.private_filename).readlines rescue ""
+  end
+
+  # called by Page#update_page_terms
+  def custom_page_terms(terms)
+    asset = self.data
+    if asset
+      if asset.new_record?
+        asset.page_terms = terms
+      elsif asset.page_terms_id != terms.id
+        asset.page_terms_id = terms.id
+        asset.save_without_revision!
+      end
+      terms.media = asset.media_flag_enums
+    end
   end
 
 end

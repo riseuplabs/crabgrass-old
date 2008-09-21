@@ -33,6 +33,7 @@ class PageTerms < ActiveRecord::Base
       # flags and access
       has :resolved
       has :access_ids, :type => :multi # multi: indexes as an array of ints
+      has :media, :type => :multi
 
       # index options
       set_property :delta => true

@@ -4,8 +4,8 @@ require 'me/requests_controller'
 # Re-raise errors caught by the controller.
 class Me::RequestsController; def rescue_action(e) raise e end; end
 
-class RequestsControllerTest < Test::Unit::TestCase
-  fixtures :groups, :pages, :users, :memberships
+class Me::RequestsControllerTest < Test::Unit::TestCase
+  fixtures :groups, :users, :memberships, :requests
   
   def setup
     @controller = Me::RequestsController.new

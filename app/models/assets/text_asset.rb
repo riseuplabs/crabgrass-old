@@ -4,6 +4,10 @@
 
 class TextAsset < Asset
 
+  def update_media_flags
+    self.is_document = true
+  end
+
   define_thumbnails(
     :odt    => {:ext => 'odt', :proxy => true},
     :txt    => {:ext => 'txt', :depends => :odt},

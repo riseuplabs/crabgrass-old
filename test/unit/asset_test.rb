@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssetTest < Test::Unit::TestCase
-  fixtures :groups
+  fixtures :groups, :users, :page_terms, :assets, :pages
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -243,6 +243,27 @@ class AssetTest < Test::Unit::TestCase
     Media::Process::Base.log_to_stdout_when = :on_error
   end
 
+  def test_search
+    user = users(:kangaroo)
+    correct_ids = Asset.find(:all).collect do |asset|
+      asset.id if user.may?(:view, asset.page)
+    end.compact.sort
+    ids = Asset.visible_to_user(user).media_type(:image).find(:all).collect{|asset| asset.id}
+    assert_equal correct_ids, ids
+  end
+
+  def test_asset_page
+    asset = Asset.build(:uploaded_data => upload_data('photo.jpg'))
+    page = nil
+    assert_nothing_raised do 
+      page = AssetPage.create! :title => 'hi', :data => asset
+    end
+    assert_equal asset, page.data
+    asset.reload
+    assert asset.page_terms
+    assert "1", page.data.page_terms.media 
+  end
+  
   protected
 
   def debug

@@ -11,6 +11,10 @@ What doc files may generate thumbnails? This is set by lib/media/processors.rb
 
 class DocAsset < Asset
 
+  def update_media_flags
+    self.is_document = true
+  end
+
   define_thumbnails(
     :pdf    => {:ext => 'pdf'}, 
     :small  => {:size => '64x64>',   :ext => 'jpg', :title => 'Small Thumbnail'}, 

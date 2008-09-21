@@ -1,5 +1,9 @@
 class SpreadsheetAsset < Asset
 
+  def update_media_flags
+    self.is_document = true
+  end
+
   define_thumbnails(
     :ods    => {:ext => 'ods', :proxy => true},
     :csv    => {:ext => 'csv', :depends => :ods},

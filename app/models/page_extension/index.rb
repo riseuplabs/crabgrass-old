@@ -96,7 +96,8 @@ module PageExtension::Index
       end
 
       # text
-      terms.title     = title.capitalize + ' ' + tag_list.join(' ') # start with capital letter for sorting
+      terms.title     = title.capitalize + ' ' + tag_list.join(' ')
+                      # ^^ start with capital letter for sorting
       terms.tags      = Page.searchable_tag_list(tag_list).join(' ')
       terms.body      = summary_terms + body_terms
       terms.comments  = comment_terms
@@ -105,7 +106,12 @@ module PageExtension::Index
       # access control
       terms.access_ids = access_ids
    
-      terms.save! if terms.changed?
+      # additional hook for subclasses
+      custom_page_terms(terms)
+      
+      if !self.new_record? and terms.changed?
+        terms.save!
+      end
     end
     
     # :nodoc:
@@ -137,6 +143,9 @@ module PageExtension::Index
     def summary_terms
       [name, title, summary] * "\n"
     end
+
+    # to be overriden by subclasses
+    def custom_page_terms(terms) end
 
   end
 end
