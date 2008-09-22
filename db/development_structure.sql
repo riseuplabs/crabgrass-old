@@ -28,9 +28,17 @@ CREATE TABLE `assets` (
   `created_at` datetime default NULL,
   `version` bigint(11) default NULL,
   `type` varchar(255) default NULL,
+  `page_terms_id` int(11) default NULL,
+  `is_attachment` tinyint(1) default '0',
+  `is_image` tinyint(1) default NULL,
+  `is_audio` tinyint(1) default NULL,
+  `is_video` tinyint(1) default NULL,
+  `is_document` tinyint(1) default NULL,
+  `updated_at` datetime default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_assets_version` (`version`),
-  KEY `index_assets_page_id` (`page_id`)
+  KEY `index_assets_page_id` (`page_id`),
+  KEY `pterms` (`page_terms_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `avatars` (
@@ -165,12 +173,6 @@ CREATE TABLE `languages` (
   UNIQUE KEY `languages_index` (`name`,`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `links` (
-  `page_id` bigint(11) default NULL,
-  `other_page_id` bigint(11) default NULL,
-  KEY `index_links_page_and_other_page` (`page_id`,`other_page_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL auto_increment,
   `profile_id` bigint(11) default NULL,
@@ -241,6 +243,7 @@ CREATE TABLE `page_terms` (
   `page_updated_at` datetime default NULL,
   `page_created_at` datetime default NULL,
   `delta` tinyint(1) default NULL,
+  `media` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `page_id` (`page_id`),
   FULLTEXT KEY `idx_fulltext` (`access_ids`,`tags`)
@@ -432,6 +435,16 @@ CREATE TABLE `requests` (
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `showings` (
+  `id` int(11) NOT NULL auto_increment,
+  `asset_id` int(11) default NULL,
+  `gallery_id` int(11) default NULL,
+  `position` int(11) default '0',
+  PRIMARY KEY  (`id`),
+  KEY `ga` (`gallery_id`,`asset_id`),
+  KEY `ag` (`asset_id`,`gallery_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `taggings` (
@@ -691,13 +704,17 @@ INSERT INTO schema_migrations (version) VALUES ('20080904213700');
 
 INSERT INTO schema_migrations (version) VALUES ('20080907063057');
 
-INSERT INTO schema_migrations (version) VALUES ('20080910212747');
-
 INSERT INTO schema_migrations (version) VALUES ('20080910214455');
 
 INSERT INTO schema_migrations (version) VALUES ('20080915045315');
 
 INSERT INTO schema_migrations (version) VALUES ('20080918080439');
+
+INSERT INTO schema_migrations (version) VALUES ('20080919225737');
+
+INSERT INTO schema_migrations (version) VALUES ('20080922055141');
+
+INSERT INTO schema_migrations (version) VALUES ('20080922055157');
 
 INSERT INTO schema_migrations (version) VALUES ('21');
 

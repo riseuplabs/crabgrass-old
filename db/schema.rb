@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080918080439) do
+ActiveRecord::Schema.define(:version => 20080922055157) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -32,17 +32,25 @@ ActiveRecord::Schema.define(:version => 20080918080439) do
   create_table "assets", :force => true do |t|
     t.string   "content_type"
     t.string   "filename"
-    t.integer  "size",         :limit => 11
-    t.integer  "width",        :limit => 11
-    t.integer  "height",       :limit => 11
-    t.integer  "page_id",      :limit => 11
+    t.integer  "size",          :limit => 11
+    t.integer  "width",         :limit => 11
+    t.integer  "height",        :limit => 11
+    t.integer  "page_id",       :limit => 11
     t.datetime "created_at"
-    t.integer  "version",      :limit => 11
+    t.integer  "version",       :limit => 11
     t.string   "type"
+    t.integer  "page_terms_id", :limit => 11
+    t.boolean  "is_attachment",               :default => false
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.datetime "updated_at"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
   add_index "assets", ["page_id"], :name => "index_assets_page_id"
+  add_index "assets", ["page_terms_id"], :name => "pterms"
 
   create_table "avatars", :force => true do |t|
     t.binary  "image_file_data"
@@ -162,13 +170,6 @@ ActiveRecord::Schema.define(:version => 20080918080439) do
 
   add_index "languages", ["name", "code"], :name => "languages_index", :unique => true
 
-  create_table "links", :id => false, :force => true do |t|
-    t.integer "page_id",       :limit => 11
-    t.integer "other_page_id", :limit => 11
-  end
-
-  add_index "links", ["page_id", "other_page_id"], :name => "index_links_page_and_other_page"
-
   create_table "locations", :force => true do |t|
     t.integer "profile_id",    :limit => 11
     t.boolean "preferred",                   :default => false
@@ -233,6 +234,7 @@ ActiveRecord::Schema.define(:version => 20080918080439) do
     t.datetime "page_updated_at"
     t.datetime "page_created_at"
     t.boolean  "delta"
+    t.string   "media"
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
@@ -405,6 +407,15 @@ ActiveRecord::Schema.define(:version => 20080918080439) do
   add_index "requests", ["code"], :name => "code"
   add_index "requests", ["created_at"], :name => "created_at"
   add_index "requests", ["updated_at"], :name => "updated_at"
+
+  create_table "showings", :force => true do |t|
+    t.integer "asset_id",   :limit => 11
+    t.integer "gallery_id", :limit => 11
+    t.integer "position",   :limit => 11, :default => 0
+  end
+
+  add_index "showings", ["gallery_id", "asset_id"], :name => "ga"
+  add_index "showings", ["asset_id", "gallery_id"], :name => "ag"
 
   create_table "taggings", :force => true do |t|
     t.integer  "taggable_id",   :limit => 11
