@@ -105,9 +105,9 @@ module PathFinder::Mysql::BuilderFilters
   ### OTHER PAGE COLUMNS
 
   def filter_type(page_class_group)
-    page_classes = Page.class_group_to_class_names(page_class_group)
+    page_class_names = Page.class_group_to_class_names(page_class_group)
     @conditions << 'pages.type IN (?)'
-    @values << page_classes
+    @values << page_class_names
   end
 
   def filter_created_by(id)

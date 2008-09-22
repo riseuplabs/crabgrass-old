@@ -58,7 +58,9 @@ module PageExtension::Subclass
   end
 
   module ClassMethods
-    
+    # PAGES is a static hash in the form:
+    # { :discussion => <DiscussionPageProxy>, :asset => <AssetPageProxy> }
+
     # lets us convert from a url pretty name to the actual class.
     def display_name_to_class(display_name)
       dn = display_name.nameize
@@ -69,10 +71,13 @@ module PageExtension::Subclass
      
     # return an array of page classes that are members of class_group
     # eg: 'poll' -> ['RateManyPage', 'RankedVotePage']
+    # each class group may have many pages in it, and each page may be in
+    # many class groups.
     def class_group_to_class_names(class_group)
-      PAGES.collect{|t|
-        t[1].to_s if t[1].class_group == class_group and t[1].class_group
-      }.compact
+      return [] unless class_group.any?
+      PAGES.values.collect do |proxy|
+        proxy.class_name if proxy.class_group.include?(class_group)
+      end.compact
     end
      
     # convert from a string representation of a class to the

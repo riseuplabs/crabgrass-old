@@ -61,8 +61,9 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page
 
-    # page_terms has all of the will_paginate magic included, it just needs to actually have the pages
-    page_terms.each_with_index {|pt, i| page_terms[i] = pt.page if pt}
+    # page_terms has all of the will_paginate magic included, it just needs to
+    # actually have the pages
+    page_terms.replace(page_terms.collect{|pt| pt.page})
   end
 
   def paginate

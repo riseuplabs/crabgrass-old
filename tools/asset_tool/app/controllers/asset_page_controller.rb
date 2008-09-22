@@ -78,12 +78,24 @@ class AssetPageController < BasePageController
     redirect_to page_url(@page, :action => 'show')
   end
 
+  # temp code, probably will be replaced by something else later.
+  def add_to_gallery
+    gallery = Gallery.find_by_id(params[:gallery_id])
+    if gallery
+      current_user.may!(:edit,gallery)
+      gallery.add_image!(@asset)
+    end
+    redirect_to page_url(@page)
+  rescue Exception => exc
+    flash_message_now :exception => exc
+  end
+
   protected
   
   def authorized?
     if @page.nil?
       true
-    elsif action?(:update)
+    elsif action?(:update, :add_to_gallery)
       current_user.may?(:edit,@page)
     elsif action?(:generate_preview, :show)
       @page.public? or current_user.may?(:view,@page)

@@ -7,18 +7,15 @@ class CollectionController < BasePageController
   def create
     @page_class = Collection
     if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
       begin
-        @page = create_new_page(@page_class)
-        if @page.valid?
-          return redirect_to(page_url(@page, :action => 'edit'))
-        else
-          flash_message_now :object => @page
-        end
+        @page = create_new_page!(@page_class)
+        redirect_to(page_url(@page, :action => 'edit'))
       rescue Exception => exc
+        @page = exc.record
         flash_message_now :exception => exc
       end
     end
-    render :template => 'base_page/create'
   end
 
   ##

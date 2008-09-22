@@ -1,0 +1,9 @@
+<div class='gallery_swatch'>
+  <%= thumbnail_img_tag(image, :medium) %>
+  <div>
+    <%= link_to 'full', image.url %>
+    <%= link_to 'info', page_url(image.page) unless image.is_attachment? %>
+    <%= link_to 'remove', page_url(@page, :action => 'remove', :id => image.id), :method => 'post', :confirm => 'are you sure you wish to remove this image from the gallery?' %>
+  </div>
+</div>
+

@@ -6,14 +6,6 @@
   <% if logged_in? -%>
   <li id='menu_me'>
     <span><%= link_to_active 'Me'.t, '/me/dashboard', active == 'me' %></span>
-    <ul class="submenu">
-      <li><%= link_to 'inbox', '/me/inbox', :style => page_icon_style('inbox') %></li>
-      <li><%= link_to 'tasks', '/me/tasks/pending', :style => page_icon_style('task-list') %></li>
-      <li><%= link_to 'search', '/me/search', :style => page_icon_style('search') %></li>
-      <li><%= link_to 'requests', '/me/requests', :style => page_icon_style('request') %></li>
-      <li><%= link_to 'edit&nbsp;profile', '/me/edit', :style => page_icon_style('settings') %></li>
-      <li><%= link_to 'new&nbsp;page', '/pages/create', :style => page_icon_style('add') %></li>
-    </ul>
   </li>
   <% else -%>
     <li>
@@ -23,24 +15,10 @@
 
   <li id='menu_people' >
     <span><%= link_to_active "People".t, people_url, active == 'people' %></span>
-    <% if logged_in? and current_user.contacts.any? -%>
-    <ul class="submenu">
-      <%# current_user.contacts.sort_by {|person| person.login}.each do |person| -%>
-      <li><%# link_to_user person, :avatar => 'xsmall', :one_link => true %></li>
-      <%# end -%>
-    </ul>
-    <% end -%>
   </li>
 
   <li id='menu_groups'>
     <span><%= link_to_active "Groups".t, groups_url, active == 'groups' %></span>
-   <% if logged_in? and current_user.groups.any? -%>
-    <ul class="submenu">
-      <%# current_user.groups.sort_by {|group| group.name }.each do |group| -%>
-      <li><%# link_to_group group, :full_name => true, :avatar => 'xsmall', :one_link => true %></li>
-      <%# end -%>
-    </ul>
-    <% end -%>
   </li>
 
   <li id='menu_networks'>

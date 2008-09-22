@@ -41,8 +41,20 @@ This will make it so that in development mode the plugin is not only loaded once
 Without this, you need to restart rails each time you modify a source file in
 the plugin.
 
+Running tests
+=============
+
+Run all tool tests:
+
+  rake test:tools
+
+To run the test for a particular tool:
+
+  rake test:tools TOOL=gallery_tool
+
 Writing tests
 ==============
+
 
 Example:
 

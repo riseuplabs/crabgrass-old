@@ -248,7 +248,7 @@ class AssetTest < Test::Unit::TestCase
     correct_ids = Asset.find(:all).collect do |asset|
       asset.id if user.may?(:view, asset.page)
     end.compact.sort
-    ids = Asset.visible_to_user(user).media_type(:image).find(:all).collect{|asset| asset.id}
+    ids = Asset.visible_to(user).media_type(:image).find(:all).collect{|asset| asset.id}
     assert_equal correct_ids, ids
   end
 

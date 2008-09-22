@@ -1,0 +1,15 @@
+<h1>add photo to gallery:</h1>
+<ul>
+  <% @assets.each do |asset| %>
+    <li>
+      <%= thumbnail_img_tag(asset, :small) %>
+      <%= link_to asset.filename, page_xurl(@page, :action => 'add', :id => asset.id), :method => :post %>
+    </li>
+  <% end %>
+</ul>
+
+<%= pagination_links(@assets) %>
+
+<p>
+  <%= link_to 'cancel', page_url(@page) %>
+</p>

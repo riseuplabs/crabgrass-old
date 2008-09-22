@@ -16,6 +16,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Create
   include PageExtension::Subclass
   include PageExtension::Index
+#  include PageExtension::Linking
 
   acts_as_taggable_on :tags
 
@@ -173,24 +174,12 @@ class Page < ActiveRecord::Base
     end
   end
 
-
   #######################################################################
-  ## RELATIONSHIP TO OTHER PAGES
-  
-  # links between pages
-  has_many :links, :foreign_key => 'to'
-  has_many :collections, :through => :links, :foreign_key => 'to'
-
-  # If you pass a collection_id to a Page the Page will be added to the Collection.
-  def collection_id=(id)
-    collection = Collection.find id
-    collection.add_page self
-  end
-
-  #######################################################################
-  ## RELATIONSHIP TO ENTITIES
+  ## RELATIONSHIP TO ENTITIES (GROUPS OR USERS)
     
-  # add a group or user participation to this page
+  # Add a group or user to this page (by creating a corresponing
+  # user_participation or group_participation object). This is the only way
+  # that groups or users should be added to pages!
   def add(entity, attributes={})
     if entity.is_a? Enumerable
       entity.collect do |e|
@@ -201,7 +190,9 @@ class Page < ActiveRecord::Base
     end
   end
       
-  # remove a group or user participation from this page
+  # Remove a group or user from this page (by destroying the corresponing
+  # user_participation or group_participation object). This is the only way
+  # that groups or users should be removed from pages!
   def remove(entity)    
     if entity.is_a? Enumerable
       entity.each do |e|

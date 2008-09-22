@@ -23,6 +23,7 @@ class PageClassProxy
         method = key.to_s + '='
         self.send(method,value) if self.respond_to?(method)
       end
+      self.class_group = [self.class_group] unless self.class_group.is_a? Array
       self.full_class_name = self.class_name
       self.controller_class_name = "#{controller.camelcase}Controller"
       self.order ||= 100

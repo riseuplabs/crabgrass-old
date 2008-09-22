@@ -2,7 +2,7 @@ require 'test/unit'
 
 class CollectionToolTest < Test::Unit::TestCase
   # Replace this with your real tests.
-  def test_this_plugin
-    flunk
-  end
+  #def test_this_plugin
+  #  flunk
+  #end
 end

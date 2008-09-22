@@ -10,6 +10,7 @@ assets_001:
   filename: bee.jpg
   created_at: 2008-09-19 06:15:53
   width: "333"
+  is_image: "1"
 assets_002: 
   content_type: image/jpeg
   size: "107459"
@@ -21,6 +22,7 @@ assets_002:
   filename: photo.jpg
   created_at: 2008-09-19 06:16:19
   width: "500"
+  is_image: "1"
 assets_003: 
   content_type: image/jpeg
   size: "51636"
@@ -32,3 +34,4 @@ assets_003:
   filename: crabgrass.jpg
   created_at: 2008-09-19 07:26:44
   width: "482"
+  is_image: "1"

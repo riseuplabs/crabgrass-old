@@ -300,7 +300,8 @@ module PageHelper
   def options_for_select_page_type(default_selected)
     array = @site.available_page_types.collect do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      [page_class.class_group.pluralize, page_class.class_group]
+      page_group = page_class.class_group.first
+      [page_group.pluralize, page_group]
     end
     options_for_select([['all page types','']] + array, default_selected)
   end

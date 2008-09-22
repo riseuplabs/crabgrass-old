@@ -1,0 +1,16 @@
+<% content_for :style do %>
+div.gallery_swatch {
+  float: left;
+  padding: 0 2em 2em 0;
+}
+<% end %>
+
+<% if @pages.any? %>
+  <%= render :partial => 'asset_page', :collection => @pages %>
+  <br style='clear:both'/>
+  <%= pagination_links @pages %>
+<% else %>
+  No images in gallery
+<% end %>
+
+<p><%= link_to 'add image', page_url(@page, :action => 'add') %>

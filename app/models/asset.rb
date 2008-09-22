@@ -41,6 +41,9 @@ class Asset < ActiveRecord::Base
   include AssetExtension::Upload
   validates_presence_of :filename
 
+  # TODO: find a way to put this in the gallery_tool
+  include AssetExtension::Gallery rescue NameError
+
   ##
   ## FINDERS
   ##
@@ -48,12 +51,10 @@ class Asset < ActiveRecord::Base
   # Use page_terms to find what assets the user has access to. Note that it is
   # necessary to match against both access_ids and tags, since the index only
   # works if both fields are included.
-  named_scope :visible_to_user, lambda { |user|
-    access_ids = "+(%s)" % Page.access_ids_for(
-      :user_ids => [user.id], :group_ids => user.group_ids
-    ).join(' ')
+  named_scope :visible_to, lambda { |*args|
+    access_filter = PageTerms.access_filter_for(*args)
     { :select => 'assets.*', :joins => :page_terms,
-      :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_ids]
+      :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
     }
   }
 
@@ -66,6 +67,15 @@ class Asset < ActiveRecord::Base
     {:conditions => ["is_#{type} = ?",true]}
   }
 
+  named_scope :exclude_ids, lambda {|ids|
+    if ids.any? and ids.is_a? Array
+      {:conditions => ['assets.id NOT IN (?)', ids]}
+    else
+      {}
+    end
+  }
+
+       
   ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
   ## 
@@ -96,7 +106,7 @@ class Asset < ActiveRecord::Base
       Media::MimeType.description_from_mime_type(content_type)
     end
   end
-   self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
+  self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
      'is_image' << 'is_audio' << 'is_video' << 'is_document'
 
   ##
@@ -155,7 +165,9 @@ class Asset < ActiveRecord::Base
   # be the data of page (1), or it could be an attachment of the page (2).
   has_many :pages, :as => :data                                             # (1)
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
-  def page(); pages.first || parent_page; end
+  def page()
+    page_id ? parent_page : pages.first
+  end
 
   belongs_to :page_terms
 

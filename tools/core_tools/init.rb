@@ -15,14 +15,6 @@ PageClassRegistrar.add(
 )
 
 PageClassRegistrar.add(
-  'InfoPage',
-  :controller => 'info_page',
-  :icon => 'info.png',
-  :class_group => 'info',
-  :internal => true
-)
-
-PageClassRegistrar.add(
   'MessagePage',
   :controller => 'message_page',
   :icon => 'message.png',
@@ -32,20 +24,6 @@ PageClassRegistrar.add(
   :order => 1
 )
 
-PageClassRegistrar.add(
-  'RequestDiscussionPage',
-  :controller => 'request_discussion_page',
-  :internal => true
-)
-
-PageClassRegistrar.add(
-  'RequestPage',
-  :controller => 'request_page',
-  :icon => 'bullhorn.png',
-  :class_group => 'request',
-  :model => 'Poll',
-  :internal => true
-) 
 
 #self.override_views = true
 self.load_once = false

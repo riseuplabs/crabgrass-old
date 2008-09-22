@@ -50,4 +50,23 @@ class PageTerms < ActiveRecord::Base
     write_attribute(:page_created_at, value)
   end
 
+  # returns a string suitable for using in a fulltext match against
+  # page_terms.access_ids. The args are any number of users or groups.
+  # the filter will require all args have access.
+  def self.access_filter_for(*args)
+    filter_str = ""
+    args.each do |arg|
+      if arg.is_a? User
+        user = arg
+        access_ids = Page.access_ids_for(:user_ids => [user.id], :group_ids => user.group_ids)
+        filter_str += " +(%s)" % access_ids.join(' ')
+      elsif arg.is_a? Group
+        group = arg
+        access_ids = Page.access_ids_for(:group_ids => [group.id])
+        filter_str += " +(%s)" % access_ids.join(' ')
+      end
+    end
+    filter_str
+  end
+
 end

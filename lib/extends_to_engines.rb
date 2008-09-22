@@ -108,6 +108,10 @@ By default, the plugin code files are loaded FIRST, and then the application cod
 This is normally what you want, but in the case of mods, you want the opposite: the
 application code should be loaded first so we can later override it with a plugin.
 
+In the case of tools, on the other hand, the application code should be loaded first.
+Otherwise, any additions to core modules that are sub-classed won't propagate
+to the subclasses. e.g. gallery_tool's extensions to Asset
+
 =end
 
 #module Engines::RailsExtensions::Dependencies

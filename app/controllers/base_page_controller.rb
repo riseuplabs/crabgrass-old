@@ -132,16 +132,20 @@ class BasePageController < ApplicationController
     # grab the current user's participation from memory
     @upart = (@page.participation_for_user(current_user) if logged_in?)
 
-    unless request.xhr?
-      @page.discussion ||= Discussion.new    
-      disc = @page.discussion
-      current_page = params[:posts] || disc.last_page
-      @posts = Post.paginate_by_discussion_id(disc.id,
-        :order => "created_at ASC", :page => current_page,
-        :per_page => disc.per_page, :include => :ratings)
-      @post = Post.new
+    if request.get?
+      load_posts
     end
     true
+  end
+
+  def load_posts
+    @page.discussion ||= Discussion.new    
+    disc = @page.discussion
+    current_page = params[:posts] || disc.last_page
+    @posts = Post.paginate_by_discussion_id(disc.id,
+      :order => "created_at ASC", :page => current_page,
+      :per_page => disc.per_page, :include => :ratings)
+    @post = Post.new
   end
       
   def context
