@@ -501,7 +501,7 @@ group_summary: Brief information regarding this %s.
 ## REQUESTS
 ##
 
-contact_request_message_label: Tell %s why you want to be their contact.
+contact_request_message_label: "Tell %s why you want to be their contact."
 add_contact_info: "When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact."
 join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
 network_invite_info: "Enter the names of the groups you would like to invite to join this network."
@@ -538,6 +538,10 @@ remove_contact_confirmation: Are you sure you wish to break contact with %s?
 already_contacts_info: "You are already the contact of this person."
 try_again: "Try Again"
 invite_accept_info: "You would like to accept the request to join. Do you already have an account on this server?"
+invite_accept_headline: "Accept invitation to join group'"
+invite_not_found: "Invite not found"
+invite_accept_via_existing_account: "I already have an account"
+invite_accept_via_register: "I need to register a new account"
 
 ##
 ## PAGES
