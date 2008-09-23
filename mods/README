@@ -1,9 +1,37 @@
 Include these files in an <tt>app</tt> directory just like you would in a normal Rails application. If you need to override a method, view or partial, create the corresponding file in your main <tt>app</tt> directory and it will be used instead.
 
 * Controllers & Helpers: See Engines::RailsExtensions::Dependencies for more information.
+
 * Views: now handled almost entirely by ActionView itself (see Engines::Plugin#add_plugin_view_paths for more information)
 
+* Models: read http://rails-engines.org/development/common-issues-when-overloading-code-from-plugins/
+
 See http://api.rails-engines.org/
+
+Plugin models
+===============================================================================
+
+Models in plugins pose a special problem for two reasons:
+
+(1) Plugins are loaded before the application
+(2) Changes made to the application get unloaded by rails
+(3) It is tricky to make rails reload code that has changed in plugins
+
+Plugins loaded first problem:
+
+  * http://weblog.techno-weenie.net/2007/1/24/understanding-the-rails-initialization-process
+
+Plugin classes unloaded after first refresh in development mode:
+
+  * http://weblog.techno-weenie.net/2007/1/26/understanding-the-rails-plugin-initialization-process
+  * http://rails-engines.org/development/common-issues-when-overloading-code-from-plugins/
+  * http://blog.nanorails.com/articles/2007/2/15/after_method
+  * http://www.ruby-forum.com/topic/111410
+
+Reloading changed code problem:
+
+  * http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
+  * crabgrass has its own method. see lib/extends_to_engines.rb
 
 Plugin assets
 ===============================================================================

@@ -16,6 +16,9 @@ Here we provide two options that can be set in a plugin's init.rb:
   self.override_views = true
   self.load_once = false
 
+Here is another way of achieving the load_once=false effect:
+http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
+
 =end
 
 Engines::Plugin.class_eval do
@@ -62,33 +65,35 @@ Engines::Plugin.class_eval do
       ActionView::TemplateFinder.process_view_paths(view_path)
     end
   end
+
 end
 
 Engines::Plugin::FileSystemLocator.class_eval do
-        # This starts at the base path looking for valid plugins (see Rails::Plugin#valid?).
-        # Since plugins can be nested arbitrarily deep within an unspecified number of intermediary 
-        # directories, this method runs recursively until it finds a plugin directory, e.g.
-        #
-        #     locate_plugins_under('vendor/plugins/acts/acts_as_chunky_bacon')
-        #     => <Rails::Plugin name: 'acts_as_chunky_bacon' ... >
-        #
-        # crabgrass hack: only load the plugins in mods/ and pages/ if they are in
-        # or MODS_ENABLED or PAGES_ENABLED
-        #
-        def locate_plugins_under(base_path)
-          Dir.glob(File.join(base_path, '*')).inject([]) do |plugins, path|
-            ## begin crabgrass hack
-            next(plugins) if path =~ /#{RAILS_ROOT}\/mods\//  and !MODS_ENABLED.include?(File.basename(path))
-            next(plugins) if path =~ /#{RAILS_ROOT}\/tools\// and !TOOLS_ENABLED.include?(File.basename(path))
-            ## end crabgrass hack
-            if plugin = create_plugin(path)
-              plugins << plugin
-            elsif File.directory?(path)
-              plugins.concat locate_plugins_under(path)
-            end
-            plugins
-          end
-        end
+  # This starts at the base path looking for valid plugins (see Rails::Plugin#valid?).
+  # Since plugins can be nested arbitrarily deep within an unspecified number of
+  # intermediary directories, this method runs recursively until it finds a plugin
+  # directory, e.g.
+  #
+  #     locate_plugins_under('vendor/plugins/acts/acts_as_chunky_bacon')
+  #     => <Rails::Plugin name: 'acts_as_chunky_bacon' ... >
+  #
+  # crabgrass hack: only load the plugins in mods/ and pages/ if they are in
+  # or MODS_ENABLED or PAGES_ENABLED
+  #
+  def locate_plugins_under(base_path)
+    Dir.glob(File.join(base_path, '*')).inject([]) do |plugins, path|
+      ## begin crabgrass hack
+      next(plugins) if path =~ /#{RAILS_ROOT}\/mods\//  and !MODS_ENABLED.include?(File.basename(path))
+      next(plugins) if path =~ /#{RAILS_ROOT}\/tools\// and !TOOLS_ENABLED.include?(File.basename(path))
+      ## end crabgrass hack
+      if plugin = create_plugin(path)
+        plugins << plugin
+      elsif File.directory?(path)
+        plugins.concat locate_plugins_under(path)
+      end
+      plugins
+    end
+  end
 end
 
 # The engines plugin dumps way too much stuff to the development log.
@@ -100,22 +105,4 @@ module Engines
     @@logger ||= ::RAILS_DEFAULT_LOGGER.dup
   end
 end
-
-
-=begin
-
-By default, the plugin code files are loaded FIRST, and then the application code.
-This is normally what you want, but in the case of mods, you want the opposite: the
-application code should be loaded first so we can later override it with a plugin.
-
-In the case of tools, on the other hand, the application code should be loaded first.
-Otherwise, any additions to core modules that are sub-classed won't propagate
-to the subclasses. e.g. gallery_tool's extensions to Asset
-
-=end
-
-#module Engines::RailsExtensions::Dependencies
-# moved to engines/lib/engines/rails_extensions/dependencies.rb because
-# it doesn't seem to work here.
-#end
 

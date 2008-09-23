@@ -163,7 +163,10 @@ module Engines
         begin
           target = File.join(destination, file.gsub(source, ''))
           unless File.exist?(target) && FileUtils.identical?(file, target)
-            FileUtils.ln_sf(file, target) # crabgrass hack
+            ## CRABGRASS HACK XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            FileUtils.ln_sf(file, target)
+            ##FileUtils.cp(file, target)
+            ## XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
           end 
         rescue Exception => e
           raise "Could not copy #{file} to #{target}: \n" + e 

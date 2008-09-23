@@ -1,5 +1,18 @@
-require 'rubygems'          # make sure we grab
-#gem 'RedCloth'    # redcloth from version 3 series
+#
+# RAILS INITIALIZATION PROCESS:
+#
+# (1) framework
+# (2) config block
+# (3) environment
+# (4) plugins
+# (5) initializers
+# (6) application
+# (7) finally
+#
+
+###
+### (1) FRAMEWORK
+###
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
@@ -8,26 +21,13 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
-
-# do this early because environments/*.rb need it
-require 'lib/crabgrass/config'
-
-# get list of mods to enable (before plugins are loaded)
-MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").freeze
-TOOLS_ENABLED = File.read("#{RAILS_ROOT}/config/tools_enabled.list").split("\n").freeze
-
-require "#{RAILS_ROOT}/lib/site.rb"
-Site.load_from_file("#{RAILS_ROOT}/config/sites.yml")
-
-# legacy configurations that should now be removed and changed to 
-# reference via @site in the code:
-Crabgrass::Config.site_name     = Site.default.name
-Crabgrass::Config.host          = Site.default.domain
-Crabgrass::Config.email_sender  = Site.default.email_sender
-Crabgrass::Config.secret        = Site.default.secret
-SECTION_SIZE = Site.default.pagination_size
+require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 
 Rails::Initializer.run do |config|
+
+  ###
+  ### (2) CONFIG BLOCK
+  ###
 
   config.load_paths += %w(assets associations discussion chat profile poll task requests).collect do |dir|
     "#{RAILS_ROOT}/app/models/#{dir}"
@@ -63,7 +63,34 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = false
 
   # See Rails::Configuration for more options
+
+  ###
+  ### (3) ENVIRONMENT 
+  ###     config/environments/development.rb
+  ###
+
+  ###
+  ### (4) PLUGINS
+  ###     vendors/plugins/*/init.rb
+  ###     mods/*/init.rb
+  ###     tools/*/init.rb
+  ###
+
+  ###
+  ### (5) INITIALIZERS
+  ###     config/initializers/*.rb
+  ###
+
+  ###
+  ### (6) APPLICATION
+  ###     app/*/*.rb
+  ###
+
 end
+
+###
+### (7) FINALLY
+###
 
 # There appears to be something wrong with dirty tracking in rails.
 # Lots of errors if this is enabled:
@@ -72,4 +99,6 @@ ActiveRecord::Base.partial_updates = false
 # build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
 
-Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+#Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+
+p Dependencies.load_once_paths

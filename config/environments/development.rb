@@ -20,6 +20,10 @@ config.action_mailer.raise_delivery_errors = true
 
 # this will cause classes in lib to be reloaded on each request in
 # development mode. very useful if working on a source file in lib!
+
+Dependencies.mechanism = :load
+#Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/mods'])
+#Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/tools'])
 Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/test/fixtures/assets"

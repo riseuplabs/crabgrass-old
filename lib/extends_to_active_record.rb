@@ -121,31 +121,3 @@ module ActiveRecord
   end
 end
 
-class ActionView::Base
-
-# It is nice to be able to have multiple submit buttons.
-# For non-ajax, this works fine: you just check the existance
-# in the params of the :name of the submit button.
-# For ajax, this breaks, and is labelled wontfix
-# http://dev.rubyonrails.org/ticket/3231
-# this hack is an attempt to get around the limitation
-# by disabling the other submit buttons, we ensure that their info
-# doesn't end up in the params of the action.
-
-  alias_method :rails_submit_tag, :submit_tag
-  def submit_tag(value = "Save changes", options = {})
-    #options[:id] = (options[:id] || options[:name] || :commit)
-    options.update(:onclick => "Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))")
-    rails_submit_tag(value, options)
-  end
-  
-# i really want to be able to use link_to(:id => 'group+name') and not have
-# it replace '+' with some ugly '%2B' character.
-
-  def link_to_with_pretty_plus_signs(*args)
-    link_to_without_pretty_plus_signs(*args).sub('%2B','+')
-  end
-  alias_method_chain :link_to, :pretty_plus_signs
-  
-end
-
