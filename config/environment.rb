@@ -99,6 +99,5 @@ ActiveRecord::Base.partial_updates = false
 # build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
 
-#Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
 
-p Dependencies.load_once_paths
