@@ -1,7 +1,5 @@
 <h1>Editing language</h1>
 
-<%= error_messages_for :language %>
-
 <% form_for(@language) do |f| %>
   <p>
     <b>Code</b><br />
@@ -14,9 +12,13 @@
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.check_box :rtl %> <b>Right to left?</b>
+  </p>
+
+  <p>
+    <%= f.submit "Update", :name => 'update' %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @language %> |
 <%= link_to 'Back', languages_path %>
+

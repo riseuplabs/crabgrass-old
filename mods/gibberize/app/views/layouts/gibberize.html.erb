@@ -14,10 +14,11 @@
   <div class='toplink'><%= link_to "Logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %> </div>
   <div class='toplink'><%= link_to "Exit gibberize", :controller => '/me' %> </div>
   <h1><%= link_to 'Crabgrass Translation Panel', '/gibberize' %></h1>
-<%= link_to 'Edit Languages', languages_path %>
+<%= link_to 'Languages', languages_path %>
+<%= link_to 'Keys', keys_path %>
 </div>
 <div id='content'>
-  <%= flash_notice %>
+  <div id="message"><%= display_messages %></div>
   <%= yield  %>
 </div>
 

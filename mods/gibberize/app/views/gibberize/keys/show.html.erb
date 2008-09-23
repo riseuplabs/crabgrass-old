@@ -4,17 +4,24 @@
 </p>
 
 <p>
-  <b>already translated to:</b>
+  <b>Text in <%= Language.default.name %>:</b>
+  <%= @key.default %>
+</p>
+
+<p>
+  <b>Already translated to:</b>
   <% @key.translations.each do |t| %>
-  <% outdated = t.updated_at < @key.default_translation.updated_at ? " (outdated)" : "" %>
-  <%= link_to h(t.language.name + outdated), edit_translation_path(t) %>
+    <% outdated = t.out_of_date? ? " (outdated)" : "" %>
+    <%= link_to h(t.language.name + outdated), edit_translation_path(t) %>
   <% end %> 
 </p>
 
-
-<% for language in @languages -%>
-  <%= link_to("Translate to #{ language.name }", :controller => :translations, :action => :new, :key => @key.id, :language => language.id) unless @key.languages.include?(language) %>
-<% end -%>
+<p>
+  <b>Translate to: </b> 
+  <% for language in @languages -%>
+    <%= link_to(language.name, :controller => :translations, :action => :new, :key => @key.name, :language => language) unless @key.languages.include?(language) %>
+  <% end -%>
+</p>
 
 <br/><br/>
 

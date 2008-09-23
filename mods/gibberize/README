@@ -44,8 +44,31 @@ Suppose you make a change to the text of crabgrass and now you want this
 key to appear in gibberize. You can manually add the key in the gibberize
 ui, or you can do this to auto-popuplate the database with detected keys:
 
+   rake cg:l10n:extract_keys
+
+This will generate the file lang/defaults_from_source.yml. Then, if you run:
+
+   rake cg:l10n:load_keys
+
+It will populate the gibberize database with these keys.
+
 In development mode you may want to load Gibberize fixtures:
 $ rake db:fixtures:plugins:load
+
+Translation workflow
+====================
+
+Step 1: load .yml files into the gibberize database
+
+  rake cg:l10n:load_translations
+
+Step 2: translate using the gibberize UI
+
+  http://localhost:3000/gibberize
+
+Step 3: export these database translations to .yml files:
+
+  rake cg:l10n:extract_translations
 
 
 Credits

@@ -19,4 +19,22 @@ module Gibberize::KeysHelper
   def key_url(arg, options={})
     gibberize_key_url(arg, options)
   end
+
+  def key_navigation_links
+    if @language
+      link_line(
+        link_to_active("translated", {:controller => 'keys', :language => @language.to_param, :filter => 'translated'}),
+        link_to_active("untranslated", {:controller => 'keys', :language => @language.to_param, :filter => 'untranslated'}),
+        link_to_active("out of date", {:controller => 'keys', :language => @language.to_param, :filter => 'out_of_date'}),
+        link_to_active("all keys", {:controller => 'keys', :language => @language.to_param, :filter => 'all'}),
+        link_to_active("new key", new_key_path)
+      )
+    else
+      link_line(
+        link_to_active('all keys', :controller => 'keys', :action => 'index'),
+        link_to_active('new keys', new_key_path)
+      )
+    end
+  end
+
 end

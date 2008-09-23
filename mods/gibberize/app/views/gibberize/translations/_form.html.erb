@@ -1,0 +1,28 @@
+<table>
+<tr>
+  <td>
+    <b>Key</b>: 
+    <%= link_to @translation.key.name, key_url(@translation.key) %>
+    <%= hidden_field :translation, :key_id %>
+  </td>
+  <td>
+    <b>Language</b>: 
+    <%= link_to( @translation.language.name, :controller => 'keys', :language => @translation.language) %>
+    <%= hidden_field :translation, :language_id %>
+  </td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td valign='top'>
+    <b>Text in <%= @translation.language.name %></b><br />
+    <%= text_area :translation, :text, :cols => 60, :rows => 5 %>
+  </td>
+  <td valign='top'>
+    <b>Text in <%= Language.default.name %></b><br />
+    <%= text_area_tag '', @translation.default_text, :cols => 60, :rows => 5 %>
+  </td>
+</tr>
+</table>
+

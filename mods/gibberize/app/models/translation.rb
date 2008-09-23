@@ -4,34 +4,26 @@ class Translation < ActiveRecord::Base
 
   validates_presence_of :key, :language, :text
 
-
   def validate_on_create
     if Key.find(key_id).languages.include?(Language.find(language_id))
       errors.add("language_id", "already has a translation")
     end
   end
 
-  def self.best_guess(key, language)
-    t = Translation.find(:first, :conditions => {:key_id => key, :language_id => language})
-    t.text if t
+  # returns the text for this translation in the default language
+  # (or the key if no default trans exists)
+  def default_text
+    key.default
   end
-  
-  def self.wanted_from(user)
-    t = Translation.new
-# task: set t.language, t.key = (language,key)-pair that 
-# we dont know well and that user will be able supply
-# objective: choose something that will be "fun" for user to translate.
-#   elements of fun include: not too hard and not too easy, similar to
-# previous translations but not too similar, don't change from_lang and
-# to_lang frequently, but do respect user's choice
-    t.language_id, cnt = user.count_translations_by_language_id.find { |lang_id, cnt| cnt > 0 }
-    t.key_id, cnt = Key.count_translations_in(t.language_id).find { |key_id, cnt| cnt == 0 }
     
-    return t
+  def default
+    Translation.find_by_key_id_and_language_id(self.key.id, Language.default.id)
   end
 
-  def link_html
-    "<a href=\"/translations/#{ id }\">#{ text }</a>"
+  def out_of_date?
+    def_trans = default()
+    return def_trans && def_trans.updated_at > self.updated_at 
   end
 
 end
+

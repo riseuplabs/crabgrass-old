@@ -75,10 +75,16 @@ namespace :cg do
       Dir["#{RAILS_ROOT}/lang/*.yml"].sort.each do |lang_file|
         lang_code = File.basename(lang_file).split('.')[0]
         keys_hash = YAML::load_file(lang_file)
-        keys_hash.each do |k,v|
-          key = Key.find_by_name(k)
-          t = Translation.create(:text => v, :key => key, :language => language)
-        end if language = Language.find_by_code(lang_code)
+        language = Language.find_by_code(lang_code)
+        if language
+          keys_hash.each do |k,v|
+            key = Key.find_or_create_by_name(k)
+            t = Translation.create(:text => v, :key => key, :language => language)
+          end
+        else
+          puts "Language '#{lang_code} does not exist in the database. Try running rake cg:load_default_data"
+          exit
+        end
       end
     end
 

@@ -1,7 +1,5 @@
 <h1>Editing key</h1>
 
-<%= error_messages_for :key %>
-
 <% form_for(@key) do |f| %>
   <p>
     <b>Name</b><br />
@@ -9,9 +7,9 @@
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Update", :name => 'update' %>
+    <%= f.submit "Destroy", :name => 'destroy' %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @key %> |
-<%= link_to 'Back', keys_path %>
+<%= link_to 'Show', @key %> | <%= link_to 'Back', keys_path %>

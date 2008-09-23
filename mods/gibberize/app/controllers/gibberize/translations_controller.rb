@@ -14,31 +14,21 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   # GET /translations/1.xml
   def show
     @translation = Translation.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @translation }
-    end
+    render :action => 'edit'
   end
 
   # GET /translations/new
   # GET /translations/new.xml
   def new
-#    @translation = Translation.wanted_from current_user
     @translation = Translation.new
-    @key = Key.find(params[:key]) if params[:key]
-    @language = Language.find(params[:language]) if params[:language]
+    @key = Key.find_by_name(params[:key])
+    @language = Language.find_by_code(params[:language])
 
-    if @key.languages.include? @language
-      @translation = @key.translations.select{|t| t if t.language == @language} 
-      redirect_to :action => :edit, :id => @translation
+    if trans = @key.translations.find_by_language_id(@language.id)
+      redirect_to :action => :edit, :id => trans
     else
       @translation.key = @key
       @translation.language = @language
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @translation }
-      end
     end
   end
 
@@ -50,19 +40,13 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   # POST /translations
   # POST /translations.xml
   def create
-#    @translation = Translation.new(params[:translation].merge(:user => current_user))
     @translation = Translation.new(params[:translation])
-    respond_to do |format|
-      if @translation.save
-        flash[:notice] = 'Translation was successfully created.'
-        format.html { redirect_to :controller => :keys, :language => @translation.language }
-        format.xml  { render :xml => @translation, :status => :created, :location => @translation }
-      else
-        @languages = Language.find(:all)
-        @keys = Key.find(:all)
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
-      end
+    if @translation.save
+      flash_message :success => 'Translation was successfully created.'
+      redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
+    else
+      flash_message_now :object => @translation
+      render :action => 'new'
     end
   end
 
@@ -70,16 +54,12 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   # PUT /translations/1.xml
   def update
     @translation = Translation.find(params[:id])
-
-    respond_to do |format|
-      if @translation.update_attributes(params[:translation])
-        flash[:notice] = 'Translation was successfully updated.'
-        format.html { redirect_to :controller => :keys, :language => @translation.language }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
-      end
+    if @translation.update_attributes(params[:translation])
+      flash_message :success => 'Translation was successfully updated.'
+      redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
+    else
+      flash_message_now :object => @translation
+      render :action => 'edit'
     end
   end
 
@@ -88,11 +68,7 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   def destroy
     @translation = Translation.find(params[:id])
     @translation.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(translations_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
   end
 
   def translation_file

@@ -1,23 +1,25 @@
-<%= "<h1>Listing #{@adjective} keys in #{@language.name}</h1>" %>
+<%= "<h1>Keys for #{@language.name}</h1>" if @language %>
 
-<p>
-<%= link_to "untranslated", :controller => :keys, :language => @language %>,
-<%= link_to "translated", :controller => :keys, :language => @language, :translated => true %>,
-<%= link_to "all", :controller => :keys, :language => @language, :all => true %>
+<p><%= key_navigation_links %></p>
 
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
+<%= pagination_links(@keys) %>
 
-<% for key in @keys %>
-  <tr>
-    <td><%=h key.name %></td>
-    <td><%= link_to 'Translate', :controller => :translations, :action => :new, :key => key, :language => @language %></td>
-  </tr>
+<% if @language %>
+  <ul>
+    <% for key in @keys %>
+      <li>
+        <%= link_to key.name, :controller => :translations, :action => 'new', :key => key, :language => @language.code%>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <ul>
+    <% for key in @keys %>
+      <li>
+        <%= link_to key.name, key %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New translation key', new_key_path %>
+<%= pagination_links(@keys) %>

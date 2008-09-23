@@ -1,18 +1,13 @@
-This is the Crabgrass translation panel.
+<p>Choose a language to translate Crabgrass into:</p>
 
-Choose a language to translate Crabgrass into:
+<blockquote>
+  <% for language in @languages %>
+    <div class='language' style='direction:<%= language.rtl? ? 'rtl' : 'ltr' %>'>
+      <b><%= link_to language.name, :controller => :keys, :language => language %></b>
+      <span>(<%= language.percent_complete %>)</span>
+    </div> 
+  <% end %>
+</blockquote>
 
-<table>
-  <tr>
-    <th>Code</th>
-    <th>Name</th>
-  </tr>
+<br style='clear:both'/>
 
-<% for language in @languages %>
-  <tr>
-    <td><%=h language.code %></td>
-    <td><%=h language.name %></td>
-    <td><%= link_to 'Translate', :controller => :keys, :language => language %></td>
-  </tr>
-<% end %>
-</table>

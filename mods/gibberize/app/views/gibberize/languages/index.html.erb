@@ -8,11 +8,9 @@
 
 <% for language in @languages %>
   <tr>
-    <td><%=h language.code %></td>
-    <td><%=h language.name %></td>
-    <td><%= link_to 'Translate', :controller => :keys, :language => language %></td>
-    <td><%= link_to 'Show', language %></td>
-    <td><%= link_to 'Edit', edit_language_path(language) %></td>
+    <td><%= link_to language.code, edit_language_path(language) %></td>
+    <td><%= link_to language.name, edit_language_path(language) %></td>
+    <td><%= link_to 'translate', :controller => :keys, :language => language %></td>
   </tr>
 <% end %>
 </table>
@@ -20,3 +18,4 @@
 <br />
 
 <%= link_to 'New language', new_language_path %>
+
