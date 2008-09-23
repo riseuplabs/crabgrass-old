@@ -65,6 +65,7 @@ module ContextHelper
   def group_context(size='large', update_breadcrumbs=true)
     return network_context(size, update_breadcrumbs) if @group and @group.is_a? Network
 
+    @active_tab = :groups
     add_context 'groups'.t, groups_url(:action => nil)
     if @group
       if @group.committee?
@@ -81,6 +82,7 @@ module ContextHelper
   end
   
   def network_context(size='large', update_breadcrumbs=true)
+    @active_tab = :networks
     add_context 'networks'.t, networks_url(:action => 'list')
     if @group
       add_context @group.display_name, url_for_group(@group)
@@ -90,6 +92,7 @@ module ContextHelper
   end
 
   def person_context(size='large', update_breadcrumbs=true)
+    @active_tab = :people
     add_context 'people'.t, people_url
     if @user
       add_context @user.display_name, url_for_user(@user, :action => 'show')
@@ -101,6 +104,7 @@ module ContextHelper
   def me_context(size='large', update_breadcrumbs=true)
     return unless logged_in?
     @user ||= current_user
+    @active_tab = :me
     add_context 'me', me_url
     set_banner 'me/banner', current_user.banner_style
     breadcrumbs_from_context if update_breadcrumbs

@@ -1,14 +1,9 @@
-<%
-  # clean up the output of the first_context method here,
-  # in case anything else is depending on the quirks
-  active = first_context.to_s.downcase.delete("/")
--%>
 <div id="top_menu_box">
 <%= render :partial => 'layouts/menu_login' %>
 <ul id="top_menu">
   <% if logged_in? -%>
   <li id='menu_me'>
-    <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', active == 'me' %></span>
+    <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
   </li>
   <% else -%>
     <li>
@@ -17,20 +12,20 @@
   <% end -%>
 
   <li id='menu_people' >
-    <span><%= link_to_active "People"[:menu_people], people_url, active == 'people' %></span>
+    <span><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
   </li>
 
   <li id='menu_groups'>
-    <span><%= link_to_active "Groups"[:menu_groups], groups_url, active == 'groups' %></span>
+    <span><%= link_to_active "Groups"[:menu_groups], groups_url, @active_tab == :groups %></span>
   </li>
 
   <li id='menu_networks'>
-    <span><%= link_to_active "Networks"[:menu_networks], networks_url, active == 'networks' %></span>
+    <span><%= link_to_active "Networks"[:menu_networks], networks_url, @active_tab == :networks %></span>
   </li>
 
   <% if logged_in? -%>
   <li>
-    <span><%= link_to_active "Chat"[:menu_chat], '/chat', active == 'chat' %></span>
+    <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
   <% end -%>
 
