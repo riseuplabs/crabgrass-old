@@ -133,7 +133,7 @@ div#bannercontent form {
  * in a huge (height + margin-bottom (1.5em)) gap at the top of
  * the #wrapper - so we remove the margin and fix the height
  * when div#message is empty, with the same pixel results */ 
-#wrapper #message {
+#wrapper div#message {
   height: expression((this.innerHTML == "") ? "1.5em" : "auto");
   margin-bottom: expression((this.innerHTML == "") ? "0" : "1.5em");
 }
