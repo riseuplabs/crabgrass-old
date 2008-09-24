@@ -68,19 +68,20 @@ Engines::Plugin.class_eval do
     end
   end
 
+  # Some plugins have a problem: if a plugin applies a mixin directly to a model
+  # in app/models, this mixin gets unloaded by rails after the first request. This
+  # only happens in development mode. The symptom of this is an application that
+  # works for the first request but fails on subsequent requests. 
   #
-  # Some plugins have a problem: if a plugin applies a mixing directly to a 
-  # model in app/models, this mixin gets unloaded by rails after the first request.
-  # This only happens in development mode. The symtom is an application that works
-  # for the first request but fails on subsiquent requests. 
+  # A call to Dispatcher.to_prepare will get around this problem by re-applying
+  # any mixin that modifies the core models on each request. In production mode,
+  # the classes are not unloaded and so the mixin is only applied once.
   #
-  # This is an attempt to get around that problem by re-applying any mixin
-  # that modifies the core models on each request. 
-  # 
-  # Normal plugins don't have this problem: they modify active record, and then
-  # the core models call these extensions which triggers the reloading of the 
-  # plugin mixin.
-  #
+  # "Normal" plugins don't have this problem: they modify active record, and then
+  # the core models call these extensions. When these core models are reloaded by
+  # rails, the plugin code is then reloaded as well. The problem only shows up
+  # when you want to modify a model in apps/model without requiring any code
+  # change to that model. 
   def apply_mixin_to_model(model_class, mixin_module)
     Dispatcher.to_prepare {
       model_class  = Kernel.const_get(model_class.to_s)  # \ weird, yet
