@@ -1,44 +1,42 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 hello_en:
   text: Hello
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 15.minutes.ago.to_s(:db) %>"
   key_id: 1
-  language_id: 1
+  language_id: 4
 
 hello_es:
   text: Hola
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 15.minutes.ago.to_s(:db) %>"
   key_id: 1
-  language_id: 2
+  language_id: 3
 
 hello_pt:
   text: Olá
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 15.minutes.ago.to_s(:db) %>"
   key_id: 1
-  language_id: 3
+  language_id: 6
 
 goodbye_en:
   text: Goodbye
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 15.minutes.ago.to_s(:db) %>"
   key_id: 2
-  language_id: 1
+  language_id: 4
 
 goodbye_es:
   text: Adiós
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 15.minutes.ago.to_s(:db) %>"
   key_id: 2
-  language_id: 2
+  language_id: 3
 
 goodbye_pt:
   text: Adeus
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 15.minutes.ago.to_s(:db) %>"
   key_id: 2
-  language_id: 3
+  language_id: 6
 

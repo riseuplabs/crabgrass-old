@@ -1,14 +1,8 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 hello:
   id: 1
   name: hello
-  updated_at: "<%= 70.minutes.ago.to_s(:db) %>"
-  created_at: "<%= 75.minutes.ago.to_s(:db) %>"
 
 goodbye:
   id: 2
   name: goodbye
-  updated_at: "<%= 70.minutes.ago.to_s(:db) %>"
-  created_at: "<%= 75.minutes.ago.to_s(:db) %>"
 

@@ -28,7 +28,7 @@ CREATE TABLE `assets` (
   `created_at` datetime default NULL,
   `version` bigint(11) default NULL,
   `type` varchar(255) default NULL,
-  `page_terms_id` int(11) default NULL,
+  `page_terms_id` bigint(11) default NULL,
   `is_attachment` tinyint(1) default '0',
   `is_image` tinyint(1) default NULL,
   `is_audio` tinyint(1) default NULL,
@@ -439,9 +439,9 @@ CREATE TABLE `schema_migrations` (
 
 CREATE TABLE `showings` (
   `id` int(11) NOT NULL auto_increment,
-  `asset_id` int(11) default NULL,
-  `gallery_id` int(11) default NULL,
-  `position` int(11) default '0',
+  `asset_id` bigint(11) default NULL,
+  `gallery_id` bigint(11) default NULL,
+  `position` bigint(11) default '0',
   PRIMARY KEY  (`id`),
   KEY `ga` (`gallery_id`,`asset_id`),
   KEY `ag` (`asset_id`,`gallery_id`)

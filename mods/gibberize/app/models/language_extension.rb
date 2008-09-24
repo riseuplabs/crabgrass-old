@@ -1,11 +1,11 @@
 module LanguageExtension
-  def self.included(base)
-    base.extend(ClassMethods)
-    base.instance_eval do
-      include InstanceMethods
-    end
-    base.instance_eval &(self.class_definition())
-  end
+#  def self.included(base)
+#    base.extend(ClassMethods)
+#    base.instance_eval do
+#      include InstanceMethods
+#    end
+#    base.instance_eval &(self.class_definition())
+#  end
 
   module ClassMethods
     def default

@@ -1,6 +1,10 @@
-ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_help'
+#ENV["RAILS_ENV"] = "test"
+#require File.expand_path(File.dirname(__FILE__) + "/../../../config/environment")
+#require 'test_help'
+
+require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
+#debugger
+Engines::Testing.set_fixture_path
 
 class Test::Unit::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method

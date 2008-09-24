@@ -21,6 +21,8 @@ http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
 
 =end
 
+require 'dispatcher'
+
 Engines::Plugin.class_eval do
   # Plugins may set this to true if they want their views to
   # take precedence over the views in the main application.
@@ -65,6 +67,29 @@ Engines::Plugin.class_eval do
       ActionView::TemplateFinder.process_view_paths(view_path)
     end
   end
+
+  #
+  # Some plugins have a problem: if a plugin applies a mixing directly to a 
+  # model in app/models, this mixin gets unloaded by rails after the first request.
+  # This only happens in development mode. The symtom is an application that works
+  # for the first request but fails on subsiquent requests. 
+  #
+  # This is an attempt to get around that problem by re-applying any mixin
+  # that modifies the core models on each request. 
+  # 
+  # Normal plugins don't have this problem: they modify active record, and then
+  # the core models call these extensions which triggers the reloading of the 
+  # plugin mixin.
+  #
+  def apply_mixin_to_model(model_class, mixin_module)
+    Dispatcher.to_prepare {
+      model_class  = Kernel.const_get(model_class.to_s)  # \ weird, yet
+      mixin_module = Kernel.const_get(mixin_module.to_s) # / required.
+      model_class.send(:extend,  mixin_module.const_get("ClassMethods"))
+      model_class.send(:include, mixin_module.const_get("InstanceMethods"))
+      model_class.instance_eval &(mixin_module.class_definition())
+    }
+  end 
 
 end
 

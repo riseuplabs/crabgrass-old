@@ -1,8 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class LanguageTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_all
-    assert_equal Language.find(:all), Language.all
+  fixtures :languages, :translations, :keys
+ 
+  def test_mixin_is_working
+    assert Language.default.percent_complete
   end
 end

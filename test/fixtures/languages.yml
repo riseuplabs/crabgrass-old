@@ -1,22 +1,86 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+##
+## In order of number of speakers worldwide
+## http://en.wikipedia.org/wiki/Most_spoken_languages
+##
 
-en:
+zh:
   id: 1
-  code: en_US
-  name: English
-  updated_at: "<%= 100.minutes.ago.to_s(:db) %>"
-  created_at: "<%= 150.minutes.ago.to_s(:db) %>"
+  name: 中文
+  code: zh_CN
+
+hi:
+  id: 2
+  name: हिंदी
+  code: hi_IN
 
 es:
-  id: 2
-  code: es_ES
+  id: 3
   name: Español
-  updated_at: "<%= 100.minutes.ago.to_s(:db) %>"
-  created_at: "<%= 150.minutes.ago.to_s(:db) %>"
+  code: es_ES
+
+en:
+  id: 4
+  name: English
+  code: en_US
+
+ar:
+  id: 5
+  name: العربية
+  code: ar_EG
+  rtl: true
 
 pt:
-  id: 3
-  code: pt_BR
+  id: 6
   name: Português
-  updated_at: "<%= 100.minutes.ago.to_s(:db) %>"
-  created_at: "<%= 150.minutes.ago.to_s(:db) %>"
+  code: pt_BR
+
+#7 = bengali
+
+ru:
+  id: 8
+  name: Pyccĸий
+  code: ru_RU
+
+#9 = japanese
+
+de:
+  id: 10
+  name: Deutsch
+  code: de_DE
+
+#11 = punjabi
+
+sw:
+  id: 12
+  name: Kiswahili
+  code: sw_SW
+
+#13 = wu
+#14 = javanese
+#15 = telugu
+#16 = marathi
+#17 = vietnamese
+#18 = korean
+#19 = tamil
+
+fr:
+  id: 20
+  name: Français
+  code: fr_FR
+
+it:
+  id: 21
+  name: Italiano
+  code: it_IT
+
+pl:
+  id: 28
+  name: Polski
+  code: pl_PL
+
+el:
+  id: 53
+  name: Ελληνικά
+  code: el_GR
+
+
