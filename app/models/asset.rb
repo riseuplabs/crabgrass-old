@@ -41,9 +41,6 @@ class Asset < ActiveRecord::Base
   include AssetExtension::Upload
   validates_presence_of :filename
 
-  # TODO: find a way to put this in the gallery_tool
-  include AssetExtension::Gallery rescue NameError
-
   ##
   ## FINDERS
   ##

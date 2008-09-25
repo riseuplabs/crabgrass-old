@@ -2,7 +2,19 @@
 
 <p><%= key_navigation_links %></p>
 
-<%= pagination_links(@keys) %>
+
+<%- if params[:filter] == 'search' -%>
+<p>
+  <%- form_tag({:controller => 'keys'}, :method => :get) do -%>
+    <%= hidden_field_tag :language, @language.to_param %>
+    <%= hidden_field_tag :filter, 'search' %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag 'search' %>
+  <%- end -%>
+</p>
+<%- end -%>
+
+<p><%= pagination_links(@keys) %></p>
 
 <% if @language %>
   <ul>

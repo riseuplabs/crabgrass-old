@@ -5,29 +5,29 @@
 <ul id="top_menu">
   <% if logged_in? -%>
   <li id='menu_me'>
-    <span><%= link_to_active 'Me'.t, '/me/dashboard', active == 'me' %></span>
+    <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', active == 'me' %></span>
   </li>
   <% else -%>
     <li>
-      <span><%= link_to_active "Home".t, '/', params[:controller]=='account' %></span>
+      <span><%= link_to_active "Home"[:menu_home], '/', params[:controller]=='account' %></span>
     </li>    
   <% end -%>
 
   <li id='menu_people' >
-    <span><%= link_to_active "People".t, people_url, active == 'people' %></span>
+    <span><%= link_to_active "People"[:menu_people], people_url, active == 'people' %></span>
   </li>
 
   <li id='menu_groups'>
-    <span><%= link_to_active "Groups".t, groups_url, active == 'groups' %></span>
+    <span><%= link_to_active "Groups"[:menu_groups], groups_url, active == 'groups' %></span>
   </li>
 
   <li id='menu_networks'>
-    <span><%= link_to_active "Networks".t, networks_url, active == 'networks' %></span>
+    <span><%= link_to_active "Networks"[:menu_networks], networks_url, active == 'networks' %></span>
   </li>
 
   <% if logged_in? -%>
   <li>
-    <span><%= link_to_active "Chat".t, '/chat', active == 'chat' %></span>
+    <span><%= link_to_active "Chat"[:menu_chat], '/chat', active == 'chat' %></span>
   </li>
   <% end -%>
 
@@ -44,9 +44,9 @@
   <li>
     <span id="login_popup" style="display: none;">
       <% form_tag :controller => 'account', :action => 'login' do -%>
-        <label for="username"><%=_("Username")%></label>
+        <label for="username"><%= "Username".t %></label>
         <%= text_field_tag 'login' %>
-        <label for="password"><%=_("Password")%></label>
+        <label for="password"><%= "Password".t %></label>
         <%= password_field_tag 'password' %>
         <%= submit_tag _('Log in') %>
         <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>

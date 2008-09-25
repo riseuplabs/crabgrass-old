@@ -27,6 +27,7 @@ module Gibberize::KeysHelper
         link_to_active("untranslated", {:controller => 'keys', :language => @language.to_param, :filter => 'untranslated'}),
         link_to_active("out of date", {:controller => 'keys', :language => @language.to_param, :filter => 'out_of_date'}),
         link_to_active("all keys", {:controller => 'keys', :language => @language.to_param, :filter => 'all'}),
+        link_to_active("search", {:controller => 'keys', :language => @language.to_param, :filter => 'search'}),
         link_to_active("new key", new_key_path)
       )
     else

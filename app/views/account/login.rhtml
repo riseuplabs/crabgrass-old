@@ -3,19 +3,19 @@
 <table>
 <tr>
   <td>
-    <label for="username"><%=_("Username")%></label><br/>
+    <label for="login"><%= "Login name"[:login_name] %></label><br/>
     <%= text_field_tag 'login' %>
   </td>
 </tr>
 <tr>
   <td>
-    <label for="password"><%=_("Password")%></label><br/>
+    <label for="password"><%= "Password"[:login_password] %></label><br/>
     <%= password_field_tag 'password' %>
   </td>
 </tr>
 <tr>
   <td style="text-align: right">
-     <%= submit_tag _('Log in') %>
+     <%= submit_tag 'Log in'[:login_button] %>
   </td>
 </tr>
 <tr>
@@ -27,9 +27,9 @@
 <%= check_box_tag 'remember_me' %></p>
 -->
 
-  <%= link_to 'Need a new account?'.t, { :action => 'signup', :redirect => params[:redirect] } %>
+  <%= link_to 'Need a new account?'[:signup_link], { :action => 'signup', :redirect => params[:redirect] } %>
   <br />
-  <%= link_to _('I forgot my password'), forgot_password_path %>
+  <%= link_to 'I forgot my password'[:forgot_password_link], forgot_password_path %>
     </div>
   </td>
 </tr>

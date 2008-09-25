@@ -27,10 +27,10 @@ module LanguageExtension
     end
   end
 
-  def self.class_definition
-    lambda {
+  def self.add_to_class_definition
+    lambda do
       has_many :translations, :dependent => :destroy
-    }
+    end
   end
 end
 

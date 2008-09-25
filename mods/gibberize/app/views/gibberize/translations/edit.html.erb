@@ -1,11 +1,11 @@
 <h1>Edit translation</h1>
 
-<%= error_messages_for :translation %>
-
 <% form_for(@translation) do |f| %>
   <%= render :partial => 'form' %>
   <p>
-    <%= f.submit "Save" %>
+    <%= f.submit "Save", :name => 'save' %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <%= f.submit "Destroy", :name => 'destroy' %>
   </p>
 <% end %>
 

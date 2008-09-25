@@ -1,4 +1,12 @@
 #
+# THINGS TO CONFIGURE
+# 
+# Hopefully, nothing here needs to be changed. But you should change stuff in:
+# 
+#   * config/database.yml
+#   * config/sites.yml
+#   * config/email.yml
+#
 # RAILS INITIALIZATION PROCESS:
 #
 # (1) framework

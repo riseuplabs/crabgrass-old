@@ -158,6 +158,9 @@ To run the test for a particular tool or mod:
 INSTALL FOR PRODUCTION
 ========================================================
 
+setup database
+----------------
+
 For installing on a production server, most everything is the same
 as a development setup except for these differences.
 
@@ -181,17 +184,17 @@ rake db:schema:load RAILS_ENV=production
 rake cg:load_default_data RAILS_ENV=production
 \--
 
-You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
-gem is installed.
+configure for your system
+--------------------------
 
-There is an example capistrano deploy.rb in the config directory.
+There are several required configuration files:
 
-To run in production mode:
+   * config/database.yml
+   * config/sites.yml
+   * config/email.yml
 
-/--
-export RAILS_ENV=production
-script/server
-\--
+It is important that you specify your own secret in the sites.yml file. 
+You can use 'rake secret' to generate a secret value. 
 
 clean out cached files
 -----------------------
@@ -200,11 +203,20 @@ By default, crabgrass will store fragment caches in tmp/cache when running in
 production mode. These cache files are not expired automatically, but old cache
 files can be safely deleted... should be!
 
-It is probably a good idea to run this once in a while:
+It is required that something like this is run once in a while:
 
   tmpreaper 7d /usr/apps/crabgrass/tmp/cache
 
-On debian, the package name is 'tmpreaper'
+This will destroy all cached views that are older than 7 dayes. On debian, the package name is 'tmpreaper'.
+
+other tips
+------------
+
+You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
+gem is installed.
+
+There is an example capistrano deploy.rb in the config directory.
+
 
 TROUBLESHOOTING
 ========================================================

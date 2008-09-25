@@ -1,34 +1,31 @@
 <div id="signup_container">
 
 <div id="signup_left">
-	<h2>Create Your Account</h2>
-	Choose your user name and your password then click "Sign up". <Br><br>
+	<h2><%= "Create Your Account"[:signup_title] %></h2>
+	<%= 'Choose your login name and your password then click "%s"'[:signup_info] % :signup_button.t %>
+  <br/><br/>
 </div>
 
 <div id="signup_right">
-<div id="signupform">
-<%= error_messages_for :user %>
-<% form_for :user do |f| -%>
-<p><label for="login">Your login name </label><br/>
-<%= f.text_field :login %></p>
-
-<script>
-  document.getElementById('user_login').focus();
-</script>
-
-<p><label for="password">Your Password</label><br/>
+  <div id="signupform">
+    <%= error_messages_for :user %>
+    <% form_for :user do |f| -%>
+      <p><label for="login"><%= 'Your login name'[:signup_login_name] %> </label><br/>
+      <%= f.text_field :login %></p>
+      <script>document.getElementById('user_login').focus();</script>
+      <p><label for="password"><%= 'Your Password'[:signup_password]%></label><br/>
 <%= f.password_field :password %></p>
 
-<p><label for="password_confirmation">Confirm Password</label><br/>
+<p><label for="password_confirmation"><%= "Confirm Password"[:signup_confirm_password] %></label><br/>
 <%= f.password_field :password_confirmation %></p>
 
-<p><label for="email">Your Email</label><br/>
+<p><label for="email"><%= "Your Email"[:signup_email] %></label><br/>
 <%= f.text_field :email%>
 <br />
-<span class="comment"><%= _("Optional: used if you forget your password") %></span>
+<span class="comment"><%= "Optional: used if you forget your password"[:signup_email_info] %></span>
 </p>
 
-<p><%= submit_tag 'Sign up' %></p>
+<p><%= submit_tag 'Sign up'[:signup_button] %></p>
 
 <%= hidden_field_tag 'redirect', params[:redirect] if params[:redirect] %>
 

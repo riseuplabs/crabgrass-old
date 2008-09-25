@@ -54,12 +54,17 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   # PUT /translations/1.xml
   def update
     @translation = Translation.find(params[:id])
-    if @translation.update_attributes(params[:translation])
-      flash_message :success => 'Translation was successfully updated.'
-      redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
-    else
-      flash_message_now :object => @translation
-      render :action => 'edit'
+    if params[:save]
+      if @translation.update_attributes(params[:translation])
+        flash_message :success => 'Translation was successfully updated.'
+        redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
+      else
+        flash_message_now :object => @translation
+        render :action => 'edit'
+      end
+    elsif params[:destroy]
+      @translation.destroy
+      redirect_to :controller => :keys, :language => @translation.language, :filter => 'translated'
     end
   end
 
@@ -68,7 +73,7 @@ class Gibberize::TranslationsController < Gibberize::BaseController
   def destroy
     @translation = Translation.find(params[:id])
     @translation.destroy
-    redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
+    redirect_to :controller => :keys, :language => @translation.language, :filter => 'translated'
   end
 
   def translation_file

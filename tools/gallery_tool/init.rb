@@ -8,14 +8,7 @@ PageClassRegistrar.add(
   :order => 31
 )
 
-# This doesn't work here, and I don't really know why
-#Asset.class_eval do
-#  has_many :showings
-#  has_many :galleries, :through => :showings
-#end
-
-# this doesn't work either
-#Asset.send(:include, AssetExtension::Gallery)
+apply_mixin_to_model(Asset, AssetsHaveGalleries)
 
 self.override_views = false
 self.load_once = false

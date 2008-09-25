@@ -4,18 +4,52 @@ Include these files in an <tt>app</tt> directory just like you would in a normal
 
 * Views: now handled almost entirely by ActionView itself (see Engines::Plugin#add_plugin_view_paths for more information)
 
-* Models: read http://rails-engines.org/development/common-issues-when-overloading-code-from-plugins/
+* Models: this is tricky, see below.
 
 See http://api.rails-engines.org/
 
 Plugin models
 ===============================================================================
 
-Models in plugins pose a special problem for two reasons:
+Some plugins have a problem: if a plugin applies a mixing directly to a model in
+app/models, this mixin gets unloaded by rails after the first request. This only
+happens in development mode. The symptom is an application that works for the
+first request but fails on subsiquent requests. 
 
-(1) Plugins are loaded before the application
-(2) Changes made to the application get unloaded by rails
-(3) It is tricky to make rails reload code that has changed in plugins
+Normal plugins don't have this problem: they modify active record, and then the
+core models call these extensions which triggers the reloading of the plugin
+mixin.
+
+To get around this problem, crabgrass has a method called apply_mixin_to_model
+that is available in the plugin's init.rb. 
+
+(1) in your plugin's init.rb:
+
+  # in this example, there is a model app/models/language.rb, and module
+  # vendor/plugins/myplugin/app/models/language_extension.rb
+
+  apply_mixin_to_model(Language, LanguageExtension)
+
+(2) define a module that will be used to extend the model:
+
+  module LanguageExtension
+    module InstanceMethods
+      def percent_complete()
+        count = Key.count_all
+        if count > 0
+          (Key.translated(self).count / count * 100.0).round.to_s + '%'
+        end
+      end
+    end
+
+    def self.add_to_class_definition
+      lambda do
+        has_many :translations, :dependent => :destroy
+      end
+    end
+  end
+
+Some further reading....
 
 Plugins loaded first problem:
 

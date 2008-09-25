@@ -9,11 +9,13 @@ namespace :cg do
 
     # This tasks extracts strings and its translation keys and dumps them
     # on 'lang/defaults_from_source.yml'. It's a bit of a hack, so check that  file before
-    # loading the defaults into your db.
+    # loading the defaults into your db. If you specific FILE=filename, then only that
+    # file is scanned.
     desc "Extract all texts prepared to be translated from Crabgrass source"
     task (:extract_keys) do
       count, keys, out = 0, [], "# Localization dictionary for the 'Gibberish' plugin (#{RAILS_ROOT.split ('/').last})\n\n"
       Dir["#{RAILS_ROOT}/app/**/*"].sort.each do |path|
+          next if ENV['FILE'] && ENV['FILE'] != File.basename(path)
           unless ( matches = File.new(path).read.scan(/['"]([^'"]*)['"]((\.t)|\[\:([a-z1-9\_]*)(, [a-z1-9\_\.]*)*\])/)).empty?
             print "."
             out << "# -- #{File.basename(path)}:\n"
@@ -60,11 +62,13 @@ namespace :cg do
 
       # write a YAML file per language with the translations
       languages.each do |l|
-        buffer = []
+        buffer = {}
         l.translations.each do |t|
-          buffer << "#{t.key.name}: #{t.text}\n"
+          buffer[t.key.name] = t.text
         end
-        File.open('lang/' + l.code + '.yml', 'w') {|f| f.write(buffer) }
+        if buffer.any?
+          File.open('lang/' + l.code + '.yml', 'w') {|f| f.write(buffer.to_yaml) }
+        end
       end
       puts "\nYAML files written to 'lang' directory\n"
     end

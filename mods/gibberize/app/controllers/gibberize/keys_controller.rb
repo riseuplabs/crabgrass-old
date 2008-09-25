@@ -14,6 +14,8 @@ class Gibberize::KeysController < Gibberize::BaseController
         @keys = Key.by_name.untranslated(@language).paginate(:page => params[:page])
       elsif @filter == 'out_of_date'
         @keys = Key.by_name.out_of_date(@language).paginate(:page => params[:page])
+      elsif @filter == 'search'
+        @keys = Key.by_name.paginate(:page => params[:page], :conditions => ['keys.name LIKE ?', "%"+(params[:search]||"")+"%"])
       end
     else
       @keys = Key.by_name.paginate(:page => params[:page])

@@ -19,10 +19,12 @@
     <b>Text in <%= @translation.language.name %></b><br />
     <%= text_area :translation, :text, :cols => 60, :rows => 5 %>
   </td>
+  <%- unless @translation.language == Language.default -%>
   <td valign='top'>
     <b>Text in <%= Language.default.name %></b><br />
     <%= text_area_tag '', @translation.default_text, :cols => 60, :rows => 5 %>
   </td>
+  <%- end -%>
 </tr>
 </table>
 
