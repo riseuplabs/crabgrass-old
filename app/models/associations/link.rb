@@ -5,15 +5,14 @@
 # Links are directional: always FROM the parent, and TO the child.
 #
 
-=begin
 
-      disabled for now
+
+#      disabled for now
 
 class Link < ActiveRecord::Base
-  belongs_to :parent, :class_name => 'Page'
-  belongs_to :child, :polymorphic => true
-
-  acts_as_list :scope => :parent
+#  belongs_to :parent, :class_name => 'Page'
+#  belongs_to :child, :polymorphic => true
+#  acts_as_list :scope => :parent
 end
 
-=end
+#=end
