@@ -147,4 +147,19 @@ class ApplicationController < ActionController::Base
     redirect_to url
   end
 
+
+  # override the standard rails rescues_path in order to be able to specify
+  # our own templates.
+  helper_method :rescues_path
+  def rescues_path(template_name)
+    file = "#{RAILS_ROOT}/app/views/rescues/#{template_name}.erb"   
+    if File.exists?(file)
+      return file
+    else
+      return super(template_name)
+    end
+  end
+
+
+
 end
