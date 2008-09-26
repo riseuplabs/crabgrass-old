@@ -123,7 +123,7 @@ rake db:fixtures:load
 rake cg:load_default_data
 \--
 
-Also, 'rake --version' must be 8.1 or greater.
+Also, 'rake --version' must be 0.8.1 or greater.
 
 run crabgrass
 -------------
