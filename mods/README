@@ -1,4 +1,20 @@
-Include these files in an <tt>app</tt> directory just like you would in a normal Rails application. If you need to override a method, view or partial, create the corresponding file in your main <tt>app</tt> directory and it will be used instead.
+Crabgrass Mods
+===============================================================================
+
+Crabgrass has a plugin system that is the reverse of most: normally, plugins
+provide behavior for an application that the plugin knows nothing about.
+
+With crabgrass, however, the plugins stored in mods/ and tools/ directories
+know about crabgrass and only work for crabgrass.
+
+Normal rails engines load the plugin code first, then the application code is
+loaded. This allows the application to override the plugin. For crabgrass, 
+we want the opposite: the plugin should override the application.
+
+Otherwise, crabgrass mods and tools are just like rails-engines enhanced plugins. 
+
+To create a plugin, put files in an app directory of the plugin just like you
+would in a normal Rails application. 
 
 * Controllers & Helpers: See Engines::RailsExtensions::Dependencies for more information.
 

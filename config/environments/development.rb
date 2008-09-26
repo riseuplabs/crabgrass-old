@@ -18,13 +18,23 @@ config.action_controller.perform_caching             = false
 # Do care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
 
+# the default log level for development mode should be to log everything.
+config.log_level = :debug
+
+# however, rails engines are way too verbose, so set engines logging to info:
+if defined? Engines
+  (tmp_config = config.dup).log_level = :info
+  Engines.logger = Rails::Initializer.new(tmp_config).initialize_logger
+end
+
 # this will cause classes in lib to be reloaded on each request in
 # development mode. very useful if working on a source file in lib!
 
-Dependencies.mechanism = :load
-#Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/mods'])
-#Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/tools'])
-Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+# TODO: for rails 2.1.1, change to ActiveSupport::Dependencies
+::Dependencies.mechanism = :load
+::Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+#::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/mods'])
+#::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/tools'])
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/test/fixtures/assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/public/assets"

@@ -68,6 +68,7 @@ Rails::Initializer.run do |config|
   # Deliveries are disabled by default. Do NOT modify this section.
   # Define your email configuration in email.yml instead.
   # It will automatically turn deliveries on
+
   config.action_mailer.perform_deliveries = false
 
   # See Rails::Configuration for more options
@@ -106,6 +107,4 @@ ActiveRecord::Base.partial_updates = false
 
 # build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
-
-Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
 

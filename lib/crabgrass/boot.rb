@@ -19,7 +19,7 @@ SECTION_SIZE = Site.default.pagination_size
 
 # this is not actually used, but i think it is so cool that i want to keep
 # it around in case we need it.
-
+=begin
 require 'dispatcher'
 
 module AfterMethod
@@ -69,5 +69,4 @@ module AfterMethod
   end
 
 end
-
-
+=end

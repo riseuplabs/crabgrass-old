@@ -130,10 +130,13 @@ end
 # The engines plugin dumps way too much stuff to the development log.
 # By default, we want to raise the level to INFO instead of DEBUG,
 # but only for the engines logger, not the default rails one.
-# (this is done in environment.rb)
+# (this is done in development.rb)
 module Engines
   def self.logger
-    @@logger ||= ::RAILS_DEFAULT_LOGGER.dup
+    @@logger
+  end
+  def self.logger=(lgr)
+    @@logger = lgr
   end
 end
 
