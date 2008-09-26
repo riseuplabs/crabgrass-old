@@ -59,8 +59,7 @@ module LayoutHelper
   # (6) mod styles (so that mods can insert their own styles after everthing else)
 
   def crabgrass_stylesheets
-    lines = [];
-
+    lines = []
     lines << stylesheet_link_tag(
       'core/00_reset',
       'core/01_column_spacing',

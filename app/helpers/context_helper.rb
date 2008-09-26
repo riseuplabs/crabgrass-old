@@ -66,12 +66,12 @@ module ContextHelper
     if @group
       if @group.committee?
         if @group.parent
-          add_context @group.parent.short_name, groups_url(:id => @group.parent, :action => 'show')
+          add_context @group.parent.display_name, group_url(:id => @group.parent, :action => 'show')
         elsif @parent
-          add_context @parent.short_name, groups_url(:id => @parent, :action => 'show')
+          add_context @parent.display_name, groups_url(:id => @parent, :action => 'show')
         end
       end
-      add_context @group.short_name, url_for_group(@group, :action => 'show')
+      add_context @group.display_name, url_for_group(@group, :action => 'show')
       set_banner "group/banner_#{size}", @group.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs
@@ -80,7 +80,7 @@ module ContextHelper
   def network_context(size='large', update_breadcrumbs=true)
     add_context 'networks'.t, networks_url(:action => 'list')
     if @group
-      add_context @group.short_name, url_for_group(@group)
+      add_context @group.display_name, url_for_group(@group)
       set_banner "group/banner_#{size}", @group.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs
@@ -89,7 +89,7 @@ module ContextHelper
   def person_context(size='large', update_breadcrumbs=true)
     add_context 'people'.t, people_url
     if @user
-      add_context @user.login, url_for_user(@user, :action => 'show')
+      add_context @user.display_name, url_for_user(@user, :action => 'show')
       set_banner "person/banner_#{size}", @user.banner_style
     end
     breadcrumbs_from_context if update_breadcrumbs

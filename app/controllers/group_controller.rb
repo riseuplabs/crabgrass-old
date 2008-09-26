@@ -166,7 +166,9 @@ class GroupController < ApplicationController
     
   def context
     group_context
-    add_context params[:action], group_url(:action => params[:action], :id => @group, :path => params[:path])
+    unless action?(:show)
+      add_context params[:action], group_url(:action => params[:action], :id => @group, :path => params[:path])
+    end
   end
   
   def find_group
