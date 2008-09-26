@@ -14,8 +14,9 @@ class User < ActiveRecord::Base
   include CrabgrassDispatcher::Validations
   validates_handle :login
   
-  #########################################################    
-  # USER IDENTITY
+  ##
+  ## USER IDENTITY
+  ##
 
   belongs_to :avatar
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
@@ -89,8 +90,9 @@ class User < ActiveRecord::Base
     read_attribute(:time_zone) || Time.zone_default
   end
 
-  #########################################################    
-  # USER SETTINGS
+  ##
+  ## USER SETTINGS
+  ##
 
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
@@ -99,8 +101,10 @@ class User < ActiveRecord::Base
     self.email.any?
   end
 
-  #########################################################    
-  # my tasks
+  ##
+  ## ASSOCIATED DATA
+  ## 
+
   has_many :task_participations, :dependent => :destroy
   has_many :tasks, :through => :task_participations do
     def pending
@@ -112,6 +116,11 @@ class User < ActiveRecord::Base
     def priority
       self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
+  end
+
+  after_destroy :destroy_requests
+  def destroy_requests
+    Request.destroy_for_user(self)
   end
 
   ##

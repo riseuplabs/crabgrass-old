@@ -27,7 +27,7 @@ class RequestTest < ActiveSupport::TestCase
     req.destroy
     assert_raises ActiveRecord::RecordInvalid, "contact already exists" do
       RequestToFriend.create!(:created_by => u1, :recipient => u2)
-    end    
+    end
   end
 
   def test_request_to_join_us
@@ -194,6 +194,29 @@ class RequestTest < ActiveSupport::TestCase
     end
     
     assert network.groups(true).include?(group)
+  end
+
+  def test_destroy_recipient
+    u1 = users(:kangaroo)
+    u2 = users(:iguana)
+
+    req = RequestToFriend.create!(:created_by => u1, :recipient => u2)
+    u1.destroy
+    assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
+      Request.find(req.id)
+    end
+
+    insider  = users(:dolphin)
+    outsider = users(:gerrard)
+    group    = groups(:animals)
+    
+    req = RequestToJoinUs.create(
+      :created_by => insider, :recipient => outsider, :requestable => group)
+
+    group.destroy
+    assert_raises ActiveRecord::RecordNotFound, 'request should have been destroyed' do
+      Request.find(req.id)
+    end
   end
   
   def test_associations

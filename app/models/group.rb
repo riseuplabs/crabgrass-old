@@ -40,8 +40,9 @@ class Group < ActiveRecord::Base
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
   
-  ####################################################################
-  ## about this group
+  ##
+  ## GROUP INFORMATION
+  ##
 
   include CrabgrassDispatcher::Validations
   validates_handle :name
@@ -97,8 +98,9 @@ class Group < ActiveRecord::Base
   def network?; instance_of? Network; end
   def normal?; instance_of? Group; end  
   
-  ####################################################################
-  ## relationships to users
+  ##
+  ## RELATIONSHIPS TO USERS
+  ## 
 
   has_many :memberships, :dependent => :destroy,
     :before_add => :check_duplicate_memberships,
@@ -175,6 +177,16 @@ class Group < ActiveRecord::Base
 #      else; relationship.to_s
 #    end  
 #  end
+
+  ##
+  ## RELATIONSHIP TO ASSOCIATED DATA
+  ## 
+
+  after_destroy :destroy_requests
+  def destroy_requests
+    Request.destroy_for_group(self)
+  end
+
 
   ####################################################################
   ## permissions

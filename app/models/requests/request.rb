@@ -162,10 +162,17 @@ class Request < ActiveRecord::Base
     '<span class="group">%s</span>' % group.name
   end
 
-  #after_create :notify_recipient
-  #def notify_recipient
-  #  Mailer::Request.deliver_request_created(self) if recipient && recipient.receives_email_on('messages')
-  #end
+  # destroy all requests relating to this user
+  def self.destroy_for_user(user)
+    destroy_all ['created_by_id = ?', user.id]
+    destroy_all ["recipient_id = ? AND recipient_type = 'User'", user.id]
+  end
+ 
+  # destroy all requests relating to this group
+  def self.destroy_for_group(group)
+    destroy_all ["recipient_id = ? AND recipient_type = 'Group'", group.id]
+    destroy_all ["requestable_id = ? AND requestable_type = 'Group'", group.id]
+  end
 
 end
 
