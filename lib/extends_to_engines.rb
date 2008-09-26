@@ -133,7 +133,7 @@ end
 # (this is done in development.rb)
 module Engines
   def self.logger
-    @@logger
+    @@logger ||= RAILS_DEFAULT_LOGGER
   end
   def self.logger=(lgr)
     @@logger = lgr
