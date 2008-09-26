@@ -108,13 +108,17 @@ module AssetExtension # :nodoc:
     # eg /assets/55/myfile.jpg
     # or /assets/55/versions/1/myfile.jpg
     def url
-      path public_url_path, path_id, version_path, filename
+      path(public_url_path, path_id, version_path, url_escape(filename))
     end
 
     # eg /assets/55/myfile~small.jpg
     # or /assets/55/versions/1/myfile~small.jpg
     def thumbnail_url(thumbnail_name)
-      path public_url_path, path_id, version_path, thumbnail_filename(thumbnail_name)
+      path(public_url_path, path_id, version_path, url_escape(thumbnail_filename(thumbnail_name)))
+    end
+
+    def url_escape(str)
+      str.gsub(/[^a-zA-Z0-9_\-.]/n){ sprintf("%%%02X", $&.unpack("C")[0]) }
     end
 
     # return a list of all the files that are associated with this asset
@@ -136,9 +140,9 @@ module AssetExtension # :nodoc:
     ## override attributes
     ## 
     
-    def filename=(value)
-      write_attribute :filename, sanitize_filename(value)
-    end
+    #def filename=(value)
+    #  write_attribute :filename, sanitize_filename(value)
+    #end
 
     # create a hard link between the files for orig_model
     # and the files for self (which are in a versioned directory)
@@ -224,12 +228,16 @@ module AssetExtension # :nodoc:
     ## Utility
     ##
 
+    # currently unused
     def sanitize_filename(filename)
       return unless filename
       returning filename.strip do |name|
         # NOTE: File.basename doesn't work right with Windows paths on Unix
         # get only the filename, not the whole path
         name.gsub! /^.*(\\|\/)/, ''
+
+        # strip out ' and "
+        name.gsub! /['"]/, ''
 
         # keep:
         #  alphanumeric characters
@@ -239,7 +247,7 @@ module AssetExtension # :nodoc:
         name.gsub! /[^\w\.\ ]+/, '-'
 
         # don't allow the thumbnail separator        
-        name.gsub! /#{THUMBNAIL_SEPARATOR}/, '-'
+        name.gsub! /#{THUMBNAIL_SEPARATOR}/, ' '
 
         # remove weird constructions:
         # - trailing or leading hypen

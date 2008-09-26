@@ -12,7 +12,9 @@ class AssetsController < ApplicationController
   end
   
   def show
-    if @asset.public?
+    if @asset.public? and !File.exists?(@asset.public_filename)
+      # update access and redirect iff asset is public AND the public
+      # file is not yet in place.
       @asset.update_access
       @asset.generate_thumbnails
       if @asset.thumbnails.any?
