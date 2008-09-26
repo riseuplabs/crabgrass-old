@@ -1,17 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-    
-  include PageHelper       # various page helpers needed everywhere
-  include UrlHelper        # for user and group urls/links
-  include Formy            # helps create forms
-  include LayoutHelper     # used in layouts
-  include LinkHelper       # for making buttons
-  include TimeHelper       # for displaying local and readable times
-  include ErrorHelper      # for displaying errors and messages to the user
-  include ImageHelper      # icons, avatars, spinners, etc.
-  include JavascriptHelper # helpers that produce javascript
-  include PathFinder::Options       # for Page.find_by_path options
-  include WindowedPaginationHelper  # deprecated, should be using will_paginate
 
   ## makes this: link | link | link
   def link_line(*links)

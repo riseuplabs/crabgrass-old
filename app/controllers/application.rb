@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
 
+  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options
+
+  # TODO: remove these, access via ActionController::Base.helpers() instead.
   include AuthenticatedSystem	
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
