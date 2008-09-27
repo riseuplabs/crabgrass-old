@@ -23,8 +23,8 @@ config.log_level = :debug
 
 # however, rails engines are way too verbose, so set engines logging to info:
 if defined? Engines
-  (tmp_config = config.dup).log_level = :info
-  Engines.logger = Rails::Initializer.new(tmp_config).initialize_logger
+  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
+  Engines.logger.level = Logger::INFO
 end
 
 # this will cause classes in lib to be reloaded on each request in
