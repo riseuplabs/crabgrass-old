@@ -20,20 +20,19 @@ table.archive-calendar td a {
 
 /** group directory **/
 
-div.group-entry {
-  float: left;
-  margin: 1em;
-  margin-left: 38px;
-  width: 30em;
+div.group_entry {
+  border-bottom: 1px solid #ccc;
+  margin: 1em 0;
 }
-div.group-entry a {
+div.group_entry a {
   font-weight: bold;
 }
-div.group-entry img {
-  margin-left: -38px;
+div.group_entry img {
   vertical-align: top;
   float: left;
+  padding: 0 1em 1em 0;
 }
+
 #l-shape {
   height: 1em;
   width: 2em;

@@ -1,6 +1,0 @@
-<% url = url_for_group(group) -%>
-<div class='group-entry'>
-  <%= link_to avatar_for(group, 'small'), url -%>
-  <%= link_to group.display_name, url -%>
-  <div><%= truncate(group.summary, 200) %></div>
-</div>

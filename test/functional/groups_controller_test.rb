@@ -15,30 +15,25 @@ class GroupsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_index
+  def test_my
     login_as :gerrard
-    get :index
+    get :my
     assert_response :success
-#    assert_template 'list'
-  end
-
-  def test_list
-    login_as :gerrard
-    get :list
-
-    assert_response :success
-#    assert_template 'list'
-
     assert_not_nil assigns(:groups)
   end
 
+  def test_directory
+    login_as :gerrard
+    get :directory
+    assert_response :success
+    assert_not_nil assigns(:groups)
+  end
 
   def test_get_create
     login_as :gerrard
     get :create
 
     assert_response :success
-#    assert_template 'create'
     assert_select "form#createform"
   end
 

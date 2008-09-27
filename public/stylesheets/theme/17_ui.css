@@ -10,6 +10,9 @@ a.invert {
   color: white;
   background-color: #003399;
 }
+a.active {
+  font-weight: bold;
+}
 a.hov {text-decoration:none;}
 a.hov:hover {text-decoration:underline;}
 a.noline, a.imglink { text-decoration: none; }

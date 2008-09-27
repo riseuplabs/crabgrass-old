@@ -1,0 +1,8 @@
+<% url = url_for_group(group) -%>
+<div class='group_entry'>
+  <%= link_to avatar_for(group, 'medium'), url -%>
+  <%= link_to group.display_name, url -%>
+  <div><%= h group.summary %></div>
+  <br style='clear:left' />
+</div>
+

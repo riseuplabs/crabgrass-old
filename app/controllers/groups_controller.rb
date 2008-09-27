@@ -6,12 +6,20 @@ class GroupsController < ApplicationController
   before_filter :login_required, :only => [:create]
 
   def index
-    list
-    render :action => 'list'
+    if logged_in?
+      redirect_to :controller => 'groups', :action => 'my'
+    else
+      redirect_to :controller => 'groups', :action => 'directory'
+    end
   end
 
-  def list
-    @groups = Group.visible_by(current_user).only_groups.paginate(:all, :page => params[:page], :order => 'full_name')
+  def directory
+    user = logged_in? ? current_user : nil
+    @groups = Group.visible_by(user).only_groups.paginate(:all, :page => params[:page], :order => 'name')
+  end
+
+  def my
+    @groups = current_user.groups.sort_by{|g|g.name}
   end
 
   # login required
@@ -62,3 +70,4 @@ class GroupsController < ApplicationController
     parent
   end
 end
+

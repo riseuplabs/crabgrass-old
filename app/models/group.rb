@@ -32,8 +32,9 @@ class Group < ActiveRecord::Base
   named_scope :visible_by, lambda { |user|
     select = 'DISTINCT groups.*'
     # ^^ another way to solve duplicates would be to put profiles.friend = true in other side of OR
+    group_ids = user ? user.all_group_ids : []
     joins = "LEFT OUTER JOIN profiles ON profiles.entity_id = groups.id AND profiles.entity_type = 'Group'"
-    {:select => select, :joins => joins, :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, user.all_group_ids]}
+    {:select => select, :joins => joins, :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
   }
 
   # finds groups that are of type Group (but not Committee or Network)

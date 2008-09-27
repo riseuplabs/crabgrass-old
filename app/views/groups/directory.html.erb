@@ -1,0 +1,6 @@
+<% @title_box = content_tag :h1, 'Group Directory'.t -%>
+<%= groups_navigation_links %>
+
+<%= render :partial => 'group', :collection => @groups %>
+<%= pagination_links(@groups) %>
+
