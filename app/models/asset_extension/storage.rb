@@ -140,9 +140,9 @@ module AssetExtension # :nodoc:
     ## override attributes
     ## 
     
-    #def filename=(value)
-    #  write_attribute :filename, sanitize_filename(value)
-    #end
+    def filename=(value)
+      write_attribute :filename, sanitize_filename(value)
+    end
 
     # create a hard link between the files for orig_model
     # and the files for self (which are in a versioned directory)
@@ -237,14 +237,14 @@ module AssetExtension # :nodoc:
         name.gsub! /^.*(\\|\/)/, ''
 
         # strip out ' and "
-        name.gsub! /['"]/, ''
+        # name.gsub! /['"]/, ''
 
         # keep:
         #  alphanumeric characters
         #  hypen
         #  space
         #  period 
-        name.gsub! /[^\w\.\ ]+/, '-'
+        #name.gsub! /[^\w\.\ ]+/, '-'
 
         # don't allow the thumbnail separator        
         name.gsub! /#{THUMBNAIL_SEPARATOR}/, ' '
