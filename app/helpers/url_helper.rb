@@ -173,9 +173,9 @@ module UrlHelper
   def tag_link(tag, group_name=nil, user_name=nil)
     name = CGI.escape tag.name
     if group_name  
-      link_path = "/groups/tags/#{group_name}/#{name}"
-    elsif user_name 
-      link_path = "/people/tags/#{user_name}/#{name}"
+      link_path = "/group/tags/#{group_name}/#{name}"
+#    elsif user_name 
+#      link_path = "/person/tags/#{user_name}/#{name}"
     else
       link_path = "/me/search/tag/#{name}"
     end
