@@ -62,7 +62,7 @@ module GroupHelper
   
   def create_committee_link
     if may_admin_group?
-      link_to 'create committee'.t, group_url(:action => 'create', :parent_id => @group.id)
+      link_to 'create committee'.t, groups_url(:action => 'create', :parent_id => @group.id)
     end
   end
   
