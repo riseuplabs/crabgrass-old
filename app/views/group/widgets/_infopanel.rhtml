@@ -7,6 +7,8 @@
         <h2>Members <span><%= @group.users.size + @group.groups.size %> members</span></h2>
         <%= render :partial => 'group/widgets/members' %>
       <%- end -%>
+      <br style='clear:both'/>
+      <%= link_line(more_members_link, invite_link, requests_link) %>
     <%- end -%>
   </td>
   <td rowspan='2' style='width:50%' class='right'>
@@ -21,6 +23,8 @@
       <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
         <%= render :partial => 'group/widgets/committees' %>
       <%- end -%>
+      <br style='clear:both'/>
+      <%= link_line(create_committee_link) %>
     <% end -%>
   </td>
 </tr>
