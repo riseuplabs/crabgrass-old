@@ -16,9 +16,7 @@
       <% group_count = 0 -%>
       <% @user.groups.each do |g| %>
         <% if g.publicly_visible_members or current_user.member_of? g %>
-          <li>
-            <%= link_to(g.display_name, :controller => 'groups', :action => 'show', :id => g) %>
-          </li>
+          <li><%= link_to_group(g) %></li>
           <% group_count += 1 -%>
         <% end -%>
       <% end -%>
