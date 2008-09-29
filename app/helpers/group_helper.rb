@@ -95,4 +95,16 @@ module GroupHelper
     ), :style => 'margin-bottom: 1em'
   end
 
+  def link_to_group_tag(tag,options)
+    options[:class] ||= ""
+    path = (params[:path]||[]).dup
+    name = tag.name
+    if path.delete(name)
+      options[:class] += ' invert'
+    else
+      path << name
+    end
+    link_to name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
+  end
+
 end

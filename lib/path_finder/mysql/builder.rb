@@ -112,6 +112,10 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     Page.count options_for_find
   end
 
+  def ids
+    Page.find_ids options_for_find.merge(:select => 'pages.id')
+  end
+
   private
 
   def options_for_find

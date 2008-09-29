@@ -6,3 +6,6 @@ require "#{RAILS_ROOT}/lib/path_finder.rb"
 require "#{RAILS_ROOT}/lib/page_class_proxy.rb"
 require "#{RAILS_ROOT}/lib/i18n_helpers.rb"
 
+# model extensions:
+require "#{RAILS_ROOT}/app/models/tag.rb"
+

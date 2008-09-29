@@ -71,19 +71,6 @@ class Group < ActiveRecord::Base
   belongs_to :avatar
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
-  # TODO: this is really really horrible.
-  has_many :tags,
-    :finder_sql => %q[
-      SELECT DISTINCT tags.* FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
-      WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
-        (SELECT pages.id FROM pages INNER JOIN group_participations ON pages.id = group_participations.page_id
-        WHERE group_participations.group_id = #{id})],
-    :counter_sql => %q[
-      SELECT COUNT(DISTINCT tags.id) FROM tags INNER JOIN taggings ON tags.id = taggings.tag_id
-      WHERE taggings.taggable_type = 'Page' AND taggings.taggable_id IN
-        (SELECT pages.id FROM pages INNER JOIN group_participations ON
-         pages.id = group_participations.page_id WHERE group_participations.group_id = #{id})]
-  
   # name stuff
   def to_param; name; end
   def display_name; full_name.any? ? full_name : name; end

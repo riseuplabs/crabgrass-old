@@ -22,6 +22,16 @@ module PathFinder
       builder(path, options).count
     end
 
+    def ids_by_path(path, options={})
+      builder(path, options).ids
+    end
+
+    # construct_finder_sql is private, but we would like to be able to use it
+    # in the builders.
+    def find_ids(options)
+      Page.connection.select_values construct_finder_sql(options)
+    end
+
     private
 
     def builder(path, options)

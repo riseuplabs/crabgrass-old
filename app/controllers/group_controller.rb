@@ -1,7 +1,7 @@
 
 class GroupController < ApplicationController
   include GroupHelper
-  helper 'task_list_page' # remove when tasks are in a separate controller
+  helper 'task_list_page', 'tags' # remove task_list_page when tasks are in a separate controller
 
   #layout :choose_layout
   stylesheet 'groups'
@@ -82,7 +82,14 @@ class GroupController < ApplicationController
   def tags
     tags = params[:path] || []
     path = tags.collect{|a|['tag',a]}.flatten
-    @pages = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
+    if path.any?
+      @pages   = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
+      page_ids = Page.ids_by_path(path, options_for_group(@group))
+      @tags    = Tag.for_taggables(Page,page_ids).find(:all)
+    else 
+      @pages = []
+      @tags  = Tag.page_tags_for_group(@group)
+    end
   end
 
   def tasks

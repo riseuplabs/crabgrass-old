@@ -1,20 +1,8 @@
-<% if @group.tags.any? -%>
-
-<%= @group.tags.collect {|tag|
-  path = (params[:path]||[]).dup
-  t = tag.name
-  if path.include? t
-    path.delete(t)
-    klass = 'invert'
-  else
-    path << t
-    klass = ''
-  end
-  link_to t, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), :class=>klass
-}.join(' ') -%>
-
+<% if @tags.any? -%>
+  <% tag_cloud @tags, %w(tag1 tag2 tag3 tag4) do |tag, css_class| %>
+    <%= link_to_group_tag tag, :class => css_class %>
+  <% end %>
 <% else -%>
-
-no tags
-
+  no tags
 <% end -%>
+

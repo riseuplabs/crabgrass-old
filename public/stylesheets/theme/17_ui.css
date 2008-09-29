@@ -22,8 +22,16 @@ img.avatar { vertical-align: middle; }
 a.selected {font-weight: bold;}
 
 /** drag & drop **/
+
 .handle {cursor: move;}
 .not_handle {cursor: default;}
+
+/** tags **/
+
+.tag1 { font-size: 1.0em; }
+.tag2 { font-size: 1.2em; }
+.tag3 { font-size: 1.4em; }
+.tag4 { font-size: 1.6em; }
 
 /** list **/
 
