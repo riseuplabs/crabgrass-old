@@ -6,7 +6,7 @@ MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").f
 TOOLS_ENABLED = File.read("#{RAILS_ROOT}/config/tools_enabled.list").split("\n").freeze
 
 require "#{RAILS_ROOT}/lib/site.rb"
-Site.load_from_file("#{RAILS_ROOT}/config/sites.yml")
+Site.load_from_file("#{RAILS_ROOT}/config/#{"development." unless RAILS_ENV=='production'}sites.yml")
 
 # legacy configurations that should now be removed and changed to 
 # reference via @site in the code:

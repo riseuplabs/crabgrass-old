@@ -10,9 +10,9 @@ ActionController::Routing::Routes.draw do |map|
 
   ##### PLUGIN ROUTES ######################################
 
-  # uncomment if you enable these plugins:
-  # map.from_plugin :super_admin
-  # map.from_plugin :gibberize
+  # optionally load these plugin routes, if they happen to be loaded
+  map.from_plugin :super_admin rescue NameError
+  map.from_plugin :gibberize   rescue NameError
 
   ##### ASSET ROUTES ######################################
   
