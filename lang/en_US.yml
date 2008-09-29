@@ -46,3 +46,8 @@ recipient_tip: Seperate recipients with commas, spaces, or new lines.
 signup_title: Create Your Account
 signup_email: Your Email
 login_password: Password
+csrf_error_message: |
+  Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
+
+try_again: Try Again
+

@@ -111,6 +111,8 @@ class ApplicationController < ActionController::Base
 
   def rescue_authentication_errors
     yield
+  rescue ActionController::InvalidAuthenticityToken
+    render :template => 'account/csrf_error'
   rescue PermissionDenied
     access_denied
   end

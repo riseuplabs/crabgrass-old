@@ -145,23 +145,7 @@ module ContextHelper
   ## HELPER FUNCTIONS
   ## not called anywhere except from here
 
-  private
-
-  def referer
-    @referer ||= get_referer
-  end
- 	   
-  def get_referer
-    return false unless raw = request.env["HTTP_REFERER"]
-    server = request.host_with_port
-    prot = request.protocol
-    if raw.starts_with?("#{prot}#{server}/")
-      raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
-    else
-      false
-    end
-  end
- 	
+  private 	
 
   def breadcrumbs_by_referer
     session[:breadcrumbs_by_referer] ||= {}

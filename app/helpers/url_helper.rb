@@ -1,4 +1,74 @@
 module UrlHelper
+
+  ##
+  ## REFERER
+  ##
+
+  def referer
+    @referer ||= get_referer
+  end
+ 	   
+  def get_referer
+    return false unless raw = request.env["HTTP_REFERER"]
+    server = request.host_with_port
+    prot = request.protocol
+    if raw.starts_with?("#{prot}#{server}/")
+      raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
+    else
+      false
+    end
+  end
+
+  ##
+  ## GROUPS
+  ##
+
+  def url_for_group(arg, options={})
+    name_and_url_for_group(arg,options)[1]
+  end
+
+  # see function name_and_path_for_group for description of options
+  def link_to_group(arg, options={})
+    if arg.is_a? Integer
+      @group_cache ||= {}
+      # hacky fix for error when a page persists after it's group is deleted --af
+      # what is this trying to do? --e
+      if not @group_cache[arg]
+        if Group.exists?(arg)
+          @group_cache[arg] = Group.find(arg)
+        else
+          return ""
+        end
+      end
+      # end hacky fix
+      arg = @group_cache[arg]
+    end
+    
+    display_name, path = name_and_url_for_group(arg,options)
+    style = options[:style]
+    label = options[:label] || display_name
+    klass = options[:class] || 'name_link'
+    avatar = ''
+    if options[:avatar_as_separate_link] # not used for now
+      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
+    elsif options[:avatar]
+      size = Avatar.pixels(options[:avatar])[0..1].to_i
+      padding = size/5 + size
+      if arg and arg.avatar
+        url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      else
+        url = avatar_url(:id => 0, :size => options[:avatar])
+      end
+      if style
+        style = "background-image: url(#{url})" + style
+      else
+        padding = size/5 + size
+        style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px"
+      end
+    end
+    avatar + link_to(label, path, :class => klass, :style => style)
+  end
+
   # if you pass options[:full_name] = true, committees will have the string
   # "group+committee" (default does not include leading "group+")
   # 
@@ -52,9 +122,9 @@ module UrlHelper
     [display_name, url]  
   end
 
-  def url_for_group(arg, options={})
-    name_and_url_for_group(arg,options)[1]
-  end
+  ##
+  ## USERS
+  ##
 
   # arg might be a user object, a user id, or the user's login
   def login_and_path_for_user(arg, options={})
@@ -111,48 +181,6 @@ module UrlHelper
       else
         padding = size/5 + size
         style = "background: url(#{url}) no-repeat 0% 50%; padding: 4px 0 4px #{padding}px;"
-      end
-    end
-    avatar + link_to(label, path, :class => klass, :style => style)
-  end
-
-  # see function name_and_path_for_group for description of options
-  def link_to_group(arg, options={})
-    if arg.is_a? Integer
-      @group_cache ||= {}
-      # hacky fix for error when a page persists after it's group is deleted --af
-      # what is this trying to do? --e
-      if not @group_cache[arg]
-        if Group.exists?(arg)
-          @group_cache[arg] = Group.find(arg)
-        else
-          return ""
-        end
-      end
-      # end hacky fix
-      arg = @group_cache[arg]
-    end
-    
-    display_name, path = name_and_url_for_group(arg,options)
-    style = options[:style]
-    label = options[:label] || display_name
-    klass = options[:class] || 'name_link'
-    avatar = ''
-    if options[:avatar_as_separate_link] # not used for now
-      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
-    elsif options[:avatar]
-      size = Avatar.pixels(options[:avatar])[0..1].to_i
-      padding = size/5 + size
-      if arg and arg.avatar
-        url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      else
-        url = avatar_url(:id => 0, :size => options[:avatar])
-      end
-      if style
-        style = "background-image: url(#{url})" + style
-      else
-        padding = size/5 + size
-        style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px"
       end
     end
     avatar + link_to(label, path, :class => klass, :style => style)
