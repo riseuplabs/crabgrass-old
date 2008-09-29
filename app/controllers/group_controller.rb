@@ -81,7 +81,7 @@ class GroupController < ApplicationController
     
   def tags
     tags = params[:path] || []
-    path = tags.collect{|a|['tag',a]}.flatten
+    path = tags.collect{|a|['tag',a.gsub('+',' ')]}.flatten
     if path.any?
       @pages   = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
       page_ids = Page.ids_by_path(path, options_for_group(@group))

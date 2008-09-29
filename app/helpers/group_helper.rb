@@ -98,13 +98,13 @@ module GroupHelper
   def link_to_group_tag(tag,options)
     options[:class] ||= ""
     path = (params[:path]||[]).dup
-    name = tag.name
+    name = tag.name.gsub(' ','+')
     if path.delete(name)
       options[:class] += ' invert'
     else
       path << name
     end
-    link_to name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
+    link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
 
 end
