@@ -10,8 +10,9 @@ class RequestsController < ApplicationController
  
   def list
     if @group
-      @incoming = Request.to_group(@group).having_state('pending').by_created_at.paginate(:page => params[:page])
-      @outgoing = Request.from_group(@group).having_state('pending').by_created_at.paginate(:page => params[:page])
+      params[:state] ||= 'pending'
+      @incoming = Request.to_group(@group).having_state(params[:state]).by_created_at.paginate(:page => params[:in_page])
+      @outgoing = Request.from_group(@group).having_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
     end
   end
 

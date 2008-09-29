@@ -86,4 +86,13 @@ module GroupHelper
     end
   end
   
+  def request_state_links
+    hash = {:controller => params[:controller], :action => params[:action], :group_id => params[:group_id]}
+    content_tag :div, link_line(
+      link_to_active(:pending.t, hash.merge(:state => 'pending')), 
+      link_to_active(:approved.t, hash.merge(:state => 'approved')),
+      link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
+    ), :style => 'margin-bottom: 1em'
+  end
+
 end

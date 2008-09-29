@@ -50,4 +50,11 @@ csrf_error_message: |
   Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
 
 try_again: Try Again
-
+pending: pending
+rejected: rejected
+approved: approved
+requests_to_me: Requests to me
+requests_from_me: Requests from me
+requests_for_group: Requests for %s
+incoming: Incoming
+outgoing: Outgoing

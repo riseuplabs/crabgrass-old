@@ -3,6 +3,8 @@
   <h1><%= "Requests to me".t %></h1>
 <% end -%>
 
+<%= request_state_links %>
+
 <%= render :partial => 'requests/table', :locals => {:requests => @requests, :approvable => true} %>
 
 <%= pagination_links(@requests) %>
