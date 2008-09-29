@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class RequestTest < ActiveSupport::TestCase
-  fixtures :users, :groups, :requests, :memberships
+  fixtures :users, :groups, :requests, :memberships, :federatings
 
   def test_request_to_friend
     u1 = users(:kangaroo)
@@ -48,6 +48,10 @@ class RequestTest < ActiveSupport::TestCase
       RequestToJoinUs.create!(
         :created_by => insider, :recipient => outsider, :requestable => group)
     end
+
+    assert_equal req, Request.to_user(outsider).having_state('pending').find(:first)
+    assert_equal req, Request.created_by(insider).having_state('pending').find(:first)
+    assert_equal req, Request.from_group(group).having_state('pending').find(:first)
 
     assert_raises PermissionDenied do
       req.approve_by!(insider)
@@ -97,6 +101,8 @@ class RequestTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordInvalid, "can't be duplicates" do
       RequestToJoinYou.create!(:created_by => outsider, :recipient => group)
     end
+
+    assert_equal req, Request.to_user(insider).having_state('pending').find(:first)
 
     assert_raises PermissionDenied do
       req.approve_by!(outsider)
