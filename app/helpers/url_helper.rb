@@ -87,7 +87,7 @@ module UrlHelper
     elsif arg.instance_of? String
       name = arg
     elsif arg.is_a? Group
-      controller = arg.class.name.downcase
+      controller = arg.class.name.downcase if arg.network?
       name = arg.name
       if options[:full_name]
         display_name = arg.full_name
