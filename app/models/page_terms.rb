@@ -62,7 +62,8 @@ class PageTerms < ActiveRecord::Base
         filter_str += " +(%s)" % access_ids.join(' ')
       elsif arg.is_a? Group
         group = arg
-        access_ids = Page.access_ids_for(:group_ids => [group.id])
+        # include the ids of committees, but do not include networks
+        access_ids = Page.access_ids_for(:group_ids => group.group_and_committee_ids)
         filter_str += " +(%s)" % access_ids.join(' ')
       end
     end
