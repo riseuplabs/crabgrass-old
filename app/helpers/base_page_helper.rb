@@ -216,4 +216,14 @@ module BasePageHelper
      popup_line(:name => 'details', :label => 'details', :icon => 'details_icon', :controller => 'participation')
   end
 
+  ##
+  ## HOOKS FOR MODS TO OVERRIDE
+  ##
+
+  def page_sidebar_actions
+  end
+
+  def discussion_post_actions
+  end
+
 end
