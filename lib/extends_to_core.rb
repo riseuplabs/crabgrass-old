@@ -57,6 +57,24 @@ class String
     s = Iconv.iconv(translation_to, translation_from, self).to_s
     s.titleize
   end
+
+  def shell_escape
+    if empty?
+      "''"
+    elsif self =~ %r{\A[0-9A-Za-z+_-]+\z}
+      self
+    else
+      result = ''
+      scan(/('+)|[^']+/) do
+        if $1
+          result << %q{\'} * $1.length
+        else
+          result << %Q{'#{$&}'}
+        end
+      end
+      result
+    end
+  end
 end
 
 class Array

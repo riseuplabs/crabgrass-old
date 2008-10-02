@@ -6,7 +6,7 @@ module Media::Process
     cattr_accessor :log_to_stdout_when
 
     def cmd(*args)
-      cmdstr = Escape.shell_command(args)
+      cmdstr = args.collect{|arg| arg.shell_escape}.join(' ') 
       log cmdstr
       if log_to_stdout_when == :never
         output = `#{cmdstr} 2>/dev/null`
