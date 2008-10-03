@@ -66,6 +66,6 @@ class Crabgrass::Hook::ManagerTest < Test::Unit::TestCase
   def test_call_hook_with_multiple_listeners
     @hook_module.add_listener(TestHook1)
     @hook_module.add_listener(TestHook2)
-    assert_equal 'Test hook 1 listener.Test hook 2 listener.', @hook_module.call_hook(:view_layouts_base_html_head)
+    assert_equal "Test hook 1 listener.\nTest hook 2 listener.", @hook_module.call_hook(:view_layouts_base_html_head)
   end
 end
