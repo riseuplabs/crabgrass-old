@@ -9,13 +9,13 @@ module UrlHelper
   end
  	   
   def get_referer
-    return false unless raw = request.env["HTTP_REFERER"]
+    return '/' unless raw = request.env["HTTP_REFERER"]
     server = request.host_with_port
     prot = request.protocol
     if raw.starts_with?("#{prot}#{server}/")
       raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
     else
-      false
+      '/'
     end
   end
 
