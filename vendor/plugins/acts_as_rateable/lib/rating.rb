@@ -12,4 +12,12 @@ class Rating < ActiveRecord::Base
       :order => "created_at DESC"
     )
   end
+
+  ## crabgrass hack
+  named_scope :with_rating, lambda {|rating|
+    { :conditions => ['rating = ?', rating] }
+  }
+  named_scope :by_user, lambda {|user|
+    { :conditions => ['user_id = ?', user.id] }
+  }
 end
