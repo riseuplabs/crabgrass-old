@@ -92,7 +92,7 @@ class AccountController < ApplicationController
     @user.password = params[:new_password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
-      Mailer.deliver_reset_password(token, mailer_options)
+      Mailer.deliver_reset_password(@user, mailer_options)
       @token.destroy
       flash_message :title => "Password Reset"[:password_reset],
         :success => "Your password has been successfully reset. You can now log in with your newly changed password."[:password_reset_ok_text]
