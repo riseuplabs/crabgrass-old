@@ -29,7 +29,7 @@
 
   <%= link_to 'Need a new account?'[:signup_link], { :action => 'signup', :redirect => params[:redirect] } %>
   <br />
-  <%= link_to 'I forgot my password'[:forgot_password_link], forgot_password_path %>
+  <%= link_to 'I forgot my password'[:forgot_password_link], :action => 'forgot_password' %>
     </div>
   </td>
 </tr>

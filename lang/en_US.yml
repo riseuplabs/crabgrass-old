@@ -58,3 +58,7 @@ requests_from_me: Requests from me
 requests_for_group: Requests for %s
 incoming: Incoming
 outgoing: Outgoing
+forgot_password_text: |
+  If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
+reset_password_text: |
+  Hello, %s. If you've forgotten the password you use to log in, you can set a new one here.

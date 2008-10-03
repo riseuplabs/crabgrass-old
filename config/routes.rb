@@ -45,6 +45,7 @@ ActionController::Routing::Routes.draw do |map|
             
   map.connect '', :controller => "account"
   map.login   'account/login',   :controller => 'account',   :action => 'login'
+  map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 
   # routes in emails:
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
