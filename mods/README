@@ -11,6 +11,11 @@ Normal rails engines load the plugin code first, then the application code is
 loaded. This allows the application to override the plugin. For crabgrass, 
 we want the opposite: the plugin should override the application.
 
+Additionally, crabgrass has view listeners: plugins can add themselves as
+listeners to certain hooks within the view code of the main application. This
+allows a plugin to add custom view elements at just the right spot without
+needing to override the entire view.
+
 Otherwise, crabgrass mods and tools are just like rails-engines enhanced plugins. 
 
 To create a plugin, put files in an app directory of the plugin just like you
@@ -24,7 +29,49 @@ would in a normal Rails application.
 
 See http://api.rails-engines.org/
 
-Plugin models
+
+Plugin Views
+===============================================================================
+
+If this is in the init.rb of your plugin:
+
+   self.override_views = true
+
+Then any view file in the plugin's app/views folder will override what is in the
+main application. Otherwise, the views in the main application take precedence. 
+
+
+Plugin View Listeners
+===============================================================================
+
+Suppose the main application had this in a view:
+
+  <%= call_hook :menu, :some_variable => true %>
+
+You can create a listener for this hook in your plugin. When this hook is called,
+all the listeners for that hook are called and their output returned.
+
+In your plugin's init.rb:
+
+  Dispatcher.to_prepare do
+    require 'my_listener'
+  end
+
+In your plugin's lib/my_listener.rb
+
+  class MyListener < Crabgrass::Hook::ViewListener
+    include Singleton
+
+    def menu(context)
+      'hi' if context[:some_variable] == true
+    end
+  end
+
+In this case, the 'call_hook' command will return 'hi'.
+
+In your ViewListener, you can use any method that is available to a view.
+
+Plugin Models
 ===============================================================================
 
 Some plugins have a problem: if a plugin applies a mixing directly to a model in
@@ -57,6 +104,12 @@ that is available in the plugin's init.rb.
         end
       end
     end
+   
+    module ClassMethods
+      def hello
+         'i am a class method'
+      end
+    end
 
     def self.add_to_class_definition
       lambda do
@@ -83,6 +136,7 @@ Reloading changed code problem:
   * http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
   * crabgrass has its own method. see lib/extends_to_engines.rb
 
+
 Plugin assets
 ===============================================================================
 
@@ -106,6 +160,7 @@ your javascripts, stylesheets and images in subdirectories of that folder:
 Files within the "asset" structure are automatically mirrored into
 a publicly-accessible folder each time your application starts
 (ie app/public/plugin_assets/<plugin name>/)
+
 
 Using plugin assets in views
 ===============================================================================
