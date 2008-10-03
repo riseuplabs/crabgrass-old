@@ -79,7 +79,7 @@ class AccountController < ApplicationController
   end
   
   def reset_password
-    @token = Token.find_by_value(params[:token])
+    @token = Token.find_by_value_and_action(params[:token], 'recovery')
     unless @token && !@token.expired?
       flash_message :title => "Invalid Token"[:invalid_token],
         :error => "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."[:invalid_token_text]
@@ -92,6 +92,7 @@ class AccountController < ApplicationController
     @user.password = params[:new_password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
+      Mailer.deliver_reset_password(token, mailer_options)
       @token.destroy
       flash_message :title => "Password Reset"[:password_reset],
         :success => "Your password has been successfully reset. You can now log in with your newly changed password."[:password_reset_ok_text]
