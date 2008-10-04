@@ -1,4 +1,4 @@
---- 
+---
 logout_success_message: You have been logged out.
 add_contact_info: When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact.
 join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
@@ -33,13 +33,13 @@ login: Login
 approve_contact_info: A contact request already exists from this user. Do you wish to approve it?
 welcome_text: |
   *Welcome*
-  
+
   Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
-  
-  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link. 
-  
+
+  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link.
+
   Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
-  
+
   Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the "get involved" link at the bottom over every page.
 
 recipient_tip: Seperate recipients with commas, spaces, or new lines.
@@ -69,3 +69,17 @@ forgot_password_mail_expiry: |
   again to request a new link.
 reset_password_mail_greeting: %s, your password has been reset as you requested.
 reset_password_mail_warning: If you did not request that your password be changed, please contact us.
+your_login: Your login
+invalid_email: Invalid Email
+invalid_email_text: The email address you provided is invalid.
+reset_password: Reset Password
+reset_password_mail_sent: An email has been sent containing instructions for resetting your password.
+invalid_token: Invalid Token
+invalid_token_text: The password reset link you specified is invalid. Presumably it has already been used, or it has expired.
+password_reset: Password Reset
+password_reset_ok_text: Your password has been successfully reset. You an now log in with your newly changed password.
+requested_forgot_password: You have requested a change of password
+password_was_reset: Your password has been reset
+forgotten_email_address: What email address did you give us when you created your account?
+new_password: New Password
+confirm_new_password: Confirm New Password
