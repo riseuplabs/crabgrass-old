@@ -22,14 +22,14 @@
   <td>
     <div align='center'>
 
-<!-- Uncomment this if you want this functionality
+<%- if false # Change to true if you want this functionality -%>
 <p><label for="remember_me">Remember me:</label>
 <%= check_box_tag 'remember_me' %></p>
--->
+<%- end -%>
 
   <%= link_to 'Need a new account?'[:signup_link], { :action => 'signup', :redirect => params[:redirect] } %>
   <br />
-  <%= link_to 'I forgot my password'[:forgot_password_link], forgot_password_path %>
+  <%= link_to 'I forgot my password'[:forgot_password_link], :action => 'forgot_password' %>
     </div>
   </td>
 </tr>

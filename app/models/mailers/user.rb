@@ -1,12 +1,14 @@
 module Mailers::User
 
-  def forgot_password(user)
-    setup_email(user)
-    @subject += _('You have requested a change of password')
-    @body[:url] = "http://#{Crabgrass::Config.host}/reset_password/#{user.password_reset_code}"
+  def forgot_password(token, options)
+    setup(options)
+    setup_email(token.user)
+    @subject += 'You have requested a change of password'[:requested_forgot_password]
+    @body[:url] = url_for(:controller => 'account', :action => 'reset_password', :token => token.value)
   end
 
-  def reset_password(user)
+  def reset_password(user, options)
+    setup(options)
     setup_email(user)
     @subject += _('Your password has been reset')
   end

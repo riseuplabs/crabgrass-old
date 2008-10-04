@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080922055157) do
+ActiveRecord::Schema.define(:version => 20080926190649) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -484,6 +484,13 @@ ActiveRecord::Schema.define(:version => 20080922055157) do
     t.boolean "failure"
   end
 
+  create_table "tokens", :force => true do |t|
+    t.integer  "user_id",    :limit => 11, :null => false
+    t.string   "action"
+    t.string   "value"
+    t.datetime "created_at",               :null => false
+  end
+
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id",       :limit => 11
     t.integer  "user_id",       :limit => 11
@@ -530,7 +537,6 @@ ActiveRecord::Schema.define(:version => 20080922055157) do
     t.binary   "foe_id_cache"
     t.binary   "peer_id_cache"
     t.binary   "tag_id_cache"
-    t.string   "password_reset_code",       :limit => 40
     t.string   "language",                  :limit => 5
   end
 

@@ -1,0 +1,31 @@
+--- 
+tokens_001: 
+  created_at: 2007-01-21 00:39:12 +01:00
+  action: register
+  id: 1
+  value: DwMJ2yIxBNeAk26znMYzYmz5dAiIina0GFrPnGTM
+  user_id: 1
+tokens_002: 
+  created_at: 2007-01-21 00:39:52 +01:00
+  action: recovery
+  id: 2
+  value: sahYSIaoYrsZUef86sTHrLISdznW6ApF36h5WSnm
+  user_id: 2
+tokens_003:
+  created_at: <%= 1.hour.ago.to_s :db %>
+  action: recovery
+  id: 3
+  value: 6HPefjP8wrWCGOAZm3IkBscUtZIxOyOOqzoAYmWN
+  user_id: 1
+old_token:
+  created_at: <%= 6.months.ago.to_s :db %>
+  action: recovery
+  id: 4
+  value: bqF4jYLoPV01mLXvLY2s8r18kjSOWAcwazSqZVwU
+  user_id: 1
+strange:
+  created_at: <%= 1.hour.ago.to_s :db %>
+  action: something_strange
+  id: 5
+  value: Kg1lkWeToZbJngKMiQUBZz74KbBway78FGIoyIy1
+  user_id: 1
