@@ -45,10 +45,9 @@ ActionController::Routing::Routes.draw do |map|
             
   map.connect '', :controller => "account"
   map.login   'account/login',   :controller => 'account',   :action => 'login'
+  map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 
   # routes in emails:
-  map.forgot_password '/forgot_password',     :controller => 'passwords',   :action =>  'new'
-  map.reset_password  '/reset_password/:id',  :controller => 'passwords',   :action =>  'edit'
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
   
   # handle all the namespaced base_page controllers:

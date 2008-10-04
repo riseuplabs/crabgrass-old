@@ -5,7 +5,7 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups
+  fixtures :users, :groups, :tokens
 
   def setup
     @controller = AccountController.new
@@ -130,7 +130,47 @@ class AccountControllerTest < Test::Unit::TestCase
     get :index
     assert !@controller.send(:logged_in?)
   end
+  
+  def test_forgot_password
+    get :forgot_password
+    assert_response :success
+    
+    old_count = Token.count
+    post :forgot_password, :email => users(:quentin).email
+    assert_response :redirect
+    assert_equal old_count + 1, Token.count
+    
+    token = Token.find(:last)
+    assert_equal "recovery", token.action
+    assert_equal users(:quentin).id, token.user_id
+    
+    get :reset_password, :token => token.value
+    assert_response :success
+    
+    post :reset_password, :token => token.value, :new_password => "abcde", :password_confirmation => "abcde"
+    assert_response :redirect
+    assert_equal old_count, Token.count
+  end
+  
+  def test_forgot_password_invalid_email_should_stay_put
+    post :forgot_password, :email => "not rfc822-compliant"
+    assert_response :success
+  end
 
+  def test_redirect_on_old_or_invalid_token
+    get :reset_password, :token => tokens(:old_token).value
+    assert_response :redirect
+
+    get :reset_password, :token => tokens(:strange).value
+    assert_response :redirect
+
+    get :reset_password, :token => "invalid"
+    assert_response :redirect
+    
+    get :reset_password, :token => tokens(:tokens_003).value
+    assert_response :success
+  end
+  
   protected
     def create_user(options = {})
       post :signup, :user => { :login => 'quire', :email => 'quire@example.com', 
