@@ -1,0 +1,15 @@
+<div id='image_popup' style='padding: 1em; margin: 1em; background: #ccc'>
+  <h1><%= "insert image".t %></h1>
+
+  <p>
+    <%= select_tag 'image_size', options_for_select([[:small.t, '0'],[:medium.t,'1'],[:large.t, '2'],[:full.t, '3']]) %>
+    <br/>
+    <label><%= check_box_tag 'image_link', true %> include link to full image</label>
+  </p>
+  
+  <%= image_list %>
+  <br style='clear:both' />
+
+  <p><%= button_to_function 'Close', "$('image_popup').hide();" %></p>
+</div>
+

@@ -45,5 +45,10 @@ module JavascriptHelper
     "$('%s').show();" % spinner_id(id)
   end
 
+  def replace_html(element_id, html)
+    element_id = dom_id(element_id) unless element_id.is_a?(String)
+    %[$('%s').update(%s);] % [element_id, html.inspect]
+  end
+
 end
 

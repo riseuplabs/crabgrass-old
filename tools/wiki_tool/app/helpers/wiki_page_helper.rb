@@ -24,5 +24,29 @@ module WikiPageHelper
    )
   end
 
+  def image_list
+    style = "height:64px;width:64px"
+    if @images.any?
+      items = @images.collect do |asset|
+        urls = %['#{asset.thumbnail(:small).url}', '#{asset.thumbnail(:medium).url}', '#{asset.thumbnail(:large).url}', '#{asset.url}']
+        insert_text = %{'!' + [#{urls}][$('image_size').value] + '!' + ($('image_link').checked ? ':#{asset.url}' : '')}
+        function = %[insertAtCursor('wiki_body',#{insert_text})]
+        img = thumbnail_img_tag(asset, :small, :scale => '64x64')
+        link_to_function(img, function, :class => 'thumbnail', :title => asset.filename, :style => style)
+      end
+      content_tag :div, items, :class => 'swatch_list'
+    end
+  end
+
+  def add_image_button_to_textile_editor()
+    text = "<img src='/images/textile-editor/img.png'/>"
+    spinner = spinner('image', :show => true)
+    on_click = remote_function(
+      :loading => replace_html('ed_image', spinner),
+      :complete => replace_html('ed_image', text),
+      :url => page_xurl(@page,:action => 'show_image_popup'))
+    textile_editor_button(text, :type => 'button', :id => 'ed_image', :title => 'Image', :onclick => on_click, :open => 'undefined')
+  end
+
 end
 

@@ -78,7 +78,14 @@ class WikiPageController < BasePageController
     @wiki.unlock
     redirect_to page_url(@page, :action => 'edit')
   end
-    
+  
+  def show_image_popup
+    @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
+    render(:update) do |page| 
+      page.replace 'image_popup', :partial => 'image_popup'
+    end
+  end
+
   protected
 
   def cancel

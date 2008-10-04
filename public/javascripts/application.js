@@ -44,6 +44,27 @@ function submit_form(link, name, value) {
   }
 }
 
+/** editing textareas **/
+
+/* element is a textarea object. value is some text */
+function insertAtCursor(element_id, value) {
+  var element = $(element_id);
+  element.focus();
+  if (document.selection) {
+    //IE support
+    sel = document.selection.createRange();
+    sel.text = value;
+  } else if (element.selectionStart || element.selectionStart == '0') {
+    //Mozilla/Firefox/Netscape 7+ support
+    var startPos = element.selectionStart;
+    var endPos   = element.selectionEnd;
+    element.value = element.value.substring(0, startPos) + value + element.value.substring(endPos, element.value.length);
+    element.setSelectionRange(endPos+value.length, endPos+value.length);
+  } else {
+    element.value += value;
+  }
+}
+
 /** menu navigation **/
 
 var SubMenu = Class.create({

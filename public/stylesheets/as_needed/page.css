@@ -19,6 +19,7 @@ div.title_box:hover #title_edit_link {
 }
 
 /* attachment formatting */
+/*
 a.asset div {
   border: 1px solid white;
   outline: 1px solid #999;
@@ -32,4 +33,4 @@ a.asset div:hover {
 a.asset {
   outline: 0;
 }
-
+*/
