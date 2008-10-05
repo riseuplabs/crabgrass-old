@@ -10,7 +10,7 @@ module Mailers::User
   def reset_password(user, options)
     setup(options)
     setup_email(user)
-    @subject += _('Your password has been reset')
+    @subject += 'Your password has been reset'[:password_was_reset]
   end
 
   protected
@@ -18,7 +18,7 @@ module Mailers::User
   def setup_email(user)
     @recipients   = "#{user.email}"
     @from         = Crabgrass::Config.email_sender
-    @subject      = Crabgrass::Config.site_name + ": " 
+    @subject      = Crabgrass::Config.site_name + ": "
     @sent_on      = Time.now
     @body[:user]  = user
   end
