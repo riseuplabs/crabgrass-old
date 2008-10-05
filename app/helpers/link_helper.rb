@@ -117,8 +117,12 @@ html_options))
   # and the current params match this hash.
   def link_to_active(link_label, url_hash, active=nil)
     if url_hash.is_a? Hash
-      params[:controller] = '/' + params[:controller] unless params[:controller] =~ /^\//
-      url_hash[:controller] = '/' + url_hash[:controller] unless url_hash[:controller] =~ /^\//
+      if params[:controller] && params[:controller] !~ /^\//
+        params[:controller] = '/' + params[:controller]
+      end
+      if url_hash[:controller] && url_hash[:controller] !~ /^\//
+        url_hash[:controller] = '/' + url_hash[:controller] unless url_hash[:controller] =~ /^\//
+      end
     end
     if url_hash.is_a? Hash and active.nil?
       url_hash[:action] = 'index' if url_hash[:action].nil?

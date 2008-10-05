@@ -192,10 +192,10 @@ module LayoutHelper
     "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
   end  
   def banner_background
-    @banner_style.background_color
+    @banner_style.background_color if @banner_style
   end
   def banner_foreground
-    @banner_style.color
+    @banner_style.color if @banner_style
   end
 
   ############################################
