@@ -75,6 +75,22 @@ class String
       result
     end
   end
+
+  #
+  # replaces the symbols in a string
+  # eg
+  #  'I love :color :thing'.replace_symbols(:color => 'green', :thing => 'trees')
+  # produces:
+  #  'I love green trees'
+  #
+  def replace_symbols(hash)
+    str = self.dup
+    hash.each do |key, value|
+      str.gsub! /:#{key}/, value
+    end
+    str
+  end
+
 end
 
 class Array
