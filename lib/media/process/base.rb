@@ -1,4 +1,3 @@
-require 'escape'
 
 module Media::Process
   class Base

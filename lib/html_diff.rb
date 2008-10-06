@@ -22,7 +22,7 @@ class HTMLDiff
   end
 
   def self.cmd(*args)
-    cmdstr = Escape.shell_command(args)
+    cmdstr = args.collect{|arg| arg.shell_escape}.join(' ') 
     log cmdstr
     output = `#{cmdstr}`
     return [$?.success?, output]
