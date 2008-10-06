@@ -61,6 +61,7 @@ class Asset < ActiveRecord::Base
 
   # one of :image, :audio, :video, :document
   named_scope :media_type, lambda {|type|
+    raise TypeError.new unless [:image,:audio,:video,:document].include?(type)
     {:conditions => ["is_#{type} = ?",true]}
   }
 
