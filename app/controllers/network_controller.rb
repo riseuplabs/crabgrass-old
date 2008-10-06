@@ -9,7 +9,9 @@ class NetworkController < GroupController
   
   def context
     network_context
-    add_context params[:action], network_url(:action => params[:action], :id => @group, :path => params[:path])
+    unless action?(:show)
+      add_context params[:action], network_url(:action => params[:action], :id => @group, :path => params[:path])
+    end
   end
 
 end

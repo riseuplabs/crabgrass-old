@@ -62,7 +62,7 @@ module ContextHelper
   def group_context(size='large', update_breadcrumbs=true)
     return network_context(size, update_breadcrumbs) if @group and @group.is_a? Network
 
-    add_context 'groups'.t, groups_url(:action => 'list')
+    add_context 'groups'.t, groups_url(:action => nil)
     if @group
       if @group.committee?
         if @group.parent
