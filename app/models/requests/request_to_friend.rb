@@ -42,7 +42,9 @@ class RequestToFriend < Request
   end
 
   def description
-    "%s would like to be the contact of %s"[:request_to_friend_description] % [user_span(created_by), user_span(recipient)]
+    ":user would like to be the contact of :other_user"[:request_to_friend_description] % {
+       :user => user_span(created_by), :other_user => user_span(recipient)
+    }
   end
 
 end

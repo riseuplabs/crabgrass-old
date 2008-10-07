@@ -44,7 +44,9 @@ class RequestToJoinOurNetwork < Request
   end
 
   def description
-    "%s was invited to join %s"[:request_to_join_us_description] % [group_span(group), group_span(network)]
+    "group :group was invited to join network :network"[:request_to_join_our_network_description] % {
+       :group => group_span(group), :network => group_span(network)
+    }
   end
 
 end

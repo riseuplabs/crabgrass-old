@@ -84,12 +84,21 @@ class String
   #  'I love green trees'
   #
   def replace_symbols(hash)
-    str = self.dup
-    hash.each do |key, value|
-      str.gsub! /:#{key}/, value
+    if hash.is_a? Hash
+      str = self.dup
+      hash.each do |key, value|
+        str.gsub! /:#{key}/, value
+      end
+      str
+    else
+      percent_without_hash(hash)
     end
-    str
   end
+  alias :percent_with_hash :replace_symbols
+
+  alias :percent :%
+  alias_method_chain :percent, :hash
+  alias :% :percent
 
 end
 

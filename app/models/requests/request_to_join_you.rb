@@ -43,7 +43,9 @@ class RequestToJoinYou < Request
   end
 
   def description
-    "%s requested to join %s"[:request_to_join_you_description] % [user_span(created_by), group_span(group)]
+    ":user requested to join :group"[:request_to_join_you_description] % {
+      :user => user_span(created_by), :group => group_span(group)
+    }
   end
 
 end
