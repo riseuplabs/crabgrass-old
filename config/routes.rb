@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   ##### ASSET ROUTES ######################################
   
   map.connect '/assets/:action/:id',                :controller => 'assets', :action => /create|destroy/
+  map.connect 'assets/rss/:media',          :controller => 'assets', :action => 'rss', :requirements => { :media => /all|image|audio|video|document/ }
+  map.connect 'assets/rss/:group/:media',          :controller => 'assets', :action => 'rss', :media => nil
   map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
   map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
 

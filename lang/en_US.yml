@@ -83,3 +83,15 @@ password_was_reset: Your password has been reset
 forgotten_email_address: What email address did you give us when you created your account?
 new_password: New Password
 confirm_new_password: Confirm New Password
+audio: Sound Recording
+audios: Sound Recordings
+video: Video
+videos: Videos
+image: Image
+images: Images
+document: Document
+documents: Documents
+all: Media
+alls: Media
+media_for_group: %s in %s
+media_without_group: All %s
