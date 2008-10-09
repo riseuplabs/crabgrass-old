@@ -1,0 +1,46 @@
+--- 
+logout_success_message: "Vous avez \xC3\xA9t\xC3\xA9 d\xC3\xA9connect\xC3\xA9."
+add_contact_info: "Quand un autre utilisateur est votre contact, il est capable de voir quand vous \xC3\xAAtes connect\xC3\xA9, d'acc\xC3\xA9der \xC3\xA0 votre profil complet. Quand vous devenez contact d'une autre personne, cette personne devient \xC3\xA9galement votre contact."
+signup_link: Besoin d'un nouveau compte ?
+remove_contact_info: "Si vous retirez quelqu'un de votre liste de contacts, vous ne serez plus en mesure de voir quand il est connect\xC3\xA9, ni de voir son profil complet. De m\xC3\xAAme, le retirer de vos contacts fera que vous serez \xC3\xA9galement retir\xC3\xA9 de la liste de ses contacts."
+network_invite_info: "\xC3\x89crivez les noms des groupes que vous d\xC3\xA9sirez inviter \xC3\xA0 rejoindre ce r\xC3\xA9seau."
+join_request_info: "Vous ne serez pas membre de ce groupe avant que votre demande ne soit approuv\xC3\xA9e. Vous pouvez v\xC3\xA9rifier l'\xC3\xA9tat de vos demandes en visitant \"%s\"."
+signup_email_info: "optionnel: utilis\xC3\xA9 si vous oubliez votre mot de passe"
+menu_home: Accueil
+menu_groups: Groupes
+forgot_password_link: "J'ai oubli\xC3\xA9 mon mot de passe"
+signup_info: Choisissez votre nom d'utilisateur ainsi que votre mot de passe avec de cliquer sur "%s"
+logout: "Se d\xC3\xA9connecter"
+signup_success_message: Merci de votre inscription !
+menu_people: Personnes
+login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
+signup_confirm_password: Confirmation du mot de passe
+menu_networks: "R\xC3\xA9seaux"
+login_name: Nom d'utilisateur
+signup_success: "Enregistrement r\xC3\xA9ussi"
+signup_password: Votre mot de passe
+menu_me: Moi
+contact_request_message_label: "Expliquez \xC3\xA0 %s pourquoi vous voulez \xC3\xAAtre son contact."
+signup_button: S'inscrire
+logout_success: Au revoir
+signup_login_name: Votre nom d'utilisateur
+remove_contact_confirmation: Voulez-vous vraiment couper le contact avec %s ?
+login_failed: Connexion impossible
+login_button: Se connecter
+invite_info: "Entrez une liste de noms d'utilisateur ou d'adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce %s."
+already_contacts_info: "Vous \xC3\xAAtes d\xC3\xA9j\xC3\xA0 contact de cette personne."
+login: Connexion
+approve_contact_info: "Cet utilisateur vous a d\xC3\xA9j\xC3\xA0 demand\xC3\xA9 comme contact. Voulez-vous l'accepter ?"
+welcome_text: "*Bienvenue*\r\n\
+  \r\n\
+  Bonjour. Ceci est une introduction rapide pour les nouveaux utilisateurs. Lors de votre prochaine connexion, vous arriverez sur [votre tableau de bord -> /me/dashboard] qui restera un lieu froid et isol\xC3\xA9 jusqu'au moment o\xC3\xB9 vous rejoindrez des groupes et vous cr\xC3\xA9erez des contacts.\r\n\
+  \r\n\
+  Donc la meilleure chose \xC3\xA0 faire en tant que nouvel utilisateur est de cr\xC3\xA9er un groupe ou d'en rejoindre un. Pour ce faire, affichez le [r\xC3\xA9pertoire des groupes -> /groups] et cliquez \"Cr\xC3\xA9er un nouveau groupe\" ou bien cliquez sur le groupe que vous d\xC3\xA9sirez rejoindre pour trouver le lien \"rejoindre le groupe\".\r\n\
+  \r\n\
+  Une fois votre demande accept\xC3\xA9e, vous pouvez y placer des documents, cr\xC3\xA9er de listes \xC3\xA0 faire, des discussions, des wikis, des votes et des messages pour communiquer, collaborer et accomplir des t\xC3\xA2ches au sein du groupe. Comme pour tout nouvel outil, vous aurez \xC3\xA0 vous familiariser avec l'interface. Pour vous aider \xC3\xA0 r\xC3\xA9pondre aux diverses interrogations que vous ne manquerez pas de vous poser comme la diff\xC3\xA9rence entre la bo\xC3\xAEte de r\xC3\xA9ception et le tableau de bord, consultez les [pages d'aides -> /crabgrass/table-of-contents].\r\n\
+  \r\n\
+  Le d\xC3\xA9veloppement est dirig\xC3\xA9 \xC3\xA0 partir du retour des utilisateurs, aussi [rejoignez -> /users] le groupe \"user feed back\" /[retour des utilisateurs/] et impliquez-vous en cliquant le lien \"get involved\" pr\xC3\xA9sent au bas de toutes les page.\r\n"
+signup_title: "Cr\xC3\xA9ez votre compte"
+signup_email: Votre mail
+recipient_tip: "S\xC3\xA9parez les destinataires par des virgules, des espaces ou de nouvelles lignes."
+login_password: Mot de passe
