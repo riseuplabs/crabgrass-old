@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
+  skip_before_filter :verify_authenticity_token, :only => 'login'
 
   def index
     if logged_in?
