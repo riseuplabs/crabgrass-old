@@ -15,7 +15,7 @@ CREATE TABLE `asset_versions` (
   KEY `index_asset_versions_asset_id` (`asset_id`),
   KEY `index_asset_versions_version` (`version`),
   KEY `index_asset_versions_page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `assets` (
   `id` int(11) NOT NULL auto_increment,
@@ -39,19 +39,19 @@ CREATE TABLE `assets` (
   KEY `index_assets_version` (`version`),
   KEY `index_assets_page_id` (`page_id`),
   KEY `pterms` (`page_terms_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `avatars` (
   `id` int(11) NOT NULL auto_increment,
   `image_file_data` blob,
   `public` tinyint(1) default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `channels` (
   `id` int(11) NOT NULL auto_increment,
@@ -60,7 +60,7 @@ CREATE TABLE `channels` (
   `public` tinyint(1) default '0',
   PRIMARY KEY  (`id`),
   KEY `index_channels_group_id` (`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `channels_users` (
   `id` int(11) NOT NULL auto_increment,
@@ -70,13 +70,13 @@ CREATE TABLE `channels_users` (
   `status` bigint(11) default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_channels_users` (`channel_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `contacts` (
   `user_id` bigint(11) default NULL,
   `contact_id` bigint(11) default NULL,
   KEY `index_contacts` (`contact_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `discussions` (
   `id` int(11) NOT NULL auto_increment,
@@ -87,7 +87,7 @@ CREATE TABLE `discussions` (
   `page_id` bigint(11) default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_discussions_page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `email_addresses` (
   `id` int(11) NOT NULL auto_increment,
@@ -97,18 +97,18 @@ CREATE TABLE `email_addresses` (
   `email_address` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `email_addresses_profile_id_index` (`profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `events` (
   `id` int(11) NOT NULL auto_increment,
-  `description` text,
-  `description_html` text,
+  `description` mediumtext,
+  `description_html` mediumtext,
   `is_all_day` tinyint(1) default '0',
   `is_cancelled` tinyint(1) default '0',
   `is_tentative` tinyint(1) default '1',
   `location` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `federatings` (
   `id` int(11) NOT NULL auto_increment,
@@ -120,7 +120,7 @@ CREATE TABLE `federatings` (
   PRIMARY KEY  (`id`),
   KEY `gn` (`group_id`,`network_id`),
   KEY `ng` (`network_id`,`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25099682 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `group_participations` (
   `id` int(11) NOT NULL auto_increment,
@@ -129,7 +129,7 @@ CREATE TABLE `group_participations` (
   `access` bigint(11) default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_group_participations` (`group_id`,`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=715436430 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL auto_increment,
@@ -150,7 +150,7 @@ CREATE TABLE `groups` (
   PRIMARY KEY  (`id`),
   KEY `index_groups_on_name` (`name`),
   KEY `index_groups_parent_id` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3003 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `im_addresses` (
   `id` int(11) NOT NULL auto_increment,
@@ -160,7 +160,7 @@ CREATE TABLE `im_addresses` (
   `im_address` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `im_addresses_profile_id_index` (`profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL auto_increment,
@@ -171,7 +171,7 @@ CREATE TABLE `languages` (
   `rtl` tinyint(1) default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `languages_index` (`name`,`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=8253282 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL auto_increment,
@@ -186,7 +186,7 @@ CREATE TABLE `locations` (
   `country_name` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `locations_profile_id_index` (`profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `memberships` (
   `id` int(11) NOT NULL auto_increment,
@@ -197,13 +197,13 @@ CREATE TABLE `memberships` (
   PRIMARY KEY  (`id`),
   KEY `gu` (`group_id`,`user_id`),
   KEY `ug` (`user_id`,`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1028710773 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL auto_increment,
   `created_at` datetime default NULL,
   `type` varchar(255) default NULL,
-  `content` text,
+  `content` mediumtext,
   `channel_id` bigint(11) default NULL,
   `sender_id` bigint(11) default NULL,
   `sender_name` varchar(255) default NULL,
@@ -211,21 +211,21 @@ CREATE TABLE `messages` (
   PRIMARY KEY  (`id`),
   KEY `index_messages_on_channel_id` (`channel_id`),
   KEY `index_messages_channel` (`sender_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `migrations_info` (
   `id` int(11) NOT NULL auto_increment,
   `created_at` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `page_terms` (
   `id` int(11) NOT NULL auto_increment,
   `page_id` bigint(11) default NULL,
   `page_type` varchar(255) default NULL,
-  `access_ids` text,
-  `body` text,
-  `comments` text,
+  `access_ids` mediumtext,
+  `body` mediumtext,
+  `comments` mediumtext,
   `tags` varchar(255) default NULL,
   `title` varchar(255) default NULL,
   `resolved` tinyint(1) default NULL,
@@ -247,7 +247,7 @@ CREATE TABLE `page_terms` (
   PRIMARY KEY  (`id`),
   KEY `page_id` (`page_id`),
   FULLTEXT KEY `idx_fulltext` (`access_ids`,`tags`)
-) ENGINE=MyISAM AUTO_INCREMENT=131 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `page_tools` (
   `id` int(11) NOT NULL auto_increment,
@@ -256,7 +256,7 @@ CREATE TABLE `page_tools` (
   `tool_type` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_page_tools` (`page_id`,`tool_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `pages` (
   `id` int(11) NOT NULL auto_increment,
@@ -267,7 +267,7 @@ CREATE TABLE `pages` (
   `public` tinyint(1) default NULL,
   `created_by_id` bigint(11) default NULL,
   `updated_by_id` bigint(11) default NULL,
-  `summary` text,
+  `summary` mediumtext,
   `type` varchar(255) default NULL,
   `message_count` bigint(11) default '0',
   `data_id` bigint(11) default NULL,
@@ -295,7 +295,7 @@ CREATE TABLE `pages` (
   KEY `index_pages_on_updated_at` (`updated_at`),
   KEY `index_pages_on_starts_at` (`starts_at`),
   KEY `index_pages_on_ends_at` (`ends_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `phone_numbers` (
   `id` int(11) NOT NULL auto_increment,
@@ -306,53 +306,54 @@ CREATE TABLE `phone_numbers` (
   `phone_number` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `phone_numbers_profile_id_index` (`profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `plugin_schema_info` (
   `plugin_name` varchar(255) default NULL,
   `version` int(11) default NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `polls` (
   `id` int(11) NOT NULL auto_increment,
   `type` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `possibles` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) default NULL,
-  `action` text,
+  `action` mediumtext,
   `poll_id` bigint(11) default NULL,
-  `description` text,
-  `description_html` text,
+  `description` mediumtext,
+  `description_html` mediumtext,
   `position` bigint(11) default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_possibles_poll_id` (`poll_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` bigint(11) default NULL,
   `discussion_id` bigint(11) default NULL,
-  `body` text,
-  `body_html` text,
+  `body` mediumtext,
+  `body_html` mediumtext,
   `created_at` datetime default NULL,
   `updated_at` datetime default NULL,
+  `deleted_at` datetime default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_posts_on_user_id` (`user_id`),
   KEY `index_posts_on_discussion_id` (`discussion_id`,`created_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `profile_notes` (
   `id` int(11) NOT NULL auto_increment,
   `profile_id` bigint(11) default NULL,
   `preferred` tinyint(1) default '0',
   `note_type` varchar(255) default NULL,
-  `body` text,
+  `body` mediumtext,
   PRIMARY KEY  (`id`),
   KEY `profile_notes_profile_id_index` (`profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `profiles` (
   `id` int(11) NOT NULL auto_increment,
@@ -393,7 +394,7 @@ CREATE TABLE `profiles` (
   `language` varchar(5) default NULL,
   PRIMARY KEY  (`id`),
   KEY `profiles_index` (`entity_id`,`entity_type`,`language`,`stranger`,`peer`,`friend`,`foe`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `ratings` (
   `id` int(11) NOT NULL auto_increment,
@@ -405,7 +406,7 @@ CREATE TABLE `ratings` (
   PRIMARY KEY  (`id`),
   KEY `fk_ratings_user` (`user_id`),
   KEY `fk_ratings_rateable` (`rateable_type`,`rateable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL auto_increment,
@@ -430,12 +431,12 @@ CREATE TABLE `requests` (
   KEY `code` (`code`),
   KEY `created_at` (`created_at`),
   KEY `updated_at` (`updated_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `showings` (
   `id` int(11) NOT NULL auto_increment,
@@ -445,7 +446,7 @@ CREATE TABLE `showings` (
   PRIMARY KEY  (`id`),
   KEY `ga` (`gallery_id`,`asset_id`),
   KEY `ag` (`asset_id`,`gallery_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `taggings` (
   `id` int(11) NOT NULL auto_increment,
@@ -459,19 +460,19 @@ CREATE TABLE `taggings` (
   PRIMARY KEY  (`id`),
   KEY `tag_id_index` (`tag_id`),
   KEY `taggable_id_index` (`taggable_id`,`taggable_type`,`context`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `tags_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `task_lists` (
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `task_participations` (
   `id` int(11) NOT NULL auto_increment,
@@ -481,14 +482,14 @@ CREATE TABLE `task_participations` (
   `user_id` bigint(11) default NULL,
   `task_id` bigint(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=858221626 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tasks` (
   `id` int(11) NOT NULL auto_increment,
   `task_list_id` bigint(11) default NULL,
   `name` varchar(255) default NULL,
-  `description` text,
-  `description_html` text,
+  `description` mediumtext,
+  `description_html` mediumtext,
   `position` bigint(11) default NULL,
   `created_at` datetime default NULL,
   `updated_at` datetime default NULL,
@@ -500,13 +501,13 @@ CREATE TABLE `tasks` (
   PRIMARY KEY  (`id`),
   KEY `index_tasks_task_list_id` (`task_list_id`),
   KEY `index_tasks_completed_positions` (`task_list_id`,`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tasks_users` (
   `user_id` bigint(11) default NULL,
   `task_id` bigint(11) default NULL,
   KEY `index_tasks_users_ids` (`user_id`,`task_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `thumbnails` (
   `id` int(11) NOT NULL auto_increment,
@@ -520,16 +521,16 @@ CREATE TABLE `thumbnails` (
   `height` bigint(11) default NULL,
   `failure` tinyint(1) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tokens` (
   `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL default '0',
-  `action` varchar(255) NOT NULL default '',
-  `value` varchar(40) NOT NULL default '',
+  `user_id` bigint(11) NOT NULL,
+  `action` varchar(255) default NULL,
+  `value` varchar(255) default NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_participations` (
   `id` int(11) NOT NULL auto_increment,
@@ -545,7 +546,7 @@ CREATE TABLE `user_participations` (
   `viewed` tinyint(1) default NULL,
   `message_count` bigint(11) default '0',
   `attend` tinyint(1) default '0',
-  `notice` text,
+  `notice` mediumtext,
   `inbox` tinyint(1) default '1',
   PRIMARY KEY  (`id`),
   KEY `index_user_participations_page` (`page_id`),
@@ -556,7 +557,7 @@ CREATE TABLE `user_participations` (
   KEY `index_user_participations_star` (`star`),
   KEY `index_user_participations_resolved` (`resolved`),
   KEY `index_user_participations_attend` (`attend`)
-) ENGINE=InnoDB AUTO_INCREMENT=347 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL auto_increment,
@@ -583,7 +584,7 @@ CREATE TABLE `users` (
   PRIMARY KEY  (`id`),
   KEY `index_users_on_login` (`login`),
   KEY `index_users_on_last_seen_at` (`last_seen_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `votes` (
   `id` int(11) NOT NULL auto_increment,
@@ -595,7 +596,7 @@ CREATE TABLE `votes` (
   PRIMARY KEY  (`id`),
   KEY `index_votes_possible` (`possible_id`),
   KEY `index_votes_possible_and_user` (`possible_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `websites` (
   `id` int(11) NOT NULL auto_increment,
@@ -605,25 +606,25 @@ CREATE TABLE `websites` (
   `site_url` varchar(255) default '',
   PRIMARY KEY  (`id`),
   KEY `websites_profile_id_index` (`profile_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `wiki_versions` (
   `id` int(11) NOT NULL auto_increment,
   `wiki_id` bigint(11) default NULL,
   `version` bigint(11) default NULL,
-  `body` text,
-  `body_html` text,
+  `body` mediumtext,
+  `body_html` mediumtext,
   `updated_at` datetime default NULL,
   `user_id` bigint(11) default NULL,
   PRIMARY KEY  (`id`),
   KEY `index_wiki_versions` (`wiki_id`),
   KEY `index_wiki_versions_with_updated_at` (`wiki_id`,`updated_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `wikis` (
   `id` int(11) NOT NULL auto_increment,
-  `body` text,
-  `body_html` text,
+  `body` mediumtext,
+  `body_html` mediumtext,
   `updated_at` datetime default NULL,
   `user_id` bigint(11) default NULL,
   `version` bigint(11) default NULL,
@@ -632,7 +633,7 @@ CREATE TABLE `wikis` (
   PRIMARY KEY  (`id`),
   KEY `index_wikis_user_id` (`user_id`),
   KEY `index_wikis_locked_by_id` (`locked_by_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO schema_migrations (version) VALUES ('0');
 
@@ -727,6 +728,8 @@ INSERT INTO schema_migrations (version) VALUES ('20080922055157');
 INSERT INTO schema_migrations (version) VALUES ('20080926185318');
 
 INSERT INTO schema_migrations (version) VALUES ('20080926190649');
+
+INSERT INTO schema_migrations (version) VALUES ('20081009073916');
 
 INSERT INTO schema_migrations (version) VALUES ('21');
 
