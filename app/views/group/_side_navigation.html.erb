@@ -3,7 +3,6 @@
   <li>
    <%= link_to_active 'home'.t, '/'+@group.name, params[:_context] == @group.name %>
   </li>
-
   <li>
    <%= link_to_active 'search'.t, url_for_group(@group,:action => 'search') %>
   </li>
@@ -16,5 +15,9 @@
   <li>
     <%= link_to_active 'tasks'.t, url_for_group(@group, :action => 'tasks') %>
   </li>
+  <li>
+    <%= link_to_active 'discussions'.t, url_for_group(@group, :action => 'discussions') %>
+  </li>
+
 </ul>
 

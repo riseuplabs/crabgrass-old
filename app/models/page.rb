@@ -126,6 +126,13 @@ class Page < ActiveRecord::Base
     true
   end
 
+  before_save :update_posts_count
+  def update_posts_count
+    if posts_count_changed?
+      self.posts_count += 1
+    end
+  end
+
   #######################################################################
   ## PAGE ACCESS CONTROL
   
