@@ -52,13 +52,13 @@ ul.side_list li:hover {
 }
 .title_box h2 {
   font-family: arial;
-  font-size: 1.8em;
+  font-size: 1.4em;
   font-weight: normal;
   margin: 0px 0 3px 0;
   padding: 0;
 }
 .title_box h2 span {
-  font-size: 0.6em;
+  font-size: 0.8em;
   margin-left: 1em;
 }
 

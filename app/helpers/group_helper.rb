@@ -44,15 +44,17 @@ module GroupHelper
   end
 
   def leave_group_link
-    if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size > 1
+    if logged_in? and current_user.direct_member_of?(@group) and (@group.network? or @group.users.uniq.size > 1)
 	    link_to_active("leave %s"[:leave_group] % group_type, {:controller => 'membership', :action => 'leave', :id => @group.name})
 		end
   end
   
   def destroy_group_link
-    if logged_in? and current_user.direct_member_of? @group and @group.users.uniq.size == 1
-#    if @group.users.uniq.size == 1 and logged_in? and @group.users.include? current_user
-          post_to "destroy #{group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
+    if logged_in? and current_user.may?(:admin, @group)
+      # eventually, this should fire a request to destroy.
+      if (@group.network? && @group.groups.size == 1) or (@group.users.uniq.size == 1)
+        post_to "destroy #{group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
+      end
     end
   end
     
@@ -106,5 +108,33 @@ module GroupHelper
     end
     link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
+
+
+
+  def may_see_members?
+    if logged_in?
+      current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+    else
+      @group.profiles.public.may_see_members?
+    end
+  end
+
+  def may_see_committees?
+    return if @group.committee?
+    if logged_in?
+      current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_committees?
+    else
+      @group.profiles.public.may_see_committees?
+    end
+  end
+
+  def may_see_networks?
+    if logged_in?
+      current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+    else
+      @group.profiles.public.may_see_members?
+    end
+  end
+
 
 end

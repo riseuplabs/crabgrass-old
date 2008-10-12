@@ -33,6 +33,7 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+    @user.avatar = Avatar.new
     @user.save!
     self.current_user = @user
     send_welcome_message(current_user)

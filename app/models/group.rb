@@ -76,7 +76,7 @@ class Group < ActiveRecord::Base
   def display_name; full_name.any? ? full_name : name; end
   def short_name; name; end
   def cut_name; name[0..20]; end
-
+ 
   # visual identity
   def banner_style
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
@@ -85,7 +85,8 @@ class Group < ActiveRecord::Base
   def committee?; instance_of? Committee; end
   def network?; instance_of? Network; end
   def normal?; instance_of? Group; end  
-  
+  def display_type() self.class.to_s.downcase; end
+ 
   ##
   ## RELATIONSHIPS TO USERS
   ## 
@@ -111,6 +112,10 @@ class Group < ActiveRecord::Base
   
   def user_ids
     @user_ids ||= memberships.collect{|m|m.user_id}
+  end
+
+  def all_users
+    users
   end
 
   # association callback
@@ -359,7 +364,7 @@ class Group < ActiveRecord::Base
   # this function should be called. Afterward, a save is required.
   def org_structure_changed(child=nil)
     User.clear_membership_cache(user_ids)
-    self.version += 1 # increment!(:version)
+    self.version += 1
   end
 
   alias_method :real_council, :council

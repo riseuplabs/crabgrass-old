@@ -53,7 +53,6 @@ module UrlHelper
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
       size = Avatar.pixels(options[:avatar])[0..1].to_i
-      padding = size/5 + size
       if arg and arg.avatar
         url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       else
@@ -62,8 +61,7 @@ module UrlHelper
       if style
         style = "background-image: url(#{url})" + style
       else
-        padding = size/5 + size
-        style = "background: url(#{url}) no-repeat 0% 50%; padding-left: #{padding}px"
+        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
       end
     end
     avatar + link_to(label, path, :class => klass, :style => style)
@@ -174,13 +172,11 @@ module UrlHelper
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
       size = Avatar.pixels(options[:avatar])[0..1].to_i
-      padding = size/5 + size
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       if style
         style = "background-image: url(#{url});" + style
       else
-        padding = size/5 + size
-        style = "background: url(#{url}) no-repeat 0% 50%; padding: 4px 0 4px #{padding}px;"
+        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
       end
     end
     avatar + link_to(label, path, :class => klass, :style => style)

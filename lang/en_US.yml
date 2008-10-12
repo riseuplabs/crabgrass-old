@@ -109,3 +109,22 @@ page_list_heading_title: title
 page_list_heading_created: created
 page_list_heading_updated: updated
 page_list_heading_posts: posts
+groups: groups
+networks: networks
+committees: committees
+Groups: Groups
+Networks: Networks
+Committees: Committees
+group: group
+network: network
+committee: committee
+Group: group
+Network: network
+Committee: committee
+contacts: contacts
+contact: contact
+Contact: Contact
+Contacts: Contacts
+Members: Members
+group_information: ":group_type Information"
+
