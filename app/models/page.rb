@@ -129,7 +129,7 @@ class Page < ActiveRecord::Base
   before_save :update_posts_count
   def update_posts_count
     if posts_count_changed?
-      self.posts_count += 1
+      self.posts_count = self.discussion.posts_count
     end
   end
 
