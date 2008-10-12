@@ -20,12 +20,16 @@ class CommitteeTest < Test::Unit::TestCase
     assert_difference 'Group.find(%d).version'%g.id do
       g.add_committee!(c2)
     end
-
+    
     g.reload
     assert_equal 2, g.committees.count, 'there should be two committees'
     assert_equal g, c1.parent, "committee's parent should match group"
+    version = g.version
+    g.remove_committee!(c1)
     c1.destroy
     assert_equal 1, g.committees.count, 'now there should be one committee'
+    assert_equal version+1, g.version, 'parent version should increment on committee destroy'
+
     g.destroy
     assert_nil Committee.find_by_name('food'), 'committee should die with group'
   end

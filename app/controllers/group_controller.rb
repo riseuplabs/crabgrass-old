@@ -128,13 +128,14 @@ class GroupController < ApplicationController
       flash_message :error => 'You can only delete a group if you are the last member'
       redirect_to :action => 'show', :id => @group
     else
-      parent = @group.parent
-      @group.destroy
-      if parent
-        parent.users.each {|u| u.clear_cache}
+      if @group.parent
+        parent = @group.parent
+        parent.remove_committee!(@group)
+        @group.destroy
         redirect_to url_for_group(parent)
       else
-        redirect_to :action => 'list'
+        @group.destroy
+        redirect_to '/'
       end
     end
   end  
