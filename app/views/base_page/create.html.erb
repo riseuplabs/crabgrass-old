@@ -9,50 +9,21 @@
 <div class='create_page'>
 <% form_tag(:action => 'create') do %>
   <%= hidden_field_tag 'page_class', @page_class %>
-  <table>
-    <tr>
-      <td colspan="2" >
-        <h2 class='section'><%= 'Page Info' %></h2>
-      </td>
-    </tr>
-    <tr>
-      <td class='label'><%= 'Title'.t %></td>
-      <td><%= text_field 'page', 'title', :size => 38 %></td>
-      <%= javascript_tag %( $("page_title").focus() ) %>
-    </tr>
-    <tr>
-      <td class='label'><%= 'Summary'.t %></td>
-      <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
-    </tr>
-    <tr>
-      <td class='label'><%= 'Tags'.t %></td>
-      <td>
-        <%= text_field 'page', 'tag_list', :size => 38 %><br/>
-        <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
-      </td>
-    </tr>
-    <% if current_user.all_groups.any? -%>
-      <tr>
-        <td colspan="2" >
-          <h2 class='section'><%= 'Access Info' %></a>
-        </td>
-      </tr>
-      <tr>
-        <td class='label'><%= 'Group'.t %></td>
-        <td>
-          <%= "Select which groups will have access to this page"[:select_group_access] %><br/>
-          <%= select_tag 'group_id', options_for_select(
-            [['no one, just me'[:no_group], '']] + current_user.all_groups.sort_by{|g|g.name}.to_select(:name), params[:group_id]
-          ) %>
-        </td>
-      </tr>
-    <% end -%>
-    <tr>
-      <td align='right' colspan="2">
-        <%= submit_tag '&laquo; ' + "Back".t, :name => 'cancel' %>
-        <%= submit_tag "Create page".t + ' &raquo;', :name => 'create' %>
-      </td>
-    </tr>
-  </table>
+  <div class='left'>
+    <h2 class='section'><%= 'Page information'[:create_page_information] %></h2>
+    <%= render :partial => 'base_page/create/information' %>
+  </div>
+  <div class='right'>
+    <h2 class='section'><%= 'Who has access to this page?'[:create_page_share] %></h2>
+    <%= render :partial => 'share' %>
+  </div>
+  <div class='clear'></div>
 <% end %>
+
+  <div class='buttons'>
+    <%= submit_tag '&laquo; ' + "Back".t, :name => 'cancel' %>
+    <%= submit_tag "Create page".t + ' &raquo;', :name => 'create' %>
+  </div>
+
 </div>
+

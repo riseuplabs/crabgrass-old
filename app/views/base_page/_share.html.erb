@@ -1,0 +1,46 @@
+
+<script>
+function recipient_checked(checkbox, recipient_name) {
+  if (checkbox.checked) {
+    $(recipient_name + '_selected').show()
+  } else {
+    $(recipient_name + '_selected').hide()
+  }
+  $$('.recipient_checkbox_' + recipient_name).each( function(cb) {
+    cb.checked = checkbox.checked
+  });
+}
+</script>
+
+<div class='share_page'>
+
+  <h2><%= 'Share this page with:'[:share_page_recipients] %></h2>
+  <table class='share_page_recipients'>
+    <tr>
+      <th><%= "Choose from your groups or friends"[:share_page_recipients_sections] %></th>
+      <th><%= "Make your selection"[:share_page_recipients_selection] %></th>
+      <th><%= "This page will be shared with"[:share_page_recipients_results] %></th>
+    </tr>
+    <tr>
+      <td>
+        <%= share_page_recipient_tabs %>
+      </td>
+      <td>
+        <%= share_page_recipient_panes %>
+      </td>
+      <td>
+        <%= share_page_recipient_results %>
+      </td>
+    </tr>
+  </table>
+
+  <h2><%= 'Choose access and notification options:'[:share_page_options] %></h2>
+  <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+   <%= 'Grant Access'[:grant_access] %>: <%= select_page_access 'access', :expand => true %>
+  <%- end -%>
+  <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.' %></label>
+
+  <h2><%= 'Send a Message (optional)'[:share_page_message] %></h2>
+  <%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
+
+</div>

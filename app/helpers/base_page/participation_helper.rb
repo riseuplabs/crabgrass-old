@@ -1,11 +1,5 @@
 module BasePage::ParticipationHelper
 
-  def select_page_access(name, blank=true)
-    options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
-    options = [['(' + 'no change'[:no_change] + ')','']] + options if blank
-    select_tag name, options_for_select(options)
-  end
-
   def access_sym_to_str(sym)
     if sym == :admin
       content_tag :span, "Coordinator"[:coordinator], :class=>sym
@@ -28,5 +22,7 @@ module BasePage::ParticipationHelper
     end
   end
 
+
 end
+
 
