@@ -137,6 +137,11 @@ module UserExtension
             INNER JOIN federatings ON groups.id = federatings.network_id
             WHERE federatings.group_id IN (#{network.join(',')})
           ])
+          committee += Group.connection.select_values(%Q[
+            SELECT groups.id FROM groups
+            WHERE groups.parent_id IN (#{network.join(',')})
+            AND groups.is_council = 0
+          ])
         end
       else
         committee, network = [],[]

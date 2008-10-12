@@ -85,14 +85,19 @@ class NetworkTest < Test::Unit::TestCase
     user = users(:gerrard)
     group = groups(:true_levellers)
 
+    committee = Committee.create! :name => 'fai+committee'
+    parent_network.add_committee!(committee)
+
     assert user.member_of?(group)
     assert child_network.groups.include?(group)
     assert user.member_of?(child_network)
     assert !user.direct_member_of?(child_network)
+    assert committee.parent, parent_network
     
     parent_network.add_group!(child_network)
     
     assert user.reload.member_of?(parent_network)
+    assert user.member_of?(committee)
   end
 
   def test_associations
