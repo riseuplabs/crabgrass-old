@@ -6,8 +6,13 @@
   <div class='landing-side-column'>
     <h3 class='section'>Recent Activity</h3>
     <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages, :style => :brief_no_group} %>
+ 
+  <h3 class='section'><%= "Featured Content".t%></h3>
+    <%= render :partial => 'group/starring', :locals => {:group => @group}%>
+
   </div>
   <div class='landing-main-column'>
+  
     <h3 class='section'>Group Wiki</h3>
     <% if @access == :public -%>
       <div class='wiki'>

@@ -102,6 +102,14 @@ class GroupController < ApplicationController
   # login required
   def edit
   end
+  
+  def update_featured_pages
+    Page.find(params[:group][:featured_pages]).each(&:static!)
+    redirect_to url_for_group(@group)
+   rescue => exc
+     flash_message_now :exception => exc
+     render :action => 'edit'
+  end
      
   # login required
   # post required

@@ -1,0 +1,11 @@
+<div id="starring_list">
+<h4 class="section_head"><%= "Featured".t %></h4>
+<% @group.pages.find_static.each do |page| %>
+<%= link_to page.title, page_url(page) %><br/>
+<% end %>
+
+<h4 class="section_head"><%= "Important".t %></h4>
+<% @group.pages.find_by_stars(:at_least => 1, :limit => 8).each do |page| %>
+<%= link_to page.title, page_url(page) %><br/>
+<% end %>
+</div>
