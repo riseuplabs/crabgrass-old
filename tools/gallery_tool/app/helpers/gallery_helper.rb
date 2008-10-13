@@ -89,4 +89,50 @@ module GalleryHelper
     output << '</div>'
     return output
   end
+  
+  def undo_remove_link(image_id, position)
+    link_to_remote('undo',
+                   :url => { 
+                     :controller => 'gallery',
+                     :action => 'add',
+                     :page_id => @page.id,
+                     :id => image_id,
+                     :position => position
+                   },
+                   :success => "update_notifier('Successfully undeleted image.');undo_remove(#{image_id}, #{position});")
+  end
+  
+  def gallery_delete_image(image, position)
+    link_to_remote(image_tag('icons/small_png/cancel.png',
+                             :title => 'Remove from gallery'),
+                   :url => {
+                     :controller => 'gallery',
+                     :action => 'remove',
+                     :page_id => @page.id,
+                     :id => image.id,
+                     :position => position
+                   },
+                   :update => 'gallery_notify_area',
+                   :loading => "update_notifier('Removing image...', true);")
+  end
+  
+  def gallery_move_image_without_js(image)
+    output  = '<noscript>'
+    output += link_to(image_tag('icons/small_png/left.png',
+                                :title => 'Move image left'),
+                      :controller => 'gallery',
+                      :action => 'update_order',
+                      :page_id => @page.id,
+                      :id => image.id,
+                      :direction => 'left')
+    output += link_to(image_tag('icons/small_png/right.png',
+                                :title => 'Move image right'),
+                      :controller => 'gallery',
+                      :action => 'update_order',
+                      :page_id => @page.id,
+                      :id => image.id,
+                      :direction => 'right')
+    output += '</noscript>'
+    return output
+  end
 end

@@ -76,6 +76,10 @@
     padding:0em;
 }
 
+.swatch_container:hover .image_control {
+    display:block;
+}
+
 .swatch_container_hover {
     border:dashed 2px #ccc;
     height:8em;
@@ -86,4 +90,9 @@
 .image_control {
     position:absolute;
     bottom:0px;
+    display:none;
+}
+
+.image_control a img {
+    margin-left:0.2em;
 }

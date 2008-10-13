@@ -272,5 +272,15 @@ class Asset < ActiveRecord::Base
 
   # to be overridden by subclasses
   def update_media_flags() end
-
+  
+  
+  after_save :update_galleries
+  # update galleries after an image was saved which has galleries.
+  # the updated_at column of galleries needs to be up to date to allow the
+  # download_gallery action to find out if it's cached zips are up to date.
+  def update_galleries
+    if galleries.any?
+      galleries.each { |g| g.save }
+    end
+  end
 end

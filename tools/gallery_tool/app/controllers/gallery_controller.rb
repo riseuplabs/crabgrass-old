@@ -60,31 +60,53 @@ class GalleryController < BasePageController
   end
   
   def download_gallery
-    filename = "/tmp/#{@page.title.gsub(/\s/,'-')}_#{Time.now.to_i}.zip"
-    Zip::ZipFile.open(filename, Zip::ZipFile::CREATE) { |zip|
-      @page.images.each do |image|
-        # multiple images could have the same name
-        image_filename = image.filename
-        extension = image_filename.split('.').last
-        image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
+    name_base = @page.title.gsub(/\s/,'-')
+    file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
+      (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
+    }.compact.sort { |x,y| x[0] <=> y[0] }.last
+    if file && file[0] >= @page.updated_at.to_i
+      filepath = "#{GALLERY_ZIP_PATH}/#{file[1]}"
+    else
+      filepath = "#{GALLERY_ZIP_PATH}/#{name_base}_#{Time.now.to_i}.zip"
+      Zip::ZipFile.open(filepath, Zip::ZipFile::CREATE) { |zip|
+        @page.images.each do |image|
+          # multiple images could have the same name
+          image_filename = image.filename
+          extension = image_filename.split('.').last
+          image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
         
-        zip.get_output_stream(image_name) { |f|
-          f.write File.read(image.private_filename)
-        }
-      end
-    }
-    send_file(filename)
+          zip.get_output_stream(image_name) { |f|
+            f.write File.read(image.private_filename)
+          }
+        end
+      }
+    end
+    send_file(filepath)
   end
   
   def update_order
+    if params[:images]
     text =""
-    ActiveSupport::JSON::decode(params[:images]).each do |image|
-      showing = @page.showings.find_by_asset_id(image['id'].to_i)
-      text << "#{showing.asset_id}: #{showing.position}"
-      showing.insert_at(image['position'].to_i)
-      text << "-> #{image['position']}\n"
+      ActiveSupport::JSON::decode(params[:images]).each do |image|
+        showing = @page.showings.find_by_asset_id(image['id'].to_i)
+        showing.insert_at(image['position'].to_i)
+      end
+    else
+      showing = @page.showings.find_by_asset_id(params[:id])
+      new_pos = (params[:direction] == 'left') ? showing.position - 1 :
+        showing.position + 1
+      new_pos = @page.showings.size-1 if new_pos < 0
+      new_pos = 0 if new_pos > new_pos.size-1
+      showing.insert_at(new_pos)
     end
-    render :text => "Saved new order. #{text}", :layout => false
+    if request.xhr?
+      render :text => "Order changed.", :layout => false
+    else
+      flash_message_now "Order changed."
+      redirect_to(:controller => 'gallery',
+                  :action => 'edit',
+                  :page_id => @page.id)
+    end
   rescue => exc
     render :text => "Error saving new order: #{exc.message}"
   end

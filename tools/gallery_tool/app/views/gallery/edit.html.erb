@@ -57,19 +57,46 @@ function redraw_images() {
   });
 }
 
-function update_notifier(text) {
+function remove_image(image_id) {
+  $('swatch_container_'+image_id).hide();
+}
+
+function undo_remove(image_id, position) {
+  image = $('swatch_container_'+image_id);
+  if(!image)
+    return false;
+  add_image(image_id, position);
+  redraw_image();
+}
+
+
+function update_notifier(text, spinner) {
+  if(spinner)
+    text = \"#{spinner('', :show => true)}\"+text;
   $('gallery_notify_area').innerHTML = text;
 }
 
+function add_image(id, position) {
+  image = new Hash();
+  image.set('position', position);
+  image.set('id', id);
+  images.push(image);
+}
+
 function saving_changes_notifier() {
-  update_notifier('<img src=\"/images/spinner.gif\" /> Saving your changes...');
+  update_notifier('Saving your changes...', true);
 }
 " %>
 
 
 <div id="gallery_notify_area">
-  Drag &amp; Drop images to rearrange them
+  <noscript>
+    <%= "Activate JavaScript to use Drag&amp;Drop to rearrange photos!".t %>
+  </noscript>
 </div>
+<%= javascript_tag("$('gallery_notify_area').innerHTML = '"+
+"Drag &amp; Drop images to rearrange them".t+
+"';") %>
 <div id="gallery_overview" style="list-style-type:none;">
 <% if @images.any? -%>
   <% @images.each_with_index do |image, i| -%>

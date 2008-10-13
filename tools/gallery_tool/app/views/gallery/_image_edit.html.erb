@@ -1,6 +1,10 @@
 <div id="swatch_container_<%= index %>" class="swatch_container">
   <span id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_edit">
     <%= thumbnail_img_tag(image, :medium) %>
+    <div id="image_control_<%= image.id -%>" class="image_control">
+      <%= gallery_delete_image(image, index) %>
+      <%= gallery_move_image_without_js(image) %>
+    </div>
   </span>
 </div>
 
@@ -24,8 +28,5 @@
 		      :revert => true) %>
 
 <%= javascript_tag "
-image = new Hash();
-image.set('position', #{index});
-image.set('id', #{image.id});
-images.push(image);
+add_image(#{image.id},#{index});
 " %>
