@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
+  
 
   # the order of these filters matters. change with caution.
   before_filter :fetch_site

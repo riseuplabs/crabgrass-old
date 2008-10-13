@@ -1,0 +1,14 @@
+<%= gallery_navigation :count, :download %>
+
+<div id="detail_view">
+  <%= detail_view_navigation(@page, @previous, @image, @next) %>
+
+  <div id="detail_image"><%= image_tag(@image.url) %></div>
+  <span id="detail_image_title">
+    <% if @image.page -%>
+      <%= @image.page.title %>
+    <% else -%>
+      <%= "(no title given)".t %>
+    <% end -%>
+  </span>
+</div>

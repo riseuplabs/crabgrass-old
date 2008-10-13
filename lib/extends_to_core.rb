@@ -87,7 +87,7 @@ class String
     if hash.is_a? Hash
       str = self.dup
       hash.each do |key, value|
-        str.gsub! /:#{key}/, value
+        str.gsub! /:#{key}/, value.to_s
       end
       str
     else
