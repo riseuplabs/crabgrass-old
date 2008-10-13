@@ -30,6 +30,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
+require "#{RAILS_ROOT}/lib/zip/zip.rb"
 
 Rails::Initializer.run do |config|
 

@@ -1,6 +1,10 @@
 class GalleryController < BasePageController
   
   stylesheet 'gallery'
+  
+  include GalleryHelper
+  include ActionView::Helpers::JavascriptHelper
+  
 
   verify :method => :post, :only => [:add, :remove]
   
@@ -55,6 +59,23 @@ class GalleryController < BasePageController
   def upload
   end
   
+  def download_gallery
+    filename = "/tmp/#{@page.title.gsub(/\s/,'-')}_#{Time.now.to_i}.zip"
+    Zip::ZipFile.open(filename, Zip::ZipFile::CREATE) { |zip|
+      @page.images.each do |image|
+        # multiple images could have the same name
+        image_filename = image.filename
+        extension = image_filename.split('.').last
+        image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
+        
+        zip.get_output_stream(image_name) { |f|
+          f.write File.read(image.private_filename)
+        }
+      end
+    }
+    send_file(filename)
+  end
+  
   def update_order
     text =""
     ActiveSupport::JSON::decode(params[:images]).each do |image|
@@ -70,8 +91,12 @@ class GalleryController < BasePageController
 
   def add
     asset = Asset.find(params[:id])
-    @page.add_image!(asset)
-    redirect_to page_url(@page)
+    @page.add_image!(asset,params[:position])
+    if request.xhr?
+      render :layout => false
+    else
+      redirect_to page_url(@page)
+    end
   #rescue Exception => exc
   #  flash_message_now :exception => exc
   end
@@ -79,7 +104,13 @@ class GalleryController < BasePageController
   def remove
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
-    redirect_to page_url(@page)
+    if request.xhr?
+      undo_link = undo_remove_link(params[:id], params[:position])
+      js = javascript_tag("remove_image(#{params[:id]});")
+      render(:text => "Successfully removed image! (#{undo_link}) #{js}", :layout => false)
+    else
+      redirect_to page_url(@page)
+    end
   end
 
   protected
