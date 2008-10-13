@@ -1,20 +1,20 @@
 <% content_for :style do -%>
-table.members td {padding: 4px;}
-table.members td a {padding: 4px;}
+table.members td {padding: 12px;}
 <% end -%>
 
-<% if may_admin_group? -%>
-<%= render :partial => 'admin' %>
-<% end -%>
-
-<% if committee? -%>
-<%= render :partial => 'committee' %>
-<% end -%>
+<% if logged_in? %>
+  <% if current_user.may?(:admin,@group) -%>
+    <%= render :partial => 'admin' %>
+  <% end -%>
+  <% if committee? and current_user.may?(:admin,@group)-%>
+    <%= render :partial => 'committee' %>
+  <% end -%>
+<% end %>
 
 <h2>current <%=group_type%> members</h2>
-
+<div class='pretty'>
 <% if @group.memberships.any? %>
-  <table>
+  <table class='members'>
   <tr>
     <th>User</th>
     <th>Joined</th>
@@ -25,7 +25,7 @@ table.members td a {padding: 4px;}
 <% end -%>
 
 <% if @group.federatings.any? %>
-  <table>
+  <table class='members'>
   <tr>
     <th>Group</th>
     <th>Joined</th>
@@ -33,4 +33,5 @@ table.members td a {padding: 4px;}
   <%= render :partial => 'federating', :collection => @group.federatings %>
   </table>
 <% end -%>
+</div>
 

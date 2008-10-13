@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
+  skip_before_filter :verify_authenticity_token, :only => 'login'
 
   def index
     if logged_in?
@@ -32,6 +33,7 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+    @user.avatar = Avatar.new
     @user.save!
     self.current_user = @user
     send_welcome_message(current_user)

@@ -2,24 +2,37 @@
 <table>
 <tr>
   <td style='width:50%'>
-    <%- if @group.publicly_visible_members or may_admin_group? %>
+    <%- if may_see_members? %>
       <%- cache(group_cache_key(@group, :what => 'members')) do -%>
-        <h2>Members <span><%= @group.users.size + @group.groups.size %> members</span></h2>
+        <h2><%= "Members"[:Members] %> <span><%= @group.users.size + @group.groups.size %> members</span></h2>
         <%= render :partial => 'group/widgets/members' %>
       <%- end -%>
       <br style='clear:both'/>
       <%= link_line(more_members_link, invite_link, requests_link) %>
     <%- end -%>
   </td>
-  <td rowspan='2' style='width:50%' class='right'>
-    <h2>Group Information</h2>
+  <td rowspan='3' style='width:50%' class='right'>
+    <h2><%= ":group_type Information"[:group_information] % {:group_type => @group.display_type.capitalize} %></h2>
     <%= render :partial => 'group/widgets/info' %>
   </td>
 </tr>
+<%- if may_see_networks? -%>
+  <%- cache(group_cache_key(@group, :what => 'networks')) do -%>
+    <%- if @group.networks.any? -%>
+      <tr>
+        <td>
+          <h2><%= "Networks"[:Networks] %></h2>
+          <%= render :partial => 'avatars/boxes', :locals => {:groups => @group.networks, :side => 'left'} %>
+          <br style='clear:both'/>
+        </td>
+      </tr>
+    <%- end -%>
+  <%- end -%>
+<%- end %>
 <tr>
   <td>
-    <% if not @group.committee? and (@group.publicly_visible_committees or may_admin_group?) -%>
-      <h2>Committees</h2>
+    <% if may_see_committees? -%>
+      <h2><%= "Committees"[:Committees] %></h2>
       <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
         <%= render :partial => 'group/widgets/committees' %>
       <%- end -%>

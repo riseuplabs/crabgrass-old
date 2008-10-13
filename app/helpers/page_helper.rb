@@ -122,12 +122,11 @@ module PageHelper
   ######################################################
   ## PAGE LISTINGS AND TABLES
 
-  # used to create the page list headings
-  # set member variable @path beforehand if you want 
-  # the links to take it into account instead of params[:path]
+  # Used to create the page list headings. set member variable @path beforehand
+  # if you want the links to take it into account instead of params[:path]
   def list_heading(text, action, select_by_default=false)
     return "<th nowrap>#{text}</th>" unless 
-      %(created_at created_by_login updated_at updated_by_login group_name title starts_at).include? action 
+      %(created_at created_by_login updated_at updated_by_login group_name title starts_at posts_count).include? action 
 
     path = filter_path
     parsed = parsed_path
@@ -150,35 +149,18 @@ module PageHelper
       selected = select_by_default
       arrow = image_tag('ui/sort-desc.png') if selected
     end
-    # FIXME: these links are not working for group archive page, person landing page, me inbox, so I'm removing them --abie 
     "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
-    #"<th nowrap class='#{selected ? 'selected' : ''}'>#{text} #{arrow}</th>"
   end
 
   ## used to create the page list headings
-  ## TODO: this is some messed up messy shit
+  ## this will create very odd results if *path is not in the current route.
   def page_path_link(text,path='',image=nil)
     hash = params.dup
     new_path = controller.parse_filter_path(path)
     current_path = controller.parse_filter_path(hash[:path])
     hash[:path] = current_path.merge(new_path).flatten
 
-    # for tags this isn't right:
-    # TODO: do not hard code the action here.
-    # this is really horrible. the problem is that in some places where 
-    # we display a list of pages we 
-    #if params[:controller] == 'groups' && params[:action] == 'show'
-    #  hash[:action] = 'search'
-    #elsif params[:controller] == 'me/inbox'
-    #  hash[:action] = 'search'
-    #elsif params[:controller] == 'person'
-    #  hash[:action] = 'search'
-    #  hash[:id] ||= hash['_context']
-    #end
-    #hash.delete('_context')
-#    hash[:action] = 'search'
     link_to text, hash
-    #hash.inspect
   end
 
   #
@@ -189,35 +171,37 @@ module PageHelper
   #
   def page_list_cell(page, column, participation=nil)
     if column == :icon
-      return page_icon(page)
+      page_icon(page)
     elsif column == :checkbox
       check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
-    elsif column == :discuss
-      if page.links.any?
-        return( link_to 'discuss'.t, page_url(page.links.first) )
-      end
     elsif column == :title
-      return page_list_title(page, column, participation)    
+      page_list_title(page, column, participation)
     elsif column == :updated_by or column == :updated_by_login
-      return( page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;')
+      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :created_by or column == :created_by_login
-      return( page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;')
+      page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
     elsif column == :updated_at
-      return friendly_date(page.updated_at)
+      friendly_date(page.updated_at)
     elsif column == :created_at
-      return friendly_date(page.created_at)
+      friendly_date(page.created_at)
     elsif column == :happens_at
-      return friendly_date(page.happens_at)
+      friendly_date(page.happens_at)
     elsif column == :group or column == :group_name
-      return( page.group_name ? link_to_group(page.group_name) : '&nbsp;')
+      page.group_name ? link_to_group(page.group_name) : '&nbsp;'
     elsif column == :contributors_count or column == :contributors
-      return page.contributors_count
+      page.contributors_count
     elsif column == :owner
-      return (page.group_name || page.created_by_login)
+      page.group_name || page.created_by_login
     elsif column == :owner_with_icon
-      return page_list_owner_with_icon(page)
+      page_list_owner_with_icon(page)
+    elsif column == :posts
+      page.posts_count
+    elsif column == :last_post
+      if page.discussion
+        content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to('view'[:view], page_url(page)+"#posts-#{page.discussion.last_post_id}")]
+      end
     else
-      return page.send(column)
+      page.send(column)
     end
   end
 
@@ -257,18 +241,21 @@ module PageHelper
     elsif column == :icon or column == :checkbox or column == :discuss
       "<th></th>"
     elsif column == :updated_by or column == :updated_by_login
-      list_heading 'updated by'.t, 'updated_by_login'
+      list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login'
     elsif column == :created_by or column == :created_by_login
-      list_heading 'created by'.t, 'created_by_login'
+      list_heading 'created by'[:page_list_heading_created_by], 'created_by_login'
     elsif column == :updated_at
-      list_heading 'updated'.t, 'updated_at'
+      list_heading 'updated'[:page_list_heading_updated], 'updated_at'
     elsif column == :created_at
-      list_heading 'created'.t, 'created_at'
+      list_heading 'created'[:page_list_heading_updated_by], 'created_at'
+    elsif column == :posts
+      list_heading 'posts'[:page_list_heading_posts], 'posts_count'
     elsif column == :happens_at
       list_heading 'happens'.t, 'happens_at'
     elsif column == :contributors_count or column == :contributors
-      #"<th>" + image_tag('ui/person-dark.png') + "</th>"
       list_heading image_tag('ui/person-dark.png'), 'contributors_count'
+    elsif column == :last_post
+      list_heading 'last post'[:page_list_heading_last_post], 'updated_at'
     elsif column
       list_heading column.to_s.t, column.to_s
     end    

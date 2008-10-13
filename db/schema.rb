@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080926190649) do
+ActiveRecord::Schema.define(:version => 20081009073916) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -319,6 +319,7 @@ ActiveRecord::Schema.define(:version => 20080926190649) do
     t.text     "body_html"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"

@@ -30,7 +30,9 @@ class GroupsController < ApplicationController
     if request.get?
       @group_class.new(params[:group])
     elsif request.post?
-      @group = @group_class.create!(params[:group])
+      @group = @group_class.create!(params[:group]) do |group|
+        group.avatar = Avatar.new
+      end
       flash_message :success => 'Group was successfully created.'.t
       @group.memberships.create :user => current_user, :group => @group
       @parent.add_committee!(@group) if @parent

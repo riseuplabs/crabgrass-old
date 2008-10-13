@@ -5,7 +5,8 @@
 class RequestsController < ApplicationController
 
   helper 'group', 'application'
-    
+  stylesheet 'groups'
+
   before_filter :login_required, :except => [:accept]
  
   def list

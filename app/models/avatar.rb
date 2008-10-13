@@ -1,16 +1,19 @@
-# == Schema Information
-# Schema version: 24
 #
-# Table name: avatars
+# Avatar -- the little icons for users and groups
 #
-#  id     :integer(11)   not null, primary key
-#  data   :binary        
-#  public :boolean(1)    
+#  create_table "avatars", :force => true do |t|
+#    t.binary  "image_file_data"
+#    t.boolean "public",          :default => false
+#  end
 #
 
 class Avatar < ActiveRecord::Base
 
-  acts_as_fleximage(:default_image_path => "/images/default/96.jpg") do
+  acts_as_fleximage do
+    default_image_path "public/images/default/96.jpg"
+    require_image false
+#    image_directory 'public/images/uploaded'  \ how do we migrate
+#    image_storage_format :png                 / to using these options?
     preprocess_image do |image|
       image.resize '96x96', :crop => true
     end
@@ -28,3 +31,4 @@ class Avatar < ActiveRecord::Base
   end
   
 end
+

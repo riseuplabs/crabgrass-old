@@ -1,0 +1,46 @@
+--- 
+logout_success_message: Wylogowano z systemu.
+add_contact_info: "Kiedy inny u\xC5\xBCytkownik lub u\xC5\xBCytkowniczka zostanie dodany jako tw\xC3\xB3j kontakt b\xC4\x99dzie widzie\xC4\x87 kiedy zalogujesz si\xC4\x99 do systemu oraz uzyska dost\xC4\x99p do twojego pe\xC5\x82nego profilu. Ten proces dzia\xC5\x82a w obie strony. "
+signup_link: Potrzebujesz nowego konta?
+remove_contact_info: "Je\xC5\xBCeli usuniesz osob\xC4\x99 ze swojej listy kontakt\xC3\xB3w, przestaniesz otrzymywa\xC4\x87 informacj\xC4\x99 kiedy si\xC4\x99 zaloguje oraz stracisz dost\xC4\x99p do jej pe\xC5\x82nego profilu. Ten proces dzia\xC5\x82a w obu kierunkach (tzn automatycznie usuniesz si\xC4\x99 z kontakt\xC3\xB3w usuwanej osoby). "
+network_invite_info: "Wprowad\xC5\xBA nazwy grup kt\xC3\xB3re chcesz zaprosi\xC4\x87 do tej sieci."
+join_request_info: "Do\xC5\x82\xC4\x85czysz do tej grupy dopiero po zatwierdzeniu twojego zg\xC5\x82oszenia przez jej cz\xC5\x82onk\xC3\xB3w. Mo\xC5\xBCesz sprawdzi\xC4\x87 stan wszystkich swoich zg\xC5\x82osze\xC5\x84 wchodz\xC4\x85c na \"%s\"."
+signup_email_info: "Nie jest to wymagane ale przydatne je\xC5\x9Bli zapomnisz has\xC5\x82a."
+menu_home: Strona domowa
+menu_groups: Grupy
+forgot_password_link: "Odzyskiwanie has\xC5\x82a"
+logout: Wyloguj
+signup_info: "Wybierz sobie login oraz has\xC5\x82o i kliknij \"%s\""
+signup_success_message: Witamy!
+menu_people: Ludzie
+login_failure_reason: "Z\xC5\x82e has\xC5\x82o lub nazwa u\xC5\xBCytkownika."
+signup_confirm_password: "Potwierd\xC5\xBA has\xC5\x82o"
+menu_networks: Sieci
+login_name: Login
+signup_success: "Tw\xC3\xB3j profil zosta\xC5\x82 utworzony"
+signup_password: "Twoje has\xC5\x82o"
+menu_me: Ja
+contact_request_message_label: "T\xC4\x85 wiadomo\xC5\x9B\xC4\x87 %s otrzyma jako wyt\xC5\x82umaczenie dlaczego chcesz do\xC5\x82\xC4\x85czy\xC4\x87 do jej/jego kontakt\xC3\xB3w."
+signup_button: "Do\xC5\x82\xC4\x85cz"
+logout_success: Do zobaczenia!
+signup_login_name: "Tw\xC3\xB3j login"
+remove_contact_confirmation: "Na pewno chcesz zerwa\xC4\x87 kontakt z %s?"
+already_contacts_info: "Ta osoba znajduje si\xC4\x99 ju\xC5\xBC w twoich kontaktach."
+login_failed: "Nie uda\xC5\x82o si\xC4\x99 zalogowa\xC4\x87"
+login_button: "Zaloguj si\xC4\x99"
+invite_info: "Wpisz loginy albo mejle os\xC3\xB3b kt\xC3\xB3re chcesz zaprosi\xC4\x87 do cz\xC5\x82onkowstwa w %s."
+approve_contact_info: "Istnieje ju\xC5\xBC pro\xC5\x9Bba o dodatnie do kontakt\xC3\xB3w od tej osoby. Czy chcesz j\xC4\x85 zatwierdzi\xC4\x87?"
+login: Login
+welcome_text: "Witamy!\r\n\
+  \r\n\
+  Cze\xC5\x9B\xC4\x87. Ten tekst jest szybkim wprowadzeniem dla nowych u\xC5\xBCytkownik\xC3\xB3w. Przy nast\xC4\x99pnym logowaniu wyl\xC4\x85dujesz od razu na swojej [stronie domowej -> /me/dashboard] kt\xC3\xB3ra b\xC4\x99dzie zimnym i pustym miejscem do p\xC3\xB3ki nie do\xC5\x82\xC4\x85czysz do grup i nie dodasz kontakt\xC3\xB3w.\r\n\
+  \r\n\
+  Wi\xC4\x99c, najlepszym co mo\xC5\xBCesz zrobi\xC4\x87 to do\xC5\x82\xC4\x85czy\xC4\x87 albo stworzy\xC4\x87 jak\xC4\x85\xC5\x9B grup\xC4\x99. \xC5\xBBeby to zrobi\xC4\x87 musisz przej\xC5\x9B\xC4\x87 do [katalogu grup -> /groups] i albo klikn\xC4\x85\xC4\x87 na \"stw\xC3\xB3rz now\xC4\x85 grup\xC4\x99\" albo znajd\xC5\xBA grup\xC4\x99 do kt\xC3\xB3rej chcesz do\xC5\x82\xC4\x85czy\xC4\x87 i klikn\xC4\x85\xC4\x87 na \"do\xC5\x82\xC4\x85cz\".\r\n\
+  \r\n\
+  Kiedy twoje zg\xC5\x82oszenie zostanie zaakceptowane mo\xC5\xBCesz uploadowa\xC4\x87 (za\xC5\x82adowa\xC4\x87 na stron\xC4\x99 grupy) materia\xC5\x82y, tworzy\xC4\x87 listy zada\xC5\x84, strony dyskusji, strony wiki, ankiety i g\xC5\x82osowania oraz wysy\xC5\x82a\xC4\x87 wiadomo\xC5\x9Bci \xC5\xBCeby komunikowa\xC4\x87 si\xC4\x99 i wsp\xC3\xB3\xC5\x82pracowa\xC4\x87 w grupie. Jak z ka\xC5\xBCd\xC4\x85 now\xC4\x85 platform\xC4\x85 mo\xC5\xBCesz potrzebowa\xC4\x87 chwili \xC5\xBCeby nauczy\xC4\x87 si\xC4\x99 obs\xC5\x82ugi i trybu pracy. \xC5\xBBeby znale\xC5\xBA\xC4\x87 odpowied\xC5\xBA na pytania takie jak czym r\xC3\xB3\xC5\xBCni si\xC4\x99 strona domowa od skrzynki zajrzyj na [strony pomocy -> /crabgrass/table-of-contents].\r\n\
+  \r\n\
+  Rozw\xC3\xB3j tego systemu oparty jest na informacjach od jego u\xC5\xBCytkownik\xC3\xB3w, wi\xC4\x99c prosimy, [do\xC5\x82\xC4\x85cz -> /users] do grupy u\xC5\xBCytkownik\xC3\xB3w i kliknij \"get involved\" na dole dowolnej strony je\xC5\x9Bli chcesz zaanga\xC5\xBCowa\xC4\x87 si\xC4\x99 w rozw\xC3\xB3j tej platformy. "
+signup_title: "Stw\xC3\xB3rz swoje konto"
+signup_email: "Tw\xC3\xB3j mejl"
+recipient_tip: "Mo\xC5\xBCesz oddzieli\xC4\x87 poszczeg\xC3\xB3lnych odbiorc\xC3\xB3w przecinkami, spacjami lub nowymi liniami."
+login_password: "Has\xC5\x82o"

@@ -1,5 +1,8 @@
 <% @title_box = content_tag :h1, 'search' %>
 
-<%= render :partial => 'pages/search', :locals => {:users => @group.users} %>
+<p><%= render :partial => 'pages/search', :locals => {:users => @group.users} %></p>
+
+<div class='pretty'>
 <%= render :partial => 'pages/list/table', :locals => {:heading => true} %>
+</div>
 

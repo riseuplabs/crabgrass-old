@@ -38,6 +38,9 @@ module ContextHelper
     
   def add_context(text, url)
     @context ||= []
+    if url.is_a? Hash
+      url = url_for url
+    end
     @context << [text,url]
   end
 

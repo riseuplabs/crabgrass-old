@@ -1,26 +1,36 @@
 <table>
-<tr>
-  <td width="50%">
-    <h2><%= "Contacts"[:contacts] %></h2>
-
-<% if current_user.contacts.any? -%>
-  <%= render :partial => 'avatars/boxes', :locals => {:people => current_user.contacts, :side => 'left'} %>
-  <br style='clear:both'/>
-<% else -%>
-  <%= "(you have no personal contacts)"[:no_contacts] %>
-<% end -%>
-
+<tr valign='top'>
+  <td>
+    <% if current_user.contacts.any? -%>
+      <h2><%= "Contacts"[:Contacts] %></h2>
+      <%= render :partial => 'avatars/boxes', :locals => {:people => current_user.contacts, :side => 'left'} %>
+      <br style='clear:both'/>
+      </td><td>&nbsp;
+    <% end -%>
   </td>
-  <td width="50%" class='right'>
-    <h2><%= "Groups"[:groups] %></h2>
-    
-<% if current_user.groups.any? -%>
-  <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.groups, :side => 'left'} %>
-  <br style='clear:both'/>
-<% else -%>
-  <%= "(not a member of any groups)"[:no_groups] %>
-<% end -%>
-    
+  <td>
+    <% if current_user.all_groups.networks.any? -%>
+      <h2><%= "Networks"[:Networks] %></h2>
+      <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.all_groups.networks, :side => 'left'} %>
+      <br style='clear:both'/>
+      </td><td>&nbsp;
+    <% end -%>    
+  </td>
+  <td>   
+    <% if current_user.groups.normals.any? -%>
+      <h2><%= "Groups"[:Groups] %></h2>
+      <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.groups.normals, :side => 'left'} %>
+      <br style='clear:both'/>
+      </td><td>&nbsp;
+    <% end -%>    
+  </td>
+  <td>
+    <% if current_user.groups.committees.any? -%>
+      <h2><%= "Committees"[:Committees] %></h2>
+      <%= render :partial => 'avatars/boxes', :locals => {:groups => current_user.groups.committees, :side => 'left'} %>
+      <br style='clear:both'/>
+      </td><td>&nbsp;
+    <% end -%>    
   </td>
 </tr>
 </table>

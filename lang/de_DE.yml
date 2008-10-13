@@ -1,0 +1,17 @@
+--- 
+logout_success_message: Du hast dich abgemeldet.
+forgot_password_link: Ich habe mein Passwort vergessen
+menu_groups: Gruppen
+menu_home: Start
+logout: Abmelden
+menu_people: Personen
+menu_networks: Netzwerke
+contact_request_message_label: Sage %s warum du sein Kontakt werden willst.
+menu_me: Ich
+logout_success: auf Wiedersehn
+login_failed: Anmeldung fehlgeschlagen
+login_button: Anmelden
+already_contacts_info: Du bist schon ein Kontakt dieser Person.
+approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. M\xC3\xB6chtest du diese annehmen?"
+login: Anmelden
+recipient_tip: "Trenne Empf\xC3\xA4nger mit Kommata, Leerzeichen oder Zeilenspr\xC3\xBCungen."

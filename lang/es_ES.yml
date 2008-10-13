@@ -1,0 +1,46 @@
+--- 
+logout_success_message: Has salido.
+add_contact_info: Cuando otr@ usuari@ es tu contacto, ell@s pueden ver cuando te encuentras conectado y tienen acceso a ver tu perfil completo. Una vez que te vuelves contacto de otra persona, ell@s a su vez se convierten en contactos de ti.
+signup_link: "\xC2\xBFNecesitas una nueva cuenta?"
+remove_contact_info: "Si eliminas a alguien de tu lista de contactos, no ser\xC3\xA1s capaz de ver cuando ell@s ingresan o su perfil completo. Tambi\xC3\xA9n, al remover un/una contacto significar\xC3\xA1 que t\xC3\xBA tambi\xC3\xA9n ser\xC3\xA1s borrad@ de su lista de contactos."
+network_invite_info: "Ingresa el nombre de los grupos que te gustar\xC3\xADa invitar a esta red."
+join_request_info: "No ser\xC3\xA1s miembro de este grupo hasta que tu petici\xC3\xB3n sea aprobada. Puedes seguir el curso de tus peticiones visitando \"%s\"."
+signup_email_info: "Opcional: usado por si olvidas tu contrase\xC3\xB1a"
+menu_home: Inicio
+menu_groups: Grupos
+forgot_password_link: "Olvid\xC3\xA9 mi contrase\xC3\xB1a"
+signup_info: "Elige tu nombre de usuari@ y contrase\xC3\xB1a, luego haz click en \"%s\""
+logout: Desconectar
+signup_success_message: "\xC2\xA1Gracias por registrarte!"
+login_failure_reason: "El usuari@ o contrase\xC3\xB1a es incorrecto."
+menu_people: gente
+signup_confirm_password: "Confirma la Contrase\xC3\xB1a"
+menu_networks: Redes
+login_name: Usuari@
+signup_success: Registro completo
+signup_password: "Tu Contrase\xC3\xB1a"
+contact_request_message_label: "Cu\xC3\xA9ntale a %s por qu\xC3\xA9 quieres ser su contacto."
+menu_me: Yo
+signup_button: "Ap\xC3\xBAntate"
+logout_success: Adios
+signup_login_name: Tu nombre de usuari@
+remove_contact_confirmation: "\xC2\xBFEst\xC3\xA1s segur@ que quieres dejar de ser contacto con %s?"
+login_failed: No puedes ingresar
+login_button: Ingresa
+invite_info: "Ingresa una lista de usuari@s o direcciones de correo de la gente que te gustar\xC3\xADa que se uniera a este/a %s"
+already_contacts_info: "T\xC3\xBA ya eres contacto de esta persona."
+login: Ingresar
+approve_contact_info: "Una petici\xC3\xB3n de contacto ya existe de esta/e usuari@. \xC2\xBFQuieres aprobarla?"
+welcome_text: "*Bienvenid@*\r\n\
+  \r\n\
+  Hola. Esta es una peque\xC3\xB1a introducci\xC3\xB3n para l@s nuev@s usuari@s. La pr\xC3\xB3xima vez que ingreses aterrizar\xC3\xA1s en [tu tablero -> /me/dashboard] el cual ser\xC3\xA1 un lugar fr\xC3\xADo y solitario hasta que te unas a grupos y hagas contactos.\r\n\
+  \r\n\
+  Entonces, la mejor cosa que puedes hacer como un/una nuev@ usuari@ es crear un grupo o unirte a uno. Para hacer eso, dir\xC3\xADgete al [directorio de grupos -> /groups] y haz click en crear grupo o en el grupo que deseas unirte y busca el enlace \"unirte al grupo\".\r\n\
+  \r\n\
+  Una vez que tu petici\xC3\xB3n sea aceptada, puedes subir archivos, crear listas de tareas, discusiones, wikis, votaciones y mensajes para comunicar, colaborar y realizar cosas dentro del grupo. Como cualquier nueva plataforma necesitar\xC3\xA1s familiarizarte con el estilo de trabajo. Para ayudarte a responder preguntas como cual es la diferencia entre inbox y el tablero, revisa las [p\xC3\xA1ginas de ayuda -> /crabgrass/table-of-contents].\r\n\
+  \r\n\
+  El desarrollo va encaminado de acuerdo a la retroalimentaci\xC3\xB3n de l@s usuari@s, entonces por favor [\xC3\xBAnete -> /users] al grupo feedback e invol\xC3\xBAcrate haciendo click en el enlace \"get involved\" al final de cada p\xC3\xA1gina."
+signup_title: Crea Tu Cuenta
+signup_email: Tu Email
+recipient_tip: "Separa a l@s destinatari@s con comas, espacios o escribiendolos en l\xC3\xADneas nuevas."
+login_password: "Contrase\xC3\xB1a"

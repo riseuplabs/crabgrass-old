@@ -15,7 +15,7 @@ class ChatController < ApplicationController
   # show a list of available channels
   def index
     if logged_in?
-      @groups = current_user.groups
+      @groups = current_user.all_groups
     end
   end
   

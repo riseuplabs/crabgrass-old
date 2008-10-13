@@ -135,12 +135,12 @@ module PathFinder::Mysql::BuilderFilters
   
   def filter_ascending(sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    @order << "%s ASC" % sortkey
+    @order << "pages.%s ASC" % sortkey
   end
   
   def filter_descending(sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    @order << "%s DESC" % sortkey
+    @order << "pages.%s DESC" % sortkey
   end
 
   #### BOOLEAN ####  

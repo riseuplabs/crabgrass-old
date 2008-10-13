@@ -1,11 +1,14 @@
-#
-# expire_page avatar_url(:id => @avatar)
-#
+##
+## Avatars are the little icons used for users and groups.
+##
 
 class AvatarsController < ActionController::Base
   session :off
   caches_page :show
- 
+
+#  include ActionView::Helpers::TagHelper
+#  include ErrorHelper
+
   def create 
     unless params[:image]
       flash[:error] = "no image uploaded"
@@ -15,16 +18,20 @@ class AvatarsController < ActionController::Base
     group = Group.find params[:group_id] if params[:group_id]
     user  = User.find params[:user_id] if params[:user_id]
     thing = group || user
-    avatar = Avatar.create(params[:image])
     if thing.avatar
       for size in %w(xsmall small medium large xlarge)
-        expire_page :controller => 'avatar', :action => 'show', :id => avatar, :size => size
+        expire_page :controller => 'avatars', :action => 'show', :id => thing.avatar.id, :size => size
       end
-      thing.avatar.destroy
+      thing.avatar.image_file = params[:image][:image_file]
+      thing.avatar.save!
+    else
+      avatar = Avatar.create(params[:image])
+      thing.avatar = avatar
+      thing.save!
     end
-    thing.avatar = avatar
-    thing.save
     redirect_to params[:redirect]
+  #rescue Exception => exc
+  #  flash_message_now :exception => exc
   end
 
   def show
