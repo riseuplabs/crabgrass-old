@@ -6,10 +6,19 @@
 
 <%= drop_receiving_element("swatch_container_#{index}",
 			   :onHover => "sort_images",
+			   :onDrop => "function() {
+			   #{remote_function(:url => {
+					     :controller => 'gallery',
+					     :action => 'update_order'
+					   },
+					   :loading => 'saving_changes_notifier();',
+					   :success => 'update_notifier("Saved new order!");',
+					   :failure => 'update_notifier("Error saving new order!");',
+					   :with => "'images='+images.toJSON()+'&page_id=#{@page.id}'")}; }",
                            :hoverclass => 'swatch_container_hover',
-                           :with => "'images='+images.toJSON()+'&page_id=#{@page.id}'",
                            :url => { :controller => 'gallery',
-                                     :action => 'update_order'}) %>
+                                     :action => 'update_order'},
+			   :loading => "saving_changes_notifier") %>
 
 <%= draggable_element("swatch_#{image.id}",
 		      :revert => true) %>

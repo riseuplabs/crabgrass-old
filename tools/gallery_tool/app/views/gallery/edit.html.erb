@@ -56,10 +56,20 @@ function redraw_images() {
     $('swatch_container_'+img.get('position')).appendChild($('swatch_'+img.get('id')));
   });
 }
+
+function update_notifier(text) {
+  $('gallery_notify_area').innerHTML = text;
+}
+
+function saving_changes_notifier() {
+  update_notifier('<img src=\"/images/spinner.gif\" /> Saving your changes...');
+}
 " %>
 
 
-
+<div id="gallery_notify_area">
+  Drag &amp; Drop images to rearrange them
+</div>
 <div id="gallery_overview" style="list-style-type:none;">
 <% if @images.any? -%>
   <% @images.each_with_index do |image, i| -%>

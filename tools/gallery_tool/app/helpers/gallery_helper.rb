@@ -66,10 +66,12 @@ module GalleryHelper
       :edit => lambda { 
         if params[:action] == 'edit'
           link_to("Show Gallery".t,
+                  :controller => 'gallery',
                   :action => 'show',
                   :page_id => @page.id)
         else
           link_to("Edit Gallery".t,
+                  :controller => 'gallery',
                   :action => 'edit',
                   :page_id => @page.id)
         end
