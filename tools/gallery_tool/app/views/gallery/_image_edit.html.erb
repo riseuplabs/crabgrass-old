@@ -1,0 +1,22 @@
+<div id="swatch_container_<%= index %>" class="swatch_container">
+  <span id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_edit">
+    <%= thumbnail_img_tag(image, :medium) %>
+  </span>
+</div>
+
+<%= drop_receiving_element("swatch_container_#{index}",
+			   :onHover => "sort_images",
+                           :hoverclass => 'swatch_container_hover',
+                           :with => "'images='+images.toJSON()+'&page_id=#{@page.id}'",
+                           :url => { :controller => 'gallery',
+                                     :action => 'update_order'}) %>
+
+<%= draggable_element("swatch_#{image.id}",
+		      :revert => true) %>
+
+<%= javascript_tag "
+image = new Hash();
+image.set('position', #{index});
+image.set('id', #{image.id});
+images.push(image);
+" %>

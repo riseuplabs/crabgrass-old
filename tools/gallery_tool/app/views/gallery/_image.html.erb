@@ -1,9 +1,10 @@
-<div class='gallery_swatch'>
-  <%= thumbnail_img_tag(image, :medium) %>
-  <div>
-    <%= link_to 'full', image.url %>
-    <%= link_to 'info', page_url(image.page) unless image.is_attachment? %>
-    <%= link_to 'remove', page_url(@page, :action => 'remove', :id => image.id), :method => 'post', :confirm => 'are you sure you wish to remove this image from the gallery?' %>
-  </div>
-</div>
+<div id="swatch_<%= image.id -%>" class="gallery_swatch">
+  <%= link_to(thumbnail_img_tag(image, :medium), 
+	      gallery_detail_view_url(@page, image)) %>
+<!--   <div> -->
+<!--     <%#= link_to 'full', image.url %> -->
+<!--     <%#= link_to 'info', page_url(image.page) unless image.is_attachment? %> -->
+<!--     <%#= link_to 'remove', page_url(@page, :action => 'remove', :id => image.id), :method => 'post', :confirm => 'are you sure you wish to remove this image from the gallery?' %> -->
+<!--   </div> -->
 
+</div>

@@ -23,6 +23,8 @@ class Network < Group
      self.federatings.create!(:group => group, :delegation => delegation, :council => council)
      group.org_structure_changed
      group.save!
+     Group.increment_counter(:version, self.id) # in case self is not saved
+     self.version += 1 # in case self is later saved
    end
    
    # only this method should be used for removing groups from a network
@@ -30,7 +32,23 @@ class Network < Group
      self.federatings.detect{|f|f.group_id == group.id}.destroy
      group.org_structure_changed
      group.save!
+     Group.increment_counter(:version, self.id) # in case self is not saved
+     self.version += 1 # in case self is later saved
    end
 
+  # Whenever the organizational structure of this network has changed 
+  # this function should be called. Afterward, a save is required.
+  def org_structure_changed(child=nil)
+    User.clear_membership_cache(user_ids)
+    self.version += 1
+    self.groups.each do |group|
+      group.org_structure_changed(child)
+      group.save!
+    end
+  end
+
+  def all_users
+    groups.collect{|group| group.all_users}.flatten.uniq
+  end
 end
 

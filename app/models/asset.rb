@@ -48,12 +48,20 @@ class Asset < ActiveRecord::Base
   # Use page_terms to find what assets the user has access to. Note that it is
   # necessary to match against both access_ids and tags, since the index only
   # works if both fields are included.
+  # FIXME: as far as I can tell page_terms never gets set in the first place,
+  # as an asset is always associated with an AssetPage. Polymorphic associations
+  # might work in this case, but I'm not sure if that will break anything else.
+  #  --niklas
   named_scope :visible_to, lambda { |*args|
     access_filter = PageTerms.access_filter_for(*args)
     { :select => 'assets.*', :joins => :page_terms,
       :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
     }
   }
+  
+  def has_access! perm, user
+    self.page.has_access! perm, user
+  end
 
   named_scope :not_attachment, :conditions => ['is_attachment = ?',false]
 
@@ -179,6 +187,7 @@ class Asset < ActiveRecord::Base
   def update_is_attachment
     if page_id_changed?
       self.is_attachment = true if page_id
+      self.page_terms = (page.page_terms if page_id)
     end
   end
   
@@ -237,7 +246,6 @@ class Asset < ActiveRecord::Base
 
   ##
   ## MEDIA TYPES
-  ## (to be overridden by subclasses)
   ##
 
   # Converts the boolean media flags to a list of integers.

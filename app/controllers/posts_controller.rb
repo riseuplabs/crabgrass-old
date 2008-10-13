@@ -6,8 +6,8 @@ class PostsController < ApplicationController
     begin
       @page = Page.find params[:page_id]
       current_user.may!(:comment, @page)
-      @post = Post.new params[:post]
-      @page.build_post(@post,current_user)
+      @post = Post.build params[:post].merge(:user => current_user, :page => @page)
+      @post.save!
       current_user.updated(@page)
       @page.save!
       respond_to do |wants|
@@ -68,7 +68,7 @@ class PostsController < ApplicationController
     if %w[twinkle untwinkle].include? params[:action]
       return current_user.may?(:comment, @post.discussion.page)
     else
-      return current_user.id == @post.user_id
+      return @post.editable_by?(current_user)
     end
   end
 

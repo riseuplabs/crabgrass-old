@@ -13,7 +13,7 @@ class BasePage::AssetsController < ApplicationController
 
   ## TODO: notify page watcher that an attachment has been added?
   def create
-    @asset = Asset.new params[:asset]
+    @asset = Asset.build params[:asset]
     @asset.parent_page = @page
     @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
     @asset.save

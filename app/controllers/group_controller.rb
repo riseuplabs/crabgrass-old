@@ -153,7 +153,7 @@ class GroupController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to url_for_group(@group, :action => 'search', :path => path)
     else
-      @pages = Page.paginate_by_path(params[:path], options_for_group(@group))
+      @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page]))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
       else
@@ -164,7 +164,15 @@ class GroupController < ApplicationController
                :link => url_for_group(@group),
                :image => avatar_url(:id => @group.avatar_id||0, :size => 'huge')
   end
-     
+  
+  # login not required
+  def discussions
+    params[:path] ||= []
+    @pages = Page.paginate_by_path(['type','discussion'] + params[:path],
+      options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
+    @columns = [:icon, :title, :posts, :contributors, :last_post]
+  end
+
   protected
   
   # returns a private wiki if it exists, a public one otherwise
@@ -182,7 +190,7 @@ class GroupController < ApplicationController
   def context
     group_context
     unless action?(:show)
-      add_context params[:action], group_url(:action => params[:action], :id => @group, :path => params[:path])
+      add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
     end
   end
   
@@ -199,7 +207,7 @@ class GroupController < ApplicationController
   
   def authorized?
     non_members_post_allowed = %w(archive tags tasks search)
-    non_members_get_allowed = %w(show members search) + non_members_post_allowed
+    non_members_get_allowed = %w(show members search discussions) + non_members_post_allowed
     if request.get? and non_members_get_allowed.include? params[:action]
       return true
     elsif request.post? and non_members_post_allowed.include? params[:action]

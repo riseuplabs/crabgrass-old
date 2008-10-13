@@ -99,7 +99,7 @@ class BasePageController < ApplicationController
       @html_title       = @page.title if @page
       @show_right_column ||= false
       unless params[:action] == 'create'
-        @title_box        = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil?
+        @title_box        = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
       end
       if params[:action] == 'show' or params[:action] == 'edit' or @show_right_column
         @right_column     = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?

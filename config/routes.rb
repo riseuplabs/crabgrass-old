@@ -41,7 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   map.group    'group/:action/:id', :controller => 'group'
   map.networks 'networks/:action/:id', :controller => 'networks'
   map.network  'network/:action/:id', :controller => 'network'
-  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search/
+  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search|discussions/
 
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             

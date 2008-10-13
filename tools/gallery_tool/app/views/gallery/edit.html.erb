@@ -1,0 +1,77 @@
+<% content_for :style do %>
+div.gallery_swatch {
+  float: left;
+  padding: 0 2em 2em 0;
+}
+<% end %>
+
+<%= gallery_navigation :count, :download, :edit %>
+
+<%= javascript_tag "
+var images = new Array();
+function sort_images(droppable, target, event) {
+  for(i=0;i<images.size();i++) {
+    var img = images[i];
+    if(img.get('id') == droppable.id.gsub('swatch_','')) {
+      var image = img;
+      break;
+    }
+  }
+
+  if(!image) {
+    alert('Failed to determine dragged image!');
+    return false;
+  }
+
+  var new_pos = target.id.gsub('swatch_container_','');
+
+  if(new_pos == image.get('position'))
+    return;
+  
+  if(new_pos < image.get('position')) {
+    images.each(function(img) {
+      if(img.get('position') < image.get('position') &&
+         img.get('position') >= new_pos) {
+        img.set('position', img.get('position')-1+2);
+      }
+    });
+  }
+  else {
+    images.each(function(img) {
+      if(img.get('position') > image.get('position') &&
+         img.get('position') <= new_pos) {
+        img.set('position', img.get('position')-1);
+      }
+    });
+  }
+
+  image.set('position', new_pos);
+
+  // redraw everything
+  redraw_images();
+}
+
+function redraw_images() {
+  images.each(function(img){
+    $('swatch_container_'+img.get('position')).appendChild($('swatch_'+img.get('id')));
+  });
+}
+" %>
+
+
+
+<div id="gallery_overview" style="list-style-type:none;">
+<% if @images.any? -%>
+  <% @images.each_with_index do |image, i| -%>
+    <%= render(:partial => 'image_edit',
+	       :locals => { :image => image, :index => i }) %>
+  <% end -%>
+  <br style='clear:both'/>
+  <%= pagination_links @images %>
+<% else %>
+  No images in gallery
+<% end %>
+</div>
+
+<p><%= link_to 'add existing image', page_url(@page, :action => 'find') %></p>
+<p><%= link_to 'upload new image', create_page_url(AssetPage, :gallery => @page.id) %></p>

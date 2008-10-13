@@ -46,12 +46,31 @@ module UserExtension::Organize
           proxy_owner.clear_peer_cache_of_my_peers
           proxy_owner.update_membership_cache
         end
+        def normals
+          self.select{|group|group.normal?}
+        end
+        def networks
+          self.select{|group|group.network?}
+        end
+        def committees
+          self.select{|group|group.committee?}
+        end
       end
         
       # all groups, including groups we have indirect access
       # to (ie committees and networks)
       has_many :all_groups, :class_name => 'Group', 
-        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})'
+        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
+        def normals
+          self.select{|group|group.normal?}
+        end
+        def networks
+          self.select{|group|group.network?}
+        end
+        def committees
+          self.select{|group|group.committee?}
+        end
+      end
       
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :peer_id_cache
