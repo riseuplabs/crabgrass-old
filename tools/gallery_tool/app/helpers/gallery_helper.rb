@@ -34,9 +34,9 @@ module GalleryHelper
       :count => lambda {
         if @image_index
           "Image :number of :count"[:image_count]%{
-            :number => @image_index, :count => @image_count }
+            :number => @image_index.to_s, :count => @image_count.to_s }
         else
-          ":count Images"[:image_count_total]%{ :count => @image_count }
+          ":count Images"[:image_count_total]%{ :count => @image_count.to_s }
         end
       },
       :formats => lambda { 
@@ -48,10 +48,10 @@ module GalleryHelper
       },
       :download => lambda { 
         if @image
-          link_to(image_tag("actions/download.png")+"Download".t,
+          link_to(image_tag("actions/download.png")+"Download"[:download],
                   @image.url)
         else
-          link_to(image_tag("actions/download.png")+"Download Gallery".t,
+          link_to(image_tag("actions/download.png")+"Download Gallery"[:download_gallery],
                   :controller => 'gallery',
                   :action => 'download_gallery',
                   :page_id => @page.id)

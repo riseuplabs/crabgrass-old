@@ -184,6 +184,8 @@ image_count_total: :count Images
 view_slideshow: View Slideshow
 show_gallery: Show Gallery
 edit_gallery: Edit Gallery
+download: Download
+download_gallery: Download Gallery
 undo: undo
 remove_from_gallery: Remove from gallery
 removing_image: Removing Image...
