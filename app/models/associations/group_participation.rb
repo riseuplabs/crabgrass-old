@@ -6,10 +6,18 @@
 # view_only (boolean) -- the group's participation is limited to viewing.
 
 
+
+
+
+
+
 class GroupParticipation < ActiveRecord::Base
   belongs_to :page
   belongs_to :group
 
+  # this includes the ability to find featured-pages in GroupContext
+  include GroupExtension::Featured::GroupParticipationMethods
+  
   def access_sym
     ACCESS_TO_SYM[self.access]
   end

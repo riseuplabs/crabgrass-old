@@ -215,6 +215,9 @@ class Group < ActiveRecord::Base
 
   ####################################################################
   ## relationship to pages
+
+  # this makes this group's pages featureable
+  include GroupExtension::Featured
   
   has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
   has_many :pages, :through => :participations do

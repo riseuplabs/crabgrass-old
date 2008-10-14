@@ -1,6 +1,6 @@
 <div id="starring_list">
 <h4 class="section_head"><%= "Featured".t %></h4>
-<% @group.pages.find_static.each do |page| %>
+<% @group.find_static.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>
 <% end %>
 

@@ -102,9 +102,27 @@ class GroupController < ApplicationController
   # login required
   def edit
   end
-  
+
+  # updates the list of featured pages
   def update_featured_pages
-    Page.find(params[:group][:featured_pages]).each(&:static!)
+    
+    # use this for group_level featured content 
+     
+    unstatic = @group.participations.find_all_by_static(true)
+    static = @group.participations.find_all_by_page_id(params[:group][:featured_pages]) if params[:group] && params[:group][:featured_pages]
+    if static
+      unstatic = unstatic-static
+      
+      static.each do |p|
+        p.static! unless p.static
+      end
+    end   
+    unstatic.each do |p|
+      p.unstatic! if p.static
+    end
+        
+   # use this for platformwide featured content
+   # Page.find(params[:group][:featured_pages]).each(&:static!)
     redirect_to url_for_group(@group)
    rescue => exc
      flash_message_now :exception => exc
