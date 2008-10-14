@@ -15,3 +15,33 @@ already_contacts_info: Du bist schon ein Kontakt dieser Person.
 approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. M\xC3\xB6chtest du diese annehmen?"
 login: Anmelden
 recipient_tip: "Trenne Empf\xC3\xA4nger mit Kommata, Leerzeichen oder Zeilenspr\xC3\xBCungen."
+
+
+################
+# Gallery Tool #
+################
+order_changed: "Reihenfolge ge&auml;ndert."
+error_saving_new_order: "Speichern der neuen Reihenfolge fehlgeschlagen: :error_message"
+sucessfully_removed_image: "Bild erfolgreich entfernt (:undo_link)"
+image_count: "Bild :number von :count gesamt"
+image_count_total: ":count Bilder"
+view_slideshow: "Diashow ansehen"
+show_gallery: "Gallerie &Uuml;berblick"
+edit_gallery: "Gallerie bearbeiten"
+undo: "r&uuml;ckg&auml;ngig"
+remove_from_gallery: "Aus Gallerie entfernen"
+removing_image: "Entferne Bild..."
+move_image_left: "Bild nach links verschieben"
+move_image_right: "Bild nach rechts verschieben"
+successful_undelete_image: "L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht."
+saved_new_order: "Neue Reihenfolge gespeichert!"
+error_saving_new_order: "Beim speichern der neuen Reihenfolge ist ein Fehler aufgetreten!"
+no_title_given: "Kein Titel angegeben"
+saving_your_changes: "&Auml;nderungen werden gespeichert..."
+activate_js_to_rearrange_photos: "Aktiviere JavaScript und die Reihenfolge mit Drag&amp;Drop zu ver&auml;ndern!"
+drag_and_drop_to_rearrange_photos: "Benutze Drag&amp;Drop um die Reihenfolge der bilder zu ver&auml;ndern"
+no_images_in_gallery: "In dieser Gallerie sind noch keine Bilder"
+add_existing_image: "Existierendes Bild hinzuf&uuml;gen"
+upload_new_image: "Neues Bild hochladen"
+add_photo_to_gallery: "Bild zur Gallerie hinzuf&uuml;gen"
+cancel_link: "Abbrechen"

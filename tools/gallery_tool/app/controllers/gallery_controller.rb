@@ -100,15 +100,15 @@ class GalleryController < BasePageController
       showing.insert_at(new_pos)
     end
     if request.xhr?
-      render :text => "Order changed.", :layout => false
+      render :text => "Order changed."[:order_changed], :layout => false
     else
-      flash_message_now "Order changed."
+      flash_message_now "Order changed."[:order_changed]
       redirect_to(:controller => 'gallery',
                   :action => 'edit',
                   :page_id => @page.id)
     end
   rescue => exc
-    render :text => "Error saving new order: #{exc.message}"
+    render :text => "Error saving new order: :error_message"[:error_saving_new_order] %{ :error_message => exc.message}
   end
 
   def add
@@ -129,7 +129,10 @@ class GalleryController < BasePageController
     if request.xhr?
       undo_link = undo_remove_link(params[:id], params[:position])
       js = javascript_tag("remove_image(#{params[:id]});")
-      render(:text => "Successfully removed image! (#{undo_link}) #{js}", :layout => false)
+      render(:text => "Successfully removed image! (:undo_link)"[:successfully_removed_image]%{
+               :undo_link => undo_link
+             } + js,
+             :layout => false)
     else
       redirect_to page_url(@page)
     end

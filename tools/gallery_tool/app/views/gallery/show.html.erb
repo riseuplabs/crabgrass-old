@@ -12,10 +12,10 @@ div.gallery_swatch {
   <br style='clear:both'/>
   <%= pagination_links @images %>
 <% else %>
-  No images in gallery
+  <%= "No images in gallery"[:no_images_in_gallery] %>
 <% end %>
 </div>
 
-<p><%= link_to 'add existing image', page_url(@page, :action => 'find') %></p>
-<p><%= link_to 'upload new image', create_page_url(AssetPage, :gallery => @page.id) %></p>
+<p><%= link_to 'add existing image'[:add_existing_image], page_url(@page, :action => 'find') %></p>
+<p><%= link_to 'upload new image'[:upload_new_image], create_page_url(AssetPage, :gallery => @page.id) %></p>
 

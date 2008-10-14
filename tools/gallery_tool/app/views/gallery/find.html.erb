@@ -1,4 +1,4 @@
-<h1>add photo to gallery:</h1>
+<h1><%= "add photo to gallery:"[:add_photo_to_gallery] %></h1>
 <ul>
   <% @images.each do |asset| %>
     <li>
@@ -11,5 +11,5 @@
 <%= pagination_links(@images) %>
 
 <p>
-  <%= link_to 'cancel', page_url(@page) %>
+  <%= link_to 'cancel'[:cancel_link], page_url(@page) %>
 </p>

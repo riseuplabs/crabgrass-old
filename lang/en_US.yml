@@ -172,3 +172,32 @@ request_status: This request was :status by :user on :time
 approve_button: approve
 reject_button: reject
 discuss_request_link: discuss this request with :person_or_group
+
+################
+# Gallery Tool #
+################
+order_changed: Order changed.
+error_saving_new_order: "Error saving new order: :error_message"
+sucessfully_removed_image: Successfully removed image! (:undo_link)
+image_count: Image :number of :count
+image_count_total: :count Images
+view_slideshow: View Slideshow
+show_gallery: Show Gallery
+edit_gallery: Edit Gallery
+undo: undo
+remove_from_gallery: Remove from gallery
+removing_image: Removing Image...
+move_image_left: Move image left
+move_image_right: Move image right
+successful_undelete_image: Successfully undeleted image.
+saved_new_order: Saved new order!
+error_saving_new_order: Error saving new order!
+no_title_given: (no title given)
+saving_your_changes: Saving your changes...
+activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
+drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
+no_images_in_gallery: No images in Gallery
+add_existing_image: add existing image
+upload_new_image: upload new image
+add_photo_to_gallery: "add photo to gallery:"
+cancel_link: cancel

@@ -33,10 +33,10 @@ module GalleryHelper
     available_elements = { 
       :count => lambda {
         if @image_index
-          "Image :image of :count".t%{
-            :index => @image_index, :count => @image_count }
+          "Image :number of :count"[:image_count]%{
+            :number => @image_index, :count => @image_count }
         else
-          ":count Images".t%{ :count => @image_count }
+          ":count Images"[:image_count_total]%{ :count => @image_count }
         end
       },
       :formats => lambda { 
@@ -58,19 +58,19 @@ module GalleryHelper
         end
       },
       :slideshow => lambda { 
-        link_to("View Slideshow".t,
+        link_to("View Slideshow"[:view_slideshow],
                 :controller => 'gallery',
                 :action => 'slideshow',
                 :page_id => @page.id)
       },
       :edit => lambda { 
         if params[:action] == 'edit'
-          link_to("Show Gallery".t,
+          link_to("Show Gallery"[:show_gallery],
                   :controller => 'gallery',
                   :action => 'show',
                   :page_id => @page.id)
         else
-          link_to("Edit Gallery".t,
+          link_to("Edit Gallery"[:edit_gallery],
                   :controller => 'gallery',
                   :action => 'edit',
                   :page_id => @page.id)
@@ -91,7 +91,7 @@ module GalleryHelper
   end
   
   def undo_remove_link(image_id, position)
-    link_to_remote('undo',
+    link_to_remote('undo'[:undo],
                    :url => { 
                      :controller => 'gallery',
                      :action => 'add',
@@ -99,12 +99,12 @@ module GalleryHelper
                      :id => image_id,
                      :position => position
                    },
-                   :success => "update_notifier('Successfully undeleted image.');undo_remove(#{image_id}, #{position});")
+                   :success => "update_notifier(#{'Successfully undeleted image.'[:successful_undelete_image]});undo_remove(#{image_id}, #{position});")
   end
   
   def gallery_delete_image(image, position)
     link_to_remote(image_tag('icons/small_png/cancel.png',
-                             :title => 'Remove from gallery'),
+                             :title => 'Remove from gallery'[:remove_from_gallery]),
                    :url => {
                      :controller => 'gallery',
                      :action => 'remove',
@@ -113,20 +113,20 @@ module GalleryHelper
                      :position => position
                    },
                    :update => 'gallery_notify_area',
-                   :loading => "update_notifier('Removing image...', true);")
+                   :loading => "update_notifier(#{'Removing image...'[:removing_image]}, true);")
   end
   
   def gallery_move_image_without_js(image)
     output  = '<noscript>'
     output += link_to(image_tag('icons/small_png/left.png',
-                                :title => 'Move image left'),
+                                :title => 'Move image left'[:move_image_left]),
                       :controller => 'gallery',
                       :action => 'update_order',
                       :page_id => @page.id,
                       :id => image.id,
                       :direction => 'left')
     output += link_to(image_tag('icons/small_png/right.png',
-                                :title => 'Move image right'),
+                                :title => 'Move image right'[:move_image_right]),
                       :controller => 'gallery',
                       :action => 'update_order',
                       :page_id => @page.id,
