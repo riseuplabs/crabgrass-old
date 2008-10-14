@@ -18,4 +18,4 @@ public/javascripts/all.js
 public/assets/*
 *.o
 *.so
-
+lang/la_US.yml

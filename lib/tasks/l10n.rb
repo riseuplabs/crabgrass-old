@@ -4,6 +4,27 @@
 
 require 'fileutils'
 
+class String
+  def pig
+    return self unless self =~ /^[a-z]/i
+    
+    self =~ /^([a-z]*)(.*)$/i
+    word = $1
+    punctuation = $2
+    leadingCap = word =~ /^[A-Z]/
+    word.downcase!
+    res = case word
+      when /^[aeiouy]/
+        word+"way"
+      when /^([^aeiouy]+)(.*)/
+        $2+$1+"ay"
+      else
+        word
+    end
+    (leadingCap ? res.capitalize : res) + punctuation
+  end
+end
+
 namespace :cg do
   namespace :l10n do
 
@@ -91,6 +112,23 @@ namespace :cg do
         end
       end
     end
-
+    
+    desc "Create a piglatin file for testing"
+    task(:create_piglatin) do
+      english = YAML::load_file(File.join(RAILS_ROOT, 'lang', 'en_US.yml'))
+      piglatin = {}
+      english.each do |k,v|
+        piglatin[k] = v.split.map{|word| word.pig}.join(" ")
+      end
+      # piglatin is latin as spoken in the USA?
+      File.open(File.join(RAILS_ROOT, 'lang', 'la_US.yml'), "w") do |outfile|
+        YAML::dump(piglatin, outfile)
+      end
+    end
+    
+    desc "Enable piglatin in the app"
+    task(:enable_piglatin => :environment) do
+      Language.create(:name => "piglatin", :code => "la_US")
+    end
   end
 end
