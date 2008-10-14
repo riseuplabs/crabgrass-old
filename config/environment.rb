@@ -30,6 +30,13 @@ require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
+require "#{RAILS_ROOT}/lib/zip/zip.rb"
+
+# path in which zipped galleries (for download) will be stored.
+GALLERY_ZIP_PATH = "#{RAILS_ROOT}/public/gallery_download"
+unless File.exists?(GALLERY_ZIP_PATH)
+  Dir.mkdir(GALLERY_ZIP_PATH)
+end
 
 Rails::Initializer.run do |config|
 

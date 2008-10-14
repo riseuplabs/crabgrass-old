@@ -17,7 +17,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Subclass
   include PageExtension::Index
 #  include PageExtension::Linking
-
+  include PageExtension::Static
   acts_as_taggable_on :tags
 
 

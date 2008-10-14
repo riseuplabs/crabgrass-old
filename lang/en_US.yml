@@ -127,4 +127,48 @@ Contact: Contact
 Contacts: Contacts
 Members: Members
 group_information: ":group_type Information"
-
+file_version_deleted: file version deleted
+delete_version_confirm: Are you sure you want to delete this version?
+delete_this_version: delete this version
+galleries: Galleries
+created_by: Created by
+created_on: Created on
+file_size: File size
+format: Format
+# TODO: possible values for @asset.format_description.t
+regenerate: regenerate thumbnails
+version_number: version :version
+create_a_new: Create a new :class
+# TODO: possible values for @page_class.class_display_name.t
+file: File
+title: Title
+summary: Summary
+tags: Tags
+separate_tags: Separate tags using commas.
+just_me: no one, just me
+back_button: Back
+create_page_button: Create page
+data_for_page_missing: The data for this page is missing.
+information: Information
+history: History
+other_formats: Other Formats
+subject_must_not_be_empty: subject must not be empty
+at_least_one_recipient_is_required: at least one recipient is required
+message_must_not_be_empty: message must not be empty
+# TODO: possible values for MessagePage.class_display_name.t
+subject: subject
+recipients: recipients
+to: to
+peers: peers
+message: message
+send_button: Send
+from: from
+date: date
+request_status: "This request is: :status."
+status_resolved: resolved
+status_pending: pending
+approve_or_reject_link: approve or reject this request
+request_status: This request was :status by :user on :time
+approve_button: approve
+reject_button: reject
+discuss_request_link: discuss this request with :person_or_group

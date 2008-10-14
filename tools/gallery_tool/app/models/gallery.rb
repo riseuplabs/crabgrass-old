@@ -10,7 +10,7 @@ class Gallery < Page
     reset_associations(asset)
     true
   end
-
+  
   # like add_image!, but does not save the page. Used to build
   # the associations in memory when creating a new page.
   #def add_image(asset, position = nil)

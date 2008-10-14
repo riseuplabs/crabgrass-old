@@ -48,12 +48,20 @@ class Asset < ActiveRecord::Base
   # Use page_terms to find what assets the user has access to. Note that it is
   # necessary to match against both access_ids and tags, since the index only
   # works if both fields are included.
+  # FIXME: as far as I can tell page_terms never gets set in the first place,
+  # as an asset is always associated with an AssetPage. Polymorphic associations
+  # might work in this case, but I'm not sure if that will break anything else.
+  #  --niklas
   named_scope :visible_to, lambda { |*args|
     access_filter = PageTerms.access_filter_for(*args)
     { :select => 'assets.*', :joins => :page_terms,
       :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
     }
   }
+  
+  def has_access! perm, user
+    self.page.has_access! perm, user
+  end
 
   named_scope :not_attachment, :conditions => ['is_attachment = ?',false]
 
@@ -264,5 +272,15 @@ class Asset < ActiveRecord::Base
 
   # to be overridden by subclasses
   def update_media_flags() end
-
+  
+  
+  after_save :update_galleries
+  # update galleries after an image was saved which has galleries.
+  # the updated_at column of galleries needs to be up to date to allow the
+  # download_gallery action to find out if it's cached zips are up to date.
+  def update_galleries
+    if galleries.any?
+      galleries.each { |g| g.save }
+    end
+  end
 end

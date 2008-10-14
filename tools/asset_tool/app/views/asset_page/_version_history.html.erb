@@ -12,7 +12,7 @@
       <% end -%>
     </td>
     <td><%= link_to_asset(version, :small, :crop! => '32x32') %></td>
-    <td nobreak='nobreak'><%= link_to "version #{version.version}", version.url %></td>
+    <td nobreak='nobreak'><%= link_to "version :version"[:version_number] % { :version => version.version }, version.url %></td>
     <td><%= friendly_date(version.updated_at) %></td>
   </tr>
 <% end -%>

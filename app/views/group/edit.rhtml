@@ -4,6 +4,10 @@
 
 <br/>
 
+ <% form_tag(:action => 'update_featured_pages', :id => @group) do -%>
+  <%= render :partial => 'select_featured' %>
+<% end %>
+
 <h2 class='section'><div style='padding: 8px;'>
   Picture
 </div></h2>

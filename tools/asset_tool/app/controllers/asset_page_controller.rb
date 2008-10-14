@@ -53,7 +53,7 @@ class AssetPageController < BasePageController
     asset_version.destroy
     respond_to do |format|
       format.html do
-        message(:success => "file version deleted")
+        message(:success => "file version deleted".t)
         redirect_to(page_url(@page))
       end
       format.js do
