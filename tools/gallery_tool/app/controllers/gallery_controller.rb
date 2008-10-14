@@ -123,6 +123,28 @@ class GalleryController < BasePageController
   #  flash_message_now :exception => exc
   end
 
+  def create
+    @page_class = get_page_type
+    if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
+      begin
+        @page = create_new_page!(@page_class)
+        params[:assets].each do |file|
+          asset = {:uploaded_data =>  file}
+          @page.add_image!(Asset.make(asset))
+        end
+        return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
+        return redirect_to(page_url(@page))
+      #rescue Exception => exc
+      #  @page = exc.record
+      #  flash_message_now :exception => exc
+      end
+    end
+    @stylesheet = 'page_creation'
+    render :template => 'gallery/create'
+  end
+
+  
   def remove
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
