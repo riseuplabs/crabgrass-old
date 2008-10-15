@@ -7,7 +7,7 @@
 <% end %>
 <% end %>
 
-<% if (@important_pages=@group.pages.find_by_stars(:at_least => 1, :limit => 8)).any? %>
+<% if (@important_pages=@group.pages.find_by_stars(:at_least => @group.min_stars, :limit => 8)).any? %>
 <h4 class="section"><%= "Important".t %></h4>
 <% @important_pages.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>
