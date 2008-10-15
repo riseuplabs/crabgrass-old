@@ -1,11 +1,16 @@
 <div id="starring_list">
-<h4 class="section_head"><%= "Featured".t %></h4>
-<% @group.find_static.each do |page| %>
+<% if (@featured_pages = @group.find_static).any? || current_user.may?(:admin,@group) %>
+<h4 class="section"><%= "Featured".t %><%= link_to("edit", group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h4>
+
+<% @featured_pages.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>
 <% end %>
+<% end %>
 
-<h4 class="section_head"><%= "Important".t %></h4>
-<% @group.pages.find_by_stars(:at_least => 1, :limit => 8).each do |page| %>
+<% if (@important_pages=@group.pages.find_by_stars(:at_least => 1, :limit => 8)).any? %>
+<h4 class="section"><%= "Important".t %></h4>
+<% @important_pages.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>
+<% end %>
 <% end %>
 </div>

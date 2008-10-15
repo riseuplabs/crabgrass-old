@@ -103,6 +103,41 @@ class GroupController < ApplicationController
   def edit
   end
 
+  # login required
+  # edit the featured content
+  def edit_featured_content
+    raise PermissionDenied.new("You cannot administrate this group.") unless(current_user.may?(:admin,@group))
+  end
+
+  # login required
+  # mark one page as featured content
+  def feature_content
+    raise ErrorMessage.new("Page not part of this group") if !(@page = @group.participations.find_by_page_id(params[:featured_content][:id]))
+    if current_user.may?(:admin, @group) 
+      year = params[:featured_content][:"expires(1i)"]
+      month = params[:featured_content][:"expires(2i)"]
+      day = params[:featured_content][:"expires(3i)"]
+      date =DateTime.parse("#{year}/#{month}/#{day}")
+
+      case params[:featured_content][:mode].to_sym
+      when :feature
+        @page.static!(date || nil)
+      when :reactivate
+        @page.expired = nil
+        @page.static!(date || nil)
+      when :unfeature
+        @page.unstatic!
+      end
+      redirect_to group_url(:action => 'edit_featured_content', :id => @group)
+    else
+      raise PermissionDenied.new("You cannot administrate this group")
+    end
+  rescue => exc
+    flash_message_now :exception => exc
+    render :action => 'edit_featured_content'
+  end
+  
+  # login required
   # updates the list of featured pages
   def update_featured_pages
     

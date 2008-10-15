@@ -30,9 +30,23 @@ module GroupExtension
       
       # gets all featured pages that have been expired
       def find_expired options={}
+        ret = []
         since = options.delete(:since) if options[:since]
         since ? since = Time.now.to_date = since.days : since = Time.now.to_date ;
-        self.participations.find_by_static_expired(:true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"])
+        self.participations.find_by_static_expired(:true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"]).each do |p|
+          ret << p.page
+        end
+        ret
+      end
+      
+      # gets all the pages that are not static and not expired
+      def find_unstatic options={}
+        ret = []
+        expired = self.find_expired
+        self.participations.find_all_by_static(false, options).each do |p|
+          ret << p.page unless expired && expired.include?(p.page)
+        end
+        ret
       end
     end
 
@@ -49,7 +63,7 @@ module GroupExtension
         # sets a page to static till date comes
         def static! date=nil
           self.static = true
-          self.static_expires = date
+          self.static_expires = date || (Time.now.to_date + 5.days)
           self.static_expired = false
           self.save!
         end
