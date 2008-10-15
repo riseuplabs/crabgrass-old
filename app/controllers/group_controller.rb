@@ -102,9 +102,62 @@ class GroupController < ApplicationController
   # login required
   def edit
   end
+
+  # login required
+  # edit the featured content
+  def edit_featured_content
+    raise PermissionDenied.new("You cannot administrate this group.") unless(current_user.may?(:admin,@group))
+  end
+
+  # login required
+  # mark one page as featured content
+  def feature_content
+    raise ErrorMessage.new("Page not part of this group") if !(@page = @group.participations.find_by_page_id(params[:featured_content][:id]))
+    if current_user.may?(:admin, @group) 
+      year = params[:featured_content][:"expires(1i)"]
+      month = params[:featured_content][:"expires(2i)"]
+      day = params[:featured_content][:"expires(3i)"]
+      date =DateTime.parse("#{year}/#{month}/#{day}")
+
+      case params[:featured_content][:mode].to_sym
+      when :feature
+        @page.static!(date || nil)
+      when :reactivate
+        @page.expired = nil
+        @page.static!(date || nil)
+      when :unfeature
+        @page.unstatic!
+      end
+      redirect_to group_url(:action => 'edit_featured_content', :id => @group)
+    else
+      raise PermissionDenied.new("You cannot administrate this group")
+    end
+  rescue => exc
+    flash_message_now :exception => exc
+    render :action => 'edit_featured_content'
+  end
   
+  # login required
+  # updates the list of featured pages
   def update_featured_pages
-    Page.find(params[:group][:featured_pages]).each(&:static!)
+    
+    # use this for group_level featured content 
+     
+    unstatic = @group.participations.find_all_by_static(true)
+    static = @group.participations.find_all_by_page_id(params[:group][:featured_pages]) if params[:group] && params[:group][:featured_pages]
+    if static
+      unstatic = unstatic-static
+      
+      static.each do |p|
+        p.static! unless p.static
+      end
+    end   
+    unstatic.each do |p|
+      p.unstatic! if p.static
+    end
+        
+   # use this for platformwide featured content
+   # Page.find(params[:group][:featured_pages]).each(&:static!)
     redirect_to url_for_group(@group)
    rescue => exc
      flash_message_now :exception => exc

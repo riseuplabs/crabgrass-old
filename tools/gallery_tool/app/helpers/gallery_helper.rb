@@ -33,10 +33,10 @@ module GalleryHelper
     available_elements = { 
       :count => lambda {
         if @image_index
-          "Image :image of :count".t%{
-            :index => @image_index, :count => @image_count }
+          "Image :number of :count"[:image_count]%{
+            :number => @image_index.to_s, :count => @image_count.to_s }
         else
-          ":count Images".t%{ :count => @image_count }
+          ":count Images"[:image_count_total] %{ :count => @image_count.to_s }
         end
       },
       :formats => lambda { 
@@ -48,33 +48,41 @@ module GalleryHelper
       },
       :download => lambda { 
         if @image
-          link_to(image_tag("actions/download.png")+"Download".t,
+          link_to(image_tag("actions/download.png")+"Download"[:download],
                   @image.url)
         else
-          link_to(image_tag("actions/download.png")+"Download Gallery".t,
-                  :controller => 'gallery',
-                  :action => 'download_gallery',
-                  :page_id => @page.id)
+          link_to(image_tag("actions/download.png")+"Download Gallery"[:download_gallery],
+                  page_url(@page, :action => 'download'))
         end
       },
       :slideshow => lambda { 
-        link_to("View Slideshow".t,
-                :controller => 'gallery',
-                :action => 'slideshow',
-                :page_id => @page.id)
+        link_to("View Slideshow"[:view_slideshow],
+                page_url(@page, :action => 'slideshow'),
+                :target => '_blank')
       },
       :edit => lambda { 
-        if params[:action] == 'edit'
-          link_to("Show Gallery".t,
-                  :controller => 'gallery',
-                  :action => 'show',
-                  :page_id => @page.id)
+        unless params[:action] == 'edit'
+          link_to("Edit Gallery"[:edit_gallery],
+                  page_url(@page, :action => 'edit'))
         else
-          link_to("Edit Gallery".t,
-                  :controller => 'gallery',
-                  :action => 'edit',
-                  :page_id => @page.id)
+          available_elements[:show].call
         end
+      },
+      :show => lambda { 
+        link_to("Show Gallery"[:show_gallery],
+                page_url(@page))
+      },
+      :upload => lambda { 
+        #       javascript_tag("target = document.createElement('div');
+        #                         #{js_style('target','position:absolute;left:40%;width:20%;top:20%;border:solid 2px #bbb')}
+        #                         target.id = 'target_for_upload';
+        #                         target.hide();
+        #                         $$('body').first().appendChild(target);")+
+        #         link_to_remote("Upload Images"[:upload_images],
+        #                        :url => page_url(@page, :action => 'upload'),
+        #                        :update => 'target_for_upload')
+        link_to("Upload Images"[:upload_images],
+                page_url(@page, :action => 'upload'))
       }
     }
     
@@ -91,7 +99,7 @@ module GalleryHelper
   end
   
   def undo_remove_link(image_id, position)
-    link_to_remote('undo',
+    link_to_remote('undo'[:undo],
                    :url => { 
                      :controller => 'gallery',
                      :action => 'add',
@@ -99,12 +107,12 @@ module GalleryHelper
                      :id => image_id,
                      :position => position
                    },
-                   :success => "update_notifier('Successfully undeleted image.');undo_remove(#{image_id}, #{position});")
+                   :success => "update_notifier(#{'Successfully undeleted image.'[:successful_undelete_image]});undo_remove(#{image_id}, #{position});")
   end
   
   def gallery_delete_image(image, position)
     link_to_remote(image_tag('icons/small_png/cancel.png',
-                             :title => 'Remove from gallery'),
+                             :title => 'Remove from gallery'[:remove_from_gallery]),
                    :url => {
                      :controller => 'gallery',
                      :action => 'remove',
@@ -113,20 +121,20 @@ module GalleryHelper
                      :position => position
                    },
                    :update => 'gallery_notify_area',
-                   :loading => "update_notifier('Removing image...', true);")
+                   :loading => "update_notifier(#{'Removing image...'[:removing_image]}, true);")
   end
   
   def gallery_move_image_without_js(image)
     output  = '<noscript>'
     output += link_to(image_tag('icons/small_png/left.png',
-                                :title => 'Move image left'),
+                                :title => 'Move image left'[:move_image_left]),
                       :controller => 'gallery',
                       :action => 'update_order',
                       :page_id => @page.id,
                       :id => image.id,
                       :direction => 'left')
     output += link_to(image_tag('icons/small_png/right.png',
-                                :title => 'Move image right'),
+                                :title => 'Move image right'[:move_image_right]),
                       :controller => 'gallery',
                       :action => 'update_order',
                       :page_id => @page.id,
@@ -134,5 +142,14 @@ module GalleryHelper
                       :direction => 'right')
     output += '</noscript>'
     return output
+  end
+  
+  def js_style var, style
+    output = []
+    style.split(';').each do |part|
+      key, value = part.split(':')
+      output << "#{var}.style['#{key}'] = '#{value}';"
+    end
+    output.join "\n"
   end
 end

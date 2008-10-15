@@ -4,8 +4,12 @@ module PageExtension::Static
     base.send(:include, InstanceMethods)
   end
   
+  
+  # Helps with getting and setting static content
   module ClassMethods
     
+
+
     # finds static pages
     # pages that should have expired yet will do so now
     # options can be passed as usual
@@ -29,6 +33,7 @@ module PageExtension::Static
       since ? since = Time.now.to_date - since.days : since = Time.now.to_date ;
       find_by_static_expired(:true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"])
     end
+
     
     # finds the pages with the most stars
     # use options[:at_least] to pass the number of stars required
@@ -49,6 +54,7 @@ module PageExtension::Static
     def get_stars
       self.user_participations.count(:all, :conditions => { :star => true})
     end
+
     
     # sets a page to static till date comes
     def static! date=nil
@@ -91,7 +97,8 @@ module PageExtension::Static
       end
     end
   end
-  
+
+
   module UserParticipationMethods
 
     def self.included(base)
@@ -137,13 +144,6 @@ module PageExtension::Static
       self.page.save
     end
 
-=begin    
-    # decrement the stars_column for page
-    def less_stars
-      self.page.stars = self.page.stars - 1
-      self.page.save
-    end
-=end    
   end  
   
 end

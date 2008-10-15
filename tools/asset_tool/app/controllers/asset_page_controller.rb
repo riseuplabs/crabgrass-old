@@ -69,6 +69,13 @@ class AssetPageController < BasePageController
       page.replace_html 'preview_area', asset_link_with_preview(@asset)
     end
   end
+  
+  # xhr request  
+  def add_file_field
+    render :update do |page|
+      page.insert_html :before, 'add_file_field', render(:partial => 'file_field')
+    end
+  end
 
   def regenerate
     @asset.thumbnails.each do |tn|

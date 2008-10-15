@@ -5,7 +5,7 @@ div.gallery_swatch {
 }
 <% end %>
 
-<%= gallery_navigation :count, :download, :edit %>
+<%= gallery_navigation :count, :download, :edit, :upload, :slideshow %>
 
 <%= javascript_tag "
 var images = new Array();
@@ -16,11 +16,6 @@ function sort_images(droppable, target, event) {
       var image = img;
       break;
     }
-  }
-
-  if(!image) {
-    alert('Failed to determine dragged image!');
-    return false;
   }
 
   var new_pos = target.id.gsub('swatch_container_','');
@@ -84,18 +79,18 @@ function add_image(id, position) {
 }
 
 function saving_changes_notifier() {
-  update_notifier('Saving your changes...', true);
+  update_notifier('#{"Saving your changes..."[:saving_your_changes]}', true);
 }
 " %>
 
 
 <div id="gallery_notify_area">
   <noscript>
-    <%= "Activate JavaScript to use Drag&amp;Drop to rearrange photos!".t %>
+    <%= "Activate JavaScript to use Drag&amp;Drop to rearrange photos!"[:activate_js_to_rearrange_photos] %>
   </noscript>
 </div>
 <%= javascript_tag("$('gallery_notify_area').innerHTML = '"+
-"Drag &amp; Drop images to rearrange them".t+
+"Drag &amp; Drop images to rearrange them"[:drag_and_drop_to_rearrange_photos]+
 "';") %>
 <div id="gallery_overview" style="list-style-type:none;">
 <% if @images.any? -%>
@@ -106,9 +101,9 @@ function saving_changes_notifier() {
   <br style='clear:both'/>
   <%= pagination_links @images %>
 <% else %>
-  No images in gallery
+  <%= "No images in gallery"[:no_images_in_gallery] %>
 <% end %>
 </div>
 
-<p><%= link_to 'add existing image', page_url(@page, :action => 'find') %></p>
-<p><%= link_to 'upload new image', create_page_url(AssetPage, :gallery => @page.id) %></p>
+<p><%= link_to 'add existing image'[:add_existing_image], page_url(@page, :action => 'find') %></p>
+<p><%= link_to 'upload new image'[:upload_new_image], create_page_url(AssetPage, :gallery => @page.id) %></p>

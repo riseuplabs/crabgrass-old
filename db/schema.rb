@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081009073916) do
+ActiveRecord::Schema.define(:version => 20081012185547) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -85,11 +85,11 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
   add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "discussions", :force => true do |t|
-    t.integer  "posts_count",  :limit => 11, :default => 0
+    t.integer  "posts_count",   :limit => 11, :default => 0
     t.datetime "replied_at"
-    t.integer  "replied_by",   :limit => 11
-    t.integer  "last_post_id", :limit => 11
-    t.integer  "page_id",      :limit => 11
+    t.integer  "replied_by_id", :limit => 11
+    t.integer  "last_post_id",  :limit => 11
+    t.integer  "page_id",       :limit => 11
   end
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
@@ -124,9 +124,12 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
   create_table "group_participations", :force => true do |t|
-    t.integer "group_id", :limit => 11
-    t.integer "page_id",  :limit => 11
-    t.integer "access",   :limit => 11
+    t.integer  "group_id",       :limit => 11
+    t.integer  "page_id",        :limit => 11
+    t.integer  "access",         :limit => 11
+    t.boolean  "static"
+    t.datetime "static_expires"
+    t.boolean  "static_expired"
   end
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
@@ -272,6 +275,10 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
     t.integer  "flow",               :limit => 11
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.boolean  "static"
+    t.datetime "static_expires"
+    t.boolean  "static_expired"
+    t.integer  "stars",              :limit => 11, :default => 0
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"

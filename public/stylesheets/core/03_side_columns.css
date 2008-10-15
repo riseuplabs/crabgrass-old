@@ -70,3 +70,5 @@ ul.side_list a.name_link {
 .side_indent {
   padding-left: 8px;
 }
+
+tr.even td {background:#ccc;}

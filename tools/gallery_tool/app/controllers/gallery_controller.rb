@@ -24,15 +24,30 @@ class GalleryController < BasePageController
     end
   end
   
+  def slideshow
+    if params[:image_id] && params[:image_id] != 0
+      showing = @page.showings.find(:first, :conditions => { :asset_id => 
+                                      params[:image_id]})
+    else
+      showing = @page.showings.first
+    end
+    @image = @page.images.find(showing.asset_id)
+    @next_id = @page.showings.find(:first, :conditions => { 
+                                     :position => showing.position+1
+                                   }, :select => 'asset_id').asset_id rescue nil
+    if request.xhr?
+      render :layout => false
+    else
+      render :layout => 'gallery_slideshow'
+    end
+  end
+  
   def edit
     @javascript = :extra
     params[:page] ||= 1
     @images = @page.images.paginate(:page => params[:page], :per_page => 16)
   end
   
-  def update
-  end
-
   def find
     existing_ids = @page.image_ids
     # this call doesn't return anything as Asset.visible_to isn't working.
@@ -59,7 +74,7 @@ class GalleryController < BasePageController
   def upload
   end
   
-  def download_gallery
+  def download
     name_base = @page.title.gsub(/\s/,'-')
     file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
       (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
@@ -100,15 +115,15 @@ class GalleryController < BasePageController
       showing.insert_at(new_pos)
     end
     if request.xhr?
-      render :text => "Order changed.", :layout => false
+      render :text => "Order changed."[:order_changed], :layout => false
     else
-      flash_message_now "Order changed."
+      flash_message_now "Order changed."[:order_changed]
       redirect_to(:controller => 'gallery',
                   :action => 'edit',
                   :page_id => @page.id)
     end
   rescue => exc
-    render :text => "Error saving new order: #{exc.message}"
+    render :text => "Error saving new order: :error_message"[:error_saving_new_order] %{ :error_message => exc.message}
   end
 
   def add
@@ -123,13 +138,52 @@ class GalleryController < BasePageController
   #  flash_message_now :exception => exc
   end
 
+  def create
+    @page_class = get_page_type
+    if request.post?
+      return redirect_to(create_page_url) if params[:cancel]
+      begin
+        @page = create_new_page!(@page_class)
+        params[:assets].each do |file|
+          next if file.size == 0 # happens if no file was selected
+          asset = Asset.make(:uploaded_data =>  file)
+          @page.add_image!(asset)
+        end
+        return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
+        return redirect_to(page_url(@page))
+      rescue Exception => exc
+        @page = exc.record
+        flash_message_now :exception => exc
+      end
+    end
+    @stylesheet = 'page_creation'
+    render :template => 'gallery/create'
+  end
+  
+  def upload
+    if request.post?
+      params[:assets].each do |file|
+        next if file.size == 0
+        asset = Asset.make(:uploaded_data => file)
+        @page.add_image!(asset)
+      end
+      redirect_to page_url(@page)
+    elsif request.xhr?
+      render :layout => false
+    end
+  end
+
+  
   def remove
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
     if request.xhr?
       undo_link = undo_remove_link(params[:id], params[:position])
       js = javascript_tag("remove_image(#{params[:id]});")
-      render(:text => "Successfully removed image! (#{undo_link}) #{js}", :layout => false)
+      render(:text => "Successfully removed image! (:undo_link)"[:successfully_removed_image]%{
+               :undo_link => undo_link
+             } + js,
+             :layout => false)
     else
       redirect_to page_url(@page)
     end
