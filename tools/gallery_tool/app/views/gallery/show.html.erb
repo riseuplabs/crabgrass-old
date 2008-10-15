@@ -5,7 +5,7 @@ div.gallery_swatch {
 }
 <% end %>
 
-<%= gallery_navigation :count, :download, :edit %>
+<%= gallery_navigation :count, :download, :edit, :upload %>
 <div id="gallery_overview">
 <% if @images.any? %>
   <%= render :partial => 'image', :collection => @images %>

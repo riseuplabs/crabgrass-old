@@ -35,16 +35,7 @@
       </td>
     </tr>
     <% end -%>
-    <%= render :partial=>'asset_page/file_field'%>
-    <tr id='add_file_field'>
-      <td align='right' colspan="2">
-	<%= link_to_remote('One more file...'.t, :url => {:controller => 'asset_page', :action => 'add_file_field'}, :html => {:style => 'display:none', :id => 'add_file_field_link'}) %>
-	<%= javascript_tag "$('add_file_field_link').show();"%>
-	<noscript>
-	  add more files? <input type="checkbox" name="add_more_files" />
-	</noscript>
-      </td>
-    </tr>
+    <%= render :partial => '_upload.html.erb' %>
     <tr>
       <td align='right' colspan="2">
         <%= submit_tag '&laquo; ' + "Back".t, :name => 'cancel' %>

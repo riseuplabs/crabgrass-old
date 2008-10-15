@@ -30,9 +30,6 @@ class GalleryController < BasePageController
     @images = @page.images.paginate(:page => params[:page], :per_page => 16)
   end
   
-  def update
-  end
-
   def find
     existing_ids = @page.image_ids
     # this call doesn't return anything as Asset.visible_to isn't working.
@@ -59,7 +56,7 @@ class GalleryController < BasePageController
   def upload
   end
   
-  def download_gallery
+  def download
     name_base = @page.title.gsub(/\s/,'-')
     file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
       (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
@@ -130,18 +127,32 @@ class GalleryController < BasePageController
       begin
         @page = create_new_page!(@page_class)
         params[:assets].each do |file|
-          asset = {:uploaded_data =>  file}
-          @page.add_image!(Asset.make(asset))
+          next if file.size == 0 # happens if no file was selected
+          asset = Asset.make(:uploaded_data =>  file)
+          @page.add_image!(asset)
         end
         return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
         return redirect_to(page_url(@page))
-      #rescue Exception => exc
-      #  @page = exc.record
-      #  flash_message_now :exception => exc
+      rescue Exception => exc
+        @page = exc.record
+        flash_message_now :exception => exc
       end
     end
     @stylesheet = 'page_creation'
     render :template => 'gallery/create'
+  end
+  
+  def upload
+    if request.post?
+      params[:assets].each do |file|
+        next if file.size == 0
+        asset = Asset.make(:uploaded_data => file)
+        @page.add_image!(asset)
+      end
+      redirect_to page_url(@page)
+    elsif request.xhr?
+      render :layout => false
+    end
   end
 
   

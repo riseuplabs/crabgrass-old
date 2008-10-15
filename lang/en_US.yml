@@ -180,7 +180,7 @@ order_changed: Order changed.
 error_saving_new_order: "Error saving new order: :error_message"
 sucessfully_removed_image: Successfully removed image! (:undo_link)
 image_count: Image :number of :count
-image_count_total: :count Images
+image_count_total: ":count Images"
 view_slideshow: View Slideshow
 show_gallery: Show Gallery
 edit_gallery: Edit Gallery
@@ -203,3 +203,7 @@ add_existing_image: add existing image
 upload_new_image: upload new image
 add_photo_to_gallery: "add photo to gallery:"
 cancel_link: cancel
+file_must_be_image_error: "File must be an image to be part of a gallery."
+group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
+add_another_file: "Add another file"
+file: "File"

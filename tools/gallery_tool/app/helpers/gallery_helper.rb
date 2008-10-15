@@ -36,7 +36,7 @@ module GalleryHelper
           "Image :number of :count"[:image_count]%{
             :number => @image_index.to_s, :count => @image_count.to_s }
         else
-          ":count Images"[:image_count_total]%{ :count => @image_count.to_s }
+          ":count Images"[:image_count_total] %{ :count => @image_count.to_s }
         end
       },
       :formats => lambda { 
@@ -52,9 +52,7 @@ module GalleryHelper
                   @image.url)
         else
           link_to(image_tag("actions/download.png")+"Download Gallery"[:download_gallery],
-                  :controller => 'gallery',
-                  :action => 'download_gallery',
-                  :page_id => @page.id)
+                  page_url(@page, :action => 'download'))
         end
       },
       :slideshow => lambda { 
@@ -64,17 +62,28 @@ module GalleryHelper
                 :page_id => @page.id)
       },
       :edit => lambda { 
-        if params[:action] == 'edit'
-          link_to("Show Gallery"[:show_gallery],
-                  :controller => 'gallery',
-                  :action => 'show',
-                  :page_id => @page.id)
-        else
+        unless params[:action] == 'edit'
           link_to("Edit Gallery"[:edit_gallery],
-                  :controller => 'gallery',
-                  :action => 'edit',
-                  :page_id => @page.id)
+                  page_url(@page, :action => 'edit'))
+        else
+          available_elements[:show].call
         end
+      },
+      :show => lambda { 
+        link_to("Show Gallery"[:show_gallery],
+                page_url(@page))
+      },
+      :upload => lambda { 
+        #       javascript_tag("target = document.createElement('div');
+        #                         #{js_style('target','position:absolute;left:40%;width:20%;top:20%;border:solid 2px #bbb')}
+        #                         target.id = 'target_for_upload';
+        #                         target.hide();
+        #                         $$('body').first().appendChild(target);")+
+        #         link_to_remote("Upload Images"[:upload_images],
+        #                        :url => page_url(@page, :action => 'upload'),
+        #                        :update => 'target_for_upload')
+        link_to("Upload Images"[:upload_images],
+                page_url(@page, :action => 'upload'))
       }
     }
     
@@ -134,5 +143,14 @@ module GalleryHelper
                       :direction => 'right')
     output += '</noscript>'
     return output
+  end
+  
+  def js_style var, style
+    output = []
+    style.split(';').each do |part|
+      key, value = part.split(':')
+      output << "#{var}.style['#{key}'] = '#{value}';"
+    end
+    output.join "\n"
   end
 end
