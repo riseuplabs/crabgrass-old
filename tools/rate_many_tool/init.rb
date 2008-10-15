@@ -5,7 +5,7 @@ PageClassRegistrar.add(
   :model => 'Poll',
   :icon => 'rate-many.png',
   :class_display_name => 'approval vote',
-  :class_description => 'Approve or disapprove of each possibility.',
+  :class_description => :approval_vote_class_description,
   :class_group => 'poll',
   :order => 10
 )

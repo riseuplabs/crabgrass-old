@@ -202,6 +202,25 @@ version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: diff
 created_when_by: created :when by :user
+wiki_class_description: A free-form text document.
+wiki: wiki
+collection_class_description: Special pages that hold other pages.
+collection: collection
+folder_class_description: A collection of assets.
+folder: folder
+task_list_class_description: A list of todo items.
+task_list: task list
+gallery_class_description: A collection of images.
+gallery: gallery
+approval_vote_class_description: Approve or disapprove of each possibility.
+approval_vote: approval vote
+group_discussion_class_description: A group discussion on a particular topic.
+group_discussion: group discussion
+personal_message_class_description: A personal message sent to individual recipients.
+personal_message: personal message
+ranked_vote_class_description: Rank possibilities in order of preference.
+ranked_vote: ranked vote
+file_class_description: An uploaded file.
 
 ################
 # Gallery Tool #
