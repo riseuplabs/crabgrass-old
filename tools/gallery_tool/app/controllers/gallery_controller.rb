@@ -24,6 +24,24 @@ class GalleryController < BasePageController
     end
   end
   
+  def slideshow
+    if params[:image_id] && params[:image_id] != 0
+      showing = @page.showings.find(:first, :conditions => { :asset_id => 
+                                      params[:image_id]})
+    else
+      showing = @page.showings.first
+    end
+    @image = @page.images.find(showing.asset_id)
+    @next_id = @page.showings.find(:first, :conditions => { 
+                                     :position => showing.position+1
+                                   }, :select => 'asset_id').asset_id rescue nil
+    if request.xhr?
+      render :layout => false
+    else
+      render :layout => 'gallery_slideshow'
+    end
+  end
+  
   def edit
     @javascript = :extra
     params[:page] ||= 1
