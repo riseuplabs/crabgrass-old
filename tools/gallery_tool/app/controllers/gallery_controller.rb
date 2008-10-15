@@ -53,9 +53,6 @@ class GalleryController < BasePageController
     redirect_to :action => 'show', :page_id => @page.id
   end
   
-  def upload
-  end
-  
   def download
     name_base = @page.title.gsub(/\s/,'-')
     file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
@@ -143,15 +140,16 @@ class GalleryController < BasePageController
   end
   
   def upload
-    if request.post?
+    logger.fatal 'go ahead'
+    if request.xhr?
+      render :layout => false
+    elsif request.post?
       params[:assets].each do |file|
         next if file.size == 0
         asset = Asset.make(:uploaded_data => file)
         @page.add_image!(asset)
       end
       redirect_to page_url(@page)
-    elsif request.xhr?
-      render :layout => false
     end
   end
 

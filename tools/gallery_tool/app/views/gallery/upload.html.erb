@@ -7,7 +7,8 @@
   <table>
     <%= render :partial => 'upload' -%>
   </table>
-  <%= submit_tag "Upload" %>
+  <%= submit_tag "upload".t %>
+  <%= submit_tag "cancel".t %>
 <% end -%>
 
 <%= javascript_tag "if($('target_for_upload')) $('target_for_upload').show();" %>

@@ -74,16 +74,16 @@ module GalleryHelper
                 page_url(@page))
       },
       :upload => lambda { 
-        #       javascript_tag("target = document.createElement('div');
-        #                         #{js_style('target','position:absolute;left:40%;width:20%;top:20%;border:solid 2px #bbb')}
-        #                         target.id = 'target_for_upload';
-        #                         target.hide();
-        #                         $$('body').first().appendChild(target);")+
-        #         link_to_remote("Upload Images"[:upload_images],
-        #                        :url => page_url(@page, :action => 'upload'),
-        #                        :update => 'target_for_upload')
-        link_to("Upload Images"[:upload_images],
-                page_url(@page, :action => 'upload'))
+                javascript_tag("target = document.createElement('div');
+                                 target.id = 'target_for_upload';
+                                 target.hide();
+                                 $$('body').first().appendChild(target);")+
+        spinner('show_upload')+
+                link_to_remote("Upload Images"[:upload_images],
+                                :url => page_url(@page, :action => 'upload'),
+                                :update => 'target_for_upload', :loading =>'$(\'show_upload_spinner\').show();', :success => 'target.show();', :complete => '$(\'show_upload_spinner\').hide();')
+        #link_to("Upload Images"[:upload_images],
+        #        page_url(@page, :action => 'upload'))
       }
     }
     
