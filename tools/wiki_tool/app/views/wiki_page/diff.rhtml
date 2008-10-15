@@ -1,22 +1,24 @@
 <%= return_to_page(@page) %>
 
 <p>
-  Comparing changes by <b><%= link_to_user(@new.user_id)%></b> at <i><%= full_time @new.updated_at %></i> from 
-<span style='background-color: #fcc; padding: 1px 4px;' >version <%= @old.version %></span>
-to
-<span style='background-color: #cfc; padding: 1px 4px;'>version <%= @new.version %></span>
+  <%=  :comparing_changes_header.t % {
+    :user => content_tag(:b, link_to_user(@new.user_id)),
+    :when => content_tag(:i, full_time(@new.updated_at)),
+    :old_version => content_tag(:span, :version_number.t % { :version => @old.version }, :style => 'background-color: #fcc; padding: 1px 4px;' ),
+    :new_version => content_tag(:span, :version_number.t % { :version => @new.version }, :style => 'background-color: #fcc; padding: 1px 4px;' )
+  }%>
 </p>
 
 <p>
 <% if @old.version.to_i != 1 %>
-  <%= link_to '« prev change', page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
+  <%= link_to "« #{"prev change".t}", page_url(@page, :action => 'diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
 <% else %>
-  « prev change
+  « <%= "prev change".t %>
 <% end %>
 <% if @wiki.version != @new.version %>
-  <%= link_to 'next change »', page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
+  <%= link_to "#{"next change".t} »", page_url(@page, :action => 'diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
 <% else %>
-  next change »
+  <%= "next change".t %> »
 <% end %>
 </p>
 

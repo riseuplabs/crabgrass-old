@@ -172,6 +172,36 @@ request_status: This request was :status by :user on :time
 approve_button: approve
 reject_button: reject
 discuss_request_link: discuss this request with :person_or_group
+locking_error: Locking error. Can't save your data, someone else has saved new changes first.
+wiki_is_locked: "This wiki is currently locked by :user"
+wont_be_able_to_save: You will not be able to save this page
+page_locked_header: Page Locked
+small: small
+medium: medium
+large: large
+full: full
+include_full_checkbox: include link to full image
+close_button: Close
+locked_by_user: "locked by :user"
+break_lock: break lock
+versions: versions
+last_change: last change
+print_underlined_p: <u>p</u>rint
+edit_underlined_e: <u>e</u>dit
+# Note for translators: in the following string, :old_version and :new_veresion will be
+# filled in using the version_number template above.
+comparing_changes_header: Comparing changes by :user at :when from :old_version to :new_version
+prev_change: prev change
+next_change: next change
+formatting_reference_link: formatting reference
+save_button: Save
+# break_lock_button probably differs from break_lock only in capitalization; similarly for cancel_button and cancel_link
+break_lock_button: Break Lock
+cancel_button: Cancel
+version_doesnt_exist: "There is no version :version"
+you_are_viewing_version: "You are viewing version :version by :user"
+diff_link: diff
+created_when_by: created :when by :user
 
 ################
 # Gallery Tool #
