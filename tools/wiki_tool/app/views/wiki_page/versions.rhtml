@@ -3,9 +3,13 @@
 <ul>
   <% for version in @wiki.versions %>
   <li>
-    <%=link_to "version %s"%version.version, page_url(@page, :action => "version", :id => version.version) %>
-    <%=link_to "(diff)", page_url(@page, :action=>'diff', :id => "#{version.version.to_i-1}-#{version.version}") if version.version > 1 %>,
-    created <i><%= full_time version.updated_at %></i> by <b><%= link_to_user(version.user_id)%></b>
+    <%=link_to :version_number.t % {:version => version.version}, page_url(@page, :action => "version", :id => version.version) %>
+    <%=link_to "(#{"diff"[:diff_link]})"[:diff_link_parens], page_url(@page, :action=>'diff', :id => "#{version.version.to_i-1}-#{version.version}") if version.version > 1 %>,
+    <%= :created_when_by.t % {
+      :when => content_tag(:i, full_time(version.updated_at)),
+      :user => content_tag(:b, link_to_user(version.user_id))
+    }
+    %>
   </li>
   <% end %>
 </ul>

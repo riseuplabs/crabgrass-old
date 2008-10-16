@@ -1,0 +1,3 @@
+<%= image_tag(@image.url, :style => 'display:none', :id => 'image') %>
+
+<%= javascript_tag "next_image_id = #{@next_id};ready_for_next = true;" %>

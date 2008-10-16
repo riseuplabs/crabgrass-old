@@ -4,7 +4,7 @@ PageClassRegistrar.add(
   :controller => 'wiki_page',
   :icon => 'wiki.png',
   :class_display_name => 'wiki',
-  :class_description => 'A free-form text document.',
+  :class_description => :wiki_class_description,
   :class_group => 'wiki',
   :order => 4
 )

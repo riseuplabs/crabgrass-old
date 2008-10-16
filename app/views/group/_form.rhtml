@@ -34,6 +34,15 @@
 
 
 <p>
+  <label for="group_min_stars">
+    <b>Minimum stars for important pages</b><br/>
+   Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page
+  </label>
+  <%= text_field :group, :min_stars %>
+</p>
+
+
+<p>
   <label for="group_summary">
     <b>Summary</b><br/>
     <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
