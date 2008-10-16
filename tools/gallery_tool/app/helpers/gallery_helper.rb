@@ -57,9 +57,8 @@ module GalleryHelper
       },
       :slideshow => lambda { 
         link_to("View Slideshow"[:view_slideshow],
-                :controller => 'gallery',
-                :action => 'slideshow',
-                :page_id => @page.id)
+                page_url(@page, :action => 'slideshow'),
+                :target => '_blank')
       },
       :edit => lambda { 
         unless params[:action] == 'edit'

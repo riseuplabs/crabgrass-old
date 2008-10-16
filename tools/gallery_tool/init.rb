@@ -3,7 +3,7 @@ PageClassRegistrar.add(
   :controller => 'gallery',
   :icon => 'gallery.png',
   :class_display_name => 'gallery',
-  :class_description => 'A collection of images.',
+  :class_description => :gallery_class_description,
   :class_group => ['gallery'],
   :order => 31
 )
