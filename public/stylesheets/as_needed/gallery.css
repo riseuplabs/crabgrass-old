@@ -96,3 +96,15 @@
 .image_control a img {
     margin-left:0.2em;
 }
+
+
+#target_for_upload {
+    position:absolute;
+    left:40%;
+    width:40em;
+    top:55%;
+    padding:10px;
+    border:solid 2px #bbb;
+    background:white;
+    margin-left:-20em;
+}
