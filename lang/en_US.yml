@@ -188,25 +188,6 @@ version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: diff
 created_when_by: created :when by :user
-wiki_class_description: A free-form text document.
-wiki: wiki
-collection_class_description: Special pages that hold other pages.
-collection: collection
-folder_class_description: A collection of assets.
-folder: folder
-task_list_class_description: A list of todo items.
-task_list: task list
-gallery_class_description: A collection of images.
-gallery: gallery
-approval_vote_class_description: Approve or disapprove of each possibility.
-approval_vote: approval vote
-group_discussion_class_description: A group discussion on a particular topic.
-group_discussion: group discussion
-personal_message_class_description: A personal message sent to individual recipients.
-personal_message: personal message
-ranked_vote_class_description: Rank possibilities in order of preference.
-ranked_vote: ranked vote
-file_class_description: An uploaded file.
 
 ##
 ## GALLERY
@@ -351,7 +332,6 @@ link_name: Link Name
 language: Language
 minimum_stars_for_important_pages: Minimum stars for important pages
 minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
-save_changes: save_changes
 group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
 committee_publicly_visible_description: Committees are viewable by non-members at we.riseup.net/yourgroupname
 group_members_publicly_visible: Make Members Publicly Visible
@@ -359,8 +339,6 @@ group_members_publicly_visible_description:   Members are viewable by non-member
 page_list: Page list
 join_chat: join chat
 no_tags: no tags
-uploaded_image_will_be_cropped: uploaded image will be cropped and stretched to 96 pixels square.
-select_image_file_or_image_url: select image file<br /> :file_field <br />or image URL
 upload_image: "Upload Image"
 back_to_group: back_to :group_name
 edit_featured_content_for_group: Edit Featured Content For :group_name
@@ -379,7 +357,6 @@ group_wiki: Group Wiki
 rss_feed: RSS Feed
 group_has_no_public_profile: This group does not have a public profile.
 pending_tasks: pending tasks.
-create_new_task_list: "create new task list &raquo;"
 no_committees: no committees
 Category: Category
 Admin: Admin
@@ -424,6 +401,8 @@ reject: reject
 pending: pending
 approved: approved
 rejected: rejected
+send_invites_button: Send Invites
+send_invites_headline: Send invitations to join {group}
 
 ##
 ## PAGES
@@ -447,10 +426,31 @@ all_groups: all groups
 all_states: all states
 create_a_new_page: Create a new page
 create_page_headline: Create a new {page_class}
+create_a_new_something: create new {something}
 create_page_button: Create page
 create_page: Create Page
 back_button: Back
 create_page_button: Create page
+wiki_class_description: A free-form text document.
+wiki: wiki
+collection_class_description: Special pages that hold other pages.
+collection: collection
+folder_class_description: A collection of assets.
+folder: folder
+task_list_class_description: A list of todo items.
+task_list: task list
+gallery_class_description: A collection of images.
+gallery: gallery
+approval_vote_class_description: Approve or disapprove of each possibility.
+approval_vote: approval vote
+group_discussion_class_description: A group discussion on a particular topic.
+group_discussion: group discussion
+personal_message_class_description: A personal message sent to individual recipients.
+personal_message: personal message
+ranked_vote_class_description: Rank possibilities in order of preference.
+ranked_vote: ranked vote
+file_class_description: An uploaded file.
+tasks: tasks
 
 ##
 ## DATES
