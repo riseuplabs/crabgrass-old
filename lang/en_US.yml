@@ -126,7 +126,7 @@ format: Format
 # TODO: possible values for @asset.format_description.t
 regenerate: regenerate thumbnails
 version_number: version :version
-create_a_new: Create a new :class
+
 # TODO: possible values for @page_class.class_display_name.t
 file: File
 title: Title
@@ -134,8 +134,6 @@ summary: Summary
 tags: Tags
 separate_tags: Separate tags using commas.
 just_me: no one, just me
-back_button: Back
-create_page_button: Create page
 data_for_page_missing: The data for this page is missing.
 information: Information
 history: History
@@ -256,7 +254,6 @@ dashboard: Dashboard
 inbox: Inbox
 my_pages: My Pages
 search: Search
-create_page: Create Page
 Pending: Pending
 my_tasks: Tasks
 completed: Completed
@@ -360,7 +357,6 @@ committee_publicly_visible_description: Committees are viewable by non-members a
 group_members_publicly_visible: Make Members Publicly Visible
 group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
 page_list: Page list
-create_page: create page
 join_chat: join chat
 no_tags: no tags
 uploaded_image_will_be_cropped: uploaded image will be cropped and stretched to 96 pixels square.
@@ -449,6 +445,12 @@ pagination_previous: prev
 all_people: all people
 all_groups: all groups
 all_states: all states
+create_a_new_page: Create a new page
+create_page_headline: Create a new {page_class}
+create_page_button: Create page
+create_page: Create Page
+back_button: Back
+create_page_button: Create page
 
 ##
 ## DATES
@@ -472,4 +474,13 @@ month_short_october: Oct
 month_short_november: Nov
 month_short_december: Dec
 
+##
+## ERRORS
+##
+
+alert_not_saved: Changes could not be saved
+alert_field_errors: There are problems with the following fields
+alert_saved: Changes saved
+alert_permission_denied: Permission Denied
+alert_error: Error
 
