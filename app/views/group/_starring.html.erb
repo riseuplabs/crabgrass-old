@@ -1,6 +1,6 @@
 <div id="starring_list">
 <% if (@featured_pages = @group.find_static).any? || current_user.may?(:admin,@group) %>
-<h4 class="section"><%= "Featured".t %><%= link_to("edit", group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h4>
+<h4 class="section"><%= "Featured".t %><%= link_to("edit".t, group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h4>
 
 <% @featured_pages.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>

@@ -207,3 +207,79 @@ file_must_be_image_error: "File must be an image to be part of a gallery."
 group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
 add_another_file: "Add another file"
 file: "File"
+
+
+ ###############
+ # Group Stuff #
+ ###############
+
+group_administration_not_allowed: "You cannot administrate this group."
+page_not_part_of_group: "Page not part of this group"
+group_successfully_updated: "Group was successfully updated."
+only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
+group_successfully_created: "Group was successfully created."
+dont_understand_group_type: Could not understand group type :type
+dont_have_permission_to_create_committees: You do not have permission to create committees under %s
+fullname: Full Name
+descriptive_name_for_display: A descriptive name used for display
+link_name: Link Name
+language: Language
+minimum_stars_for_important_pages: Minimum stars for important pages
+minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
+save_changes: save_changes
+group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
+committee_publicly_visible_description: Committees are viewable by non-members at we.riseup.net/yourgroupname
+group_members_publicly_visible: Make Members Publicly Visible
+group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
+page_list: Page list
+create_page: create page
+join_chat: join chat
+no_tags: no tags
+uploaded_image_will_be_cropped: uploaded image will be cropped and stretched to 96 pixels square.
+select_image_file_or_image_url: select image file<br /> :file_field <br />or image URL
+upload_image: "Upload Image"
+back_to_group: back_to :group_name
+edit_featured_content_for_group: Edit Featured Content For :group_name
+mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
+current_featured_content: Current Featured Content
+when_does_feature_expire: When does this feature expire?
+unfeature_button: Unfeature!
+not_featured_content: Not yet Featured Content
+expired_featured_content: Expired Featured Content
+feature_button: Feature!
+reactivate_button: Reactivate!
+no_group_named: there is no group named <b>:name</b>.
+recent_activity: Recent Activity
+featured_content: Featured Content
+group_wiki: Group Wiki
+rss_feed: RSS Feed
+group_has_no_public_profile: This group does not have a public profile.
+pending_tasks: pending tasks.
+create_new_task_list: "create new task list &raquo;"
+no_committees: no committees
+Category: Category
+Admin: Admin
+Founded: Founded
+Language: Language
+not_set: not set
+unknown: unknown
+edit_featured_content: edit featured content
+no_members: (no members)
+directory_of_groups: Directory of groups
+Create: Create
+new_group: New group
+new_network: New network
+group_directory: Group Directory
+my_groups: My Groups
+you_have_no_groups: You have no groups
+edit_settings: edit settings
+destroy_group: destroy %s
+view_all: view all
+create_committee: create committee
+edit: edit
+send_invites: send invites
+view_requests: view requests
+pending: pending
+approved: approved
+rejected: rejected
+page_is_not_static: Page is not static

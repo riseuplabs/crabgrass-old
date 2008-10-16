@@ -5,23 +5,24 @@
 <br/>
 
 <h2 class='section'><div style='padding: 8px;'>
-  Picture
+    <%= "Picture".t %>
 </div></h2>
 
 <%= avatar_for @group, 'xlarge' %>
 
-<p>uploaded image will be cropped and stretched to 96 pixels square.</p>
+<p><%= "uploaded image will be cropped and stretched to 96 pixels square."[:uploaded_image_will_be_cropped] %></p>
 
 <p>
 <% @avatar ||= @group.avatar -%>
 <p><% form_for(:image, @avatar, :url => {:controller => 'avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>
-   select image file<br />
-   <%= f.file_field :image_file %><br />
-   or image URL<br />
+   <%= "select image file<br /> :file_field <br />or image URL"[:select_image_file_or_image_url]%{
+         :file_field => f.file_field(:image_file)
+       }
+ %><br />
    <%= f.text_field :image_file_url %><br />
    <%= hidden_field_tag 'redirect', group_url(:action=>'edit',:id=>@group) %>
    <%= hidden_field_tag 'group_id', @group.id %>
-   <br /><%= submit_tag 'Upload Image' %>
+   <br /><%= submit_tag 'Upload Image'[:upload_image] %>
 <% end -%></p>
 </p>
 
