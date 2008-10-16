@@ -33,7 +33,7 @@ module GroupExtension
         ret = []
         since = options.delete(:since) if options[:since]
         since ? since = Time.now.to_date = since.days : since = Time.now.to_date ;
-        self.participations.find_by_static_expired(:true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"]).each do |p|
+        self.participations.find_by_static_expired(true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"]).each do |p|
           ret << p.page
         end
         ret
