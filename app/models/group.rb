@@ -196,7 +196,7 @@ class Group < ActiveRecord::Base
     if user.member_of?(self) or publicly_visible_group or (parent and parent.publicly_visible_committees and parent.may_be_pestered_by?(user))
       return true
     else
-      raise PermissionDenied.new('You not allowed to share with %s'[:pester_denied] % self.name)
+      raise PermissionDenied.new('You are not allowed to share with %s'[:pester_denied] % self.name)
     end
   end
 

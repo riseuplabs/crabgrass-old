@@ -106,18 +106,18 @@ class GroupController < ApplicationController
   # login required
   # edit the featured content
   def edit_featured_content
-    raise PermissionDenied.new("You cannot administrate this group.") unless(current_user.may?(:admin,@group))
+    raise PermissionDenied.new("You cannot administrate this group."[:group_administration_not_allowed_error]) unless(current_user.may?(:admin,@group))
   end
 
   # login required
   # mark one page as featured content
   def feature_content
-    raise ErrorMessage.new("Page not part of this group") if !(@page = @group.participations.find_by_page_id(params[:featured_content][:id]))
+    raise ErrorMessage.new("Page not part of this group"[:page_not_part_of_group]) if !(@page = @group.participations.find_by_page_id(params[:featured_content][:id]))
     if current_user.may?(:admin, @group) 
       year = params[:featured_content][:"expires(1i)"]
       month = params[:featured_content][:"expires(2i)"]
       day = params[:featured_content][:"expires(3i)"]
-      date =DateTime.parse("#{year}/#{month}/#{day}")
+      date = DateTime.parse("#{year}/#{month}/#{day}")
 
       case params[:featured_content][:mode].to_sym
       when :feature
@@ -130,7 +130,7 @@ class GroupController < ApplicationController
       end
       redirect_to group_url(:action => 'edit_featured_content', :id => @group)
     else
-      raise PermissionDenied.new("You cannot administrate this group")
+      raise PermissionDenied.new("You cannot administrate this group"[:group_administration_not_allowed_error])
     end
   rescue => exc
     flash_message_now :exception => exc
@@ -176,7 +176,7 @@ class GroupController < ApplicationController
     
     if @group.save
       redirect_to :action => 'edit', :id => @group
-      flash_message :success => 'Group was successfully updated.'
+      flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
     else
       flash_message_now :object => @group  
     end
@@ -186,7 +186,7 @@ class GroupController < ApplicationController
   # post required
   def destroy
     if @group.users.uniq.size > 1 or @group.users.first != current_user
-      flash_message :error => 'You can only delete a group if you are the last member'
+      flash_message :error => 'You can only delete a group if you are the last member'[:only_last_member_can_delete_group]
       redirect_to :action => 'show', :id => @group
     else
       if @group.parent

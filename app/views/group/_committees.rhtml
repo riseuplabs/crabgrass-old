@@ -1,6 +1,6 @@
 <% unless committee? -%>
 <p>
-  <b>Committees</b><br/>
+  <b><%= "Committees"[:Committees]%></b><br/>
 <% @group.committees.each do |c| -%>
   <%= link_to_group c %>
 <% end -%>
