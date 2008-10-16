@@ -11,6 +11,8 @@ default:
   - blue
   translators:
   - blue
+  translation_group:
+  - animals
   default_language:
   - english
   available_page_types:

@@ -21,7 +21,11 @@ default:
   translators:
   - sally
   - bob
+  translation_group:
+  - translators
 <end>
+
+Use "translators" and/or "translation_group"
 
 Uncomment gibberize on config/mods_enabled.list
 
@@ -54,6 +58,21 @@ It will populate the gibberize database with these keys.
 
 In development mode you may want to load Gibberize fixtures:
 $ rake db:fixtures:plugins:load
+
+Translating into piglatin
+=========================
+
+It can be very useful to create 'dummy' translations of every key so you can 
+visually scan a page and see what strings have yet to be localized. 
+
+Run this once:
+
+  rake cg:l10n:enable_piglatin
+
+Then, every time you modify en_US.yml:
+
+  rake cg:l10n:create_piglatin
+
 
 Translation workflow
 ====================
