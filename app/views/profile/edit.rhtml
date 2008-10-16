@@ -2,12 +2,9 @@
 
 <% @title_box = capture do -%>
   <% if @profile.public? -%>
-    This profile is public and will be visible to anyone visiting this website.
-    The information you put here is also searchable by other people. 
-    Use caution when adding personal information to your public profile.
+    <%= :profile_public_description.t %>
   <% elsif @profile.private? -%>
-    This profile is private and is only visible to your contacts.
-    The information you put here is not searchable, even by your contacts.
+    <%= :profile_private_description.t %>
   <% end -%>
 <% end -%>
 

@@ -1,6 +1,6 @@
 <% if @group.users.any? or @group.groups.any? -%>
 <%= render :partial => 'avatars/boxes', :locals => {:people => @group.users, :groups => @group.groups, :side => 'left'} %>
 <% else -%>
-(no members)
+<%= "(no members)"[:no_members] %>
 <% end -%>
 

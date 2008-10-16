@@ -9,7 +9,7 @@ module ProfileHelper
   end
   
   def remove_link(dom_id)
-    "<span class='remove'>%s</span>" % link_to_function('remove', "Element.remove($('#{dom_id}'))")
+    "<span class='remove'>%s</span>" % link_to_function('remove'.t, "Element.remove($('#{dom_id}'))")
   end    
   
   def add_row_link(title,action)

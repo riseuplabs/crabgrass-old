@@ -18,6 +18,13 @@ class Gibberize::BaseController < ApplicationController
   protected
 
   def authorized?
-    @site.translators and @site.translators.include?(current_user.login)
+    ret = false
+    if @site.translators.any?
+      ret = true if @site.translators.include?(current_user.login)
+    end
+    if @site.translation_group.any?
+      ret = true if current_user.member_of?(Group.find_by_name(@site.translation_group))
+    end
+    ret
   end
 end

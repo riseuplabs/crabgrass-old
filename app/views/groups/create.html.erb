@@ -3,9 +3,9 @@
     <%- if group_type == 'committee' -%>
       <%= 'New committee for group %s'[:new_committee] % @parent.name %>
     <%- elsif group_type == 'network' -%>
-      <%= 'New network'.t %>
+      <%= 'New network'[:new_network] %>
     <%- elsif group_type == 'group' -%>
-      <%= 'New group'.t %>
+      <%= 'New group'[:new_group] %>
     <%- end -%>
   </h1>
 <% end %>
@@ -14,7 +14,7 @@
 <% form_tag({:action => "create", :id => group_type},:id => "createform") do %>
   <%= render(:partial => 'group/form', :locals => {:submit => false}) %>
   <%= render(:partial => 'networks/initial_membership_form') if group_type == 'network' %>
-  <%= submit_tag "Create" %>
+  <%= submit_tag "Create"[:Create] %>
 <% end %>
 <%= javascript_tag "Form.focusFirstElement('createform');" %>
 

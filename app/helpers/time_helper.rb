@@ -6,8 +6,8 @@ module TimeHelper
   # Here are the current options:
   #   4:30PM    -- time was today
   #   Wednesday -- time was within the last week.
-  #   Mar/7     -- time was in the current year.
-  #   Mar/7/07  -- time was in a different year.
+  #   7/Mar     -- time was in the current year.
+  #   7/Mar/08  -- time was in a different year.
   # The date is then wrapped in a label, so that if you hover over the text
   # you will see the full details.
   def friendly_date(*times)
@@ -18,17 +18,25 @@ module TimeHelper
     date  = time.to_date
     
     if date == today
+      # 4:30PM
       str = time.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
     elsif today > date and (today-date) < 7
-      str = time.strftime("%A")
+      # Wednesday
+      str = time.strftime("%A").t
     elsif date.year != today.year
-      str = date.strftime("%d/%b/%Y")
+      # 7/Mar/08
+      str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
     else
-      str = date.strftime('%d/%b')
+      # 7/Mar
+      str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
     end
     "<label title='#{ full_time(time) }'>#{str}</label>"
   end
   
+  def localize_month(month)
+    month[('month_short_'+month.downcase).to_sym]
+  end
+
   # formats a time, in full detail
   # for example: Sunday July/3/2007 2:13PM PST
   def full_time(time)

@@ -20,7 +20,7 @@ module GroupHelper
   
   def edit_settings_link
     if may_admin_group?
-      link_to 'edit settings'.t, group_url(:action => 'edit', :id => @group)
+      link_to 'edit settings'[:edit_settings], group_url(:action => 'edit', :id => @group)
     end
   end
   
@@ -53,38 +53,38 @@ module GroupHelper
     if logged_in? and current_user.may?(:admin, @group)
       # eventually, this should fire a request to destroy.
       if (@group.network? && @group.groups.size == 1) or (@group.users.uniq.size == 1)
-        post_to "destroy #{group_type}".t, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
+        post_to "destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
       end
     end
   end
     
   def more_committees_link
-    link_to 'view all', ''
+    link_to 'view all'[:view_all], ''
   end
   
   def create_committee_link
     if may_admin_group?
-      link_to 'create committee'.t, groups_url(:action => 'create', :parent_id => @group.id)
+      link_to 'create committee'[:create_committee], groups_url(:action => 'create', :parent_id => @group.id)
     end
   end
   
   def more_members_link
     if may_admin_group?
-      link_to_active 'edit'.t, {:controller => 'membership', :action => 'list', :id => @group.name}
+      link_to_active 'edit'[:edit], {:controller => 'membership', :action => 'list', :id => @group.name}
     elsif @group.profiles.visible_by(current_user).may_see_members?
-      link_to_active 'view all'.t, {:controller => 'membership', :action => 'list', :id => @group.name}
+      link_to_active 'view all'[:view_all], {:controller => 'membership', :action => 'list', :id => @group.name}
     end
   end
   
   def invite_link
     if may_admin_group?
-      link_to_active('send invites'.t, {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
+      link_to_active('send invites'[:send_invites], {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
     end
   end
 
   def requests_link
     if may_admin_group?
-      link_to_active('view requests'.t, {:controller => 'requests', :action => 'list', :group_id => @group.id})
+      link_to_active('view requests'[:view_requests], {:controller => 'requests', :action => 'list', :group_id => @group.id})
     end
   end
   

@@ -26,9 +26,9 @@ module ErrorHelper
     elsif opts[:object]
       object = opts[:object]
       unless object.errors.empty?        
-        flash.now[:error] = _("Changes could not be saved.")
+        flash.now[:error] = "Changes could not be saved."[:alert_not_saved]
         flash.now[:text] ||= ""
-        flash.now[:text] += content_tag "p", _("There are problems with the following fields") + ":"
+        flash.now[:text] += content_tag "p", "There are problems with the following fields"[:alert_field_errors] + ":"
         flash.now[:text] += content_tag "ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) }
         flash.now[:errors] = object.errors
       end

@@ -95,20 +95,8 @@ all: Media
 alls: Media
 media_for_group: %s in %s
 media_without_group: All %s
-request_to_friend_description: ":user would like to be the contact of :other_user"
-request_to_join_our_network_description: "group :group was invited to join network :network"
-request_to_join_us_description: ":user was invited to join :group"
-request_to_join_us_via_email_description: ":email was invited to join :group"
-request_to_join_you_description: ":user requested to join :group"
-request_to_join_your_network_description: ":group requested to join network :network"
 Discussions: Discussions
 discussions: discussions
-page_list_heading_updated_by: updated by
-page_list_heading_created_by: created by
-page_list_heading_title: title
-page_list_heading_created: created
-page_list_heading_updated: updated
-page_list_heading_posts: posts
 groups: groups
 networks: networks
 committees: committees
@@ -118,9 +106,9 @@ Committees: Committees
 group: group
 network: network
 committee: committee
-Group: group
-Network: network
-Committee: committee
+Group: Group
+Network: Network
+Committee: Committee
 contacts: contacts
 contact: contact
 Contact: Contact
@@ -138,7 +126,7 @@ format: Format
 # TODO: possible values for @asset.format_description.t
 regenerate: regenerate thumbnails
 version_number: version :version
-create_a_new: Create a new :class
+
 # TODO: possible values for @page_class.class_display_name.t
 file: File
 title: Title
@@ -146,8 +134,6 @@ summary: Summary
 tags: Tags
 separate_tags: Separate tags using commas.
 just_me: no one, just me
-back_button: Back
-create_page_button: Create page
 data_for_page_missing: The data for this page is missing.
 information: Information
 history: History
@@ -202,29 +188,11 @@ version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: diff
 created_when_by: created :when by :user
-wiki_class_description: A free-form text document.
-wiki: wiki
-collection_class_description: Special pages that hold other pages.
-collection: collection
-folder_class_description: A collection of assets.
-folder: folder
-task_list_class_description: A list of todo items.
-task_list: task list
-gallery_class_description: A collection of images.
-gallery: gallery
-approval_vote_class_description: Approve or disapprove of each possibility.
-approval_vote: approval vote
-group_discussion_class_description: A group discussion on a particular topic.
-group_discussion: group discussion
-personal_message_class_description: A personal message sent to individual recipients.
-personal_message: personal message
-ranked_vote_class_description: Rank possibilities in order of preference.
-ranked_vote: ranked vote
-file_class_description: An uploaded file.
 
-################
-# Gallery Tool #
-################
+##
+## GALLERY
+##
+
 order_changed: Order changed.
 error_saving_new_order: "Error saving new order: :error_message"
 sucessfully_removed_image: Successfully removed image! (:undo_link)
@@ -258,5 +226,261 @@ add_another_file: "Add another file"
 file: "File"
 slideshow_delay_input: "Update every :input_field seconds"
 slideshow_the_end: "The End"
-upload: "Upload"
-cancel: "Cancel"
+
+##
+## ME
+## 
+
+dashboard: Dashboard
+inbox: Inbox
+my_pages: My Pages
+search: Search
+Pending: Pending
+my_tasks: Tasks
+completed: Completed
+requests: Requests
+to_me: To Me
+from_me: From Me
+settings: Settings
+private_profile: Private Profile
+public_profile: Public Profile
+my_tasks_description: Task lists I have access to
+create_task_list: create new task list
+me_search_description: Search through all pages you have access to
+requests_from_me: Requests from me
+requests_to_me: Requests to me
+inbox_description: Inbox of pages I am actively participating in or watching for changes
+toggle_selection: Toggle selection
+remove_from_inbox: Remove from inbox
+my_settings: Settings for {user}
+upload_image: upload_image
+uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
+select_image_file: "select image file"
+or_image_url: "or image URL"
+upload_image: Upload Image
+save_changes: Save Changes
+username: Username
+display_name: Display name
+email: Email
+language: Language
+time_zone: Time Zone
+password: Password
+password_confirmation: Password confirmation
+Today: Today
+Yesterday: Yesterday
+This_Past_Week: This Past Week
+Older: Older
+more: more
+
+##
+## PROFILE
+## 
+
+profile_public_description: |
+  This profile is public and will be visible to anyone visiting this website. 
+  The information you put here is also searchable by other people. 
+  Use caution when adding personal information to your public profile.
+
+profile_private_description: This profile is private and is only visible to your contacts.
+remove: remove
+Home: Home
+Work: Work
+School: School
+Personal: Personal
+Other: Other
+About_Me: About Me
+Social_Change_Interests: Social Change Interests
+Personal_Interests: Personal Interests
+Work_Life: Work Life
+Fax: Fax
+Mobile: Mobile
+Pager: Pager
+general_info: General Info
+first_name: first name
+middle_name: middle
+last_name: last
+organization: organization
+organizational_role: organizational role
+descriptions: Descriptions
+add_description: Add Description
+phone_numbers: Phone Numbers
+add_phone_number: Add Phone Number
+email_addresses: Email Addresses
+add_email_address: Add Email Address
+locations: Locations
+add_location: Add Location
+im_addresses: IM Addresses
+add_im_address: Add IM Address
+websites: Websites
+add_websites: Add Websites
+
+
+##
+## GROUPS
+##
+
+group_administration_not_allowed: "You cannot administrate this group."
+page_not_part_of_group: "Page not part of this group"
+group_successfully_updated: "Group was successfully updated."
+only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
+group_successfully_created: "Group was successfully created."
+dont_understand_group_type: Could not understand group type :type
+dont_have_permission_to_create_committees: You do not have permission to create committees under %s
+fullname: Full Name
+descriptive_name_for_display: A descriptive name used for display
+link_name: Link Name
+language: Language
+minimum_stars_for_important_pages: Minimum stars for important pages
+minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
+group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
+committee_publicly_visible_description: Committees are viewable by non-members at we.riseup.net/yourgroupname
+group_members_publicly_visible: Make Members Publicly Visible
+group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
+page_list: Page list
+join_chat: join chat
+no_tags: no tags
+upload_image: "Upload Image"
+back_to_group: back_to :group_name
+edit_featured_content_for_group: Edit Featured Content For :group_name
+mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
+current_featured_content: Current Featured Content
+when_does_feature_expire: When does this feature expire?
+unfeature_button: Unfeature!
+not_featured_content: Not yet Featured Content
+expired_featured_content: Expired Featured Content
+feature_button: Feature!
+reactivate_button: Reactivate!
+no_group_named: there is no group named <b>:name</b>.
+recent_activity: Recent Activity
+featured_content: Featured Content
+group_wiki: Group Wiki
+rss_feed: RSS Feed
+group_has_no_public_profile: This group does not have a public profile.
+pending_tasks: pending tasks.
+no_committees: no committees
+Category: Category
+Admin: Admin
+Founded: Founded
+Language: Language
+not_set: not set
+unknown: unknown
+edit_featured_content: edit featured content
+no_members: (no members)
+directory_of_groups: Directory of groups
+Create: Create
+new_group: New group
+new_network: New network
+group_directory: Group Directory
+my_groups: My Groups
+you_have_no_groups: You have no groups
+edit_settings: edit settings
+destroy_group: destroy %s
+view_all: view all
+create_committee: create committee
+edit: edit
+send_invites: send invites
+view_requests: view requests
+page_is_not_static: Page is not static
+
+##
+## REQUESTS
+##
+
+description: description
+state: state
+action: action
+request_to_friend_description: ":user would like to be the contact of :other_user"
+request_to_join_our_network_description: "group :group was invited to join network :network"
+request_to_join_us_description: ":user was invited to join :group"
+request_to_join_us_via_email_description: ":email was invited to join :group"
+request_to_join_you_description: ":user requested to join :group"
+request_to_join_your_network_description: ":group requested to join network :network"
+destroy: destroy
+approve: approve
+reject: reject
+pending: pending
+approved: approved
+rejected: rejected
+send_invites_button: Send Invites
+send_invites_headline: Send invitations to join {group}
+
+##
+## PAGES
+##
+
+all_page_types: all page types
+page_list_heading_updated_by: updated by
+page_list_heading_created_by: created by
+page_list_heading_title: title
+page_list_heading_created: created
+page_list_heading_updated: updated
+page_list_heading_posts: posts
+updated: updated
+created: created
+unread: unread
+starred: starred
+pagination_next: next
+pagination_previous: prev
+all_people: all people
+all_groups: all groups
+all_states: all states
+create_a_new_page: Create a new page
+create_page_headline: Create a new {page_class}
+create_a_new_something: create new {something}
+create_page_button: Create page
+create_page: Create Page
+back_button: Back
+create_page_button: Create page
+wiki_class_description: A free-form text document.
+wiki: wiki
+collection_class_description: Special pages that hold other pages.
+collection: collection
+folder_class_description: A collection of assets.
+folder: folder
+task_list_class_description: A list of todo items.
+task_list: task list
+gallery_class_description: A collection of images.
+gallery: gallery
+approval_vote_class_description: Approve or disapprove of each possibility.
+approval_vote: approval vote
+group_discussion_class_description: A group discussion on a particular topic.
+group_discussion: group discussion
+personal_message_class_description: A personal message sent to individual recipients.
+personal_message: personal message
+ranked_vote_class_description: Rank possibilities in order of preference.
+ranked_vote: ranked vote
+file_class_description: An uploaded file.
+tasks: tasks
+
+##
+## DATES
+## 
+sunday: Sunday
+monday: Monday
+tuesday: Tuesday
+wednesday: Wednesday
+thursday: Thursday
+friday: Friday
+month_short_january: Jan
+month_short_february: Feb
+month_short_march: Mar
+month_short_april: Apr
+month_short_may: May
+month_short_june: Jun
+month_short_july: Jul
+month_short_august: Aug
+month_short_september: Sep
+month_short_october: Oct
+month_short_november: Nov
+month_short_december: Dec
+
+##
+## ERRORS
+##
+
+alert_not_saved: Changes could not be saved
+alert_field_errors: There are problems with the following fields
+alert_saved: Changes saved
+alert_permission_denied: Permission Denied
+alert_error: Error
+
