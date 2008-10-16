@@ -1,18 +1,15 @@
 /* editing possibles */
 
+.hover {
+  background: red;
+  border: 2px solid yellow;
+}
+
 #progress, #instructions {
   padding: 0.5em;
   background-color: #FEA;
   border: 1px solid #EB0;
-}
-
-#progress_area {
-  padding: 1em;
-  height: 2em;
-}
-
-ul.possible_list {
-
+  margin: 1em;
 }
 
 ul.possible_list li {
@@ -32,12 +29,6 @@ ul.possible_list li:hover .edit {
   display: inline;
 }
 
-
-li#possible_unordered {
-  color: #666;
-  margin-left: -2px;
-  border-bottom: 2px solid #000;
-}
 
 li#add_possible_link {
   margin-top: 2em;
@@ -83,4 +74,5 @@ span.winner {
   display: block;
   float: right;
 }
+
 

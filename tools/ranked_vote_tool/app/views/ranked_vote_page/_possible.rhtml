@@ -8,9 +8,9 @@ possible_show_id   = "#{possible_id}_show"
 spinner_edit       = "#{possible_id}_edit"
 -%>
 
-<li id='<%=possible_id%>' class='possible'>
+<li id='<%=possible_id%>' class='possible' class='handle'>
 
-  <div id='<%=possible_show_id%>' class='handle'>
+  <div id='<%=possible_show_id%>'>
     <%= render :partial => 'possible_show', :locals => {:possible => possible} %>
   </div>
   

@@ -484,3 +484,12 @@ alert_saved: Changes saved
 alert_permission_denied: Permission Denied
 alert_error: Error
 
+##
+## RANKED VOTE
+##
+
+ranked_vote_instructions: |
+  Drag and drop the items on the following list until they are in order from
+  most preferred at the top to least preferred at the bottom. When you are done,
+  press confirm to record your vote.
+
