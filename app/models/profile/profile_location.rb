@@ -35,7 +35,7 @@ class ProfileLocation < ActiveRecord::Base
   end
 
   def self.options
-    %w[Home Work School Other].to_localized_select
+    [:Home, :Work, :School, :Other].to_localized_select
   end
 
   protected

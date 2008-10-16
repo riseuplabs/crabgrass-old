@@ -155,6 +155,7 @@ class Request < ActiveRecord::Base
   ##
   
   # used by subclass's description()
+  # if you change this to display_name, make sure to escape it!
   def user_span(user)
     '<span class="user">%s</span>' % user.name
   end

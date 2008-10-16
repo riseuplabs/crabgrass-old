@@ -1,7 +1,7 @@
 <% @avatar ||= @user.avatar -%>
 
 <% @title_box = capture do -%>
-<%= "Settings for {user_display_name}"[:settings_for, current_user.display_name] %>
+<%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %>
 <% end -%>
 
 <%# render :partial => 'profile_tabs' %>
@@ -19,7 +19,7 @@
       <%= f.text_field :image_file_url %><br />
       <%= hidden_field_tag 'redirect', url_for(:controller=>'me/base',:action=>'edit') %>
       <%= hidden_field_tag 'user_id', @user.id %>
-      <br /><%= submit_tag 'Upload Image' %>
+      <br /><%= submit_tag 'Upload Image'[:upload_image] %>
     <% end -%>
   </div>
   </td></tr></table>

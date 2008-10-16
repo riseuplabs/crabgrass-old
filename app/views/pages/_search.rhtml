@@ -30,12 +30,12 @@
 <% end -%>
 
 <% if users -%>
-<%= select_tag 'search[person]', "<option value=''>all people</option>"+
+<%= select_tag 'search[person]', "<option value=''>#{'all people'.t}</option>"+
 options_from_collection_for_select(users, "id", "name", parsed.int_for('person')) %>
 <% end -%>
 
 <% if groups -%>
-<%= select_tag 'search[group]', "<option value=''>all groups</option>"+
+<%= select_tag 'search[group]', "<option value=''>#{'all groups'.t}</option>"+
 options_from_collection_for_select(groups, "id", "name", parsed.int_for('group')) %>
 <% end -%>
 
@@ -43,7 +43,7 @@ options_from_collection_for_select(groups, "id", "name", parsed.int_for('group')
 <%# select_month(parsed.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
 <%# select_year(parsed.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
 
-<%= select_tag 'search[page_state]', "<option value=''>all states</option>"+
+<%= select_tag 'search[page_state]', "<option value=''>#{'all states'.t}</option>"+
 options_for_page_states(parsed) %>
 <!--
 <label><%= check_box_tag 'search[pending]', 'true', parsed.keyword?('pending') %> pending</label>
@@ -53,7 +53,7 @@ options_for_page_states(parsed) %>
 
 <span style='white-space: nowrap'>
 <%= text_field_tag 'search[text]', parsed.arg_for('text') && parsed.arg_for('text').gsub('+',' '), :size => '20' %>
-<%= submit_tag 'Search' %>
+<%= submit_tag 'Search'.t %>
 </span>
 
 <script type="text/javascript">

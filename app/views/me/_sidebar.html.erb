@@ -28,10 +28,10 @@
 
 </ul>
 
-<h2><%= "Tasks"[:tasks] %></h2>
+<h2><%= "Tasks"[:my_tasks] %></h2>
 <ul class='side_list'>
   <li class='small_icon task_pending_icon'><%= link_to_active(
-    'Pending'[:pending],
+    'Pending'[:Pending],
     '/me/tasks/pending',
     params[:controller] == 'me/tasks' && params[:action] == 'pending'
   ) %></li>

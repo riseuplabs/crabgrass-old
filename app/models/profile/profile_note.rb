@@ -13,7 +13,7 @@ class ProfileNote < ActiveRecord::Base
   after_destroy {|record| record.profile.save if record.profile}
   
   def self.options
-    ['About Me', 'Social Change Interests', 'Personal Interests', 'Work Life'].to_localized_select
+    [:About_Me, :Social_Change_Interests, :Personal_Interests, :Work_Life].to_localized_select
   end
   
 end

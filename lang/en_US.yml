@@ -95,20 +95,8 @@ all: Media
 alls: Media
 media_for_group: %s in %s
 media_without_group: All %s
-request_to_friend_description: ":user would like to be the contact of :other_user"
-request_to_join_our_network_description: "group :group was invited to join network :network"
-request_to_join_us_description: ":user was invited to join :group"
-request_to_join_us_via_email_description: ":email was invited to join :group"
-request_to_join_you_description: ":user requested to join :group"
-request_to_join_your_network_description: ":group requested to join network :network"
 Discussions: Discussions
 discussions: discussions
-page_list_heading_updated_by: updated by
-page_list_heading_created_by: created by
-page_list_heading_title: title
-page_list_heading_created: created
-page_list_heading_updated: updated
-page_list_heading_posts: posts
 groups: groups
 networks: networks
 committees: committees
@@ -118,9 +106,9 @@ Committees: Committees
 group: group
 network: network
 committee: committee
-Group: group
-Network: network
-Committee: committee
+Group: Group
+Network: Network
+Committee: Committee
 contacts: contacts
 contact: contact
 Contact: Contact
@@ -258,3 +246,152 @@ add_another_file: "Add another file"
 file: "File"
 slideshow_delay_input: "Update every :input_field seconds"
 slideshow_the_end: "The End"
+
+##
+## ME
+## 
+
+dashboard: Dashboard
+inbox: Inbox
+my_pages: My Pages
+search: Search
+create_page: Create Page
+Pending: Pending
+my_tasks: Tasks
+completed: Completed
+requests: Requests
+to_me: To Me
+from_me: From Me
+settings: Settings
+private_profile: Private Profile
+public_profile: Public Profile
+my_tasks_description: Task lists I have access to
+create_task_list: create new task list
+me_search_description: Search through all pages you have access to
+requests_from_me: Requests from me
+requests_to_me: Requests to me
+inbox_description: Inbox of pages I am actively participating in or watching for changes
+toggle_selection: Toggle selection
+remove_from_inbox: Remove from inbox
+my_settings: Settings for {user}
+upload_image: upload_image
+uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
+select_image_file: "select image file"
+or_image_url: "or image URL"
+upload_image: Upload Image
+save_changes: Save Changes
+username: Username
+display_name: Display name
+email: Email
+language: Language
+time_zone: Time Zone
+password: Password
+password_confirmation: Password confirmation
+Today: Today
+Yesterday: Yesterday
+This_Past_Week: This Past Week
+Older: Older
+more: more
+
+##
+## PROFILE
+## 
+
+profile_public_description: |
+  This profile is public and will be visible to anyone visiting this website. 
+  The information you put here is also searchable by other people. 
+  Use caution when adding personal information to your public profile.
+
+profile_private_description: This profile is private and is only visible to your contacts.
+remove: remove
+Home: Home
+Work: Work
+School: School
+Personal: Personal
+Other: Other
+About_Me: About Me
+Social_Change_Interests: Social Change Interests
+Personal_Interests: Personal Interests
+Work_Life: Work Life
+Fax: Fax
+Mobile: Mobile
+Pager: Pager
+general_info: General Info
+first_name: first name
+middle_name: middle
+last_name: last
+organization: organization
+organizational_role: organizational role
+descriptions: Descriptions
+add_description: Add Description
+phone_numbers: Phone Numbers
+add_phone_number: Add Phone Number
+email_addresses: Email Addresses
+add_email_address: Add Email Address
+locations: Locations
+add_location: Add Location
+im_addresses: IM Addresses
+add_im_address: Add IM Address
+websites: Websites
+add_websites: Add Websites
+
+##
+## REQUESTS
+##
+
+description: description
+state: state
+action: action
+request_to_friend_description: ":user would like to be the contact of :other_user"
+request_to_join_our_network_description: "group :group was invited to join network :network"
+request_to_join_us_description: ":user was invited to join :group"
+request_to_join_us_via_email_description: ":email was invited to join :group"
+request_to_join_you_description: ":user requested to join :group"
+request_to_join_your_network_description: ":group requested to join network :network"
+destroy: destroy
+approve: approve
+reject: reject
+
+##
+## PAGES
+##
+
+all_page_types: all page types
+page_list_heading_updated_by: updated by
+page_list_heading_created_by: created by
+page_list_heading_title: title
+page_list_heading_created: created
+page_list_heading_updated: updated
+page_list_heading_posts: posts
+updated: updated
+created: created
+unread: unread
+starred: starred
+pagination_next: next
+pagination_previous: prev
+all_people: all people
+all_groups: all groups
+all_states: all states
+
+##
+## DATES
+## 
+sunday: Sunday
+monday: Monday
+tuesday: Tuesday
+wednesday: Wednesday
+thursday: Thursday
+friday: Friday
+month_short_january: Jan
+month_short_february: Feb
+month_short_march: Mar
+month_short_april: Apr
+month_short_may: May
+month_short_june: Jun
+month_short_july: Jul
+month_short_august: Aug
+month_short_september: Sep
+month_short_october: Oct
+month_short_november: Nov
+month_short_december: Dec
+

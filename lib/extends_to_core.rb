@@ -79,15 +79,16 @@ class String
   #
   # replaces the symbols in a string
   # eg
-  #  'I love :color :thing'.replace_symbols(:color => 'green', :thing => 'trees')
+  #  'I love {color} {thing}'.replace_symbols(:color => 'green', :thing => 'trees')
   # produces:
   #  'I love green trees'
-  #
+  # 
   def replace_symbols(hash)
     if hash.is_a? Hash
       str = self.dup
       hash.each do |key, value|
         str.gsub! /:#{key}/, value.to_s
+        str.gsub! /\{#{key}\}/, value.to_s
       end
       str
     else
