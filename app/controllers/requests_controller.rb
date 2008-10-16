@@ -94,11 +94,8 @@ class RequestsController < ApplicationController
 
     begin
       users, groups, emails = Page.parse_recipients!(params[:recipients])
-      if @group.is_a? Network
-        users = []; emails = []
-      else
-        groups = []
-      end
+      groups = [] unless @group.network?
+
       reqs = []; mailers = []
       unless users.any? or emails.any? or groups.any?
         raise ErrorMessage.new('recipient required'.t)
