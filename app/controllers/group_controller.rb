@@ -117,7 +117,7 @@ class GroupController < ApplicationController
       year = params[:featured_content][:"expires(1i)"]
       month = params[:featured_content][:"expires(2i)"]
       day = params[:featured_content][:"expires(3i)"]
-      date = DateTime.parse("#{year}/#{month}/#{day}")
+      date = DateTime.parse("#{year}/#{month}/#{day}") if year && month && day
 
       case params[:featured_content][:mode].to_sym
       when :feature
