@@ -2,12 +2,14 @@
 <% if (@featured_pages = @group.find_static).any? || current_user.may?(:admin,@group) %>
 <h4 class="section"><%= "Featured".t %><%= link_to("edit".t, group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h4>
 
+
+
 <% @featured_pages.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>
 <% end %>
 <% end %>
 
-<% if (@important_pages=@group.pages.find_by_stars(:at_least => @group.min_stars, :limit => 8)).any? %>
+<% if (@important_pages=@group.pages.find_by_path(['stars',@group.min_stars,'limit',7],options_for_group(@group))).any?%>
 <h4 class="section"><%= "Important".t %></h4>
 <% @important_pages.each do |page| %>
 <%= link_to page.title, page_url(page) %><br/>
