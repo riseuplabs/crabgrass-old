@@ -123,7 +123,7 @@ class GroupController < ApplicationController
       when :feature
         @page.static!(date || nil)
       when :reactivate
-        @page.expired = nil
+        @page.static_expired = nil
         @page.static!(date || nil)
       when :unfeature
         @page.unstatic!

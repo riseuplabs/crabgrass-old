@@ -1,8 +1,8 @@
 class AddGroupParticipationsStickyness < ActiveRecord::Migration
   def self.up
-    add_column :group_participations, :static, :boolean
+    add_column :group_participations, :static, :boolean, :default => false
     add_column :group_participations, :static_expires, :datetime
-    add_column :group_participations, :static_expired, :boolean
+    add_column :group_participations, :static_expired, :boolean, :default => false
   end
 
   def self.down

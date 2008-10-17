@@ -59,7 +59,7 @@
 <% @group.find_expired.each do |p| %>
 <tr class="<%=cycle(:even,:odd)%>">
 <% form_tag group_url(:action => 'feature_content', :id => @group) do %>
-<td><%= link_to p.title, page_url(p) %> <%= p.expires %> </td>
+<td><%= link_to p.title, page_url(p) %> <%= p.group_participations.find_by_group_id(@group.id).static_expires %> </td>
 <%= hidden_field :featured_content, :id, :value => p.id %>
 <%= hidden_field :featured_content, :mode, :value => :reactivate %>
 <td><%= date_select :featured_content, :expires %></td>
