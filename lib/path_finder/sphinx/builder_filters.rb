@@ -135,6 +135,14 @@ module PathFinder::Sphinx::BuilderFilters
     @conditions[:name] ||= ""
     @conditions[:name] += " #{name}"
   end
+
+  def filter_stars(star_count)
+    @conditions[:stars] = range(star_count, 10000)
+  end
+
+  def filter_starred
+    filter_stars(1)
+  end
   
   #### sorting  ####
   

@@ -196,7 +196,7 @@ class GroupController < ApplicationController
         redirect_to url_for_group(parent)
       else
         @group.destroy
-        redirect_to '/'
+        redirect_to :controller => 'groups', :action => nil
       end
     end
   end  
