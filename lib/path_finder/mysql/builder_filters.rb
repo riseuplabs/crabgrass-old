@@ -131,6 +131,15 @@ module PathFinder::Mysql::BuilderFilters
     @values << "%#{text}%"
   end
   
+  def filter_stars(star_count)
+    @conditions << 'pages.stars >= ?'
+    @values << star_count
+  end
+
+  def filter_starred
+    @conditions << 'pages.stars > 0'
+  end
+
   #### sorting  ####
   
   def filter_ascending(sortkey)
