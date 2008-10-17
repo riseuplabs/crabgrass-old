@@ -23,7 +23,6 @@ module GroupExtension
           else
             p.unstatic!
           end
-          
         }      
         ret
       end
@@ -33,7 +32,7 @@ module GroupExtension
         ret = []
         since = options.delete(:since) if options[:since]
         since ? since = Time.now.to_date = since.days : since = Time.now.to_date ;
-        self.participations.find_by_static_expired(true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"]).each do |p|
+        self.participations.find_all_by_static_expired(true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"]).each do |p|
           ret << p.page
         end
         ret
@@ -43,7 +42,7 @@ module GroupExtension
       def find_unstatic options={}
         ret = []
         expired = self.find_expired
-        self.participations.find_all_by_static(false, options).each do |p|
+        self.participations.find_all_by_static(false,options).each do |p|
           ret << p.page unless expired && expired.include?(p.page)
         end
         ret
@@ -77,7 +76,7 @@ module GroupExtension
         def static_expires?
           raise_if_not_static
           return false unless static_can_expire?
-          true if self.static_expires.to_date <= Time.now.to_date
+          true if (self.static_expires.to_date+1.day) <= Time.now.to_date
         end
         
         # finds out if a page has expired before
