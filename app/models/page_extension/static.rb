@@ -141,7 +141,7 @@ module PageExtension::Static
       self.page.stars = self.page.stars + star_this
       self.star_this = 0
       self.old_star=self.star
-      self.page.save
+      self.page.save if self.page.stars_changed?
     end
 
   end  
