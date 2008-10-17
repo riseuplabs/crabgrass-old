@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081015154838) do
+ActiveRecord::Schema.define(:version => 20081017071525) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -239,6 +239,7 @@ ActiveRecord::Schema.define(:version => 20081015154838) do
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media"
+    t.integer  "stars",              :limit => 11, :default => 0
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
