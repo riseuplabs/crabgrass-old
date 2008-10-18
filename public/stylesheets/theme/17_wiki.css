@@ -13,12 +13,14 @@
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.wiki pre.code, .post pre {
+.wiki pre.code, .wiki pre code, .post pre {
+  display: block;
   background: #FFF6DD;
   border: solid 1px;
   border-color: #FFE8A9;
   padding: 0.5em;
 }
+code {background-color: #fff6dd;}
 .wiki div.codetitle, .post div.codetitle {
   background: #FFE8A9;
   color: #614B2A;

@@ -58,6 +58,27 @@ out: |-
   </table>
 ---
 in: |-
+  	This	is	a	simple	table with tabs	
+  	This	is	a	simple	row	
+out: |-
+  <table>
+  	<tr>
+  		<td>This</td>
+  		<td>is</td>
+  		<td>a</td>
+  		<td>simple</td>
+  		<td>table with tabs</td>
+  	</tr>
+  	<tr>
+  		<td>This</td>
+  		<td>is</td>
+  		<td>a</td>
+  		<td>simple</td>
+  		<td>row</td>
+  	</tr>
+  </table>
+---
+in: |-
   table{border:1px solid black}.
   |This|is|a|row|
   |This|is|a|row|

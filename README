@@ -35,14 +35,9 @@ install the requirements
 These packages are required:
 
 /--
-apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake ragel
+apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
 gem install -y rails --no-ri --no-rdoc
 gem install rmagick tzinfo --no-ri --no-rdoc
-\--
-
-Ragel is required to compile RedCloth, which WholeCloth derives from. To compile redcloth, go to lib/WholeCloth/RedCloth and run
-/--
-rake compile
 \--
 
 These packages are optional, but necessary for image thumbnails

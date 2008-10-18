@@ -313,9 +313,6 @@ in: |-
   ** Sub point 1
   ** Sub point 2
 
-
-  Well, that went well. How about we insert an <a href="/" title="watch out">old-fashioned hypertext link</a>? Will the quote marks in the tags get messed up? No!
-
   [This is a link -> http://www.textism.com]
 
 out: |-
@@ -349,7 +346,6 @@ out: |-
   		<li>Sub point 2</li>
   	</ul></li>
   </ul>
-  <p>Well, that went well. How about we insert an <a href="/" title="watch out">old-fashioned hypertext link</a>? Will the quote marks in the tags get messed up? No!</p>
   <p><a href="http://www.textism.com">This is a link</a></p>
 ---
 name: table
@@ -408,17 +404,20 @@ in: |-
   This <code>is some code, "isn't it"</code>. Watch those quote marks! Now for some preformatted text:
   
   <code>
-      $text = str_replace("<p>%::%</p>","",$text);
-      $text = str_replace("%::%</p>","",$text);
-      $text = str_replace("%::%","",$text);
-  
+    $text = str_replace("<p>%::%</p>","",$text);
+    $text = str_replace("%::%</p>","",$text);
+    $text = str_replace("%::%","",$text);
   </code>
   
   This isn't code.
-  
-  
-out: "<h3>Coding</h3>\n<p>This <code>is some code, \"isn't it\"</code>. Watch those quote marks! Now for some preformatted text:</p>\n<p><pre class='code'>$text = str_replace(\"&lt;p&gt;%::%&lt;/p&gt;\",\"\",$text);\n    $text = str_replace(\"%::%&lt;/p&gt;\",\"\",$text);\n    $text = str_replace(\"%::%\",\"\",$text);</pre></p>\n<p>This isn&#8217;t code.</p>"
-
+out: |-
+  <h3>Coding</h3>
+  <p>This <code>is some code, "isn't it"</code>. Watch those quote marks! Now for some preformatted text:</p>
+  <pre><code>  $text = str_replace("&lt;p&gt;%::%&lt;/p&gt;","",$text);
+    $text = str_replace("%::%&lt;/p&gt;","",$text);
+    $text = str_replace("%::%","",$text);
+  </code></pre>
+  <p>This isn&#8217;t code.</p>
 ---
 name: hard break
 in: |-

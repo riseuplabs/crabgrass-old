@@ -1,6 +1,11 @@
+---
 name: headers
 in: "header one\n=====\nheader two\n----"
 out: "<h1>header one</h1>\n<h2>header two</h2>"
+---
+name: headers
+in: "la la la\n\nheader one\n=====\nheader two\n----\nla la la"
+out: "<p>la la la</p>\n<h1>header one</h1>\n<h2>header two</h2>\n<p>la la la</p>"
 --- 
 name: paragraphs
 desc: Textile looks for paragraphs in your text.  Paragraphs are separated by one blank line. Every paragraph is translated as an HTML paragraph.
@@ -83,12 +88,16 @@ out: |-
 name: html tags
 desc: You can certainly use HTML tags inside your Textile documents.  HTML will only be escaped if it&#8217;s found in a <code>pre</code> or <code>code</code> block.
 in: |-
-  I am <b>very</b> serious.
+  I am very serious.
   
   <pre>
-    I am <b>very</b> serious.
+    I am very serious.
   </pre>
-out: "<p>I am <b>very</b> serious.</p>\n<p><pre>I am <b>very</b> serious.</pre></p>"
+out: |-
+  <p>I am very serious.</p>
+
+  <pre>  I am very serious.
+  </pre>
 --- 
 name: line breaks
 desc: Line breaks are converted to HTML breaks.
@@ -231,7 +240,7 @@ out: <p><cite>Cat&#8217;s Cradle</cite> by Vonnegut</p>
 --- 
 name: code phrases
 desc: Code phrases can be surrounded by at-symbols.
-in: Convert with @ r.to_html @
+in: Convert with @r.to_html@
 out: <p>Convert with <code>r.to_html</code></p>
 lite_mode_out: Convert with <code>r.to_html</code>
 ---
@@ -310,40 +319,6 @@ name: indentation and alignment
 desc: Identation may be coupled with alignment.
 in: h2()>. Bingo.
 out: <h2 style="padding-left:1em;padding-right:1em;text-align:right;">Bingo.</h2>
---- 
-name: code blocks
-desc: For example, long code blocks belong between <code>pre</code> and <code>code</code> tags.  Please also indent your code inside the tags to be sure that all Textile processors out there will ignore the contents.
-in: |
-  <pre>
-  <code>
-    a.gsub!( /</, '' )
-  </code>
-  </pre>
-out: |-
-  <p><pre><code>
-    a.gsub!( /</, '' )
-  </code></pre></p>
---- 
-name: div tags
-desc: You may also choose to surround sections with <code>div</code> tags to separate your document into sections. <a href="http://www.instiki.org/">Instiki</a> uses this technique to float a sidebar to the right.
-in: |
-  <div style="float:right;">
-  
-  h3. Sidebar
-  
-  [Hobix -> http://hobix.com/]
-  [Ruby -> http://ruby-lang.org/]
-  
-  </div>
-  
-  The main text of the page goes here and will stay to the left of the sidebar.
-out: |-
-  <div style="float:right;">
-  <h3>Sidebar</h3>
-  <p><a href="http://hobix.com/">Hobix</a><br />
-  <a href="http://ruby-lang.org/">Ruby</a></p>
-  </div>
-  <p>The main text of the page goes here and will stay to the left of the sidebar.</p>
 --- 
 name: numbered list
 desc: To make a numbered list, place each item in its own paragraph, preceded by &#8221;#&#8221;.
