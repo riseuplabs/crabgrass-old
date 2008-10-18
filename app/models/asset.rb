@@ -60,7 +60,17 @@ class Asset < ActiveRecord::Base
   }
   
   def has_access! perm, user
-    self.page.has_access! perm, user
+    # everything becomes PermissionDenied (e.g. also if self.page is nil)
+    self.page.has_access! perm, user rescue raise PermissionDenied
+  rescue PermissionDenied
+    # if the gallery_tool is disabled Gallery doesn't exist, so we don't check
+    # anything at all. otherwise we check if there are any galleries this image
+    # is in and the given user has access to.
+    unless defined?(Gallery) &&
+        self.kind_of?(ImageAsset) &&
+        self.galleries.select {|g| user.may?(perm, g) ? g : nil}.any?
+      raise PermissionDenied
+    end
   end
 
   named_scope :not_attachment, :conditions => ['is_attachment = ?',false]

@@ -225,7 +225,8 @@ group_not_allowed_to_view_image_error: "The group that owns this page is not all
 add_another_file: "Add another file"
 file: "File"
 slideshow_delay_input: "Update every :input_field seconds"
-slideshow_the_end: "The End"
+add_comment: add comment
+make_album_cover: make this image the album cover
 
 ##
 ## ME

@@ -1,6 +1,7 @@
 class GalleryController < BasePageController
   
   stylesheet 'gallery'
+  javascript :extra
   
   include GalleryHelper
   include ActionView::Helpers::JavascriptHelper
@@ -43,9 +44,18 @@ class GalleryController < BasePageController
   end
   
   def edit
-    @javascript = :extra
     params[:page] ||= 1
     @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+  end
+  
+  def make_cover
+    unless current_user.may?(:admin, @page)
+      raise PermissionDenied
+    end
+    @page.cover = params[:id]
+    redirect_to page_url(@page, :action => 'edit')
+  rescue ArgumentError # happens with wrong ID
+    raise PermissionDenied
   end
   
   def find
@@ -72,26 +82,35 @@ class GalleryController < BasePageController
   end
   
   def download
-    name_base = @page.title.gsub(/\s/,'-')
-    file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
-      (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
-    }.compact.sort { |x,y| x[0] <=> y[0] }.last
-    if file && file[0] >= @page.updated_at.to_i
-      filepath = "#{GALLERY_ZIP_PATH}/#{file[1]}"
+    if params[:image_id]
+      image = Asset.find(params[:image_id])
+      unless image
+        raise "Image not found."
+      end
+      current_user.may! :view, image
+      filepath = image.private_filename
     else
-      filepath = "#{GALLERY_ZIP_PATH}/#{name_base}_#{Time.now.to_i}.zip"
-      Zip::ZipFile.open(filepath, Zip::ZipFile::CREATE) { |zip|
-        @page.images.each do |image|
-          # multiple images could have the same name
-          image_filename = image.filename
-          extension = image_filename.split('.').last
-          image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
-        
-          zip.get_output_stream(image_name) { |f|
-            f.write File.read(image.private_filename)
-          }
-        end
-      }
+      name_base = @page.title.gsub(/\s/,'-')
+      file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
+        (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
+      }.compact.sort { |x,y| x[0] <=> y[0] }.last
+      if file && file[0] >= @page.updated_at.to_i
+        filepath = "#{GALLERY_ZIP_PATH}/#{file[1]}"
+      else
+        filepath = "#{GALLERY_ZIP_PATH}/#{name_base}_#{Time.now.to_i}.zip"
+        Zip::ZipFile.open(filepath, Zip::ZipFile::CREATE) { |zip|
+          @page.images.each do |image|
+            # multiple images could have the same name, so add the ID
+            image_filename = image.filename
+            extension = image_filename.split('.').last
+            image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
+            
+            zip.get_output_stream(image_name) { |f|
+              f.write File.read(image.private_filename)
+            }
+          end
+        }
+      end
     end
     send_file(filepath)
   end

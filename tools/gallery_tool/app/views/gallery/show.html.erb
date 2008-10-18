@@ -5,7 +5,11 @@ div.gallery_swatch {
 }
 <% end %>
 
-<%= gallery_navigation :count, :download, :edit, :upload, :slideshow %>
+<%= gallery_navigation :count, :download, :edit, :upload, :slideshow, :comment %>
+<div id="gallery_cover">
+  <%= thumbnail_img_tag @page.cover, 'large' if @page.cover%>
+</div>
+
 <div id="gallery_overview">
 <% if @images.any? %>
   <%= render :partial => 'image', :collection => @images %>
@@ -16,6 +20,4 @@ div.gallery_swatch {
 <% end %>
 </div>
 
-<p><%= link_to 'add existing image'[:add_existing_image], page_url(@page, :action => 'find') %></p>
-<p><%= link_to 'upload new image'[:upload_new_image], create_page_url(AssetPage, :gallery => @page.id) %></p>
 

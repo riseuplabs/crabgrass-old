@@ -60,9 +60,15 @@
 }
 
 .gallery_swatch img {
-    max-height:7em;
     vertical-align:middle;
     text-align:center;
+}
+
+.gallery_swatch_landscape {
+    max-height:7em;
+}
+.gallery_swatch_portrait {
+    max-width:7em;
 }
 
 .swatch_container {

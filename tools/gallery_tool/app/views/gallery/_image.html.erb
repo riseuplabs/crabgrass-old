@@ -1,6 +1,6 @@
-<div id="swatch_<%= image.id -%>" class="gallery_swatch">
+<div id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_<%= image.format -%>">
   <%= link_to(thumbnail_img_tag(image, :medium), 
-	      gallery_detail_view_url(@page, image)) %>
+	      page_url(@page, :action => 'detail_view', :id => image.id)) %>
 <!--   <div> -->
 <!--     <%#= link_to 'full', image.url %> -->
 <!--     <%#= link_to 'info', page_url(image.page) unless image.is_attachment? %> -->

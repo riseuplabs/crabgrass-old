@@ -1,9 +1,10 @@
 <div id="swatch_container_<%= index %>" class="swatch_container">
-  <span id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_edit">
+  <span id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_edit handle gallery_swatch_<%= image.format -%>">
     <%= thumbnail_img_tag(image, :medium) %>
     <div id="image_control_<%= image.id -%>" class="image_control">
       <%= gallery_delete_image(image, index) %>
       <%= gallery_move_image_without_js(image) %>
+      <%= gallery_make_cover(image) %>
     </div>
   </span>
 </div>
