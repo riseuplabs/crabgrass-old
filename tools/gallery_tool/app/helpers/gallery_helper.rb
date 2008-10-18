@@ -29,6 +29,21 @@ module GalleryHelper
             :id => (image ? image.id : nil))
   end
   
+  # navigation for gallery. pass elements to show as arguments. possible
+  # elements are (right now, maybe more to come):
+  #  * count     - shows number of total images (or current image index if we
+  #                are in detail_view action)
+  #  * download  - link to download the gallery in zipped format. (detail_view:
+  #                download this image)
+  #  * slideshow - link to GalleryController#slideshow
+  #  * edit      - link to edit action (or show if we are in edit action)
+  #  * show      - link to show action (no matter where we are)
+  #  * upload    - link to display upload box (or go to upload action if JS is
+  #                disabled)
+  #
+  # Elements need to be passed as symbols or strings. They will appear in the
+  # order they are given.
+  # Raises an argument error if the element doesn't exist.
   def gallery_navigation *elements
     available_elements = { 
       :count => lambda {
@@ -48,10 +63,14 @@ module GalleryHelper
       },
       :download => lambda { 
         if @image
-          link_to(image_tag("actions/download.png")+"Download"[:download],
-                  @image.url)
+          link_to(image_tag("actions/download.png")+
+                  "Download"[:download],
+                  page_url(@page,
+                           :action => 'download',
+                           :image_id => @image.id))
         else
-          link_to(image_tag("actions/download.png")+"Download Gallery"[:download_gallery],
+          link_to(image_tag("actions/download.png")+
+                  "Download Gallery"[:download_gallery],
                   page_url(@page, :action => 'download'))
         end
       },
@@ -62,7 +81,8 @@ module GalleryHelper
       },
       :edit => lambda { 
         unless params[:action] == 'edit'
-          link_to("Edit Gallery"[:edit_gallery],
+          link_to(image_tag("actions/edit.png")+
+                  "Edit Gallery"[:edit_gallery],
                   page_url(@page, :action => 'edit'))
         else
           available_elements[:show].call
@@ -73,16 +93,26 @@ module GalleryHelper
                 page_url(@page))
       },
       :upload => lambda { 
-                javascript_tag("target = document.createElement('div');
-                                 target.id = 'target_for_upload';
-                                 target.hide();
-                                 $$('body').first().appendChild(target);")+
+        javascript_tag("target = document.createElement('div');
+                        target.id = 'target_for_upload';
+                        target.hide();
+                        $$('body').first().appendChild(target);")+
         spinner('show_upload')+
-                link_to_remote("Upload Images"[:upload_images],
-                                :url => page_url(@page, :action => 'upload'),
-                                :update => 'target_for_upload', :loading =>'$(\'show_upload_spinner\').show();', :success => 'target.show();', :complete => '$(\'show_upload_spinner\').hide();')
+        link_to_remote("Upload new images"[:upload_images],
+                       :url => page_url(@page, :action => 'upload'),
+                       :update => 'target_for_upload',
+                       :loading =>'$(\'show_upload_spinner\').show();',
+                       :success => 'target.show();',
+                       :complete => '$(\'show_upload_spinner\').hide();')
         #link_to("Upload Images"[:upload_images],
         #        page_url(@page, :action => 'upload'))
+      },
+      :add_existing => lambda { 
+        link_to("add existing image"[:add_existing_image],
+                page_url(@page, :action => 'find'))
+      },
+      :comment => lambda { 
+        link_to_function("add comment"[:add_comment], "$('reply_container').show();window.location = '#reply_container';$('show_reply_link').hide();")
       }
     }
     
@@ -151,5 +181,11 @@ module GalleryHelper
       output << "#{var}.style['#{key}'] = '#{value}';"
     end
     output.join "\n"
+  end
+  
+  def gallery_make_cover(image)
+    link_to(image_tag("pages/image.png", :title =>
+                      'make this image the albums cover'[:make_album_cover]),
+            page_url(@page, :action => 'make_cover', :id => image.id))
   end
 end

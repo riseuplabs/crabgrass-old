@@ -11,6 +11,26 @@ class Gallery < Page
     true
   end
   
+  def cover
+    self.cover_showing ? self.cover_showing.asset : nil
+  end
+  
+  def cover_showing
+    self.showings.find_by_is_cover(true) ||
+      self.showings.find_by_position(0) ||
+      self.showings.first
+  end
+  
+  def cover= image_id
+    showing = self.showings.find_by_asset_id(image_id)
+    raise ArgumentError unless showing
+    self.cover_showing.is_cover = false
+    self.cover_showing.save
+    showing.is_cover = true
+    showing.save
+  end
+
+  
   # like add_image!, but does not save the page. Used to build
   # the associations in memory when creating a new page.
   #def add_image(asset, position = nil)
