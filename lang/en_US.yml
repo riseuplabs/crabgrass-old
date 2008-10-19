@@ -7,6 +7,7 @@ remove_contact_info: If you remove someone from your contact list, you will not 
 signup_link: Need a new account?
 menu_groups: Groups
 menu_home: Home
+menu_chat: Chat
 signup_email_info: "Optional: used if you forget your password"
 forgot_password_link: I forgot my password
 logout: Logout
