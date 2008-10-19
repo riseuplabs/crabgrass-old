@@ -293,4 +293,11 @@ class Asset < ActiveRecord::Base
       galleries.each { |g| g.save }
     end
   end
+
+  # returns either :landscape or :portrait, depending on the format of the 
+  # image.
+  def image_format
+    raise TypeError unless self.resond_to?(:width) && self.respond_to?(:height)
+    self.width > self.height ? :landscape : :portrait
+  end
 end

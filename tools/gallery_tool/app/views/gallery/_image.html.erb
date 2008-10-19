@@ -1,4 +1,4 @@
-<div id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_<%= image.format -%>">
+<div id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_<%= image.image_format -%>">
   <%= link_to(thumbnail_img_tag(image, :medium), 
 	      page_url(@page, :action => 'detail_view', :id => image.id)) %>
 <!--   <div> -->
