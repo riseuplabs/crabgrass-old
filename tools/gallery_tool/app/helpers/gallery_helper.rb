@@ -104,8 +104,6 @@ module GalleryHelper
                        :loading =>'$(\'show_upload_spinner\').show();',
                        :success => 'target.show();',
                        :complete => '$(\'show_upload_spinner\').hide();')
-        #link_to("Upload Images"[:upload_images],
-        #        page_url(@page, :action => 'upload'))
       },
       :add_existing => lambda { 
         link_to("add existing image"[:add_existing_image],
