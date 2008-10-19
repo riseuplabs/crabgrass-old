@@ -93,10 +93,10 @@ module GalleryHelper
                 page_url(@page))
       },
       :upload => lambda { 
-        javascript_tag("target = document.createElement('div');
-                        target.id = 'target_for_upload';
-                        target.hide();
-                        $$('body').first().appendChild(target);")+
+                javascript_tag("upload_target = document.createElement('div');
+                                 upload_target.id = 'target_for_upload';
+                                 upload_target.hide();
+                                 $$('body').first().appendChild(upload_target);")+
         spinner('show_upload')+
         link_to_remote("Upload new images"[:upload_images],
                        :url => page_url(@page, :action => 'upload'),
@@ -135,7 +135,7 @@ module GalleryHelper
                      :id => image_id,
                      :position => position
                    },
-                   :success => "update_notifier(#{'Successfully undeleted image.'[:successful_undelete_image]});undo_remove(#{image_id}, #{position});")
+                   :success => "update_notifier('#{'Successfully undeleted image.'[:successful_undelete_image]};');undo_remove(#{image_id}, #{position});")
   end
   
   def gallery_delete_image(image, position)
@@ -149,7 +149,7 @@ module GalleryHelper
                      :position => position
                    },
                    :update => 'gallery_notify_area',
-                   :loading => "update_notifier(#{'Removing image...'[:removing_image]}, true);")
+                   :loading => "update_notifier('#{'Removing image...'[:removing_image]}', true);")
   end
   
   def gallery_move_image_without_js(image)

@@ -297,7 +297,7 @@ class Asset < ActiveRecord::Base
   # returns either :landscape or :portrait, depending on the format of the 
   # image.
   def image_format
-    raise TypeError unless self.resond_to?(:width) && self.respond_to?(:height)
+    raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
     self.width > self.height ? :landscape : :portrait
   end
 end

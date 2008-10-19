@@ -53,15 +53,16 @@ function redraw_images() {
 }
 
 function remove_image(image_id) {
-  $('swatch_container_'+image_id).hide();
+  $('swatch_'+image_id).getOffsetParent().hide();
 }
 
 function undo_remove(image_id, position) {
+  $('swatch_'+image_id).getOffsetParent().show();
   image = $('swatch_container_'+image_id);
   if(!image)
     return false;
   add_image(image_id, position);
-  redraw_image();
+  $('swatch_'+image_id).getOffsetParent().show();
 }
 
 
@@ -106,4 +107,3 @@ function saving_changes_notifier() {
 </div>
 
 <p><%= link_to 'add existing image'[:add_existing_image], page_url(@page, :action => 'find') %></p>
-<p><%= link_to 'upload new image'[:upload_new_image], create_page_url(AssetPage, :gallery => @page.id) %></p>
