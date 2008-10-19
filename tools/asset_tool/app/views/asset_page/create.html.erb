@@ -2,7 +2,7 @@
 <%= link_to_breadcrumbs %>
 <h1>
   <%= image_tag('/images/pages/big/%s' % @page_class.icon) %>
-  <%= "Create a new :class".t % { :class => @page_class.class_display_name.t } %>
+  <%= "Create a new {page_class}"[:create_page_headline, {:page_class => @page_class.class_display_name.t }] %>
 </h1>
 <% end -%>
 
