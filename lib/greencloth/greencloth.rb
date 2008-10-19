@@ -69,7 +69,7 @@ module GreenClothFormatterHTML
     "<code#{pba(opts)}>%s</code>" % original.revert_offtags(opts[:text])
   end
 
-  ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong)>/
+  ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/
 
   def inline_html(opts)
     if opts[:text] =~ ALLOWED_HTML_TAGS_RE
@@ -180,7 +180,6 @@ class GreenCloth < RedCloth::TextileDoc
     if tag == '<pre>' or (leading_character.any? and leading_character!="\n")
       "#{tag}#{offtag}#{tag.sub('<','</')}"
     else      
-      #"<pre class='code'>#{body}</pre>"
       "<pre><code>#{offtag}</code></pre>"
     end
   end

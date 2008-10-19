@@ -30,6 +30,7 @@ in: |-
 out: |-
   <pre><code>_a_ &lt; _b_
   </code></pre>
+
 # greencloth doesn't support manual <pre><code> 
 #---
 #in: |-
@@ -128,6 +129,7 @@ out: |-
   <pre><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;
   </code></pre>
 
+
 ##
 ## ensure custom greencloth filters don't apply to code blocks
 ## 
@@ -149,4 +151,19 @@ out: <p><code>http://riseup.net</code></p>
 ---
 in: inline <code>http://riseup.net</code>
 out: <p>inline <code>http://riseup.net</code></p>
+
+##
+##
+##
+
+---
+in: |-
+  hi
+  <code>
+  wandering robot
+  </code>
+out: |-
+  <p>hi<br />
+  <pre><code>wandering robot
+  </code></pre></p>
 
