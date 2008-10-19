@@ -1,0 +1,37 @@
+--- 
+logout_success_message: Disconnessione effettuata con successo.
+add_contact_info: "Quando aggiungi un utente alla lista dei tuoi contatti, sar\xC3\xA0 in grado di vedere se hai effettuato l'accesso e potr\xC3\xA0 vedere il tuo profilo. Inoltre, una volta che diventi un contatto per un'altro utente, anche l'altro utente diventa un tuo contatto."
+signup_link: Vuoi creare un nuovo account?
+remove_contact_info: "Se rimuovi qualcuno dalla tua lista dei contatti, non potrai pi\xC3\xB9 vedere se ha effettuato l'accesso o vedere il suo profilo. Inoltre, questo significa che verrai rimosso anche dalla sua lista dei contatti."
+network_invite_info: Inserisci i nomi dei gruppi che vorresti invitare in questa rete.
+join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sar\xC3\xA0 stata approvata. Puoi controllare lo stato delle tue richieste visitando \"%s\"."
+signup_email_info: "Opzionale: usato se dimentichi la tua password"
+menu_home: Pagina iniziale
+menu_groups: Gruppi
+forgot_password_link: Ho dimenticato la mia password.
+signup_info: Scegli il tuo nome utente e la tua password, poi fai click su "%s"
+logout: Disconnetti
+signup_success_message: Grazie per esserti registrato!
+menu_people: Persone
+login_failure_reason: Nome utente o password non corretti.
+signup_confirm_password: Conferma password
+menu_networks: Reti
+login_name: Nome utente
+signup_success: Registrazione eseguita con successo
+signup_password: La tua password
+menu_me: Io
+contact_request_message_label: "Spiega a %s perch\xC3\xA9 vorresti diventare un suo contatto."
+signup_button: Registrati
+logout_success: Arrivederci
+signup_login_name: Il tuo nome utente
+remove_contact_confirmation: Sei sicuro di voler rimuovere il contatto "%s"?
+login_failed: Impossibile accedere
+login_button: Entra
+invite_info: Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo %s.
+already_contacts_info: "Sei gi\xC3\xA0 un contatto di questa persona."
+login: Accesso
+approve_contact_info: "Esiste gi\xC3\xA0 una richiesta di contatto da questo utente. Vuoi approvarla?"
+signup_email: La tua e-mail
+recipient_tip: Separa i diversi destinatari con virgole, spazi o ritorni a capo.
+login_password: Password
+signup_title: Crea il tuo account

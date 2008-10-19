@@ -9,6 +9,9 @@ Tools, in short, are engines (ie plugins enhanced with the 'engines' plugin),
 except that tools are stored in the directory /tools and they are only loaded
 if the directory name appears in config/tools_enabled.list
 
+You should also add your tool to config/sites.yml and 
+config/development.sites.yml if you want actually to be able to use it.
+
 A tool can do pretty much anything. It can be an entire rails application. 
 However, the typical case is that whenever a Page of the type defined
 in the tool is to be shown, then crabgrass will use the controllers and views

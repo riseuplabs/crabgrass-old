@@ -125,14 +125,14 @@ class ChatController < ApplicationController
   end
   
   def sanitize(say)
-# we'll use WholeCloth to process the say string --- 
+# we'll use GreenCloth to process the say string --- 
 # this makes links clickable, and allows inline images, 
 # and can easily be extended to use smilies, etc...
 #
-# the only trick is that WholeCloth returns the text wrapped
+# the only trick is that GreenCloth returns the text wrapped
 # in a paragraph block (<p> stuff </p>), and things will
 # look funny if we don't strip that off
-    say  = WholeCloth.new(say).to_html
+    say  = GreenCloth.new(say).to_html
     say.gsub!(/^<p>/, '')
     say.gsub!(/<\/p>$/, '')
     return say

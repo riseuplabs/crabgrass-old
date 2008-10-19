@@ -5,13 +5,13 @@ xml.rss :version => '2.0',
   xml.channel do
     if @group
       # this is arguably an abuse of gibberish, but it works
-      xml.title :media_for_group.t % ["#{@type}s".t, @group.full_name]
+      xml.title :media_for_group.t % ["media_#{@type}s".t, @group.full_name]
       xml.link hostport + "/" + @group.name
-      xml.description :media_for_group.t % ["#{@type}s".t, @group.full_name]
+      xml.description :media_for_group.t % ["media_#{@type}s".t, @group.full_name]
     else
-      xml.title :media_without_group.t % "#{@type}s".t
+      xml.title :media_without_group.t % "media_#{@type}s".t
       xml.link hostport + "/"
-      xml.description :media_without_group.t % "#{@type}s".t
+      xml.description :media_without_group.t % "media_#{@type}s".t
     end
 
     if @media.size > 0
@@ -34,7 +34,7 @@ xml.rss :version => '2.0',
         xml.pubDate asset.updated_at.to_s(:rfc822)
         xml.guid 'tag:riseup.net,2008/crabgrass-asset/' + Digest::SHA1.hexdigest("#{asset.id.to_s}--#{asset.filename}"), :isPermaLink => false
         xml.enclosure :url => (hostport + asset.url), :length => asset.size, :type => asset.content_type
-        instances = ([asset] + asset.thumbnails).select{|i| (i.size && i.size > 0) || (i.width && i.width > 0)}
+        instances = [asset] + asset.thumbnails.select{|i| i.exists?}
         case instances.size
         when 0
           # shouldn't ever happen

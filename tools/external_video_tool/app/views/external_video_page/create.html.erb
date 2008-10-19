@@ -7,16 +7,18 @@
 <% end -%>
 
 <div class='create_page'>
-<% form_tag({:action => 'create'}, :multipart => true) do %>
+<% form_tag(:action => 'create') do %>
   <%= hidden_field_tag 'page_class', @page_class %>
   <table>
     <tr>
-      <td class='label'><%= 'File'.t %></td>
-      <td><%= file_field 'asset', 'uploaded_data', :size => 38 %></td>
+      <td colspan="2" >
+        <h2 class='section'><%= 'Page Info'.t %></h2>
+      </td>
     </tr>
     <tr>
       <td class='label'><%= 'Title'.t %></td>
       <td><%= text_field 'page', 'title', :size => 38 %></td>
+      <%= javascript_tag %( $("page_title").focus() ) %>
     </tr>
     <tr>
       <td class='label'><%= 'Summary'.t %></td>
@@ -29,15 +31,28 @@
         <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
       </td>
     </tr>
-    <% if current_user.all_groups.any? -%>
     <tr>
-      <td class='label'><%= 'Group'.t %></td>
+      <td class='label'><%= 'Embed code from external video source'[:video_embed_code_prompt] %></td>
       <td>
-        <%= select_tag 'group_id', options_for_select(
-          [['no one, just me'[:just_me], '']] + current_user.all_groups.to_select(:name), params[:group_id]
-        ) %>
+        <%= text_area 'external_video', 'media_embed', :size => '38x3' %><br />
+        <i>(<%= 'currently supported: youtube, blip.tv, google video, vimeo'[:current_video_sources] %>)</i>
       </td>
     </tr>
+    <% if current_user.all_groups.any? -%>
+      <tr>
+        <td colspan="2" >
+          <h2 class='section'><%= 'Access Info'.t %></h2>
+        </td>
+      </tr>
+      <tr>
+        <td class='label'><%= 'Group'.t %></td>
+        <td>
+          <%= "Select which groups will have access to this page"[:select_group_access] %><br/>
+          <%= select_tag 'group_id', options_for_select(
+            [['no one, just me'[:no_group], '']] + current_user.all_groups.sort_by{|g|g.name}.to_select(:name), params[:group_id]
+          ) %>
+        </td>
+      </tr>
     <% end -%>
     <tr>
       <td align='right' colspan="2">
@@ -47,5 +62,4 @@
     </tr>
   </table>
 <% end %>
-
 </div>
