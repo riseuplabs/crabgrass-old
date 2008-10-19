@@ -1,7 +1,6 @@
 args = {
   :url => (hostport + instance.url),
-  :type => instance.content_type,
-  :medium => asset.format_description.downcase,
+  :type => instance.content_type
 }
 args[:fileSize] = instance.size if instance.size
 args[:isDefault] = "true" if instance == asset
