@@ -253,7 +253,7 @@ class GreenCloth < RedCloth::TextileDoc
   # hyperlinks to external pages
   URL_CHAR = '\w' + Regexp::quote('+%$*\'()-~')
   URL_PUNCT = Regexp::quote(',.;:!?')
-  PROTOCOL = '(?:sip|http|ftp|sftp)'
+  PROTOCOL = '(?:sips?|https?|s?ftps?)'
   AUTO_LINK_RE = %r{
     (                          # (a) LEADING TEXT
       <\w+.*?>|                # leading HTML tag, or
@@ -318,10 +318,10 @@ class GreenCloth < RedCloth::TextileDoc
         # text == "from -> to"
         from, to = text.split(/\s*->\s*/)[0..1]
         to ||= from
-        if to =~ /^(\/|https?:\/\/)/
+        if to =~ /^(\/|#{PROTOCOL}:\/\/)/
           # to == https://riseup.net
           # to == /an/absolute/path
-          text = from
+          text = from.sub(/#{PROTOCOL}:\/\//, '').sub(/\/$/, '')
         else
           # to == "group_name / page_name"
           group_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
@@ -340,7 +340,8 @@ class GreenCloth < RedCloth::TextileDoc
           valid = true
         end
         valid_class = valid ? '' : 'class="dead"'
-        offtag_it('%s<a%s href="%s">%s</a>' % [preceding_char,valid_class,to,text], all)
+        all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+        preceding_char + offtag_it('<a%s href="%s">%s</a>' % [valid_class,to,text], all)
       end
     end
   end
