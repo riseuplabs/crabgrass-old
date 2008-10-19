@@ -10,12 +10,11 @@ database.yml
 public/plugin_assets/*
 db/*.sqlite3
 db/sphinx
+db/development_structure.sql
 /assets
 public/avatars/*/*
 !public/avatars/0/*
 public/stylesheets/all.css
 public/javascripts/all.js
 public/assets/*
-*.o
-*.so
 lang/la_US.yml
