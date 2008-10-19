@@ -122,5 +122,12 @@ class Thumbnail < ActiveRecord::Base
   def proxy?
     thumbdef.proxy and parent.content_type == thumbdef.mime_type
   end
+
+  def size
+    if attributes['size'].nil? && exists?
+      update_attribute('size', File.size(private_filename))
+    end
+    attributes['size']
+  end
 end
 

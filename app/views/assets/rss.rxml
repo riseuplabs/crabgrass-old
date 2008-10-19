@@ -34,7 +34,7 @@ xml.rss :version => '2.0',
         xml.pubDate asset.updated_at.to_s(:rfc822)
         xml.guid 'tag:riseup.net,2008/crabgrass-asset/' + Digest::SHA1.hexdigest("#{asset.id.to_s}--#{asset.filename}"), :isPermaLink => false
         xml.enclosure :url => (hostport + asset.url), :length => asset.size, :type => asset.content_type
-        instances = ([asset] + asset.thumbnails).select{|i| (i.size && i.size > 0) || (i.width && i.width > 0)}
+        instances = [asset] + asset.thumbnails.select{|i| i.exists?}
         case instances.size
         when 0
           # shouldn't ever happen
