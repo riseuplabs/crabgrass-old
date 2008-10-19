@@ -98,15 +98,12 @@ module GalleryHelper
                                  upload_target.hide();
                                  $$('body').first().appendChild(upload_target);")+
         spinner('show_upload')+
-                link_to_remote("Upload Images"[:upload_images],
-                               :url => page_url(@page, :action => 'upload'),
-                               :update => 'target_for_upload', 
-                               :loading =>'$(\'show_upload_spinner\').show();', 
-                               :success => '$(\'target_for_upload\').show();', 
-                               :complete => '$(\'show_upload_spinner\').hide();'
-                               )
-        #link_to("Upload Images"[:upload_images],
-        #        page_url(@page, :action => 'upload'))
+        link_to_remote("Upload new images"[:upload_images],
+                       :url => page_url(@page, :action => 'upload'),
+                       :update => 'target_for_upload',
+                       :loading =>'$(\'show_upload_spinner\').show();',
+                       :success => 'target.show();',
+                       :complete => '$(\'show_upload_spinner\').hide();')
       },
       :add_existing => lambda { 
         link_to("add existing image"[:add_existing_image],

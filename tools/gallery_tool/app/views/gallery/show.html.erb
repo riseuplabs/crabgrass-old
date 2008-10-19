@@ -5,7 +5,7 @@ div.gallery_swatch {
 }
 <% end %>
 
-<%= gallery_navigation :count, :download, :edit, :upload, :slideshow, :comment %>
+<%= gallery_navigation :count, :download, :edit, :upload, :slideshow, :comment, :add_existing %>
 <div id="gallery_cover">
   <%= thumbnail_img_tag @page.cover, 'large' if @page.cover%>
 </div>
