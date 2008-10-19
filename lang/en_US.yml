@@ -190,6 +190,8 @@ you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: diff
 created_when_by: created :when by :user
 video_service_is_not_supported: is not supported (currently only youtube, google video, blip.tv, and vimeo)
+current_video_sources: "currently supported: youtube, blip.tv, google video, vimeo"
+video_embed_code_prompt: Embed code from external video source
 
 ##
 ## GALLERY
@@ -457,6 +459,7 @@ tasks: tasks
 video_class_description: Show a video hosted on an external website.
 video: video
 page_info: Page Info
+access_info: Access Info
 
 ##
 ## DATES
