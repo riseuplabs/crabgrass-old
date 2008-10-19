@@ -189,6 +189,7 @@ version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: diff
 created_when_by: created :when by :user
+video_service_is_not_supported: is not supported (currently only youtube, google video, blip.tv, and vimeo)
 
 ##
 ## GALLERY
@@ -453,6 +454,9 @@ ranked_vote_class_description: Rank possibilities in order of preference.
 ranked_vote: ranked vote
 file_class_description: An uploaded file.
 tasks: tasks
+video_class_description: Show a video hosted on an external website.
+video: video
+page_info: Page Info
 
 ##
 ## DATES
