@@ -175,7 +175,9 @@ class GreenCloth < RedCloth::TextileDoc
 
   def format_block_code(tag, body, leading_character='')
     body = self.formatter.html_esc(body, :html_escape_preformatted)
-    body.gsub!(/\A\n/,'')
+    body.gsub!(/\A\r?\n/,'')
+    # ^^^ get ride of leading returns. This makes it so the text in
+    # <pre> doesn't appear in the browser with an empty first line.
     offtag = offtag_it(body)
     if tag == '<pre>' or (leading_character.any? and leading_character!="\n")
       "#{tag}#{offtag}#{tag.sub('<','</')}"

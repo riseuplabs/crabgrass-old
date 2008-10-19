@@ -166,4 +166,7 @@ out: |-
   <p>hi<br />
   <pre><code>wandering robot
   </code></pre></p>
+---
+in: "<code>\r\ngrrrr. this makes me angry.\r\n</code>"
+out: "<pre><code>grrrr. this makes me angry.\r\n</code></pre>"
 
