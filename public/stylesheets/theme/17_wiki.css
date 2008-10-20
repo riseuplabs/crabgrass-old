@@ -13,7 +13,7 @@
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-.wiki pre.code, .wiki pre code, .post pre {
+.wiki pre code, .post pre {
   display: block;
   background: #FFF6DD;
   border: solid 1px;
