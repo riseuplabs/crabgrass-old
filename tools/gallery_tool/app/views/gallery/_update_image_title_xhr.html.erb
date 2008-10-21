@@ -1,0 +1,10 @@
+<%= javascript_tag("
+$('detail_image_title').innerHTML = '#{@showing.title}';
+$('change_title_link').show();
+$('change_title_form').hide();
+submit = $('change_title_form_submit')
+submit.value = '#{:save.t}';
+submit.disabled = false;
+$('change_title_spinner').hide();
+$('change_title_form_cancel').show();
+") %>

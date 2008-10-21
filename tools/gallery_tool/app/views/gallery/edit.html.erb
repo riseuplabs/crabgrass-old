@@ -5,7 +5,7 @@ div.gallery_swatch {
 }
 <% end %>
 
-<%= gallery_navigation :count, :download, :edit, :upload, :slideshow %>
+<%= gallery_navigation :count, :download, :edit, :upload, :slideshow, :add_existing %>
 
 <%= javascript_tag "
 var images = new Array();
@@ -106,4 +106,3 @@ function saving_changes_notifier() {
 <% end %>
 </div>
 
-<p><%= link_to 'add existing image'[:add_existing_image], page_url(@page, :action => 'find') %></p>

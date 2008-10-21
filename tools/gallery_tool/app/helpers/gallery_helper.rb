@@ -8,9 +8,6 @@ module GalleryHelper
     else
       output << '<span style="min-width:13px;width:13px;margin:1em;"></span>'
     end
-    output << link_to(image_tag('pages/gallery.png',
-                                :title => 'Back to gallery'.t),
-                        page_url(gallery))
     if after && after.kind_of?(ActiveRecord::Base)
       output << link_to(image_tag('icons/next.png',
                                   :title => 'Next'.t),
@@ -23,10 +20,7 @@ module GalleryHelper
   end
   
   def gallery_detail_view_url gallery, image=nil
-    url_for(:controller => 'gallery',
-            :action => 'detail_view',
-            :page_id => gallery.id,
-            :id => (image ? image.id : nil))
+    page_url(gallery, :action => 'detail_view', :id => (image ? image.id : nil))
   end
   
   # navigation for gallery. pass elements to show as arguments. possible
@@ -62,15 +56,15 @@ module GalleryHelper
         # code for "Past Versions", see above
       },
       :download => lambda { 
-        if @image
-          link_to(image_tag("actions/download.png")+
-                  "Download"[:download],
+        image_tag("actions/download.png")+
+        if @showing || @image
+          image = (@showing ? @showing.image : @image)
+          link_to("Download"[:download],
                   page_url(@page,
                            :action => 'download',
-                           :image_id => @image.id))
+                           :image_id => image.id))
         else
-          link_to(image_tag("actions/download.png")+
-                  "Download Gallery"[:download_gallery],
+          link_to("Download Gallery"[:download_gallery],
                   page_url(@page, :action => 'download'))
         end
       },
@@ -185,5 +179,18 @@ module GalleryHelper
     link_to(image_tag("pages/image.png", :title =>
                       'make this image the albums cover'[:make_album_cover]),
             page_url(@page, :action => 'make_cover', :id => image.id))
+  end
+  
+  def change_title_link showing
+    output = render(:partial => 'change_image_title',
+                    :locals => { :showing => showing })
+    unless @change_title
+      output << link_to("change title"[:change_title],
+                        page_url(@page, :action => 'change_image_title',
+                                 :id => showing.asset_id),
+                        :id => "change_title_link",
+                        :onclick => "$('change_title_form').show();$('change_title_link').hide();return false;")
+    end
+    output
   end
 end
