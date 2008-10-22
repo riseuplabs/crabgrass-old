@@ -21,11 +21,12 @@ class Gallery < Page
       self.showings.first
   end
   
-  def cover= image_id
+  def cover=(image_id)
     showing = self.showings.find_by_asset_id(image_id)
     raise ArgumentError unless showing
-    self.cover_showing.is_cover = false
-    self.cover_showing.save
+    old = self.cover_showing
+    old.is_cover = false
+    old.save
     showing.is_cover = true
     showing.save
   end

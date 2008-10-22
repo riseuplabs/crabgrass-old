@@ -176,9 +176,26 @@ module GalleryHelper
   end
   
   def gallery_make_cover(image)
-    link_to(image_tag("pages/image.png", :title =>
-                      'make this image the albums cover'[:make_album_cover]),
-            page_url(@page, :action => 'make_cover', :id => image.id))
+    extra_output = ""
+    html_options = {
+      :id => "make_cover_link_#{image.id}"
+    }
+    if image.is_cover_of?(@page)
+      html_options[:style] = "display:none;" 
+      extra_output += javascript_tag("var current_cover = #{image.id};")
+    end
+    options = { 
+      :url => page_url(@page, :action => 'make_cover', :id => image.id),
+      :update => 'gallery_notify_area',
+      :loading => "$('gallery_notify_area').innerHTML = '#{"Changing cover..."[:changing_cover]}';
+                   $('gallery_spinner').show();",
+      :complete => "$('gallery_spinner').hide();",
+      :success => "$('make_cover_link_'+current_cover).show();
+                   $('make_cover_link_#{image.id}').hide();"
+    }
+    link_to_remote(image_tag("pages/image.png", :title =>
+                             'make this image the albums cover'[:make_album_cover]),
+                   options, html_options)+extra_output
   end
   
   def change_title_link showing
