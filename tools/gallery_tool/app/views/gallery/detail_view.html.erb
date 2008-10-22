@@ -3,7 +3,7 @@
 <div id="detail_view">
   <%= detail_view_navigation(@page, @previous, @image, @next) %>
 
-  <div id="detail_image"><%= thumbnail_img_tag(@image, 'large') %></div>
+  <div id="detail_image"><%= link_to thumbnail_img_tag(@image, 'large'), @image.url %></div>
   <span id="detail_image_title">
     <% if @image.page -%>
       <%= @image.page.title %>
