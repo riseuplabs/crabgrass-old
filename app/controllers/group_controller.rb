@@ -173,7 +173,7 @@ class GroupController < ApplicationController
     @group.publicly_visible_committees = params[:group][:publicly_visible_committees] if params[:group]
     @group.publicly_visible_members = params[:group][:publicly_visible_members] if params[:group]
     @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests] if params[:group]
-    
+    @group.min_stars = params[:group][:min_stars]
     if @group.save
       redirect_to :action => 'edit', :id => @group
       flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
