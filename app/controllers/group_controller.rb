@@ -107,6 +107,15 @@ class GroupController < ApplicationController
   # edit the featured content
   def edit_featured_content
     raise PermissionDenied.new("You cannot administrate this group."[:group_administration_not_allowed_error]) unless(current_user.may?(:admin,@group))
+    case params[:mode]
+      when "unfeatured"
+        @content = @group.find_unstatic.paginate(:page => params[:page], :per_page => 5)
+      when "expired"
+        @content = @group.find_expired.paginate(:page => params[:page], :per_page => 5)
+      else
+        @content = @group.find_static.paginate(:page => params[:page], :per_page => 5)
+    end
+  
   end
 
   # login required
