@@ -111,8 +111,7 @@ namespace :cg do
             end
           end
         else
-          puts "Language '#{lang_code} does not exist in the database. Try running rake cg:load_default_data"
-          exit
+          puts "skipping language '#{lang_code}' (does not exist in the database)"
         end
       end
     end
