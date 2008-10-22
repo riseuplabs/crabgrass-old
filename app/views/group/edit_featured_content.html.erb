@@ -4,7 +4,13 @@
 
 <%= "Here you can mark pages as featured content of this group."[:mark_pages_as_featured_content_for_group] %>
 
-<% if @group.find_static.any? %>
+<%= link_to "currently featured content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "current", :page => 1) %> | 
+<%= link_to "not yet featured content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "unfeatured", :page => 1) %> |
+<%= link_to "reactivate expired content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "expired", :page => 1) %>
+
+<%= pagination_links(@content) %>
+
+<% if (params[:mode] == "current") || (params[:mode].nil?) %>
 <h4 class="section"><%= "Current Featured Content"[:current_featured_content] %></h4>
 <table>
   <tr>
@@ -12,7 +18,7 @@
     <th><%= "When does this feature expire?"[:when_does_feature_expire] %></th>
     <th><%= "Action".t %></th>
   </tr>
-<% @group.find_static.each do |p|%>
+<% @content.each do |p|%>
  <tr  class="<%=cycle(:even,:odd)%>">
  <% form_tag group_url(:action => 'feature_content', :id => @group) do %>
 <td><%= link_to p.title, page_url(p) %></td>
@@ -26,7 +32,7 @@
 </table>
 <% end %>
 
-<% if @group.find_unstatic.any? %>
+<% if params[:mode] == "unfeatured" %>
 <h4 class="section"><%= "Not yet Featured Content"[:not_featured_content] %></h4>
 <table>
   <tr>
@@ -34,7 +40,7 @@
     <th><%= :when_does_feature_expire.t %></th>
     <th><%= "Action".t %></th>
   </tr>
-<% @group.find_unstatic.each do |p|%>
+<% @content.each do |p|%>
 <tr class="<%=cycle(:even,:odd)%>">
 <% form_tag group_url(:action => 'feature_content', :id => @group) do %>
   <%= hidden_field :featured_content, :mode, :value => :feature %>
@@ -48,7 +54,7 @@
 </table>
 <% end %>
 
-<% if @group.find_expired.any? %>
+<% if params[:mode] == "expired"%>
 <h4 class="section"><%= "Expired Featured Content"[:expired_featured_content] %></h4>
 <table>
   <tr>
@@ -56,7 +62,7 @@
     <th><%= :when_does_feature_expire.t %></th>
     <th><%= "Action".t %></th>
   </tr>
-<% @group.find_expired.each do |p| %>
+<% @content.each do |p| %>
 <tr class="<%=cycle(:even,:odd)%>">
 <% form_tag group_url(:action => 'feature_content', :id => @group) do %>
 <td><%= link_to p.title, page_url(p) %> <%= p.group_participations.find_by_group_id(@group.id).static_expires %> </td>

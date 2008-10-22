@@ -17,11 +17,49 @@ class GalleryController < BasePageController
   end
   
   def detail_view
-    @image = @page.images.find(params[:id] || :first)
-    @image_index = @page.images.index(@image)
-    @next = @page.images[@image_index+1]
-    if @page.images.index(@image)-1 >= 0
-      @previous = @page.images[@image_index-1]
+    @showing = @page.showings.find_by_asset_id(params[:id] || :first)
+    @image_index = @showing.position+1
+    @next = @showing.lower_item.image
+    @previous = @showing.higher_item
+  end
+  
+  def comment_image
+    @showing = @page.showings.find_by_asset_id(params[:id])
+    raise "No such image" unless @showing
+    @post = Post.new
+    @post.user = current_user
+    @post.discussion = @showing.discussion
+    @post.body = params[:post][:body]
+    @post.save!
+    @showing.comments << @post
+    @showing.save!
+    redirect_to page_url(@page,
+                         :action => 'detail_view',
+                         :id => @showing.asset_id)
+  end
+  
+  def change_image_title
+    # happens with non-ajax calls
+    if request.get?
+      detail_view
+      @change_title = true
+      render :template => 'detail_view'
+    end
+    if request.post?
+      current_user.may!(:admin, @page)
+      @showing = @page.showings.find_by_asset_id(params[:id])
+      @showing.title = params[:title]
+      @showing.save
+      @page.updated_by = current_user
+      @page.updated_by_login = current_user.login
+      @page.save
+      unless request.xhr?
+        redirect_to page_url(@page,
+                             :action => 'detail_view',
+                             :id => @showing.asset_id)
+      else
+        render :partial => 'update_image_title_xhr'
+      end
     end
   end
   

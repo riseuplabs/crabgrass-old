@@ -231,6 +231,7 @@ file: "File"
 slideshow_delay_input: "Update every :input_field seconds"
 add_comment: add comment
 make_album_cover: make this image the album cover
+image_title: "Image title: %s"
 
 ##
 ## ME

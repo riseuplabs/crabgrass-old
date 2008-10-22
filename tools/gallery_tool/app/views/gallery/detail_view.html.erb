@@ -1,14 +1,35 @@
-<%= gallery_navigation :count, :download %>
+<%
+  showing ||= @showing
+  image = showing.image
+  title = if showing.title
+            showing.title
+          elsif image.page
+            "Image title: %s"[:image_title]%image.page.title
+          else
+            "(no title given)"[:no_title_given]
+          end
+-%>
+
+<%= gallery_navigation :count, :download, :show, :edit %>
 
 <div id="detail_view">
-  <%= detail_view_navigation(@page, @previous, @image, @next) %>
+  <%= detail_view_navigation(@page, @previous, image, @next) %>
 
-  <div id="detail_image"><%= link_to thumbnail_img_tag(@image, 'large'), @image.url %></div>
+  <div id="detail_image"><%= link_to thumbnail_img_tag(image, 'large'), image.url %></div>
   <span id="detail_image_title">
-    <% if @image.page -%>
-      <%= @image.page.title %>
-    <% else -%>
-      <%= "(no title given)"[:no_title_given] %>
-    <% end -%>
+    <%= title %>
   </span>
+  <%= change_title_link(showing) -%>
+  <div id="image_comments">
+    <h2>Comments</h2>
+    <table>
+      <% if showing.comments.any? -%>
+	<% showing.comments.each do |comment| -%>
+	  <%= render(:partial => 'posts/post',
+		     :locals => { :post => comment }) %>
+	<% end -%>
+      <% end -%>
+      <%= render :partial => 'comment_reply' %>
+    </table>
+  </div>
 </div>
