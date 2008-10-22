@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081017071525) do
+ActiveRecord::Schema.define(:version => 20081018181941) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -110,6 +110,13 @@ ActiveRecord::Schema.define(:version => 20081017071525) do
     t.boolean "is_cancelled",     :default => false
     t.boolean "is_tentative",     :default => true
     t.string  "location"
+  end
+
+  create_table "external_videos", :force => true do |t|
+    t.string "media_key"
+    t.string "media_url"
+    t.string "media_thumbnail_url"
+    t.text   "media_embed"
   end
 
   create_table "federatings", :force => true do |t|
@@ -422,6 +429,7 @@ ActiveRecord::Schema.define(:version => 20081017071525) do
     t.integer "asset_id",   :limit => 11
     t.integer "gallery_id", :limit => 11
     t.integer "position",   :limit => 11, :default => 0
+    t.boolean "is_cover",                 :default => false
   end
 
   add_index "showings", ["gallery_id", "asset_id"], :name => "ga"
