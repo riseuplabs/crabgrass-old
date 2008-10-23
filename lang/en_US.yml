@@ -319,13 +319,19 @@ im_addresses: IM Addresses
 add_im_address: Add IM Address
 websites: Websites
 add_websites: Add Websites
-
+add_encryption_key: Add Encryption Key
+public_key: Public Key
+location_address: address
+location_city: city
+location_state: state/province
+location_postal_code: postal_code
+location_country: country
 
 ##
 ## GROUPS
 ##
 
-group_administration_not_allowed: "You cannot administrate this group."
+group_administration_not_allowed: "You cannot administer this group."
 page_not_part_of_group: "Page not part of this group"
 group_successfully_updated: "Group was successfully updated."
 only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
@@ -471,6 +477,7 @@ tuesday: Tuesday
 wednesday: Wednesday
 thursday: Thursday
 friday: Friday
+saturday: Saturday
 month_short_january: Jan
 month_short_february: Feb
 month_short_march: Mar
