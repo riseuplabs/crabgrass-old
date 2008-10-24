@@ -4,6 +4,7 @@ class GalleryController < BasePageController
   javascript :extra
   
   include GalleryHelper
+  include BasePageHelper
   include ActionView::Helpers::JavascriptHelper
   
 
