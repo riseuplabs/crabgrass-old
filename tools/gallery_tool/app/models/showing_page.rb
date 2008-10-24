@@ -1,0 +1,2 @@
+class ShowingPage < BasePage
+end
