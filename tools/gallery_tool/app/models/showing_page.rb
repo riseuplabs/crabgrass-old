@@ -1,2 +1,0 @@
-class ShowingPage < BasePage
-end
