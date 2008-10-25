@@ -77,6 +77,10 @@ Rails::Initializer.run do |config|
 
   config.action_mailer.perform_deliveries = false
 
+  # the absolutely required gems
+  config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
+  config.gem 'RedCloth', :version => '>= 4.0.0'
+
   # See Rails::Configuration for more options
 
   ###
