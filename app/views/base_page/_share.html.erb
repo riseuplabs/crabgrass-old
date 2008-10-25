@@ -1,0 +1,34 @@
+<% class_display_name = 'page'.t if class_display_name.nil? -%>
+<% type = 'send' if type.nil? -%>
+
+<div class='share_page'>
+  <h2><%= 'Share this {page_class} with'[:share_page_recipients, {:page_class => class_display_name}] %>:</h2>
+  <table class='share_page_recipients'>
+    <tr>
+      <th><%= "Choose from your groups or friends"[:share_page_recipients_sections] %></th>
+      <th><%= "Make your selection"[:share_page_recipients_selection] %></th>
+      <th><%= "This {page_class} will be shared with"[:share_page_recipients_results, {:page_class => class_display_name}] %></th>
+    </tr>
+    <tr>
+      <td>
+        <div class='scroll'><%= share_page_recipient_tabs %></div>
+      </td>
+      <td>
+        <div class='scroll'><%= share_page_recipient_panes %></div>
+      </td>
+      <td>
+        <div class='scroll'><%= share_page_recipient_results %></div>
+      </td>
+    </tr>
+  </table>
+
+  <h2><%= 'Choose options'[:share_page_options] %>:</h2>
+  <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+   <%= 'Grant Access'[:grant_access] %>: <%= select_page_access 'access', :blank => (type=='send') %>
+  <%- end -%>
+  <%- if type == 'send' -%>
+    <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.'[:share_page_email] %></label>
+		<h2><%= 'Send a Message (optional)'[:share_page_message] %></h2>
+		<%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
+  <%- end -%>
+</div>

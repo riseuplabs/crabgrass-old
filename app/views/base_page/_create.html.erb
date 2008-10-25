@@ -1,0 +1,44 @@
+<% class_display_name = @page_class.class_display_name.t -%>
+<% sections = [] if sections.nil? -%>
+<% multipart = sections.grep 'file' -%>
+
+<% @title_box = capture do -%>
+	<%= link_to_breadcrumbs %>
+	<h1>
+		<%= image_tag('/images/pages/big/%s' % @page_class.icon) %>
+		<%= "Create a new {page_class}"[:create_page_headline, {:page_class => class_display_name }] %>
+	</h1>
+<% end -%>
+
+<div class='create_page'>
+<% form_tag({:action => 'create'}, :multipart => multipart) do %>
+  <%= hidden_field_tag 'page_class', @page_class %>
+  <%= hidden_field_tag('group', params[:group]) if params[:group] %>
+  <div class='left'>
+    <% if sections.include? 'file' -%>
+      <h2 class='section'><%= '{page_class} data'[:create_page_data, {:page_class => class_display_name}].capitalize %></h2>
+      <%= render :partial => 'base_page/create/file' %>
+    <% end -%>
+    <% if sections.include? 'files' -%>
+      <h2 class='section'><%= '{page_class} data'[:create_page_data, {:page_class => class_display_name}].capitalize %></h2>
+      <%= render :partial => 'base_page/create/files' %>
+    <% end -%>
+    <% if sections.include? 'external_video' -%>
+      <h2 class='section'><%= '{page_class} data'[:create_page_data, {:page_class => class_display_name}].capitalize %></h2>
+      <%= render :partial => 'base_page/create/video' %>
+    <% end -%>
+    <h2 class='section'><%= '{page_class} information'[:create_page_information, {:page_class => class_display_name}].capitalize %></h2>
+    <%= render :partial => 'base_page/create/information' %>
+  </div>
+  <div class='right'>
+    <h2 class='section'><%= 'Who has access to this {page_class}?'[:create_page_share, {:page_class => class_display_name}] %></h2>
+    <%= render :partial => 'share', :locals => {:class_display_name => class_display_name, :type => 'share'} %>
+  </div>
+  <div class='clear'></div>
+  <div class='buttons'>
+    <%= submit_tag '&laquo; ' + "Back".t, :name => 'cancel' %>
+    <%= submit_tag "Create {page_class}"[:create_page_button, {:page_class => class_display_name}] + ' &raquo;', :name => 'create' %>
+  </div>
+<% end %>
+</div>
+

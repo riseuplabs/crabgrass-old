@@ -26,3 +26,7 @@ div.page-class .page-link {
   width: 25em;
   font-family: serif; font-size: 1em;
 }
+
+h2.section {
+  margin-top: 0.5em;
+}
