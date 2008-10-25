@@ -1,17 +1,34 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'membership_controller'
+require 'requests_controller'
 
 # Re-raise errors caught by the controller.
 class RequestsController; def rescue_action(e) raise e end; end
 
 class RequestsControllerTest < Test::Unit::TestCase
-  fixtures :users, :memberships, :groups, :profiles
+  fixtures :users, :memberships, :groups, :profiles, :federatings
 
   def setup
     @controller = RequestsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
+
+  def test_cant_create_invite
+    login_as :green
+    assert_no_difference 'RequestToJoinUs.count' do
+      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['red', 'blue']
+    end
+  end
+
+  def test_create_invite
+    login_as :gerrard
+    get :create_invite, :group_id => groups(:cnt).id
+    assert_response :success
+    assert_difference 'RequestToJoinUs.count', 2 do
+      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['red', 'blue']
+    end
+  end
+
 
 =begin
   def test_join_not_logged_in

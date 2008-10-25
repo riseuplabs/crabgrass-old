@@ -290,7 +290,7 @@ module PageHelper
       page_group = page_class.class_group.first
       [page_group.pluralize, page_group]
     end
-    options_for_select([['all page types','']] + array, default_selected)
+    options_for_select([['all page types'.t,'']] + array, default_selected)
   end
   
   ## Creates options useable in a select() for the various states
@@ -301,7 +301,7 @@ module PageHelper
     selected = 'unread' if parsed_path.keyword?('unread')
     selected = 'starred' if parsed_path.keyword?('starred')
     selected = parsed_path.first_arg_for('page_state') if parsed_path.keyword?('page_state')
-    options_for_select(['unread','pending','starred'], selected)
+    options_for_select(['unread','pending','starred'].to_localized_select, selected)
   end
 
   ## Link to the action for the form to create a page of a particular type.

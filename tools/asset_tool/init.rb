@@ -6,7 +6,7 @@ PageClassRegistrar.add(
   :model => 'Asset',
   :icon => 'package.png',
   :class_display_name => 'file',
-  :class_description => 'an uploaded file',
+  :class_description => :file_class_description,
   :class_group => 'asset', 
   :order => 20
 )

@@ -1,14 +1,16 @@
-<h2>dual memberships</h2>
+<% if @group.parent.all_users.any? %>
+<h2><%= "Dual memberships"[:dual_memberships] %></h2>
 
-<p>Members of group <b><%=@group.parent.name%></b> who should also be in committee <b><%=@group.short_name%></b></p>
+<p><%= "Members of :group_type <b>:group</b> who should also be in committee <b>:committee</b>"[:dual_membership_info] % {:group_type => @group.parent.display_type.t, :group => @group.parent.display_name, :committee => @group.display_name } %></p>
 
 <blockquote>
 <% form_tag(:action => 'update', :id => @group) do -%>
   <div id='test'>
-  <%= collection_multiple_select('group', 'user_ids', @group.parent.users, :id, :login, :outer_class=>'plainlist floatlist') %>
+  <%= collection_multiple_select('group', 'user_ids', @group.parent.all_users, :id, :login, :outer_class=>'plainlist floatlist') %>
   <p style='clear:left'>
   <%= submit_tag "Save" %>
   </p>
   </div>
 <% end -%>
 </blockquote>
+<% end %>

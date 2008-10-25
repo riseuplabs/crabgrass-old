@@ -216,7 +216,6 @@ module BasePageHelper
      popup_line(:name => 'details', :label => 'details', :icon => 'details_icon', :controller => 'participation')
   end
 
-
   ##
   ## PAGE SHARING FORM
   ##

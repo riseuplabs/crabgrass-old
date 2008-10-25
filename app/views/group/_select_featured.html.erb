@@ -1,0 +1,2 @@
+<%= select :group, :featured_pages, @group.pages.collect{|p| [p.title, p.id]},{}, :multiple => true %><br/>
+<%= submit_tag "update"[:update] %>

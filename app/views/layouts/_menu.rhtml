@@ -31,6 +31,8 @@
   </li>
   <% end -%>
 
+  <%= call_hook :top_menu %>
+
   <% if logged_in? -%>
   <li>
     <span><%= link_to_active "Logout".t + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %></span>

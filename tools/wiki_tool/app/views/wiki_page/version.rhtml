@@ -1,9 +1,12 @@
 <%= return_to_page(@page) %>
 
 <% unless @version %>
-  There is no version <%=params[:version]%>
+  <%= :version_doesnt_exist.t % {:version => params[:version]} %>
 <% else %>
-  <i>You are viewing version <%=@version.version%> by <%=link_to_user(@version.user_id)%></i><br/>
+  <i><%= :you_are_viewing_version.t % {
+     :version => @version.version,
+     :user => link_to_user(@version.user_id)
+   }%></i><br/>
 <div class='greybox'>
   <%= @version.body_html %>
 </div>

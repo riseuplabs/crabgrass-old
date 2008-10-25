@@ -24,7 +24,7 @@ class Discussion < ActiveRecord::Base
   ## methods
   ##
 
-  def per_page() 4 end
+  def per_page() 30 end
  
   # this doesn't appear to be called anywhere.
   #def paged?() posts_count > per_page end

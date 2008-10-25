@@ -3,7 +3,7 @@ PageClassRegistrar.add(
   :controller => 'collection',
   :icon => 'collection.png',
   :class_display_name => 'collection',
-  :class_description => 'Special pages that hold other pages.',
+  :class_description => :collection_class_description,
   :class_group => 'collection',
   :order => 30
 )
@@ -13,7 +13,7 @@ PageClassRegistrar.add(
   :controller => 'folder_page',
   :icon => 'collection.png',
   :class_display_name => 'folder',
-  :class_description => 'A collection of assets',
+  :class_description => :folder_class_description,
   :class_group => ['collection','folder'],
   :order => 32
 )

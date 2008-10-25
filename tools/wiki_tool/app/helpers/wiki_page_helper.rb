@@ -3,10 +3,10 @@ module WikiPageHelper
   def locked_error_message
     if @locked_for_me
       msgs = [
-        'This wiki is currently locked by %s' % @wiki.locked_by.display_name,
-        'You will not be able to save this page'
+        'This wiki is currently locked by :user'[:wiki_locked] % {:user => @wiki.locked_by.display_name},
+        'You will not be able to save this page'[:wont_be_able_to_save]
       ]
-      flash_message_now :title => 'Page Locked', :error => msgs
+      flash_message_now :title => 'Page Locked'[:page_locked_header], :error => msgs
     end
   end
 
@@ -45,7 +45,7 @@ module WikiPageHelper
       :loading => replace_html('ed_image', spinner),
       :complete => replace_html('ed_image', text),
       :url => page_xurl(@page,:action => 'show_image_popup'))
-    textile_editor_button(text, :type => 'button', :id => 'ed_image', :title => 'Image', :onclick => on_click, :open => 'undefined')
+    textile_editor_button(text, :type => 'button', :id => 'ed_image', :title => 'Image'.t, :onclick => on_click, :open => 'undefined')
   end
 
 end

@@ -33,6 +33,7 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+    @user.avatar = Avatar.new
     @user.save!
     self.current_user = @user
     send_welcome_message(current_user)
@@ -53,7 +54,7 @@ class AccountController < ApplicationController
   end
 
   def welcome
-    render :text => WholeCloth.new(:welcome_text.t).to_html, :layout => 'default'
+    render :text => GreenCloth.new(:welcome_text.t).to_html, :layout => 'default'
   end
   
   def forgot_password

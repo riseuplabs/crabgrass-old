@@ -102,6 +102,76 @@ class GroupController < ApplicationController
   # login required
   def edit
   end
+
+  # login required
+  # edit the featured content
+  def edit_featured_content
+    raise PermissionDenied.new("You cannot administrate this group."[:group_administration_not_allowed_error]) unless(current_user.may?(:admin,@group))
+    case params[:mode]
+      when "unfeatured"
+        @content = @group.find_unstatic.paginate(:page => params[:page], :per_page => 5)
+      when "expired"
+        @content = @group.find_expired.paginate(:page => params[:page], :per_page => 5)
+      else
+        @content = @group.find_static.paginate(:page => params[:page], :per_page => 5)
+    end
+  
+  end
+
+  # login required
+  # mark one page as featured content
+  def feature_content
+    raise ErrorMessage.new("Page not part of this group"[:page_not_part_of_group]) if !(@page = @group.participations.find_by_page_id(params[:featured_content][:id]))
+    if current_user.may?(:admin, @group) 
+      year = params[:featured_content][:"expires(1i)"]
+      month = params[:featured_content][:"expires(2i)"]
+      day = params[:featured_content][:"expires(3i)"]
+      date = DateTime.parse("#{year}/#{month}/#{day}") if year && month && day
+
+      case params[:featured_content][:mode].to_sym
+      when :feature
+        @page.static!(date || nil)
+      when :reactivate
+        @page.static_expired = nil
+        @page.static!(date || nil)
+      when :unfeature
+        @page.unstatic!
+      end
+      redirect_to group_url(:action => 'edit_featured_content', :id => @group)
+    else
+      raise PermissionDenied.new("You cannot administrate this group"[:group_administration_not_allowed_error])
+    end
+  rescue => exc
+    flash_message_now :exception => exc
+    render :action => 'edit_featured_content'
+  end
+  
+  # login required
+  # updates the list of featured pages
+  def update_featured_pages
+    
+    # use this for group_level featured content 
+     
+    unstatic = @group.participations.find_all_by_static(true)
+    static = @group.participations.find_all_by_page_id(params[:group][:featured_pages]) if params[:group] && params[:group][:featured_pages]
+    if static
+      unstatic = unstatic-static
+      
+      static.each do |p|
+        p.static! unless p.static
+      end
+    end   
+    unstatic.each do |p|
+      p.unstatic! if p.static
+    end
+        
+   # use this for platformwide featured content
+   # Page.find(params[:group][:featured_pages]).each(&:static!)
+    redirect_to url_for_group(@group)
+   rescue => exc
+     flash_message_now :exception => exc
+     render :action => 'edit'
+  end
      
   # login required
   # post required
@@ -112,10 +182,10 @@ class GroupController < ApplicationController
     @group.publicly_visible_committees = params[:group][:publicly_visible_committees] if params[:group]
     @group.publicly_visible_members = params[:group][:publicly_visible_members] if params[:group]
     @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests] if params[:group]
-    
+    @group.min_stars = params[:group][:min_stars]
     if @group.save
       redirect_to :action => 'edit', :id => @group
-      flash_message :success => 'Group was successfully updated.'
+      flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
     else
       flash_message_now :object => @group  
     end
@@ -125,16 +195,17 @@ class GroupController < ApplicationController
   # post required
   def destroy
     if @group.users.uniq.size > 1 or @group.users.first != current_user
-      flash_message :error => 'You can only delete a group if you are the last member'
+      flash_message :error => 'You can only delete a group if you are the last member'[:only_last_member_can_delete_group]
       redirect_to :action => 'show', :id => @group
     else
-      parent = @group.parent
-      @group.destroy
-      if parent
-        parent.users.each {|u| u.clear_cache}
+      if @group.parent
+        parent = @group.parent
+        parent.remove_committee!(@group)
+        @group.destroy
         redirect_to url_for_group(parent)
       else
-        redirect_to :action => 'list'
+        @group.destroy
+        redirect_to :controller => 'groups', :action => nil
       end
     end
   end  

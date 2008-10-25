@@ -4,11 +4,16 @@
 
 <div class='landing'>
   <div class='landing-side-column'>
-    <h3 class='section'>Recent Activity</h3>
+    <h3 class='section'><%= "Recent Activity"[:recent_activity] %></h3>
     <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages, :style => :brief_no_group} %>
+ 
+  <h3 class='section'><%= "Featured Content"[:rfeatured_content] %></h3>
+    <%= render :partial => 'group/starring', :locals => {:group => @group}%>
+
   </div>
   <div class='landing-main-column'>
-    <h3 class='section'>Group Wiki</h3>
+  
+    <h3 class='section'><%= "Group Wiki"[:group_wiki] %></h3>
     <% if @access == :public -%>
       <div class='wiki'>
         <%= @profile.wiki.body_html %>
@@ -19,4 +24,4 @@
   </div>
 </div>
 
-<link rel="alternate" href="/group/search/<%= @group.name %>/rss" title="RSS Feed" type="application/rss+xml" />
+<link rel="alternate" href="/group/search/<%= @group.name %>/rss" title=<%= "RSS Feed"[:rss_feed] %> type="application/rss+xml" />

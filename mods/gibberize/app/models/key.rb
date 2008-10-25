@@ -3,7 +3,7 @@ class Key < ActiveRecord::Base
   has_many :languages, :through => :translations
 
   validates_uniqueness_of :name
-  validates_format_of :name, :with => /\A[a-z0-9_]+\Z/
+  validates_format_of :name, :with => /\A[A-Za-z0-9_]+\Z/
 
   ##
   ## FINDERS

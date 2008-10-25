@@ -1,9 +1,9 @@
-<% @title_box = content_tag :h1, 'My Groups'.t -%>
+<% @title_box = content_tag :h1, 'My Groups'[:my_groups] -%>
 <%= groups_navigation_links %>
 
 <%- if @groups.any? -%>
   <%= render :partial => 'group', :collection => @groups %>
 <%- else -%>
-  <%= 'You have no groups'.t %>
+  <%= 'You have no groups'[:you_have_no_groups] %>
 <%- end -%>
 

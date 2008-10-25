@@ -53,7 +53,7 @@ class Mailer < ActionMailer::Base
     @page = options[:page]
 
     @host = default_url_options[:host] = @site.domain || options[:host]
-    @port = default_url_options[:port] = options[:port]
+    @port = default_url_options[:port] = options[:port] if options[:port]
     @protocol = default_url_options[:protocol] = options[:protocol]
     default_url_options[:only_path] = false
   end

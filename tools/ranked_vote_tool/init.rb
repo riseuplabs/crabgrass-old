@@ -6,7 +6,7 @@ PageClassRegistrar.add(
   :model => 'Poll',
   :icon => 'ballot.png',
   :class_display_name => 'ranked vote',
-  :class_description => 'Rank possibilities in order of preference.',
+  :class_description => :ranked_vote_class_description,
   :class_group => 'vote',
   :order => 11
 )

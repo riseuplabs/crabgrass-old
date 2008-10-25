@@ -277,7 +277,7 @@ class GroupControllerTest < Test::Unit::TestCase
     
     assert_difference 'Group.count', -1, "should delete newly created group" do
       post :destroy, :id => group_name
-      assert_redirected_to :action => 'list'
+      assert_redirected_to :controller => 'groups'
     end
   end
 

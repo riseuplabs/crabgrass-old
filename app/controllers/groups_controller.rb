@@ -30,8 +30,10 @@ class GroupsController < ApplicationController
     if request.get?
       @group_class.new(params[:group])
     elsif request.post?
-      @group = @group_class.create!(params[:group])
-      flash_message :success => 'Group was successfully created.'.t
+      @group = @group_class.create!(params[:group]) do |group|
+        group.avatar = Avatar.new
+      end
+      flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.memberships.create :user => current_user, :group => @group
       @parent.add_committee!(@group) if @parent
       redirect_to url_for_group(@group)
@@ -57,7 +59,7 @@ class GroupsController < ApplicationController
     type = params[:id].any? ? params[:id] : 'group'
     type = 'committee' if params[:parent_id]
     unless ['committee','group','network'].include? type
-      raise ErrorMessage.new('Could not understand group type %s' % type)
+      raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
     end
     Kernel.const_get(type.capitalize)
   end
@@ -65,7 +67,7 @@ class GroupsController < ApplicationController
   def get_parent
     parent = Group.find(params[:parent_id]) if params[:parent_id]
     if parent and not current_user.may?(:admin, parent)
-      raise ErrorMessage.new('You do not have permission to create committees under %s' % parent.name)
+      raise ErrorMessage.new('You do not have permission to create committees under %s'[:dont_have_permission_to_create_committees] % parent.name)
     end
     parent
   end

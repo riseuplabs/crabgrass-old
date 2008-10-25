@@ -53,7 +53,7 @@ class AssetPageController < BasePageController
     asset_version.destroy
     respond_to do |format|
       format.html do
-        message(:success => "file version deleted")
+        message(:success => "file version deleted".t)
         redirect_to(page_url(@page))
       end
       format.js do
@@ -67,6 +67,13 @@ class AssetPageController < BasePageController
     @asset.generate_thumbnails
     render :update do |page|
       page.replace_html 'preview_area', asset_link_with_preview(@asset)
+    end
+  end
+  
+  # xhr request  
+  def add_file_field
+    render :update do |page|
+      page.insert_html :before, 'add_file_field', render(:partial => 'file_field')
     end
   end
 

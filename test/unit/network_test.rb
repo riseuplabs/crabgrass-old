@@ -25,6 +25,8 @@ class NetworkTest < Test::Unit::TestCase
     group1 = groups(:animals)
     group2 = groups(:rainbow)
 
+    version = network.version
+
     assert_nothing_raised do
       network.add_group!(group1)
       network.add_group!(group2)
@@ -36,6 +38,8 @@ class NetworkTest < Test::Unit::TestCase
     assert network.groups(true).include?(group1)
     assert network.groups(true).include?(group2)
     
+    assert_equal version+2, network.reload.version
+
     user = users(:red)
     
     assert !user.direct_member_of?(network)
@@ -74,6 +78,27 @@ class NetworkTest < Test::Unit::TestCase
     assert !user.member_of?(network), "user should NOT be a member of the network (all group ids = #{user.all_group_id_cache.inspect})"
   end
 
+  # what happens when a network is a member of a network?
+  def test_nested_network
+    parent_network = groups(:fai)
+    child_network  = groups(:cnt)
+    user = users(:gerrard)
+    group = groups(:true_levellers)
+
+    committee = Committee.create! :name => 'fai+committee'
+    parent_network.add_committee!(committee)
+
+    assert user.member_of?(group)
+    assert child_network.groups.include?(group)
+    assert user.member_of?(child_network)
+    assert !user.direct_member_of?(child_network)
+    assert committee.parent, parent_network
+    
+    parent_network.add_group!(child_network)
+    
+    assert user.reload.member_of?(parent_network)
+    assert user.member_of?(committee)
+  end
 
   def test_associations
     assert check_associations(Network)

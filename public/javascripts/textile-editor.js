@@ -45,6 +45,7 @@ function TextileEditorButton(id, display, tagStart, tagEnd, access, title, sve, 
 	this.sve = sve;				// sve = simple vs. extended. add an 's' to make it show up in the simple toolbar
 	this.open = open;			// set to -1 if tag does not need to be closed
 	this.standard = true;  // this is a standard button
+	// this.framework = 'prototype'; // the JS framework used
 }
 
 function TextileEditorButtonSeparator(sve) {
@@ -52,7 +53,7 @@ function TextileEditorButtonSeparator(sve) {
 	this.sve = sve;
 }
 
-var TextileEditor = Class.create();
+var TextileEditor = function() {};
 TextileEditor.buttons = new Array();
 TextileEditor.Methods = {
   // class methods
@@ -89,17 +90,21 @@ TextileEditor.Methods = {
 		} // end for
 		
 		var te = this;
-		$A(toolbar.getElementsByTagName('button')).each(function(button) {
-			if (!button.onclick) {
-				button.onclick = function() { te.insertTag(button); return false; }
+		var buttons = toolbar.getElementsByTagName('button');
+		for(var i = 0; i < buttons.length; i++) {
+		//$A(toolbar.getElementsByTagName('button')).each(function(button) {
+			if (!buttons[i].onclick) {
+				buttons[i].onclick = function() { te.insertTag(this); return false; }
 			} // end if
 			
-			button.tagStart = button.getAttribute('tagStart');
-			button.tagEnd = button.getAttribute('tagEnd');
-			button.open = button.getAttribute('open');
-			button.textile_editor = te;
-			button.canvas = te.canvas;
-		});
+			buttons[i].tagStart = buttons[i].getAttribute('tagStart');
+			buttons[i].tagEnd = buttons[i].getAttribute('tagEnd');
+			buttons[i].open = buttons[i].getAttribute('open');
+			buttons[i].textile_editor = te;
+			buttons[i].canvas = te.canvas;
+			// console.log(buttons[i].canvas);
+		//});
+	  }
 	}, // end initialize
 	
 	// draw individual buttons (edShowButton)
@@ -174,6 +179,7 @@ TextileEditor.Methods = {
 	// insert the tag. this is the bulk of the code.
 	// (edInsertTag)
   insertTag: function(button, tagStart, tagEnd) {
+    console.log(button);
 	  var myField = button.canvas;
 		myField.focus();
 
@@ -662,5 +668,9 @@ TextileEditor.Methods = {
 }; // end class
 
 // add class methods
-Object.extend(TextileEditor, TextileEditor.Methods);
+// Object.extend(TextileEditor, TextileEditor.Methods);
+destination = TextileEditor
+source = TextileEditor.Methods
+for(var property in source) destination[property] = source[property];
+
 document.write('<script src="/javascripts/textile-editor-config.js" type="text/javascript"></script>');

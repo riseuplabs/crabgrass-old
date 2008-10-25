@@ -45,7 +45,6 @@ class DiscussionTest < Test::Unit::TestCase
     assert_equal 2, page.discussion.reload.posts_count
     assert_equal 2, page.discussion.posts.size
 
-    #p page
     page.save!
 
     assert_equal 2, page.reload.posts_count

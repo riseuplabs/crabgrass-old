@@ -1,0 +1,12 @@
+if @possibles_voted.empty?
+  page.show('none_voted')
+else
+  page.hide('none_voted')
+end
+
+if @possibles_unvoted.empty?
+  page.show('none_unvoted')
+else
+  page.hide('none_unvoted')
+end
+

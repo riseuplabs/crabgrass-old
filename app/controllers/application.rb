@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
+  
 
   # the order of these filters matters. change with caution.
   before_filter :fetch_site
@@ -50,8 +51,10 @@ class ApplicationController < ActionController::Base
   end
 
   def mailer_options
-    {:site => @site, :current_user => current_user, :host => request.host,
-     :protocol => request.protocol, :port => request.port_string, :page => @page}
+    opts = {:site => @site, :current_user => current_user, :host => request.host,
+     :protocol => request.protocol, :page => @page}
+    opts[:port] = request.port_string.sub(':','') if request.port_string.any?
+    return opts
   end
   
   # returns true if params[:action] matches one of the args.

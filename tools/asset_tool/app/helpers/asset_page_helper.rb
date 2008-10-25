@@ -32,11 +32,11 @@ module AssetPageHelper
   def destroy_version_link(version)
     action = {
       :url => page_xurl(@page, :action => 'destroy_version', :id => version.version),
-      :confirm => 'are you sure you want to delete this version?',
+      :confirm => 'Are you sure you want to delete this version?'[:delete_version_confirm],
       :before => "$($(this).up('td')).addClassName('busy')",
       :failure => "$($(this).up('td')).removeClassName('busy')"
     }
-    link_to_remote(image_tag('actions/delete.png'), action, :title => 'delete this version')
+    link_to_remote(image_tag('actions/delete.png'), action, :title => 'delete this version'.t)
     # non-ajax? {:href => url_for(:controller => 'asset', :action => 'destroy', :id => @asset.id)})
   end
 

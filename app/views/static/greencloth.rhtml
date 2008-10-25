@@ -37,14 +37,16 @@ pre {
   white-space: -o-pre-wrap;    /* Opera 7 */
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
-pre.code {
-  background: black;
-  color: #0f0;
+pre.code, pre code {
+  display: block;
+  background: #FFF6DD;
+  border: solid 1px;
+  border-color: #FFE8A9;
   padding: 0.5em;
 }
 div.codetitle {
-  background: #333;
-  color: #fff;
+  background: #FFE8A9;
+  color: #614B2A;
   margin-bottom: -1em;
   padding: 0.25em;
   font-weight: bold;
@@ -55,9 +57,9 @@ div.codetitle {
 def row(text)
   %Q(
 <tr>
-  <td class='code'><pre>#{text.gsub('<','&lt;').gsub("\n","<span class='light'>&crarr;</span>\n")}</pre></td>
+  <td class='code'><pre>#{text.gsub('<','&lt;').gsub("\n","<span class='light'>&para;</span>\n").gsub("\t","<span class='light'>&rarr;</span>")}</pre></td>
   <td><b>&rarr;</b></td>
-  <td class='rendered wiki'>#{WholeCloth.new(text).to_html}</td>
+  <td class='rendered wiki'>#{GreenCloth.new(text).to_html}</td>
 </tr>
   )
 end
@@ -74,7 +76,7 @@ end
 
 <table cellpadding='0' cellspacing='10' id='maintable'>
 <tr><td colspan="3">
-Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. In the example source text, the symbol <b>&crarr;</b> is used to indicate where returns are. 
+Crabgrass uses a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language">lightweight markup language<a> called GreenCloth. There are many such markup languages, all with the same purpose: convert plain text into formatted HTML. In the example source text, the symbol <b>&para;</b> is used to indicate where returns are. 
 </tr></td>
 <%=  
 
@@ -120,9 +122,9 @@ bq. This is a blockquote.
 
 You can extend blockquotes for multiple paragraphs by using bq.. (note the double dots):
 
-bq.. "There’s a time when the operation of the machine becomes so odious, makes you so sick at heart, that you can't take part, you can’t even passively take part, and you’ve got to put your bodies upon the gears and upon the wheels, upon the levers, upon all the apparatus, and you’ve got to make it stop!
+bq.. "There's a time when the operation of the machine becomes so odious, makes you so sick at heart, that you can't take part, you can't even passively take part, and you've got to put your bodies upon the gears and upon the wheels, upon the levers, upon all the apparatus, and you've got to make it stop!
 
-And you’ve got to indicate to the people who run it, to the people who own it, that unless you’re free, the machine will be prevented from working at all!"
+And you've got to indicate to the people who run it, to the people who own it, that unless you're free, the machine will be prevented from working at all!"
 
 p. Multiple paragraph blockquotes are ended with p.
 
@@ -131,6 +133,9 @@ END
   header('Formatting') +
   row(<<END) +
 _emphasis_, __italicized__, *strong*, **bold**, ??citation??, -deleted text-, +inserted text+, ^superscript^, ~subscript~, @code@, %(classname)span%
+
+[_emphasis_], [__italicized__], [*strong*], [**bold**], [??citation??], [-deleted text-], [+inserted text+], [^superscript^], [~subscript~], [@code@]
+
 END
 
   header('Links') +
@@ -171,10 +176,12 @@ END
 | penguin   | black  | swim |
 END
   row(<<END) +
-|_. bird    |_. color |_. locomotion  |
-| macaw     | red     | fly  |
-| kakapo    | green   | walk |
-| penguin   | black   | swim |
+Tables can be built with tabs instead of "|" and they can have headers:
+
+	_. bird	_. color	_. locomotion	
+	macaw	red	fly	
+	kakapo	green	walk	
+	penguin	black	swim	
 END
 
   header('Preformatted Code') +

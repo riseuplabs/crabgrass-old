@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081009073916) do
+ActiveRecord::Schema.define(:version => 20081018181941) do
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -85,11 +85,11 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
   add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "discussions", :force => true do |t|
-    t.integer  "posts_count",  :limit => 11, :default => 0
+    t.integer  "posts_count",   :limit => 11, :default => 0
     t.datetime "replied_at"
-    t.integer  "replied_by",   :limit => 11
-    t.integer  "last_post_id", :limit => 11
-    t.integer  "page_id",      :limit => 11
+    t.integer  "replied_by_id", :limit => 11
+    t.integer  "last_post_id",  :limit => 11
+    t.integer  "page_id",       :limit => 11
   end
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
@@ -112,6 +112,13 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
     t.string  "location"
   end
 
+  create_table "external_videos", :force => true do |t|
+    t.string "media_key"
+    t.string "media_url"
+    t.string "media_thumbnail_url"
+    t.text   "media_embed"
+  end
+
   create_table "federatings", :force => true do |t|
     t.integer  "group_id",      :limit => 11
     t.integer  "network_id",    :limit => 11
@@ -124,9 +131,12 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
   create_table "group_participations", :force => true do |t|
-    t.integer "group_id", :limit => 11
-    t.integer "page_id",  :limit => 11
-    t.integer "access",   :limit => 11
+    t.integer  "group_id",       :limit => 11
+    t.integer  "page_id",        :limit => 11
+    t.integer  "access",         :limit => 11
+    t.boolean  "static",                       :default => false
+    t.datetime "static_expires"
+    t.boolean  "static_expired",               :default => false
   end
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
@@ -146,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
     t.string   "language",   :limit => 5
     t.integer  "version",    :limit => 11, :default => 0
     t.boolean  "is_council",               :default => false
+    t.integer  "min_stars",  :limit => 11, :default => 1
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
@@ -235,6 +246,7 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media"
+    t.integer  "stars",              :limit => 11, :default => 0
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
@@ -272,6 +284,10 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
     t.integer  "flow",               :limit => 11
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.boolean  "static"
+    t.datetime "static_expires"
+    t.boolean  "static_expired"
+    t.integer  "stars",              :limit => 11, :default => 0
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -413,6 +429,7 @@ ActiveRecord::Schema.define(:version => 20081009073916) do
     t.integer "asset_id",   :limit => 11
     t.integer "gallery_id", :limit => 11
     t.integer "position",   :limit => 11, :default => 0
+    t.boolean "is_cover",                 :default => false
   end
 
   add_index "showings", ["gallery_id", "asset_id"], :name => "ga"

@@ -15,7 +15,7 @@ class ProfilePhoneNumber < ActiveRecord::Base
   after_destroy {|record| record.profile.save if record.profile}
   
   def self.options
-    %w[Home Fax Mobile Other Pager Work].to_localized_select
+    [:Home,:Fax,:Mobile,:Pager,:Work, :Other].to_localized_select
   end
   
 end

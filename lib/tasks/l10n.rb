@@ -4,6 +4,27 @@
 
 require 'fileutils'
 
+class String
+  def pig
+    return self unless self =~ /^[a-z]/i
+    
+    self =~ /^([a-z]*)(.*)$/i
+    word = $1
+    punctuation = $2
+    leadingCap = word =~ /^[A-Z]/
+    word.downcase!
+    res = case word
+      when /^[aeiouy]/
+        word+"way"
+      when /^([^aeiouy]+)(.*)/
+        $2+$1+"ay"
+      else
+        word
+    end
+    (leadingCap ? res.capitalize : res) + punctuation
+  end
+end
+
 namespace :cg do
   namespace :l10n do
 
@@ -83,14 +104,34 @@ namespace :cg do
         if language
           keys_hash.each do |k,v|
             key = Key.find_or_create_by_name(k)
-            t = Translation.create(:text => v, :key => key, :language => language)
+            if t = Translation.find_by_key_id_and_language_id(key.id,language.id)
+              t.update_attribute('text',v) unless t.text == v
+            else
+              Translation.create(:text => v, :key => key, :language => language)
+            end
           end
         else
-          puts "Language '#{lang_code} does not exist in the database. Try running rake cg:load_default_data"
-          exit
+          puts "skipping language '#{lang_code}' (does not exist in the database)"
         end
       end
     end
-
+    
+    desc "Create a piglatin file for testing"
+    task(:create_piglatin) do
+      english = YAML::load_file(File.join(RAILS_ROOT, 'lang', 'en_US.yml'))
+      piglatin = {}
+      english.each do |k,v|
+        piglatin[k] = v.split.map{|word| word.pig}.join(" ")
+      end
+      # piglatin is latin as spoken in the USA?
+      File.open(File.join(RAILS_ROOT, 'lang', 'la_US.yml'), "w") do |outfile|
+        YAML::dump(piglatin, outfile)
+      end
+    end
+    
+    desc "Enable piglatin in the app"
+    task(:enable_piglatin => :environment) do
+      Language.create(:name => "piglatin", :code => "la_US")
+    end
   end
 end

@@ -10,7 +10,27 @@ class Gallery < Page
     reset_associations(asset)
     true
   end
+  
+  def cover
+    self.cover_showing ? self.cover_showing.asset : nil
+  end
+  
+  def cover_showing
+    self.showings.find_by_is_cover(true) ||
+      self.showings.find_by_position(0) ||
+      self.showings.first
+  end
+  
+  def cover= image_id
+    showing = self.showings.find_by_asset_id(image_id)
+    raise ArgumentError unless showing
+    self.cover_showing.is_cover = false
+    self.cover_showing.save
+    showing.is_cover = true
+    showing.save
+  end
 
+  
   # like add_image!, but does not save the page. Used to build
   # the associations in memory when creating a new page.
   #def add_image(asset, position = nil)
@@ -33,13 +53,13 @@ class Gallery < Page
   end
 
   def check_permissions!(asset)
-    if self.group and !self.group.may?(:view,asset.page)
-      raise PermissionDenied.new('The group that owns this page is not allowed to view that image')
+    if asset.page and self.group and !self.group.may?(:view,asset.page)
+      raise PermissionDenied.new('The group that owns this page is not allowed to view that image'[:group_not_allowed_to_view_image_error])
     end
   end
 
   def check_type!(asset)
-    raise ErrorMessage.new('asset must be an image to be part of a gallery') unless asset.is_image?
+    raise ErrorMessage.new('File must be an image to be part of a gallery'[:file_must_be_image_error]) unless asset.is_image?
   end
 
 end

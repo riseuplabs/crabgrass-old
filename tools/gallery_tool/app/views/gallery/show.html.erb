@@ -5,13 +5,17 @@ div.gallery_swatch {
 }
 <% end %>
 
+<%= gallery_navigation :count, :download, :edit, :upload, :slideshow, :comment, :add_existing %>
+<div id="gallery_cover">
+  <%= thumbnail_img_tag @page.cover, 'large' if @page.cover%>
+</div>
+
+<div id="gallery_overview">
 <% if @images.any? %>
   <%= render :partial => 'image', :collection => @images %>
   <br style='clear:both'/>
   <%= pagination_links @images %>
 <% else %>
-  No images in gallery
+  <%= "No images in gallery"[:no_images_in_gallery] %>
 <% end %>
-
-<p><%= link_to 'add existing image', page_url(@page, :action => 'find') %></p>
-<p><%= link_to 'upload new image', create_page_url(AssetPage,:gallery => @page.id) %></p>
+</div>

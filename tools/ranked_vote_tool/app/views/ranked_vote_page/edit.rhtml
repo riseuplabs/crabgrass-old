@@ -7,32 +7,44 @@
   <%= spinner('progress', :show => true) %> <%= 'Saving...' %>
   </div>
   <div id='instructions'>
-<%= 'Click and drag to arrange the possibilities in order of your preference.'.t  %>
+    <%= :ranked_vote_instructions.t %>
+    <% form_tag page_xurl(@page, :action => 'confirm') do %>
+      <div style='float:right'><%= submit_tag 'Confirm Vote'.t %></div>
+      <br style='clear:right'/>
+    <% end %>
   </div>
 </div>
 
-
-<ul id='sort_list' class='possible_list plainlist'>
+<h3>Voted on</h3>
+<ul id='sort_list_voted' class='possible_list plainlist'>
   <% if @possibles_voted.any? %>
      <%= render :partial => 'possible', :collection => @possibles_voted %>
-  <% # the following is a quick attempt to make the ui clearer when no votes have been cast,
-     # it should be improved by a more advanced developer. It requires a page reload to add or remove the blank lines.
-     #
-     # one possibility is to have a numbered list, with blanks if the user has not voted on everything yet
-    else %>
-    <br /><br />
+     <li id='none_voted' style='display:none'> <%= 'none'.t %> </li>
+  <% else %>
+     <li id='none_voted' > <%= 'none'.t %> </li>
   <% end %>
-  <li id='possible_unordered'> <%= "Things below this line are not yet ranked/tied for last. Move options above this line to vote for them." %> </li>
-  <%= render :partial => 'possible', :collection => @possibles_unvoted %>
 </ul>
 
-
+<h3>Not voted on</h3>
+<ul id='sort_list_unvoted' class='possible_list plainlist'>
+  <% if @possibles_unvoted.any? %>
+    <%= render :partial => 'possible', :collection => @possibles_unvoted %>
+     <li id='none_unvoted' style='display:none'> <%= 'none'.t %> </li>
+  <% else %>
+     <li id='none_unvoted'> <%= 'none'.t %> </li>
+  <% end %>
+</ul>
 
 <ul class='possible_list plainlist'>
   <li id='add_possible_link'><%= render :partial => 'new_possible'%></li>
 </ul>
 
-<%= sortable_element 'sort_list', :handle => 'handle', :url => page_xurl(@page, :action=>'sort'), :loading => "Element.show('progress');Element.hide('instructions')", :complete => "Element.hide('progress'); Element.show('instructions')" %>
+<%= sortable_element 'sort_list_voted', :handle => 'handle',
+  :containment => ['sort_list_voted', 'sort_list_unvoted'], 
+  :url => page_xurl(@page, :action=>'sort') %>
+<%= sortable_element 'sort_list_unvoted', :handle => 'handle',
+  :containment => ['sort_list_voted', 'sort_list_unvoted'],
+  :url => page_xurl(@page, :action=>'sort') %>
 
 </div> <!-- end edit_vote -->
 

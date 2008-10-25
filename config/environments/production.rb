@@ -47,6 +47,10 @@ end
 
 # the default log level for production should be to only log warnings. 
 config.log_level = :warn
+if defined? Engines
+  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
+  Engines.logger.level = Logger::WARN
+end
 
 #ANALYZABLE_PRODUCTION_LOG = "#{RAILS_ROOT}/log/production.log"
 ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
@@ -60,4 +64,5 @@ ANALYZABLE_PRODUCTION_LOG = "/var/log/rails.log"
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/public/assets"
+KEYRING_STORAGE = "#{RAILS_ROOT}/assets/keyrings"
 

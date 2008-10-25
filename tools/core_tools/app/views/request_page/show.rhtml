@@ -2,18 +2,19 @@
 <b><%= @request.name %></b>
 <% if @page.resolved? and @request.vote %>
 <div>
-   This request was <b><%= @request.vote.value == 1 ? 'approved' : 'rejected' %></b>
-   by <b><%= @request.vote.user.login %></b>
-   on <%= @request.vote.created_at %>
+  <%= "This request was :status by :user on :time"[:request_status] % {
+   :staus => content_tag(:b, @request.vote.value == 1 ? 'approved'.t : 'rejected'.t),
+   :user => content_tag(:b, @request.vote.user.login),
+   :time => @request.vote.created_at} %>
 </div>
 <% else %>
-  <%= button_to 'approve', page_url(@page, :action => 'approve') %>
-  <%= button_to 'reject', page_url(@page, :action => 'reject') %>
+  <%= button_to 'approve'[:approve_button], page_url(@page, :action => 'approve') %>
+  <%= button_to 'reject'[:reject_button], page_url(@page, :action => 'reject') %>
 <% end  %>
 <p>
 <% if @link and current_user.may?(:admin, @link) -%>
 <% with_name = @link.group_name || @page.created_by.name %>
-<%= link_to 'discuss this request with %s'.t % with_name, page_url(@link) -%>
+<%= link_to 'discuss this request with %s'[:discuss_request_link] % {:person_or_group => with_name}, page_url(@link) -%>
 <% end -%>
 </p>
 </blockquote>

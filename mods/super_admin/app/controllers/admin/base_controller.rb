@@ -1,5 +1,6 @@
 class Admin::BaseController < ActionController::Base
 
+  include ActionView::Helpers::TagHelper 
   include ErrorHelper
   include AuthenticatedSystem
 

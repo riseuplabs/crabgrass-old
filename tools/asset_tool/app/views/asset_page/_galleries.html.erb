@@ -7,7 +7,7 @@
   <% end -%>
   <% if galleries.any? %>
     <% form_tag(page_url(@page, :action => 'add_to_gallery')) do %>
-      <%= select_tag('gallery_id', options_for_select([['galleries...','']] + galleries.to_select(:title))) %>
+      <%= select_tag('gallery_id', options_for_select([["#{'galleries'.t}…",'']] + galleries.to_select(:title))) %>
       <%= submit_tag 'add to' %>
     <% end %>
   <% end %>

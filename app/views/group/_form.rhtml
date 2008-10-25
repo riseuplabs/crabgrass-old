@@ -9,14 +9,14 @@
 
 <p>
   <label for="group_full_name">
-    <b>Full name</b><br/>
-    A descriptive name used for display.
+    <b><%= "Full name"[:fullname]%></b><br/>
+    <%= "A descriptive name used for display."[:descriptive_name_for_display]%>
   </label><br/>
   <%= text_field 'group', 'full_name', :size => 30  %>
 </p>
 
 <p>
-  <label for="group_name"><b>Link Name</b><br>This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.</label><br/>
+  <label for="group_name"><b><%= "Link Name"[:link_name] %></b><br>This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.</label><br/>
   <% if @parent -%>
     <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
   <% else -%>
@@ -26,10 +26,19 @@
 
 <p>
   <label for="group_language">
-    <b>Language</b><br/>
+    <b><%= "Language"[:language] %></b><br/>
     <%= 'The main language of this %s.'[:group_language] % group_type %>
   </label>
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
+</p>
+
+
+<p>
+  <label for="group_min_stars">
+    <b><%= "Minimum stars for important pages"[:minimum_stars_for_important_pages] %></b><br/>
+   <%= "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"[:minimum_stars_for_important_pages_description] %>
+  </label>
+  <%= text_field :group, :min_stars %>
 </p>
 
 
@@ -41,7 +50,7 @@
   <%= text_field 'group', 'summary', :size => 30, :maxlength => 256  %>
 </p>
 
-  <%= submit_tag 'Save changes'.t if submit %>
+  <%= submit_tag 'Save changes'[:save_changes] if submit %>
 
 <br/><br/>
 
@@ -54,7 +63,7 @@
 <p><%= check_box :group, :publicly_visible_group, :onclick => "show_or_hide_vis_opts();" %>
 <label for="group_visible"><b><%= 'Make %s Publicly Visible'[:group_publicly_visible] % group_type.capitalize %></b></label>
 <br>
-Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
+<%= "Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname."[:group_publicly_visible_description] %>
 </p>
 
 <div id='visible_group_options' style='margin-left: 2em'>
@@ -63,14 +72,14 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
   <p><%= check_box :group, :publicly_visible_committees %>
   <label for="group_visible"><b><%= 'Make Committees Publicly Visible'[:committee_publicly_visible] %></b></label>
   <br>
-  Committees are viewable by non-members at we.riseup.net/yourgroupname
+  <%= "Committees are viewable by non-members at we.riseup.net/yourgroupname"[:committee_publicly_visible_description] %>
   </p>
 <% end -%>
 
   <p><%= check_box :group, :publicly_visible_members %>
-  <label for="group_visible"><b>Make Members Publicly Visible</b></label>
+  <label for="group_visible"><b><%= "Make Members Publicly Visible"[:group_members_publicly_visible] %></b></label>
   <br>
-  Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
+<%= "  Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)"[:group_members_publicly_visible_description] %>
   </p>
 
   <p><%= check_box :group, :accept_new_membership_requests %>
@@ -80,7 +89,9 @@ Group appears in public directory and group <i>profile</i> is viewable by non-me
   </p>
 </div>
 
-  <%= submit_tag 'Save changes'.t if submit%>
+
+  <%= submit_tag 'Save changes'[:save_changes] if submit%>
+
 
 <!--[eoform:group]-->
 

@@ -68,18 +68,19 @@ class RankedVotePageController < BasePageController
   # and it must be declared sortable like this:
   # <%= sortable_element 'sort_list_xxx', .... %>
   def sort
-    sort_list_key = params.keys.grep(/^sort_list/)
-    return unless sort_list_key.any?
-    
-    @poll.delete_votes_by_user(current_user)
-    ids = params[sort_list_key[0]]
-    ids.each_with_index do |id, rank|
-      break if id == 'unordered'
-      possible = @poll.possibles.find(id)
-      possible.votes.create :user => current_user, :value => rank
+    if params[:sort_list_voted].empty?
+      render :nothing => true
+      return
+    else
+      @poll.delete_votes_by_user(current_user)
+      ids = params[:sort_list_voted]
+      ids.each_with_index do |id, rank|
+        next unless id.to_i != 0
+        possible = @poll.possibles.find(id)
+        possible.votes.create :user => current_user, :value => rank
+      end
+      find_possibles
     end
-
-    render :nothing => true
   end
   
   def update_possible
@@ -100,6 +101,13 @@ class RankedVotePageController < BasePageController
     render :nothing => true
   end
   
+  def confirm
+    # right now, this is just an illusion, but perhaps we should make the vote
+    # only get saved after confirmation. people like the confirmation, rather
+    # then the weird ajax-only sorting.
+    redirect_to page_url(@page)
+  end
+
   protected
 
   # returns:

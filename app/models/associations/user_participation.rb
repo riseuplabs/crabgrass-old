@@ -19,6 +19,9 @@ class UserParticipation < ActiveRecord::Base
   belongs_to :user
   serialize :notice
 
+  #use this for counting stars :)
+  include PageExtension::Static::UserParticipationMethods
+  
   def access_sym
     ACCESS_TO_SYM[self.access]
   end

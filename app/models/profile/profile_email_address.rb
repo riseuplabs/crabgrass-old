@@ -16,7 +16,7 @@ class ProfileEmailAddress < ActiveRecord::Base
   after_destroy {|record| record.profile.save if record.profile}
   
   def self.options
-    %w[Home Work School Personal Group Other].to_localized_select
+    [:Home, :Work, :School, :Personal, :Group, :Other].to_localized_select
   end
   
 end

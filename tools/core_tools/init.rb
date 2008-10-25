@@ -9,7 +9,7 @@ PageClassRegistrar.add(
   :controller => 'discussion_page',
   :icon => 'discussion.png',
   :class_display_name => 'group discussion',
-  :class_description => 'A group discussion on a particular topic.',
+  :class_description => :group_discussion_class_description,
   :class_group => 'discussion',
   :order => 2
 )
@@ -19,7 +19,7 @@ PageClassRegistrar.add(
   :controller => 'message_page',
   :icon => 'message.png',
   :class_display_name => 'personal message',
-  :class_description => 'A personal message sent to individual recipients.',
+  :class_description => :personal_message_class_description,
   :class_group => 'message',
   :order => 1
 )

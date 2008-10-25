@@ -1,0 +1,14 @@
+<% unless request.xhr? -%>
+  <%= gallery_navigation :show %>
+<% end -%>
+
+<h2>Upload Images</h2>
+<% form_tag page_url(@page, :action => 'upload'), :method => :post, :multipart => true do -%>
+  <table>
+    <%= render :partial => 'upload' -%>
+  </table>
+  <%= submit_tag "upload".t %>
+  <%= button_to_function "cancel".t, "new Effect.SlideUp($('target_for_upload'));" %>
+<% end -%>
+
+<%= javascript_tag "if($('target_for_upload')) $('target_for_upload').show();" %>
