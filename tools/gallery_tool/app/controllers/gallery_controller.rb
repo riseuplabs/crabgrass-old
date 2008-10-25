@@ -4,6 +4,7 @@ class GalleryController < BasePageController
   javascript :extra
   
   include GalleryHelper
+  include BasePageHelper
   include ActionView::Helpers::JavascriptHelper
   
 
@@ -88,10 +89,20 @@ class GalleryController < BasePageController
   
   def make_cover
     unless current_user.may?(:admin, @page)
-      raise PermissionDenied
+      if request.xhr?
+        render(:text => "You are not allowed to do that!"[:you_are_not_allowed_to_do_that],
+               :layout => false) and return
+      else
+        raise PermissionDenied
+      end
     end
     @page.cover = params[:id]
-    redirect_to page_url(@page, :action => 'edit')
+    if request.xhr?
+      render :text => :album_cover_changed.t, :layout => false
+    else
+      flash_message(:album_cover_changed.t)
+      redirect_to page_url(@page, :action => 'edit')
+    end
   rescue ArgumentError # happens with wrong ID
     raise PermissionDenied
   end
@@ -102,7 +113,7 @@ class GalleryController < BasePageController
     # see my comment in app/models/asset.rb for details.
     #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
     results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-        current_user.may?(:view, a.page) ? a : nil
+        current_user.may?(:view, a) ? a : nil
     }
     current_page = (params[:page] or 1)
     per_page = 30

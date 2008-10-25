@@ -5,7 +5,8 @@
 class Showing < ActiveRecord::Base
   belongs_to :gallery
   belongs_to :asset
-
+  belongs_to :page
+  
   acts_as_list :scope => :gallery
   
   belongs_to :discussion
@@ -15,6 +16,12 @@ class Showing < ActiveRecord::Base
       create_discussion
     end
     discussion.posts
+  end
+  
+  def page
+    unless page
+      page = ShowingPage.new
+    end
   end
   
   alias :image :asset

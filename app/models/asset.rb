@@ -60,17 +60,21 @@ class Asset < ActiveRecord::Base
   }
   
   def has_access! perm, user
-    # everything becomes PermissionDenied (e.g. also if self.page is nil)
-    self.page.has_access! perm, user rescue raise PermissionDenied
-  rescue PermissionDenied
-    # if the gallery_tool is disabled Gallery doesn't exist, so we don't check
-    # anything at all. otherwise we check if there are any galleries this image
-    # is in and the given user has access to.
+    self.page.has_access! perm, user
+  rescue
+    Gallery rescue nil # assure load_missing_constant loads this if possible
     unless defined?(Gallery) &&
-        self.kind_of?(ImageAsset) &&
+        self.galleries.any? &&
         self.galleries.select {|g| user.may?(perm, g) ? g : nil}.any?
       raise PermissionDenied
     end
+    true
+  end
+  
+  def is_cover_of? gallery
+    raise ArgumentError.new() unless gallery.kind_of? Gallery
+    showing = gallery.showings.find_by_asset_id(self.id)
+    !showing.nil? && showing.is_cover
   end
 
   named_scope :not_attachment, :conditions => ['is_attachment = ?',false]

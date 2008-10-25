@@ -190,6 +190,8 @@ module PageHelper
       page.group_name ? link_to_group(page.group_name) : '&nbsp;'
     elsif column == :contributors_count or column == :contributors
       page.contributors_count
+    elsif column == :stars_count or column == :stars
+      page.stars
     elsif column == :owner
       page.group_name || page.created_by_login
     elsif column == :owner_with_icon
