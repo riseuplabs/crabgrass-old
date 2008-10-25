@@ -12,8 +12,9 @@ class AssetPageController < BasePageController
   def create
     @page_class = AssetPage
     @stylesheet = 'page_creation'
-    if request.post?
-      return redirect_to(create_page_url) if params[:cancel]
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
       begin
         # create asset
         @asset = Asset.make params[:asset]
@@ -26,8 +27,8 @@ class AssetPageController < BasePageController
         params[:page][:title] = @asset.basename unless params[:page][:title].any?
         @page = @page_class.create!(params[:page].merge(
           :user => current_user,
-          :share_with => Group.find_by_id(params[:group_id]),
-          :access => :admin,
+          :share_with => params[:recipients],
+          :access => params[:access],
           :data => @asset
         ))  
         redirect_to(page_url(@page))

@@ -128,15 +128,6 @@ format: Format
 regenerate: regenerate thumbnails
 version_number: version :version
 
-# TODO: possible values for @page_class.class_display_name.t
-file: File
-title: Title
-summary: Summary
-tags: Tags
-separate_tags: Separate tags using commas.
-just_me: no one, just me
-data_for_page_missing: The data for this page is missing.
-information: Information
 history: History
 other_formats: Other Formats
 subject_must_not_be_empty: subject must not be empty
@@ -221,16 +212,16 @@ activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rea
 drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
 no_images_in_gallery: No images in Gallery
 add_existing_image: add existing image
-upload_new_image: upload new image
+upload_new_image: "upload new image"
 add_photo_to_gallery: "add photo to gallery:"
-cancel_link: cancel
+cancel_link: "cancel"
 file_must_be_image_error: "File must be an image to be part of a gallery."
 group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
 add_another_file: "Add another file"
-file: "File"
+File: "File"
 slideshow_delay_input: "Update every :input_field seconds"
-add_comment: add comment
-make_album_cover: make this image the album cover
+add_comment: "add comment"
+make_album_cover: "make this image the album cover"
 image_title: "Image title: %s"
 
 ##
@@ -420,54 +411,73 @@ send_invites_headline: Send invitations to join {group}
 ## PAGES
 ##
 
-all_page_types: all page types
-page_list_heading_updated_by: updated by
-page_list_heading_created_by: created by
-page_list_heading_title: title
-page_list_heading_created: created
-page_list_heading_updated: updated
-page_list_heading_posts: posts
-updated: updated
-created: created
-unread: unread
-starred: starred
-pagination_next: next
-pagination_previous: prev
-all_people: all people
-all_groups: all groups
-all_states: all states
-create_a_new_page: Create a new page
-create_page_headline: Create a new {page_class}
-create_a_new_something: create new {something}
-create_page_button: Create page
-create_page: Create Page
-back_button: Back
-create_page_button: Create page
-wiki_class_description: A free-form text document.
-wiki: wiki
-collection_class_description: Special pages that hold other pages.
-collection: collection
-folder_class_description: A collection of assets.
-folder: folder
-task_list_class_description: A list of todo items.
-task_list: task list
-gallery_class_description: A collection of images.
-gallery: gallery
-approval_vote_class_description: Approve or disapprove of each possibility.
-approval_vote: approval vote
-group_discussion_class_description: A group discussion on a particular topic.
-group_discussion: group discussion
-personal_message_class_description: A personal message sent to individual recipients.
-personal_message: personal message
-ranked_vote_class_description: Rank possibilities in order of preference.
-ranked_vote: ranked vote
-file_class_description: An uploaded file.
-tasks: tasks
-video_class_description: Show a video hosted on an external website.
-video: video
-page_info: Page Info
-access_info: Access Info
+all_page_types: "all page types"
+page_list_heading_updated_by: "updated by"
+page_list_heading_created_by: "created by"
+page_list_heading_title: "title"
+page_list_heading_created: "created"
+page_list_heading_updated: "updated"
+page_list_heading_posts: "posts"
+updated: "updated"
+created: "created"
+unread: "unread"
+starred: "starred"
+pagination_next: "next"
+pagination_previous: "prev"
+all_people: "all people"
+all_groups: "all groups"
+all_states: "all states"
+create_a_new_page: "Create a new page"
+create_page_headline: "Create a new {page_class}"
+create_a_new_something: "create new {something}"
+create_page_button: "Create page"
+create_page: "Create Page"
+back_button: "Back"
+create_page_button: "Create {page_class}"
+wiki_class_description: "A free-form text document."
+wiki: "wiki"
+collection_class_description: "Special pages that hold other pages."
+collection: "collection"
+folder_class_description: "A collection of assets."
+folder: "folder"
+task_list_class_description: "A list of todo items."
+task_list: "task list"
+gallery_class_description: "A collection of images."
+gallery: "gallery"
+approval_vote_class_description: "Approve or disapprove of each possibility."
+approval_vote: "approval vote"
+group_discussion_class_description: "A group discussion on a particular topic."
+group_discussion: "discussion"
+personal_message_class_description: "A personal message sent to individual recipients."
+personal_message: "personal message"
+ranked_vote_class_description: "Rank possibilities in order of preference."
+ranked_vote: "ranked vote"
+file: "file"
+file_class_description: "An uploaded file."
+tasks: "tasks"
+video_class_description: "Show a video hosted on an external website."
+video: "video"
 
+title: "Title"
+summary: "Summary"
+tags: "Tags"
+separate_tags: "Separate tags using commas."
+data_for_page_missing: "The data for this page is missing."
+information: "Information"
+
+share_page_options: "Choose options"
+share_page_recipients: "Share this {page_class} with"
+share_page_recipients_sections: "Choose from your groups or friends"
+share_page_recipients_selection: "Make your selection"
+share_page_recipients_results: "This {page_class} will be shared with"
+grant_access: "Grant Access"
+share_page_email: "Send an email notification"
+share_page_message: "Send a message (optional)"
+coordinator: "Coordinator"
+participant: "Participant"
+viewer: "Viewer"
+no_change: "no change"
+   
 ##
 ## DATES
 ## 

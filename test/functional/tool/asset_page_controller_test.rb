@@ -56,7 +56,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
 
     get 'create'
 
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :group_id => groups(:rainbow).id
+    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :recipients => { 'rainbow' => '1' }
     assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group"
     assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group"
     

@@ -33,7 +33,7 @@ module PageExtension::Create
         # extract extra attributes
         user       = attributes.delete(:user)
         recipients = attributes.delete(:share_with)
-        access     = attributes.delete(:access) || :admin
+        access     = (attributes.delete(:access) || :admin).to_sym
         attributes[:created_by] ||= user
         attributes[:updated_by] ||= user
         Page.transaction do

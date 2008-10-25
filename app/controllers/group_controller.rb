@@ -175,14 +175,18 @@ class GroupController < ApplicationController
      
   # login required
   # post required
+  # TODO: this is messed up.
   def update
     @group.update_attributes(params[:group])
     
-    @group.publicly_visible_group = params[:group][:publicly_visible_group] if params[:group]
-    @group.publicly_visible_committees = params[:group][:publicly_visible_committees] if params[:group]
-    @group.publicly_visible_members = params[:group][:publicly_visible_members] if params[:group]
-    @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests] if params[:group]
-    @group.min_stars = params[:group][:min_stars]
+    if params[:group]
+      @group.publicly_visible_group         = params[:group][:publicly_visible_group]
+      @group.publicly_visible_committees    = params[:group][:publicly_visible_committees]
+      @group.publicly_visible_members       = params[:group][:publicly_visible_members]
+      @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests]
+      @group.min_stars = params[:group][:min_stars]
+    end
+
     if @group.save
       redirect_to :action => 'edit', :id => @group
       flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
