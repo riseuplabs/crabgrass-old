@@ -222,9 +222,9 @@ class GroupController < ApplicationController
     else
       @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page]))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
-        @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
+        @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
       else
-        @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+        @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
       end
     end
     handle_rss :title => @group.name, :description => @group.summary,

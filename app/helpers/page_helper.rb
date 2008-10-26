@@ -126,7 +126,7 @@ module PageHelper
   # if you want the links to take it into account instead of params[:path]
   def list_heading(text, action, select_by_default=false)
     return "<th nowrap>#{text}</th>" unless 
-      %w(created_at created_by_login updated_at updated_by_login group_name title starts_at posts_count stars stars_count).include? action 
+      %w(created_at created_by_login updated_at updated_by_login group_name title starts_at posts_count contributors_count stars_count).include? action 
 
     path = filter_path
     parsed = parsed_path
@@ -257,6 +257,8 @@ module PageHelper
       list_heading image_tag('ui/person-dark.png'), 'contributors_count'
     elsif column == :last_post
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at'
+    elsif column == :stars or column == :stars_count
+      list_heading 'stars'[:page_list_heading_stars], 'stars_count'
     elsif column
       list_heading column.to_s.t, column.to_s
     end    
