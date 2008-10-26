@@ -162,3 +162,23 @@
   </table>
 </div>
 
+<div class="section">
+  <table>
+    <tr>
+      <td class="label" valign="top">
+        <%= _('Public Encryption Keys') -%>
+      </td>
+      <td class="form">
+        <table>
+          <tbody id="profile_crypt_keys">
+            <% @profile.crypt_keys.each_with_index do |crypt_key, index| -%>
+              <%= render :partial => 'crypt_key', :locals => { :crypt_key => crypt_key, :index => index } %>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= add_row_link 'Add Encryption Key'.t, 'add_crypt_key' %>
+      </td>
+    </tr>
+  </table>
+</div>
+

@@ -302,7 +302,7 @@ class GroupControllerTest < Test::Unit::TestCase
     g.committees << c
     u = User.create! :login => 'user', :password => 'password', :password_confirmation => 'password'
     assert u.id
-    c.memberships.create :user => u
+    c.add_user! u
     c.save
     u.reload
 

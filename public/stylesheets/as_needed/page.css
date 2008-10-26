@@ -34,3 +34,22 @@ a.asset {
   outline: 0;
 }
 */
+
+table.share_page_recipients th {
+  width: 10em;
+}
+table.share_page_recipients td {
+  vertical-align: top;
+}
+table.share_page_recipients div.scroll {
+  overflow: auto;
+  height: 20em;
+  width: 13em;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  font-size: 0.8em;
+}
+table.share_page_recipients div.scroll a {
+  font-size: 0.8em;
+}
+

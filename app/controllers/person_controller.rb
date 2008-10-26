@@ -19,6 +19,7 @@ class PersonController < ApplicationController
   
   def show
     params[:path] ||= "descending/updated_at"
+    @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
     search
   end
 

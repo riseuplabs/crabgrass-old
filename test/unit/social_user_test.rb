@@ -16,25 +16,25 @@ class SocialUserTest < Test::Unit::TestCase
     assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'
     assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
 
-    m = group.memberships.create :user => u1
+    group.add_user! u1
     u1.reload; u2.reload
 
     assert u1.peer_of?(u2), 'user with membership change (red) should have other user (kangaroo) as a peer'
     assert u2.peer_of?(u1), 'other user (kangaroo) should have user with membership change (red) as a peer.'
 
-    u1.groups.delete group
+    group.remove_user! u1
     u1.reload; u2.reload
 
     assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'
     assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
 
-    u1.memberships.create :group => group
+    group.add_user! u1
     u1.reload; u2.reload
 
     assert u1.peer_of?(u2), 'user with membership change (red) should have other user (kangaroo) as a peer'
     assert u2.peer_of?(u1), 'other user (kangaroo) should have user with membership change (red) as a peer.'
 
-    group.users.delete u1
+    group.remove_user! u1
     u1.reload; u2.reload
 
     assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'

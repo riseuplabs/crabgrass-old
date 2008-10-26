@@ -1,5 +1,5 @@
 # copied from:
-# Crabgrass - project management software
+# redmine - project management software
 # Copyright (C) 2006-2008  Jean-Philippe Lang
 # GPL v2 +
 

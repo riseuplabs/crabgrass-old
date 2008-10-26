@@ -38,7 +38,7 @@ class RequestToFriend < Request
   end
 
   def after_approval
-    recipient.contacts << created_by
+    recipient.add_contact!(created_by)
   end
 
   def description

@@ -2,8 +2,9 @@ class ExternalVideoPageController < BasePageController
   def create
     @page_class = ExternalVideoPage
     @stylesheet = 'page_creation'
-    if request.post?
-      return redirect_to(create_page_url) if params[:cancel]
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
       begin
         @external_video = ExternalVideo.new(params[:external_video])
         unless @external_video.valid?

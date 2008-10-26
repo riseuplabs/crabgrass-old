@@ -97,6 +97,7 @@ class Profile < ActiveRecord::Base
   has_many   :phone_numbers,   :class_name => '::ProfilePhoneNumber', :dependent => :destroy, :order=>"preferred desc"
   has_many   :websites,        :class_name => '::ProfileWebsite', :dependent => :destroy, :order=>"preferred desc"
   has_many   :notes,           :class_name => '::ProfileNote', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :crypt_keys,      :class_name => '::ProfileCryptKey', :dependent => :destroy, :order=>"preferred desc"
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -105,7 +106,8 @@ class Profile < ActiveRecord::Base
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
-      'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote
+      'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote,
+      'crypt_keys'      => ::ProfileCryptKey
     }
     
     profile_params.stringify_keys!

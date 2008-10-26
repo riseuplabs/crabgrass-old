@@ -5,10 +5,9 @@ Everything to do with user <> group relationships should be here.
 How to use
 -----------
  
-There are two valid ways to establish membership between user and group:
+There is only one valid way to establish membership between user and group:
 
-group.memberships.create :user => user
-user.memberships.create :group => group
+group.add_user! user
 
 Other methods should not be used!
 
@@ -24,15 +23,7 @@ module UserExtension::Organize
     base.instance_eval do
       has_many :memberships, :foreign_key => 'user_id',
         :dependent => :destroy,
-        :before_add => :check_duplicate_memberships,
-        :after_add => [
-          :update_membership_cache,
-          :clear_peer_cache_of_my_peers,
-          :increment_group_version],
-        :after_remove => [
-          :clear_peer_cache_of_my_peers,
-          :update_membership_cache,
-          :increment_group_version]
+        :before_add => :check_duplicate_memberships
       
       has_many :groups, :foreign_key => 'user_id', :through => :memberships do
         def <<(*dummy)
