@@ -51,7 +51,7 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     @page        = options[:page] || 1
 
     apply_filters_from_path( @path )
-    @order = "page_updated_at DESC" unless @order.any?
+    @order = nil unless @order.any? # the default sphinx sort is "@relevance DESC"
   end
 
   def find

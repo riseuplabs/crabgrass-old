@@ -126,28 +126,27 @@ module PageHelper
   # if you want the links to take it into account instead of params[:path]
   def list_heading(text, action, select_by_default=false)
     return "<th nowrap>#{text}</th>" unless 
-      %(created_at created_by_login updated_at updated_by_login group_name title starts_at posts_count).include? action 
+      %w(created_at created_by_login updated_at updated_by_login group_name title starts_at posts_count stars stars_count).include? action 
 
     path = filter_path
     parsed = parsed_path
     selected = false
     arrow = ''
-    if parsed.keyword?('ascending')
-      link = page_path_link(text,"descending/#{action}")
-      if parsed.first_arg_for('ascending') == action
-        selected = true
+    if parsed.sort_arg?(action)
+      selected = true
+      if parsed.keyword?('ascending')
+        link = page_path_link(text,"descending/#{action}")
         arrow = image_tag('ui/sort-asc.png')
-      end
-    elsif parsed.keyword?('descending')
-      link = page_path_link(text,"ascending/#{action}")
-      if parsed.first_arg_for('descending') == action
-        selected = true
+      else
+        link = page_path_link(text,"ascending/#{action}")
         arrow = image_tag('ui/sort-desc.png')
       end
-    else
+    elsif %w(title created_by_login updated_by_login group_name).include? action
       link = page_path_link(text, "ascending/#{action}")
       selected = select_by_default
-      arrow = image_tag('ui/sort-desc.png') if selected
+    else
+      link = page_path_link(text, "descending/#{action}")
+      selected = select_by_default
     end
     "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
   end
