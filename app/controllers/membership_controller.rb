@@ -44,7 +44,7 @@ class MembershipController < ApplicationController
       new_ids.each do |id|
         next unless id.any?
         u = User.find(id)
-        @group.memberships.create(:user => u) if u.member_of?(@group.parent) and not u.direct_member_of?(@group)
+        @group.add_user!(u) if u.member_of?(@group.parent) and not u.direct_member_of?(@group)
       end
       flash_message :success => 'member list updated'
     end

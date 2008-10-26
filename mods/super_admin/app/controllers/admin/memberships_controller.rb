@@ -4,7 +4,7 @@ class Admin::MembershipsController < Admin::BaseController
 
   def create
     if @group and @user
-      @group.memberships.create :user => @user
+      @group.add_user!(@user)
     else
       flash[:notice] = 'no such user or group'
     end
@@ -12,7 +12,7 @@ class Admin::MembershipsController < Admin::BaseController
   end
 
   def destroy
-    @membership.destroy
+    @membership.group.remove_user!(@membership.user)
     redirect_to edit_group_path(@group)
   end
 

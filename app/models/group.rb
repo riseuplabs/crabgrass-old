@@ -24,6 +24,9 @@
 class Group < ActiveRecord::Base
   attr_accessible :name, :full_name, :short_name, :summary, :language
 
+   # not saved to database, just used by activity feed:
+  attr_accessor :created_by, :destroyed_by
+
   ##
   ## FINDERS
   ## 
@@ -92,21 +95,14 @@ class Group < ActiveRecord::Base
   ## 
 
   has_many :memberships, :dependent => :destroy,
-    :before_add => :check_duplicate_memberships,
-    :after_add => :update_membership,
-    :after_remove => :update_membership
+    :before_add => :check_duplicate_memberships
 
   has_many :users, :through => :memberships do
     def <<(*dummy)
       raise Exception.new("don't call << on group.users");
     end
     def delete(*records)
-      super(*records)
-      records.each do |user|
-        user.clear_peer_cache_of_my_peers
-        user.update_membership_cache
-      end
-      proxy_owner.increment!(:version)
+      raise Exception.new("don't call delete on group.users");
     end
   end
   
@@ -121,14 +117,6 @@ class Group < ActiveRecord::Base
   # association callback
   def check_duplicate_memberships(membership)
     membership.user.check_duplicate_memberships(membership)
-  end
-
-  # association callback
-  def update_membership(membership)
-    @user_ids = nil
-    self.increment!(:version)
-    membership.user.update_membership_cache
-    membership.user.clear_peer_cache_of_my_peers
   end
 
   def relationship_to(user)
@@ -148,18 +136,29 @@ class Group < ActiveRecord::Base
     ret
   end
   
-  # this is the preferred way to add users to a group.
-  # all other methods are deprecated.
+  # this is the ONLY way to add users to a group.
+  # all other methods will not work.
   def add_user!(user)
-    memberships.create! :user => user
+    self.memberships.create! :user => user
+    user.update_membership_cache
+    user.clear_peer_cache_of_my_peers
+
+    @user_ids = nil
+    self.increment!(:version)
   end
   
-  # this is the preferred way to remove users from a grou.
-  # all other methods are deprecated.
+  # this is the ONLY way to remove users from a group.
+  # all other methods will not work.
   def remove_user!(user)
-    membership = memberships.detect{|m|m.user_id == user.id}
+    membership = self.memberships.find_by_user_id(user.id)
     raise ErrorMessage.new('no such membership') unless membership
+
+    user.clear_peer_cache_of_my_peers
     membership.destroy
+    user.update_membership_cache
+
+    @user_ids = nil
+    self.increment!(:version)
   end
   
 # maps a user <-> group relationship to user <-> language

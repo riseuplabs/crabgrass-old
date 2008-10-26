@@ -9,7 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081018181941) do
+ActiveRecord::Schema.define(:version => 20081026033235) do
+
+  create_table "activities", :force => true do |t|
+    t.integer  "subject_id",   :limit => 11
+    t.string   "subject_type"
+    t.integer  "object_id",    :limit => 11
+    t.string   "object_type"
+    t.string   "type"
+    t.string   "extra"
+    t.integer  "key",          :limit => 11
+    t.boolean  "public",                     :default => false
+    t.datetime "created_at"
+  end
+
+  execute "CREATE INDEX subject_0_4_0 ON activities (subject_id,subject_type(4),public)"
+  add_index "activities", ["created_at"], :name => "created_at"
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -83,6 +98,16 @@ ActiveRecord::Schema.define(:version => 20081018181941) do
   end
 
   add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
+
+  create_table "crypt_keys", :force => true do |t|
+    t.integer "profile_id",  :limit => 11
+    t.boolean "preferred",                 :default => false
+    t.text    "key"
+    t.string  "keyring"
+    t.string  "fingerprint"
+    t.string  "name"
+    t.string  "description"
+  end
 
   create_table "discussions", :force => true do |t|
     t.integer  "posts_count",   :limit => 11, :default => 0
@@ -426,10 +451,14 @@ ActiveRecord::Schema.define(:version => 20081018181941) do
   add_index "requests", ["updated_at"], :name => "updated_at"
 
   create_table "showings", :force => true do |t|
-    t.integer "asset_id",   :limit => 11
-    t.integer "gallery_id", :limit => 11
-    t.integer "position",   :limit => 11, :default => 0
-    t.boolean "is_cover",                 :default => false
+    t.integer "asset_id",         :limit => 11
+    t.integer "gallery_id",       :limit => 11
+    t.integer "position",         :limit => 11, :default => 0
+    t.boolean "is_cover",                       :default => false
+    t.integer "stars",            :limit => 11
+    t.integer "comment_id_cache", :limit => 11
+    t.integer "discussion_id",    :limit => 11
+    t.string  "title"
   end
 
   add_index "showings", ["gallery_id", "asset_id"], :name => "ga"

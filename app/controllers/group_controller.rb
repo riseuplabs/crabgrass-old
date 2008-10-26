@@ -34,7 +34,8 @@ class GroupController < ApplicationController
     @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
     @profile = @group.profiles.send(@access)
     @committees = @group.committees_for @access
-    
+    @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
+
     @wiki = private_or_public_wiki()
   end
 
@@ -202,6 +203,7 @@ class GroupController < ApplicationController
       flash_message :error => 'You can only delete a group if you are the last member'[:only_last_member_can_delete_group]
       redirect_to :action => 'show', :id => @group
     else
+      @group.destroyed_by = current_user
       if @group.parent
         parent = @group.parent
         parent.remove_committee!(@group)

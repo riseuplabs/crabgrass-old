@@ -39,7 +39,7 @@ class RequestToJoinYou < Request
   end
 
   def after_approval
-    group.memberships.create :user => created_by, :group => group
+    group.add_user! created_by
   end
 
   def description

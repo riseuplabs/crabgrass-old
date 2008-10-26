@@ -185,6 +185,18 @@ current_video_sources: "currently supported: youtube, blip.tv, google video, vim
 video_embed_code_prompt: Embed code from external video source
 
 ##
+## ACTIVITIES
+## 
+
+activity_contact_created: "{user} added {other_user} as a contact"
+activity_user_status: "{user} is now {status}"
+activity_user_left_group: "{user} has left {group_type} {group}"
+activity_user_joined_group: "{user} has joined {group_type} {group}"
+activity_user_destroyed: "{user} has retired"
+activity_group_created: "{user} created {group_type} {group}"
+activity_group_destroyed: "{group} was destroyed by {user}"
+
+##
 ## GALLERY
 ##
 
