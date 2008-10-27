@@ -12,7 +12,7 @@ function quickRedReference() {
 }
 
 function show_tab(tab_link, tab_content) {
-  $$('ul.tabset.top a').each( function(elem) {
+  $$('ul.tabset a').each( function(elem) {
     elem.removeClassName('selected');
   })
   $$('.tab-content').each( function(elem) {

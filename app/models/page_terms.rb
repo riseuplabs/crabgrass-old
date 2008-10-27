@@ -79,7 +79,7 @@ class PageTerms < ActiveRecord::Base
 
       # index options
       set_property :delta => true
-
+      set_property :field_weights => {:tags => 12, :title => 8, :body => 4, :comments => 2}
     rescue
       RAILS_DEFAULT_LOGGER.warn "failed to index page #{self.id} for sphinx search"
     end

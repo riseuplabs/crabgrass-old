@@ -4,6 +4,7 @@ class GalleryController < BasePageController
   javascript :extra
   
   include GalleryHelper
+  include BasePageHelper
   include ActionView::Helpers::JavascriptHelper
   
 
@@ -204,8 +205,9 @@ class GalleryController < BasePageController
 
   def create
     @page_class = get_page_type
-    if request.post?
-      return redirect_to(create_page_url) if params[:cancel]
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
       begin
         @page = create_new_page!(@page_class)
         params[:assets].each do |file|
@@ -221,7 +223,6 @@ class GalleryController < BasePageController
       end
     end
     @stylesheet = 'page_creation'
-    render :template => 'gallery/create'
   end
   
   def upload

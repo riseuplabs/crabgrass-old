@@ -38,6 +38,7 @@ end
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/test/fixtures/assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/public/assets"
+KEYRING_STORAGE = "#{RAILS_ROOT}/test/fixtures/assets/keyrings"
 
 # here is a handy method for dev mode. it dumps a table to a yml file.
 # you can use it to build up your fixtures. dumps to

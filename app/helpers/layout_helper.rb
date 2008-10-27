@@ -157,9 +157,10 @@ module LayoutHelper
     js_files = optional_javascripts
     js_files = [js_files] unless js_files.is_a? Array
     return unless js_files.any?
-    if js_files.include? :extra
-        js_files += ['effects', 'dragdrop', 'controls']
-        js_files.delete_if{|i|i==:extra}
+    extra = js_files.delete(:extra)
+    js_files = js_files.collect{|file| "as_needed/#{file}" }
+    if extra
+      js_files += ['effects', 'dragdrop', 'controls']
     end
     javascript_include_tag(*js_files)
   end

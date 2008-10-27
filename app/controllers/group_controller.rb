@@ -34,7 +34,8 @@ class GroupController < ApplicationController
     @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
     @profile = @group.profiles.send(@access)
     @committees = @group.committees_for @access
-    
+    @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
+
     @wiki = private_or_public_wiki()
   end
 
@@ -175,14 +176,18 @@ class GroupController < ApplicationController
      
   # login required
   # post required
+  # TODO: this is messed up.
   def update
     @group.update_attributes(params[:group])
     
-    @group.publicly_visible_group = params[:group][:publicly_visible_group] if params[:group]
-    @group.publicly_visible_committees = params[:group][:publicly_visible_committees] if params[:group]
-    @group.publicly_visible_members = params[:group][:publicly_visible_members] if params[:group]
-    @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests] if params[:group]
-    @group.min_stars = params[:group][:min_stars]
+    if params[:group]
+      @group.publicly_visible_group         = params[:group][:publicly_visible_group]
+      @group.publicly_visible_committees    = params[:group][:publicly_visible_committees]
+      @group.publicly_visible_members       = params[:group][:publicly_visible_members]
+      @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests]
+      @group.min_stars = params[:group][:min_stars]
+    end
+
     if @group.save
       redirect_to :action => 'edit', :id => @group
       flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
@@ -198,6 +203,7 @@ class GroupController < ApplicationController
       flash_message :error => 'You can only delete a group if you are the last member'[:only_last_member_can_delete_group]
       redirect_to :action => 'show', :id => @group
     else
+      @group.destroyed_by = current_user
       if @group.parent
         parent = @group.parent
         parent.remove_committee!(@group)
@@ -218,9 +224,9 @@ class GroupController < ApplicationController
     else
       @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page]))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
-        @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
+        @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
       else
-        @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+        @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
       end
     end
     handle_rss :title => @group.name, :description => @group.summary,

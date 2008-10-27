@@ -25,7 +25,7 @@ module PageExtension::Users
         def with_access
           find(:all, :conditions => 'access IS NOT NULL')
         end
-        def participated
+        def contributed
           find(:all, :conditions => 'changed_at IS NOT NULL')
         end
       end
@@ -40,7 +40,10 @@ module PageExtension::Users
     user_participations.collect{|part| part.user if part.access }.compact
   end
   
-  # like users.participated, but uses already included data
+  # A contributor has actually modified the page in some way. A participant
+  # simply has a user_participation record, maybe they have never even seen
+  # the page.
+  # This method is like users.contributed, but uses already included data
   def contributors
     user_participations.collect{|part| part.user if part.changed_at }.compact
   end

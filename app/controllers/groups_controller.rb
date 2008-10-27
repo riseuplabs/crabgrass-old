@@ -32,14 +32,15 @@ class GroupsController < ApplicationController
     elsif request.post?
       @group = @group_class.create!(params[:group]) do |group|
         group.avatar = Avatar.new
+        group.created_by = current_user
       end
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
-      @group.memberships.create :user => current_user, :group => @group
+      @group.add_user!(current_user)
       @parent.add_committee!(@group) if @parent
       redirect_to url_for_group(@group)
     end
   rescue Exception => exc
-    @group = exc.record
+    @group = exc.record if exc.record.is_a? Group
     flash_message :exception => exc
   end
        
