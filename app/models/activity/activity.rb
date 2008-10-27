@@ -1,9 +1,15 @@
 class Activity < ActiveRecord::Base
 
+  # activity access:
+  PRIVATE = 1  # only you can see it
+  DEFAULT = 2  # your friends can see it activity for you
+  PUBLIC  = 3  # anyone can see it.
+
   belongs_to :subject, :polymorphic => true
   belongs_to :object, :polymorphic => true
 
-  def before_create
+  before_create :set_defaults
+  def set_defaults
     # the key is used to filter out twin activities so that we don't show
     # duplicates. for example, if two of your friends become friends, you don't
     # need to know about it twice. 
@@ -33,9 +39,10 @@ class Activity < ActiveRecord::Base
   #
   named_scope :for_dashboard, lambda {|current_user|
     {:conditions => [
-      "(subject_type = 'User'  AND subject_id IN (?)) OR
+      "(subject_type = 'User'  AND subject_id = ?) OR
+       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
        (subject_type = 'Group' AND subject_id IN (?))",
-      [current_user.id] + current_user.friend_id_cache,
+      current_user.id, current_user.friend_id_cache, Activity::PRIVATE,
       current_user.all_group_id_cache
     ]}
   }
@@ -53,12 +60,13 @@ class Activity < ActiveRecord::Base
   named_scope :for_user, lambda {|user, current_user|
     if current_user and current_user.friend_of?(user)
       {:conditions => [
-        "subject_type = 'User' AND subject_id = ?", user.id
+        "subject_type = 'User' AND subject_id = ? AND access != ?",
+        user.id, Activity::PRIVATE
       ]}
     else
       {:conditions => [
-        "public = ? AND (subject_type = 'User' AND subject_id = ?)",
-        true, user.id
+        "subject_type = 'User' AND subject_id = ? AND access = ?",
+        user.id, Activity::PUBLIC
       ]}
     end
   }
@@ -76,12 +84,13 @@ class Activity < ActiveRecord::Base
   named_scope :for_group, lambda {|group, current_user|
     if current_user and current_user.member_of?(group)
       {:conditions => [
-        "subject_type = 'Group' AND subject_id IN (?)", group.group_and_committee_ids
+        "subject_type = 'Group' AND subject_id IN (?)",
+        group.group_and_committee_ids
       ]}
     else
       {:conditions => [
-        "public = ? AND (subject_type = 'Group' AND subject_id IN (?))",
-        true, group.group_and_committee_ids
+        "subject_type = 'Group' AND subject_id IN (?) AND access = ?",
+        group.group_and_committee_ids, Activity::PUBLIC
       ]}
     end
   }

@@ -8,5 +8,10 @@ class GroupLostUserActivity < GroupGainedUserActivity
       }
     ]
   end
+
+  def icon
+    'membership_delete'
+  end
+
 end
 

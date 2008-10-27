@@ -8,6 +8,13 @@ class ContactActivity < Activity
   alias_attr :user,       :subject
   alias_attr :other_user, :object
   
+  before_create :set_access
+  def set_access
+    unless user.profiles.private.may_see_contacts?
+      self.access = Activity::PRIVATE
+    end
+  end
+
   def description
     "{user} added {other_user} as a contact"[
        :activity_contact_created, 
@@ -17,6 +24,10 @@ class ContactActivity < Activity
 
   def self.find_twin(user, other_user)
     find(:first, :conditions => ['subject_id = ? AND object_id = ?', other_user.id, user.id])
+  end
+
+  def icon
+    'user_add'
   end
 
 end

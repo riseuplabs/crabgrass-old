@@ -15,5 +15,9 @@ class GroupDestroyedActivity < Activity
     }]
   end
 
+  def icon
+    'minus'
+  end
+
 end
 

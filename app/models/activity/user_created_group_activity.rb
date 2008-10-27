@@ -18,4 +18,8 @@ class UserCreatedGroupActivity < Activity
     ]
   end
 
+  def icon
+    'plus'
+  end
+
 end
