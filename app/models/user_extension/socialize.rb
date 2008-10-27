@@ -36,6 +36,13 @@ module UserExtension::Socialize
     end
   end
 
+  
+  def add_contact(other_user, type = 'Friend')
+    self.contacts << other_user
+    self.contacts.last.type = type
+    self.contacts.last.save!
+  end
+  
   ## CALLBACKS
 
   def check_duplicate_contacts(other_user)
