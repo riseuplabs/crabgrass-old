@@ -28,17 +28,89 @@ div#footer {
 }
 
 
+
+
+
+
+
+/*FONT*/
+.title2{
+	color:#C33737;
+	font-size:1.125em;
+}
+
+
+
+
+
+
+
+
+
 /***********************MAIN***************************/
-#group_description{
+#group_description, .content_box{
 	background:#ECF9FE;
 }
-#group_description
+.description_content1, #description_content2{
+	background:#ECF9FE;
+}
+
+.description_content1 h3.title3, .description_content1 h4.title4{
+	color:#5F7689;
+	margin-bottom:11px;
+}
+.description_content1 h4.title4{
+	clear:both;
+	float:left;
+	margin-right:20px;
+	background:url(/images/point.gif) no-repeat  right 10px;
+}
+
+.description_content1 p{
+	color:#7390A7;
+	font-family:georgia, times;
+	font-style: italic;
+	font-size:14px;
+	letter-spacing: 0.07em;
+	word-spacing:0.13em;
+	line-height:23px;
+	margin-bottom:7px;
+}
+
+.description_content1 p.more1, .description_content1 p.more2{
+	text-transform: capitalize;
+	font-style: normal;
+	font-size:11px;
+	font-family:verdana;
+	margin-bottom:20px;
+	clear:left;
+}
+
+.description_content1 p.more2{
+
+}
+
+.description_content1 p.more1 a {
+	color:#5a98c8;
+}
+ul li .pict_id{
+	width:40px;
+	height: 40px;
+	border:1px solid #ccc;
+	margin-right:3px;
+}
+
+
+/*avatars in Group Home*/
+.description_content1 ul li{
+	float:left;
+	padding-left:4px;
+}
 
 
 /***********************COLUMNS************************/
 /* the white content area of the main column*/
 .col1 {
-  background: white;
   border: 1px solid #E1E1E1;
 }
 
@@ -86,7 +158,9 @@ ul.side_list li:hover {
 }
 .title_box h1, .title_box .h1 {
   	color: #5F7689;
-	font-weight:300;
+	font-weight:600;
+	font-family:arial, verdana;
+	font-size:25px;
 }
 .title_box h1 img {
   vertical-align: middle;
@@ -106,11 +180,11 @@ ul.side_list li:hover {
 /***********************HEADER************************/
 
 div#banner {
-  border: 0;
   background:url(/images/background/banner_bg.jpg) repeat-x;
 }
 div#bannercontent h1 a{
-	font-weight:normal;
+	font-family:arial, verdana;
+	font-weight:300;
 	line-height:85px;
 }
 /* header background */
@@ -124,35 +198,56 @@ div#masthead {text-align: left;}
 	line-height:30px;
 	}
 	
-/* Top Menu*/
-#top_menu{
-	margin:0;
-	padding:0;
+	
+	
+	
+	
+	
+	
+/* **************Top Menu************************************/
+#top_menu2{
+	display:none;
 }
-ul#top_menu{
+ul#top_menu, ul#top_menu2{
 	background:#263239;	
 }
 
-
 /* non-active tab */
-ul#top_menu li a {
-	margin:0; padding:0;
+ul#top_menu li a, ul#top_menu2 li a {
   	background: transparent url(/images/bar.jpg) right no-repeat;
   	color: #869DA4;
+	padding:0;
 	padding-right:30px;
 	padding-left:30px;
-	font-weight:600;
+	font-weight:400;
 	text-transform: capitalize;
 }
-ul#top_menu li a.active, ul#top_menu li a.active:hover {
+ul#top_menu li a.active, 
+ul#top_menu li a.active:hover, 
+ul#top_menu2 li a.active, 
+ul#top_menu2 li a.active:hover {
+	background:none;
 	background: transparent url(/images/bar.jpg) right no-repeat;
 }
 
 /* active tab */
-ul#top_menu li a.active,
-ul#top_menu li a.active:hover {
+ul#top_menu li a.active, 
+ul#top_menu li a.active:hover,
+ul#top_menu2 li a.active, 
+ul#top_menu2 li a.active:hover {
 font-weight:normal;
 background:transparent;
+}
+
+
+
+
+
+
+/* **************Top Menu2************************************/
+ul#top_menu2 li a{
+	text-transform:upper;
+	background: transparent url(/images/disc.jpg) right no-repeat;
 }
 
 

@@ -2,8 +2,9 @@
 
 /*******************RESET*************************/
 
-*, body, table, ul, ol, li, img  {margin: 0; padding: 0;}
-table, ul, ol, li {margin: 0; padding: 0; border-spacing: 0;list-style:none;border: 0;}
+
+*, body, table, ul, ol, li, img, table, ul, ol, li, a  
+{margin: 0; padding: 0; border-spacing: 0;list-style:none;border: 0;text-decoration:none;}
 img   {border: 0;}
 .clear {clear: both;}
 
@@ -155,15 +156,39 @@ h1#site_title{
 	display:none;
 }
 
+
+
+
+
+
+
+
+
 /*******************TOP MENU*************************/
-
-#top_menu{
-
+#top_menu, #top_menu2{
+	height:43px;
+}
+ul#top_menu li a, ul#top_menu2 li a {
+	line-height:43px;
+}
+#top_menu, #top_menu2{
+	width:500px;
 }
 
-ul #top_menu{
-	border:1px solid red;
-}
+
+
+/*******************TOP MENU2*************************/
+
+
+
+
+
+
+
+
+
+
+
 
 /*#header ul li a {
   padding: 4px 10px;
@@ -258,7 +283,7 @@ div.breadcrumbs {
 div.title_box {
   	margin: 0;
   	padding: 0;
-	padding-left:23px;
+	padding-left:21px;
   	position: relative;
 	height:60px;
 	line-height:60px;
@@ -274,8 +299,38 @@ div.title_box:hover .title_box_edit_link {
 }
 
 #group_description{
-	padding:20px 23px;
+	padding:20px 0;
+	min-height:234px;
+	height:100%;
+	overflow:hidden;
 }
+
+.description_content1, .description_content2{
+	display:inline;
+	width:46%;
+	float:left;
+}
+
+h3.title3, p.txt_group_description, p.more1{
+	padding-left:22px;
+}
+.listavatars{
+clear:both;
+float:none;
+}
+.dashmenu{
+	clear:both;
+}
+.dashbox2{
+	clear:left;
+	float:left;
+}
+
+/*GROUP_SCROLLTABLE*/
+#group_scrolltable{
+	background:white;
+}
+
 
 /*******************SIDE COLUMNS*************************/
 /* wings */
