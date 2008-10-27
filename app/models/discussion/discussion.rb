@@ -7,9 +7,13 @@ class Discussion < ActiveRecord::Base
   belongs_to :page
   belongs_to :replied_by, :class_name => 'User'
   belongs_to :last_post, :class_name => 'Post'
-
+  
+  has_one :profile, :foreign_key => 'discussion_id'
+  has_one :acquaintance, :foreign_key => 'discussion_id'
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => 'Post'
 
+  belongs_to :commentable, :polymorph => true
+  
   ## 
   ## attributes
   ##

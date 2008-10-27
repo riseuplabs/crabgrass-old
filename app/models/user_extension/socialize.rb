@@ -74,6 +74,10 @@ module UserExtension::Socialize
           end
       end
 =end
+    
+    ## DISCUSSIONS
+    has_many :discussions, :as => :commentable
+      
     end
   end
 
@@ -82,27 +86,28 @@ module UserExtension::Socialize
   # this should be the ONLY way that contacts are created
   def add_contact!(other_user, type=nil)
     unless self.contacts.find_by_id(other_user.id)
-      Contact.create!(:user => self, :contact => other_user, :type => type)
+      UserRelation.create!(:user_id => self.id, :partner_id => other_user.id, :type => type)
       self.contacts.reset
       self.update_contacts_cache
     end
     unless other_user.contacts.find_by_id(self.id)
-      Contact.create!(:user => other_user, :contact => self, :type => type)
+     UserRelation.create!(:user_id => other_user.id, :partner_id => self.id, :type => type)
       other_user.contacts.reset
       other_user.update_contacts_cache
     end
   end
 
   # this should be the ONLY way contacts are deleted
-  def remove_contact!(other_user)
-    if self.contacts.find_by_id(other_user.id)
-      self.contacts.delete(other_user)
+  def remove_contact!(other_user, type=nil)
+    
+    if rel1 = UserRelation.find_by_user_id_and_partner_id_and_type(self.id, other_user.id,type)
+      rel1.destroy
       self.update_contacts_cache
-    end
-    if other_user.contacts.find_by_id(self.id)
-      other_user.contacts.delete(self)
-      other_user.update_contacts_cache
-    end
+    end  
+    if rel2 = UserRelation.find_by_user_id_and_partner_id(other_user.id,self.id,type)
+       rel2.destroy
+       other_user.update_contacts_cache
+    end  
   end
   
   ## PERMISSIONS
@@ -132,6 +137,15 @@ module UserExtension::Socialize
     entity.may_be_pestered_by! self
   end
 
+  ## Discussions
+  
+ # specified above: has_many :discussions, :as => :commentable
+  
+  def discussion
+    self.discussions.first
+  end
+  
+  
   ## RELATIONSHIPS
 
   def stranger_to?(user)

@@ -166,7 +166,7 @@ module UserExtension
       foe = [] # no foes yet.
       friend = Contact.connection.select_values( %Q[
         SELECT contacts.contact_id FROM contacts
-        WHERE contacts.user_id = #{self.id}
+        WHERE type = 'Friend' AND contacts.user_id = #{self.id}
       ])
       [friend,foe]
     end
