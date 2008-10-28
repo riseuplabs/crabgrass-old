@@ -96,7 +96,7 @@ module GalleryHelper
                        :url => page_url(@page, :action => 'upload'),
                        :update => 'target_for_upload',
                        :loading =>'$(\'show_upload_spinner\').show();',
-                       :success => 'target.show();',
+                       :success => 'upload_target.show();',
                        :complete => '$(\'show_upload_spinner\').hide();')
       },
       :add_existing => lambda { 
