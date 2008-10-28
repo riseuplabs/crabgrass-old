@@ -27,12 +27,6 @@ div#footer {
   background-color: #EFEBE5;
 }
 
-
-
-
-
-
-
 /*FONT*/
 .title2{
 	color:#C33737;
@@ -42,13 +36,8 @@ div#footer {
 
 
 
-
-
-
-
-
 /***********************MAIN***************************/
-#group_description, .content_box{
+#mainsection1, .content_box{
 	background:#ECF9FE;
 }
 .description_content1, #description_content2{
@@ -62,8 +51,11 @@ div#footer {
 .description_content1 h4.title4{
 	clear:both;
 	float:left;
-	margin-right:20px;
-	background:url(/images/point.gif) no-repeat  right 10px;
+	padding-right:15px;
+	background:url(/images/point.gif) no-repeat right;
+}
+.description_content1 span{
+	padding-left:10px;
 }
 
 .description_content1 p{
@@ -77,7 +69,7 @@ div#footer {
 	margin-bottom:7px;
 }
 
-.description_content1 p.more1, .description_content1 p.more2{
+.description_content1 p.more1, .description_content1 span .more2 a{
 	text-transform: capitalize;
 	font-style: normal;
 	font-size:11px;
@@ -86,6 +78,17 @@ div#footer {
 	clear:left;
 }
 
+.dashbox1 span a, .dashbox2 span a{
+	text-transform: uppercase;
+	padding-right:10px;
+	font-weight:600;
+	font-size:9px;
+	color:#4986BC;
+	background:url(/images/quotmark.gif) no-repeat right;
+}
+.dashbox2 p{
+	padding:0;
+}
 .description_content1 p.more2{
 
 }
@@ -99,6 +102,64 @@ ul li .pict_id{
 	border:1px solid #ccc;
 	margin-right:3px;
 }
+
+.dashmenu li{
+	padding-right:10px;
+	background:url(/images/point.gif) no-repeat right;
+}
+
+/*GROUP_SCROLLTABLE **********************/
+#group_scrolltable{
+	border-top:1px solid #E1E1E1;
+	background:white;
+	padding-top:22px;
+	height:300px;
+	overflow:auto;
+}
+
+#group_scrolltable table{
+	width:94%;
+	margin-left:22px;
+	clear:both;
+}
+
+table .date{
+	background:#FFF4E8;
+	height:33px;
+	padding-left:5px;
+}
+
+table .data, table.rightdata{
+	height:50px;
+	padding-left:5px;
+}
+table .rightdata{
+	text-align:right;
+	text-transform:capitalize;
+}
+#group_scrolltable table td{
+	border-bottom:1px solid #ccc;
+}
+
+#group_scrolltable ul.table_menu li{
+	float:left;
+}
+#group_scrolltable ul.table_menu li a{
+
+}
+
+#group_scrolltable span a {
+	text-transform: uppercase;
+	padding-right:10px;
+	font-weight:600;
+	font-size:9px;
+	color:#4986BC;
+	background:url(/images/quotmark.gif) no-repeat right;
+}
+
+
+
+
 
 
 /*avatars in Group Home*/
@@ -176,6 +237,13 @@ ul.side_list li:hover {
   font-size: 0.8em;
   margin-left: 1em;
 }
+
+.title5 {
+	font-size:18px;
+	color:#679BC7;
+	font-weight:600;
+}
+
 
 /***********************HEADER************************/
 

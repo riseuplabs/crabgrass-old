@@ -298,7 +298,7 @@ div.title_box:hover .title_box_edit_link {
 /*  display: block;*/
 }
 
-#group_description{
+#mainsection1{
 	padding:20px 0;
 	min-height:234px;
 	height:100%;
@@ -321,16 +321,20 @@ float:none;
 .dashmenu{
 	clear:both;
 }
+.dashbox1, .dashbox2{
+	padding-left:22px;
+}
 .dashbox2{
 	clear:left;
 	float:left;
 }
 
 /*GROUP_SCROLLTABLE*/
-#group_scrolltable{
-	background:white;
+#group_scrolltable div h2{
+	float:left;
+	padding-left:22px;
+	
 }
-
 
 /*******************SIDE COLUMNS*************************/
 /* wings */
