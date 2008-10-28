@@ -70,8 +70,7 @@ div#bannercontent {
   padding: 0 7px 0 20px;
 }
 div#banner img.avatar {
-	width:66px;
-	height:66px;
+	width: 64px; height: 64px;
   border: 1px solid white;
   margin: 0 7px 0 0;
   vertical-align: bottom;

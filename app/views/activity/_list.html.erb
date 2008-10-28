@@ -1,0 +1,10 @@
+<% if @activities -%>
+<div class='activities'>
+  <ul>
+    <% @activities.each do |activity| -%>
+      <li>(<%= friendly_date(activity.created_at) %>) <%= activity.description %></li>
+    <% end -%>
+  </ul>
+</div>
+<% end -%>
+

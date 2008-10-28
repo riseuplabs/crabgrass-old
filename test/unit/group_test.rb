@@ -10,8 +10,8 @@ class GroupTest < Test::Unit::TestCase
     assert_raises(Exception, '<< should raise exception not allowed') do
       g.users << u
     end
-    g.memberships.create :user => u
-    g.memberships.create :user_id => users(:red).id
+    g.add_user! u
+    g.add_user! users(:red)
 
     assert u.member_of?(g), 'user should be member of group'
     
@@ -65,9 +65,8 @@ class GroupTest < Test::Unit::TestCase
   def test_association_callbacks
     g = Group.create :name => 'callbacks'
     g.expects(:check_duplicate_memberships)
-    g.expects(:update_membership)
     u = users(:blue)
-    g.memberships.create(:user => u)
+    g.add_user!(u)
   end
   
   def test_committee_access

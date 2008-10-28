@@ -67,6 +67,7 @@ module UrlHelper
     avatar + link_to(label, path, :class => klass, :style => style)
   end
 
+
   # if you pass options[:full_name] = true, committees will have the string
   # "group+committee" (default does not include leading "group+")
   # 
@@ -188,6 +189,14 @@ module UrlHelper
     elsif entity.is_a? Group
       url_for_group(entity, options)
     end
+  end
+
+  # display a user or a group, without a link, with an avatar
+  def display_entity(entity, size=:small)
+    pixels = Avatar.pixels(size)[0..1].to_i
+    url = avatar_url(:id => (entity.avatar||0), :size => size)
+    style = "background: url(#{url}) no-repeat 0% 50%; padding: #{pixels/4}px 0 #{pixels/4}px #{pixels/5 + pixels}px;"
+    content_tag :div, entity.display_name, :style => style
   end
 
   ##

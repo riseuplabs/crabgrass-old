@@ -36,6 +36,16 @@ class Page < ActiveRecord::Base
     name.any? ? name : friendly_url
   end
   
+  def flow= flow
+    if flow.kind_of? Integer
+      write_attribute(:flow, flow)
+    elsif flow.kind_of?(Symbol) && FLOW[flow]
+      write_attribute(:flow, FLOW[flow])
+    else
+      raise TypeError.new("Flow needs to be an integer or one of [#{FLOW.keys.join(', ')}]")
+    end
+  end
+  
   def friendly_url
     s = title.nameize
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word

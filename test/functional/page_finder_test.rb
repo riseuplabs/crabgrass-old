@@ -228,7 +228,7 @@ class PageFinderTest < Test::Unit::TestCase
     puts 'creating and joining groups: '
     1000.times do |i|
       group = Group.create(:name => "group#{i}")
-      group.memberships.create(:user => user)
+      group.add_user!(user)
       groups << group
       page = Page.create(:title => "page#{i}")
       page.add(group)

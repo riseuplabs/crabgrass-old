@@ -6,7 +6,7 @@ class Site
   attr_accessor :email_sender
   attr_accessor :secret
   attr_accessor :pagination_size
-  attr_accessor :super_admins
+  attr_accessor :super_admin_group_id
   attr_accessor :translators
   attr_accessor :translation_group
   attr_accessor :default_language

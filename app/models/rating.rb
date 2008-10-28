@@ -1,7 +1,10 @@
+#
+# Adapted from acts_as_rateable
+#
+
 class Rating < ActiveRecord::Base
   belongs_to :rateable, :polymorphic => true
   
-  # NOTE: Comments belong to a user
   belongs_to :user
   
   # Helper class method to lookup all ratings assigned
@@ -13,11 +16,20 @@ class Rating < ActiveRecord::Base
     )
   end
 
-  ## crabgrass hack
   named_scope :with_rating, lambda {|rating|
     { :conditions => ['rating = ?', rating] }
   }
   named_scope :by_user, lambda {|user|
     { :conditions => ['user_id = ?', user.id] }
   }
+
+  def after_create
+    puts "+#{self.id}"
+  end
+
+  def after_destroy
+    puts "-#{self.id}"
+  end
+
 end
+

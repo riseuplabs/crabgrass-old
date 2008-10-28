@@ -116,7 +116,7 @@ module ImageHelper
   #  * :crop!  -- crop, even if there is no known height and width
   #
 
-  def thumbnail_img_tag(asset, thumbnail_name,options={})
+  def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]
@@ -140,16 +140,18 @@ module ImageHelper
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          image_tag(thumbnail.url, :size => "#{width}x#{height}")
+          html_options.merge(:size => "#{width}x#{height}")
+          image_tag(thumbnail.url, html_options)
         end
       else
-        image_tag(thumbnail.url, :size => "#{thumbnail.width}x#{thumbnail.height}")
+        html_options.merge(:size => "#{thumbnail.width}x#{thumbnail.height}")
+        image_tag(thumbnail.url, html_options)
       end
     elsif options[:crop!]
       target_width, target_height = options[:crop!].split(/x/).map(&:to_f)
-      img = thumbnail_or_icon(asset, thumbnail, target_width, target_height)
+      img = thumbnail_or_icon(asset, thumbnail, target_width, target_height, html_options)
     else
-      thumbnail_or_icon(asset, thumbnail)
+      thumbnail_or_icon(asset, thumbnail, html_options)
     end
   end
 
@@ -171,9 +173,9 @@ module ImageHelper
     link_to img, asset.url, :class => klass, :title => asset.filename, :style => style
   end
 
-  def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil)
+  def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})
     if thumbnail
-      image_tag(thumbnail.url)
+      image_tag(thumbnail.url, html_options)
     else
       mini_icon_for(asset, width, height)
     end

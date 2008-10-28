@@ -60,12 +60,17 @@ apt-get -t etch-backports install openoffice.org openoffice.org-headless
 For more details, see docs/ASSETS_README.
 
 
-To use full-text searching, you need to build and install sphinx search http://www.sphinxsearch.com/downloads.html (debian package coming soon).  For more details, see doc/SPHINX_README.
+To use full-text searching, you need to build and install sphinx search
+http://www.sphinxsearch.com/downloads.html (debian package coming soon).
+For more details, see doc/SPHINX_README.
 
 For search to do asynchronous index generation, you need BackgrounDRb to work,
 which requires the chronic and packet gems:
+
 @@ sudo gem install chronic packet 
+
 and then should start the backgroundrb daemon
+
 @@ script/backgroundrb start
 
 These packages are need for running tests:
@@ -187,6 +192,12 @@ There are several required configuration files:
    * config/database.yml
    * config/sites.yml
    * config/email.yml
+   * config/environments/production.rb
+
+If you are not running over https only, then you must comment out this line in
+production.rb:
+
+@@ Crabgrass::Config.https_only = true
 
 It is important that you specify your own secret in the sites.yml file. 
 You can use 'rake secret' to generate a secret value. 
@@ -202,7 +213,8 @@ It is required that something like this is run once in a while:
 
   tmpreaper 7d /usr/apps/crabgrass/tmp/cache
 
-This will destroy all cached views that are older than 7 dayes. On debian, the package name is 'tmpreaper'.
+This will destroy all cached views that are older than 7 dayes. On debian, the
+package name is 'tmpreaper'.
 
 other tips
 ------------

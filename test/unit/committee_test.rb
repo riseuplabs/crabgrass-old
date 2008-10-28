@@ -54,18 +54,16 @@ class CommitteeTest < Test::Unit::TestCase
     
     assert(!user.member_of?(g), 'user should not be member yet')
 
-    user.memberships.create :group => g
-    user.update_membership_cache
+    g.add_user!(user)
 
     assert user.member_of?(g), 'user should be member of group'
     assert user.member_of?(c1), 'user should also be a member of committee'
     assert(user.direct_member_of?(g), 'user should be a direct member of the group')
     assert(!user.direct_member_of?(c1), 'user should not be a direct member of the committee')
-    user.groups.delete(g)
+    g.remove_user!(user)
 
     assert(!user.member_of?(g), 'user should not be member of group after being removed')
     assert(!user.member_of?(c1), 'user should not be a member of committee')
-               
   end
   
   def test_naming
@@ -95,8 +93,8 @@ class CommitteeTest < Test::Unit::TestCase
     g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
-    u = User.create :login => 'user'
-    c.memberships.create :user => u
+    u = users(:gerrard)
+    c.add_user!(u)
     c.save
 
     group_page = Page.create! :title => 'a group page', :public => false

@@ -14,8 +14,7 @@ class MembershipTest < Test::Unit::TestCase
     oldcount = g.users.count
     oldversion = g.version
 
-    g.memberships.create :user => u
-    # u.memberships.create :group => g (another valid way to do the same thing)
+    g.add_user! u
     assert oldcount < g.users.count, "group should have more users after add user"   
     assert_nothing_raised("group.users.find should return user") do
       g.users.find(u.id)
@@ -32,22 +31,17 @@ class MembershipTest < Test::Unit::TestCase
     assert_equal oldversion+2, g.version, 'group version should increment'
   end
 
-  def test_various_ways_of_deleting_memberships
+  def test_deleting_memberships
     u1 = create_user :login => 'testy_one'
     u2 = create_user :login => 'testy_two'
     g = groups(:animals)
 
-    membership1 = g.memberships.create :user => u1
-    membership2 = g.memberships.create :user => u2
+    membership1 = g.add_user! u1
+    membership2 = g.add_user! u2
     
     assert_difference 'groups(:animals).version' do
-      u1.groups.delete g
+      g.remove_user! u1
       assert !u1.member_of?(g), 'user1 must NOT be a member_of? group'
-    end
-
-    assert_difference 'Group.find(groups(:animals).id).version' do
-      membership2.destroy
-      assert !u2.member_of?(g), 'user2 must NOT be a member_of? group'
     end
   end
 
@@ -55,9 +49,9 @@ class MembershipTest < Test::Unit::TestCase
     u = create_user :login => 'harry-potter'
     g = Group.create :name => 'hogwarts-academy'
     
-    u.memberships.create :group => g
+    g.add_user! u
     assert_raises(AssociationError) do
-      u.memberships.create :group => g
+      g.add_user! u
     end
   end
   
@@ -69,7 +63,7 @@ class MembershipTest < Test::Unit::TestCase
     assert_equal [], u.all_groups, 'should no all_groups'
 
     g = Group.create :name => 'hogwarts-academy'
-    g.memberships.create :user => u
+    g.add_user! u
 
     assert_equal [g.id], u.all_group_ids, 'should be one group (all id)'
     assert_equal [g.id], u.group_ids, 'should be one group (id)'
@@ -88,7 +82,7 @@ class MembershipTest < Test::Unit::TestCase
     u = create_user :login => 'ron'
 
     g = Group.create :name => 'hogwarts-academy'
-    g.memberships.create :user => u
+    g.add_user! u
 
     assert_equal [g.id], u.all_group_ids, 'should be one group (all id)'
 
@@ -123,8 +117,8 @@ class MembershipTest < Test::Unit::TestCase
 
     g1 = Group.create :name => 'pumpkin'
     g2 = Group.create :name => 'eaters'
-    g1.memberships.create :user => u
-    g2.memberships.create :user => u
+    g1.add_user! u
+    g2.add_user! u
 
     #u.clear_cache
     #u = User.find_by_login 'peter'
@@ -142,7 +136,7 @@ class MembershipTest < Test::Unit::TestCase
     for i in 0..19
       g[i] = Group.create :name => 'group-%d' % i
       if to_join.include? i
-        g[i].memberships.create :user => u
+        g[i].add_user! u
       end
     end
     
@@ -176,14 +170,14 @@ class MembershipTest < Test::Unit::TestCase
     ## create memberships
     groups.each do |group|
       if rand(2)==0
-        u.memberships.create :group => group
+        group.add_user! u
         correct_group_ids     << group.id
         correct_all_group_ids << group.id
         group.committees.each do |c|
           correct_all_group_ids << c.id
           if rand(2)==0
             correct_group_ids << c.id
-            u.memberships.create :group => c
+            c.add_user! u
           end
         end
       end
