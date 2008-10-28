@@ -12,7 +12,7 @@ class Discussion < ActiveRecord::Base
   has_one :acquaintance, :foreign_key => 'discussion_id'
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => 'Post'
 
-  belongs_to :commentable, :polymorph => true
+  belongs_to :commentable, :polymorphic => true
   
   ## 
   ## attributes
