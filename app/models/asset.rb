@@ -42,13 +42,15 @@ class Asset < ActiveRecord::Base
   include AssetExtension::Upload
   validates_presence_of :filename
 
+  
   ##
-  ## FINDERS
+  ## ACCESS
   ##
   
   def has_access! perm, user
-    self.page.has_access! perm, user
-  rescue
+    raise PermissionDenied unless self.page
+    p = self.page.has_access!(perm, user)
+  rescue PermissionDenied
     Gallery rescue nil # assure load_missing_constant loads this if possible
     unless defined?(Gallery) &&
         self.galleries.any? &&
@@ -57,6 +59,13 @@ class Asset < ActiveRecord::Base
     end
     true
   end
+  
+
+  
+  
+  ##
+  ## FINDERS
+  ##
   
   def is_cover_of? gallery
     raise ArgumentError.new() unless gallery.kind_of? Gallery

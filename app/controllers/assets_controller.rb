@@ -103,9 +103,9 @@ class AssetsController < ApplicationController
   def authorized?
     if @asset
       if action_name == 'show' || action_name == 'version'
-        current_user.may?(:view, @asset.page)
+        current_user.may?(:view, @asset)
       elsif action_name == 'create' || action_name == 'destroy'
-        current_user.may?(:edit, @asset.page)
+        current_user.may?(:edit, @asset)
       end
     else
       false
