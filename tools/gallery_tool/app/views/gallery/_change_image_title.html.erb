@@ -1,9 +1,9 @@
 <div id="change_title_form">
 <% form_remote_tag(:url => page_url(@page,
                                     :action => 'change_image_title',
-                                    :id => showing.asset_id),
+                                    :id => image.id),
 		   :update => 'detail_image_title') do -%>
-  <%= text_field_tag :title, showing.title %>
+  <%= text_field_tag :title, image.page.title %>
   <input type="submit", value="<%= :save.t %>" onclick="this.disabled=true;this.value='Saving...';$('change_title_spinner').show();$('change_title_form_cancel').hide();" id="change_title_form_submit" />
   <%= button_to_function :cancel.t, "$('change_title_form').hide();$('change_title_link').show();", :id => "change_title_form_cancel" %>
   <%= spinner('change_title') %>

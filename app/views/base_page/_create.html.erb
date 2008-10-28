@@ -36,6 +36,8 @@
   </div>
   <div class='clear'></div>
   <div class='buttons'>
+    <%# the extra submit button is needed, so that 'create' remains the default (on enter) -%>
+    <%= submit_tag "", :name => 'create', :style => 'display:none' %>
     <%= submit_tag '&laquo; ' + "Back".t, :name => 'cancel' %>
     <%= submit_tag "Create {page_class}"[:create_page_button, {:page_class => class_display_name}] + ' &raquo;', :name => 'create' %>
   </div>
