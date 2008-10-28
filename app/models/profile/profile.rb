@@ -88,6 +88,11 @@ class Profile < ActiveRecord::Base
   ### collections ########################################################## 
 
   belongs_to :wiki, :dependent => :destroy
+  belongs_to(:wall,
+             :class_name => 'Discussion',
+             :foreign_key => 'discussion_id',
+             :dependent => :destroy)
+  
   #belongs_to :photo
   #belongs_to :layout
   
@@ -97,6 +102,7 @@ class Profile < ActiveRecord::Base
   has_many   :phone_numbers,   :class_name => '::ProfilePhoneNumber', :dependent => :destroy, :order=>"preferred desc"
   has_many   :websites,        :class_name => '::ProfileWebsite', :dependent => :destroy, :order=>"preferred desc"
   has_many   :notes,           :class_name => '::ProfileNote', :dependent => :destroy, :order=>"preferred desc"
+  has_many   :crypt_keys,      :class_name => '::ProfileCryptKey', :dependent => :destroy, :order=>"preferred desc"
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -105,7 +111,8 @@ class Profile < ActiveRecord::Base
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
-      'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote
+      'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote,
+      'crypt_keys'      => ::ProfileCryptKey
     }
     
     profile_params.stringify_keys!
@@ -134,5 +141,13 @@ class Profile < ActiveRecord::Base
     save
     wiki
   end
-    
+  
+
+   def ensure_wall
+     unless self.wall
+       self.wall = Discussion.create
+       self.save!
+     end
+     self.wall
+   end
 end # class

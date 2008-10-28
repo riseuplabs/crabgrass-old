@@ -1,3 +1,5 @@
+# this requires ActionView::Helpers::TagHelper 
+
 module ErrorHelper
 
   ##

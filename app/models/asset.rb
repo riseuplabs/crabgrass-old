@@ -60,17 +60,21 @@ class Asset < ActiveRecord::Base
   }
   
   def has_access! perm, user
-    # everything becomes PermissionDenied (e.g. also if self.page is nil)
-    self.page.has_access! perm, user rescue raise PermissionDenied
-  rescue PermissionDenied
-    # if the gallery_tool is disabled Gallery doesn't exist, so we don't check
-    # anything at all. otherwise we check if there are any galleries this image
-    # is in and the given user has access to.
+    self.page.has_access! perm, user
+  rescue
+    Gallery rescue nil # assure load_missing_constant loads this if possible
     unless defined?(Gallery) &&
-        self.kind_of?(ImageAsset) &&
+        self.galleries.any? &&
         self.galleries.select {|g| user.may?(perm, g) ? g : nil}.any?
       raise PermissionDenied
     end
+    true
+  end
+  
+  def is_cover_of? gallery
+    raise ArgumentError.new() unless gallery.kind_of? Gallery
+    showing = gallery.showings.find_by_asset_id(self.id)
+    !showing.nil? && showing.is_cover
   end
 
   named_scope :not_attachment, :conditions => ['is_attachment = ?',false]
@@ -182,7 +186,10 @@ class Asset < ActiveRecord::Base
   has_many :pages, :as => :data                                             # (1)
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page()
-    page_id ? parent_page : pages.first
+    p = page_id ? parent_page : pages.first
+    return p if p
+    p = self.pages.create(:title => self.filename,
+                          :data_id => self.id)
   end
 
   belongs_to :page_terms
@@ -221,11 +228,18 @@ class Asset < ActiveRecord::Base
   # create on that class.
   # eg. Asset.make(attributes) ---> ImageAsset.create(attributes)
   #     if attributes contains an image file.
+  # if attributes[:page] is given, an AssetPage is created with the given 
+  # attributes. The page's title defaults to the original filename of the
+  # uploaded asset.
   def self.make(attributes = nil)
+    page_attrs = attributes.delete(:page)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.create(attributes)
+    asset = asset_class.create(attributes)
+    AssetPage.create({:data_id => asset.id, :title => asset.filename
+                     }.merge(page_attrs)) if page_attrs
+    asset
   end
-
+  
   # like make(), but builds the asset in memory and does not save it.
   def self.build(attributes = nil)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
@@ -297,7 +311,10 @@ class Asset < ActiveRecord::Base
   # returns either :landscape or :portrait, depending on the format of the 
   # image.
   def image_format
-    raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
+    raise TypeError unless self.is_image
+    if self.width.nil? || self.height.nil?
+      return :landscape
+    end
     self.width > self.height ? :landscape : :portrait
   end
 end

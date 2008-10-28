@@ -4,6 +4,7 @@ class GalleryController < BasePageController
   javascript :extra
   
   include GalleryHelper
+  include BasePageHelper
   include ActionView::Helpers::JavascriptHelper
   
 
@@ -16,12 +17,70 @@ class GalleryController < BasePageController
     @images = @page.images.paginate(:page => params[:page], :per_page => 16)
   end
   
-  def detail_view
-    @image = @page.images.find(params[:id] || :first)
-    @image_index = @page.images.index(@image)
-    @next = @page.images[@image_index+1]
-    if @page.images.index(@image)-1 >= 0
-      @previous = @page.images[@image_index-1]
+  def add_star
+    @image = @page.images.find(params[:id])
+    @image.page.add(current_user, :star => true).save!
+    if request.xhr?
+      render :text => javascript_tag("$('add_star_link').hide();$('remove_star_link').show();"), :layout => false
+    else
+      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
+    end
+  end
+  
+  def remove_star
+    @image = @page.images.find(params[:id])
+    @image.page.add(current_user, :star => false).save!
+    if request.xhr?
+      render :text => javascript_tag("$('remove_star_link').hide();$('add_star_link').show();"), :layout => false
+    else
+      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
+    end
+  end
+  
+  def detail_view    
+    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
+    @image = @showing.asset
+    @image_index = @showing.position
+    @next = @showing.lower_item
+    @previous = @showing.higher_item
+    # we need to set @upart manually as we are not working on @page
+    @upart = @image.page.participation_for_user(current_user)
+  end
+  
+  def comment_image
+    @image = @page.images.find(params[:id])
+    @post = Post.build(:page => @image.page,
+                       :user => current_user,
+                       :body => params[:post][:body])
+    @post.save!
+    redirect_to page_url(@page,
+                         :action => 'detail_view',
+                         :id => @image.id)
+  end
+  
+  def change_image_title
+    # in non-ajax calls we need to render the form
+    if request.get?
+      detail_view
+      @change_title = true
+      render :template => 'detail_view'
+    else
+      # whoever may edit the gallery, may edit the assets too.
+      raise PermissionDenied unless current_user.may?(:edit, @page)
+      @image = @page.images.find(params[:id])
+      page = @image.page
+      page.title = params[:title]
+      # btw, what is the convenient way to do that??? --niklas
+      page.updated_by = current_user
+      page.updated_by_login = current_user.login
+      page.save!
+      unless request.xhr?
+        redirect_to page_url(@page,
+                             :action => 'detail_view',
+                             :id => @image.id)
+      else
+        render :partial => 'update_image_title_xhr'
+      end
     end
   end
   
@@ -50,10 +109,20 @@ class GalleryController < BasePageController
   
   def make_cover
     unless current_user.may?(:admin, @page)
-      raise PermissionDenied
+      if request.xhr?
+        render(:text => "You are not allowed to do that!"[:you_are_not_allowed_to_do_that],
+               :layout => false) and return
+      else
+        raise PermissionDenied
+      end
     end
     @page.cover = params[:id]
-    redirect_to page_url(@page, :action => 'edit')
+    if request.xhr?
+      render :text => :album_cover_changed.t, :layout => false
+    else
+      flash_message(:album_cover_changed.t)
+      redirect_to page_url(@page, :action => 'edit')
+    end
   rescue ArgumentError # happens with wrong ID
     raise PermissionDenied
   end
@@ -64,7 +133,7 @@ class GalleryController < BasePageController
     # see my comment in app/models/asset.rb for details.
     #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
     results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-        current_user.may?(:view, a.page) ? a : nil
+        current_user.may?(:view, a) ? a : nil
     }
     current_page = (params[:page] or 1)
     per_page = 30
@@ -156,13 +225,15 @@ class GalleryController < BasePageController
 
   def create
     @page_class = get_page_type
-    if request.post?
-      return redirect_to(create_page_url) if params[:cancel]
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
       begin
         @page = create_new_page!(@page_class)
         params[:assets].each do |file|
           next if file.size == 0 # happens if no file was selected
-          asset = Asset.make(:uploaded_data =>  file)
+          asset = Asset.make(:uploaded_data =>  file,
+                             :page => { :flow => :gallery })
           @page.add_image!(asset)
         end
         return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
@@ -173,7 +244,6 @@ class GalleryController < BasePageController
       end
     end
     @stylesheet = 'page_creation'
-    render :template => 'gallery/create'
   end
   
   def upload
@@ -183,7 +253,8 @@ class GalleryController < BasePageController
     elsif request.post?
       params[:assets].each do |file|
         next if file.size == 0
-        asset = Asset.make(:uploaded_data => file)
+        asset = Asset.make(:uploaded_data => file,
+                           :page => { :flow => :gallery})
         @page.add_image!(asset)
       end
       redirect_to page_url(@page)

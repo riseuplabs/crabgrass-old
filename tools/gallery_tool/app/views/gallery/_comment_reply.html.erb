@@ -1,0 +1,51 @@
+<%
+  url = url_for(:controller => 'gallery',
+		:action => 'comment_image',
+		:id => @image.id,
+		:page_id => @page.id) 
+-%>
+
+
+<% color = cycle('shade-odd', 'shade-even') %>
+
+<% if @show_reply %>
+<tbody>
+<% else %>
+<%= link_to_function "Add comment &raquo;", "Element.show('reply_container'); Element.hide('show_reply_link')", :id=>'show_reply_link', :style => 'display:none'; %>
+<tbody id='reply_container'>
+<% end %>
+
+<tr class="post-spacer-top <%=color%> <%= @posts.any? ? '' : 'post-border-top' %>">
+  <td colspan="2">
+    <a name="reply-form">&nbsp;</a>
+  </td>
+</tr>
+
+<tr class="post <%=color%>">
+  <td>
+    <div class="post-author">
+      <%= avatar_for current_user, 'small' %>
+      <div><%= link_to_user current_user %></div>  
+    </div> 
+  </td>
+  <td class="post-body" id="reply">
+    <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
+    <% form_for :post, :url => url do |f| %>
+      <fieldset><div>
+        <%= f.text_area :body, :rows => 8, :class => 'post_body' %>    
+        <div style="float: left"><%= submit_tag "Post Message", :name => 'post_message' %></div>
+        <div style="text-align: right"><a  href="javascript:quickRedReference();">formatting reference</a></div>
+      </div></fieldset>
+    <% end -%>
+  </td>
+</tr>
+
+<tr class="post-spacer-bottom <%=color%>">
+  <td colspan="2">&nbsp;</td>
+</tr>
+
+</tbody>
+
+<% unless @show_reply -%>
+  <%= javascript_tag "$('reply_container').hide();$('show_reply_link').show();" %>
+<% end -%>

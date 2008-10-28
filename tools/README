@@ -49,11 +49,14 @@ Running tests
 
 Run all tool tests:
 
-  rake test:tools
+  rake test:tools:all
 
 To run the test for a particular tool:
 
-  rake test:tools TOOL=gallery_tool
+  rake test:tools:all TOOL=gallery_tool
+
+Instead of 'all', you can also specify 'functionals', 'integration', or 
+'units'.
 
 Writing tests
 ==============

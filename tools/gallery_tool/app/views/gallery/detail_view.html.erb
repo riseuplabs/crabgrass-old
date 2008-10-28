@@ -1,14 +1,34 @@
-<%= gallery_navigation :count, :download %>
+<%
+  showing ||= @showing
+  image = showing.image
+  title = image.page.title
+  comments = @image.page.discussion.posts rescue []
+-%>
+
+<%= gallery_navigation :count, :download, :show, :edit %>
 
 <div id="detail_view">
-  <%= detail_view_navigation(@page, @previous, @image, @next) %>
+  <%= detail_view_navigation(@page, @previous, image, @next) %>
 
-  <div id="detail_image"><%= thumbnail_img_tag(@image, 'large') %></div>
+  <div id="detail_image"><%= link_to thumbnail_img_tag(image, 'large'), image.url %></div>
   <span id="detail_image_title">
-    <% if @image.page -%>
-      <%= @image.page.title %>
-    <% else -%>
-      <%= "(no title given)"[:no_title_given] %>
-    <% end -%>
+    <%= title %>
   </span>
+  <%= change_title_link(image) -%><br />
+  <%= star_for_image(image) %><br />
+  <%# we insert javascript that gets returned by xhr request here, so that it is
+      evaluated. (tfjs = target for javascript) %>
+  <div id="tfjs" style="display:none"></div>
+  <div id="image_comments">
+    <h2>Comments</h2>
+    <table>
+      <% if comments.any? -%>
+	<% comments.each do |comment| -%>
+	  <%= render(:partial => 'posts/post',
+		     :locals => { :post => comment }) %>
+	<% end -%>
+      <% end -%>
+      <%= render :partial => 'comment_reply' %>
+    </table>
+  </div>
 </div>

@@ -37,7 +37,7 @@ class RequestToJoinUsViaEmail < Request
   # this assumes that the code has been redeemed and an account created
   # and that account is set to recipient.
   def after_approval
-    group.memberships.create :user => recipient, :group => group
+    group.add_user! recipient
   end
 
   def description

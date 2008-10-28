@@ -36,7 +36,7 @@ class ProfileTest < Test::Unit::TestCase
     blue = users(:blue)
     red = users(:red)
     
-    red.contacts << blue unless red.contacts.include?(blue)
+    red.add_contact!(blue)
     
     blue.profiles.create :friend => true, :organization => 'rainbows'
     blue.profiles.create :stranger => true, :organization => 'none'

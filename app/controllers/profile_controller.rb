@@ -6,7 +6,6 @@ class ProfileController < ApplicationController
   stylesheet 'profile'
   
   def show
-    
   end
 
   def edit
@@ -56,7 +55,14 @@ class ProfileController < ApplicationController
       page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => ProfileWebsite.new}
     end
   end
+  
 
+  def add_crypt_key
+    render :update do |page|
+      page.insert_html :bottom, 'profile_crypt_keys', :partial => 'crypt_key', :locals => {:crypt_key => ProfileCryptKey.new}
+    end
+  end
+  
   protected
  
   def fetch_profile

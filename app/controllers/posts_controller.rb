@@ -50,13 +50,27 @@ class PostsController < ApplicationController
   end
   
   def twinkle   
-    @post.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, 1)
+    if rating = @post.ratings.find_by_user_id(current_user.id)
+      rating.update_attribute(:rating, 1)
+    else
+      rating = @post.ratings.create(:user_id => current_user.id, :rating => 1)
+    end
+
+    # this should be in an observer, but oddly it doesn't work there.
+    TwinkledActivity.create!(
+      :user => @post.user, :twinkler => current_user, 
+      :post => {:id => @post.id, :snippet => @post.body[0..30]}
+    )
   end
 
   def untwinkle
     if rating = @post.ratings.find_by_user_id(current_user.id)
       rating.destroy
     end
+  end
+
+  def jump
+    redirect_to page_url(@post.discussion.page) + "#posts-#{@post.id}"
   end
 
   protected

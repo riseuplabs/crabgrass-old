@@ -1,0 +1,7 @@
+<%= "Leave a message"[:leave_a_message] %>
+<% form_tag(url_for(:controller => 'person',
+		    :action => 'add_wall_message',
+		    :id => @user.login)) do -%>
+  <%= text_area :post, :body, :size => '20x5' %>
+  <%= submit_tag :post.t %>
+<% end -%>

@@ -39,7 +39,7 @@ class ContactController < ApplicationController
     if request.post? and params[:cancel]
       redirect_to url_for_user(@user)
     elsif request.post? and params[:remove]
-      current_user.contacts.delete(@user)
+      current_user.remove_contact!(@user)
       flash_message_now :success => '%s has been removed from your contact list.'[:contact_removed] % @user.login
     end
   end

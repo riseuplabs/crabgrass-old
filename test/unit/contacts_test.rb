@@ -8,13 +8,13 @@ class ContactsTest < Test::Unit::TestCase
     b = users(:green)
     
     assert !a.contacts.include?(b), 'no contact yet'
-    a.contacts << b
+    a.add_contact!(b)
     assert a.contacts.include?(b), 'should be contact'
     a.reload
     assert a.friend_id_cache.include?(b.id), 'friend id cache should be updated'
     assert a.friend_of?(b), 'should be friends'
     assert b.friend_of?(a), 'should be friends both ways'
-    a.contacts.delete(b)
+    a.remove_contact!(b)
     assert !a.contacts.include?(b), 'no contact now'
   end
 
@@ -22,10 +22,9 @@ class ContactsTest < Test::Unit::TestCase
     a = users(:red)
     b = users(:green)
     
-    a.contacts << b
-    assert_raises(AssociationError) do
-      a.contacts << b
-    end
+    a.add_contact!(b)
+    a.add_contact!(b)
+    
     assert_equal 1, Contact.count(:conditions => ['user_id = ? and contact_id = ?', a.id, b.id]), 'should be only be one contact, but there are really two'
   end
 
@@ -34,3 +33,4 @@ class ContactsTest < Test::Unit::TestCase
   end  
 
 end
+

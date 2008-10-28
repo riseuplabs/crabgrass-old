@@ -7,7 +7,9 @@ class WikiPageController < BasePageController
 
   def create
     @page_class = WikiPage
-    if request.post?
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
       begin
         @page = create_new_page!(@page_class)
         @page.update_attribute(:data, Wiki.create(:user => current_user))
