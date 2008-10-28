@@ -13,5 +13,9 @@ class UserDestroyedActivity < Activity
     ]
   end
 
+  def icon
+    'minus'
+  end
+
 end
 

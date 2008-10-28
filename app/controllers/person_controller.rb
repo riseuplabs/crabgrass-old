@@ -10,7 +10,7 @@ see PeopleController.
 
 class PersonController < ApplicationController
 
-  helper 'task_list_page'
+  helper 'task_list_page', 'wall'
 
   def initialize(options={})
     super()
@@ -36,6 +36,15 @@ class PersonController < ApplicationController
     #options[:values] << false
     @pages = Page.find_by_path('type/task/pending', options)
     @task_lists = @pages.collect{|p|p.data}
+  end
+  
+  def add_wall_message
+    @profile = @user.profiles.visible_by(current_user)
+    @post = Post.new(params[:post])
+    @post.discussion = @profile.ensure_wall
+    @post.user = current_user
+    @post.save!
+    redirect_to(:controller => 'person', :action => 'show', :id => @profile.user.login)
   end
     
   protected

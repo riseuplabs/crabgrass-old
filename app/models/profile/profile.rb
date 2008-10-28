@@ -88,6 +88,11 @@ class Profile < ActiveRecord::Base
   ### collections ########################################################## 
 
   belongs_to :wiki, :dependent => :destroy
+  belongs_to(:wall,
+             :class_name => 'Discussion',
+             :foreign_key => 'discussion_id',
+             :dependent => :destroy)
+  
   #belongs_to :photo
   #belongs_to :layout
   
@@ -136,5 +141,13 @@ class Profile < ActiveRecord::Base
     save
     wiki
   end
-    
+  
+
+   def ensure_wall
+     unless self.wall
+       self.wall = Discussion.create
+       self.save!
+     end
+     self.wall
+   end
 end # class

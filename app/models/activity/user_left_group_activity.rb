@@ -8,4 +8,9 @@ class UserLeftGroupActivity < UserJoinedGroupActivity
        }
     ]
   end
+
+  def icon
+    'membership_delete'
+  end
+
 end

@@ -2,38 +2,45 @@
   <%= render :partial => 'profile/show', :locals => {:profile => @user.profiles.public} %>
 <% else -%>
   <% if @user.friend_of?(current_user) -%>
-    <%= link_to 'remove from my contacts'.t, {:controller => 'contact', :action => 'remove', :id => @user} %>
+    <%= link_to :remove_from_my_contacts.t, {:controller => 'contact', :action => 'remove', :id => @user} %>
   <% elsif @user.profiles.visible_by(current_user).may_request_contact? -%>
-    <%= link_to 'add to my contacts', {:controller => 'contact', :action => 'add', :id => @user} %>
+    <%= link_to :add_to_my_contacts.t, {:controller => 'contact', :action => 'add', :id => @user} %>
   <% end -%>
 
+<div id="person_profile">
   <h1>Profile</h1>
   <%= render( :partial => 'profile/show',
-     :locals => {:profile => @user.profiles.visible_by(current_user)} )%>
+	      :locals => {:profile => @user.profiles.visible_by(current_user)} )
+      %>
   <% if @user.friend_of?(current_user) or @user.peer_of?(current_user) -%>
-    <h1>Groups</h1>
-    <ul>
-      <% group_count = 0 -%>
-      <% @user.groups.each do |g| %>
-        <% if g.publicly_visible_members or current_user.member_of? g %>
-          <li><%= link_to_group(g) %></li>
-          <% group_count += 1 -%>
-        <% end -%>
-      <% end -%>
-      <% if group_count == 0 %>
-        <li><%= 'none'.t %></li>
-      <% end %>
-    </ul>
-    <h1>Activity</h1>
-    <p>
-      <b>tasks:</b><br/>
-      <%= link_to 'tasks assigned to %s' %@user.display_name, url_for_user(@user, :action => 'tasks') %>
-    </p>
-    <p>
-      <b>pages participated in:</b><br/>
-      <%= render :partial => 'pages/list/table', :locals => {:heading => true} %>
-    </p>
+    <div id="person_groups" style="float:left;width:40%;left:5%;">
+      <h3 class="section">Groups</h2>
+      <ul>
+	<% group_count = 0 -%>
+	<% @user.groups.each do |g| %>
+	  <% if g.publicly_visible_members or current_user.member_of? g %>
+	    <li><%= link_to_group(g) %></li>
+	    <% group_count += 1 -%>
+          <% end -%>
+	<% end -%>
+	<% if group_count == 0 %>
+          <li><%= 'none'.t %></li>
+	<% end %>
+      </ul>
+    </div>
+    <div id="person_activity" style="float:right;width:40%;right:5%;">
+	<h3 class="section">Activity</h3>
+	<p>
+	  <b>tasks:</b><br/>
+	  <%= link_to 'tasks assigned to %s' %@user.display_name, url_for_user(@user, :action => 'tasks') %>
+	</p>
+	<p>
+	  <b>pages participated in:</b><br/>
+	  <%# render :partial => 'pages/list/table', :locals => {:heading => true} %>
+	</p>
+      </div>
   <% end -%>
+</div>
 <% end -%>
 
 <%= render :partial => 'activity/list' %>

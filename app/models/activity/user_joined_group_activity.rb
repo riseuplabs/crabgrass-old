@@ -8,6 +8,14 @@ class UserJoinedGroupActivity < Activity
   alias_attr :user,  :subject
   alias_attr :group, :object
   
+  before_create :set_access
+  def set_access
+    if user.profiles.public.may_see_groups? and group.profiles.public.may_see_members?
+      self.access = Activity::PUBLIC
+    end
+  end
+
+
   def description
     "{user} has joined {group_type} {group}"[
       :activity_user_joined_group, {
@@ -16,6 +24,10 @@ class UserJoinedGroupActivity < Activity
         :group => group_span(:group)
       }
     ]
+  end
+
+  def icon
+    'membership_add'
   end
 
 end
