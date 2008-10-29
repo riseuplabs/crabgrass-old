@@ -1,3 +1,11 @@
+<%
+  url = url_for(:controller => 'gallery',
+		:action => 'comment_image',
+		:id => @image.id,
+		:page_id => @page.id) 
+-%>
+
+
 <% color = cycle('shade-odd', 'shade-even') %>
 
 <% if @show_reply %>
@@ -22,7 +30,6 @@
   </td>
   <td class="post-body" id="reply">
     <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-    <% url = url_for(:controller => 'gallery', :action => 'comment_image', :id => @showing.asset_id, :page_id => @page.id) %>
     <% form_for :post, :url => url do |f| %>
       <fieldset><div>
         <%= f.text_area :body, :rows => 8, :class => 'post_body' %>    

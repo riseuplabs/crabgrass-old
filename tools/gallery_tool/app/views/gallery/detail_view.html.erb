@@ -1,13 +1,8 @@
 <%
   showing ||= @showing
   image = showing.image
-  title = if showing.title
-            showing.title
-          elsif image.page
-            "Image title: %s"[:image_title]%image.page.title
-          else
-            "(no title given)"[:no_title_given]
-          end
+  title = image.page.title
+  comments = @image.page.discussion.posts rescue []
 -%>
 
 <%= gallery_navigation :count, :download, :show, :edit %>
@@ -19,13 +14,16 @@
   <span id="detail_image_title">
     <%= title %>
   </span>
-  <%= change_title_link(showing) -%>
-
+  <%= change_title_link(image) -%><br />
+  <%= star_for_image(image) %><br />
+  <%# we insert javascript that gets returned by xhr request here, so that it is
+      evaluated. (tfjs = target for javascript) %>
+  <div id="tfjs" style="display:none"></div>
   <div id="image_comments">
     <h2>Comments</h2>
     <table>
-      <% if showing.comments.any? -%>
-	<% showing.comments.each do |comment| -%>
+      <% if comments.any? -%>
+	<% comments.each do |comment| -%>
 	  <%= render(:partial => 'posts/post',
 		     :locals => { :post => comment }) %>
 	<% end -%>

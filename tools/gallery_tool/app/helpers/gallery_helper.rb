@@ -96,7 +96,7 @@ module GalleryHelper
                        :url => page_url(@page, :action => 'upload'),
                        :update => 'target_for_upload',
                        :loading =>'$(\'show_upload_spinner\').show();',
-                       :success => 'target.show();',
+                       :success => 'upload_target.show();',
                        :complete => '$(\'show_upload_spinner\').hide();')
       },
       :add_existing => lambda { 
@@ -198,16 +198,39 @@ module GalleryHelper
                    options, html_options)+extra_output
   end
   
-  def change_title_link showing
+  def change_title_link image
     output = render(:partial => 'change_image_title',
-                    :locals => { :showing => showing })
+                    :locals => { :image => image })
     unless @change_title
       output << link_to("change title"[:change_title],
                         page_url(@page, :action => 'change_image_title',
-                                 :id => showing.asset_id),
+                                 :id => image.id),
                         :id => "change_title_link",
                         :onclick => "$('change_title_form').show();$('change_title_link').hide();return false;")
     end
     output
+  end
+  
+  def star_for_image image
+    star = (@upart and @upart.star?)
+    add_options = { 
+      :id => "add_star_link"
+    }
+    remove_options = { 
+      :id => "remove_star_link"
+    }
+    star_img = image_tag('icons/small_png/star_outline.png')
+    nostar_img = image_tag('icons/small_png/star.png')
+    (star ? add_options : remove_options).merge!(:style => "display:none;")
+    content_tag(:span, link_to_remote(star_img+:add_star.t, 
+                                      :url => page_url(@page,
+                                        :action => 'add_star',
+                                        :id => image.id),
+                                      :update => 'tfjs'), add_options)+
+      content_tag(:span, link_to_remote(nostar_img+:remove_star.t,
+                                        :url => page_url(@page,
+                                          :action => 'remove_star',
+                                          :id => image.id),
+                                        :update => 'tfjs'), remove_options)
   end
 end

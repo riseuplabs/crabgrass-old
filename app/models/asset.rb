@@ -186,7 +186,10 @@ class Asset < ActiveRecord::Base
   has_many :pages, :as => :data                                             # (1)
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page()
-    page_id ? parent_page : pages.first
+    p = page_id ? parent_page : pages.first
+    return p if p
+    p = self.pages.create(:title => self.filename,
+                          :data_id => self.id)
   end
 
   belongs_to :page_terms
@@ -225,11 +228,18 @@ class Asset < ActiveRecord::Base
   # create on that class.
   # eg. Asset.make(attributes) ---> ImageAsset.create(attributes)
   #     if attributes contains an image file.
+  # if attributes[:page] is given, an AssetPage is created with the given 
+  # attributes. The page's title defaults to the original filename of the
+  # uploaded asset.
   def self.make(attributes = nil)
+    page_attrs = attributes.delete(:page)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.create(attributes)
+    asset = asset_class.create(attributes)
+    AssetPage.create({:data_id => asset.id, :title => asset.filename
+                     }.merge(page_attrs)) if page_attrs
+    asset
   end
-
+  
   # like make(), but builds the asset in memory and does not save it.
   def self.build(attributes = nil)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
@@ -301,7 +311,10 @@ class Asset < ActiveRecord::Base
   # returns either :landscape or :portrait, depending on the format of the 
   # image.
   def image_format
-    raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
+    raise TypeError unless self.is_image
+    if self.width.nil? || self.height.nil?
+      return :landscape
+    end
     self.width > self.height ? :landscape : :portrait
   end
 end

@@ -9,7 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081018181941) do
+ActiveRecord::Schema.define(:version => 20081027170835) do
+
+  create_table "activities", :force => true do |t|
+    t.integer  "subject_id",   :limit => 11
+    t.string   "subject_type"
+    t.string   "subject_name"
+    t.integer  "object_id",    :limit => 11
+    t.string   "object_type"
+    t.string   "object_name"
+    t.string   "type"
+    t.string   "extra"
+    t.integer  "key",          :limit => 11
+    t.datetime "created_at"
+    t.integer  "access",       :limit => 1,  :default => 2
+  end
+
+  add_index "activities", ["created_at"], :name => "created_at"
+  execute "CREATE INDEX subject_0_4_0 ON activities (subject_id,subject_type(4),access)"
 
   create_table "asset_versions", :force => true do |t|
     t.integer  "asset_id",       :limit => 11
@@ -84,12 +101,24 @@ ActiveRecord::Schema.define(:version => 20081018181941) do
 
   add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
 
+  create_table "crypt_keys", :force => true do |t|
+    t.integer "profile_id",  :limit => 11
+    t.boolean "preferred",                 :default => false
+    t.text    "key"
+    t.string  "keyring"
+    t.string  "fingerprint"
+    t.string  "name"
+    t.string  "description"
+  end
+
   create_table "discussions", :force => true do |t|
-    t.integer  "posts_count",   :limit => 11, :default => 0
+    t.integer  "posts_count",      :limit => 11, :default => 0
     t.datetime "replied_at"
-    t.integer  "replied_by_id", :limit => 11
-    t.integer  "last_post_id",  :limit => 11
-    t.integer  "page_id",       :limit => 11
+    t.integer  "replied_by_id",    :limit => 11
+    t.integer  "last_post_id",     :limit => 11
+    t.integer  "page_id",          :limit => 11
+    t.integer  "commentable_id",   :limit => 11
+    t.string   "commentable_type"
   end
 
   add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
@@ -386,6 +415,7 @@ ActiveRecord::Schema.define(:version => 20081018181941) do
     t.boolean  "may_burden"
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
+    t.integer  "discussion_id",          :limit => 11
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -426,10 +456,14 @@ ActiveRecord::Schema.define(:version => 20081018181941) do
   add_index "requests", ["updated_at"], :name => "updated_at"
 
   create_table "showings", :force => true do |t|
-    t.integer "asset_id",   :limit => 11
-    t.integer "gallery_id", :limit => 11
-    t.integer "position",   :limit => 11, :default => 0
-    t.boolean "is_cover",                 :default => false
+    t.integer "asset_id",         :limit => 11
+    t.integer "gallery_id",       :limit => 11
+    t.integer "position",         :limit => 11, :default => 0
+    t.boolean "is_cover",                       :default => false
+    t.integer "stars",            :limit => 11
+    t.integer "comment_id_cache", :limit => 11
+    t.integer "discussion_id",    :limit => 11
+    t.string  "title"
   end
 
   add_index "showings", ["gallery_id", "asset_id"], :name => "ga"
@@ -534,6 +568,15 @@ ActiveRecord::Schema.define(:version => 20081018181941) do
   add_index "user_participations", ["star"], :name => "index_user_participations_star"
   add_index "user_participations", ["resolved"], :name => "index_user_participations_resolved"
   add_index "user_participations", ["attend"], :name => "index_user_participations_attend"
+
+  create_table "user_relations", :force => true do |t|
+    t.integer "user_id",       :limit => 11
+    t.integer "partner_id",    :limit => 11
+    t.string  "type"
+    t.boolean "is_active"
+    t.float   "value"
+    t.integer "discussion_id", :limit => 11
+  end
 
   create_table "users", :force => true do |t|
     t.string   "login"

@@ -38,7 +38,7 @@ class RequestToJoinUs < Request
   end
 
   def after_approval
-    group.memberships.create :user => recipient, :group => group
+    group.add_user! recipient
   end
 
   def description
