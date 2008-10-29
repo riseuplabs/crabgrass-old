@@ -32,6 +32,7 @@ xml.rss :version => '2.0',
           xml.media :player, :url => hostport + page_url(video.page)
           xml.media :thumbnail, :url => video.thumbnail_url if video.thumbnail_url
         end
+        xml.guid 'tag:riseup.net,2008/crabgrass-video/' + Digest::SHA1.hexdigest("#{video.id.to_s}--#{video.media_key}"), :isPermaLink => false
       end
     end
   end
