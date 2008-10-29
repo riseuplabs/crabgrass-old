@@ -9,8 +9,7 @@ class ActivityTest < ActiveSupport::TestCase
 
     u1.add_contact!(u2)
 
-    act = Activity.for_dashboard(u1).find(:first)
-    assert_equal ContactActivity, act.class
+    act = FriendActivity.for_dashboard(u1).find(:first)
     assert_equal u1, act.user
     assert_equal u2, act.other_user
   end
@@ -23,8 +22,7 @@ class ActivityTest < ActiveSupport::TestCase
     username = u2.name
     u2.destroy
 
-    acts = Activity.for_dashboard(u1).find(:all)
-    act = acts.detect{|a|a.class == UserDestroyedActivity}
+    act = UserDestroyedActivity.for_dashboard(u1).find(:first)
     assert_equal username, act.username
   end
 
@@ -48,16 +46,14 @@ class ActivityTest < ActiveSupport::TestCase
 
     group.add_user!(user)
 
-    act = Activity.for_dashboard(notified_user).find(:first)
+    act = GroupGainedUserActivity.for_dashboard(notified_user).find(:first)
+    assert_equal group.id, act.group.id
+
+    act = GroupGainedUserActivity.for_group(group, notified_user).find(:first, :order => 'created_at DESC')
     assert_equal GroupGainedUserActivity, act.class
     assert_equal group.id, act.group.id
 
-    act = Activity.for_group(group, notified_user).find(:first)
-    assert_equal GroupGainedUserActivity, act.class
-    assert_equal group.id, act.group.id
-
-    acts = Activity.for_dashboard(user).find(:all)
-    act = acts.detect{|a|a.class == UserJoinedGroupActivity}
+    act = UserJoinedGroupActivity.for_dashboard(user).find(:first)
     assert_equal group.id, act.group.id
   end
 
@@ -66,7 +62,7 @@ class ActivityTest < ActiveSupport::TestCase
     u2 = users(:iguana)
 
     u1.add_contact!(u2)
-    act = Activity.for_dashboard(u1).find(:first)
+    act = FriendActivity.for_dashboard(u1).find(:first)
     u2.destroy
 
     assert_equal nil, act.other_user
