@@ -1,4 +1,6 @@
 class ExternalVideoPageController < BasePageController
+  session :off, :only => %w(rss)
+  
   def create
     @page_class = ExternalVideoPage
     @stylesheet = 'page_creation'
@@ -23,5 +25,18 @@ class ExternalVideoPageController < BasePageController
         flash_message_now :exception => exc
       end
     end
+  end
+  
+  def rss
+    if params[:id]
+      @group = Group.get_by_name(params[:group])
+      # treat invisible and nonexistent groups the same
+      unless @group && @group.publicly_visible_group
+        raise ErrorMessage.new("Invalid group #{params[:group]} specified")
+      end
+    end
+    scope = @group ? ExternalVideo.visible_to(@group, :public) : ExternalVideo.visible_to(:public)
+    @videos = scope.most_recent.find(:all, :limit => 20)
+    render :layout => false
   end
 end
