@@ -21,7 +21,22 @@
   <h1 id='site_title'><img src="/images/logo.jpg" alt=""></h1>
 <%= render :partial => 'design/menus' %>
   </div>
-	<div id="banner"><div id='bannercontent'><%= @banner %></div></div>
+	<div id="banner">
+		<div id='bannercontent'>
+			<!-- search form -->
+			<form method="post" action="search" method="get">
+				<fieldset>
+					<input class="search-input" type="text" name="q" value="Type search term" />
+					<input class="search-button" type="submit" value="" />
+				</fieldset>
+				<a href="/search/advanced/">Advanced Search</a>
+			</form>
+			<!-- /search form -->
+			
+			<%= @banner %>
+			
+		</div>
+	</div>
 </div>
 
 <%= render :partial => 'layouts/messages' %>

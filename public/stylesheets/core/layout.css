@@ -67,7 +67,7 @@ div#banner {
   text-align: left;
 }
 div#bannercontent {
-  padding: 0 7px 0 20px;
+  padding: 0px 20px;
 }
 div#banner img.avatar {
 	width: 64px; height: 64px;
@@ -86,6 +86,47 @@ div#banner a {
 }
 div#banner a:hover {
   text-decoration: underline;
+}
+
+/* search form in banner */
+div#bannercontent form {
+	float:right;
+	text-align:right;
+	margin-top:20px;	
+	color:#E1E1E1;
+}
+div#bannercontent form fieldset {
+	border:1px solid #526568;
+	background:#3A464F;
+	padding:0px;
+	margin:0px;
+}
+
+div#bannercontent .search-input { 
+	padding:2px; 
+	margin:4px 3px 4px 5px;
+	background:#3A464F; 
+	border:none;
+	color:#fff;
+	font-size:10px;
+	font-weight:normal;
+	width:180px;
+}
+
+div#bannercontent form fieldset .search-button {
+	display:inline;
+	margin:5px 5px 2px;
+	padding:0px;
+	border:0px;
+	width:15px;
+	height:15px;
+	background:url(/images/ui/search/magnifyer.gif) no-repeat;
+}
+
+div#bannercontent form a {
+	font-size:10px;
+	font-weight:normal;
+	color:#E1E1E1;
 }
 
 /* icon boxes */
