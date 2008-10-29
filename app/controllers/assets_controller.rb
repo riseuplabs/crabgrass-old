@@ -1,8 +1,5 @@
 class AssetsController < ApplicationController
-
-  session :off, :only => %w(rss)
-  
-  before_filter :public_or_login_required, :except => %w(rss)
+  before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
 
@@ -54,28 +51,6 @@ class AssetsController < ApplicationController
     @asset.save
     flash_message_now :object => @asset
     redirect_to page_url(@asset.page)
-  end
-
-  # this can be called by anyone, so be sure only to return super-public stuff
-  # tbd: how do we specify a language in the absense of a session?
-  def rss
-    if (params[:group])
-      @group = Group.get_by_name(params[:group])
-      # treat invisible and nonexistent groups the same
-      unless @group && @group.publicly_visible_group
-        raise ErrorMessage.new("Invalid group #{params[:group]} specified")
-      end
-    end
-
-    @type = params[:media].to_sym if params[:media]
-    @type = :all unless [:image,:audio,:video,:document].include?(@type)
-    
-    scope = @group ? Asset.visible_to(@group, :public) : Asset.visible_to(:public)
-    scope = scope.media_type(@type) unless @type == :all
-    
-    @media = scope.most_recent.find(:all, :limit => 20)
-    
-    render :layout => false
   end
 
   protected

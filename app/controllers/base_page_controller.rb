@@ -116,7 +116,7 @@ class BasePageController < ApplicationController
   
   # don't require a login for public pages
   def login_or_public_page_required
-    if (action_name == 'show' and @page and @page.public?) || (action_name == 'rss')
+    if action_name == 'show' and @page and @page.public?
       true
     else
       return login_required

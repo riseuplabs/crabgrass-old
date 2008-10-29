@@ -17,8 +17,6 @@ ActionController::Routing::Routes.draw do |map|
   ##### ASSET ROUTES ######################################
   
   map.connect '/assets/:action/:id',                :controller => 'assets', :action => /create|destroy/
-  map.connect 'assets/rss/:media',          :controller => 'assets', :action => 'rss', :requirements => { :media => /all|image|audio|video|document/ }
-  map.connect 'assets/rss/:group/:media',          :controller => 'assets', :action => 'rss', :media => nil
   map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
   map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
 
@@ -51,6 +49,10 @@ ActionController::Routing::Routes.draw do |map|
 
   # routes in emails:
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
+
+  map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
+  map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil
+  map.connect 'feeds/:type/:group', :controller => 'feeds', :action => 'index', :group => nil
   
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
