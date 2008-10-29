@@ -1,0 +1,120 @@
+--- 
+activities_001: 
+  object_name: gerrard
+  subject_name: animals
+  type: GroupCreatedActivity
+  id: "1"
+  subject_type: Group
+  subject_id: "2"
+  access: "2"
+  object_type: User
+  key: "933577122"
+  extra: 
+  object_id: "3"
+  created_at: "<%= 1.week.ago.to_s(:db) %>"
+activities_002: 
+  object_name: animals
+  subject_name: gerrard
+  type: UserCreatedGroupActivity
+  id: "2"
+  subject_type: User
+  subject_id: "3"
+  access: "2"
+  object_type: Group
+  key: "933577122"
+  extra: 
+  object_id: "2"
+  created_at: "<%= 1.week.ago.to_s(:db) %>"
+activities_003: 
+  object_name: animals
+  subject_name: gerrard
+  type: UserJoinedGroupActivity
+  id: "3"
+  subject_type: User
+  subject_id: "3"
+  access: "2"
+  object_type: Group
+  key: "250431626"
+  extra: 
+  object_id: "2"
+  created_at: "<%= 1.week.ago.to_s(:db) %>"
+activities_004: 
+  object_name: gerrard
+  subject_name: animals
+  type: GroupGainedUserActivity
+  id: "4"
+  subject_type: Group
+  subject_id: "2"
+  access: "2"
+  object_type: User
+  key: "250431626"
+  extra: 
+  object_id: "3"
+  created_at: "<%= 1.week.ago.to_s(:db) %>"
+activities_005: 
+  object_name: animals
+  subject_name: blue
+  type: UserJoinedGroupActivity
+  id: "5"
+  subject_type: User
+  subject_id: "4"
+  access: "2"
+  object_type: Group
+  key: "1171500401"
+  extra: 
+  object_id: "2"
+  created_at: "<%= 1.hour.ago.to_s(:db) %>"
+activities_006: 
+  object_name: blue
+  subject_name: animals
+  type: GroupGainedUserActivity
+  id: "6"
+  subject_type: Group
+  subject_id: "2"
+  access: "2"
+  object_type: User
+  key: "1171500401"
+  extra: 
+  object_id: "4"
+  created_at: "<%= 1.hour.ago.to_s(:db) %>"
+activities_007: 
+  object_name: gerrard
+  subject_name: blue
+  type: TwinkledActivity
+  id: "7"
+  subject_type: User
+  subject_id: "4"
+  access: "1"
+  object_type: User
+  key: "502126422"
+  extra: "--- \n\
+    :snippet: blah blah blah blah\n\
+    :id: 1\n"
+  object_id: "3"
+  created_at: "<%= 1.hour.ago.to_s(:db) %>"
+activities_008: 
+  object_name: blue
+  subject_name: gerrard
+  type: FriendActivity
+  id: "8"
+  subject_type: User
+  subject_id: "3"
+  access: "1"
+  object_type: User
+  key: "1146383332"
+  extra: 
+  object_id: "4"
+  created_at: "<%= 1.minute.ago.to_s(:db) %>"
+activities_009: 
+  object_name: gerrard
+  subject_name: blue
+  type: FriendActivity
+  id: "9"
+  subject_type: User
+  subject_id: "4"
+  access: "1"
+  object_type: User
+  key: "1146383332"
+  extra: 
+  object_id: "3"
+  created_at: "<%= 1.minute.ago.to_s(:db) %>"
