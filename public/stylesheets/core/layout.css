@@ -165,7 +165,7 @@ h1#site_title{
 
 /*******************TOP MENU*************************/
 #top_menu, #top_menu2{
-	height:43px;
+	height:44px;
 }
 ul#top_menu li a, ul#top_menu2 li a {
 	line-height:43px;
@@ -279,7 +279,7 @@ div.breadcrumbs {
 	
 }
 
-div.title_box {
+div.title_box h1{
   	margin: 0;
   	padding: 0;
 	padding-left:21px;
@@ -298,8 +298,8 @@ div.title_box:hover .title_box_edit_link {
 }
 
 #mainsection1{
-	padding:20px 0;
-	min-height:234px;
+	padding:20px 0 0 0;
+	min-height:222px;
 	height:100%;
 	overflow:hidden;
 }
@@ -320,12 +320,21 @@ float:none;
 .dashmenu{
 	clear:both;
 }
-.dashbox1, .dashbox2{
+.dashbox2, .dashbox3{
+	margin-top:15px;
+}
+.dashbox1, .dashbox2, .dashbox3{
 	padding-left:22px;
 }
 .dashbox2{
-	clear:left;
+	clear:both;
+	width:47%;
 	float:left;
+}
+
+.dashbox3{
+	float:left;
+	width:40%;
 }
 
 /*GROUP_SCROLLTABLE*/

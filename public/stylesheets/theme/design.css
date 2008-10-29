@@ -28,10 +28,12 @@ div#footer {
 }
 
 /*FONT*/
-.title2{
+.title2, #mainsection2 h2.title2{
 	color:#C33737;
 	font-size:1.125em;
+	text-transform:capitalize;
 }
+
 
 
 
@@ -78,7 +80,7 @@ div#footer {
 	clear:left;
 }
 
-.dashbox1 span a, .dashbox2 span a{
+.dashbox1 span a, .dashbox2 span a, .dashbox3 span a{
 	text-transform: uppercase;
 	padding-right:10px;
 	font-weight:600;
@@ -86,7 +88,7 @@ div#footer {
 	color:#4986BC;
 	background:url(/images/quotmark.gif) no-repeat right;
 }
-.dashbox2 p{
+.dashbox2 p, .dashbox3 p{
 	padding:0;
 }
 .description_content1 p.more2{
@@ -97,10 +99,10 @@ div#footer {
 	color:#5a98c8;
 }
 ul li .pict_id{
-	width:40px;
-	height: 40px;
+	width:38px;
+	height: 38px;
 	border:1px solid #ccc;
-	margin-right:3px;
+	margin-right:2px;
 }
 
 .dashmenu li{
@@ -108,15 +110,26 @@ ul li .pict_id{
 	background:url(/images/point.gif) no-repeat right;
 }
 
+.dashmenu li a{
+	color:#5a98c8;
+	text-transform:capitalize;
+	font-size:11px;
+}
+
 /*GROUP_SCROLLTABLE **********************/
 #group_scrolltable{
 	border-top:1px solid #E1E1E1;
 	background:white;
 	padding-top:22px;
-	height:300px;
-	overflow:auto;
 }
 
+.scrolltable{
+	clear:both;
+	height:300px;
+	overflow:auto;
+	margin-top:50px;
+	margin-bottom
+}
 #group_scrolltable table{
 	width:94%;
 	margin-left:22px;
@@ -129,23 +142,54 @@ table .date{
 	padding-left:5px;
 }
 
-table .data, table.rightdata{
+table .data, table .rightdata{
 	height:50px;
-	padding-left:5px;
+
 }
-table .rightdata{
+
+table th.data, table th.rightdata{
+	text-transform:uppercase;
+	color:#C1C1C1;
+	font-weight:600;
+	font-size:10px;
+	
+}
+
+table th.rightdata{
 	text-align:right;
-	text-transform:capitalize;
 }
 #group_scrolltable table td{
 	border-bottom:1px solid #ccc;
 }
 
+#group_scrolltable ul{
+	margin-left:32px;
+	clear:both;
+	margin-top:20px;
+	margin-botto:5px;
+	border-right:1px solid red;
+}
+
 #group_scrolltable ul.table_menu li{
 	float:left;
+	background:url(/images/table_menu.jpg) repeat-x;
 }
 #group_scrolltable ul.table_menu li a{
+	font-weight:600;
+	text-transform:capitalize;
+	color:#667D92;
+	font-size:11px;
+	padding:8px 10px;
+	border:1px solid #E1E1E1;
+	border-right:none;
+	background:#F0EDEC url(/images/background/table_menu.jpg) repeat-x; /* extract gradient*/
+}
 
+
+#group_scrolltable ul.table_menu li.active a {
+	border-bottom:none;
+	background:none;
+	color:#2E495D;
 }
 
 #group_scrolltable span a {
@@ -154,11 +198,15 @@ table .rightdata{
 	font-weight:600;
 	font-size:9px;
 	color:#4986BC;
-	background:url(/images/quotmark.gif) no-repeat right;
+	background:0url(/images/quotmark.gif) no-repeat right;
+	margin-left:10px;
 }
 
 
-
+#page_list, #page_list table.activity{
+	clear:both;
+	float:none;
+}
 
 
 
@@ -229,13 +277,18 @@ ul.side_list li:hover {
 .title_box h2 {
   font-family: arial;
   font-size: 1.4em;
-  font-weight: normal;
+  font-weight: 600;
   margin: 0px 0 3px 0;
   padding: 0;
 }
 .title_box h2 span {
   font-size: 0.8em;
   margin-left: 1em;
+}
+
+.title_box .title2{
+	padding-right:15px;
+	background:url(/images/point.gif) no-repeat right;
 }
 
 .title5 {
