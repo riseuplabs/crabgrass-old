@@ -1,4 +1,4 @@
-class ContactActivity < Activity
+class FriendActivity < Activity
 
   validates_format_of :subject_type, :with => /User/
   validates_format_of :object_type, :with => /User/
