@@ -1,0 +1,9 @@
+---
+name: a left aligned image (<p> should have class 'left')
+in: |-
+  !</assets/5/rain.jpg!
+out: |-
+  <p style="float:left;" class="left"><img src="/assets/5/rain.jpg" alt="" /></p>
+---
+in: '!>/image.gif! right-aligned image'
+out: <p style="float:right;" class="right"><img src="/image.gif" alt="" /> right-aligned image</p>
