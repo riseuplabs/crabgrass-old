@@ -4,9 +4,9 @@
 #
 
 class ExternalVideo < ActiveRecord::Base
-  has_many :pages, :as => :data
-  def page; pages.first; end
-
+  include PageData
+  before_save :update_page_terms
+  
   SERVICES = [
 
     { :name => :youtube,
@@ -89,5 +89,9 @@ class ExternalVideo < ActiveRecord::Base
 
   def build_embed
     service[:template ] % [media_key, width, height] if service
+  end
+  
+  def update_page_terms
+    self.page_terms = page.page_terms unless page.nil?
   end
 end

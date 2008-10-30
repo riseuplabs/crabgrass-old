@@ -243,13 +243,37 @@ div.breadcrumbs {
 
 
 
+div.page_title a{
+	vertical-align:top;
+	line-height:60px;
+	margin-left:20px;
+	font-size:10px;
+}
+
 div.title_box h1{
   	margin: 0;
   	padding: 0;
 	padding-left:21px;
   	position: relative;
 	line-height:60px;
+	display:inline;
 }
+
+.title_box .breadcrumb {
+  	margin:0;
+  	padding: 4px 4px 0px 21px;
+}
+
+.title_box .breadcrumb,
+	.title_box .breadcrumb a {
+	color:#8A8988;
+	font-size:10px;
+}
+
+.title_box .breadcrumb a {
+	text-transform:capitalize;
+}
+
 div.title_box .title_box_edit_link {
   display: none;
   position: absolute;
@@ -488,5 +512,22 @@ div.popup blockquote {
 }
 
 
-
-
+/* gallery page styles */
+.gallery-nav { padding:5px 20px; border-top:1px solid #E1E1E1; border-bottom:1px solid #E1E1E1; background:#fff; line-height:28px; }
+.gallery-nav .button,
+ 	.gallery-nav .meta { float:right; }
+.gallery-nav .button { height:28px; line-height:28px; display:block; font-size:11px; color:#5A99C9; font-weight:bold; }
+.gallery-nav .button:hover { background-color:#EFF9FE; color:#266E94; text-decoration:none; }
+.gallery-nav .next { padding-right:10px; padding-left:10px; background:url(/images/ui/buttons/next.gif) right; border-left:1px dotted #ccc; }
+.gallery-nav .previous { padding-left:10px; padding-right:10px; background:url(/images/ui/buttons/previous.gif) left; }
+.gallery-nav .meta { margin-right:10px; color:#898989; display:inline; vertical-align:middle; margin-top:5px; font-size:11px; }
+.gallery-nav .link { padding:2px 0px 4px 24px; margin-right:20px; }
+.gallery-nav .edit { background:url(/images/icons/silk/picture_edit.png) no-repeat left; }
+.gallery-nav .download { background:url(/images/icons/silk/folder_picture.png) no-repeat left; }
+.gallery-nav .slideshow { background:url(/images/icons/silk/application_view_gallery.png) no-repeat left; }
+/* gallery item */
+.gallery-item { padding:20px; text-align:center; background:#fff; border-bottom:1px solid #E1E1E1; }
+.gallery-item .description { color:#73879A; font-style:italic; font-family:Times; font-size:16px; text-align:center; margin-top:10px; background:#fff; }
+.gallery-item .meta { text-align:right; margin-top:10px; color:#99A9B7; font-size:11px; }
+a { color:#5A98C8; font-size:11px;  }
+a:hover { text-decoration:underline; }

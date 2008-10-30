@@ -1,6 +1,9 @@
 <%- @title_box = capture do -%>
  <%= render :partial => 'group/widgets/infopanel' %>
 <%- end -%>
+<% content_for :html_head do %>
+  <link rel="alternate" href="/group/search/<%= @group.name %>/rss" title="<%= "RSS Feed"[:rss_feed] %>" type="application/rss+xml" />
+<% end %>
 
 <div class='landing'>
   <div class='landing-side-column'>
@@ -26,4 +29,3 @@
 
 <%= render :partial => 'activity/list' %>
 
-<link rel="alternate" href="/group/search/<%= @group.name %>/rss" title=<%= "RSS Feed"[:rss_feed] %> type="application/rss+xml" />

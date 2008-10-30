@@ -3,6 +3,7 @@
   if @user
     users ||= @user.contacts
     groups ||= @user.groups
+    users.unshift @user unless users.include? @user
   else
     users ||= nil; groups ||= nil 
   end
