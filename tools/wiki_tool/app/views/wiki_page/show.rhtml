@@ -3,6 +3,7 @@
   <div id='wiki_html'>
     <%= @wiki.body_html %>
   </div>
+  <br style='clear:both' />
   <%= render :partial => 'wiki_edit_controls', :locals => {:access_keys => true} if current_user.may? :edit, @page %>
 </div><!-- end wiki -->
 <%= load_lasted_change_diff if @last_seen %>

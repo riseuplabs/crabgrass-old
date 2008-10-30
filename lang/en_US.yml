@@ -469,6 +469,8 @@ file_class_description: "An uploaded file."
 tasks: "tasks"
 video_class_description: "Show a video hosted on an external website."
 video: "video"
+article: "article"
+article_class_description: "Blog post or news article."
 
 title: "Title"
 summary: "Summary"
