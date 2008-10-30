@@ -3,7 +3,7 @@ class TaskListPageController < BasePageController
   after_filter :update_participations,
     :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   stylesheet 'tasks'
-  javascript :extra
+  javascript :extra, 'page'
   
   def show 
   end
