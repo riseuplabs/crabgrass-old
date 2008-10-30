@@ -174,18 +174,10 @@ class Asset < ActiveRecord::Base
     # is destroyed?
     #
     # That's right, but this is necessary to assure an asset_page exists.
-    # see below...
     return self.pages.create(:title => self.filename, :data_id => self.id,
                              :flow => FLOW[:gallery])
   end
   
-  before_destroy :remove_asset_page
-  def remove_asset_page
-    if(self.page.flow == FLOW[:gallery])
-      self.page.destroy
-    end
-  end
-
   # some asset subclasses (like AudioAsset) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
