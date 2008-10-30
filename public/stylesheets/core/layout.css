@@ -58,7 +58,6 @@ img   {border: 0;}
   padding-top: 3.5em;
 }
 
-
 /*******************BANNER*************************/
 div#banner {
   clear: both;
@@ -223,91 +222,18 @@ ul#top_menu li a, ul#top_menu2 li a {
 
 
 
-
-
-
-
-
-
-
-/*#header ul li a {
-  padding: 4px 10px;
-  text-decoration:none;
-  margin:0 0 0 2px;
-  -webkit-border-top-left-radius: 2px;
-  -webkit-border-top-right-radius: 2px;
-  -moz-border-radius-topright: 4px;
-  -moz-border-radius-topleft: 4px;*/
-}
-
-/*
-ul.tabmenu li a em {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  text-indent: -9999px;
-  right: 8px;
-  top: 11px;
-  background: #057 url(../images/app/droparrow.gif) 5px 6px no-repeat;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
-}
-
-ul.tabmenu li a:hover em {
-  background-color: #057;
-}
-*/
-
 ul.submenu {
   display: none;
 }
 
-/** submenus not yet working in core 
-ul.submenu {
-  width: 230px;
-  background: #fff !important;
-  position: absolute;
-  border-bottom: 1px solid #4294CF;
-  border-left: 1px solid #4294CF;
-  border-right: 1px solid #4294CF;
-  top: 33px;
-  left: 0;
-  z-index: 9;
-  display: none;
-}
 
-ul.submenu li {
-  float: none;
-  display: block;
-  border-bottom: 1px solid #eee;
-  margin: 0 6px !important;
-  background-color: #fff;
-}
-
-ul.submenu li a {
-  color: #333;
-  float: none;
-  padding: 6px;
-  background-color: #fff;
-}
-
-ul.submenu li a:hover {
-  background: transparent;
-  color: #058;
-}
-
-**/
 
 
 
 /*******************THE MAIN COLUMN*************************/
 /* the main column */
 
-div.content_box {
-  margin: 0;
-}
+
 
 div.breadcrumbs {
   margin: -10px;
@@ -315,17 +241,13 @@ div.breadcrumbs {
   padding-left: 10px;
 }
 
-.title_box h1, .title_box form .h1 {
-  padding: 0; margin: 0;
-	
-}
+
 
 div.title_box h1{
   	margin: 0;
   	padding: 0;
 	padding-left:21px;
   	position: relative;
-	height:60px;
 	line-height:60px;
 }
 div.title_box .title_box_edit_link {
@@ -340,7 +262,7 @@ div.title_box:hover .title_box_edit_link {
 
 #mainsection1{
 	padding:20px 0 0 0;
-	min-height:222px;
+	/*min-height:222px;*/
 	height:100%;
 	overflow:hidden;
 }
@@ -351,7 +273,7 @@ div.title_box:hover .title_box_edit_link {
 	float:left;
 }
 
-h3.title3, p.txt_group_description, p.more1{
+h3.title3, p.description, p.more1{
 	padding-left:22px;
 }
 .listavatars{
