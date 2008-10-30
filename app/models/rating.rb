@@ -23,13 +23,5 @@ class Rating < ActiveRecord::Base
     { :conditions => ['user_id = ?', user.id] }
   }
 
-  def after_create
-    puts "+#{self.id}"
-  end
-
-  def after_destroy
-    puts "-#{self.id}"
-  end
-
 end
 

@@ -52,7 +52,7 @@ end
 <table class='activity'>
 <% if today.any? -%>
   <% reset_cycle 'activity_entry_cycle' -%>
-  <thead><tr><th colspan='30'><h4 class='section'><%= :Today.t %></h4></th></tr></thead>
+  <tbody><tr><th colspan='30'><h4 class='section'><%= :Today.t %></h4></th></tr></tbody>
   <% today.each do |page| -%>
     <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
@@ -60,7 +60,7 @@ end
 
 <% if yesterday.any? -%>
   <% reset_cycle 'activity_entry_cycle' -%>
-  <thead><tr><th colspan='30'><h4 class='section'><%= :Yesterday.t %></h4></th></tr></thead>
+  <tbody><tr><th colspan='30'><h4 class='section'><%= :Yesterday.t %></h4></th></tr></tbody>
   <% yesterday.each do |page| -%>
     <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
@@ -68,7 +68,7 @@ end
 
 <% if week.any? -%>
   <% reset_cycle 'activity_entry_cycle' -%>
-  <thead><tr><th colspan='30'><h4 class='section'><%= :This_Past_Week.t %></h4></th></tr></thead>
+  <tbody><tr><th colspan='30'><h4 class='section'><%= :This_Past_Week.t %></h4></th></tr></tbody>
   <% week.each do |page| -%>
     <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>
@@ -76,7 +76,7 @@ end
 
 <% if later.any? -%>
   <% reset_cycle 'activity_entry_cycle' -%>
-  <thead><tr><th colspan='30'><h4 class='section'><%= :Older.t %></h4></th></tr></thead>
+  <tbody><tr><th colspan='30'><h4 class='section'><%= :Older.t %></h4></th></tr></tbody>
   <% later.each do |page| -%>
     <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
   <% end -%>

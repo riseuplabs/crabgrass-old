@@ -17,50 +17,6 @@ module UserExtension::Socialize
       has_many :peers, :class_name => 'User',
         :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})'
 
-      #########
-      # User to User Relations
-      # Association is in  app/models/associations/user_relation.rb
-      #########
-      
-      has_many :user_relations
-      has_many :related_users, :foreign_key => "partner_id", :class_name => "UserRelation", :uniq => true
-
-      has_many :contacts, :through => :related_users, :source => :user, :foreign_key => "partner_id", :uniq => true do
-        def online
-          find( :all, 
-            :conditions => ['users.last_seen_at > ?',10.minutes.ago],
-            :order => 'users.last_seen_at DESC' )
-        end
-      end
-  
-      has_many :friendships
-      has_many :befriends, :foreign_key => "partner_id", :class_name => "Friendship", :uniq => true
-      has_many :friends, :through => :befriends, :source => :user, :foreign_key => "partner_id", :uniq => true do
-        def online
-          find( :all, 
-            :conditions => ['users.last_seen_at > ?',10.minutes.ago],
-            :order => 'users.last_seen_at DESC' )
-        end
-      end  
-      
-      # TODO
-      # This should be rewritten as a extension for usage like that:
-      # define_user_relations :user_relation, :friendship
-      #
-      # maybe the STI in the association should be metagenerated, too
-      
-      # changes the type of the user_relationc
-      def change_user_relation other, type
-        rel1 = UserRelation.find_by_user_id_and_partner_id(self.id, other.id)
-        rel1.type = type
-        rel1.save
-        rel2 = UserRelation.find_by_user_id_and_partner_id(other.id,self.id)
-        rel2.type = type
-        rel2.save
-      end
-      
-=begin
-# Will be deprecated soon      
       has_and_belongs_to_many :contacts,
         {:class_name => "User",
         :join_table => "contacts",
@@ -73,11 +29,7 @@ module UserExtension::Socialize
               :order => 'users.last_seen_at DESC' )
           end
       end
-=end
-    
-    ## DISCUSSIONS
-    has_many :discussions, :as => :commentable
-      
+
     end
   end
 
@@ -86,28 +38,27 @@ module UserExtension::Socialize
   # this should be the ONLY way that contacts are created
   def add_contact!(other_user, type=nil)
     unless self.contacts.find_by_id(other_user.id)
-      UserRelation.create!(:user_id => self.id, :partner_id => other_user.id, :type => type)
+      Contact.create!(:user_id => self.id, :contact_id => other_user.id)
       self.contacts.reset
       self.update_contacts_cache
     end
     unless other_user.contacts.find_by_id(self.id)
-     UserRelation.create!(:user_id => other_user.id, :partner_id => self.id, :type => type)
+      Contact.create!(:user_id => other_user.id, :contact_id => self.id)
       other_user.contacts.reset
       other_user.update_contacts_cache
     end
   end
 
   # this should be the ONLY way contacts are deleted
-  def remove_contact!(other_user, type=nil)
-    
-    if rel1 = UserRelation.find_by_user_id_and_partner_id_and_type(self.id, other_user.id,type)
-      rel1.destroy
+  def remove_contact!(other_user, type=nil)    
+    if contact = Contact.find_by_user_id_and_contact_id(self.id, other_user.id)
+      self.contacts.delete(other_user)
       self.update_contacts_cache
-    end  
-    if rel2 = UserRelation.find_by_user_id_and_partner_id(other_user.id,self.id,type)
-       rel2.destroy
+    end
+    if contact = Contact.find_by_user_id_and_contact_id(other_user.id,self.id)
+       other_user.contacts.delete(self)
        other_user.update_contacts_cache
-    end  
+    end
   end
   
   ## PERMISSIONS
@@ -137,15 +88,6 @@ module UserExtension::Socialize
     entity.may_be_pestered_by! self
   end
 
-  ## Discussions
-  
- # specified above: has_many :discussions, :as => :commentable
-  
-  def discussion
-    self.discussions.first
-  end
-  
-  
   ## RELATIONSHIPS
 
   def stranger_to?(user)

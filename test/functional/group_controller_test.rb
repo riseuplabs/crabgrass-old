@@ -320,7 +320,6 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :show
     assert_response :success
-#    assert_template 'show'
     assert_select "h4", "Today"
     assert_select "a[href=?]", @controller.page_url(committee_page)
 

@@ -7,7 +7,7 @@ module WikiHelper
   
   def wiki_edit_link
     link_to_remote(
-      '<u>e</u>dit wiki'.t + ' &raquo; ',
+      'edit wiki'.t + ' &raquo; ',
       {
          :url => wiki_action('edit'),
          :loading => show_spinner('wiki-edit'),
