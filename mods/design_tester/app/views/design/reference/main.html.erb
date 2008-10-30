@@ -46,9 +46,9 @@ end
 </ul>
 
 <% sections.each do |section| %>
-  <h1><a name="<%= section[0] %>"><%= section[1] %></a></h1>
+  <h1><a name="<%= section[0] %>"></a><%= section[1] %></h1>
   <% section[2..-1].each do |file| %>
-    <h2><a name="<%= section[0] + '-' + file[:file] %>"><%= file[:title]%></a></h2>
+    <h2><a name="<%= section[0] + '-' + file[:file] %>"></a><%= file[:title]%></h2>
     <table><tr>
      <td><textarea cols="" wrap="off" rows='<%= file[:text].count("\n") + 1 %>'><%= file[:text] %></textarea></td>
      <td><%= file[:html] %></td>
