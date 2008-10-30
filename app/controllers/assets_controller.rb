@@ -80,7 +80,7 @@ class AssetsController < ApplicationController
       if action_name == 'show' || action_name == 'version'
         current_user.may?(:view, @asset)
       elsif action_name == 'create' || action_name == 'destroy'
-        current_user.may?(:edit, @asset)
+        current_user.may?(:edit, @asset.page)
       end
     else
       false

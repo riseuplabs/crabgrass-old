@@ -59,9 +59,7 @@ class Asset < ActiveRecord::Base
     end
     true
   end
-  
 
-  
   
   ##
   ## FINDERS
@@ -170,10 +168,11 @@ class Asset < ActiveRecord::Base
   # be the data of page (1), or it could be an attachment of the page (2).
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page()
-    p = page_id ? parent_page : pages.first
-    return p if p
-    p = self.pages.create(:title => self.filename,
-                          :data_id => self.id)
+    return page_id ? parent_page : pages.first
+
+    # I think this is a bad idea... how will the page get destroyed if the asset
+    # is destroyed?
+    # p = self.pages.create(:title => self.filename, :data_id => self.id)
   end
 
   # some asset subclasses (like AudioAsset) will display using flash
@@ -293,10 +292,7 @@ class Asset < ActiveRecord::Base
   # returns either :landscape or :portrait, depending on the format of the 
   # image.
   def image_format
-    raise TypeError unless self.is_image
-    if self.width.nil? || self.height.nil?
-      return :landscape
-    end
+    raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
     self.width > self.height ? :landscape : :portrait
   end
 end
