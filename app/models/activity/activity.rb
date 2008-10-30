@@ -127,6 +127,8 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def icon() end
+  
   ##
   ## DYNAMIC MAGIC
   ##
