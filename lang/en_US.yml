@@ -1,4 +1,5 @@
 ---
+create_a_new_thing: "create a new :thing"
 logout_success_message: You have been logged out.
 add_contact_info: When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact.
 join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
