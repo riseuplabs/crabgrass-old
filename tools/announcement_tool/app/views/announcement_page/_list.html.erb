@@ -1,0 +1,24 @@
+<%# this is very hacky and temporarily %>
+<% content_for :style do %>
+div.announce table {
+  width: 20em; border: 1px dotted #ccc; float:left; margin-right: 1em
+}
+<% end %>
+<% announcements = @announcements if announcements.nil? %>
+<div class='announce'>
+  <h3><%= 'Announcements'.T %></h3>
+  <% announcements.each do |page| %>
+    <table>
+      <tr>
+        <th width='1%'><img align='left' src='/images/icons/small_png/info.png' /></th>
+        <th align='left'><%= link_to h(page.title), page_url(page) %></th>
+      </tr>
+      <tr>
+        <td colspan='2'><%= truncate(page.wiki.body_html, 140, '... ' + link_to('more'.t + ARROW, page_url(page))) %></td>
+      </tr>
+    </table>
+  <% end %>
+  <br style='clear:left' />
+</div>
+
+
