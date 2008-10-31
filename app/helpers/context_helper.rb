@@ -143,6 +143,12 @@ module ContextHelper
 
   end
 
+  def no_context
+    @context = []
+    @banner = ''
+    @banner_style = nil
+    @left_column = nil
+  end
 
   #################################################
   ## HELPER FUNCTIONS

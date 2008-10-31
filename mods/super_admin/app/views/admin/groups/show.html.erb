@@ -1,4 +1,8 @@
 <p>
+  <%= link_to '%s home page' % @group.name, url_for_group(@group) %>
+</p>
+
+<p>
   <b>Name:</b>
   <%=h @group.name %>
 </p>
