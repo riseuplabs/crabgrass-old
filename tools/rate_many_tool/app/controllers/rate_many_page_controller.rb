@@ -1,6 +1,6 @@
 class RateManyPageController < BasePageController
   before_filter :fetch_poll
-  javascript :extra, 'page'
+  javascript :extra
   
   def show
   	@possibles = @poll.possibles.sort_by{|p| p.position||0 }

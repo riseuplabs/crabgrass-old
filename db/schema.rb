@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081029060705) do
+ActiveRecord::Schema.define(:version => 20081027170835) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -142,13 +142,10 @@ ActiveRecord::Schema.define(:version => 20081029060705) do
   end
 
   create_table "external_videos", :force => true do |t|
-    t.string   "media_key"
-    t.string   "media_url"
-    t.string   "media_thumbnail_url"
-    t.text     "media_embed"
-    t.integer  "page_terms_id",       :limit => 11
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.string "media_key"
+    t.string "media_url"
+    t.string "media_thumbnail_url"
+    t.text   "media_embed"
   end
 
   create_table "federatings", :force => true do |t|
