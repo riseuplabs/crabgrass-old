@@ -1,0 +1,16 @@
+<%# this is very hacky and temporarily %>
+<div class='announcements'>
+  <h3>Announcements</h3>
+  <% @announcements.each do |page| %>
+    <table style='width: 20em; border: 1px dotted #ccc; float:left; margin-right: 1em'>
+      <tr>
+        <th width='1%'><img align='left' src='/images/icons/small_png/info.png' /></th>
+        <th align='left'><%=h page.title %></th>
+      </tr>
+      <tr>
+        <td colspan='2'><%= page.wiki.body_html %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+<br class='clear' />

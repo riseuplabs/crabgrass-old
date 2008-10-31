@@ -1,0 +1,8 @@
+<div class='wiki'>
+  <div id='wiki_html'>
+    <%= @wiki.body_html %>
+  </div>
+  <br style='clear:both' />
+</div>
+<%= load_lasted_change_diff if @last_seen %>
+

@@ -8,6 +8,9 @@ div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}
 <%- end -%>
 
 <div class='landing'>
+
+  <%= render :partial => 'announcements' if @announcements.any? %>
+
   <div id='page_list'>
 <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages} %>
 <%= link_to :more.t + ' &raquo;', me_url(:action => 'search') + "/descending/updated_at" %>

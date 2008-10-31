@@ -11,5 +11,7 @@ class WikiPage < Page
     return "" unless data and data.body
     data.body
   end
+
+  alias_method :wiki, :data
   
 end
