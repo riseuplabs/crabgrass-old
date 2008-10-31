@@ -1,6 +1,13 @@
+div#posts .comments-head { 
+	border-top:1px solid #E1E1E1; 
+	padding-top:20px; 
+	padding-bottom:10px; 
+}
 /* posts */
 div#posts {
-  margin-top: 20px;
+  padding:0px 20px 20px;
+  background:#fff;
+  margin-bottom:5px;
 }
 table.posts {
   width: 100%;
@@ -12,6 +19,8 @@ table.posts {
   padding-left: 10px;
   /* height: 32px; */
   margin-right: 10px;
+  color:#6E6E6C;
+  font-size:12px;
 }
 .post-author div.username, .post-author div.date {
   margin-right: 40px;
