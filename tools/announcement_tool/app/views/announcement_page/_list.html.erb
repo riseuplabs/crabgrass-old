@@ -1,12 +1,11 @@
 <%# this is very hacky and temporarily %>
 <% content_for :style do %>
 div.announce table {
-  width: 20em; border: 1px dotted #ccc; float:left; margin-right: 1em
+  width: 20em; border: 1px dotted #ccc; float:left; margin: 0 1em 1em 0
 }
 <% end %>
 <% announcements = @announcements if announcements.nil? %>
 <div class='announce'>
-  <h3><%= 'Announcements'.T %></h3>
   <% announcements.each do |page| %>
     <table>
       <tr>
@@ -14,11 +13,11 @@ div.announce table {
         <th align='left'><%= link_to h(page.title), page_url(page) %></th>
       </tr>
       <tr>
-        <td colspan='2'><%= truncate(page.wiki.body_html, 140, '... ' + link_to('more'.t + ARROW, page_url(page))) %></td>
+        <td></td>
+        <td><%= truncate(page.wiki.body_html, 140, '... ' + link_to('more'.t + ARROW, page_url(page))) %></td>
       </tr>
     </table>
   <% end %>
   <br style='clear:left' />
 </div>
-
 
