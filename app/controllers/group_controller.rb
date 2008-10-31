@@ -264,7 +264,7 @@ class GroupController < ApplicationController
   end
   
   def find_group
-    @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
+    @group = Group.find_by_name params[:id] if params[:id]
     if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or may_admin_group?) ##committees need to be handled better
       @left_column = render_to_string(:partial => 'sidebar')
       return true

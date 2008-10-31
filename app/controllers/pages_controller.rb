@@ -43,7 +43,7 @@ class PagesController < ApplicationController
          
   # for quickly creating a wiki
   def create_wiki
-    group = Group.get_by_name(params[:group])
+    group = Group.find_by_name(params[:group])
     if group.nil? or !current_user.member_of?(group)
       flash_message_now :error => "Group does not exist or you do not have permission to create a page for that group"
       render :text => '', :layout => 'default'

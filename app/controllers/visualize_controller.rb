@@ -12,7 +12,7 @@ class VisualizeController < ApplicationController
   protected 
 
   def find_group
-    @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
+    @group = Group.find_by_name params[:id] if params[:id]
   end
   
   def authorized?

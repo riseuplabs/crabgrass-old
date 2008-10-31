@@ -60,7 +60,7 @@ class MembershipController < ApplicationController
   
   prepend_before_filter :fetch_group
   def fetch_group
-    @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
+    @group = Group.find_by_name params[:id]
   end
   
   before_filter :setup_sidebar
