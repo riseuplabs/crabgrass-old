@@ -18,3 +18,6 @@ MEDIA_TYPE = {
 
 ARROW = " &raquo; "
 
+
+LANGUAGES = Language.find(:all).freeze
+

@@ -121,27 +121,20 @@ class ApplicationController < ActionController::Base
     access_denied
   end
 
-  # get the user language from the user profile or use the site default one
-  # Gibberish uses lang codes instead of locales.
-  # Our default language is 'en_US' and Gibberize default is 'en'.
   def set_language
-    # if user is not logged in we query the db on every page load
-    # once we are sure we destroy/recreate session on login we can remove
-    # this corner case
-    if !logged_in?
-      if default_language = Language.find_by_name(@site.default_language)
-        Gibberish.use_language(default_language.code.to_sym) { yield }
+    session[:language_code] ||= begin
+      if !logged_in? or current_user.language.nil?
+        language = LANGUAGES.detect{|l|l.code == @site.default_language}
+        language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
+        language_code = language.code.to_sym
       else
-        yield
+        language_code = current_user.language.to_sym
       end
-    elsif !current_user.language.empty?
-      Gibberish.use_language(current_user.language.to_sym) { yield }
+    end
+    if session[:language_code]
+      Gibberish.use_language(session[:language_code]) { yield }
     else
-      if default_language = Language.find_by_name(@site.default_language)
-        Gibberish.use_language(default_language.code.to_sym) { yield }
-      else
-        yield
-      end
+      yield # we should really never get here
     end
   end
  
