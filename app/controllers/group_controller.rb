@@ -30,6 +30,8 @@ class GroupController < ApplicationController
     end
     
     @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
+    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
+
     @profile = @group.profiles.send(@access)
     @committees = @group.committees_for @access
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)

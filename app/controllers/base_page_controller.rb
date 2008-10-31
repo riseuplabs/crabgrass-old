@@ -94,17 +94,23 @@ class BasePageController < ApplicationController
   def setup_default_view
     if request.get?
       setup_view        # allow subclass to override view defaults
-      @show_posts       = params[:action] == 'show' if @show_posts.nil?
-      @show_reply       = @posts.any? if @show_reply.nil?
-      @show_attachments = true if @show_attachments.nil?
-      @show_tags        = true if @show_tags.nil? 
-      @html_title       = @page.title if @page
-      @show_right_column ||= false
-      unless params[:action] == 'create'
-        @title_box        = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
+      @show_posts       = action?(:show) if @show_posts.nil?
+      @show_reply       = @posts.any?    if @show_reply.nil?
+      @show_attachments = true           if @show_attachments.nil?
+      @show_tags        = true           if @show_tags.nil? 
+      @html_title       = @page.title    if @page && @html_title.nil?
+
+      # show the right column in actions other than :show,:edit
+      @show_right_column = false if @show_right_column.nil?
+
+      # hide the right column 
+      @hide_right_column = false if @hide_right_column.nil?
+
+      unless action?(:create)
+        @title_box = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
       end
-      if params[:action] == 'show' or params[:action] == 'edit' or @show_right_column
-        @right_column     = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
+        @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
       end
     end
     true

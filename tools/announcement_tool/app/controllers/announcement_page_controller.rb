@@ -31,7 +31,15 @@ class AnnouncementPageController < WikiPageController
   private
   
   # dump the sidebar
-  def setup_default_view() end
+  def setup_view
+    if logged_in? and @page and current_user.may?(:admin,@page)
+      @hide_right_column = false
+    else
+      @hide_right_column = true
+    end
+    @show_posts = false
+    @show_reply = false
+  end
   
   def fetch_wiki
     return true unless @page
