@@ -1,0 +1,53 @@
+
+div#banner {
+  border: 0;
+background:url(/images/background/banner_bg.jpg) repeat-x;
+}
+div#bannercontent h1 a{
+	font-weight:normal;
+	line-height:85px;
+}
+/* header background */
+div#header {
+	background: #ccc url(/images/background/grey-invert.png) repeat-x top;
+}
+
+div#masthead {text-align: left;}
+#site_title {
+	background: #fff;
+	}
+	
+/* Top Menu*/
+#top_menu{
+	border:1 px solid red;
+	margin:0;
+	padding:0;
+}
+ul#top_menu{
+	background:#33424A;	
+}
+ul#top_menu ul{
+	line-height:43px;
+}
+
+/* non-active tab */
+ul#top_menu li a {
+	margin:0; padding:0;
+  	background-color: transparent;
+  	color: #869DA4;
+	padding-right:30px;
+	padding-left:30px;
+	font-weight:normal;
+	text-transform: capitalize;
+}
+ul#top_menu li a:hover {
+	background:none;
+}
+
+/* active tab */
+ul#top_menu li a.active,
+ul#top_menu li a.active:hover {
+font-weight:normal;
+}
+
+

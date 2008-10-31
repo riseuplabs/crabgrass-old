@@ -213,23 +213,14 @@ class Asset < ActiveRecord::Base
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
   def self.make(attributes = nil)
-    begin
-      return self.make!(attributes)
-    rescue Exception => exc
-      return nil
-    end
-  end
-  
-  def self.make!(attributes = nil)
     page_attrs = attributes.delete(:page)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset = asset_class.create!(attributes)
-    if page_attrs
-      AssetPage.create!({:data_id => asset.id, :title => asset.filename}.merge(page_attrs))
-    end
+    asset = asset_class.create(attributes)
+    AssetPage.create({:data_id => asset.id, :title => asset.filename
+                     }.merge(page_attrs)) if page_attrs
     asset
   end
-
+  
   # like make(), but builds the asset in memory and does not save it.
   def self.build(attributes = nil)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )

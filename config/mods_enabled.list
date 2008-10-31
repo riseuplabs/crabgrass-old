@@ -12,7 +12,7 @@
 
 ## design tester mode is a little sandbox for testing template/css changes
 ## available at localhost:3000/design
-#design_tester
+design_tester
 
 ## The gibberize mod allows certain 'translator' to translate
 ## a crabgrass site user interface.

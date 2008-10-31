@@ -61,19 +61,7 @@ module LayoutHelper
   def crabgrass_stylesheets
     lines = []
     lines << stylesheet_link_tag(
-      'core/00_reset',
-      'core/01_column_spacing',
-
-      'core/02_banner',
-      'core/02_header',
-      'core/02_top_menu',
-
-      'core/03_main_column',
-      'core/03_side_columns',
-
-      'core/04_footer',
-      'core/04_popups',
-
+      'core/layout',
       :cache => 'core'
     )
     lines << theme_styles
@@ -97,20 +85,8 @@ module LayoutHelper
   def theme_styles
     # TODO: make this method return a stylesheet specific to the @site.
     stylesheet_link_tag(
-      'theme/10_general',
-
-      'theme/11_columns',
-      'theme/11_header',
-
-      'theme/12_errors',
-
-      'theme/15_tables', 
-      'theme/15_pagination',
-      'theme/15_icons_png',
-
-      'theme/17_ui',
-      'theme/17_tabs',
-      'theme/17_wiki',
+      'theme/design',
+      'theme/wiki',
 
       :cache => 'theme'
     )

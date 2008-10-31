@@ -1,0 +1,59 @@
+<%
+require 'pathname'
+
+def do_file(file)
+  filedata = File.read(file).strip
+  {:title => file.basename.to_s.gsub('_', ' ').sub(/\.html$/, ''), :file => file.basename.to_s.sub(/\.html$/,''), :text => h(filedata), :html => filedata}
+end
+
+def do_section(dir)
+  files = [ dir.basename.to_s, dir.basename.to_s.gsub('_', ' ') ]
+  Dir.new(dir).each do |file|
+    next if File.directory?(file)
+    files << do_file( dir + file ) unless file =~ /~$/
+  end
+  return files
+end
+
+sections = []
+Dir.glob( File.dirname(__FILE__) + '/*/').each do |dir|
+  next unless File.directory?(dir)
+  sections << do_section( Pathname.new(dir) )
+end
+
+%>
+<% content_for :style do %>
+  .design_reference table td {padding: 10px;}
+  .design_reference textarea {
+    overflow-x: scroll;
+    width: 40em;
+   }
+<% end %>
+
+
+<div class='design_reference'>
+<ul>
+  <% sections.each do |section| %>
+    <li>
+      <a href="#<%= section[0] %>"><%= section[1] %></a>
+      <ul>
+        <% section[2..-1].each do |file| %>
+          <li><a href="#<%= section[0] + '-' + file[:file] %>"><%= file[:title]%></a></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+
+<% sections.each do |section| %>
+  <h1><a name="<%= section[0] %>"></a><%= section[1] %></h1>
+  <% section[2..-1].each do |file| %>
+    <h2><a name="<%= section[0] + '-' + file[:file] %>"></a><%= file[:title]%></h2>
+    <table><tr>
+     <td><textarea cols="" wrap="off" rows='<%= file[:text].count("\n") + 1 %>'><%= file[:text] %></textarea></td>
+     <td><%= file[:html] %></td>
+    </tr></table>
+  <% end %>
+<% end %>
+</div>
+

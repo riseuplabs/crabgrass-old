@@ -33,7 +33,7 @@ class RankedVotePageController < BasePageController
   before_filter :fetch_poll
   before_filter :find_possibles, :only => [:show, :edit] 
   stylesheet 'vote'
-  javascript :extra, 'page'
+  javascript :extra
      
   def show
     redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?

@@ -1,6 +1,3 @@
-<% if @group.is_council? -%>
-  <p><%= 'coordinating committee'.t %></p>
-<% end -%>
 <p><%=h @group.summary %></p>
 <!--
 <ul class='plainlist'>
@@ -10,5 +7,5 @@
  <li><%= "Language:"[:Language] %> <b><%# @group.language %></b></li>
 </ul>
 -->
-<%= link_line(edit_settings_link, leave_group_link, join_group_link, destroy_group_link, edit_featured_link) %>
-
+<%= link_line(edit_settings_link, leave_group_link, join_group_link, destroy_group_link) %>
+<%= link_to "edit featured content"[:edit_featured_content], group_url(:action => 'edit_featured_content', :id => @group)%>

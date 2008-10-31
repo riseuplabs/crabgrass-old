@@ -1,7 +1,7 @@
 class GalleryController < BasePageController
   
   stylesheet 'gallery'
-  javascript :extra, 'page'
+  javascript :extra
   
   include GalleryHelper
   include BasePageHelper

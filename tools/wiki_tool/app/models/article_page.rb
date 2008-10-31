@@ -1,4 +1,0 @@
-class ArticlePage < WikiPage
-
-
-end
