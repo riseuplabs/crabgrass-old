@@ -302,6 +302,7 @@ class Asset < ActiveRecord::Base
   # image.
   def image_format
     raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
+    return :landscape if width.nil? or height.nil?
     self.width > self.height ? :landscape : :portrait
   end
 end
