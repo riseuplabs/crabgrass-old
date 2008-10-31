@@ -5,7 +5,7 @@
     <table style='width: 20em; border: 1px dotted #ccc; float:left; margin-right: 1em'>
       <tr>
         <th width='1%'><img align='left' src='/images/icons/small_png/info.png' /></th>
-        <th align='left'><%=h page.title %></th>
+        <th align='left'><%= link_to page.title, page_url(page) %></th>
       </tr>
       <tr>
         <td colspan='2'><%= page.wiki.body_html %></td>

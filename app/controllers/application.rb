@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
   def action?(*actions)
     actions.include?(params[:action].to_sym)
   end
+  helper_method :action?
 
   # let controllers set a custom stylesheet in their class definition
   def self.stylesheet(*css_files)
