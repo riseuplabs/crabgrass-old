@@ -168,15 +168,15 @@ class Asset < ActiveRecord::Base
   # be the data of page (1), or it could be an attachment of the page (2).
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page()
-    return page_id ? parent_page : pages.first
-
+    page = page_id ? parent_page : pages.first
+    return page if page
     # I think this is a bad idea... how will the page get destroyed if the asset
     # is destroyed?
     #
     # That's right, but this is necessary to assure an asset_page exists.
     # see below...
-    p = self.pages.create(:title => self.filename, :data_id => self.id,
-                          :flow => FLOW[:gallery])
+    return self.pages.create(:title => self.filename, :data_id => self.id,
+                             :flow => FLOW[:gallery])
   end
   
   before_destroy :remove_asset_page
