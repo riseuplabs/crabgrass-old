@@ -1,7 +1,7 @@
 <div class='wing'>
   <h3><%= 'Membership'.t %></h3>
   <ul class='side_list'>
-    <%= content_tag(:li, more_members_link) if more_members_link %>
+    <%= content_tag(:li, list_membership_link) if may_see_members? %>
     <%= content_tag(:li, join_group_link) if join_group_link %>
     <%= content_tag(:li, leave_group_link) if leave_group_link %>
     <%= content_tag(:li, invite_link) if invite_link %>

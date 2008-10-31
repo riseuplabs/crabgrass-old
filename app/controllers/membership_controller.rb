@@ -72,9 +72,9 @@ class MembershipController < ApplicationController
   def authorized?
     return false unless logged_in?
     if action?(:list)
-      return current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+      return current_user.may?(:view_membership, @group)
     elsif action?(:join)
-      return current_user.member_of?(@group)
+      return current_user.may?(:admin, @group)
     else
       return current_user.member_of?(@group)
     end

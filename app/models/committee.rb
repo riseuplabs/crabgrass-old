@@ -46,6 +46,22 @@ class Committee < Group
     raise 'call group.add_committee! instead'
   end
 
+  # if user has +access+ to group, return true.
+  # otherwise, raise PermissionDenied
+  def has_access!(access, user)
+    if access == :admin
+      ok = self.parent.has_access!(:admin, user)
+    elsif access == :edit
+      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access!(:edit, user)
+    elsif access == :view
+      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access!(:view, user) || profiles.public.may_see?
+    elsif access == :view_membership
+      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access!(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
+    end
+    ok or raise PermissionDenied.new
+  end
+
+
   ####################################################################
   ## relationships to users
   def may_be_pestered_by?(user)

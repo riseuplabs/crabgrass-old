@@ -44,7 +44,7 @@
     <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('login_popup').toggle(); Field.focus('login'); return false;" } %></span>
   </li>
   <li>
-    <span id="login_popup" style="display: none;">
+    <div id="login_popup" style="display: none;">
       <% form_tag :controller => 'account', :action => 'login' do -%>
         <label for="username"><%= "Username".t %></label>
         <%= text_field_tag 'login' %>
@@ -53,7 +53,7 @@
         <%= submit_tag _('Log in') %>
         <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
       <% end -%>
-    </span>
+    </div>
   </li>
   <% end -%>  
 </ul>

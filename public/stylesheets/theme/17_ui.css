@@ -182,7 +182,7 @@ form.minisearch {
 }
 
 /* layout helpers */
-.left { float: left; margin-right: 1em; }
-.right { float: left }
+div.left { float: left; margin-right: 1em; }
+div.right { float: left }
 .clear { clear: both }
 

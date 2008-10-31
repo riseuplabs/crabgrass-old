@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
       end
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.add_user!(current_user)
-      @parent.add_committee!(@group) if @parent
+      @parent.add_committee!(@group, params[:council] == "true" ) if @parent
       redirect_to url_for_group(@group)
     end
   rescue Exception => exc
