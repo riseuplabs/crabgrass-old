@@ -16,6 +16,11 @@
   </div>
   <div class='landing-main-column'>
   
+    <%- if @announcements.any? -%>
+      <h3 class='section'><%= "Announcements".T %></h3>
+      <%= render :partial => 'announcement_page/list'  %>
+    <%- end -%>
+
     <h3 class='section'><%= "Group Wiki"[:group_wiki] %></h3>
     <% if @access == :public -%>
       <div class='wiki'>

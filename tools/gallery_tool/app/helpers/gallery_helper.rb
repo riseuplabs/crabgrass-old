@@ -20,7 +20,7 @@ module GalleryHelper
   end
   
   def gallery_detail_view_url gallery, image=nil
-    image = image.asset if image.is_a?(Showing)
+    image = (image.is_a?(Showing) ? image.asset : image)
     page_url(gallery, :action => 'detail_view', :id => (image ? image.id : nil))
   end
   

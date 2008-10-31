@@ -1,16 +1,18 @@
 <%=
-Formy.tabs do |f|
-  f.tab do |t|
-    t.label 'show'.t
-    t.link page_url(@page)
-    t.selected action?(:show)
-  end
-  f.tab do |t|
-    t.label 'edit'.t
-    t.link page_url(@page, :action => 'edit')
-    t.selected action?(:edit)
-  end
-end + '<br/>'
+if logged_in? and current_user.may?(:admin, @page)
+  Formy.tabs do |f|
+    f.tab do |t|
+      t.label 'show'.t
+      t.link page_url(@page)
+      t.selected action?(:show)
+    end
+    f.tab do |t|
+      t.label 'edit'.t
+      t.link page_url(@page, :action => 'edit')
+      t.selected action?(:edit)
+    end
+  end + '<br/>'
+end
 %>
 <div class='wiki'>
   <div id='wiki_html'>
