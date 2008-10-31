@@ -172,7 +172,18 @@ class Asset < ActiveRecord::Base
 
     # I think this is a bad idea... how will the page get destroyed if the asset
     # is destroyed?
-    # p = self.pages.create(:title => self.filename, :data_id => self.id)
+    #
+    # That's right, but this is necessary to assure an asset_page exists.
+    # see below...
+    p = self.pages.create(:title => self.filename, :data_id => self.id,
+                          :flow => FLOW[:gallery])
+  end
+  
+  before_destroy :remove_asset_page
+  def remove_asset_page
+    if(self.page.flow == FLOW[:gallery])
+      self.page.destroy
+    end
   end
 
   # some asset subclasses (like AudioAsset) will display using flash
