@@ -50,13 +50,13 @@ class Committee < Group
   # otherwise, raise PermissionDenied
   def has_access!(access, user)
     if access == :admin
-      ok = self.parent.has_access!(:admin, user)
+      ok = user.member_of?(self) || self.parent.has_access?(:admin, user)
     elsif access == :edit
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access!(:edit, user)
+      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
     elsif access == :view
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access!(:view, user) || profiles.public.may_see?
+      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
     elsif access == :view_membership
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access!(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
+      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
