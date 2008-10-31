@@ -19,7 +19,7 @@ class GroupController < ApplicationController
 
   def show
     @stylesheet = 'landing'
-    if logged_in? and current_user.member_of?(@group)
+    if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
       @access = :private
     elsif @group.publicly_visible_group
       @access = :public

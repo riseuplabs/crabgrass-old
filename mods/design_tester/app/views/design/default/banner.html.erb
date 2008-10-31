@@ -1,17 +1,6 @@
-<!-- search form -->
-<form method="post" action="search" method="get">
-	<fieldset>
-		<input class="search-input" type="text" name="q" value="Type search term" />
-		<input class="search-button" type="submit" value="" />
-	</fieldset>
-	<a href="/search/advanced/">Advanced Search</a>
-</form>
-<!-- /search form -->
-
-
 <table>
 <tr>
-  <td rowspan='2'><%= avatar_for @user, 'large' -%></td>
+  <td rowspan='2'><%= avatar_for @user, 'medium' -%></td>
   <td style='width:99%'><h1><%= link_to_user @user %></h1></td>
 </tr>
 </table>

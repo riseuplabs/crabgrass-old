@@ -3,9 +3,22 @@
 
 <h2 class='section'>
 <div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
-  <%= '%s Info'[:group_info] % group_type.capitalize.t %>
+  <%= '{group_type} Information'[:group_infomation, {:group_type => group_type.capitalize.T}] %>
 </div>
 </h2>
+
+<% if @parent %>
+<p>
+  <label for="group_type">
+    <b><%= "Committee type"[:commitee_type]%></b><br/>
+    <%= "What type of committee will this be?"[:committee_type_description]%>
+  </label><br/>
+  <ul class='plainlist'>
+   <li><label><%= radio_button_tag('council', true, false) %> <b><%= "coordinating council".t %>:</b> <%= :coordinating_council_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
+   <li><label><%= radio_button_tag('council', false, true) %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
+  </ul>
+</p>
+<% end -%>
 
 <p>
   <label for="group_full_name">
@@ -37,7 +50,7 @@
   <label for="group_min_stars">
     <b><%= "Minimum stars for important pages"[:minimum_stars_for_important_pages] %></b><br/>
    <%= "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"[:minimum_stars_for_important_pages_description] %>
-  </label>
+  </label><br/>
   <%= text_field :group, :min_stars %>
 </p>
 

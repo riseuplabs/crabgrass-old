@@ -1,15 +1,13 @@
-  <table>
-    <tr>
-      <td class='label'><%= 'File'[:File] %></td>
-      <td><input name="assets[]" size="38" type="file" /></td>
-    </tr>
-    <tr>
-      <td class='label'><%= 'File'[:File] %></td>
-      <td><input name="assets[]" size="38" type="file" /></td>
-    </tr>
-    <tr id='add_file_field'>
-      <td></td>
-      <td><%= link_to_function('Add another file'[:add_another_file], %[$('add_file_field').insert({before: '<tr><td class=\\'label\\'>#{'File'[:File]}</td><td><input name=\\'assets[]\\' size=\\'38\\' type=\\'file\\' /></td></tr>'})]) %>
-    </tr>
-  </table>
+<tr>
+  <td class='label'><%= 'File'[:File] %></td>
+  <td><input name="assets[]" size="38" type="file" /></td>
+</tr>
+<tr>
+  <td class='label'><%= 'File'[:File] %></td>
+  <td><input name="assets[]" size="38" type="file" /></td>
+</tr>
+<tr id='add_file_field'>
+  <td></td>
+  <td><%= link_to_function('Add another file'[:add_another_file], %[$('add_file_field').insert({before: '<tr><td class=\\'label\\'>#{'File'[:File]}</td><td><input name=\\'assets[]\\' size=\\'38\\' type=\\'file\\' /></td></tr>'})]) %>
+</tr>
 

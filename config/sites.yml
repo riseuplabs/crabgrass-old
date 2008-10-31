@@ -10,6 +10,7 @@ default:
   - Message
   - Discussion
   - Wiki
+  - Article
   - RateMany
   - RankedVote
   - TaskList

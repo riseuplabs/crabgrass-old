@@ -2,9 +2,6 @@ log/*.log
 log/searchd.*
 tmp/**/*
 .DS_Store
-.AppleDouble
-:2eDS_Store
-:2e_*
 config/*.sphinx.conf
 doc/api
 doc/app

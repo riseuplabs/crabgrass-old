@@ -396,6 +396,10 @@ edit: edit
 send_invites: send invites
 view_requests: view requests
 page_is_not_static: Page is not static
+coordinating_council: coordinating council
+working_group: working group
+coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
+working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
 
 ##
 ## REQUESTS
@@ -469,6 +473,8 @@ file_class_description: "An uploaded file."
 tasks: "tasks"
 video_class_description: "Show a video hosted on an external website."
 video: "video"
+article: "article"
+article_class_description: "Blog post or news article."
 
 title: "Title"
 summary: "Summary"

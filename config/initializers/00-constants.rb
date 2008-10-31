@@ -16,3 +16,5 @@ MEDIA_TYPE = {
   :document => 4
 }.freeze
 
+ARROW = " &raquo; "
+

@@ -1,5 +1,6 @@
 <tr>
   <td><%= link_to_user membership.user, :avatar => 'small' %></td>
   <td><%= friendly_date membership.created_at %></td>
+  <td><%= membership.user.may?(:admin,@group) ? 'coordinator'.t : '' %></td>
 </tr>
 

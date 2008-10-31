@@ -1,0 +1,31 @@
+
+div#banner {
+  border: 0;
+  background: #159;
+}
+
+/* header background */
+div#header {
+  background: #ccc url(/images/background/grey-invert.png) repeat-x top;
+  border: 0;
+}
+
+div#masthead {text-align: right;}
+#site_title {color: #159;}
+
+/* non-active tab */
+ul#top_menu li a {
+  background-color: #036;
+  font-weight: bold;
+  color: #fff;
+}
+ul#top_menu li a:hover {
+  background-color: #06A;
+}
+
+/* active tab */
+ul#top_menu li a.active,
+ul#top_menu li a.active:hover {
+  background-color: #159;
+}
+

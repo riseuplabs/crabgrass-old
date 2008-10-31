@@ -1,0 +1,74 @@
+/* wings */
+
+.wing {padding: 8px;}
+
+.wing hr {
+  margin: 2px 10px;
+  border: 0; height: 1px;
+  background-color: #ccc; color: #ccc;
+}
+
+/* sidebar heading */
+
+.col2 h2, .col3 h2, .col2 h3, .col3 h3 {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin: 1em 0 0 0;
+}
+
+/* lists in sidebar */
+
+ul.side_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.side_list a {
+  text-decoration: none;
+  display: block;
+  padding: 2px 0 2px 26px;
+  color: #336699;
+}
+ul.side_list a.active {
+  font-weight: bold;
+}
+
+ul.side_list a.visited {
+  color: #336699;
+}
+
+ul.side_list li {
+  margin: 0 -8px 0 -8px;
+  padding-left: 12px;
+}
+
+input.check {
+  position: absolute;
+  left: 15px;
+  margin-top: 5px;
+}
+
+.small_icon {
+  background-repeat: no-repeat;
+  background-position: 18px 50%;
+}
+.name_link {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+}
+.small_icon.spinner_icon {
+  background-image: url(/images/spinner.gif)
+}
+ul.side_list a.name_link {
+  padding: 4px 0 4px 26px;
+}
+
+/* none-list things in sidebar */
+.side_indent {
+  padding-left: 8px;
+}
+
+tr.even td {background:#ccc;}
