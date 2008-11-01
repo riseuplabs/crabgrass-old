@@ -9,7 +9,7 @@ $images_dir = File.dirname(__FILE__)
 def write_file(type, images)
   File.open($images_dir + "/../stylesheets/icon_#{type}.css", 'w') do |file|
     images.each do |image|
-      str = ".#{image[1]}#{image[0]} {background-image: url(images/#{type}/#{image[0]}/#{image[1]}.#{type})}\n"
+      str = ".#{image[1]}_#{image[0]} {background-image: url(/images/#{type}/#{image[0]}/#{image[1]}.#{type})}\n"
       file.write(str)
     end
   end
@@ -29,8 +29,27 @@ Dir.chdir($images_dir) do
   end
 end
 
+images.sort!{|a,b| 
+  if a[0] == b[0]
+    a [1] <=> b[1]
+  else
+    a[0] <=> b[0]
+  end
+}
+
 ['png','gif'].each do |type|
   write_file(type, images)
+end
+
+File.open('../../mods/design_tester/app/views/design/reference/Images/icons.html','w') do |file|
+  images.each do |image|
+    if image[0] == '16'
+      klass = 'small_icon'
+    else
+      klass = 'big_icon'
+    end
+    file.write %(<div class="#{klass} #{image[1]}_#{image[0]}">#{image[1]}_#{image[0]}</div>\n)
+  end
 end
 
 puts 'done'
