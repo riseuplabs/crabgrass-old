@@ -61,10 +61,12 @@ module LayoutHelper
   def crabgrass_stylesheets
     lines = []
     lines << stylesheet_link_tag(
-      'core/layout',
+      'core/reset',
+      'core/design',
+      'core/wiki',
       :cache => 'core'
     )
-    lines << theme_styles
+ #  lines << theme_styles
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
     lines << context_styles
@@ -82,15 +84,14 @@ module LayoutHelper
     lines.join("\n")
   end
 
-  def theme_styles
-    # TODO: make this method return a stylesheet specific to the @site.
-    stylesheet_link_tag(
-      'theme/design',
-      'theme/wiki',
-
-      :cache => 'theme'
-    )
-  end
+#  def theme_styles
+#    # TODO: make this method return a stylesheet specific to the @site.
+#    stylesheet_link_tag(
+#      'theme/design',
+#      'theme/wiki',
+#      :cache => 'theme'
+#    )
+#  end
 
   # to be overridden by mods, if they want.
   def mod_styles
