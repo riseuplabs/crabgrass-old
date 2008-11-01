@@ -66,6 +66,7 @@ module LayoutHelper
       'core/wiki',
       :cache => 'core'
     )
+    lines << stylesheet_link_tag('icons_png')
  #  lines << theme_styles
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
@@ -74,11 +75,11 @@ module LayoutHelper
     lines << '</style>'
     lines << '<!--[if IE 6]>'
     lines << stylesheet_link_tag('ie/ie6')
-    lines << stylesheet_link_tag('ie/icons_gif')
+    lines << stylesheet_link_tag('icons_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
     lines << stylesheet_link_tag('ie/ie7')
-    lines << stylesheet_link_tag('ie/icons_gif')
+    lines << stylesheet_link_tag('icons_gif')
     lines << '<![endif]-->'
     lines << mod_styles
     lines.join("\n")
