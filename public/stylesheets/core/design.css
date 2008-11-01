@@ -370,7 +370,6 @@ ul.side_list a.name_link {
 	line-height:20px;
 }
  div.tags ul{
-	border:2px solid blue;
 	width:190px;
 }
 
@@ -627,13 +626,13 @@ ul li .pict_id{
 #page_list table a{
 	color:#4986BC;
 }
-#page_list table .data1, table.header1{
+#page_list table .data1, #page_list table.header1{
 	width:55px;
 }
-#page_list table .header1, table .header2, table .rightheader{
+#page_list table .header1, #page_list table .header2,  #page_list table .rightheader{
 	border-bottom:1px solid #E1E1E1;
 }
-#page_list table .date, table .date h3{
+#page_list table .date, #page_list  table .date h3{
 	background:#FFF4E8;
 	height:33px;
 	line-height:33px;
@@ -645,7 +644,7 @@ ul li .pict_id{
 	font-size:0.8em;
 }
 
-#page_list table .data1, table .data2, table .rightdata, table .header1, table .header2, table rightheader{
+#page_list table .data1, #page_list table .data2, #page_list table .rightdata, #page_list table .header1, #page_list table .header2, #page_list table rightheader{
 	height:50px;
 }
 
@@ -653,7 +652,7 @@ ul li .pict_id{
 	padding-right:10px;
 }
 
-#page_list table th.header1, table th.header2, table th.rightheader{
+#page_list table th.header1, #page_list table th.header2, #page_list table th.rightheader{
 	text-transform:uppercase;
 	color:#C1C1C1;
 	font-weight:600;
@@ -662,7 +661,7 @@ ul li .pict_id{
 #page_list table .rightdata{
 	font-size:10px;
 }
-#page_list table td.rightdata, table th.rightheader{
+#page_list table td.rightdata, #page_list table th.rightheader{
 	text-align:right;
 }
 #page_list table .data2{
