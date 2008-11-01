@@ -426,7 +426,7 @@ in: |-
   And others sat all round the small
   machine and paid it to sing to them.
 out: |-
-  <p style="float:right;"><img src="obake.gif" alt="" /></p>
+  <p style="float:right;" class="right"><img src="obake.gif" alt="" /></p>
   <p>And others sat all round the small<br />
   machine and paid it to sing to them.</p>
 --- 

@@ -1,135 +1,54 @@
 ---
-logout_success_message: You have been logged out.
-add_contact_info: When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact.
-join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
-network_invite_info: Enter the names of the groups you would like to invite to join this network.
-remove_contact_info: If you remove someone from your contact list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a contact will mean that you are also removed from their contact list.
-signup_link: Need a new account?
-menu_groups: Groups
-menu_home: Home
-menu_chat: Chat
-signup_email_info: "Optional: used if you forget your password"
-forgot_password_link: I forgot my password
-logout: Logout
-signup_info: Choose your login name and your password then click "%s"
-login_failure_reason: Username or password is incorrect.
-signup_success_message: Thanks for signing up!
-menu_people: People
-menu_networks: Networks
-signup_confirm_password: Confirm Password
-login_name: Login name
-signup_success: Registration successful
-contact_request_message_label: Tell %s why you want to be their contact.
-menu_me: Me
-signup_password: Your Password
-logout_success: Goodbye
-signup_button: Sign up
-login_failed: Could not log in
-invite_info: Enter a list of user logins or email addresses of the people you would like to invite to join this %s.
-remove_contact_confirmation: Are you sure you wish to break contact with %s?
-already_contacts_info: You are already the contact of this person.
-signup_login_name: Your login name
-login_button: Log in
-login: Login
-approve_contact_info: A contact request already exists from this user. Do you wish to approve it?
-welcome_text: |
-  *Welcome*
 
-  Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
+##
+## GENERAL STRINGS
+##
 
-  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link.
+create_a_new_thing: "create a new :thing"
+Discussions: "Discussions"
+discussions: "discussions"
+groups: "groups"
+networks: "networks"
+committees: "committees"
+Groups: "Groups"
+Networks: "Networks"
+Committees: "Committees"
+group: "group"
+network: "network"
+committee: "committee"
+Group: "Group"
+Network: "Network"
+Committee: "Committee"
+contacts: "contacts"
+contact: "contact"
+Contact: "Contact"
+Contacts: "Contacts"
+Members: "Members"
 
-  Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
+close_button: "Close"
+save_button: "Save"
+cancel_button: "Cancel"
 
-  Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the "get involved" link at the bottom over every page.
 
-recipient_tip: Seperate recipients with commas, spaces, or new lines.
-signup_title: Create Your Account
-signup_email: Your Email
-login_password: Password
-csrf_error_message: |
-  Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
 
-try_again: Try Again
-pending: pending
-rejected: rejected
-approved: approved
-requests_to_me: Requests to me
-requests_from_me: Requests from me
-requests_for_group: Requests for %s
-incoming: Incoming
-outgoing: Outgoing
-forgot_password_text: |
-  If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
-reset_password_text: |
-  Hello, %s. If you've forgotten the password you use to log in, you can set a new one here.
-forgot_password_mail_greeting: %s, to reset your password, please visit
-forgot_password_mail_expiry: |
-  This link will remain valid for 24 hours. If you need to reset your
-  password after that, you will have to visit the forgotten password page
-  again to request a new link.
-reset_password_mail_greeting: %s, your password has been reset as you requested.
-reset_password_mail_warning: If you did not request that your password be changed, please contact us.
-your_login: Your login
-invalid_email: Invalid Email
-invalid_email_text: The email address you provided is invalid.
-reset_password: Reset Password
-reset_password_mail_sent: An email has been sent containing instructions for resetting your password.
-invalid_token: Invalid Token
-invalid_token_text: The password reset link you specified is invalid. Presumably it has already been used, or it has expired.
-password_reset: Password Reset
-password_reset_ok_text: Your password has been successfully reset. You an now log in with your newly changed password.
-requested_forgot_password: You have requested a change of password
-password_was_reset: Your password has been reset
-forgotten_email_address: What email address did you give us when you created your account?
-new_password: New Password
-confirm_new_password: Confirm New Password
-media_audio: Sound Recording
-media_audios: Sound Recordings
-media_video: Video
-media_videos: Videos
-media_image: Image
-media_images: Images
-media_document: Document
-media_documents: Documents
-media_all: Media
-media_alls: Media
-media_for_group: %s in %s
-media_without_group: All %s
-Discussions: Discussions
-discussions: discussions
-groups: groups
-networks: networks
-committees: committees
-Groups: Groups
-Networks: Networks
-Committees: Committees
-group: group
-network: network
-committee: committee
-Group: Group
-Network: Network
-Committee: Committee
-contacts: contacts
-contact: contact
-Contact: Contact
-Contacts: Contacts
-Members: Members
+##
+## NAVIGATION
+##
+
+menu_me: "Me"
+menu_groups: "Groups"
+menu_home: "Home"
+menu_chat: "Chat"
+menu_people: "People"
+menu_networks: "Networks"
+
+###
+### TO BE SORTED
+###
+
 group_information: ":group_type Information"
-file_version_deleted: file version deleted
-delete_version_confirm: Are you sure you want to delete this version?
-delete_this_version: delete this version
-galleries: Galleries
-created_by: Created by
-created_on: Created on
-file_size: File size
-format: Format
-# TODO: possible values for @asset.format_description.t
-regenerate: regenerate thumbnails
-version_number: version :version
 
-history: History
-other_formats: Other Formats
+
 subject_must_not_be_empty: subject must not be empty
 at_least_one_recipient_is_required: at least one recipient is required
 message_must_not_be_empty: message must not be empty
@@ -150,39 +69,80 @@ request_status: This request was :status by :user on :time
 approve_button: approve
 reject_button: reject
 discuss_request_link: discuss this request with :person_or_group
-locking_error: Locking error. Can't save your data, someone else has saved new changes first.
-wiki_is_locked: "This wiki is currently locked by :user"
-wont_be_able_to_save: You will not be able to save this page
-page_locked_header: Page Locked
 small: small
 medium: medium
 large: large
 full: full
 include_full_checkbox: include link to full image
-close_button: Close
-locked_by_user: "locked by :user"
-break_lock: break lock
-versions: versions
-last_change: last change
-print_underlined_p: <u>p</u>rint
-edit_underlined_e: <u>e</u>dit
-# Note for translators: in the following string, :old_version and :new_veresion will be
-# filled in using the version_number template above.
-comparing_changes_header: Comparing changes by :user at :when from :old_version to :new_version
-prev_change: prev change
-next_change: next change
-formatting_reference_link: formatting reference
-save_button: Save
-# break_lock_button probably differs from break_lock only in capitalization; similarly for cancel_button and cancel_link
-break_lock_button: Break Lock
-cancel_button: Cancel
-version_doesnt_exist: "There is no version :version"
-you_are_viewing_version: "You are viewing version :version by :user"
-diff_link: diff
-created_when_by: created :when by :user
-video_service_is_not_supported: is not supported (currently only youtube, google video, blip.tv, and vimeo)
-current_video_sources: "currently supported: youtube, blip.tv, google video, vimeo"
-video_embed_code_prompt: Embed code from external video source
+
+
+##
+## ACCOUNT
+##
+
+signup_link: "Need a new account?"
+signup_email_info: "Optional: used if you forget your password"
+forgot_password_link: "I forgot my password"
+logout: "Logout"
+signup_info: Choose your login name and your password then click "%s"
+login_failure_reason: "Username or password is incorrect."
+signup_success_message: "Thanks for signing up!"
+signup_confirm_password: "Confirm Password"
+login_name: "Login name"
+signup_success: "Registration successful"
+signup_password: "Your Password"
+logout_success: "Goodbye"
+logout_success_message: "You have been logged out."
+signup_button: "Sign up"
+login_failed: "Could not log in"
+signup_login_name: "Your login name"
+login_button: "Log in"
+login: "Login"
+welcome_text: |
+  *Welcome*
+
+  Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
+
+  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link.
+
+  Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
+
+  Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the "get involved" link at the bottom over every page.
+
+signup_title: "Create Your Account"
+signup_email: "Your Email"
+login_password: "Password"
+csrf_error_message: |
+  Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
+
+forgot_password_text: |
+  If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
+reset_password_text: |
+  Hello, %s. If you've forgotten the password you use to log in, you can set a new one here.
+
+forgot_password_mail_greeting: %s, to reset your password, please visit
+forgot_password_mail_expiry: |
+  This link will remain valid for 24 hours. If you need to reset your
+  password after that, you will have to visit the forgotten password page
+  again to request a new link.
+
+reset_password_mail_greeting: %s, your password has been reset as you requested.
+reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
+your_login: "Your login"
+invalid_email: "Invalid Email"
+invalid_email_text: "The email address you provided is invalid."
+reset_password: "Reset Password"
+reset_password_mail_sent: "An email has been sent containing instructions for resetting your password."
+invalid_token: "Invalid Token"
+invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
+password_reset: "Password Reset"
+password_reset_ok_text: "Your password has been successfully reset. You an now log in with your newly changed password."
+requested_forgot_password: "You have requested a change of password"
+password_was_reset: "Your password has been reset"
+forgotten_email_address: "What email address did you give us when you created your account?"
+new_password: "New Password"
+confirm_new_password: "Confirm New Password"
+
 
 ##
 ## ACTIVITIES
@@ -195,6 +155,35 @@ activity_user_joined_group: "{user} has joined {group_type} {group}"
 activity_user_destroyed: "{user} has retired"
 activity_group_created: "{user} created {group_type} {group}"
 activity_group_destroyed: "{group} was destroyed by {user}"
+
+##
+## ASSETS
+##
+
+media_audio: "Sound Recording"
+media_audios: "Sound Recordings"
+media_video: "Video"
+media_videos: "Videos"
+media_image: "Image"
+media_images: "Images"
+media_document: "Document"
+media_documents: "Documents"
+media_all: "Media"
+media_alls: "Media"
+media_for_group: "%s in %s"
+media_without_group: "All %s"
+history: "History"
+other_formats: "Other Formats"
+file_version_deleted: "file version deleted"
+delete_version_confirm: "Are you sure you want to delete this version?"
+delete_this_version: "delete this version"
+galleries: "Galleries"
+created_by: "Created by"
+created_on: "Created on"
+file_size: "File size"
+format: "Format"
+regenerate: "regenerate thumbnails"
+version_number: "version :version"
 
 ##
 ## GALLERY
@@ -256,8 +245,6 @@ public_profile: Public Profile
 my_tasks_description: Task lists I have access to
 create_task_list: create new task list
 me_search_description: Search through all pages you have access to
-requests_from_me: Requests from me
-requests_to_me: Requests to me
 inbox_description: Inbox of pages I am actively participating in or watching for changes
 toggle_selection: Toggle selection
 remove_from_inbox: Remove from inbox
@@ -396,28 +383,51 @@ edit: edit
 send_invites: send invites
 view_requests: view requests
 page_is_not_static: Page is not static
+coordinating_council: coordinating council
+working_group: working group
+coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
+working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
 
 ##
 ## REQUESTS
 ##
 
-description: description
-state: state
-action: action
+contact_request_message_label: Tell %s why you want to be their contact.
+add_contact_info: "When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact."
+join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
+network_invite_info: "Enter the names of the groups you would like to invite to join this network."
+remove_contact_info: "If you remove someone from your contact list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a contact will mean that you are also removed from their contact list."
+approve_contact_info: "A contact request already exists from this user. Do you wish to approve it?"
+recipient_tip: "Seperate recipients with commas, spaces, or new lines."
+pending: "pending"
+rejected: "rejected"
+approved: "approved"
+requests_to_me: "Requests to me"
+requests_from_me: "Requests from me"
+requests_for_group: Requests for %s
+incoming: "Incoming"
+outgoing: "Outgoing"
+description: "description"
+state: "state"
+action: "action"
 request_to_friend_description: ":user would like to be the contact of :other_user"
 request_to_join_our_network_description: "group :group was invited to join network :network"
 request_to_join_us_description: ":user was invited to join :group"
 request_to_join_us_via_email_description: ":email was invited to join :group"
 request_to_join_you_description: ":user requested to join :group"
 request_to_join_your_network_description: ":group requested to join network :network"
-destroy: destroy
-approve: approve
-reject: reject
-pending: pending
-approved: approved
-rejected: rejected
-send_invites_button: Send Invites
-send_invites_headline: Send invitations to join {group}
+destroy: "destroy"
+approve: "approve"
+reject: "reject"
+pending: "pending"
+approved: "approved"
+rejected: "rejected"
+send_invites_button: "Send Invites"
+send_invites_headline: "Send invitations to join {group}"
+invite_info: Enter a list of user logins or email addresses of the people you would like to invite to join this %s.
+remove_contact_confirmation: Are you sure you wish to break contact with %s?
+already_contacts_info: "You are already the contact of this person."
+try_again: "Try Again"
 
 ##
 ## PAGES
@@ -469,6 +479,8 @@ file_class_description: "An uploaded file."
 tasks: "tasks"
 video_class_description: "Show a video hosted on an external website."
 video: "video"
+article: "article"
+article_class_description: "Blog post or news article."
 
 title: "Title"
 summary: "Summary"
@@ -489,10 +501,12 @@ coordinator: "Coordinator"
 participant: "Participant"
 viewer: "Viewer"
 no_change: "no change"
-   
+Announcements: "Announcements"
+
 ##
 ## DATES
 ## 
+
 sunday: Sunday
 monday: Monday
 tuesday: Tuesday
@@ -517,11 +531,11 @@ month_short_december: Dec
 ## ERRORS
 ##
 
-alert_not_saved: Changes could not be saved
-alert_field_errors: There are problems with the following fields
-alert_saved: Changes saved
-alert_permission_denied: Permission Denied
-alert_error: Error
+alert_not_saved: "Changes could not be saved"
+alert_field_errors: "There are problems with the following fields"
+alert_saved: "Changes saved"
+alert_permission_denied: "Permission Denied"
+alert_error: "Error"
 
 ##
 ## RANKED VOTE
@@ -531,4 +545,37 @@ ranked_vote_instructions: |
   Drag and drop the items on the following list until they are in order from
   most preferred at the top to least preferred at the bottom. When you are done,
   press confirm to record your vote.
+
+##
+## EXTERNAL VIDEO
+##
+
+video_service_is_not_supported: "is not supported (currently only youtube, google video, blip.tv, and vimeo)"
+current_video_sources: "currently supported: youtube, blip.tv, google video, vimeo"
+video_embed_code_prompt: "Embed code from external video source"
+
+
+##
+## WIKI
+##
+
+locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
+wiki_is_locked: "This wiki is currently locked by :user"
+wont_be_able_to_save: "You will not be able to save this page"
+page_locked_header: "Page Locked"
+locked_by_user: "locked by :user"
+break_lock: "break lock"
+versions: "versions"
+last_change: "last change"
+print_underlined_p: "<u>p</u>rint"
+edit_underlined_e: "<u>e</u>dit"
+comparing_changes_header: "Comparing changes by :user at :when from :old_version to :new_version"
+prev_change: "prev change"
+next_change: "next change"
+formatting_reference_link: "formatting reference"
+version_doesnt_exist: "There is no version :version"
+you_are_viewing_version: "You are viewing version :version by :user"
+diff_link: "diff"
+break_lock_button: "Break Lock"
+created_when_by: "created :when by :user"
 

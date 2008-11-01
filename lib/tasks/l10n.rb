@@ -61,7 +61,7 @@ namespace :cg do
     task (:load_keys => :environment) do
       keys_hash = YAML::load_file(File.join(RAILS_ROOT, 'lang', 'defaults_from_source.yml'))
       keys_hash.each {|k,v| Key.create(:name => k)}
-      default_language = Language.find_by_name('english')
+      default_language = Language.find_by_code('en_US')
       keys_hash.each do |k,v|
         key = Key.find_by_name(k)
         t = Translation.create(:text => v, :key => key, :language => default_language)

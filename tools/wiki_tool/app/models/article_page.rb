@@ -1,0 +1,4 @@
+class ArticlePage < WikiPage
+
+
+end

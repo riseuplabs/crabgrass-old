@@ -168,13 +168,16 @@ class Asset < ActiveRecord::Base
   # be the data of page (1), or it could be an attachment of the page (2).
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page()
-    return page_id ? parent_page : pages.first
-
+    page = page_id ? parent_page : pages.first
+    return page if page
     # I think this is a bad idea... how will the page get destroyed if the asset
     # is destroyed?
-    # p = self.pages.create(:title => self.filename, :data_id => self.id)
+    #
+    # That's right, but this is necessary to assure an asset_page exists.
+    return self.pages.create(:title => self.filename, :data_id => self.id,
+                             :flow => FLOW[:gallery])
   end
-
+  
   # some asset subclasses (like AudioAsset) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
@@ -213,14 +216,23 @@ class Asset < ActiveRecord::Base
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
   def self.make(attributes = nil)
-    page_attrs = attributes.delete(:page)
-    asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset = asset_class.create(attributes)
-    AssetPage.create({:data_id => asset.id, :title => asset.filename
-                     }.merge(page_attrs)) if page_attrs
-    asset
+    begin
+      return self.make!(attributes)
+    rescue Exception => exc
+      return nil
+    end
   end
   
+  def self.make!(attributes = nil)
+    page_attrs = attributes.delete(:page)
+    asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
+    asset = asset_class.create!(attributes)
+    if page_attrs
+      AssetPage.create!({:data_id => asset.id, :title => asset.filename}.merge(page_attrs))
+    end
+    asset
+  end
+
   # like make(), but builds the asset in memory and does not save it.
   def self.build(attributes = nil)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
@@ -293,6 +305,7 @@ class Asset < ActiveRecord::Base
   # image.
   def image_format
     raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)
+    return :landscape if width.nil? or height.nil?
     self.width > self.height ? :landscape : :portrait
   end
 end

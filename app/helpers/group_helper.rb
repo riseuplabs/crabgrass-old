@@ -50,7 +50,7 @@ module GroupHelper
   end
   
   def destroy_group_link
-    if logged_in? and current_user.may?(:admin, @group)
+    if may_admin_group?
       # eventually, this should fire a request to destroy.
       if (@group.network? && @group.groups.size == 1) or (@group.users.uniq.size == 1)
         post_to "destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
@@ -68,23 +68,33 @@ module GroupHelper
     end
   end
   
-  def more_members_link
+  def list_membership_link(link_suffix='')
+    text = ''
     if may_admin_group?
-      link_to_active 'edit'[:edit], {:controller => 'membership', :action => 'list', :id => @group.name}
-    elsif @group.profiles.visible_by(current_user).may_see_members?
-      link_to_active 'view all'[:view_all], {:controller => 'membership', :action => 'list', :id => @group.name}
+      text = 'edit'.t
+    elsif may_see_members?
+      text = 'see all'.t
+    end
+    if text.any?
+      link_to_active text+link_suffix, {:controller => 'membership', :action => 'list', :id => @group.name}
     end
   end
   
-  def invite_link
+  def invite_link(suffix='')
     if may_admin_group?
-      link_to_active('send invites'[:send_invites], {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
+      link_to_active('send invites'[:send_invites] + suffix, {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
     end
   end
 
-  def requests_link
+  def edit_featured_link
     if may_admin_group?
-      link_to_active('view requests'[:view_requests], {:controller => 'requests', :action => 'list', :group_id => @group.id})
+      link_to "edit featured content"[:edit_featured_content], group_url(:action => 'edit_featured_content', :id => @group)
+    end
+  end
+
+  def requests_link(suffix='')
+    if may_admin_group?
+      link_to_active('view requests'[:view_requests]+suffix, {:controller => 'requests', :action => 'list', :group_id => @group.id})
     end
   end
   
@@ -109,11 +119,9 @@ module GroupHelper
     link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
 
-
-
   def may_see_members?
     if logged_in?
-      current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+      current_user.may?(:admin,@group) || current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
     else
       @group.profiles.public.may_see_members?
     end

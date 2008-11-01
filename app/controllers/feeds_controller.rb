@@ -21,7 +21,7 @@ class FeedsController < ApplicationController
     end
     
     if params[:group]
-      @group = Group.get_by_name(params[:group])
+      @group = Group.find_by_name(params[:group])
       # treat invisible and nonexistent groups the same
       unless @group && @group.publicly_visible_group
         raise ErrorMessage.new("Invalid group #{params[:group]} specified")

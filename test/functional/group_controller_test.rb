@@ -299,7 +299,7 @@ class GroupControllerTest < Test::Unit::TestCase
     User.current = nil
     g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach', :parent => g
-    g.committees << c
+    g.add_committee!(c)
     u = User.create! :login => 'user', :password => 'password', :password_confirmation => 'password'
     assert u.id
     c.add_user! u
@@ -316,6 +316,7 @@ class GroupControllerTest < Test::Unit::TestCase
     @controller.stubs(:current_user).returns(u)
     @controller.stubs(:logged_in?).returns(true)
     @controller.instance_variable_set(:@group, c)
+    assert u.may_admin?(c)
     assert @controller.may_admin_group?
 
     get :show

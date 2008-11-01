@@ -1,19 +1,19 @@
-  <table>
-    <tr>
-      <td class='label'><%= 'Title'.t %></td>
-      <td><%= text_field 'page', 'title', :size => 38 %></td>
-      <%= javascript_tag %( $("page_title").focus() ) %>
-    </tr>
-    <tr>
-      <td class='label'><%= 'Summary'.t %></td>
-      <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
-    </tr>
-    <tr>
-      <td class='label'><%= 'Tags'.t %></td>
-      <td>
-        <%= text_field 'page', 'tag_list', :size => 38 %><br/>
-        <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
-      </td>
-    </tr>
-  </table>
+<table>
+  <tr>
+    <td class='label'><%= 'Title'.t %></td>
+    <td><%= text_field 'page', 'title', :size => 38 %></td>
+    <%= javascript_tag %( $("page_title").focus() ) %>
+  </tr>
+  <tr>
+    <td class='label'><%= 'Summary'.t %></td>
+    <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'Tags'.t %></td>
+    <td>
+      <%= text_field 'page', 'tag_list', :size => 38 %><br/>
+      <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
+    </td>
+  </tr>
+</table>
 

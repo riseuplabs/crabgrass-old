@@ -11,7 +11,7 @@ default:
   translation_group:
   - animals
   default_language:
-  - english
+  - en_US
   available_page_types:
   - Message
   - Discussion
@@ -22,3 +22,4 @@ default:
   - Asset
   - Gallery
   - ExternalVideo
+  - Article

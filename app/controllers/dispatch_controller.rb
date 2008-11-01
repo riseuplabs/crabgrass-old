@@ -71,7 +71,7 @@ class DispatchController < ApplicationController
         # we are dealing with a committee!
         context.sub!(' ','+')
       end
-      @group = Group.get_by_name(context) 
+      @group = Group.find_by_name(context) 
       @user  = User.find_by_login(context) unless @group
     end
 

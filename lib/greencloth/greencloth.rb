@@ -26,7 +26,7 @@ Some problems:
   won't work.
 
 * we could do the un-offtagging in formatter code(), pre(), and snip(), but these
-  are not only sometimes called.
+  are only sometimes called.
 
 * we can't apply custom greencloth filters in formatter.p(), because auto links
   might have already been messed up by redcloth entity formatting.
@@ -35,11 +35,18 @@ So, this is our strategy:
 
 (1) first, we offtag the obvious code blocks.
 
-(2) then we offtag the greencloth links
+(2) then we apply our custom greencloth filters.
 
-(3) finally, if the formatter discovers code blocks later, we un-offtag
-    those blocks (in formatter.code())
+    a. one of the things these filters do is to offtag all the greencloth and 
+       auto rul links. this is necessary at this stage so that redcloth can't
+       mess up the urls
 
+(3) redcloth transformations are run
+
+    a. if the formatter discovers code blocks during the redcloth run, we
+       remove any offtags from those blocks (since the code block must not have
+       formatting and the offtags is from our previous pass looking for
+       greencloth links). This happens i GreenClothFormatterHTML.code().
 
 offtags
 ----------------------------------
@@ -67,6 +74,13 @@ module GreenClothFormatterHTML
 
   def code(opts)
     "<code#{pba(opts)}>%s</code>" % original.revert_offtags(opts[:text])
+  end
+
+  # add class='left' or class='right' to <p> to make it possible to set the
+  # margins in the stylesheet. 
+  def p(opts)
+    klass = opts[:float] ? ' class="%s"'%opts[:float] : ''
+    "<p#{pba(opts)}#{klass}>#{opts[:text]}</p>\n"
   end
 
   ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/

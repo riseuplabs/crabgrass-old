@@ -93,9 +93,11 @@ class CommitteeTest < Test::Unit::TestCase
     g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
-    u = users(:gerrard)
-    c.add_user!(u)
+    user = users(:gerrard)
+    c.add_user!(user)
     c.save
+
+    assert user.may?(:admin, c)
 
     group_page = Page.create! :title => 'a group page', :public => false
     group_page.add(g, :access => :admin)
@@ -104,9 +106,8 @@ class CommitteeTest < Test::Unit::TestCase
     committee_page.add(c, :access => :admin)
     committee_page.save
 
-    # of course, this doesn't seem to be the way we do it anyway
-    assert c.may?(:view, committee_page), "should be able to view committee page"
-    assert !c.may?(:view, group_page), "should not be able to view group page"
+    assert user.may?(:view, committee_page), "should be able to view committee page"
+    assert !user.may?(:view, group_page), "should not be able to view group page"
   end
   
   def test_cant_pester_private_committee

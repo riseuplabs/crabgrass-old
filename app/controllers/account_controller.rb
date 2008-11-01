@@ -1,8 +1,11 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
-  skip_before_filter :verify_authenticity_token, :only => 'login'
+  skip_before_filter :verify_authenticity_token, :only => :login
 
+  # TODO: it would be good to require post for logout in the future
+  verify :method => :post, :only => [:language]
+   
   def index
     if logged_in?
       redirect_to me_url
@@ -11,9 +14,11 @@ class AccountController < ApplicationController
 
   def login
     return unless request.post?
+    previous_language = session[:language_code]
     reset_session # important!!
                   # always force a new session on every login attempt
-                  # in order to prevent session fixation attacks. 
+                  # in order to prevent session fixation attacks.
+    
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
       if params[:remember_me] == "1"
@@ -22,6 +27,12 @@ class AccountController < ApplicationController
           :value => self.current_user.remember_token,
           :expires => self.current_user.remember_token_expires_at
         }
+      end
+
+      if self.current_user.language.any?
+        session[:language_code] = self.current_user.language.to_sym
+      else
+        session[:language_code] = previous_language
       end
       redirect_to params[:redirect] || {:controller => '/me/dashboard', :action => 'index'}
     else
@@ -47,16 +58,24 @@ class AccountController < ApplicationController
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
+    language = session[:language_code]
     reset_session
+    session[:language_code] = language
     flash_message :title => "Goodbye"[:logout_success],
       :success => "You have been logged out."[:logout_success_message]
     redirect_to :controller => '/account', :action => 'index'
   end
 
+  # set the language of the current session
+  def language
+    session[:language_code] = params[:id].to_sym
+    redirect_to referer
+  end
+
   def welcome
     render :text => GreenCloth.new(:welcome_text.t).to_html, :layout => 'default'
   end
-  
+
   def forgot_password
     return unless request.post?
 

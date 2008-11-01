@@ -35,7 +35,7 @@ class Group < ActiveRecord::Base
   named_scope :visible_by, lambda { |user|
     select = 'DISTINCT groups.*'
     # ^^ another way to solve duplicates would be to put profiles.friend = true in other side of OR
-    group_ids = user ? user.all_group_ids : []
+    group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
     joins = "LEFT OUTER JOIN profiles ON profiles.entity_id = groups.id AND profiles.entity_type = 'Group'"
     {:select => select, :joins => joins, :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
   }
@@ -66,9 +66,9 @@ class Group < ActiveRecord::Base
 
   # the code shouldn't call find_by_name directly, because the group name
   # might contain a space in it, which we store in the database as a plus.
-  def self.get_by_name(name)
-    return nil unless name
-    Group.find_by_name(name.gsub(' ','+'))
+  def self.find_by_name(name)
+    return nil unless name.any?
+    Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
 
   belongs_to :avatar
@@ -208,8 +208,16 @@ class Group < ActiveRecord::Base
       ok = user.member_of?(self)
     elsif access == :view
       ok = user.member_of?(self) || profiles.public.may_see?
+    elsif access == :view_membership
+      ok = user.member_of?(self) || self.has_access!(:admin,user) || profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
+  end
+
+  def has_access?(access, user)
+    return has_access!(access, user)
+  rescue PermissionDenied
+    return false
   end
 
   ####################################################################
@@ -335,6 +343,15 @@ class Group < ActiveRecord::Base
     ).collect{|id|id.to_i}
   end
   
+  def self.parent_ids(ids)
+    ids = [ids] unless ids.instance_of? Array
+    return [] unless ids.any?
+    ids = ids.join(',')
+    Group.connection.select_values(
+      "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
+    ).collect{|id|id.to_i}
+  end
+
   # returns an array of committees visible to appropriate access level
   def committees_for(access)
     if access == :private
@@ -352,13 +369,10 @@ class Group < ActiveRecord::Base
   # passed in. wtf does this mean? for each group id, we get the ids
   # of all its relatives (parents, children, siblings).
   def self.namespace_ids(ids)
-    ids = [ids] unless ids.instance_of? Array
+    ids = [ids] unless ids.is_a? Array
     return [] unless ids.any?
-    ids = ids.join(',')
-    parent_ids = Group.connection.select_values(
-      "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
-    ).collect{|id|id.to_i}
-    return ([ids] + committee_ids(ids) + parent_ids + committee_ids(parent_ids)).flatten.uniq
+    parentids = parent_ids(ids)
+    return (ids + parentids + committee_ids(ids+parentids)).flatten.uniq
   end
 
   # whenever the structure of this group has changed 

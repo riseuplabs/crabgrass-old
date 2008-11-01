@@ -19,19 +19,19 @@ class GroupController < ApplicationController
 
   def show
     @stylesheet = 'landing'
-    if logged_in? and current_user.member_of?(@group)
+
+    if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
       @access = :private
     elsif @group.publicly_visible_group
       @access = :public
     else
-#     TODO: make this look identical to the page returned if the group/committee doesn't exist
-#           perhaps it should be handled in the dispatch controller, and this code should never be reached
-      @group = nil
-      set_banner "group/banner_nothing", Style.new(:background_color => "#1B5790", :color => "#eef")
-      return render(:template => 'group/show_nothing')
+      clear_context
+      return render(:template => 'dispatch/not_found')
     end
     
     @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
+    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
+
     @profile = @group.profiles.send(@access)
     @committees = @group.committees_for @access
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
@@ -264,14 +264,9 @@ class GroupController < ApplicationController
   end
   
   def find_group
-    @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
-    if @group and (@group.publicly_visible_group or (@group.committee? and @group.parent.publicly_visible_group) or may_admin_group?) ##committees need to be handled better
-      @left_column = render_to_string(:partial => 'sidebar')
-      return true
-    else
-      render :template => 'group/show_nothing'
-      return false
-    end
+    @group = Group.find_by_name params[:id] if params[:id]
+    @left_column = render_to_string(:partial => 'sidebar') if @group
+    true
   end
   
   def authorized?
@@ -282,8 +277,15 @@ class GroupController < ApplicationController
     elsif request.post? and non_members_post_allowed.include? params[:action]
       return true
     else
-      return(logged_in? and current_user.member_of? @group)
+      return (logged_in? && @group && (current_user.member_of?(@group) || current_user.may?(:admin,@group)))
     end
   end    
-  
+
+  # called when we don't want to let on that a group exists
+  # when a user doesn't have permission to see it.  
+  def clear_context
+    @group = nil
+    no_context
+  end
+
 end

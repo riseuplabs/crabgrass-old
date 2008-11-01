@@ -181,3 +181,7 @@ form.minisearch {
   white-space: nowrap;
 }
 
+/* layout helpers */
+div.left { float: left; margin-right: 1em; }
+div.right { float: left }
+.clear { clear: both }

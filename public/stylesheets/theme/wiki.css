@@ -50,6 +50,10 @@ code {background-color: #fff6dd;}
   margin-top: 0;
 }
 
+.wiki p.left, .wiki p.right {margin: 0;}
+.wiki p.left img {margin-right: 1em;}
+.wiki p.right img {margin-left: 1em;}
+
 /** inline table formatting */
 
 .wiki table {

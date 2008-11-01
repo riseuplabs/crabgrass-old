@@ -13,7 +13,8 @@ module UserExtension::Sharing
   def self.included(base)
     base.instance_eval do
       has_many :participations, :class_name => 'UserParticipation', 
-        :after_add => :update_tag_cache, :after_remove => :update_tag_cache
+        :after_add => :update_tag_cache, :after_remove => :update_tag_cache,
+        :dependent => :destroy
       has_many :pages, :through => :participations do
         def pending
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )

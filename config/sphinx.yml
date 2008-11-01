@@ -14,6 +14,7 @@ test:
   port: 3313
   address: localhost
 
-#production:
-#  config: /etc/sphinx/sphinx.conf
+production:
+  port: 3312
+  address: localhost
 

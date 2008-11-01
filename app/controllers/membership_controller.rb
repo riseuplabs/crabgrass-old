@@ -60,7 +60,7 @@ class MembershipController < ApplicationController
   
   prepend_before_filter :fetch_group
   def fetch_group
-    @group = Group.get_by_name params[:id].sub(' ','+') if params[:id]
+    @group = Group.find_by_name params[:id]
   end
   
   before_filter :setup_sidebar
@@ -72,9 +72,9 @@ class MembershipController < ApplicationController
   def authorized?
     return false unless logged_in?
     if action?(:list)
-      return current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+      return current_user.may?(:view_membership, @group)
     elsif action?(:join)
-      return current_user.member_of?(@group)
+      return current_user.may?(:admin, @group)
     else
       return current_user.member_of?(@group)
     end

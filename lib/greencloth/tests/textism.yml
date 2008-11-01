@@ -156,9 +156,6 @@ out: <h2 style="padding-left:1em;padding-right:1em;text-align:right;">right-alig
 in: h3=. centered header
 out: <h3 style="text-align:center;">centered header</h3>
 ---
-in: '!>/image.gif! right-aligned image'
-out: <p style="float:right;"><img src="/image.gif" alt="" /> right-aligned image</p>
----
 in: |-
   |This|is|a|simple|table|
   |This|is|a|simple|row|
