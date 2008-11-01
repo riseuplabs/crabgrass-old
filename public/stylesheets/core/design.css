@@ -105,7 +105,7 @@ div#banner {
 	padding: 0; 
 	text-align: left;
 	height:5.9375em;
-	background:url(images/background/banner_bg.jpg) repeat-x;
+	background:url(/images/background/banner_bg.jpg) repeat-x;
 }
 div#bannercontent {
   padding: 0px 1.25em;
@@ -177,7 +177,7 @@ div#bannercontent form fieldset .search-button {
 	border:0px;
 	width:15px;
 	height:15px;
-	background:url(images/ui/search/magnifyer.gif) no-repeat;
+	background:url(/images/ui/search/magnifyer.gif) no-repeat;
 }
 
 div#bannercontent form a {
@@ -306,7 +306,7 @@ input.check {
   background-position: 1px 50%;
 }
 .small_icon.spinner_icon {
-  background-image: url(images/spinner.gif)
+  background-image: url(/images/spinner.gif)
 }
 ul.side_list a.name_link {
   padding: 4px 0 4px 26px;
@@ -323,7 +323,7 @@ ul.side_list a.name_link {
 	margin-right:5px;
 	margin-left:3px;
 	padding-left:25px;
-	background:url(images/icons/small_png/images.png) no-repeat left;
+	background:url(/images/icons/small_png/images.png) no-repeat left;
 }
 
 .col2 h4.discussion{
@@ -331,7 +331,7 @@ ul.side_list a.name_link {
 	margin-right:5px;
 	margin-left:3px;
 	padding-left:25px;
-	background:url(images/icons/small_png/discussions.png) no-repeat left;
+	background:url(/images/icons/small_png/discussions.png) no-repeat left;
 }
 .col2 span.legend{
 	clear:both;
@@ -405,7 +405,7 @@ ul.side_list a.name_link {
 
 .title_box .title2{
 	padding-right:15px;
-	background:url(images/point.gif) no-repeat right;
+	background:url(/images/point.gif) no-repeat right;
 }
 
 .title5 {
@@ -501,7 +501,7 @@ ul.listavatars, ul.dashmenu{
 	float:left;
 	margin:0;
 	padding-right:1em;
-	background:url(images/point.gif) no-repeat right;
+	background:url(/images/point.gif) no-repeat right;
 }
 .description_content1 span{
 	padding-left:0.625em;
@@ -529,7 +529,7 @@ ul.listavatars, ul.dashmenu{
 	font-weight:600;
 	font-size:9px;
 	color:#4986BC;
-	background:url(images/quotmark.gif) no-repeat right;
+	background:url(/images/quotmark.gif) no-repeat right;
 }
 .dashbox2, .dashbox3{
 	margin-top:15px;
@@ -564,7 +564,7 @@ ul li .pict_id{
 
 .dashmenu li{
 	padding-right:10px;
-	background:url(images/point.gif) no-repeat right;
+	background:url(/images/point.gif) no-repeat right;
 }
 
 .dashmenu li a{
@@ -687,7 +687,7 @@ ul li .pict_id{
 
 #page_list ul.table_menu li{
 	float:left;
-	background:url(images/table_menu.jpg) repeat-x;
+	background:url(/images/table_menu.jpg) repeat-x;
 }
 #page_list ul.table_menu li a{
 	font-weight:600;
@@ -697,7 +697,7 @@ ul li .pict_id{
 	padding:8px 10px;
 	border:1px solid #E1E1E1;
 	border-right:none;
-	background:#F0EDEC url(images/background/table_menu.jpg) repeat-x; /* extract gradient*/
+	background:#F0EDEC url(/images/background/table_menu.jpg) repeat-x; /* extract gradient*/
 }
 
 
@@ -713,7 +713,7 @@ ul li .pict_id{
 	font-weight:600;
 	font-size:9px;
 	color:#4986BC;
-	background:0url(images/quotmark.gif) no-repeat right;
+	background:0url(/images/quotmark.gif) no-repeat right;
 	margin-left:10px;
 }
 
@@ -787,7 +787,7 @@ ul#top_menu li a{
 }
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {
-  	background: transparent url(images/bar.jpg) right no-repeat;
+  	background: transparent url(/images/bar.jpg) right no-repeat;
   	color: #869DA4;
 	padding:0 30px;
 	font-weight:400;
@@ -798,7 +798,7 @@ ul#top_menu li a.active:hover,
 ul#top_menu2 li a.active, 
 ul#top_menu2 li a.active:hover {
 	background:none;
-	background: transparent url(images/bar.jpg) right no-repeat;
+	background: transparent url(/images/bar.jpg) right no-repeat;
 }
 
 /* active tab */
@@ -813,39 +813,39 @@ background:transparent;
 
 /***********************ICONS_PNG************************/
 
-.small_icon.delete_icon {background-image: url(images/icons/small_png/trash.png)}
-.small_icon.share_icon {background-image: url(images/icons/small_png/send.png)}
-.small_icon.watch_icon {background-image: url(images/icons/small_png/eye.png)}
-.small_icon.move_icon {background-image: url(images/icons/small_png/lorry.png)}
-.small_icon.full_star_icon {background-image: url(images/icons/small_png/star.png)}
-.small_icon.empty_star_icon {background-image: url(images/icons/small_png/star_outline.png)}
-.small_icon.details_icon {background-image: url(images/icons/small_png/info.png)}
-.small_icon.tag_icon {background-image: url(images/icons/small_png/tag.png)}
-.small_icon.attach_icon {background-image: url(images/icons/small_png/attach.png)}
+.small_icon.delete_icon {background-image: url(/images/icons/small_png/trash.png)}
+.small_icon.share_icon {background-image: url(/images/icons/small_png/send.png)}
+.small_icon.watch_icon {background-image: url(/images/icons/small_png/eye.png)}
+.small_icon.move_icon {background-image: url(/images/icons/small_png/lorry.png)}
+.small_icon.full_star_icon {background-image: url(/images/icons/small_png/star.png)}
+.small_icon.empty_star_icon {background-image: url(/images/icons/small_png/star_outline.png)}
+.small_icon.details_icon {background-image: url(/images/icons/small_png/info.png)}
+.small_icon.tag_icon {background-image: url(/images/icons/small_png/tag.png)}
+.small_icon.attach_icon {background-image: url(/images/icons/small_png/attach.png)}
 
-.small_icon.dashboard_icon {background-image: url(images/icons/small_png/house.png)}
-.small_icon.inbox_icon {background-image: url(images/icons/small_png/open_letter.png)}
-.small_icon.watch_icon {background-image: url(images/icons/small_png/refresh.png)}
-.small_icon.search_icon {background-image: url(images/icons/small_png/magnifier.png)}
-.small_icon.create_icon {background-image: url(images/icons/small_png/plus.png)}
-.small_icon.task_completed_icon {background-image: url(images/icons/small_png/checked.png)}
-.small_icon.task_pending_icon {background-image: url(images/icons/small_png/unchecked.png)}
-.small_icon.settings_icon {background-image: url(images/icons/small_png/settings.png)}
-.small_icon.to_me_icon {background-image: url(images/icons/small_png/to_me.png)}
-.small_icon.from_me_icon {background-image: url(images/icons/small_png/from_me.png)}
-.small_icon.public_profile_icon {background-image: url(images/icons/small_png/profile.png)}
-.small_icon.private_profile_icon {background-image: url(images/icons/small_png/profile_private.png)}
-
-
-.contribute_icon {background: url(images/icons/small_gif/contribute_icon.gif) no-repeat 9% 30%}
-.small_icon.home_icon {background-image: url(images/icons/small_png/home.png) }
-.small_icon.about_icon {background-image: url(images/icons/small_png/info.png) }
-.small_icon.archive_icon {background-image: url(images/icons/small_png/archive.png) }
-.small_icon.tags_icon {background-image: url(images/icons/small_png/tags.png) }
-.small_icon.tasks_icon {background-image: url(images/icons/small_png/tasks.png) }
-.small_icon.discussions_icon {background-image: url(images/icons/small_png/discussions.png) }
+.small_icon.dashboard_icon {background-image: url(/images/icons/small_png/house.png)}
+.small_icon.inbox_icon {background-image: url(/images/icons/small_png/open_letter.png)}
+.small_icon.watch_icon {background-image: url(/images/icons/small_png/refresh.png)}
+.small_icon.search_icon {background-image: url(/images/icons/small_png/magnifier.png)}
+.small_icon.create_icon {background-image: url(/images/icons/small_png/plus.png)}
+.small_icon.task_completed_icon {background-image: url(/images/icons/small_png/checked.png)}
+.small_icon.task_pending_icon {background-image: url(/images/icons/small_png/unchecked.png)}
+.small_icon.settings_icon {background-image: url(/images/icons/small_png/settings.png)}
+.small_icon.to_me_icon {background-image: url(/images/icons/small_png/to_me.png)}
+.small_icon.from_me_icon {background-image: url(/images/icons/small_png/from_me.png)}
+.small_icon.public_profile_icon {background-image: url(/images/icons/small_png/profile.png)}
+.small_icon.private_profile_icon {background-image: url(/images/icons/small_png/profile_private.png)}
 
 
-span.admin {padding-right: 16px; background: url(images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
-span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}
+.contribute_icon {background: url(/images/icons/small_gif/contribute_icon.gif) no-repeat 9% 30%}
+.small_icon.home_icon {background-image: url(/images/icons/small_png/home.png) }
+.small_icon.about_icon {background-image: url(/images/icons/small_png/info.png) }
+.small_icon.archive_icon {background-image: url(/images/icons/small_png/archive.png) }
+.small_icon.tags_icon {background-image: url(/images/icons/small_png/tags.png) }
+.small_icon.tasks_icon {background-image: url(/images/icons/small_png/tasks.png) }
+.small_icon.discussions_icon {background-image: url(/images/icons/small_png/discussions.png) }
+
+
+span.admin {padding-right: 16px; background: url(/images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
+span.edit {padding-right: 16px; background: url(/images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}
 
