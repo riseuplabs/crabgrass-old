@@ -1,11 +1,13 @@
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 img,
-
-
 body {
+	margin:0;
+	padding:0;
 	line-height: 1;
 }
+
+img{border:none;}
 
 blockquote, q {
 	quotes: none;

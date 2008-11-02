@@ -19,8 +19,6 @@ a:hover{
 	text-decoration:underline;
 }
 
-
-
 /*FONTS-----------------------------------------------------*/
 body{
 	font-family:verdana, arial;
@@ -62,7 +60,6 @@ h3 {
 /*h4*/
 h4 {font-size:0.875em;
 	font-size:13px;
-	color:#444;
 }
 .col2 h4{
 	color:#4883BA;
@@ -82,6 +79,13 @@ word-spacing:0.13em;
 line-height:23px;
 }
 
+.more1{}
+
+p.more2, .more2{
+  text-transform: uppercase;
+  font-style: 600; 
+  font-size:0.6875em;
+  font-family:verdana;}
 
 /*LAYOUT-----------------------------------------------------*/
 
@@ -185,7 +189,6 @@ div#bannercontent form a {
 	font-weight:normal;
 	color:#E1E1E1;
 }
-
 
 
 /************************************ 2 column left menu settings *********************************/
@@ -325,23 +328,24 @@ ul.side_list a.name_link {
 .col2 h4{
 	float:left;
 }
-.col2 h4.gallery{
+.col2 h4.images_16{
+	margin:0;padding:0;
 	height:17px;
 	margin-right:5px;
 	margin-left:3px;
 	padding-left:25px;
-	background:url(/images/icons/small_png/images.png) no-repeat left;
+	float:left;
 }
 
-.col2 h4.discussion{
+.col2 h4.discussions_16{
 	height:17px;
 	margin-right:5px;
 	margin-left:3px;
 	padding-left:25px;
-	background:url(/images/icons/small_png/discussions.png) no-repeat left;
+	float:left;
 }
-.col2 span.legend{
-	clear:both;
+.col2 .p{
+	float:left;
 	font-size:10px;
 	color:#969995;
 }
@@ -353,6 +357,14 @@ ul.side_list a.name_link {
 .col2 p{
 	color:#727272;
 	padding:5px 0;
+	line-height:16px;
+}
+
+
+.col2 p.legend{
+	color:#727272;
+	padding:5px 0;
+	font-size:12px;
 	line-height:16px;
 }
 
@@ -384,6 +396,7 @@ ul.side_list a.name_link {
 /******************************************** TITTLE BOX *******************************************/
 .title_box {
   background: #ECF9FE;
+  border-bottom:1px solid #E1E1E1;
 
 }
 .title_box h1 {
@@ -522,7 +535,6 @@ ul.listavatars, ul.dashmenu{
 	font-style: normal;
 	font-size:0.6875em;
 	font-family:verdana;
-	margin-bottom:1.25em;
 	clear:left;
 }
 .description_content1 p.more1{
@@ -547,11 +559,6 @@ ul.listavatars, ul.dashmenu{
 	padding:0;
 }
 
-
-
-.description_content1 p.more2{
-
-}
 
 .description_content1 p.more1 a {
 	color:#5a98c8;
@@ -591,6 +598,91 @@ ul li .pict_id{
 }
 
 
+		/*ANNOUNCEMENT - Notable and Popular*/
+.announcement{
+	padding:0;
+	margin:0;
+	background:#fff;
+	padding-left:1.25em;
+	margin-bottom:2em;
+}
+.announcement h4.title4{
+	margin:0; padding:0;
+	margin-top:1.5em;
+	padding-right:1em;
+	background:url(/images/point.gif) no-repeat right;
+	float:left;
+}
+.announcement .more2{
+	float:left;
+}
+.announcement_box{
+	clear:both;
+	height:7.625em;
+	margin-right:1.25em;
+}
+.announcement_1, .announcement_2, .announcement_3{
+	background:#fff;
+	border:1px solid #E1E1E1;
+	margin:0;padding:0;
+	display:inline;
+	float:left;
+	width:28%;
+	padding:1em;
+	height:6.625em;
+	overflow:hidden;
+}
+.announcement p{
+	line-height:1.5em;
+	clear:both;
+}
+
+
+
+/*Announcement_1*/
+.announcement_1 .tiny_pending_16{
+	background-repeat:no-repeat;
+	margin:0; padding:0;
+	padding-left:25px;
+	padding-bottom:7em	;
+	color:#C43839;
+}
+
+
+/*Announcement_2*/
+.announcement_2 {
+border:none;
+border-top:1px solid #E1E1E1;
+border-bottom:1px solid #E1E1E1;
+}
+.announcement_2 img{
+	width:4.875em;
+	height:4.875em;
+	border:1px solid #E1E1E1;
+}
+.announcement_2 .discussions_16{
+	margin:0; padding:0;
+	padding-left:23px;	
+	color:#4984BB;
+	background-repeat:no-repeat;
+}
+.announcement_2 p{
+	clear:both;
+}
+.announcement2box1{
+	float:left;
+}
+.announcement2box2{
+	float:right;
+}
+/*Announcement_3*/
+.announcement_3 .table_16{
+	margin:0; padding:0;
+	padding-left:23px;	
+	background-repeat:no-repeat;
+	color:#4984BB;
+}
+
 
 		/*PAGE_LIST **********************/
 #page_list h2.title2{
@@ -601,7 +693,6 @@ ul li .pict_id{
 
 #page_list{
 	width:99%;
-	border-top:1px solid #E1E1E1;
 	background:white;
 	padding-top:22px;
 	padding-bottom:30px;
@@ -778,11 +869,13 @@ ul li .pict_id{
 /*TOPMENU-----------------------------------------------------*/
 #top_menu{
 	height:2.75em;
+	
 }
 ul#top_menu{
 	margin:0;
 	background:#263239;	
 	list-style:none;
+
 }
 
 ul#top_menu li{
@@ -818,4 +911,3 @@ background:transparent;
 
 span.admin {padding-right: 16px; background: url(images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
 span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}
-
