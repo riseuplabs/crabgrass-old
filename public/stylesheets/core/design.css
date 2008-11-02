@@ -34,10 +34,10 @@ img.avatar { vertical-align: middle; }
 .handle {cursor: move;}
 .not_handle {cursor: default;}
 
-.tag1 { font-size: 1.0em; }
-.tag2 { font-size: 1.2em; }
-.tag3 { font-size: 1.4em; }
-.tag4 { font-size: 1.6em; }
+.tag1 { font-size: 0.9em; }
+.tag2 { font-size: 1.1em; }
+.tag3 { font-size: 1.3em; }
+.tag4 { font-size: 1.5em; }
 
 ul.plain {padding: 0; margin: 0; list-style: none;}
 
@@ -522,6 +522,25 @@ ul.side_list a.name_link {
 .rightmenu ul.side_list li a { 
   text-transform:capitalize;
   padding:4px 0px;
+}
+
+.rightmenu ul.side_list li a.name_link { 
+  padding:0px;
+  margin:0px;
+  width:38px;
+  height:38px;
+  background-position:left top;
+}
+
+.rightmenu ul.side_list li a.group_link { 
+  padding:10px 0px 10px 40px;
+  font-size:12px;
+  font-weight:normal;
+  background-repeat:no-repeat;
+}
+
+.rightmenu ul.side_list li a.group_link span { 
+  padding-right:0px;
 }
 
 .rightmenu  ul.side_list li.small_icon {
@@ -1082,5 +1101,7 @@ font-weight:normal;
 background:transparent;
 }
 
+/*
 span.admin {padding-right: 16px; background: url(images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
 span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}
+*/
