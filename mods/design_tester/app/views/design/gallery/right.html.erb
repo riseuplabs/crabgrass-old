@@ -4,7 +4,7 @@
   <ul class='side_list'>
   
     <li class="small_icon" id="watch_li"><input class="check" id="watch_checkbox" name="watch_checkbox" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')})" type="checkbox" value="1" /><a class="check" href="#" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">watch for updates</a></li>
-    <li class="small_icon add_star_16"><a href="/base_page/participation/add_star?page_id=5811" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'post'); f.appendChild(m);var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', '0c2ab596ed717ad3622a901f3fc6aa4422f7a28a'); f.appendChild(s);f.submit();return false;">add star</a></li>
+    <li class="small_icon star-plus_16"><a href="/base_page/participation/add_star?page_id=5811" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'post'); f.appendChild(m);var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', '0c2ab596ed717ad3622a901f3fc6aa4422f7a28a'); f.appendChild(s);f.submit();return false;">add star</a></li>
   
   </ul>
   
@@ -19,7 +19,12 @@
   <h3>tags</h3>
   <div class='tags'>
   
-    <div class="side_indent"><a href="/group/tags/rails/tutorial">tutorial</a>, <a href="/group/tags/rails/crud">crud</a>, <a href="/group/tags/rails/mvc">mvc</a></div>
+    <a href="#" class="tag1">ajax</a>
+    <a href="#" class="tag1">apache</a>
+    <a href="#" class="tag2">api</a>
+    <a href="#" class="tag3">bugs</a>
+    <a href="#" class="tag1">cache</a>
+    <a href="#" class="tag2">crabgrass</a>
   
   </div>
   

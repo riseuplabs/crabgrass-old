@@ -473,11 +473,13 @@ ul.side_list a.name_link {
 .rightmenu h3.first { 
   border-top:none; 
   padding-top:auto; 
+  margin-top:0px;
 }
 
 .rightmenu h3 { 
   border-top:2px solid #fff; 
-  padding-top:15px; 
+  padding:15px 0px 5px 0px;
+  margin-top:15px;
 }
 
 .rightmenu hr {
@@ -491,8 +493,8 @@ ul.side_list a.name_link {
 .rightmenu input.check {
   left:0px;
 }
+
 .rightmenu ul.side_list li {
-  padding:4px 0px;
   margin:0px;
   height:auto;
 }
@@ -510,10 +512,6 @@ ul.side_list a.name_link {
   display:none;
 }
 
-.rightmenu .col2 ul.people li a {
-  font-size:normal;
-}
-
 .rightmenu .col2 ul.people li {
   border:1px solid #ccc;
   display:block;
@@ -523,6 +521,16 @@ ul.side_list a.name_link {
 }
 .rightmenu ul.side_list li a { 
   text-transform:capitalize;
+  padding:4px 0px;
+}
+
+.rightmenu  ul.side_list li.small_icon {
+  background-position:left center;
+  padding:4px 0px 4px 24px;
+}
+
+.rightmenu .tags {
+  margin:0px 0px 15px;
 }
 
 /*********************************************** MAIN *********************************************/

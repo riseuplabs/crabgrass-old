@@ -117,8 +117,7 @@
 
 /* gallery page styles */
 .gallery-nav { 
-  padding:5px 20px; 
-  border-top:1px solid #E1E1E1; 
+  padding:5px 20px;
   border-bottom:1px solid #E1E1E1; 
   background:#fff; 
   line-height:26px; 
@@ -164,7 +163,7 @@
   margin-right:10px; 
   color:#898989; 
   display:inline; 
-  margin-top:2px; 
+  margin-top:9px; 
   font-size:11px;
 }
 
