@@ -1,12 +1,4 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-img,
-
-
-body {
-	line-height: 1;
-}
-
+body { border:none; padding:0px; margin:0px; }
 blockquote, q {
 	quotes: none;
 }
@@ -34,3 +26,5 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+form, fieldset { border:none; }

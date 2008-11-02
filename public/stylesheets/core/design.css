@@ -383,17 +383,22 @@ ul.side_list a.name_link {
 
 /******************************************** TITTLE BOX *******************************************/
 .title_box {
-  background: #ECF9FE;
-
+  background: #DAF0FC;
 }
 .title_box h1 {
-	background:#DAF0FC;
-  	color: #5F7689;
+  color: #5F7689;
 	font-weight:600;
 	font-family:arial, verdana;
 	font-size:1.5625em;
-	padding:18px 0 18px 20px;
+	padding:18px 0pt 18px 20px;
 }
+
+div.page_title a{
+  vertical-align:middle;
+	margin-left:20px;
+	font-size:10px;
+}
+
 .title_box h1 img {
 	line-height:200px;
 }
@@ -422,6 +427,30 @@ ul.side_list a.name_link {
 
 #summary{
 	display:none;
+}
+
+/* breadcrumb */
+.title_box .breadcrumb {
+  	margin:0;
+  	padding: 4px 4px 0px 21px;
+}
+
+.title_box .breadcrumb,
+	.title_box .breadcrumb a {
+	color:#8A8988;
+	font-size:10px;
+}
+
+.title_box .breadcrumb a {
+	text-transform:capitalize;
+}
+/* breadcrumb */
+
+div.title_box .title_box_edit_link {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 
