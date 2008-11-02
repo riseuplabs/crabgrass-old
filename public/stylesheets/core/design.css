@@ -66,6 +66,10 @@ ul.icon_boxes li:hover span {
   z-index: 100;
 }
 
+span.link_line em {
+  color: #ccc;
+}
+
 .round {
   -webkit-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -653,9 +657,6 @@ h3.title3, p.description, p.more1{
 	padding-left:22px;
 }
 
-.dashmenu{
-	clear:both;
-}
 .dashbox2, .dashbox3{
 	margin-top:0.9375em;
 }
@@ -701,9 +702,6 @@ h3.title3, p.description, p.more1{
 	padding-right:1em;
 	background:url(/images/point.gif) no-repeat right;
 }
-.description_content1 span{
-	padding-left:0.625em;
-}
 
 .description_content1 p{
 	margin-bottom:0.4375em;
@@ -720,13 +718,12 @@ h3.title3, p.description, p.more1{
 	padding-left:1.8em;
 }
 
-.dashbox1 span a, .dashbox2 span a, .dashbox3 span a{
+a.more {
 	text-transform: uppercase;
 	padding-right:1.4em;
 	font-weight:600;
 	font-size:9px;
 	color:#4986BC;
-	background:url(/images/quotmark.gif) no-repeat right;
 }
 .dashbox2, .dashbox3{
 	margin-top:15px;
@@ -746,22 +743,6 @@ h3.title3, p.description, p.more1{
 .description_content1 p.description{
 	padding:0 20px 20px 20px;
 }
-
-.dashmenu li{
-	padding-right:10px;
-	background:url(/images/point.gif) no-repeat right;
-}
-
-.dashmenu li a{
-	color:#5a98c8;
-	text-transform:capitalize;
-	font-size:11px;
-}
-
-
-
-
-
 
 
 /********************************* CONTENT BOX : TABLE + WIKI**************************************/
