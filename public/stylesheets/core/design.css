@@ -44,6 +44,28 @@ ul.plain {padding: 0; margin: 0; list-style: none;}
 option.indented {margin-left: 1em;}
 option.section {font-weight: bold;}
 
+ul.icon_boxes {
+  padding: 0; margin: 0; list-style: none; 
+}
+ul.icon_boxes li span {
+  display: none;
+  padding: 0.5em;
+  background-color: black; color: white;
+  font-weight: bold;
+}
+ul.icon_boxes li {
+  float: left;
+  border: 1px solid #ccc;
+  position: relative;
+  height: 32px; width: 32px;
+  margin: 0 5px 5px 0;
+}
+ul.icon_boxes li:hover span {
+  display: inline; position: absolute;
+  top: 40px; left: 0;
+  z-index: 100;
+}
+
 .round {
   -webkit-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -426,13 +448,16 @@ ul.side_list a.name_link {
 	padding:5px 0;
 	line-height:16px;
 }
-
+.col2 img.thumb{
+	margin-bottom:1em;
+}
 
 .col2 p.legend{
 	color:#727272;
 	padding:5px 0;
-	font-size:12px;
+	font-size:0.6em;
 	line-height:16px;
+	float:left;
 }
 
 .col2 .tags ul{
@@ -454,7 +479,10 @@ ul.side_list a.name_link {
 
 
 /*Contribute Button*/
-
+h2 .small_icon.plus_16 a{
+	border:none;
+	color:green;
+}
 
 /************************************************** two column right **************************************************/
 .rightmenu .col1 { 
@@ -652,20 +680,6 @@ h3.title3, p.description, p.more1{
 	padding-left:22px;
 }
 
-		/*avatars in Group Home*/
-.description_content1 ul li{
-	float:left;
-	padding-right:0.25em;
-}
-
-ul.listavatars, ul.dashmenu{
-	margin:0;padding:0;
-	list-style:none;
-}
-.listavatars li{
-	float:left;
-}
-
 .dashmenu{
 	clear:both;
 }
@@ -760,13 +774,6 @@ ul.listavatars, ul.dashmenu{
 	padding:0 20px 20px 20px;
 }
 
-ul li .pict_id{
-	width:38px;
-	height: 38px;
-	border:1px solid #ccc;
-	margin-right:2px;
-}
-
 .dashmenu li{
 	padding-right:10px;
 	background:url(/images/point.gif) no-repeat right;
@@ -796,7 +803,7 @@ ul li .pict_id{
 	margin:0;
 	background:#fff;
 	padding-left:1.25em;
-	margin-bottom:2em;
+	margin-bottom:2em; 
 }
 .announcement h4.title4{
 	margin:0; padding:0;
@@ -822,7 +829,7 @@ ul li .pict_id{
 	width:28%;
 	padding:1em;
 	height:6.625em;
-	overflow:hidden;
+	overflow:hidden;    
 }
 .announcement p{
 	line-height:1.5em;
@@ -836,7 +843,7 @@ ul li .pict_id{
 	background-repeat:no-repeat;
 	margin:0; padding:0;
 	padding-left:25px;
-	padding-bottom:7em	;
+	padding-bottom:0.7em;
 	color:#C43839;
 }
 
@@ -848,30 +855,39 @@ border-top:1px solid #E1E1E1;
 border-bottom:1px solid #E1E1E1;
 }
 .announcement_2 img{
+	clear:both;
 	width:4.875em;
 	height:4.875em;
 	border:1px solid #E1E1E1;
+	float:left;
 }
 .announcement_2 .discussions_16{
+	clear:both;
+	background-repeat:no-repeat;
 	margin:0; padding:0;
 	padding-left:23px;	
 	color:#4984BB;
-	background-repeat:no-repeat;
+	padding-bottom:0.7em;
+	float:left;
+
 }
 .announcement_2 p{
-	clear:both;
+	margin-left:1em;
 }
 .announcement2box1{
+	position:absolute;
 	float:left;
 }
 .announcement2box2{
-	float:right;
+	margin-left:5em;
+	float:left;
 }
 /*Announcement_3*/
 .announcement_3 .table_16{
 	margin:0; padding:0;
 	padding-left:23px;	
 	background-repeat:no-repeat;
+	padding-bottom:0.7em;
 	color:#4984BB;
 }
 
@@ -1057,7 +1073,6 @@ border-bottom:1px solid #E1E1E1;
 }
 
 
-
 /*TOPMENU-----------------------------------------------------*/
 #top_menu{
 	height:2.75em;
@@ -1067,7 +1082,6 @@ ul#top_menu{
 	margin:0;
 	background:#263239;	
 	list-style:none;
-
 }
 
 ul#top_menu li{
@@ -1075,6 +1089,7 @@ ul#top_menu li{
 }
 ul#top_menu li a{
 	line-height:2.75em;
+	font-size:0.65em;
 }
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {
