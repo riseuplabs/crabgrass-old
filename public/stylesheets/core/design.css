@@ -44,6 +44,28 @@ ul.plain {padding: 0; margin: 0; list-style: none;}
 option.indented {margin-left: 1em;}
 option.section {font-weight: bold;}
 
+ul.icon_boxes {
+  padding: 0; margin: 0; list-style: none; 
+}
+ul.icon_boxes li span {
+  display: none;
+  padding: 0.5em;
+  background-color: black; color: white;
+  font-weight: bold;
+}
+ul.icon_boxes li {
+  float: left;
+  border: 1px solid #ccc;
+  position: relative;
+  height: 32px; width: 32px;
+  margin: 0 5px 5px 0;
+}
+ul.icon_boxes li:hover span {
+  display: inline; position: absolute;
+  top: 40px; left: 0;
+  z-index: 100;
+}
+
 .round {
   -webkit-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -631,20 +653,6 @@ h3.title3, p.description, p.more1{
 	padding-left:22px;
 }
 
-		/*avatars in Group Home*/
-.description_content1 ul li{
-	float:left;
-	padding-right:0.25em;
-}
-
-ul.listavatars, ul.dashmenu{
-	margin:0;padding:0;
-	list-style:none;
-}
-.listavatars li{
-	float:left;
-}
-
 .dashmenu{
 	clear:both;
 }
@@ -737,13 +745,6 @@ ul.listavatars, ul.dashmenu{
 
 .description_content1 p.description{
 	padding:0 20px 20px 20px;
-}
-
-ul li .pict_id{
-	width:38px;
-	height: 38px;
-	border:1px solid #ccc;
-	margin-right:2px;
 }
 
 .dashmenu li{
