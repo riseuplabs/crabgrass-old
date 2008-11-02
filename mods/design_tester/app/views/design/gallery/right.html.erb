@@ -1,43 +1,47 @@
 <div class='wing'>
 
-<h2><a href='#'><img src="/images/actions/contribute.png"></a></h2>
- <ul class='side_list'>
+  <h3 class="first">actions</h3>
+  <ul class='side_list'>
   
-  <li class='small_icon home_icon'><a href='#'>Home</a></li>
-  <li class='small_icon about_icon'><a href='#'>About</a></li>
-  <li class='small_icon archive_icon'><a href='#'>Archive</a></li>
-  <li class='small_icon tags_icon'><a href='#'>Tags</a></li>
-  <li class='small_icon tasks_icon'><a href='#'>Tasks</a></li>
-  <li class='small_icon discussions_icon'><a href='#'>Discussions</a></li>
-</ul>
+    <li class="small_icon" id="watch_li"><input class="check" id="watch_checkbox" name="watch_checkbox" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')})" type="checkbox" value="1" /><a class="check" href="#" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">watch for updates</a></li>
+    <li class="small_icon add_star_16"><a href="/base_page/participation/add_star?page_id=5811" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'post'); f.appendChild(m);var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', '0c2ab596ed717ad3622a901f3fc6aa4422f7a28a'); f.appendChild(s);f.submit();return false;">add star</a></li>
+  
+  </ul>
+  
+  <hr/>
 
-<hr>
-<h2 class="title2">Featured</h2>
-<a href='#'><img class="thumb" src="/plugin_assets/design_tester/images/thumbnails/photo1.jpg"></a>
-<h3 class="title3">Gallery Title</h3><h4 class="amount">(28 images)</h4>
-<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-</p>
+  <ul class='side_list'>      
+  
+    <li class="small_icon details_icon" id="details_li"><a href="#" onclick="new Ajax.Request('/base_page/participation/show_popup?name=details&amp;page_id=5811', {asynchronous:true, evalScripts:true, onComplete:function(request){$('details_li').removeClassName('spinner_icon');$('details_li').addClassName('details_icon');}, onLoading:function(request){$('details_li').removeClassName('details_icon');$('details_li').addClassName('spinner_icon');}, parameters:absolutePositionParams(this) + '&amp;authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">details</a></li>
+  
+  </ul>
+    
+  <h3>tags</h3>
+  <div class='tags'>
+  
+    <div class="side_indent"><a href="/group/tags/rails/tutorial">tutorial</a>, <a href="/group/tags/rails/crud">crud</a>, <a href="/group/tags/rails/mvc">mvc</a></div>
+  
+  </div>
+  
+  <h3>groups</h3>
+  <ul class='side_list'>
+      
+    <li><a href="/rails" class="name_link" style="background-image: url(https://we.riseup.net/avatars/592/xsmall.jpg)"><span class="admin">Ruby on Rails</span></a></li>
 
-<h3 class="titletags">Tags</h3>
-<div class='tags'><a href='#'>red</a> <a href='#'>travel</a> <a href='#'>community</a> <a href='#'>social</a> <a href='#'>polaroid</a> <a href='#'>blackandwhite</a></div>
+  </ul>
+  
+  <h3>people</h3>
+      
+  <ul class='side_list people'>
+      
+    <li><a href="/elijah" class="name_link" style="background-image: url(https://we.riseup.net/avatars/804/small.jpg);"><span>elijah</span></a></li>
+    
+    <li><a href="/felix" class="name_link" style="background-image: url(https://we.riseup.net/avatars/0/xsmall.jpg);"><span>felix</span></a></li>
+      
+    <li><a href="/msutton" class="name_link" style="background-image: url(https://we.riseup.net/avatars/636/xsmall.jpg);"><span>Maira</span></a></li>
+      
+    <li><a href="/suqzi" class="name_link" style="background-image: url(https://we.riseup.net/avatars/176/xsmall.jpg);"><span>suqzi</span></a></li>
 
-<hr>
-<h2 class="title2">Popular right now</h2>
-<h3 class="title5">Discussion Title</h3><h4 class="amount">(35 posts)</h4>
-<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-</p>
-
-<h3 class="titletags">Tags</h3>
-<div class='tags'><a href='#'>red</a> <a href='#'>travel</a> <a href='#'>community</a> <a href='#'>social</a> <a href='#'>polaroid</a> <a href='#'>blackandwhite</a></div>
-
-<hr>
-
-<h3 class="title5">Gallery Title</h3><h4 class="amount">(28 images)</h4>
-<p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-</p>
-
-<h3 class="titletags">Tags</h3>
-<div class='tags'><a href='#'>red</a> <a href='#'>travel</a> <a href='#'>community</a> <a href='#'>social</a> <a href='#'>polaroid</a> <a href='#'>blackandwhite</a></div>
-
+  </ul>
+  
 </div>
-

@@ -54,6 +54,7 @@ h2 {
 h3, .col2 h3{
 	font-size:15px;
 	color:#708796;
+	text-transform:capitalize;
 }
 h3 { 
   	font-size: 1em; 
@@ -190,15 +191,12 @@ div#bannercontent form a {
 /************************************ 2 column left menu settings *********************************/
 .colmask{
 	width:96%;	/*left + main*/
-	border-right: 1px solid #E1E1E1;
+  border: 1px solid #E1E1E1;
 }
 .leftmenu {
-    background:#FAFDF9;; /*LEFT COLUMN*/
+  background:#FAFDF9;; /*LEFT COLUMN*/
 	margin-left:1.25em;
-	margin-top:1.2em;
-	border-bottom:0.625em solid #DAF0FC;
-	border-top: 1px solid #E1E1E1;
-	border-left: 1px solid #E1E1E1;
+	margin-top:1.2em;	
 }
 .leftmenu .colright {
     float:left;
@@ -375,6 +373,75 @@ ul.side_list a.name_link {
 
 /*Contribute Button*/
 
+
+/************************************************** two column right **************************************************/
+.rightmenu .col1 { 
+  background:#DAF0FC none repeat scroll 0% 50%
+  border:1px solid #E1E1E1;
+}
+.rightmenu {
+  border:none;
+}
+
+.rightmenu .col2 p, 
+  .rightmenu .col2 h3 {
+  margin-left:0px;
+}
+
+.rightmenu h3.first { 
+  border-top:none; 
+  padding-top:auto; 
+}
+
+.rightmenu h3 { 
+  border-top:2px solid #fff; 
+  padding-top:15px; 
+}
+
+.rightmenu hr {
+  height: 0px;
+  border:none;
+  margin:0px;
+  padding:0px;
+  border-bottom:1px dotted #ccc;
+}
+
+.rightmenu input.check {
+  left:0px;
+}
+.rightmenu ul.side_list li {
+  padding:4px 0px;
+  margin:0px;
+  height:auto;
+}
+
+.rightmenu .col2 ul.people { 
+ margin-top:8px;
+}
+
+.rightmenu .col2 ul.people li { 
+  float:left; 
+  margin:0px 5px 5px 0px; 
+}
+
+.rightmenu .col2 ul.people li span {
+  display:none;
+}
+
+.rightmenu .col2 ul.people li a {
+  font-size:normal;
+}
+
+.rightmenu .col2 ul.people li {
+  border:1px solid #ccc;
+  display:block;
+  padding:0px;
+  width:38px;
+  height:38px;
+}
+.rightmenu ul.side_list li a { 
+  text-transform:capitalize;
+}
 
 /*********************************************** MAIN *********************************************/
 /*------------------------------------------------------------------------------------------------*/
