@@ -1,0 +1,82 @@
+/** 
+ **  ICONS
+ **/ 
+
+.small_icon {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+  padding-left: 20px;
+}
+.big_icon {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+  padding: 20px 0 20px 54px;
+}
+.page_icon {
+  height: 16px;
+  width: 16px;
+}
+button.icon_16, button.icon_48 {
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  border: none; margin: 0; padding: 0;
+}
+button.icon_16 {height: 16px; width: 16px;}
+button.icon_48 {height: 48px; width: 48px;}
+
+.name_link {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+}
+ul.side_list a.name_link {
+  padding: 4px 0 4px 26px;
+}
+
+.small_icon.spinner_icon {
+  background-image: url(images/spinner.gif)
+}
+
+/** 
+ **  ASSET THUMBNAILS
+ **/ 
+
+a.thumbnail {
+  display:block;
+  overflow:hidden;
+  outline: 0;
+  background: white;
+  border: 1px solid white;
+  outline: 1px solid #999;
+  margin: 0 5px 5px 0;
+}
+a.thumbnail:hover {
+  border: 1px solid #cdf;
+  outline: 1px solid black;
+}
+
+/** 
+ **  ICON BOXES
+ **/ 
+
+ul.icon_boxes {
+  padding: 0; margin: 0; list-style: none; 
+}
+ul.icon_boxes li span {
+  display: none;
+  padding: 0.5em;
+  background-color: black; color: white;
+  font-weight: bold;
+}
+ul.icon_boxes li {
+  float: left;
+  border: 1px solid #ccc;
+  position: relative;
+  height: 32px; width: 32px;
+  margin: 0 5px 5px 0;
+}
+ul.icon_boxes li:hover span {
+  display: inline; position: absolute;
+  top: 40px; left: 0;
+  z-index: 100;
+}
+

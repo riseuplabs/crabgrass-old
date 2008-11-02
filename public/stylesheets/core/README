@@ -1,0 +1,27 @@
+These are loaded in this order:
+
+reset.css:
+  css reset to help deal with browser differences.
+  
+design.css:
+  general 'shell' css, fonts, and a catch-all for everything not in one of
+  the other files.
+
+landing.css:
+  css related specifically to the dashboard, the group home, and the
+  person profile. 
+
+page.css:
+  everything specific to content pages (ie wiki, discussion, gallery, etc).
+
+ui_elements.css:
+  common reusable css elements that are used everywhere.
+
+wiki.css:
+  formatting for the html that is generated from wiki markup by greencloth.
+
+images.css:
+  anything related to the display of images should go here.
+  this includes icons, thumbnails, avatars.
+
+

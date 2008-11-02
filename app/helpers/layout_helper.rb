@@ -63,11 +63,14 @@ module LayoutHelper
     lines << stylesheet_link_tag(
       'core/reset',
       'core/design',
+      'core/landing',
+      'core/page',
+      'core/ui_elements',
       'core/wiki',
+      'core/images',
       :cache => 'core'
     )
     lines << stylesheet_link_tag('icon_png')
- #  lines << theme_styles
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
     lines << context_styles
@@ -84,15 +87,6 @@ module LayoutHelper
     lines << mod_styles
     lines.join("\n")
   end
-
-#  def theme_styles
-#    # TODO: make this method return a stylesheet specific to the @site.
-#    stylesheet_link_tag(
-#      'theme/design',
-#      'theme/wiki',
-#      :cache => 'theme'
-#    )
-#  end
 
   # to be overridden by mods, if they want.
   def mod_styles

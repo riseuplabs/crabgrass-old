@@ -1,0 +1,119 @@
+/** 
+ **  UI ELEMENTS
+ **/ 
+
+a, a:active{
+	text-decoration:none;
+	color:#4986BC;
+}
+a:hover{
+	color:#4986BC;
+	text-decoration:underline;
+}
+a.dotted {
+  color: black; text-decoration: none; outline: 0;
+  border-bottom: 1px #999 dotted;
+}
+a.invert {color: white; background-color: #003399;}
+a.active {font-weight: bold;}
+a.selected {font-weight: bold;}
+a.hov {text-decoration:none;}
+a.hov:hover {text-decoration:underline;}
+a.noline, a.imglink { text-decoration: none; }
+a.imglink span { text-decoration: underline; }
+img.avatar { vertical-align: middle; } 
+
+.handle {cursor: move;}
+.not_handle {cursor: default;}
+
+.tag1 { font-size: 0.9em; }
+.tag2 { font-size: 1.1em; }
+.tag3 { font-size: 1.3em; }
+.tag4 { font-size: 1.5em; }
+
+ul.plain {padding: 0; margin: 0; list-style: none;}
+
+option.indented {margin-left: 1em;}
+option.section {font-weight: bold;}
+
+span.link_line em {
+  color: #ccc;
+}
+
+.round {
+  -webkit-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+.round_top {
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-topleft: 4px;
+}
+.round_left {
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-bottomleft: 4px;
+}
+.round_right {
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
+}
+
+.clear { clear: both }
+
+/** 
+ **  SIDE LIST
+ **/ 
+
+ul.side_list {
+  padding: 0; margin: 0; list-style: none;
+}
+
+/* side_list a */
+ul.side_list a {
+  text-decoration: none;
+  display: block;
+  padding: 8px 0 8px 0px;
+  color: #4986BC;
+  font-size:0.72em;
+  font-weight:600;
+}
+ul.side_list a.active {background-color: black;}
+ul.side_list a.visited {color: #336699;}
+ul.side_list a:hover {text-decoration: underline;}
+
+/* side_list li */
+ul.side_list li:hover {background-color: #cdf;}
+ul.side_list li.small_icon {
+  padding-left: 40px;
+  background-position: 20px 50%;
+}
+
+input.check {
+  position: absolute;
+  left: 15px;
+  margin-top: 5px;
+}
+
+/* contribute link */
+ul.side_list li.contribute_icon{
+  height:30px;
+  line-height:30px;
+  margin-bottom:7px;
+  font-size:1.1em;
+}
+ul.side_list li.contribute_icon a{
+  color:#42861F;
+}
+h2 .small_icon.plus_16 a{
+  border:none;
+  color:green;
+}
+
+
