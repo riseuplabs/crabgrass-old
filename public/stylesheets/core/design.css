@@ -15,7 +15,6 @@ a, a:active{
 }
 a:hover{
 	color:#4986BC;
-	background:none;
 	text-decoration:underline;
 }
 
@@ -432,7 +431,7 @@ div.page_title a{
 /* breadcrumb */
 .title_box .breadcrumb {
   	margin:0;
-  	padding: 4px 4px 0px 21px;
+  	padding: 10px 0px 0px 20px;
 }
 
 .title_box .breadcrumb,
