@@ -426,13 +426,16 @@ ul.side_list a.name_link {
 	padding:5px 0;
 	line-height:16px;
 }
-
+.col2 img.thumb{
+	margin-bottom:1em;
+}
 
 .col2 p.legend{
 	color:#727272;
 	padding:5px 0;
-	font-size:12px;
+	font-size:0.6em;
 	line-height:16px;
+	float:left;
 }
 
 .col2 .tags ul{
@@ -454,7 +457,10 @@ ul.side_list a.name_link {
 
 
 /*Contribute Button*/
-
+h2 .small_icon.plus_16 a{
+	border:none;
+	color:green;
+}
 
 /************************************************** two column right **************************************************/
 .rightmenu .col1 { 
@@ -769,7 +775,7 @@ ul li .pict_id{
 	margin:0;
 	background:#fff;
 	padding-left:1.25em;
-	margin-bottom:2em;
+	margin-bottom:2em; 
 }
 .announcement h4.title4{
 	margin:0; padding:0;
@@ -795,7 +801,7 @@ ul li .pict_id{
 	width:28%;
 	padding:1em;
 	height:6.625em;
-	overflow:hidden;
+	overflow:hidden;    
 }
 .announcement p{
 	line-height:1.5em;
@@ -809,7 +815,7 @@ ul li .pict_id{
 	background-repeat:no-repeat;
 	margin:0; padding:0;
 	padding-left:25px;
-	padding-bottom:7em	;
+	padding-bottom:0.7em;
 	color:#C43839;
 }
 
@@ -821,30 +827,39 @@ border-top:1px solid #E1E1E1;
 border-bottom:1px solid #E1E1E1;
 }
 .announcement_2 img{
+	clear:both;
 	width:4.875em;
 	height:4.875em;
 	border:1px solid #E1E1E1;
+	float:left;
 }
 .announcement_2 .discussions_16{
+	clear:both;
+	background-repeat:no-repeat;
 	margin:0; padding:0;
 	padding-left:23px;	
 	color:#4984BB;
-	background-repeat:no-repeat;
+	padding-bottom:0.7em;
+	float:left;
+
 }
 .announcement_2 p{
-	clear:both;
+	margin-left:1em;
 }
 .announcement2box1{
+	position:absolute;
 	float:left;
 }
 .announcement2box2{
-	float:right;
+	margin-left:5em;
+	float:left;
 }
 /*Announcement_3*/
 .announcement_3 .table_16{
 	margin:0; padding:0;
 	padding-left:23px;	
 	background-repeat:no-repeat;
+	padding-bottom:0.7em;
 	color:#4984BB;
 }
 
@@ -1030,7 +1045,6 @@ border-bottom:1px solid #E1E1E1;
 }
 
 
-
 /*TOPMENU-----------------------------------------------------*/
 #top_menu{
 	height:2.75em;
@@ -1040,7 +1054,6 @@ ul#top_menu{
 	margin:0;
 	background:#263239;	
 	list-style:none;
-
 }
 
 ul#top_menu li{
@@ -1048,6 +1061,7 @@ ul#top_menu li{
 }
 ul#top_menu li a{
 	line-height:2.75em;
+	font-size:0.65em;
 }
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {

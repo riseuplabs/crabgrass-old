@@ -85,3 +85,18 @@ form.minisearch {
   background: white;
 }
 
+/* search form in banner */
+div#bannercontent form {
+	width:223px;
+	height:23px;
+}
+
+/*Announcement*/
+.announcement2box1{
+	position:relative;
+	float:left;
+}
+.announcement2box2{
+	display:inline;
+	margin-top:-5em;
+	}
