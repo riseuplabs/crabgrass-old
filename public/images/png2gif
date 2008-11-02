@@ -3,18 +3,20 @@
 #
 # converts all the files in icons/*_png to .gif files in icons/*_gif.
 #
+require 'pathname'
 
-images_dir = File.dirname(__FILE__)
+images_dir = Pathname.new(File.dirname(__FILE__)).realpath.to_s
+white_png = images_dir + '/png/white.png'
 
 Dir.chdir(images_dir) do 
-  Dir.chdir('icons') do
-    Dir.glob('*_png/') do |dir|
+  Dir.chdir('png') do
+    ['16','48'].each do |dir|
       Dir.chdir(dir) do 
         Dir.glob('*.png') do |png_file|
-          gif_file = '../' + dir.sub('png','gif') + png_file.sub('png','gif')
+          gif_file = "%s/gif/%s/%s" % [images_dir,dir, png_file.sub('.png','.gif')]
           putc '.'; STDOUT.flush;
           width, height = `gm identify -format '%wx%h' #{png_file}`.gsub(/\s/,'').split('x')
-          system('gm', 'composite', png_file, '../white.png', '-geometry', "#{width}x#{height}", 'temp_file.png')
+          system('gm', 'composite', png_file, white_png, '-geometry', "#{width}x#{height}", 'temp_file.png')
           system('gm', 'convert', 'temp_file.png', '-transparent', '#fff', gif_file)
           File.unlink('temp_file.png')
         end
