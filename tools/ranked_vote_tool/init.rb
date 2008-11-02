@@ -4,7 +4,7 @@ PageClassRegistrar.add(
   'RankedVotePage',
   :controller => 'ranked_vote_page',
   :model => 'Poll',
-  :icon => 'ballot.png',
+  :icon => 'page_ranked',
   :class_display_name => 'ranked vote',
   :class_description => :ranked_vote_class_description,
   :class_group => 'vote',

@@ -25,8 +25,7 @@ module Media
 #    end
 
     def self.icon_for(mtype)
-      iconname = lookup(mtype,ICON) || lookup(mime_group(mtype),ICON) || lookup('default',ICON)
-      "#{iconname}.png"
+      lookup(mtype,ICON) || lookup(mime_group(mtype),ICON) || lookup('default',ICON)
     end
 
     def self.asset_class_from_mime_type(mime_type)

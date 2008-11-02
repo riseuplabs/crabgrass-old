@@ -4,7 +4,7 @@ PageClassRegistrar.add(
   'TaskListPage',
   :controller => 'task_list_page',
   :model => 'TaskList',
-  :icon => 'task-list.png',
+  :icon => 'page_tasks',
   :class_display_name => 'task list',
   :class_description => :task_list_class_description,
   :class_group => 'task',

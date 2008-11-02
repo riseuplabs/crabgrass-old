@@ -33,16 +33,22 @@ module ImageHelper
 
   ## creates an <a> tag with an icon via a background image.
   def link_to_icon(text, icon, path={}, options={})
+#XXX
     link_to text, path, options.merge(:style => icon_style(icon))
   end
 
   ## return the style css text need to put the icon on the background
   def icon_style(icon)
+#XXX
     size = 16
     url = "/images/#{icon}"
     "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
   end
-   
+  
+  def icon_tag(icon, size = 16)
+    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
+  end
+
   ##
   ## AVATARS
   ##
@@ -71,11 +77,13 @@ module ImageHelper
 
   ## returns the img tag for the page's icon
   def page_icon(page)
-    image_tag "pages/#{page.icon}", :size => "22x22"
+    content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
+#    image_tag "pages/#{page.icon}", :size => "22x22"
   end
   
   ## returns css style text to display the page's icon
   def page_icon_style(icon)
+   # XXX
    "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
 

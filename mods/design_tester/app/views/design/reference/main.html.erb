@@ -23,11 +23,20 @@ end
 
 %>
 <% content_for :style do %>
-  .design_reference table td {padding: 10px;}
-  .design_reference textarea {
-    overflow-x: scroll;
-    width: 40em;
-   }
+.design_reference table {
+  width: 100%;
+}
+.design_reference table td {
+  border: 10px solid #ccc;
+  background: #ccc;
+}
+.design_reference table td div.html {
+  background: #efefef;
+}
+.design_reference textarea {
+  overflow-x: scroll;
+  width: 40em;
+}
 <% end %>
 
 
@@ -45,15 +54,19 @@ end
   <% end %>
 </ul>
 
+<table>
 <% sections.each do |section| %>
-  <h1><a name="<%= section[0] %>"></a><%= section[1] %></h1>
+  <tr><td colspan='2'><h1><a name="<%= section[0] %>"></a><%= section[1] %></h1></td></tr>
   <% section[2..-1].each do |file| %>
-    <h2><a name="<%= section[0] + '-' + file[:file] %>"></a><%= file[:title]%></h2>
-    <table><tr>
-     <td><textarea cols="" wrap="off" rows='<%= file[:text].count("\n") + 1 %>'><%= file[:text] %></textarea></td>
-     <td><%= file[:html] %></td>
-    </tr></table>
+    <tr><td colspan='2'><h2><a name="<%= section[0] + '-' + file[:file] %>"></a><%= file[:title]%></h2></td></tr>
+     <tr>
+       <td><textarea cols="" wrap="off" rows='<%= file[:text].count("\n") + 1 %>'><%= file[:text] %></textarea></td>
+       <td><div class='html'><%= file[:html] %></div></td>
+     </tr>
+    </tr>
   <% end %>
 <% end %>
+</table>
+
 </div>
 

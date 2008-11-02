@@ -1,14 +1,10 @@
 /* 2 column right menu settings */
-.rightmenu {
-  background:#CDEAFF;
-}
 .rightmenu .colleft {
   float:left;
   width:200%;
   margin-left:-12em;
   position:relative;
   right:100%;
-  background:#fff;
 }
 .rightmenu .col1wrap {
   float:left;
@@ -18,8 +14,10 @@
   padding-bottom:1em;
 }
 .rightmenu .col1 {
-  margin:0 1em 0 13em;
+  margin:0pt 0pt 0pt 13.2em;
   overflow:hidden;
+  background:#fff;
+  border:1px solid #E1E1E1;
 }
 .rightmenu .col2 {
   float:right;

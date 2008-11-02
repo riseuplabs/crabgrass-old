@@ -1,0 +1,537 @@
+/*===============LAYOUT STYLESHEET - CRABGRASS 2008=============*/
+
+/*******************RESET*************************/
+
+
+*, body, table, ul, ol, li, img, table, ul, ol, li, a  
+{text-decoration:none;}
+body, table, ul, ol, li, img, table, ul, ol, li, a, h1, h2, h3, h4  
+{margin:0; padding:0;}
+body, table, ul, ol, li, img, table, ul, ol, li, a  
+{border: 0;}
+img   {border: 0;}
+.clear {clear: both;}
+
+/*******************COLUMN SPACING*************************/
+/* modify the holygrail margins and padding for the three columns */
+
+/* main column, left or right layout. left margin = space for sidebar */
+.leftmenu .col1, .rightmenu .col1 {
+  margin: 1.5em 1.5em 1.5em 20.18em;
+}
+
+/* main column, three column layout */
+.holygrail .col1 {
+  margin: 1.5em 11em;
+}
+
+/* 1 column */
+.fullpage .col1 {
+  margin:1.5em;
+}
+
+
+/* 2 col left sidebar */
+
+.leftmenu .col2 {
+	
+  width:18.7em; /* sidebar_width */
+  right:10.5em; /* distance between left edge of sidebar and left edge of main column */
+  padding-top: 1.5em;
+}
+
+.leftmenu .colright {
+  left:12em; /* left edge of the main column */
+}
+
+/* 2 col right sidebar */
+
+.rightmenu .col2 {
+  width:13em; /* sidebar width */
+  left:11.5em;  /* distance from right edge of sidebar to right edge of main column */
+  padding-top: 3.5em;
+}
+
+.rightmenu .colleft {
+  margin-left:-13em; /* right edge of main column, relative to the right side of container */
+}
+
+/* 3 col sidebars */
+
+.holygrail .col2, .holygrail .col3 {
+  padding-top: 3.5em;
+}
+
+/*******************BANNER*************************/
+div#banner {
+  clear: both;
+  margin: 0;
+  padding: 0; 
+  text-align: left;
+}
+div#bannercontent {
+  padding: 0px 20px;
+}
+div#banner img.avatar {
+	width: 64px; height: 64px;
+  border: 1px solid white;
+  margin: 0 7px 0 0;
+  vertical-align: bottom;
+
+}
+div#banner h1, div#banner h3 {
+  padding: 0; margin: 0
+}
+div#banner a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+div#banner a:hover {
+  text-decoration: underline;
+}
+
+/* search form in banner */
+div#bannercontent form {
+	float:right;
+	text-align:right;
+	margin-top:20px;	
+	color:#E1E1E1;
+}
+div#bannercontent form fieldset {
+	border:1px solid #526568;
+	background:#3A464F;
+	padding:0px;
+	margin:0px;
+}
+
+div#bannercontent .search-input { 
+	padding:2px; 
+	margin:4px 3px 4px 5px;
+	background:#3A464F; 
+	border:none;
+	color:#fff;
+	font-size:10px;
+	font-weight:normal;
+	width:180px;
+}
+
+div#bannercontent form fieldset .search-button {
+	display:inline;
+	margin:5px 5px 2px;
+	padding:0px;
+	border:0px;
+	width:15px;
+	height:15px;
+	background:url(/images/ui/search/magnifyer.gif) no-repeat;
+}
+
+div#bannercontent form a {
+	font-size:10px;
+	font-weight:normal;
+	color:#E1E1E1;
+}
+
+/* icon boxes */
+div.iconboxes {
+}
+div.iconboxes img {
+  border:1px solid white;
+}
+div.online img {
+  border:1px solid yellow;
+}
+
+div.iconboxes div.iconbox {
+  position: relative;
+  width: 24px; height: 24px;
+  float: right;
+  margin: 2px;
+}
+div.iconboxes div.iconbox.left {
+  float: left;
+}
+div.iconboxes div.hover {
+  display: none;
+}
+div.iconboxes div.iconbox:hover div.hover {
+  display: inline;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  background: white;
+  color: black;
+  z-index: 100;
+  width: 34px; height: 34px;
+}
+div.iconbox div.hover div.text {
+  position: absolute;
+  width: 20em;
+  right: 0px;
+  top: 45px
+}
+div.iconbox.left div.hover div.text {
+  left: 0px;
+}
+div.iconbox div.hover div.text span {
+  background: #eee;
+  border: 1px solid white;
+  padding: 3px;
+}
+div.iconbox a {
+  text-decoration: none;
+  color: black;
+}
+
+
+/*******************HEADER*************************/
+#header {
+ padding: 0;
+ margin: 0;
+}
+h1#site_title{
+	padding-left:18px;
+}
+#banner{
+	height:85px;
+}
+#summary{
+	display:none;
+}
+
+
+
+
+
+
+
+
+
+/*******************TOP MENU*************************/
+#top_menu, #top_menu2{
+	height:44px;
+}
+ul#top_menu li a, ul#top_menu2 li a {
+	line-height:43px;
+}
+#top_menu, #top_menu2{
+	width:500px;
+}
+
+
+
+/*******************TOP MENU2*************************/
+
+
+
+
+
+ul.submenu {
+  display: none;
+}
+
+
+
+
+
+/*******************THE MAIN COLUMN*************************/
+/* the main column */
+div.title_box h1{
+  margin: 0;
+  padding: 0;
+	padding-left:21px;
+  position: relative;
+	line-height:60px;
+	display:inline;
+}
+
+.title_box .breadcrumb {
+  margin:0;
+  padding: 4px 4px 0px 21px;
+}
+
+.title_box .breadcrumb,
+	.title_box .breadcrumb a {
+	color:#8A8988;
+	font-size:10px;
+}
+
+.title_box .breadcrumb a {
+	text-transform:capitalize;
+}
+
+div.title_box .title_box_edit_link {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+
+div.page_title a{
+	vertical-align:top;
+	line-height:60px;
+	margin-left:20px;
+	font-size:10px;
+}
+
+div.title_box h1{
+  	margin: 0;
+  	padding: 0;
+	padding-left:21px;
+  	position: relative;
+	line-height:60px;
+	display:inline;
+}
+
+.title_box .breadcrumb {
+  	margin:0;
+  	padding: 4px 4px 0px 21px;
+}
+
+.title_box .breadcrumb,
+	.title_box .breadcrumb a {
+	color:#8A8988;
+	font-size:10px;
+}
+
+.title_box .breadcrumb a {
+	text-transform:capitalize;
+}
+
+div.title_box .title_box_edit_link {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+div.title_box:hover .title_box_edit_link {
+/*  display: block;*/
+}
+
+#mainsection1{
+	padding:20px 0 0 0;
+	/*min-height:222px;*/
+	height:100%;
+	overflow:hidden;
+}
+
+.description_content1, .description_content2{
+	display:inline;
+	width:46%;
+	float:left;
+}
+
+h3.title3, p.description, p.more1{
+	padding-left:22px;
+}
+.listavatars{
+clear:both;
+float:none;
+}
+.dashmenu{
+	clear:both;
+}
+.dashbox2, .dashbox3{
+	margin-top:15px;
+}
+.dashbox1, .dashbox2, .dashbox3{
+	padding-left:22px;
+}
+.dashbox2{
+	clear:both;
+	width:47%;
+	float:left;
+}
+
+.dashbox3{
+	float:left;
+	width:40%;
+}
+
+/*GROUP_SCROLLTABLE*/
+#group_scrolltable div h2{
+	float:left;
+	padding-left:22px;
+	
+}
+
+/*******************SIDE COLUMNS*************************/
+/* wings */
+
+.wing {
+	padding: 8px;
+	}
+
+.wing hr {
+  margin: 2px 10px;
+  border: 0; height: 2px;
+  background-color: #E6E6E6; color: #E6E6E6;
+}
+
+.wing .thumb{
+	height:198px;
+	width:198px;
+	border:0.05em solid #DADADA;
+	margin-left:10px;
+}
+
+.wing .title2{
+	color:#C33737;
+	font-size:1.125em;
+	margin-top:17px;
+	margin-bottom:7px;
+}
+
+/* sidebar heading */
+
+.col2 h2, .col3 h2, .col2 h3, .col3 h3 {
+  /*text-transform: uppercase;*/
+  font-size: 0.9em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin: 1em 0 0 0;
+}
+
+
+
+/* lists in sidebar */
+
+ul.side_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom:12px;
+}
+
+ul.side_list a {
+  text-decoration: none;
+  padding: 2px 0 2px 26px;
+  color: #4986BC;
+  font-size:0.8125em;
+  font-weight:600;
+}
+ul.side_list a.active {
+}
+
+ul.side_list a.visited {
+  color: #336699;
+}
+
+ul.side_list li {
+  margin: 0 -8px 0 -8px;
+  padding-left: 15px;
+  padding-top:3px;
+  padding-bottom:3px;
+}
+
+input.check {
+  position: absolute;
+  left: 15px;
+  margin-top: 5px;
+}
+
+.small_icon {
+  background-repeat: no-repeat;
+  background-position: 18px 50%;
+}
+.name_link {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+}
+.small_icon.spinner_icon {
+  background-image: url(/images/spinner.gif)
+}
+ul.side_list a.name_link {
+  padding: 4px 0 4px 26px;
+}
+
+/* none-list things in sidebar */
+.side_indent {
+  padding-left: 8px;
+}
+
+tr.even td {background:#ccc;}
+
+
+/*******************FOOTER*************************/
+div#footercontent {
+  	padding: 2em;
+  	text-align: left;
+	border-top:1px solid #ccc;
+}
+
+
+/*******************POPUPS*************************/
+/*** login menu box ***/
+
+#login_popup {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: 5px solid #333;
+  height: 2em;
+  width: 33em;
+  background: #999;
+  padding: 1em;
+  color: white;
+}
+#login_popup input {
+  width: 5em;
+  margin-right: 1em;
+  border: 1px solid black;
+}
+
+/* sidebar popups */
+
+div.popup {
+  background: #efefef;
+  border: 4px solid #666;
+  z-index: 101;
+  position: absolute;
+  top: -32px;
+  right: 20px;
+}
+div.popup h1 {
+  background: #ccc;
+  color: white;
+  padding: 10px;
+  margin: 0;
+  border-bottom: 1px solid #aaa;
+}
+
+div.popup_arrow {
+  height: 29px;
+  width: 15px;
+  background: url(/images/ui/wedge_right.png);
+  position: absolute;
+  top: 24px;
+  right: -19px;
+}
+
+div#popup_holder {
+  position: absolute;
+  z-index: 100;
+  display: none;
+}
+
+div.popup fieldset {
+  background: white;
+  padding: 1em;
+  border: 1px solid #999;
+  margin-top: 16px;
+}
+div.popup legend {
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: bold;
+  border: 1px solid #999;
+  border-bottom: 0px;
+  background: white;
+  margin-top: -16px;
+  padding: 0 10px;
+}
+div.popup blockquote {
+  margin: 0;
+  padding: 2em;
+}

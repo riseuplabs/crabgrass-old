@@ -14,6 +14,17 @@ table.posts {
   border-top: 1px solid #ccc;
 }
 
+table.posts textarea {
+  width:100%;
+  margin-bottom:5px;
+  padding:4px;
+}
+
+table.posts a { 
+  font-size:11px;
+  text-transform:capitalize;
+}
+
 .post-author {
   text-align: right;
   padding-left: 10px;
