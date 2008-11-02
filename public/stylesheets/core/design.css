@@ -34,10 +34,10 @@ img.avatar { vertical-align: middle; }
 .handle {cursor: move;}
 .not_handle {cursor: default;}
 
-.tag1 { font-size: 1.0em; }
-.tag2 { font-size: 1.2em; }
-.tag3 { font-size: 1.4em; }
-.tag4 { font-size: 1.6em; }
+.tag1 { font-size: 0.9em; }
+.tag2 { font-size: 1.1em; }
+.tag3 { font-size: 1.3em; }
+.tag4 { font-size: 1.5em; }
 
 ul.plain {padding: 0; margin: 0; list-style: none;}
 
@@ -501,11 +501,13 @@ h2 .small_icon.plus_16 a{
 .rightmenu h3.first { 
   border-top:none; 
   padding-top:auto; 
+  margin-top:0px;
 }
 
 .rightmenu h3 { 
   border-top:2px solid #fff; 
-  padding-top:15px; 
+  padding:15px 0px 5px 0px;
+  margin-top:15px;
 }
 
 .rightmenu hr {
@@ -519,8 +521,8 @@ h2 .small_icon.plus_16 a{
 .rightmenu input.check {
   left:0px;
 }
+
 .rightmenu ul.side_list li {
-  padding:4px 0px;
   margin:0px;
   height:auto;
 }
@@ -538,10 +540,6 @@ h2 .small_icon.plus_16 a{
   display:none;
 }
 
-.rightmenu .col2 ul.people li a {
-  font-size:normal;
-}
-
 .rightmenu .col2 ul.people li {
   border:1px solid #ccc;
   display:block;
@@ -551,6 +549,35 @@ h2 .small_icon.plus_16 a{
 }
 .rightmenu ul.side_list li a { 
   text-transform:capitalize;
+  padding:4px 0px;
+}
+
+.rightmenu ul.side_list li a.name_link { 
+  padding:0px;
+  margin:0px;
+  width:38px;
+  height:38px;
+  background-position:left top;
+}
+
+.rightmenu ul.side_list li a.group_link { 
+  padding:10px 0px 10px 40px;
+  font-size:12px;
+  font-weight:normal;
+  background-repeat:no-repeat;
+}
+
+.rightmenu ul.side_list li a.group_link span { 
+  padding-right:0px;
+}
+
+.rightmenu  ul.side_list li.small_icon {
+  background-position:left center;
+  padding:4px 0px 4px 24px;
+}
+
+.rightmenu .tags {
+  margin:0px 0px 15px;
 }
 
 /*********************************************** MAIN *********************************************/
@@ -1090,5 +1117,7 @@ font-weight:normal;
 background:transparent;
 }
 
+/*
 span.admin {padding-right: 16px; background: url(images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
 span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}
+*/
