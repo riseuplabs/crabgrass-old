@@ -16,7 +16,6 @@ a, a:active{
 }
 a:hover{
 	color:#4986BC;
-	background:none;
 	text-decoration:underline;
 }
 a.dotted {
@@ -119,6 +118,7 @@ h2 {
 h3, .col2 h3{
 	font-size:15px;
 	color:#708796;
+	text-transform:capitalize;
 }
 h3 { 
   	font-size: 1em; 
@@ -169,7 +169,7 @@ div#banner {
 	padding: 0; 
 	text-align: left;
 	height:5.9375em;
-	background:url(images/background/banner_bg.jpg) repeat-x;
+	background:url(/images/background/banner_bg.jpg) repeat-x;
 }
 div#bannercontent {
   padding: 0px 1.25em;
@@ -241,7 +241,7 @@ div#bannercontent form fieldset .search-button {
 	border:0px;
 	width:15px;
 	height:15px;
-	background:url(images/ui/search/magnifyer.gif) no-repeat;
+	background:url(/images/ui/search/magnifyer.gif) no-repeat;
 }
 
 div#bannercontent form a {
@@ -255,15 +255,12 @@ div#bannercontent form a {
 /************************************ 2 column left menu settings *********************************/
 .colmask{
 	width:96%;	/*left + main*/
-	border-right: 1px solid #E1E1E1;
+  border: 1px solid #E1E1E1;
 }
 .leftmenu {
-    background:#FAFDF9;; /*LEFT COLUMN*/
+  background:#FAFDF9;; /*LEFT COLUMN*/
 	margin-left:1.25em;
-	margin-top:1.2em;
-	border-bottom:0.625em solid #DAF0FC;
-	border-top: 1px solid #E1E1E1;
-	border-left: 1px solid #E1E1E1;
+	margin-top:1.2em;	
 }
 .leftmenu .colright {
     float:left;
@@ -389,7 +386,6 @@ ul.side_list a.name_link {
 }
 
 
-
 /*Featured - Popular Right now*/
 .col2 h4{
 	float:left;
@@ -399,7 +395,7 @@ ul.side_list a.name_link {
 	margin-right:5px;
 	margin-left:3px;
 	padding-left:25px;
-	background:url(images/icons/small_png/images.png) no-repeat left;
+	background:url(/images/icons/small_png/images.png) no-repeat left;
 }
 
 .col2 h4.discussion{
@@ -407,7 +403,7 @@ ul.side_list a.name_link {
 	margin-right:5px;
 	margin-left:3px;
 	padding-left:25px;
-	background:url(images/icons/small_png/discussions.png) no-repeat left;
+	background:url(/images/icons/small_png/discussions.png) no-repeat left;
 }
 .col2 span.legend{
 	clear:both;
@@ -439,7 +435,6 @@ ul.side_list a.name_link {
 	line-height:20px;
 }
  div.tags ul{
-	border:2px solid blue;
 	width:190px;
 }
 
@@ -447,23 +442,97 @@ ul.side_list a.name_link {
 /*Contribute Button*/
 
 
+/************************************************** two column right **************************************************/
+.rightmenu .col1 { 
+  background:#DAF0FC none repeat scroll 0% 50%
+  border:1px solid #E1E1E1;
+}
+.rightmenu {
+  border:none;
+}
+
+.rightmenu .col2 p, 
+  .rightmenu .col2 h3 {
+  margin-left:0px;
+}
+
+.rightmenu h3.first { 
+  border-top:none; 
+  padding-top:auto; 
+}
+
+.rightmenu h3 { 
+  border-top:2px solid #fff; 
+  padding-top:15px; 
+}
+
+.rightmenu hr {
+  height: 0px;
+  border:none;
+  margin:0px;
+  padding:0px;
+  border-bottom:1px dotted #ccc;
+}
+
+.rightmenu input.check {
+  left:0px;
+}
+.rightmenu ul.side_list li {
+  padding:4px 0px;
+  margin:0px;
+  height:auto;
+}
+
+.rightmenu .col2 ul.people { 
+ margin-top:8px;
+}
+
+.rightmenu .col2 ul.people li { 
+  float:left; 
+  margin:0px 5px 5px 0px; 
+}
+
+.rightmenu .col2 ul.people li span {
+  display:none;
+}
+
+.rightmenu .col2 ul.people li a {
+  font-size:normal;
+}
+
+.rightmenu .col2 ul.people li {
+  border:1px solid #ccc;
+  display:block;
+  padding:0px;
+  width:38px;
+  height:38px;
+}
+.rightmenu ul.side_list li a { 
+  text-transform:capitalize;
+}
+
 /*********************************************** MAIN *********************************************/
 /*------------------------------------------------------------------------------------------------*/
 
 
 /******************************************** TITTLE BOX *******************************************/
 .title_box {
-  background: #ECF9FE;
-
+  background: #DAF0FC;
 }
 .title_box h1 {
-	background:#DAF0FC;
-  	color: #5F7689;
+  color: #5F7689;
 	font-weight:600;
 	font-family:arial, verdana;
 	font-size:1.5625em;
-	padding:18px 0 18px 20px;
+	padding:18px 0pt 18px 20px;
 }
+
+div.page_title a{
+  vertical-align:middle;
+	margin-left:20px;
+	font-size:10px;
+}
+
 .title_box h1 img {
 	line-height:200px;
 }
@@ -481,7 +550,7 @@ ul.side_list a.name_link {
 
 .title_box .title2{
 	padding-right:15px;
-	background:url(images/point.gif) no-repeat right;
+	background:url(/images/point.gif) no-repeat right;
 }
 
 .title5 {
@@ -492,6 +561,30 @@ ul.side_list a.name_link {
 
 #summary{
 	display:none;
+}
+
+/* breadcrumb */
+.title_box .breadcrumb {
+  	margin:0;
+  	padding: 10px 0px 0px 20px;
+}
+
+.title_box .breadcrumb,
+	.title_box .breadcrumb a {
+	color:#8A8988;
+	font-size:10px;
+}
+
+.title_box .breadcrumb a {
+	text-transform:capitalize;
+}
+/* breadcrumb */
+
+div.title_box .title_box_edit_link {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 
@@ -577,7 +670,7 @@ ul.listavatars, ul.dashmenu{
 	float:left;
 	margin:0;
 	padding-right:1em;
-	background:url(images/point.gif) no-repeat right;
+	background:url(/images/point.gif) no-repeat right;
 }
 .description_content1 span{
 	padding-left:0.625em;
@@ -605,7 +698,7 @@ ul.listavatars, ul.dashmenu{
 	font-weight:600;
 	font-size:9px;
 	color:#4986BC;
-	background:url(images/quotmark.gif) no-repeat right;
+	background:url(/images/quotmark.gif) no-repeat right;
 }
 .dashbox2, .dashbox3{
 	margin-top:15px;
@@ -640,7 +733,7 @@ ul li .pict_id{
 
 .dashmenu li{
 	padding-right:10px;
-	background:url(images/point.gif) no-repeat right;
+	background:url(/images/point.gif) no-repeat right;
 }
 
 .dashmenu li a{
@@ -696,13 +789,13 @@ ul li .pict_id{
 #page_list table a{
 	color:#4986BC;
 }
-#page_list table .data1, table.header1{
+#page_list table .data1, #page_list table.header1{
 	width:55px;
 }
-#page_list table .header1, table .header2, table .rightheader{
+#page_list table .header1, #page_list table .header2,  #page_list table .rightheader{
 	border-bottom:1px solid #E1E1E1;
 }
-#page_list table .date, table .date h3{
+#page_list table .date, #page_list  table .date h3{
 	background:#FFF4E8;
 	height:33px;
 	line-height:33px;
@@ -714,7 +807,7 @@ ul li .pict_id{
 	font-size:0.8em;
 }
 
-#page_list table .data1, table .data2, table .rightdata, table .header1, table .header2, table rightheader{
+#page_list table .data1, #page_list table .data2, #page_list table .rightdata, #page_list table .header1, #page_list table .header2, #page_list table rightheader{
 	height:50px;
 }
 
@@ -722,7 +815,7 @@ ul li .pict_id{
 	padding-right:10px;
 }
 
-#page_list table th.header1, table th.header2, table th.rightheader{
+#page_list table th.header1, #page_list table th.header2, #page_list table th.rightheader{
 	text-transform:uppercase;
 	color:#C1C1C1;
 	font-weight:600;
@@ -731,7 +824,7 @@ ul li .pict_id{
 #page_list table .rightdata{
 	font-size:10px;
 }
-#page_list table td.rightdata, table th.rightheader{
+#page_list table td.rightdata, #page_list table th.rightheader{
 	text-align:right;
 }
 #page_list table .data2{
@@ -763,7 +856,7 @@ ul li .pict_id{
 
 #page_list ul.table_menu li{
 	float:left;
-	background:url(images/table_menu.jpg) repeat-x;
+	background:url(/images/table_menu.jpg) repeat-x;
 }
 #page_list ul.table_menu li a{
 	font-weight:600;
@@ -773,7 +866,7 @@ ul li .pict_id{
 	padding:8px 10px;
 	border:1px solid #E1E1E1;
 	border-right:none;
-	background:#F0EDEC url(images/background/table_menu.jpg) repeat-x; /* extract gradient*/
+	background:#F0EDEC url(/images/background/table_menu.jpg) repeat-x; /* extract gradient*/
 }
 
 
@@ -789,7 +882,7 @@ ul li .pict_id{
 	font-weight:600;
 	font-size:9px;
 	color:#4986BC;
-	background:0url(images/quotmark.gif) no-repeat right;
+	background:0url(/images/quotmark.gif) no-repeat right;
 	margin-left:10px;
 }
 
@@ -863,7 +956,7 @@ ul#top_menu li a{
 }
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {
-  	background: transparent url(images/bar.jpg) right no-repeat;
+  	background: transparent url(/images/bar.jpg) right no-repeat;
   	color: #869DA4;
 	padding:0 30px;
 	font-weight:400;
@@ -874,7 +967,7 @@ ul#top_menu li a.active:hover,
 ul#top_menu2 li a.active, 
 ul#top_menu2 li a.active:hover {
 	background:none;
-	background: transparent url(images/bar.jpg) right no-repeat;
+	background: transparent url(/images/bar.jpg) right no-repeat;
 }
 
 /* active tab */
