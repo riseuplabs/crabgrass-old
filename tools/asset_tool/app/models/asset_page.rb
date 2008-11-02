@@ -2,7 +2,7 @@ class AssetPage < Page
 
   def icon
     return asset.small_icon if asset
-    return 'package.png' 
+    return 'page_package'
   end
     
   after_save :update_access

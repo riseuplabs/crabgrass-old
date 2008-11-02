@@ -190,7 +190,7 @@ module PageHelper
     elsif column == :contributors_count or column == :contributors
       page.contributors_count
     elsif column == :stars_count or column == :stars
-      page.stars
+      "%s %s" % [icon_tag('star'), page.stars]
     elsif column == :owner
       page.group_name || page.created_by_login
     elsif column == :owner_with_icon
@@ -225,10 +225,10 @@ module PageHelper
   def page_list_title(page, column, participation = nil)
     title = link_to(page.title, page_url(page))
     if participation and participation.instance_of? UserParticipation
-      title += " " + image_tag("emblems/pending.png", :size => "11x11", :title => 'pending') unless participation.resolved?
-      title += " " + image_tag("emblems/star.png", :size => "11x11", :title => 'star') if participation.star?
+      title += " " + icon_tag("tiny_pending") unless participation.resolved?
+      title += " " + icon_tag("tiny_star") if participation.star?
     else
-      title += " " + image_tag("emblems/pending.png", :size => "11x11", :title => 'pending') unless page.resolved?
+      title += " " + icon_tag("tiny_pending") unless page.resolved?
     end
     if page.flag[:new]
       title += " <span class='newpage'>#{'new'.t}</span>"

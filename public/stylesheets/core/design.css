@@ -2,13 +2,14 @@
 
 
 /*GLOBAL----------------------------------------*/
-html{ font-size:100%; }
-body{
-	font-family: verdana, arial, helvetica, sans-serif;
-	font-size:1em;
-	}
+html {font-size:100%;}
+body {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:1em;
+}
 
-/*LINKS-----------------------------------------------------*/
+/*COMMON REUSABLE ELEMENTS----------------------*/
+
 a, a:active{
 	text-decoration:none;
 	color:#4986BC;
@@ -18,8 +19,72 @@ a:hover{
 	background:none;
 	text-decoration:underline;
 }
+a.dotted {
+  color: black; text-decoration: none; outline: 0;
+  border-bottom: 1px #999 dotted;
+}
+a.invert {color: white; background-color: #003399;}
+a.active {font-weight: bold;}
+a.selected {font-weight: bold;}
+a.hov {text-decoration:none;}
+a.hov:hover {text-decoration:underline;}
+a.noline, a.imglink { text-decoration: none; }
+a.imglink span { text-decoration: underline; }
+img.avatar { vertical-align: middle; } 
 
+.handle {cursor: move;}
+.not_handle {cursor: default;}
 
+.tag1 { font-size: 1.0em; }
+.tag2 { font-size: 1.2em; }
+.tag3 { font-size: 1.4em; }
+.tag4 { font-size: 1.6em; }
+
+ul.plain {padding: 0; margin: 0; list-style: none;}
+
+option.indented {margin-left: 1em;}
+option.section {font-weight: bold;}
+
+.round {
+  -webkit-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+.round_top {
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-topleft: 4px;
+}
+.round_left {
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-bottomleft: 4px;
+}
+.round_right {
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomright: 4px;
+}
+
+a.thumbnail {
+  display:block;
+  overflow:hidden;
+  outline: 0;
+  background: white;
+  border: 1px solid white;
+  outline: 1px solid #999;
+  margin: 0 5px 5px 0;
+}
+a.thumbnail:hover {
+  border: 1px solid #cdf;
+  outline: 1px solid black;
+}
+
+.clear { clear: both }
 
 /*FONTS-----------------------------------------------------*/
 body{
@@ -27,7 +92,6 @@ body{
 	color:#222;
 	background:#EFECEB;
 }
-
 
 h1, h2, h3{
 	margin:0;
@@ -240,32 +304,39 @@ div#bannercontent form a {
 	padding-bottom:70px;
 }
 
-
-/* lists in sidebar */
-.col2 ul.side_list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-bottom:12px;
-}
-
 .col2 h2{
 	padding-top:15px;
 	  border-top:2px solid #E6E6E6;
 	padding-bottom:15px;
 }
 
+/** icons & icon lists **/
+
+ul.side_list {
+  padding: 0; margin: 0; list-style: none;
+}
+
+/* side_list a */
 ul.side_list a {
   text-decoration: none;
-  padding: 0 0 0 26px;
+  display: block;
+  padding: 8px 0 8px 0px;
   color: #4986BC;
   font-size:0.72em;
   font-weight:600;
 }
-ul.side_list a:hover {
-	text-decoration:underline;
+ul.side_list a.active {background-color: black;}
+ul.side_list a.visited {color: #336699;}
+ul.side_list a:hover {text-decoration: underline;}
+
+/* side_list li */
+ul.side_list li:hover {background-color: #cdf;}
+ul.side_list li.small_icon {
+  padding-left: 40px;
+  background-position: 20px 50%;
 }
 
+/* contribute link */
 ul.side_list li.contribute_icon{
 	height:30px;
 	line-height:30px;
@@ -273,21 +344,7 @@ ul.side_list li.contribute_icon{
 	font-size:1.1em;
 }
 ul.side_list li.contribute_icon a{
-color:#42861F;}
-
-ul.side_list a.active {
-}
-
-ul.side_list a.visited {
-  color: #336699;
-}
-
-ul.side_list li {
-	height:26px;
-  margin: 0 -8px 0 -8px;
-  padding-left: 15px;
-  padding-top:0px;
-  padding-bottom:2px;
+  color:#42861F;
 }
 
 input.check {
@@ -296,6 +353,7 @@ input.check {
   margin-top: 5px;
 }
 
+/* icons */
 .small_icon {
   background-repeat: no-repeat;
   background-position: 1px 50%;
@@ -306,17 +364,28 @@ input.check {
   background-position: 1px 50%;
   padding: 20px 0 20px 54px;
 }
-
+.page_icon {
+  height: 16px;
+  width: 16px;
+}
+button.icon_16, button.icon_48 {
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  border: none; margin: 0; padding: 0;
+}
+button.icon_16 {height: 16px; width: 16px;}
+button.icon_48 {height: 48px; width: 48px;}
 
 .name_link {
   background-repeat: no-repeat;
   background-position: 1px 50%;
 }
-.small_icon.spinner_icon {
-  background-image: url(images/spinner.gif)
-}
 ul.side_list a.name_link {
   padding: 4px 0 4px 26px;
+}
+
+.small_icon.spinner_icon {
+  background-image: url(images/spinner.gif)
 }
 
 

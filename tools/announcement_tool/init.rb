@@ -1,7 +1,7 @@
 PageClassRegistrar.add(
   'AnnouncementPage',
   :controller => 'announcement_page',
-  :icon => 'announce.png',
+  :icon => 'page_notice',
   :class_display_name => 'announcement',
   :class_description => "A little advertising",
   :class_group => 'wiki',

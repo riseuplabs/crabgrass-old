@@ -98,11 +98,11 @@ class Asset < ActiveRecord::Base
     def basename; File.basename(filename, ext); end
 
     def big_icon
-      "mime/big/#{Media::MimeType.icon_for(content_type)}"
+      "mime_#{Media::MimeType.icon_for(content_type)}"
     end
 
     def small_icon
-      "mime/small/#{Media::MimeType.icon_for(content_type)}"
+      "mime_#{Media::MimeType.icon_for(content_type)}"
     end
 
     def format_description

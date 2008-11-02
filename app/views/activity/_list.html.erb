@@ -1,8 +1,8 @@
 <% if @activities and @activities.any? -%>
 <div class='activities'>
-  <ul class='plainlist'>
+  <ul class='plain'>
     <% @activities.each do |activity| -%>
-      <li class="icon <%=activity.icon%>"><%= activity.description %> <span><%= friendly_date(activity.created_at) %></span></li>
+      <li class="small_icon <%=activity.icon%>_16"><%= activity.description %> <span><%= friendly_date(activity.created_at) %></span></li>
     <% end -%>
   </ul>
 </div>

@@ -7,7 +7,7 @@ PageClassRegistrar.add(
 PageClassRegistrar.add(
   'DiscussionPage',
   :controller => 'discussion_page',
-  :icon => 'discussion.png',
+  :icon => 'page_discussion',
   :class_display_name => 'group discussion',
   :class_description => :group_discussion_class_description,
   :class_group => 'discussion',
@@ -17,7 +17,7 @@ PageClassRegistrar.add(
 PageClassRegistrar.add(
   'MessagePage',
   :controller => 'message_page',
-  :icon => 'message.png',
+  :icon => 'page_message',
   :class_display_name => 'personal message',
   :class_description => :personal_message_class_description,
   :class_group => 'message',
