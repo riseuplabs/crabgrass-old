@@ -36,6 +36,18 @@ ul.side_list a.name_link {
   background-image: url(images/spinner.gif)
 }
 
+/**
+ ** FRAMED IMAGES
+ **/
+
+img.left  {float: left; margin: 0 0.5em 0.5em 0;}
+img.right {float: right; margin: 0 0 0.5em 0.5em;}
+img.framed {
+  padding: 2px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
 /** 
  **  ASSET THUMBNAILS
  **/ 
@@ -79,4 +91,4 @@ ul.icon_boxes li:hover span {
   top: 40px; left: 0;
   z-index: 100;
 }
-
+ul.icon_boxes li a {display: block;}

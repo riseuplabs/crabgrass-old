@@ -6,6 +6,7 @@
 .burst_16 {background-image: url(/images/png/16/burst.png)}
 .cancel_16 {background-image: url(/images/png/16/cancel.png)}
 .checked_16 {background-image: url(/images/png/16/checked.png)}
+.exclamation_16 {background-image: url(/images/png/16/exclamation.png)}
 .eye_16 {background-image: url(/images/png/16/eye.png)}
 .folder_picture_16 {background-image: url(/images/png/16/folder_picture.png)}
 .from_me_16 {background-image: url(/images/png/16/from_me.png)}
@@ -16,7 +17,6 @@
 .info_16 {background-image: url(/images/png/16/info.png)}
 .key_16 {background-image: url(/images/png/16/key.png)}
 .left_16 {background-image: url(/images/png/16/left.png)}
-.lock_16 {background-image: url(/images/png/16/lock.png)}
 .lorry_16 {background-image: url(/images/png/16/lorry.png)}
 .magnifier_16 {background-image: url(/images/png/16/magnifier.png)}
 .membership_add_16 {background-image: url(/images/png/16/membership_add.png)}
@@ -47,6 +47,7 @@
 .minus_16 {background-image: url(/images/png/16/minus.png)}
 .ok_16 {background-image: url(/images/png/16/ok.png)}
 .open_letter_16 {background-image: url(/images/png/16/open_letter.png)}
+.open_quote_16 {background-image: url(/images/png/16/open_quote.png)}
 .page_approval_16 {background-image: url(/images/png/16/page_approval.png)}
 .page_article_16 {background-image: url(/images/png/16/page_article.png)}
 .page_default_16 {background-image: url(/images/png/16/page_default.png)}
