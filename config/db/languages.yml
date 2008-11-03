@@ -73,6 +73,11 @@ it:
   name: Italiano
   code: it_IT
 
+tr:
+  id: 24
+  name: Tϋrkçe
+  code: tr_TR
+
 pl:
   id: 28
   name: Polski
