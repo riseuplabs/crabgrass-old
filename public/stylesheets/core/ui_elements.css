@@ -36,7 +36,7 @@ ul.plain {padding: 0; margin: 0; list-style: none;}
 option.indented {margin-left: 1em;}
 option.section {font-weight: bold;}
 
-span.link_line em {
+.link_line em {
   color: #ccc;
 }
 
@@ -66,6 +66,30 @@ span.link_line em {
 }
 
 .clear { clear: both }
+
+/** 
+ **  COLORED HEADINGS
+ **/ 
+
+h1.dim, h2.dim, h3.dim {
+  color: #738899;
+}
+h1.bright, h2.bright, h3.bright {
+  color: #5B97CB;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+h1.alert, h2.alert, h3.alert  {
+  color: #CE4A48;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+h2 span, h3 span {
+  font-size: 0.6em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
 
 /** 
  **  SIDE LIST

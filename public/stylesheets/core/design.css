@@ -1,59 +1,24 @@
 /** 
- **  GLOBAL
+ **  FLOATS & CLEARING
  **/ 
 
-html {font-size:100%;}
-body {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size:1em;
-}
+hr {clear:both}
 
 /** 
  **  FONTS
  **/ 
 
 body {
-  font-family:verdana, arial;
-  color:#222;
-  background:#EFECEB;
+  font-family: verdana, arial, helvetica, sans-serif;
+  color: #222;
+  background: #EFECEB;
 }
-
-h1, h2, h3 {
-  margin:0;
+h1, h2, h3, h4 {
+  font-family: arial, helvetica, sans-serif;
 }
-/*h1*/
-h1 { 
-  font-family:arial;
-    font-size: 1.5em; 
-}
-/*h2*/
-h2 { 
-  clear:both;
-    font-size: 1em; 
-}
-
-/*h3*/
-h3, .col2 h3{
-  font-size:15px;
-  color:#708796;
-  text-transform:capitalize;
-}
-h3 { 
-    font-size: 1em; 
-}
-/*h4*/
-h4 {
-  font-size:0.875em; /* ?? */
-  font-size:13px;
-}
-.col2 h4 {
-  color:#4883BA;
-}
-/*p*/
-p {
-  font-size:12px;
-  color:#6E6E6C;
-}
+h1 {font-size: 2.2em;} /* ~ 28px */
+h2 {font-size: 1.5em;} /* ~ 18px */
+h3 {font-size: 1.2em;} /* ~ 15px */
 
 /** 
  **  LAYOUT
@@ -63,10 +28,10 @@ h1#site_title {
   padding-left:1.6em;
 }
 #site_title {
-  margin:0;padding:0;
+  margin:0; padding:0;
   background: #fff;
-  height:2.1em;
-  line-height:1.875em;
+  height: 2.1em;
+  line-height: 1.875em;
 }
 div#masthead {text-align: left;}
 
@@ -156,6 +121,15 @@ div#bannercontent form a {
   font-size:10px;
   font-weight:normal;
   color:#E1E1E1;
+}
+
+/**
+ ** CONTENT_BOX
+ **/
+
+.content_box {
+  background: #fff;
+  padding: 1em;
 }
 
 
@@ -317,18 +291,19 @@ div#bannercontent form a {
  **/ 
 
 .title_box {
-  background: #ECF9FE;
+  background: #E1F3FD;
   border-bottom:1px solid #E1E1E1;
 }
 .title_box h1 {
-  color: #5F7689;
-  font-weight:600;
-  font-family:arial, verdana;
-  font-size:1.5625em;
-  padding:18px 0pt 18px 20px;
+  color: #718898;
+  background-color: #E1F3FD;
+  font-weight: 600;
+  font-family: arial, verdana;
+  font-size:1.6em;
+  padding: 0.7em;
 }
 
-div.page_title a{
+div.page_title a {
   vertical-align:middle;
   margin-left:20px;
   font-size:10px;
@@ -360,18 +335,13 @@ div.page_title a{
   font-weight:600;
 }
 
-#summary{
-  display:none;
-}
-
 /* breadcrumb */
 .title_box .breadcrumb {
-    margin:0;
-    padding: 10px 0px 0px 20px;
+  margin:0;
+  padding: 10px 0px 0px 20px;
 }
 
-.title_box .breadcrumb,
-  .title_box .breadcrumb a {
+.title_box .breadcrumb, .title_box .breadcrumb a {
   color:#8A8988;
   font-size:10px;
 }
