@@ -140,4 +140,73 @@ h2 .small_icon.plus_16 a{
   color:green;
 }
 
+/* profile wall */
+.profile-fun {
+  width:100%;
+  background-color:#EFF9FE;
+}
+.profile-fun td {
+  padding:1.2em;
+  vertical-align:top;
+}
+.profile-fun .profile-wall {
+   width:70%;
+}
+.profile-fun .profile-wall textarea {
+   width:98%;
+   margin:10px 0px;
+   padding:4px;
+   border-color:#E1E1E1;
+}
+.profile-fun .profile-wall fieldset a {
+  float:right;
+}
+/* wall postings */
+.profile-fun .wall-posts {
+  clear:both;
+  height:500px;
+  margin-top:15px;
+  overflow:auto;
+  background:#fff;
+}
+.profile-fun .wall-posts h4 {
+ padding:10px 5px 8px;
+ color:#F5967A;
+ background-color:#FFF6ED; 
+ border-top:1px solid #E1E1E1;
+ border-bottom:1px solid #E1E1E1;
+}
 
+.profile-fun .wall-posts blockquote {
+  color:#999999;
+  line-height:1.5em;
+  border-bottom:1px dotted #E1E1E1;
+  padding:10px 5px;
+  clear:both;
+  overflow:hidden;
+  display:block;
+}
+
+.profile-fun .wall-posts blockquote p {
+  margin:0px;
+  padding-left:65px;
+  background-position:45px 0px;
+}
+
+.profile-fun .wall-posts blockquote img {
+  width:38px;
+  height:38px;
+  margin:auto;
+  padding:0px;
+}
+/* recent profile activities */
+.profile-fun  .profile-activity {
+  width:30%;
+  border-left:1px dotted #E1E1E1;
+} 
+.activities li {
+  color:#666;
+  margin:7px 0px;
+  padding:3px 0px;
+  padding-left:24px;
+}

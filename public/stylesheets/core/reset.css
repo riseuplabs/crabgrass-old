@@ -38,4 +38,4 @@ table {
 	border-spacing: 0;
 }
 
-form, fieldset { border:none; }
+form, fieldset { border:none; padding:0; margin:0; }
