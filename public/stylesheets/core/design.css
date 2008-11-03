@@ -29,7 +29,8 @@ h1 {
 /*h2*/
 h2 { 
   clear:both;
-    font-size: 1em; 
+  font-size: 1em;
+  color:#BF3937; 
 }
 
 /*h3*/
@@ -467,3 +468,82 @@ background:transparent;
 span.admin {padding-right: 16px; background: url(images/icons/small_png/tiny_wrench.png) no-repeat 100% 50%}
 span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_pencil.png) no-repeat 100% 50%}
 */
+
+
+
+
+
+
+
+
+/*DASHBOARD
+*/
+
+/*DASHBOARD CSS*/
+
+
+.col2 h3{
+	padding-left:0;
+}
+.col2 h4.world_subtitle{
+	clear:both;
+	float:none;
+}
+
+.col2 ul.people { 
+  margin-top:8px;
+ }
+.col2 h2.small_icon.plus_16 {
+	padding-top:0;
+	padding-bottom:0;
+	margin-bottom:1em;
+	border-top:none;
+}
+.col2 ul.people li { 
+  float:left; 
+  margin:0px 5px 5px 0px; 
+}
+.col2 ul.people li span {
+  display:none;
+}
+
+.col2 ul.people li {
+  border:1px solid #ccc;
+  display:block;
+  padding:0px;
+  width:38px;
+  height:38px;
+
+}
+.col2 ul.side_list li a { 
+  text-transform:capitalize;
+  padding:4px 0px;
+}
+
+.col2 ul.side_list li a.name_link { 
+  padding:0px;
+   margin:0px;
+  width:38px;
+  height:38px;
+  background-position:left top;
+}
+
+.col2 img.side_list.people{
+	margin-bottom:2em;
+}
+
+.title_box #mainsection1 .newsfeed{
+	width:49%;
+  	float:left;
+	border:1px solid red;
+}
+.title_box #mainsection1 .status{
+		width:49%;
+	display:inline;
+	border:1px solid red;
+}
+.title_box #mainsection1 .wall{
+	position:relative;
+	width:49%;
+	border:1px solid red;
+}

@@ -73,6 +73,7 @@ span.link_line em {
 
 ul.side_list {
   padding: 0; margin: 0; list-style: none;
+  margin-bottom:1em;
 }
 
 /* side_list a */

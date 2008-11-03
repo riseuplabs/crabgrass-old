@@ -30,11 +30,14 @@ div.popup fieldset {
 div.popup blockquote {
   padding: 1em 1em 0 1em;
 }
+.page_list{
+width:100%;
+}
 
 /* layout */
 
 .leftmenu .col1, .rightmenu .col1 {
-  margin: 0.5em 1.5em 1.5em 20.35em;
+  margin: 0 0 1.5em 11.9em;
 }
 .holygrail .col1 {
   margin: 0.5em 11em;
@@ -44,11 +47,12 @@ div.popup blockquote {
 }
 .leftmenu .col2 {
   padding-top: 0.5em;
-	padding-right:30em;
+  padding-right:30em;
 }
 .left menu .col1{
 
 }
+
 
 /* ui */
 
@@ -63,4 +67,5 @@ form.minisearch input.minisearch_submit[type=submit] {
   border: 0px;
   margin: 0 0 -1px 0;
 }
+
 
