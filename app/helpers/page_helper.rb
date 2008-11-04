@@ -122,11 +122,22 @@ module PageHelper
   ######################################################
   ## PAGE LISTINGS AND TABLES
 
+  SORTABLE_COLUMNS = %w(
+    created_at created_by_login updated_at updated_by_login group_name title
+    starts_at posts_count contributors_count stars_count
+  ).freeze
+
   # Used to create the page list headings. set member variable @path beforehand
   # if you want the links to take it into account instead of params[:path]
-  def list_heading(text, action, select_by_default=false)
-    return "<th nowrap>#{text}</th>" unless 
-      %w(created_at created_by_login updated_at updated_by_login group_name title starts_at posts_count contributors_count stars_count).include? action 
+  # option defaults:
+  #  :selected => false
+  #  :sortable => true
+  def list_heading(text, action, options={})
+    options = {:selected => false, :sortable => true}.merge(options)
+
+    unless options[:sortable] and SORTABLE_COLUMNS.include?(action)
+      return content_tag :th, text, :class => options[:class]
+    end
 
     path = filter_path
     parsed = parsed_path
@@ -143,10 +154,10 @@ module PageHelper
       end
     elsif %w(title created_by_login updated_by_login group_name).include? action
       link = page_path_link(text, "ascending/#{action}")
-      selected = select_by_default
+      selected = options[:selected]
     else
       link = page_path_link(text, "descending/#{action}")
-      selected = select_by_default
+      selected = options[:selected]
     end
     "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
   end
@@ -190,11 +201,17 @@ module PageHelper
     elsif column == :contributors_count or column == :contributors
       page.contributors_count
     elsif column == :stars_count or column == :stars
-      "%s %s" % [icon_tag('star'), page.stars]
+      if page.stars > 0
+        content_tag(:span, "%s %s" % [icon_tag('star'), page.stars], :class => 'star')
+      else
+        icon_tag('star_empty')
+      end
     elsif column == :owner
       page.group_name || page.created_by_login
     elsif column == :owner_with_icon
       page_list_owner_with_icon(page)
+    elsif column == :last_updated
+      page_list_updated_or_created(page)
     elsif column == :posts
       page.posts_count
     elsif column == :last_post
@@ -216,10 +233,10 @@ module PageHelper
   
   def page_list_updated_or_created(page)
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? 'updated'.t : 'created'.t
+    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    content_tag :span, "%s &bull; %s &bull; %s" % [label, username, date]
+    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date]
   end
 
   def page_list_title(page, column, participation = nil)
@@ -236,32 +253,68 @@ module PageHelper
     return title
   end
   
-  def page_list_heading(column=nil)
+  def page_list_heading(column, options={})
     if column == :group or column == :group_name
-      list_heading 'group'.t, 'group_name'
+      list_heading 'group'.t, 'group_name', options
     elsif column == :icon or column == :checkbox or column == :discuss
       "<th></th>"
     elsif column == :updated_by or column == :updated_by_login
-      list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login'
+      list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
-      list_heading 'created by'[:page_list_heading_created_by], 'created_by_login'
+      list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
     elsif column == :updated_at
-      list_heading 'updated'[:page_list_heading_updated], 'updated_at'
+      list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
-      list_heading 'created'[:page_list_heading_updated_by], 'created_at'
+      list_heading 'created'[:page_list_heading_updated_by], 'created_at', options
     elsif column == :posts
-      list_heading 'posts'[:page_list_heading_posts], 'posts_count'
+      list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
-      list_heading 'happens'.t, 'happens_at'
+      list_heading 'happens'.t, 'happens_at', options
     elsif column == :contributors_count or column == :contributors
-      list_heading image_tag('ui/person-dark.png'), 'contributors_count'
+      list_heading image_tag('ui/person-dark.png'), 'contributors_count', options
     elsif column == :last_post
-      list_heading 'last post'[:page_list_heading_last_post], 'updated_at'
+      list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
-      list_heading 'stars'[:page_list_heading_stars], 'stars_count'
+      list_heading 'stars'[:page_list_heading_stars], 'stars_count', options
     elsif column
-      list_heading column.to_s.t, column.to_s
-    end    
+      list_heading column.to_s.t, column.to_s, options
+    end
+  end
+
+  def page_row(page, columns, participation=nil)
+    participation ||= page.flag[:user_participation]
+    participation ||= page.flag[:group_participation]
+
+    trs = []
+    tds = []
+    tds << content_tag(:td, page_list_cell(page,columns[0], participation), :class=>'first')
+    columns[1..-2].each do |column|
+      tds << content_tag(:td, page_list_cell(page,column, participation))
+    end
+    tds << content_tag(:td, page_list_cell(page,columns[-1], participation), :class=>'last')
+    trs << content_tag(:tr, tds.join("\n"))
+
+    if participation and participation.is_a? UserParticipation and participation.notice
+      participation.notice.each do |notice| 
+        next unless notice.is_a? Hash
+        trs << page_notice_row(notice, columns.size)
+      end
+    end
+
+    if page.flag[:excerpt]
+      trs << content_tag(:tr, content_tag(:td, page.flag[:excerpt], :class => 'excerpt', :colspan=>columns.size))
+    end
+    trs.join("\n")
+  end
+
+  def page_notice_row(notice, column_size)
+    html = "<td class='excerpt', colspan='#{column_size}'>"
+    html += "page sent by {user} on {date}"[:page_notice_message, {:user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time])}]
+    if notice[:message].any?
+      html += 'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+    end
+    html += "</td>"
+    content_tag(:tr, html, :class => "page_info")
   end
 
   ######################################################

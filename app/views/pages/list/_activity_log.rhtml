@@ -48,38 +48,45 @@ while page
   page = pages.shift
 end
 
+columns ||= (@columns || [:stars, :owner_with_icon, :icon, :title, :last_updated])
+sortable = false
+colspan = columns.size
+
 -%>
-<table class='activity'>
+<div class='page_list'>
+<table>
+<%= render :partial => 'pages/list/headings', :locals => {:columns => columns, :sortable => false} %>
 <% if today.any? -%>
-  <% reset_cycle 'activity_entry_cycle' -%>
-  <tbody><tr><th colspan='30'><h4 class='section'><%= :Today.t %></h4></th></tr></tbody>
-  <% today.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
-  <% end -%>
+  <%- reset_cycle 'page_list_cycle' -%>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :Today.t %></td></tr></tbody>
+  <%- today.each do |page| -%>
+    <%= page_row(page, columns) %>
+  <%- end -%>
 <% end -%>
 
 <% if yesterday.any? -%>
-  <% reset_cycle 'activity_entry_cycle' -%>
-  <tbody><tr><th colspan='30'><h4 class='section'><%= :Yesterday.t %></h4></th></tr></tbody>
-  <% yesterday.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
-  <% end -%>
+  <%- reset_cycle 'page_list_cycle' -%>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :Yesterday.t %></td></tr></tbody>
+  <%- yesterday.each do |page| -%>
+    <%= page_row(page, columns) %>
+  <%- end -%>
 <% end -%>
 
 <% if week.any? -%>
-  <% reset_cycle 'activity_entry_cycle' -%>
-  <tbody><tr><th colspan='30'><h4 class='section'><%= :This_Past_Week.t %></h4></th></tr></tbody>
-  <% week.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
-  <% end -%>
+  <%- reset_cycle 'page_list_cycle' -%>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :This_Past_Week.t %></td></tr></tbody>
+  <%- week.each do |page| -%>
+    <%= page_row(page, columns) %>
+  <%- end -%>
 <% end -%>
 
 <% if later.any? -%>
-  <% reset_cycle 'activity_entry_cycle' -%>
-  <tbody><tr><th colspan='30'><h4 class='section'><%= :Older.t %></h4></th></tr></tbody>
-  <% later.each do |page| -%>
-    <%= render :partial => 'pages/list/activity_entry', :locals => {:page => page, :style => style} %>
-  <% end -%>
+  <%- reset_cycle 'page_list_cycle' -%>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :Older.t %></td></tr></tbody>
+  <%- later.each do |page| -%>
+    <%= page_row(page, columns) %>
+  <%- end -%>
 <% end -%>
-
 </table>
+</div> <!-- end page_list -->
+

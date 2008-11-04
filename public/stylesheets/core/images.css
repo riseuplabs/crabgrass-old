@@ -20,6 +20,7 @@ button.icon_16, button.icon_48 {
   vertical-align: middle;
   background-repeat: no-repeat;
   border: none; margin: 0; padding: 0;
+  background-color: transparent;
 }
 button.icon_16 {height: 16px; width: 16px;}
 button.icon_48 {height: 48px; width: 48px;}

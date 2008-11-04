@@ -10,7 +10,7 @@ class Me::SearchController < Me::BaseController
       # if there was a text string in the search, generate extracts for the results      
       if parsed_path.keyword? 'text' and @pages.any?
         begin
-          @excerpts = extract_excerpts(@pages)
+          add_excerpts_to_pages(@pages)
         rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
           RAILS_DEFAULT_LOGGER.warn "failed to extract keywords from sphinx search: #{err}."
         end
@@ -44,7 +44,7 @@ class Me::SearchController < Me::BaseController
     add_context 'search', url_for(:controller => 'me/search', :action => nil)
   end
 
-  def extract_excerpts(pages)
+  def add_excerpts_to_pages(pages)
     config = ThinkingSphinx::Configuration.new
     client = Riddle::Client.new config.address, config.port
 
@@ -56,14 +56,11 @@ class Me::SearchController < Me::BaseController
       :after_match      => "</b>",
       :chunk_separator  => " ... ",
       :limit            => 400,
-      :around           => 15
+      :around           => 20
     )
-  
-    excerpts = {}
     results.each_with_index do |result, i|
-      excerpts[pages[i].id] = result
+      pages[i].flag[:exerpt] = result
     end
-    return excerpts
   end
     
 end

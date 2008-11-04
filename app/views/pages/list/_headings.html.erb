@@ -1,0 +1,8 @@
+<%- sortable = true if sortable.nil? -%>
+  <tr>
+  <%- columns[0..-2].each do |column| -%>
+    <%= page_list_heading(column, :sortable => sortable) %>
+  <%- end -%>
+  <%= page_list_heading(columns[-1], :sortable => sortable, :class => 'last') %>
+  </tr>
+

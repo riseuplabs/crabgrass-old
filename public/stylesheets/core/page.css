@@ -2,137 +2,33 @@
  **  PAGE LIST
  **/ 
 
-.page_list h2.title2{
-	padding-left:20px;
-	float:left;
-	padding-top:0;
+.page_list table {
+  width: 100%;
+  color: #979797;
 }
 
-.page_list{
-	width:99%;
-	background:white;
-	padding-top:22px;
-	padding-bottom:30px;
+.page_list td.last {text-align: right;}
+.page_list th.last {text-align: right;}
+.page_list a {color: #4986BC;}
+.page_list td.date {
+  background: #FFF4E8;
+  color: #F28367;
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: 1.2em;
 }
-
-.page_list table{
-	width:94%;
-	margin-left:22px;
-	clear:both;
-	border-bottom:1px solid #E1E1E1;
-	color:#979797;
+.page_list td {
+  padding: 0.5em;
+  /* font-weight:600; this is how we indicate unread! */
+  border-bottom: 1px solid #ccc;
 }
-
-
-.page_list table a{
-	color:#4986BC;
+.page_list th {
+  text-transform: uppercase;
+  border-bottom: 1px solid #ccc;
+  padding: 0.75em;
+  padding-left: 0.5em;
+  text-align: left;
 }
-.page_list table .data1, .page_list table.header1{
-	width:55px;
-}
-.page_list table .header1, .page_list table .header2,  .page_list table .rightheader {
-	border-bottom:1px solid #E1E1E1;
-}
-.page_list table .date, .page_list  table .date h3{
-	background:#FFF4E8;
-	height:33px;
-	line-height:33px;
-	padding-left:5px;
-	color:#F28367;
-	text-transform:capitalize;
-}
-.page_list table .date{
-	font-size:0.8em;
-}
-
-.page_list table .data1, .page_list table .data2, .page_list table .rightdata, .page_list table .header1, .page_list table .header2, .page_list table rightheader{
-	height:50px;
-}
-
-.page_list table .data2 img{
-	padding-right:10px;
-}
-
-.page_list table th.header1, .page_list table th.header2, .page_list table th.rightheader{
-	text-transform:uppercase;
-	color:#C1C1C1;
-	font-weight:600;
-	font-size:0.7em;
-}
-.page_list table .rightdata{
-	font-size:10px;
-}
-.page_list table td.rightdata, .page_list table th.rightheader{
-	text-align:right;
-}
-.page_list table .data2{
-	color:#4883BA;
-	font-weight:600;
-	font-size:11px;
-}
-.page_list table #border {
-	border-top:10px solid #E1E1E1;
-}
-.page_list table em.status{
-	color:red;
-	font-style: normal;
-}
-
-.page_list table td{
-	border-bottom:1px solid #ccc;
-}
-
-
-		/*Table Menu: All, Top Rated, Highest Contributors*/
-.page_list ul{ 
-	margin-left:0px;
-	clear:both;
-	margin-top:20px;
-	margin-bottom:5px;
-	list-style:none;
-}
-
-.page_list ul.table_menu li{
-	float:left;
-	background:url(/images/table_menu.jpg) repeat-x;
-}
-.page_list ul.table_menu li a{
-	font-weight:600;
-	text-transform:capitalize;
-	color:#667D92;
-	font-size:11px;
-	padding:8px 10px;
-	border:1px solid #E1E1E1;
-	border-right:none;
-	background:#F0EDEC url(/images/background/table_menu.jpg) repeat-x; /* extract gradient*/
-}
-
-
-.page_list ul.table_menu li.active a {
-	border-bottom:none;
-	background:none;
-	color:#2E495D;
-}
-
-.page_list span a {
-	text-transform: uppercase;
-	padding-right:10px;
-	font-weight:600;
-	font-size:9px;
-	color:#4986BC;
-	background:0url(/images/quotmark.gif) no-repeat right;
-	margin-left:10px;
-}
-
-
-.page_list, .page_list table.activity {
-	clear:both;
-	float:none;
-}
-
-
-/*Stars in Table*/
-.page_list .data1 {
-	padding-left:10px;
-}
+.page_list span.status {color: red;}
+.page_list span.star {color: #EBBA20;}
 
