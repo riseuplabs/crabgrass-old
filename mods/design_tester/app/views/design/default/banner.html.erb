@@ -12,7 +12,13 @@
 <table>
 <tr>
   <td rowspan='2'><%= avatar_for @user, 'large' -%></td>
-  <td style='width:99%'><h1><%= link_to_user @user %></h1></td>
+  <td style='width:30%'><h1><%= link_to_user @user %></h1></td>
+  <td>
+    <span class="link_line">
+      <a href="#">Edit Settings</a> <em>&bull;</em>
+      <a href="#">Leave Group</a>
+	</span>
+  </td>
 </tr>
 </table>
 

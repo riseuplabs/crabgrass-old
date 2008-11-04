@@ -36,6 +36,7 @@ h1#site_title {
 div#masthead {text-align: left;}
 
 /*BANNER*/
+
 div#banner {
   clear: both;
   margin: 0;
@@ -47,6 +48,11 @@ div#banner {
 div#bannercontent {
   padding: 0px 1.25em;
 }
+#bannercontent table td{
+	padding:0;
+	height:70px;
+}
+
 div#banner img.avatar {
   width: 4em; height: 4em;
   border: 1px solid white;
@@ -73,13 +79,8 @@ div#banner a:hover {
 div#bannercontent h1 a{
   font-family:arial, verdana;
   font-weight:300;
-  height:92px;
-  line-height:92px;
-  
 }
-#bannercontent table tbody td{
-line-height:92px;
-}
+
 
 
 /* search form in banner */
@@ -145,7 +146,8 @@ div#bannercontent form a {
 }
 .leftmenu .colright {
   float:left;
-  width:190.6%; /*MAIN COLUMN*/
+  width:193.6%; /*MAIN COLUMN*/
+right:100px;
   position:relative;
   left:15.2em;
   background:#fff;
@@ -285,6 +287,20 @@ div#bannercontent form a {
 .rightmenu .tags {
   margin:0px 0px 15px;
 }
+
+
+
+/************************************* ONE COLUMNS ************************************************/
+.fullpage{
+	margin:1.25em;
+}
+.fullpage .col1{
+	margin:0;
+}
+
+
+
+
 
 /** 
  **  TITLE BOX
