@@ -1,20 +1,20 @@
 /** 
- **  TITLE_BOX > LANDING > INFO_BOX
+ **  TITLE_BOX > INFO_BOX
  **/ 
 
-.landing table.info_box {
+.title_box table.info_box {
   padding: 1em;
   background-color: #F0F9FE;
   border-bottom: 1px solid #E1F3FD;
   width: 100%;
 }
-.landing table.info_box td {
+.title_box table.info_box td {
   width: 50%;
   vertical-align: top;
   padding: 1em;
 }
 
-.description {
+.title_box .description {
   color: #738899;
   font-family: georgia, times;
   font-style: italic;
@@ -32,6 +32,13 @@
   margin: 0 2em 1.5em 0;
 }
 
+.activities li {
+  color:#666;
+  margin:7px 0px;
+  padding:3px 0px;
+  padding-left:24px;
+}
+
 /**
  ** LEFT_COLUMN
  **/
@@ -40,6 +47,18 @@
   margin: 1em 0;
 }
 
+a.contribute {
+  display: block;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  font-weight: bold;
+  color:green;
+}
+a.contribute:hover {
+  background: #cdf;
+  text-decoration: none;
+}
 
 /** 
  **  CONTENT_BOX > LANDING
@@ -142,3 +161,72 @@ div.tags ul {
   width:190px;
 }
 
+/**
+ ** THE WALL
+ **/
+
+
+.profile-fun {
+  width:100%;
+  background-color:#EFF9FE;
+}
+.profile-fun td {
+  padding:1.2em;
+  vertical-align:top;
+}
+.profile-fun .profile-wall {
+   width:70%;
+}
+.profile-fun .profile-wall textarea {
+   width:98%;
+   margin:10px 0px;
+   padding:4px;
+   border-color:#E1E1E1;
+}
+.profile-fun .profile-wall fieldset a {
+  float:right;
+}
+
+.wall_posts {
+  clear: both;
+  height: 20em;
+  overflow: auto;
+  background: #fff;
+}
+.wall_posts h4 {
+ padding:10px 5px 8px;
+ color:#F5967A;
+ background-color:#FFF6ED; 
+ border-top:1px solid #E1E1E1;
+ border-bottom:1px solid #E1E1E1;
+}
+
+.wall_posts blockquote {
+  color:#999999;
+  line-height:1.5em;
+  border-bottom:1px dotted #E1E1E1;
+  padding:10px 5px;
+  clear:both;
+  overflow:hidden;
+  display:block;
+}
+
+.wall_posts blockquote p {
+  margin:0px;
+  padding-left:65px;
+  background-position:45px 0px;
+}
+
+.wall_posts blockquote img {
+  width:38px;
+  height:38px;
+  margin:auto;
+  padding:0px;
+}
+
+/*
+.profile-fun  .profile-activity {
+  width:30%;
+  border-left:1px dotted #E1E1E1;
+} 
+*/

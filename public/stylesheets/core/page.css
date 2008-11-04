@@ -16,10 +16,9 @@ div.page_list {background: white;}
   color: #F28367;
   text-transform: capitalize;
   font-weight: bold;
-  font-size: 1.2em;
 }
 .page_list td {
-  padding: 0.5em;
+  padding: 0.25em;
   /* font-weight:600; this is how we indicate unread! */
   border-bottom: 1px solid #ccc;
   background-color: white;

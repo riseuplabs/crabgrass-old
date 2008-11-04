@@ -11,8 +11,7 @@
 .big_icon {
   background-repeat: no-repeat;
   background-position: 1px 50%;
-  padding-left: 54px;
-  min-height: 48px;
+  padding: 10px 0 10px 54px;
 }
 .page_icon {
   height: 16px;

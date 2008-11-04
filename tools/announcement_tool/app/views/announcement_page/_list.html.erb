@@ -1,23 +1,14 @@
-<%# this is very hacky and temporarily %>
-<% content_for :style do %>
-div.announce table {
-  width: 20em; border: 1px dotted #ccc; float:left; margin: 0 1em 1em 0
-}
-<% end %>
 <% announcements = @announcements if announcements.nil? %>
-<div class='announce'>
+<% if announcements.any? %>
+<div class="announcements">
+  <%= header_with_more(:h2, 'bright', "Announcements"[:Announcements], nil) %>
+  <table><tr>
   <% announcements.each do |page| %>
-    <table>
-      <tr>
-        <th width='1%'><img align='left' src='/images/icons/small_png/info.png' /></th>
-        <th align='left'><%= link_to h(page.title), page_url(page) %></th>
-      </tr>
-      <tr>
-        <td></td>
-        <td><%= truncate(page.wiki.body_html, 140, '... ' + link_to('more'.t + ARROW, page_url(page))) %></td>
-      </tr>
-    </table>
+    <td>
+      <h3 class="alert small_icon exclamation_16"><%= link_to h(page.title), page_url(page) %></h3>
+      <p><%= truncate(page.wiki.body_html, 250, '... ' + link_to('more'.t + ARROW, page_url(page))) %></p>
+    </td>
   <% end %>
-  <br style='clear:left' />
+  </tr></table>
 </div>
-
+<% end %>

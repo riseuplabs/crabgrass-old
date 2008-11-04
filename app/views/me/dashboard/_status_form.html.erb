@@ -1,0 +1,6 @@
+<%# TODO !!!!!!!!!!!!!!!!!1 %>
+<div class='set_status big_icon' style='background-image: url(<%= avatar_url_for(current_user,"small")%>)'>
+  <% form_tag '' do -%>
+    <%= text_field_tag 'status', "What are you doing right now?"[:set_status_messsage], :style=>'width:100%' %>
+  <% end %>
+</div>

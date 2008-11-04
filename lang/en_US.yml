@@ -24,7 +24,9 @@ contact: "contact"
 Contact: "Contact"
 Contacts: "Contacts"
 Members: "Members"
+Friends: "Friends"
 
+recent_activity: "Recent Activity"
 close_button: "Close"
 save_button: "Save"
 cancel_button: "Cancel"
@@ -232,6 +234,8 @@ image_title: "Image title: %s"
 dashboard: Dashboard
 inbox: Inbox
 my_pages: My Pages
+my_dashboard: My Dashboard
+contribute_content_link: Contribute
 search: Search
 Pending: Pending
 my_tasks: Tasks
@@ -263,6 +267,8 @@ time_zone: Time Zone
 password: Password
 password_confirmation: Password confirmation
 more: more
+see_more_link: See all
+set_status_messsage: What are you doing right now?
 
 ##
 ## PROFILE

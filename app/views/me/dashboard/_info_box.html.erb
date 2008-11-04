@@ -1,0 +1,19 @@
+<table class="info_box">
+<tr>
+  <td class="left">
+    <%= header_with_more(:h3, :dim, "Recent Activity"[:recent_activity], nil) %>
+    <%= render :partial => 'activity/list' %>
+  </td>
+  <td class="right">
+    <div class="status">
+      <h3 class="dim">Your Current Status</h3>
+      <%= render :partial => 'me/dashboard/status_form' %>
+
+      <h3 class="dim">Recent Wall Posts</h3>
+      <%# render :partial => 'posts/wall', :locals => {:posts => current_user.xxxxx} %>
+      <%= render :partial => 'posts/wall' %>
+
+  </td>
+</tr>
+</table>
+

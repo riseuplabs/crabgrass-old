@@ -1,18 +1,11 @@
-<%= render :partial => 'design/group_home/announcements' %>
-
-<div class="page_list">
-  <div>
-    <h2 class="title2">Recent group activity</h2><span><a href="#">more</a></span>
+<div class='landing'>
+  <div class='section'>
+    <%= render :partial => 'design/group_home/announcements' %>
   </div>
-
-  <ul class="table_menu">
-    <li class="active"><a href="#">All</a></li>
-    <li><a href="#">Top Rated</a></li>
-    <li><a href="#">Highest Contributors</a></li>
-  </ul>
-
-  <div class="activity">
-    <%= render :partial => 'design/group_home/page_list' %>
+  <div class='section'>
+    <h2 class="bright">Recent contributions <span>&bull; <a href="#">more &raquo;</a></span></h2>
+    <div class='page_scroll'>
+      <%= render :partial => 'design/group_home/page_list' %>
+    </div>
   </div>
-	
 </div>

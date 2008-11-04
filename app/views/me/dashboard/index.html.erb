@@ -1,18 +1,13 @@
-<% content_for :style do -%>
-div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}
-<% end -%>
 <%- @title_box = capture do -%>
-  <%- cache(me_cache_key) do -%>
-    <%= render :partial => 'infopanel' %>
-  <%- end -%>
+  <h1><%= "My Dashboard"[:my_dashboard] %></h1>
+  <%= render :partial => 'me/dashboard/info_box' %>
 <%- end -%>
 
 <div class='landing'>
 
-  <%- if @announcements.any? -%>
-    <h3><%= "Announcements".T %></h3>
-    <%= render :partial => 'announcement_page/list'  %>
-  <%- end -%>
+  <%= render :partial => 'announcement_page/list'  %>
+
+  <h2 class='alert'>Recent Pages</h3>
 
   <div id='page_list'>
 <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages} %>
@@ -22,4 +17,4 @@ div.timeclump {font-weight: bold; font-size: 1.2em; margin: 8px 0;}
 
 <%= javascript_tag remote_function(:url => { :action => :counts }) %>
 
-<%= render :partial => 'activity/list' %>
+

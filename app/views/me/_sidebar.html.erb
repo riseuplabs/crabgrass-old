@@ -1,79 +1,50 @@
-<div class='wing'>
+<a href="/pages/create" class="contribute round"><span class="small_icon plus_16"><%= "Contribute"[:contribute_content_link] %></span></a>
 
-<h2><%= "My Pages"[:my_pages] %></h2>
 <ul class='side_list'>
 
-  <li class='small_icon dashboard_icon'><%= link_to_active(
+  <li class='small_icon home_16'><%= link_to_active(
     'Dashboard'[:dashboard],
     '/me/dashboard',
     params[:controller] == 'me/dashboard'
   ) %></li>
 
-  <li id='inbox_line' class='small_icon inbox_icon'><%= link_to_active(
+  <li id='inbox_line' class='small_icon archive_16'><%= link_to_active(
      'Inbox'[:inbox],
     '/me/inbox',
     params[:controller] == 'me/inbox'
   ) %></li>
 
-<!--  <li class='small_icon watch_icon'><a href='#'><%= "Watching for Updates"[:watching] %></a></li> -->
-
-  <li class='small_icon search_icon'><%= link_to_active(
+  <li class='small_icon magnifier_16'><%= link_to_active(
     'Search'[:search],
     '/me/search',
     params[:controller] == 'me/search'
   ) %></li>
 
-
-  <li class='small_icon create_icon'><a href='/pages/create'><%= "Create Page"[:create_page] %></a></li>
-
-</ul>
-
-<h2><%= "Tasks"[:my_tasks] %></h2>
-<ul class='side_list'>
-  <li class='small_icon task_pending_icon'><%= link_to_active(
-    'Pending'[:Pending],
+  <li class='small_icon page_tasks_16'><%= link_to_active(
+    'Tasks'[:tasks],
     '/me/tasks/pending',
-    params[:controller] == 'me/tasks' && params[:action] == 'pending'
+    params[:controller] == 'me/tasks'
   ) %></li>
-  <li class='small_icon task_completed_icon'><%= link_to_active(
-    'Completed'[:completed],
-    '/me/tasks/completed',
-    params[:controller] == 'me/tasks' && params[:action] == 'completed'
-  ) %></li>
-</ul>
 
-<h2><%= "Requests"[:requests] %></h2>
-<ul class='side_list'>
-
-  <li id='to_me_line' class='small_icon to_me_icon'><%= link_to_active(
-    'To Me'[:to_me],
+  <li id='requests_line' class='small_icon info_16'><%= link_to_active(
+    'Requests'[:requests],
     {:controller => '/me/requests', :action => 'to_me'}
   ) %></li>
 
-  <li id='from_me_line' class='small_icon from_me_icon'><%= link_to_active(
-    'From Me'[:from_me],
-    {:controller => '/me/requests', :action => 'from_me'}
-  ) %></li>
 </ul>
 
-<h2><%= "Options"[:options] %></h2>
-<ul class='side_list'>
-  <li class='small_icon settings_icon'><%= link_to_active(
-    'Settings'[:settings],
-    '/me/edit',
-    params[:controller] == 'me/base'
-  ) %></li>
-  <li class='small_icon public_profile_icon'><%= link_to_active(
-    'Public Profile'[:public_profile],
-    '/profile/edit/public',
-    params[:controller] == 'profile' && params[:action] == 'edit' && params[:id] == 'public'
-  ) %></li>
-  <li class='small_icon private_profile_icon'><%= link_to_active(
-    'Private Profile'[:private_profile],
-    '/profile/edit/private',
-    params[:controller] == 'profile' && params[:action] == 'edit' && params[:id] == 'private'
-  ) %></li>
-</ul>
+<hr class="thick" />
 
-</div>
+<%- cache(me_cache_key) do -%>
+  <h2 class="alert"><%= "My World"[:my_world] %></h2>
+
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:Networks], :entities => current_user.all_groups.networks } %>
+
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:Groups], :entities => current_user.groups.normals } %>
+
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:Committees], :entities => current_user.groups.committees } %>
+
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Friends'[:Friends], :entities => current_user.contacts } %>
+
+<%- end -%>
 

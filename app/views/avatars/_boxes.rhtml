@@ -4,13 +4,14 @@
   #
 -%>
 <%
-  side = 'right' if side.nil? 
+  side = 'left' if side.nil? 
   groups = [] if groups.nil?
   people = [] if people.nil?
+  entities = [] if entities.nil?
   size   = 'small' if size.nil? # this only works currently with 32px
 %>
 <ul class='icon_boxes'>
-<% (groups + people).each do |entity| -%>
+<% (groups + people + entities).each do |entity| -%>
 <%  url = url_for_group(entity) if entity.is_a? Group
     url = url_for_user(entity) if entity.is_a? User
     online = entity.respond_to?(:online?) && entity.online? ? 'online' : ''

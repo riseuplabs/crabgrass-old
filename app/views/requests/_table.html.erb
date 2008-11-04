@@ -15,7 +15,7 @@
       <tr>
         <td><%= link_to_user(request.created_by) %></td>
         <td><%= friendly_date(request.created_at) %></td>
-        <td><%= expand_description(request) %></td>
+        <td><%= expand_links(request.description) %></td>
         <td><%= request.state.t %></td>
         <%- if approvable -%>
           <td><%= request_action_links(request) %></td>

@@ -13,12 +13,4 @@ module RequestsHelper
     link_to('destroy'.t, {:controller => '/requests', :action => 'destroy', :id => request.id}, :method => :post)
   end
 
-  def expand_description(request)
-    request.description.gsub(/<span class="user">(.*?)<\/span>/) do |match|
-      link_to_user($1)
-    end.gsub(/<span class="group">(.*?)<\/span>/) do |match|
-      link_to_group($1)
-    end
-  end
-
 end

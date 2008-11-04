@@ -61,4 +61,18 @@ module ApplicationHelper
     options_for_select(LANGUAGES.to_select(:name, :code), selected)
   end
 
+  def header_with_more(tag, klass, text, more_url=nil)
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'+ARROW, more_url)) : ""
+    content_tag tag, text + span, :class => klass
+  end
+
+  # converts span tags from a model (request or activity) and inserts links
+  def expand_links(text)
+    text.gsub(/<span class="user">(.*?)<\/span>/) do |match|
+      link_to_user($1)
+    end.gsub(/<span class="group">(.*?)<\/span>/) do |match|
+      link_to_group($1)
+    end
+  end
+
 end
