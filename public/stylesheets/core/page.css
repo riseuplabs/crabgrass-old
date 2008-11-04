@@ -9,14 +9,14 @@
 }
 
 .page_list{
-	width:99%;
+	width:100%;
 	background:white;
 	padding-top:22px;
 	padding-bottom:30px;
 }
 
 .page_list table{
-	width:94%;
+	width:93%;
 	margin-left:22px;
 	clear:both;
 	border-bottom:1px solid #E1E1E1;

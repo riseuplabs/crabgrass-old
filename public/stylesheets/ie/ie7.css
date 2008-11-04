@@ -52,7 +52,10 @@ width:100%;
 .left menu .col1{
 
 }
-
+.fullpage .col1{
+	margin:0;
+	width:100%;;
+}
 
 /* ui */
 
