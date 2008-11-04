@@ -23,17 +23,17 @@ end
 
 %>
 <% content_for :style do %>
-.design_reference table {
+.design_reference table.grey {
   width: 100%;
 }
-.design_reference table td {
+.design_reference td.grey {
   border: 10px solid #ccc;
   background: #ccc;
 }
-.design_reference table td div.html {
+.design_reference td.grey div.html {
   background: #efefef;
 }
-.design_reference textarea {
+.design_reference td.grey textarea {
   overflow-x: scroll;
   width: 40em;
 }
@@ -54,14 +54,14 @@ end
   <% end %>
 </ul>
 
-<table>
+<table class='grey'>
 <% sections.each do |section| %>
-  <tr><td colspan='2'><h1><a name="<%= section[0] %>"></a><%= section[1] %></h1></td></tr>
+  <tr><td colspan='2' class='grey'><h1><a name="<%= section[0] %>"></a><%= section[1] %></h1></td></tr>
   <% section[2..-1].each do |file| %>
-    <tr><td colspan='2'><h2><a name="<%= section[0] + '-' + file[:file] %>"></a><%= file[:title]%></h2></td></tr>
+    <tr><td colspan='2' class='grey'><h2><a name="<%= section[0] + '-' + file[:file] %>"></a><%= file[:title]%></h2></td></tr>
      <tr>
-       <td><textarea cols="" wrap="off" rows='<%= file[:text].count("\n") + 1 %>'><%= file[:text] %></textarea></td>
-       <td><div class='html'><%= file[:html] %></div></td>
+       <td class='grey'><textarea cols="" wrap="off" rows='<%= file[:text].count("\n") + 1 %>'><%= file[:text] %></textarea></td>
+       <td class='grey'><div class='html'><%= file[:html] %></div></td>
      </tr>
     </tr>
   <% end %>

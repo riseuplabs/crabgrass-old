@@ -2,6 +2,7 @@
  **  PAGE LIST
  **/ 
 
+div.page_list {background: white;}
 .page_list table {
   width: 100%;
   color: #979797;
@@ -21,6 +22,7 @@
   padding: 0.5em;
   /* font-weight:600; this is how we indicate unread! */
   border-bottom: 1px solid #ccc;
+  background-color: white;
 }
 .page_list th {
   text-transform: uppercase;
@@ -30,5 +32,12 @@
   text-align: left;
 }
 .page_list span.status {color: red;}
-.page_list span.star {color: #EBBA20;}
+.page_list span.star {color: #EBBA20; font-weight: bold;}
+
+.page_scroll {
+  height: 40em;
+  overflow: auto;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
 

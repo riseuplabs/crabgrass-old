@@ -276,6 +276,10 @@ module PageHelper
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
       list_heading 'stars'[:page_list_heading_stars], 'stars_count', options
+    elsif column == :owner_with_icon
+      list_heading "owner"[:page_list_heading_owner], '', options
+    elsif column == :last_updated
+      list_heading "last updated"[:page_list_heading_last_updated], '', options
     elsif column
       list_heading column.to_s.t, column.to_s, options
     end

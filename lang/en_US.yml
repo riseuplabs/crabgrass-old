@@ -262,10 +262,6 @@ language: Language
 time_zone: Time Zone
 password: Password
 password_confirmation: Password confirmation
-Today: Today
-Yesterday: Yesterday
-This_Past_Week: This Past Week
-Older: Older
 more: more
 
 ##
@@ -440,6 +436,8 @@ page_list_heading_title: "title"
 page_list_heading_created: "created"
 page_list_heading_updated: "updated"
 page_list_heading_posts: "posts"
+page_list_heading_owner: "owner"
+page_list_heading_last_updated: "last updated"
 page_notice_message: "page sent by {user} on {date}"
 page_with_message: "with message"
 updated: "updated"
@@ -528,6 +526,10 @@ month_short_september: Sep
 month_short_october: Oct
 month_short_november: Nov
 month_short_december: Dec
+date_today: Today
+date_yesterday: Yesterday
+date_this_week: This Past Week
+date_older: Older
 
 ##
 ## ERRORS

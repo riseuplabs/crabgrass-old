@@ -58,7 +58,7 @@ colspan = columns.size
 <%= render :partial => 'pages/list/headings', :locals => {:columns => columns, :sortable => false} %>
 <% if today.any? -%>
   <%- reset_cycle 'page_list_cycle' -%>
-  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :Today.t %></td></tr></tbody>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Today"[:date_today] %></td></tr></tbody>
   <%- today.each do |page| -%>
     <%= page_row(page, columns) %>
   <%- end -%>
@@ -66,7 +66,7 @@ colspan = columns.size
 
 <% if yesterday.any? -%>
   <%- reset_cycle 'page_list_cycle' -%>
-  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :Yesterday.t %></td></tr></tbody>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Yesterday"[:date_yesterday] %></td></tr></tbody>
   <%- yesterday.each do |page| -%>
     <%= page_row(page, columns) %>
   <%- end -%>
@@ -74,7 +74,7 @@ colspan = columns.size
 
 <% if week.any? -%>
   <%- reset_cycle 'page_list_cycle' -%>
-  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :This_Past_Week.t %></td></tr></tbody>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "This Past Week"[:date_this_week] %></td></tr></tbody>
   <%- week.each do |page| -%>
     <%= page_row(page, columns) %>
   <%- end -%>
@@ -82,7 +82,7 @@ colspan = columns.size
 
 <% if later.any? -%>
   <%- reset_cycle 'page_list_cycle' -%>
-  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= :Older.t %></td></tr></tbody>
+  <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Older"[:date_older] %></td></tr></tbody>
   <%- later.each do |page| -%>
     <%= page_row(page, columns) %>
   <%- end -%>

@@ -45,16 +45,10 @@ div.announcements table td {
 }
 div.announcements table {
   margin: 0.75em 0;
-margin-right:20px;
 }
 
-/** ACTIVITY **/
-.activity {
-  clear:both;
-  height:410px;
-  overflow:auto;
-  margin-top:50px;
-  padding-bottom:20px;
+div.section {
+  margin-bottom: 2em;
 }
 
 /** WIKI **/

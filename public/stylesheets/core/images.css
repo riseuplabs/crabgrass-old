@@ -16,6 +16,12 @@
   height: 16px;
   width: 16px;
 }
+.name_icon {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+  padding: 5px 0 5px 26px;
+}
+
 button.icon_16, button.icon_48 {
   vertical-align: middle;
   background-repeat: no-repeat;
@@ -25,10 +31,6 @@ button.icon_16, button.icon_48 {
 button.icon_16 {height: 16px; width: 16px;}
 button.icon_48 {height: 48px; width: 48px;}
 
-.name_link {
-  background-repeat: no-repeat;
-  background-position: 1px 50%;
-}
 ul.side_list a.name_link {
   padding: 4px 0 4px 26px;
 }
