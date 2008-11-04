@@ -52,6 +52,12 @@ div#bannercontent {
 	padding:0;
 	height:70px;
 }
+#bannercontent table td span a{
+	font-weight:300;
+	font-size:0.75em;
+	color:#DADADA;
+}
+
 
 div#banner img.avatar {
   width: 4em; height: 4em;
@@ -149,7 +155,7 @@ div#bannercontent form a {
   width:193.6%; /*MAIN COLUMN*/
 right:100px;
   position:relative;
-  left:15.2em;
+  left:17em;
   background:#fff;
   border-left: 1px solid #E1E1E1;
 }
