@@ -137,8 +137,9 @@ div#bannercontent form a {
  ** LEFT COLUMN LAYOUT
  **/
 
+
 .colmask{
-  width:96%;  /*left + main*/
+  width:95%;  /*left + main*/
   border: 1px solid #ccc;
 }
 .leftmenu {
@@ -154,7 +155,7 @@ div#bannercontent form a {
 }
 .leftmenu .col1wrap {
   float:right;
-  width:50%;
+  /*width:50%;*/
   position:relative;
   right:11.8em;
   padding-bottom:1em;
@@ -181,6 +182,10 @@ div#bannercontent form a {
 .rightmenu .col1 { 
   background:#DAF0FC none repeat scroll 0% 50%
   border:1px solid #E1E1E1;
+  margin-top:1.25em;
+}
+.rightmenu .col2{
+	 margin-top:1.25em;
 }
 .rightmenu {
   border:none;
@@ -397,7 +402,7 @@ ul#top_menu li{
 }
 ul#top_menu li a{
   line-height:2.75em;
-  font-size:0.65em;
+  font-size:0.85em;
 }
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {
