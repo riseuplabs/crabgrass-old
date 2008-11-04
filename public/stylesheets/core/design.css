@@ -1,10 +1,4 @@
 /** 
- **  FLOATS & CLEARING
- **/ 
-
-hr {clear:both}
-
-/** 
  **  FONTS
  **/ 
 
@@ -139,25 +133,24 @@ div#bannercontent form a {
   padding: 1em;
 }
 
+/**
+ ** LEFT COLUMN LAYOUT
+ **/
 
-/************************************ 2 column left menu settings *********************************/
 .colmask{
   width:96%;  /*left + main*/
-  border: 1px solid #E1E1E1;
+  border: 1px solid #ccc;
 }
 .leftmenu {
-  background:#FAFDF9;; /*LEFT COLUMN*/
-  margin-left:1.25em;
-  margin-top:1.2em;  
+  background: #FAFDF9; /*LEFT COLUMN*/
+  margin-left: 1em;
+  margin-top: 1em;
 }
 .leftmenu .colright {
   float:left;
-  width:193.6%; /*MAIN COLUMN*/
-right:100px;
-  position:relative;
-  left:17em;
+  left: 19em;
   background:#fff;
-  border-left: 1px solid #E1E1E1;
+  border-left: 1px solid #ccc;
 }
 .leftmenu .col1wrap {
   float:right;
@@ -169,36 +162,22 @@ right:100px;
 .leftmenu .col1 {
   margin:0 0 0 11.8em;
   position:relative;
-  right:100%;
+  right: 100%;
   overflow:hidden;
 }
 .leftmenu .col2 {
   float:left;
-  width:12.4em;
+  width:16.7em;
   position:relative;
-  right:14em;
+  right:18em;
+  margin-top: 1em;
 }
-.colleft{
-  padding-top:0;
-}
+.colleft {padding-top:0;}
 
+/**
+ ** RIGHT COLUMN LAYOUT
+ **/
 
-/*col2S*/
-/* col2s */
-.col2{
-  padding-top:20px;
-  padding-bottom:70px;
-}
-
-.col2 h2{
-  padding-top:15px;
-    border-top:2px solid #E6E6E6;
-  padding-bottom:15px;
-}
-
-
-
-/************************************************** two column right **************************************************/
 .rightmenu .col1 { 
   background:#DAF0FC none repeat scroll 0% 50%
   border:1px solid #E1E1E1;
@@ -222,14 +201,6 @@ right:100px;
   border-top:2px solid #fff; 
   padding:15px 0px 5px 0px;
   margin-top:15px;
-}
-
-.rightmenu hr {
-  height: 0px;
-  border:none;
-  margin:0px;
-  padding:0px;
-  border-bottom:1px dotted #ccc;
 }
 
 .rightmenu input.check {

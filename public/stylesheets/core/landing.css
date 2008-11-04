@@ -32,6 +32,15 @@
   margin: 0 2em 1.5em 0;
 }
 
+/**
+ ** LEFT_COLUMN
+ **/
+
+.left_column h2.alert {
+  margin: 1em 0;
+}
+
+
 /** 
  **  CONTENT_BOX > LANDING
  **/ 
@@ -90,10 +99,14 @@ div.section {
   font-size:10px;
   color:#969995;
 }
+
+/*
+this messes up other layouts
 .col2 p, .col2 h3{
   margin-left:3px;
   clear:both;
 }
+*/
 
 .col2 p{
   color:#727272;

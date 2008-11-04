@@ -67,6 +67,12 @@ option.section {font-weight: bold;}
 
 .clear { clear: both }
 
+hr.thin, hr.thick {
+  height: 0; border: none; margin: 0; padding:0;
+}
+hr.thin {border-bottom:1px dotted #ccc;}
+hr.thick {border-bottom:2px solid #ccc;}
+
 /** 
  **  COLORED HEADINGS
  **/ 
