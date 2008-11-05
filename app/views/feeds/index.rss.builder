@@ -26,7 +26,7 @@ xml.rss :version => '2.0',
         xml.author "nobody@example.com (#{object.page.updated_by.login})"
         xml.link hostport + page_url(object.page)
         object.page.tags.each do |tag|
-          xml.catgeory tag.name
+          xml.category tag.name
         end
         xml << render(:partial => @type.to_s.underscore, :locals => {:hostport => hostport, :object => object})
       end
