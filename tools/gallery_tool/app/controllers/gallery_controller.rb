@@ -37,7 +37,7 @@ class GalleryController < BasePageController
     end
   end
   
-  def detail_view    
+  def detail_view
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
     @image_index = @showing.position
@@ -91,7 +91,7 @@ class GalleryController < BasePageController
     else
       showing = @page.showings.first
     end
-    @image = @page.images.find(showing.asset_id)
+    @image = @page.images.find(showing.asset_id) if showing
     @next_id = @page.showings.find(:first, :conditions => { 
                                      :position => showing.position+1
                                    }, :select => 'asset_id').asset_id rescue nil
