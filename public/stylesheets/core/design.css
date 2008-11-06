@@ -17,9 +17,10 @@ h1 {font-size: 2.10em;} /* ~ 28px */
 h2 {font-size: 1.125em; clear:both;} /* ~ 18px */
 h3 {font-size: 1em;} /* ~ 15px */
 
-/** 
- **  LAYOUT
- **/ 
+/**
+ ** MASTHEAD
+ **/
+
 div#masthead {
   margin:0;
 }
@@ -30,7 +31,9 @@ h1#site_title {
   padding:0.5em;
 }
 
-/*BANNER*/
+/**
+ ** BANNER
+ **/
 
 div#banner {
   clear: both;
@@ -132,191 +135,10 @@ div#bannercontent form a {
  ** CONTENT_BOX
  **/
 
+
 .content_box {
   background: #fff none repeat scroll 0 0;
   padding: 1em;
-width:89%;
-}
-
-
-
-
-/**
- ** LEFT COLUMN LAYOUT
- **/
-.colmask{
-  width:97%;  /*left + main*/
-  border: 1px solid #ccc;
-}
-.leftmenu {
-  background: #FAFDF9; /*LEFT COLUMN*/
-  margin-left: 1.5em;
-  margin-top: 1.5em;
-}
-.leftmenu .colright {
-  float:left;
-  left: 19em;
-  background:#fff;
-  border-left: 1px solid #ccc;
-}
-.leftmenu .col1wrap {
-  float:right;
-  /*width:50%;*/
-  position:relative;
-  right:11.8em;
-  padding-bottom:1em;
-}
-.leftmenu .col1 {
-  margin:0 0 0 11.8em;
-  position:relative;
-  right: 100%;
-  overflow:hidden;
-}
-.leftmenu .col2 {
-  float:left;
-  width:16.7em;
-  position:relative;
-  right:17.3em;
-  margin-top: 2em;
-}
-.colleft {padding-top:0;}
-
-
-
-
-/**
- ** RIGHT COLUMN LAYOUT
- **/
-
-.rightmenu .col1wrap {
-float:left;
-left:50%;
-padding-bottom:1em;
-position:relative;
-width:46%;
-}
-
-.rightmenu .col2 {
-float:right;
-margin-top:4em;
-left:10.5em;
-position:relative;
-width:15em;
-}
-
-
-.rightmenu .col1 { 
-  background:#DAF0FC none repeat scroll 0% 50%
-  border:1px solid #E1E1E1;
-  margin-top:1.25em;
-}
-
-.rightmenu {
-  border:none;
-}
-
-.rightmenu .col2 p, 
-  .rightmenu .col2 h3 {
-  margin-left:0px;
-}
-
-.rightmenu h3.first { 
-  border-top:none; 
-  padding-top:auto; 
-  margin-top:0px;
-}
-
-.rightmenu h3 { 
-  padding:15px 0px 5px 0px;
-  margin-top:15px;
-}
-
-.rightmenu input.check {
-  left:0px;
-}
-
-.rightmenu ul.side_list li {
-  margin:0px;
-  height:auto;
-}
-
-.rightmenu .col2 ul.people { 
- margin-top:8px;
-}
-
-.rightmenu .col2 ul.people li { 
-  float:left; 
-  margin:0px 5px 5px 0px; 
-}
-
-.rightmenu .col2 ul.people li span {
-  display:none;
-}
-
-.rightmenu .col2 ul.people li {
-  border:1px solid #ccc;
-  display:block;
-  padding:0px;
-  width:38px;
-  height:38px;
-}
-.rightmenu ul.side_list li a { 
-  text-transform:capitalize;
-  padding:4px 0px;
-}
-
-.rightmenu ul.side_list li a.name_link { 
-  padding:0px;
-  margin:0px;
-  width:38px;
-  height:38px;
-  background-position:left top;
-}
-
-.rightmenu ul.side_list li a.group_link { 
-  padding:10px 0px 10px 40px;
-  font-size:12px;
-  font-weight:normal;
-  background-repeat:no-repeat;
-}
-
-.rightmenu ul.side_list li a.group_link span { 
-  padding-right:0px;
-}
-
-.rightmenu  ul.side_list li.small_icon {
-  background-position:left center;
-  padding:2px 0px 2px 24px;
-}
-
-.rightmenu .tags {
-  margin:0px 0px 15px;
-}
-
-.rightmenu ul.side_list li a{
-	font-size:0.875em;
-	color:#4586C0;
-}
-.rightmenu h3{
-	text-transform:capitalize;
-}
-
-
-/************************************* ONE COLUMNS ************************************************/
-.fullpage{
-	margin:0;
-	background:#EFECEB;
-}
-.fullpage .col1{
-	margin:1.5em;
-	border:1px solid #E1E1E1;
-}
-
-.fullpage .content_box, .fullpage .title_box h1{
-	width:100%;
-} 
-.colmask .fullpage{
-	border:none;
 }
 
 
@@ -396,41 +218,19 @@ div.title_box .title_box_edit_link {
  **  FOOTER
  **/ 
 
-#footer{
-  margin-top:1em;
-  border-top:1px solid #E1E1E1;
-  line-height:auto;
+#footer {
+  border-top: 1px solid #ccc;
+  background: #ddd;
+  color: #999;
 }
-
-#footercontent p {
-  padding:0em;
-  margin:0em;
-  padding:1em;
-}
-
-#footer ul{
-  list-style:none;
-  margin:0;
-  padding:1em;
-}
-#footercontent p{
-  float:left;
-}
-#footercontent ul{
-  color:#979797;
-  float:right;
-}
-#footercontent ul.foot_menu li{
-  float:left;
-  padding-left:0.6em;
-}
-#footer a{
-  font-size:11px;
-}
+#footercontent div {padding: 1em;}
+#footercontent div.left {float: left}
+#footercontent div.right {float: right}
 
 /** 
  **  TOPMENU
- **/ 
+ **/
+
 #topmenubox {
   overflow:hidden;
   background:#33414A;

@@ -1,0 +1,64 @@
+/**
+ ** LEFT COLUMN LAYOUT
+ **/
+
+#wrapper {
+  padding: 1.5em;
+  float: left;
+}
+
+.leftmenu {
+  background: #FAFDF9;  /* left column color */
+  border: 1px solid #ccc;
+}
+
+.leftmenu .colright {
+  left: 19em; /* size of left column */
+  border-left: 1px solid #ccc;
+}
+.leftmenu .col1wrap {
+  right:19em; /* size of left column */
+}
+.leftmenu .col1 {
+  margin:0;
+  margin-left: 19em; 
+}
+.leftmenu .col2 {
+  width:16.7em; /* right column - offset for padding */
+  right:18em;
+  margin: 1em 0;
+}
+
+/**
+ ** RIGHT COLUMN LAYOUT
+ **/
+
+.rightmenu .col1 {
+  border: 1px solid #ccc;
+}
+
+/* 2 column right menu settings */
+.rightmenu .colleft {
+  margin-left:-18em;
+}
+.rightmenu .col1wrap {
+  padding-bottom:0em;
+}
+.rightmenu .col1 {
+  margin:0pt 0pt 0pt 18em;
+}
+.rightmenu .col2 {
+  width:17em;
+  left:18em;
+  margin-top: 1em;
+}
+
+
+/**
+ ** ONE COLUMN LAYOUT
+ **/
+
+.fullpage .col1 {
+  margin: 0;
+}
+
