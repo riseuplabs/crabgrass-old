@@ -1,5 +1,13 @@
 <%# this is a totally silly partial to created links to the test data directories %>
 <div id="topmenubox">
+  
+  <div id="manage">
+    <a hre="#">account</a>
+    &bull;
+    <a hre="#">logout</a>
+  </div>
+  
+  
 <ul id='top_menu'>
 <% Dir.glob(File.dirname(__FILE__)+'/*/').each do |dir|%>
   <li><%= link_to_active File.basename(dir).gsub('_', ' ').titlecase, :action => nil, :data => File.basename(dir) %></li>
