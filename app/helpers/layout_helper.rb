@@ -62,6 +62,7 @@ module LayoutHelper
     lines = []
     lines << stylesheet_link_tag(
       'core/reset',
+      'core/layout',
       'core/design',
       'core/landing',
       'core/page',

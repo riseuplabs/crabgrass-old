@@ -27,8 +27,10 @@
 	<div id="banner"><div id='bannercontent'><%= @banner %></div></div>
 </div>
 
+<div id='wrapper'>
 <%= render :partial => 'layouts/messages' %>
 <%= render :file => 'layouts/holygrail_'+type_of_column_layout %>
+</div>
 
 <div id="footer"><div id='footercontent'>
   <%= @footer %>

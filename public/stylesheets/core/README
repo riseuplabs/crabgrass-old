@@ -2,7 +2,10 @@ These are loaded in this order:
 
 reset.css:
   css reset to help deal with browser differences.
-  
+
+layout.css
+  this file is for modifications to the default holygrail css.
+
 design.css:
   general 'shell' css, fonts, and a catch-all for everything not in one of
   the other files.
