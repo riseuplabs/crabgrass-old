@@ -9,7 +9,7 @@
   width: 100%;
 }
 .title_box table.info_box td {
-  width: 50%;
+  width: 40%;
   vertical-align: top;
   padding: 1em;
 }
@@ -31,8 +31,11 @@
   float: left;
   margin: 0 2em 1.5em 0;
 }
+.col2 .dash_box{
+	clear:both;
 
-.activities li {
+}
+.activities li, .user_activities {
   color:#666;
   margin:7px 0px;
   padding:3px 0px;
@@ -60,6 +63,29 @@ a.contribute:hover {
   text-decoration: none;
 }
 
+.col2 .info{
+  	margin-bottom:1em;
+}
+.col2 .info div{
+	margin-bottom:0.8em;
+	font-size:0.85em;
+	color:#434343;
+}
+.col2 .info em{
+	font-style: normal;
+	font-weight:600;
+	padding-left:0.7em;
+}
+.col2 .info .c_icon{
+
+}
+.xxlarge_avatar{
+	margin:0;
+	padding:0;
+	height:200px;
+	width:200px;
+	border:1px solid #ccc;
+}
 /** 
  **  CONTENT_BOX > LANDING
  **/ 
@@ -72,6 +98,7 @@ div.announcements table td {
   border: 1px dotted #ccc;
 }
 div.announcements table {
+  width:95%;
   margin: 0.75em 0;
 }
 
