@@ -52,6 +52,11 @@ div.popup blockquote {
 .leftmenu .col2 {
   padding-top: 0.5em;
 }
+.leftmenu {
+  display:inline;
+  margin-left: 1.5em;
+  margin-top: 1.5em;
+}
 
 /* ui */
 
@@ -100,3 +105,11 @@ div#bannercontent form {
 	display:inline;
 	margin-top:-5em;
 	}
+
+/*border-left main content*/
+.title_box{
+	border-left:1px solid #ccc;
+}
+.content_box{
+	border-left:1px solid #ccc;
+}
