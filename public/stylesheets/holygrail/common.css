@@ -45,7 +45,6 @@ body {
   text-decoration:none;
   position:relative;
   left:15px;
-  line-height:1.3em;
 }
 #header ul li a:hover {
   background:#369;

@@ -17,17 +17,15 @@ h3 {font-size: 1.2em;} /* ~ 15px */
 /** 
  **  LAYOUT
  **/ 
+div#masthead {
+  margin:0;
+}
 
 h1#site_title {
-  padding-left:1.6em;
+  background:#fff;
+  margin:0;
+  padding:0.5em;
 }
-#site_title {
-  margin:0; padding:0;
-  background: #fff;
-  height: 2.1em;
-  line-height: 1.875em;
-}
-div#masthead {text-align: left;}
 
 /*BANNER*/
 
@@ -395,37 +393,53 @@ div.title_box .title_box_edit_link {
 /** 
  **  TOPMENU
  **/ 
-
-#top_menu{
-  height:2.75em;  
+#topmenubox {
+  overflow:hidden;
+  background:#33414A;
 }
+
+#manage {
+  float:right;
+  padding:1em;
+  color:#646360;
+}
+
+#manage a {
+  color:#E1E2E2;
+  font-size:11px;
+  margin-left:.5em;
+  margin-right:.5em;
+}
+
 ul#top_menu{
   margin:0;
-  background:#263239;  
+  padding:0;
   list-style:none;
+  width:auto;
 }
 
 ul#top_menu li{
   float:left;
+  padding:0;
+  margin:0;
 }
 ul#top_menu li a{
-  line-height:2.75em;
-  font-size:0.85em;
+  color:#98ABB3;
+  padding:1em;
+  background:none;
+  margin:0;
+  font-weight:400;
+  line-height:;
+  border-right:1px solid #2A3841;
+}
+
+ul#top_menu li:first-child a {
+  border-left:1px solid #2A3841;
 }
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {
-   background: transparent url(/images/bar.jpg) right no-repeat;
-   color: #869DA4;
-  padding:0 30px;
-  font-weight:400;
+  color: #869DA4;
   text-transform: capitalize;
-}
-ul#top_menu li a.active, 
-ul#top_menu li a.active:hover, 
-ul#top_menu2 li a.active, 
-ul#top_menu2 li a.active:hover {
-  background:none;
-  background: transparent url(/images/bar.jpg) right no-repeat;
 }
 
 /* active tab */
@@ -433,8 +447,9 @@ ul#top_menu li a.active,
 ul#top_menu li a.active:hover,
 ul#top_menu2 li a.active, 
 ul#top_menu2 li a.active:hover {
-font-weight:normal;
-background:transparent;
+  color:#fff;
+  font-weight:normal;
+  background:url(/images/background/top_nav_active.png) bottom center #4F5E61 repeat-x;
 }
 
 
