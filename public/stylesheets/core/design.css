@@ -386,7 +386,7 @@ div.title_box .title_box_edit_link {
 }
 #footercontent ul.foot_menu li{
   float:left;
-  padding-right:15px;
+  padding-left:0.6em;
 }
 #footer a{
   font-size:11px;
