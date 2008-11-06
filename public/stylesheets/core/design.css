@@ -363,7 +363,16 @@ div.title_box .title_box_edit_link {
 #footer{
   margin-top:1em;
   border-top:1px solid #E1E1E1;
+  padding:1em;
+  width:auto;
+  line-height:auto;
 }
+
+#footercontent p {
+  padding:0em;
+  margin:0em;
+}
+
 #footer ul{
   list-style:none;
   margin:0;
