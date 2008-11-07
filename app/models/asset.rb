@@ -59,6 +59,14 @@ class Asset < ActiveRecord::Base
     end
     true
   end
+  
+  def participation_for_groups ids
+    gparts = self.page.participation_for_groups(ids)
+    if(self.galleries.any?)
+      gparts += self.galleries.map(&:participation_for_groups)
+    end
+    return gparts.flatten
+  end
 
   
   ##
@@ -169,13 +177,7 @@ class Asset < ActiveRecord::Base
   belongs_to :parent_page, :foreign_key => 'page_id', :class_name => 'Page' # (2)
   def page()
     page = page_id ? parent_page : pages.first
-    return page if page
-    # I think this is a bad idea... how will the page get destroyed if the asset
-    # is destroyed?
-    #
-    # That's right, but this is necessary to assure an asset_page exists.
-    return self.pages.create(:title => self.filename, :data_id => self.id,
-                             :flow => FLOW[:gallery])
+    return page
   end
   
   # some asset subclasses (like AudioAsset) will display using flash

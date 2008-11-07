@@ -149,6 +149,9 @@ module LayoutHelper
     lines = []
     lines << javascript_include_tag('prototype', 'application', :cache => true)
     lines << optional_javascript_tag
+    lines << '<script type="text/javascript">'
+    lines << @content_for_script
+    lines << '</script>'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
       lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
