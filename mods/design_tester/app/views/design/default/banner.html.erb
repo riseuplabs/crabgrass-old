@@ -1,24 +1,29 @@
-<!-- search form -->
-<form method="post" action="search" method="get">
-	<fieldset>
-		<input class="search-input" type="text" name="q" value="Type search term" />
-		<input class="search-button" type="submit" value="" />
-	</fieldset>
-	<a href="/search/advanced/">Advanced Search</a>
-</form>
-<!-- /search form -->
-
-
-<table>
-<tr>
-  <td rowspan='2'><%= avatar_for @user, 'large' -%></td>
-  <td style='width:30%'><h1><%= link_to_user @user %></h1></td>
+<table><tr>
+  <td style='width: 1%'><%= avatar_for @user,'medium'%></td>
+  <td style='width: 1%' align='left' nowrap="nowrap"><h1><%= link_to_user current_user %></h1></td>
   <td>
     <span class="link_line">
       <a href="#">Edit Settings</a> <em>&bull;</em>
       <a href="#">Leave Group</a>
-	</span>
+    </span>
   </td>
-</tr>
-</table>
+  <td align='right' nowrap='nowrap'>
+
+<!--
+<form method="post" action="search" method="get">
+  <fieldset>
+    <input class="search-input" type="text" name="q" value="Type search term" />
+    <input class="search-button" type="submit" value="" />
+  </fieldset>
+  <a href="/search/advanced/">Advanced Search</a>
+</form>
+-->
+    <form action="/me/search/" class="minisearch" method="post">
+      <fieldset>
+        <input class="minisearch_text" id="search_text" name="search[text]" size="15" type="text" value="" />  
+        <input class="minisearch_submit" name="commit" onclick="" type="submit" value="search" /> 
+      </fieldset>
+    </form>
+  </td>
+</tr></table>
 

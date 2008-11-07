@@ -1,12 +1,7 @@
-<table>
- <tr>
-  <td style='width: 1%'><%= avatar_for current_user,'small'%></td>
-  <td style='width: 1%' align='left' nowrap><h3><%= link_to_user current_user %></h3></td>
-  <td align='right'>
-    <%= render :partial => 'avatars/boxes', :locals => {:users => current_user.contacts.online, :side => 'right'} %>
-  </td>
-  <td align='right'>
+<table><tr>
+  <td style='width: 1%'><%= avatar_for current_user,'medium'%></td>
+  <td style='width: 1%' align='left' nowrap="nowrap"><h1><%= link_to_user current_user %></h1></td>
+  <td align='right' nowrap='nowrap'>
     <%= mini_search_form %>
   </td>
- </tr>
-</table>
+</tr></table>
