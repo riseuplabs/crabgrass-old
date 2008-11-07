@@ -231,18 +231,18 @@ div.title_box .title_box_edit_link {
  **  TOPMENU
  **/
 
-#topmenubox {
+#top_menu_box {
   overflow:hidden;
   background:#33414A;
 }
 
-#manage {
+#account {
   float:right;
   padding:1em;
   color:#646360;
 }
 
-#manage a {
+#account a {
   color:#E1E2E2;
   font-size:11px;
   margin-left:.5em;
@@ -290,6 +290,20 @@ ul#top_menu2 li a.active:hover {
   background:url(/images/background/top_nav_active.png) bottom center #4F5E61 repeat-x;
 }
 
+#login_popup {
+  position: absolute;
+  right: 2em;
+  border: 5px solid #000;
+  height: 2em;
+  width: 30em;
+  background: #333;
+  padding: 1em;
+  color: white;
+}
+#login_popup input {
+  width: 5em;
+  border: 1px solid white;
+}
 
 
 /*
@@ -446,6 +460,9 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 	color:#6B6D6E;
 }
 
+/*
+i don't know what this is trying to do, but it messes up the 
+hover labels for icon_boxes 
 .landing td.right .round{
 	border:1px solid #E1E1E1;
 	width:150%;
@@ -453,6 +470,7 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 	margin:1em 0 1em 1.2em;
 	height:3em;
 }
+*/
 .landing td.right input{
 	width:99%;
 	height:3em;
@@ -467,3 +485,104 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 	margin:1em 0;
 	border:1px solid #E1E1E1;
 }
+
+/**
+ ** RIGHTMENU
+ **/
+
+.rightmenu .col1 { 
+  background:#DAF0FC none repeat scroll 0% 50%
+  border:1px solid #E1E1E1;
+  margin-top:1.25em;
+}
+
+.rightmenu {
+  border:none;
+}
+
+.rightmenu .col2 p, 
+  .rightmenu .col2 h3 {
+  margin-left:0px;
+}
+
+.rightmenu h3.first { 
+  border-top:none; 
+  padding-top:auto; 
+  margin-top:0px;
+}
+
+.rightmenu h3 { 
+  padding:15px 0px 5px 0px;
+  margin-top:15px;
+}
+
+.rightmenu input.check {
+  left:0px;
+}
+
+.rightmenu ul.side_list li {
+  margin:0px;
+  height:auto;
+}
+
+.rightmenu .col2 ul.people { 
+ margin-top:8px;
+}
+
+.rightmenu .col2 ul.people li { 
+  float:left; 
+  margin:0px 5px 5px 0px; 
+}
+
+.rightmenu .col2 ul.people li span {
+  display:none;
+}
+
+.rightmenu .col2 ul.people li {
+  border:1px solid #ccc;
+  display:block;
+  padding:0px;
+  width:38px;
+  height:38px;
+}
+.rightmenu ul.side_list li a { 
+  text-transform:capitalize;
+  padding:4px 0px;
+}
+
+.rightmenu ul.side_list li a.name_link { 
+  padding:0px;
+  margin:0px;
+  width:38px;
+  height:38px;
+  background-position:left top;
+}
+
+.rightmenu ul.side_list li a.group_link { 
+  padding:10px 0px 10px 40px;
+  font-size:12px;
+  font-weight:normal;
+  background-repeat:no-repeat;
+}
+
+.rightmenu ul.side_list li a.group_link span { 
+  padding-right:0px;
+}
+
+.rightmenu  ul.side_list li.small_icon {
+  background-position:left center;
+  padding:2px 0px 2px 24px;
+}
+
+.rightmenu .tags {
+  margin:0px 0px 15px;
+}
+
+.rightmenu ul.side_list li a{
+  font-size:0.875em;
+  color:#4586C0;
+}
+.rightmenu h3{
+  text-transform:capitalize;
+}
+

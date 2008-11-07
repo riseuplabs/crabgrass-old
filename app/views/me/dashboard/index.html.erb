@@ -7,14 +7,11 @@
 
   <%= render :partial => 'announcement_page/list'  %>
 
-  <h2 class='alert'>Recent Pages</h3>
+  <%= header_with_more :h2, 'alert', "Recent Pages".t, me_url(:action => 'search') + "/descending/updated_at" %>
 
   <div id='page_list'>
 <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages} %>
 <%= link_to :more.t + ' &raquo;', me_url(:action => 'search') + "/descending/updated_at" %>
   </div>
 </div>
-
-<%= javascript_tag remote_function(:url => { :action => :counts }) %>
-
 

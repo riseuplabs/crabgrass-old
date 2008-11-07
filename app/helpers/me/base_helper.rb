@@ -6,12 +6,18 @@ module Me::BaseHelper
 
   def request_state_links
     hash = {:controller => params[:controller], :action => params[:action]}
-    content_tag :div, link_line(
+    link_line(
       link_to_active(:pending.t, hash.merge(:state => 'pending')), 
       link_to_active(:approved.t, hash.merge(:state => 'approved')),
       link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
-    ), :style => 'margin-bottom: 1em'
-
+    )
   end
  
+  def request_source_links
+    link_line(
+      link_to_active('to me'[:requests_to_me], :controller => '/me/requests', :action => 'to_me', :state => params[:state]),
+      link_to_active('from me'[:requests_from_me], :controller => '/me/requests', :action => 'from_me', :state => params[:state])
+    )
+  end
+
 end

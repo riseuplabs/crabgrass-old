@@ -40,17 +40,8 @@ div.popup blockquote {
 }
 /* layout */
 
-.leftmenu .col1, .rightmenu .col1 {
-  margin: 0 1.5em 1.5em 11.8em;
-}
-.holygrail .col1 {
-  margin: 0.5em 11em;
-}
-.fullpage .col1 {
-  margin: 0.5em;
-}
-.leftmenu .col2 {
-  padding-top: 0.5em;
+.leftmenu .col1wrap {
+  right:18.95em; /* fixes a rendering bug in ie */
 }
 .leftmenu {
   display:inline;

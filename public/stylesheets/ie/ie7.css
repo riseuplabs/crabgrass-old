@@ -36,25 +36,9 @@ width:100%;
 
 /* layout */
 
-.leftmenu .col1, .rightmenu .col1 {
-  margin: 0 0 1.5em 11.9em;
-}
-.holygrail .col1 {
-  margin: 0.5em 11em;
-}
-.fullpage .col1 {
-  margin: 0.5em;
-}
-.leftmenu .col2 {
-  padding-top: 0.5em;
-  padding-right:30em;
-}
-.left menu .col1{
-
-}
-.fullpage .col1{
-	margin:0;
-	width:100%;;
+#wrapper {
+  position: relative; overflow:hidden; /* needed for ie7 bug */
+  float: none;
 }
 
 /* ui */

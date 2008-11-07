@@ -1,6 +1,9 @@
 <% @title_box = capture do -%>
-<%= "Task lists I have access to."[:my_tasks_description] %>
-<%= link_to 'create new task list'[:create_task_list] + '&raquo;', create_page_url(TaskListPage) %>
+<h1><%= "My Tasks"[:my_tasks_headline] %></h1>
+<table class="info_box my_tasks"><tr>
+  <td><%= "All tasks assigned to me."[:my_tasks_description] %>  <%= link_to 'create new task list'[:create_task_list] + ARROW, create_page_url(TaskListPage) %></td>
+  <td class='right'><%= link_line(link_to_active('pending'.t, :controller => '/me/tasks', :action => 'pending'), link_to_active('completed'.t, :controller => '/me/tasks', :action => 'completed')) %></td>
+</table>
 <% end -%>
 
 <%= render(:partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_page_types => 'false'}) %>

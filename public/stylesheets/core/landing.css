@@ -2,7 +2,7 @@
  **  TITLE_BOX > INFO_BOX
  **/ 
 
-.title_box table.info_box {
+.title_box .info_box {
   padding: 1em;
   background-color: #F0F9FE;
   border-bottom: 1px solid #E1F3FD;

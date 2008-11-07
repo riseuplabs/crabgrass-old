@@ -1,17 +1,16 @@
-/**
- ** LEFT COLUMN LAYOUT
- **/
-
 #wrapper {
   padding: 1.5em;
   float: left;
 }
 
+/**
+ ** LEFT COLUMN LAYOUT
+ **/
+
 .leftmenu {
   background: #FAFDF9;  /* left column color */
   border: 1px solid #ccc;
 }
-
 .leftmenu .colright {
   left: 19em; /* size of left column */
   border-left: 1px solid #ccc;
@@ -60,5 +59,6 @@
 
 .fullpage .col1 {
   margin: 0;
+  border: 1px solid #ccc;
 }
 

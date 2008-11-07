@@ -4,11 +4,15 @@ class ProfileController < ApplicationController
   prepend_before_filter :fetch_profile
   #layout :choose_layout
   stylesheet 'profile'
+  helper 'me/base'
   
   def show
   end
 
   def edit
+    if @user
+      @tabs = 'me/base/profile_tabs'
+    end
     if request.post?
       @profile.save_from_params params['profile']
     end

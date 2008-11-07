@@ -1,34 +1,39 @@
 <a href="/pages/create" class="contribute round"><span class="small_icon plus_16"><%= "Contribute"[:contribute_content_link] %></span></a>
 
 <ul class='side_list'>
-
-  <li class='small_icon home_16'><%= link_to_active(
+  <%- active = params[:controller] == 'me/dashboard' -%>
+  <li class='small_icon home_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Dashboard'[:dashboard],
     '/me/dashboard',
     params[:controller] == 'me/dashboard'
   ) %></li>
 
-  <li id='inbox_line' class='small_icon archive_16'><%= link_to_active(
+  <%- active = params[:controller] == 'me/inbox' -%>
+  <li id='inbox_line' class='small_icon archive_16<%= active ? ' active' : '' %>'><%= link_to_active(
      'Inbox'[:inbox],
     '/me/inbox',
-    params[:controller] == 'me/inbox'
+    active
   ) %></li>
 
-  <li class='small_icon magnifier_16'><%= link_to_active(
+  <%- active = params[:controller] == 'me/search' -%>
+  <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Search'[:search],
     '/me/search',
-    params[:controller] == 'me/search'
+    active
   ) %></li>
 
-  <li class='small_icon page_tasks_16'><%= link_to_active(
+  <%- active = params[:controller] == 'me/tasks' -%>
+  <li class='small_icon page_tasks_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Tasks'[:tasks],
     '/me/tasks/pending',
-    params[:controller] == 'me/tasks'
+    active
   ) %></li>
 
-  <li id='requests_line' class='small_icon info_16'><%= link_to_active(
+  <%- active = params[:controller] == 'me/requests' -%>
+  <li id='requests_line' class='small_icon info_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Requests'[:requests],
-    {:controller => '/me/requests', :action => 'to_me'}
+    {:controller => '/me/requests', :action => 'to_me'},
+    active
   ) %></li>
 
 </ul>
@@ -47,4 +52,6 @@
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Friends'[:Friends], :entities => current_user.contacts } %>
 
 <%- end -%>
+
+<%= javascript_tag remote_function(:url => { :action => :counts }) %>
 

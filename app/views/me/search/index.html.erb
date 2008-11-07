@@ -1,5 +1,6 @@
 <% @title_box = capture do -%>
-<%= "Search through all pages you have access to."[:me_search_description] %>
+<h1><%= "Search"[:my_search_headline] %></h1>
+<div class='info_box'><%= "Search through all pages you have access to."[:me_search_description] %></div>
 <% end %>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups} %>

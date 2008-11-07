@@ -18,6 +18,14 @@ class Me::BaseController < ApplicationController
     end
   end
 
+  def counts
+    return false unless request.xhr?
+    @from_me_count = 0 #Request.created_by(current_user).pending.count
+    @to_me_count   = Request.to_user(current_user).pending.count
+    @unread_count  = Page.count_by_path('unread',  options_for_inbox)
+    render :layout => false
+  end
+
   protected
   
   append_before_filter :fetch_user

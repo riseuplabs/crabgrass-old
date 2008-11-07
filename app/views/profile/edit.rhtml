@@ -1,11 +1,7 @@
 <%= render :partial => @tabs %>
 
 <% @title_box = capture do -%>
-  <% if @profile.public? -%>
-    <%= :profile_public_description.t %>
-  <% elsif @profile.private? -%>
-    <%= :profile_private_description.t %>
-  <% end -%>
+<h1><%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %></h1>
 <% end -%>
 
 <!-- begin profile form -->
