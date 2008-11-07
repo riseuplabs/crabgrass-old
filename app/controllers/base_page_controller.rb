@@ -91,6 +91,11 @@ class BasePageController < ApplicationController
     true
   end
   
+  after_filter :update_view_count
+  def update_view_count
+    PageView.insert_delayed(@page) if @page && !@page.id.nil?
+  end
+  
   def setup_default_view
     if request.get?
       setup_view        # allow subclass to override view defaults
