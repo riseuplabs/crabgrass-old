@@ -45,11 +45,6 @@ class ApplicationController < ActionController::Base
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
   end
 
-  before_filter :load_template_defaults
-  def load_template_defaults
-    @footer = render_to_string :partial => 'layouts/footer'
-  end
-
   def mailer_options
     opts = {:site => @site, :current_user => current_user, :host => request.host,
      :protocol => request.protocol, :page => @page}
@@ -93,6 +88,9 @@ class ApplicationController < ActionController::Base
         (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
       response.headers['Content-Type'] = 'application/rss+xml'   
       render :partial => '/pages/rss', :locals => locals
+      return true
+    else
+      return false
     end
   end
      
