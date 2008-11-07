@@ -38,15 +38,15 @@ module WikiPageHelper
     end
   end
 
-  def add_image_button_to_textile_editor()
-    text = "<img src='/images/textile-editor/img.png'/>"
-    spinner = spinner('image', :show => true)
-    on_click = remote_function(
-      :loading => replace_html('ed_image', spinner),
-      :complete => replace_html('ed_image', text),
-      :url => page_xurl(@page,:action => 'show_image_popup'))
-    textile_editor_button(text, :type => 'button', :id => 'ed_image', :title => 'Image'.t, :onclick => on_click, :open => 'undefined')
-  end
+#  def add_image_button_to_textile_editor()
+#    text = "<img src='/images/textile-editor/img.png'/>"
+#    spinner = spinner('image', :show => true)
+#    on_click = remote_function(
+#      :loading => replace_html('ed_image', spinner),
+#      :complete => replace_html('ed_image', text),
+#      :url => page_xurl(@page,:action => 'show_image_popup'))
+#    textile_editor_button(text, :type => 'button', :id => 'ed_image', :title => 'Image'.t, :onclick => on_click, :open => 'undefined')
+#  end
 
 end
 
