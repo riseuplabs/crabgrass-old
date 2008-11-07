@@ -1,6 +1,24 @@
-<div class='sidesection'>
-<!-- <div class='sidehead'>Navigation</div> -->
+<%= avatar_for @user, 'xlarge' %>
 
+<div class="info">
+  <h2 class="alert">Info</h2>
+  <%= location_line(profile) if profile.locations.any? %>
+  <%= birthday_line(profile) if profile.birthday %>
+  <%= interest_line(profile) %>
+  <%= member_since_line(profile) if profile.user %>
+</div>
+
+<hr class="thick" />
+
+<h2 class="alert">UserName's World</h2>
+      
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:Networks], :entities => @user.all_groups.networks } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:Groups], :entities => @user.groups.normals } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:Committees], :entities => @user.groups.committees } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:Friends], :entities => @user.contacts } %> 
+<!--
+<div class='sidesection'>
+<div class='sidehead'>Navigation</div>
 <div class='sidelink'>
 <% if @is_contact -%>
 <%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user} %>
@@ -19,4 +37,6 @@
 
 <div class='sidetail'></div>
 </div>
+
+-->
 

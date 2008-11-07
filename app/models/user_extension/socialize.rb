@@ -16,6 +16,10 @@ module UserExtension::Socialize
       # (peer_id_cache defined in UserExtension::Organize)
       has_many :peers, :class_name => 'User',
         :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})'
+      
+      # discussion
+      has_one :discussion, :as => :commentable
+      has_many :discussions, :through => :user_relations
 
       has_and_belongs_to_many :contacts,
         {:class_name => "User",
@@ -31,6 +35,13 @@ module UserExtension::Socialize
       end
 
     end
+  end
+    
+    ## STATUS / WALL
+  
+  # returns the users current status by returning his latest status_posts.body
+  def current_status
+    self.discussion.posts.find_all_by_type('StatusPost').last.body
   end
 
   ## CONTACTS
@@ -88,6 +99,16 @@ module UserExtension::Socialize
     entity.may_be_pestered_by! self
   end
 
+  ## Discussions
+  
+  def ensure_discussion
+    unless self.discussion
+      self.discussion = Discussion.create()
+      self.discussion.user = self
+    end
+    self.discussion
+  end
+  
   ## RELATIONSHIPS
 
   def stranger_to?(user)

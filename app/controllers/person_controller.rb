@@ -10,17 +10,32 @@ see PeopleController.
 
 class PersonController < ApplicationController
 
-  helper 'task_list_page', 'wall'
+  helper 'task_list_page', 'wall', 'profile'
 
   def initialize(options={})
     super()
     @user = options[:user]   # the user context, if any
   end
   
+  before_filter :load_partials
+  def load_partials
+    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @user.profiles.visible_by(current_user)}
+  end
+  
   def show
+    @pages = Page.find_by_path('descending/updated_at/ascending/group_name/limit/40', options_for_me)
     params[:path] ||= "descending/updated_at"
     @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
+    
+        @wall_discussion = @user.ensure_discussion
+    if params[:show_full_wall]
+      @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')
+    else
+      @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')[0..9]
+    end
+    
     search
+   
   end
 
   def search
@@ -38,13 +53,27 @@ class PersonController < ApplicationController
     @task_lists = @pages.collect{|p|p.data}
   end
   
-  def add_wall_message
-    @profile = @user.profiles.visible_by(current_user)
+   def add_wall_message
+    # 1. get the user, whos discussionis edited
+    # 2. get the userr, who is editing the discussion
+    # if it's  private, we get UserRelation.blabla
+    # if not, we take @user.discussion
+   # @profile = @user.profiles.visible_by(current_user)
+    # @user = User.find(params[:id])
+    if @user.discussion.nil?
+      @user.discussion = Discussion.create
+    end
+    @discussion = @user.discussion
+    # TODO how do we find out if user is allowed to post  in here?
     @post = Post.new(params[:post])
-    @post.discussion = @profile.ensure_wall
+    @post.discussion  = @user.discussion
+    # don't see the reason for ensure_wall
+    # @post.discussion = @user.ensure_wall
     @post.user = current_user
     @post.save!
-    redirect_to(:controller => 'person', :action => 'show', :id => @profile.user.login)
+    @user.discussion.save
+    
+    redirect_to(url_for_user(@user))
   end
     
   protected

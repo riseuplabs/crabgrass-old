@@ -1,3 +1,7 @@
-<div class="wall_post">
-  <%= link_to_user(wall_post.user, :avatar => 'xsmall')%><%= wall_post.body %>
-</div>
+<blockquote>
+   <%= avatar_for(wall_post.user, :class => ' left framed' )%>
+    <p class="small_icon open_quote_16">
+      <%= wall_post.body %>
+      <br /><%= link_to wall_post.user.display_name, url_for_user(wall_post.user)%> &bull; <%= friendly_date(wall_post.created_at) %>
+    </p>
+</blockquote>

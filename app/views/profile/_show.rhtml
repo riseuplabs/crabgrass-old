@@ -1,88 +1,61 @@
 <% # this partial should be rendered with a local variable, such as
    # render :partial => 'profile/show', :locals => {:profile => @user.profiles.public}
-   
+
    # in case it is not,
    profile ||= Profile.new -%>
-<div class="profile">
-<table><tr>
-  <td style="text-align:left;">						
-    <table><tr>
-      <td>
-        <%= avatar_for @user, 'xlarge' %>
-      </td>
-      <td>&nbsp;</td>
-      <td>
-        <h2><%= profile.full_name %></h2>
-        <div><%= [profile.organization, profile.role].reject(&:blank?).join(', ') %></div>
-      </td>
-    </tr></table>
-  </td>
-  <td class="" style="text-align:right;">
-    <%# link_to '<div class="buttonStandardLeft"><div class="buttonStandardRight"><div class="buttonStandardBG"><span class="download addIconLeft">'+_('Download vCard')+'</span></div></div></div>', person_vcard_url(:id => profile), {:class => 'buttonStandard', :style => '', :title => _('Download vCard for this person')} %>
-  </td>
-</tr></table>
-</div>
+<div class='title_box'>
+  <div class='landing'>
 
-<dl>
-  <% unless profile.phone_numbers.empty? -%>
-    <dt><%= _('Phone') -%>:</dt>
-    <% profile.phone_numbers.each do |phone_number| -%>
-      <dd>                                                                  
-          <%= h(phone_number.phone_number) %>
-        <em>
-          <%= h(_(phone_number.phone_number_type)) %>
-        </em>
-      </dd>
-    <% end -%>
-  <% end -%>
-  <% unless profile.email_addresses.empty? -%>
-    <dt><%= _('Email') -%>:</dt>
-    <% profile.email_addresses.each do |email_address| -%>
-      <dd>
-        <%= h email_address.email_address %>
-        <em>
-          <%= h(_(email_address.email_type)) %>
-        </em>
-      </dd>
-    <% end -%>
-  <% end -%>
-  <% profile.locations.each do |location| -%>
-    <dt><%= _('Location') -%>:</dt>
-    <dd>
-      <%= h(location.street) %> <em><%= h(_(location.location_type)) %></em>
-      <br />
-      <%= h(location.city) %>, <%= h(location.state) %> <%= h(location.postal_code) %>
-      <br />
-      <%# google_maps_link(location) %>
-    </dd>
-  <% end -%>
-  <% unless profile.im_addresses.empty? -%>
-    <dt><%= _('Instant Messaging') -%>:</dt>
-    <% profile.im_addresses.each do |im| -%>
-      <dd>
-        <%= im.im_address %>
-        <em><%= h(im.im_type) %></em>
-      </dd>
-    <% end -%>
-  <% end -%>
-  <% unless profile.websites.empty? -%>
-    <dt><%= _('Websites') -%>:</dt>
-    <% profile.websites.each do |website| -%>
-      <dd>
-        <a target="_blank" href="<%= website.site_url %>">
-          <%= h(website.site_title.length > 0 ? website.site_title : website.site_url) %>
-        </a>
-      </dd>
-    <% end -%>
-  <% end -%>
-  <% unless profile.notes.empty? -%>
-    <% profile.notes.each do |note| -%>
-      <dt><%= _(note.note_type) -%>:</dt>
-      <dd>
-        <%=h note.body %>
-      </dd>
-    <% end -%>
-  <% end -%>
-</dl>
-<%# render :partial => 'profile/the_wall', :locals => {:profile => profile} %>
+    <p style="float:right; margin:20px; color:#999;"><%= last_login(@user) %></p>
+
+    <h1>
+      <%= @user.display_name%>
+      <span>is <%# @user.current_status%>.</span>
+    </h1>
+
+    <table class="profile-fun">
+      <tr>
+	<td class="profile-wall">
+	  <h3 class="dim">
+	    User Name's Wall
+	    <span> &bull; <%= link_to 'see all &raquo;'.t, "/#{@user.login}?show_full_wall=true", :class => 'more'  %>
+	  </h3>
+	  <%= render :partial => 'profile/wall_post_form' %>
+	  <%= render :partial => 'profile/wall_discussion', :locals => { :posts => @wall_posts} unless @wall_posts.empty? %>
+	</td>
+	<td class="profile-activity">
+	  <h3 class="dim">
+	    User Name's Recent Activity
+	  </h3>
+	  <%= render :partial => 'activity/list' %>
+	</td>
+      </tr>
+    </table>
+
+  </div> <!-- end landing -->
+
+</div>
+<div class='content_box'>
+  <div>
+    <h2 class="bright"><%= @user.display_name%>'s Recent Work</h2><span>&bull; <a href="#">more &raquo;</a></span>
+  </div>
+
+  <div class="table_menu">
+
+    <ul>
+      <li><a class="selected" href="#">All</a></li>
+      <li><a href="#">Top Rated</a></li>
+      <li><a href="#">Most Viewed</a></li>
+      <li><a href="#">Highest Contributors</a></li>
+    </ul>
+  </div>
+
+  <div class="page_scroll">
+
+    <%= render :partial => 'pages/list/activity_log', :locals => {:pages => @pages, :columns => [:stars, :owner, :title, :last_updated]} %>
+    <%= link_to :more.t + ' &raquo;', me_url(:action => 'search') + "/descending/updated_at" %>
+
+  </div>
+
+</div>
 
