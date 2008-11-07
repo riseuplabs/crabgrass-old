@@ -43,6 +43,11 @@ div.popup blockquote {
 .leftmenu .col1wrap {
   right:18.95em; /* fixes a rendering bug in ie */
 }
+.leftmenu {
+  display:inline;
+  margin-left: 1.5em;
+  margin-top: 1.5em;
+}
 
 /* ui */
 
@@ -91,3 +96,11 @@ div#bannercontent form {
 	display:inline;
 	margin-top:-5em;
 	}
+
+/*border-left main content*/
+.title_box{
+	border-left:1px solid #ccc;
+}
+.content_box{
+	border-left:1px solid #ccc;
+}

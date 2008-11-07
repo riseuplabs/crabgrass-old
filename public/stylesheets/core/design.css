@@ -14,7 +14,7 @@ h1{
 	font-family:arial;
 }
 h1 {font-size: 2.10em;} /* ~ 28px */
-h2 {font-size: 1.125em;} /* ~ 18px */
+h2 {font-size: 1.125em; clear:both;} /* ~ 18px */
 h3 {font-size: 1em;} /* ~ 15px */
 
 /**
@@ -338,8 +338,13 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 .col2 h2.small_icon.plus_16 {
 	padding-top:0;
 	padding-bottom:0;
+	padding-left:1.675em;
 	margin-bottom:1em;
 	border-top:none;
+}
+.col2 h2.small_icon.plus_16 a {
+	color:#428521;
+	font-size:0.975em;
 }
 .col2 ul.people li { 
   float:left; 

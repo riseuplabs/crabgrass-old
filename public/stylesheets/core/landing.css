@@ -123,13 +123,14 @@ div.section {
 .col2 h4{
   float:left;
 }
-.col2 h4.images_16{
+.col2 h4.images_16, .col2 h4.page_discussion_16{
   margin:0;padding:0;
   height:17px;
   margin-right:5px;
   margin-left:3px;
   padding-left:25px;
   float:left;
+  color:#4784BC;
 }
 
 .col2 h4.discussions_16{
@@ -144,7 +145,9 @@ div.section {
   font-size:10px;
   color:#969995;
 }
-
+.col2 .left_column .tags ul{
+	margin-bottom:1em;
+}
 /*
 this messes up other layouts
 .col2 p, .col2 h3{
@@ -154,19 +157,23 @@ this messes up other layouts
 */
 
 .col2 p{
-  color:#727272;
-  padding:5px 0;
+  color:#666;
+  padding:7px 0;
   line-height:16px;
+  clear:left; 
+  font-size:0.85em;
 }
 .col2 img.thumb{
   margin-bottom:1em;
 }
 
 .col2 p.legend{
-  color:#727272;
-  padding:5px 0;
-  font-size:0.6em;
+  color:#999;
+  padding:0;
+  margin:0;
+  font-size:0.750em;
   line-height:16px;
+  clear:none;  
   float:left;
 }
 
