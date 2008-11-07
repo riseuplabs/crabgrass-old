@@ -65,7 +65,7 @@ module ProfileHelper
   end
   
   def member_since_line(profile)
-    "<div class='small_icon status_online_16'><em>#{"Member Since".t} </em>: #{profile.user.created_at.strftime("%B %e, %Y")}</div>"
+    "<div class='small_icon status_online_16'><em>#{"Member Since".t} </em>: #{friendly_date(profile.user.created_at)}</div>"
   end
   
   def last_login(user)

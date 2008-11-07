@@ -27,7 +27,7 @@ class PersonController < ApplicationController
     params[:path] ||= "descending/updated_at"
     @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
     
-        @wall_discussion = @user.ensure_discussion
+       @wall_discussion = @user.ensure_discussion
     if params[:show_full_wall]
       @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')
     else
