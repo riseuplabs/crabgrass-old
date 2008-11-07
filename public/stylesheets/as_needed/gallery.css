@@ -117,10 +117,11 @@
 
 /* gallery page styles */
 .gallery-nav { 
+  /*
   padding:11px 20px;
   border-bottom:1px solid #E1E1E1; 
   background:#fff; 
-  overflow:hidden;
+  overflow:hidden; */
 }
 .gallery-nav .button,
  	.gallery-nav .meta { float:right; }
@@ -131,9 +132,8 @@
   font-size:11px; 
   color:#5A99C9; 
   font-weight:bold; 
-  border-width:1px;
-  border-style:solid;
-  border-color:#E1E1E1;
+  border:1px solid #E1E1E1;
+  background-color: white;
 }
 .gallery-nav .button:hover { 
   background-color:#EFF9FE; 

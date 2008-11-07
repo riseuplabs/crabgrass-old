@@ -6,8 +6,8 @@
   padding: 1em;
   background-color: #F0F9FE;
   border-bottom: 1px solid #E1F3FD;
-  width: 100%;
 }
+.title_box table.info_box {width: 100%;} /* don't make divs 100% */
 .title_box table.info_box td {
   width: 40%;
   vertical-align: top;

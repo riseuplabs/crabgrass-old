@@ -155,13 +155,15 @@ div#bannercontent form a {
  **/ 
 
 .title_box {
-  background: #E1F3FD;
+  background-color: #DAF0FC;
   border-bottom:1px solid #E1E1E1;
 }
 .title_box h1 {
   color: #607689;
-  background-color: #DAF0FC;
   padding: 0.7em;
+}
+.title_box h1 span {
+  margin-left: 3em;
 }
 
 /*
@@ -175,6 +177,8 @@ div#bannercontent form a {
   line-height:60px;
 }
 */
+/*
+this markup doesn't seem to exist
 div.page_title a {
   vertical-align:middle;
   margin-left:20px;
@@ -205,22 +209,26 @@ div.page_title a {
   color:#679BC7;
   font-weight:600;
 }
+*/
 
 /* breadcrumb */
 .title_box .breadcrumb {
   margin:0;
-  padding: 10px 0px 0px 20px;
+  padding: 1em 0 0 2em;
+  font-size: 0.85em;
+  margin-bottom: -0.5em;
 }
 
+/*
 .title_box .breadcrumb, .title_box .breadcrumb a {
   color:#8A8988;
   font-size:10px;
 }
+*/
 
 .title_box .breadcrumb a {
   text-transform:capitalize;
 }
-/* breadcrumb */
 
 div.title_box .title_box_edit_link {
   display: none;

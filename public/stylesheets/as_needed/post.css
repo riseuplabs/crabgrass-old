@@ -5,12 +5,12 @@ div#posts .comments-head {
 }
 /* posts */
 div#posts {
-  padding:0px 20px 20px;
+  /*padding:0px 20px 20px;*/
   background:#fff;
   margin-bottom:5px;
 }
 table.posts {
-  width: 100%;
+  /* width: 100%; <-- this messes up ie6 */
   border-top: 1px solid #ccc;
 }
 
