@@ -27,6 +27,7 @@ Members: "Members"
 Friends: "Friends"
 
 recent_activity: "Recent Activity"
+recent_pages: "Recent Pages"
 close_button: "Close"
 save_button: "Save"
 cancel_button: "Cancel"
@@ -231,16 +232,18 @@ image_title: "Image title: %s"
 ## ME
 ## 
 
-dashboard: Dashboard
-inbox: Inbox
-my_pages: My Pages
-my_dashboard: My Dashboard
-contribute_content_link: Contribute
+dashboard: "Dashboard"
+inbox: "Inbox"
+my_pages: "My Pages"
+my_dashboard: "My Dashboard"
+contribute_content_link: "Contribute"
 search: Search
-Pending: Pending
-my_tasks: Tasks
-completed: Completed
-requests: Requests
+Pending: "Pending"
+completed: "Completed"
+my_tasks: "Tasks"
+my_tasks_headline: "My Tasks"
+requests: "Requests"
+my_requests_headline: "My Requests"
 to_me: To Me
 from_me: From Me
 settings: Settings
@@ -404,8 +407,8 @@ recipient_tip: "Seperate recipients with commas, spaces, or new lines."
 pending: "pending"
 rejected: "rejected"
 approved: "approved"
-requests_to_me: "Requests to me"
-requests_from_me: "Requests from me"
+requests_to_me: "to me"
+requests_from_me: "from me"
 requests_for_group: Requests for %s
 incoming: "Incoming"
 outgoing: "Outgoing"

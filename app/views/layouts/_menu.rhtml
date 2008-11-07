@@ -2,6 +2,10 @@
   active = first_context()
   selected = 'class="selected"'
 -%>
+<div id="top_menu_box">
+
+<%= render :partial => 'layouts/menu_login' %>
+
 <ul id="top_menu">
   <% if logged_in? -%>
   <li id='menu_me'>
@@ -32,31 +36,6 @@
   <% end -%>
 
   <%= call_hook :top_menu %>
-
-  <% if logged_in? -%>
-  <li>
-    <span><%= link_to_active "Logout".t + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %></span>
-  </li>
-  <li>
-  </li>
-  <% else -%>  
-  <li>
-    <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('login_popup').toggle(); Field.focus('login'); return false;" } %></span>
-  </li>
-  <li>
-    <div id="login_popup" style="display: none;">
-      <% form_tag :controller => 'account', :action => 'login' do -%>
-        <label for="username"><%= "Username".t %></label>
-        <%= text_field_tag 'login' %>
-        <label for="password"><%= "Password".t %></label>
-        <%= password_field_tag 'password' %>
-        <%= submit_tag _('Log in') %>
-        <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
-      <% end -%>
-    </div>
-  </li>
-  <% end -%>  
 </ul>
-<div style='clear: both;'></div>
-
-
+<!-- <div style='clear: both;'></div> -->
+</div>

@@ -1,9 +1,10 @@
 <% @title_box = capture do -%>
-  <%= link_to_breadcrumbs %>
-  <h1><%= "Requests to me".t %></h1>
+  <h1><%= "My requests"[:my_requests_headline] %></h1>
+  <table class='info_box my_tasks'><tr>
+   <td><%= request_state_links %></td>
+   <td class='right'><%= request_source_links %></td>
+  </tr></table>
 <% end -%>
-
-<%= request_state_links %>
 
 <%= render :partial => 'requests/table', :locals => {:requests => @requests, :approvable => true} %>
 

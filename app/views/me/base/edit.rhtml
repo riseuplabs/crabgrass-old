@@ -1,10 +1,10 @@
 <% @avatar ||= @user.avatar -%>
 
 <% @title_box = capture do -%>
-<%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %>
+<h1><%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %></h1>
 <% end -%>
 
-<%# render :partial => 'profile_tabs' %>
+<%= render :partial => 'profile_tabs' %>
 
   <table><tr>
   <td valign='top'<%= avatar_for @user, 'xlarge' %></td>

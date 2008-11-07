@@ -1,0 +1,21 @@
+<div id="account">
+<% if logged_in? -%>
+  <%= link_to 'Account'[:menu_link_account], :controller => '/me', :action => 'edit' %>
+  &bull;
+  <%= link_to "Logout".t + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
+<% else -%>
+  <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('login_popup').toggle(); Field.focus('login'); return false;" } %></span>
+  <div id="login_popup" style="display: none;">
+    <% form_tag :controller => 'account', :action => 'login' do -%>
+      <label for="username"><%= "Username".t %></label>
+      <%= text_field_tag 'login' %>
+      &nbsp;&nbsp;
+      <label for="password"><%= "Password".t %></label>
+      <%= password_field_tag 'password' %>
+      &nbsp;&nbsp;
+      <%= submit_tag _('Log in') %>
+      <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
+    <% end -%>
+  </div>
+<% end -%>
+</div>

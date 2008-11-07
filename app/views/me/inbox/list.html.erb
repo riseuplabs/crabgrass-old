@@ -4,7 +4,8 @@ p#inbox_buttons {
 }
 <% end -%>
 <% @title_box = capture do -%>
-<%=  "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %>
+<h1><%= "My Inbox"[:my_inbox_headline] %></h1>
+<div class='info_box'><%=  "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %></div>
 <% end -%>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
