@@ -3,7 +3,7 @@
  **/ 
 
 div.page_list {background: white;}
-.page_list table {
+.page_scroll .page_list table {
   width: 100%;
   color: #979797;
 }
@@ -38,5 +38,35 @@ div.page_list {background: white;}
   overflow: auto;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  clear:left;
+  padding-top:none;
 }
 
+/*Page List - Menu*/
+.section .table_menu ul li{
+	margin:0;
+	padding:0;
+	list-style:none;
+	float:left;
+	background:url(images/table_menu.jpg) repeat-x;
+	height:26px;
+}
+.section .table_menu ul li a{
+	margin:0;
+	font-weight:bold;
+	text-transform:capitalize;
+	color:#667D92;
+	font-size:11px;
+	padding:10px;
+	border:1px solid #E1E1E1;
+	border-right:none;
+	background:#F0EDEC url(images/background/table_menu.jpg) repeat-x; /* extract gradient*/
+}
+.section .table_menu ul li a.selected {
+	border-bottom:none;
+	background:none;
+	color:#2E495D;
+}
+.section h2.alert{
+	padding-bottom:1em;
+}

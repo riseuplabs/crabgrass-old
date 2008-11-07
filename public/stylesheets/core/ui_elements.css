@@ -71,7 +71,7 @@ hr.thin, hr.thick {
   height: 0; border: none; margin: 1em 0; padding:0; clear:both;
 }
 hr.thin {border-bottom:1px dotted #ccc;}
-hr.thick {border-bottom:2px solid #ccc;}
+hr.thick {border-bottom:2px solid #E6E6E6;}
 
 /** 
  **  COLORED HEADINGS

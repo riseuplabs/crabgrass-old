@@ -3,7 +3,17 @@
     <%= render :partial => 'design/group_home/announcements' %>
   </div>
   <div class='section'>
-    <h2 class="bright">Recent contributions <span>&bull; <a href="#">more &raquo;</a></span></h2>
+    <h2 class="alert">Recent Group Activity <span>&bull; <a href="#">more &raquo;</a></span></h2>
+    
+	<div class="table_menu">
+	  <ul>
+	    <li><a class="selected" href="#">All</a></li>
+		<li><a href="#">Top Rated</a></li>
+		<li><a href="#">Most Viewed</a></li>
+		<li><a href="#">Highest Contributors</a></li>
+      </ul>
+	</div>
+	
     <div class='page_scroll'>
       <%= render :partial => 'design/group_home/page_list' %>
     </div>

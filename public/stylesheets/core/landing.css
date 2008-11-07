@@ -12,6 +12,7 @@
   width: 40%;
   vertical-align: top;
   padding: 1em;
+  background:#ECF9FE;
 }
 
 .title_box .description {
@@ -140,11 +141,7 @@ div.section {
   padding-left:25px;
   float:left;
 }
-.col2 .p{
-  float:left;
-  font-size:10px;
-  color:#969995;
-}
+
 .col2 .left_column .tags ul{
 	margin-bottom:1em;
 }
@@ -158,7 +155,7 @@ this messes up other layouts
 
 .col2 p{
   color:#666;
-  padding:7px 0;
+  padding:6px 0 0 0;
   line-height:16px;
   clear:left; 
   font-size:0.85em;

@@ -44,7 +44,7 @@ ul.side_list a.name_link {
  ** FRAMED IMAGES
  **/
 
-img.left  {float: left; margin: 0 0.5em 0.5em 0;}
+img.left  {float: left; margin: 0 0.2em 0.5em 0;}
 img.right {float: right; margin: 0 0 0.5em 0.5em;}
 img.framed {
   padding: 2px;

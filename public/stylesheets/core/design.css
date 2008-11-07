@@ -409,11 +409,10 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 /*RECENT WALL POSTS*/
 .recent_wall_posts {
   clear: both;
-  height: 15em;
   overflow: auto;
 }
 .recent_wall_posts h4 {
- padding:10px 5px 8px;
+ padding:10px 5px 6px 0;
  color:#F5967A;
  border-top:1px solid #E1E1E1;
  border-bottom:1px solid #E1E1E1;
@@ -422,7 +421,7 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 .recent_wall_posts blockquote {
   color:#999999;
   line-height:1.5em;
-  padding:10px 5px;
+  padding:10px 0px 5px 0;
   clear:both;
   overflow:hidden;
   display:block;
