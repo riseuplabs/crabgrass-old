@@ -88,6 +88,9 @@ class ApplicationController < ActionController::Base
         (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
       response.headers['Content-Type'] = 'application/rss+xml'   
       render :partial => '/pages/rss', :locals => locals
+      return true
+    else
+      return false
     end
   end
      
