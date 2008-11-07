@@ -1,7 +1,7 @@
 <%#
   # this partial display a grid of little avatar boxes. 
   # arguments: groups, people, side
-  #
+  # This markup and css may seem odd, but it works in all browsers.
 -%>
 <%
   side = 'left' if side.nil? 
@@ -18,7 +18,7 @@
 -%>
   <li class='<%=side%> <%=online%>'>
     <%= link_to avatar_for(entity, size), url %>
-    <span class='round'><%=h entity.both_names %></span>
+    <div><span class='round'><%=h entity.both_names %></span></div>
   </li>
 <% end -%>
 </ul>

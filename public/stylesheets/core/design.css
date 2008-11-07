@@ -10,8 +10,8 @@ body {
 h1, h2, h3, h4 {
   font-family: verdana, helvetica, sans-serif;
 }
-h1{
-	font-family:arial;
+h1 {
+	font-family: arial, helvetica, sans-serif;
 }
 h1 {font-size: 2.10em;} /* ~ 28px */
 h2 {font-size: 1.125em; clear:both;} /* ~ 18px */
@@ -35,40 +35,21 @@ h1#site_title {
  ** BANNER
  **/
 
-div#banner {
+#banner {
   clear: both;
-  margin: 0;
-  padding: 0; 
-  text-align: left;
-  height:5.9375em;
   background:url(/images/background/banner_bg.jpg) repeat-x;
 }
-div#bannercontent {
-  padding: 0px 1.25em;
-}
-#bannercontent table td{
-	padding:0;
-	height:70px;
-}
-#bannercontent table td span a{
-	font-weight:300;
-	font-size:0.75em;
-	color:#DADADA;
-}
-
-#bannercontent  .link_line{
-	margin-left:0.5em;
-}
-
-div#banner img.avatar {
-  width: 4em; height: 4em;
+#banner img.avatar {
   border: 1px solid white;
-  margin: 0 7px 0 0;
-  vertical-align: middle;
-
+  margin: 1em;
 }
-div#banner h1, div#banner h3 {
-  padding: 0; margin: 0
+#banner h1, #banner h3 {padding: 0; margin: 0;}
+#banner, #banner a {color: white;}
+#banner .link_line {margin-left:2em;}
+
+/*
+#bannercontent  .link_line{
+  margin-left:0.5em;
 }
 div#banner a {
   color: white;
@@ -78,19 +59,46 @@ div#banner a {
 div#banner a:hover {
   text-decoration: underline;
 }
-
 #summary{
   display:none;
 }
 
-div#bannercontent h1 a{
-  font-family:arial, verdana;
+#bannercontent table td span a{
   font-weight:300;
+  font-size:0.75em;
+  color:#DADADA;
 }
-
+*/
 
 
 /* search form in banner */
+form.minisearch {
+  float: right;
+  text-align:right;
+  color: #ddd;
+  margin-right: 1em;
+}
+form.minisearch fieldset {
+  float: right;
+  padding: 0.25em;
+  border: 1px solid #526568;
+  background: #3A464F;
+}
+.minisearch_text { 
+  background: #3A464F; 
+  border: none;
+  color: #fff;
+  width: 13em;
+}
+.minisearch_submit {
+  display:inline;
+  border: 0;
+  background: url(/images/ui/search/magnifyer.gif) no-repeat 0% 50%;
+  vertical-align: middle;
+  padding-left: 16px;
+  color: #ddd;
+} 
+/*
 div#bannercontent form {
   float:right;
   text-align:right;
@@ -100,8 +108,7 @@ div#bannercontent form {
 div#bannercontent form fieldset {
   border:1px solid #526568;
   background:#3A464F;
-  padding:0px;
-  margin:0px;
+  padding:0px; margin:0px;
 }
 
 div#bannercontent .search-input { 
@@ -130,6 +137,7 @@ div#bannercontent form a {
   font-weight:normal;
   color:#E1E1E1;
 }
+*/
 
 /**
  ** CONTENT_BOX
@@ -153,13 +161,20 @@ div#bannercontent form a {
 .title_box h1 {
   color: #607689;
   background-color: #DAF0FC;
+  padding: 0.7em;
+}
+
+/*
+.title_box h1 {
+  color: #607689;
+  background-color: #DAF0FC;
   font-weight: 300;
   font-family: arial, verdana;
   padding: 0 0.7em;
   height:60px;
   line-height:60px;
 }
-
+*/
 div.page_title a {
   vertical-align:middle;
   margin-left:20px;
@@ -318,12 +333,13 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 
 
 
-/*DASHBOARD
-*/
+/**
+ ** LEFT_COLUMN
+ **/
 
-/*DASHBOARD CSS*/
+.left_column ul.icon_boxes {width: 17em;} /* force avatars to use full width */
 
-
+/*
 .col2 h3{
 	padding-left:0;
 }
@@ -393,10 +409,9 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 	width:49%;
 
 }
+*/
 
-.landing{
-	}
-	
+
 .landing .activities, .landing .user_activities{
 	clear:left;
 	float:none;
@@ -419,6 +434,7 @@ span.edit {padding-right: 16px; background: url(images/icons/small_png/tiny_penc
 .landing table td.left{
 	border-right:1px dotted #ccc;
 }
+
 
 /*RECENT WALL POSTS*/
 .recent_wall_posts {

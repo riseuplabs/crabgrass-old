@@ -1,6 +1,8 @@
 #wrapper {
-  padding: 1.5em;
-  float: left;
+  padding: 0 1.5em;
+}
+.colmask {
+  margin: 1.5em 0;
 }
 
 /**

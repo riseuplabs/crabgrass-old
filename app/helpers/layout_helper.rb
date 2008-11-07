@@ -74,7 +74,7 @@ module LayoutHelper
     lines << stylesheet_link_tag('icon_png')
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
-    lines << context_styles
+    #lines << context_styles
     lines << @content_for_style
     lines << '</style>'
     lines << '<!--[if IE 6]>'

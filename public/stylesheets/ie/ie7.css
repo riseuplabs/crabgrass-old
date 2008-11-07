@@ -30,29 +30,28 @@ div.popup fieldset {
 div.popup blockquote {
   padding: 1em 1em 0 1em;
 }
-.page_list{
-width:100%;
+
+/* ie7 puts the scroll bar over top the enclosed content */
+.page_scroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 16px;
 }
+.page_list {width: 100%;} /* this is required to get ie7 to actually show scrollbars */
+
 
 /* layout */
 
 #wrapper {
   position: relative; overflow:hidden; /* needed for ie7 bug */
-  float: none;
 }
 
 /* ui */
-
+/*
 .tab-area fieldset textarea {
   width: 100%;
   margin-left: -18px;
 }
-
-/* minisearch */
-
-form.minisearch input.minisearch_submit[type=submit] {
-  border: 0px;
-  margin: 0 0 -1px 0;
-}
+*/
 
 

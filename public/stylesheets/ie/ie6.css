@@ -40,14 +40,20 @@ div.popup blockquote {
 }
 /* layout */
 
-.leftmenu .col1wrap {
-  right:18.95em; /* fixes a rendering bug in ie */
+#wrapper {
+  position: relative; overflow:hidden; /* needed for ie6 bug */
+  float: left;
 }
+.leftmenu .col1wrap {
+  right: 18.95em; /* fixes a rendering bug in ie */
+}
+/*
 .leftmenu {
   display:inline;
   margin-left: 1.5em;
   margin-top: 1.5em;
 }
+*/
 
 /* ui */
 
@@ -62,7 +68,7 @@ div.edit-tab span {
 }
 
 /* minisearch */
-
+/*
 input.minisearch_text {
   border: 0;
 }
@@ -80,6 +86,7 @@ form.minisearch {
   border: 1px solid #000;
   background: white;
 }
+*/
 
 /* search form in banner */
 div#bannercontent form {
@@ -95,12 +102,5 @@ div#bannercontent form {
 .announcement2box2{
 	display:inline;
 	margin-top:-5em;
-	}
+}
 
-/*border-left main content*/
-.title_box{
-	border-left:1px solid #ccc;
-}
-.content_box{
-	border-left:1px solid #ccc;
-}
