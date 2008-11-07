@@ -31,7 +31,7 @@
 <%= render :file => 'layouts/holygrail_'+type_of_column_layout %>
 
 <div id="footer"><div id='footercontent'>
-  <%= @footer %>
+  <%= render :partial => 'layouts/footer' %>
   <%= call_hook :footer_content %>
 </div></div>
 

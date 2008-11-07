@@ -45,11 +45,6 @@ class ApplicationController < ActionController::Base
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
   end
 
-  before_filter :load_template_defaults
-  def load_template_defaults
-    @footer = render_to_string :partial => 'layouts/footer'
-  end
-
   def mailer_options
     opts = {:site => @site, :current_user => current_user, :host => request.host,
      :protocol => request.protocol, :page => @page}
