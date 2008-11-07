@@ -563,7 +563,7 @@ hover labels for icon_boxes
 }
 .rightmenu ul.side_list li a { 
   text-transform:capitalize;
-  padding:4px 0px;
+  padding:2px 0;
 }
 
 .rightmenu ul.side_list li a.name_link { 
