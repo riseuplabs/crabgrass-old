@@ -1,0 +1,293 @@
+<script>
+function recipient_checked(checkbox, recipient_name) {
+  if (checkbox.checked) {
+    $(recipient_name + '_selected').show()
+  } else {
+    $(recipient_name + '_selected').hide()
+  }
+  $$('.recipient_checkbox_' + recipient_name).each( function(cb) {
+    cb.checked = checkbox.checked
+  });
+}
+</script>
+
+  <div class='create_page'>
+    <form action="/discussion_page/create/group-discussion" enctype="multipart/form-data" method="post">
+      <div style="margin:0;padding:0">
+        <input name="authenticity_token" type="hidden" value="26a7cd1ba25d162b562c033dc32d1bd66a59deed">
+      </div><input id="page_class" name="page_class" type="hidden" value="DiscussionPage">
+
+      <div class='left'>
+        <h2 class='section'>Group discussion information</h2><script type="text/javascript">
+//<![CDATA[
+        $("page_title").focus() 
+        //]]>
+        </script>
+
+        <table>
+          <tr>
+            <td class='label'>Title</td>
+
+            <td><input id="page_title" name="page[title]" size="38" type="text"></td>
+          </tr>
+
+          <tr>
+            <td class='label'>Summary</td>
+
+            <td>
+            <textarea cols="38" id="page_summary" name="page[summary]" rows="3">
+</textarea></td>
+          </tr>
+
+          <tr>
+            <td class='label'>Tags</td>
+
+            <td><input id="page_tag_list" name="page[tag_list]" size="38" type="text"><br>
+            <i>(separate tags using commas)</i></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class='right'>
+        <h2 class='section'>Who has access to this group discussion?</h2>
+
+        <div class='share_page'>
+          <h2>Share this group discussion with:</h2>
+
+          <table class='share_page_recipients'>
+            <tr>
+              <th>Choose from your groups or friends</th>
+
+              <th>Make your selection</th>
+
+              <th>This group discussion will be shared with</th>
+            </tr>
+
+            <tr>
+              <td>
+                <div class='scroll'>
+                  <!-- begin tabset -->
+
+                  <div style='height:1%'>
+                    <ul class='tabset left'>
+                      <!-- begin tab -->
+
+                      <li class="tab"><a href="javascript:void(0)" id="share_population_my_groups_link" onclick="show_tab(this, $('share_population_my_groups'))" name="share_population_my_groups_link">Groups</a></li><!-- end tab -->
+                      <!-- begin tab -->
+
+                      <li class="tab"><a href="javascript:void(0)" id="share_population_my_networks_link" onclick="show_tab(this, $('share_population_my_networks'))" name="share_population_my_networks_link">Networks</a></li><!-- end tab -->
+                      <!-- begin tab -->
+
+                      <li class="tab"><a href="javascript:void(0)" id="share_population_my_committees_link" onclick="show_tab(this, $('share_population_my_committees'))" name="share_population_my_committees_link">Committees</a></li><!-- end tab -->
+                      <!-- begin tab -->
+
+                      <li class="tab"><a href="javascript:void(0)" id="share_population_friends_link" onclick="show_tab(this, $('share_population_friends'))" name="share_population_friends_link">Contacts</a></li><!-- end tab -->
+                      <!-- begin tab -->
+
+                      <li class="tab"><a href="javascript:void(0)" id="share_population_peers_link" onclick="show_tab(this, $('share_population_peers'))" name="share_population_peers_link">Peers</a></li><!-- end tab -->
+                    </ul>
+                  </div><!-- end tabset -->
+                </div>
+              </td>
+
+              <td>
+                <div class='scroll'>
+                  <div class="tab-content" id="share_population_my_groups" style="display:none">
+                    <label><input class="recipient_checkbox_the-true-levellers" id="recipients[the-true-levellers]" name="recipients[the-true-levellers]" onclick="recipient_checked(this, 'the-true-levellers');" type="checkbox" value="1">&nbsp;The True Levellers</label><br>
+                    <label><input class="recipient_checkbox_animals" id="recipients[animals]" name="recipients[animals]" onclick="recipient_checked(this, 'animals');" type="checkbox" value="1">&nbsp;animals</label><br>
+                    <label><input class="recipient_checkbox_rainbow" id="recipients[rainbow]" name="recipients[rainbow]" onclick="recipient_checked(this, 'rainbow');" type="checkbox" value="1">&nbsp;rainbow</label><br>
+                    <label><input class="recipient_checkbox_public_group_everyone_can_see" id="recipients[public_group_everyone_can_see]" name="recipients[public_group_everyone_can_see]" onclick="recipient_checked(this, 'public_group_everyone_can_see');" type="checkbox" value="1">&nbsp;public_group_everyone_can_see</label><br>
+                    <label><input class="recipient_checkbox_private_group_not_everyone_can_see" id="recipients[private_group_not_everyone_can_see]" name="recipients[private_group_not_everyone_can_see]" onclick="recipient_checked(this, 'private_group_not_everyone_can_see');" type="checkbox" value="1">&nbsp;private_group_not_everyone_can_see</label><br>
+                  </div>
+
+                  <div class="tab-content" id="share_population_my_networks" style="display:none">
+                    <label><input class="recipient_checkbox_cnt" id="recipients[cnt]" name="recipients[cnt]" onclick="recipient_checked(this, 'cnt');" type="checkbox" value="1">&nbsp;Confederaci&Atilde;&sup3;n Nacional del Trabajo</label><br>
+                  </div>
+
+                  <div class="tab-content" id="share_population_my_committees" style="display:none">
+                    <label><input class="recipient_checkbox_rainbow+the-warm-colors" id="recipients[rainbow+the-warm-colors]" name="recipients[rainbow+the-warm-colors]" onclick="recipient_checked(this, 'rainbow+the-warm-colors');" type="checkbox" value="1">&nbsp;the-warm-colors</label><br>
+                    <label><input class="recipient_checkbox_rainbow+the-cold-colors" id="recipients[rainbow+the-cold-colors]" name="recipients[rainbow+the-cold-colors]" onclick="recipient_checked(this, 'rainbow+the-cold-colors');" type="checkbox" value="1">&nbsp;the-cold-colors</label><br>
+                    <label><input class="recipient_checkbox_public_group_everyone_can_see+public_committee" id="recipients[public_group_everyone_can_see+public_committee]" name="recipients[public_group_everyone_can_see+public_committee]" onclick="recipient_checked(this, 'public_group_everyone_can_see+public_committee');" type="checkbox" value="1">&nbsp;public_committee</label><br>
+                    <label><input class="recipient_checkbox_public_group_everyone_can_see+private_committee" id="recipients[public_group_everyone_can_see+private_committee]" name="recipients[public_group_everyone_can_see+private_committee]" onclick="recipient_checked(this, 'public_group_everyone_can_see+private_committee');" type="checkbox" value="1">&nbsp;private_committee</label><br>
+                    <label><input class="recipient_checkbox_animals+admins" id="recipients[animals+admins]" name="recipients[animals+admins]" onclick="recipient_checked(this, 'animals+admins');" type="checkbox" value="1">&nbsp;admins</label><br>
+                  </div>
+
+                  <div class="tab-content" id="share_population_friends" style="display:none">
+                    <label><input class="recipient_checkbox_green" id="recipients[green]" name="recipients[green]" onclick="recipient_checked(this, 'green');" type="checkbox" value="1">&nbsp;Green!</label><br>
+                    <label><input class="recipient_checkbox_orange" id="recipients[orange]" name="recipients[orange]" onclick="recipient_checked(this, 'orange');" type="checkbox" value="1">&nbsp;Orange!</label><br>
+                    <label><input class="recipient_checkbox_purple" id="recipients[purple]" name="recipients[purple]" onclick="recipient_checked(this, 'purple');" type="checkbox" value="1">&nbsp;Purple!</label><br>
+                    <label><input class="recipient_checkbox_red" id="recipients[red]" name="recipients[red]" onclick="recipient_checked(this, 'red');" type="checkbox" value="1">&nbsp;Red!</label><br>
+                    <label><input class="recipient_checkbox_yellow" id="recipients[yellow]" name="recipients[yellow]" onclick="recipient_checked(this, 'yellow');" type="checkbox" value="1">&nbsp;Yellow!</label><br>
+                  </div>
+
+                  <div class="tab-content" id="share_population_peers" style="display:none">
+                    <label><input class="recipient_checkbox_dolphin" id="recipients[dolphin]" name="recipients[dolphin]" onclick="recipient_checked(this, 'dolphin');" type="checkbox" value="1">&nbsp;Dolphin!</label><br>
+                    <label><input class="recipient_checkbox_gerrard" id="recipients[gerrard]" name="recipients[gerrard]" onclick="recipient_checked(this, 'gerrard');" type="checkbox" value="1">&nbsp;Gerrard!</label><br>
+                    <label><input class="recipient_checkbox_green" id="recipients[green]" name="recipients[green]" onclick="recipient_checked(this, 'green');" type="checkbox" value="1">&nbsp;Green!</label><br>
+                    <label><input class="recipient_checkbox_iguana" id="recipients[iguana]" name="recipients[iguana]" onclick="recipient_checked(this, 'iguana');" type="checkbox" value="1">&nbsp;Iguana!</label><br>
+                    <label><input class="recipient_checkbox_kangaroo" id="recipients[kangaroo]" name="recipients[kangaroo]" onclick="recipient_checked(this, 'kangaroo');" type="checkbox" value="1">&nbsp;Kangaroo!</label><br>
+                    <label><input class="recipient_checkbox_orange" id="recipients[orange]" name="recipients[orange]" onclick="recipient_checked(this, 'orange');" type="checkbox" value="1">&nbsp;Orange!</label><br>
+                    <label><input class="recipient_checkbox_penguin" id="recipients[penguin]" name="recipients[penguin]" onclick="recipient_checked(this, 'penguin');" type="checkbox" value="1">&nbsp;Penguin!</label><br>
+                    <label><input class="recipient_checkbox_purple" id="recipients[purple]" name="recipients[purple]" onclick="recipient_checked(this, 'purple');" type="checkbox" value="1">&nbsp;Purple!</label><br>
+                    <label><input class="recipient_checkbox_red" id="recipients[red]" name="recipients[red]" onclick="recipient_checked(this, 'red');" type="checkbox" value="1">&nbsp;Red!</label><br>
+                    <label><input class="recipient_checkbox_yellow" id="recipients[yellow]" name="recipients[yellow]" onclick="recipient_checked(this, 'yellow');" type="checkbox" value="1">&nbsp;Yellow!</label><br>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <div class='scroll'>
+                  <div id="animals_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      animals
+                    </div>
+                  </div>
+
+                  <div id="animals+admins_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/3/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      admins
+                    </div>
+                  </div>
+
+                  <div id="cnt_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Confederaci&Atilde;&sup3;n Nacional del Trabajo
+                    </div>
+                  </div>
+
+                  <div id="private_group_not_everyone_can_see_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      private_group_not_everyone_can_see
+                    </div>
+                  </div>
+
+                  <div id="public_group_everyone_can_see_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      public_group_everyone_can_see
+                    </div>
+                  </div>
+
+                  <div id="public_group_everyone_can_see+private_committee_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      private_committee
+                    </div>
+                  </div>
+
+                  <div id="public_group_everyone_can_see+public_committee_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      public_committee
+                    </div>
+                  </div>
+
+                  <div id="rainbow_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      rainbow
+                    </div>
+                  </div>
+
+                  <div id="rainbow+the-cold-colors_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      the-cold-colors
+                    </div>
+                  </div>
+
+                  <div id="rainbow+the-warm-colors_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      the-warm-colors
+                    </div>
+                  </div>
+
+                  <div id="the-true-levellers_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      The True Levellers
+                    </div>
+                  </div>
+
+                  <div id="dolphin_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Dolphin!
+                    </div>
+                  </div>
+
+                  <div id="gerrard_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Gerrard!
+                    </div>
+                  </div>
+
+                  <div id="green_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Green!
+                    </div>
+                  </div>
+
+                  <div id="iguana_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Iguana!
+                    </div>
+                  </div>
+
+                  <div id="kangaroo_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Kangaroo!
+                    </div>
+                  </div>
+
+                  <div id="orange_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Orange!
+                    </div>
+                  </div>
+
+                  <div id="penguin_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Penguin!
+                    </div>
+                  </div>
+
+                  <div id="purple_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Purple!
+                    </div>
+                  </div>
+
+                  <div id="red_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Red!
+                    </div>
+                  </div>
+
+                  <div id="yellow_selected" style="display:none">
+                    <div style="background: url(http://localhost:3000/avatars/0/xsmall.jpg) no-repeat 0% 50%; padding: 5px 0 5px 26px;">
+                      Yellow!
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <h2>Choose options:</h2>Grant Access: <select id="access" name="access">
+            <option value="admin">
+              Coordinator
+            </option>
+
+            <option value="edit">
+              Participant
+            </option>
+
+            <option value="view" selected="selected">
+              Viewer
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class='clear'></div>
+
+      <div class='buttons'>
+        <input name="create" onclick="Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))" style="display:none" type="submit" value=""> <input name="cancel" onclick="Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))" type="submit" value="&laquo; Back"> <input name="create" onclick="Form.getInputs(this.form, 'submit').each(function(x){if (x!=this) x.disabled=true}.bind(this))" type="submit" value="Create group discussion &raquo;">
+      </div>
+    </form>
+  </div>
+
