@@ -61,7 +61,9 @@ class WikiPageController < BasePageController
   ## ACCESS: :edit
   ##
 
-  def edit
+ def edit
+    @stylesheet = 'wiki_edit'
+    @javascript = 'wiki_edit'
     if params[:cancel]
       cancel
     elsif params[:break_lock]
