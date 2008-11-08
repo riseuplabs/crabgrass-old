@@ -25,6 +25,7 @@ Contact: "Contact"
 Contacts: "Contacts"
 Members: "Members"
 Friends: "Friends"
+people: "People"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
@@ -512,6 +513,15 @@ participant: "Participant"
 viewer: "Viewer"
 no_change: "no change"
 Announcements: "Announcements"
+
+watch_checkbox: "Watch For Updates"
+add_star_link: "Add Star (:star_count)"
+remove_star_link: "Remove Star (:star_count)"
+share_link: "Share :page_class"
+public_checkbox: "Public"
+delete_page_link: "Delete :page_class"
+move_page_link: "Move :page_class"
+page_details_link: ":page_class Details"
 
 ##
 ## DATES

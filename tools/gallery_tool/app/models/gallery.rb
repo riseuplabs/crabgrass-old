@@ -3,6 +3,10 @@ class Gallery < Page
   has_many :showings, :order => 'position', :dependent => :destroy
   has_many :images, :through => :showings, :source => :asset, :order => 'showings.position'
 
+  def supports_attachments
+    false
+  end
+  
   def add_image!(asset, position = nil)
     check_for_page(asset)
     check_permissions!(asset)

@@ -1,4 +1,7 @@
 class AssetPage < Page
+  def supports_attachments
+    false
+  end
 
   def icon
     return asset.small_icon if asset
