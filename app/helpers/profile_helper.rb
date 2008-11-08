@@ -53,7 +53,7 @@ module ProfileHelper
   
   def location_line(profile)
     loc = profile.locations.first
-    "<div class='small_icon world_16'><em>#{:Location.t} </em>: #{loc.city}, #{loc.country_name}</div>"
+    "<div class='small_icon world_16'><em>#{:Location.t} </em>: #{loc.city.capitalize}, #{loc.country_name.capitalize}</div>"
   end
 
   def birthday_line(profile)

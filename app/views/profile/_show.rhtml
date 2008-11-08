@@ -10,7 +10,7 @@
 
     <h1>
       <%= @user.display_name%>
-      <span>is <%# @user.current_status%>.</span>
+      <span><%= :is.t+'&nbsp;'+@user.current_status+'.' if @user.current_status%></span>
     </h1>
 
     <table class="profile-fun">

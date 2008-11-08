@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081029060705) do
+ActiveRecord::Schema.define(:version => 20081107231213) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -279,6 +279,7 @@ ActiveRecord::Schema.define(:version => 20081029060705) do
     t.boolean  "delta"
     t.string   "media"
     t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "views_count",        :limit => 11, :default => 0, :null => false
   end
 
   add_index "page_terms", ["page_id"], :name => "page_id"
@@ -292,6 +293,10 @@ ActiveRecord::Schema.define(:version => 20081029060705) do
   end
 
   add_index "page_tools", ["page_id", "tool_id"], :name => "index_page_tools"
+
+  create_table "page_views", :force => true do |t|
+    t.integer "page_id", :limit => 11, :null => false
+  end
 
   create_table "pages", :force => true do |t|
     t.string   "title"
@@ -320,6 +325,7 @@ ActiveRecord::Schema.define(:version => 20081029060705) do
     t.datetime "static_expires"
     t.boolean  "static_expired"
     t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -368,6 +374,7 @@ ActiveRecord::Schema.define(:version => 20081029060705) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.string   "type"
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"

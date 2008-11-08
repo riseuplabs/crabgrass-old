@@ -75,7 +75,7 @@ class PersonController < ApplicationController
     
     redirect_to(url_for_user(@user))
   end
-    
+   
   protected
   
   def context

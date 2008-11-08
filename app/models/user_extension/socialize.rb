@@ -41,7 +41,7 @@ module UserExtension::Socialize
   
   # returns the users current status by returning his latest status_posts.body
   def current_status
-    self.discussion.posts.find_all_by_type('StatusPost').last.body
+    self.discussion.posts.find_all_by_type('StatusPost').last.body rescue nil
   end
 
   ## CONTACTS

@@ -17,7 +17,7 @@ class ProfileController < ApplicationController
       @profile.save_from_params params['profile']
     end
   end
-
+  
   # ajax
   def add_location
     render :update do |page|

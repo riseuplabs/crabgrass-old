@@ -7,5 +7,11 @@ module WallHelper
                         'profile/wall_status_post' : 'profile/wall_post'),
            :locals => {:wall_post => post})
   end
+  
+  def delete_wall_post(post)
+    if current_user.discussion.id == post.discussion.id
+      link_to("Delete Post"[:delete_post], url_for(:controller => '/me/dashboard', :action => 'delete_wall_post', :id => post.id ), :style => 'float:right;')
+    end
+  end
 
 end
