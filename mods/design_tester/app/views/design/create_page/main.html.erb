@@ -18,7 +18,8 @@ function recipient_checked(checkbox, recipient_name) {
       </div><input id="page_class" name="page_class" type="hidden" value="DiscussionPage">
 
       <div class='left'>
-        <h2 class='section'>Group discussion information</h2><script type="text/javascript">
+        <h2 class='small_icon info_16'>Article Information</h2>
+<script type="text/javascript">
 //<![CDATA[
         $("page_title").focus() 
         //]]>
@@ -35,7 +36,7 @@ function recipient_checked(checkbox, recipient_name) {
             <td class='label'>Summary</td>
 
             <td>
-            <textarea cols="38" id="page_summary" name="page[summary]" rows="3">
+            <textarea cols="38" id="page_summary" name="page[summary]" rows="6">
 </textarea></td>
           </tr>
 
@@ -43,24 +44,55 @@ function recipient_checked(checkbox, recipient_name) {
             <td class='label'>Tags</td>
 
             <td><input id="page_tag_list" name="page[tag_list]" size="38" type="text"><br>
-            <i>(separate tags using commas)</i></td>
-          </tr>
+            <p class="legend">(separate tags using commas)</p></td>
+            </tr>
+
+
+
+            <tr><td class="article_data"><h2 class='small_icon article_16'>Article Data</h2></td></tr>
+			<tr>
+		        <td class='label'>Image</td>
+
+		        <td><input id="page_image" name="page[image]" size="38" type="text"></td>
+		      </tr>
+
+		      <tr>
+		        <td class='label'>Article Body</td>
+
+		        <td>
+		        <textarea cols="38" id="page_article_body" name="page[article_body]" rows="6">
+		</textarea></td>
+		      </tr>
+
+		      <tr>
+		        <td class='label'>Tags</td>
+
+		        <td><input id="page_tag_list" name="page[tag_list]" size="38" type="text"><br>
+		        <p class="legend">(separate tags using commas)</p></td>
+		        </tr>
+
+
+
+
         </table>
+
+
+
       </div>
 
       <div class='right'>
-        <h2 class='section'>Who has access to this group discussion?</h2>
+        <h2 class='small_icon group_16'>Article Access</h2>
 
         <div class='share_page'>
-          <h2>Share this group discussion with:</h2>
+          <h2>Share this article with:</h2>
 
           <table class='share_page_recipients'>
             <tr>
-              <th>Choose from your groups or friends</th>
+              <th>Choose from your groups or friends:</th>
 
-              <th>Make your selection</th>
+              <th>Make your selection:</th>
 
-              <th>This group discussion will be shared with</th>
+              <th>This article will be shared with:</th>
             </tr>
 
             <tr>
@@ -265,7 +297,8 @@ function recipient_checked(checkbox, recipient_name) {
                 </div>
               </td>
             </tr>
-          </table>
+          </table>  
+
 
           <h2>Choose options:</h2>Grant Access: <select id="access" name="access">
             <option value="admin">
