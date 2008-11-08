@@ -136,7 +136,7 @@ module PageHelper
     options = {:selected => false, :sortable => true}.merge(options)
 
     unless options[:sortable] and SORTABLE_COLUMNS.include?(action)
-      return content_tag :th, text, :class => options[:class]
+      return content_tag(:th, text, :class => options[:class])
     end
 
     path = filter_path

@@ -59,7 +59,14 @@ offtags work like this:
 =end
 
 require 'rubygems'
-require 'RedCloth'
+
+begin
+  # try redcloth 4.1
+  require 'redcloth'
+rescue Exception
+  # try redcloth 4.0
+  require 'RedCloth'
+end
 
 require 'redcloth/formatters/html'
 module GreenClothFormatterHTML
