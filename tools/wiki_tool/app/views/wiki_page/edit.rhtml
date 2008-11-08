@@ -1,16 +1,18 @@
 <% content_for :style do -%>
 div.swatch_list a {float: left; background: #000;}
 <% end -%>
+<% content_for :script do -%>
+<%= image_button_for_editor() %>
+<% end -%>
 <% @show_posts = false -%>
 <% locked_error_message -%>
-<% add_image_button_to_textile_editor() -%>
+<%# add_image_button_to_textile_editor() -%>
 <div class='formbox'>
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
    <div id='image_popup' style='display:none'></div>
-   <fieldset><%= textile_editor 'wiki', 'body' %></fieldset>
+   <fieldset><%= text_area 'wiki', 'body' %></fieldset>
    <div>
-    <a style="float: right" href="javascript:quickRedReference();"><%= "formatting reference"[:formatting_reference_link] %></a>
      <% if @locked_for_me -%>
        <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
      <% else -%>
@@ -19,7 +21,6 @@ div.swatch_list a {float: left; background: #000;}
      <%# submit_tag 'Save minor edit', :name => 'save_minor' %>
      <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
    </div>
-    <%= textile_editor_initialize -%>
   <% end -%>
 </div>
 

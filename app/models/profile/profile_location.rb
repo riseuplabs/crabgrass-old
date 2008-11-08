@@ -6,6 +6,9 @@ class ProfileLocation < ActiveRecord::Base
 
   set_table_name 'locations'
 
+  @@icons = Hash.new('world').merge({ 
+  })
+  
   belongs_to  :profile
 
   before_save :set_geocode
@@ -37,6 +40,11 @@ class ProfileLocation < ActiveRecord::Base
   def self.options
     [:Home, :Work, :School, :Other].to_localized_select
   end
+  
+  def icon
+    @@icons[location_type]
+  end
+
 
   protected
 

@@ -10,8 +10,7 @@
       <%= render :partial => 'me/dashboard/status_form' %>
 
       <h3 class="dim">Recent Wall Posts</h3>
-      <%# render :partial => 'posts/wall', :locals => {:posts => current_user.xxxxx} %>
-      <%= render :partial => 'posts/wall' %>
+      <%= render :partial => 'profile/wall_discussion', :locals => {:posts => (params[:show_full_wall] ? @wall_posts : @wall_posts[0..10])} %>
 
   </td>
 </tr>

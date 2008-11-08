@@ -10,6 +10,9 @@ class ProfileCryptKey < ActiveRecord::Base
   after_save {|record| record.profile.save if record.profile}
   after_destroy {|record| record.profile.save if record.profile}
   
+  @@icons = Hash.new('star').merge({ 
+  })
+  
   def before_create
     keyring_path = "%s/%s.keystore" % [KEYRING_STORAGE, profile.user.id]
     keyring = Keyring.create(self.key, keyring_path)
@@ -18,6 +21,10 @@ class ProfileCryptKey < ActiveRecord::Base
     self.fingerprint = info[:fingerprint]
     self.description = 'gpg'
     self.keyring = keyring.path
+  end
+  
+  def icon
+    @@icons['']
   end
 
 end

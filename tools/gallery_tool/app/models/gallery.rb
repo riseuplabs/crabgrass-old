@@ -4,6 +4,7 @@ class Gallery < Page
   has_many :images, :through => :showings, :source => :asset, :order => 'showings.position'
 
   def add_image!(asset, position = nil)
+    check_for_page(asset)
     check_permissions!(asset)
     check_type!(asset)
     Showing.create! :gallery => self, :asset => asset, :position => position
@@ -61,6 +62,26 @@ class Gallery < Page
 
   def check_type!(asset)
     raise ErrorMessage.new('File must be an image to be part of a gallery'[:file_must_be_image_error]) unless asset.is_image?
+  end
+  
+  def check_for_page(asset)
+    unless asset.page
+      up=0
+      gp=0
+      page = asset.pages.create!(:title => asset.filename, :data_id => asset.id,
+                                 :flow => FLOW[:gallery])
+      self.group_participations.each do |gpart|
+        page.group_participations.create(:group_id => gpart.group_id,
+                                         :access => gpart.access)
+        gp+=1
+      end
+      self.user_participations.each do |upart|
+        page.user_participations.create(:user_id => upart.user_id,
+                                        :access => upart.access)
+        up+=1
+      end
+      page.save
+    end
   end
 
 end

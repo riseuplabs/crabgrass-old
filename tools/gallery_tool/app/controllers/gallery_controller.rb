@@ -37,7 +37,7 @@ class GalleryController < BasePageController
     end
   end
   
-  def detail_view    
+  def detail_view
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
     @image_index = @showing.position
@@ -52,6 +52,7 @@ class GalleryController < BasePageController
     @post = Post.build(:page => @image.page,
                        :user => current_user,
                        :body => params[:post][:body])
+    current_user.updated(@image.page)
     @post.save!
     redirect_to page_url(@page,
                          :action => 'detail_view',
@@ -70,9 +71,7 @@ class GalleryController < BasePageController
       @image = @page.images.find(params[:id])
       page = @image.page
       page.title = params[:title]
-      # btw, what is the convenient way to do that??? --niklas
-      page.updated_by = current_user
-      page.updated_by_login = current_user.login
+      current_user.updated(page)
       page.save!
       unless request.xhr?
         redirect_to page_url(@page,
@@ -91,7 +90,7 @@ class GalleryController < BasePageController
     else
       showing = @page.showings.first
     end
-    @image = @page.images.find(showing.asset_id)
+    @image = @page.images.find(showing.asset_id) if showing
     @next_id = @page.showings.find(:first, :conditions => { 
                                      :position => showing.position+1
                                    }, :select => 'asset_id').asset_id rescue nil
@@ -117,6 +116,7 @@ class GalleryController < BasePageController
       end
     end
     @page.cover = params[:id]
+    current_user.updated(@page)
     if request.xhr?
       render :text => :album_cover_changed.t, :layout => false
     else
@@ -158,11 +158,17 @@ class GalleryController < BasePageController
       end
       current_user.may! :view, image
       filepath = image.private_filename
+      filename = (image.page ?
+                  image.page.title.sub(' ', '_')+'.'+
+                  image.filename.split('.').last :
+                  image.filename)
+      filename = "#{image.page.title.sub(' ','_')}.#{image.filename.split('.').last}"
     else
       name_base = @page.title.gsub(/\s/,'-')
       file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
         (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
       }.compact.sort { |x,y| x[0] <=> y[0] }.last
+      filename = "#{name_base}.zip"
       if file && file[0] >= @page.updated_at.to_i
         filepath = "#{GALLERY_ZIP_PATH}/#{file[1]}"
       else
@@ -181,12 +187,12 @@ class GalleryController < BasePageController
         }
       end
     end
-    send_file(filepath)
+    send_file(filepath, :filename => filename)
   end
   
   def update_order
     if params[:images]
-    text =""
+      text =""
       ActiveSupport::JSON::decode(params[:images]).each do |image|
         showing = @page.showings.find_by_asset_id(image['id'].to_i)
         showing.insert_at(image['position'].to_i)
@@ -199,6 +205,7 @@ class GalleryController < BasePageController
       new_pos = 0 if new_pos > new_pos.size-1
       showing.insert_at(new_pos)
     end
+    current_user.updated(@page)
     if request.xhr?
       render :text => "Order changed."[:order_changed], :layout => false
     else
@@ -214,6 +221,7 @@ class GalleryController < BasePageController
   def add
     asset = Asset.find(params[:id])
     @page.add_image!(asset,params[:position])
+    current_user.updated(@page)
     if request.xhr?
       render :layout => false
     else
@@ -257,6 +265,7 @@ class GalleryController < BasePageController
                            :page => { :flow => :gallery})
         @page.add_image!(asset)
       end
+      current_user.updated(@page)
       redirect_to page_url(@page)
     end
   end
@@ -282,9 +291,10 @@ class GalleryController < BasePageController
   def authorized?
     if @page.nil?
       true
-    elsif action?(:add, :remove, :find)
-      current_user.may?(:edit,@page)
-    elsif action?(:show)
+    elsif action?(:add, :remove, :find, :upload, :add_star, :remove_star,
+                  :change_image_title, :make_cover)
+      current_user.may?(:edit, @page)
+    elsif action?(:show, :comment_image, :detail_view, :slideshow, :download)
       @page.public? or current_user.may?(:view,@page)
     else
       current_user.may?(:admin, @page)

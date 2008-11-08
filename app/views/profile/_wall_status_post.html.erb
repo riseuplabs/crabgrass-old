@@ -1,0 +1,11 @@
+<blockquote>
+   <%= avatar_for(wall_post.user, :class => ' left framed' )%>
+    <p class="small_icon">
+      &raquo;
+      <em><%= link_to wall_post.user.display_name,'' %></em> <%=:is.t %>
+      <%= wall_post.body %>
+      &laquo;
+      <br /> <%= friendly_date(wall_post.created_at) %>
+      <%= delete_wall_post(wall_post) %>
+    </p>
+</blockquote>
