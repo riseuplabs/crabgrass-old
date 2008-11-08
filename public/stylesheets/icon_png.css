@@ -1,4 +1,3 @@
-.add_star_16 {background-image: url(/images/png/16/add_star.png)}
 .application_go_16 {background-image: url(/images/png/16/application_go.png)}
 .application_view_gallery_16 {background-image: url(/images/png/16/application_view_gallery.png)}
 .archive_16 {background-image: url(/images/png/16/archive.png)}
@@ -7,12 +6,9 @@
 .burst_16 {background-image: url(/images/png/16/burst.png)}
 .cancel_16 {background-image: url(/images/png/16/cancel.png)}
 .chat_16 {background-image: url(/images/png/16/chat.png)}
-.checked_16 {background-image: url(/images/png/16/checked.png)}
 .date_16 {background-image: url(/images/png/16/date.png)}
 .exclamation_16 {background-image: url(/images/png/16/exclamation.png)}
-.eye_16 {background-image: url(/images/png/16/eye.png)}
 .folder_picture_16 {background-image: url(/images/png/16/folder_picture.png)}
-.from_me_16 {background-image: url(/images/png/16/from_me.png)}
 .group_16 {background-image: url(/images/png/16/group.png)}
 .heart_16 {background-image: url(/images/png/16/heart.png)}
 .home_16 {background-image: url(/images/png/16/home.png)}
@@ -67,8 +63,6 @@
 .page_video_16 {background-image: url(/images/png/16/page_video.png)}
 .page_white_text_16 {background-image: url(/images/png/16/page_white_text.png)}
 .pencil_16 {background-image: url(/images/png/16/pencil.png)}
-.pending-minus_16 {background-image: url(/images/png/16/pending-minus.png)}
-.pending-plus_16 {background-image: url(/images/png/16/pending-plus.png)}
 .picture_edit_16 {background-image: url(/images/png/16/picture_edit.png)}
 .plus_16 {background-image: url(/images/png/16/plus.png)}
 .profile_16 {background-image: url(/images/png/16/profile.png)}
@@ -79,8 +73,8 @@
 .security-medium_16 {background-image: url(/images/png/16/security-medium.png)}
 .send_16 {background-image: url(/images/png/16/send.png)}
 .settings_16 {background-image: url(/images/png/16/settings.png)}
-.sort-down_16 {background-image: url(/images/png/16/sort-down.png)}
-.sort-up_16 {background-image: url(/images/png/16/sort-up.png)}
+.sort_down_16 {background-image: url(/images/png/16/sort_down.png)}
+.sort_up_16 {background-image: url(/images/png/16/sort_up.png)}
 .star_16 {background-image: url(/images/png/16/star.png)}
 .star_empty_16 {background-image: url(/images/png/16/star_empty.png)}
 .star_minus_16 {background-image: url(/images/png/16/star_minus.png)}
@@ -93,9 +87,7 @@
 .tiny_pending_16 {background-image: url(/images/png/16/tiny_pending.png)}
 .tiny_star_16 {background-image: url(/images/png/16/tiny_star.png)}
 .tiny_wrench_16 {background-image: url(/images/png/16/tiny_wrench.png)}
-.to_me_16 {background-image: url(/images/png/16/to_me.png)}
 .trash_16 {background-image: url(/images/png/16/trash.png)}
-.unchecked_16 {background-image: url(/images/png/16/unchecked.png)}
 .user_add_16 {background-image: url(/images/png/16/user_add.png)}
 .world_16 {background-image: url(/images/png/16/world.png)}
 .wrench_16 {background-image: url(/images/png/16/wrench.png)}
