@@ -20,11 +20,6 @@ table.posts textarea {
   padding:4px;
 }
 
-table.posts a { 
-  font-size:11px;
-  text-transform:capitalize;
-}
-
 .post-author {
   text-align: right;
   padding-left: 10px;

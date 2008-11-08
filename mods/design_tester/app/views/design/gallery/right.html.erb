@@ -1,71 +1,53 @@
-
-
-
- <ul class='side_list'>
+<ul class='side_list'>
+  <li class="small_icon" id="watch_li"><input class="check" id="watch_checkbox" name="watch_checkbox" type="checkbox" value="1" /><a class="check" href="#">Watch For Updates</a></li>
+  <li class="small_icon add_star_16"><a href="/base_page/participation/add_star?page_id=5811">Add Star (2)</a></li>
+</ul>
  
-   <li class="small_icon" id="watch_li"><input class="check" id="watch_checkbox" name="watch_checkbox" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')})" type="checkbox" value="1" /><a class="check" href="#" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">watch for updates</a></li>
+<hr class="thin" />  
 
-   <li class="small_icon add_star_16"><a href="/base_page/participation/add_star?page_id=5811" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', '_method'); m.setAttribute('value', 'post'); f.appendChild(m);var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', 'authenticity_token'); s.setAttribute('value', '0c2ab596ed717ad3622a901f3fc6aa4422f7a28a'); f.appendChild(s);f.submit();return false;">add star (2)</a></li>
- 
- </ul>
- 
- <hr class="thin" />  
-
- <ul class='side_list'>      
- 
-   <li class="small_icon group_16" id="delete_li"><a href="#">share gallery</a></li>
-   
-   <li class="small_icon" id="watch_li"><input class="check" id="watch_checkbox" name="watch_checkbox" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')})" type="checkbox" value="1" /><a class="check" href="#" onclick="new Ajax.Request('/base_page/participation/add_watch?page_id=5811', {asynchronous:true, evalScripts:true, onLoading:function(request){$('watch_checkbox').hide();$('watch_li').addClassName('spinner_icon');}, parameters:'authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">Make Public</a></li>
- 
- </ul>
+<ul class='side_list'>      
+  <li class="small_icon group_16" id="delete_li"><a href="#">Share Gallery</a></li>
+  <li class="small_icon" id="watch_li"><input class="check" id="watch_checkbox" name="watch_checkbox" type="checkbox" value="1" /><a class="check" href="#">Public</a></li>
+</ul>
  
  <hr class="thin" />
 
  <ul class='side_list'>      
- 
-   <li class="small_icon minus_16" id="delete_li"><a href="#" onclick="new Ajax.Request('/base_page/participation/show_popup?name=details&amp;page_id=5811', {asynchronous:true, evalScripts:true, onComplete:function(request){$('details_li').removeClassName('spinner_icon');$('details_li').addClassName('details_icon');}, onLoading:function(request){$('details_li').removeClassName('details_icon');$('details_li').addClassName('spinner_icon');}, parameters:absolutePositionParams(this) + '&amp;authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">delete gallery</a></li>
-   <li class="small_icon application_go_16" id=" move_li"><a href="#" onclick="new Ajax.Request('/base_page/participation/show_popup?name=details&amp;page_id=5811', {asynchronous:true, evalScripts:true, onComplete:function(request){$('details_li').removeClassName('spinner_icon');$('details_li').addClassName('details_icon');}, onLoading:function(request){$('details_li').removeClassName('details_icon');$('details_li').addClassName('spinner_icon');}, parameters:absolutePositionParams(this) + '&amp;authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">move gallery</a></li>
-   <li class="small_icon table_16" id="details_li"><a href="#" onclick="new Ajax.Request('/base_page/participation/show_popup?name=details&amp;page_id=5811', {asynchronous:true, evalScripts:true, onComplete:function(request){$('details_li').removeClassName('spinner_icon');$('details_li').addClassName('details_icon');}, onLoading:function(request){$('details_li').removeClassName('details_icon');$('details_li').addClassName('spinner_icon');}, parameters:absolutePositionParams(this) + '&amp;authenticity_token=' + encodeURIComponent('0c2ab596ed717ad3622a901f3fc6aa4422f7a28a')}); return false;">gallery details</a></li>
- 
+   <li class="small_icon minus_16" id="delete_li"><a href="#">Delete Gallery</a></li>
+   <li class="small_icon application_go_16" id=" move_li"><a href="#">Move Gallery</a></li>
+   <li class="small_icon table_16" id="details_li"><a href="#">Gallery Details</a></li>
  </ul>
    
   <hr class="thick" />  
-
 
  <h3 class="dim">groups</h3>
  <ul class='side_list'>
      
-   <li><a href="/rails" class="group_link" style="background-image: url(https://we.riseup.net/avatars/592/small.jpg)"><span class="admin">Ruby on Rails</span></a></li>
+   <li><a href="/rails" class="name_icon small" style="background-image: url(https://we.riseup.net/avatars/592/small.jpg)"><span class="admin">Ruby on Rails</span></a></li>
 
  </ul>
  
   <hr class="thick" />  
 
- <h3 class="dim">people</h3>
+<h3 class="dim">people</h3>
      
- <ul class='side_list people'>
-     
-   <li><a href="/elijah" class="name_link" style="background-image: url(https://we.riseup.net/avatars/804/medium.jpg);"><span>elijah</span></a></li>
-   
-   <li><a href="/felix" class="name_link" style="background-image: url(https://we.riseup.net/avatars/0/medium.jpg);"><span>felix</span></a></li>
-     
-   <li><a href="/msutton" class="name_link" style="background-image: url(https://we.riseup.net/avatars/636/medium.jpg);"><span>Maira</span></a></li>
-     
-   <li><a href="/suqzi" class="name_link" style="background-image: url(https://we.riseup.net/avatars/176/medium.jpg);"><span>suqzi</span></a></li>
+<ul class='side_list'>
+ <li><a href="/elijah" class="name_icon small" style="background-image: url(https://we.riseup.net/avatars/804/small.jpg);"><span>elijah</span></a></li> 
+ <li><a href="/felix" class="name_icon small" style="background-image: url(https://we.riseup.net/avatars/0/small.jpg);"><span>felix</span></a></li>
+ <li><a href="/msutton" class="name_icon small" style="background-image: url(https://we.riseup.net/avatars/636/small.jpg);"><span>Maira</span></a></li>
+ <li><a href="/suqzi" class="name_icon small" style="background-image: url(https://we.riseup.net/avatars/176/small.jpg);"><span>suqzi</span></a></li>
+</ul>
 
- </ul>
-
- <hr class="thick" /> 
+<hr class="thick" /> 
 
 <h3 class="dim">tags</h3>
- <div class='tags'>
 
-   <a href="#" class="tag1">ajax</a>
-   <a href="#" class="tag1">apache</a>
-   <a href="#" class="tag2">api</a>
-   <a href="#" class="tag3">bugs</a>
-   <a href="#" class="tag1">cache</a>
-   <a href="#" class="tag2">crabgrass</a>
-
- </div>
+<div class='tags'>
+ <a href="#" class="tag1">ajax</a>
+ <a href="#" class="tag1">apache</a>
+ <a href="#" class="tag2">api</a>
+ <a href="#" class="tag3">bugs</a>
+ <a href="#" class="tag1">cache</a>
+ <a href="#" class="tag2">crabgrass</a>
+</div>
 
