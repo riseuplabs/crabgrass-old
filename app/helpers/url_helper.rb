@@ -45,24 +45,24 @@ module UrlHelper
     end
     
     display_name, path = name_and_url_for_group(arg,options)
-    style = options[:style]
+    style = options[:style] || ""
     label = options[:label] || display_name
-    klass = options[:class] || 'name_link'
+    klass = options[:class] || 'name_icon'
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
-      size = Avatar.pixels(options[:avatar])[0..1].to_i
+      #size = Avatar.pixels(options[:avatar])[0..1].to_i
+      klass += " #{options[:avatar]}"
       if arg and arg.avatar
         url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       else
         url = avatar_url(:id => 0, :size => options[:avatar])
       end
-      if style
-        style = "background-image: url(#{url})" + style
-      else
-        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
-      end
+      style = "background-image:url(#{url});" + style
+#      else
+#        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
+#      end
     end
     avatar + link_to(label, path, :class => klass, :style => style)
   end
@@ -161,24 +161,25 @@ module UrlHelper
   #  :avatar => [:small | :medium | :large]
   #  :label -- override display_name as the link text
   #  :style -- override the default style
-  #  :class -- override the default class of the link (name_link)
+  #  :class -- override the default class of the link (name_icon)
   def link_to_user(arg, options={})
     login, path, display_name = login_and_path_for_user(arg,options)
-    style = options[:style]                         # allow style override
+    style = options[:style] || ""                   # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
-    klass = options[:class] || 'name_link'
+    klass = options[:class] || 'name_icon'
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
-      size = Avatar.pixels(options[:avatar])[0..1].to_i
+      #size = Avatar.pixels(options[:avatar])[0..1].to_i
+      klass += " #{options[:avatar]}"
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      if style
-        style = "background-image: url(#{url});" + style
-      else
-        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
-      end
+      #if style
+        style = "background-image:url(#{url});" + style
+      #else
+#        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
+ #     end
     end
     avatar + link_to(label, path, :class => klass, :style => style)
   end
@@ -193,10 +194,11 @@ module UrlHelper
 
   # display a user or a group, without a link, with an avatar
   def display_entity(entity, size=:small)
-    pixels = Avatar.pixels(size)[0..1].to_i
+    #pixels = Avatar.pixels(size)[0..1].to_i
     url = avatar_url(:id => (entity.avatar||0), :size => size)
-    style = "background: url(#{url}) no-repeat 0% 50%; padding: #{pixels/4}px 0 #{pixels/4}px #{pixels/5 + pixels}px;"
-    content_tag :div, entity.display_name, :style => style
+    klass = "name_icon #{size}"
+    style = "background-image:url(#{url})" # no-repeat 0% 50%; padding: #{pixels/4}px 0 #{pixels/4}px #{pixels/5 + pixels}px;"
+    content_tag :div, entity.display_name, :style => style, :class => klass
   end
 
   ##

@@ -2,27 +2,6 @@
  **  UI ELEMENTS
  **/ 
 
-a, a:active{
-	text-decoration:none;
-	color:#4986BC;
-}
-a:hover{
-	color:#4986BC;
-	text-decoration:underline;
-}
-a.dotted {
-  color: black; text-decoration: none; outline: 0;
-  border-bottom: 1px #999 dotted;
-}
-a.invert {color: white; background-color: #003399;}
-a.active {font-weight: bold;}
-a.selected {font-weight: bold;}
-a.hov {text-decoration:none;}
-a.hov:hover {text-decoration:underline;}
-a.noline, a.imglink { text-decoration: none; }
-a.imglink span { text-decoration: underline; }
-img.avatar { vertical-align: middle; } 
-
 .handle {cursor: move;}
 .not_handle {cursor: default;}
 
@@ -72,6 +51,38 @@ hr.thin, hr.thick {
 }
 hr.thin {border-bottom:1px dotted #ccc;}
 hr.thick {border-bottom:2px solid #E6E6E6;}
+
+/**
+ ** LINKING
+ **/
+
+a, a:active{
+	text-decoration:none;
+	color:#4986BC;
+}
+a:hover{
+	color:#4986BC;
+	text-decoration:underline;
+}
+a.dotted {
+  color: black; text-decoration: none; outline: 0;
+  border-bottom: 1px #999 dotted;
+}
+a.invert {color: white; background-color: #003399;}
+a.active {font-weight: bold;}
+a.selected {font-weight: bold;}
+a.hov {text-decoration:none;}
+a.hov:hover {text-decoration:underline;}
+a.noline, a.imglink { text-decoration: none; }
+a.imglink span { text-decoration: underline; }
+
+/*
+a.name_link {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+}
+*/
+
 
 /** 
  **  COLORED HEADINGS
@@ -127,12 +138,16 @@ ul.side_list li.small_icon {
   background-position: 2px 50%;
 }
 
-input.check {
+ul.side_list input.check {
   position: absolute;
-  left: 15px;
+  left: 0px;
   margin-top: 5px;
 }
-
+/*
+ul.side_list a.name_link {
+  padding: 4px 0 4px 26px;
+}
+*/
 
 /**
  ** TABS

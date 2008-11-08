@@ -65,6 +65,7 @@ class PageTerms < ActiveRecord::Base
       has :page_updated_at
       has :starts_at
       has :ends_at
+      has :views
 
       # ids
       has :created_by_id

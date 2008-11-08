@@ -166,7 +166,6 @@ div#bannercontent form a {
 .title_box h1 span {
   margin-left: 3em;
 }
-
 /*
 .title_box h1 {
   color: #607689;
@@ -213,11 +212,17 @@ div.page_title a {
 */
 
 /* breadcrumb */
-.title_box .breadcrumb {
-  margin:0;
-  padding: 1em 0 0 2em;
+.title_box .breadcrumb, .title_box .summary {
   font-size: 0.85em;
+}
+.title_box .breadcrumb {
+  padding: 1em 0 0 2em;
   margin-bottom: -0.5em;
+}
+.title_box .summary {
+  padding: 0 0 1em 2em;
+  margin-top: -1em;
+  color: #555;
 }
 
 /*
@@ -512,13 +517,18 @@ hover labels for icon_boxes
 }
 
 /**
- ** RIGHTMENU
+ ** RIGHT_COLUMN
  **/
 
+.right_column h3 {
+  margin: 0.5em 0;
+  text-transform:capitalize;
+}
+
+/*
 .rightmenu .col1 { 
   background:#DAF0FC none repeat scroll 0% 50%
   border:1px solid #E1E1E1;
-  margin-top:1.25em;
 }
 
 .rightmenu {
@@ -610,6 +620,7 @@ hover labels for icon_boxes
 .rightmenu h3{
   text-transform:capitalize;
 }
+*/
 
 /**
  ** CREATE PAGE
@@ -705,7 +716,3 @@ td .legend{
 .scroll{
 	border:none;
 }
-
-
-
-

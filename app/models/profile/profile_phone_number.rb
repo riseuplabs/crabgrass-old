@@ -6,6 +6,10 @@ class ProfilePhoneNumber < ActiveRecord::Base
   
   set_table_name 'phone_numbers'
 
+  @@icons= Hash.new('site').merge({ 
+    'Home' => 'house'
+  })
+  
   validates_presence_of :phone_number_type
   validates_presence_of :phone_number
 
@@ -16,6 +20,10 @@ class ProfilePhoneNumber < ActiveRecord::Base
   
   def self.options
     [:Home,:Fax,:Mobile,:Pager,:Work, :Other].to_localized_select
+  end
+
+  def icon
+    @@icons[phone_number_type]
   end
   
 end

@@ -6,6 +6,9 @@ class ProfileImAddress < ActiveRecord::Base
 
   set_table_name 'im_addresses'
 
+  @@icons=Hash.new('group').merge({
+  })
+  
   validates_presence_of :im_type
   validates_presence_of :im_address
 
@@ -17,5 +20,9 @@ class ProfileImAddress < ActiveRecord::Base
   def self.options
     ['Jabber', 'IRC', 'Silc', 'Gizmo', 'AIM',
     'Google Talk', 'MSN', 'Skype', 'Yahoo', 'Other'].to_localized_select
+  end
+  
+  def icon
+    @@icons[im_type]
   end
 end

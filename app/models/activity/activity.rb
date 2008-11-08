@@ -58,7 +58,7 @@ class Activity < ActiveRecord::Base
   #     (AND activity.public == true)
   #
   named_scope :for_user, lambda {|user, current_user|
-    if current_user and current_user.friend_of?(user)
+    if current_user and (current_user.friend_of?(user) or current_user == user)
       {:conditions => [
         "subject_type = 'User' AND subject_id = ? AND access != ?",
         user.id, Activity::PRIVATE

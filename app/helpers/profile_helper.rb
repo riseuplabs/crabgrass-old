@@ -50,6 +50,26 @@ module ProfileHelper
     tag_id = options.has_key?(:id) ? options[:id] : name
     content_tag :select, option_tags, { "name" => name, "id" => tag_id }.update(options.stringify_keys)
   end
+  
+  def location_line(profile)
+    loc = profile.locations.first
+    "<div class='small_icon world_16'><em>#{:Location.t} </em>: #{loc.city.capitalize}, #{loc.country_name.capitalize}</div>"
+  end
 
+  def birthday_line(profile)
+    "TODO (birthday_line)"#"<div class='small_icon date_16'><em>#{:"Year of birth".t} </em>: #{profile.birthday.year}</div>"
+  end
+  
+  def interest_line(profile)
+    "<div class='small_icon heart_16'><em>(TODO)Interest </em>: Family, Travel, Music, Politics, Outdoors,   Friends</div>"
+  end
+  
+  def member_since_line(profile)
+    "<div class='small_icon status_online_16'><em>#{"Member Since".t} </em>: #{friendly_date(profile.user.created_at)}</div>"
+  end
+  
+  def last_login(user)
+    "#{"Last login:".t} #{friendly_date(user.last_seen_at)}"
+  end
 end
 

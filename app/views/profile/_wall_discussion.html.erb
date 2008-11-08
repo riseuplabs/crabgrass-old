@@ -1,0 +1,57 @@
+<%
+  # locals: posts
+
+  today = []
+  yesterday = []
+  week = []
+  later = []
+  
+  post = posts.shift
+
+  while post and after_day_start?(post.updated_at)
+    today << post
+    post = posts.shift
+  end
+
+  while post and after_yesterday_start?(post.updated_at)
+    yesterday << post
+    post = posts.shift
+  end
+
+  while post and after_week_start?(post.updated_at)
+    week << post
+    post = posts.shift
+  end
+
+  while post
+    later << post
+    post = posts.shift
+  end
+-%>
+<div class="wall_posts">
+<% if today.any? -%>
+  <h4 class='section'><%= :Today.t -%></h4>
+  <% today.each do |post| -%>
+    <%= wall_post(post) -%>
+  <% end -%>
+<% end -%>
+<% if yesterday.any? -%>
+  <h4 class='section'><%= :Yesterday.t -%></h4>
+  <% yesterday.each do |post| -%>
+    <%= wall_post(post) -%>
+  <% end -%>
+<% end -%>
+<% if week.any? -%>
+  <h4 class='section'><%= :This_Past_Week.t -%></h4>
+  <% week.each do |post| -%>
+    <%= wall_post(post) -%>
+  <% end -%>
+<% end -%>
+<% if later.any? -%>
+  <h4 class='section'><%= :Older.t -%></h4>
+  <% later.each do |post| -%>
+    <%= wall_post(post) -%>
+  <% end -%>
+<% end -%>
+
+</div>
