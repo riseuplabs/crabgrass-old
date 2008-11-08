@@ -6,7 +6,8 @@ class Me::DashboardController < Me::BaseController
     @pages = Page.find_by_path('descending/updated_at/ascending/group_name/limit/40', options_for_me)
     @activities = Activity.for_dashboard(current_user).newest.unique.find(:all)
     @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_me(:flow => :announcement))
-   @wall_posts  = current_user.discussion.posts.all(:order => 'created_at DESC')
+    current_user.ensure_discussion
+    @wall_posts  = current_user.discussion.posts.all(:order => 'created_at DESC')
     @current_status = current_user.current_status
   end
 
