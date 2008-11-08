@@ -14,7 +14,7 @@ h1 {
 	font-family: arial, helvetica, sans-serif;
 }
 h1 {font-size: 2.10em;} /* ~ 28px */
-h2 {font-size: 1.125em; clear:both;} /* ~ 18px */
+h2 {font-size: 1.125em; } /* ~ 18px */
 h3 {font-size: 1em;} /* ~ 15px */
 
 /**
@@ -59,9 +59,7 @@ div#banner a {
 div#banner a:hover {
   text-decoration: underline;
 }
-#summary{
-  display:none;
-}
+
 
 #bannercontent table td span a{
   font-weight:300;
@@ -70,6 +68,9 @@ div#banner a:hover {
 }
 */
 
+#summary{
+  display:none;
+}
 
 /* search form in banner */
 form.minisearch {
@@ -581,7 +582,7 @@ hover labels for icon_boxes
 }
 .rightmenu ul.side_list li a { 
   text-transform:capitalize;
-  padding:4px 0px;
+  padding:2px 0;
 }
 
 .rightmenu ul.side_list li a.name_link { 
@@ -620,3 +621,98 @@ hover labels for icon_boxes
   text-transform:capitalize;
 }
 */
+
+/**
+ ** CREATE PAGE
+ **/
+
+/*LEFT*/
+.other_contribute{
+  float:right;
+  margin-right:1.5em;
+  height:60px;
+  line-height:60px;
+}
+.contribute_title_page{
+  height:60px;
+  line-height:60px;
+}
+.other_contribute a, .other_contribute a:hover{
+  color:#428521;
+}
+h1 span h2 .article_16{
+}
+.left h2.info_16, .left h2.article_16, .right h2.group_16{
+	color:#72899B;
+	margin-top:0.3em;
+}
+.create_page .left, .create_page .right{
+  display:inline;
+  float:left;
+}
+.left2{
+	clear:both;
+	float:none;
+}
+.create_page .right{
+	padding-right:20px;
+}
+.left table td input, .left table td textarea {
+  margin:0;
+  padding:0;
+  width:350px;
+  border:1px solid #E1E1E1;
+}
+.left table td input{
+	height:26px;
+}
+.left table td.label {
+  padding:0;
+  text-align:right;
+  color:#898989;
+  font-size:1em;
+  font-weight:bold;
+  padding-left:2.2em;
+}
+.left table td{
+  padding:20px 20px 0 20px;
+}
+td .legend{
+	color:#898989;
+	font-size:0.8em;
+}
+.article_data{
+	padding:0;
+}
+
+/*RIGHT*/
+.share_page h2{
+  color:#898989;
+  font-size:1em;
+  font-weight:bold;
+  padding-top:20px;
+}
+.right ul.tabset{
+	list-style:none;
+}
+.right table{
+	border:none;
+	margin-top:20px;
+}
+
+.right th{
+	border:1px solid  #E1E1E1;
+
+}
+.right table th{
+  color:#72889A;
+  font-size:0.8em;
+  font-weight:bold;
+  text-align:left;
+  border-left:1px solid  #E1E1E1;
+  padding:1em;
+}
+
+.scroll{
+	border:none;
+}
