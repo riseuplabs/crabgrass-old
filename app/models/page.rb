@@ -220,7 +220,7 @@ class Page < ActiveRecord::Base
     end
     entity
   end
-
+  
   #######################################################################
   ## DENORMALIZATION
 
@@ -261,4 +261,13 @@ class Page < ActiveRecord::Base
     PageStork.send(function, options)
   end
 
+  def class_display_name
+    self.class.class_display_name
+  end
+  
+  # override this in subclasses…
+  def supports_attachments
+    true
+  end
+  
 end

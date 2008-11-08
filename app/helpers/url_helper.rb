@@ -214,7 +214,8 @@ module UrlHelper
     else
       link_path = "/me/search/tag/#{name}"
     end
-    link_to h(tag.name), link_path
+    # FIXME: determine the tag class non-stupidly.
+    link_to h(tag.name), link_path, :class => "tag#{Kernel.rand(3) + 1}"
 
   end
 

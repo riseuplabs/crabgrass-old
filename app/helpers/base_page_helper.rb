@@ -19,12 +19,12 @@ module BasePageHelper
   
   def link_to_user_participation(upart)
     label = content_tag :span, upart.user.display_name, :class => upart.access_sym
-    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
+    link_to_user(upart.user, :avatar => 'small', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)
     label = content_tag :span, gpart.group.display_name, :class => gpart.access_sym
-    link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
+    link_to_group(gpart.group, :avatar => 'small', :label => label, :style => '')
   end
 
   ## POSTS HELPERS
@@ -72,7 +72,7 @@ module BasePageHelper
     checkbox_id = 'watch_checkbox'
     action =  watch ? 'remove_watch' : 'add_watch'
     url = {:controller => 'base_page/participation', :action => action, :page_id => @page.id}
-    checkbox_line = sidebar_checkbox('watch for updates', watch, url, li_id, checkbox_id)
+    checkbox_line = sidebar_checkbox('Watch For Updates'[:watch_checkbox], watch, url, li_id, checkbox_id)
     content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
   end
 
@@ -81,29 +81,34 @@ module BasePageHelper
       li_id = 'public_li' 
       checkbox_id = 'public_checkbox'
       url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :public => (!@page.public?).to_s}
-      checkbox_line = sidebar_checkbox('public', @page.public?, url, li_id, checkbox_id)
+      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id)
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     end
   end
 
   def star_line
     if @upart and @upart.star?
-      icon = 'full_star_icon'
-      link = link_to('remove star', {:controller => 'base_page/participation',
-        :action => 'remove_star', :page_id => @page.id}, :method => 'post')
+      icon = 'star_16'
+      link_action = 'remove_star'
+      link_text = 'Remove Star (:star_count)'[:remove_star_link]
     else
-      icon = 'empty_star_icon'
-      link = link_to('add star', {:controller => 'base_page/participation', 
-        :action => 'add_star', :page_id => @page.id}, :method => 'post')
+      icon = 'star_empty_16'
+      link_action = 'add_star'
+      link_text = 'Add Star (:star_count)'[:add_star_link]
     end
+    link = link_to(link_text % {:star_count => @page.stars},
+      {:controller => 'base_page/participation',
+        :action => link_action, :page_id => @page.id},
+      :method => 'post')
     content_tag :li, link, :class => "small_icon #{icon}"
   end
 
   def destroy_page_line
     if current_user.may?(:admin, @page)
-      link = link_to('delete page', page_xurl(@page, :action => 'destroy'),
+      link = link_to("Delete :page_class"[:delete_link] % { :page_class => page_class },
+        page_xurl(@page, :action => 'destroy'),
         :method => 'post', :confirm => 'Are you sure you want to delete this page?')
-      content_tag :li, link, :class => 'small_icon delete_icon'
+      content_tag :li, link, :class => 'small_icon minus_16'
     end
   end
 
@@ -115,8 +120,8 @@ module BasePageHelper
     if @page.tags.any?
       links = @page.tags.collect do |tag|
         tag_link(tag, @page.group_name, @page.created_by_login)
-      end.join(", ")
-      content_tag :div, links, :class => 'side_indent'
+      end.join("\n")
+      content_tag :div, links, :class => 'tags'
     elsif current_user.may? :edit, @page
       ''
     end
@@ -195,6 +200,7 @@ module BasePageHelper
   end
 
   def edit_tags_line
+    # FIXME: get some CSS mockup for new design, then apply it
     if current_user.may? :edit, @page
       popup_line(:name => 'tags', :label => 'edit', :icon => 'tag_icon')
     end
@@ -202,18 +208,18 @@ module BasePageHelper
 
   def share_line
     if current_user.may? :view, @page
-      popup_line(:name => 'share', :label => 'share page', :icon => 'share_icon', :controller => 'participation')
+      popup_line(:name => 'share', :label => "Share :page_class"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
     end
   end
 
   def move_line
     if current_user.may? :admin, @page
-      popup_line(:name => 'move', :label => 'move page', :icon => 'move_icon', :controller => 'participation')
+      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'application_go_16', :controller => 'participation')
     end
   end
 
   def details_line
-     popup_line(:name => 'details', :label => 'details', :icon => 'details_icon', :controller => 'participation')
+     popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table_16', :controller => 'participation')
   end
 
   ##
@@ -376,4 +382,8 @@ module BasePageHelper
     end
   end
 
+  def page_class
+    @page.class_display_name.t.capitalize
+  end
+  
 end
