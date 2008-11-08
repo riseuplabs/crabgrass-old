@@ -1,0 +1,21 @@
+<div class='landing'>
+
+<h1><%= "Group Home"[:group_home_headline] %></h1>
+
+<table class="info_box">
+<tr>
+  <td class="left">
+    <h2 class='dim'>Welcome</h2>
+    <% if @group.is_council? -%>
+      <p><%= 'coordinating committee'.t %></p>
+    <% end -%>
+    <p class="description"><%=h @group.summary %></p>
+    <%= link_span(:bullet, edit_settings_link, leave_group_link) %>
+  </td>
+  <td class='right'>
+    <%= render :partial => 'group/title_box_memberships' %>
+  </td>
+</tr>
+</table>
+
+</div>

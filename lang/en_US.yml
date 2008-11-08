@@ -326,18 +326,20 @@ location_country: country
 ## GROUPS
 ##
 
+group_home_headline: "Group Home"
+group_home_welcome: "Welcome"
 group_administration_not_allowed: "You cannot administer this group."
 page_not_part_of_group: "Page not part of this group"
 group_successfully_updated: "Group was successfully updated."
 only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
 group_successfully_created: "Group was successfully created."
-dont_understand_group_type: Could not understand group type :type
-dont_have_permission_to_create_committees: You do not have permission to create committees under %s
-fullname: Full Name
-descriptive_name_for_display: A descriptive name used for display
-link_name: Link Name
-language: Language
-minimum_stars_for_important_pages: Minimum stars for important pages
+dont_understand_group_type: "Could not understand group type :type"
+dont_have_permission_to_create_committees: "You do not have permission to create committees under %s"
+fullname: "Full Name"
+descriptive_name_for_display: "A descriptive name used for display"
+link_name: "Link Name"
+language: "Language"
+minimum_stars_for_important_pages: "Minimum stars for important pages"
 minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
 group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
 committee_publicly_visible_description: Committees are viewable by non-members at we.riseup.net/yourgroupname
@@ -358,7 +360,6 @@ expired_featured_content: Expired Featured Content
 feature_button: Feature!
 reactivate_button: Reactivate!
 no_group_named: there is no group named <b>:name</b>.
-recent_activity: Recent Activity
 featured_content: Featured Content
 group_wiki: Group Wiki
 rss_feed: RSS Feed

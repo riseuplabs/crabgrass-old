@@ -9,7 +9,6 @@
     <%- end -%>
   </h1>
 <% end %>
-<%= groups_navigation_links %>
 
 <% form_tag({:action => "create", :id => group_type},:id => "createform") do %>
   <%= render(:partial => 'group/form', :locals => {:submit => false}) %>

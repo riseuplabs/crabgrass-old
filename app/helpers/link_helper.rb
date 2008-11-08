@@ -116,24 +116,29 @@ html_options))
   # if last argument is true or if the url is in the form of a hash
   # and the current params match this hash.
   def link_to_active(link_label, url_hash, active=nil)
-    if url_hash.is_a? Hash
-      if params[:controller] && params[:controller] !~ /^\//
-        params[:controller] = '/' + params[:controller]
-      end
-      if url_hash[:controller] && url_hash[:controller] !~ /^\//
-        url_hash[:controller] = '/' + url_hash[:controller] unless url_hash[:controller] =~ /^\//
-      end
-    end
-    if url_hash.is_a? Hash and active.nil?
-      url_hash[:action] = 'index' if url_hash[:action].nil?
-      selected = url_hash.inject(true) do |selected, p|
-        param, value = p
-        selected and params[param].to_s == value.to_s
-      end
-      selected_class = selected ? 'active' : ''
-    else
-      selected_class = active ? 'active' : ''
-    end
+    active = url_active?(url_hash) || active  # yes this is weird, but we want url_active? to always get called.
+    selected_class = active ? 'active' : ''
     link_to(link_label,url_hash, :class => selected_class)
   end
+
+  def url_active?(url_hash)
+    return false unless url_hash.is_a? Hash
+
+    if params[:controller] && params[:controller] !~ /^\//
+      params[:controller] = '/' + params[:controller]
+    end
+    if url_hash[:controller] && url_hash[:controller] !~ /^\//
+      url_hash[:controller] = '/' + url_hash[:controller] unless url_hash[:controller] =~ /^\//
+    end
+  
+    url_hash[:action] = 'index' if url_hash[:action].nil?
+
+    selected = url_hash.inject(true) do |selected, p|
+      param, value = p
+      selected and params[param].to_s == value.to_s
+    end
+
+    return selected
+  end
+
 end

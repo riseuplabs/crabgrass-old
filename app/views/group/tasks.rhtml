@@ -2,7 +2,7 @@
 
 <div>
   <b><%= "pending tasks."[:pending_tasks] %></b>
-  <%= link_to :create_a_new_something.t % {:something => 'task list'.t}, create_page_url(TaskListPage, :group_id => @group.id) %>
+  <%= link_to ("create a new :thing"[:create_a_new_thing] % {:thing => 'task list'.t}) + ARROW, create_page_url(TaskListPage, :group_id => @group.id) %>
 </div>
 
 <p>

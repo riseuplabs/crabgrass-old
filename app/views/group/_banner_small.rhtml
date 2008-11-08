@@ -1,14 +1,14 @@
 <table>
   <tr>
     <% if @group.committee? -%>
-      <td><%= link_to_group @group.parent, :text => avatar_for(@group.parent,'xsmall') %></td>
+      <td><%= link_to_group @group.parent, :text => avatar_for(@group.parent,'small') %></td>
       <td><span style='font-weight: bold;'>&rarr;</span>&nbsp;</td>
-      <td nowrap='nowrap' width='99%' valign='center'><%= link_to_group @group, :text => avatar_for(@group,'xsmall')%> <%= link_to_group @group %></td>
+      <td nowrap='nowrap' width='99%' valign='center'><%= link_to_group @group, :text => avatar_for(@group,'small')%> <%= link_to_group @group %></td>
     <% else -%>
       <td><%= avatar_for @group,'small'%></td>
       <td nowrap='nowrap' width='99%'><h3><%= link_to_group @group %></h3></td>
     <% end -%>
-    <td align='right'><%= mini_search_form %></td>
+    <td align='right' nowrap='nowrap'><%= mini_search_form %></td>
   </tr>
 </table>
 

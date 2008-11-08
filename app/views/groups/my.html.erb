@@ -1,5 +1,4 @@
 <% @title_box = content_tag :h1, 'My Groups'[:my_groups] -%>
-<%= groups_navigation_links %>
 
 <%- if @groups.any? -%>
   <%= render :partial => 'group', :collection => @groups %>

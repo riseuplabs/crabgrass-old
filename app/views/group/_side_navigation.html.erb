@@ -1,23 +1,13 @@
-<h3><%= 'Navigation'.t %></h3>
 <ul class='side_list'>
-  <li>
-   <%= link_to_active 'home'.t, '/'+@group.name, params[:_context] == @group.name %>
-  </li>
-  <li>
-   <%= link_to_active 'search'.t, url_for_group(@group,:action => 'search') %>
-  </li>
-  <li>
-    <%= link_to_active 'archive'.t, url_for_group(@group, :action => 'archive') %>
-  </li>
-  <li>
-    <%= link_to_active 'tags'.t, url_for_group(@group, :action => 'tags') %>
-  </li>
-  <li>
-    <%= link_to_active 'tasks'.t, url_for_group(@group, :action => 'tasks') %>
-  </li>
-  <li>
-    <%= link_to_active 'discussions'.t, url_for_group(@group, :action => 'discussions') %>
-  </li>
-
+  <%= side_list_li :text => 'home'.t, :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
+  <%# side_list_li :text => 'about'.t, :url => url_for_group(@group,:action => 'about'), :active => ..., :icon => 'info' %>
+  <%= side_list_li :text => 'search'.t, :url => url_for_group(@group,:action => 'search'), :icon => 'magnifier' %>
+  <%= side_list_li :text => 'archive'.t, :url => url_for_group(@group, :action => 'archive'), :icon => 'book_open' %>
+  <%= side_list_li :text => 'tags'.t, :url => url_for_group(@group, :action => 'tags'), :icon => 'tag' %>
+  <%= side_list_li :text => 'tasks'.t, :url => url_for_group(@group, :action => 'tasks'), :icon => 'page_tasks' %>
+  <%= side_list_li :text => 'discussions'.t, :url => url_for_group(@group, :action => 'discussions'), :icon => 'page_discussion' %>
+  <%- if group_member? and !committee? -%>
+    <%= side_list_li :text => 'join chat'.t, :url => {:controller => 'chat', :action => 'channel', :id => @group.name}, :icon => 'chat' %>
+  <%- end -%>
 </ul>
 

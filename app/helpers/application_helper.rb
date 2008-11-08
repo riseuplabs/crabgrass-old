@@ -1,9 +1,24 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  def link_char(links)
+    if links.first.is_a? Symbol
+      char = links.shift
+      return ' &bull; ' if char == :bullet
+      return ' | '
+    else
+      return ' | '
+    end
+  end
+
   ## makes this: link | link | link
   def link_line(*links)
-    "<div class='link_line'>" + links.compact.join(' | ') + "</div>"
+    char = content_tag(:em, link_char(links))
+    content_tag(:div, links.compact.join(char), :class => 'link_line')
+  end
+  def link_span(*links)
+    char = content_tag(:em, link_char(links))
+    content_tag(:span, links.compact.join(char), :class => 'link_line')
   end
 
   ## coverts bytes into something more readable 
@@ -73,6 +88,11 @@ module ApplicationHelper
     end.gsub(/<span class="group">(.*?)<\/span>/) do |match|
       link_to_group($1)
     end
+  end
+
+  def side_list_li(options)
+     active = url_active?(options[:url]) || options[:active]
+     content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
 end

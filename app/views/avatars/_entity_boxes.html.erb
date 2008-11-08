@@ -2,18 +2,23 @@
   # a set of avatar boxes for groups or users, with a link to more of them.
   # requires locals: header, entities
 
-  more_url = nil # TODO: support more link...
+  more_url = nil  if more_url.nil?
+  more_link = nil if more_link.nil?
+  if more_url
+     more_link = link_to "See all"[:see_more_link] + ARROW, more_url, :class => 'more'
+  end
+  after = nil if after.nil?
+  links = nil if links.nil?
 %>
 <% if entities.any? -%>
 <div class="dash_box">
   <h3 class="dim">
     <%= header %>
-    <%- if more_url -%>
-      <span>&bull; <%= link_to "See all"[:see_more_link] + ARROW, more_url, :class => 'more'%></span>
-    <%- end %>
+    <%= link_span(:bullet, links, more_link) %>
   </h3>
   <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
-  <br class='clear' />
+  <hr class='clear' />
+  <%= after %>
 </div>
 <% end %>
 

@@ -1,0 +1,24 @@
+<% if may_see_members? -%>
+  <%- cache(group_cache_key(@group, :what => 'members')) do -%>
+  <%= render :partial => 'avatars/entity_boxes',
+      :locals => {:header => 'Members'[:Members], :entities => @group.groups + @group.users,
+      :more_link => link_to("{count} members"[:group_membership_count, {:count=>(@group.users.size+@group.groups.size).to_s}] + ARROW, list_membership_url),
+      :after => link_line(:bullet, list_membership_link, invite_link, requests_link) } %>
+  <%=  %>
+  <% end -%>
+<% end -%>
+
+<%- if may_see_networks? -%>
+  <%- cache(group_cache_key(@group, :what => 'networks')) do -%>
+    <%- if @group.networks.any? -%>
+      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:Networks], :entities => @group.networks, :after => '&nbsp'} %>
+    <%- end -%>
+  <%- end -%>
+<%- end %>
+
+<% if may_see_committees? -%>
+  <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:Committees], :entities => @group.committees, :after => link_line(create_committee_link)} %>
+  <%- end -%>
+<%- end %>
+

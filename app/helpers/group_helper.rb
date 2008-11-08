@@ -9,7 +9,11 @@ module GroupHelper
   def may_admin_group?
     logged_in? and current_user.may?(:admin, @group)
   end
-    
+
+  def group_member?
+    logged_in? and current_user.member_of?(@group)
+  end
+
   def committee?
     @group.instance_of? Committee
   end
@@ -68,6 +72,8 @@ module GroupHelper
     end
   end
   
+  def list_membership_url() {:controller => 'membership', :action => 'list', :id => @group.name} end
+
   def list_membership_link(link_suffix='')
     text = ''
     if may_admin_group?
@@ -76,7 +82,7 @@ module GroupHelper
       text = 'see all'.t
     end
     if text.any?
-      link_to_active text+link_suffix, {:controller => 'membership', :action => 'list', :id => @group.name}
+      link_to_active text+link_suffix, list_membership_url
     end
   end
   
@@ -144,5 +150,11 @@ module GroupHelper
     end
   end
 
+  # used to build an rss link from the current params[:path]
+  def current_rss_path
+    path = params[:path] || []
+    path << 'rss' unless path.last == 'rss'
+    return path
+  end
 
 end

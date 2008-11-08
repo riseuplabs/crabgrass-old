@@ -121,6 +121,10 @@ module UrlHelper
     [display_name, url]  
   end
 
+  def group_search_url(*path)
+    url_for_group(@group, :action => 'search', :path => path)
+  end
+
   ##
   ## USERS
   ##

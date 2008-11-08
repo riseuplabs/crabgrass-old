@@ -10,8 +10,7 @@ module GroupsHelper
     if logged_in?
       links << link_to_active( 'create a new group'[:create_group_link], :controller => 'groups', :action => 'create' )
     end
-
-    content_tag(:div, link_line(*links), :style => 'padding-bottom: 1em')
+    content_tag(:div, link_line(*links), :class => 'navigation')
   end
 
 end

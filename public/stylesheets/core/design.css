@@ -47,6 +47,13 @@ h1#site_title {
 #banner, #banner a {color: white;}
 #banner .link_line {margin-left:2em;}
 
+#banner div.navigation {
+  padding: 1.5em 0;
+}
+#banner div.navigation a {
+  font-size: 1.25em;
+}
+
 /*
 #bannercontent  .link_line{
   margin-left:0.5em;
@@ -316,7 +323,7 @@ ul#top_menu2 li a.active,
 ul#top_menu2 li a.active:hover {
   color:#fff;
   font-weight:normal;
-  background:url(/images/background/top_nav_active.png) bottom center #4F5E61 repeat-x;
+  /* background:url(/images/background/top_nav_active.png) bottom center #4F5E61 repeat-x; */
 }
 
 #login_popup {
