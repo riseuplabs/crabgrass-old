@@ -104,3 +104,12 @@ div#bannercontent form {
 	margin-top:-5em;
 }
 
+/*CREATE PAGE*/
+.create_page table{
+} 
+.create_page .right { 
+	padding-left:5px;
+}
+.create_page .right .share_page{
+	padding:0.5em;
+}

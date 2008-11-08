@@ -10,7 +10,7 @@ div, span, p, ol, ul, td {
   font-size:   13px;
   line-height: 18px;
 }
-
+em{font-style: normal;}
 /* html {font-size: 75%;}
 body {font-size: 100%;} */
 
