@@ -209,7 +209,7 @@ module UrlHelper
   ## TAGGING
   ##
 
-  def tag_link(tag, group_name=nil, user_name=nil)
+  def tag_link(tag, group_name=nil, user_name=nil, css_class='tag2')
     name = CGI.escape tag.name
     if group_name  
       link_path = "/group/tags/#{group_name}/#{name}"
@@ -218,8 +218,7 @@ module UrlHelper
     else
       link_path = "/me/search/tag/#{name}"
     end
-    # FIXME: determine the tag class non-stupidly.
-    link_to h(tag.name), link_path, :class => "tag#{Kernel.rand(3) + 1}"
+    link_to h(tag.name), link_path, :class => css_class
 
   end
 
