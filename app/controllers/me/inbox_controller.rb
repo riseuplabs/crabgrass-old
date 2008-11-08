@@ -4,9 +4,9 @@ class Me::InboxController < Me::BaseController
     if request.post?
       path = build_filter_path(params[:search])
       if path == '/'
-        redirect_to url_for(:controller => 'me/inbox', :action => nil, :path => nil)
+        redirect_to url_for(:controller => '/me/inbox', :action => nil, :path => nil)
       else
-        redirect_to url_for(:controller => 'me/inbox', :action => 'search', :path => nil) + path
+        redirect_to url_for(:controller => '/me/inbox', :action => 'search', :path => nil) + path
       end
     else
       list
@@ -18,17 +18,14 @@ class Me::InboxController < Me::BaseController
   end
 
   def list
-    path = ['inbox'] + filter_path
-    if parsed_path(path).keyword?('vital')
-      path << ['starred','or','unread','or','pending']
-    elsif !parsed_path(path).sort_arg?
-      path << 'descending' << 'updated_at'
-    end
-    @pages = Page.paginate_by_path(path, options_for_inbox(:page => params[:page]))
+    params[:path] = ['descending', 'updated_at'] if params[:path].empty?
+    @pages = Page.paginate_by_path(params[:path], options_for_inbox(:page => params[:page]))
     add_user_participations(@pages)
-    handle_rss(:title => 'Crabgrass Inbox', :link => '/me/inbox',
-                 :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')) or
-      render(:action => 'list')
+    handle_rss(
+      :title => 'Crabgrass Inbox',
+      :link => '/me/inbox',
+      :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+    ) or render(:action => 'list')
   end
 
   # post required

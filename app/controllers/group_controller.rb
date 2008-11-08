@@ -28,8 +28,13 @@ class GroupController < ApplicationController
       clear_context
       return render(:template => 'dispatch/not_found')
     end
-    
-    @pages = Page.find_by_path('descending/updated_at/limit/20', options_for_group(@group))
+
+    params[:path] ||= ""
+    params[:path] = params[:path].split('/')
+    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
+    params[:path] += ['limit','20']
+
+    @pages = Page.find_by_path(params[:path], options_for_group(@group))
     @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
 
     @profile = @group.profiles.send(@access)
@@ -222,6 +227,7 @@ class GroupController < ApplicationController
       path = build_filter_path(params[:search])
       redirect_to url_for_group(@group, :action => 'search', :path => path)
     else
+      params[:path] = ['descending', 'updated_at'] if params[:path].empty?
       @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page]))
       if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
         @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
@@ -236,7 +242,7 @@ class GroupController < ApplicationController
   
   # login not required
   def discussions
-    params[:path] ||= []
+    params[:path] = ['descending', 'updated_at'] if params[:path].empty?
     @pages = Page.paginate_by_path(['type','discussion'] + params[:path],
       options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
     @columns = [:icon, :title, :posts, :contributors, :last_post]

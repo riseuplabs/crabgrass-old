@@ -1,0 +1,136 @@
+<%
+=begin
+
+This is the master partial to display any list of pages. 
+
+It slices, it dices! It has magical properties! In other words, it is flexible
+and can be used in every case where you need a table of pages. 
+
+local variables which may be passed in
+------------------------------------
+
+  * pages: an array of pages. the default is @pages variable.
+
+  * columns: what columns to display. default is 
+    [:icon, :title, :updated_by, :update_at, :posts]
+    or @columns variable.
+
+  * heading: show heading if set to true. default is true.
+
+  * show_pagination_controls: defaults to true if paginating.
+
+  * show_time_dividers: defaults to true if sorting by time.
+
+=end
+
+
+pages   ||= @pages
+columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
+colspan = columns.size
+heading = true if heading.nil?
+show_pagination_controls = true if pages.is_a? WillPaginate::Collection
+show_time_dividers = parsed_path.sort_by_time? if show_time_dividers.nil?
+any_results = pages.any?
+sortable = true
+
+if show_time_dividers
+  today = []; yesterday = []; week = []; later = [];
+  pages = array_of_pages(pages)
+  page = pages.shift
+  while page and after_day_start?(page.updated_at)
+    today << page
+    page = pages.shift
+  end
+  while page and after_yesterday_start?(page.updated_at)
+    yesterday << page
+    page = pages.shift
+  end
+  while page and after_week_start?(page.updated_at)
+    week << page
+    page = pages.shift
+  end
+  unless today.size + yesterday.size + week.size > 1
+    show_time_dividers = false
+  else
+    while page
+      later << page
+      page = pages.shift
+    end
+  end
+end
+
+-%>
+<%= pagination_links(pages) if any_results and show_pagination_controls %>
+<div class='page_list'>
+  <table>
+    <%- if !any_results -%>
+      <tr><td colspan="<%= colspan %>"><%= "No Results"[:no_search_results] %></td></tr>
+    <%- else -%>
+    <%- if heading -%>
+
+      <%#
+      ### PAGE HEADING
+      #%>
+
+      <tr>
+        <%- columns[0..-2].each do |column| -%>
+          <%= page_list_heading(column, :sortable => sortable) %>
+        <%- end -%>
+        <%= page_list_heading(columns[-1], :sortable => sortable, :class => 'last') %>
+      </tr>
+
+    <%- end -%>
+    <%- if show_time_dividers -%>
+
+      <%#
+      ### PAGE ROWS DIVIDED BY TIME
+      #%>
+
+      <% if today.any? -%>
+        <%- reset_cycle 'page_list_cycle' -%>
+        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Today"[:date_today] %></td></tr></tbody>
+        <%- today.each do |page| -%>
+          <%= page_row(page, columns) %>
+        <%- end -%>
+      <% end -%>
+
+      <% if yesterday.any? -%>
+        <%- reset_cycle 'page_list_cycle' -%>
+        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Yesterday"[:date_yesterday] %></td></tr></tbody>
+        <%- yesterday.each do |page| -%>
+          <%= page_row(page, columns) %>
+        <%- end -%>
+      <% end -%>
+
+      <% if week.any? -%>
+        <%- reset_cycle 'page_list_cycle' -%>
+        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "This Past Week"[:date_this_week] %></td></tr></tbody>
+        <%- week.each do |page| -%>
+          <%= page_row(page, columns) %>
+        <%- end -%>
+      <% end -%>
+
+      <% if later.any? -%>
+        <%- reset_cycle 'page_list_cycle' -%>
+        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Older"[:date_older] %></td></tr></tbody>
+        <%- later.each do |page| -%>
+          <%= page_row(page, columns) %>
+        <%- end -%>
+      <% end -%>
+
+    <%- else -%>
+
+      <%#
+      ### NORMAL PAGE ROWS
+      #%>
+
+      <%- pages.each do |page| -%>
+        <%= page_row(page, columns) %>
+      <%- end -%>
+
+    <%- end -%>
+    <% end -%>
+  </table>
+</div>
+<%= pagination_links(pages) if any_results and show_pagination_controls %>
+

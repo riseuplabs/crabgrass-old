@@ -7,8 +7,8 @@
   else
     users ||= nil; groups ||= nil 
   end
-  path = filter_path
-  parsed = parsed_path
+  path = params[:path]
+  parsed = parsed_path(path)
 
   # we use strings for boolean so that we can correctly set defaults
   show_extras ||= 'false'
@@ -23,7 +23,7 @@
 %>
 <%# [show_extras, show_page_types, url].inspect -%>
 
-<div style='text-align:center; line-height: 2.5em;'>
+<div class='page_search_form'>
 <% form_tag(url) do -%>
 
 <% if show_page_types == 'true' -%>

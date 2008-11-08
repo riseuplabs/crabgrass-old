@@ -110,12 +110,17 @@ module PageHelper
     query_string = "?#{elements.join("&")}" unless elements.empty?
     query_string || ""
   end
-      
-  def filter_path(path=nil)
-    @path ||= (path || params[:path] || [])
+  
+  def filter_path()
+    params[:path] || []
   end
   def parsed_path(path=nil)
-    @parsed_path ||= controller.parse_filter_path(path || filter_path)
+    if path
+      @latest_parsed_path = controller.parse_filter_path(path)
+    else
+      @latest_parsed_path ||= controller.parse_filter_path(filter_path)
+    end
+    return @latest_parsed_path
   end
 
 
@@ -124,7 +129,7 @@ module PageHelper
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login group_name title
-    starts_at posts_count contributors_count stars_count
+    starts_at posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -139,18 +144,18 @@ module PageHelper
       return content_tag(:th, text, :class => options[:class])
     end
 
-    path = filter_path
-    parsed = parsed_path
+    path   = filter_path()
+    parsed = parsed_path()
     selected = false
     arrow = ''
     if parsed.sort_arg?(action)
       selected = true
       if parsed.keyword?('ascending')
         link = page_path_link(text,"descending/#{action}")
-        arrow = image_tag('ui/sort-asc.png')
+        arrow = icon_tag('sort_up')
       else
         link = page_path_link(text,"ascending/#{action}")
-        arrow = image_tag('ui/sort-desc.png')
+        arrow = icon_tag('sort_down')
       end
     elsif %w(title created_by_login updated_by_login group_name).include? action
       link = page_path_link(text, "ascending/#{action}")
@@ -159,16 +164,22 @@ module PageHelper
       link = page_path_link(text, "descending/#{action}")
       selected = options[:selected]
     end
-    "<th nowrap class='#{selected ? 'selected' : ''}'>#{link} #{arrow}</th>"
+    content_tag :th, "#{link} #{arrow}", :nowrap => 'nowrap', :class => "#{selected ? 'selected' : ''} #{options[:class]}"
   end
 
   ## used to create the page list headings
-  ## this will create very odd results if *path is not in the current route.
+
   def page_path_link(text,path='',image=nil)
-    hash = params.dup
-    new_path = controller.parse_filter_path(path)
-    current_path = controller.parse_filter_path(hash[:path])
-    hash[:path] = current_path.merge(new_path).flatten
+
+    hash         = params.dup
+    new_path     = parsed_path(path)
+    current_path = parsed_path(hash[:path])
+    hash[:path]  = current_path.merge(new_path).flatten
+
+    if params[:_context]
+      # special hack for landing pages using the weird dispatcher route.
+      hash = "/%s?path=%s" % [params[:_context], hash[:path].join('/')]
+    end
 
     link_to text, hash
   end
@@ -275,11 +286,11 @@ module PageHelper
     elsif column == :last_post
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
-      list_heading 'stars'[:page_list_heading_stars], 'stars_count', options
+      list_heading 'stars'[:page_list_heading_stars], 'stars', options
     elsif column == :owner_with_icon
       list_heading "owner"[:page_list_heading_owner], '', options
     elsif column == :last_updated
-      list_heading "last updated"[:page_list_heading_last_updated], '', options
+      list_heading "last updated"[:page_list_heading_last_updated], 'updated_at', options
     elsif column
       list_heading column.to_s.t, column.to_s, options
     end

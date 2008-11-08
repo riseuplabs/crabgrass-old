@@ -4,7 +4,7 @@ class Me::BaseController < ApplicationController
   stylesheet 'me'
 
   def index
-    redirect_to :controller => 'me/dashboard'
+    redirect_to :controller => '/me/dashboard'
   end
   
   def edit   

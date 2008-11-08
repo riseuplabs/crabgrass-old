@@ -26,11 +26,15 @@ div.page_list {background: white;}
 .page_list th {
   text-transform: uppercase;
   border-bottom: 1px solid #ccc;
+  border-top: 2px solid #ccc;
   padding: 0.75em;
   padding-left: 0.5em;
   text-align: left;
   font-size:0.8em;
   color:#C2C2C2;
+}
+.page_list th.selected {
+  background-color: #eee;
 }
 .page_list span.status {color: red;}
 .page_list span.star {color: #EBBA20; font-weight: bold;}
@@ -74,6 +78,17 @@ div.page_list {background: white;}
 }
 .section h2.alert{
   padding-bottom:1em;
+}
+
+
+/**
+ ** SEARCH
+ **/
+
+div.page_search_form {
+  text-align:center;
+  line-height: 2.5em;
+  margin-bottom: 1em;
 }
 
 /*FILTER MENU*/

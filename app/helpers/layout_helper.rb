@@ -5,7 +5,7 @@ module LayoutHelper
   
   def link_to_breadcrumbs
     if @breadcrumbs and @breadcrumbs.length > 1
-      content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :id => 'breadcrumbs')
+      content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
     else
       ""
     end

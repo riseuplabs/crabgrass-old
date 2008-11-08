@@ -19,7 +19,7 @@ module TimeHelper
     
     if date == today
       # 4:30PM
-      str = time.strftime("%I:%M<span style='font-size: 80%'>%p</span>")
+      str = time.strftime("%I:%M<span>%p</span>")
     elsif today > date and (today-date) < 7
       # Wednesday
       str = time.strftime("%A").t
@@ -30,7 +30,7 @@ module TimeHelper
       # 7/Mar
       str = date.strftime('%d') + '/' + localize_month(date.strftime('%B'))
     end
-    "<label title='#{ full_time(time) }'>#{str}</label>"
+    "<label class='date' title='#{ full_time(time) }'>#{str}</label>"
   end
   
   def localize_month(month)

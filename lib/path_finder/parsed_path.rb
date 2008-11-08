@@ -49,6 +49,10 @@ class PathFinder::ParsedPath < Array
     end
   end
   
+  def sort_by_time?
+    sort_arg?('created_at') or sort_arg?('updated_at')
+  end
+
   def remove_sort
     self.delete_if{|e| e[0] == 'ascending' or e[0] == 'descending' }
   end

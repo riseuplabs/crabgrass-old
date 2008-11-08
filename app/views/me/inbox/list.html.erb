@@ -12,14 +12,11 @@ p#inbox_buttons {
 
 <% form_tag({:controller => 'me/inbox', :action => 'update', :path => params[:path]}, {:id => 'inbox_form'}) do -%>  
 
-<div class='pretty'>
-<%= render :partial => 'pages/list/table', :locals => {:heading => true, :checkbox => true, 
+<%= render :partial => 'pages/list', :locals => {:heading => true, :checkbox => true, 
     :columns => [:checkbox, :icon, :title, :group, :updated_by, :updated_at, :contributors]} %>
 
-</div>
-
 <p id='inbox_buttons'>
-  <%= link_to_function 'Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %>
+  <%= link_to_function 'Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %> &nbsp;&nbsp;
   <%= submit_link 'Remove from inbox'[:remove_from_inbox], :name => 'remove' %> 
 </p>
   

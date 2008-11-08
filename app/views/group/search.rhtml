@@ -3,9 +3,7 @@
   <link rel="alternate" href="<%= url_for group_search_url(*current_rss_path) %>" title="<%= "RSS Feed"[:rss_feed] %>" type="application/rss+xml" />
 <% end %>
 
-<p><%= render :partial => 'pages/search', :locals => {:users => @group.users} %></p>
+<%= render :partial => 'pages/search', :locals => {:users => @group.users} %>
 
-<div class='pretty'>
-<%= render :partial => 'pages/list/table', :locals => {:heading => true} %>
-</div>
+<%= render :partial => 'pages/list', :locals => {:heading => true} %>
 

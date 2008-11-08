@@ -4,7 +4,7 @@ module PathFinder::Sql::BuilderFilters
   protected
   
   def filter_unread
-    @conditions << 'viewed = ?'
+    @conditions << 'user_participations.viewed = ?'
     @values << false  
   end
   
@@ -18,36 +18,28 @@ module PathFinder::Sql::BuilderFilters
   end
 
   def filter_interesting
-    @conditions << '(user_parts.watch = ? or user_parts.attend = ?)'
+    @conditions << '(user_participations.watch = ? or user_participations.attend = ?)'
     @values << true
     @values << true
   end
 
   def filter_watching
-    @conditions << 'user_parts.watch = ?'
+    @conditions << 'user_participations.watch = ?'
     @values << true
   end
 
   def filter_inbox
-    if @inbox
-      @conditions << 'user_participations.inbox = ?'
-    else
-      @conditions << 'user_parts.inbox = ?'
-    end
+    @conditions << 'user_participations.inbox = ?'
     @values << true
   end
 
   def filter_attending
-    @conditions << 'user_parts.attend = ?'
+    @conditions << 'user_participations.attend = ?'
     @values << true
   end
 
   def filter_starred
-    if @inbox
-      @conditions << 'user_participations.star = ?'
-    else
-      @conditions << 'user_parts.star = ?'
-    end
+    @conditions << 'user_participations.star = ?'
     @values << true
   end
   

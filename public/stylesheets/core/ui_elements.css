@@ -5,7 +5,7 @@
 .handle {cursor: move;}
 .not_handle {cursor: default;}
 
-.tag1 { font-size: 0.8em; padding-right:0.5em;}
+.tag1 { font-size: 1em; }
 .tag2 { font-size: 1.1em; }
 .tag3 { font-size: 1.3em; }
 .tag4 { font-size: 1.5em; }
@@ -14,6 +14,8 @@ ul.plain {padding: 0; margin: 0; list-style: none;}
 
 option.indented {margin-left: 1em;}
 option.section {font-weight: bold;}
+
+label.date span {font-size: 0.8em}
 
 .link_line em {color: #ccc;}
 
