@@ -1,5 +1,5 @@
 if @unread_count > 0
-  page.replace_html 'inbox_line', link_to('Inbox'.t + ' (%i)' % @unread_count, '/me/inbox')
+  page.replace_html 'inbox_line', link_to('Inbox'[:me_inbox_link] + ' (%i)' % @unread_count, '/me/inbox')
 end
 if @to_me_count > 0
   page.replace_html 'requests_line', link_to_active('Requests'[:requests] + ' (%i)' % @to_me_count, {:controller => '/me/requests', :action => 'to_me'})

@@ -2,7 +2,7 @@
 <% if logged_in? -%>
   <%= link_to 'Account'[:menu_link_account], :controller => '/me', :action => 'edit' %>
   &bull;
-  <%= link_to "Logout".t + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
+  <%= link_to "Logout"[:menu_link_logout] + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
 <% else -%>
   <span id="top-login-prompt"><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('login_popup').toggle(); Field.focus('login'); return false;" } %></span>
   <div id="login_popup" style="display: none;">

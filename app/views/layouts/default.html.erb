@@ -1,13 +1,16 @@
 <% inside_layout 'holygrail' do -%>
-
 <% if @title_box.any? -%>
 <div class='title_box'>
   <%= @title_box %>
 </div>
 <% end -%>
+<% if @info_box.any? -%>
+<div class='info_box'>
+  <%= @info_box %>
+</div>
+<% end -%>
 <div class='content_box'>
   <%= yield %>
 </div>
-
 <% end -%>
 

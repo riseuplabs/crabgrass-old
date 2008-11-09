@@ -4,7 +4,7 @@ PageClassRegistrar.add(
   'AssetPage',
   :controller => 'asset_page',
   :model => 'Asset',
-  :icon => 'page_default',
+  :icon => 'page_package',
   :class_display_name => 'file',
   :class_description => :file_class_description,
   :class_group => 'asset', 

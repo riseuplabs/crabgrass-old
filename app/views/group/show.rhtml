@@ -1,5 +1,9 @@
 <%- @title_box = capture do -%>
- <%= render :partial => 'group/title_box' %>
+  <h1><%= "Group Home"[:group_home_headline] %></h1>
+<%- end -%>
+
+<%- @info_box = capture do -%>
+ <%= render :partial => 'group/info_box' %>
 <%- end -%>
 
 <% content_for :html_head do %>

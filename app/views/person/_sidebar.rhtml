@@ -4,33 +4,14 @@
 
 <hr class="thick" />
 
+<ul class="side_list">
+  <li><%= friend_link %></li>
+</ul>
+
 <h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>
       
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:Networks], :entities => @user.all_groups.networks } %>
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:Groups], :entities => @user.groups.normals } %>
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:Committees], :entities => @user.groups.committees } %>
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:Friends], :entities => @user.contacts } %> 
-<!--
-<div class='sidesection'>
-<div class='sidehead'>Navigation</div>
-<div class='sidelink'>
-<% if @is_contact -%>
-<%= link_to 'remove from my contacts', {:controller => 'contact', :action => 'remove', :id => @user} %>
-<% elsif logged_in? and !current_user.contacts.include?(@user) -%>
-<%= link_to 'add to my contacts', url_for(:controller => 'contact', :action => 'add', :id => @user) %>
-<% end -%>
-</div>
-
-<div class='sidelink'>
-<%= link_to 'send message', {:controller => 'tool/message_page', :action => 'create', :to => @user.login}, :method => 'get' if @user%>
-</div>
-
-<div class='sidelink'>
-  <%= link_to 'tasks', url_for_user(@user, :action => 'tasks') if @user %>
-</div>
-
-<div class='sidetail'></div>
-</div>
-
--->
 

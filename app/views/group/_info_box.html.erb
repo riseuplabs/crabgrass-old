@@ -1,8 +1,4 @@
-<div class='landing'>
-
-<h1><%= "Group Home"[:group_home_headline] %></h1>
-
-<table class="info_box">
+<table class="columns">
 <tr>
   <td class="left">
     <h2 class='dim'>Welcome</h2>
@@ -13,9 +9,8 @@
     <%= link_span(:bullet, edit_settings_link, leave_group_link) %>
   </td>
   <td class='right'>
-    <%= render :partial => 'group/title_box_memberships' %>
+    <%= render :partial => 'group/info_box_memberships' %>
   </td>
 </tr>
 </table>
 
-</div>

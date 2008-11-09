@@ -21,6 +21,7 @@ class DesignController < ApplicationController
       @banner       = read_file(data, 'banner')
       @footer       = read_file(data, 'footer')
       @title_box    = read_file(data, 'title_box')
+      @info_box    = read_file(data, 'info_box')
       
       @banner       ||= read_file('default', 'banner')
       @footer       ||= read_file('default', 'footer')

@@ -1,5 +1,7 @@
 <%- @title_box = capture do -%>
   <h1><%= "My Dashboard"[:my_dashboard] %></h1>
+<%- end -%>
+<%- @info_box = capture do -%>
   <%= render :partial => 'me/dashboard/info_box' %>
 <%- end -%>
 

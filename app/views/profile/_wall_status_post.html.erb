@@ -1,11 +1,9 @@
-<blockquote>
-   <%= avatar_for(wall_post.user, :class => ' left framed' )%>
-    <p class="small_icon">
-      &raquo;
-      <em><%= link_to wall_post.user.display_name, url_for_user(wall_post.user) %></em> <%=:is.t %>
-      <%= force_line_breaks wall_post.body %>
-      &laquo;
-      <br /> <%= friendly_date(wall_post.created_at) %>
-      <%= delete_wall_post(wall_post) %>
-    </p>
-</blockquote>
+<tr>
+  <td class='icon'><%= avatar_for(wall_post.user, 'small') %></td>
+  <td>
+     <%= link_to_user(wall_post.user) %>
+     <%= wall_post.body_html.gsub(/\A<p>|<\/p>\Z/,'') %><br/>
+     <%= link_line(:bullet, friendly_date(wall_post.created_at), delete_wall_post(wall_post)) %>
+  </td>
+</tr>
+

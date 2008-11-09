@@ -29,29 +29,30 @@
   end
 -%>
 <div class="wall_posts">
+<table><tr>
 <% if today.any? -%>
-  <h4 class='section'><%= :Today.t -%></h4>
+  <tr><td colspan='2' class='date'><%= "Today"[:date_today] -%></td></tr>
   <% today.each do |post| -%>
     <%= wall_post(post) -%>
   <% end -%>
 <% end -%>
 <% if yesterday.any? -%>
-  <h4 class='section'><%= :Yesterday.t -%></h4>
+  <tr><td colspan='2' class='date'><%= "Yesterday"[:date_yesterday] -%></td></tr>
   <% yesterday.each do |post| -%>
     <%= wall_post(post) -%>
   <% end -%>
 <% end -%>
 <% if week.any? -%>
-  <h4 class='section'><%= :This_Past_Week.t -%></h4>
+  <tr><td colspan='2' class='date'><%= "This Past Week"[:date_this_week] -%></td></tr>
   <% week.each do |post| -%>
     <%= wall_post(post) -%>
   <% end -%>
 <% end -%>
 <% if later.any? -%>
-  <h4 class='section'><%= :Older.t -%></h4>
+  <tr><td colspan='2' class='date'><%= "Older"[:date_older] -%></td></tr>
   <% later.each do |post| -%>
     <%= wall_post(post) -%>
   <% end -%>
 <% end -%>
-
+</tr></table>
 </div>

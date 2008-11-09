@@ -11,55 +11,32 @@
 </form>
 
 <div class="wall_posts">
-  <h4>Yesterday</h4>
-  <blockquote>
-    <img class="left framed" src="/plugin_assets/design_tester/images/thumbnails/announcement.jpg"/>
-    <p class="small_icon open_quote_16">
+<table>
+  <tr><td class='date' colspan='2'>Yesterday</td></tr>
+
+<% 3.times do %>
+  <tr>
+    <td class='icon'><%= avatar_for(@user, 'small') %></td>
+    <td>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-      <br /><a class='more' href="#">margo</a> &bull; 10:45pm
-    </p>
-  </blockquote>
-  
-  <blockquote>
-    <img class="left framed" src="/plugin_assets/design_tester/images/thumbnails/announcement.jpg"/>
-    <p class="small_icon open_quote_16">
+      <br />
+      <%= link_line(:bullet, link_to_user(@user), friendly_date(Time.now), 'delete') %>
+    </td>
+  </tr>
+<% end %>
+
+  <tr><td class='date' colspan='2'>This Past Week</td></tr>
+
+<% 3.times do %>
+  <tr>
+    <td class='icon'><%= avatar_for(@user, 'small') %></td>
+    <td>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-      <br /><a class='more' href="#">margo</a> &bull; 10:45pm
-    </p>
-  </blockquote>
-  
-  <blockquote>
-    <img class="left framed" src="/plugin_assets/design_tester/images/thumbnails/announcement.jpg"/>
-    <p class="small_icon open_quote_16">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-      <br /><a class='more' href="#">margo</a> &bull; 10:45pm
-    </p>
-  </blockquote>
-  
-  <h4>The Day Before Yesterday</h4>
-  <blockquote>
-    <img class="left framed" src="/plugin_assets/design_tester/images/thumbnails/announcement.jpg"/>
-    <p class="small_icon open_quote_16">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-      <br /><a class='more' href="#">margo</a> &bull; 10:45pm
-    </p>
-  </blockquote>
-  
-  <blockquote>
-    <img class="left framed" src="/plugin_assets/design_tester/images/thumbnails/announcement.jpg"/>
-    <p class="small_icon open_quote_16">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-      <br /><a class='more' href="#">margo</a> &bull; 10:45pm
-    </p>
-  </blockquote>
-  
-  <blockquote>
-    <img class="left framed" src="/plugin_assets/design_tester/images/thumbnails/announcement.jpg"/>
-    <p class="small_icon open_quote_16">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-      <br /><a class='more' href="#">margo</a> &bull; 10:45pm
-    </p>
-  </blockquote>
+      <br />
+      <%= link_line(:bullet, link_to_user(@user), friendly_date(Time.now), 'delete') %>
+    </td>
+  </tr>
+<% end %>
+
+</table>
 </div>

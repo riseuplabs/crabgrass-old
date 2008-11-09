@@ -77,7 +77,7 @@ module ApplicationHelper
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
-    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'+ARROW, more_url)) : ""
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'[:see_more_link]+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
 

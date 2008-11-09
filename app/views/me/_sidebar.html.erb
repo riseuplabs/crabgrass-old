@@ -3,35 +3,35 @@
 <ul class='side_list'>
   <%- active = params[:controller] == 'me/dashboard' -%>
   <li class='small_icon home_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Dashboard'[:dashboard],
+    'Dashboard'[:me_dashboard_link],
     '/me/dashboard',
     params[:controller] == 'me/dashboard'
   ) %></li>
 
   <%- active = params[:controller] == 'me/inbox' -%>
   <li id='inbox_line' class='small_icon archive_16<%= active ? ' active' : '' %>'><%= link_to_active(
-     'Inbox'[:inbox],
+     'Inbox'[:me_inbox_link],
     '/me/inbox',
     active
   ) %></li>
 
   <%- active = params[:controller] == 'me/search' -%>
   <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Search'[:search],
+    'Search'[:me_search_link],
     '/me/search',
     active
   ) %></li>
 
   <%- active = params[:controller] == 'me/tasks' -%>
   <li class='small_icon page_tasks_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Tasks'[:tasks],
+    'Tasks'[:me_tasks_link],
     '/me/tasks/pending',
     active
   ) %></li>
 
   <%- active = params[:controller] == 'me/requests' -%>
   <li id='requests_line' class='small_icon info_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Requests'[:requests],
+    'Requests'[:me_requests_link],
     {:controller => '/me/requests', :action => 'to_me'},
     active
   ) %></li>
@@ -41,7 +41,7 @@
 <hr class="thick" />
 
 <%- cache(me_cache_key) do -%>
-  <h2 class="alert"><%= "My World"[:my_world] %></h2>
+  <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:Networks], :entities => current_user.all_groups.networks } %>
 

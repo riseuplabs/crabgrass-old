@@ -1,22 +1,31 @@
+/**
+ ** TITLE_BOX
+ **/
+
+.title_box h1 em.status {
+  font-weight: 100
+}
+
 /** 
- **  TITLE_BOX > INFO_BOX
+ **  INFO_BOX
  **/ 
 
-.title_box .info_box {
+.info_box {
+  margin-top: -1px;
   padding: 1em;
-  margin: 1em -1em -1em -1em;
   background-color: #F0F9FE;
-  border-bottom: 1px solid #E1F3FD;
+  border-bottom: 1px solid #ccc;
 }
-.title_box table.info_box {width: 100%;} /* don't make divs 100% */
-.title_box table.info_box td {
-  width: 40%;
-  vertical-align: top;
-  padding: 1em;
-  background:#ECF9FE;
+.info_box table.columns {width: 100%;}
+.info_box td {vertical-align: top;}
+.info_box td.right {
+  padding-left: 1em;
+  border-left: 1px dotted #ccc;
+  width: 50%;
 }
+.info_box td.left {width: 50%}
 
-.title_box .description {
+.info_box .description {
   color: #738899;
   font-family: georgia, times;
   font-style: italic;
@@ -25,18 +34,19 @@
   word-spacing: 0.1em;
   line-height: 1.6em;
 }
+.info_box .status h3 {margin-top: 0.5em;}
+.info_box h3 {margin-bottom: 0.5em;}
 
-.dash_box h3 {
-  margin-bottom: 0.5em;
-}
 .dash_box {
   float: left;
   margin: 0 2em 1.5em 0;
 }
+
+/*
 .col2 .dash_box{
 	clear:both;
-
 }
+*/
 .activities li, .user_activities {
   color:#666;
   margin:7px 0px;
@@ -81,13 +91,14 @@ a.contribute:hover {
 .col2 .info .c_icon{
 
 }
-.xxlarge_avatar{
+/*.xxlarge_avatar{
 	margin:0;
 	padding:0;
 	height:200px;
 	width:200px;
 	border:1px solid #ccc;
-}
+}*/
+
 /** 
  **  CONTENT_BOX > LANDING
  **/ 
@@ -219,6 +230,30 @@ div.tags ul {
   float:right;
 }
 
+.set_status td {vertical-align: middle; padding: 0.5em;}
+.set_status {width: 100%}
+
+.wall_posts {
+  clear: both;
+  height: 20em;
+  overflow: auto;
+  background: #fff;
+}
+.wall_posts table td.icon {width: 1%;}
+.wall_posts td.date {
+  background: #FFF4E8;
+  color: #F28367;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.wall_posts td {
+  vertical-align: top;
+  padding: 0.25em;
+  border-bottom: 1px solid #ccc;
+}
+.wall_posts td p {margin:0;}
+
+/*
 .wall_posts {
   clear: both;
   height: 20em;
@@ -249,13 +284,8 @@ div.tags ul {
   background-position:45px 0px;
 }
 
-.wall_posts blockquote img {
-  width:38px;
-  height:38px;
-  margin:auto;
-  padding:0px;
-}
-
+.wall_posts blockquote img {}
+*/
 /*
 .profile-fun  .profile-activity {
   width:30%;

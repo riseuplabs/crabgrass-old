@@ -1,7 +1,7 @@
 ---
 
 ##
-## GENERAL STRINGS
+## GENERIC TERMS
 ##
 
 create_a_new_thing: "create a new :thing"
@@ -26,6 +26,7 @@ Contacts: "Contacts"
 Members: "Members"
 Friends: "Friends"
 people: "People"
+search: "Search"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
@@ -34,6 +35,9 @@ save_button: "Save"
 cancel_button: "Cancel"
 no_search_results: "No Results"
 search_headline: "Search"
+see_more_link: "More"
+
+
 
 ##
 ## NAVIGATION
@@ -45,6 +49,8 @@ menu_home: "Home"
 menu_chat: "Chat"
 menu_people: "People"
 menu_networks: "Networks"
+menu_link_logout: "Logout"
+menu_link_account: "Account"
 
 ###
 ### TO BE SORTED
@@ -87,7 +93,6 @@ include_full_checkbox: include link to full image
 signup_link: "Need a new account?"
 signup_email_info: "Optional: used if you forget your password"
 forgot_password_link: "I forgot my password"
-logout: "Logout"
 signup_info: Choose your login name and your password then click "%s"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
@@ -233,24 +238,28 @@ image_title: "Image title: %s"
 ## ME
 ## 
 
-dashboard: "Dashboard"
-inbox: "Inbox"
+contribute_content_link: "Contribute"
+me_dashboard_link: "Dashboard"
+me_inbox_link: "Inbox"
+me_search_link: "Search"
+me_tasks_link: "Tasks"
+me_requests_link: "Requests"
+my_world_heading: "My World"
+
 my_pages: "My Pages"
 my_dashboard: "My Dashboard"
-contribute_content_link: "Contribute"
-search: Search
-Pending: "Pending"
-completed: "Completed"
+
 my_tasks: "Tasks"
 my_tasks_headline: "My Tasks"
-requests: "Requests"
-my_requests_headline: "My Requests"
-to_me: To Me
-from_me: From Me
-settings: Settings
-private_profile: Private Profile
-public_profile: Public Profile
 my_tasks_description: Task lists I have access to
+Pending: "Pending"
+completed: "Completed"
+
+my_requests_headline: "My Requests"
+
+private_profile: "Private Profile"
+public_profile: "Public Profile"
+
 create_task_list: create new task list
 me_search_description: Search through all pages you have access to
 inbox_description: Inbox of pages I am actively participating in or watching for changes
@@ -270,8 +279,6 @@ language: Language
 time_zone: Time Zone
 password: Password
 password_confirmation: Password confirmation
-more: more
-see_more_link: See all
 set_status_messsage: What are you doing right now?
 
 ##
@@ -324,12 +331,15 @@ location_postal_code: postal_code
 location_country: country
 
 users_wall: ":user's Wall"
-users_recent_activity: ":user's Recent Activity"
-users_recent_work: ":user's Recent Work"
+#users_recent_activity: ":user's Recent Activity"
+#users_recent_work: ":user's Recent Work"
+recent_contributions: "Recent Contributions"
 Top_Rated: Top Rated
 Most_Viewed: Most Viewed
 Highest_Contributors: Highest Contributors
 users_world: ":user's World"
+request_friend_link: "Add to my contacts"
+remove_friend_link: "Remove from my contacts"
 
 ##
 ## GROUPS
@@ -414,9 +424,14 @@ network_invite_info: "Enter the names of the groups you would like to invite to 
 remove_contact_info: "If you remove someone from your contact list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a contact will mean that you are also removed from their contact list."
 approve_contact_info: "A contact request already exists from this user. Do you wish to approve it?"
 recipient_tip: "Seperate recipients with commas, spaces, or new lines."
+
+destroy: "destroy"
+approve: "approve"
+reject: "reject"
 pending: "pending"
 rejected: "rejected"
 approved: "approved"
+
 requests_to_me: "to me"
 requests_from_me: "from me"
 requests_for_group: Requests for %s
@@ -431,12 +446,7 @@ request_to_join_us_description: ":user was invited to join :group"
 request_to_join_us_via_email_description: ":email was invited to join :group"
 request_to_join_you_description: ":user requested to join :group"
 request_to_join_your_network_description: ":group requested to join network :network"
-destroy: "destroy"
-approve: "approve"
-reject: "reject"
-pending: "pending"
-approved: "approved"
-rejected: "rejected"
+
 send_invites_button: "Send Invites"
 send_invites_headline: "Send invitations to join {group}"
 invite_info: Enter a list of user logins or email addresses of the people you would like to invite to join this %s.
@@ -457,6 +467,7 @@ page_list_heading_updated: "updated"
 page_list_heading_posts: "posts"
 page_list_heading_owner: "owner"
 page_list_heading_last_updated: "last updated"
+page_list_heading_stars: "stars"
 page_notice_message: "page sent by {user} on {date}"
 page_with_message: "with message"
 updated: "updated"
@@ -613,3 +624,10 @@ diff_link: "diff"
 break_lock_button: "Break Lock"
 created_when_by: "created :when by :user"
 
+##
+## WALL
+## 
+
+set_status_button: "Set Status"
+my_status_heading: "Your Current Status"
+recent_wall_posts: "Recent Wall Posts"
