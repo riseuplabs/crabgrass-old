@@ -298,6 +298,7 @@ ActiveRecord::Schema.define(:version => 20081107231213) do
     t.integer "page_id", :limit => 11, :null => false
   end
 
+  execute "ALTER TABLE page_views ENGINE = MyISAM"
   create_table "pages", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
