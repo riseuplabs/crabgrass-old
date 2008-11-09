@@ -1,20 +1,24 @@
-<% @public ||= @user.profiles.public -%>
-<% @private ||= @user.profiles.private -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label 'User Preferences'[:user_preferences]
     t.link me_url(:action => 'edit', :id => nil)
     t.selected params[:action] == 'edit' && params[:controller] == '/me/base'
   end
-  f.tab do |t|
-    t.label 'Public Profile'[:public_profile]
-    t.link url_for(:controller => '/profile', :action => 'edit', :id => @public.id)
-    t.selected params[:controller] == '/profile' && params[:id] == @public.id.to_s
+  if @site.profiles.public?
+    f.tab do |t|
+      t.label @site.profiles.private? ? 'Public Profile'[:public_profile] :
+        'Profile'[:profile]
+      t.link url_for(:controller => '/profile', :action => 'edit', :id => 'public')
+      t.selected params[:controller] == '/profile' && params[:id] == 'public'
+    end
   end
-  f.tab do |t|
-    t.label 'Private Profile'[:private_profile]
-    t.link url_for(:controller => '/profile', :action => 'edit', :id => @private.id)
-    t.selected params[:controller] == '/profile' && params[:id] == @private.id.to_s
+  if @site.profiles.private?
+    f.tab do |t|
+      t.label @site.profiles.public? ? 'Private Profile'[:private_profile] :
+        'Profile'[:profile]
+      t.link url_for(:controller => '/profile', :action => 'edit', :id => 'private')
+      t.selected params[:controller] == '/profile' && params[:id] == 'private'
+    end
   end
 end
 %>

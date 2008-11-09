@@ -1,7 +1,7 @@
 <%= avatar_for @user, 'xlarge' %>
 
 <div class="info">
-  <h2 class="alert">Info</h2>
+  <h2 class="alert"><%= :Info.t %></h2>
   <%= member_since_line(profile) if profile.user %>
   <% unless profile.phone_numbers.empty? -%>
     <% profile.phone_numbers.each do |phone_number| -%>
@@ -58,7 +58,7 @@
 
 <hr class="thick" />
 
-<h2 class="alert">UserName's World</h2>
+<h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>
       
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:Networks], :entities => @user.all_groups.networks } %>
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:Groups], :entities => @user.groups.normals } %>

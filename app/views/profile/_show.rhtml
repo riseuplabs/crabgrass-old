@@ -2,7 +2,7 @@
    # render :partial => 'profile/show', :locals => {:profile => @user.profiles.public}
 
    # in case it is not,
-   profile ||= Profile.new -%>
+   #profile ||= Profile.new -%>
 <div class='title_box'>
   <div class='landing'>
 
@@ -17,7 +17,7 @@
       <tr>
 	<td class="profile-wall">
 	  <h3 class="dim">
-	    User Name's Wall
+	    <%= ":user's Wall"[:users_wall]%{:user => @user.display_name} %>
 	    <span> &bull; <%= link_to 'see all &raquo;'.t, "/#{@user.login}?show_full_wall=true", :class => 'more'  %>
 	  </h3>
 	  <%= render :partial => 'profile/wall_post_form' %>
@@ -25,7 +25,7 @@
 	</td>
 	<td class="profile-activity">
 	  <h3 class="dim">
-	    User Name's Recent Activity
+	    <%= ":user's Recent Activity"[:users_recent_activity]%{:user => @user.display_name} %>
 	  </h3>
 	  <%= render :partial => 'activity/list' %>
 	</td>
@@ -35,4 +35,3 @@
   </div> <!-- end landing -->
 
 </div>
-

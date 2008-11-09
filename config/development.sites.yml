@@ -23,3 +23,11 @@ default:
   - Gallery
   - ExternalVideo
   - Article
+
+  profiles:
+    public:
+      elements: [note, location]
+      visible_to: users
+    private:
+      elements: []
+      visible_to: noone

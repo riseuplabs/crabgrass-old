@@ -2,6 +2,7 @@ class ProfileController < ApplicationController
 
   before_filter :login_required
   prepend_before_filter :fetch_profile
+  append_before_filter :fetch_profile_settings
   #layout :choose_layout
   stylesheet 'profile'
   helper 'me/base'
@@ -14,56 +15,64 @@ class ProfileController < ApplicationController
       @tabs = 'me/base/profile_tabs'
     end
     if request.post?
+      apply_settings_to_params!
       @profile.save_from_params params['profile']
     end
   end
   
   # ajax
   def add_location
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_locations', :partial => 'location', :locals => {:location => ProfileLocation.new}
+      page.insert_html :bottom, 'profile_locations', :partial => 'location', :locals => {:location => ProfileLocation.new, :multiple => multiple}
     end
   end
 
   # ajax
   def add_email_address
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_email_addresses', :partial => 'email_address', :locals => {:email_address => ProfileEmailAddress.new}
+      page.insert_html :bottom, 'profile_email_addresses', :partial => 'email_address', :locals => {:email_address => ProfileEmailAddress.new, :multiple => multiple}
     end
   end
 
   # ajax
   def add_im_address
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_im_addresses', :partial => 'im_address', :locals => {:im_address => ProfileImAddress.new}
+      page.insert_html :bottom, 'profile_im_addresses', :partial => 'im_address', :locals => {:im_address => ProfileImAddress.new, :multiple => multiple}
     end
   end
 
   # ajax
   def add_phone_number
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_phone_numbers', :partial => 'phone_number', :locals => {:phone_number => ProfilePhoneNumber.new}
+      page.insert_html :bottom, 'profile_phone_numbers', :partial => 'phone_number', :locals => {:phone_number => ProfilePhoneNumber.new, :multiple => multiple}
     end
   end
 
   # ajax
   def add_note
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_notes', :partial => 'note', :locals => {:note => ProfileNote.new}
+      page.insert_html :bottom, 'profile_notes', :partial => 'note', :locals => {:note => ProfileNote.new, :multiple => multiple}
     end
   end
 
   # ajax
   def add_website
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => ProfileWebsite.new}
+      page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => ProfileWebsite.new, :multiple => multiple}
     end
   end
   
 
   def add_crypt_key
+    multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_crypt_keys', :partial => 'crypt_key', :locals => {:crypt_key => ProfileCryptKey.new}
+      page.insert_html :bottom, 'profile_crypt_keys', :partial => 'crypt_key', :locals => {:crypt_key => ProfileCryptKey.new, :multiple => multiple}
     end
   end
   
@@ -71,9 +80,10 @@ class ProfileController < ApplicationController
  
   def fetch_profile
     return true unless params[:id]
-    if params[:id] == 'public'
+    fetch_site unless @site
+    if params[:id] == 'public' && @site.profiles.public?
       @profile = current_user.profiles.public
-    elsif params[:id] == 'private'
+    elsif params[:id] == 'private' && @site.profiles.private?
       @profile = current_user.profiles.private
     else
       @profile = Profile.find params[:id]
@@ -85,6 +95,47 @@ class ProfileController < ApplicationController
       @group = @entity
     else
       raise Exception.new("could not determine entity type for profile: #{@profile.inspect}")
+    end
+  end
+  
+  def fetch_profile_settings
+    return true unless @profile
+    @profile_settings = (@profile.public? ? @site.profiles.public : 
+                         @site.profiles.private)
+  end
+
+  # removes everything from params that isn't to be included, due to the profile
+  # settings of the current site.
+  def apply_settings_to_params!
+    # values are preset (select field), so we ignore them
+    ignore = { 
+      'location' => ['location_type'],
+      'note' => ['note_type']
+    }
+    %w(crypt_key email_address location website note im_address
+       phone_number).each do |element|
+      next unless (this_params = params['profile'][plural = element.pluralize])
+      if !@profile_settings.element?(element)
+        params['profile'][plural] = []
+        text << "  don't want it though\n"
+        next
+      end
+      if !@profile_settings.multiple?(element)
+        if this_params.kind_of? Array
+          params['profile'][plural] = [this_params.first]
+        else
+          params['profile'][plural] = this_params[this_params.keys.first]
+        end
+      end
+      # elements with all fields empty shouldn't be fatal errors that prevent us
+      # from saving.
+      valid_keys = this_params.map do |key, value|
+        values = ((ignored_keys = ignore[element]) ?
+                  value.allow(value.keys-ignored_keys).values :
+                  value.values)
+        values.map(&:empty?).include?(false) ? key : nil
+      end.compact
+      params['profile'][plural] = this_params.allow(valid_keys)
     end
   end
   
@@ -115,5 +166,6 @@ class ProfileController < ApplicationController
     me_context('large')
     @banner = render_to_string :partial => 'me/banner'
   end
+
 
 end

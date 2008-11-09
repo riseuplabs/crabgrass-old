@@ -12,8 +12,10 @@
   <td>
     <input id="profile_im_addresses_<%= index %>_im_address" size="40" value="<%=h im_address.im_address %>" type="text" maxlength="100" name="profile[im_addresses][<%= index %>][im_address]" class="textInput profile_im_address" style="width:199px;"  />
   </td>
+  <% if multiple %>
   <td>
     <%= remove_link dom_id %>  
   </td>
+  <% end -%>
 </tr>
 <tr><td><div class='spacer'></div></td></tr>

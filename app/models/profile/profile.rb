@@ -126,12 +126,12 @@ class Profile < ActiveRecord::Base
     collections.each do |collection_name, collection_class|
       params[collection_name] = profile_params[collection_name].collect do |key,value|
         # puts "%s.new ( %s )" % [collection_class, value.inspect]
-        collection_class.new( value.merge('profile_id' => self.id.to_i) )
+        collection_class.create( value.merge('profile_id' => self.id.to_i) )
       end || [] rescue []
     end
 
     self.update_attributes( params )
-    self.reload    
+    self.reload
     self
   end
 
