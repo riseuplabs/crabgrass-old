@@ -1,65 +1,61 @@
+<%# div#page_sidebar gets replaced by popups %>
 <div id='page_sidebar'>
-  <div class='right_column'>
-
-    <% if logged_in? -%>
-      <ul class='side_list'>
-        <%= watch_line %>
-        <%= star_line %>
-      </ul>
-      <hr class="thin" />
-      <ul class='side_list'>
-        <%= share_line %>
-        <%= public_line %>
-      </ul>
-      <hr class="thin" />
-      <ul class='side_list'>
-        <%= destroy_page_line %>
-        <%= move_line %>
-        <%= details_line %>
-      </ul>
-      <%= call_hook :page_sidebar_actions %>
-    <% end -%>
-
+  <% if logged_in? -%>
+    <ul class='side_list'>
+      <%= watch_line %>
+      <%= star_line %>
+    </ul>
+    <hr class="thin" />
+    <ul class='side_list'>
+      <%= share_line %>
+      <%= public_line %>
+    </ul>
+    <hr class="thin" />
+    <ul class='side_list'>
+      <%= destroy_page_line %>
+      <%= move_line %>
+      <%= details_line %>
+    </ul>
+    <%= call_hook :page_sidebar_actions %>
     <hr class="thick" /> 
-    <h3 class="dim"><%= :tags.t %></h3>
-    <div class='tags'>
-      <%= page_tags %>
-    </div>
-    <ul class='side_list'>
-      <%= edit_tags_line %>
-    </ul>
+  <% end -%>
 
-    <%- if @page.supports_attachments -%>
-    <%# FIXME: someone needs to mock this up for new CSS, then we can implement it… %>
-    <hr class="thick" />
-    <h3 class="dim"><%= :attachments.t %></h3>
-    <div class='attachments'>
-      <%= page_attachments %>
-    </div>
-    <ul class='side_list'>
-      <%= edit_attachments_line %>
-    </ul>
-    <%- end -%>
-
-    <% if @page.group_participations.any? -%>
-      <hr class="thick" />
-      <h3 class="dim"><%= :Groups.t %></h3>
-      <ul class='side_list'>
-        <% @page.sorted_group_participations.each do |group_part| %>
-          <li><%= link_to_group_participation(group_part) %></li>
-        <% end -%>
-      </ul>
-    <% end -%>
-
-    <% if @page.user_participations.any? -%>
-      <hr class="thick" />
-      <h3 class="dim"><%= :People.t %></h3>
-      <ul class='side_list'>
-        <% @page.sorted_user_participations.each do |user_part| %>
-          <li><%= link_to_user_participation(user_part) %></li>
-        <% end -%>
-      </ul>
-    <% end -%>
-
+  <h3 class="dim"><%= :tags.t %></h3>
+  <div class='tags'>
+    <%= page_tags %>
   </div>
+  <ul class='side_list'>
+    <%= edit_tags_line %>
+  </ul>
+
+  <%- if @page.supports_attachments -%>
+  <hr class="thick" />
+  <h3 class="dim"><%= :attachments.t %></h3>
+  <div class='attachments'>
+    <%= page_attachments %>
+  </div>
+  <ul class='side_list'>
+    <%= edit_attachments_line %>
+  </ul>
+  <%- end -%>
+
+  <% if @page.group_participations.any? -%>
+    <hr class="thick" />
+    <h3 class="dim"><%= :Groups.t %></h3>
+    <ul class='side_list'>
+      <% @page.sorted_group_participations.each do |group_part| %>
+        <li><%= link_to_group_participation(group_part) %></li>
+      <% end -%>
+    </ul>
+  <% end -%>
+
+  <% if @page.user_participations.any? -%>
+    <hr class="thick" />
+    <h3 class="dim"><%= :People.t %></h3>
+    <ul class='side_list'>
+      <% @page.sorted_user_participations.each do |user_part| %>
+        <li><%= link_to_user_participation(user_part) %></li>
+      <% end -%>
+    </ul>
+  <% end -%>
 </div>

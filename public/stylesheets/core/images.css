@@ -37,7 +37,7 @@ button.icon_16 {height: 16px; width: 16px;}
 button.icon_48 {height: 48px; width: 48px;}
 
 .small_icon.spinner_icon {
-  background-image: url(images/spinner.gif)
+  background-image: url(/images/spinner.gif)
 }
 
 /**

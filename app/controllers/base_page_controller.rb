@@ -112,7 +112,7 @@ class BasePageController < ApplicationController
       @hide_right_column = false if @hide_right_column.nil?
 
       unless action?(:create)
-        @title_box = '<div id="title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
+        @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
       end
       if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
         @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?

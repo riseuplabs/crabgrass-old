@@ -195,14 +195,13 @@ module BasePageHelper
 
   def edit_attachments_line
     if current_user.may? :edit, @page
-      popup_line(:name => 'assets', :label => 'edit', :icon => 'attach_icon')
+      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach_16')
     end 
   end
 
   def edit_tags_line
-    # FIXME: get some CSS mockup for new design, then apply it
     if current_user.may? :edit, @page
-      popup_line(:name => 'tags', :label => 'edit', :icon => 'tag_icon')
+      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link], :icon => 'tag_16')
     end
   end
 

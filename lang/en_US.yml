@@ -530,6 +530,8 @@ public_checkbox: "Public"
 delete_page_link: "Delete :page_class"
 move_page_link: "Move :page_class"
 page_details_link: ":page_class Details"
+edit_tags_link: "Edit"
+edit_attachments_link: "Edit"
 
 ##
 ## DATES
