@@ -136,7 +136,7 @@ class GalleryController < BasePageController
     # see my comment in app/models/asset.rb for details.
     #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
     results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-        current_user.may?(:view, a) ? a : nil
+      current_user.may?(:view, a.page) ? a : nil
     }
     current_page = (params[:page] or 1)
     per_page = 30
@@ -223,8 +223,7 @@ class GalleryController < BasePageController
 
   def add
     asset = Asset.find(params[:id])
-    @page.add_image!(asset,params[:position])
-    current_user.updated(@page)
+    @page.add_image!(asset, current_user, params[:position])
     if request.xhr?
       render :layout => false
     else
@@ -245,7 +244,7 @@ class GalleryController < BasePageController
           next if file.size == 0 # happens if no file was selected
           asset = Asset.make(:uploaded_data =>  file,
                              :page => { :flow => :gallery })
-          @page.add_image!(asset)
+          @page.add_image!(asset, current_user)
         end
         return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
         return redirect_to(page_url(@page))
@@ -266,9 +265,8 @@ class GalleryController < BasePageController
         next if file.size == 0
         asset = Asset.make(:uploaded_data => file,
                            :page => { :flow => :gallery})
-        @page.add_image!(asset)
+        @page.add_image!(asset, current_user)
       end
-      current_user.updated(@page)
       redirect_to page_url(@page)
     end
   end

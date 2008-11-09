@@ -7,12 +7,15 @@ class Gallery < Page
     false
   end
   
-  def add_image!(asset, position = nil)
-    check_for_page(asset)
-    check_permissions!(asset)
+  def add_image!(asset, user=nil, position = nil)
+    check_for_page(asset, user)
+    check_permissions!(asset, user)
     check_type!(asset)
     Showing.create! :gallery => self, :asset => asset, :position => position
     reset_associations(asset)
+    if user
+      user.updated(self)
+    end
     true
   end
   
@@ -58,8 +61,8 @@ class Gallery < Page
     #self.images.reset
   end
 
-  def check_permissions!(asset)
-    if asset.page and self.group and !self.group.may?(:view,asset.page)
+  def check_permissions!(asset, user)
+    unless user.may?(:view,asset.page)
       raise PermissionDenied.new('The group that owns this page is not allowed to view that image'[:group_not_allowed_to_view_image_error])
     end
   end
@@ -68,7 +71,7 @@ class Gallery < Page
     raise ErrorMessage.new('File must be an image to be part of a gallery'[:file_must_be_image_error]) unless asset.is_image?
   end
   
-  def check_for_page(asset)
+  def check_for_page(asset, user)
     unless asset.page
       up=0
       gp=0
@@ -85,6 +88,10 @@ class Gallery < Page
         up+=1
       end
       page.save
+      if user
+        user.updated(page)
+        page.save
+      end
     end
   end
 
