@@ -261,3 +261,95 @@ div.tags ul {
   border-left:1px dotted #E1E1E1;
 } 
 */
+
+
+.landing .activities, .landing .user_activities{
+	clear:left;
+	float:none;
+}
+.landing .photos_activities{
+	margin-left:1.8em;
+}
+
+.landing ul li, ul.plain li a span{
+	font-size:11px;	
+}
+
+.landing table td.left{
+	width:40%;
+}
+.landing table td.profile-wall{
+	width:40%;
+}
+
+.landing table td.left{
+	border-right:1px dotted #ccc;
+}
+
+
+/*RECENT WALL POSTS*/
+.recent_wall_posts {
+  clear: both;
+  overflow: auto;
+}
+.recent_wall_posts h4 {
+ padding:10px 5px 6px 0;
+ color:#F5967A;
+ border-top:1px solid #E1E1E1;
+ border-bottom:1px solid #E1E1E1;
+}
+
+.recent_wall_posts blockquote {
+  color:#999999;
+  line-height:1.5em;
+  padding:10px 0px 5px 0;
+  clear:both;
+  overflow:hidden;
+  display:block;
+}
+
+.recent_wall_posts blockquote p {
+  margin:0px;
+  padding-left:65px;
+  background-position:45px 0px;
+}
+
+.recent_wall_posts blockquote img {
+  width:38px;
+  height:38px;
+  margin:auto;
+  padding:0px;
+}
+
+.landing td.right blockquote p{
+	width:60%;
+	font-size:0.875em;
+	color:#6B6D6E;
+}
+
+/*
+i don't know what this is trying to do, but it messes up the 
+hover labels for icon_boxes 
+.landing td.right .round{
+	border:1px solid #E1E1E1;
+	width:150%;
+	background-color:#fff; 
+	margin:1em 0 1em 1.2em;
+	height:3em;
+}
+*/
+.landing td.right input{
+	width:99%;
+	height:3em;
+	border:none;
+}
+
+.landing td.right .status_composer{
+	float:left;
+}
+.status_photo{
+	float:left;
+	margin:1em 0;
+	border:1px solid #E1E1E1;
+}
+
