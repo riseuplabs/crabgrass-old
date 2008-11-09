@@ -19,9 +19,11 @@
             </tr>
           </table>
         </td>
-        <td valign="top">
-          <%= remove_link dom_id %>
-        </td>
+        <% if multiple %>
+          <td valign="top">
+            <%= remove_link dom_id %>
+          </td>
+	<% end -%>
       </tr>
       <tr>
         <td />

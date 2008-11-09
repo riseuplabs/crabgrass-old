@@ -1,3 +1,4 @@
+
 <div class="section">
   <table>
     <tr>
@@ -41,144 +42,220 @@
   </table>
 </div>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('Descriptions') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_notes">
-            <% @profile.notes.each_with_index do |note, index| -%>
-              <%= render :partial => 'note', :locals => { :note => note, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add Description'.t, 'add_note' %>
-      </td>
-    </tr>
-  </table>
-</div>
+<% if @profile_settings.element?('note') -%>
+  <% multiple = @profile_settings.multiple?('note') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('Descriptions') : _('Description') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_notes">
+		<% @profile.notes.each_with_index do |note, index| -%>
+		  <%= render :partial => 'note', :locals => { :note => note, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
+            <%= add_row_link 'Add Description'.t, 'add_note', multiple %>
+	  <% else -%>
+	    <table>
+	      <tbody id="profile_notes">
+	    <%= render :partial => 'note', :locals => { :note => (@profile.notes.first or ProfileNote.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>
 
+<% if @profile_settings.element?('phone_number') -%>
+  <% multiple = @profile_settings.multiple?('phone_number') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('Phone Numbers') : _('Phone Number') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_phone_numbers">
+		<% @profile.phone_numbers.each_with_index do |phone_number, index| -%>
+		  <%= render :partial => 'phone_number', :locals => { :phone_number => phone_number, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('Phone Numbers') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_phone_numbers">
-            <% @profile.phone_numbers.each_with_index do |phone_number, index| -%>
-              <%= render :partial => 'phone_number', :locals => { :phone_number => phone_number, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add Phone Number'.t, 'add_phone_number' %>
-      </td>
-    </tr>
-  </table>
-</div>
+            <%= add_row_link 'Add Phone Number'.t, 'add_phone_number', multiple %>
+	  <% else -%>
+            <table>
+              <tbody id="profile_phone_numbers">
+	    <%= render :partial => 'phone_number', :locals => { :phone_number => (@profile.phone_numbers.first or ProfilePhoneNumber.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('Email Addresses') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_email_addresses">
-            <% @profile.email_addresses.each_with_index do |email_address, index| -%>
-              <%= render :partial => 'email_address', :locals => { :email_address => email_address, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add Email Address'.t, 'add_email_address' %>
-      </td>
-    </tr>
-  </table>
-</div>
+<% if @profile_settings.element?('email_address') -%>
+  <% multiple = @profile_settings.multiple?('email_address') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('Email Addresses') : _('Email Address') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_email_addresses">
+		<% @profile.email_addresses.each_with_index do |email_address, index| -%>
+		  <%= render :partial => 'email_address', :locals => { :email_address => email_address, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
+            <%= add_row_link 'Add Email Address'.t, 'add_email_address', multiple %>
+	  <% else -%>
+            <table>
+              <tbody id="profile_email_addresses">
+	    <%= render :partial => 'email_address', :locals => { :email_address => (@profile.email_addresses.first or ProfileEmailAddress.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('Locations') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_locations">
-            <% @profile.locations.each_with_index do |location, index| -%>
-              <%= render :partial => 'location', :locals => { :location => location, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add Location'.t, 'add_location' %>
-      </td>
-    </tr>
-  </table>
-</div>
+<% if @profile_settings.element?('location') -%>
+  <% multiple = @profile_settings.multiple?('location') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('Locations') : _('Location') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_locations">
+		<% @profile.locations.each_with_index do |location, index| -%>
+		  <%= render :partial => 'location', :locals => { :location => location, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
+            <%= add_row_link 'Add Location'.t, 'add_location', multiple %>
+	  <% else -%>
+            <table>
+              <tbody id="profile_locations">
+	    <%= render :partial => 'location', :locals => { :location => (@profile.locations.first or ProfileLocation.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('IM Addresses') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_im_addresses">
-            <% @profile.im_addresses.each_with_index do |im_address, index| -%>
-              <%= render :partial => 'im_address', :locals => { :im_address => im_address, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add IM Address'.t, 'add_im_address' %>
-      </td>
-    </tr>
-  </table>
-</div>
+<% if @profile_settings.element?('im_address') -%>
+  <% multiple = @profile_settings.multiple?('im_address') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('IM Addresses') : _('IM Address') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_im_addresses">
+		<% @profile.im_addresses.each_with_index do |im_address, index| -%>
+		  <%= render :partial => 'im_address', :locals => { :im_address => im_address, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
+            <%= add_row_link 'Add IM Address'.t, 'add_im_address', multiple %>
+	  <% else -%>
+            <table>
+              <tbody id="profile_im_addresses">
+	    <%= render :partial => 'im_address', :locals => { :im_address => (@profile.im_addresses.first or ProfileImAddress.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('Websites') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_websites">
-            <% @profile.websites.each_with_index do |website, index| -%>
-              <%= render :partial => 'website', :locals => { :website => website, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add Websites'.t, 'add_website' %>
-      </td>
-    </tr>
-  </table>
-</div>
+<% if @profile_settings.element?('website') -%>
+  <% multiple = @profile_settings.multiple?('website') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('Websites') : _('Website') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_websites">
+		<% @profile.websites.each_with_index do |website, index| -%>
+		  <%= render :partial => 'website', :locals => { :website => website, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
+            <%= add_row_link 'Add Websites'.t, 'add_website', multiple %>
+	  <% else -%>
+            <table>
+              <tbody id="profile_websites">
+	    <%= render :partial => 'website', :locals => { :website => (@profile.websites.first or ProfileWebsite.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>
 
-<div class="section">
-  <table>
-    <tr>
-      <td class="label" valign="top">
-        <%= _('Public Encryption Keys') -%>
-      </td>
-      <td class="form">
-        <table>
-          <tbody id="profile_crypt_keys">
-            <% @profile.crypt_keys.each_with_index do |crypt_key, index| -%>
-              <%= render :partial => 'crypt_key', :locals => { :crypt_key => crypt_key, :index => index } %>
-            <% end -%>
-          </tbody>
-        </table>
-        <%= add_row_link 'Add Encryption Key'.t, 'add_crypt_key' %>
-      </td>
-    </tr>
-  </table>
-</div>
-
+<% if @profile_settings.element?('crypt_key') -%>
+  <% multiple = @profile_settings.multiple?('crypt_key') -%>
+  <div class="section">
+    <table>
+      <tr>
+	<td class="label" valign="top">
+          <%= multiple ? _('Public Encryption Keys') : _('Public Encryption Key') -%>
+	</td>
+	<td class="form">
+	  <% if multiple -%>
+            <table>
+              <tbody id="profile_crypt_keys">
+		<% @profile.crypt_keys.each_with_index do |crypt_key, index| -%>
+		  <%= render :partial => 'crypt_key', :locals => { :crypt_key => crypt_key, :index => index, :multiple => multiple } %>
+		<% end -%>
+              </tbody>
+            </table>
+            <%= add_row_link 'Add Encryption Key'.t, 'add_crypt_key', multiple %>
+	  <% else -%>
+            <table>
+              <tbody id="profile_crypt_keys">
+	    <%= render :partial => 'crypt_key', :locals => { :crypt_key => (@profile.crypt_keys.first or ProfileCryptKey.new), :multiple => multiple } %>
+	      </tbody>
+	    </table>
+	  <% end -%>
+	</td>
+      </tr>
+    </table>
+  </div>
+<% end -%>

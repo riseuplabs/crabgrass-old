@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
   
 
   # the order of these filters matters. change with caution.
-  before_filter :fetch_site
+  prepend_before_filter :fetch_site # needs to come before fetch_profile in
+                                    # profile controller
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors

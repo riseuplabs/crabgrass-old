@@ -19,7 +19,8 @@ class PersonController < ApplicationController
   
   before_filter :load_partials
   def load_partials
-    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @user.profiles.visible_by(current_user)}
+    fetch_profile unless @profile
+    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @profile}
   end
   
   def show
@@ -58,7 +59,6 @@ class PersonController < ApplicationController
     # 2. get the userr, who is editing the discussion
     # if it's  private, we get UserRelation.blabla
     # if not, we take @user.discussion
-   # @profile = @user.profiles.visible_by(current_user)
     # @user = User.find(params[:id])
     if @user.discussion.nil?
       @user.discussion = Discussion.create
@@ -90,6 +90,33 @@ class PersonController < ApplicationController
     @user ||= User.find_by_login params[:id] if params[:id]
     @is_contact = (logged_in? and current_user.contacts.include?(@user))
     true
+  end
+
+  def fetch_profile
+    vis_group = 
+      if logged_in?
+        if current_user.id == @user.id
+          'friends' # not so sure about this
+        elsif current_user.friend_of? @user.id
+          'friends'
+        elsif current_user.peer_of? @user
+          'peers'
+        else
+          'users'
+        end
+      else
+        'everyone'
+      end
+    if(@site.profiles.private? && 
+       @site.profiles.private.visible_to?(vis_group))
+      @profile = @user.profiles.private
+    elsif(@site.profiles.public? &&
+          @site.profiles.public.visible_to?(vis_group))
+      @profile = @user.profiles.public
+    end
+    unless @profile
+      raise PermissionDenied
+    end
   end
   
 end

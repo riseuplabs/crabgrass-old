@@ -1,5 +1,7 @@
-<% index ||= params[:index] || random_dom_id -%>
-<% dom_id = "profile_crypt_key_#{index}" -%>
+<% 
+   index ||= params[:index] || random_dom_id
+   dom_id = "profile_crypt_key_#{index}"
+-%>
 <tr id="<%=dom_id%>" class='data_row'>
   <td>
     <table>
@@ -20,9 +22,10 @@
       </tr>
     </table>
   </td>
-  <td>
-    <%= remove_link dom_id %>
-  </td>
+  <% if multiple %>
+    <td>
+      <%= remove_link dom_id %>
+    </td>
+  <% end -%>
 </tr>
 <tr><td><div class='spacer'></div></td></tr>
-
