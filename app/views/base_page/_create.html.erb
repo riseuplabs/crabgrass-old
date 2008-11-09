@@ -3,11 +3,10 @@
 <% multipart = sections.grep 'file' -%>
 
 <% @title_box = capture do -%>
-	<%= link_to_breadcrumbs %>
-	<h1>
-		<%= image_tag('/images/pages/big/%s' % @page_class.icon) %>
-		<%= "Create a new {page_class}"[:create_page_headline, {:page_class => class_display_name }] %>
-	</h1>
+  <%= link_to_breadcrumbs %>
+  <div class='big_icon <%=@page_class.icon%>_48'>
+    <h1><%= "Create a new {page_class}"[:create_page_headline, {:page_class => class_display_name }] %></h1>
+  </div>
 <% end -%>
 
 <div class='create_page'>

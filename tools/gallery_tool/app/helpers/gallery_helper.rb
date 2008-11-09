@@ -92,7 +92,7 @@ module GalleryHelper
       },
     }
     
-    output  = '<div class="gallery-nav info_box">'
+    output  = '<div class="gallery-nav">'
     output << available_elements[:detail_view].call
     output << available_elements[:count].call
     output << '<span class="gallery-actions">'
@@ -181,7 +181,7 @@ module GalleryHelper
       :success => "$('make_cover_link_'+current_cover).show();
                    $('make_cover_link_#{image.id}').hide();"
     }
-    link_to_remote(image_tag("pages/image.png", :title =>
+    link_to_remote(image_tag("png/16/mime_image.png", :title =>
                              'make this image the albums cover'[:make_album_cover]),
                    options, html_options)+extra_output
   end

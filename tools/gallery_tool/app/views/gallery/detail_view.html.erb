@@ -5,7 +5,7 @@
 -%>
 
 <% detail_view_navigation(@page, @previous, image, @next) %>
-<% @title_box += gallery_navigation %>
+<% @info_box = gallery_navigation %>
 
 <div class="gallery-item">
   <%= link_to thumbnail_img_tag(image, 'large'), image.url %>
