@@ -48,7 +48,7 @@
   <% unless profile.notes.empty? -%>
     <% profile.notes.each do |note| -%>
       <div class='small_icon <%=note.icon -%>_16'>
-	<em><%= note.note_type.to_sym.t -%>:</em>
+	<em><%= note.note_type ? note.note_type.to_sym.t : :About_Me.t -%>:</em>
         <%=h note.body %>
       </div>
     <% end -%>
