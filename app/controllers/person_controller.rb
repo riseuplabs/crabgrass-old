@@ -23,25 +23,37 @@ class PersonController < ApplicationController
   end
   
   def show
-    @pages = Page.find_by_path('descending/updated_at/ascending/group_name/limit/40', options_for_me)
-    params[:path] ||= "descending/updated_at"
     @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
     
-       @wall_discussion = @user.ensure_discussion
+    @wall_discussion = @user.ensure_discussion
     if params[:show_full_wall]
       @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')
     else
       @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')[0..9]
     end
     
-    search
-   
+    params[:path] ||= ""
+    params[:path] = params[:path].split('/')
+    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
+    params[:path] += ['limit','30', 'contributed', @user.id]
+
+    @columns = [:stars, :owner_with_icon, :icon, :title, :last_updated]
+    options = options_for_user(@user, :page => params[:page])
+    @pages = Page.find_by_path params[:path], options
   end
 
   def search
-    options = options_for_user(@user, :page => params[:page])
-    @pages = Page.paginate_by_path params[:path], options
-    @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
+    if request.post?
+      path = build_filter_path(params[:search])
+      redirect_to url_for_user(@user, :action => 'search', :path => path)
+    else
+      params[:path] = ['descending', 'updated_at'] if params[:path].empty?
+      params[:path] += ['contributed', @user.id]
+      @pages = Page.paginate_by_path(params[:path], options_for_user(@user, :page => params[:page]))
+      @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
+    end
+    handle_rss :title => @user.name, :link => url_for_user(@user),
+      :image => avatar_url_for(@user, 'xlarge')
   end
 
   def tasks

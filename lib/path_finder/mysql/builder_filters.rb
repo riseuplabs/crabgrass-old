@@ -175,5 +175,15 @@ module PathFinder::Mysql::BuilderFilters
     @per_page = per_page.to_i
   end
 
+  ##
+  ## ASSOCIATION
+  ##
+
+  def filter_contributed(user_id)
+    @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
+    @values << [user_id.to_i]
+    @order = "user_participations.changed_at DESC"
+  end
+
 end
 

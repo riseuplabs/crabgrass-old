@@ -32,6 +32,7 @@ class PathFinder::Builder
     'group' => 1,
     'created_by' => 1,
     'not_created_by' => 1,
+    'contributed' => 1,
     
     # date
     'month' => 1,

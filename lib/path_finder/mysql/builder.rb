@@ -122,21 +122,21 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   def options_for_find
     conditions = sql_for_conditions
     order      = sql_for_order
-    joins      = nil
+    #joins      = nil
 
     fulltext_filter = [
       @access_me_clause, @access_target_clause, @access_filter_clause, @tags
     ].flatten.compact
 
     if fulltext_filter.any?
-      joins = :page_terms
+      #joins = :page_terms
       conditions += " AND MATCH(page_terms.access_ids, page_terms.tags) AGAINST('%s' IN BOOLEAN MODE)" % fulltext_filter.join(' ')
     end
 
     # make the hash
     return {
       :conditions => conditions,
-      :joins => joins,
+      :joins => sql_for_joins(conditions),
       :limit => @limit,         # \ manual offset or limit
       :offset => @offset,       # /   
       :order => order,
@@ -165,6 +165,23 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       end
     }.join(') AND (') + ")"
   end
+
+  def sql_for_joins(conditions_string)
+    joins = []
+    
+    if /user_participations\./ =~ conditions_string
+      joins << :user_participations
+    end
+    if /group_participations\./ =~ conditions_string
+      join << :group_participations
+    end
+    if /page_terms\./ =~ conditions_string
+      joins << :page_terms
+    end
+    
+    return joins
+  end
+
     
   def sql_for_order
     return nil if @order.nil?

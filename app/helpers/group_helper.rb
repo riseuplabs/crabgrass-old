@@ -150,11 +150,4 @@ module GroupHelper
     end
   end
 
-  # used to build an rss link from the current params[:path]
-  def current_rss_path
-    path = params[:path] || []
-    path << 'rss' unless path.last == 'rss'
-    return path
-  end
-
 end

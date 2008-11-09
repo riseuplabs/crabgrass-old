@@ -237,7 +237,7 @@ class GroupController < ApplicationController
     end
     handle_rss :title => @group.name, :description => @group.summary,
                :link => url_for_group(@group),
-               :image => avatar_url(:id => @group.avatar_id||0, :size => 'huge')
+               :image => avatar_url_for(@group, 'xlarge')
   end
   
   # login not required

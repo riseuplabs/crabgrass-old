@@ -23,7 +23,6 @@ local variables which may be passed in
 
 =end
 
-
 pages   ||= @pages
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 colspan = columns.size
@@ -49,7 +48,7 @@ if show_time_dividers
     week << page
     page = pages.shift
   end
-  unless today.size + yesterday.size + week.size > 1
+  unless today.size + yesterday.size + week.size > 0
     show_time_dividers = false
   else
     while page
