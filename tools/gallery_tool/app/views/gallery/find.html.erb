@@ -1,9 +1,14 @@
-<h1><%= "add photo to gallery:"[:add_photo_to_gallery] %></h1>
-<ul>
+<% @title_box += gallery_navigation %>
+<h2><%= "Add Photo To Gallery"[:add_photo_to_gallery] %></h2>
+<ul style="list-style-type:none;">
   <% @images.each do |asset| %>
-    <li>
-      <%= thumbnail_img_tag(asset, :small) %>
-      <%= link_to asset.filename, page_xurl(@page, :action => 'add', :id => asset.id), :method => :post %>
+    <li style="display:inline;">
+      <span>
+	<%= link_to(thumbnail_img_tag(asset, :small),
+                    page_xurl(@page, :action => 'add', :id => asset.id),
+                              :method => :post) %>
+	<%= asset.page.title %>
+      </span>
     </li>
   <% end %>
 </ul>

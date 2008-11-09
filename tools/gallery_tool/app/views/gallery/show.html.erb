@@ -5,11 +5,7 @@ div.gallery_swatch {
 }
 <% end %>
 
-<%= gallery_navigation :count, :download, :edit, :upload, :slideshow, :comment, :add_existing %>
-<div id="gallery_cover">
-  <%= thumbnail_img_tag @page.cover, 'large' if @page.cover%>
-</div>
-
+<% @title_box += gallery_navigation %>
 <div id="gallery_overview">
 <% if @images.any? %>
   <%= render :partial => 'image', :collection => @images %>
@@ -18,4 +14,10 @@ div.gallery_swatch {
 <% else %>
   <%= "No images in gallery"[:no_images_in_gallery] %>
 <% end %>
+</div>
+<br />
+<div id="posts">
+  <div class="comments-head">
+    <h2 class="title2"><%= :Comments.t %></h2>
+  </div>
 </div>

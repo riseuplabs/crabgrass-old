@@ -1,38 +1,3 @@
-#detail_view {
-    text-align:center;
-}
-#detail_view_navigation {
-    text-align:center;
-}
-
-#detail_view_navigation a {
-    margin:1em;
-}
-
-#detail_image {
-    text-align:center;
-}
-
-#detail_image_title {
-    font-weight:bold;
-    font-style:italic;
-}
-
-#gallery_navigation {
-    margin-bottom:2em;
-}
-
-#gallery_navigaton span a {
-    text-decoration:none;
-}
-
-#gallery_navigation span {
-    padding-right:2em;
-    border-style:none dotted none none;
-    border-width:1px;
-    padding-left:1em;
-}
-
 #gallery_overview {
     padding:1em;
     border:solid 1px #ddd;
@@ -173,3 +138,5 @@
 .gallery-item .meta { text-align:right; margin:10px 0px 0px; color:#99A9B7; }
 .gallery-nav a { color:#5A98C8; font-size:11px; }
 .gallery-nav .gallery-actions a { padding:2px 0px 4px 24px; margin-right:20px; }
+.title2 { text-align:left;}
+.posts { text-align:left;}

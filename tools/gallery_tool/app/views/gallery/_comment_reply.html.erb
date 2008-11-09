@@ -1,19 +1,14 @@
 <%
   url = url_for(:controller => 'gallery',
 		:action => 'comment_image',
-		:id => @image.id,
-		:page_id => @page.id) 
+		:id => @image.id)
 -%>
 
 
 <% color = cycle('shade-odd', 'shade-even') %>
 
-<% if @show_reply %>
-<tbody>
-<% else %>
-<%= link_to_function "Add comment &raquo;", "Element.show('reply_container'); Element.hide('show_reply_link')", :id=>'show_reply_link', :style => 'display:none'; %>
+
 <tbody id='reply_container'>
-<% end %>
 
 <tr class="post-spacer-top <%=color%> <%= @posts.any? ? '' : 'post-border-top' %>">
   <td colspan="2">
@@ -31,6 +26,7 @@
   <td class="post-body" id="reply">
     <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
     <% form_for :post, :url => url do |f| %>
+      <%= hidden_field_tag :page_id, @page.id.to_s %>
       <fieldset><div>
         <%= f.text_area :body, :rows => 8, :class => 'post_body' %>    
         <div style="float: left"><%= submit_tag "Post Message", :name => 'post_message' %></div>
@@ -46,6 +42,3 @@
 
 </tbody>
 
-<% unless @show_reply -%>
-  <%= javascript_tag "$('reply_container').hide();$('show_reply_link').show();" %>
-<% end -%>

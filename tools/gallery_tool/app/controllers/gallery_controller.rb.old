@@ -6,29 +6,16 @@ class GalleryController < BasePageController
   include GalleryHelper
   include BasePageHelper
   include ActionView::Helpers::JavascriptHelper
-
-
+  include ActionView::Helpers::UrlHelper
+  
   verify :method => :post, :only => [:add, :remove]
   
-  prepend_before_filter :setup_gallery_view
+  before_filter :setup_gallery_view
 
   def show
     params[:page] ||= 1
     @images = @page.images.paginate(:page => params[:page], :per_page => 16)
   end
-
-  def comment_image
-    @image = @page.images.find(params[:id])
-    @post = Post.build(:page => @image.page,
-                       :user => current_user,
-                       :body => params[:post][:body])
-    current_user.updated(@image.page)
-    @post.save!
-    redirect_to page_url(@page,
-                         :action => 'detail_view',
-                         :id => @image.id)
-  end
-  
   
   def add_star
     @image = @page.images.find(params[:id])
@@ -40,17 +27,6 @@ class GalleryController < BasePageController
     end
   end
 
- 
-  def remove_star
-    @image = @page.images.find(params[:id])
-    @image.page.add(current_user, :star => false).save!
-    if request.xhr?
-      render :text => javascript_tag("$('remove_star_link').hide();$('add_star_link').show();"), :layout => false
-    else
-      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
-    end
-  end
-  
   def detail_view
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
@@ -61,6 +37,29 @@ class GalleryController < BasePageController
     @upart = @image.page.participation_for_user(current_user)
   end
   
+  
+  
+  def remove_star
+    @image = @page.images.find(params[:id])
+    @image.page.add(current_user, :star => false).save!
+    if request.xhr?
+      render :text => javascript_tag("$('remove_star_link').hide();$('add_star_link').show();"), :layout => false
+    else
+      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
+    end
+  end
+  
+  def comment_image
+    @image = @page.images.find(params[:id])
+    @post = Post.build(:page => @image.page,
+                       :user => current_user,
+                       :body => params[:post][:body])
+    current_user.updated(@image.page)
+    @post.save!
+    redirect_to page_url(@page,
+                         :action => 'detail_view',
+                         :id => @image.id)
+  end
   
   def change_image_title
     # in non-ajax calls we need to render the form
@@ -305,11 +304,14 @@ class GalleryController < BasePageController
   end
   
   def setup_gallery_view
+#     @show_right_column = true
     @image_count = @page.images.size if @page
-    @show_right_column = true
-    if params[:action] != 'show' && @page
-      @back_link = render_to_string(:partial => 'back_link')
-    end
+    
+#     if params[:action] != :show
+#       @back_link ='<span>'+
+#         link_to("Back to Gallery"[:back_to_gallery],
+#                                   page_url(@page))+'</span>'
+#     end
   end
 
 end
