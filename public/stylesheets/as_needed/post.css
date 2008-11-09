@@ -10,7 +10,7 @@ div#posts {
   margin-bottom:5px;
 }
 table.posts {
-  /* width: 100%; <-- this messes up ie6 */
+  width: 100%;
   border-top: 1px solid #ccc;
 }
 

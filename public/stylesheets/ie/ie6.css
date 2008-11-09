@@ -11,11 +11,10 @@ ul.side_list li {
 input.check {
   margin-top: 2px;
 }
-ul.side_list a {
-  padding: 1px 0 1px 26px;
-}
 
-div.content_box {
+/* is this really the best we can do? */
+hr.thin {
+  border: 0; size: 0; padding: 0; margin: 0;
 }
 
 /* pages */

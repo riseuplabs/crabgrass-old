@@ -186,22 +186,19 @@ form.minisearch fieldset {
 .title_box {
   background-color: #DAF0FC;
   border-bottom:1px solid #E1E1E1;
+  padding: 1em;
 }
 .title_box h1 {
   color: #607689;
-  padding: 0.7em;
+  padding: 0.25em 0;
 }
 .title_box h1 span {
   margin-left: 3em;
 }
-
 .title_box .breadcrumb {
-  padding: 1em 0 0 2em;
-  margin-bottom: -0.5em;
+  padding-bottom: 0.25em;
 }
 .title_box .summary {
-  padding: 0 0 1em 2em;
-  margin-top: -1em;
   color: #555;
 }
 

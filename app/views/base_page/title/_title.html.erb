@@ -1,7 +1,5 @@
-<div class='h1'>
-  <%= icon_for @asset if @asset %> <%=h @page.title %>
-</div>
-<div id='summary'>
+<h1><%= icon_for @asset if @asset %> <%=h @page.title %></h1>
+<div class='summary'>
   <%=h @page.summary %>
 </div>
 <% if current_user.may? :edit, @page -%>
