@@ -1,6 +1,7 @@
 <%# TODO !!!!!!!!!!!!!!!!!1 %>
 <div class='set_status big_icon' style='background-image: url(<%= avatar_url_for(current_user,"small")%>)'>
   <% form_tag url_for(:controller => '/me/dashboard', :action => 'add_status_message') do -%>
-    <%= text_field :post, :body,:value =>  @current_status || "What are you doing right now?"[:set_status_messsage], :style=>'width:100%' %>
+    <%= text_field :post, :body,:value =>  @current_status || "What are you doing right now?"[:set_status_messsage], :style=>'width:60%' %>
+    <a><%= submit_tag :post.t %></a>
   <% end %>
 </div>
