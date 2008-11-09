@@ -80,7 +80,7 @@ default:
 
 profiles:
   public:
-    elements: [note]
+    elements: [note, location]
     visible_to: users
   private:
     elements: []
