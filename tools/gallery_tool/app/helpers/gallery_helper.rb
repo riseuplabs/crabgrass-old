@@ -1,27 +1,19 @@
 module GalleryHelper
   def detail_view_navigation gallery, previous, this, after # next is reserved
-    output  = '<div id="detail_view_navigation">'
-    if previous && previous.kind_of?(ActiveRecord::Base)
-      output << link_to(image_tag('icons/previous.png',
-                                  :title => 'Previous'.t),
-                        gallery_detail_view_url(gallery, previous))
-    else
-      output << '<span style="min-width:13px;width:13px;margin:1em;"></span>'
-    end
-    if after && after.kind_of?(ActiveRecord::Base)
-      output << link_to(image_tag('icons/next.png',
-                                  :title => 'Next'.t),
-                        gallery_detail_view_url(gallery, after))
-    else 
-      output << '<span style="min-width:13px;width:13px;margin:1em;"></span>'
-    end
-    output << '</div>'
-    output
+    @detail_view_navigation = link_to("Next"[:next]+"&rsaquo;",
+                                      gallery_detail_view_url(gallery, after,
+                                                              this.id),
+                                      :class => 'next button')+
+      link_to("&lsaquo;"+"Previous"[:previous],
+              gallery_detail_view_url(gallery, previous, this.id),
+              :class => 'previous button')
+    ""
   end
   
-  def gallery_detail_view_url gallery, image=nil
+  def gallery_detail_view_url gallery, image=nil, this_id=nil
     image = (image.is_a?(Showing) ? image.asset : image)
-    page_url(gallery, :action => 'detail_view', :id => (image ? image.id : nil))
+    page_url(gallery, :action => 'detail_view', :id => (image ? image.id : 
+                                                        this_id))
   end
   
   # navigation for gallery. pass elements to show as arguments. possible
@@ -42,82 +34,76 @@ module GalleryHelper
   def gallery_navigation *elements
     available_elements = { 
       :count => lambda {
-        if @image_index
-          "Image :number of :count"[:image_count]%{
-            :number => @image_index.to_s, :count => @image_count.to_s }
-        else
-          ":count Images"[:image_count_total] %{ :count => @image_count.to_s }
-        end
-      },
-      :formats => lambda { 
-        # nothing here yet, code for the "Other Formats" link
-        # (see https://we.riseup.net/assets/2644/Gallery+view.jpg)
-      },
-      :versions => lambda { 
-        # code for "Past Versions", see above
+        '<p class="meta">'+if @image_index
+                             'Photo :number of :count'[:image_count]%{:number => @image_index.to_s, :count => @image_count.to_s }
+                           else
+                             ":count Images"[:image_count_total] %{ :count => @image_count.to_s }
+                           end+'</p>'
       },
       :download => lambda { 
-        image_tag("actions/download.png")+
         if @showing || @image
           image = (@showing ? @showing.image : @image)
           link_to("Download"[:download],
                   page_url(@page,
                            :action => 'download',
-                           :image_id => image.id))
+                           :image_id => image.id),
+                  :class => "small_icon folder_picture_16")
         else
           link_to("Download Gallery"[:download_gallery],
-                  page_url(@page, :action => 'download'))
+                  page_url(@page, :action => 'download'),
+                  :class => "small_icon folder_picture_16")
         end
       },
       :slideshow => lambda { 
         link_to("View Slideshow"[:view_slideshow],
                 page_url(@page, :action => 'slideshow'),
-                :target => '_blank')
+                :target => '_blank', :class => "small_icon application_view_gallery_16")
       },
       :edit => lambda { 
         unless params[:action] == 'edit'
-          link_to(image_tag("actions/edit.png")+
-                  "Edit Gallery"[:edit_gallery],
-                  page_url(@page, :action => 'edit'))
+          link_to("Edit Gallery"[:edit_gallery],
+                  page_url(@page, :action => 'edit'),
+                  :class => "small_icon picture_edit_16")
         else
           available_elements[:show].call
         end
       },
-      :show => lambda { 
-        link_to("Show Gallery"[:show_gallery],
-                page_url(@page))
+      :detail_view => lambda {
+        @detail_view_navigation or ""
       },
       :upload => lambda { 
-                javascript_tag("upload_target = document.createElement('div');
-                                 upload_target.id = 'target_for_upload';
-                                 upload_target.hide();
-                                 $$('body').first().appendChild(upload_target);")+
+        javascript_tag("upload_target = document.createElement('div');
+                        upload_target.id = 'target_for_upload';
+                        upload_target.hide();
+                        $$('body').first().appendChild(upload_target);")+
         spinner('show_upload')+
-        link_to_remote("Upload new images"[:upload_images],
-                       :url => page_url(@page, :action => 'upload'),
-                       :update => 'target_for_upload',
-                       :loading =>'$(\'show_upload_spinner\').show();',
-                       :success => 'upload_target.show();',
-                       :complete => '$(\'show_upload_spinner\').hide();')
+        link_to_remote("Upload"[:upload_images],
+                       { :url => page_url(@page, :action => 'upload'),
+                         :update => 'target_for_upload',
+                         :loading =>'$(\'show_upload_spinner\').show();',
+                         :success => 'upload_target.show();',
+                         :complete => '$(\'show_upload_spinner\').hide();'},
+                       :class => "small_icon page_gallery_16")
       },
       :add_existing => lambda { 
         link_to("add existing image"[:add_existing_image],
-                page_url(@page, :action => 'find'))
+                page_url(@page, :action => 'find'),
+                :class => "small_icon plus_16")
       },
-      :comment => lambda { 
-        link_to_function("add comment"[:add_comment], "$('reply_container').show();window.location = '#reply_container';$('show_reply_link').hide();")
-      }
     }
     
-    output  = '<div id="gallery_navigation">'
-    elements.each do |element|
-      if available_elements[element]
-        output << "<span>"+available_elements[element].call+"</span>"
-      else
-        raise ArgumentError.new("No such element: #{element}")
-      end
-    end
+    output  = '<div class="gallery-nav info_box">'
+    output << available_elements[:detail_view].call
+    output << available_elements[:count].call
+    output << '<span class="gallery-actions">'
+    output << available_elements[:edit].call unless params[:action] == 'edit'
+    output << available_elements[:download].call
+    output << available_elements[:slideshow].call
+    output << available_elements[:add_existing].call unless params[:action] == 'find'
+    output << available_elements[:upload].call
+    output << '</span>'
     output << '</div>'
+    
     return output
   end
   
@@ -134,17 +120,18 @@ module GalleryHelper
   end
   
   def gallery_delete_image(image, position)
-    link_to_remote(image_tag('icons/small_png/cancel.png',
-                             :title => 'Remove from gallery'[:remove_from_gallery]),
-                   :url => {
-                     :controller => 'gallery',
-                     :action => 'remove',
-                     :page_id => @page.id,
-                     :id => image.id,
-                     :position => position
-                   },
-                   :update => 'gallery_notify_area',
-                   :loading => "update_notifier('#{'Removing image...'[:removing_image]}', true);")
+    link_to_remote('', {
+                     :url => {
+                       :controller => 'gallery',
+                       :action => 'remove',
+                       :page_id => @page.id,
+                       :id => image.id,
+                       :position => position
+                     },
+                     :update => 'gallery_notify_area',
+                     :loading => "update_notifier('#{'Removing image...'[:removing_image]}', true);"
+                   }, :title => 'Remove from gallery'[:remove_from_gallery],
+                   :class => 'small_icon minus_16')
   end
   
   def gallery_move_image_without_js(image)
@@ -199,17 +186,13 @@ module GalleryHelper
                    options, html_options)+extra_output
   end
   
-  def change_title_link image
-    output = render(:partial => 'change_image_title',
+  def image_title image
+    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
+    output = '<p class="description" id="detail_image_title" onClick="'+change_title+'">'+
+      image.page.title+'</p>'
+    output << render(:partial => 'change_image_title',
                     :locals => { :image => image })
-    unless @change_title
-      output << link_to("change title"[:change_title],
-                        page_url(@page, :action => 'change_image_title',
-                                 :id => image.id),
-                        :id => "change_title_link",
-                        :onclick => "$('change_title_form').show();$('change_title_link').hide();return false;")
-    end
-    output
+    return output
   end
   
   def star_for_image image

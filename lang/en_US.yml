@@ -196,8 +196,8 @@ version_number: "version :version"
 order_changed: Order changed.
 error_saving_new_order: "Error saving new order: :error_message"
 sucessfully_removed_image: Successfully removed image! (:undo_link)
-image_count: Image :number of :count
-image_count_total: ":count Images"
+image_count: Photo :number of :count
+image_count_total: ":count Photos"
 view_slideshow: View Slideshow
 show_gallery: Show Gallery
 edit_gallery: Edit Gallery
@@ -216,9 +216,9 @@ saving_your_changes: Saving your changes...
 activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
 drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
 no_images_in_gallery: No images in Gallery
-add_existing_image: add existing image
+add_existing_image: Add Photo
 upload_new_image: "upload new image"
-add_photo_to_gallery: "add photo to gallery:"
+add_photo_to_gallery: "Click on a Photo to add it"
 cancel_link: "cancel"
 file_must_be_image_error: "File must be an image to be part of a gallery."
 group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
@@ -261,7 +261,7 @@ upload_image: upload_image
 uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
 select_image_file: "select image file"
 or_image_url: "or image URL"
-upload_image: Upload Image
+upload_images: Upload
 save_changes: Save Changes
 username: Username
 display_name: Display name
