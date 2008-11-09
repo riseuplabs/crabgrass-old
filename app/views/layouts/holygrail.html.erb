@@ -22,6 +22,7 @@
 <div id="header">
   <div id='masthead'>
   <h1 id='site_title'><%= site_name %></h1>
+  <%= call_hook :masthead %>
 <%= render :partial => 'layouts/menu' %>
   </div>
 	<div id="banner"><div id='bannercontent'><%= @banner %></div></div>

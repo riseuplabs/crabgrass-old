@@ -126,3 +126,134 @@ table.share_page_recipients div.scroll a {
   font-size: 0.8em;
 }
 
+/**
+ ** PAGE CREATION
+ **/
+
+/* titlebox */
+.other_contribute{
+  float:right;
+  margin-right:1.5em;
+  height:60px;
+  line-height:60px;
+}
+.contribute_title_page{
+  height:60px;
+  line-height:60px;
+}
+.other_contribute a, .other_contribute a:hover{
+  color:#428521;
+}
+
+/*---------LEFT----------------*/
+/*global*/
+.create_page .left{
+  margin:0;
+  padding:0;
+  margin-left:7px;
+}
+.create_page .left, .create_page .right{
+  display:inline;
+  float:left;
+}
+.create_page .left2{
+  clear:both;
+  float:none;
+}
+
+.create_page .left table td{/*border:1px solid blue;*/ }
+/*titles*/
+.create_page .left h2.info_16, .left h2.article_16, .right h2.group_16{
+  color:#72899B;
+  /*margin-top:0.3em;*/
+}
+.create_page .left h2.article_16{
+	margin:20px 0;
+}
+
+/*table*/
+.create_page .left table{
+  margin-top:20px;
+  }
+.create_page .left table td input, .left table td textarea {
+  margin:0;
+  padding:0;
+  width:340px;
+  border:1px solid #E1E1E1;
+  margin-bottom:20px;
+}
+.create_page .left table td input{
+  height:26px;}
+
+/*label*/
+.create_page .left table td.label {
+  padding:0; margin:0;
+  text-align:right;
+  color:#898989;
+  font-size:1em;
+  font-weight:bold;
+  padding-right:1em;
+  padding-bottom:none;
+}
+.create_page .left table td{
+  padding:0;
+}
+.create_page td .legend{
+  color:#898989;
+  font-size:0.8em;
+}
+.create_page .article_data{
+  padding:0;
+}
+.create_page .separation{
+  border-top:1px dotted #E1E1E1;
+}
+
+/*---------RIGHT----------------*/
+.create_page .right {
+  padding-left:20px;
+  }
+.create_page .share_page h2{
+  color:#898989;
+  font-size:1em;
+  font-weight:bold;
+  margin-top:20px;
+}
+.create_page .right ul.tabset{
+	list-style:none;
+}
+.create_page .right .share_page{
+	padding:1em;
+	border:1px solid #E1E1E1;
+	margin-top:20px;
+}
+
+.create_page .right th{
+/*	border:1px solid  #E1E1E1;*/
+
+}
+.create_page .right table th{
+  color:#72889A;
+  font-size:0.8em;
+  font-weight:bold;
+  text-align:left;
+  padding:1em;
+  background:#F3F3F1 url(/images/background/table_create_bg.jpg) repeat-x;
+  border:1px solid #E1E1E1;
+}
+table.share_page_recipients tbody tr td div.scroll{
+	border:none;
+	margin:0;
+	padding:0;
+	border:1px solid #E1E1E1;
+	border-spacing:0
+	}
+	
+.share_page h2 em{
+	color:#C43838;
+	font-size:1.1em;
+}
+.create_article{
+	text-align:center;
+}
+
