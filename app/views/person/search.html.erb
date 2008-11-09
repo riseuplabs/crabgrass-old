@@ -1,0 +1,9 @@
+<% @title_box = content_tag :h1, 'Search'[:search_headline] %>
+
+<%# content_for :html_head do %>
+<!--  <link rel="alternate" href="<%= url_for person_search_url(*current_rss_path) %>" title="<%= "RSS Feed"[:rss_feed] %>" type="application/rss+xml" /> -->
+<%# end %>
+
+<%# render :partial => 'pages/search' %>
+
+<%= render :partial => 'pages/list' %>

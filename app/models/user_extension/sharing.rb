@@ -119,23 +119,22 @@ module UserExtension::Sharing
   #
   def updated(page, options={})
     raise PermissionDenied.new unless self.may?(:edit, page)
+    now = Time.now
 
     # create self's participation if it does not exist
-    find_or_build_participation(page)
+    my_part = find_or_build_participation(page)
+    my_part.update_attributes(
+      :changed_at => now, :viewed_at => now, :viewed => true,
+      :resolved => (options[:resolved] || options[:all_resolved] || my_part.resolved?)
+    )
 
     unless page.contributors.include?(self)
       page.contributors_count +=1
     end
      
     # update everyone's participation
-    now = Time.now
     page.user_participations.each do |party|
-      if party.user_id == self.id
-        party.changed_at = now
-        party.viewed_at = now
-        party.viewed = true
-        party.resolved = options[:resolved] || options[:all_resolved] || party.resolved?
-      else
+      unless party.user_id == self.id
         party.resolved = options[:all_resolved] || party.resolved?
         party.viewed = false
         party.inbox = true if party.watch?

@@ -52,7 +52,6 @@ module UrlHelper
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
-      #size = Avatar.pixels(options[:avatar])[0..1].to_i
       klass += " #{options[:avatar]}"
       if arg and arg.avatar
         url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
@@ -60,9 +59,6 @@ module UrlHelper
         url = avatar_url(:id => 0, :size => options[:avatar])
       end
       style = "background-image:url(#{url});" + style
-#      else
-#        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
-#      end
     end
     avatar + link_to(label, path, :class => klass, :style => style)
   end
@@ -176,17 +172,21 @@ module UrlHelper
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
-      #size = Avatar.pixels(options[:avatar])[0..1].to_i
       klass += " #{options[:avatar]}"
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      #if style
-        style = "background-image:url(#{url});" + style
-      #else
-#        style = "background: url(#{url}) no-repeat 0% 50%; padding: #{size/4}px 0 #{size/4}px #{size/5+size}px"
- #     end
+      style = "background-image:url(#{url});" + style
     end
     avatar + link_to(label, path, :class => klass, :style => style)
   end
+
+  def person_search_url(*path)
+    url_for_user(@user, :action => 'search', :path => path)
+  end
+
+
+  ##
+  ## GENERIC PERSON OR GROUP 
+  ##
 
   def url_for_entity(entity, options={})
     if entity.is_a? User
@@ -198,11 +198,17 @@ module UrlHelper
 
   # display a user or a group, without a link, with an avatar
   def display_entity(entity, size=:small)
-    #pixels = Avatar.pixels(size)[0..1].to_i
     url = avatar_url(:id => (entity.avatar||0), :size => size)
     klass = "name_icon #{size}"
-    style = "background-image:url(#{url})" # no-repeat 0% 50%; padding: #{pixels/4}px 0 #{pixels/4}px #{pixels/5 + pixels}px;"
+    style = "background-image:url(#{url})"
     content_tag :div, entity.display_name, :style => style, :class => klass
+  end
+
+  # used to build an rss link from the current params[:path]
+  def current_rss_path
+    path = params[:path] || []
+    path << 'rss' unless path.last == 'rss'
+    return path
   end
 
   ##

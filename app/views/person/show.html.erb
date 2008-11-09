@@ -1,0 +1,51 @@
+<div class='landing'>
+
+  <!--
+      <%# unless logged_in? -%>
+	<%# render :partial => 'profile/show', :locals => {:profile => @user.profiles.public} %>
+	<%# end -%>
+-->
+
+  <div class="title_box">
+    <p style="float:right; margin:20px; color:#999;"><%= last_login(@user) %></p>
+    <h1>
+      <%= @user.display_name%>
+      <span><%= :is.t+'&nbsp;'+@user.current_status+'.' if @user.current_status%></span>
+    </h1>
+  </div>
+  <%= link_line(friend_link) %>
+  <table class="profile-fun">
+    <tr>
+      <td class="profile-wall">
+	<h3 class="dim">
+	  <%= ":user's Wall"[:users_wall]%{:user => @user.display_name} %>
+	  <span> &bull; <%= link_to 'see all &raquo;'.t, "/#{@user.login}?show_full_wall=true", :class => 'more'  %></span>
+	</h3>
+	<%= render :partial => 'profile/wall_post_form' %>
+	<%= render :partial => 'profile/wall_discussion', :locals => { :posts => @wall_posts} unless @wall_posts.empty? %>
+      </td>
+      <td class="profile-activity">
+	<h3 class="dim">
+	  <%= ":user's Recent Activity"[:users_recent_activity]%{:user => @user.display_name} %>
+	</h3>
+	<%= render :partial => 'activity/list' %>
+      </td>
+    </tr>
+  </table>
+  <div class='content_box'>
+
+    <%#
+    ### PAGES
+    #%>
+
+    <div class='section'>
+      <%= header_with_more(:h2, :alert, "Recent Contributions".t, person_search_url('descending', 'updated_at')) %>
+      <div class='page_scroll'>
+	<%= render :partial => 'pages/list' %>
+	<br/>
+	<%= link_to :more.t + ARROW, person_search_url('descending', 'updated_at') %>
+      </div>
+    </div>
+  </div>
+</div>
+
