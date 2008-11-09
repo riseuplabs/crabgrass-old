@@ -103,45 +103,13 @@ module PageExtension::Static
 
     def self.included(base)
       base.class_eval do
-        before_save :count_stars
         after_save :update_stars
-
-        attr_accessor :old_star, :star_this
       end
     end    
     
-    def star= s
-      self.old_star = self.star if self.star != s
-      super
-    end
-    
-    # shall there be set a new star?
-    def stars_up?
-      true if self.star_this == 1
-    end
-    
-    def stars_down?
-      true if self.star_this == -1
-    end
-
-    # finds out, wether stars should be raised or lowered
-    def count_stars
-      if (self.new_record? && self.star==true) || (self.star==true && self.old_star==false)
-        self.star_this = 1
-      elsif self.star == false && self.old_star == true
-        self.star_this = -1
-      else
-        self.star_this = 0
-      end
-    end
-    
-    
-    # updates the stars count after save
     def update_stars
-      self.page.stars = self.page.stars + star_this
-      self.star_this = 0
-      self.old_star=self.star
-      self.page.save if self.page.stars_changed?
+      new_stars_count = page.get_stars
+      page.update_attribute(:stars, page.get_stars) unless new_stars_count == page.stars
     end
 
   end  
