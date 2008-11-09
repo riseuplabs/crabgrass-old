@@ -123,8 +123,9 @@ class ProfileController < ApplicationController
       if !@profile_settings.multiple?(element)
         if this_params.kind_of? Array
           params['profile'][plural] = [this_params.first]
+        else
+          params['profile'][plural] = this_params[this_params.keys.first]
         end
-         = [this_params[this_params.keys.first]]
       end
       # elements with all fields empty shouldn't be fatal errors that prevent us
       # from saving.
