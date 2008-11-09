@@ -3,11 +3,11 @@ module PostHelper
     words = body.split(' ')
     return words.map do |w|
       ret = []
-      if w.size < 65
+      if w.size < 45
         body
       else
-        while w.size > 65
-          step = (w.size < 65 ? w.size : 65)
+        while w.size > 45
+          step = (w.size < 45 ? w.size : 45)
           ret << w[0..step]
           w = w[step..w.size]
         end
