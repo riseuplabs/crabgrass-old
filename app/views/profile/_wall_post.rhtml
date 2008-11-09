@@ -1,7 +1,7 @@
 <blockquote>
    <%= avatar_for(wall_post.user, :class => ' left framed' )%>
     <p class="small_icon open_quote_16">
-      <%= wall_post.body %>
+      <%= force_line_breaks wall_post %>
       <br /><%= link_to wall_post.user.display_name, url_for_user(wall_post.user)%> &bull; <%= friendly_date(wall_post.created_at) %>
       <%= delete_wall_post(wall_post) %>
     </p>
