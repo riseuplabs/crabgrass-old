@@ -79,6 +79,7 @@ default:
 
 
 profiles:
+  general_info: false
   public:
     elements: [note, location]
     visible_to: users

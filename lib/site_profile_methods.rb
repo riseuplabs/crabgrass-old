@@ -31,6 +31,10 @@ module SiteProfileMethods
     def private
       self['private']
     end
+    
+    def general_info?
+      (self['general_info'] && self['general_info'] != 'false')
+    end
   end
   
   module InstanceMethods

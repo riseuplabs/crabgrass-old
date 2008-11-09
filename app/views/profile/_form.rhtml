@@ -1,8 +1,9 @@
 
+<% if @site.profiles.general_info? %>
 <div class="section">
   <table>
     <tr>
-      <td class="label" valign="top">
+      <td class="label" valign="top"> %>
         <%= _('General Info') -%>
       </td>
       <td class="form">
@@ -10,7 +11,7 @@
           <tr>
             <td>
               <%= text_field 'profile', 'first_name', 'size' => 15, 'maxlength' => 100, 'style' => 'width:100px' %>
-              <div class="infoGroupInputLabel"><%= _('first name') -%></div>
+              <div class="infoGroupInputLabel"><%= _('first name') %></div>
             </td>
             <td>
               <%= text_field 'profile', 'middle_name', 'size' => 9, 'maxlength' => 100, 'style' => 'width:50px' %>
@@ -30,7 +31,7 @@
           <tr>
             <td colspan="3">
             <%= text_field 'profile', 'role', 'size' => 40, 'maxlength' => 100, 'style' => 'width:285px' %>
-              <div class="infoGroupInputLabel"><%= _('organizational role') -%></div>
+              <div class="infoGroupInputLabel"><%#= _('organizational role') -%></div>
             </td>
           </tr>
         </table>
@@ -41,6 +42,7 @@
     </tr>
   </table>
 </div>
+<% end -%><%# end of if @site.profiles.general_info? %>
 
 <% if @profile_settings.element?('note') -%>
   <% multiple = @profile_settings.multiple?('note') -%>
