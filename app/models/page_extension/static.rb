@@ -46,6 +46,13 @@ module PageExtension::Static
       find :all, :order => order, :limit => limit, :conditions => ["stars >= ?", at_least]
     end
     
+    def update_all_stars
+      self.find(:all).each do |page|
+        correct_stars = page.get_stars
+        page.update_attribute(:stars, correct_stars) if correct_stars != page.stars
+      end
+    end
+    
   end
   
   module InstanceMethods
