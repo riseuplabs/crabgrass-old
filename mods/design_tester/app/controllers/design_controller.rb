@@ -11,6 +11,7 @@ class DesignController < ApplicationController
   before_filter :fetch_random_data, :fetch_site
   stylesheet 'post'
   stylesheet 'gallery'
+  stylesheet 'contribute'
   
   def index
     data = params[:data]    

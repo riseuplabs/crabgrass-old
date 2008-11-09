@@ -42,6 +42,14 @@ label.date span {font-size: 0.8em}
   -moz-border-radius-bottomright: 4px;
 }
 
+.large_circle {
+  -moz-border-radius-bottomleft:21px;
+  -moz-border-radius-bottomright:21px;
+  -moz-border-radius-topleft:21px;
+  -moz-border-radius-topright:21px;
+}
+
+
 .clear { clear: both }
 
 hr.thin, hr.thick, hr.clear {
