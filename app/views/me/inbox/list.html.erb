@@ -3,10 +3,9 @@ p#inbox_buttons {
   text-align: right;
 }
 <% end -%>
-<% @title_box = capture do -%>
-<h1><%= "My Inbox"[:my_inbox_headline] %></h1>
-<div class='info_box'><%=  "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %></div>
-<% end -%>
+<% @title_box = content_tag :h1, "My Inbox"[:my_inbox_headline] %>
+<% @info_box = "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %>
+
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
 
