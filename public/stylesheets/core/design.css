@@ -131,10 +131,15 @@ ul#top_menu2 li a.active:hover {
   clear: both;
   background:url(/images/background/banner_bg.jpg) repeat-x;
 }
-#banner img.avatar {
+#banner img {
   border: 1px solid white;
-  margin: 1em;
+  vertical-align: middle;
 }
+#banner img.avatar {margin: 1em;}
+#banner div.parent {margin: 1em 0 0 1em;}
+/*#banner img.child {margin-bottom: 1em;}*/
+#banner div.child {margin: 0 0 1em 1em;}
+
 #banner h1, #banner h3 {padding: 0; margin: 0;}
 #banner, #banner a {color: white;}
 #banner .link_line {margin-left:2em;}
