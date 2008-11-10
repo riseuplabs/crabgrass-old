@@ -14,9 +14,11 @@ signup_info: "Wybierz sobie login oraz has\xC5\x82o i kliknij \"%s\""
 signup_success_message: Witamy!
 menu_people: Ludzie
 login_failure_reason: "Z\xC5\x82e has\xC5\x82o lub nazwa u\xC5\xBCytkownika."
+approved: zatwierdzone
 signup_confirm_password: "Potwierd\xC5\xBA has\xC5\x82o"
 menu_networks: Sieci
 login_name: Login
+approve: "zatwierd\xC5\xBA"
 signup_success: "Tw\xC3\xB3j profil zosta\xC5\x82 utworzony"
 signup_password: "Twoje has\xC5\x82o"
 menu_me: Ja
@@ -31,6 +33,7 @@ login_button: "Zaloguj si\xC4\x99"
 invite_info: "Wpisz loginy albo mejle os\xC3\xB3b kt\xC3\xB3re chcesz zaprosi\xC4\x87 do cz\xC5\x82onkowstwa w %s."
 approve_contact_info: "Istnieje ju\xC5\xBC pro\xC5\x9Bba o dodatnie do kontakt\xC3\xB3w od tej osoby. Czy chcesz j\xC4\x85 zatwierdzi\xC4\x87?"
 login: Login
+About_Me: O mnie
 welcome_text: "Witamy!\r\n\
   \r\n\
   Cze\xC5\x9B\xC4\x87. Ten tekst jest szybkim wprowadzeniem dla nowych u\xC5\xBCytkownik\xC3\xB3w. Przy nast\xC4\x99pnym logowaniu wyl\xC4\x85dujesz od razu na swojej [stronie domowej -> /me/dashboard] kt\xC3\xB3ra b\xC4\x99dzie zimnym i pustym miejscem do p\xC3\xB3ki nie do\xC5\x82\xC4\x85czysz do grup i nie dodasz kontakt\xC3\xB3w.\r\n\

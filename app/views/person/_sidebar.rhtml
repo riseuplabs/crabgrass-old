@@ -5,7 +5,8 @@
 <hr class="thick" />
 
 <ul class="side_list">
-  <li><%= friend_link %></li>
+  <%= friend_link %>
+  <%= edit_profile_link %>
 </ul>
 
 <h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>

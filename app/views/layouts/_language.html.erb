@@ -1,4 +1,6 @@
-<% form_tag({:controller => '/account', :action => 'language'},{:style=>'display: inline'}) do -%>
-<%= select_tag 'id', options_for_language, :onchange => 'this.form.submit();' %>
-<% end -%>
-
+<% unless @language_form_already_rendered %>
+  <% form_tag({:controller => '/account', :action => 'language'},{:style=>'display: inline'}) do -%>
+    <%= select_tag 'id', options_for_language, :onchange => 'this.form.submit();' %>
+  <% end -%>
+  <% @language_form_already_rendered = true %>
+<% end %>

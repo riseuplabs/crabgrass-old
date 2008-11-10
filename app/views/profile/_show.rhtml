@@ -3,8 +3,7 @@
    # in case it is not,
    #profile ||= Profile.new -%>
 
-
-<div class="info">
+<div class="profile">
   <h2 class="alert"><%= :Info.t %></h2>
   <%= member_since_line(profile) if profile.user %>
   <% unless profile.phone_numbers.empty? -%>

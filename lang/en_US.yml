@@ -151,7 +151,35 @@ password_was_reset: "Your password has been reset"
 forgotten_email_address: "What email address did you give us when you created your account?"
 new_password: "New Password"
 confirm_new_password: "Confirm New Password"
-
+accept_usage_agreement: "I accept the terms of the usage agreement"
+usage_agreement_required: "Acceptance of the usage agreement is required"
+usage_agreement_heading: "Usage Agreement"
+usage_agreement_text: |
+  The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
+  
+  In consideration for your use of this service you agree to the following conditions:
+  
+  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site. 
+  
+  You also agree not to use our services to:
+  
+  * harass other people;
+  * harm or exploit minors;
+  * impersonate or cause others to believe that you are another person;
+  * send unsolicited messages;
+  * collect personal data from users of this service without their express consent; and
+  * interfere with or disrupt our services, those of our users or any other person or service;
+  
+  Further, you agree to:
+  
+  * avoid excessive use of our services;
+  * be responsible for maintaining the confidentiality of your accounts and passwords;
+  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
+  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
+  
+  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
+  
+  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
 
 ##
 ## ACTIVITIES
@@ -252,8 +280,8 @@ my_dashboard: "My Dashboard"
 my_tasks: "Tasks"
 my_tasks_headline: "My Tasks"
 my_tasks_description: Task lists I have access to
-Pending: "Pending"
-completed: "Completed"
+my_pending_tasks_link: "Pending"
+my_completed_tasks_link: "Completed"
 
 my_requests_headline: "My Requests"
 
@@ -338,8 +366,9 @@ Top_Rated: Top Rated
 Most_Viewed: Most Viewed
 Highest_Contributors: Highest Contributors
 users_world: ":user's World"
-request_friend_link: "Add to my contacts"
-remove_friend_link: "Remove from my contacts"
+request_friend_link: "Add To My Contacts"
+remove_friend_link: "Remove From My Contacts"
+edit_profile_link: "Edit Profile"
 
 ##
 ## GROUPS
@@ -623,6 +652,8 @@ you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: "diff"
 break_lock_button: "Break Lock"
 created_when_by: "created :when by :user"
+insert_image_heading: "Insert Image"
+insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
 ##
 ## WALL
@@ -631,3 +662,23 @@ created_when_by: "created :when by :user"
 set_status_button: "Set Status"
 my_status_heading: "Your Current Status"
 recent_wall_posts: "Recent Wall Posts"
+
+
+##
+## EMAIL
+##
+
+group_invite_email: |
+  {from_user} has invited you to join group "{group}".
+  
+  If you wish to join this group, click here:
+  
+    {accept_invite_link}
+  
+  The home page of this group can be found here:
+  
+    {group_home_link}
+  
+  If you do not wish to join this group, simply ignore this email.
+
+

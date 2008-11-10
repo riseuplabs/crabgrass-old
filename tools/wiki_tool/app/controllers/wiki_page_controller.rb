@@ -83,10 +83,26 @@ class WikiPageController < BasePageController
     redirect_to page_url(@page, :action => 'edit')
   end
   
+  # xhr only
   def show_image_popup
     @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
     render(:update) do |page| 
       page.replace 'image_popup', :partial => 'image_popup'
+    end
+  end
+
+  # upload image via xhr
+  # response goes to an iframe, so requires responds_to_parent
+  def upload
+    debugger
+    asset = Asset.build params[:asset]
+    asset.parent_page = @page
+    asset.save
+    @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
+    responds_to_parent do
+      render(:update) do |page|
+        page.replace 'image_popup', :partial => 'image_popup'
+      end
     end
   end
 
@@ -134,7 +150,7 @@ class WikiPageController < BasePageController
     if @page
       if %w(show print diff version versions).include? params[:action]
         @page.public? or current_user.may?(:view, @page)
-      elsif %w(edit break_lock).include? params[:action]
+      elsif %w(edit break_lock upload).include? params[:action]
         current_user.may?(:edit, @page)
       else
         current_user.may?(:admin, @page)

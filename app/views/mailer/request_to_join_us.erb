@@ -1,12 +1,22 @@
-<%= @from.display_name %> has invited you to join group "<%= @group.display_name -%>".
+<%=
+
+%({from_user} has invited you to join group "{group}".
 
 If you wish to join this group, click here:
 
-  <%= @link %>
+  {accept_invite_link}
 
 The home page of this group can be found here:
   
-  <%= @group_home %>
+  {group_home_link}
 
 If you do not wish to join this group, simply ignore this email.
+)[:group_invite_email, {
+  :from_user => @from.display_name,
+  :group => @group.display_name,
+  :accept_invite_link => @link,
+  :group_home_link => @group_home
+}]
+
+%>
 

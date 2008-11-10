@@ -38,9 +38,9 @@ div.group_entry img {
   width: 2em;
   display: block;
   float: left;
-  border: 1px solid white;
+  border: 1px dotted white;
   border-width: 0 0 1px 1px;
   margin-left: 10px;
-  margin-top: -2px;
+  margin-top: -4px;
 }
 

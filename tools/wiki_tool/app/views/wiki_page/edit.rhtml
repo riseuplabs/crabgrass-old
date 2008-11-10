@@ -7,10 +7,11 @@ div.swatch_list a {float: left; background: #000;}
 <% @show_posts = false -%>
 <% locked_error_message -%>
 <%# add_image_button_to_textile_editor() -%>
+<div id='image_popup' style='display:none'></div>
 <div class='formbox'>
   <% form_tag(page_url(@page,:action=>'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
-   <div id='image_popup' style='display:none'></div>
+
    <fieldset><%= text_area 'wiki', 'body' %></fieldset>
    <div>
      <% if @locked_for_me -%>
