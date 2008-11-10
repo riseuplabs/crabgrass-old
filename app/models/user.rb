@@ -7,8 +7,12 @@ class User < ActiveRecord::Base
   include UserExtension::Sharing    # user <--> pages
   include UserExtension::Tags       # user <--> tags
 
+  
   # acts_as_authenticated
   include UserExtension::AuthenticatedUser
+  # the PW strength is the amount of time needed to bruteforce a password in 
+  # years, at approximately 1000 tries per second.
+  # I don't know what a good value would be, just tried around a litte
 
   # custom validation
   include CrabgrassDispatcher::Validations

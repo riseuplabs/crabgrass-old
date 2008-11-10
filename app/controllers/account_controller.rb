@@ -42,6 +42,7 @@ class AccountController < ApplicationController
   end
 
   def signup
+    @javascript = "account"
     @user = User.new(params[:user])
     return unless request.post?
 

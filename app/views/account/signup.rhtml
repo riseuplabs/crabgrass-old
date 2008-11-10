@@ -28,7 +28,15 @@
         <label for="password_confirmation"><%= "Confirm Password"[:signup_confirm_password] %></label><br/>
         <%= f.password_field :password_confirmation %>
       </p>
-
+      <p>
+	<%= :Password_strength.t %>:
+	<div class="pw_meter">
+	  <div id="pw_bar">
+	  </div>
+	</div>
+	<%= observe_field('user_password', :function => "set_pw_bar(value, #{MIN_PASSWORD_STRENGTH});", :frequency => 0.25) %>
+	(takes <span id="pw_crack_time">??</span> to crack)
+      </p>
       <p>
         <label for="usage_agreement_accepted">
         <%= check_box_tag 'usage_agreement_accepted', "1", params['usage_agreement_accepted'] %>

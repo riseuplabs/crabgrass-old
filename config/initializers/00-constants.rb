@@ -18,6 +18,10 @@ MEDIA_TYPE = {
 
 ARROW = " &raquo; "
 
+# This is the time in years a password should hold for a brute force attack at
+# minimum. 0.06 is just 21 days, I don't know if it's a good idea...
+MIN_PASSWORD_STRENGTH = 0.06
+
 begin
   LANGUAGES = Language.find(:all).freeze
 rescue Exception

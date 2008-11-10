@@ -49,8 +49,31 @@ module AuthenticatedUser
       before_save :encrypt_password
     end
   end
+  
+  def validate
+    errors.add_to_base "Password is not strong enough"[:validation_password_not_strong_enough] unless self.check_strength(self.password)
+    errors.add_to_base "Password and Login may not be the same"[:validation_password_and_login_not_the_same] if self.password == self.login
+  end 
+  
+  # http://www.codeandcoffee.com/2007/06/27/how-to-make-a-password-strength-meter-like-google/
+  # http://snippets.dzone.com/posts/show/4698  
+  
+  PASSWORD_SETS = {
+    /[a-z]/ => 26,
+    /[A-Z]/ => 26,
+    /[0-9]/ => 10,
+    /[^\w]/ => 32
+  }
+  def check_strength(password)
+    set_size = 0
+    PASSWORD_SETS.each_pair {|k,v| set_size += v if password =~ k}
+    combinations = set_size ** password.length
+    # assuming 1000 tries per second
+    days = combinations.to_f / 1000 / 86400
+    (days / 365) > MIN_PASSWORD_STRENGTH
+  end
+
   module ClassMethods
-    
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     def authenticate(login, password)
       u = find_by_login(login) # need to get the salt
@@ -65,7 +88,7 @@ module AuthenticatedUser
     def find_for_forget(email)
       find :first, :conditions => ['email = ?', email]
     end
-
+        
   end
 
   # Encrypts the password with the user salt

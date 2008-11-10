@@ -1,5 +1,4 @@
 module PostHelper
-=begin
   def force_line_breaks body
     words = body.split(' ')
     return words.map do |w|
@@ -16,5 +15,4 @@ module PostHelper
       end
     end
   end
-=end
 end
