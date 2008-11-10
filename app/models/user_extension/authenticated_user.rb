@@ -51,8 +51,10 @@ module AuthenticatedUser
   end
   
   def validate
-    errors.add_to_base "Password is not strong enough"[:validation_password_not_strong_enough] unless self.check_strength(self.password)
-    errors.add_to_base "Password and Login may not be the same"[:validation_password_and_login_not_the_same] if self.password == self.login
+    if self.password
+      errors.add_to_base "Password is not strong enough"[:validation_password_not_strong_enough] unless self.check_strength(self.password)
+      errors.add_to_base "Password and Login may not be the same"[:validation_password_and_login_not_the_same] if self.password == self.login
+    end
   end 
   
   # http://www.codeandcoffee.com/2007/06/27/how-to-make-a-password-strength-meter-like-google/
