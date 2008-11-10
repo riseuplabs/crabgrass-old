@@ -127,15 +127,19 @@ class GreenCloth < RedCloth::TextileDoc
 
   def to_html(*before_filters, &block)
     @block = block
+
+    strip_enclosing_p = before_filters.delete(:no_enclosing_p)
+
     before_filters += [:normalize_code_blocks, :offtag_obvious_code_blocks,
       :bracket_links, :auto_links, :headings, :embedded, :quoted_block,
-      :tables_with_tabs]
+      :tables_with_tabs, :wrap_long_words]
 
     formatter = self.clone()                   # \  in case one of the before filters
     formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
 
     apply_rules(before_filters)
     html = to(GreenClothFormatterHTML)
+    html.gsub!(/\A<p>|<\/p>\Z/,'') if strip_enclosing_p
     extract_offtags(html)
 
     return html
@@ -365,6 +369,29 @@ class GreenCloth < RedCloth::TextileDoc
         all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
         preceding_char + offtag_it('<a%s href="%s">%s</a>' % [valid_class,to,text], all)
       end
+    end
+  end
+
+  ##
+  ## WRAP LONG WORDS
+  ## really long words totally mess up most layouts.
+  ## so here we break them up with some special spans.
+  ## 
+
+  # this style is required to make this look right:
+  # span.break {font-size:1px;line-height:1px;float:right !important;float:none;}
+  # this tries to make the span invisible in as many browsers as possible.
+
+  LONG_WORD_CHAR_MAX = 30
+  LONG_WORDS_RE = /(\w{#{LONG_WORD_CHAR_MAX},})/
+  def wrap_long_words(text)
+    # <wbr/> is a soft wrap tag, noting where a break may occur.
+    # unfortunately, it is not supported in all browsers.
+    text.gsub!(LONG_WORDS_RE) do |word|
+      chopped = word.scan(/.{#{LONG_WORD_CHAR_MAX}}/)
+      offtag = offtag_it("<wbr/><span class='break'> </span>")
+      remainder = word.split(/.{#{LONG_WORD_CHAR_MAX}}/).select{|str| str.any?}
+      (chopped + remainder).join(offtag)
     end
   end
 

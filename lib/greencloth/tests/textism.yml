@@ -453,3 +453,8 @@ out: |-
 name: copyright symbol at line start
 in: "(C) copyright conversion (C) test."
 out: "<p>&#169; copyright conversion &#169; test.</p>"
+---
+name: force soft breaks in really long words
+in: ohmygodthisisareallyreallylongwordwhydontilikespacesyoumightbeaskingyourself
+out: "<p>ohmygodthisisareallyreallylong<wbr/><span class='break'> </span>wordwhydontilikespacesyoumight<wbr/><span class='break'> </span>beaskingyourself</p>"
+

@@ -220,12 +220,6 @@ div.tags ul {
 .profile-fun .profile-wall {
    width:70%;
 }
-.profile-fun .profile-wall textarea {
-   width:98%;
-   margin:10px 0px;
-   padding:4px;
-   border-color:#E1E1E1;
-}
 .profile-fun .profile-wall fieldset a {
   float:right;
 }
@@ -251,48 +245,6 @@ div.tags ul {
   padding: 0.25em;
   border-bottom: 1px solid #ccc;
 }
-.wall_posts td p {margin:0;}
-
-/*
-.wall_posts {
-  clear: both;
-  height: 20em;
-  overflow: auto;
-  background: #fff;
-}
-.wall_posts h4 {
- padding:10px 5px 8px;
- color:#F5967A;
- background-color:#FFF6ED; 
- border-top:1px solid #E1E1E1;
- border-bottom:1px solid #E1E1E1;
-}
-
-.wall_posts blockquote {
-  color:#999999;
-  line-height:1.5em;
-  border-bottom:1px dotted #E1E1E1;
-  padding:10px 5px;
-  clear:both;
-  overflow:hidden;
-  display:block;
-}
-
-.wall_posts blockquote p {
-  margin:0px;
-  padding-left:65px;
-  background-position:45px 0px;
-}
-
-.wall_posts blockquote img {}
-*/
-/*
-.profile-fun  .profile-activity {
-  width:30%;
-  border-left:1px dotted #E1E1E1;
-} 
-*/
-
 
 .landing .activities, .landing .user_activities{
 	clear:left;
@@ -319,7 +271,7 @@ div.tags ul {
 
 
 /*RECENT WALL POSTS*/
-.recent_wall_posts {
+/*.recent_wall_posts {
   clear: both;
   overflow: auto;
 }
@@ -357,6 +309,7 @@ div.tags ul {
 	font-size:0.875em;
 	color:#6B6D6E;
 }
+*/
 
 /*
 i don't know what this is trying to do, but it messes up the 
@@ -369,6 +322,7 @@ hover labels for icon_boxes
 	height:3em;
 }
 */
+/*
 .landing td.right input{
 	width:99%;
 	height:3em;
@@ -383,4 +337,4 @@ hover labels for icon_boxes
 	margin:1em 0;
 	border:1px solid #E1E1E1;
 }
-
+*/

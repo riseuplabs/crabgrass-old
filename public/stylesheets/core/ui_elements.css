@@ -59,6 +59,9 @@ hr.thick {margin: 0.5em 0; border-bottom: 2px solid #E6E6E6;}
 
 div.p {margin: 1em 0} /* simulate a <p> when you can't use one */
 
+/* attempt to allow for soft breaks */
+span.break {font-size:1px;line-height:1px;float:right !important;float:none;}
+
 /**
  ** FORM ELEMENTS
  **/
