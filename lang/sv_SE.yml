@@ -1,0 +1,156 @@
+--- 
+add_email_address: "L\xC3\xA4gg till e-postadress"
+fullname: Helt namn
+invalid_email: Ogiltig e-postadress
+image_count_total: ":count bilder"
+group_discussion: gruppdiskussion
+confirm_new_password: "Bekr\xC3\xA4fta det nya l\xC3\xB6senordet"
+folder: mapp
+approve_button: bifall
+forgotten_email_address: "Vad f\xC3\xB6r e-postadress gav du oss n\xC3\xA4r du skapade ditt konto?"
+Committees: "Kommitt\xC3\xA9er"
+incoming: Inkommande
+group_discussion_class_description: "En gruppdiskussion i ett s\xC3\xA4rskilt \xC3\xA4mne."
+forgot_password_link: "Jag har gl\xC3\xB6mt mitt l\xC3\xB6senord"
+add_another_file: "L\xC3\xA4gg till ny fil"
+edit: "\xC3\xA4ndra"
+login_failure_reason: "Anv\xC3\xA4ndarnamnet eller l\xC3\xB6senordet st\xC3\xA4mmer inte."
+group_successfully_updated: Gruppen uppdaterades utan problem.
+group: Grupp
+destroy_group: "f\xC3\xB6rst\xC3\xB6r %s"
+committee_publicly_visible_description: "Kommitt\xC3\xA9er kan ses av ickemedlemmar p\xC3\xA5 we.riseup.net/gruppnamn"
+data_for_page_missing: "Datan f\xC3\xB6r den h\xC3\xA4r sidan saknas."
+join_request_info: "Du kommer inte att bli medlem i den h\xC3\xA4r gruppen f\xC3\xB6rr\xC3\xA4n din beg\xC3\xA4ran har accepterats. Du kan f\xC3\xB6lja statusen f\xC3\xB6r varje beg\xC3\xA4ran genom \"%s\"."
+create_page_button: Skapa sida
+add_description: "L\xC3\xA4gg till beskrivning"
+Contacts: kontakter
+email: e-post
+back_to_group: tillbaka till :group_name
+About_Me: Om mig
+alert_not_saved: "Det gick inte att spara f\xC3\xB6r\xC3\xA4ndringarna"
+full: full
+create_a_new_something: skapa en ny {something}
+formatting_reference_link: formateringsreferens
+back_button: Tillbaka
+approve: bifall
+create_page: Skapa sida
+created_by: Skapades av
+edit_underlined_e: "<u>\xC3\xA4</u>ndra"
+descriptions: Beskrivningar
+create_task_list: skapa en ny uppgiftslista
+comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av :user :when fr\xC3\xA5n :old_version till :new_version"
+edit_gallery: Redigera galleri
+group_directory: Gruppkatalog
+Fax: Fax
+add_phone_number: "L\xC3\xA4gg till telefonnummer"
+create_page_headline: Skapa en ny {page_class}
+just_me: ingen utom mig
+group_members_publicly_visible: "G\xC3\xB6r medlemmar synliga offentligt"
+dont_understand_group_type: "F\xC3\xB6rstod inte grupptypen :type"
+create_a_new_page: Skapa en ny sida
+forgot_password_mail_greeting: "%s, f\xC3\xB6r att \xC3\xA5terst\xC3\xA4lla l\xC3\xB6senordet kan du bes\xC3\xB6ka"
+cancel_button: Avbryt
+drag_and_drop_to_rearrange_photos: "Drag & sl\xC3\xA4pp bilder f\xC3\xB6r att flytta runt dem."
+description: beskrivning
+approval_vote: "bifallsomr\xC3\xB6stning"
+edit_settings: "\xC3\xA4ndra inst\xC3\xA4llningar"
+close_button: "St\xC3\xA4ng"
+break_lock: "bryt l\xC3\xA5s"
+add_existing_image: "L\xC3\xA4gg till existerande bild"
+cancel_link: avbryt
+add_comment: "l\xC3\xA4gg till kommentar"
+dont_have_permission_to_create_committees: "Du har inga r\xC3\xA4ttigheter att skapa kommitt\xC3\xA9er under %s"
+discussions: Diskussioner
+diff_link: diff
+Home: Hem
+gallery_class_description: En samling bilder.
+galleries: Gallerier
+already_contacts_info: "Du \xC3\xA4r redan den h\xC3\xA4r personens kontakt."
+add_location: "L\xC3\xA4gg till plats"
+group_not_allowed_to_view_image_error: "Gruppen som \xC3\xA4ger sidan har inte till\xC3\xA5telse att se den h\xC3\xA4r bilden."
+action: handling
+alert_saved: "\xC3\x84ndringarna sparades"
+activate_js_to_rearrange_photos: "Aktivera Javascript om du vill anv\xC3\xA4nda drag-och-sl\xC3\xA4pp-metoden f\xC3\xB6r att flytta runt bilder!"
+forgot_password_mail_expiry: "Den h\xC3\xA4r l\xC3\xA4nken kommer att fungera i 24 timmar. Om du beh\xC3\xB6ver\r\n\
+  \xC3\xA5terst\xC3\xA4lla l\xC3\xB6senordet efter det m\xC3\xA5ste du bes\xC3\xB6ka sidan f\xC3\xB6r gl\xC3\xB6mt\r\n\
+  l\xC3\xB6senord igen och beg\xC3\xA4ra en ny l\xC3\xA4nk."
+created_on: Skapad
+information: Information
+file: Fil
+join_chat: delta i chatten
+me_inbox_link: Inkorg
+group_administration_not_allowed: "Du kan inte administrera den h\xC3\xA4r gruppen."
+access_info: "Tillg\xC3\xA4nglighetsinformation"
+approval_vote_class_description: "Bifall eller inte om varje m\xC3\xB6jlighet."
+current_video_sources: "st\xC3\xB6ds f\xC3\xB6r n\xC3\xA4rvarande: youtube, blip.tv, google video, vimeo"
+all_page_types: alla sidtyper
+descriptive_name_for_display: "Ett beskrivande namn f\xC3\xB6r uppvisning"
+file_must_be_image_error: "Filen m\xC3\xA5ste vara en bild f\xC3\xB6r att hamna i galleriet."
+invite_info: "Ange en lista med anv\xC3\xA4ndarnamn eller e-postadresser till folk som du vill bjuda in till denna %s."
+group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar p\xC3\xA5 we.riseup.net/gruppnamn. Dessutom syns gruppens namn i en lista p\xC3\xA5 varje medlems profilsida (we.riseup.net/anv\xC3\xA4ndarnamn)"
+delete_this_version: radera denna version
+contact_request_message_label: "S\xC3\xA4g %s varf\xC3\xB6r du vill vara deras kontakt."
+Founded: Grundad
+display_name: Visningsnamn
+Committee: "kommitt\xC3\xA9"
+image_count: Bild :number av :count
+group_publicly_visible_description: "Gruppen framtr\xC3\xA4der i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar p\xC3\xA5 we.riseup.net/gruppnamn."
+group_has_no_public_profile: "Den h\xC3\xA4r gruppen har ingen offentlig profil."
+destroy: "f\xC3\xB6rst\xC3\xB6r"
+format: Formatera
+discuss_request_link: "diskutera den h\xC3\xA4r beg\xC3\xA4ran med :person_or_group"
+add_photo_to_gallery: "L\xC3\xA4gg till ett foto till ett galleri:"
+my_completed_tasks_link: "Fullf\xC3\xB6ljd"
+at_least_one_recipient_is_required: "det kr\xC3\xA4vs minst en mottagare"
+forgot_password_text: "Om du har gl\xC3\xB6mt l\xC3\xB6senordet du anv\xC3\xA4nder f\xC3\xB6r att logga in, kan vi skicka ett e-brev med en l\xC3\xA4nk som g\xC3\xB6r att du kan skapa ett nytt."
+group_successfully_created: Gruppen skapades utan problem.
+groups: Grupper
+alert_permission_denied: "\xC3\x85tkomst nekad"
+folder_class_description: "En samling tillg\xC3\xA5ngar."
+gallery: galleri
+from: "fr\xC3\xA5n"
+invalid_email_text: "E-postadressen du angivit \xC3\xA4r ogiltig."
+created_when_by: skapad :when av :user
+first_name: "f\xC3\xB6rnamn"
+created: skapad
+collection_class_description: "Speciella sidor som inneh\xC3\xA5ller andra sidor."
+friday: fredag
+file_version_deleted: filversion borttagen
+Admin: Admin
+file_size: Filstorlek
+download_gallery: Ladda ner galleri
+approve_contact_info: "Det finns redan en kontaktans\xC3\xB6kan fr\xC3\xA5n den h\xC3\xA4r anv\xC3\xA4ndaren. Vill du godk\xC3\xA4nna den?"
+general_info: "Allm\xC3\xA4n information"
+all_people: alla personer
+invalid_token_text: "L\xC3\xA4nken du angivit f\xC3\xB6r att \xC3\xA5terst\xC3\xA4lla ett l\xC3\xB6senord \xC3\xA4r ogiltig. Den har f\xC3\xB6rmodligen redan anv\xC3\xA4nts, eller s\xC3\xA5 har den g\xC3\xA5tt ut."
+directory_of_groups: "Katalog \xC3\xB6ver grupper"
+approved: bifallen
+approve_or_reject_link: "acceptera eller avsl\xC3\xA5 denna ans\xC3\xB6kan"
+alert_error: Fel
+add_im_address: "L\xC3\xA4gg till IM-adress"
+add_websites: "L\xC3\xA4gg till webbsajter"
+create_committee: "skapa kommitt\xC3\xA9"
+collection: samling
+error_saving_new_order: Det gick inte att spara den nya ordern!
+Create: Skapa
+csrf_error_message: "Din inloggning liknar ett f\xC3\xB6rs\xC3\xB6k att hacka sajten. Ta det lugnt: det h\xC3\xA4nder ofta \xC3\xA4ven f\xC3\xB6r oskyldiga f\xC3\xB6rs\xC3\xB6k. Vi \xC3\xA4r bara extra paranoida. Allt du beh\xC3\xB6ver g\xC3\xB6ra \xC3\xA4r ladda om sidan innan du f\xC3\xB6rs\xC3\xB6ker logga in. Du kan f\xC3\xB6lja den h\xC3\xA4r l\xC3\xA4nken f\xC3\xB6r att f\xC3\xB6rs\xC3\xB6ka igen:\r\n"
+im_addresses: IM-adresser
+add_contact_info: "En annan anv\xC3\xA4ndare, som \xC3\xA4r din kontakt, kan de se n\xC3\xA4r du \xC3\xA4r inloggad och har tillg\xC3\xA5ng till din fullst\xC3\xA4ndiga profil. N\xC3\xA4r du blir n\xC3\xA5gon annans kontakt, blir de ocks\xC3\xA5 din."
+group_information: "Information f\xC3\xB6r :group_type"
+break_lock_button: "Bryt l\xC3\xA5s"
+delete_version_confirm: "Vill du s\xC3\xA4kert radera den h\xC3\xA4r informationen?"
+Category: Kategori
+history: Historia
+email_addresses: E-postadresser
+include_full_checkbox: "ta med l\xC3\xA4nk till hela bilden"
+all_states: "alla tillst\xC3\xA5nd"
+group_wiki: Gruppwiki
+all_groups: alla grupper
+from_me: "Fr\xC3\xA5n mig"
+invalid_token: Ogiltig symbol
+inbox_description: "Inkorg f\xC3\xB6r sidor jag aktivt deltar i eller \xC3\xB6vervakar efter \xC3\xA4ndringar."
+file_class_description: En uppladdad fil.
+download: Ladda ner
+date: datum
+alert_field_errors: "N\xC3\xA5got \xC3\xA4r fel med f\xC3\xB6ljande f\xC3\xA4lt"
+contact: Kontakt

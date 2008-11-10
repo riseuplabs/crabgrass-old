@@ -1,0 +1,414 @@
+--- 
+group_not_allowed_to_view_image_error: "O grupo dono desta p\xC3\xA1gina n\xC3\xA3o tem autoriza\xC3\xA7\xC3\xA3o para ver esta foto."
+Personal: Pessoal
+small: pequeno
+menu_networks: Redes
+Network: rede
+groups: Grupos
+title: "T\xC3\xADtulo"
+month_short_april: Abr
+request_to_friend_description: ":user gostaria de ser contato de :other_user"
+move_image_left: "Colocar a imagem \xC3\xA0 esquerda"
+peers: colegas
+wiki: wiki
+current_video_sources: "atualmente suporta: youtube, blip.tv, google video, vimeo"
+request_to_join_us_description: ":user foi convidado para fazer parte de :group"
+break_lock: quebrar cadeado
+or_image_url: ou URL de imagem
+add_comment: "Adicionar coment\xC3\xA1rio"
+login_password: Senha
+folder: pasta
+order_changed: Ordem modificada.
+organizational_role: "fun\xC3\xA7\xC3\xA3o organizacional"
+toggle_selection: "Mudar a sele\xC3\xA7\xC3\xA3o"
+email_addresses: "Endere\xC3\xA7os de e-mail"
+join_chat: entre no chat
+at_least_one_recipient_is_required: "pelo menos um recipiente \xC3\xA9 necess\xC3\xA1rio"
+media_videos: "V\xC3\xADdeos"
+add_location: Adicionar Local
+Committees: "comit\xC3\xAAs"
+group_information: "Informa\xC3\xA7\xC3\xA3o :group_type"
+welcome_text: "*Bem-vindo/a*\r\n\
+  \r\n\
+  Ol\xC3\xA1! Esta \xC3\xA9 uma breve introdu\xC3\xA7\xC3\xA3o para novos usu\xC3\xA1rios. Da pr\xC3\xB3xima vez que voc\xC3\xAA entrar, voc\xC3\xAA ir\xC3\xA1 direto para [your dashboard -> /me/dashboard] que ser\xC3\xA1 um espa\xC3\xA7o frio e solit\xC3\xA1rio enquanto voc\xC3\xAA n\xC3\xA3o fa\xC3\xA7a parte de grupos e estabele\xC3\xA7a contatos.\r\n\
+  \r\n\
+  Portanto, o melhor que voc\xC3\xAA pode fazer como novo usu\xC3\xA1rio \xC3\xA9 criar um grupo ou entrar em um. Para isso, v\xC3\xA1 ao [group directory -> /groups] e clique em \"create a new group\" ou no grupo do qual voc\xC3\xAA quer fazer parte e encontre o link \"join group\".\r\n\
+  \r\n\
+  Assim que seu pedido \xC3\xA9 aceito, voc\xC3\xAA pode carregar ativos, gerar listas de  tarefas, discuss\xC3\xB5es, wikis, pesquisas de opini\xC3\xA3o e mensagens para se comunicar, colaborar, e realizar coisas com no \xC3\xA2mbito do grupo. Como qualquer outra plataforma nova, voc\xC3\xAA ter\xC3\xA1 de se familiarizar com o fluxo de trabalho. Para ajudar a responder perguntas como qual \xC3\xA9 a diferen\xC3\xA7a entre a caixa de entrada e o tabuleiro, visite as [help pages -> /crabgrass/table-of-contents].\r\n\
+  \r\n\
+  O desenvolvimento \xC3\xA9 conduzido pelo feedback dos usu\xC3\xA1rios, portanto, [join -> /users] o grupo de feedback dos usu\xC3\xA1rios e participe clicando no link \"envolva-se\" no fim de cada p\xC3\xA1gina.\r\n"
+prev_change: "mudan\xC3\xA7a anterior"
+to_me: Para Mim
+time_zone: "Fuso Hor\xC3\xA1rio"
+page_not_part_of_group: "A p\xC3\xA1gina n\xC3\xA3o faz parte deste grupo"
+contact: Contato
+try_again: Tente Novamente
+file_size: Tamanho do arquivo
+dont_have_permission_to_create_committees: "Voc\xC3\xAA n\xC3\xA3o est\xC3\xA1 autorizado para criar comit\xC3\xAAs sob %s"
+activate_js_to_rearrange_photos: Ativar Javascript para usar Drag&Drop para reorganizar as fotos.
+media_for_group: "%s em %s"
+medium: "interm\xC3\xA9dio"
+reject_button: recusar
+group_publicly_visible_description: "O grupo aparece numa lista p\xC3\xBAblica e o <i>profile</i> do grupo \xC3\xA9 vis\xC3\xADvel."
+Language: Idioma
+delete_version_confirm: "Voc\xC3\xAA tem certeza que quer apagar essa vers\xC3\xA3o?"
+websites: Sites
+Personal_Interests: Interesses pessoais
+logout_success: "At\xC3\xA9 mais!"
+signup_title: Crie sua conta
+menu_chat: Chat
+image_count_total: ":count Fotos"
+page_locked_header: "P\xC3\xA1gina bloqueada"
+all_page_types: "todos os tipos de p\xC3\xA1ginas"
+media_document: Documento
+collection: "cole\xC3\xA7\xC3\xA3o"
+no_images_in_gallery: "N\xC3\xA3o h\xC3\xA1 imagens na Galeria"
+my_settings: "Configura\xC3\xA7\xC3\xB5es para {user}"
+locations: "Localiza\xC3\xA7\xC3\xB5es"
+Home: Home
+last_change: "\xC3\xBAltima mudan\xC3\xA7a"
+join_request_info: "Voc\xC3\xAA n\xC3\xA3o ser\xC3\xA1 membro deste grupo enquanto seu pedido n\xC3\xA3o for aprovado. Para acompanhar a evolu\xC3\xA7\xC3\xA3o de seu pedido clique \"%s\"."
+add_email_address: "Adicionar Endere\xC3\xA7o de E-mail"
+Networks: redes
+month_short_may: Mai
+Committee: "comit\xC3\xAA"
+group: Grupo
+format: Formato
+media_image: Imagem
+confirm_new_password: Confirmar Nova Senha
+logout_success_message: "Sess\xC3\xA3o encerrada."
+undo: desfazer
+me_inbox_link: Caixa de Entrada
+action: "A\xC3\xA7\xC3\xA3o "
+Founded: Fundado
+new_network: Nova rede
+password_reset_ok_text: "Sua senha foi restabelecida. Agora voc\xC3\xAA pode fazer login com a nova senha."
+public_profile: "Perfil P\xC3\xBAblico"
+invalid_token_text: "O link que voc\xC3\xAA especificou para restabelecer sua senha \xC3\xA9 inv\xC3\xA1lido. Possivelmente j\xC3\xA1 tenha sido usado ou tenha caducado."
+requests_to_me: Pedidos para mim
+back_button: Voltar
+page_is_not_static: "A p\xC3\xA1gina n\xC3\xA3o \xC3\xA9 est\xC3\xA1tica"
+create_a_new_page: "Criar uma nova p\xC3\xA1gina"
+display_name: Visualizar nome
+sunday: domingo
+edit_featured_content_for_group: "Editar conte\xC3\xBAdo publicado para :group_name"
+move_image_right: "Colocar a imagem \xC3\xA0 direita"
+signup_link: Precisa de uma nova conta?
+download: Baixar
+status_resolved: resolvido
+all_groups: todos os grupos
+pagination_previous: anterior
+save_button: Salvar
+media_video: "V\xC3\xADdeo"
+media_audio: "Grava\xC3\xA7\xC3\xA3o de som"
+media_without_group: Todos %s
+personal_message_class_description: "Mensagem pessoal enviada a diferentes destinat\xC3\xA1rios."
+reset_password_mail_greeting: "%s, sua senha foi restabelecida conforme voc\xC3\xAA pediu."
+login_name: "Usu\xC3\xA1rio"
+forgot_password_text: "Se voc\xC3\xAA esqueceu sua senha para fazer log in, n\xC3\xB3s podemos enviar-lhe um e-mail que lhe permitir\xC3\xA1 criar outra.\r\n"
+login: Login
+separate_tags: "Separar etiquetas usando v\xC3\xADrgulas."
+inbox_description: "Caixa de entrada das p\xC3\xA1ginas das quais eu estou participando ativamente ou esperando mudan\xC3\xA7as"
+Mobile: Celular
+state: estado
+invalid_token: "Token inv\xC3\xA1lido"
+month_short_july: Jul
+search: Pesquisar
+email: E-mail
+slideshow_delay_input: Atualize cada :input_field segundos
+view_requests: ver pedidos
+minimum_stars_for_important_pages_description: "Estabele\xC3\xA7a o m\xC3\xADnimo necess\xC3\xA1rio de estrelas para uma p\xC3\xA1gina aparecer como 'importante' - na landing page do grupo"
+date_older: Mais antiga
+your_login: "Seu nome de usu\xC3\xA1rio"
+signup_email_info: "Opcional: usado se voc\xC3\xAA esquecer sua senha"
+next_change: "pr\xC3\xB3xima altera\xC3\xA7\xC3\xA3o"
+create_task_list: criar nova lista de tarefas
+folder_class_description: "Compila\xC3\xA7\xC3\xA3o de recursos."
+signup_email: Seu e-mail
+alert_error: Erro
+full: completo
+login_button: Log in
+remove_from_gallery: Tirar da galeria
+destroy_group: destruir %s
+Contacts: contatos
+group_has_no_public_profile: "Este grupo n\xC3\xA3o tem um perfil p\xC3\xBAblico."
+Category: Categoria
+invalid_email: "E-mail inv\xC3\xA1lido"
+month_short_march: Mar
+file_must_be_image_error: "O arquivo tem que ser uma imagem para ser inclu\xC3\xADdo em um \xC3\xA1lbum."
+month_short_february: Fev
+descriptions: "Descri\xC3\xA7\xC3\xB5es"
+Fax: Fax
+edit_gallery: Editar Galeria
+send_invites: enviar convites
+create_page: "Criar P\xC3\xA1gina"
+version_number: "vers\xC3\xA3o :version"
+media_images: Imagens
+uploaded_image_cropped: "A imagem carregada ser\xC3\xA1 cortada e expandida a um quadrado de 96 pixels."
+signup_login_name: "Seu nome de usu\xC3\xA1rio"
+file_class_description: Arquivo carregado
+approve: aprovar
+summary: Resumo
+only_last_menber_can_delete_group: "Voc\xC3\xAA s\xC3\xB3 pode suprimir um grupo se voc\xC3\xAA for o \xC3\xBAltimo membro"
+gallery_class_description: "Compila\xC3\xA7\xC3\xA3o de imagens"
+unknown: desconhecido
+approval_vote: "voto de aprova\xC3\xA7\xC3\xA3o"
+signup_info: "Escolha seu nome de usu\xC3\xA1rio e sua senha, ent\xC3\xA3o clique \"%s\""
+Admin: "Administra\xC3\xA7\xC3\xA3o"
+link_name: Nome do link
+my_tasks_description: Todas as tarefas que me foram consignadas.
+me_tasks_link: tarefas
+print_underlined_p: <u>p</u>rint
+month_short_december: Dez
+my_completed_tasks_link: Completo
+galleries: Galerias
+reset_password_mail_sent: "Foi enviado um e-mail com instru\xC3\xA7\xC3\xB5es para restabelecer sua senha."
+reset_password_mail_warning: "Se voc\xC3\xAA n\xC3\xA3o pediu para mudar sua senha, entre em contato conosco."
+alert_permission_denied: "Permiss\xC3\xA3o Negada"
+friday: sexta-feira
+pending_tasks: tarefas pendentes
+data_for_page_missing: "Os dados desta p\xC3\xA1gina n\xC3\xA3o est\xC3\xA3o dispon\xC3\xADveis;"
+monday: segunda-feira
+ranked_vote_class_description: "Classificar as possibilidades seguindo a ordem de prefer\xC3\xAAncias."
+me_dashboard_link: Painel
+rejected: recusado
+signup_confirm_password: Confirmar senha
+delete_this_version: "apagar essa vers\xC3\xA3o"
+password_was_reset: Sua senha foi restabelecida
+remove_contact_info: "Se voc\xC3\xAA eliminar contatos de sua lista, voc\xC3\xAA n\xC3\xA3o poder\xC3\xA1 v\xC3\xAA-los quando fizerem login ou ver seu perfil completo. Al\xC3\xA9m do mais, voc\xC3\xAA tamb\xC3\xA9m ser\xC3\xA1 eliminado/a das listas de contatos deles."
+Work: Trabalho
+from: de
+discuss_request_link: discutir este pedido com :person_or_group
+group_administration_not_allowed: "Voc\xC3\xAA n\xC3\xA3o tem autoriza\xC3\xA7\xC3\xA3o para administrar este grupo."
+menu_people: Pessoas
+send_button: Enviar
+saving_your_changes: "Salvar suas mudan\xC3\xA7as..."
+from_me: De mim
+gallery: galeria
+add_another_file: Adicionar outro documento
+access_info: "Informa\xC3\xA7\xC3\xB5es de Acesso "
+ranked_vote: voto classificado
+Other: Outro
+media_audios: "Grava\xC3\xA7\xC3\xB5es de som"
+close_button: Fechar
+fullname: Nome Completo
+username: "Usu\xC3\xA1rio"
+page_list_heading_created_by: gerado por
+download_gallery: Baixar Galeria
+password: Senha
+Pager: Pager
+current_featured_content: "Informa\xC3\xA7\xC3\xA3o atualizada"
+create_committee: "criar comit\xC3\xAA"
+date_this_week: "Esta \xC3\x9Altima Semana"
+recent_activity: Atividade Recente
+drag_and_drop_to_rearrange_photos: "Arraste e solte as imagens para reorganiz\xC3\xA1-las"
+subject_must_not_be_empty: "voc\xC3\xAA deve incluir um assunto"
+page_list_heading_created: gerado
+remove_contact_confirmation: "Voc\xC3\xAA tem certeza de que quer deixar de ter contato com %s?"
+group_wiki: Grupo Wiki
+view_all: ver todos
+just_me: "ningu\xC3\xA9m, s\xC3\xB3 eu"
+group_successfully_created: O novo grupo foi criado.
+approve_button: aprovar
+create_page_button: "Criar p\xC3\xA1gina"
+add_description: "Adicionar Descri\xC3\xA7\xC3\xA3o"
+menu_home: Home
+menu_me: Eu
+directory_of_groups: "Cat\xC3\xA1logo de grupos"
+personal_message: mensagem pessoal
+wont_be_able_to_save: "Voc\xC3\xAA n\xC3\xA3o vai poder salvar esta p\xC3\xA1gina"
+request_to_join_our_network_description: O grupo :group foi convidado para fazer parte da rede :network
+remove_from_inbox: Eliminar da caixa de entrada
+recipients: "destinat\xC3\xA1rios"
+no_members: (no members)
+descriptive_name_for_display: "Um nome descritivo foi usado para visualiza\xC3\xA7\xC3\xA3o"
+profile_private_description: "Este perfil \xC3\xA9 provado; apenas seus contatos podem acess\xC3\xA1-lo."
+signup_password: Sua senha
+alert_not_saved: "As altera\xC3\xA7\xC3\xB5es n\xC3\xA3o puderam ser salvas"
+formatting_reference_link: "refer\xC3\xAAncia de formata\xC3\xA7\xC3\xA3o"
+created: criado
+group_members_publicly_visible_description: "Os membros s\xC3\xA3o vis\xC3\xADveis por n\xC3\xA3o membros do we.riseup.net/yourgroupname. Al\xC3\xA9m disso, o nome do grupo ser\xC3\xA1 listado na p\xC3\xA1gina de perfil de cada membro (we.riseup.net/username)"
+edit: editar
+phone_numbers: Telefones
+view_slideshow: Ver Slideshow
+video: "v\xC3\xADdeo"
+requests_for_group: Pedidos de %s
+add_im_address: "Adicionar Endere\xC3\xA7o IM"
+removing_image: Eliminar imagem...
+wiki_is_locked: "Atualmente, esta wiki est\xC3\xA1 bloqueada por :user"
+task_list_class_description: Uma lista de coisas a serem feitas
+group_members_publicly_visible: "Tornar os membros publicamente vis\xC3\xADveis"
+page_list_heading_updated_by: atualizado por
+task_list: lista de tarefas
+version_doesnt_exist: "N\xC3\xA3o h\xC3\xA1 nenhuma vers\xC3\xA3o :version"
+image_count: Foto :number of :count
+media_documents: Documentos
+requested_forgot_password: "Voc\xC3\xAA pediu uma nova senha"
+ranked_vote_instructions: "Arraste e solte os itens da lista abaixo at\xC3\xA9 organiz\xC3\xA1-los dos mais preferidos no in\xC3\xADcio at\xC3\xA9 os menos preferidos no fim. Ao concluir, clique confirmar para registrar seu voto.\r\n"
+Members: Membros
+no_title_given: (no title given)
+feature_button: Publicar
+page_list_heading_updated: atualizado
+successful_undelete_image: A imagem foi recuperada.
+back_to_group: "Voltar para:"
+contact_request_message_label: "Diga a %s porque voc\xC3\xAA deseja se tornar um contato. "
+cancel_link: cancelar
+file_version_deleted: "a vers\xC3\xA3o do arquivo foi removida"
+starred: estrelado
+add_phone_number: "Adicionar N\xC3\xBAmero de Telefone"
+created_by: Criado por
+Work_Life: Vida de Trabalho
+minimum_stars_for_important_pages: "Estrelas m\xC3\xADnimas para p\xC3\xA1ginas importantes"
+tags: Etiquetas
+message_must_not_be_empty: "a mensagem deve ter alg\xC3\xBAm conte\xC3\xBAdo"
+my_tasks: Tarefas
+month_short_november: Nov
+new_password: Nova senha
+my_pages: "Minhas P\xC3\xA1ginas"
+save_changes: "Salvar mudan\xC3\xA7as"
+reactivate_button: Reativar
+approve_or_reject_link: aceitar ou rejeitar esse pedido
+password_reset: Restabelecer senha
+collection_class_description: "P\xC3\xA1ginas especiais contendo outras p\xC3\xA1ginas."
+remove: eliminar
+unread: "n\xC3\xA3o lido"
+new_group: Novo grupo
+diff_link: diferente
+media_all: "m\xC3\xADdia"
+locking_error: "Erro de bloqueio. N\xC3\xA3o \xC3\xA9 poss\xC3\xADvel salvar seus dados; algu\xC3\xA9m j\xC3\xA1 salvou novas mudan\xC3\xA7as."
+sucessfully_removed_image: A imagem foi eliminada. (:undo_link)
+first_name: nome
+select_image_file: selecionar arquivo de imagem
+discussions: "Discuss\xC3\xB5es"
+login_failure_reason: "Usu\xC3\xA1rio ou senha errados."
+rss_feed: Feed RSS
+media_alls: "M\xC3\xADdia"
+edit_settings: "editar configura\xC3\xA7\xC3\xB5es"
+not_featured_content: "Conte\xC3\xBAdo ainda n\xC3\xA3o publicado"
+requests_from_me: Meus pedidos
+wiki_class_description: Um documento com formato de texto livre.
+more: mais
+invalid_email_text: "O endere\xC3\xA7o de e-mail digitado \xC3\xA9 inv\xC3\xA1lido."
+send_invites_headline: Enviar convites para fazer parte de {group}
+destroy: destruir
+add_existing_image: adicionar imagem existente
+add_contact_info: "Quando um outro usu\xC3\xA1rio for um contato seu, ele poder\xC3\xA1 ver se voc\xC3\xAA est\xC3\xA1 conectado ao site e ter acesso ao seu perfil completo. Uma vez que voc\xC3\xAA se tornar um contato de outra pessoa, ela tamb\xC3\xA9m se tornar\xC3\xA1 seu contato. "
+subject: assunto
+recipient_tip: "Separar os destinat\xC3\xA1rios com v\xC3\xADrgulas, espa\xC3\xA7os ou par\xC3\xA1grafos."
+alert_saved: "Altera\xC3\xA7\xC3\xB5es salvas"
+month_short_september: Set
+forgot_password_mail_expiry: "Este link \xC3\xA9 v\xC3\xA1lido durante 24 horas. Se voc\xC3\xAA precisar restabelecer sua senha depois disso, voc\xC3\xAA ter\xC3\xA1 de voltar a visitar a p\xC3\xA1gina de senha esquecida e pedir um novo link.\r\n"
+general_info: "Informa\xC3\xA7\xC3\xA3o geral"
+request_to_join_you_description: ":user pediu para fazer parte de :group"
+date_today: Hoje
+forgot_password_mail_greeting: "%s, para restabelecer sua senha, visite"
+updated: atualizado
+group_discussion_class_description: "Discuss\xC3\xA3o em grupo de um assunto espec\xC3\xADfico."
+featured_content: "Conte\xC3\xBAdo Publicado"
+profile_public_description: "Este perfil \xC3\xA9 p\xC3\xBAblico e qualquer pessoa que visitar este site poder\xC3\xA1 acess\xC3\xA1-lo. \r\n\
+  As informa\xC3\xA7\xC3\xB5es que voc\xC3\xAA colocar aqui poder\xC3\xA3o ser encontradas por outras pessoas. \r\n\
+  Seja cauteloso/a ao incluir informa\xC3\xA7\xC3\xA3o pessoal em seu perfil p\xC3\xBAblico.\r\n"
+versions: "vers\xC3\xB5es"
+history: "Hist\xC3\xB3rico"
+last_name: sobrenome
+create_page_headline: Criar uma nova {page_class}
+forgotten_email_address: "Qual foi o e-mail que voc\xC3\xAA forneceu quando criou sua conta?"
+School: Escola
+invite_info: "Digite uma lista de identifica\xC3\xA7\xC3\xB5es de usu\xC3\xA1rio ou de endere\xC3\xA7os de e-mail de pessoas que voc\xC3\xAA gostaria de convidar para fazerem parte deste %s."
+status_pending: pendente
+message: mensagem
+me_requests_link: Pedidos
+date_yesterday: Ontem
+show_gallery: Mostrar Galeria
+upload_image: Carregar imagem
+signup_success_message: Obrigado por ter se cadastrado!
+created_when_by: criado :when por :user
+Create: Criar
+approval_vote_class_description: aprovar ou rejeitar cada possibilidade
+password_confirmation: "Confirma\xC3\xA7\xC3\xA3o da senha"
+menu_groups: Grupos
+signup_button: Cadastrar-se
+month_short_october: Out
+create_a_new_something: criar novo {something}
+created_on: "Criado em "
+dont_understand_group_type: "N\xC3\xA3o foi poss\xC3\xADvel entender o tipo de grupo :type"
+other_formats: "Outros formatos "
+organization: "organiza\xC3\xA7\xC3\xA3o"
+approve_contact_info: "J\xC3\xA1 existe um pedido de contato deste usu\xC3\xA1rio. Voc\xC3\xAA deseja aprov\xC3\xA1-lo?"
+to: para
+group_successfully_updated: O grupo foi atualizado.
+large: "extens\xC3\xA3o"
+committee_publicly_visible_description: "Comit\xC3\xAAs podem ser vistos por n\xC3\xA3o-membros no site"
+thursday: quinta-feira
+description: "descri\xC3\xA7\xC3\xA3o"
+reject: recusar
+outgoing: "De sa\xC3\xADda"
+month_short_august: Ago
+request_status: Este pedido foi :status por :user em :time
+all_people: todas as pessoas
+video_service_is_not_supported: "n\xC3\xA3o \xC3\xA9 compat\xC3\xADvel (atualmente, apenas youtube, google video, blip.tv, e vimeo)"
+login_failed: "N\xC3\xA3o foi poss\xC3\xADvel fazer log in"
+add_photo_to_gallery: "adicionar foto a galeria: "
+private_profile: Perfil Privado
+error_saving_new_order: Erro ao salvar novo comando
+page_list_heading_title: "t\xC3\xADtulo"
+request_to_join_your_network_description: ":group pediu para fazer parte da rede :network"
+video_embed_code_prompt: "C\xC3\xB3digo incrustado de uma fonte de v\xC3\xADdeo externa"
+cancel_button: Cancelar
+not_set: "n\xC3\xA3o configurado"
+tuesday: "ter\xC3\xA7a-feira"
+settings: "Configura\xC3\xA7\xC3\xA3o"
+information: "Informa\xC3\xA7\xC3\xA3o"
+file: Arquivo
+expired_featured_content: "O conte\xC3\xBAdo publicado caducou"
+locked_by_user: bloqueado por :user
+middle_name: do meio
+month_short_january: Jan
+signup_success: "Voc\xC3\xAA foi cadastrado/a"
+edit_featured_content: "editar conte\xC3\xBAdo publicado"
+alert_field_errors: "H\xC3\xA1 problemas com os campos seguintes"
+comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por :user em :when de :old_version para :new_version"
+csrf_error_message: "Seu pedido de log in parece ser uma tentativa de hackear este site. N\xC3\xA3o se preocupe: \xC3\xA9 um erro freq\xC3\xBCente, at\xC3\xA9 no caso dos pedidos mais inocentes. N\xC3\xB3s estamos apenas sendo excessivamente paran\xC3\xB3icos. Voc\xC3\xAA s\xC3\xB3 tem que voltar a carregar a p\xC3\xA1gina antes de tentar fazer log in. Voc\xC3\xAA pode usar este link para tentar novamente:\r\n"
+send_invites_button: Enviar Convites
+page_list: "Lista de p\xC3\xA1ginas"
+date: data
+me_search_description: "Pesquisar em todas as p\xC3\xA1ginas \xC3\xA0s quais voc\xC3\xAA tem acesso"
+About_Me: Sobre Mim
+no_committees: "n\xC3\xA3o h\xC3\xA1 comit\xC3\xAAs"
+you_are_viewing_version: "YVoc\xC3\xAA est\xC3\xA1 vendo a vers\xC3\xA3o :version por :user"
+you_have_no_groups: "Voc\xC3\xAA n\xC3\xA3o tem nenhum grupo"
+video_class_description: "Mostrar um v\xC3\xADdeo hospedado em site externo."
+pagination_next: seguinte
+network_invite_info: "Digite os nomes dos grupos que voc\xC3\xAA gostaria de convidar para entrarem nesta rede."
+make_album_cover: "use esta foto para a capa do \xC3\xA1lbum"
+no_group_named: "n\xC3\xA3o h\xC3\xA1 nenhum grupo sob o nome <b>:name</b>."
+im_addresses: "Endere\xC3\xA7os IM"
+page_list_heading_posts: "an\xC3\xBAncios"
+approved: aprovado
+Social_Change_Interests: "Interesses quanto a mudan\xC3\xA7a social"
+upload_new_image: carregar nova imagem
+request_to_join_us_via_email_description: ":email foi convidado para fazer parte de :group"
+page_info: "Informa\xC3\xA7\xC3\xA3o da p\xC3\xA1gina"
+wednesday: quarta-feira
+regenerate: regenerar fotos minimizadas
+include_full_checkbox: incluir link a imagem completa
+logout: Log off
+group_directory: Lista de Grupos
+month_short_june: Jun
+incoming: Entrante
+when_does_feature_expire: "Quando \xC3\xA9 que caduca esta caracter\xC3\xADstica?"
+break_lock_button: Quebrar Cadeado
+edit_underlined_e: <u>e</u>dit
+all_states: todos os estados
+no_tags: "n\xC3\xA3o h\xC3\xA1 etiquetas"
+reset_password: Restabelecer senha
+already_contacts_info: "Voc\xC3\xAA j\xC3\xA1 \xC3\xA9 contato dessa pessoa"
+unfeature_button: Tirar dos destacados
+mark_pages_as_featured_content_for_group: "Aqui voc\xC3\xAA pode marcar p\xC3\xA1ginas como conte\xC3\xBAdo em destaque deste grupo."
+saved_new_order: A nova ordem foi salvada.
+add_websites: Adicionar Sites Online
+forgot_password_link: Esqueci minha senha
+my_groups: Meus Grupos
+group_discussion: "discuss\xC3\xA3o em grupo "
+my_pending_tasks_link: Pendente
+reset_password_text: "Ol\xC3\xA1, %s. Se voc\xC3\xAA esqueceu sua senha, voc\xC3\xAA pode criar outra aqui.\r\n"
