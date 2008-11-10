@@ -600,6 +600,14 @@ date_today: Today
 date_yesterday: Yesterday
 date_this_week: This Past Week
 date_older: Older
+date_centuries: centuries
+date_years: years
+date_months: months
+date_weeks: weeks
+date_days: days
+date_hours: hours
+date_minutes: minutes
+date_seconds: seconds
 
 ##
 ## ERRORS

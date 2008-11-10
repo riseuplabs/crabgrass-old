@@ -5,7 +5,7 @@
       <%= render :partial => 'layouts/language' %>
     </div>
     <h2 class='alert'><%= "Create Your Account"[:signup_title] %></h2>
-	  <%= 'Choose your login name and your password then click "%s"'[:signup_info] % 'Sign up'[:signup_button] %>
+    <%= 'Choose your login name and your password then click "%s"'[:signup_info] % 'Sign up'[:signup_button] %>
   </td>
 </tr>
 <tr>
@@ -28,15 +28,21 @@
         <label for="password_confirmation"><%= "Confirm Password"[:signup_confirm_password] %></label><br/>
         <%= f.password_field :password_confirmation %>
       </p>
-      <p>
-	<%= :Password_strength.t %>:
-	<div class="pw_meter">
-	  <div id="pw_bar">
-	  </div>
-	</div>
-	<%= observe_field('user_password', :function => "set_pw_bar(value, #{MIN_PASSWORD_STRENGTH});", :frequency => 0.25) %>
-	(takes <span id="pw_crack_time">??</span> to crack)
-      </p>
+
+      <div class='p'>
+      <%= "Password Strength"[:signup_password_strength] %>:
+      <div class="pw_meter">
+        <div id="pw_bar">
+        </div>
+      </div>
+      <%= observe_field('user_password', :function => "set_pw_bar(value, #{MIN_PASSWORD_STRENGTH});", :frequency => 0.25) %>
+      <span id='pw_time_to_crack' style='display:none'><%= "(takes {time} to crack)"[:signup_time_to_crack_password, {:time => "<span id='pw_time'>??</span>"}] %>
+</span>
+      <%- %w(date_centuries date_years date_months date_days date_hours date_minutes date_seconds).each do |time| -%>
+        <%=  hidden_field_tag(time, time.t) %>
+      <%- end -%>
+      </div>
+
       <p>
         <label for="usage_agreement_accepted">
         <%= check_box_tag 'usage_agreement_accepted', "1", params['usage_agreement_accepted'] %>
