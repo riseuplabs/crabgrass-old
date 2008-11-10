@@ -6,6 +6,11 @@
   <%= @title_box %>
 </div>
 <% end -%>
+<% if @info_box.any? -%>
+<div class='info_box'>
+  <%= @info_box %>
+</div>
+<% end -%>
 <div class='content_box'>
   <%= yield %>
   <%= render :partial => 'posts/list' if @show_posts %>

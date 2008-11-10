@@ -4,8 +4,8 @@ div.gallery_swatch {
   padding: 0 2em 2em 0;
 }
 <% end %>
+<% @info_box = gallery_navigation %>
 
-<% @title_box += gallery_navigation %>
 <div id="gallery_overview">
 <% if @images.any? %>
   <%= render :partial => 'image', :collection => @images %>

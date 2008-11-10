@@ -35,6 +35,7 @@ a.asset {
 }
 */
 
+/*
 table.share_page_recipients th {
   width: 10em;
 }
@@ -52,6 +53,7 @@ table.share_page_recipients div.scroll {
 table.share_page_recipients div.scroll a {
   font-size: 0.8em;
 }
+*/
 
 /* sidebar popups: px units matter */
 
@@ -106,6 +108,4 @@ div.popup blockquote {
   margin: 0;
   padding: 2em;
 }
-
-
 
