@@ -249,8 +249,7 @@ div.title_box .title_box_edit_link {
  **/ 
 
 #footer {
-  border-top: 1px solid #ccc;
-  background: #ddd;
+  border-top: 2px solid #ccc;
   color: #999;
 }
 #footercontent div {padding: 1em;}
