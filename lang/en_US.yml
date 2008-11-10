@@ -280,8 +280,8 @@ my_dashboard: "My Dashboard"
 my_tasks: "Tasks"
 my_tasks_headline: "My Tasks"
 my_tasks_description: Task lists I have access to
-Pending: "Pending"
-completed: "Completed"
+my_pending_tasks_link: "Pending"
+my_completed_tasks_link: "Completed"
 
 my_requests_headline: "My Requests"
 
@@ -652,6 +652,8 @@ you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: "diff"
 break_lock_button: "Break Lock"
 created_when_by: "created :when by :user"
+insert_image_heading: "Insert Image"
+insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
 ##
 ## WALL

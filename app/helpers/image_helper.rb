@@ -190,14 +190,14 @@ module ImageHelper
   end
 
   def icon_for(asset)
-    image_tag asset.big_icon, :style => 'vertical-align: middle'
+    image_tag "/images/png/16/#{asset.big_icon}.png", :style => 'vertical-align: middle'
   end
 
   def mini_icon_for(asset, width=nil, height=nil)
     if width.nil? or height.nil?
-      image_tag asset.small_icon, :style => 'vertical-align: middle;'
+      image_tag "/images/png/16/#{asset.small_icon}.png", :style => 'vertical-align: middle;'
     else
-      image_tag asset.small_icon, :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
+      image_tag "/images/png/16/#{asset.small_icon}.png", :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
     end
   end
 end
