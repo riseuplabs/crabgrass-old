@@ -5,7 +5,7 @@
 -%>
 <div style='position:relative'>
 <% (1..stars).each do -%>
-  <div style='background: url(/images/emblems/light-star-<%= rand(3) %>.png) no-repeat <%= rand(100) %>% <%= rand(100) %>%'>  
+  <div style='background-position: <%= rand(100) %>% <%= rand(100) %>%; background-repeat: no-repeat' class='post_twinkle_<%=rand(3)%>_48'>  
 <% end -%>
 <div class='negativespace'><%= post.body_html %></div>
 <% if logged_in? and post.user_id == current_user.id -%>
@@ -27,6 +27,7 @@
     %>
   <% end -%>
   </div>
+  <%= call_hook :post_actions, {:post => post} %>
 <% end -%>
 <% (1..stars).each do -%>
   </div>  
