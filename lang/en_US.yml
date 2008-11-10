@@ -632,3 +632,23 @@ created_when_by: "created :when by :user"
 set_status_button: "Set Status"
 my_status_heading: "Your Current Status"
 recent_wall_posts: "Recent Wall Posts"
+
+
+##
+## EMAIL
+##
+
+group_invite_email: |
+  {from_user} has invited you to join group "{group}".
+  
+  If you wish to join this group, click here:
+  
+    {accept_invite_link}
+  
+  The home page of this group can be found here:
+  
+    {group_home_link}
+  
+  If you do not wish to join this group, simply ignore this email.
+
+
