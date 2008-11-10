@@ -127,6 +127,9 @@ h2 span, h3 span {
   white-space: nowrap;
   text-transform: uppercase;
 }
+h2.section, h3.section {
+  background: #eee;
+}
 
 
 /** 
