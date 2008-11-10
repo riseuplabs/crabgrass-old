@@ -5,3 +5,24 @@
   width: 15em;
   background: #eee;
 }
+
+/* signup */
+table.signup td {vertical-align: top;}
+table.signup td.title {
+  border: 1px solid #ccc;
+  padding: 1em;
+  background: #eee;
+}
+table.signup td.right {
+  padding: 1em 0 0 1em;
+  text-align: center;
+}
+table.signup td .agreement {
+  height: 30em;
+  overflow: scroll;
+  text-align: left;
+  border: 1px solid #ccc;
+  padding: 1em;
+}
+
+

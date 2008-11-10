@@ -1,41 +1,56 @@
-<div id="signup_container">
-
-<div id="signup_left">
-	<h2><%= "Create Your Account"[:signup_title] %></h2>
-	<%= 'Choose your login name and your password then click "%s"'[:signup_info] % 'Sign up'[:signup_button] %>
-  <br/><br/>
-</div>
-
-<div id="signup_right">
-  <div id="signupform">
-    <%= error_messages_for :user %>
+<table class='signup'>
+<tr>
+  <td class='title' colspan='2'>
+    <h2 class='alert'><%= "Create Your Account"[:signup_title] %></h2>
+	  <%= 'Choose your login name and your password then click "%s"'[:signup_info] % 'Sign up'[:signup_button] %>
+  </td>
+</tr>
+<tr>
+  <td class='left'>
     <% form_for :user do |f| -%>
-      <p><label for="login"><%= 'Your login name'[:signup_login_name] %> </label><br/>
-      <%= f.text_field :login %></p>
+
+      <p>
+        <label for="login"><%= 'Your login name'[:signup_login_name] %> </label><br/>
+        <%= f.text_field :login %>
+      </p>
+
       <script>document.getElementById('user_login').focus();</script>
-      <p><label for="password"><%= 'Your Password'[:signup_password]%></label><br/>
-<%= f.password_field :password %></p>
 
-<p><label for="password_confirmation"><%= "Confirm Password"[:signup_confirm_password] %></label><br/>
-<%= f.password_field :password_confirmation %></p>
+      <p>
+        <label for="password"><%= 'Your Password'[:signup_password]%></label><br/>
+        <%= f.password_field :password %>
+      </p>
 
-<p><label for="email"><%= "Your Email"[:signup_email] %></label><br/>
-<%= f.text_field :email%>
-<br />
-<span class="comment"><%= "Optional: used if you forget your password"[:signup_email_info] %></span>
-</p>
+      <p>
+        <label for="password_confirmation"><%= "Confirm Password"[:signup_confirm_password] %></label><br/>
+        <%= f.password_field :password_confirmation %>
+      </p>
 
-<p><%= submit_tag 'Sign up'[:signup_button] %></p>
+      <p>
+        <label for="usage_agreement_accepted">
+        <%= check_box_tag 'usage_agreement_accepted', "1", params['usage_agreement_accepted'] %>
+        <%= "I accept the terms of the usage agreement"[:accept_usage_agreement] %>
+        </label>
+      </p>  
 
-<%= hidden_field_tag 'redirect', params[:redirect] if params[:redirect] %>
+      <p>
+        <label for="email"><%= "Your Email"[:signup_email] %></label><br/>
+        <%= f.text_field :email%>
+        <br />
+        <i><%= "Optional: used if you forget your password"[:signup_email_info] %></i>
+      </p>
 
-<% end -%>
-</div>
-</div>
-<br><br><br>
+      <p><%= submit_tag 'Sign up'[:signup_button] %></p>
 
-<div id="signup_footer"></div>
-
-</div>
-
+      <%= hidden_field_tag 'redirect', params[:redirect] if params[:redirect] %>
+    <%- end -%>
+  </td>
+  <td class='right'>
+    <h3 class='dim'><%= "Usage Agreement"[:usage_agreement_heading] %></h3>
+    <div class='agreement'>
+      <%= RedCloth.new("Usage agreement text goes here"[:usage_agreement_text]).to_html %>
+    </div>
+  </td>
+</tr>
+</table>
 

@@ -44,6 +44,12 @@ class AccountController < ApplicationController
   def signup
     @user = User.new(params[:user])
     return unless request.post?
+
+    if params[:usage_agreement_accepted] != "1"
+      flash_message_now :error => "Acceptance of the usage agreement is required"[:usage_agreement_required]
+      return
+    end
+
     @user.avatar = Avatar.new
     @user.save!
     self.current_user = @user
@@ -51,7 +57,9 @@ class AccountController < ApplicationController
     redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
     flash_message :title => 'Registration successful'[:signup_success],
       :success => "Thanks for signing up!"[:signup_success_message]
-  rescue ActiveRecord::RecordInvalid
+  rescue Exception => exc
+    @user = exc.record
+    flash_message_now :exception => exc
     render :action => 'signup'
   end
 

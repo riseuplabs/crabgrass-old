@@ -84,8 +84,7 @@ module ErrorHelper
   private
   
   def build_notice_area(type, title, text)
-    img = image_tag("notice/#{type}.png")
-    header = content_tag(:h2, img + title)
+    header = content_tag :h2, content_tag(:div, title, :class => "big_icon #{type}_48")
     content_tag(
      :div, 
      content_tag(
