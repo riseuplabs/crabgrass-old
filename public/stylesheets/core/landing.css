@@ -34,19 +34,17 @@
   word-spacing: 0.1em;
   line-height: 1.6em;
 }
-.info_box .status h3 {margin-top: 0.5em;}
-.info_box h3 {margin-bottom: 0.5em;}
+.info_box .status h3 {margin: 0.5em 0;}
+/*.info_box h3 {margin-bottom: 0.5em;}*/
 
 .dash_box {
   float: left;
   margin: 0 2em 1.5em 0;
 }
-
-/*
-.col2 .dash_box{
-	clear:both;
+.dash_box div.link_line {
+  line-height: 0.8em;
 }
-*/
+
 .activities li, .user_activities {
   color:#666;
   margin:7px 0px;
@@ -229,9 +227,10 @@ div.tags ul {
 
 .wall_posts {
   clear: both;
-  height: 20em;
+  height: 10em;
   overflow: auto;
   background: #fff;
+  border: 1px solid #ccc;
 }
 .wall_posts table td.icon {width: 1%;}
 .wall_posts td.date {

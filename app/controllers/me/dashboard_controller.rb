@@ -6,8 +6,8 @@ class Me::DashboardController < Me::BaseController
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
     params[:path] += ['limit','40']
     @pages = Page.find_by_path(params[:path], options_for_me)
-    @activities = Activity.for_dashboard(current_user).newest.unique.find(:all)
-    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_me(:flow => :announcement))
+    @activities = Activity.for_dashboard(current_user).newest.unique.find(:all, :limit => 6)
+    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_user(current_user, :flow => :announcement))
     current_user.ensure_discussion
     @wall_posts  = current_user.discussion.posts.all(:order => 'created_at DESC', :limit => 10)
     @current_status = current_user.current_status
