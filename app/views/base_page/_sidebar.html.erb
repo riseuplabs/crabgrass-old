@@ -1,17 +1,17 @@
 <%# div#page_sidebar gets replaced by popups %>
 <div id='page_sidebar'>
   <% if logged_in? -%>
-    <ul class='side_list'>
+    <ul class='side_list commands'>
       <%= watch_line %>
       <%= star_line %>
     </ul>
     <hr class="thin" />
-    <ul class='side_list'>
+    <ul class='side_list commands'>
       <%= share_line %>
       <%= public_line %>
     </ul>
     <hr class="thin" />
-    <ul class='side_list'>
+    <ul class='side_list commands'>
       <%= destroy_page_line %>
       <%= move_line %>
       <%= details_line %>
@@ -24,7 +24,7 @@
   <div class='tags'>
     <%= page_tags %>
   </div>
-  <ul class='side_list'>
+  <ul class='side_list commands'>
     <%= edit_tags_line %>
   </ul>
 
@@ -34,7 +34,7 @@
   <div class='attachments'>
     <%= page_attachments %>
   </div>
-  <ul class='side_list'>
+  <ul class='side_list commands'>
     <%= edit_attachments_line %>
   </ul>
   <%- end -%>

@@ -1,4 +1,4 @@
-<ul class='side_list'>
+<ul class='side_list commands'>
   <%= side_list_li :text => 'home'.t, :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
   <%# side_list_li :text => 'about'.t, :url => url_for_group(@group,:action => 'about'), :active => ..., :icon => 'info' %>
   <%= side_list_li :text => 'search'.t, :url => url_for_group(@group,:action => 'search'), :icon => 'magnifier' %>

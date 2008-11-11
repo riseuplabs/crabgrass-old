@@ -157,6 +157,7 @@ ul.side_list a {
 ul.side_list a.active {}
 ul.side_list a.visited {color: #336699;}
 ul.side_list a:hover {text-decoration: underline;}
+ul.side_list.commands a {text-transform: capitalize}
 
 /* side_list li */
 ul.side_list li.active {background-color: #eee;}
