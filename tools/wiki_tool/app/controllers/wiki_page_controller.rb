@@ -94,7 +94,6 @@ class WikiPageController < BasePageController
   # upload image via xhr
   # response goes to an iframe, so requires responds_to_parent
   def upload
-    debugger
     asset = Asset.build params[:asset]
     asset.parent_page = @page
     asset.save
