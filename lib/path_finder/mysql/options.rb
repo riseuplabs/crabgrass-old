@@ -30,4 +30,14 @@ module PathFinder::Mysql::Options
     })
   end
 
+  def self.options_for_groups(path, options)
+    groups = options[:callback_arg_groups]
+    group_ids = groups.first.is_a?(Group) ? groups.collect{|g|g.id.to_i} : groups.collect{|g|g.to_i}
+
+    options.merge({
+     :public => true,
+     :secondary_group_ids => group_ids
+    })
+  end
+
 end

@@ -39,6 +39,15 @@ module PathFinder::Options
   end
 
   # access options for pages I have access to
+  # and that +group+ has participated in.
+  def options_for_groups(groups,args={})
+    default_options.merge(
+      :callback => :options_for_groups,
+      :callback_arg_groups => groups
+    ).merge(args)
+  end
+
+  # access options for pages I have access to
   # and that +user+ has participated in.
   def options_for_user(user,args={})
     default_options.merge(

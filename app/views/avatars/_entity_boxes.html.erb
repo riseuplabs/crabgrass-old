@@ -9,15 +9,20 @@
   end
   after = nil if after.nil?
   links = nil if links.nil?
+  show_empty = false if show_empty.nil?
 %>
-<% if entities.any? -%>
+<% if entities.any? or show_empty -%>
 <div class="dash_box">
   <h3 class="dim">
     <%= header %>
     <%= link_span(:bullet, links, more_link) %>
   </h3>
-  <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
-  <hr class='clear' />
+  <%- if entities.any? -%>
+    <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
+  <%- else -%>
+    <%= "None"[:empty_results] %>
+  <%- end -%>
+  <div class='clear'></div>
   <%= after %>
 </div>
 <% end %>

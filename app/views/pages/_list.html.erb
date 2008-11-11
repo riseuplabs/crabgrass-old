@@ -30,7 +30,7 @@ heading = true if heading.nil?
 show_pagination_controls = true if pages.is_a? WillPaginate::Collection
 show_time_dividers = parsed_path.sort_by_time? if show_time_dividers.nil?
 any_results = pages.any?
-sortable = true
+sortable = true if sortable.nil?
 
 if show_time_dividers
   today = []; yesterday = []; week = []; later = [];

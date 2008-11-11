@@ -11,7 +11,7 @@ table.members td {padding: 12px;}
   <% end -%>
 <% end %>
 
-<h2>current <%=group_type%> members</h2>
+<h2><%= "members".t %></h2>
 <div class='pretty'>
 <% if @group.memberships.any? %>
   <table class='members'>
@@ -26,6 +26,7 @@ table.members td {padding: 12px;}
 <% end -%>
 
 <% if @group.federatings.any? %>
+<h2><%= "group members".t %></h2>
   <table class='members'>
   <tr>
     <th>Group</th>
@@ -34,5 +35,6 @@ table.members td {padding: 12px;}
   <%= render :partial => 'federating', :collection => @group.federatings %>
   </table>
 <% end -%>
+
 </div>
 

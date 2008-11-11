@@ -11,54 +11,13 @@
 <% end %>
 
 <div class='landing'>
-
-  <%#
-  ### ANNOUNCEMENTS
-  #%>
-
-  <%- if @announcements.any? %>
-  <div class='section'>
-    <%= render :partial => 'announcement_page/list'  %>
-  </div>
-  <%- end -%>
-
-  <%#
-  ### PAGES
-  #%>
-
-  <div class='section'>
-    <%= header_with_more(:h2, :alert, "Recent Pages".t, group_search_url('descending', 'updated_at')) %>
-    <div class='page_scroll'>
-      <%= render :partial => 'pages/list', :locals => {:pages => @pages, :columns => [:stars, :icon, :title, :last_updated]} %>
-      <br/>
-      <%= link_to :more.t + ARROW, group_search_url('descending', 'updated_at') %>
-    </div>
-  </div>
-
-  <%#
-  ### WIKI
-  #%>
-
-  <div class='section'>
-    <%= header_with_more(:h2, :alert, "Group Wiki"[:group_wiki], group_search_url('type','wiki','descending', 'updated_at')) %>
-    <% if @access == :public -%>
-      <div class='wiki'>
-        <%= @profile.wiki.body_html %>
-      </div>
-    <% else -%>
-      <%= render :partial => 'wiki/show' %>
-    <% end -%>
-  </div>
-
+<%= render :partial => 'landing_content' %>
 </div>
    
 <!--  
  
   <h3 class='section'><%= "Featured Content"[:featured_content] %></h3>
     <%= render :partial => 'group/starring', :locals => {:group => @group}%>
-
-    <br style='clear:left' />
-    <%= render :partial => 'activity/list' %>
 -->
 
 

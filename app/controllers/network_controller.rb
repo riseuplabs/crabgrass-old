@@ -5,6 +5,11 @@ class NetworkController < GroupController
     @group = options[:group] # the group context, if any
   end
 
+  def show
+    super
+    @group_pages = Page.find_by_path(['descending', 'updated_at', 'limit','10'], options_for_groups(@group.group_ids))
+  end
+
   protected
   
   def context

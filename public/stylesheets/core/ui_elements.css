@@ -115,16 +115,15 @@ a.name_link {
 
 h1.dim, h2.dim, h3.dim {
   color: #738899;
+  text-transform: capitalize;
 }
 h1.bright, h2.bright, h3.bright {
   color: #5B97CB;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  text-transform: capitalize;
 }
 h1.alert, h2.alert, h3.alert  {
   color: #CE4A48;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  text-transform: capitalize;
 }
 h2 span, h3 span {
   font-size: 0.6em;

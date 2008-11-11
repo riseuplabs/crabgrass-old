@@ -5,25 +5,18 @@
 ##
 
 create_a_new_thing: "create a new :thing"
-Discussions: "Discussions"
 discussions: "discussions"
 groups: "groups"
 networks: "networks"
 committees: "committees"
-Groups: "Groups"
-Networks: "Networks"
-Committees: "Committees"
 group: "group"
 network: "network"
 committee: "committee"
-Group: "Group"
-Network: "Network"
-Committee: "Committee"
 contacts: "contacts"
 contact: "contact"
-Contact: "Contact"
+member_groups_of_network: "member groups"
+
 Contacts: "Contacts"
-Members: "Members"
 Friends: "Friends"
 people: "People"
 search: "Search"
@@ -34,6 +27,7 @@ close_button: "Close"
 save_button: "Save"
 cancel_button: "Cancel"
 no_search_results: "No Results"
+empty_results: "None"
 search_headline: "Search"
 see_more_link: "More"
 
@@ -441,6 +435,8 @@ coordinating_council: coordinating council
 working_group: working group
 coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
 working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
+recent_network_pages: "Recent Network Pages"
+recent_member_group_pages: "Recent Member Group Pages"
 
 ##
 ## REQUESTS

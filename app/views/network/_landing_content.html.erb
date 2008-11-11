@@ -1,0 +1,42 @@
+  <%#
+  ### ANNOUNCEMENTS
+  #%>
+
+  <%- if @announcements.any? %>
+  <div class='section'>
+    <%= render :partial => 'announcement_page/list'  %>
+  </div>
+  <%- end -%>
+
+  <%#
+  ### PAGES
+  #%>
+
+  <div class='section'>
+    <%= header_with_more(:h2, :alert, "Recent Network Pages".t, group_search_url('descending', 'updated_at')) %>
+      <%= render :partial => 'pages/list', :locals => {:pages => @pages, :columns => [:stars, :icon, :title, :last_updated]} %>
+      <br/>
+      <%= link_to "More"[:see_more_link] + ARROW, group_search_url('descending', 'updated_at') if @pages.any?%>
+  </div>
+
+  <div class='section'>
+    <%= header_with_more(:h2, :alert, "Recent Member Group Pages"[:recent_member_group_pages]) %>
+      <%= render :partial => 'pages/list', :locals => {:pages => @group_pages, :columns => [:stars, :group, :icon, :title, :last_updated], :sortable => false} %>
+      <%# link_to "More"[:see_more_link] + ARROW, group_search_url('descending', 'updated_at') %>
+  </div>
+
+  <%#
+  ### WIKI
+  #%>
+
+  <div class='section'>
+    <%= header_with_more(:h2, :alert, "Group Wiki"[:group_wiki], group_search_url('type','wiki','descending', 'updated_at')) %>
+    <% if @access == :public -%>
+      <div class='wiki'>
+        <%= @profile.wiki.body_html %>
+      </div>
+    <% else -%>
+      <%= render :partial => 'wiki/show' %>
+    <% end -%>
+  </div>
+
