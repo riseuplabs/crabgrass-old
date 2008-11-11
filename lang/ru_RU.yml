@@ -448,9 +448,6 @@ Contacts: !binary |
 versions: !binary |
   0LLQtdGA0YHQuNC4
 
-more: !binary |
-  0LXRidGR
-
 or_image_url: "\xD0\xB8\xD0\xBB\xD0\xB8 URL \xD0\xB8\xD0\xB7\xD0\xBE\xD0\xB1\xD1\x80\xD0\xB0\xD0\xB6\xD0\xB5\xD0\xBD\xD0\xB8\xD1\x8F"
 outgoing: !binary |
   0JjRgdGF0L7QtNGP0YnQuNC1
