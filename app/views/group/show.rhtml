@@ -1,5 +1,5 @@
 <%- @title_box = capture do -%>
-  <h1><%= "Group Home"[:group_home_headline] %></h1>
+  <h1><%= "{group_type} Home"[:group_home_headline, {:group_type => group_type.capitalize}] %></h1>
 <%- end -%>
 
 <%- @info_box = capture do -%>

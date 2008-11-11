@@ -1,7 +1,7 @@
 <table class="columns">
 <tr>
   <td class="left">
-    <h2 class='dim'>Welcome</h2>
+    <h2 class='dim'><%= "Welcome"[:group_home_welcome] %></h2>
     <% if @group.is_council? -%>
       <p><%= 'coordinating committee'.t %></p>
     <% end -%>

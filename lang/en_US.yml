@@ -374,7 +374,7 @@ edit_profile_link: "Edit Profile"
 ## GROUPS
 ##
 
-group_home_headline: "Group Home"
+group_home_headline: "{group_type} Home"
 group_home_welcome: "Welcome"
 group_administration_not_allowed: "You cannot administer this group."
 page_not_part_of_group: "Page not part of this group"
