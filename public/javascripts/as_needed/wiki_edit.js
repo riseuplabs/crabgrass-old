@@ -463,6 +463,7 @@ Control.TextArea.ToolBar = Class.create(	{
 		var li = document.createElement('li');
 		var a = document.createElement('a');
 		a.href = '#';
+    a.title = link_text; // crabgrass addition
 		this.attachButton(a,callback);
 		li.appendChild(a);
 		Object.extend(a,attrs || {});
