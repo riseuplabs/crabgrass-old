@@ -672,6 +672,7 @@ recent_wall_posts: "Recent Wall Posts"
 ## EMAIL
 ##
 
+group_invite_subject: "Invitation to join group \"{group}\""
 group_invite_email: |
   {from_user} has invited you to join group "{group}".
   

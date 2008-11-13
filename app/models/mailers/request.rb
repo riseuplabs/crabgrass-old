@@ -9,7 +9,7 @@ module Mailers::Request
 
     recipients request.email
     from "%s <%s>" % [@current_user.display_name, @site.email_sender]
-    subject 'Invitation to join group "%s"' % request.group.display_name
+    subject 'Invitation to join group "{group}"'[:group_invite_subject, {:group => request.group.display_name}]
     body({ :from => @current_user, :group => request.group, :link => accept_link,
        :group_home => group_home })
   end
