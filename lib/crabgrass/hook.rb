@@ -85,7 +85,7 @@ module Crabgrass
     # Current project is automatically added to the call context.
     module Helper
       def call_hook(hook, context={})
-        defaults = {:page => @page, :user => @user, :group => @group, :delegate_to => self}
+        defaults = {:page => @page, :user => @user, :group => @group, :delegate_to => self, :session => session}
         Crabgrass::Hook.call_hook(hook, defaults.merge(context))
       end
     end
