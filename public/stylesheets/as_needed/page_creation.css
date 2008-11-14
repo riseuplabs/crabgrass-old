@@ -13,6 +13,9 @@ div.page-class .page-link {
   display: block;
   outline: 0;
 }
+td.label {
+  text-transform: capitalize;
+}
 
 /*
 previously.....

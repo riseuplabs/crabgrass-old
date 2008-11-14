@@ -1,25 +1,33 @@
 ---
 
 ##
+## not currently used
+## 
+
+settings: settings
+page_info: Page Info
+logout: Logout
+
+##
 ## GENERIC TERMS
 ##
 
-create_a_new_thing: "create a new :thing"
-discussions: "discussions"
-groups: "groups"
-networks: "networks"
-committees: "committees"
-group: "group"
-network: "network"
-committee: "committee"
-contacts: "contacts"
-contact: "contact"
-member_groups_of_network: "member groups"
-
-Contacts: "Contacts"
-Friends: "Friends"
+create_a_new_thing: "Create a new :thing"
+discussions: "Discussions"
+groups: "Groups"
+networks: "Networks"
+committees: "Committees"
+group: "Group"
+network: "Network"
+committee: "Committee"
+contact: "Contact"
+member_groups_of_network: "Member Groups"
+peers: "Peers"
+contacts: "Contacts"
+friends: "Friends"
 people: "People"
 search: "Search"
+members: "Members"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
@@ -59,8 +67,6 @@ message_must_not_be_empty: message must not be empty
 # TODO: possible values for MessagePage.class_display_name.t
 subject: subject
 recipients: recipients
-to: to
-peers: peers
 message: message
 send_button: Send
 from: from
@@ -250,7 +256,6 @@ cancel_link: "cancel"
 file_must_be_image_error: "File must be an image to be part of a gallery."
 group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
 add_another_file: "Add another file"
-File: "File"
 slideshow_delay_input: "Update every :input_field seconds"
 add_comment: "add comment"
 make_album_cover: "make this image the album cover"
@@ -356,9 +361,9 @@ users_wall: ":user's Wall"
 #users_recent_activity: ":user's Recent Activity"
 #users_recent_work: ":user's Recent Work"
 recent_contributions: "Recent Contributions"
-Top_Rated: Top Rated
-Most_Viewed: Most Viewed
-Highest_Contributors: Highest Contributors
+top_rated: Top Rated
+most_viewed: Most Viewed
+highest_contributors: Highest Contributors
 users_world: ":user's World"
 request_friend_link: "Add To My Contacts"
 remove_friend_link: "Remove From My Contacts"
@@ -417,7 +422,7 @@ unknown: unknown
 edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups
-Create: Create
+create_button: Create
 new_group: New group
 new_network: New network
 group_directory: Group Directory

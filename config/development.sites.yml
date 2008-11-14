@@ -8,8 +8,7 @@ default:
   secret: '3d3dc74473a8a65696b564a4214b3'
   pagination_size: 29
   super_admin_group_id: 1
-  translation_group:
-  - animals
+  translation_group: animals
   default_language:
   - en_US
   available_page_types:
