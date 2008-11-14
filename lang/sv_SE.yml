@@ -23,7 +23,7 @@ data_for_page_missing: "Datan f\xC3\xB6r den h\xC3\xA4r sidan saknas."
 join_request_info: "Du kommer inte att bli medlem i den h\xC3\xA4r gruppen f\xC3\xB6rr\xC3\xA4n din beg\xC3\xA4ran har accepterats. Du kan f\xC3\xB6lja statusen f\xC3\xB6r varje beg\xC3\xA4ran genom \"%s\"."
 create_page_button: Skapa sida
 add_description: "L\xC3\xA4gg till beskrivning"
-Contacts: kontakter
+contacts: kontakter
 email: e-post
 back_to_group: tillbaka till :group_name
 About_Me: Om mig
@@ -132,7 +132,7 @@ add_websites: "L\xC3\xA4gg till webbsajter"
 create_committee: "skapa kommitt\xC3\xA9"
 collection: samling
 error_saving_new_order: Det gick inte att spara den nya ordern!
-Create: Skapa
+create_button: Skapa
 csrf_error_message: "Din inloggning liknar ett f\xC3\xB6rs\xC3\xB6k att hacka sajten. Ta det lugnt: det h\xC3\xA4nder ofta \xC3\xA4ven f\xC3\xB6r oskyldiga f\xC3\xB6rs\xC3\xB6k. Vi \xC3\xA4r bara extra paranoida. Allt du beh\xC3\xB6ver g\xC3\xB6ra \xC3\xA4r ladda om sidan innan du f\xC3\xB6rs\xC3\xB6ker logga in. Du kan f\xC3\xB6lja den h\xC3\xA4r l\xC3\xA4nken f\xC3\xB6r att f\xC3\xB6rs\xC3\xB6ka igen:\r\n"
 im_addresses: IM-adresser
 add_contact_info: "En annan anv\xC3\xA4ndare, som \xC3\xA4r din kontakt, kan de se n\xC3\xA4r du \xC3\xA4r inloggad och har tillg\xC3\xA5ng till din fullst\xC3\xA4ndiga profil. N\xC3\xA4r du blir n\xC3\xA5gon annans kontakt, blir de ocks\xC3\xA5 din."

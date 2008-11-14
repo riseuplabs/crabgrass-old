@@ -4,6 +4,8 @@
     <b>Key</b>: 
     <%= link_to @translation.key.name, key_url(@translation.key) %>
     <%= hidden_field :translation, :key_id %>
+    <br/>
+    <label><%= check_box :translation, :custom %>custom translation</label>
   </td>
   <td>
     <b>Language</b>: 

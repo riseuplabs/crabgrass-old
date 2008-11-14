@@ -282,6 +282,8 @@ class GroupController < ApplicationController
       return true
     elsif request.post? and non_members_post_allowed.include? params[:action]
       return true
+    elsif action?(:update)
+      return logged_in? && current_user.may?(:admin,@group)
     else
       return (logged_in? && @group && (current_user.member_of?(@group) || current_user.may?(:admin,@group)))
     end

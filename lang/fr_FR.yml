@@ -4,10 +4,9 @@ drag_and_drop_to_rearrange_photos: Attrapez et glissez les images pour les arran
 formatting_reference_link: "Formatage de r\xC3\xA9f\xC3\xA9rence"
 signup_info: Choisissez votre nom d'utilisateur ainsi que votre mot de passe avec de cliquer sur "%s"
 invalid_email: Mail invalide
-my_pages: Mes pages
 medium: moyenne
 created_by: "Cr\xC3\xA9\xC3\xA9e par"
-Create: "Cr\xC3\xA9er"
+my_pages: Mes pages
 group_successfully_created: "Le groupe est cr\xC3\xA9\xC3\xA9 avec succ\xC3\xA8s."
 month_short_august: "Ao\xC3\xBB"
 middle_name: initiale
@@ -25,20 +24,19 @@ action: action
 description: description
 login_password: Mot de passe
 add_another_file: Ajouter un autre fichier
-page_info: Page d'Information
 image_count: Image :number sur :count
 remove_contact_confirmation: Voulez-vous vraiment couper le contact avec %s ?
+page_info: Page d'Information
 settings: "Param\xC3\xA8tres"
 discuss_request_link: Discuter de cette demande avec :person_or_group
 media_videos: "Vid\xC3\xA9os"
+all_groups: tous les groupes
 date_older: Plus Vieux
 month_short_september: Sep
-all_groups: tous les groupes
-my_pending_tasks_link: En attente
 group_has_no_public_profile: Ce groupe n'a pas de profil public.
+my_pending_tasks_link: En attente
 Committee: Commission
 destroy_group: "d\xC3\xA9truire %s"
-to_me: Pour moi
 month_short_may: Mai
 from: de
 full: plein
@@ -47,26 +45,25 @@ message: message
 me_search_description: "Chercher dans les pages auxquelles vous avez acc\xC3\xA8s"
 menu_chat: Chat
 incoming: A venir
-date_this_week: "La Semaine Pass\xC3\xA9e"
-peers: pairs
+create_button: "Cr\xC3\xA9er"
 im_addresses: "Adresse de messagerie instantan\xC3\xA9e"
 alert_not_saved: "Les modifications ne peuvent \xC3\xAAtre sauvegard\xC3\xA9es"
-Networks: "r\xC3\xA9seaux"
+peers: pairs
+date_this_week: "La Semaine Pass\xC3\xA9e"
 all_states: "tous les \xC3\xA9tats"
 gallery: Galerie
 me_inbox_link: "Bo\xC3\xAEte de r\xC3\xA9ception"
-new_password: Nouveau mot de passe
 csrf_error_message: "Votre demande de connexion ressemble \xC3\xA0 une tentative de piratage de ce site. Pas d'inqui\xC3\xA9tude: cette erreur arrive fr\xC3\xA9quemment m\xC3\xAAme pour des demandes anodines. Nous sommes simplement particuli\xC3\xA8rement parano\xC3\xAFaques. Tout ce que vous avez \xC3\xA0 faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:"
 galleries: Galeries
-page_is_not_static: La page n'est pas statique
-month_short_november: Nov
+new_password: Nouveau mot de passe
 last_change: "derni\xC3\xA8re modification"
+page_is_not_static: La page n'est pas statique
 download_gallery: "T\xC3\xA9l\xC3\xA9charger la galerie"
 alert_permission_denied: "Autorisation refus\xC3\xA9e"
+month_short_november: Nov
 back_button: Revenir
 group_discussion_class_description: Une discussion du groupe sur un sujet particulier.
 move_image_left: "D\xC3\xA9placer l'image \xC3\xA0 gauche"
-Members: Membres
 signup_login_name: Votre nom d'utilisateur
 cancel_link: annuler
 no_group_named: "Il n'existe pas de groupe nomm\xC3\xA9 <b>:name</b>."
@@ -74,26 +71,24 @@ page_list_heading_title: titre
 create_task_list: "cr\xC3\xA9er une nouvelle liste de t\xC3\xA2ches"
 edit_underlined_e: modifi<u>e</u>r
 media_for_group: "%s dans %s"
-task_list: "liste de t\xC3\xA2ches"
-page_list_heading_updated_by: "mis \xC3\xA0 jour par"
-my_tasks: "T\xC3\xA2ches"
 download: "T\xC3\xA9l\xC3\xA9chargement"
+my_tasks: "T\xC3\xA2ches"
+task_list: "liste de t\xC3\xA2ches"
 error_saving_new_order: Erreur lors de la sauvegarde de l'arrangement
 descriptive_name_for_display: "Un nom explicite utilis\xC3\xA9 pour l'affichage"
 Home: Accueil
-page_list_heading_posts: messages
+page_list_heading_updated_by: "mis \xC3\xA0 jour par"
 my_tasks_description: "Listes de t\xC3\xA2ches accessibles"
 month_short_july: Juil
 Language: Langue
+page_list_heading_posts: messages
 login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
-from_me: De moi
 collection: collection
-Network: "r\xC3\xA9seau"
-month_short_october: Oct
 make_album_cover: Faire de cette image la couverture de l'album
+month_short_october: Oct
 month_short_december: "D\xC3\xA9c"
-approval_vote: vote d'approbation
 edit_settings: "modifier les param\xC3\xA8tres"
+approval_vote: vote d'approbation
 monday: Lundi
 locations: Lieux
 login_button: Se connecter
@@ -101,34 +96,34 @@ edit_gallery: Modifier la gallerie
 Mobile: Portable
 signup_link: Besoin d'un nouveau compte ?
 fullname: Nom Complet
-page_list_heading_created: "cr\xC3\xA9\xC3\xA9"
-no_committees: pas de commission
 add_contact_info: "Quand un autre utilisateur est votre contact, il est capable de voir quand vous \xC3\xAAtes connect\xC3\xA9, d'acc\xC3\xA9der \xC3\xA0 votre profil complet. Quand vous devenez contact d'une autre personne, cette personne devient \xC3\xA9galement votre contact."
 collection_class_description: "Page sp\xC3\xA9ciale qui comprend les autres pages"
+no_committees: pas de commission
 current_video_sources: "actuellement support\xC3\xA9s: youtube, blip.tv, google video, vimeo"
-new_group: nouveau groupe
+page_list_heading_created: "cr\xC3\xA9\xC3\xA9"
 month_short_june: Juin
 my_completed_tasks_link: "Compl\xC3\xA9t\xC3\xA9es"
 display_name: "Nom affich\xC3\xA9"
 forgot_password_mail_greeting: "%s, pour r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe"
+new_group: nouveau groupe
 Other: Autre
 approve_contact_info: "Cet utilisateur vous a d\xC3\xA9j\xC3\xA0 demand\xC3\xA9 comme contact. Voulez-vous l'accepter ?"
 join_chat: Rejoindre le chat
 login: Connexion
-no_members: (aucun membre)
-date_today: Aujourd'hui
-private_profile: "Profil priv\xC3\xA9"
 message_must_not_be_empty: "Le message ne doit pas \xC3\xAAtre vide"
+date_today: Aujourd'hui
 add_location: Ajouter un lieu
+no_members: (aucun membre)
 signup_title: "Cr\xC3\xA9ez votre compte"
 back_to_group: revenir au groupe :group_name
-organization: organisation
+private_profile: "Profil priv\xC3\xA9"
 break_lock: forcer le verrou
 group_directory: "R\xC3\xA9pertoire du groupe"
-next_change: modification suivante
+organization: organisation
 create_committee: "cr\xC3\xA9er une commission"
 locked_by_user: "Verrouill\xC3\xA9 par :user"
 comparing_changes_header: "Comparaison des modifications de :user \xC3\xA0 :when de :old_version vers :new_version"
+next_change: modification suivante
 requests_to_me: "Demandes \xC3\xA0 mon intention"
 welcome_text: "*Bienvenue*\r\n\
   \r\n\
@@ -140,12 +135,12 @@ welcome_text: "*Bienvenue*\r\n\
   \r\n\
   Le d\xC3\xA9veloppement est dirig\xC3\xA9 \xC3\xA0 partir du retour des utilisateurs, aussi [rejoignez -> /users] le groupe \"user feed back\" /[retour des utilisateurs/] et impliquez-vous en cliquant le lien \"get involved\" pr\xC3\xA9sent au bas de toutes les page.\r\n"
 alert_saved: "Modifications effectu\xC3\xA9es"
-page_list_heading_created_by: "cr\xC3\xA9\xC3\xA9 par"
 email_addresses: Adresses mail
 file_version_deleted: "version du fichier supprim\xC3\xA9e"
 friday: Vendredi
 group_members_publicly_visible: Afficher publiquement les membres du groupe
 forgotten_email_address: "Quelle est l'adresse mail donn\xC3\xA9e lors de la cr\xC3\xA9ation du compte ?"
+page_list_heading_created_by: "cr\xC3\xA9\xC3\xA9 par"
 history: Historique
 media_document: Document
 gallery_class_description: Une collection d'images.
@@ -154,51 +149,52 @@ link_name: Nom du lien
 activate_js_to_rearrange_photos: "Activer JavaScript pour pouvoir r\xC3\xA9arranger les photos !"
 create_page_headline: "Cr\xC3\xA9er une nouvelle {page_class}"
 Fax: Fax
-my_settings: "Param\xC3\xA8tres pour {user}"
 group_information: Information de :group_type
 all_people: toutes les personnes
+my_settings: "Param\xC3\xA8tres pour {user}"
 committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 we.riseup.net/yourgroupname"
-move_image_right: "D\xC3\xA9placer l'image \xC3\xA0 droite"
 month_short_april: Avr
 network_invite_info: "\xC3\x89crivez les noms des groupes que vous d\xC3\xA9sirez inviter \xC3\xA0 rejoindre ce r\xC3\xA9seau."
 Admin: Administrer
+move_image_right: "D\xC3\xA9placer l'image \xC3\xA0 droite"
 media_image: Image
-just_me: Personne, seulement moi
-only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en \xC3\xAAtes le dernier membre"
 my_groups: Mes groupes
 delete_this_version: effacer cette version
+only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en \xC3\xAAtes le dernier membre"
 page_not_part_of_group: Page ne faisant pas partie de ce groupe
-requests_from_me: Mes demandes
 group_wiki: Wiki du groupe
+requests_from_me: Mes demandes
 media_alls: "M\xC3\xA9dias"
 minimum_stars_for_important_pages_description: "D\xC3\xA9terminer le minimum d'\xC3\xA9toile qu'une page doit avoir pour appara\xC3\xAEtre dans la liste 'important' de la page d'accueil du groupe"
 group_not_allowed_to_view_image_error: "Le groupe qui poss\xC3\xA8de cette image n'est pas autoris\xC3\xA9 \xC3\xA0 voir cette image."
+contacts: Contacts
 directory_of_groups: "R\xC3\xA9pertoire des groupes"
 add_comment: Ajouter un commentaire
 logout: "D\xC3\xA9connecter"
 media_video: "Vid\xC3\xA9o"
 About_Me: Mes Informations
-ranked_vote: vote de classement
 minimum_stars_for_important_pages: Etoiles minimum pour les pages importantes
 recipient_tip: "S\xC3\xA9parez les destinataires par des virgules, des espaces ou de nouvelles lignes."
+ranked_vote: vote de classement
 dont_understand_group_type: Ne peut comprendre le type de groupe :type
 invalid_token: Lien invalide
 all_page_types: tous les types de pages
 login_name: Nom d'utilisateur
+members: Membres
 add_existing_image: Ajouter une image existante
 image_count_total: ":count images"
 signup_email_info: "optionnel: utilis\xC3\xA9 si vous oubliez votre mot de passe"
 general_info: "Informations g\xC3\xA9n\xC3\xA9rales"
 group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 we.riseup.net/yourgroupname."
 descriptions: descriptions
-pagination_next: suivant
 logout_success: Au revoir
 created_when_by: "cr\xC3\xA9\xC3\xA9 \xC3\xA0 :when par :user"
 media_without_group: Tous les %s
+pagination_next: suivant
 forgot_password_link: "J'ai oubli\xC3\xA9 mon mot de passe"
 page_locked_header: "page verrouill\xC3\xA9e"
-organizational_role: "r\xC3\xB4le organisationnel"
 invite_info: "Entrez une liste de noms d'utilisateur ou d'adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce %s."
+organizational_role: "r\xC3\xB4le organisationnel"
 discussions: Discussions
 create_a_new_page: "Cr\xC3\xA9er une nouvelle page"
 group_discussion: discussion de groupe
@@ -215,12 +211,11 @@ invalid_email_text: L'adresse mail fournie est invalide.
 format: Format
 menu_me: Moi
 diff_link: "diff\xC3\xA9rent"
-Contacts: Contacts
 media_audio: Enregistrement audio
 or_image_url: ou URL de l'image
-rejected: "rejet\xC3\xA9es"
 break_lock_button: forcer le verrou
 media_images: Images
+rejected: "rejet\xC3\xA9es"
 approve_button: approuver
 add_email_address: Ajouter une adresse mail
 other_formats: autres formats
@@ -257,6 +252,7 @@ confirm_new_password: Confirmer le nouveau mot de passe
 login_failed: Connexion impossible
 invalid_token_text: "Le lien de r\xC3\xA9g\xC3\xA9n\xC3\xA9ration de mot de passe sp\xC3\xA9cifi\xC3\xA9 est invalide. Il doit \xC3\xAAtre d\xC3\xA9j\xC3\xA0 utilis\xC3\xA9, ou a d\xC3\xBBt expirer."
 file_must_be_image_error: "Le fichier doit \xC3\xAAtre une image pour pouvoir \xC3\xAAtre ajout\xC3\xA9 \xC3\xA0 une galerie."
+networks: "r\xC3\xA9seaux"
 no_images_in_gallery: Aucune image dans la galerie
 groups: Groupes
 dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour cr\xC3\xA9er des commissions sous %s"
@@ -275,6 +271,7 @@ personal_message: message personnel
 page_list_heading_updated: "mis \xC3\xA0 jour le"
 date: date
 at_least_one_recipient_is_required: choisir au moins un destinataire
+network: "r\xC3\xA9seau"
 you_have_no_groups: Vous n'avez aucun groupe
 file_class_description: "T\xC3\xA9l\xC3\xA9charger un fichier ."
 forgot_password_mail_expiry: "Ce lien sera valide pendant 24 heures. Si vous avez besoin de r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe apr\xC3\xA8s ce d\xC3\xA9lai, vous aurez \xC3\xA0 retourner \xC3\xA0 nouveau sur la page pour demander un nouveau lien."

@@ -11,8 +11,8 @@
 
 <h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>
       
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:Networks], :entities => @user.all_groups.networks } %>
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:Groups], :entities => @user.groups.normals } %>
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:Committees], :entities => @user.groups.committees } %>
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:Friends], :entities => @user.contacts } %> 
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:networks], :entities => @user.all_groups.networks } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:hroups], :entities => @user.groups.normals } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => @user.groups.committees } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:friends], :entities => @user.contacts } %> 
 

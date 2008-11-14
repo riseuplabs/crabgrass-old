@@ -43,13 +43,13 @@
 <%- cache(me_cache_key) do -%>
   <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:Networks], :entities => current_user.all_groups.networks } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.networks } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:Groups], :entities => current_user.groups.normals } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.normals } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:Committees], :entities => current_user.groups.committees } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.committees } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Friends'[:Friends], :entities => current_user.contacts } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Friends'[:friends], :entities => current_user.contacts } %>
 
 <%- end -%>
 

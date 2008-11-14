@@ -80,9 +80,11 @@ module Gibberish
     def interpolate_with_strings(string, strings)
       string.gsub(/\{\w+\}/) { strings.shift }
     end
-    
+   
+    ## crabgrass hack: added *.custom.yml 
     def language_files
-      @@language_paths.map {|path| Dir[File.join(path, 'lang', '*.{yml,yaml}')]}.flatten
+      @@language_paths.map {|path| Dir[File.join(path, 'lang', '*.{yml,yaml}')]}.flatten + 
+      @@language_paths.map {|path| Dir[File.join(path, 'lang', 'custom', '*.{yml,yaml}')]}.flatten
     end
   end
 end

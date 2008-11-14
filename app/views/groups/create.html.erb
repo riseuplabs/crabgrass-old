@@ -13,7 +13,7 @@
 <% form_tag({:action => "create", :id => group_type},:id => "createform") do %>
   <%= render(:partial => 'group/form', :locals => {:submit => false}) %>
   <%= render(:partial => 'networks/initial_membership_form') if group_type == 'network' %>
-  <%= submit_tag "Create"[:Create] %>
+  <%= submit_tag "Create"[:create_button] %>
 <% end %>
 <%= javascript_tag "Form.focusFirstElement('createform');" %>
 

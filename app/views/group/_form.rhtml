@@ -3,19 +3,19 @@
 
 <h2 class='section'>
 <div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
-  <%= '{group_type} Information'[:group_infomation, {:group_type => group_type.capitalize.T}] %>
+  <%= '{group_type} Information'[:group_infomation, {:group_type => group_type.t}] %>
 </div>
 </h2>
 
-<% if @parent %>
+<% if @parent and may_admin_group? %>
 <p>
   <label for="group_type">
     <b><%= "Committee type"[:commitee_type]%></b><br/>
     <%= "What type of committee will this be?"[:committee_type_description]%>
   </label><br/>
-  <ul class='plainlist'>
-   <li><label><%= radio_button_tag('council', true, false) %> <b><%= "coordinating council".t %>:</b> <%= :coordinating_council_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
-   <li><label><%= radio_button_tag('council', false, true) %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
+  <ul class='plain'>
+   <li><label><%= radio_button(:group, 'is_council', "true") %> <b><%= "coordinating council".t %>:</b> <%= :coordinating_council_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
+   <li><label><%= radio_button(:group, 'is_council', "false") %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
   </ul>
 </p>
 <% end -%>
@@ -45,7 +45,7 @@
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
 </p>
 
-
+<!--
 <p>
   <label for="group_min_stars">
     <b><%= "Minimum stars for important pages"[:minimum_stars_for_important_pages] %></b><br/>
@@ -53,14 +53,14 @@
   </label><br/>
   <%= text_field :group, :min_stars %>
 </p>
-
+-->
 
 <p>
   <label for="group_summary">
     <b>Summary</b><br/>
     <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
   </label><br/>
-  <%= text_field 'group', 'summary', :size => 30, :maxlength => 256  %>
+  <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
 </p>
 
   <%= submit_tag 'Save changes'[:save_changes] if submit %>
