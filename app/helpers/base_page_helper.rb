@@ -263,35 +263,35 @@ module BasePageHelper
       end
       if @share_groups.any?
         f.tab do |t|
-          t.label "Groups"[:Groups]
+          t.label "Groups"[:groups]
           t.show_tab 'share_population_my_groups'
           t.selected false
         end
       end
       if @share_networks.any?
         f.tab do |t|
-          t.label "Networks"[:Networks]
+          t.label "Networks"[:networks]
           t.show_tab 'share_population_my_networks'
           t.selected false
         end
       end
       if @share_committees.any?
         f.tab do |t|
-          t.label "Committees"[:Committees]
+          t.label "Committees"[:committees]
           t.show_tab 'share_population_my_committees'
           t.selected false
         end
       end
       if @share_friends.any?
         f.tab do |t|
-          t.label "Contacts"[:Contacts]
+          t.label "Contacts"[:contacts]
           t.show_tab 'share_population_friends'
           t.selected false
         end
       end
       if @share_peers.any?
         f.tab do |t|
-          t.label "Peers"[:Peers]
+          t.label "Peers"[:peers]
           t.show_tab 'share_population_peers'
           t.selected false
         end
