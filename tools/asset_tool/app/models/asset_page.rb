@@ -3,6 +3,10 @@ class AssetPage < Page
     false
   end
 
+  def cover
+    return asset if asset.is_a?(ImageAsset)
+  end
+  
   def icon
     return asset.small_icon if asset
     return 'page_package'

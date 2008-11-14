@@ -115,11 +115,11 @@ class GroupController < ApplicationController
     raise PermissionDenied.new("You cannot administrate this group."[:group_administration_not_allowed_error]) unless(current_user.may?(:admin,@group))
     case params[:mode]
       when "unfeatured"
-        @content = @group.find_unstatic.paginate(:page => params[:page])
+        @content = @group.find_unstatic.paginate(:page => params[:page], :per_page => 20)
       when "expired"
-        @content = @group.find_expired.paginate(:page => params[:page])
+        @content = @group.find_expired.paginate(:page => params[:page], :per_page => 20)
       else
-        @content = @group.find_static.paginate(:page => params[:page])
+        @content = @group.find_static.paginate(:page => params[:page], :per_page => 20)
     end
   
   end
