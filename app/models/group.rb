@@ -22,7 +22,7 @@
 =end
 
 class Group < ActiveRecord::Base
-  attr_accessible :name, :full_name, :short_name, :summary, :language
+  attr_accessible :name, :full_name, :short_name, :summary, :language, :is_council
 
    # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
