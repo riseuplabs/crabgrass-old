@@ -34,7 +34,7 @@ xml.rss(:version=>"2.0"){
         
       xml.item do
         xml.title(item.title)
-        if item.instance_of?(WikiPage) and item.data
+        if item.is_a?(WikiPage) and item.data
           xml.description(item.data.body_html)
         else
           xml.description(item.summary)
