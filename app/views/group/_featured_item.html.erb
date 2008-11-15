@@ -6,12 +6,4 @@ link_to(thumbnail_img_tag(featured_item.cover, :medium, {:crop => "200x200"}, {:
 <%- end -%>
 <h4 class="small_icon <%= featured_item.icon %>_16"><%= link_to(featured_item.title, page_url(featured_item)) %></h4>
 <p><%= featured_item.summary %></p>
-<%- if featured_item.tags.any? -%>
-  <h3 class="dim"><%= "Tags".t %></h3>
-  <div class="tags">
-    <%- featured_item.tags.each do |tag| -%>
-    <%= tag_link(tag, @group.name, nil, 'tag1') %>
-    <%- end -%>
-  </div>
-<%- end -%>
 <hr style="clear:both; " class="thin" />

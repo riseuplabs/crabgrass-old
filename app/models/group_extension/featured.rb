@@ -16,6 +16,7 @@ module GroupExtension
       # gets all the featured pages for one group, using group-context
       def find_static options={}
         ret = []
+        options = options.merge(:include => :page, :order => "pages.updated_at DESC")
         self.participations.find_all_by_static(true, options).each {|p| 
           
           if !p.static_expires?
@@ -30,6 +31,7 @@ module GroupExtension
       # gets all featured pages that have been expired
       def find_expired options={}
         ret = []
+        options = options.merge(:include => :page, :order => "pages.updated_at DESC")
         since = options.delete(:since) if options[:since]
         since ? since = Time.now.to_date = since.days : since = Time.now.to_date ;
         self.participations.find_all_by_static_expired(true, :conditions => ["static_expires <= ?", since], :order => ["static_expires DESC"]).each do |p|
@@ -41,6 +43,7 @@ module GroupExtension
       # gets all the pages that are not static and not expired
       def find_unstatic options={}
         ret = []
+        options = options.merge(:include => :page, :order => "pages.updated_at DESC")
         expired = self.find_expired
         self.participations.find_all_by_static(false,options).each do |p|
           ret << p.page unless expired && expired.include?(p.page)
