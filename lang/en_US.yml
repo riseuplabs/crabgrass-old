@@ -368,6 +368,7 @@ users_world: ":user's World"
 request_friend_link: "Add To My Contacts"
 remove_friend_link: "Remove From My Contacts"
 edit_profile_link: "Edit Profile"
+send_message_link: "Send Message"
 
 ##
 ## GROUPS
