@@ -696,3 +696,13 @@ group_invite_email: |
   If you do not wish to join this group, simply ignore this email.
 
 
+##
+## PEOPLE (i.e., PeopleController)
+##
+
+directory_of_people: Directory of People
+my_contacts: my contacts
+no_contacts_msg: You have no contacts.
+my_peers: my peers
+my_peers_explain: users I share a common group with
+no_peers_msg: You have no peers.
