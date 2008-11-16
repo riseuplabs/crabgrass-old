@@ -446,6 +446,9 @@ working_group_description: "Membership in this committee grants <i>no access</i>
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Member Group Pages"
 featured_content_header: "Featured"
+my_groups_link: my groups
+group_directory_link: group directory
+create_group_link: create group
 
 ##
 ## REQUESTS
