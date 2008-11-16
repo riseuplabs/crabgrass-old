@@ -133,8 +133,9 @@ module UrlHelper
       login = user.login 
       display = user.display_name
     elsif arg.is_a? String
+      user = User.find_by_login(arg)
       login = arg
-      display = arg
+      display = user.nil? ? arg : user.display_name
     elsif arg.is_a? User
       login = arg.login
       display = arg.display_name
