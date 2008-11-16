@@ -17,7 +17,7 @@
 
   <%- active = params[:controller] == 'me/search' -%>
   <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Search'[:me_search_link],
+    'All Content'.t,
     '/me/search',
     active
   ) %></li>
