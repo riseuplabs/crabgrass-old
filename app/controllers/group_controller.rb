@@ -9,7 +9,8 @@ class GroupController < ApplicationController
   prepend_before_filter :find_group
   
   before_filter :login_required, :except => [:show, :archive, :tags, :search]
-    
+  before_filter :render_sidebar
+  
   verify :method => :post, :only => [:destroy, :update]
 
   def initialize(options={})
@@ -271,8 +272,11 @@ class GroupController < ApplicationController
   
   def find_group
     @group = Group.find_by_name params[:id] if params[:id]
-    @left_column = render_to_string(:partial => 'sidebar') if @group
     true
+  end
+
+  def render_sidebar
+    @left_column = render_to_string(:partial => 'sidebar') if @group
   end
   
   def authorized?

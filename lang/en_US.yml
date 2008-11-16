@@ -424,6 +424,7 @@ unknown: unknown
 edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups
+directory_of_networks: Directory of networks
 create_button: Create
 new_group: New group
 new_network: New network
@@ -444,6 +445,7 @@ coordinating_council_description: "Membership in this committee grants special <
 working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Member Group Pages"
+featured_content_header: "Featured"
 
 ##
 ## REQUESTS
