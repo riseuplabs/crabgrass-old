@@ -1,5 +1,5 @@
 <ul class='side_list commands'>
-  <%= side_list_li :text => 'home'.t, :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
+  <%= side_list_li :text => 'home'[:menu_home], :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
   <%# side_list_li :text => 'about'.t, :url => url_for_group(@group,:action => 'about'), :active => ..., :icon => 'info' %>
   <%= side_list_li :text => 'all content'.t, :url => url_for_group(@group,:action => 'search'), :icon => 'magnifier' %>
   <%= side_list_li :text => 'archive'.t, :url => url_for_group(@group, :action => 'archive'), :icon => 'book_open' %>

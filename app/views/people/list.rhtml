@@ -4,7 +4,7 @@
 <% if @contacts %>
 <%= render :partial => 'user', :collection => @contacts %>
 <% else %>
-<%=  :you_have_no_contacts.t %>
+<%= :no_contacts_msg.t %>
 <% end %>
 <br class='clear' />
 </div>
@@ -14,7 +14,7 @@
 <% if @peers %>
 <%= render :partial => 'user', :collection => @peers %>
 <% else %>
-<%=  :you_have_no_peers.t %>
+<%=  :no_peers_msg.t %>
 <% end %>
 <br class='clear' />
 </div>
@@ -25,6 +25,6 @@
 <br class='clear' />
 </div>
 <% else %>
-<%= :no_public_profiles.t %>
+<%= "No public profiles yet..."[:no_public_profiles] %>
 <% end %>
 

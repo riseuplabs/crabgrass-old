@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
     @group_type = @group_class.to_s.downcase
     @parent = get_parent
     if request.get?
-      @group_class.new(params[:group])
+      @group = @group_class.new(params[:group])
     elsif request.post?
       @group = @group_class.create!(params[:group]) do |group|
         group.avatar = Avatar.new
@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
       end
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.add_user!(current_user)
-      @parent.add_committee!(@group, params[:council] == "true" ) if @parent
+      @parent.add_committee!(@group, params[:group][:is_council] == "true" ) if @parent
       redirect_to url_for_group(@group)
     end
   rescue Exception => exc

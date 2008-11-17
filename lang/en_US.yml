@@ -456,6 +456,7 @@ unknown: unknown
 edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups
+directory_of_networks: Directory of networks
 create_button: Create
 new_group: New group
 create_group_link: create a new group
@@ -482,6 +483,19 @@ working_group_description: "Membership in this committee grants <i>no access</i>
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Member Group Pages"
 directory_of_networks: Directory of networks
+featured_content_header: "Featured"
+my_groups_link: my groups
+group_directory_link: group directory
+create_group_link: create group
+edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+this_is_coordinating: "This committee is the <strong>coordinating council</strong> for {parent_group}."
+this_is_committee: "This committee is part of {parent_group}."
+leave_group: leave %s
+commitee_type: Committee type
+committee_type_description: What type of committee will this be?
+link_name_description: This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.
+group_language: The main language of this %s.
+group_summary: Brief information regarding this %s.
 
 ##
 ## REQUESTS
@@ -596,8 +610,11 @@ article: "article"
 article_class_description: "Blog post or news article."
 
 title: "Title"
+summary: "Summary"
+tags: "Tags"
 edit_title: "edit title"
 summary: "Summary"
+separate_tags: "Separate tags using commas."
 data_for_page_missing: "The data for this page is missing."
 information: "Information"
 
@@ -751,9 +768,13 @@ group_invite_email: |
 
 
 ##
-## PEOPLE
+## PEOPLE (i.e., PeopleController)
 ##
 
+directory_of_people: Directory of People
+no_contacts_msg: You have no contacts.
+my_peers_explain: users I share a common group with
+no_peers_msg: You have no peers.
 my_contacts: my contacts
 no_public_profiles: No public profiles yet...
 all_people: all people
@@ -761,7 +782,6 @@ my_peers: my peers
 my_peers_description: users I share a common group with
 you_have_no_contacts: 'You have no contacts'
 you_have_no_peers: 'You have no peers'
-directory_of_people: Directory of people
 
 ##
 ## AUTHENTICATED SYSTEM
