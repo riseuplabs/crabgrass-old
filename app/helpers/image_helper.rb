@@ -134,26 +134,24 @@ module ImageHelper
           # thumbnail is actually _smaller_ than our target area
           margin_x = ((target_width - thumbnail.width) / 2)
           margin_y = ((target_height - thumbnail.height) / 2)
-          img = image_tag(thumbnail.url, :size => "#{thumbnail.width}x#{thumbnail.height}",
-            :style => "padding: #{margin_y}px #{margin_x}px;")
+          img = image_tag(thumbnail.url, html_options.merge(:size => "#{thumbnail.width}x#{thumbnail.height}",
+            :style => "padding: #{margin_y}px #{margin_x}px;"))
         elsif options[:crop]
           # extra thumbnail will be hidden by overflow:hidden
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height].max
           ratio  = [1, ratio].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          img = image_tag(thumbnail.url, :size => "#{width}x#{height}")
+          img = image_tag(thumbnail.url, html_options.merge(:size => "#{width}x#{height}"))
         elsif options[:scale]
           # set image tag to use new scale
           ratio  = [target_width / thumbnail.width, target_height / thumbnail.height, 1].min
           height = (thumbnail.height * ratio).round
           width  = (thumbnail.width * ratio).round
-          html_options.merge(:size => "#{width}x#{height}")
-          image_tag(thumbnail.url, html_options)
+          image_tag(thumbnail.url, html_options.merge(:size => "#{width}x#{height}"))
         end
       else
-        html_options.merge(:size => "#{thumbnail.width}x#{thumbnail.height}")
-        image_tag(thumbnail.url, html_options)
+        image_tag(thumbnail.url, html_options.merge(:size => "#{thumbnail.width}x#{thumbnail.height}"))
       end
     elsif options[:crop!]
       target_width, target_height = options[:crop!].split(/x/).map(&:to_f)

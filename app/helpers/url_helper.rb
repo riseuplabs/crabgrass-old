@@ -133,8 +133,9 @@ module UrlHelper
       login = user.login 
       display = user.display_name
     elsif arg.is_a? String
+      user = User.find_by_login(arg)
       login = arg
-      display = arg
+      display = user.nil? ? arg : user.display_name
     elsif arg.is_a? User
       login = arg.login
       display = arg.display_name
@@ -207,7 +208,7 @@ module UrlHelper
   # used to build an rss link from the current params[:path]
   def current_rss_path
     path = params[:path] || []
-    path << 'rss' unless path.last == 'rss'
+    path = path + ['rss'] unless path.last == 'rss'
     return path
   end
 

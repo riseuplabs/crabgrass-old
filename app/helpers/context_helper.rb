@@ -35,7 +35,7 @@ module ContextHelper
   # before filter that may be overridden by controllers
   def breadcrumbs; end
   def context; end
-    
+
   def add_context(text, url)
     @context ||= []
     if url.is_a? Hash

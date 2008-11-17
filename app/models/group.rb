@@ -22,7 +22,7 @@
 =end
 
 class Group < ActiveRecord::Base
-  attr_accessible :name, :full_name, :short_name, :summary, :language, :is_council
+  attr_accessible :name, :full_name, :short_name, :summary, :language
 
    # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
@@ -311,6 +311,9 @@ class Group < ActiveRecord::Base
       end
       self.council = committee
       committee.is_council = true  
+    elsif self.council == committee && !make_council
+      committee.is_council = false
+      self.council = nil
     end
     committee.save!
     self.org_structure_changed

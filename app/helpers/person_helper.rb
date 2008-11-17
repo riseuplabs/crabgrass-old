@@ -12,6 +12,13 @@ module PersonHelper
     end
   end
 
+  def message_link
+    if logged_in? and current_user.id != @user.id
+      link = link_to "Send message"[:send_message_link], {:controller => 'message_page', :action => 'create', :id => 'personal-message', :to => @user.name}
+      content_tag :li, link, :class => 'small_icon page_message_16'
+    end
+  end
+
   def edit_profile_link
     if logged_in? and current_user.id == @user.id
       content_tag :li, link_to("Edit Profile"[:edit_profile_link], :controller => 'profile', :action => 'edit', :id => 'public'), :class => 'small_icon pencil_16'

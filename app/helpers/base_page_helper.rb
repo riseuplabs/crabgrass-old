@@ -105,7 +105,7 @@ module BasePageHelper
 
   def destroy_page_line
     if current_user.may?(:admin, @page)
-      link = link_to("Delete :page_class"[:delete_link] % { :page_class => page_class },
+      link = link_to("Delete :page_class"[:delete_page_link] % { :page_class => page_class },
         page_xurl(@page, :action => 'destroy'),
         :method => 'post', :confirm => 'Are you sure you want to delete this page?')
       content_tag :li, link, :class => 'small_icon minus_16'

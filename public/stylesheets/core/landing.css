@@ -137,7 +137,7 @@ div.section {
 }
 .col2 h4.images_16, .col2 h4.page_discussion_16{
   margin:0;padding:0;
-  height:17px;
+  min-height:17px;
   margin-right:5px;
   margin-left:3px;
   padding-left:25px;

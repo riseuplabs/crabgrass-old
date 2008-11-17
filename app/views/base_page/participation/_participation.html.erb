@@ -1,9 +1,9 @@
 <div class='pretty'>
   <table cellpadding='5'>
     <tr>
-      <th align='left'>user</th>
-      <th align='left'>viewed</th>
-      <th align='left'>contributed</th>
+      <th align='left'><%= :user.t %></th>
+      <th align='left'><%= :viewed.t %></th>
+      <th align='left'><%= :contributed.t %></th>
       <th>&nbsp;</th>
     </tr>
 
@@ -14,7 +14,7 @@
       <td><%= friendly_date(upart.viewed_at) %></td>
       <td><%= friendly_date(upart.changed_at) %></td>
       <td>
-        <%= upart.viewed? ? 'read' : 'unread' %>
+        <%= upart.viewed? ? 'read'.t : 'unread'.t %>
         <%= image_tag "emblems/pending.png", :size => "11x11", :title => 'pending' unless upart.resolved? %>
         <%= image_tag "emblems/star.png", :size => "11x11", :title => 'star' if upart.star? %>
       </td>

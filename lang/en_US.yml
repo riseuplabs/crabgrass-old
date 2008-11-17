@@ -12,6 +12,16 @@ logout: Logout
 ## GENERIC TERMS
 ##
 
+access: "Access"
+name: "Name"
+user: "User"
+to: "To"
+viewed: "Viewed"
+people: "People"
+delete: "Delete"
+share: "Share"
+contributed: "Contributed"
+summary: Summary
 create_a_new_thing: "Create a new :thing"
 discussions: "Discussions"
 groups: "Groups"
@@ -23,16 +33,21 @@ committee: "Committee"
 contact: "Contact"
 member_groups_of_network: "Member Groups"
 peers: "Peers"
+none: 'none'
 contacts: "Contacts"
 friends: "Friends"
 people: "People"
 search: "Search"
 members: "Members"
+all_content: "All Content"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
 close_button: "Close"
+share_button: "Share"
 save_button: "Save"
+move_button: "Move"
+add_button: "Add"
 cancel_button: "Cancel"
 no_search_results: "No Results"
 empty_results: "None"
@@ -70,6 +85,7 @@ recipients: recipients
 message: message
 send_button: Send
 from: from
+To: To
 date: date
 request_status: "This request is: :status."
 status_resolved: resolved
@@ -216,6 +232,8 @@ delete_version_confirm: "Are you sure you want to delete this version?"
 delete_this_version: "delete this version"
 galleries: "Galleries"
 created_by: "Created by"
+created: "Created"
+updated: "Updated"
 created_on: "Created on"
 file_size: "File size"
 format: "Format"
@@ -251,6 +269,7 @@ drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
 no_images_in_gallery: No images in Gallery
 add_existing_image: Add Photo
 upload_new_image: "upload new image"
+type_your_messages_here: "Type your messages here and press enter..."
 add_photo_to_gallery: "Click on a Photo to add it"
 cancel_link: "cancel"
 file_must_be_image_error: "File must be an image to be part of a gallery."
@@ -308,6 +327,12 @@ password: Password
 password_confirmation: Password confirmation
 set_status_messsage: What are you doing right now?
 
+votes: votes
+wikis: wikis
+assets: assets
+videos: videos
+messages: messages
+
 ##
 ## PROFILE
 ## 
@@ -361,6 +386,8 @@ users_wall: ":user's Wall"
 #users_recent_activity: ":user's Recent Activity"
 #users_recent_work: ":user's Recent Work"
 recent_contributions: "Recent Contributions"
+delete_post: Delete Post
+post_message: Post Message
 top_rated: Top Rated
 most_viewed: Most Viewed
 highest_contributors: Highest Contributors
@@ -368,11 +395,16 @@ users_world: ":user's World"
 request_friend_link: "Add To My Contacts"
 remove_friend_link: "Remove From My Contacts"
 edit_profile_link: "Edit Profile"
+send_message_link: "Send Message"
 
 ##
 ## GROUPS
 ##
 
+group_privacy_settings: '%s Privacy Settings'
+group_publicly_visible: 'Make %s Publicly Visible'
+committee_publicly_visible: 'Make Committees Publicly Visible'
+allow_membership_requests: 'Allow Membership Requests'
 group_home_headline: "{group_type} Home"
 group_home_welcome: "Welcome"
 group_administration_not_allowed: "You cannot administer this group."
@@ -394,7 +426,9 @@ group_members_publicly_visible: Make Members Publicly Visible
 group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
 page_list: Page list
 join_chat: join chat
-no_tags: no tags
+typing: typing
+away: away
+you_are_not_member_of_any_group: You are not a member of any group.
 upload_image: "Upload Image"
 back_to_group: back_to :group_name
 edit_featured_content_for_group: Edit Featured Content For :group_name
@@ -422,11 +456,17 @@ unknown: unknown
 edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups
+directory_of_networks: Directory of networks
 create_button: Create
 new_group: New group
+create_group_link: create a new group
+group_language: 'The main language of this %s.'
+group_summary: 'Brief information regarding this %s.'
 new_network: New network
 group_directory: Group Directory
+group_directory_link: group directory
 my_groups: My Groups
+my_groups_link: my groups
 you_have_no_groups: You have no groups
 edit_settings: edit settings
 destroy_group: destroy %s
@@ -442,6 +482,20 @@ coordinating_council_description: "Membership in this committee grants special <
 working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Member Group Pages"
+directory_of_networks: Directory of networks
+featured_content_header: "Featured"
+my_groups_link: my groups
+group_directory_link: group directory
+create_group_link: create group
+edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+this_is_coordinating: "This committee is the <strong>coordinating council</strong> for {parent_group}."
+this_is_committee: "This committee is part of {parent_group}."
+leave_group: leave %s
+commitee_type: Committee type
+committee_type_description: What type of committee will this be?
+link_name_description: This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.
+group_language: The main language of this %s.
+group_summary: Brief information regarding this %s.
 
 ##
 ## REQUESTS
@@ -488,6 +542,11 @@ try_again: "Try Again"
 ## PAGES
 ##
 
+
+share_this_page: "Share This Page"
+
+move_this_page: "Move This Page"
+move_page_to_different_group: "Move this page to a different group"
 all_page_types: "all page types"
 page_list_heading_updated_by: "updated by"
 page_list_heading_created_by: "created by"
@@ -500,9 +559,14 @@ page_list_heading_last_updated: "last updated"
 page_list_heading_stars: "stars"
 page_notice_message: "page sent by {user} on {date}"
 page_with_message: "with message"
+page_details: "Page Details"
+participation: "Participation"
+permissions: "Permissions"
+user_or_group_name: "User or group name"
 updated: "updated"
 created: "created"
 unread: "unread"
+read: "read"
 starred: "starred"
 pagination_next: "next"
 pagination_previous: "prev"
@@ -511,8 +575,11 @@ all_groups: "all groups"
 all_states: "all states"
 create_a_new_page: "Create a new page"
 create_page_headline: "Create a new {page_class}"
+create_page_information: "{page_class} information"
+create_page_data: "{page_class} data"
 create_a_new_something: "create new {something}"
 create_page_button: "Create page"
+create_page_share: "Who has access to this {page_class}?"
 create_page: "Create Page"
 back_button: "Back"
 create_page_button: "Create {page_class}"
@@ -545,10 +612,13 @@ article_class_description: "Blog post or news article."
 title: "Title"
 summary: "Summary"
 tags: "Tags"
+edit_title: "edit title"
+summary: "Summary"
 separate_tags: "Separate tags using commas."
 data_for_page_missing: "The data for this page is missing."
 information: "Information"
 
+share_page_link: "Share :page_class"
 share_page_options: "Choose options"
 share_page_recipients: "Share this {page_class} with"
 share_page_recipients_sections: "Choose from your groups or friends"
@@ -573,6 +643,11 @@ move_page_link: "Move :page_class"
 page_details_link: ":page_class Details"
 edit_tags_link: "Edit"
 edit_attachments_link: "Edit"
+attachments: "Attachments"
+edit_attachments: "Edit Attachments"
+current_attachments: "Current Attachments"
+add_new_attachment: "Add New Attachment" 
+upload_attachment: "Upload Attachment"
 
 ##
 ## DATES
@@ -692,3 +767,44 @@ group_invite_email: |
   If you do not wish to join this group, simply ignore this email.
 
 
+##
+## PEOPLE (i.e., PeopleController)
+##
+
+directory_of_people: Directory of People
+no_contacts_msg: You have no contacts.
+my_peers_explain: users I share a common group with
+no_peers_msg: You have no peers.
+my_contacts: my contacts
+no_public_profiles: No public profiles yet...
+all_people: all people
+my_peers: my peers
+my_peers_description: users I share a common group with
+you_have_no_contacts: 'You have no contacts'
+you_have_no_peers: 'You have no peers'
+
+##
+## AUTHENTICATED SYSTEM
+##
+
+login_required: 'Login required'
+login_required_description: 'Please login to perform that action.'
+permission_denied: 'Permission denied'
+permission_denied_description: 'You do not have sufficient permission to perform that action.'
+
+##
+## CHAT
+##
+
+joins_the_chatroom: 'joins the chatroom'
+left_the_chatroom: 'left the chatroom'
+
+##
+## TAGS
+##
+
+tags: "Tags"
+edit_tags: "Edit Tags"
+no_tags: "no tags"
+add_one_or_more_tags: "Add one or more tags, separated by commas"
+separate_tags: "Separate tags using commas."

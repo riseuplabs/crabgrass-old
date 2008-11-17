@@ -7,7 +7,14 @@
 </div>
 </h2>
 
-<% if @parent and may_admin_group? %>
+<%-
+# only show the committee type form if:
+#  * we are creatting a new committee,
+#  * the parent group of said committe doesn't already have a council,
+#  * and we have admin privileges on the group.
+# Yes, this is confusing.
+-%>
+<% if @parent and may_admin_group? and @group.new_record? and @parent.real_council.nil? %>
 <p>
   <label for="group_type">
     <b><%= "Committee type"[:commitee_type]%></b><br/>
@@ -17,6 +24,16 @@
    <li><label><%= radio_button(:group, 'is_council', "true") %> <b><%= "coordinating council".t %>:</b> <%= :coordinating_council_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
    <li><label><%= radio_button(:group, 'is_council', "false") %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
   </ul>
+</p>
+<%- elsif @group.is_council? && !@parent.nil? -%>
+<p>
+  <%= "This committee is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
+    {:parent_group => link_to_group(@parent)}] %>
+</p>
+<%- elsif !@parent.nil? -%>
+<p>
+  <%= "This committee is part of {parent_group}."[:this_is_committee,
+    {:parent_group => link_to_group(@parent)}] %>
 </p>
 <% end -%>
 
@@ -29,7 +46,8 @@
 </p>
 
 <p>
-  <label for="group_name"><b><%= "Link Name"[:link_name] %></b><br>This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.</label><br/>
+  <label for="group_name"><b><%= "Link Name"[:link_name] %></b><br>
+    <%= "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."[:link_name_description] %></label><br/>
   <% if @parent -%>
     <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
   <% else -%>
@@ -40,7 +58,7 @@
 <p>
   <label for="group_language">
     <b><%= "Language"[:language] %></b><br/>
-    <%= 'The main language of this %s.'[:group_language] % group_type %>
+    <%= 'The main language of this %s.'[:group_language] % group_type.t %>
   </label>
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
 </p>
@@ -57,12 +75,24 @@
 
 <p>
   <label for="group_summary">
-    <b>Summary</b><br/>
+    <b><%= :summary.t %></b><br/>
     <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
   </label><br/>
   <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
 </p>
 
+<%-
+# Show the coordinating council selection form iff we are editing a group with at least one committee
+-%>
+<%- if !@group.committees.empty? && may_admin_group? -%>
+<p>
+  <label for="group_council_id">
+    <b><%= "Coordinating council".t.capitalize %></b><br />
+    <%= 'If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so.'[:edit_council_help_text] %>
+  </label><br />
+  <%= select 'group', 'council_id', @group.committees.map{|c| [c.name, c.id]}.sort, { :include_blank => true } %>
+</p>
+<%- end -%>
   <%= submit_tag 'Save changes'[:save_changes] if submit %>
 
 <br/><br/>
@@ -96,7 +126,7 @@
   </p>
 
   <p><%= check_box :group, :accept_new_membership_requests %>
-  <label for="group_visible"><b>Allow Membership Requests</b></label>
+  <label for="group_visible"><b><%= :allow_membership_requests.t %></b></label>
   <br>
   A “join group” link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected.
   </p>

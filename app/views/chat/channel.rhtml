@@ -35,7 +35,7 @@ complete = "eval(request.responseText)"
 <tr>
   <td width="1%" id='handle'><%= current_user.login %></td>
   <td width="99%">
-    <% default_text = "Type your messages here and press enter...".t -%>
+    <% default_text = "Type your messages here and press enter..."[:type_your_messages_here] -%>
     <input id="entryfield" type="text" name="message" value="<%=default_text%>"
       onclick="if ($('entryfield').value == '<%=default_text%>') {$('entryfield').clear();}"
       />

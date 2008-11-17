@@ -1,8 +1,8 @@
 <div class='pretty'>
   <table cellpadding='5'>
     <tr>
-      <th align='left'>name</th>
-      <th align='left'>access</th>
+      <th align='left'><%= :name.t %></th>
+      <th align='left'><%= :access.t %></th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
@@ -42,10 +42,10 @@
     :loading => show_spinner('permissions'),
     :complete => hide_spinner('permissions')
   ) do -%>
-    User or group name:<br/>
+    <%= "User or group name"[:user_or_group_name] %>:<br/>
     <%= text_field_tag 'add_names','',:size=>17 %>
     <%= select_page_access 'access', :blank => false %>
-    <%= submit_tag 'Grant Access', :name => 'add' %>
+    <%= submit_tag 'Grant Access'[:grant_access], :name => 'add' %>
     <%= spinner 'permissions' %>
   <%- end -%>
   <%= javascript_tag "Field.focus('add_names')" %>

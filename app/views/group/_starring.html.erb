@@ -1,18 +1,11 @@
-<div id="starring_list">
-<% if (@featured_pages = @group.find_static).any? || current_user.may?(:admin,@group) %>
-<h4 class="section"><%= "Featured".t %><%= link_to("edit".t, group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h4>
-
-
-
-<% @featured_pages.each do |page| %>
-<%= link_to page.title, page_url(page) %><br/>
-<% end %>
+<% if (@featured_pages = @group.find_static(:order => "pages.updated_at DESC")).any? || current_user.may?(:admin,@group) %>
+<hr class="thick" />
+<h2 class="alert"><%= "Featured"[:featured_content_header] %><%= link_to("edit".t, group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h2>
+<%= render :partial => "featured_item", :collection => @featured_pages %>
 <% end %>
 
-<% if (@important_pages=@group.pages.find_by_path(['stars',@group.min_stars,'limit',7],options_for_group(@group))).any?%>
-<h4 class="section"><%= "Important".t %></h4>
-<% @important_pages.each do |page| %>
-<%= link_to page.title, page_url(page) %><br/>
+<% if false and (@important_pages=@group.pages.find_by_path(['stars',@group.min_stars,'limit',7],options_for_group(@group))).any?%>
+<hr class="thick" />
+<h2 class="section"><%= "Popular".t %></h2>
+<%= render :partial => "featured_item", :collection => @important_pages %>
 <% end %>
-<% end %>
-</div>

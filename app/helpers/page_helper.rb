@@ -298,6 +298,7 @@ module PageHelper
 
   def page_row(page, columns, participation=nil)
     participation ||= page.flag[:user_participation]
+    unread = (participation && !participation.viewed?)
     participation ||= page.flag[:group_participation]
 
     trs = []
@@ -307,7 +308,7 @@ module PageHelper
       tds << content_tag(:td, page_list_cell(page,column, participation))
     end
     tds << content_tag(:td, page_list_cell(page,columns[-1], participation), :class=>'last')
-    trs << content_tag(:tr, tds.join("\n"))
+    trs << content_tag(:tr, tds.join("\n"), (unread ? {:class =>  'unread'}:{}))
 
     if participation and participation.is_a? UserParticipation and participation.notice
       participation.notice.each do |notice| 
@@ -359,7 +360,7 @@ module PageHelper
     array = @site.available_page_types.collect do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
       page_group = page_class.class_group.first
-      [page_group.pluralize, page_group]
+      [page_group.pluralize.t, page_group]
     end
     options_for_select([['all page types'.t,'']] + array, default_selected)
   end
