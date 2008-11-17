@@ -13,8 +13,8 @@ class ExternalVideoPageController < BasePageController
         end
         @page = @page_class.create!(params[:page].merge(
           :user => current_user,
-          :share_with => Group.find_by_id(params[:group_id]),
-          :access => :admin,
+          :share_with => params[:recipients],
+          :access => params[:access],
           :data => @external_video
           ))
         redirect_to(page_url(@page))
