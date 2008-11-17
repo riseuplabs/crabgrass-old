@@ -537,6 +537,7 @@ invite_info: Enter a list of user logins or email addresses of the people you wo
 remove_contact_confirmation: Are you sure you wish to break contact with %s?
 already_contacts_info: "You are already the contact of this person."
 try_again: "Try Again"
+invite_accept_info: "You would like to accept the request to join. Do you already have an account on this server?"
 
 ##
 ## PAGES
