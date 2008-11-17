@@ -192,6 +192,14 @@ class GroupController < ApplicationController
       @group.publicly_visible_members       = params[:group][:publicly_visible_members]
       @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests]
       @group.min_stars = params[:group][:min_stars]
+      if @group.valid? && may_admin_group? && (params[:group][:council_id] != @group.council_id)
+        # unset the current council if there is one
+        @group.add_committee!(Group.find(@group.council_id), false) unless @group.council_id.nil?
+        
+        # set the new council if there is one
+        new_council = @group.committees.find_by_council_id(params[:group][:council_id])
+        @group.add_committee!(new_council, true) unless new_council.nil?
+      end
     end
 
     if @group.save

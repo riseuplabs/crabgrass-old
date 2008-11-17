@@ -7,7 +7,14 @@
 </div>
 </h2>
 
-<% if @parent and may_admin_group? %>
+<%-
+# only show the committee type form if:
+#  * we are creatting a new committee,
+#  * the parent group of said committe doesn't already have a council,
+#  * and we have admin privileges on the group.
+# Yes, this is confusing.
+-%>
+<% if @parent and may_admin_group? and @group.new_record? and @parent.real_council.nil? %>
 <p>
   <label for="group_type">
     <b><%= "Committee type"[:commitee_type]%></b><br/>
@@ -63,6 +70,18 @@
   <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
 </p>
 
+<%-
+# Show the coordinating council selection form iff we are editing a group with at least one committee
+-%>
+<%- if !@group.committees.empty? && may_admin_group? -%>
+<p>
+  <label for="group_council_id">
+    <b><%= "Coordinating council".t.capitalize %></b><br />
+    <%= 'If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so.'[:edit_council_help_text] %>
+  </label><br />
+  <%= select 'group', 'council_id', @group.committees.map{|c| [c.name, c.id]}.sort, { :include_blank => true } %>
+</p>
+<%- end -%>
   <%= submit_tag 'Save changes'[:save_changes] if submit %>
 
 <br/><br/>

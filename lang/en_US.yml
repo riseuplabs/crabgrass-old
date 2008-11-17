@@ -449,6 +449,7 @@ featured_content_header: "Featured"
 my_groups_link: my groups
 group_directory_link: group directory
 create_group_link: create group
+edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
 
 ##
 ## REQUESTS
