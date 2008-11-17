@@ -450,6 +450,14 @@ my_groups_link: my groups
 group_directory_link: group directory
 create_group_link: create group
 edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+this_is_coordinating: "This committee is the <strong>coordinating council</strong> for {parent_group}."
+this_is_committee: "This committee is part of {parent_group}."
+leave_group: leave %s
+commitee_type: Committee type
+committee_type_description: What type of committee will this be?
+link_name_description: This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.
+group_language: The main language of this %s.
+group_summary: Brief information regarding this %s.
 
 ##
 ## REQUESTS

@@ -25,6 +25,16 @@
    <li><label><%= radio_button(:group, 'is_council', "false") %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
   </ul>
 </p>
+<%- elsif @group.is_council? && !@parent.nil? -%>
+<p>
+  <%= "This committee is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
+    {:parent_group => link_to_group(@parent)}] %>
+</p>
+<%- elsif !@parent.nil? -%>
+<p>
+  <%= "This committee is part of {parent_group}."[:this_is_committee,
+    {:parent_group => link_to_group(@parent)}] %>
+</p>
 <% end -%>
 
 <p>
@@ -36,7 +46,8 @@
 </p>
 
 <p>
-  <label for="group_name"><b><%= "Link Name"[:link_name] %></b><br>This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.</label><br/>
+  <label for="group_name"><b><%= "Link Name"[:link_name] %></b><br>
+    <%= "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."[:link_name_description] %></label><br/>
   <% if @parent -%>
     <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
   <% else -%>
@@ -47,7 +58,7 @@
 <p>
   <label for="group_language">
     <b><%= "Language"[:language] %></b><br/>
-    <%= 'The main language of this %s.'[:group_language] % group_type %>
+    <%= 'The main language of this %s.'[:group_language] % group_type.t %>
   </label>
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
 </p>
@@ -64,8 +75,8 @@
 
 <p>
   <label for="group_summary">
-    <b>Summary</b><br/>
-    <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
+    <b><%= "Summary".t %></b><br/>
+    <%= 'Brief information regarding this %s.'[:group_summary] % group_type.t %>  
   </label><br/>
   <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
 </p>

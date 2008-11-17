@@ -197,7 +197,7 @@ class GroupController < ApplicationController
         @group.add_committee!(Group.find(@group.council_id), false) unless @group.council_id.nil?
         
         # set the new council if there is one
-        new_council = @group.committees.find_by_council_id(params[:group][:council_id])
+        new_council = @group.committees.find(params[:group][:council_id]) unless params[:group][:council_id].empty?
         @group.add_committee!(new_council, true) unless new_council.nil?
       end
     end
