@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
     @group_type = @group_class.to_s.downcase
     @parent = get_parent
     if request.get?
-      @group_class.new(params[:group])
+      @group = @group_class.new(params[:group])
     elsif request.post?
       @group = @group_class.create!(params[:group]) do |group|
         group.avatar = Avatar.new
