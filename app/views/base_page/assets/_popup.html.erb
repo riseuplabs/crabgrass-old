@@ -1,26 +1,25 @@
-<% popup('Edit Attachments', :id => 'assets_popup', :style => '') do -%>
+<% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :style => '') do -%>
   <fieldset>
-    <legend>Current Attachments</legend>
+    <legend><%= "Current Attachments"[:current_attachments] %></legend>
     <table width='100%' cellpadding='4'>
       <% if @page.assets.any? -%>
         <%= asset_rows -%>
       <% else -%>
-       <tr><td>(none)</td></tr>
+       <tr><td>(<%='none'.t%>)</td></tr>
       <% end -%>
     </table>
   </fieldset><br/>
   <fieldset>
-    <legend>Add New Attachment</legend>
+    <legend><%- "Add New Attachment"[:add_new_attachment] %></legend>
     <% form_for( :asset, Asset.new(), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
       <table>
         <tr>
-          <td align='right'>File: </td><td><%= f.file_field 'uploaded_data', :size => '20' %></td>
+          <td align='right'><%="File".t %>: </td><td><%= f.file_field 'uploaded_data', :size => '20' %></td>
+        </tr>
+          <!-- <td align='right'><%="Title".t%>: </td><td><%= text_field_tag 'asset_title', '',:style => 'width:98%'  %></td> -->
         </tr>
         <tr>
-          <!-- <td align='right'>Title: </td><td><%= text_field_tag 'asset_title', '',:style => 'width:98%'  %></td> -->
-        </tr>
-        <tr>
-          <td colspan='2' align='right'><%= submit_tag 'Upload Attachment' %></td>
+          <td colspan='2' align='right'><%= submit_tag 'Upload Attachment'[:upload_attachment] %></td>
         </tr>
       </table>
     <% end -%>
@@ -29,7 +28,7 @@
     <% form_remote_tag(
       :url => {:controller => 'base_page/assets', :action => 'close', :page_id => @page.id},
       :loading => show_spinner('popup')) do -%>
-         <%= submit_tag 'Close', :name => 'close' %>
+         <%= submit_tag :close_button.t, :name => 'close' %>
          <%= spinner 'popup' %>
     <% end -%>
   </p>

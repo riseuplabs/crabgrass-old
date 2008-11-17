@@ -57,7 +57,7 @@
 
 <p>
   <label for="group_summary">
-    <b>Summary</b><br/>
+    <b><%= :summary.t %></b><br/>
     <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
   </label><br/>
   <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
@@ -96,7 +96,7 @@
   </p>
 
   <p><%= check_box :group, :accept_new_membership_requests %>
-  <label for="group_visible"><b>Allow Membership Requests</b></label>
+  <label for="group_visible"><b><%= :allow_membership_requests.t %></b></label>
   <br>
   A “join group” link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected.
   </p>

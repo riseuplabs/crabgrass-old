@@ -81,11 +81,11 @@ module AuthenticatedSystem
     # simply close itself.
     def access_denied
       if logged_in?
-        flash_message :title => 'Permission denied',
-          :error => 'You do not have sufficient permission to perform that action.'
+        flash_message :title => :permission_denied.t,
+          :error => :permission_denied_description.t
       else
-        flash_message :title => 'Login required',
-          :success => 'Please login to perform that action.'
+        flash_message :title => :login_required.t,
+          :success => :login_required_description.t
       end
 
       respond_to do |format|

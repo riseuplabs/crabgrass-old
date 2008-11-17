@@ -1,9 +1,9 @@
-<% popup('Page Details', :id => 'details_popup', :width => "40em") do -%>
+<% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
 
     <table><tr>
-      <td><b><%= 'Created'.t %>:</b> <%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
+      <td><b><%= :created.t %>:</b> <%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
       <td>&nbsp;&nbsp;&nbsp;</td>
-      <td><b><%= 'Updated'.t %>:</b> <%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
+      <td><b><%= :updated.t %>:</b> <%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
     </tr></table><br/>
 
     <%= render :partial => 'base_page/participation/details_tabs' -%>
@@ -19,7 +19,7 @@
       :url => {:controller => 'participation', :action => 'close_details', :page_id => @page.id},
       :loading => show_spinner('popup')) do -%>
 
-       <%= submit_tag 'Close', :name => 'cancel' %>
+       <%= submit_tag :close_button.t, :name => 'cancel' %>
        <%= spinner 'popup' %>
       <% end -%>
     </p>
