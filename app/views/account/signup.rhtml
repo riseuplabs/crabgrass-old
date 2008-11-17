@@ -43,12 +43,7 @@
       <%- end -%>
       </div>
 
-      <p>
-        <label for="usage_agreement_accepted">
-        <%= check_box_tag 'usage_agreement_accepted', "1", params['usage_agreement_accepted'] %>
-        <%= "I accept the terms of the usage agreement"[:accept_usage_agreement] %>
-        </label>
-      </p>  
+      <%= render :partial => 'signup_agreement_checkbox' %>
 
       <p>
         <label for="email"><%= "Your Email"[:signup_email] %></label><br/>
