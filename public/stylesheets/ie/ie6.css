@@ -112,3 +112,23 @@ div#bannercontent form {
 .create_page .right .share_page{
 	padding:0.5em;
 }
+
+
+/* the top menu collapses, because it only contains
+ * floating elements, so keep its height synchronized
+ * with the first child element (usually div#account) */
+#top_menu_box {
+  height: expression(this.childNodes[0].style.pixelHeight + "px");
+}
+
+/* center align the login box (margin: 0 auto doesn't
+ * work when not in ie6 standards mode (we're not) */
+#loginwrap { text-align: center; }
+#loginwrap #loginformbox { text-align: left; }
+
+/* ie6 doesn't collapse div#message when its empty,
+ * so hack in the behavior via css expressions */
+#message {
+	display: expression(
+		(this.innerHTML == "") ? "none" : "block");
+}
