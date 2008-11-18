@@ -119,6 +119,7 @@ div#bannercontent form {
  * with the first child element (usually div#account) */
 #top_menu_box {
   height: expression(this.childNodes[0].style.pixelHeight + "px");
+  padding-bottom: 1px;
 }
 
 /* center align the login box (margin: 0 auto doesn't
@@ -132,3 +133,13 @@ div#bannercontent form {
 	display: expression(
 		(this.innerHTML == "") ? "none" : "block");
 }
+
+/* emulate :first-child in ie6, if prototype is
+ * available (this is just too painful if it's not),
+ * to add the left border to the first menu item */
+ul#top_menu li a {
+  border-left: expression(
+    window.Prototype && ($(this).up().up().previous() == null) ? "1px solid #1e2f37" : "none"
+  );
+}
+

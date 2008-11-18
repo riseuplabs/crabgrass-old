@@ -40,7 +40,6 @@ div#masthead {
 }
 
 h1#site_title {
-  background:#fff;
   margin:0;
   padding:0.5em;
 }
@@ -86,12 +85,13 @@ ul#top_menu li a{
   margin:0;
   font-weight:400;
   line-height:;
-  border-right:1px solid #2A3841;
+  border-right:1px solid #1e2f37;
 }
 
 ul#top_menu li:first-child a {
-  border-left:1px solid #2A3841;
+  border-left:1px solid #1e2f37;
 }
+
 /* non-active tab */
 ul#top_menu li a, ul#top_menu2 li a {
   color: #869DA4;
@@ -105,7 +105,19 @@ ul#top_menu2 li a.active,
 ul#top_menu2 li a.active:hover {
   color:#fff;
   font-weight:normal;
-  /* background:url(/images/background/top_nav_active.png) bottom center #4F5E61 repeat-x; */
+  background:url(/images/background/top_nav_active.png) 0 100% #4F5E61 repeat-x;
+}
+
+/* graphical shim, inserted by application.js - it's
+ * not particularly important, if JS is disabled */
+div#header span.bump {
+  position:absolute;
+  display: block;
+  width: 26px;
+  height: 13px;
+  margin-left: -13px;
+  margin-bottom: -13px;
+  background:url(/images/background/top_nav_active_bump.png) no-repeat;
 }
 
 #login_popup {
@@ -129,28 +141,19 @@ ul#top_menu2 li a.active:hover {
 
 #banner {
   clear: both;
-  background:url(/images/background/banner_bg.jpg) repeat-x;
+  padding: 1em;
+  background: url(/images/background/banner_bg.jpg) repeat-x;
 }
 #banner img {
   border: 1px solid white;
   vertical-align: middle;
 }
-#banner img.avatar {margin: 1em;}
+#banner img.avatar {margin-right: 1em;}
 #banner div.parent {margin: 1em 0 0 1em;}
-/*#banner img.child {margin-bottom: 1em;}*/
 #banner div.child {margin: 0 0 1em 1em;}
 
 #banner h1, #banner h3 {padding: 0; margin: 0;}
 #banner, #banner a {color: white;}
-#banner .link_line {margin-left:2em;}
-
-#banner div.navigation {
-  padding: 1.5em 0;
-}
-#banner div.navigation a {
-  font-size: 1.25em;
-}
-
 
 #summary{
   display:none;
@@ -161,7 +164,6 @@ form.minisearch {
   float: right;
   text-align:right;
   color: #ddd;
-  margin-right: 1em;
 }
 form.minisearch fieldset {
   float: right;
@@ -183,6 +185,13 @@ form.minisearch fieldset {
   padding-left: 16px;
   color: #ddd;
 } 
+
+/**
+ ** HEADER
+ **/
+
+#header {
+  margin-bottom: 1.5em; }
 
 /** 
  **  TITLE_BOX
@@ -249,6 +258,7 @@ div.title_box .title_box_edit_link {
  **/ 
 
 #footer {
+  margin-top: 1.5em;
   border-top: 2px solid #ccc;
   color: #999;
 }
@@ -276,6 +286,7 @@ div#message {
   float: left;
   width: 100%;
   background: #eee;
+  margin-bottom: 1.5em;
 }
 
 div.notice {

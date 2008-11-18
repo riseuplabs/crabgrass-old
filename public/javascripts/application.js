@@ -109,3 +109,28 @@ function absolutePositionParams(obj) {
   page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
+
+
+/** add downward bump/arrow to top menu **/
+
+document.observe('dom:loaded', function() {
+  /* the bump needs something to overlap,
+   * so abort if there is no banner */
+  if ($("bannercontent").innerHTML == "")
+  	return false;
+  
+  /* iterate active elements (there should only be
+   * one, but whatever), and add a bump to each */
+  $$("#top_menu a.active").each(function(obj) {
+  	
+    /* measure the active element */
+    var pos = obj.getBoundingClientRect();
+    var dim = obj.getDimensions();
+    
+    /* insert a useless SPAN element at the bottom
+     * center, to be caught and styled in design.css */
+  	var stl = "left:" + (pos.left + (dim.width/2)) + "px; top:" + pos.bottom + "px";
+    $("header").insert ('<span class="bump" style="' + stl + '"></span>');
+  });
+});
+
