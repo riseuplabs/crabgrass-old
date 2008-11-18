@@ -1,3 +1,4 @@
+(function() {
 /*
  
 Correctly handle PNG transparency in Win IE 5.5 & 6.
@@ -12,6 +13,15 @@ Use in <HEAD> with DEFER keyword wrapped in conditional comments:
 
 var arVersion = navigator.appVersion.split("MSIE")
 var version = parseFloat(arVersion[1])
+
+
+/* the d.b.filters array is only present when directx is
+ * installed (which it isn't, when running under WINE),
+ * so test for that and abort if necessary, to avoid
+ * an ugly error popup */
+try { document.body.filters }
+catch (err) { return false; }
+
 
 if ((version >= 5.5) && (document.body.filters)) 
 {
@@ -37,3 +47,4 @@ if ((version >= 5.5) && (document.body.filters))
       }
    }
 }
+})();
