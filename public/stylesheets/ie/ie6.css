@@ -127,11 +127,15 @@ div#bannercontent form {
 #loginwrap { text-align: center; }
 #loginwrap #loginformbox { text-align: left; }
 
-/* ie6 doesn't collapse div#message when its empty,
- * so hack in the behavior via css expressions */
-#message {
-	display: expression(
-		(this.innerHTML == "") ? "none" : "block");
+/* GIGANTIC HACKS AHOY:
+ * ie6 refuses to collapse div#message, which is always rendered,
+ * even when it's empty (for ajax to pop things into), resulting
+ * in a huge (height + margin-bottom (1.5em)) gap at the top of
+ * the #wrapper - so we remove the margin and fix the height
+ * when div#message is empty, with the same pixel results */ 
+#wrapper #message {
+  height: expression((this.innerHTML == "") ? "1.5em" : "auto");
+  margin-bottom: expression((this.innerHTML == "") ? "0" : "1.5em");
 }
 
 /* emulate :first-child in ie6, if prototype is

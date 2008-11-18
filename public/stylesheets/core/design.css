@@ -42,6 +42,7 @@ div#masthead {
 h1#site_title {
   margin:0;
   padding:0.5em;
+  background:#fff;
 }
 
 /** 
@@ -184,14 +185,7 @@ form.minisearch fieldset {
   vertical-align: middle;
   padding-left: 16px;
   color: #ddd;
-} 
-
-/**
- ** HEADER
- **/
-
-#header {
-  margin-bottom: 1.5em; }
+}
 
 /** 
  **  TITLE_BOX
@@ -290,7 +284,7 @@ div#message {
 }
 
 div.notice {
-  padding: 1em 4em 0 4em;
+  padding: 1.5em 4em 0 4em;
 }
 div.notice h2 {
   font-weight: bold;

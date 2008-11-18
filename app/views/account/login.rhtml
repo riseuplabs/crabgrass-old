@@ -1,3 +1,4 @@
+<div id="loginwrap">
 <div id="loginformbox">
 <% form_tag({:controller => 'account', :action => 'login'}, :id => "loginform") do -%>
 <table>
@@ -41,3 +42,4 @@
 <%= javascript_tag "Form.focusFirstElement('loginform');" %>
 <div><%# flash[:error] %></div>
 </div> <!-- end login -->
+</div>
