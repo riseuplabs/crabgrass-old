@@ -19,7 +19,7 @@
 body {
   font-family: verdana, arial, helvetica, sans-serif;
   color: #222;
-  background: #EFECEB;
+  background: #f2f1ef;
 }
 h1, h2, h3, h4 {
   font-family: verdana, helvetica, sans-serif;
@@ -192,12 +192,12 @@ form.minisearch fieldset {
  **/ 
 
 .title_box {
-  background-color: #DAF0FC;
-  border-bottom:1px solid #ccc;
+  background-color: #e1f3fd;
+  border-bottom:1px solid #e7f0eb;
   padding: 1em;
 }
 .title_box h1 {
-  color: #607689;
+  color: #72889d;
   padding: 0.25em 0;
 }
 .title_box h1 span {
@@ -230,6 +230,25 @@ div.title_box .title_box_edit_link {
   padding: 1em;
 }
 
+/* this element has no semantic
+ * value at all, i'm afraid */
+#content-bottom-shim {
+  clear: both;
+  height: 8px;
+  overflow: hidden;
+  background: #e1f2fa;
+  border: 1px solid #e1e1e1;
+  border-top: none;
+}
+
+  /* the left and right "holy grail" layouts are
+   * slightly wider than 'auto', because they have
+   * 1px borders in places that they shouldn't --
+   * this little hack corrects the offset */
+  #content-bottom-shim.hg-left,
+  #content-bottom-shim.hg-right {
+    width: 100%; }
+
 
 /**
  ** LEFT_COLUMN
@@ -253,7 +272,7 @@ div.title_box .title_box_edit_link {
 
 #footer {
   margin-top: 1.5em;
-  border-top: 2px solid #ccc;
+  border-top: 1px solid #ccc;
   color: #999;
 }
 #footercontent div {padding: 1em;}

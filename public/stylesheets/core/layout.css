@@ -11,11 +11,11 @@
 
 .leftmenu {
   background: #FAFDF9;  /* left column color */
-  border: 1px solid #ccc;
+  border: 1px solid #e1e1e1;
 }
 .leftmenu .colright {
   left: 19em; /* size of left column */
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #e1e1e1;
 }
 .leftmenu .col1wrap {
   right:19em; /* size of left column */
@@ -35,7 +35,7 @@
  **/
 
 .rightmenu .col1 {
-  border: 1px solid #ccc;
+  border: 1px solid #e1e1e1;
 }
 
 /* 2 column right menu settings */
@@ -60,6 +60,6 @@
 
 .fullpage .col1 {
   margin: 0;
-  border: 1px solid #ccc;
+  border: 1px solid #e1e1e1;
 }
 
