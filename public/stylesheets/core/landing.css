@@ -11,10 +11,9 @@
  **/ 
 
 .info_box {
-  margin-top: -1px;
   padding: 1em;
   background-color: #F0F9FE;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #dfe1e0;
 }
 .info_box table.columns {width: 100%;}
 .info_box td {vertical-align: top;}
@@ -61,17 +60,30 @@
 }
 
 a.contribute {
+  float: left;
   display: block;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 0.5em;
+  background: url("/images/background/contribute_button_left.png") no-repeat;
   font-weight: bold;
-  color:green;
+  padding-left: 35px;
+  color: #52972d;
+  
+  /* should be 1em, to match the margin-bottom
+   * of the following ul.side_list; but the menu
+   * items have their own slight padding */
+  margin-bottom: 0.8em;
 }
+
 a.contribute:hover {
-  background: #cdf;
   text-decoration: none;
+  color: #52972d;
 }
+
+  a.contribute span {
+    display: block;
+    line-height: 32px;
+    padding-right: 16px;
+    background: url("/images/background/contribute_button_right.png") no-repeat 100% 0;
+  }
 
 .col2 .info{
   	margin-bottom:1em;
@@ -115,6 +127,11 @@ div.announcements table {
 div.section {
   margin-bottom: 2em;
 }
+
+
+/** RECENT PAGES **/
+.landing h2.alert {
+  padding-bottom: 0.5em; }
 
 
 /** WIKI **/

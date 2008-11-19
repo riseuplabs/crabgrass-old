@@ -142,6 +142,7 @@ h2.section, h3.section {
 ul.side_list {
   padding: 0; margin: 0; list-style: none;
   margin-bottom:1em;
+  clear: left;
 }
 
 /* side_list a */
@@ -149,18 +150,18 @@ ul.side_list a {
   text-decoration: none;
   display: block;
   padding: 4px 0;
-  color: #4986BC;
+  color: #5a98c7;
   font-weight:600;
   font-size:0.875em;
 }
-ul.side_list a.active {}
-ul.side_list a.visited {color: #336699;}
+ul.side_list a.active { color: #536977; }
+ul.side_list a.visited {}
 ul.side_list a:hover {text-decoration: underline;}
 ul.side_list.commands a {text-transform: capitalize}
 
 /* side_list li */
-ul.side_list li.active {background-color: #eee;}
-ul.side_list li:hover {background-color: #cdf;}
+ul.side_list li.active {}
+ul.side_list li:hover {}
 ul.side_list li.small_icon {
   padding-left: 25px;
   background-position: 2px 50%;

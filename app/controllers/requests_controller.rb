@@ -7,6 +7,7 @@ class RequestsController < ApplicationController
   helper 'group', 'application'
   stylesheet 'groups'
 
+  prepend_before_filter :set_language_from_invite, :only => [:accept]
   before_filter :login_required, :except => [:accept]
  
   def list
@@ -110,7 +111,7 @@ class RequestsController < ApplicationController
       end
       emails.each do |email|
         req = RequestToJoinUsViaEmail.create(:created_by => current_user,
-          :email => email, :requestable => @group)
+          :email => email, :requestable => @group, :language => Gibberish.current_language.to_s)
         begin
           Mailer.deliver_request_to_join_us!(req, mailer_options)
           reqs << req
@@ -143,13 +144,9 @@ class RequestsController < ApplicationController
   ##
   
   def accept
-    code = params[:path][0]
-    email = params[:path][1].gsub('_at_','@')
     redeem_url = url_for(:controller => 'requests', :action => 'redeem',
-     :email => email, :code => code) 
+     :email => @email, :code => @code) 
 
-    @request = RequestToJoinUsViaEmail.find_by_code_and_email(code,email)
-   
     if @request
       if @request.state != 'pending'
         @error = "Invite has already been redeemed"[:invite_redeemed]
@@ -212,6 +209,13 @@ class RequestsController < ApplicationController
     elsif @user
       @left_column = render_to_string :partial => 'person/sidebar'
     end
+  end
+
+  def set_language_from_invite
+    @code = params[:path][0]
+    @email = params[:path][1].gsub('_at_','@')
+    @request = RequestToJoinUsViaEmail.find_by_code_and_email(@code,@email)
+    session[:language_code] ||= @request.language unless @request.nil?
   end
   
   def authorized?

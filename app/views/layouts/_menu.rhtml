@@ -1,7 +1,5 @@
 <div id="top_menu_box">
-
 <%= render :partial => 'layouts/menu_login' %>
-
 <ul id="top_menu">
   <% if logged_in? -%>
   <li id='menu_me'>
@@ -9,7 +7,7 @@
   </li>
   <% else -%>
     <li>
-      <span><%= link_to_active "Home"[:menu_home], '/', params[:controller]=='account' %></span>
+      <span><%= link_to_active "Home"[:menu_home], '/', params[:controller] == 'account' %></span>
     </li>    
   <% end -%>
 

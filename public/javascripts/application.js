@@ -44,6 +44,7 @@ function submit_form(link, name, value) {
   }
 }
 
+
 /** editing textareas **/
 
 /* element is a textarea object. value is some text */
@@ -64,6 +65,7 @@ function insertAtCursor(element_id, value) {
     element.value += value;
   }
 }
+
 
 /** menu navigation **/
 
@@ -91,7 +93,6 @@ document.observe('dom:loaded', function() {
 });
 
 
-
 /** finding position **/
 
 function absolutePosition(obj) {
@@ -114,22 +115,18 @@ function absolutePositionParams(obj) {
 /** add downward bump/arrow to top menu **/
 
 document.observe('dom:loaded', function() {
-  /* the bump needs something to overlap,
-   * so abort if there is no banner */
-  if ($("bannercontent").innerHTML == "")
-  	return false;
   
   /* iterate active elements (there should only be
    * one, but whatever), and add a bump to each */
   $$("#top_menu a.active").each(function(obj) {
-  	
+    
     /* measure the active element */
-    var pos = obj.getBoundingClientRect();
+    var pos = obj.cumulativeOffset();
     var dim = obj.getDimensions();
     
     /* insert a useless SPAN element at the bottom
      * center, to be caught and styled in design.css */
-  	var stl = "left:" + (pos.left + (dim.width/2)) + "px; top:" + pos.bottom + "px";
+    var stl = "left:" + (pos.left + (dim.width/2)) + "px; top:" + (pos.top + dim.height) + "px";
     $("header").insert ('<span class="bump" style="' + stl + '"></span>');
   });
 });

@@ -6,6 +6,7 @@ div.page_list {background: white;}
 .page_list table {
   width: 100%;
   color: #979797;
+  border-collapse: collapse;
 }
 
 .page_list td.last {text-align: right;}

@@ -267,8 +267,11 @@ module PageHelper
   def page_list_heading(column, options={})
     if column == :group or column == :group_name
       list_heading 'group'.t, 'group_name', options
+    
+    # empty <th>s contain an nbsp to prevent collapsing in IE
     elsif column == :icon or column == :checkbox or column == :discuss
-      "<th></th>"
+      "<th>&nbsp;</th>" 
+    
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
