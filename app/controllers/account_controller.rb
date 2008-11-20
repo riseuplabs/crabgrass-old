@@ -53,7 +53,7 @@ class AccountController < ApplicationController
 
     @user.avatar = Avatar.new
     @user.save!
-    session.delete(:signup_email_address)
+    session[:signup_email_address] = nil
     self.current_user = @user
     send_welcome_message(current_user)
     redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
