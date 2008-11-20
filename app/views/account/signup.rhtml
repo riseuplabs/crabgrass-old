@@ -48,8 +48,10 @@
       <p>
         <label for="email"><%= "Your Email"[:signup_email] %></label><br/>
         <%= f.text_field :email%>
+        <%- unless Crabgrass::Config.require_user_email -%>
         <br />
         <i><%= "Optional: used if you forget your password"[:signup_email_info] %></i>
+        <%- end -%>
       </p>
 
       <p><%= submit_tag 'Sign up'[:signup_button] %></p>

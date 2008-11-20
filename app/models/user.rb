@@ -171,5 +171,14 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  validates_presence_of :email if Crabgrass::Config.require_user_email
+  
+  validates_as_email :email
+  before_validation :clear_email
+  # makes the validation succeed if email == ''
+  def clear_email
+    self.email = nil if email.empty?
+  end
   
 end
