@@ -153,6 +153,7 @@ class RequestsController < ApplicationController
       elsif logged_in?
         redirect_to redeem_url
       else
+        session[:signup_email_address] = @email
         @login_url = url_for({
           :controller => 'account', :action => 'login',
           :redirect => redeem_url

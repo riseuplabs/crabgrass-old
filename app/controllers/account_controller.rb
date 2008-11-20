@@ -43,7 +43,7 @@ class AccountController < ApplicationController
 
   def signup
     @javascript = "account"
-    @user = User.new(params[:user])
+    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
     return unless request.post?
 
     if params[:usage_agreement_accepted] != "1"
@@ -53,6 +53,7 @@ class AccountController < ApplicationController
 
     @user.avatar = Avatar.new
     @user.save!
+    session.delete(:signup_email_address)
     self.current_user = @user
     send_welcome_message(current_user)
     redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
