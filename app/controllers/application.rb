@@ -102,6 +102,22 @@ class ApplicationController < ActionController::Base
   def controller
     self
   end 
+
+  # note: this method is not automatically called. if you want to enable HTTP
+  # authentication for some action(s), you must put a prepend_before_filter in
+  # place.
+  # however, a user who successfully uses HTTP auth on an action for which it
+  # was enabled will stay logged in and can then go and see other things.
+  # this is kind of lame. but only exploitable by people who could log in
+  # anyway, so presumabbly not *too* big a security hole.
+  def login_with_http_auth
+    unless logged_in?
+      authenticate_or_request_with_http_basic do |user, password|
+        founduser = User.authenticate(user, password)
+        self.current_user = founduser unless founduser.nil?
+      end
+    end
+  end
   
   private
   

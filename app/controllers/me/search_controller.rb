@@ -1,5 +1,7 @@
 class Me::SearchController < Me::BaseController
 
+  prepend_before_filter :login_with_http_auth
+  
   def index
     if request.post?
       path = build_filter_path(params[:search])
