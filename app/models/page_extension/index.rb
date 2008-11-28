@@ -50,6 +50,7 @@ module PageExtension::Index
       end
     end
 
+    # this is not thread safe.
     def with_deltas_disabled
       if block_given?
         previous_deltas_enabled = ThinkingSphinx.deltas_enabled?
@@ -67,7 +68,7 @@ module PageExtension::Index
   module InstanceMethods    
   
     def update_page_terms_in_background
-      if ::BACKGROUND
+      if backgroundrb_running?
         begin
           # first, immediately update access, because that needs to always be up to date.
           Page.with_deltas_disabled do 

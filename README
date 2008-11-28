@@ -202,19 +202,36 @@ production.rb:
 It is important that you specify your own secret in the sites.yml file. 
 You can use 'rake secret' to generate a secret value. 
 
-clean out cached files
------------------------
+running background tasks
+-------------------------
 
-By default, crabgrass will store fragment caches in tmp/cache when running in
-production mode. These cache files are not expired automatically, but old cache
-files can be safely deleted... should be!
+There are many tasks which crabgrass needs to run regularly in the background,
+including cleaning out cache files and recreating the sphinx index.
 
-It is required that something like this is run once in a while:
+These tasks will be run if you have backgroundrb running. You can configure the
+frequency of these tasks by editing config/backgroundrb.yml.
 
-  tmpreaper 7d /usr/apps/crabgrass/tmp/cache
+First, install the backgroundrb requirements:
 
-This will destroy all cached views that are older than 7 dayes. On debian, the
-package name is 'tmpreaper'.
+/--
+sudo gem install chronic packet --no-ri --no-rdoc
+\--
+
+Start backgroundrb:
+
+/--
+script/backgroundrb start
+\--
+
+running sphinx
+--------------
+
+Sphinx must be running when crabgrass is started for it to be used. To start sphinx,
+run this:
+
+/--
+rake ts:start RAILS_ENV=production
+\--
 
 other tips
 ------------

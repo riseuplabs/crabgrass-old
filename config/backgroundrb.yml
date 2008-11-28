@@ -1,6 +1,39 @@
---- 
+<%
+
+  #
+  # time trigger:
+  # sec[0,59] min[0,59], hour[0,23], day[1,31], month[1,12], weekday[0,6], year
+  #
+  
+  hourly     = "0 0 * * * * *"
+  daily      = "0 0 4 * * * *"       # run at 4am
+  three_days = "0 0 0 */3 * * *"
+
+#  OTHER OPTIONS
+#  :backgroundrb: 
+#    :log: foreground      # foreground mode,print log messages on console
+#    :debug_log: false     # disable log workers and other logging
+#    :persistent_disabled: false 
+#       # false: we use a database to keep a persistent job queue
+#       # true: the job queue is kept only in memory and might be lost
+#    :persistent_delay: 10
+#       # the time (seconds) between each time backgroundrb checks the
+#       # database for enqueued tasks
+%>
+---
 :backgroundrb: 
-  :ip: 0.0.0.0
+  :ip: localhost
   :port: 11006
-  :log: foreground # foreground mode,print log messages on console
-  :persistent_disabled: true # turn this off if your application doesn't use backgroundrb's persistent/enqueued tasks system
+  :environment: production
+  :persistent_disabled: true
+:schedules:
+  :cron_worker:
+    :clean_fragment_cache:
+      :trigger_args: <%= daily %>
+    :clean_session_cache:
+      :trigger_args: <%= daily %>
+    :update_page_views_count:
+      :trigger_args: <%= hourly %>
+    :reindex_sphinx:
+      :trigger_args: <%= hourly %>
+

@@ -66,6 +66,26 @@ module TimeHelper
   def after_week_start?(time)
     (local_now.at_beginning_of_day - 7.days) < time
   end
+
+  ##
+  ## This are used as a cheap time based expiry of fragment caches.
+  ##
+  ## for example:
+  ##   cache(:expires_in => hours(3))
+  ##
+  ## this does NOT actually expire the fragment cache, but it makes it invalid
+  ## after three hours, which is just as good so long as you have an external
+  ## job that cleans up after old files.
+  ##
+  
+  def hours(num)
+    (Time.now.to_i / num.hour).floor
+  end
+  
+  def days(num)
+    (Time.now.to_i / num.days).floor
+  end
+  
   
   ##############################################
   ## UI helpers

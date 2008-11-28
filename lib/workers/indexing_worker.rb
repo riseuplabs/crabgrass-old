@@ -5,7 +5,7 @@ class IndexingWorker < BackgrounDRb::MetaWorker
   end
 
   def update_page_terms(page_id)
-    logger.info 'updating page terms'
+    logger.info('updating page terms %s' % page_id)
     Page.find(page_id).update_page_terms
   end
 end

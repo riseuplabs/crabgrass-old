@@ -8,7 +8,13 @@ class PageView < ActiveRecord::Base
     connection.execute("INSERT DELAYED INTO #{table_name} (page_id) VALUES (#{connection.quote(page_id)})")
   end
   
-  def self.update_page_terms
+  ##
+  ## Takes all the page view records that have been inserted into page_views
+  ## table and updates the view counts in the pages and page_terms tables with
+  ## this data. Afterward, all the data in the page_views table is deleted.
+  ##
+    
+  def self.update_page_views_count
     begin
       connection.execute("LOCK TABLES #{table_name} WRITE, page_terms WRITE")
       connection.execute("CREATE TEMPORARY TABLE page_view_counts SELECT COUNT(*) AS c, page_id FROM #{table_name} GROUP BY page_id")
@@ -20,5 +26,6 @@ class PageView < ActiveRecord::Base
     end
     # do this after unlocking tables just to try to minimize the amount of time tables are locked…
     connection.execute("UPDATE page_terms,pages SET pages.views_count = page_terms.views_count WHERE pages.id=page_terms.page_id")
+    true
   end
 end

@@ -15,7 +15,7 @@ module BackgrounDRb
                 "Show this help message.") { $stderr.puts opts; exit }
         opts.separator ""
         opts.on("-v","--version",
-                "Show version.") { $stderr.puts "1.0.4"; exit }
+                "Show version.") { $stderr.puts "1.1"; exit }
       end.parse!(argv)
 
       ENV["RAILS_ENV"] = options[:environment] if options[:environment]
@@ -24,7 +24,15 @@ module BackgrounDRb
     def self.read_config(config_file)
       config = YAML.load(ERB.new(IO.read(config_file)).result)
       environment = ENV["RAILS_ENV"] || config[:backgroundrb][:environment] || "development"
-      Object.const_set("RAILS_ENV",environment)
+
+      if respond_to?(:silence_warnings)
+        silence_warnings do
+          Object.const_set("RAILS_ENV",environment)
+        end
+      else
+        Object.const_set("RAILS_ENV",environment)
+      end
+
       ENV["RAILS_ENV"] = environment
       config
     end

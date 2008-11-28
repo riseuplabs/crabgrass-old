@@ -1,5 +1,5 @@
 <% if may_see_members? -%>
-  <%- cache(group_cache_key(@group, :what => 'members')) do -%>
+  <%- cache(group_cache_key(@group, :what => 'members', :expires_in => hours(3))) do -%>
   <%= render :partial => 'avatars/entity_boxes',
       :locals => {:header => 'members'[:members], :entities => @group.users,
       :more_link => link_to("{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}] + ARROW, list_membership_url),
