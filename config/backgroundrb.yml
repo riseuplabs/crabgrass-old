@@ -26,6 +26,7 @@
   :port: 11006
   :environment: production
   :persistent_disabled: true
+  :debug_log: true
 :schedules:
   :cron_worker:
     :clean_fragment_cache:

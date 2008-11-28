@@ -5,13 +5,13 @@ class CronWorker < BackgrounDRb::MetaWorker
     # this method is called, when worker is loaded for the first time
   end
 
-  def clean_fragment_cache(arg)
+  def clean_fragment_cache
     # remove all files that have had their status changed more than three days ago.
     system("find", RAILS_ROOT+'/tmp/cache', '-ctime', '+3', '-exec', 'rm', '{}', ';')
     # (on a system with user accounts, tmpreaper should be used instead.)
   end
 
-  def clean_session_cache(arg)
+  def clean_session_cache
     # remove all files that have had their status changed more than three days ago.
     system("find", RAILS_ROOT+'/tmp/sessions', '-ctime', '+3', '-exec', 'rm', '{}', ';')
     # (on a system with user accounts, tmpreaper should be used instead.)
@@ -19,11 +19,13 @@ class CronWorker < BackgrounDRb::MetaWorker
 
   # updates page.views_count from the data in the page_views table.
   # this should be called frequently.
-  def update_page_views_count(arg)
+  def update_page_views_count
     PageView.update_page_views_count
   end
 
-  def reindex_sphinx(arg)
+  # the output of this is logged to: log/backgroundrb_debug_11006.log
+  # if debug_log == true in backgroundrb.yml
+  def reindex_sphinx
     system('rake', '--rakefile', RAILS_ROOT+'/Rakefile', 'ts:index', 'RAILS_ENV=production')
   end
 
