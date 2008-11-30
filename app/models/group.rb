@@ -209,7 +209,7 @@ class Group < ActiveRecord::Base
     if access == :admin
       ok = user.member_of?(self.council)
     elsif access == :edit
-      ok = user.member_of?(self)
+      ok = user.member_of?(self) || user.member_of?(self.council)
     elsif access == :view
       ok = user.member_of?(self) || profiles.public.may_see?
     elsif access == :view_membership

@@ -6,35 +6,51 @@ module PathFinder::Mysql::BuilderFilters
 
 
   ### TIME AND DATE FILTERS
-  
+
+  # for your health, use this to convert local time to utc
+  # the dates in @values should be utc, all other date variables
+  # should be local time.  
+  def to_utc(time)
+    time = time.to_time if time.is_a? Date
+    Time.zone.local_to_utc(time)
+  end
+
   def filter_starts
     @date_field = "starts_at"
   end
 
+  def filter_created
+    @date_field = "created_at"
+  end
+
+  def filter_updated
+    @date_field = "updated_at"
+  end
+
   def filter_after(date)
-    if date == 'now'
-      date = Time.now
-    else
-      if date == 'today'
-        date = to_utc(local_now.at_beginning_of_day)
-      else
-        year, month, day = date.split('-')
-        date = to_utc( Time.in_time_zone(year, month, day) )
-      end
-    end
-    @conditions << "pages.#{@date_field} >= ?"
-    @values << date.to_s(:db)
+#    if date == 'now'
+#      date = Time.now
+#    else
+#      if date == 'today'
+#        date = to_utc(local_now.at_beginning_of_day)
+#      else
+#        year, month, day = date.split('-')
+#        date = to_utc( Time.in_time_zone(year, month, day) )
+#      end
+#    end
+#    @conditions << "pages.#{@date_field} >= ?"
+#    @values << date.to_s(:db)
   end
 
   def filter_before(date)
-    if date == 'now'
-      date = Time.now
-    else
-      year, month, day = date.split('-')
-      date = to_utc Time.in_time_zone(year, month, day)
-    end
-    @conditions << "pages.#{@date_field} <= ?"
-    @values << date.to_s(:db)
+#    if date == 'now'
+#      date = Time.now
+#    else
+#      year, month, day = date.split('-')
+#      date = to_utc Time.in_time_zone(year, month, day)
+#    end
+#    @conditions << "pages.#{@date_field} <= ?"
+#    @values << date.to_s(:db)
   end
   
   def filter_changed
@@ -51,35 +67,42 @@ module PathFinder::Mysql::BuilderFilters
     near = near.to_i.days.ago
     far  = far.to_i.days.ago
     @conditions << 'pages.updated_at < ? and pages.updated_at > ? '
-    @values << near
-    @values << far
+    @values << to_utc(near) << to_utc(far)
   end
   
   def filter_created_after(date)
-    year, month, day = date.split('-')
-    date = to_utc Time.in_time_zone(year, month, day)
-    @conditions << 'pages.created_at > ?'
-    @values << date.to_s(:db)
+#    year, month, day = date.split('-')
+#    date = to_utc Time.in_time_zone(year, month, day)
+#    @conditions << 'pages.created_at > ?'
+#    @values << date.to_s(:db)
   end
   
   def filter_created_before(date)
-    year, month, day = date.split('-')
-    date = to_utc Time.in_time_zone(year, month, day)
-    @conditions << 'pages.created_at < ?'
-    @values << date.to_s(:db)
+#    year, month, day = date.split('-')
+#    date = to_utc Time.in_time_zone(year, month, day)
+#    @conditions << 'pages.created_at < ?'
+#    @values << date.to_s(:db)
   end
  
-  # this is a grossly inefficient method
-  def filter_month(month)
-    offset = Time.zone.utc_offset
-    @conditions << "MONTH(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
-    @values << month.to_i
-  end
-
-  def filter_year(year)
-    offset = Time.zone.utc_offset
-    @conditions << "YEAR(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
-    @values << year.to_i
+  # 2008      --> all pages from 2008-1-1 up to but not including 2009-1-1
+  # 2008-12   --> all pages from 2008-12-1 up to but not including 2009-1-1
+  # 2008-12-5 --> all pages from 2008-12-5 up to but not including 2008-12-6
+  def filter_date(date)
+    start_year, start_month, start_day = date.split('-')
+    if start_year.nil?
+      return # no way to deal with an empty date
+    elsif start_month.nil?
+      start_time = Date.new(start_year.to_i, 1, 1)
+      end_time = start_time + 1.year
+    elsif start_day.nil?
+      start_time = Date.new(start_year.to_i, start_month.to_i, 1)
+      end_time = start_time + 1.month
+    else
+      start_time = Date.new(start_year.to_i, start_month.to_i, start_day.to_i)
+      end_time = start_time + 1.day
+    end
+    @conditions << "pages.`#{@date_field}` >= ? AND pages.`#{@date_field}` < ?"
+    @values << to_utc(start_time) << to_utc(end_time)
   end
   
   #### FULLTEXT FILTERS

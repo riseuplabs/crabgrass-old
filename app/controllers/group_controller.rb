@@ -46,43 +46,33 @@ class GroupController < ApplicationController
   end
 
   def archive
-    #XXX: this belongs in the model
-    case Page.connection.adapter_name
-    when "SQLite"
-      dates = "strftime('%m', created_at) AS month, strftime('%Y', created_at) AS year"
-    when "MySQL"
-      dates = "MONTH(pages.created_at) AS month, YEAR(pages.created_at) AS year"
-    else
-      raise "#{Article.connection.adapter_name} is not yet supported here"
-    end
+    @path = params[:path] || []
+    @parsed = parse_filter_path(params[:path])
+    @field = @parsed.keyword?('updated') ? 'updated' : 'created'
 
-    sql = "SELECT #{dates}, count(pages.id) " +
-     "FROM pages JOIN group_participations ON pages.id = group_participations.page_id " +
-     "JOIN user_participations ON pages.id = user_participations.id " +
-     "WHERE group_participations.group_id = #{@group.id} "
-    unless may_admin_group?
-      sql += " AND (pages.public = 1#{' OR user_participations.user_id = %d' % current_user.id if logged_in?}) "
-    end
-    sql += "GROUP BY year, month ORDER BY year, month"
-    @months = Page.connection.select_all(sql)
-    
+    @months = Page.month_counts(:group => @group, :current_user => (current_user if logged_in?), :field => @field)
+
     unless @months.empty?
-      @current_year = (Date.today).year 
-      @start_year = @months[0]['year'] || @current_year.to_s
+      @current_year  = (Date.today).year
+      @start_year    = @months[0]['year'] || @current_year.to_s
       @current_month = (Date.today).month
 
-      @path = params[:path] || []
-      @parsed = parse_filter_path(params[:path])
-      unless @parsed.keyword?('month')
-        @path << 'month' << @months.last['month'] #@current_month
-        @parsed << [ 'month', @months.last['month'] ]
+      # normalize path
+      unless @parsed.keyword?('date')
+        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']] 
       end
-      unless @parsed.keyword?('year')
-        @path << 'year' << @months.last['year'] #@current_year
-        @parsed << [ 'year', @months.last['year'] ]
-      end
+      @path.unshift(@field) unless @parsed.keyword?(@field)
+      @parsed = parse_filter_path(@path)
 
-      @pages = Page.paginate_by_path(@path, options_for_group(@group))
+      # find pages
+      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
+
+      # set columns
+      if @field == 'created'
+        @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
+      else
+        @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
+      end
     end
   end
     

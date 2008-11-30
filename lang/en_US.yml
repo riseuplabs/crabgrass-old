@@ -33,7 +33,7 @@ committee: "Committee"
 contact: "Contact"
 member_groups_of_network: "Member Groups"
 peers: "Peers"
-none: 'none'
+none: "none"
 contacts: "Contacts"
 friends: "Friends"
 people: "People"
@@ -54,6 +54,7 @@ empty_results: "None"
 search_headline: "Search"
 see_more_link: "More"
 
+edit: "edit"
 
 
 ##
@@ -459,43 +460,46 @@ directory_of_groups: Directory of groups
 directory_of_networks: Directory of networks
 create_button: Create
 new_group: New group
-create_group_link: create a new group
-group_language: 'The main language of this %s.'
-group_summary: 'Brief information regarding this %s.'
-new_network: New network
-group_directory: Group Directory
-group_directory_link: group directory
-my_groups: My Groups
-my_groups_link: my groups
-you_have_no_groups: You have no groups
-edit_settings: edit settings
-destroy_group: destroy %s
-view_all: view all
-create_committee: create committee
-edit: edit
-send_invites: send invites
-view_requests: view requests
+create_group_link: "create a new group"
+create_committee: "create committee"
+group_language: "The main language of this %s."
+group_summary: "Brief information regarding this %s."
+new_network: "New network"
+group_directory: "Group Directory"
+group_directory_link: "group directory"
+my_groups: "My Groups"
+my_groups_link: "my groups"
+my_groups_link: "my groups"
+# gah! too much duplication ^^^
+you_have_no_groups: "You have no groups"
+edit_settings: "edit settings"
+destroy_group: "destroy %s"
+view_all: "view all"
+send_invites: "send invites"
+view_requests: "view requests"
 page_is_not_static: Page is not static
-coordinating_council: coordinating council
-working_group: working group
+coordinating_council: "coordinating council"
+working_group: "working group"
 coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
 working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Member Group Pages"
-directory_of_networks: Directory of networks
+directory_of_networks: "Directory of networks"
 featured_content_header: "Featured"
-my_groups_link: my groups
-group_directory_link: group directory
-create_group_link: create group
+group_directory_link: "group directory"
+create_group_link: "create group"
 edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
 this_is_coordinating: "This committee is the <strong>coordinating council</strong> for {parent_group}."
 this_is_committee: "This committee is part of {parent_group}."
-leave_group: leave %s
-commitee_type: Committee type
-committee_type_description: What type of committee will this be?
-link_name_description: This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed.
-group_language: The main language of this %s.
-group_summary: Brief information regarding this %s.
+leave_group: "leave %s"
+commitee_type: "Committee type"
+committee_type_description: "What type of committee will this be?"
+link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
+group_language: "The main language of this %s."
+group_summary: "Brief information regarding this %s."
+archive_headline: "Archive"
+archive_filter_created_link: "Date Created"
+archive_filter_updated_link: "Last Date Updated"
 
 ##
 ## REQUESTS

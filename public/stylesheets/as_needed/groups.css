@@ -2,17 +2,17 @@
 
 /** searching and archive **/
 
-table.archive-calendar {
+table.archive_calendar {
   color: #999;
   border: 1px solid #ccc;
   border-collapse: collapse;
 }
-table.archive-calendar td {
+table.archive_calendar td {
   width: 20px;
   border: 1px solid #ccc;
   text-align: center;
 }
-table.archive-calendar td a {
+table.archive_calendar td a {
   display: block;
   font-weight: bold;
   text-decoration: none;

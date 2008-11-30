@@ -42,7 +42,7 @@ module PathFinder
 
     def resolve_options(query_method, path, options)
       if options[:callback]
-        path = PathFinder::Builder.parse_filter_path(path)
+        path = PathFinder::ParsedPath.new(path)
         return PathFinder.get_options_module(query_method).send(options[:callback],path,options)
       else
         return options

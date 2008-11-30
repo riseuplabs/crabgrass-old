@@ -279,7 +279,7 @@ module PageHelper
     elsif column == :updated_at
       list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
-      list_heading 'created'[:page_list_heading_updated_by], 'created_at', options
+      list_heading 'created'[:page_list_heading_created], 'created_at', options
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
