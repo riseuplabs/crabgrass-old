@@ -41,7 +41,7 @@ module AuthenticatedUser
       validates_presence_of     :login
       validates_presence_of     :password,                   :if => :password_required?
       validates_presence_of     :password_confirmation,      :if => :password_required?
-      validates_length_of       :password, :within => 4..40, :if => :password_required?
+      validates_length_of       :password, :within => 5..40, :if => :password_required?
       validates_confirmation_of :password,                   :if => :password_required?
       validates_format_of       :login, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
       validates_length_of       :login, :within => 3..40
@@ -51,9 +51,9 @@ module AuthenticatedUser
   end
   
   def validate
-    if self.password
-      errors.add_to_base "Password is not strong enough"[:validation_password_not_strong_enough] unless self.check_strength(self.password)
-      errors.add_to_base "Password and Login may not be the same"[:validation_password_and_login_not_the_same] if self.password == self.login
+    if password_required?
+      errors.add(:password, "Password is not strong enough"[:validation_password_not_strong_enough]) unless self.check_strength(self.password)
+      errors.add(:password, "Password and Login may not be the same"[:validation_password_and_login_not_the_same]) if self.password == self.login
     end
   end 
   
