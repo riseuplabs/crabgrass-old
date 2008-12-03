@@ -3,16 +3,17 @@ body {
   border:0;    /* This removes the border around the viewport in old versions of IE */
   width:100%;
   min-width:600px;  /* Minimum width of layout - remove line if not required */
-      /* The min-width property does not work in old versions of Internet Explorer */
+                    /* The min-width property does not work in old versions of Internet Explorer */
 }
 /* Header styles */
+/*
 #header {
   clear:both;
   float:left;
   width:100%;
 }
 #header {
-  /*border-bottom:1px solid #000;*/
+  border-bottom:1px solid #000;
 }
 #header p,
 #header h1,
@@ -59,15 +60,16 @@ body {
 #header ul li a span {
   display:block;
 }
-/* 'widths' sub menu */
-/*#banner {
+#banner {
   clear:both;
   background:#eee;
   border-top:4px solid #000;
   margin:0;
   padding:6px 15px !important;
   text-align:right;
-}*/
+}
+*/
+
 /* column container */
 .colmask {
   position:relative;  /* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */

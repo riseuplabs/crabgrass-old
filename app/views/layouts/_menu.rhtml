@@ -2,34 +2,34 @@
 <%= render :partial => 'layouts/menu_login' %>
 <ul id="top_menu">
   <% if logged_in? -%>
-  <li id='menu_me'>
+  <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
     <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
   </li>
   <% else -%>
-    <li>
+    <li class='<%= params[:controller] == 'account' ? 'active' : '' %>'>
       <span><%= link_to_active "Home"[:menu_home], '/', params[:controller] == 'account' %></span>
     </li>    
   <% end -%>
 
-  <li id='menu_people' >
+  <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
     <span><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
   </li>
 
-  <li id='menu_groups'>
+  <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
     <span><%= link_to_active "Groups"[:menu_groups], groups_url, @active_tab == :groups %></span>
   </li>
 
-  <li id='menu_networks'>
+  <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
     <span><%= link_to_active "Networks"[:menu_networks], networks_url, @active_tab == :networks %></span>
   </li>
 
   <% if logged_in? -%>
-  <li>
+  <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
     <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
   <% end -%>
 
   <%= call_hook :top_menu %>
 </ul>
-<!-- <div style='clear: both;'></div> -->
+<div style='clear: both;'></div>
 </div>

@@ -6,13 +6,16 @@
     &bull;
     <a hre="#">logout</a>
   </div>
-  
-  
-<ul id='top_menu'>
-<% Dir.glob(File.dirname(__FILE__)+'/*/').each do |dir|%>
-  <li><%= link_to_active File.basename(dir).gsub('_', ' ').titlecase, :action => nil, :data => File.basename(dir) %></li>
-<% end %>
-</ul>
+    
+  <ul id='top_menu'>
+  <% Dir.glob(File.dirname(__FILE__)+'/*/').each do |dir|%>
+    <%- url = {:action => nil, :data => File.basename(dir)} -%>
+    <%- active = url_active?(url) -%>
+    <li class='<%=active ? 'active' : ''%>'><%= link_to_active File.basename(dir).gsub('_', ' ').titlecase, url %></li>
+  <% end %>
+  </ul>
+
+  <div style='clear: both;'></div>
 </div>
 
 

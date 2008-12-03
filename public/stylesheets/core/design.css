@@ -50,75 +50,63 @@ h1#site_title {
  **/
 
 #top_menu_box {
-  overflow:hidden;
-  background:#33414A;
+  background-color: #33414A;
+  padding-left: 1em;
 }
-
-#account {
-  float:right;
-  padding:1em;
-  color:#646360;
+ul#top_menu {
+  margin: 0; padding: 0;
+  list-style: none;
+  width: auto;
 }
-
-#account a {
-  color:#E1E2E2;
-  font-size:11px;
-  margin-left:.5em;
-  margin-right:.5em;
+ul#top_menu li {
+  float: left;
+  padding: 0; margin: 0;
 }
-
-ul#top_menu{
-  margin:0;
-  padding:0;
-  list-style:none;
-  width:auto;
+ul#top_menu li a {
+  display: block;
+  background: none;
+  font-weight: 400;
+  border-right: 1px solid #1e2f37;
+  color: #98ABB3;
 }
-
-ul#top_menu li{
-  float:left;
-  padding:0;
-  margin:0;
+ul#top_menu li a, div#account {
+  padding: 0.5em 1em;
 }
-ul#top_menu li a{
-  color:#98ABB3;
-  padding:1em;
-  background:none;
-  margin:0;
-  font-weight:400;
-  line-height:;
-  border-right:1px solid #1e2f37;
+ul#top_menu li.active {
+  position: relative; /* for ie6 */
+  padding-bottom: 13px;
+  margin-bottom: -13px;
+  background: url(/images/background/top_nav_active_bump.png) no-repeat 50% 100%;
 }
 
 ul#top_menu li:first-child a {
-  border-left:1px solid #1e2f37;
+  border-left: 1px solid #1e2f37;
 }
 
 /* non-active tab */
-ul#top_menu li a, ul#top_menu2 li a {
+ul#top_menu li a {
   color: #869DA4;
   text-transform: capitalize;
 }
 
 /* active tab */
 ul#top_menu li a.active, 
-ul#top_menu li a.active:hover,
-ul#top_menu2 li a.active, 
-ul#top_menu2 li a.active:hover {
-  color:#fff;
-  font-weight:normal;
-  background:url(/images/background/top_nav_active.png) 0 100% #4F5E61 repeat-x;
+ul#top_menu li a.active:hover {
+  color: #fff;
+  font-weight: normal;
+  background: url(/images/background/top_nav_active.png) 0 100% #4F5E61 repeat-x;
 }
 
-/* graphical shim, inserted by application.js - it's
- * not particularly important, if JS is disabled */
-div#header span.bump {
-  position:absolute;
-  display: block;
-  width: 26px;
-  height: 13px;
-  margin-left: -13px;
-  margin-bottom: -13px;
-  background:url(/images/background/top_nav_active_bump.png) no-repeat;
+div#account {
+  float: right;
+  color: #646360;
+}
+
+div#account a {
+  color: #E1E2E2;
+  font-size: 11px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 #login_popup {
@@ -150,8 +138,6 @@ div#header span.bump {
   vertical-align: middle;
 }
 #banner img.avatar {margin-right: 1em;}
-#banner div.parent {margin: 1em 0 0 1em;}
-#banner div.child {margin: 0 0 1em 1em;}
 
 #banner h1, #banner h3 {padding: 0; margin: 0;}
 #banner, #banner a {color: white;}
