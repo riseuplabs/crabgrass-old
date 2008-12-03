@@ -1,59 +1,7 @@
 GreenCloth is derived from RedCloth, the defacto text to html converter for ruby.
 
-There are two RedCloth directories:
-
-* RedCloth-original: this is an unmodified copy of RedCloth. We keep it around
-  to make future three wage merges much easier.
-* RedCloth-modified: this is RedCloth that has been patched to support in ragel
-  changes that we want for greencloth.
-
-Most of the greencloth changes are in ruby code extensions, in greencloth.rb.
-
-However, some of the changes are in the core way that the RedCloth ragel
-parsing works. These core changes are what is in RedCloth-modified. 
-
-Deployment
-----------
-
-GreenCloth must be compiled for your platform.
-
-/--
-apt-get install build-essential
-cd crabgrass
-rake compile
-\--
-
-Development
------------
-
-GreenCloth.new('text').to_html
-
-(1) apply all the custom greencloth rules
-(2) calls to(RedCloth::Formatters::HTML)
-(3) to() calls the C function redcloth_to() defined in redcloth_scan.rl
-(4) formatter.before_transform is called
-(5) C function redcloth_transform() is called
-    in redcloth_transform() there is this mystery code:
-      %% write exec;
-    that is where all the compiled regal gets inserted as C code
-    to produce redcloth_scan.c
-(6) formatter.after_transform is called
-
-
-notes:
-
- ruby html_esc is defined in redcloth_scan.rl as redcloth_html_esc()
-
-There are two things that need to be compiled:
-(1) ragel files get compiled to c code (redcloth_inline.c)
-(2) c code gets compiled to object libraries
-
-When distributing the software, only #2 needs to happen. However, if you modify the
-.rl files, then you also need to do #1. This required ragel 6.2 or greater.
-
-For ubuntu, you get get a 6.2 package here:
-http://packages.ubuntu.com/intrepid/i386/ragel/download
-
+GreenCloth requires that RedCloth version > 4.0 is installed and that prior
+versions are NOT installed.
 
 Testing
 ----------
@@ -73,24 +21,13 @@ ruby run-tests.rb tests/basic.yml
 Changes from RedCloth
 ----------------------
 
-These syntax changes were made by modifying RedCloth/ext/redcloth_scan/redcloth_inline.rl:
+New markup:
 
-* Disabled redcloth style links e.g. "google":google.com
-
-* require spaces for @ code tags, e.g. @ blah blah @ instead of @blah blah@
-
-Changes made in redcloth_scan.rl:
-
-* Disabled 'link aliases'
-
-These syntax changes were made in wholecloth.rb:
-
-* Crabgrass style links [google -> google.com]
+* Crabgrass style links [my blog post -> meblogpretty.org/2008/4/5]
 * Autolinks
-* Crabgrass style code blocks, like in this document
+* Crabgrass style code blocks
 * Markdown blockquotes
-* Setext headers
-
-Also some html elements were added to the whitelist in RedCloth/lib/redcloth/formatters/html.rb
-
+* Setext headers (h1 is formed by under line with ====, h2 underline with ----)
+* Allow embedded video tags, and sanitize these embeds. 
+* Tables can use tabs in addition to pipes (|)
 

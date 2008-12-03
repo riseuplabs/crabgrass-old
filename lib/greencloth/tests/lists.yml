@@ -277,3 +277,14 @@ out: |-
   	<li>One</li>
   	<li>Two</li>
   </ul>
+---
+name: list with double colons
+in: |-
+  * one:: fish
+  * two:: fish
+out: |-
+  <ul>
+  	<li><b>one:</b> fish</li>
+  	<li><b>two:</b> fish</li>
+  </ul>
+

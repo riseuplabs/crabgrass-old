@@ -92,12 +92,23 @@ module GreenClothFormatterHTML
 
   ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/
 
+  ##
+  ## Allow some html, but not all
+  ##
   def inline_html(opts)
     if opts[:text] =~ ALLOWED_HTML_TAGS_RE
       "#{opts[:text]}" # nil-safe
     else
       html_esc(opts[:text], :html_escape_preformatted)    
     end
+  end
+
+  ##
+  ## convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
+  ##
+  def li_open(opts)
+    opts[:text].sub!(/^([\w\s]+):: /, '<b>\1:</b> ')
+    "#{li_close unless opts.delete(:first)}#{"\t" * opts[:nest]}<li#{pba(opts)}>#{opts[:text]}"
   end
     
 end
