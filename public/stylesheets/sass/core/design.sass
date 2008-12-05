@@ -1,0 +1,271 @@
+@import common.sass
+
+// MASTHEAD
+// BANNER
+// TITLE_BOX
+// CONTENT_BOX
+// LEFT_COLUMN
+// RIGHT_COLUMN
+// FOOTER
+// ERROR
+
+
+body
+  font-family= !body_text_font_family
+  color= !body_fg_color
+  background-color= !footer_bg_color
+
+h1
+  font-family= !headline_font_family
+  font-size= !h1_font_size
+
+h2, h3, h4, h5
+  font-family= !body_text_font_family 
+
+h2
+  font-size= !h2_font_size
+
+h3
+  font-size= !h3_font_size
+
+div#wrapper
+  padding= !outer_margin
+  background-color= !body_bg_color
+  overflow: hidden
+
+//
+// MASTHEAD
+//
+
+div#masthead
+  margin: 0
+  background= !masthead_background
+  h1#site_title
+    margin: 0
+    padding: 0.5em
+    display= !masthead_display
+
+//
+// TOP_MENU
+//
+
+div#top_menu
+  background-color= !menu_bg_color
+  padding-left: 1em
+  div.account_links
+    float: right
+    color: #646360
+    padding= !menu_item_padding
+    a
+      color: #E1E2E2
+      margin: 0 0.5em
+    div#login_popup
+      position: absolute
+      right: 2em
+      border= !popup_border
+      height: 2em
+      width: 30em
+      background: #333
+      padding: 1em
+      color: white
+      input
+        width: 5em
+        border: 1px solid white
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+    width: auto
+    li
+      float: left
+      padding: 0
+      margin: 0
+      &.active
+        padding-bottom= !menu_item_active_bump_height
+        margin-bottom= -!menu_item_active_bump_height
+        background= !menu_item_active_bump "no-repeat 50% 100%"
+      &:first-child a
+        border-left: 1px solid
+        border-color= !menu_border_color
+      span
+        //display: block
+        border: 0
+      a
+        display: block
+        //background: none
+        font-weight: 400
+        border-right: 1px solid
+        border-color= !menu_border_color
+        color= !menu_fg_color
+        padding= !menu_item_padding
+        text-transform: capitalize
+        //background: blue
+        //border: 1px solid pink
+        &.active
+          color= !menu_item_active_fg_color
+          //color: pink
+          //font-weight: normal
+          background= !menu_item_active_background
+          //background: red
+          //border: 1px solid green
+          //&:hover
+          //  color= !menu_item_active_fg_color
+          //  font-weight: normal
+          //  background= !menu_item_active_background
+
+
+//
+// BANNER
+//
+
+#banner
+  clear: both
+  padding= !banner_padding
+  background= !banner_background
+  color= !banner_fg_color
+  border-color= !banner_border_color
+  border-width= !banner_border_width
+  border-style: solid
+  img
+    border: 1px solid white
+    vertical-align: middle
+    &.avatar
+      margin-right: 1em
+  h1, h3
+    padding: 0
+    margin: 0
+  a
+    color: white
+
+form.minisearch
+  float: right
+  text-align: right
+  color= !banner_search_fg_color
+  fieldset
+    float: right
+    padding= !banner_search_padding
+    border= !banner_search_border 
+    background-color= !banner_search_bg_color
+  .minisearch_text
+    background-color= !banner_search_bg_color
+    border: none
+    color= !banner_search_text_color
+    width: 13em
+  .minisearch_submit
+    display: inline
+    border: 0
+    background= !banner_search_img "no-repeat 0% 50%"
+    vertical-align: middle
+    padding-left: 16px
+    color= !banner_search_fg_color
+
+//
+// TITLE_BOX
+//
+
+.title_box
+  background-color: #e1f3fd
+  border-bottom: 1px solid #e7f0eb
+  padding: 1em
+  .summary
+    color: #555
+  .title_box_edit_link
+    display: none
+    position: absolute
+    top: 0
+    right: 0
+  h1
+    color: #72889d
+    padding: 0.25em 0
+    span
+      margin-left: 3em
+  .breadcrumb
+    padding-bottom: 0.25em
+    a
+      text-transform: capitalize
+
+//
+// CONTENT_BOX
+//
+
+.content_box
+  background: #fff none repeat scroll 0 0
+  padding: 1em
+
+//
+  .bottom_shim
+    display: none
+    clear: both
+    height: 8px
+    overflow: hidden
+    background-color= #e1f2fa
+    border: 1px solid #e1e1e1
+    border-top: none
+    &.hg-left, &.hg-right
+      width: 100%
+
+//
+// LEFT_COLUMN
+//
+
+.left_column ul.icon_boxes
+  width: 17em
+
+//
+// RIGHT_COLUMN
+//
+
+//
+// FOOTER
+// 
+
+#footer
+  border-top= !footer_border
+  color= !footer_fg_color
+  a
+    color= !footer_fg_color
+  .content div
+    padding: 1em
+    &.left
+      float: left
+    &.right
+      float: right
+
+//
+// ERRORS
+//
+
+#message
+  div.notice
+    padding: 0 4em 1.5em 4em
+    h2
+      font-weight: bold
+      margin: 0
+      padding: 0.5em
+      background-color: #ccc
+      border-bottom: 1px solid #999
+      img
+        vertical-align: middle
+    p, li
+      color: black
+      margin-left: 2em
+  div.error
+    border: 2px solid red
+    color: #900
+    background-color: #fafafa
+  div.info
+    border: 2px solid green
+    color: #090
+    background-color: #fafafa
+  div.update
+    border: 2px solid blue
+    color: #009
+    background-color: #fafafa
+
+div
+  &.fieldWithErrors
+    border: 2px solid red
+    display: table-cell
+    + div.fieldWithErrors
+      display: none
+

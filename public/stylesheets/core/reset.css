@@ -1,48 +1,34 @@
-html, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, blockquote, pre,
-img, body {
-  margin:0; padding:0; border:none;
-}
-body {font-size: 100%;}
+html,
+body,
+pre,
+img,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none; }
 
-div, span, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size:   13px;
-  line-height: 18px;
-}
-em{font-style: normal;}
-/* html {font-size: 75%;}
-body {font-size: 100%;} */
+body {
+  font-size: 100%; }
 
-img{border:none;}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
-}
-
-/* remember to highlight inserts somehow! */
-ins {
-	text-decoration: none;
-}
-del {
-	text-decoration: line-through;
-}
-
-/* tables still need 'cellspacing="0"' in the markup */
 table {
-  /* border-collapse: collapse; this is messing stuff up for me */
-  border-spacing: 0;
-}
+  border-spacing: 0; }
 
-form, fieldset { border:none; padding:0; margin:0; }
-
-
+p,
+ol,
+ul,
+td,
+div,
+span {
+  font-family: verdana, bitstream vera sans, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; }

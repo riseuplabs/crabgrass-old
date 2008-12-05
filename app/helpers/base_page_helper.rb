@@ -92,7 +92,7 @@ module BasePageHelper
       link_action = 'remove_star'
       link_text = 'Remove Star (:star_count)'[:remove_star_link]
     else
-      icon = 'star_empty_16'
+      icon = 'star_empty_dark_16'
       link_action = 'add_star'
       link_text = 'Add Star (:star_count)'[:add_star_link]
     end
@@ -108,7 +108,7 @@ module BasePageHelper
       link = link_to("Delete :page_class"[:delete_page_link] % { :page_class => page_class },
         page_xurl(@page, :action => 'destroy'),
         :method => 'post', :confirm => 'Are you sure you want to delete this page?')
-      content_tag :li, link, :class => 'small_icon minus_16'
+      content_tag :li, link, :class => 'small_icon trash_16'
     end
   end
 
@@ -213,7 +213,7 @@ module BasePageHelper
 
   def move_line
     if current_user.may? :admin, @page
-      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'application_go_16', :controller => 'participation')
+      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
     end
   end
 

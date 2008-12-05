@@ -23,7 +23,6 @@ share: "Share"
 contributed: "Contributed"
 summary: Summary
 create_a_new_thing: "Create a new :thing"
-discussions: "Discussions"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
@@ -37,7 +36,6 @@ none: "none"
 contacts: "Contacts"
 friends: "Friends"
 people: "People"
-search: "Search"
 members: "Members"
 all_content: "All Content"
 
@@ -56,6 +54,11 @@ see_more_link: "More"
 
 edit: "edit"
 
+discussions: "Discussions"
+tags: "Tags"
+search: "Search"
+achive: "Archive"
+tasks: "Tasks"
 
 ##
 ## NAVIGATION
@@ -402,6 +405,7 @@ send_message_link: "Send Message"
 ## GROUPS
 ##
 
+group_join_chat: "Join Chat"
 group_privacy_settings: '%s Privacy Settings'
 group_publicly_visible: 'Make %s Publicly Visible'
 committee_publicly_visible: 'Make Committees Publicly Visible'
@@ -426,7 +430,7 @@ committee_publicly_visible_description: Committees are viewable by non-members a
 group_members_publicly_visible: Make Members Publicly Visible
 group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
 page_list: Page list
-join_chat: join chat
+
 typing: typing
 away: away
 you_are_not_member_of_any_group: You are not a member of any group.
@@ -468,7 +472,6 @@ new_network: "New network"
 group_directory: "Group Directory"
 group_directory_link: "group directory"
 my_groups: "My Groups"
-my_groups_link: "my groups"
 my_groups_link: "my groups"
 # gah! too much duplication ^^^
 you_have_no_groups: "You have no groups"
@@ -613,7 +616,6 @@ ranked_vote_class_description: "Rank possibilities in order of preference."
 ranked_vote: "ranked vote"
 file: "file"
 file_class_description: "An uploaded file."
-tasks: "tasks"
 video_class_description: "Show a video hosted on an external website."
 video: "video"
 article: "article"
@@ -621,7 +623,6 @@ article_class_description: "Blog post or news article."
 
 title: "Title"
 summary: "Summary"
-tags: "Tags"
 edit_title: "edit title"
 summary: "Summary"
 separate_tags: "Separate tags using commas."
@@ -813,8 +814,8 @@ left_the_chatroom: 'left the chatroom'
 ## TAGS
 ##
 
-tags: "Tags"
 edit_tags: "Edit Tags"
 no_tags: "no tags"
 add_one_or_more_tags: "Add one or more tags, separated by commas"
 separate_tags: "Separate tags using commas."
+

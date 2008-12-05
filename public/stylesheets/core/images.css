@@ -1,111 +1,100 @@
-/** 
- **  ICONS
- **/ 
-
 .small_icon {
   background-repeat: no-repeat;
   background-position: 0 50%;
   padding-left: 20px;
-  min-height: 16px;
-}
+  min-height: 16px; }
+  .small_icon.spinner_icon {
+    background-image: url(/images/spinner.gif); }
+
 .big_icon {
   background-repeat: no-repeat;
   background-position: 1px 50%;
-  padding: 10px 0 10px 54px;
-}
+  padding: 14px 0 14px 54px; }
+
 .page_icon {
   height: 16px;
-  width: 16px;
-}
+  width: 16px; }
+
 .name_icon {
   background-repeat: no-repeat;
-  background-position: 1px 50%;
-}
+  background-position: 1px 50%; }
+  .name_icon.tiny {
+    padding: 0px 0 0px 12px; }
+  .name_icon.xsmall {
+    padding: 5px 0 5px 26px; }
+  .name_icon.small {
+    padding: 8px 0 8px 36px; }
+  .name_icon.medium {
+    padding: 16px 0 16px 52px; }
 
-.name_icon.tiny   {padding: 0px 0 0px 12px}
-.name_icon.xsmall {padding: 5px 0 5px 26px}
-.name_icon.small  {padding: 8px 0 8px 36px}
-.name_icon.medium {padding: 16px 0 16px 52px}
-
-button.icon_16, button.icon_48 {
+button.icon_16 {
   vertical-align: middle;
   background-repeat: no-repeat;
-  border: none; margin: 0; padding: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
   background-color: transparent;
-}
-button.icon_16 {height: 16px; width: 16px;}
-button.icon_48 {height: 48px; width: 48px;}
+  height: 16px;
+  width: 16px; }
+button.icon_48 {
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  height: 48px;
+  width: 48px; }
 
-.small_icon.spinner_icon {
-  background-image: url(/images/spinner.gif)
-}
-
-/**
- ** FRAMED IMAGES
- **/
-
-img.left  {float: left; margin: 0 0.2em 0.5em 0;}
-img.right {float: right; margin: 0 0 0.5em 0.5em;}
+img.left {
+  float: left;
+  margin: 0 0.2em 0.5em 0; }
+img.right {
+  float: right;
+  margin: 0 0 0.5em 0.5em; }
 img.framed {
   padding: 2px;
   border: 1px solid #ccc;
-  background: white;
-}
-
-/** 
- **  ASSET THUMBNAILS
- **/ 
+  background: white; }
+img.avatar {
+  vertical-align: middle; }
 
 a.thumbnail {
-  display:block;
-  overflow:hidden;
+  display: block;
+  overflow: hidden;
   outline: 0;
   background: white;
   border: 1px solid white;
   outline: 1px solid #999;
-  margin: 0 5px 5px 0;
-}
-a.thumbnail:hover {
-  border: 1px solid #cdf;
-  outline: 1px solid black;
-}
-
-/**
- **  AVATARS
- **/ 
-
-img.avatar {vertical-align: middle;}
-
-/** 
- **  ICON BOXES
- **  This css may seem odd, but it works in all browsers.
- **/ 
+  margin: 0 5px 5px 0; }
+  a.thumbnail:hover {
+    border: 1px solid #cdf;
+    outline: 1px solid black; }
 
 ul.icon_boxes {
-  padding: 0; margin: 0; list-style: none;
-}
-ul.icon_boxes li span {
-  display: none;
-  padding: 1em;
-  background-color: black; color: white;
-  font-weight: bold;
-  z-index: 10;
-  position: absolute;
-  top: 4px; left: 0;
-}
-ul.icon_boxes li div {
-  position: relative;
-}
-ul.icon_boxes img {}
-ul.icon_boxes li {
-  float: left;
-  border: 1px solid #ccc;
-  height: 32px; width: 32px;
-  margin: 0 5px 5px 0;
-  z-index: auto;
-}
-ul.icon_boxes li:hover span {
-  display: inline; 
-}
-ul.icon_boxes li a {display: block;}
-
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+  ul.icon_boxes li {
+    float: left;
+    border: 1px solid #ccc;
+    height: 32px;
+    width: 32px;
+    margin: 0 5px 5px 0;
+    z-index: auto; }
+    ul.icon_boxes li span {
+      display: none;
+      padding: 1em;
+      background-color: black;
+      color: white;
+      font-weight: bold;
+      z-index: 10;
+      position: absolute;
+      top: 4px;
+      left: 0; }
+    ul.icon_boxes li div {
+      position: relative; }
+    ul.icon_boxes li:hover span {
+      display: inline; }
+    ul.icon_boxes li a {
+      display: block; }

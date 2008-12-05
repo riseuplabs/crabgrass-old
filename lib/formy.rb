@@ -256,7 +256,7 @@ module Formy
       element_attr :label, :link, :selected, :icon, :show_tab, :click, :id, :style
       
       def close
-        selected = 'selected' if "#{@selected}" == "true"
+        selected = 'active' if "#{@selected}" == "true"
         style = @style
         style ||= @icon ? "background: url(/images/#{@icon}) no-repeat center left" : nil
         id = @id
@@ -305,7 +305,7 @@ module Formy
     class Link < Element
       element_attr :label, :link, :selected
       def close
-        selected = 'selected' if "#{@selected}" == "true"
+        selected = 'active' if "#{@selected}" == "true"
         puts "<div class='sidelink #{selected}'>"
         if @label.any?
           puts "<a href='#{@link}'>#{@label}</a>"

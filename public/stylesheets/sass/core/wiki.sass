@@ -1,0 +1,109 @@
+.wiki,
+.post
+
+  // http://longren.org/2006/09/27/wrapping-text-inside-pre-tags
+  // Browser specific (not valid) styles to make preformatted text wrap
+  pre
+    white-space: pre-wrap
+    white-space: -moz-pre-wrap
+    white-space: -pre-wrap
+    white-space: -o-pre-wrap
+    word-wrap: break-word
+
+    code
+      display: block
+      background: #FFF6DD
+      border: solid 1px
+      border-color: #FFE8A9
+      padding: 0.5em
+
+  div.codetitle
+    background: #FFE8A9
+    color: #614B2A
+    margin-bottom: -1em
+    padding: 0.25em
+    font-weight: bold
+
+  h1
+    font-size: 24pt
+    line-height: 1.25em
+    margin-top: 1.5em
+    color: #666
+    border-bottom: 2px dotted #999
+
+    &:first-child
+      margin-top: 0
+
+  h2
+    font-size: 14pt
+    margin-top: 1.25em
+    line-height: 1.25em
+    border-bottom: 1px dashed #ccc
+
+    &:first-child
+      margin-top: 0
+
+  h3
+    font-size: 1.1em
+    margin-top: 0.75em
+
+  p
+    &.left
+      margin: 0
+
+      img
+        margin-right: 1em
+
+    &.right
+      margin: 0
+
+      img
+        margin-left: 1em
+
+  table
+    border-collapse: collapse
+
+  td
+    padding: 4px
+    border: 1px solid #CCC
+
+  th
+    padding: 4px
+    border: 1px solid #CCC
+    background: #ddd
+
+  tr
+    &.odd
+      background-color: #F2F2F2
+
+    &.even
+      background-color: white
+
+  code
+    background-color: #fff6dd
+
+//
+// diff
+//
+
+div.diff
+  background: #f4f4f4
+  border: 1px solid #ddd
+  padding: 8px 20px
+  margin: 15px 0px
+
+  p
+    margin: 0
+
+
+del
+  &.diffmod, &.diffins
+    color: #999
+    background-color: #ddd
+
+
+ins
+  &.diffmod, &.diffins
+    background-color: #cfc
+    text-decoration: none
+    color: #000

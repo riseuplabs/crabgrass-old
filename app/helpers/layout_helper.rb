@@ -59,10 +59,10 @@ module LayoutHelper
     lines << stylesheet_link_tag(
       'core/reset',
       'core/layout',
+      'core/ui_elements',
       'core/design',
       'core/landing',
       'core/page',
-      'core/ui_elements',
       'core/wiki',
       'core/images',
       :cache => 'core'

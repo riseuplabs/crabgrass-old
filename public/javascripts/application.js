@@ -10,12 +10,12 @@ function quickRedReference() {
 
 function show_tab(tab_link, tab_content) {
   $$('ul.tabset a').each( function(elem) {
-    elem.removeClassName('selected');
+    elem.removeClassName('active');
   })
   $$('.tab-content').each( function(elem) {
     elem.hide();
   })
-  tab_link.addClassName('selected');
+  tab_link.addClassName('active');
   tab_content.show();
   tab_link.blur();
   return false;

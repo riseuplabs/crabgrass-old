@@ -5,22 +5,19 @@
       <%= watch_line %>
       <%= star_line %>
     </ul>
-    <hr class="thin" />
-    <ul class='side_list commands'>
+    <ul class='side_list commands rule'>
       <%= share_line %>
       <%= public_line %>
     </ul>
-    <hr class="thin" />
-    <ul class='side_list commands'>
+    <ul class='side_list commands rule'>
       <%= destroy_page_line %>
       <%= move_line %>
       <%= details_line %>
     </ul>
     <%= call_hook :page_sidebar_actions %>
-    <hr class="thick" /> 
   <% end -%>
 
-  <h3 class="dim"><%= :tags.t %></h3>
+  <h3><%= 'tags'[:tags] %></h3>
   <div class='tags'>
     <%= page_tags %>
   </div>
@@ -29,8 +26,7 @@
   </ul>
 
   <%- if @page.supports_attachments -%>
-  <hr class="thick" />
-  <h3 class="dim"><%= :attachments.t %></h3>
+  <h3><%= 'attachments'[:attachments] %></h3>
   <div class='attachments'>
     <%= page_attachments %>
   </div>
@@ -40,8 +36,7 @@
   <%- end -%>
 
   <% if @page.group_participations.any? -%>
-    <hr class="thick" />
-    <h3 class="dim"><%= :Groups.t %></h3>
+    <h3><%= :Groups.t %></h3>
     <ul class='side_list'>
       <% @page.sorted_group_participations.each do |group_part| %>
         <li><%= link_to_group_participation(group_part) %></li>
@@ -50,8 +45,7 @@
   <% end -%>
 
   <% if @page.user_participations.any? -%>
-    <hr class="thick" />
-    <h3 class="dim"><%= :People.t %></h3>
+    <h3><%= :People.t %></h3>
     <ul class='side_list'>
       <% @page.sorted_user_participations.each do |user_part| %>
         <li><%= link_to_user_participation(user_part) %></li>

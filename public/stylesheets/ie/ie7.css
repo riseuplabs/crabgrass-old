@@ -46,6 +46,10 @@ div.popup blockquote {
   position: relative; overflow:hidden; /* needed for ie7 bug */
 }
 
+/* This is a true mystery to me. For some reason, a padding of 0.55em is needed
+ * on the top to approximate the 1em padding for the sides and bottom. */
+#banner {padding-top: 0.55em;}
+
 /* ui */
 /*
 .tab-area fieldset textarea {

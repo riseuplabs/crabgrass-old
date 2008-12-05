@@ -1,0 +1,350 @@
+@import common.sass
+
+//
+// UI ELEMENTS
+// 
+
+
+.handle
+  cursor: move
+.not_handle
+  cursor: default
+.tag1
+  font-size: 1em
+.tag2
+  font-size: 1.1em
+.tag3
+  font-size: 1.3em
+.tag4
+  font-size: 1.5em
+ul.plain
+  padding: 0
+  margin: 0
+  list-style: none
+
+//
+// LINKS
+// 
+
+a
+  text-decoration: none
+  color= !link_color
+  outline: none
+  &:visited
+    color= !link_visited_color
+  &:active
+    color= !link_active_color
+    text-decoration: none
+  &:hover
+    color= !link_hover_color
+    text-decoration: underline
+  &.dotted
+    color: black
+    text-decoration: none
+    outline: 0
+    border-bottom: 1px #999 dotted
+  //&.invert
+  //  color: white
+  //  background-color: #003399
+  &.active
+    font-weight: bold
+  //&.selected
+  //  font-weight: bold
+  //&.hov
+  //  text-decoration: none
+  //  &:hover
+  //    text-decoration: underline
+  //&.noline
+  //  text-decoration: none
+  &.imglink
+    text-decoration: none
+    span
+      text-decoration: underline
+
+.link_line em
+  color: #ccc
+
+//
+// SIDE LIST
+// 
+
+ul.side_list
+  padding: 0
+  margin: 0
+  list-style: none
+  margin-bottom: 1em
+  clear: left
+  a
+    //text-decoration: none
+    display: block
+    padding: 4px 0
+    //&.active
+    //&.visited
+    //&:hover
+    //  text-decoration: underline
+  &.commands a
+    text-transform: capitalize
+  li
+    &.active, &:hover
+    &.small_icon
+      padding-left: 25px
+      background-position: 2px 50%
+  input.check
+    position: absolute
+    left: 0px
+    margin-top: 5px
+
+//
+// TABS
+// 
+
+.tab-area
+  background-color: white
+  padding: 1em
+  border-top: 0
+  clear: left
+
+ul.tabset
+  &.top
+    margin: 0
+    padding: 0
+    clear: left
+    float: left
+    width: 100%
+    height: 1%
+    list-style: none
+    background: url(/images/grey9.png) repeat-x bottom
+    li
+      display: inline
+    a:hover
+      text-decoration: underline
+    a
+      display: block
+      float: left
+      text-align: center
+      text-decoration: none
+      position: relative
+      left: 1em
+      line-height: 1.3em
+      padding: 0.5em 1em
+      &.active
+        background: white
+        border: 1px solid #999
+        border-bottom: 0
+
+//
+// FORM ELEMENTS
+//
+
+input[type="hidden"]
+  display: none
+
+option
+  &.indented
+    margin-left: 1em
+  &.section
+    font-weight: bold
+
+label.date span
+  font-size: 0.8em
+
+fieldset
+  border: 0
+  margin: 0
+  padding: 0
+  margin-right: 6px
+  textarea
+    width: 100%
+    max-width: 80em
+
+//
+// ROUNDY CORNERS
+//
+
+.round
+  -webkit-border-radius: 4px
+  -moz-border-radius: 4px
+.round_top
+  -webkit-border-top-left-radius: 4px
+  -webkit-border-top-right-radius: 4px
+  -moz-border-radius-topright: 4px
+  -moz-border-radius-topleft: 4px
+.round_left
+  -webkit-border-top-left-radius: 4px
+  -webkit-border-bottom-left-radius: 4px
+  -moz-border-radius-topleft: 4px
+  -moz-border-radius-bottomleft: 4px
+.round_right
+  -webkit-border-top-right-radius: 4px
+  -webkit-border-bottom-right-radius: 4px
+  -moz-border-radius-topright: 4px
+  -moz-border-radius-bottomright: 4px
+.large_circle
+  -moz-border-radius-bottomleft: 21px
+  -moz-border-radius-bottomright: 21px
+  -moz-border-radius-topleft: 21px
+  -moz-border-radius-topright: 21px
+
+//
+// UTILITY
+//
+
+.clear
+  clear: both 
+
+hr
+  &.clear
+    height: 0
+    border: none
+    padding: 0
+    clear: both
+  // disabled:
+    &.thin
+      height: 0
+      border: none
+      padding: 0
+      clear: both
+      margin: 0.5em 0
+      border-bottom= "1px solid" !right_column_hr_color
+    &.thick
+      height: 0
+      border: none
+      padding: 0
+      clear: both
+      margin: 0.5em 0
+      border-bottom= "2px solid" !right_column_hr_color
+
+// act like a <p>
+div.p
+  margin: 1em 0
+
+// allow for soft breaks in a variety of browsers
+span.break
+  font-size: 1px
+  line-height: 1px
+  float: right !important
+  float: none
+
+//
+// COLORED HEADINGS
+//
+
+h1
+  &.dim
+    color: #738899
+    text-transform: capitalize
+  &.bright
+    color: #5B97CB
+    text-transform: capitalize
+  &.alert
+    color: #CE4A48
+    text-transform: capitalize
+h2
+  &.dim
+    color: #738899
+    text-transform: capitalize
+  &.bright
+    color: #5B97CB
+    text-transform: capitalize
+  &.alert
+    color: #CE4A48
+    text-transform: capitalize
+  span
+    font-size: 0.6em
+    white-space: nowrap
+    text-transform: uppercase
+  &.section
+    background: #eee
+h3
+  &.dim
+    color: #738899
+    text-transform: capitalize
+  &.bright
+    color: #5B97CB
+    text-transform: capitalize
+  &.alert
+    color: #CE4A48
+    text-transform: capitalize
+  span
+    font-size: 0.6em
+    white-space: nowrap
+    text-transform: uppercase
+  &.section
+    background: #eee
+
+
+//
+// FORMATTED TABLES
+//
+
+.pretty
+  table
+    border-collapse: collapse
+    width: 100%
+    td
+      padding: 0.5em
+      border-bottom: 1px solid #e6e6e6
+      img
+        vertical-align: bottom
+    tr
+      &.odd
+        background-color: #F2F2F2
+      &.even
+        background-color: white
+      &.unread
+        font-weight: bold
+    a
+      text-decoration: none
+      &:hover
+        text-decoration: underline
+  th
+    padding: 0.5em
+    text-align: left
+    background: #FFF4E8
+    color: #F28367
+    text-transform: capitalize
+    font-weight: bold
+    border-bottom: 1px solid #ccc
+  tr.heading th
+    img
+      vertical-align: bottom
+    a
+      color: #333
+    &.selected
+      background: #888
+      a
+        color: white
+
+//
+// PAGINATION
+//
+
+.pagination
+  padding: 1em 0
+  text-align: center
+  a
+    padding: 0 5px 1px 5px
+    border: 1px solid #9aafe5
+    text-decoration: none
+    color: #2e6ab1
+    &:visited
+      padding: 0 5px 1px 5px
+      border: 1px solid #9aafe5
+      text-decoration: none
+      color: #2e6ab1
+    &:hover, &:active
+      border: 1px solid #2b66a5
+      color: #000
+      background-color: #ffffe0
+      text-decoration: none
+  span
+    &.current
+      padding: 0 5px 1px 5px
+      border: 1px solid black
+      background-color: #2e6ab1
+      color: #FFF
+    &.disabled
+      padding: 0 5px 1px 5px
+      border: 1px solid #929292
+      color: #929292
+

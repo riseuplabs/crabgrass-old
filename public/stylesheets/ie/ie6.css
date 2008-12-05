@@ -1,6 +1,9 @@
 /* get hover to work in ie */
 body {behavior:url("/javascripts/ie/csshover.htc");}
 
+/* get first-child to work in ie */
+
+
 div.content_box {
   height: 1%; /* ie hack so that tables don't spill the margins */
 }
@@ -37,22 +40,23 @@ div.popup fieldset {
 div.popup blockquote {
   padding: 1em 1em 0 1em;
 }
+
 /* layout */
 
 #wrapper {
   position: relative; overflow:hidden; /* needed for ie6 bug */
   float: left;
 }
+#message {
+  height: 1%; /* needed because of #wrapper float */
+  margin: 0;
+  line-height: 1px;
+}
+
+
 .leftmenu .col1wrap {
   right: 18.95em; /* fixes a rendering bug in ie */
 }
-/*
-.leftmenu {
-  display:inline;
-  margin-left: 1.5em;
-  margin-top: 1.5em;
-}
-*/
 
 /* ui */
 
@@ -66,61 +70,30 @@ div.edit-tab {
 div.edit-tab span {
 }
 
-/* minisearch */
-/*
-input.minisearch_text {
-  border: 0;
-}
-input.minisearch_submit {
-  border: 0;
-  background: #999;
-  color: white;
-  margin-bottom: -1px;
-}
-input.minisearch_submit:hover {
-  background: #666;
-}
-form.minisearch {
-  margin: 0;
-  border: 1px solid #000;
-  background: white;
-}
-*/
-
 /* search form in banner */
-div#bannercontent form {
+/* div#banner .content form {
 	width:223px;
 	height:23px;
-}
+} */
 
 /*Announcement*/
-.announcement2box1{
+/* .announcement2box1{
 	position:relative;
 	float:left;
 }
 .announcement2box2{
 	display:inline;
 	margin-top:-5em;
-}
+} */
 
 /*CREATE PAGE*/
-.create_page table{
-} 
-.create_page .right { 
-	padding-left:5px;
-}
-.create_page .right .share_page{
-	padding:0.5em;
-}
+.create_page table{} 
+.create_page .right {padding-left:5px;}
+.create_page .right .share_page{padding:0.5em;}
 
-
-/* the top menu collapses, because it only contains
- * floating elements, so keep its height synchronized
- * with the first child element (usually div#account) */
-#top_menu_box {
-  height: expression(this.childNodes[0].style.pixelHeight + "px");
-  padding-bottom: 1px;
-}
+/* This is a true mystery to me. For some reason, a padding of 0.55em is needed
+ * on the top to approximate the 1em padding for the sides and bottom. */
+#banner {padding-top: 0.55em;}
 
 /* center align the login box (margin: 0 auto doesn't
  * work when not in ie6 standards mode (we're not) */
@@ -133,17 +106,27 @@ div#bannercontent form {
  * in a huge (height + margin-bottom (1.5em)) gap at the top of
  * the #wrapper - so we remove the margin and fix the height
  * when div#message is empty, with the same pixel results */ 
+/*
 #wrapper div#message {
-  height: expression((this.innerHTML == "") ? "1.5em" : "auto");
-  margin-bottom: expression((this.innerHTML == "") ? "0" : "1.5em");
+  xheight: expression((this.innerHTML == "") ? "1.5em" : "auto");
+  xmargin-bottom: expression((this.innerHTML == "") ? "0" : "1.5em");
 }
+*/
 
 /* emulate :first-child in ie6, if prototype is
  * available (this is just too painful if it's not),
  * to add the left border to the first menu item */
-ul#top_menu li a {
+#top_menu ul li a {
   border-left: expression(
-    window.Prototype && ($(this).up().up().previous() == null) ? "1px solid #1e2f37" : "none"
+    window.Prototype && ($(this).up().previous() == null) ? "1px solid" : "none"
   );
 }
+
+/* the top menu collapses, because it only contains
+ * floating elements, so keep its height synchronized
+ * with the first child element (usually div#account) */
+
+/* #top_menu {
+  height: expression(this.childNodes[0].style.pixelHeight + "px");
+} */
 
