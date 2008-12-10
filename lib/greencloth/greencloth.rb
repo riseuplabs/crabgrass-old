@@ -115,9 +115,6 @@ end
 
 class GreenCloth < RedCloth::TextileDoc
 
-  OFFTAG_PREFIX = 'offtag'
-  OFFTAG_RE = /\{#{OFFTAG_PREFIX}#([\d]+)\}/  # matches {offtag#55} -> $1 == 55
-
   attr_accessor :original
   attr_accessor :offtags
   attr_accessor :formatter
@@ -260,12 +257,16 @@ class GreenCloth < RedCloth::TextileDoc
   ## OFFTAGS
   ##
 
+  OFFTAG_PREFIX = 'offtag'
+  OFFTAG_RE = /\}#{OFFTAG_PREFIX}#([\d]+)\{/  # matches }offtag#55{ -> $1 == 55
+                                              # why }{ instead of {}? so offtags will work with tables.
+
   def offtag_it(text, original='')
     @count ||= 0
     @offtags ||= []
     @count += 1
     @offtags << [text, original]
-    '{offtag#%s}' % @count
+    '}offtag#%s{' % @count
   end
   def extract_offtags(html)
     html.gsub!(OFFTAG_RE) do |m|
