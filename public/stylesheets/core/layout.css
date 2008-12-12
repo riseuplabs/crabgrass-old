@@ -14,18 +14,39 @@
     width: 16.7em;
     right: 18em;
     margin: 1em 0; }
+  .leftmenu .rightmenu .col1 {
+    border: 1px solid #999;
+    border-width: 1px;
+    margin: 0 0 0 17em; }
+  .leftmenu .rightmenu .col2 {
+    width: 16em;
+    left: 17em; }
+  .leftmenu .rightmenu .colleft {
+    margin-left: -17em; }
+  .leftmenu .rightmenu .col1wrap {
+    padding-bottom: 0em; }
 
-.rightmenu .col1 {
-  border: 1px solid #999;
-  border-width: 1px;
-  margin: 0 0 0 17em; }
-.rightmenu .colleft {
-  margin-left: -17em; }
-.rightmenu .col1wrap {
-  padding-bottom: 0em; }
-.rightmenu .col2 {
-  width: 16em;
-  left: 17em; }
+.rightmenu {
+  border-left: 1px solid #999;
+  background: #e3e3e3; }
+  .rightmenu .border {
+    background: white;
+    border: 1px solid #999;
+    border-left: 0;
+    float: left;
+    position: relative;
+    right: 0;
+    width: 100%; }
+  .rightmenu .col1 {
+    margin: 0 0 0 17em; }
+  .rightmenu .col2 {
+    width: 16em;
+    left: 17em;
+    /* padding-left= !right_column_margin */ */ }
+  .rightmenu .colleft {
+    margin-left: -17em; }
+  .rightmenu .col1wrap {
+    padding-bottom: 0em; }
 
 .fullpage .col1 {
   margin: 0;
