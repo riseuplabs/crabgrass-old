@@ -24,10 +24,10 @@ default:
   - Article
 
   profiles:
-    general_info: false
+    general_info: true
     public:
-      elements: [note, location]
-      visible_to: users
+       elements: [email_address, location, note, website, phone_number, crypt_key]
+       visible_to: users
     private:
-      elements: []
-      visible_to: noone
+       elements: [email_address, location, note, website, phone_number, crypt_key]
+       visible_to: friends
