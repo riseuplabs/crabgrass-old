@@ -36,8 +36,7 @@ These packages are required:
 
 /--
 apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
-gem install -y rails --no-ri --no-rdoc
-gem install rmagick tzinfo RedCloth --no-ri --no-rdoc
+gem install -y rails rmagick tzinfo RedCloth haml --no-ri --no-rdoc
 \--
 
 Note: crabgrass requires RedCloth version > 4.0. Additionally, if a version 3.0
