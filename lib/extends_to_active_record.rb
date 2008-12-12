@@ -12,9 +12,9 @@ ActiveRecord::Base.class_eval do
       unless record.body.blank?
         record.body.strip!
         if record.respond_to?('group_name')
-          record.body_html = GreenCloth.new(record.body,record.group_name).to_html(:no_enclosing_p)
+          record.body_html = GreenCloth.new(record.body,record.group_name).to_html #(:no_enclosing_p)
         else
-          record.body_html = GreenCloth.new(record.body).to_html(:no_enclosing_p)
+          record.body_html = GreenCloth.new(record.body).to_html #(:no_enclosing_p)
         end
       end
     end

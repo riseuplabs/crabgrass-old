@@ -18,13 +18,23 @@ module BasePageHelper
   end
   
   def link_to_user_participation(upart)
-    label = content_tag :span, upart.user.display_name, :class => upart.access_sym
-    link_to_user(upart.user, :avatar => 'small', :label => label, :style => '')
+    klass = case upart.access_sym
+      when :admin : 'tiny_wrench_16'
+      when :edit : 'tiny_pencil_16'
+      when :view : ''
+    end
+    label = content_tag :span, upart.user.display_name, :class => klass
+    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)
-    label = content_tag :span, gpart.group.display_name, :class => gpart.access_sym
-    link_to_group(gpart.group, :avatar => 'small', :label => label, :style => '')
+    klass = case gpart.access_sym
+      when :admin : 'tiny_wrench_16'
+      when :edit : 'tiny_pencil_16'
+      when :view : ''
+    end
+    label = content_tag :span, gpart.group.display_name, :class => klass
+    link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   ## POSTS HELPERS

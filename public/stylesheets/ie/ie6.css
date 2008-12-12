@@ -16,27 +16,22 @@ input.check {
 }
 
 /* is this really the best we can do? */
-hr.thin {
+/* hr.thin {
   border: 0; size: 0; padding: 0; margin: 0;
-}
+} */
 
 /* pages */
 
-td.post-body div.negativespace {
+/* td.post-body div.negativespace {
   margin: -4px 0 -16px 0;
-}
+} */
 
 div.popup_arrow {
-  right: -20px;
+  right: -24px;
 }
-div.popup legend {
+/*div.popup fieldset {
   border: 0;
-  font-size: 1em;
-  margin-left: -2em;
-}
-div.popup fieldset {
-  border: 0;
-}
+}*/
 div.popup blockquote {
   padding: 1em 1em 0 1em;
 }
@@ -52,7 +47,6 @@ div.popup blockquote {
   margin: 0;
   line-height: 1px;
 }
-
 
 .leftmenu .col1wrap {
   right: 18.95em; /* fixes a rendering bug in ie */
@@ -113,13 +107,23 @@ div.edit-tab span {
 }
 */
 
-/* emulate :first-child in ie6, if prototype is
- * available (this is just too painful if it's not),
- * to add the left border to the first menu item */
+/**
+ ** FIRST-CHILD EMULATION
+ **/
+
+.post-body p {
+  margin: expression( this == this.parentNode.firstChild || this == this.parentNode.lastChild ? "0em" : "1em 0" );
+}
+
+/* this one is special, because the :first-child is on the <li>, not the <a> */
 #top_menu ul li a {
   border-left: expression(
-    window.Prototype && ($(this).up().previous() == null) ? "1px solid" : "none"
+    window.Prototype && ($(this).up().up().previous() == null) ? "1px solid" : "none"
   );
+}
+
+#page_sidebar ul.names li {
+  border-top: expression( this == this.parentNode.firstChild ? "0" : "1px dotted white" )
 }
 
 /* the top menu collapses, because it only contains

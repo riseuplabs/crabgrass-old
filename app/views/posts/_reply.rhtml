@@ -24,7 +24,7 @@
     <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
     <% url = url_for(:controller => '/posts', :action => 'create') %>
     <% form_for :post, :url => url do |f| %>
-      <fieldset><div>
+      <div class='fieldset'>
         <%= f.text_area :body, :rows => 8, :class => 'post_body' %>    
         <%= hidden_field_tag('page_id', @page.id) %>
         <%= hidden_field_tag('paging', @page.discussion.last_page) %>
@@ -33,7 +33,7 @@
 
         <div style="float: left"><%= submit_tag "Post Message"[:post_message], :name => 'post_message' %></div>
         <div style="text-align: right"><a  href="javascript:quickRedReference();"><%= :formatting_reference_link.t %></a></div>
-      </div></fieldset>
+      </div>
     <% end -%>
   </td>
 </tr>

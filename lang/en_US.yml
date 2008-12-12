@@ -818,4 +818,6 @@ edit_tags: "Edit Tags"
 no_tags: "no tags"
 add_one_or_more_tags: "Add one or more tags, separated by commas"
 separate_tags: "Separate tags using commas."
+add_tags: "Add Tags"
+current_tags: "Current Tags"
 

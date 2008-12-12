@@ -72,12 +72,13 @@ ul.side_list
   padding: 0
   margin: 0
   list-style: none
-  margin-bottom: 1em
+  margin-bottom: 0.5em
   clear: left
   a
     //text-decoration: none
     display: block
-    padding: 4px 0
+    padding-top: 4px
+    padding-bottom: 4px
     //&.active
     //&.visited
     //&:hover
@@ -89,10 +90,6 @@ ul.side_list
     &.small_icon
       padding-left: 25px
       background-position: 2px 50%
-  input.check
-    position: absolute
-    left: 0px
-    margin-top: 5px
 
 //
 // TABS
@@ -148,14 +145,9 @@ option
 label.date span
   font-size: 0.8em
 
-fieldset
-  border: 0
-  margin: 0
-  padding: 0
-  margin-right: 6px
-  textarea
-    width: 100%
-    max-width: 80em
+.fieldset textarea
+  width: 99%
+  max-width: 80em
 
 //
 // ROUNDY CORNERS

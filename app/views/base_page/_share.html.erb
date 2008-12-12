@@ -3,6 +3,7 @@
 
 <div class='share_page'>
   <h2><%= 'Share this {page_class} with'[:share_page_recipients, {:page_class => class_display_name}] %>:</h2>
+  <div class='fieldset'>
   <table class='share_page_recipients'>
     <tr>
       <th><%= "Choose from your groups or friends"[:share_page_recipients_sections] %></th>
@@ -21,14 +22,21 @@
       </td>
     </tr>
   </table>
+  </div>
 
   <h2><%= 'Choose options'[:share_page_options] %>:</h2>
+  <div class='fieldset'>
   <%- if @page.nil? or current_user.may?(:admin,@page) -%>
    <%= 'Grant Access'[:grant_access] %>: <%= select_page_access 'access', :blank => (type=='send') %>
   <%- end -%>
   <%- if type == 'send' -%>
     <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.'[:share_page_email] %></label>
+  <%- end -%>
+  </div>
+  <%- if type == 'send' -%>
 		<h2><%= 'Send a Message (optional)'[:share_page_message] %></h2>
-		<%= text_area_tag 'message', '', :id => 'message', :rows => 6, :cols => 60 %>
+    <div class='fieldset'>
+		<%= text_area_tag 'message', '', :id => 'share_message', :rows => 6, :cols => 60 %>
+    </div>
   <%- end -%>
 </div>

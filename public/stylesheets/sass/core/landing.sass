@@ -1,27 +1,22 @@
+@import common.sass
+
 .title_box h1 em.status
   font-weight: 100
 
-
-
 .info_box
   padding: 1em
-  background-color: #F0F9FE
-  border-bottom: 1px solid #dfe1e0
-
+  background-color= !info_box_bg_color
+  border-bottom= "1px solid" !title_box_border_color
   table.columns
     width: 100%
-
   td
     vertical-align: top
-
     &.right
       padding-left: 1em
       border-left: 1px dotted #ccc
       width: 50%
-
     &.left
       width: 50%
-
   .description
     color: #738899
     font-family: georgia, times
@@ -30,10 +25,8 @@
     letter-spacing: 0.03em
     word-spacing: 0.1em
     line-height: 1.6em
-
   .status h3
     margin: 0.5em 0
-
 
 .dash_box
   float: left

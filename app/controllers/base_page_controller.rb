@@ -7,7 +7,7 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   layout :choose_layout
-  stylesheet 'page', 'post'
+#  stylesheet 'page', 'post'
   javascript 'page'
 
   prepend_before_filter :fetch_page_data

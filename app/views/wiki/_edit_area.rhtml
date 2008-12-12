@@ -6,7 +6,7 @@
      :loading => show_spinner(spinner_id)
   ) do -%>
   <%= hidden_field_tag 'version', wiki.version %>
-  <fieldset><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80 %></fieldset>
+  <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80 %></div>
   <div>
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
     <%= submit_tag 'Save', :name => 'save' %>

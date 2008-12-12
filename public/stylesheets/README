@@ -1,18 +1,30 @@
-
 How do stylesheets work?
 
 First and foremost, you need to know that some of the .css files are
-automitically generated and should not be edited by hand.
+automatically generated and should not be edited by hand.
 
+Files in stylesheets/sass/*.sass are automatically converted into .css files and
+placed in stylesheets/*.css. 
 
-http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html
+To read more about the format of .sass files, see:
+
+  http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html
 
 There are three main categories of css files:
 
-* core
-* as_needed
-* ie
-* holygrail
+stylesheets/core/
+  the core stylesheets that are included in all pages.
+
+stylesheets/as_needed/
+  stylesheets that are only sometimes used. for example, stylesheets
+  for a particular tool.
+
+stylesheets/ie/
+  stylesheets for ie6 and ie7 hacks.
+
+stylesheets/holygrail/
+  holygrail is the layout template that crabgrass uses. the pure,
+  unaltered holygrail stylesheets live here.
 
 
 core stylesheets

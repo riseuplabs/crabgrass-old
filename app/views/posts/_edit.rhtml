@@ -1,7 +1,7 @@
 <div class='spaced-out'>
 <% form_remote_tag :loading => "Element.show('post-edit-submit-spinner')", 
   :url => {:controller => 'posts', :action => 'save', :id => post.id} do -%>
-  <fieldset><div>
+  <div class='fieldset'>
     <%= text_area_tag 'body', post.body, :rows => 8, :cols => 60, :class => 'post_body'  %>
     <div style="float: left">
       <%= submit_tag "Save", :name => 'save' %>
@@ -10,6 +10,6 @@
       <span id='post-edit-submit-spinner' style='display:none'><%=image_tag('spinner.gif')%></span>
     </div>
     <div style="text-align: right"><a href="javascript:quickRedReference();">formatting reference</a></div>
-  </div></fieldset>
+  </div>
 <% end -%>
 </div>

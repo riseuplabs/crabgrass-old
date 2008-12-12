@@ -123,8 +123,8 @@ form.minisearch {
     color: #000000; }
 
 .title_box {
-  background-color: #e1f3fd;
-  border-bottom: 1px solid #e7f0eb;
+  background-color: #e6f2ff;
+  border-bottom: 1px solid #d0e3f7;
   padding: 1em; }
   .title_box .summary {
     color: #555; }
@@ -134,7 +134,7 @@ form.minisearch {
     top: 0;
     right: 0; }
   .title_box h1 {
-    color: #72889d;
+    color: #666699;
     padding: 0.25em 0; }
     .title_box h1 span {
       margin-left: 3em; }

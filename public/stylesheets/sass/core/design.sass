@@ -164,8 +164,8 @@ form.minisearch
 //
 
 .title_box
-  background-color: #e1f3fd
-  border-bottom: 1px solid #e7f0eb
+  background-color= !title_box_bg_color
+  border-bottom= "1px solid" !title_box_border_color
   padding: 1em
   .summary
     color: #555
@@ -175,7 +175,7 @@ form.minisearch
     top: 0
     right: 0
   h1
-    color: #72889d
+    color= !title_box_heading_color
     padding: 0.25em 0
     span
       margin-left: 3em
@@ -214,6 +214,8 @@ form.minisearch
 //
 // RIGHT_COLUMN
 //
+
+// see page.sass
 
 //
 // FOOTER
