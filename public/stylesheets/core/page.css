@@ -118,18 +118,21 @@ table.share_page_recipients {
 
 #page_sidebar {
   padding-top: 1em; }
+  #page_sidebar a,
+  #page_sidebar a:visited {
+    color: #0000cc; }
   #page_sidebar h3 {
     color: #666666;
     border: 1px solid;
-    border-color: #eee #ccc #ccc #eee;
-    background: #e9e9e9;
+    border-color: #eee #bbb #bbb #eee;
+    background: #e0e0e0;
     text-transform: uppercase;
     font-size: 0.8em;
     padding: 0.25em 0 0.25em .5em;
     margin: 2.5em 0 0.5em 0;
     -moz-border-radius: 4px; }
   #page_sidebar ul.rule {
-    border-top: 1px dotted #999;
+    border-top: 1px dotted #fff;
     padding-top: 0.5em; }
   #page_sidebar ul.names li:first-child {
     border-top: 0; }
@@ -144,6 +147,13 @@ table.share_page_recipients {
     position: absolute;
     left: 0;
     margin-top: 6px; }
+  #page_sidebar .tags a {
+    background-color: #dde;
+    padding: 0px 2px;
+    line-height: 175%;
+    white-space: nowrap; }
+  #page_sidebar .tags a:hover {
+    background-color: #eef; }
 
 #posts {
   background: #fff;

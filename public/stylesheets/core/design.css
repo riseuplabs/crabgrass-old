@@ -18,7 +18,7 @@ h3 {
 
 div#wrapper {
   padding: 1.5em;
-  background-color: #e3e3e3;
+  background: #d6d6d6 url(/images/background/grey2.png) repeat-x;
   overflow: hidden; }
 
 div#masthead {
