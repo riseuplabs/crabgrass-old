@@ -18,7 +18,7 @@ INSTALL FOR DEVELOPMENT
 ========================================================
 
 grab the code
---------------
+-------------
 
 To get a copy of the most recent code:
 
@@ -29,64 +29,58 @@ git clone git://labs.riseup.net/crabgrass.git
 
 See https://labs.riseup.net/code for information on releases.
 
-install the requirements
-------------------------
+prepare your system
+-------------------
 
 These packages are required:
 
 /--
 apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
-gem install -y rails rmagick tzinfo RedCloth haml --no-ri --no-rdoc
 \--
-
-Note: crabgrass requires RedCloth version > 4.0. Additionally, if a version 3.0
-is installed on the same machine, crabgrass will not work.
 
 These packages are optional, but necessary for image thumbnails
 and document previews:
 
 /--
 apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
-gem install mime-types --no-ri --no-rdoc
 \--
 
 Graphicsmagick is needed for building thumbnails. OfficeOffice is needed for
-previewing Microsoft Office and OpenOffice documents. The mime-types gem is use
-to overcome a file uploading bug in ie6. OpenOffice should be at least version
-2.4 or greater. If you are running etch, you can install the backport
-of openoffice:
+previewing Microsoft Office and OpenOffice documents. OpenOffice should be at
+least version 2.4 or greater. If you are running etch, you can install the
+backport of openoffice:
 
 /--
 apt-get -t etch-backports install openoffice.org openoffice.org-headless
 \--
 For more details, see docs/ASSETS_README.
 
+Additional packages may be required for special features of crabgrass. See the
+README files in the docs folder.
 
-To use full-text searching, you need to build and install sphinx search
-http://www.sphinxsearch.com/downloads.html (debian package coming soon).
-For more details, see doc/SPHINX_README.
+install gems
+---------------------
 
-For search to do asynchronous index generation, you need BackgrounDRb to work,
-which requires the chronic and packet gems:
-
-@@ sudo gem install chronic packet 
-
-and then should start the backgroundrb daemon
-
-@@ script/backgroundrb start
-
-These packages are need for running tests:
+These gems are required:
 
 /--
-gem install ruby-debug hpricot --no-ri --no-rdoc
+gem install -y rails rmagick tzinfo RedCloth haml --no-ri --no-rdoc
 \--
 
-If you want to be able to include latex markup in wiki pages:
+Note: crabgrass requires RedCloth version > 4.0. Additionally, if a version 3.0
+is installed on the same machine, crabgrass will not work.
+
+These gems are optional:
 
 /--
-apt-get install graphicsmagick texlive gs-gpl
-gem install open4 --no-ri --no-rdoc
+gem install ruby-debug hpricot mime-types chronic packet --no-ri --no-rdoc
 \--
+
+The gem 'mime-types' is use to overcome a file uploading bug in ie6.
+
+The gems 'hpricot' and 'ruby-debug' are used for testing.
+
+The gems 'chronic' and 'packet' are required for backgroundrb. 
 
 setup mysql database
 --------------------
@@ -141,6 +135,10 @@ can install the mongrel gem or debian package. If installed, script/server will
 pick them instead.
 
 Once the server is running, just point your web browser at http://localhost:3000.
+
+If you have run 'rake db:fixtures:load', there will be a bunch of test data
+loaded, including users. To get started, you can login as user 'blue' with
+password 'blue'.
 
 testing
 --------
@@ -228,8 +226,16 @@ script/backgroundrb start
 running sphinx
 --------------
 
-Sphinx must be running when crabgrass is started for it to be used. To start sphinx,
-run this:
+Sphinx must be running when crabgrass is started for it to be used. If sphinx
+searchd daemon is not detected, then crabgrass will not use fulltext searching.
+
+First make sure that you have an up to date sphinx database:
+
+/--
+rake ts:index RAILS_ENV=production
+\--
+
+Then to start sphinx, run this:
 
 /--
 rake ts:start RAILS_ENV=production
@@ -254,6 +260,7 @@ required
 * redcloth: greencloth derives from redcloth
 * rmagick: used to scale avatars and build thumbnails.
 * chronic, packet: required for production mode in order to run backgroundrb
+* haml: an alternate templating engine used to generate the .css files
 
 optional
 --------
