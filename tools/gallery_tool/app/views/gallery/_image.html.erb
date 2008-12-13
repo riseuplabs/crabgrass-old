@@ -1,11 +1,3 @@
-<div id="swatch_<%= image.id -%>" class="gallery_swatch gallery_swatch_<%= image.image_format -%>">
-  <%= link_to(thumbnail_img_tag(image, :medium), 
-	      page_url(@page, :action => 'detail_view', :id => image.id)) %>
-
-<!--   <div> -->
-<!--     <%#= link_to 'full', image.url %> -->
-<!--     <%#= link_to 'info', page_url(image.page) unless image.is_attachment? %> -->
-<!--     <%#= link_to 'remove', page_url(@page, :action => 'remove', :id => image.id), :method => 'post', :confirm => 'are you sure you wish to remove this image from the gallery?' %> -->
-<!--   </div> -->
-
+<div id="swatch_<%= image.id -%>" class="swatch gallery_swatch_<%= image.image_format -%>">
+  <%= link_to_asset(image, :medium, :crop => '128x128', :url => page_url(@page, :action => 'detail_view', :id => image.id)) %>
 </div>

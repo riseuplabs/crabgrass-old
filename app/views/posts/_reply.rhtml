@@ -3,7 +3,6 @@
 <% if @show_reply %>
 <tbody>
 <% else %>
-<%= link_to_function "Add comment &raquo;", "Element.show('reply_container'); Element.hide('show_reply_link')", :id=>'show_reply_link' %>
 <tbody id='reply_container' style='display:none;'>
 <% end %>
 
@@ -22,12 +21,12 @@
   </td>
   <td class="post-body" id="reply">
     <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-    <% url = url_for(:controller => '/posts', :action => 'create') %>
-    <% form_for :post, :url => url do |f| %>
+    <%- url = @create_post_url || url_for(:controller => '/posts', :action => 'create') -%>
+    <%- form_for :post, :url => url do |f| -%>
       <div class='fieldset'>
         <%= f.text_area :body, :rows => 8, :class => 'post_body' %>    
         <%= hidden_field_tag('page_id', @page.id) %>
-        <%= hidden_field_tag('paging', @page.discussion.last_page) %>
+        <%= hidden_field_tag('paging', @discussion.last_page) %>
         <%= hidden_field_tag('from', params[:from] || 'groups' ) %>
         <%= hidden_field_tag('from_id', params[:from_id] || params[:group_name] ) %>
 

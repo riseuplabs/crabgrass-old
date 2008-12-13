@@ -188,10 +188,9 @@ module GalleryHelper
   
   def image_title image
     change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
-    output = '<p class="description" id="detail_image_title" onClick="'+change_title+'">'+
-      image.page.title+'</p>'
-    output << render(:partial => 'change_image_title',
-                    :locals => { :image => image })
+    output = content_tag :p, image.page.title, :class => 'description',
+       :id => 'detail_image_title', :onclick => change_title
+    output << render(:partial => 'change_image_title', :locals => { :image => image })
     return output
   end
   

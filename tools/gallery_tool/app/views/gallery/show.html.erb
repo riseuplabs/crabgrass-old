@@ -1,23 +1,17 @@
-<% content_for :style do %>
-div.gallery_swatch {
-  float: left;
-  padding: 0 2em 2em 0;
-}
-<% end %>
-<% @info_box = gallery_navigation %>
+<%- @info_box = gallery_navigation -%>
 
-<div id="gallery_overview">
-<% if @images.any? %>
-  <%= render :partial => 'image', :collection => @images %>
-  <br style='clear:both'/>
-  <%= pagination_links @images %>
-<% else %>
-  <%= "No images in gallery"[:no_images_in_gallery] %>
-<% end %>
+<!-- <div class="cover">
+  <%# link_to_asset(@cover, :large, :url => page_url(@page, :action => 'detail_view', :id => @cover.id)) %>
+</div> -->
+
+<div class="swatches">
+  <%- if @images.any? -%>
+    <%= render :partial => 'image', :collection => @images %>
+    <br style='clear:both'/>
+    <%= pagination_links @images %>
+  <%- else -%>
+    <%= "No images in gallery"[:no_images_in_gallery] %>
+  <%- end -%>
 </div>
-<br />
-<div id="posts">
-  <div class="comments-head">
-    <h2 class="title2"><%= :Comments.t %></h2>
-  </div>
-</div>
+
+

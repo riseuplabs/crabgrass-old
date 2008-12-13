@@ -1,17 +1,28 @@
-<div id="change_title_form">
-<% form_remote_tag(:url => page_url(@page,
-                                    :action => 'change_image_title',
-                                    :id => image.id),
-		   :update => 'detail_image_title',
-		   :complete => "$('detail_image_title').show();") do -%>
+<%-
+
+#submit_action = "$('change_title_form_submit').disabled=true;this.value='Saving...';$('change_title_spinner').show();$('change_title_form_cancel').hide();"
+
+
+#form_options = {
+#  :url => page_xurl(@page, :action => 'change_image_title', :id => image.id)
+#  :update => 'detail_image_title',
+#	:complete => "$('detail_image_title').show()",
+#  :pending => "$('change_title_spinner').show()"
+#}
+
+form_options = page_xurl(@page, :action => 'change_image_title', :id => image.id)
+
+cancel_action = "$('change_title_form').hide();$('detail_image_title').show();"
+#, :id => "change_title_form_cancel"
+
+-%>
+
+<div id="change_title_form" style='display:none' class='p'>
+<% form_tag(form_options) do -%>
   <%= text_field_tag :title, image.page.title %>
-  <input type="submit", value="<%= :save.t %>" onclick="this.disabled=true;this.value='Saving...';$('change_title_spinner').show();$('change_title_form_cancel').hide();" id="change_title_form_submit" />
-  <%= button_to_function :cancel.t, "$('change_title_form').hide();$('detail_image_title').show();", :id => "change_title_form_cancel" %>
-  <%= spinner('change_title') %>
+  <input type="submit", value="<%= :save.t %>" />
+  <%= button_to_function :cancel.t, cancel_action %>
+  <%# spinner('change_title') %>
 <% end -%>
 </div>
 
-<%= javascript_tag "$('change_title_form').hide();" unless @change_title %>
-  <%# we insert javascript that gets returned by xhr request here, so that it is
-      evaluated. (tfjs = target for javascript) %>
-<div id="tfjs" style="display:none">

@@ -1,29 +1,12 @@
 <%
   showing ||= @showing
   image = showing.image
-  comments = @image.page.discussion.posts rescue []
+  detail_view_navigation(@page, @previous, image, @next)
+  @info_box = gallery_navigation
 -%>
-
-<% detail_view_navigation(@page, @previous, image, @next) %>
-<% @info_box = gallery_navigation %>
 
 <div class="gallery-item">
   <%= link_to thumbnail_img_tag(image, 'large'), image.url %>
   <%= image_title(image) %>
-</div>
-</div>
-<div id="posts">
-  <div class="comments-head">
-    <h2 class="title2"><%= :Comments.t %></h2>
-  </div>
-  <table class="posts">
-    <% if comments.any? -%>
-      <% comments.each do |comment| -%>
-	<%= render(:partial => 'posts/post',
-		     :locals => { :post => comment }) %>
-      <% end -%>
-    <% end -%>
-    <%= render :partial => 'comment_reply' %>
-  </table>
 </div>
 

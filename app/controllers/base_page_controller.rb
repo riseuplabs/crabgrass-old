@@ -13,7 +13,11 @@ class BasePageController < ApplicationController
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   append_before_filter :setup_default_view
-  
+  append_before_filter :load_posts
+  # :load_posts should come after :setup_default_view, to give controllers an
+  # opportunity to disable loading of posts or to load posts via an alternate
+  # method.  
+
   # if the page controller is call by our custom DispatchController, 
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
@@ -100,7 +104,6 @@ class BasePageController < ApplicationController
     if request.get?
       setup_view        # allow subclass to override view defaults
       @show_posts       = action?(:show) if @show_posts.nil?
-      @show_reply       = @posts.any?    if @show_reply.nil?
       @show_attachments = true           if @show_attachments.nil?
       @show_tags        = true           if @show_tags.nil? 
       @html_title       = @page.title    if @page && @html_title.nil?
@@ -146,21 +149,18 @@ class BasePageController < ApplicationController
     end
     # grab the current user's participation from memory
     @upart = (@page.participation_for_user(current_user) if logged_in?)
-
-    if request.get?
-      load_posts
-    end
     true
   end
 
   def load_posts
-    @page.discussion ||= Discussion.new    
-    disc = @page.discussion
-    current_page = params[:posts] || disc.last_page
-    @posts = Post.paginate_by_discussion_id(disc.id,
+    return if @discussion === false # allow for the disabling of load_posts()
+    @discussion ||= (@page.discussion ||= Discussion.new)
+    current_page = params[:posts] || @discussion.last_page
+    @posts = Post.paginate_by_discussion_id(@discussion.id,
       :order => "created_at ASC", :page => current_page,
-      :per_page => disc.per_page, :include => :ratings)
+      :per_page => @discussion.per_page, :include => :ratings)
     @post = Post.new
+    @show_reply = @posts.any? if @show_reply.nil?
   end
       
   def context

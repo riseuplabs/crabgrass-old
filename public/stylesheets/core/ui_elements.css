@@ -195,8 +195,6 @@ h2 span {
   font-size: 0.6em;
   white-space: nowrap;
   text-transform: uppercase; }
-h2.section {
-  background: #eee; }
 
 h3.dim {
   color: #738899;
@@ -211,8 +209,6 @@ h3 span {
   font-size: 0.6em;
   white-space: nowrap;
   text-transform: uppercase; }
-h3.section {
-  background: #eee; }
 
 .pretty table {
   border-collapse: collapse;
