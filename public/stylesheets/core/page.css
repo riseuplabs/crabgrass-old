@@ -237,17 +237,17 @@ div.title_box:hover #title_edit_link {
 
 div.popup {
   background: #aaa;
-  border: 8px solid black;
+  border: 8px solid #666;
   z-index: 101;
   position: absolute;
   top: -32px;
   right: 43px; }
   div.popup h1 {
-    background: #666;
+    background: #888;
     color: white;
     padding: 10px;
     margin: 0;
-    border-bottom: 1px solid black; }
+    border-bottom: 1px solid #666; }
   div.popup h2 {
     color: white;
     background: #666;
