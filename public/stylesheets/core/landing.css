@@ -21,7 +21,8 @@ a.contribute {
   display: block;
   background: url("/images/background/contribute_button_left.png") no-repeat;
   font-weight: bold;
-  padding-left: 35px;
+  padding-left: 15px;
+  margin-left: -0.65em;
   color: #52972d;
   margin-bottom: 0.8em; }
   a.contribute:hover {
@@ -127,11 +128,11 @@ div.tags ul {
   width: 100%;
   background-color: #EFF9FE; }
   .profile-fun td {
-    padding: 1.2em;
+    padding-right: 1em;
     vertical-align: top; }
   .profile-fun .profile-wall {
     width: 70%; }
-    .profile-fun .profile-wall fieldset a {
+    .profile-fun .profile-wall .fieldset a {
       float: right; }
 
 .set_status {

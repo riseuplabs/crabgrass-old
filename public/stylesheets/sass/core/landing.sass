@@ -1,5 +1,9 @@
 @import common.sass
 
+//
+// THIS IS A MESS AND NEEDS TO BE CLEANED UP
+//
+
 .title_box h1 em.status
   font-weight: 100
 
@@ -23,7 +27,8 @@ a.contribute
   display: block
   background: url("/images/background/contribute_button_left.png") no-repeat
   font-weight: bold
-  padding-left: 35px
+  padding-left: 15px
+  margin-left: -0.65em
   color: #52972d
   margin-bottom: 0.8em
   &:hover
@@ -112,25 +117,19 @@ div
 .landing
   h2.alert
     padding-bottom: 0.5em
-
   .activities, .user_activities
     clear: left
     float: none
-
   .photos_activities
     margin-left: 1.8em
-
   ul li
     font-size: 11px
-
   table td
     &.left
       width: 40%
       border-right: 1px dotted #ccc
-
     &.profile-wall
       width: 40%
-
 
 .box1
   border: 1px solid #E1E1E1
@@ -145,15 +144,12 @@ div
 .profile-fun
   width: 100%
   background-color: #EFF9FE
-
   td
-    padding: 1.2em
+    padding-right: 1em
     vertical-align: top
-
   .profile-wall
     width: 70%
-
-    fieldset a
+    .fieldset a
       float: right
 
 
