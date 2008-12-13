@@ -36,7 +36,7 @@ class Me::TasksController < Me::BaseController
       path = build_filter_path(params[:search])
       redirect_to url_for(:controller => 'me/tasks', :action => params[:action], :path => nil)
     else
-      path = parsed_path.merge([['type','task']]).flatten
+      path = parsed_path.set_keyword('type','task').to_path
       @pages = Page.find_by_path(path, options_for_me)
       @task_lists = @pages.collect{|page|page.data}
       @show_user = current_user

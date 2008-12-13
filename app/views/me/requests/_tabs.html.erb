@@ -1,0 +1,10 @@
+<% @title_box = capture do -%>
+  <h1><%= "My requests"[:my_requests_headline] %></h1>
+<% end -%>
+<% @info_box = capture do -%>
+  <table class='columns'><tr>
+   <td><%= request_state_links %></td>
+   <td class='right' style='text-align: right'><%= request_source_links %></td>
+  </tr></table>
+<% end -%>
+
