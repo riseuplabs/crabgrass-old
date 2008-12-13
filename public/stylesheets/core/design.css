@@ -143,6 +143,35 @@ form.minisearch {
     .title_box .breadcrumb a {
       text-transform: capitalize; }
 
+.info_box {
+  padding: 1em;
+  background-color: #f0f7ff;
+  border-bottom: 1px solid #d0e3f7; }
+  .info_box table.columns {
+    width: 100%; }
+  .info_box td {
+    vertical-align: top; }
+    .info_box td.right {
+      padding-left: 1em;
+      border-left: 1px dotted #ccc;
+      width: 50%; }
+    .info_box td.left {
+      width: 50%; }
+  .info_box .description {
+    color: #738899;
+    font-family: georgia, times;
+    font-style: italic;
+    font-size: 1.1em;
+    letter-spacing: 0.03em;
+    word-spacing: 0.1em;
+    line-height: 1.6em; }
+  .info_box .status h3 {
+    margin: 0.5em 0; }
+  .info_box.tabs {
+    padding: 1em 0 0 0;
+    overflow: hidden;
+    border-bottom: 0; }
+
 .content_box {
   background: #fff none repeat scroll 0 0;
   padding: 1em; }

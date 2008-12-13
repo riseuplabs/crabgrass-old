@@ -301,7 +301,7 @@ class GalleryController < BasePageController
     @image_count = @page.images.size if @page
     @show_right_column = true
     if !action?(:show) && @page
-      @back_link = render_to_string(:partial => 'back_link')
+      @title_addendum = render_to_string(:partial => 'back_link')
     end
     if action?(:detail_view)
       @discussion = false # disable load_posts()

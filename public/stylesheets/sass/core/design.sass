@@ -3,6 +3,7 @@
 // MASTHEAD
 // BANNER
 // TITLE_BOX
+// INFO_BOX
 // CONTENT_BOX
 // LEFT_COLUMN
 // RIGHT_COLUMN
@@ -183,6 +184,40 @@ form.minisearch
     padding-bottom: 0.25em
     a
       text-transform: capitalize
+
+//
+// INFO_BOX
+//
+
+.info_box
+  padding: 1em
+  background-color= !info_box_bg_color
+  border-bottom= "1px solid" !title_box_border_color
+  table.columns
+    width: 100%
+  td
+    vertical-align: top
+    &.right
+      padding-left: 1em
+      border-left: 1px dotted #ccc
+      width: 50%
+    &.left
+      width: 50%
+  .description
+    color: #738899
+    font-family: georgia, times
+    font-style: italic
+    font-size: 1.1em
+    letter-spacing: 0.03em
+    word-spacing: 0.1em
+    line-height: 1.6em
+  .status h3
+    margin: 0.5em 0
+  &.tabs
+    padding: 1em 0 0 0
+    overflow: hidden
+    border-bottom: 0
+
 
 //
 // CONTENT_BOX

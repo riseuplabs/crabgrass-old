@@ -10,6 +10,16 @@ class BasePageController < ApplicationController
 #  stylesheet 'page', 'post'
   javascript 'page'
 
+  # page_controller subclasses often need to run code at very precise placing
+  # in the filter chain. For this reason, there are a number of stub methods
+  # they can define:
+  #
+  # filter order:
+  # (1) fetch_page_data
+  # (2) fetch_data (defined by subclass)
+  # (3) setup_view (defined by subclass)
+  # (4) setup_default_view
+
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   append_before_filter :setup_default_view
@@ -129,7 +139,7 @@ class BasePageController < ApplicationController
   # to be overwritten by subclasses.
   def setup_view
   end
-  
+ 
   # don't require a login for public pages
   def login_or_public_page_required
     if action_name == 'show' and @page and @page.public?
@@ -149,7 +159,12 @@ class BasePageController < ApplicationController
     end
     # grab the current user's participation from memory
     @upart = (@page.participation_for_user(current_user) if logged_in?)
+    fetch_data() # all subclasses to get fetch data early on.
     true
+  end
+
+  # to be overwritten by subclasses.
+  def fetch_data
   end
 
   def load_posts

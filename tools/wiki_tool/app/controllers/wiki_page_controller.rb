@@ -1,5 +1,4 @@
 class WikiPageController < BasePageController
-  append_before_filter :fetch_wiki
 
   ##
   ## ACCESS: no restriction
@@ -135,7 +134,8 @@ class WikiPageController < BasePageController
     end
   end
   
-  def fetch_wiki
+  # called early in filter chain
+  def fetch_data
     return true unless @page
     @wiki = @page.data
     @locked_for_me = !@wiki.editable_by?(current_user) if logged_in?
@@ -143,6 +143,9 @@ class WikiPageController < BasePageController
   
   def setup_view
     @show_attach = true
+    if @locked_for_me
+      @title_addendum = render_to_string(:partial => 'locked_notice')
+    end
   end
 
   def authorized?

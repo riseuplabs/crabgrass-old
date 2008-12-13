@@ -253,25 +253,22 @@ module Formy
       
   class Tabset < Root 
     class Tab < Element
-      element_attr :label, :link, :selected, :icon, :show_tab, :click, :id, :style
+      # required: label & ( link | url | show_tab )
+      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style
       
       def close
         selected = 'active' if "#{@selected}" == "true"
-        style = @style
-        style ||= @icon ? "background: url(/images/#{@icon}) no-repeat center left" : nil
-        id = @id
-        onclick = @click
-        href = @link
-        if @click
-          href = "javascript:void(0)"
+        @style ||= @icon ? "background: url(/images/#{@icon}) no-repeat center left" : nil
+        if @link
+          a_tag = @link
+        elsif @url
+          a_tag = content_tag :a, @label, :href => @url, :class => selected, :style => @style, :id => @id
         elsif @show_tab
           onclick = "show_tab(this, $('%s'))" % @show_tab
-          id = @show_tab + '_link'
-          href = "javascript:void(0)"
+          @id = @show_tab + '_link'
+          a_tag = content_tag :a, @label, :onclick => onclick, :class => selected, :style => @style, :id => @id
         end
-        link = content_tag :a, @label, :class => selected, :style => style,
-           :id => id, :onclick => onclick, :href => href
-        puts content_tag(:li, link, :class => 'tab')
+        puts content_tag(:li, a_tag, :class => 'tab')
         super
       end
     end
