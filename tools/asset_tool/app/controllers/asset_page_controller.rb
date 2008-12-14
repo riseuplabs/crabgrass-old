@@ -11,7 +11,6 @@ class AssetPageController < BasePageController
 
   def create
     @page_class = AssetPage
-    @stylesheet = 'page_creation'
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
     elsif request.post?

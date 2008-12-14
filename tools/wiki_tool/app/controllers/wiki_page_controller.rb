@@ -1,5 +1,8 @@
 class WikiPageController < BasePageController
 
+  stylesheet 'wiki_edit', :action => :edit
+  javascript 'wiki_edit', :action => :edit
+
   ##
   ## ACCESS: no restriction
   ##
@@ -61,8 +64,6 @@ class WikiPageController < BasePageController
   ##
 
  def edit
-    @stylesheet = 'wiki_edit'
-    @javascript = 'wiki_edit'
     if params[:cancel]
       cancel
     elsif params[:break_lock]

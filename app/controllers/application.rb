@@ -61,24 +61,43 @@ class ApplicationController < ActionController::Base
   end
   helper_method :action?
 
-  # let controllers set a custom stylesheet in their class definition
+  # rather than include every stylesheet in every request, some stylesheets are 
+  # only included "as needed". A controller can set a custom stylesheet
+  # using 'stylesheet' in the class definition:
+  #
+  # for example:
+  #   
+  #   stylesheet 'gallery', 'images'
+  #   stylesheet 'page_creation', :action => :create
+  #
+  # as needed stylesheets are kept in public/stylesheets/as_needed
+  #
   def self.stylesheet(*css_files)
     if css_files.any?
-      sheets = css_files + (read_inheritable_attribute("stylesheet") || [])
+      options = css_files.last.is_a?(Hash) ? css_files.pop : {}
+      sheets  = read_inheritable_attribute("stylesheet") || {}
+      index   = options[:action] || :all
+      sheets[index] ||= []
+      sheets[index] << css_files       
       write_inheritable_attribute "stylesheet", sheets
     else
       read_inheritable_attribute "stylesheet"
     end
   end
-  
-#  def get_unobtrusive_javascript
-#    @js_behaviours.to_s
-#  end
-  
+   
   # let controllers require extra javascript
+  # for example:
+  #
+  #   javascript 'wiki_edit', :action => :edit
+  #
   def self.javascript(*js_files)
     if js_files.any?
-      write_inheritable_attribute "javascript", js_files
+      options = js_files.last.is_a?(Hash) ? js_files.pop : {}
+      scripts  = read_inheritable_attribute("javascript") || {}
+      index   = options[:action] || :all
+      scripts[index] ||= []
+      scripts[index] << js_files       
+      write_inheritable_attribute "javascript", scripts
     else
       read_inheritable_attribute "javascript"
     end

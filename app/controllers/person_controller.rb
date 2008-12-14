@@ -11,6 +11,7 @@ see PeopleController.
 class PersonController < ApplicationController
 
   helper 'task_list_page', 'wall', 'profile'
+  stylesheet 'tasks', :action => :tasks
 
   def initialize(options={})
     super()
@@ -58,7 +59,6 @@ class PersonController < ApplicationController
   end
 
   def tasks
-    @stylesheet = 'tasks'
     options = options_for_user(@user)
     #options[:conditions] += " AND user_participations.resolved = ?"
     #options[:values] << false

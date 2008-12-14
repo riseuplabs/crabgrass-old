@@ -35,10 +35,10 @@ module LayoutHelper
   
   # custom stylesheet
   # rather than include every stylesheet in every request, some stylesheets are 
-  # only included if they are needed. a controller can set a custom stylesheet
-  # using 'stylesheet' in the class definition, or an action can set @stylesheet.
+  # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
-    sheets = [controller.class.stylesheet, @stylesheet].flatten.compact.collect{|i| 'as_needed/' + i}
+    stylesheet = controller.class.stylesheet || {}
+    sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
     stylesheet_link_tag(*sheets)
   end 
  
@@ -123,22 +123,15 @@ module LayoutHelper
   # JAVASCRIPT
 
   def optional_javascript_tag
-    js_files = optional_javascripts
-    js_files = [js_files] unless js_files.is_a? Array
+    scripts = controller.class.javascript || {}
+    js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
     return unless js_files.any?
     extra = js_files.delete(:extra)
-    js_files = js_files.collect{|file| "as_needed/#{file}" }
+    js_files = js_files.collect{|i| "as_needed/#{i}" }
     if extra
       js_files += ['effects', 'dragdrop', 'controls']
     end
     javascript_include_tag(*js_files)
-  end
-  def optional_javascripts
-    if @javascript  # optional javascript at the action level
-      @javascript
-    else # optional javascript at the controller level
-      controller.class.javascript 
-    end
   end
   
   def crabgrass_javascripts

@@ -7,7 +7,7 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   layout :choose_layout
-#  stylesheet 'page', 'post'
+  stylesheet 'page_creation', :action => :create
   javascript 'page'
 
   # page_controller subclasses often need to run code at very precise placing
@@ -36,8 +36,6 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
-
-    @javascript_extra = true
   end  
 
   ##
@@ -59,7 +57,6 @@ class BasePageController < ApplicationController
         flash_message_now :exception => exc
       end
     end
-    @stylesheet = 'page_creation'
     render :template => 'base_page/create'
   end
 
@@ -168,7 +165,7 @@ class BasePageController < ApplicationController
   end
 
   def load_posts
-    return if @discussion === false # allow for the disabling of load_posts()
+    return if @discussion === false || @page.nil? # allow for the disabling of load_posts()
     @discussion ||= (@page.discussion ||= Discussion.new)
     current_page = params[:posts] || @discussion.last_page
     @posts = Post.paginate_by_discussion_id(@discussion.id,

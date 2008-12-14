@@ -248,7 +248,6 @@ class GalleryController < BasePageController
         flash_message_now :exception => exc
       end
     end
-    @stylesheet = 'page_creation'
   end
   
   def upload

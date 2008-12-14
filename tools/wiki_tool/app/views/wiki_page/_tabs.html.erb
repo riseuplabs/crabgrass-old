@@ -21,11 +21,6 @@
       end
     end
   end
-  f.tab do |t|
-    t.label "Print"[:print]
-    t.url page_url(@page,:action=>'print')
-    t.class 'page_url'
-  end
   last_change_id = "#{@wiki.version.to_i-1}-#{@wiki.version}"
   f.tab do |t|
     t.label "Versions"[:versions]
@@ -40,6 +35,11 @@
       t.selected action?(:diff) && params[:id] == last_change_id
       t.class 'page_url'
     end
+  end
+  f.tab do |t|
+    t.label "Print"[:print]
+    t.url page_url(@page,:action=>'print')
+    t.class 'page_url'
   end
 end -%>
 <%- end -%>
