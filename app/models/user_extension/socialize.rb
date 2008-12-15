@@ -19,7 +19,7 @@ module UserExtension::Socialize
       
       # discussion
       has_one :discussion, :as => :commentable
-      has_many :discussions, :through => :user_relations
+      #has_many :discussions, :through => :user_relations
 
       has_and_belongs_to_many :contacts,
         {:class_name => "User",

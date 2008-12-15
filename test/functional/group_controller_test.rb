@@ -136,14 +136,11 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :search, :id => groups(:rainbow).name
     assert_response :success
-#    assert_template 'search'
     assert_not_nil assigns(:pages)
-
     assert assigns(:pages).length > 0, "should have some search results"
     
     get :search, :id => groups(:rainbow).name, :path => 'type/discussion'
     assert_response :success
-#    assert_template 'search'
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results when filter for discussions"
     
@@ -157,7 +154,6 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_search_when_not_logged_in
     get :search, :id => groups(:public_group).name
     assert_response :success
-#    assert_template 'search'
     
     post :search, :id => groups(:public_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
@@ -321,7 +317,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :show
     assert_response :success
-    assert_select "h4", "Today"
+    assert_select "td.date", "Today"
     assert_select "a[href=?]", @controller.page_url(committee_page)
 
     @controller.instance_variable_set(:@group, g)

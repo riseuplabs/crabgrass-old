@@ -17,13 +17,7 @@ class PersonController < ApplicationController
     super()
     @user = options[:user]   # the user context, if any
   end
-  
-  before_filter :load_partials
-  def load_partials
-    fetch_profile unless @profile
-    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @profile}
-  end
-  
+    
   def show
     @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
     
@@ -104,9 +98,13 @@ class PersonController < ApplicationController
     true
   end
 
+=begin
+
+  I don't understand what this is trying to accomplish, but I don't
+  think this is the right way to do it, whatever it is. -elijah
+
   def fetch_profile
-    vis_group = 
-      if logged_in?
+    if logged_in?
         if current_user.id == @user.id
           'friends' # not so sure about this
         elsif current_user.friend_of? @user.id
@@ -130,5 +128,27 @@ class PersonController < ApplicationController
       raise PermissionDenied
     end
   end
+=end
   
+  before_filter :fetch_profile, :load_partials
+  def fetch_profile
+    if logged_in?
+      @profile = @user.profiles.visible_to(current_user)
+    else
+      @profile = @user.profiles.public
+    end
+    unless @profile and @profile.may_see?
+      @user = nil
+      no_context
+      render(:template => 'dispatch/not_found')
+      false
+    else
+      true
+    end
+  end
+  def load_partials
+    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @profile}
+    true
+  end
+
 end

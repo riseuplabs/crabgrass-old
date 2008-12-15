@@ -156,20 +156,28 @@ class ApplicationController < ActionController::Base
     access_denied
   end
 
+  # an around filter responsible for setting the current language.
+  # order of precedence in choosing a language:
+  # (1) the current session
+  # (2) the current_user's settings
+  # (3) the site default
+  # (4) english
   def set_language
-    session[:language_code] ||= begin
-      if !logged_in? or current_user.language.nil?
-        language = LANGUAGES.detect{|l|l.code == @site.default_language}
-        language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
-        language_code = language.code.to_sym
-      else
-        language_code = current_user.language.to_sym
+    if LANGUAGES.any?
+      session[:language_code] ||= begin
+        if !logged_in? or current_user.language.nil?
+          language = LANGUAGES.detect{|l|l.code == @site.default_language}
+          language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
+          language_code = language.code.to_sym
+        else
+          language_code = current_user.language.to_sym
+        end
       end
     end
     if session[:language_code]
       Gibberish.use_language(session[:language_code]) { yield }
     else
-      yield # we should really never get here
+      yield
     end
   end
  
