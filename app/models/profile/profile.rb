@@ -51,6 +51,14 @@ Order of profile presidence (user sees the first one that matches):
     t.string   "language",               :limit => 5
   end
 
+Applies to both groups and users: may_see, may_see_groups
+
+Applies to sers only: may_see_contacts, may_request_contact, may_pester
+
+Applies to groups only: may_see_committees, may_see_networks, may_see_members,
+  may_request_membership, membership_policy
+
+Currently unused: membership_policy, may_burden, may_spy, language.
 
 =end
 
@@ -107,7 +115,12 @@ class Profile < ActiveRecord::Base
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
-    valid_params = ['first_name', 'middle_name', 'last_name', 'role', 'organization']
+
+    valid_params = ['first_name', 'middle_name', 'last_name', 'role', 'organization', 
+      "may_see", "may_see_committees", "may_see_networks", "may_see_members", "may_request_membership",
+      "membership_policy", "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
+      "may_burden", "may_spy"]
+
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
