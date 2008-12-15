@@ -30,6 +30,14 @@
         </td>
         <td class="description"><%= :user_profile_description_may_pester.t %></td>
       </tr>
+      <%- if @profile.private? %>
+      <tr class="<%=cycle('odd','even')%>">
+        <td>
+          <label class="checkbox"><%= check_box 'profile', 'peer', :class => 'checkbox' %> <%= :profile_option_allow_peers.t %></label>
+        </td>
+        <td class="description"><%= :user_profile_description_allow_peers.t %></td>
+      </tr>
+      <%- end -%>
       <tr class="<%=cycle('odd','even')%>">
         <td>
           <label class="checkbox"><%= check_box 'profile', 'may_see', :class => 'checkbox' %> <%= :profile_option_may_see.t %></label>

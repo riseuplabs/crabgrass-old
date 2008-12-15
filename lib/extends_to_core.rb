@@ -116,7 +116,7 @@ class Array
   # option shown to be localized.
   # eg ['hi','bye'] --> [['hi'.t,'hi'],['bye'.t,'bye']]
   def to_localized_select
-    self.collect{|a| [a.t, a] }
+    self.collect{|a| [a.t, a.to_s] }
   end
   
   def any_in?(array)

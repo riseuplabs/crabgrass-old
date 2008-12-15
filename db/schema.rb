@@ -418,7 +418,7 @@ ActiveRecord::Schema.define(:version => 20081214021332) do
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
-    t.boolean  "may_see"
+    t.boolean  "may_see",                              :default => true
     t.boolean  "may_see_committees"
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"

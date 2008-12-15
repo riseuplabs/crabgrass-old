@@ -6,9 +6,6 @@ class ProfileLocation < ActiveRecord::Base
 
   set_table_name 'locations'
 
-  @@icons = Hash.new('world').merge({ 
-  })
-  
   belongs_to  :profile
 
   before_save :set_geocode
@@ -42,7 +39,7 @@ class ProfileLocation < ActiveRecord::Base
   end
   
   def icon
-    @@icons[location_type]
+    'world'
   end
 
 

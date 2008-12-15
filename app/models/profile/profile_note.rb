@@ -6,8 +6,6 @@ class ProfileNote < ActiveRecord::Base
   validates_presence_of :body
 
   set_table_name 'profile_notes'
-  @@icons=Hash.new('page_text').merge({ 
-  })
   
   belongs_to :profile
 
@@ -19,7 +17,7 @@ class ProfileNote < ActiveRecord::Base
   end
 
   def icon
-    @@icons[note_type]
+    'info'
   end
     
 end

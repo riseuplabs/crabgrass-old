@@ -6,8 +6,6 @@ class ProfileWebsite < ActiveRecord::Base
 
   set_table_name 'websites'
   
-  @@icons=Hash.new('mime_html')
-  
   validates_presence_of :site_title
   validates_presence_of :site_url
 
@@ -18,7 +16,7 @@ class ProfileWebsite < ActiveRecord::Base
   after_destroy {|record| record.profile.save if record.profile}
   
   def icon
-    @@icons['']
+    'mime_html'
   end
   
   private

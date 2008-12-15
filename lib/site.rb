@@ -2,7 +2,7 @@ require 'site_profile_methods'
 
 class Site
   
-  include SiteProfileMethods
+  #include SiteProfileMethods
 
   # once sites are stored in the database, these accessors will go away:
   attr_accessor :name
@@ -15,7 +15,7 @@ class Site
   attr_accessor :translation_group
   attr_accessor :default_language
   attr_writer   :available_page_types
-  attr_accessor :profiles
+  #attr_accessor :profiles
 
   # the default site when no others match
   cattr_accessor :default
@@ -27,7 +27,7 @@ class Site
       method = key.to_s + '='
       self.send(method,value) if self.respond_to?(method)
     end
-    setup_profile_methods
+    #setup_profile_methods
   end
 
   def available_page_types
