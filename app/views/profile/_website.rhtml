@@ -12,10 +12,8 @@
 		<input id="profile_websites_<%= index %>_site_url" size="40" value="<%=h website.site_url %>" type="text" maxlength="100" name="profile[websites][<%= index %>][site_url]" class="textInput" style="width:180px;"  />
 		<div class="input_label"><%= _('url') -%></div>
 	</td>
-	<% if multiple -%>
 	<td>
 	  <%= remove_link dom_id %>
 	</td>
-	<% end -%>
 </tr>
 <tr><td><div class='spacer'></div></td></tr>

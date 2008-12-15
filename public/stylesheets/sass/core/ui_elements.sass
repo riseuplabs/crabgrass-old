@@ -145,9 +145,21 @@ option
 label.date span
   font-size: 0.8em
 
+// real fieldsets cause all kinds of cross-browser problems
+// so we use div.fieldset instead.
 .fieldset textarea
   width: 99%
   max-width: 80em
+
+// make checkboxes have a hanging indent look, like bullets.
+label.checkbox
+  display: block
+  margin-left: 1.5em
+input.checkbox
+  position: relative
+  top: 2px
+  margin-left: -1.6em
+
 
 //
 // ROUNDY CORNERS
@@ -265,35 +277,30 @@ h3
 // FORMATTED TABLES
 //
 
-.pretty
-  table
-    border-collapse: collapse
-    width: 100%
-    td
+table.pretty
+  border-collapse: collapse
+  width: 100%
+  & > tbody > tr
+    &.even
+      background-color: #F2F2F2
+    &.odd
+      background-color: white
+    &.unread
+      font-weight: bold
+    & > td
       padding: 0.5em
       border-bottom: 1px solid #e6e6e6
       img
         vertical-align: bottom
-    tr
-      &.odd
-        background-color: #F2F2F2
-      &.even
-        background-color: white
-      &.unread
-        font-weight: bold
-    a
-      text-decoration: none
-      &:hover
-        text-decoration: underline
-  th
-    padding: 0.5em
-    text-align: left
-    background: #FFF4E8
-    color: #F28367
-    text-transform: capitalize
-    font-weight: bold
-    border-bottom: 1px solid #ccc
-  tr.heading th
+    & > th
+      padding: 0.5em
+      text-align: left
+      background: #FFF4E8
+      color: #F28367
+      text-transform: capitalize
+      font-weight: bold
+      border-bottom: 1px solid #ccc
+  & > tbody > tr.heading > th
     img
       vertical-align: bottom
     a
@@ -302,6 +309,11 @@ h3
       background: #888
       a
         color: white
+  a
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+
 
 //
 // PAGINATION
