@@ -58,6 +58,10 @@ end
 # so i am going to seed the random number generator here,
 # and then things will randomly be the same every time we test
 srand(314159265359)
+
+owner_groups = [['rainbow','3'],['animals','2']]
+owner_users = [['blue','4'],['orange','5'], ['red', '8'], ['kangaroo','10']]
+
 %>
 
 <% for i in 1..100 %>
@@ -74,14 +78,21 @@ page<%=i%>:
 <% if rand(3) == 0 %>
   resolved: false
 <% end %>
-<%# user = User.find(rand(11)+3) %>
-  created_by_login: quentin
-  created_by_id: 1
-<%# user = User.find(rand(11)+3) %>  
-  updated_by_login: aaron
-  updated_by_id: 2
-  group_id: <%= 3 %>
-  group_name: rainbow
+<% group_name, group_id = owner_groups[rand(2)] %>
+<% user_name, user_id = owner_users[rand(4)] %>
+  updated_by_login: <%= user_name %>
+  updated_by_id: <%= user_id %>
+  group_id: <%= group_id %>
+  group_name: <%= group_name %>
+<% if rand(1) == 0 %>
+  owner_type: Group
+  owner_id: <%= group_id %>
+  owner_name: <%= group_name %>
+<% else %>
+  owner_type: User
+  owner_id: <%= user_id %>
+  owner_name: <%= user_name %>  
+<% end %>
   type: DiscussionPage
   public: <%= rand(4) == 0 %>
 <% end %>
