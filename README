@@ -220,7 +220,7 @@ sudo gem install chronic packet --no-ri --no-rdoc
 Start backgroundrb:
 
 /--
-script/backgroundrb start
+script/backgroundrb start -e production
 \--
 
 running sphinx
