@@ -21,7 +21,17 @@ module PersonHelper
 
   def edit_profile_link
     if logged_in? and current_user.id == @user.id
-      content_tag :li, link_to("Edit Profile"[:edit_profile_link], :controller => 'profile', :action => 'edit', :id => 'public'), :class => 'small_icon pencil_16'
+      content_tag :li, link_to("Edit Profile"[:edit_profile_link], :controller => 'profile', :action => 'edit', :id => params[:profile]), :class => 'small_icon pencil_16'
+    end
+  end
+
+  def choose_profile_menu
+    if logged_in? and current_user.id == @user.id
+      options = options_for_select([['Public Profile'[:public_profile],'public'],['Private Profile'[:private_profile],'private']], params[:profile])
+      form = form_tag('/'+@user.name, :method => 'get')
+      form += select_tag('profile', options, :onchange => 'this.form.submit();')
+      form += '</form>'
+      content_tag :li, form, :class => 'small_icon profile_16'
     end
   end
 

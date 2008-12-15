@@ -48,6 +48,7 @@ class PersonController < ApplicationController
       @pages = Page.paginate_by_path(params[:path], options_for_user(@user, :page => params[:page]))
       @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
     end
+
     handle_rss :title => @user.name, :link => url_for_user(@user),
       :image => avatar_url_for(@user, 'xlarge')
   end
@@ -100,9 +101,6 @@ class PersonController < ApplicationController
 
 =begin
 
-  I don't understand what this is trying to accomplish, but I don't
-  think this is the right way to do it, whatever it is. -elijah
-
   def fetch_profile
     if logged_in?
         if current_user.id == @user.id
@@ -133,16 +131,30 @@ class PersonController < ApplicationController
   before_filter :fetch_profile, :load_partials
   def fetch_profile
     if logged_in?
-      @profile = @user.profiles.visible_to(current_user)
+      # if the user is viewing their own profile, let them choose which one.
+      if current_user == @user
+        params[:profile] ||= 'private'
+        if params[:profile] == 'private'
+          @profile = @user.profiles.private
+        elsif params[:profile] == 'public'
+          @profile = @user.profiles.public
+        end
+      else
+        @profile = @user.profiles.visible_by(current_user)
+      end
     else
       @profile = @user.profiles.public
     end
+
     unless @profile and @profile.may_see?
+      # make it appear as if the user does not exist if may_see? is false. 
+      # or should we show an empty profile page?
       @user = nil
       no_context
       render(:template => 'dispatch/not_found')
       false
     else
+      params[:profile] ||= @profile.public? ? 'public' : 'private'
       true
     end
   end

@@ -23,11 +23,3 @@ default:
   - ExternalVideo
   - Article
 
-  profiles:
-    general_info: true
-    public:
-       elements: [email_address, location, note, website, phone_number, crypt_key]
-       visible_to: users
-    private:
-       elements: [email_address, location, note, website, phone_number, crypt_key]
-       visible_to: friends

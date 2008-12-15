@@ -2,7 +2,7 @@
 <% dom_id = "profile_location_#{index}" -%>
 <tr id="<%= dom_id %>" class='data_row'>
   <td>
-    <table>
+    <table cellpadding="4">
       <tr>
         <td valign="top"><%= mark_as_primary(location, 'profile', 'location', index) %></td>
         <td colspan="2">
@@ -14,7 +14,6 @@
                      (location ? location.location_type : nil)
                    ) -%>
                 <%= select_tag_with_id "profile[locations][#{index}][location_type]", location_types_options, {:id => "profile_locations_#{index}_location_type"} %>
-                <br /><span class="input_label"><%= _('type') -%></span>
               </td>
             </tr>
           </table>

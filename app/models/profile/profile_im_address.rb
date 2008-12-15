@@ -6,9 +6,6 @@ class ProfileImAddress < ActiveRecord::Base
 
   set_table_name 'im_addresses'
 
-  @@icons=Hash.new('group').merge({
-  })
-  
   validates_presence_of :im_type
   validates_presence_of :im_address
 
@@ -23,6 +20,6 @@ class ProfileImAddress < ActiveRecord::Base
   end
   
   def icon
-    @@icons[im_type]
+    'page_discussion'
   end
 end

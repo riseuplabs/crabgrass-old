@@ -53,6 +53,7 @@ search_headline: "Search"
 see_more_link: "More"
 
 edit: "Edit"
+preview: "Preview"
 
 discussions: "Discussions"
 tags: "Tags"
@@ -347,6 +348,8 @@ profile_public_description: |
   Use caution when adding personal information to your public profile.
 
 profile_private_description: This profile is private and is only visible to your contacts.
+profile_last_login: "Last Login"
+profile_member_since: "Member Since"
 remove: remove
 Home: Home
 Work: Work
@@ -377,13 +380,13 @@ add_location: Add Location
 im_addresses: IM Addresses
 add_im_address: Add IM Address
 websites: Websites
-add_websites: Add Websites
+add_websites: Add Website
 add_encryption_key: Add Encryption Key
 public_key: Public Key
 location_address: address
 location_city: city
 location_state: state/province
-location_postal_code: postal_code
+location_postal_code: postal code
 location_country: country
 
 users_wall: ":user's Wall"
@@ -400,8 +403,8 @@ request_friend_link: "Add To My Contacts"
 remove_friend_link: "Remove From My Contacts"
 edit_profile_link: "Edit Profile"
 send_message_link: "Send Message"
+profile_saved: "Your profile has been saved."
 
-profile_option_may_see: "Profile is visible"
 profile_option_may_see_committees: "Show committees"
 profile_option_may_see_networks: "Show networks"
 profile_option_may_see_members: "Show group members"
@@ -410,19 +413,22 @@ profile_option_may_see_groups: "Show group memberships"
 profile_option_may_see_contacts: "Show personal contacts"
 profile_option_may_request_contact: "May request a personal contact"
 profile_option_may_pester: "May pester me"
+profile_option_allow_peers: "Visible to peers"
+profile_option_may_see: "Profile is visible"
 
 user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
 user_profile_description_may_see_contacts: "Allow people to see your list of personal contacts."
 user_profile_description_may_request_contact: "Allow people to request to be your personal contact."
 user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
-user_profile_description_may_see: "If enabled, the profile information below will be visible. If disabled, your profile will be hidden entirely."
+user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
+user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
 group_profile_description_may_see_groups: "Allow people to see the groups that are part of this {group_type}."
 group_profile_description_may_see_committees: "Allow people to see what committees this {group_type} has."
 group_profile_description_may_see_networks: "Allow people to see what networks this {group_type} is part of."
 group_profile_description_may_see_members: "Allow people to see the membership list of this {group_type}."
 group_profile_description_may_request_membership: "Allow people to request to be a member of this {group_type}."
-group_profile_description_may_see: "If enabled, the profile information below will be visible. If disabled, the profile for this {group_type} will be hidden entirely."
+group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this {group_type} will be hidden entirely."
 
 
 ##

@@ -6,21 +6,15 @@
     t.url me_url(:action => 'edit', :id => nil)
     t.selected params[:action] == 'edit' && params[:controller] == '/me/base'
   end
-  if @site.profiles.public?
-    f.tab do |t|
-      t.label @site.profiles.private? ? 'Public Profile'[:public_profile] :
-        'Profile'[:profile]
-      t.url url_for(:controller => '/profile', :action => 'edit', :id => 'public')
-      t.selected params[:controller] == '/profile' && params[:id] == 'public'
-    end
+  f.tab do |t|
+    t.label 'Public Profile'[:public_profile]
+    t.url url_for(:controller => '/profile', :action => 'edit', :id => 'public')
+    t.selected params[:controller] == '/profile' && params[:id] == 'public'
   end
-  if @site.profiles.private?
-    f.tab do |t|
-      t.label @site.profiles.public? ? 'Private Profile'[:private_profile] :
-        'Profile'[:profile]
-      t.url url_for(:controller => '/profile', :action => 'edit', :id => 'private')
-      t.selected params[:controller] == '/profile' && params[:id] == 'private'
-    end
+  f.tab do |t|
+    t.label 'Private Profile'[:private_profile]
+    t.url url_for(:controller => '/profile', :action => 'edit', :id => 'private')
+    t.selected params[:controller] == '/profile' && params[:id] == 'private'
   end
 end %>
 <%- end -%>

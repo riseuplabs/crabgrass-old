@@ -1,1 +1,10 @@
 
+td.label {
+  width:1%;
+  white-space: nowrap;
+  text-align: right;
+  font-weight: bold;
+  color: #555;
+}
+td.form {width:99%;}
+

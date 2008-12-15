@@ -36,7 +36,7 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
-    t.boolean  "may_see"
+    t.boolean  "may_see"                 :default => true
     t.boolean  "may_see_committees"
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
@@ -44,8 +44,8 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "membership_policy",      :limit => 11
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact"
-    t.boolean  "may_pester"
+    t.boolean  "may_request_contact"     :default => true
+    t.boolean  "may_pester"              :default => true
     t.boolean  "may_burden"
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
@@ -93,6 +93,12 @@ class Profile < ActiveRecord::Base
     friend?
   end
   
+  def type
+    return 'public' if stranger?
+    return 'private' if friend?
+    return 'unknown'
+  end
+
   ### collections ########################################################## 
 
   belongs_to :wiki, :dependent => :destroy

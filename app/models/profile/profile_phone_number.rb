@@ -5,10 +5,6 @@
 class ProfilePhoneNumber < ActiveRecord::Base
   
   set_table_name 'phone_numbers'
-
-  @@icons= Hash.new('site').merge({ 
-    'Home' => 'house'
-  })
   
   validates_presence_of :phone_number_type
   validates_presence_of :phone_number
@@ -23,7 +19,13 @@ class ProfilePhoneNumber < ActiveRecord::Base
   end
 
   def icon
-    @@icons[phone_number_type]
+    case self.phone_number_type
+      when 'Home'   : 'house'
+      when 'Fax'    : 'fax'
+      when 'Mobile' : 'mobile'
+      when 'Pager'  : 'mobile'
+      else 'phone'
+    end
   end
   
 end
