@@ -360,10 +360,10 @@ Work_Life: Work Life
 Fax: Fax
 Mobile: Mobile
 Pager: Pager
-general_info: General Info
+general_info: General Information
 first_name: first name
 middle_name: middle
-last_name: last
+last_name: last name
 organization: organization
 organizational_role: organizational role
 descriptions: Descriptions
@@ -400,6 +400,30 @@ request_friend_link: "Add To My Contacts"
 remove_friend_link: "Remove From My Contacts"
 edit_profile_link: "Edit Profile"
 send_message_link: "Send Message"
+
+profile_option_may_see: "Profile is visible"
+profile_option_may_see_committees: "Show committees"
+profile_option_may_see_networks: "Show networks"
+profile_option_may_see_members: "Show group members"
+profile_option_may_request_membership: "Allow membership requests"
+profile_option_may_see_groups: "Show group memberships"
+profile_option_may_see_contacts: "Show personal contacts"
+profile_option_may_request_contact: "May request a personal contact"
+profile_option_may_pester: "May pester me"
+
+user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
+user_profile_description_may_see_contacts: "Allow people to see your list of personal contacts."
+user_profile_description_may_request_contact: "Allow people to request to be your personal contact."
+user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
+user_profile_description_may_see: "If enabled, the profile information below will be visible. If disabled, your profile will be hidden entirely."
+
+group_profile_description_may_see_groups: "Allow people to see the groups that are part of this {group_type}."
+group_profile_description_may_see_committees: "Allow people to see what committees this {group_type} has."
+group_profile_description_may_see_networks: "Allow people to see what networks this {group_type} is part of."
+group_profile_description_may_see_members: "Allow people to see the membership list of this {group_type}."
+group_profile_description_may_request_membership: "Allow people to request to be a member of this {group_type}."
+group_profile_description_may_see: "If enabled, the profile information below will be visible. If disabled, the profile for this {group_type} will be hidden entirely."
+
 
 ##
 ## GROUPS
