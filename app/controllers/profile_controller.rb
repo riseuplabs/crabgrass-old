@@ -2,7 +2,7 @@ class ProfileController < ApplicationController
 
   before_filter :login_required
   prepend_before_filter :fetch_profile
-  append_before_filter :fetch_profile_settings
+  #append_before_filter :fetch_profile_settings
   #layout :choose_layout
   stylesheet 'profile'
   helper 'me/base'
@@ -84,10 +84,10 @@ class ProfileController < ApplicationController
  
   def fetch_profile
     return true unless params[:id]
-    fetch_site unless @site
-    if params[:id] == 'public' && @site.profiles.public?
+    #fetch_site unless @site
+    if params[:id] == 'public' #&& @site.profiles.public?
       @profile = current_user.profiles.public
-    elsif params[:id] == 'private' && @site.profiles.private?
+    elsif params[:id] == 'private' #&& @site.profiles.private?
       @profile = current_user.profiles.private
     else
       @profile = Profile.find params[:id]
@@ -102,11 +102,11 @@ class ProfileController < ApplicationController
     end
   end
   
-  def fetch_profile_settings
-    return true unless @profile
-    @profile_settings = (@profile.public? ? @site.profiles.public : 
-                         @site.profiles.private)
-  end
+  #def fetch_profile_settings
+  #  return true unless @profile
+  #  @profile_settings = (@profile.public? ? @site.profiles.public : 
+  #                       @site.profiles.private)
+  #end
 
   # removes everything from params that isn't to be included, due to the profile
   # settings of the current site.
@@ -119,18 +119,18 @@ class ProfileController < ApplicationController
     %w(crypt_key email_address location website note im_address
        phone_number).each do |element|
       next unless (this_params = params['profile'][plural = element.pluralize])
-      if !@profile_settings.element?(element)
-        params['profile'][plural] = []
-        text << "  don't want it though\n"
-        next
-      end
-      if !@profile_settings.multiple?(element)
-        if this_params.kind_of? Array
-          params['profile'][plural] = [this_params.first]
-        else
-          params['profile'][plural] = this_params[this_params.keys.first]
-        end
-      end
+#      if !@profile_settings.element?(element)
+#        params['profile'][plural] = []
+#        text << "  don't want it though\n"
+#        next
+#      end
+#      if !@profile_settings.multiple?(element)
+#        if this_params.kind_of? Array
+#          params['profile'][plural] = [this_params.first]
+#        else
+#          params['profile'][plural] = this_params[this_params.keys.first]
+#        end
+#      end
       # elements with all fields empty shouldn't be fatal errors that prevent us
       # from saving.
       valid_keys = this_params.map do |key, value|
