@@ -143,6 +143,9 @@ class Wiki < ActiveRecord::Base
     end
   end
  
+  def clear_html
+    update_attribute(:body_html, nil)
+  end
 
   ##### RELATIONSHIP TO GROUPS ###################
   

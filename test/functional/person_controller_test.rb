@@ -32,8 +32,8 @@ class PersonControllerTest < Test::Unit::TestCase
 
   def test_search_not_logged_in
     get :search, :id => users(:yellow).login
-    assert_response :success
-#    assert_template 'search'
+#    assert_response :success
+    assert_template 'search'
     assert_nil assigns(:pages).find { |p| !p.public? }
   end
 

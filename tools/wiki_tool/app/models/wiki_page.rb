@@ -13,5 +13,12 @@ class WikiPage < Page
   end
 
   alias_method :wiki, :data
-  
+
+  before_save :update_wiki_group
+  def update_wiki_group
+    if self.group_name_changed?
+      self.wiki.clear_html if self.wiki
+    end
+  end
+
 end

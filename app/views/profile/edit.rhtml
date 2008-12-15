@@ -1,13 +1,13 @@
-<%= render :partial => @tabs %>
-
 <% @title_box = capture do -%>
 <h1><%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %></h1>
 <% end -%>
+<% render :partial => @tabs %>
 
 <!-- begin profile form -->
 <% form_tag do -%>
 
 <div class='profile'>
+<%= render :partial => 'permissions_form' %>
 <%= render :partial => 'form' %>
 </div>
 

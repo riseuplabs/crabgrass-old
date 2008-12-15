@@ -57,6 +57,7 @@ class PageTerms < ActiveRecord::Base
       indexes :created_by_login, :sortable => true
       indexes :updated_by_login, :sortable => true
       indexes :group_name,       :sortable => true
+      indexes :owner_name,       :sortable => true
 
       ## attributes ##
 

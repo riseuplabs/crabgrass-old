@@ -220,14 +220,36 @@ class Page < ActiveRecord::Base
     end
     entity
   end
-  
+
+  # The owner may be a user or a group.
+  def owner=(entity)
+    raise ArgumentError.new("owner= can't be nil") if entity.nil?
+    self.owner_id = entity.id
+    self.owner_name = entity.name
+    if entity.is_a? Group
+      self.owner_type = "Group"
+      self.group_name = self.owner_name
+      self.group_id = self.owner_id
+    elsif entity.is_a? User
+      self.owner_type = "User"
+    else
+      raise Exception.new('must be user or group')
+    end
+    self.add(entity, :access => :admin) unless entity.may?(:admin, self)
+  end
+
+  before_create :ensure_owner
+  def ensure_owner
+    self.owner ||= self.group || self.created_by if self.group || self.created_by
+  end
+
   #######################################################################
   ## DENORMALIZATION
 
+  # denormalize hack follows:
   before_save :denormalize
   def denormalize
-    # denormalize hack follows:
-    if group_participations.any?
+    if self.owner_type != "Group" and self.group_name.empty? and group_participations.any?
       group = group_participations.first.group
       self.group_name = group.name
       self.group_id = group.id

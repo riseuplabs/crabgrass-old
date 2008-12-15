@@ -41,7 +41,6 @@ module AuthenticatedUser
       validates_presence_of     :login
       validates_presence_of     :password,                   :if => :password_required?
       validates_presence_of     :password_confirmation,      :if => :password_required?
-      validates_length_of       :password, :within => 5..40, :if => :password_required?
       validates_confirmation_of :password,                   :if => :password_required?
       validates_format_of       :login, :with => /^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
       validates_length_of       :login, :within => 3..40
@@ -51,7 +50,7 @@ module AuthenticatedUser
   end
   
   def validate
-    if password_required?
+    if password_required? and MIN_PASSWORD_STRENGTH > 0
       errors.add(:password, "Password is not strong enough"[:validation_password_not_strong_enough]) unless self.check_strength(self.password)
       errors.add(:password, "Password and Login may not be the same"[:validation_password_and_login_not_the_same]) if self.password == self.login
     end
@@ -59,6 +58,10 @@ module AuthenticatedUser
   
   # http://www.codeandcoffee.com/2007/06/27/how-to-make-a-password-strength-meter-like-google/
   # http://snippets.dzone.com/posts/show/4698  
+
+  # the PW strength is the amount of time needed to bruteforce a password in 
+  # years, at approximately 1000 tries per second.
+  # I don't know what a good value would be, just tried around a litte
   
   PASSWORD_SETS = {
     /[a-z]/ => 26,
@@ -67,6 +70,7 @@ module AuthenticatedUser
     /[^\w]/ => 32
   }
   def check_strength(password)
+    return false unless password.any?
     set_size = 0
     PASSWORD_SETS.each_pair {|k,v| set_size += v if password =~ k}
     combinations = set_size ** password.length
@@ -120,16 +124,17 @@ module AuthenticatedUser
   end
 
   protected
-    # before filter 
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
-    
-    def password_required?
-      crypted_password.blank? || !password.blank?
-    end
+
+  # before filter 
+  def encrypt_password
+    return if password.blank?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
+    self.crypted_password = encrypt(password)
+  end
+  
+  def password_required?
+    crypted_password.blank? || !password.blank?
+  end
   
 end
 end

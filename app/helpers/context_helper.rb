@@ -114,11 +114,11 @@ module ContextHelper
     if @page
       if @group and @page.group_ids.include?(@group.id)
         group_context('small', false)
-      elsif @page.group_name
-        @group = @page.group
+      elsif @page.owner_type == "Group"
+        @group = @page.owner
         group_context('small', false)
-      elsif @page.created_by_id
-        @user = @page.created_by
+      elsif @page.owner_type == "User"
+        @user = @page.owner
         if current_user != @user
           person_context('small', false)
         else
@@ -152,6 +152,7 @@ module ContextHelper
     @banner = ''
     @banner_style = nil
     @left_column = nil
+    @active_tab = nil
   end
 
   #################################################

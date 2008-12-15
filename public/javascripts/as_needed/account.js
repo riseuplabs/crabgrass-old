@@ -45,13 +45,13 @@ function pw_bar_class(pw, min_strength) {
   }
   var s = pw_strength(pw);
   $('pw_time').innerHTML = pw_days_to_crack(s);
-  if(s > min_strength*1.5)
+  if(s > min_strength*10)
     return "pw_bar_100";
   if(s >= min_strength)
     return "pw_bar_75";
-  if(s > min_strength/3)
+  if(s > (min_strength/2))
     return "pw_bar_50";
-  if(s < (min_strength/3))
+  if(s < (min_strength/2))
     return "pw_bar_25";
 }
 function set_pw_bar(password, min_strength) {

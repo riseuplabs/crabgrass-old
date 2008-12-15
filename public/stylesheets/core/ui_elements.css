@@ -112,6 +112,15 @@ label.date span {
   width: 99%;
   max-width: 80em; }
 
+label.checkbox {
+  display: block;
+  margin-left: 1.5em; }
+
+input.checkbox {
+  position: relative;
+  top: 2px;
+  margin-left: -1.6em; }
+
 .round {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px; }
@@ -210,40 +219,40 @@ h3 span {
   white-space: nowrap;
   text-transform: uppercase; }
 
-.pretty table {
+table.pretty {
   border-collapse: collapse;
   width: 100%; }
-  .pretty table td {
+  table.pretty > tbody > tr.even {
+    background-color: #F2F2F2; }
+  table.pretty > tbody > tr.odd {
+    background-color: white; }
+  table.pretty > tbody > tr.unread {
+    font-weight: bold; }
+  table.pretty > tbody > tr > td {
     padding: 0.5em;
     border-bottom: 1px solid #e6e6e6; }
-    .pretty table td img {
+    table.pretty > tbody > tr > td img {
       vertical-align: bottom; }
-  .pretty table tr.odd {
-    background-color: #F2F2F2; }
-  .pretty table tr.even {
-    background-color: white; }
-  .pretty table tr.unread {
-    font-weight: bold; }
-  .pretty table a {
+  table.pretty > tbody > tr > th {
+    padding: 0.5em;
+    text-align: left;
+    background: #FFF4E8;
+    color: #F28367;
+    text-transform: capitalize;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc; }
+  table.pretty > tbody > tr.heading > th img {
+    vertical-align: bottom; }
+  table.pretty > tbody > tr.heading > th a {
+    color: #333; }
+  table.pretty > tbody > tr.heading > th.selected {
+    background: #888; }
+    table.pretty > tbody > tr.heading > th.selected a {
+      color: white; }
+  table.pretty a {
     text-decoration: none; }
-    .pretty table a:hover {
+    table.pretty a:hover {
       text-decoration: underline; }
-.pretty th {
-  padding: 0.5em;
-  text-align: left;
-  background: #FFF4E8;
-  color: #F28367;
-  text-transform: capitalize;
-  font-weight: bold;
-  border-bottom: 1px solid #ccc; }
-.pretty tr.heading th img {
-  vertical-align: bottom; }
-.pretty tr.heading th a {
-  color: #333; }
-.pretty tr.heading th.selected {
-  background: #888; }
-  .pretty tr.heading th.selected a {
-    color: white; }
 
 .pagination {
   padding: 1em 0;
