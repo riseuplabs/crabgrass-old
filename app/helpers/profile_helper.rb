@@ -69,7 +69,7 @@ module ProfileHelper
   end
   
   def last_login(user)
-    "Last Login"[:profile_last_login] + ': ' + friendly_date(user.last_seen_at)
+    "%s: %s"  % ["Last Login"[:profile_last_login], friendly_date(user.last_seen_at)]
   end
 
   def profile_description

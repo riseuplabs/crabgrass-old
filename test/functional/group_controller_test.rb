@@ -81,19 +81,15 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_show_private_when_not_logged_in
     get :show, :id => groups(:private_group).name
     assert_response :success
-#    assert_template 'show_nothing'
     assert_nil assigns(:access), "should have no access to private group"
     
     get :show, :id => groups(:warm).name
     assert_response :success
-#    assert_template 'show_nothing'
     assert_nil assigns(:access), "should have no access to private committee"
 
     get :show, :id => groups(:private_committee).name
     assert_response :success
-#    assert_template 'show_nothing'
-    assert_nil assigns(:access), "should have no access to private committee of public group"
-    
+    assert_nil assigns(:access), "should have no access to private committee of public group"    
   end
 
   def test_visualize
