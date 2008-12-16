@@ -51,6 +51,9 @@ class Asset < ActiveRecord::Base
     raise PermissionDenied unless self.page
     p = self.page.has_access!(perm, user)
   rescue PermissionDenied
+    ##
+    ## I think there is a much better way to do this -elijah
+    ##
     Gallery rescue nil # assure load_missing_constant loads this if possible
     unless defined?(Gallery) &&
         self.galleries.any? &&
@@ -130,7 +133,7 @@ class Asset < ActiveRecord::Base
   def type_as_parent; self.type; end
 
   versioned_class.class_eval do
-    delegate :page, :public?, :to => :asset
+    delegate :page, :public?, :has_access!, :to => :asset
 
     # all our paths will have version info inserted into them
     def version_path

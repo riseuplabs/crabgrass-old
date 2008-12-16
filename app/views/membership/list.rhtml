@@ -12,9 +12,9 @@ table.members td {padding: 12px;}
 <% end %>
 
 <h2><%= "members".t %></h2>
-<div class='pretty'>
+<div>
 <% if @group.memberships.any? %>
-  <table class='members'>
+  <table class='members pretty'>
   <tr>
     <th>User</th>
     <th>Joined</th>
@@ -27,7 +27,7 @@ table.members td {padding: 12px;}
 
 <% if @group.federatings.any? %>
 <h2><%= "group members".t %></h2>
-  <table class='members'>
+  <table class='members pretty'>
   <tr>
     <th>Group</th>
     <th>Joined</th>

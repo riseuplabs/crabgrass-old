@@ -194,12 +194,15 @@ form.minisearch {
   color: #ffffff; }
   #footer a {
     color: #ffffff; }
-  #footer .content div {
+  #footer div.content {
     padding: 1em; }
-    #footer .content div.left {
-      float: left; }
-    #footer .content div.right {
-      float: right; }
+  #footer div.left {
+    float: left;
+    width: 45%;
+    padding: 0 2em; }
+  #footer div.right {
+    float: left;
+    width: 45%; }
 
 #message div.notice {
   padding: 0 4em 1.5em 4em; }

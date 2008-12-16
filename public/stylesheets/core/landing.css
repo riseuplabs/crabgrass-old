@@ -26,7 +26,6 @@ a.contribute {
   color: #52972d;
   margin-bottom: 0.8em; }
   a.contribute:hover {
-    text-decoration: none;
     color: #52972d; }
   a.contribute span {
     display: block;

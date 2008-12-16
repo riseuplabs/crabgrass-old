@@ -1,139 +1,44 @@
 --- 
-article_class_description: "Billet de blog ou article d'actualit\xC3\xA9."
-month_short_january: Jan
-drag_and_drop_to_rearrange_photos: Attrapez et glissez les images pour les arranger
-formatting_reference_link: "Formatage de r\xC3\xA9f\xC3\xA9rence"
-signup_info: Choisissez votre nom d'utilisateur ainsi que votre mot de passe avec de cliquer sur "%s"
-invalid_email: Mail invalide
-add_star_link: "Ajouter une \xC3\xA9toile (:star_count)"
-my_pages: Mes pages
-medium: moyenne
-created_by: "Cr\xC3\xA9\xC3\xA9e par"
-group_successfully_created: "Le groupe est cr\xC3\xA9\xC3\xA9 avec succ\xC3\xA8s."
-month_short_august: "Ao\xC3\xBB"
-middle_name: initiale
-add_phone_number: "Ajouter un num\xC3\xA9ro de t\xC3\xA9l\xC3\xA9phone"
-create_a_new_something: "Cr\xC3\xA9er {something}"
-folder: dossier
-search: Rechercher
-create_page_button: "Cr\xC3\xA9er une page"
-edit: "\xC3\xA9diter"
-Category: "Cat\xC3\xA9gorie"
-delete_version_confirm: "\xC3\x8Ates-vous certain de vouloir supprimer cette version ?"
-folder_class_description: Une collection.
-signup_success: "Enregistrement r\xC3\xA9ussi"
-action: action
-description: description
-login_password: Mot de passe
-add_another_file: Ajouter un autre fichier
-page_info: Page d'Information
-image_count: Image :number sur :count
-remove_contact_confirmation: Voulez-vous vraiment couper le contact avec %s ?
-settings: "Param\xC3\xA8tres"
-discuss_request_link: Discuter de cette demande avec :person_or_group
-media_videos: "Vid\xC3\xA9os"
-date_older: Plus Vieux
-month_short_september: Sep
-all_groups: tous les groupes
-coordinator: Coordinateur
-my_pending_tasks_link: En attente
-group_has_no_public_profile: Ce groupe n'a pas de profil public.
-Committee: Commission
-destroy_group: "d\xC3\xA9truire %s"
-month_short_may: Mai
-from: de
-full: plein
-no_title_given: "(pas de titre donn\xC3\xA9)"
-message: message
-me_search_description: "Chercher dans les pages auxquelles vous avez acc\xC3\xA8s"
-menu_chat: Chat
-incoming: A venir
-create_button: "Cr\xC3\xA9er"
-date_this_week: "La Semaine Pass\xC3\xA9e"
-peers: pairs
-im_addresses: "Adresse de messagerie instantan\xC3\xA9e"
-alert_not_saved: "Les modifications ne peuvent \xC3\xAAtre sauvegard\xC3\xA9es"
-all_states: "tous les \xC3\xA9tats"
-gallery: Galerie
-me_inbox_link: "Bo\xC3\xAEte de r\xC3\xA9ception"
-accept_usage_agreement: J'accepte les termes de l'accord d'utilisation
-new_password: Nouveau mot de passe
-csrf_error_message: "Votre demande de connexion ressemble \xC3\xA0 une tentative de piratage de ce site. Pas d'inqui\xC3\xA9tude: cette erreur arrive fr\xC3\xA9quemment m\xC3\xAAme pour des demandes anodines. Nous sommes simplement particuli\xC3\xA8rement parano\xC3\xAFaques. Tout ce que vous avez \xC3\xA0 faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:"
-galleries: Galeries
-coordinating_council: conseil de coordination
-page_is_not_static: La page n'est pas statique
-last_change: "derni\xC3\xA8re modification"
-download_gallery: "T\xC3\xA9l\xC3\xA9charger la galerie"
-alert_permission_denied: "Autorisation refus\xC3\xA9e"
-month_short_november: Nov
-back_button: Revenir
-group_discussion_class_description: Une discussion du groupe sur un sujet particulier.
-move_image_left: "D\xC3\xA9placer l'image \xC3\xA0 gauche"
-signup_login_name: Votre nom d'utilisateur
-cancel_link: annuler
+small: petit
+Personal: Personnel
+group_not_allowed_to_view_image_error: "Le groupe qui poss\xC3\xA8de cette image n'est pas autoris\xC3\xA9 \xC3\xA0 voir cette image."
 add_encryption_key: "ajouter une cl\xC3\xA9 de chiffrement"
-no_group_named: "Il n'existe pas de groupe nomm\xC3\xA9 <b>:name</b>."
-page_list_heading_title: titre
-create_task_list: "cr\xC3\xA9er une nouvelle liste de t\xC3\xA2ches"
-edit_underlined_e: modifi<u>e</u>r
-media_for_group: "%s dans %s"
-task_list: "liste de t\xC3\xA2ches"
-page_list_heading_updated_by: "mis \xC3\xA0 jour par"
-my_tasks: "T\xC3\xA2ches"
-download: "T\xC3\xA9l\xC3\xA9chargement"
-error_saving_new_order: Erreur lors de la sauvegarde de l'arrangement
-descriptive_name_for_display: "Un nom explicite utilis\xC3\xA9 pour l'affichage"
-Home: Accueil
-activity_user_destroyed: "{user} s'est retir\xC3\xA9"
-page_list_heading_posts: messages
-my_tasks_description: "Listes de t\xC3\xA2ches accessibles"
-month_short_july: Juil
-Language: Langue
-login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
-collection: collection
-month_short_october: Oct
-make_album_cover: Faire de cette image la couverture de l'album
-month_short_december: "D\xC3\xA9c"
-approval_vote: vote d'approbation
-edit_settings: "modifier les param\xC3\xA8tres"
-monday: Lundi
-locations: Lieux
-login_button: Se connecter
-edit_gallery: Modifier la gallerie
-Mobile: Portable
-signup_link: Besoin d'un nouveau compte ?
-fullname: Nom Complet
-page_list_heading_created: "cr\xC3\xA9\xC3\xA9"
-no_committees: pas de commission
-add_contact_info: "Quand un autre utilisateur est votre contact, il est capable de voir quand vous \xC3\xAAtes connect\xC3\xA9, d'acc\xC3\xA9der \xC3\xA0 votre profil complet. Quand vous devenez contact d'une autre personne, cette personne devient \xC3\xA9galement votre contact."
-collection_class_description: "Page sp\xC3\xA9ciale qui comprend les autres pages"
+menu_networks: "R\xC3\xA9seaux"
+request_to_friend_description: ":user aimerait \xC3\xAAtre le contact de :other_user"
+groups: Groupes
+title: Titre
+group_summary: Information succincte sur %s.
+my_requests_headline: "Mes requ\xC3\xAAtes"
+month_short_april: Avr
+move_image_left: "D\xC3\xA9placer l'image \xC3\xA0 gauche"
+peers: Pairs
+add_star_link: "Ajouter une \xC3\xA9toile (:star_count)"
+wiki: wiki
 current_video_sources: "actuellement support\xC3\xA9s: youtube, blip.tv, google video, vimeo"
-new_group: nouveau groupe
-month_short_june: Juin
-my_completed_tasks_link: "Compl\xC3\xA9t\xC3\xA9es"
-display_name: "Nom affich\xC3\xA9"
-forgot_password_mail_greeting: "%s, pour r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe"
-Other: Autre
-approve_contact_info: "Cet utilisateur vous a d\xC3\xA9j\xC3\xA0 demand\xC3\xA9 comme contact. Voulez-vous l'accepter ?"
-join_chat: Rejoindre le chat
-login: Connexion
-activity_user_left_group: "{user} a quitt\xC3\xA9 {group_type} {group}"
-no_members: (aucun membre)
-date_today: Aujourd'hui
-private_profile: "Profil priv\xC3\xA9"
-message_must_not_be_empty: "Le message ne doit pas \xC3\xAAtre vide"
-add_location: Ajouter un lieu
-signup_title: "Cr\xC3\xA9ez votre compte"
-back_to_group: revenir au groupe :group_name
-organization: organisation
+request_to_join_us_description: ":user a \xC3\xA9t\xC3\xA9 invit\xC3\xA9 \xC3\xA0 rejoindre :group"
 break_lock: forcer le verrou
-group_directory: "R\xC3\xA9pertoire du groupe"
-next_change: modification suivante
-create_committee: "cr\xC3\xA9er une commission"
-locked_by_user: "Verrouill\xC3\xA9 par :user"
-comparing_changes_header: "Comparaison des modifications de :user \xC3\xA0 :when de :old_version vers :new_version"
-contribute_content_link: Contribuer
-requests_to_me: "Demandes \xC3\xA0 mon intention"
+left_the_chatroom: quitter l'espace de discussion
+or_image_url: ou URL de l'image
+add_comment: Ajouter un commentaire
+login_password: Mot de passe
+folder: dossier
+users_wall: le mur de :user
+upload_attachment: Joindre un fichier
+toggle_selection: "Inverser la s\xC3\xA9lection"
+order_changed: "ordre modifi\xC3\xA9."
+organizational_role: "r\xC3\xB4le organisationnel"
+email_addresses: Adresses mail
+join_chat: Rejoindre le chat
+at_least_one_recipient_is_required: choisir au moins un destinataire
+media_videos: "Vid\xC3\xA9os"
+recent_wall_posts: "Messages r\xC3\xA9cents du mur"
+directory_of_people: "R\xC3\xA9pertoire des personnes"
+add_location: Ajouter un lieu
+friends: Amis
+share_page_recipients: "Partager cette {page_class} avec "
+saturday: Samedi
+prev_change: "modification pr\xC3\xA9c\xC3\xA9dente"
+group_information: Information de :group_type
 welcome_text: "*Bienvenue*\r\n\
   \r\n\
   Bonjour. Ceci est une introduction rapide pour les nouveaux utilisateurs. Lors de votre prochaine connexion, vous arriverez sur [votre tableau de bord -> /me/dashboard] qui restera un lieu froid et isol\xC3\xA9 jusqu'au moment o\xC3\xB9 vous rejoindrez des groupes et vous cr\xC3\xA9erez des contacts.\r\n\
@@ -143,173 +48,584 @@ welcome_text: "*Bienvenue*\r\n\
   Une fois votre demande accept\xC3\xA9e, vous pouvez y placer des documents, cr\xC3\xA9er de listes \xC3\xA0 faire, des discussions, des wikis, des votes et des messages pour communiquer, collaborer et accomplir des t\xC3\xA2ches au sein du groupe. Comme pour tout nouvel outil, vous aurez \xC3\xA0 vous familiariser avec l'interface. Pour vous aider \xC3\xA0 r\xC3\xA9pondre aux diverses interrogations que vous ne manquerez pas de vous poser comme la diff\xC3\xA9rence entre la bo\xC3\xAEte de r\xC3\xA9ception et le tableau de bord, consultez les [pages d'aides -> /crabgrass/table-of-contents].\r\n\
   \r\n\
   Le d\xC3\xA9veloppement est dirig\xC3\xA9 \xC3\xA0 partir du retour des utilisateurs, aussi [rejoignez -> /users] le groupe \"user feed back\" /[retour des utilisateurs/] et impliquez-vous en cliquant le lien \"get involved\" pr\xC3\xA9sent au bas de toutes les page.\r\n"
-alert_saved: "Modifications effectu\xC3\xA9es"
-page_list_heading_created_by: "cr\xC3\xA9\xC3\xA9 par"
-email_addresses: Adresses mail
-file_version_deleted: "version du fichier supprim\xC3\xA9e"
-friday: Vendredi
-group_members_publicly_visible: Afficher publiquement les membres du groupe
-forgotten_email_address: "Quelle est l'adresse mail donn\xC3\xA9e lors de la cr\xC3\xA9ation du compte ?"
-history: Historique
-media_document: Document
-gallery_class_description: Une collection d'images.
-cancel_button: Annuler
-link_name: Nom du lien
-activate_js_to_rearrange_photos: "Activer JavaScript pour pouvoir r\xC3\xA9arranger les photos !"
-create_page_headline: "Cr\xC3\xA9er une nouvelle {page_class}"
-Fax: Fax
-my_settings: "Param\xC3\xA8tres pour {user}"
-group_information: Information de :group_type
-all_people: toutes les personnes
-committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 we.riseup.net/yourgroupname"
-move_image_right: "D\xC3\xA9placer l'image \xC3\xA0 droite"
-month_short_april: Avr
-network_invite_info: "\xC3\x89crivez les noms des groupes que vous d\xC3\xA9sirez inviter \xC3\xA0 rejoindre ce r\xC3\xA9seau."
-Admin: Administrer
-media_image: Image
-article: article
-only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en \xC3\xAAtes le dernier membre"
-my_groups: Mes groupes
-delete_this_version: effacer cette version
+time_zone: Fuseau Horaire
+share_page_recipients_sections: Choisissez parmi vos groupes ou amis
+delete: Supprimer
 page_not_part_of_group: Page ne faisant pas partie de ce groupe
-requests_from_me: Mes demandes
-group_wiki: Wiki du groupe
-media_alls: "M\xC3\xA9dias"
-minimum_stars_for_important_pages_description: "D\xC3\xA9terminer le minimum d'\xC3\xA9toile qu'une page doit avoir pour appara\xC3\xAEtre dans la liste 'important' de la page d'accueil du groupe"
-group_not_allowed_to_view_image_error: "Le groupe qui poss\xC3\xA8de cette image n'est pas autoris\xC3\xA9 \xC3\xA0 voir cette image."
-contacts: Contacts
-directory_of_groups: "R\xC3\xA9pertoire des groupes"
-add_comment: Ajouter un commentaire
-logout: "D\xC3\xA9connecter"
-media_video: "Vid\xC3\xA9o"
-About_Me: Mes Informations
-ranked_vote: vote de classement
-minimum_stars_for_important_pages: Etoiles minimum pour les pages importantes
-recipient_tip: "S\xC3\xA9parez les destinataires par des virgules, des espaces ou de nouvelles lignes."
-dont_understand_group_type: Ne peut comprendre le type de groupe :type
-invalid_token: Lien invalide
-all_page_types: tous les types de pages
-login_name: Nom d'utilisateur
-activity_user_joined_group: "{user} a rejoint {group_type} {group}"
-coordinating_council_description: Les membres de ce conseil ont des <i>droits d'administration</i> sur le :group_type <b>:group_name</b>.
-members: Membres
-add_existing_image: Ajouter une image existante
-image_count_total: ":count images"
-signup_email_info: "optionnel: utilis\xC3\xA9 si vous oubliez votre mot de passe"
-general_info: "Informations g\xC3\xA9n\xC3\xA9rales"
-group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 we.riseup.net/yourgroupname."
-descriptions: descriptions
-pagination_next: suivant
-logout_success: Au revoir
-created_when_by: "cr\xC3\xA9\xC3\xA9 \xC3\xA0 :when par :user"
-media_without_group: Tous les %s
-forgot_password_link: "J'ai oubli\xC3\xA9 mon mot de passe"
-page_locked_header: "page verrouill\xC3\xA9e"
-organizational_role: "r\xC3\xB4le organisationnel"
-invite_info: "Entrez une liste de noms d'utilisateur ou d'adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce %s."
-discussions: Discussions
-create_a_new_page: "Cr\xC3\xA9er une nouvelle page"
-group_discussion: discussion de groupe
+you_are_not_member_of_any_group: "Vous n'\xC3\xAAtes membre d'aucun groupe."
+try_again: Essayer encore
 contact: Contact
-signup_confirm_password: Confirmation du mot de passe
-menu_people: Personnes
-add_photo_to_gallery: "Ajouter une photo \xC3\xA0 la galerie"
-signup_success_message: Merci de votre inscription !
-file: Fichier
-inbox_description: Affiche les pages auxquelles je participe activement ou dont je suis les modifications
-signup_password: Votre mot de passe
-alert_error: Erreur
-invalid_email_text: L'adresse mail fournie est invalide.
-format: Format
-menu_me: Moi
-diff_link: "diff\xC3\xA9rent"
-media_audio: Enregistrement audio
-Announcements: Annonces
-or_image_url: ou URL de l'image
-rejected: "rejet\xC3\xA9es"
-break_lock_button: forcer le verrou
-media_images: Images
-approve_button: approuver
-add_email_address: Ajouter une adresse mail
-other_formats: autres formats
-created_on: "Cr\xC3\xA9\xC3\xA9 sur"
-already_contacts_info: "Vous \xC3\xAAtes d\xC3\xA9j\xC3\xA0 contact de cette personne."
-signup_email: Votre mail
-approve: approuver
-group: Groupe
-alert_field_errors: "Il y a un probl\xC3\xA8me avec les champs suivants"
-group_members_publicly_visible_description: "Les membres sont visibles des non-membres \xC3\xA0 we.riseup.net/yourgroupname. De m\xC3\xAAme, le nom du groupe sera list\xC3\xA9 sur chaque profil des membres (we.riseup.net/username)"
-close_button: Fermer
-signup_button: S'inscrire
-not_set: "non d\xC3\xA9termin\xC3\xA9"
-title: Titre
-add_websites: Ajouter des sites web
-approved: "approuv\xC3\xA9es"
-menu_home: Accueil
-logout_success_message: "Vous avez \xC3\xA9t\xC3\xA9 d\xC3\xA9connect\xC3\xA9."
-data_for_page_missing: Le contenu pour cette page est manquant.
-media_documents: Documents
-create_a_new_thing: "Cr\xC3\xA9er un nouvel :thing"
-upload_image: "T\xC3\xA9l\xC3\xA9charger une image"
-me_dashboard_link: Tableau de bord
-large: grande
-information: Information
-remove_contact_info: "Si vous retirez quelqu'un de votre liste de contacts, vous ne serez plus en mesure de voir quand il est connect\xC3\xA9, ni de voir son profil complet. De m\xC3\xAAme, le retirer de vos contacts fera que vous serez \xC3\xA9galement retir\xC3\xA9 de la liste de ses contacts."
-add_description: Ajouter une description
-menu_groups: Groupes
-password_confirmation: Confirmation du mot de passe
-include_full_checkbox: Inclus le lien vers l'image de taille originale
-add_im_address: "Ajouter une adresse de messagerie instantan\xC3\xA9e"
-committees: Commissions
-month_short_february: "F\xC3\xA9v"
-join_request_info: "Vous ne serez pas membre de ce groupe avant que votre demande ne soit approuv\xC3\xA9e. Vous pouvez v\xC3\xA9rifier l'\xC3\xA9tat de vos demandes en visitant \"%s\"."
-confirm_new_password: Confirmer le nouveau mot de passe
-activity_user_status: "{user} est maintenant {status}"
-login_failed: Connexion impossible
-invalid_token_text: "Le lien de r\xC3\xA9g\xC3\xA9n\xC3\xA9ration de mot de passe sp\xC3\xA9cifi\xC3\xA9 est invalide. Il doit \xC3\xAAtre d\xC3\xA9j\xC3\xA0 utilis\xC3\xA9, ou a d\xC3\xBBt expirer."
-file_must_be_image_error: "Le fichier doit \xC3\xAAtre une image pour pouvoir \xC3\xAAtre ajout\xC3\xA9 \xC3\xA0 une galerie."
-networks: "r\xC3\xA9seaux"
-no_images_in_gallery: Aucune image dans la galerie
-groups: Groupes
-dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour cr\xC3\xA9er des commissions sous %s"
-reject: rejeter
-state: "\xC3\xA9tat"
-new_network: "Nouveau r\xC3\xA9seau"
-last_name: nom
-forgot_password_text: "Si vous avez oubli\xC3\xA9 votre mot de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en g\xC3\xA9n\xC3\xA9rer un nouveau."
-contact_request_message_label: "Expliquez \xC3\xA0 %s pourquoi vous voulez \xC3\xAAtre son contact."
-group_administration_not_allowed: Vous ne pouvez administrer ce groupe.
-activity_group_created: "{user} a cr\xC3\xA9\xC3\xA9 {group_type} {group}"
-menu_networks: "R\xC3\xA9seaux"
-first_name: "pr\xC3\xA9nom"
-Founded: "Fond\xC3\xA9"
-pagination_previous: "pr\xC3\xA9c\xC3\xA9dent"
-personal_message: message personnel
-page_list_heading_updated: "mis \xC3\xA0 jour le"
-date: date
-at_least_one_recipient_is_required: choisir au moins un destinataire
-you_have_no_groups: Vous n'avez aucun groupe
-network: "r\xC3\xA9seau"
-file_class_description: "T\xC3\xA9l\xC3\xA9charger un fichier ."
-forgot_password_mail_expiry: "Ce lien sera valide pendant 24 heures. Si vous avez besoin de r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe apr\xC3\xA8s ce d\xC3\xA9lai, vous aurez \xC3\xA0 retourner \xC3\xA0 nouveau sur la page pour demander un nouveau lien."
-group_successfully_updated: "Le groupe est mis \xC3\xA0 jour."
-public_profile: Profil public
-approval_vote_class_description: "approuver ou d\xC3\xA9sapprouver chaque proposition"
-order_changed: "ordre modifi\xC3\xA9."
+usage_agreement_required: "L'acceptation des conditions d'utilisation est n\xC3\xA9cessaire"
 file_size: Taille fichier
-created: "cr\xC3\xA9\xC3\xA9"
-create_page: "Cr\xC3\xA9er une page"
-password: Mot de passe
-me_requests_link: Demandes
-approve_or_reject_link: Accepter ou rejeter cette demande
-activity_group_destroyed: "{group} a \xC3\xA9t\xC3\xA9 d\xC3\xA9truit par {user}"
-activity_contact_created: "{user} a ajout\xC3\xA9 {other_user} comme contact"
-page_list: liste de page
-date_yesterday: Hier
-locking_error: "Erreur de verrouillage. Vos modification ne peuvent \xC3\xAAtre prises en compte, quelqu'un d'autre a fait des modifications en premier."
-destroy: "d\xC3\xA9truire"
-media_all: "M\xC3\xA9dia"
+dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour cr\xC3\xA9er des commissions sous %s"
+activate_js_to_rearrange_photos: "Activer JavaScript pour pouvoir r\xC3\xA9arranger les photos !"
+media_for_group: "%s dans %s"
+medium: moyenne
+websites: sites web
+reject_button: rejeter
+group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 we.riseup.net/yourgroupname."
+Language: Langue
+coordinator: Coordinateur
+delete_version_confirm: "\xC3\x8Ates-vous certain de vouloir supprimer cette version ?"
+featured_content_header: Mis en avant
+tasks: "t\xC3\xA2ches"
+Personal_Interests: "Int\xC3\xA9r\xC3\xAAts personnels"
+logout_success: Au revoir
+signup_title: "Cr\xC3\xA9ez votre compte"
+menu_chat: Chat
+user: Utilisateur
+image_count_total: ":count Images"
+usage_agreement_text: "Les services de ce sites sont fournis TELS QUELS. Vous comprenez et acceptez que l'OP\xC3\x89RATEUR de ce site internet n'assume aucune responsabilit\xC3\xA9, entre autres choses, toute interruption de service, l'indisponibilit\xC3\xA9 de services ou fonctionnalit\xC3\xA9s particuliers ou de votre incapacit\xC3\xA9 \xC3\xA0 acc\xC3\xA9der ou faire usage de tout ou partie de nos services.\r\n\
+  De plus, vous comprenez et acceptez que l'OP\xC3\x89RATEUR n'assume aucune responsabilit\xC3\xA9 pour la suppression, la perte ou l'indisponibilit\xC3\xA9 d'informations stock\xC3\xA9es ou d\xC3\xA9livr\xC3\xA9es par nos services. L'OP\xC3\x89RATEUR de ce site ne fait aucune garantie du tout.\r\n\
+  \r\n\
+  En consid\xC3\xA9ration de votre utilisation de ce service, vous acceptez les conditions suivantes:\r\n\
+  \r\n\
+  Vous reconnaissez et acceptez de ne pas vendre, revendre ou exploiter l'utilisation de nos services, d'utiliser nos services ou aucun contenu accessible par nos services pour tout usage commercial, \xC3\xA0 l'exception d'utiliser de telles informations ou service dans l'unique but d'affichage dans un moteur de recherche ou autres services redirigeant les utilisateurs vers notre site.\r\n\
+  \r\n\
+  Vous \xC3\xAAtes \xC3\xA9galement d'accord pour ne pas utiliser nos services dans le but de:\r\n\
+  \r\n\
+  * harceler d'autres personnes;\r\n\
+  * porter atteinte d'une quelconque mani\xC3\xA8re aux mineurs, de les inciter \xC3\xA0 se mettre en danger d'une quelconque mani\xC3\xA8re;\r\n\
+  * tenter d'induire en erreur d'autres utilisateurs en usurpant l'identit\xC3\xA9 et/ou en vous faisant passer pour un tiers;\r\n\
+  * exp\xC3\xA9dier ou faire exp\xC3\xA9dier des courriers \xC3\xA9lectroniques ou des messages instantan\xC3\xA9s \xC3\xA0 des personnes qui ne les ont pas sollicit\xC3\xA9s;\r\n\
+  * collecter des donn\xC3\xA9es personnelles des utilisateurs de ce service sans leur consentement pr\xC3\xA9alable;\r\n\
+  * perturber, ralentir, bloquer ou alt\xC3\xA9rer nos services, ceux des utilisateurs ou n'importe quel autre personne ou service;\r\n\
+  \r\n\
+  De plus, vous acceptez de:\r\n\
+  \r\n\
+  * \xC3\xA9viter l'usage excessif de nos services;\r\n\
+  * d'\xC3\xAAtre responsable de la conservation du caract\xC3\xA8re confidentiel de vos comptes et mots de passe\r\n\
+  * d'\xC3\xAAtre responsable des actions qui sont effectu\xC3\xA9es avec votre compte et/ou avec votre mot de passe pour acc\xC3\xA9der \xC3\xA0 nos syst\xC3\xA8mes;\r\n\
+  * de nous pr\xC3\xA9venir imm\xC3\xA9diatement de tout usage non autoris\xC3\xA9 de votre compte ou de tout trou de s\xC3\xA9curit\xC3\xA9 en rapport avec vos comptes.\r\n\
+  \r\n\
+  L'OP\xC3\x89RATEUR ne revendique d'aucune mani\xC3\xA8re la propri\xC3\xA9t\xC3\xA9 des contenus t\xC3\xA9l\xC3\xA9charg\xC3\xA9s ou transmis d'une autre mani\xC3\xA8re sur nos serveurs ou r\xC3\xA9seaux.\r\n\
+  \r\n\
+  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.\r\n"
+page_locked_header: "page verrouill\xC3\xA9e"
+all_page_types: tous les types de pages
+contribute_content_link: Contribuer
+media_document: Document
+activity_user_left_group: "{user} a quitt\xC3\xA9 {group_type} {group}"
+collection: collection
+no_images_in_gallery: Aucune image dans la galerie
+joins_the_chatroom: Rejoindre l'espace de discussion
+my_settings: "Param\xC3\xA8tres pour {user}"
+locations: Lieux
+Home: Accueil
+last_change: "derni\xC3\xA8re modification"
+public_checkbox: Public
+join_request_info: "Vous ne serez pas membre de ce groupe avant que votre demande ne soit approuv\xC3\xA9e. Vous pouvez v\xC3\xA9rifier l'\xC3\xA9tat de vos demandes en visitant \"%s\"."
+group_language: La langue principale de ce %s.
+add_email_address: Ajouter une adresse mail
+edit_attachments_link: Modifier
+create_page_data: "{page_class} donn\xC3\xA9es"
+month_short_may: Mai
+Committee: Conseil
+contributed: "Contribu\xC3\xA9"
+group: Groupe
+format: Format
+media_image: Image
+confirm_new_password: Confirmer le nouveau mot de passe
+group_publicly_visible: "Publiciser %s "
+undo: "d\xC3\xA9faire"
+logout_success_message: "Vous avez \xC3\xA9t\xC3\xA9 d\xC3\xA9connect\xC3\xA9."
+me_inbox_link: "Bo\xC3\xAEte de r\xC3\xA9ception"
+action: action
+set_status_messsage: Que faites-vous actuellement ?
+password_reset_ok_text: "Votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\xC3\xA9. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+Founded: "Fond\xC3\xA9"
+new_network: "Nouveau r\xC3\xA9seau"
+my_contacts: mes contacts
+public_profile: Profil public
+empty_results: "Aucun r\xC3\xA9sultat"
+invalid_token_text: "Le lien de r\xC3\xA9g\xC3\xA9n\xC3\xA9ration de mot de passe sp\xC3\xA9cifi\xC3\xA9 est invalide. Il doit \xC3\xAAtre d\xC3\xA9j\xC3\xA0 utilis\xC3\xA9, ou a d\xC3\xBBt expirer."
+requests_to_me: "\xC3\xA0 mon intention"
+back_button: Revenir
+page_is_not_static: La page n'est pas statique
+recent_pages: "Pages r\xC3\xA9centes"
+invite_accept_via_existing_account: "J'ai d\xC3\xA9j\xC3\xA0 un compte"
+create_a_new_page: "Cr\xC3\xA9er une nouvelle page"
+display_name: "Nom affich\xC3\xA9"
+edit_featured_content_for_group: Modifier le contenu mis en avant du groupe :group_name
+you_have_no_contacts: Vous n'avez aucun contact
+sunday: Dimanche
+status_resolved: "r\xC3\xA9solu"
+invite_accept_via_register: Je dois ouvrir un nouveau compte
+move_image_right: "D\xC3\xA9placer l'image \xC3\xA0 droite"
+signup_link: Besoin d'un nouveau compte ?
+download: "T\xC3\xA9l\xC3\xA9chargement"
+all_groups: tous les groupes
+committee_publicly_visible: Publiciser les conseils
+save_button: Sauvegarder
+pagination_previous: "pr\xC3\xA9c\xC3\xA9dent"
+committees: Conseils
+create_page_information: "{page_class} information"
+media_video: "Vid\xC3\xA9o"
+votes: votes
+personal_message_class_description: "Un message personnel envoy\xC3\xA9 \xC3\xA0 des destinataires individuels."
+media_audio: Enregistrement audio
+media_without_group: Tous les %s
+article: article
+date_weeks: semaines
+no_peers_msg: Vous n'avez aucun pair.
+working_group: groupe de travail
+reset_password_mail_greeting: "%s, votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\xC3\xA9 \xC3\xA0 votre demande."
+location_country: pays
+login_name: Nom d'utilisateur
+leave_group: quitter %s
+permission_denied: "Autorisation refus\xC3\xA9e"
+add_one_or_more_tags: "Ajouter une ou plusieurs \xC3\xA9tiquettes, s\xC3\xA9par\xC3\xA9es par des virgules"
+forgot_password_text: "Si vous avez oubli\xC3\xA9 votre mot de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en g\xC3\xA9n\xC3\xA9rer un nouveau."
+login: Connexion
+separate_tags: "S\xC3\xA9parer les \xC3\xA9tiquettes par une virgule."
+participant: Participant
+add_new_attachment: Joindre un nouveau fichier
+inbox_description: Affiche les pages auxquelles je participe activement ou dont je suis les modifications
+share_page_recipients_results: "Cette {page_class} sera partag\xC3\xA9e avec"
+all_content: Tout les contenus
+Mobile: Portable
+delete_page_link: Supprimer :page_class
+share_link: Partager :page_class
+page_list_heading_stars: "\xC3\xA9toiles"
+page_list_heading_last_updated: "derni\xC3\xA8re modification"
+state: "\xC3\xA9tat"
+invalid_token: Lien invalide
+month_short_july: Juil
+delete_post: Supprimer le message
+search: Rechercher
 email: Mail
-no_tags: aucun tag
+create_a_new_thing: "Cr\xC3\xA9er un nouvel :thing"
+my_world_heading: Mon Univers
+view_requests: Voir les demandes
+your_login: Votre identifiant
+slideshow_delay_input: "Mettre \xC3\xA0 jour toutes les :input_field secondes"
+my_dashboard: Mon tableau de bord
+network: "R\xC3\xA9seau"
+minimum_stars_for_important_pages_description: "D\xC3\xA9terminer le minimum d'\xC3\xA9toile qu'une page doit avoir pour appara\xC3\xAEtre dans la liste 'important' de la page d'accueil du groupe"
+date_older: Plus Vieux
+signup_email_info: "optionnel: utilis\xC3\xA9 si vous oubliez votre mot de passe"
+next_change: modification suivante
+create_task_list: "cr\xC3\xA9er une nouvelle liste de t\xC3\xA2ches"
+my_status_heading: Mon statut actuel
+folder_class_description: Une collection.
+signup_email: Votre mail
+alert_error: Erreur
+coordinating_council: conseil de coordination
+full: plein
+videos: "vid\xC3\xA9os"
+remove_from_gallery: Retirer de la galerie
+login_button: Se connecter
+destroy_group: "d\xC3\xA9truire %s"
+group_has_no_public_profile: Ce groupe n'a pas de profil public.
+Category: "Cat\xC3\xA9gorie"
+invalid_email: Mail invalide
+send_invites: envoyer des invitations
 month_short_march: Mar
+file_must_be_image_error: "Le fichier doit \xC3\xAAtre une image pour pouvoir \xC3\xAAtre ajout\xC3\xA9 \xC3\xA0 une galerie."
+month_short_february: "F\xC3\xA9v"
+descriptions: descriptions
+Fax: Fax
+edit_gallery: Modifier la gallerie
+group_home_welcome: Bienvenue
+Top_Rated: Meilleur classement
+version_number: version :version
+uploaded_image_cropped: "Les images t\xC3\xA9l\xC3\xA9charg\xC3\xA9es seront r\xC3\xA9duites \xC3\xA0 un carr\xC3\xA9 de 96 pixels de c\xC3\xB4t\xC3\xA9."
+pending: en attente
+create_page: "Cr\xC3\xA9er une page"
+Highest_Contributors: Collaborateurs les plus actifs
+media_images: Images
+signup_login_name: Votre nom d'utilisateur
+file_class_description: "T\xC3\xA9l\xC3\xA9charger un fichier ."
+approve: approuver
+unknown: inconnu
+summary: Sommaire
+only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en \xC3\xAAtes le dernier membre"
+gallery_class_description: Une collection d'images.
+allow_membership_requests: "Autoriser les requ\xC3\xAAtes de membre"
+approval_vote: vote d'approbation
+signup_info: Choisissez votre nom d'utilisateur ainsi que votre mot de passe avec de cliquer sur "%s"
+committee_type_description: Quel type de conseil sera-ce ?
+Admin: Administrer
+link_name: Nom du lien
+my_tasks_description: "Listes de t\xC3\xA2ches accessibles"
+location_address: adresse
+print_underlined_p: im<u>p</u>rimer
+me_tasks_link: "T\xC3\xA2ches"
+month_short_december: "D\xC3\xA9c"
+post_message: Ecrire un message
+login_required: Connexion requise
+commitee_type: type conseil
+reset_password_mail_sent: "Un email contenant les instructions de r\xC3\xA9initialisation du mot de passe vous a \xC3\xA9t\xC3\xA9 envoy\xC3\xA9."
+my_completed_tasks_link: "Compl\xC3\xA9t\xC3\xA9es"
+galleries: Galeries
+reset_password_mail_warning: "Si vous n'avez pas demand\xC3\xA9 \xC3\xA0 r\xC3\xA9initialiser votre mot de passe, merci de nous contacter."
+read: lire
+alert_permission_denied: "Autorisation refus\xC3\xA9e"
+typing: "\xC3\xA9crit"
+page_notice_message: "page envoy\xC3\xA9e par {user} le {date}"
+activity_user_status: "{user} est maintenant {status}"
+location_city: ville
+friday: Vendredi
+my_groups_link: mes groupes
+ranked_vote_class_description: "Ordonner les propositions par ordre de pr\xC3\xA9f\xC3\xA9rence."
+pending_tasks: "t\xC3\xA2ches en cours."
+data_for_page_missing: Le contenu pour cette page est manquant.
+monday: Lundi
+activity_user_destroyed: "{user} s'est retir\xC3\xA9"
+password_was_reset: "Votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\xC3\xA9"
+me_dashboard_link: Tableau de bord
+rejected: "rejet\xC3\xA9es"
+signup_confirm_password: Confirmation du mot de passe
+delete_this_version: effacer cette version
+article_class_description: "Billet de blog ou article d'actualit\xC3\xA9."
+Work: Travail
+group_directory_link: "r\xC3\xA9pertoire des groupes"
+remove_contact_info: "Si vous retirez quelqu'un de votre liste de contacts, vous ne serez plus en mesure de voir quand il est connect\xC3\xA9, ni de voir son profil complet. De m\xC3\xAAme, le retirer de vos contacts fera que vous serez \xC3\xA9galement retir\xC3\xA9 de la liste de ses contacts."
+date_seconds: secondes
+from: de
+discuss_request_link: Discuter de cette demande avec :person_or_group
+group_administration_not_allowed: Vous ne pouvez administrer ce groupe.
+no_contacts_msg: Vous n'avez aucun contact.
+menu_people: Personnes
+send_button: Envoyer
+saving_your_changes: Sauvegarde de vos modifications...
+gallery: Galerie
+add_another_file: Ajouter un autre fichier
+page_list_heading_owner: "propri\xC3\xA9taire"
+ranked_vote: vote de classement
+Other: Autre
+username: Nom
 media_audios: Enregistrements audio
+close_button: Fermer
+fullname: Nom Complet
+page_list_heading_created_by: "cr\xC3\xA9\xC3\xA9 par"
+download_gallery: "T\xC3\xA9l\xC3\xA9charger la galerie"
+Pager: Pager
+current_featured_content: Contenu mis en avant actuel
+recent_activity: "Activit\xC3\xA9 r\xC3\xA9cente"
+password: Mot de passe
+access: "Acc\xC3\xA8s"
+create_committee: "cr\xC3\xA9er une commission"
+date_this_week: "La Semaine Pass\xC3\xA9e"
+drag_and_drop_to_rearrange_photos: Attrapez et glissez les images pour les arranger
+subject_must_not_be_empty: "Le sujet ne doit pas \xC3\xAAtre vide"
+share_this_page: Partager cette page
+page_list_heading_created: "cr\xC3\xA9\xC3\xA9"
+date_days: jours
+remove_contact_confirmation: Voulez-vous vraiment couper le contact avec %s ?
+view_all: tout voir
+group_wiki: Wiki du groupe
+group_successfully_created: "Le groupe est cr\xC3\xA9\xC3\xA9 avec succ\xC3\xA8s."
+approve_button: approuver
+create_page_button: "Cr\xC3\xA9er {page_class}"
+remove_friend_link: Retirer de mes contacts
+recent_contributions: "Contributions r\xC3\xA9centes"
+add_description: Ajouter une description
+menu_home: Accueil
+menu_me: Moi
+directory_of_groups: "R\xC3\xA9pertoire des groupes"
+my_peers: mes pairs
+date_hours: heures
+wont_be_able_to_save: Vous ne serez pas en mesure de sauvegarder cette page
+request_to_join_our_network_description: "Le groupe :group a \xC3\xA9t\xC3\xA9 invit\xC3\xA9 \xC3\xA0 rejoindre le r\xC3\xA9seau :network"
+personal_message: message personnel
+name: Nom
+page_details: "D\xC3\xA9tails de la page"
+remove_from_inbox: "Retirer de la boite de r\xC3\xA9ception"
+recipients: destinataires
+profile_private_description: "Ce profile est priv\xC3\xA9 et visible uniquement par vos contacts."
+no_members: (aucun membre)
+descriptive_name_for_display: "Un nom explicite utilis\xC3\xA9 pour l'affichage"
+remove_star_link: "Retirer l'\xC3\xA9toile (:star_count)"
+signup_password: Votre mot de passe
+move_page_to_different_group: "D\xC3\xA9placer cette page dans un autre groupe"
+alert_not_saved: "Les modifications ne peuvent \xC3\xAAtre sauvegard\xC3\xA9es"
+formatting_reference_link: "Formatage de r\xC3\xA9f\xC3\xA9rence"
+created: "cr\xC3\xA9\xC3\xA9"
+group_members_publicly_visible_description: "Les membres sont visibles des non-membres \xC3\xA0 we.riseup.net/yourgroupname. De m\xC3\xAAme, le nom du groupe sera list\xC3\xA9 sur chaque profil des membres (we.riseup.net/username)"
+edit: "\xC3\xA9diter"
+view_slideshow: Voir le diaporama
+video: "vid\xC3\xA9o"
+requests_for_group: "Requ\xC3\xAAtes pour %s"
+phone_numbers: "Num\xC3\xA9ros de t\xC3\xA9l\xC3\xA9phone"
+wiki_is_locked: "Ce wiki est actuellement verrouill\xC3\xA9 par :user"
+removing_image: Retirer l'image...
+page_details_link: "D\xC3\xA9tails :page_class"
+date_months: mois
+add_im_address: "Ajouter une adresse de messagerie instantan\xC3\xA9e"
+my_peers_description: utilisateurs inscrits dans au moins un de mes groupes
+version_doesnt_exist: Il n'y a pas de version :version
+task_list_class_description: "Une liste de choses \xC3\xA0 faire."
+send_message_link: Envoyer un message
+coordinating_council_description: Les membres de ce conseil ont des <i>droits d'administration</i> sur le :group_type <b>:group_name</b>.
+group_members_publicly_visible: Afficher publiquement les membres du groupe
+page_list_heading_updated_by: "mis \xC3\xA0 jour par"
+task_list: "liste de t\xC3\xA2ches"
+image_count: Image :number sur :count
+invite_accept_headline: "Accepter l'invitation \xC3\xA0 rejoindre le groupe"
+requested_forgot_password: "Vous avez demand\xC3\xA9 une modification du mot de passe"
+recent_network_pages: "Pages r\xC3\xA9centes du r\xC3\xA9seau"
+media_documents: Documents
+feature_button: Mettre en avant!
+ranked_vote_instructions: "Glisser les objets dans la liste suivante pour les ordonner du pr\xC3\xA9f\xC3\xA9r\xC3\xA9 en haut au moins appr\xC3\xA9ci\xC3\xA9 en bas.\r\n\
+  Quand vous avez fini, cliquez sur confirmer pour enregistrer votre choix."
+no_title_given: "(pas de titre donn\xC3\xA9)"
+successful_undelete_image: "R\xC3\xA9cup\xC3\xA9ration de l'image r\xC3\xA9ussie"
+share_page_link: Partager :page_class
+page_list_heading_updated: "mis \xC3\xA0 jour le"
+back_to_group: revenir au groupe :group_name
+no_public_profiles: Encore aucun profil public...
+people: Utilisateurs
+contact_request_message_label: "Expliquez \xC3\xA0 %s pourquoi vous voulez \xC3\xAAtre son contact."
+cancel_link: annuler
+my_tasks_headline: "Mes t\xC3\xA2ches"
+starred: "\xC3\xA9toil\xC3\xA9"
+activity_contact_created: "{user} a ajout\xC3\xA9 {other_user} comme contact"
+no_search_results: "Aucun r\xC3\xA9sultat"
+file_version_deleted: "version du fichier supprim\xC3\xA9e"
+add_phone_number: "Ajouter un num\xC3\xA9ro de t\xC3\xA9l\xC3\xA9phone"
+created_by: "Cr\xC3\xA9\xC3\xA9e par"
+Work_Life: Vie de taff
+minimum_stars_for_important_pages: Etoiles minimum pour les pages importantes
+tags: "\xC3\x89tiquettes"
+message_must_not_be_empty: "Le message ne doit pas \xC3\xAAtre vide"
+my_tasks: "T\xC3\xA2ches"
+month_short_november: Nov
+new_password: Nouveau mot de passe
+my_pages: Mes pages
+save_changes: Sauvegarder les modifications
+reactivate_button: "R\xC3\xA9activer!"
+edit_profile_link: Modifier le profil
+recent_member_group_pages: "Pages r\xC3\xA9centes des membres du groupe"
+permissions: Autorisations
+password_reset: "r\xC3\xA9initialisation du mot de passe"
+approve_or_reject_link: Accepter ou rejeter cette demande
+login_required_description: Merci de vous connecter pour effectuer cette action.
+collection_class_description: "Page sp\xC3\xA9ciale qui comprend les autres pages"
+unread: marquer comme non lu
+share: Partager
+remove: retirer
+new_group: nouveau groupe
+add_button: Ajouter
+diff_link: "diff\xC3\xA9rent"
+away: absent
+sucessfully_removed_image: "Image retir\xC3\xA9e ! (:undo_link)"
+set_status_button: "D\xC3\xA9finir le statut"
+select_image_file: "S\xC3\xA9lectionner le fichier image"
+rss_feed: Flux RSS
+media_all: "M\xC3\xA9dia"
+locking_error: "Erreur de verrouillage. Vos modification ne peuvent \xC3\xAAtre prises en compte, quelqu'un d'autre a fait des modifications en premier."
+first_name: "pr\xC3\xA9nom"
+discussions: Discussions
+edit_tags: "Modifier les \xC3\xA9tiquettes"
+login_failure_reason: Le nom d'utilisateur ou le mot de passe est incorrect.
+group_invite_email: "{from_user} vous a invit\xC3\xA9 \xC3\xA0 rejoindre le groupe \"{group}\".\r\n\
+  \r\n\
+  Si vous souhaitez rejoindre ce groupe, cliquez ici:\r\n\
+  \r\n  {accept_invite_link}\r\n\
+  \r\n\
+  La page d'accueil du groupe peut \xC3\xAAtre trouv\xC3\xA9e ici :\r\n\
+  \r\n  {group_home_link}\r\n\
+  \r\n\
+  Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail."
+see_more_link: Plus
+media_alls: "M\xC3\xA9dias"
+not_featured_content: Contenu non encore mis en avant
+edit_settings: "modifier les param\xC3\xA8tres"
+create_button: "Cr\xC3\xA9er"
+location_state: "\xC3\xA9tat/province"
+share_button: Partager
+participation: Participation
+edit_attachments: Modifier les fichiers joints
+requests_from_me: de ma part
+wiki_class_description: un formulaire de document texte.
+send_invites_headline: "Envoyer des invitations \xC3\xA0 rejoindre {group}"
+invalid_email_text: L'adresse mail fournie est invalide.
+create_page_share: "Qui a un acc\xC3\xA8s \xC3\xA0 cette {page_class}?"
+assets: actifs
+viewed: Vu
+accept_usage_agreement: J'accepte les termes de l'accord d'utilisation
+subject: sujet
+destroy: "d\xC3\xA9truire"
+add_existing_image: Ajouter une image existante
+add_contact_info: "Quand un autre utilisateur est votre contact, il est capable de voir quand vous \xC3\xAAtes connect\xC3\xA9, d'acc\xC3\xA9der \xC3\xA0 votre profil complet. Quand vous devenez contact d'une autre personne, cette personne devient \xC3\xA9galement votre contact."
+member_groups_of_network: Groupes membres
+recipient_tip: "S\xC3\xA9parez les destinataires par des virgules, des espaces ou de nouvelles lignes."
+alert_saved: "Modifications effectu\xC3\xA9es"
+month_short_september: Sep
+featured_content: Contenu mis en avant
+updated: "mis \xC3\xA0 jour"
+request_to_join_you_description: ":user deamnde \xC3\xA0 rejoindre :group"
+request_friend_link: "Ajouter \xC3\xA0 mes contacts"
+profile_public_description: "Ce profil est public et sera visible de tout visiteur de ce site.\r\n\
+  Les informations que vous y mettez sont aussi peuvent aussi \xC3\xAAtre trouv\xC3\xA9es par les recherches des autres utilisateurs.\r\n\
+  Soyez attentifs aux informations personnelles que vous ajoutez dans votre profil public."
+forgot_password_mail_expiry: "Ce lien sera valide pendant 24 heures. Si vous avez besoin de r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe apr\xC3\xA8s ce d\xC3\xA9lai, vous aurez \xC3\xA0 retourner \xC3\xA0 nouveau sur la page pour demander un nouveau lien."
+general_info: "Informations g\xC3\xA9n\xC3\xA9rales"
+date_today: Aujourd'hui
+forgot_password_mail_greeting: "%s, pour r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe"
+group_discussion_class_description: Une discussion du groupe sur un sujet particulier.
+versions: versions
+create_group_link: "cr\xC3\xA9er un groupe"
+history: Historique
+group_invite_subject: "Invitation \xC3\xA0 rejoindre le groupe \"{group}\""
+School: "\xC3\x89cole"
+group_home_headline: "{group_type} Accueil"
+last_name: nom
+directory_of_networks: "R\xC3\xA9pertoire des r\xC3\xA9seaux"
+create_page_headline: "Cr\xC3\xA9er une nouvelle {page_class}"
+forgotten_email_address: "Quelle est l'adresse mail donn\xC3\xA9e lors de la cr\xC3\xA9ation du compte ?"
+edit_title: modifier le titre
+you_have_no_peers: Vous n'avez pas de pair
+status_pending: en attente
+no_change: aucun changement
+invite_not_found: "Invitation non trouv\xC3\xA9e"
+invite_info: "Entrez une liste de noms d'utilisateur ou d'adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce %s."
+attachments: Fichiers joints
+link_name_description: "C'est ce nomp qui sera utilise pour identifier ce groupe dans les liens et les URLs. Il ne doit contenir que des caract\xC3\xA8res alphanum\xC3\xA9riques non accentu\xC3\xA9s sans espace."
+message: message
+this_is_committee: Ce conseil fait partie de {parent_group}.
+me_requests_link: Demandes
+show_gallery: Montrer la galerie
+date_yesterday: Hier
+upload_image: "T\xC3\xA9l\xC3\xA9charger une image"
+signup_success_message: Merci de votre inscription !
+created_when_by: "cr\xC3\xA9\xC3\xA9 \xC3\xA0 :when par :user"
+none: aucun
+approval_vote_class_description: "approuver ou d\xC3\xA9sapprouver chaque proposition"
+password_confirmation: Confirmation du mot de passe
+menu_groups: Groupes
+signup_button: S'inscrire
+month_short_october: Oct
+create_a_new_something: "Cr\xC3\xA9er {something}"
+share_page_message: Envoyer un message (optionnel)
+created_on: "Cr\xC3\xA9\xC3\xA9 sur"
+dont_understand_group_type: Ne peut comprendre le type de groupe :type
+to: !binary |
+  w6A=
+
+activity_group_created: "{user} a cr\xC3\xA9\xC3\xA9 {group_type} {group}"
+other_formats: autres formats
+organization: organisation
+approve_contact_info: "Cet utilisateur vous a d\xC3\xA9j\xC3\xA0 demand\xC3\xA9 comme contact. Voulez-vous l'accepter ?"
+wikis: wikis
+thursday: Jeudi
+group_successfully_updated: "Le groupe est mis \xC3\xA0 jour."
+date_years: "ann\xC3\xA9es"
+large: grande
+committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 we.riseup.net/yourgroupname"
+menu_link_logout: "D\xC3\xA9connexion"
+description: description
+outgoing: Sortant
+reject: rejeter
+month_short_august: "Ao\xC3\xBB"
+video_service_is_not_supported: "n'est pas support\xC3\xA9 (actuellement seulement youtube, google video, blip.tv et vimeo)"
+viewer: Lecteur
+user_or_group_name: Utilisateur ou nom de groupe
+request_status: "Cette demande a \xC3\xA9t\xC3\xA9 :status par :user \xC3\xA0 :time"
+messages: messages
+all_people: toutes les personnes
+working_group_description: "L'appartenance \xC3\xA0 ce conseil ne conf\xC3\xA8re <i>aucun acc\xC3\xA8s</i> au :group_type <b>:group_name</b>."
+request_to_join_your_network_description: ":group demande \xC3\xA0 rejoindre le r\xC3\xA9seau :network"
+login_failed: Connexion impossible
+add_photo_to_gallery: Cliquer sur une photo pour l'ajouter
+private_profile: "Profil priv\xC3\xA9"
+location_postal_code: code postal
+error_saving_new_order: Erreur lors de la sauvegarde de l'arrangement
+page_list_heading_title: titre
+video_embed_code_prompt: "Code import\xC3\xA9 depuis une source vid\xC3\xA9o ext\xC3\xA9rieure"
+cancel_button: Annuler
+tuesday: Mardi
+not_set: "non d\xC3\xA9termin\xC3\xA9"
+settings: "Param\xC3\xA8tres"
+expired_featured_content: Expiration de la mise en avant du contenu
+information: Information
+file: fichier
+locked_by_user: "Verrouill\xC3\xA9 par :user"
+most_viewed: Les plus vus
+move_page_link: "D\xC3\xA9placer :page_class"
+middle_name: initiale
+month_short_january: Jan
+invite_accept_info: "Vous d\xC3\xA9sirez accepter l'invitation. Avez-vous d\xC3\xA9j\xC3\xA0 un compte sur ce serveur ?"
+signup_success: "Enregistrement r\xC3\xA9ussi"
+usage_agreement_heading: Condition d'utilisation
+edit_featured_content: modifier le contenu mis en avant
+search_headline: Recherche
+alert_field_errors: "Il y a un probl\xC3\xA8me avec les champs suivants"
+move_this_page: "D\xC3\xA9placer cette page"
+comparing_changes_header: "Comparaison des modifications de :user \xC3\xA0 :when de :old_version vers :new_version"
+this_is_coordinating: Ce conseil est le <strong>conseil de coordination</strong> de {parent_group}.
+share_page_recipients_selection: Faites votre choix
+edit_council_help_text: "Si ce groupe poss\xC3\xA8de un conseil de coordination, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
+csrf_error_message: "Votre demande de connexion ressemble \xC3\xA0 une tentative de piratage de ce site. Pas d'inqui\xC3\xA9tude: cette erreur arrive fr\xC3\xA9quemment m\xC3\xAAme pour des demandes anodines. Nous sommes simplement particuli\xC3\xA8rement parano\xC3\xAFaques. Tout ce que vous avez \xC3\xA0 faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:"
+type_your_messages_here: "\xC3\x89crivez votre message ici et validez avec la touche Entr\xC3\xA9e..."
+send_invites_button: Envoyer des invitations
+page_list: liste de page
+current_attachments: "Pi\xC3\xA8ces jointes actuelles"
+date: date
+networks: "R\xC3\xA9seaux"
+date_centuries: "si\xC3\xA8cles"
+menu_link_account: Compte
+me_search_description: "Chercher dans les pages auxquelles vous avez acc\xC3\xA8s"
+you_are_viewing_version: Vous regardez la version :version de :user
+move_button: "D\xC3\xA9placer"
+grant_access: "Donner acc\xC3\xA8s"
+About_Me: Mes Informations
+no_committees: pas de commission
+video_class_description: "Affiche une vid\xC3\xA9o h\xC3\xA9berg\xC3\xA9e sur un site ext\xC3\xA9rieur."
+share_page_options: Choisir les options
+you_have_no_groups: Vous n'avez aucun groupe
+group_privacy_settings: "%s param\xC3\xA8tres de confidentialit\xC3\xA9"
+pagination_next: suivant
+activity_user_joined_group: "{user} a rejoint {group_type} {group}"
+network_invite_info: "\xC3\x89crivez les noms des groupes que vous d\xC3\xA9sirez inviter \xC3\xA0 rejoindre ce r\xC3\xA9seau."
+make_album_cover: Faire de cette image la couverture de l'album
+public_key: "Cl\xC3\xA9 Publique"
+no_group_named: "Il n'existe pas de groupe nomm\xC3\xA9 <b>:name</b>."
+im_addresses: "Adresse de messagerie instantan\xC3\xA9e"
+page_list_heading_posts: messages
+users_world: le monde de :user
+Social_Change_Interests: "Int\xC3\xA9r\xC3\xAAts pour la transformation sociale"
+approved: "approuv\xC3\xA9es"
+date_minutes: minutes
+upload_new_image: "t\xC3\xA9l\xC3\xA9charger une nouvelle image"
+upload_images: "T\xC3\xA9l\xC3\xA9charger"
+request_to_join_us_via_email_description: ":email a \xC3\xA9t\xC3\xA9 invit\xC3\xA9 \xC3\xA0 rejoindre :group"
+page_info: Page d'Information
+watch_checkbox: "Rechercher les mises \xC3\xA0 jour"
+wednesday: Mercredi
+regenerate: "r\xC3\xA9g\xC3\xA9n\xC3\xA9rer les vignettes"
+Announcements: Annonces
+include_full_checkbox: Inclus le lien vers l'image de taille originale
+logout: "D\xC3\xA9connecter"
+group_directory: "R\xC3\xA9pertoire du groupe"
+month_short_june: Juin
+incoming: A venir
+when_does_feature_expire: Quand cette mise en avant doit-elle expirer ?
+break_lock_button: forcer le verrou
+members: Membres
+edit_underlined_e: modifi<u>e</u>r
+all_states: "tous les \xC3\xA9tats"
+no_tags: aucun tag
+activity_group_destroyed: "{group} a \xC3\xA9t\xC3\xA9 d\xC3\xA9truit par {user}"
+contacts: Contacts
+insert_image_instructions: "Cliquer sur une image pour l'ins\xC3\xA9rer dans le texte du wiki."
+unfeature_button: Retirer la mise en avant!
+share_page_email: Envoyer une notification par mail
+reset_password: "R\xC3\xA9initialiser le mot de passe"
+permission_denied_description: Vous n'avez pas les droits suffisants pour effectuer cette action.
+already_contacts_info: "Vous \xC3\xAAtes d\xC3\xA9j\xC3\xA0 contact de cette personne."
+my_peers_explain: utilisateurs inscrits dans au moins un de mes groupes
+mark_pages_as_featured_content_for_group: "Ici, vous pouvez indiquer les pages \xC3\xA0 mettre en avant pour ce groupe."
+saved_new_order: "Nouvel ordre enregistr\xC3\xA9 !"
+edit_tags_link: Modifier
+add_websites: Ajouter des sites web
+forgot_password_link: "J'ai oubli\xC3\xA9 mon mot de passe"
+me_search_link: Chercher
+my_groups: Mes groupes
+page_with_message: avec message
+group_discussion: discussion
+my_pending_tasks_link: En attente
+insert_image_heading: Ajouter une image
+reset_password_text: "Bonjour, %s. Si vous avez oubli\xC3\xA9 votre mot de passe pour vous connecter, vous pouvez en d\xC3\xA9finir un ici."
+image_title: "Titre de l'image: %s"

@@ -97,7 +97,7 @@ module TaskListPageHelper
   end
 
   def checkboxes_for_assign_people_to_task(task, selected=nil)
-    collection_multiple_select('task', 'user_ids', possible_users, :id, :login, :outer_class=>'plainlist floatlist', :selected_items => selected)
+    collection_multiple_select('task', 'user_ids', possible_users, :id, :login, :outer_class=>'plain floatlist', :selected_items => selected)
   end
 
   def close_task_edit_button(task)

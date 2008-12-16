@@ -22,6 +22,18 @@ class PageSharingTest < Test::Unit::TestCase
     assert group.may?(:admin, page), 'group should still be able to admin group'
   end
 
+  def test_share_with_view_access
+    user = users(:kangaroo)
+    group = groups(:animals)
+    recipients = [group]
+    page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => recipients, :access => :view)
+
+    #user.share_page_with!(page, recipients, :access => :view)
+
+    assert group.may?(:view, page), 'group must have view access'
+    assert !group.may?(:admin, page), 'group must not have admin access'
+  end
+
   def test_add_page
     user = users(:kangaroo)
     page = nil

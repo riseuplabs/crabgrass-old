@@ -141,9 +141,11 @@ invalid_token_text: "O link que voc\xC3\xAA especificou para restabelecer sua se
 requests_to_me: Pedidos para mim
 back_button: Voltar
 page_is_not_static: "A p\xC3\xA1gina n\xC3\xA3o \xC3\xA9 est\xC3\xA1tica"
+invite_accept_via_existing_account: "Eu j\xC3\xA1 tenho uma conta"
 recent_pages: "P\xC3\xA1ginas Recentes"
 create_a_new_page: "Criar uma nova p\xC3\xA1gina"
 display_name: Visualizar nome
+invite_accept_via_register: Eu preciso me cadastrar
 you_have_no_contacts: "Voc\xC3\xAA n\xC3\xA3o tem contatos"
 sunday: domingo
 edit_featured_content_for_group: "Editar conte\xC3\xBAdo em destaque do grupo :group_name"
@@ -351,6 +353,7 @@ page_details_link: "Detalhes de :page_class "
 add_im_address: "Adicionar Endere\xC3\xA7o IM"
 removing_image: Eliminar imagem...
 wiki_is_locked: "Atualmente, esta wiki est\xC3\xA1 bloqueada por :user"
+invite_accept_headline: Aceitar convite para fazer parte do grupo
 send_message_link: Enviar Mensagem
 coordinating_council_description: "Fazer parte deste comit\xC3\xAA confere <i>acesso administrativo</i> especial ao <b>:group_name</b> de :group_type."
 task_list_class_description: Uma lista de coisas a serem feitas
@@ -471,6 +474,7 @@ last_name: sobrenome
 create_page_headline: Criar uma nova {page_class}
 forgotten_email_address: "Qual foi o e-mail que voc\xC3\xAA forneceu quando criou sua conta?"
 School: Escola
+invite_not_found: "N\xC3\xA3o h\xC3\xA1 convite"
 you_have_no_peers: "Voc\xC3\xAA n\xC3\xA3o tem parceiros"
 link_name_description: "Este \xC3\xA9 o nome por meio do qual voc\xC3\xAA vai se referir a este grupo nos links e URLs. Use apenas caracteres alfanum\xC3\xA9ricos, os espa\xC3\xA7os n\xC3\xA3o s\xC3\xA3o permitidos."
 attachments: Arquivos Anexados
@@ -538,6 +542,7 @@ most_viewed: Mais Visitados
 locked_by_user: bloqueado por :user
 middle_name: do meio
 month_short_january: Jan
+invite_accept_info: "Voc\xC3\xAA gostaria de aceitar o pedido para participar. Voc\xC3\xAA j\xC3\xA1 tem uma conta neste servidor?"
 signup_success: "Voc\xC3\xAA foi cadastrado/a"
 move_this_page: "Deslocar Esta P\xC3\xA1gina"
 usage_agreement_heading: "Termos e Condi\xC3\xA7\xC3\xB5es de Uso"

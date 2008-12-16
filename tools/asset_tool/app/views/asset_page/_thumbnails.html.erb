@@ -1,4 +1,4 @@
-<div class='pretty'><table>
+<div><table class='pretty'>
   <%- @asset.thumbnails.select{|tn|tn.thumbdef}.sort_by{|tn|tn.thumbdef.ext}.each do |tn| -%>
     <%- next if tn.thumbdef.proxy and tn.content_type == @asset.content_type -%>
     <tr>
