@@ -24,6 +24,9 @@ table.signup td .agreement {
   border: 1px solid #ccc;
   padding: 1em;
 }
+table.signup td .agreement h1 {
+ margin: 1em 0; color: #999;
+}
 
 /* password strength-meter */
 .pw_meter { height:1em; width:100%; border:1px solid #ccc; background: #eee;}
@@ -32,3 +35,4 @@ table.signup td .agreement {
 .pw_bar_50  { background:#ff0; width:50%; }
 .pw_bar_75  { background:#0ff; width:75%; }
 .pw_bar_100 { background:#0f0; width:100%; }
+
