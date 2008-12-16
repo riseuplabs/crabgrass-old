@@ -16,7 +16,7 @@
 </div>
 
 <h3>Voted on</h3>
-<ul id='sort_list_voted' class='possible_list plainlist'>
+<ul id='sort_list_voted' class='possible_list plain'>
   <% if @possibles_voted.any? %>
      <%= render :partial => 'possible', :collection => @possibles_voted %>
      <li id='none_voted' style='display:none'> <%= 'none'.t %> </li>
@@ -26,7 +26,7 @@
 </ul>
 
 <h3>Not voted on</h3>
-<ul id='sort_list_unvoted' class='possible_list plainlist'>
+<ul id='sort_list_unvoted' class='possible_list plain'>
   <% if @possibles_unvoted.any? %>
     <%= render :partial => 'possible', :collection => @possibles_unvoted %>
      <li id='none_unvoted' style='display:none'> <%= 'none'.t %> </li>
@@ -35,7 +35,7 @@
   <% end %>
 </ul>
 
-<ul class='possible_list plainlist'>
+<ul class='possible_list plain'>
   <li id='add_possible_link'><%= render :partial => 'new_possible'%></li>
 </ul>
 

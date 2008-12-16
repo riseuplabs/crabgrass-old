@@ -1,5 +1,5 @@
 <%= render :partial => 'tabs' %>
-<ul class='possibles plainlist'>
+<ul class='possibles plain'>
 
 <% @sorted_possibles.each do |possible| -%>
 <% winner = 'winner' if (@result.winners.any? and @result.winners.include?possible.id) %>

@@ -17,7 +17,7 @@ delete_click     = "Element.hide('#{possible_id}');" + remote_function(:url => d
   <%# text_field 'possible', 'name', :size => 70 %>
   <%= h possible.name %>
   <br/>
-  <%= text_area 'possible', 'description', :size => '70x4' %><br/>
+  <div class='fieldset'><%= text_area 'possible', 'description', :size => '70x4' %></div>
   <p>
     <%= submit_tag 'Save'.t %>
     <%= button_to_function "Cancel".t, close_click %>
