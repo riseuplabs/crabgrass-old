@@ -240,7 +240,14 @@ class Page < ActiveRecord::Base
 
   before_create :ensure_owner
   def ensure_owner
-    self.owner ||= self.group || self.created_by if self.group || self.created_by
+    if gp = self.group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+      self.owner = gp.group
+    elsif self.created_by
+      self.owner = self.created_by
+    else
+      # in real life, we should not get here. but in tests, we make pages a lot
+      # that don't have a group or user.
+    end
   end
 
   #######################################################################
