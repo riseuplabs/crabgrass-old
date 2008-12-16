@@ -143,9 +143,11 @@ invalid_token_text: "El enlace para restablecer la contrase\xC3\xB1a que has esp
 requests_to_me: Peticiones para mi
 back_button: Regresar
 page_is_not_static: "La pagina no esta est\xC3\xA1tica"
+invite_accept_via_existing_account: Ya tengo una cuenta
 recent_pages: Paginas Recientes
 create_a_new_page: "Crear una nueva p\xC3\xA1gina"
 display_name: Nombre visible
+invite_accept_via_register: Tengo que registrar una nueva cuenta
 you_have_no_contacts: Usted no tiene contactos
 sunday: Domingo
 edit_featured_content_for_group: Editar contenido destacado para :group_name
@@ -355,6 +357,7 @@ page_details_link: ":page_class Detalles"
 add_im_address: Agregar Direccion Mensajeria IM
 removing_image: Eliminar foto....
 wiki_is_locked: Este wiki se encuentra actualmente bloqueado por :user
+invite_accept_headline: "Acepta invitaci\xC3\xB3n para participar en grupo"
 send_message_link: Enviar Mensaje
 coordinating_council_description: "La participaci\xC3\xB3n en este comit\xC3\xA9 concede especial <i>administrative access</i> to the :group_type <b>:group_name</b>."
 task_list_class_description: Una lista de las cosas pendientes.
@@ -412,9 +415,13 @@ edit_tags: Editar Etiquetas
 set_status_button: Configurar el estado
 group_invite_email: "{from_user} te ha invitado a participar en el grupo \"{group}\". \r\n\
   \r\n\
-  Si usted desea unirse a este grupo, haga clic aqu\xC3\xAD: \r\n\
+  Si deseas unirte a este grupo, haz clic aqu\xC3\xAD:\r\n\
+  \r\n   {accept_invite_link}\r\n\
   \r\n\
-  {accept_invite_link}"
+  La p\xC3\xA1gina principal de este grupo se puede encontrar aqu\xC3\xAD: \r\n\
+  \r\n   {group_home_link}\r\n\
+  \r\n\
+  Si no deseas unirte a este grupo, simplemente ignora este mensaje de correo electr\xC3\xB3nico.\r\n"
 locking_error: Hubo un error. No puede guardar los datos, alguien ha guardado nuevos cambios primero.
 media_all: "Medios de comunicaci\xC3\xB3n"
 sucessfully_removed_image: Foto ha sido exitosamente eliminada! (:undo_link)
@@ -471,6 +478,7 @@ last_name: apellido
 create_page_headline: Crear una nueva {page_class}
 forgotten_email_address: "Que correo electr\xC3\xB3nico usaste cuando creaste la cuenta?"
 School: Escuela
+invite_not_found: "No hay invitaci\xC3\xB3n  "
 you_have_no_peers: "Usted no tiene compa\xC3\xB1eros"
 link_name_description: "Este nombre es c\xC3\xB3mo va a referirse a este grupo en los enlaces y direcciones URL. Debe tener s\xC3\xB3lo caracteres alfanum\xC3\xA9ricos, no se permite espacios."
 attachments: Archivos adjuntos
@@ -538,6 +546,7 @@ most_viewed: "M\xC3\xA1s Vistos"
 locked_by_user: bloqueado por :user
 middle_name: segundo nombre
 month_short_january: enero
+invite_accept_info: "Te gustar\xC3\xADa aceptar la solicitud para participar. \xC2\xBFYa tienes una cuenta en este servidor?"
 signup_success: Registro completo
 move_this_page: "Mueve esta p\xC3\xA1gina"
 usage_agreement_heading: "Acuerdo de uso "
