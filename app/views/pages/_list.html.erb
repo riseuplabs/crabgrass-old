@@ -87,7 +87,7 @@ end
 
       <% if today.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Today"[:date_today] %></td></tr></tbody>
+        <tr><td class="date" colspan="<%=colspan%>"><%= "Today"[:date_today] %></td></tr>
         <%- today.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
@@ -95,7 +95,7 @@ end
 
       <% if yesterday.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Yesterday"[:date_yesterday] %></td></tr></tbody>
+        <tr><td class="date" colspan="<%=colspan%>"><%= "Yesterday"[:date_yesterday] %></td></tr>
         <%- yesterday.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
@@ -103,7 +103,7 @@ end
 
       <% if week.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "This Past Week"[:date_this_week] %></td></tr></tbody>
+        <tr><td class="date" colspan="<%=colspan%>"><%= "This Past Week"[:date_this_week] %></td></tr>
         <%- week.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
@@ -111,7 +111,7 @@ end
 
       <% if later.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tbody><tr><td class="date" colspan="<%=colspan%>"><%= "Older"[:date_older] %></td></tr></tbody>
+        <tr><td class="date" colspan="<%=colspan%>"><%= "Older"[:date_older] %></td></tr>
         <%- later.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
