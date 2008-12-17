@@ -1,3 +1,5 @@
+@import common.sass
+
 .wiki,
 .post
 
@@ -20,7 +22,6 @@
   div.codetitle
     background: #FFE8A9
     color: #614B2A
-    margin-bottom: -1em
     padding: 0.25em
     font-weight: bold
 
@@ -30,7 +31,7 @@
     margin-top: 1.5em
     color: #666
     border-bottom: 2px dotted #999
-
+    font-family= !body_text_font_family 
     &:first-child
       margin-top: 0
 
