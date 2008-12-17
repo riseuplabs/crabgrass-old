@@ -195,7 +195,7 @@ form.minisearch {
   #footer a {
     color: #ffffff; }
   #footer div.content {
-    padding: 1em; }
+    padding: 1.5em; }
   #footer div.left {
     float: left;
     width: 45%;
@@ -203,6 +203,8 @@ form.minisearch {
   #footer div.right {
     float: left;
     width: 45%; }
+  #footer div.language_menu {
+    float: right; }
 
 #message div.notice {
   padding: 0 4em 1.5em 4em; }
