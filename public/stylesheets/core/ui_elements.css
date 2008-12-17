@@ -45,6 +45,9 @@ a {
     text-decoration: none;
     outline: 0;
     border-bottom: 1px #999 dotted; }
+  a.invert {
+    color: white;
+    background-color: #0000ee; }
   a.active {
     font-weight: bold; }
   a.imglink {
