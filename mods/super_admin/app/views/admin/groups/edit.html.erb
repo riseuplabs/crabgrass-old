@@ -1,0 +1,42 @@
+<%= link_to 'Show', @group %> |
+<%= link_to 'Back', groups_path %>
+
+<h1>Editing group</h1>
+
+<% form_for(@group) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :full_name %><br />
+    <%= f.text_field :full_name %>
+  </p>
+  <p>
+    <%= f.label :summary %><br />
+    <%= f.text_field :summary %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<h1>Memberships</h1>
+
+<ul>
+  <% @group.memberships.each do |mem| -%>
+  <li>
+    <%= mem.user.login %>
+    <%# link_to 'remove', :controller => 'admin/memberships', :action => 'destroy', :id => mem.id %>
+    <%= link_to 'remove', membership_path(mem), :method => 'delete' %>
+  </li>
+  <% end -%>
+</ul>
+
+<% form_tag(:controller => 'admin/memberships', :action => 'create', :group_id => @group.id) do -%>
+<%= text_field_tag 'user_login' %>
+<%= submit_tag 'add' %>
+<% end -%>
+

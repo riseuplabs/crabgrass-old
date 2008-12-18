@@ -68,7 +68,7 @@ Rails::Initializer.run do |config|
 
   # allow plugins in mods/ and pages/
   config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
-
+ 
   # Deliveries are disabled by default. Do NOT modify this section.
   # Define your email configuration in email.yml instead.
   # It will automatically turn deliveries on
@@ -88,9 +88,12 @@ Rails::Initializer.run do |config|
 
   ###
   ### (4) PLUGINS
-  ###     vendors/plugins/*/init.rb
-  ###     mods/*/init.rb
-  ###     tools/*/init.rb
+  ###     Plugins are loading in alphanumerical order across all
+  ###     all these directories:  
+  ###       vendors/plugins/*/init.rb
+  ###       mods/*/init.rb
+  ###       tools/*/init.rb
+  ###     If you want to control the load order, change their names!
   ###
 
   ###

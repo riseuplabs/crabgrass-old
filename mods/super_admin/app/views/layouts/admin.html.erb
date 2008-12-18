@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Admin : <%= controller.class.name %> : <%= controller.action_name %></title>
+  <%= stylesheet_link_tag('admin', :plugin => 'super_admin') %>
+</head>
+<body>
+
+<div id='container'>
+<div id='header'>
+  <div class='toplink'><%= link_to "Logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %> </div>
+  <div class='toplink'><%= link_to "Exit admin", :controller => '/me' %> </div>
+  <h1><a href='/admin'>Crabgrass Administration Panel</a></h1>
+  <%= link_to 'admin home', '/admin' %> <%= link_to 'users', users_path %> <%= link_to 'groups', groups_path %>  <%= link_to 'pages', pages_path %> <%= link_to 'comments', posts_path %> <%= link_to 'announcements', announcements_path %>
+</div>
+<div id='content'>
+  <%= flash_notice %>
+  <%= yield  %>
+</div>
+
+</body>
+</html>
+

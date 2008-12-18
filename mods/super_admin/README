@@ -1,0 +1,31 @@
+SuperAdmin
+==========
+
+This crabgrass mod allow for god-like administration of all users
+and groups in a particular site. 
+
+Usage
+=======
+
+edit config/routes.rb (this should be done for you already)
+  map.from_plugin :super_admin
+
+Specify which crabgrass group will have super admin power in sites.yml:
+
+<begin>
+default:
+  name: crabgrass
+  domain: localhost
+  email_sender: 'crabgrass-system@localhost'
+  secret: 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8'
+  pagination_size: 29
+  super_admin_group_id: 1
+<end>
+
+If you want the moderation capability of super_admin, 
+add the migration to crabgrass:
+
+% script/generate plugin_migration
+% rake db:migrate
+
+restart rails and browse to: http://localhost:3000/admin
