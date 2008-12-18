@@ -22,4 +22,8 @@ default:
   - Gallery
   - ExternalVideo
   - Article
-
+  evil:
+    google_analytics:
+      enabled: false
+      site_id: UA-XXXXXX-X
+      https: false

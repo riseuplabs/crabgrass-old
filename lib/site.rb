@@ -14,6 +14,7 @@ class Site
   attr_accessor :translators
   attr_accessor :translation_group
   attr_accessor :default_language
+  attr_accessor :evil
   attr_writer   :available_page_types
   #attr_accessor :profiles
 
