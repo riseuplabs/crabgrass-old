@@ -38,6 +38,11 @@ unless File.exists?(GALLERY_ZIP_PATH)
   Dir.mkdir(GALLERY_ZIP_PATH)
 end
 
+# possible in plugin?
+#class Rails::Configuration
+#  attr_accessor :action_web_service
+#end
+
 Rails::Initializer.run do |config|
   ###
   ### (2) CONFIG BLOCK
@@ -79,6 +84,11 @@ Rails::Initializer.run do |config|
   config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
 
+  #config.frameworks += [ :action_web_service]
+  #config.action_web_service = Rails::OrderedOptions.new
+  #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
+  #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
+
   # See Rails::Configuration for more options
 
   ###
@@ -108,6 +118,8 @@ end
 ###
 ### (7) FINALLY
 ###
+#require 'actionwebservice'
+#require RAILS_ROOT+'/vendor/plugins/actionwebservice/lib/actionwebservice'
 
 # There appears to be something wrong with dirty tracking in rails.
 # Lots of errors if this is enabled:
