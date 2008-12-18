@@ -11,10 +11,11 @@
     </div>
     <% unless @wall_posts.empty? %>
       <div class='status'>
-	<h3 class="dim"><%= "Recent Wall Posts"[:recent_wall_posts] %></h3>
-	<%= render :partial => 'profile/wall_discussion', :locals => {:posts => @wall_posts} %>
+        <h3 class="dim"><%= "Recent Wall Posts"[:recent_wall_posts] %></h3>
+        <%= render :partial => 'profile/wall_discussion', :locals => {:posts => @wall_posts} %>
       </div>
     <% end %>
+  </td>
 </tr>
 </table>
 

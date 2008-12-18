@@ -1,4 +1,4 @@
-<%= return_to_page(@page) %>
+<% render :partial => 'tabs' %>
 
 <% unless @version %>
   <%= :version_doesnt_exist.t % {:version => params[:version]} %>

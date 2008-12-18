@@ -204,15 +204,25 @@ class PathFinder::ParsedPath < Array
     (path_a + path_b).uniq
   end
 
-  # replace one keyword with another. only works for keywords with zero args
-  def replace_keyword(keyword, newkeyword)
+  # replace one keyword with another. 
+  def replace_keyword(keyword, newkeyword, arg1=nil, arg2=nil)
     PathFinder::ParsedPath.new.replace(collect{|elem|
       if elem[0] == keyword
-        [newkeyword]
+        [newkeyword,arg1,arg2].compact
       else
         elem
       end
     })
+  end
+
+  # sets the value of the keyword in the parsed path,
+  # replacing existing value or adding to the path as necessary.
+  def set_keyword(keyword, arg1=nil, arg2=nil)
+    if keyword?(keyword)
+      replace_keyword(keyword,keyword,arg1,arg2)
+    else
+      self << [keyword,arg1,arg2].compact
+    end
   end
 
 end

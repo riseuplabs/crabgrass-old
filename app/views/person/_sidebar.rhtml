@@ -7,13 +7,19 @@
 <ul class="side_list">
   <%= friend_link %>
   <%= message_link %>
+  <%= choose_profile_menu %>
   <%= edit_profile_link %>
 </ul>
 
-<h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>
-      
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:networks], :entities => @user.all_groups.networks } %>
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:hroups], :entities => @user.groups.normals } %>
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => @user.groups.committees } %>
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:friends], :entities => @user.contacts } %> 
+<%- if @profile.may_see_groups? or @profile.may_see_contacts? -%>
+  <h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>
+        
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:networks], :entities => @user.all_groups.networks } if @profile.may_see_groups? %>
 
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:hroups], :entities => @user.groups.normals } if @profile.may_see_groups? %>
+
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => @user.groups.committees } if @profile.may_see_groups? %>
+
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:friends], :entities => @user.contacts } if @profile.may_see_contacts? %> 
+
+<%- end -%>

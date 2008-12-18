@@ -1,4 +1,4 @@
-<a href="/pages/create" class="contribute" title="<%= 'Create a new page'.t %>"><span><%= "Contribute"[:contribute_content_link] %></span></a>
+<%= link_to "<span class='small_icon plus_16'>#{"Contribute"[:contribute_content_link]}</span>", {:controller => '/pages', :action => 'create'}, :class => "contribute round" %>
 
 <ul class='side_list'>
   <%- active = params[:controller] == 'me/dashboard' -%>
@@ -17,7 +17,7 @@
 
   <%- active = params[:controller] == 'me/search' -%>
   <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'All Content'.t,
+    'Search'[:me_search_link],
     '/me/search',
     active
   ) %></li>
@@ -49,7 +49,7 @@
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.committees } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Friends'[:friends], :entities => current_user.contacts } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => current_user.contacts } %>
 
 <%- end -%>
 

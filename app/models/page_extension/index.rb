@@ -91,7 +91,7 @@ module PageExtension::Index
 
       # attributes
       %w[updated_at created_at starts_at ends_at created_by_id updated_by_id group_id
-      created_by_login updated_by_login group_name resolved
+      created_by_login updated_by_login group_name owner_name resolved 
       flow contributors_count stars].each do |field|
         terms.send("#{field}=",self.send(field))
       end

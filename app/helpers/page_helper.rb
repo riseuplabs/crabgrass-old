@@ -128,8 +128,8 @@ module PageHelper
   ## PAGE LISTINGS AND TABLES
 
   SORTABLE_COLUMNS = %w(
-    created_at created_by_login updated_at updated_by_login group_name title
-    starts_at posts_count contributors_count stars
+    created_at created_by_login updated_at updated_by_login group_name owner_name 
+    title starts_at posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -164,7 +164,7 @@ module PageHelper
       link = page_path_link(text, "descending/#{action}")
       selected = options[:selected]
     end
-    content_tag :th, "#{link} #{arrow}", :nowrap => 'nowrap', :class => "#{selected ? 'selected' : ''} #{options[:class]}"
+    content_tag :th, "#{link} #{arrow}", :class => "#{selected ? 'selected' : ''} #{options[:class]} nowrap"
   end
 
   ## used to create the page list headings
@@ -218,7 +218,7 @@ module PageHelper
         icon_tag('star_empty')
       end
     elsif column == :owner
-      page.group_name || page.created_by_login
+      page.owner_name
     elsif column == :owner_with_icon
       page_list_owner_with_icon(page)
     elsif column == :last_updated
@@ -235,10 +235,11 @@ module PageHelper
   end
 
   def page_list_owner_with_icon(page)
-    if page.group_id
-      return link_to_group(page.group_id, :avatar => 'xsmall')
-    elsif page.created_by
-      return link_to_user(page.created_by, :avatar => 'xsmall')
+    return unless page.owner
+    if page.owner_type == "Group"
+      return link_to_group(page.owner, :avatar => 'xsmall')
+    else
+      return link_to_user(page.owner, :avatar => 'xsmall')
     end
   end
   
@@ -247,7 +248,7 @@ module PageHelper
     label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date]
+    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
   end
 
   def page_list_title(page, column, participation = nil)
@@ -290,8 +291,8 @@ module PageHelper
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
       list_heading 'stars'[:page_list_heading_stars], 'stars', options
-    elsif column == :owner_with_icon
-      list_heading "owner"[:page_list_heading_owner], '', options
+    elsif column == :owner_with_icon || column == :owner
+      list_heading "owner"[:page_list_heading_owner], 'owner_name', options
     elsif column == :last_updated
       list_heading "last updated"[:page_list_heading_last_updated], 'updated_at', options
     elsif column

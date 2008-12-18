@@ -1,13 +1,20 @@
 <div id="posts">
-  <%= pagination_links(@posts, 'posts') %>
+
+   <%= link_to_function "Add Comment"[:add_comment] + ARROW, "Element.show('reply_container'); Element.hide('show_reply_link')", :class => 'small_icon page_discussion_16 p', :id=>'show_reply_link' unless @show_reply %>
+
   <table border="0" cellspacing="0" cellpadding="0" class="posts">
+    <%= post_pagination_links %>
+
     <%- for post in @posts do -%>
       <%= render :partial => 'posts/post', :locals => {:post => post} %>
     <%- end -%>
-    <tr><td colspan="2"><%= pagination_links(@posts, 'posts') %></td></tr>
+
+    <%= post_pagination_links %>
+
     <%- if current_user.may? :comment, @page -%>
       <%= render :partial => 'posts/reply' %>
     <%- end -%>
   </table>
+
 </div>
 

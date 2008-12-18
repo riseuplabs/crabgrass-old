@@ -7,13 +7,27 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   layout :choose_layout
-  stylesheet 'page', 'post'
+  stylesheet 'page_creation', :action => :create
   javascript 'page'
+
+  # page_controller subclasses often need to run code at very precise placing
+  # in the filter chain. For this reason, there are a number of stub methods
+  # they can define:
+  #
+  # filter order:
+  # (1) fetch_page_data
+  # (2) fetch_data (defined by subclass)
+  # (3) setup_view (defined by subclass)
+  # (4) setup_default_view
 
   prepend_before_filter :fetch_page_data
   append_before_filter :login_or_public_page_required
   append_before_filter :setup_default_view
-  
+  append_before_filter :load_posts
+  # :load_posts should come after :setup_default_view, to give controllers an
+  # opportunity to disable loading of posts or to load posts via an alternate
+  # method.  
+
   # if the page controller is call by our custom DispatchController, 
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
@@ -22,8 +36,6 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
-
-    @javascript_extra = true
   end  
 
   ##
@@ -45,7 +57,6 @@ class BasePageController < ApplicationController
         flash_message_now :exception => exc
       end
     end
-    @stylesheet = 'page_creation'
     render :template => 'base_page/create'
   end
 
@@ -100,7 +111,6 @@ class BasePageController < ApplicationController
     if request.get?
       setup_view        # allow subclass to override view defaults
       @show_posts       = action?(:show) if @show_posts.nil?
-      @show_reply       = @posts.any?    if @show_reply.nil?
       @show_attachments = true           if @show_attachments.nil?
       @show_tags        = true           if @show_tags.nil? 
       @html_title       = @page.title    if @page && @html_title.nil?
@@ -126,7 +136,7 @@ class BasePageController < ApplicationController
   # to be overwritten by subclasses.
   def setup_view
   end
-  
+ 
   # don't require a login for public pages
   def login_or_public_page_required
     if action_name == 'show' and @page and @page.public?
@@ -146,21 +156,23 @@ class BasePageController < ApplicationController
     end
     # grab the current user's participation from memory
     @upart = (@page.participation_for_user(current_user) if logged_in?)
-
-    if request.get?
-      load_posts
-    end
+    fetch_data() # all subclasses to get fetch data early on.
     true
   end
 
+  # to be overwritten by subclasses.
+  def fetch_data
+  end
+
   def load_posts
-    @page.discussion ||= Discussion.new    
-    disc = @page.discussion
-    current_page = params[:posts] || disc.last_page
-    @posts = Post.paginate_by_discussion_id(disc.id,
+    return if @discussion === false || @page.nil? # allow for the disabling of load_posts()
+    @discussion ||= (@page.discussion ||= Discussion.new)
+    current_page = params[:posts] || @discussion.last_page
+    @posts = Post.paginate_by_discussion_id(@discussion.id,
       :order => "created_at ASC", :page => current_page,
-      :per_page => disc.per_page, :include => :ratings)
+      :per_page => @discussion.per_page, :include => :ratings)
     @post = Post.new
+    @show_reply = @posts.any? if @show_reply.nil?
   end
       
   def context

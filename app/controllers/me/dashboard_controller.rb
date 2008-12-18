@@ -3,7 +3,7 @@ class Me::DashboardController < Me::BaseController
   helper 'wall'
 
   def index
-    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
+    params[:path] = ['descending', 'updated_at'] if params[:path].empty?
     params[:path] += ['limit','40']
     @pages = Page.find_by_path(params[:path], options_for_me)
     @activities = Activity.for_dashboard(current_user).newest.unique.find(:all, :limit => 6)

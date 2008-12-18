@@ -30,7 +30,7 @@ div#new_possible {background: #eee; padding: 1em; margin: 1em;}
 	<div id='non-ajax-form' style="text-align: right">
 	<%= submit_tag 'Save my choices' if @possibles.any? %>
 	</div>
-	<ul id='sort_list' class='possibles plainlist'>
+	<ul id='sort_list' class='possibles plain'>
 
 <% @possibles.each do |possible| -%>
 <%= render :partial => 'possible', :locals => {:possible => possible} %>

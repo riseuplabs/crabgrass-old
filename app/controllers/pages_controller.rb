@@ -24,6 +24,8 @@ class PagesController < ApplicationController
   before_filter :login_required
   prepend_before_filter :fetch_page
 
+  stylesheet 'page_creation', :action => :create
+
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
   def initialize(options={})
@@ -38,7 +40,6 @@ class PagesController < ApplicationController
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool). 
   def create
-    @stylesheet = 'page_creation'
   end
          
   # for quickly creating a wiki

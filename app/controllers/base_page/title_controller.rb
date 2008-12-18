@@ -11,10 +11,12 @@ class BasePage::TitleController < ApplicationController
   # TODO: add non-ajax version.
   def update
     if params[:save]
+      @old_name = @page.name
       @page.title   = params[:page][:title]
       @page.summary = params[:page][:summary]
       @page.name    = params[:page][:name].to_s.nameize if params[:page][:name].any?
       @page.updated_by = current_user
+      @new_name = @page.name
       unless @page.save
         render(:template => 'base_page/title/edit_title') and return
       end

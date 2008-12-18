@@ -81,19 +81,15 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_show_private_when_not_logged_in
     get :show, :id => groups(:private_group).name
     assert_response :success
-#    assert_template 'show_nothing'
     assert_nil assigns(:access), "should have no access to private group"
     
     get :show, :id => groups(:warm).name
     assert_response :success
-#    assert_template 'show_nothing'
     assert_nil assigns(:access), "should have no access to private committee"
 
     get :show, :id => groups(:private_committee).name
     assert_response :success
-#    assert_template 'show_nothing'
-    assert_nil assigns(:access), "should have no access to private committee of public group"
-    
+    assert_nil assigns(:access), "should have no access to private committee of public group"    
   end
 
   def test_visualize
@@ -136,14 +132,11 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :search, :id => groups(:rainbow).name
     assert_response :success
-#    assert_template 'search'
     assert_not_nil assigns(:pages)
-
     assert assigns(:pages).length > 0, "should have some search results"
     
     get :search, :id => groups(:rainbow).name, :path => 'type/discussion'
     assert_response :success
-#    assert_template 'search'
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results when filter for discussions"
     
@@ -157,7 +150,6 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_search_when_not_logged_in
     get :search, :id => groups(:public_group).name
     assert_response :success
-#    assert_template 'search'
     
     post :search, :id => groups(:public_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
@@ -321,7 +313,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :show
     assert_response :success
-    assert_select "h4", "Today"
+    assert_select "td.date", "Today"
     assert_select "a[href=?]", @controller.page_url(committee_page)
 
     @controller.instance_variable_set(:@group, g)

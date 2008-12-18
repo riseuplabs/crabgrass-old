@@ -1,6 +1,6 @@
-<div id="top_menu_box">
+<div id="top_menu">
 <%= render :partial => 'layouts/menu_login' %>
-<ul id="top_menu">
+<ul>
   <% if logged_in? -%>
   <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
     <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>

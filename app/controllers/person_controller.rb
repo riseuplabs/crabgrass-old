@@ -11,18 +11,13 @@ see PeopleController.
 class PersonController < ApplicationController
 
   helper 'task_list_page', 'wall', 'profile'
+  stylesheet 'tasks', :action => :tasks
 
   def initialize(options={})
     super()
     @user = options[:user]   # the user context, if any
   end
-  
-  before_filter :load_partials
-  def load_partials
-    fetch_profile unless @profile
-    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @profile}
-  end
-  
+    
   def show
     @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
     
@@ -53,12 +48,12 @@ class PersonController < ApplicationController
       @pages = Page.paginate_by_path(params[:path], options_for_user(@user, :page => params[:page]))
       @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
     end
+
     handle_rss :title => @user.name, :link => url_for_user(@user),
       :image => avatar_url_for(@user, 'xlarge')
   end
 
   def tasks
-    @stylesheet = 'tasks'
     options = options_for_user(@user)
     #options[:conditions] += " AND user_participations.resolved = ?"
     #options[:values] << false
@@ -104,9 +99,10 @@ class PersonController < ApplicationController
     true
   end
 
+=begin
+
   def fetch_profile
-    vis_group = 
-      if logged_in?
+    if logged_in?
         if current_user.id == @user.id
           'friends' # not so sure about this
         elsif current_user.friend_of? @user.id
@@ -130,5 +126,41 @@ class PersonController < ApplicationController
       raise PermissionDenied
     end
   end
+=end
   
+  before_filter :fetch_profile, :load_partials
+  def fetch_profile
+    if logged_in?
+      # if the user is viewing their own profile, let them choose which one.
+      if current_user == @user
+        params[:profile] ||= 'private'
+        if params[:profile] == 'private'
+          @profile = @user.profiles.private
+        elsif params[:profile] == 'public'
+          @profile = @user.profiles.public
+        end
+      else
+        @profile = @user.profiles.visible_by(current_user)
+      end
+    else
+      @profile = @user.profiles.public
+    end
+
+    unless @profile and @profile.may_see?
+      # make it appear as if the user does not exist if may_see? is false. 
+      # or should we show an empty profile page?
+      @user = nil
+      no_context
+      render(:template => 'dispatch/not_found')
+      false
+    else
+      params[:profile] ||= @profile.public? ? 'public' : 'private'
+      true
+    end
+  end
+  def load_partials
+    @left_column = render_to_string :partial => 'person/sidebar', :locals => {:profile => @profile}
+    true
+  end
+
 end

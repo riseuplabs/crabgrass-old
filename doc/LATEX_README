@@ -1,0 +1,7 @@
+Crabgrass can render png images from latex formulas and insert the resulting
+image in the wiki. To enable this, install these packages:
+
+apt-get install texlive gs-gpl
+gem install open4 --no-ri --no-rdoc
+
+NOTE: This ability is temporarily not working at the moment.

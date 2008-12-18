@@ -2,7 +2,6 @@ class ArticlePageController < WikiPageController
 
   def create
     @page_class = ArticlePage
-    @stylesheet = 'page_creation'
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
     elsif request.post?

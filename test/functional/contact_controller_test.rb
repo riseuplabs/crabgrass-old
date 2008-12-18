@@ -29,14 +29,18 @@ class ContactControllerTest < Test::Unit::TestCase
   
   def test_remove
     login_as :blue
-    get :remove, :id => users(:orange).login
-    assert_response :success
-    
-    assert_no_difference 'users(:blue).contacts.count' do
+
+    count = "Contact.count :conditions => 'user_id = #{users(:blue).id}'"
+
+    assert_no_difference count do
+      get :remove, :id => users(:orange).login
+    end
+
+    assert_no_difference count do
       post :remove, :id => users(:orange).login, :cancel => true
     end
     
-    assert_difference 'users(:blue).contacts.count', -1 do
+    assert_difference count, -1 do
       post :remove, :id => users(:orange).login, :remove => true
     end
   end

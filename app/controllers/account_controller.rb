@@ -1,6 +1,8 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
+  javascript 'account', :action => :signup
+
   skip_before_filter :verify_authenticity_token, :only => :login
 
   # TODO: it would be good to require post for logout in the future
@@ -42,7 +44,6 @@ class AccountController < ApplicationController
   end
 
   def signup
-    @javascript = "account"
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})
     return unless request.post?
 

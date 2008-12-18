@@ -1,5 +1,6 @@
 /* allows for checkbox and link to the on the same line */
-ul.side_list a.check {
+
+/*ul.side_list a.check {
   display: inline;
   line-height: 1.9em;
 }
@@ -9,42 +10,58 @@ input.check {
 ul.side_list a {
   padding: 1px 0 1px 26px;
 }
+*/
+
+#page_sidebar input.check {
+  margin-top: 2px;
+}
+
+/* simulate :last-child */
+.post-body p {
+  margin: expression( this == this.parentNode.firstChild || this == this.parentNode.lastChild ? "0em" : "1em 0" );
+}
+
 
 /* pages */
 
+/*
 td.post-body div.negativespace {
   margin: -4px 0 -16px 0;
 }
+*/
 .popup h1, .popup h4, .popup td, .popup blockquote {
   white-space: nowrap;
 }
-div.popup legend {
-  border: 0;
-  font-size: 1em;
-  margin-left: -1.2em;
-}
-div.popup fieldset {
-  width: 30em;
-  border: 0;
-}
+
+/* width:100% doesn't seem to work in ie7 in an absolutely positioned div */
+.popup .fieldset textarea {width: 30em;} */
+
+/*
 div.popup blockquote {
   padding: 1em 1em 0 1em;
 }
+*/
 
 /* ie7 puts the scroll bar over top the enclosed content */
-.page_scroll {
+div.page_scroll {
   overflow: hidden;
   overflow-y: scroll;
   padding-right: 16px;
 }
-.page_list {width: 100%;} /* this is required to get ie7 to actually show scrollbars */
+div.page_list {width: 100%;} /* this is required to get ie7 to actually show scrollbars */
 
 
 /* layout */
 
-#wrapper {
-  position: relative; overflow:hidden; /* needed for ie7 bug */
-}
+/* needed for ie7 bug */
+#wrapper {position: relative; overflow: hidden;} 
+
+/* hide the message area */
+#message {line-height: 1px;}
+
+/* This is a true mystery to me. For some reason, a padding of 0.55em is needed
+ * on the top to approximate the 1em padding for the sides and bottom. */
+#banner {padding-top: 0.55em;}
 
 /* ui */
 /*

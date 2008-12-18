@@ -36,7 +36,7 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
-    t.boolean  "may_see"
+    t.boolean  "may_see"                 :default => true
     t.boolean  "may_see_committees"
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
@@ -44,13 +44,21 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "membership_policy",      :limit => 11
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact"
-    t.boolean  "may_pester"
+    t.boolean  "may_request_contact"     :default => true
+    t.boolean  "may_pester"              :default => true
     t.boolean  "may_burden"
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
   end
 
+Applies to both groups and users: may_see, may_see_groups
+
+Applies to sers only: may_see_contacts, may_request_contact, may_pester
+
+Applies to groups only: may_see_committees, may_see_networks, may_see_members,
+  may_request_membership, membership_policy
+
+Currently unused: membership_policy, may_burden, may_spy, language.
 
 =end
 
@@ -85,6 +93,12 @@ class Profile < ActiveRecord::Base
     friend?
   end
   
+  def type
+    return 'public' if stranger?
+    return 'private' if friend?
+    return 'unknown'
+  end
+
   ### collections ########################################################## 
 
   belongs_to :wiki, :dependent => :destroy
@@ -107,7 +121,12 @@ class Profile < ActiveRecord::Base
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
-    valid_params = ['first_name', 'middle_name', 'last_name', 'role', 'organization']
+
+    valid_params = ['first_name', 'middle_name', 'last_name', 'role', 'organization', 
+      "may_see", "may_see_committees", "may_see_networks", "may_see_members", "may_request_membership",
+      "membership_policy", "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
+      "may_burden", "may_spy"]
+
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,

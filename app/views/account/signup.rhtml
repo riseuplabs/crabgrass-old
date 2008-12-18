@@ -38,7 +38,7 @@
       <%= observe_field('user_password', :function => "set_pw_bar(value, #{MIN_PASSWORD_STRENGTH});", :frequency => 0.25) %>
       <span id='pw_time_to_crack' style='display:none'><%= "(takes {time} to crack)"[:signup_time_to_crack_password, {:time => "<span id='pw_time'>??</span>"}] %>
 </span>
-      <%- %w(date_centuries date_years date_months date_days date_hours date_minutes date_seconds).each do |time| -%>
+      <%- %w(date_centuries date_years date_months date_weeks date_days date_hours date_minutes date_seconds).each do |time| -%>
         <%=  hidden_field_tag(time, time.t) %>
       <%- end -%>
       </div>
@@ -62,7 +62,7 @@
   <td class='right'>
     <h3 class='dim'><%= "Usage Agreement"[:usage_agreement_heading] %></h3>
     <div class='agreement'>
-      <%= RedCloth.new("Usage agreement text goes here"[:usage_agreement_text]).to_html %>
+      <%= GreenCloth.new("Usage agreement text goes here"[:usage_agreement_text]).to_html %>
     </div>
   </td>
 </tr>

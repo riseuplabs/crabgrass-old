@@ -9,8 +9,7 @@
     <table>
       <tr>
         <td style="width:80px;">
-	  <%= :About_Me.t %>
-	  <input type="hidden" name="profile[notes][<%=index%>][note_type]" value="<%=:About_Me%>" />
+          <%= select_tag_with_id "profile[notes][#{index}][note_type]", note_options, {:id => "profile_notes_#{index}_note_types"} %>
         </td>
       </tr>
       <tr>
@@ -20,11 +19,9 @@
       </tr>
     </table>
   </td>
-  <% if multiple %>
   <td>
     <%= remove_link dom_id %>
   </td>
-  <% end -%>
 </tr>
 <tr><td><div class='spacer'></div></td></tr>
 

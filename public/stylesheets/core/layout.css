@@ -1,65 +1,53 @@
-#wrapper {
-  padding: 0 1.5em;
-}
-.colmask {
-  margin: 0;
-}
-
-/**
- ** LEFT COLUMN LAYOUT
- **/
-
 .leftmenu {
-  background: #FAFDF9;  /* left column color */
-  border: 1px solid #e1e1e1;
-}
-.leftmenu .colright {
-  left: 19em; /* size of left column */
-  border-left: 1px solid #e1e1e1;
-}
-.leftmenu .col1wrap {
-  right:19em; /* size of left column */
-}
-.leftmenu .col1 {
-  margin:0;
-  margin-left: 19em; 
-}
-.leftmenu .col2 {
-  width:16.7em; /* right column - offset for padding */
-  right:18em;
-  margin: 1em 0;
-}
+  background-color: #fafdf9;
+  border: 1px solid #999;
+  border-width: 1px; }
+  .leftmenu .colright {
+    left: 19em;
+    border-left: 1px solid #ccc; }
+  .leftmenu .col1wrap {
+    right: 19em; }
+  .leftmenu .col1 {
+    margin: 0;
+    margin-left: 19em; }
+  .leftmenu .col2 {
+    width: 16.7em;
+    right: 18em;
+    margin: 1em 0; }
+  .leftmenu .rightmenu .col1 {
+    border: 1px solid #999;
+    border-width: 1px;
+    margin: 0 0 0 17em; }
+  .leftmenu .rightmenu .col2 {
+    width: 16em;
+    left: 17em; }
+  .leftmenu .rightmenu .colleft {
+    margin-left: -17em; }
+  .leftmenu .rightmenu .col1wrap {
+    padding-bottom: 0em; }
 
-/**
- ** RIGHT COLUMN LAYOUT
- **/
-
-.rightmenu .col1 {
-  border: 1px solid #e1e1e1;
-}
-
-/* 2 column right menu settings */
-.rightmenu .colleft {
-  margin-left:-18em;
-}
-.rightmenu .col1wrap {
-  padding-bottom:0em;
-}
-.rightmenu .col1 {
-  margin:0pt 0pt 0pt 18em;
-}
-.rightmenu .col2 {
-  width:17em;
-  left:18em;
-}
-
-
-/**
- ** ONE COLUMN LAYOUT
- **/
+.rightmenu {
+  border-left: 1px solid #999; }
+  .rightmenu .border {
+    background: white;
+    border: 1px solid #999;
+    border-left: 0;
+    float: left;
+    position: relative;
+    right: 0;
+    width: 100%; }
+  .rightmenu .col1 {
+    margin: 0 0 0 17em; }
+  .rightmenu .col2 {
+    width: 16em;
+    left: 17em;
+    /* padding-left= !right_column_margin */ */ }
+  .rightmenu .colleft {
+    margin-left: -17em; }
+  .rightmenu .col1wrap {
+    padding-bottom: 0em; }
 
 .fullpage .col1 {
   margin: 0;
-  border: 1px solid #e1e1e1;
-}
-
+  border: 1px solid #999;
+  border-width: 1px; }

@@ -1,4 +1,4 @@
-FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plainlist' if defined? FightTheMelons
+FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'plain' if defined? FightTheMelons
 
 if File.exists?('.svn')
   SVN_REVISION = (RAILS_ENV != 'test' && r = YAML.load(`svn info`)) ? r['Revision'] : nil

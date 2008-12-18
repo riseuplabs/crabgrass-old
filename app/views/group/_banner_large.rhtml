@@ -8,7 +8,7 @@
         <b><%= link_to_group @parent %></b>
       </div>
     </td>
-    <td align='right' rowspan='2' nowrap='nowrap'>
+    <td align='right' rowspan='2' class='nowrap'>
       <%= mini_search_form %>
     </td>
   </tr>
@@ -27,7 +27,7 @@
   <tr>
     <td rowspan='2'><%= avatar_for @group, 'medium' %></td>
     <td style='width:99%'><h1><%= link_to_group @group, :display_name => true %></h1></td>
-    <td align='right' nowrap='nowrap'>
+    <td align='right' class='nowrap'>
       <%= mini_search_form %>
     </td>
   </tr>

@@ -12,8 +12,11 @@ module PageExtension::Groups
 
       has_many :group_participations, :dependent => :destroy
       has_many :groups, :through => :group_participations
-      belongs_to :group # the main group
-      
+
+      # the primary group will be equal to the owner if the owner is a group.
+      belongs_to :group                       # the primary group
+      belongs_to :owner, :polymorphic => true # the page owner
+
       has_many :namespace_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})'
 
       # override the ActiveRecord created method

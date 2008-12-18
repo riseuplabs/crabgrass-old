@@ -123,7 +123,10 @@ module ImageHelper
   #  * :scale  -- the img is scaled, preserving proportions 
   #  * :crop!  -- crop, even if there is no known height and width
   #
-
+  # note: if called directly, thumbnail_img_tag does not actually do the
+  #       cropping. rather, it generate a correct img tag for use with 
+  #       link_to_asset.
+  #
   def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
@@ -176,7 +179,8 @@ module ImageHelper
     end  
     style = "height:#{target_height}px;width:#{target_width}px"
     klass = options[:class] || 'thumbnail'
-    link_to img, asset.url, :class => klass, :title => asset.filename, :style => style
+    url   = options[:url] || asset.url
+    link_to img, url, :class => klass, :title => asset.filename, :style => style
   end
 
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})

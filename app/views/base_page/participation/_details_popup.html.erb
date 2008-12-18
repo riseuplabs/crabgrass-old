@@ -1,6 +1,6 @@
 <% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
 
-    <table><tr>
+    <table class='fieldset'><tr>
       <td><b><%= :created.t %>:</b> <%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
       <td>&nbsp;&nbsp;&nbsp;</td>
       <td><b><%= :updated.t %>:</b> <%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>

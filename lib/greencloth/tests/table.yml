@@ -286,3 +286,22 @@ out: |-
   		<td>3</td>
   	</tr>
   </table>
+---
+name: links in tables
+in: |
+  |{color:red}. a|b|[cute -> http://zooborns.com]|
+  |1|2|[scary -> http://www.cuteoverlord.blogspot.com]|
+out: |-
+  <table>
+  	<tr>
+  		<td style="color:red;">a</td>
+  		<td>b</td>
+  		<td><a href="http://zooborns.com">cute</a></td>
+  	</tr>
+  	<tr>
+  		<td>1</td>
+  		<td>2</td>
+  		<td><a href="http://www.cuteoverlord.blogspot.com">scary</a></td>
+  	</tr>
+  </table>
+

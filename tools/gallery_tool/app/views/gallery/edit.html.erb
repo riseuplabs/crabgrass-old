@@ -1,10 +1,3 @@
-<% content_for :style do %>
-div.gallery_swatch {
-  float: left;
-  padding: 0 2em 2em 0;
-}
-<% end %>
-
 <% @info_box = gallery_navigation %>
 
 <%= javascript_tag "
@@ -93,7 +86,7 @@ function saving_changes_notifier() {
 <%= javascript_tag("$('gallery_notify_area').innerHTML = '"+
 "Drag &amp; Drop images to rearrange them"[:drag_and_drop_to_rearrange_photos]+
 "';") %>
-<div id="gallery_overview" style="list-style-type:none;">
+<div class="gallery_edit">
 <% if @images.any? -%>
   <% @images.each_with_index do |image, i| -%>
     <%= render(:partial => 'image_edit',

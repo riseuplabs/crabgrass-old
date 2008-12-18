@@ -1,7 +1,7 @@
 <h1>
   <%= icon_for @asset if @asset %>
   <%=h @page.title %>
-  <%= @back_link if @back_link %>
+  <%= content_tag(:span,@title_addendum) if @title_addendum %>
 </h1>
 <div class='summary'>
   <%=h @page.summary %>

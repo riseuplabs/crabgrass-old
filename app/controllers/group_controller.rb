@@ -3,9 +3,10 @@ class GroupController < ApplicationController
   include GroupHelper
   helper 'task_list_page', 'tags' # remove task_list_page when tasks are in a separate controller
 
-  #layout :choose_layout
   stylesheet 'groups'
-  
+  stylesheet 'tasks', :action => :tasks
+  javascript :extra, :action => :tasks
+
   prepend_before_filter :find_group
   
   before_filter :login_required, :except => [:show, :archive, :tags, :search]
@@ -19,8 +20,6 @@ class GroupController < ApplicationController
   end  
 
   def show
-    @stylesheet = 'landing'
-
     if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
       @access = :private
     elsif @group.publicly_visible_group
@@ -90,8 +89,6 @@ class GroupController < ApplicationController
   end
 
   def tasks
-    @stylesheet = 'tasks'
-    @javascript = :extra
     @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
   end

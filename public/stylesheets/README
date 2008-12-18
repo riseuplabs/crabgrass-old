@@ -1,0 +1,62 @@
+How do stylesheets work?
+
+First and foremost, you need to know that some of the .css files are
+automatically generated and should not be edited by hand.
+
+Files in stylesheets/sass/*.sass are automatically converted into .css files and
+placed in stylesheets/*.css. 
+
+To read more about the format of .sass files, see:
+
+  http://haml.hamptoncatlin.com/docs/rdoc/classes/Sass.html
+
+There are three main categories of css files:
+
+stylesheets/core/
+  the core stylesheets that are included in all pages.
+
+stylesheets/as_needed/
+  stylesheets that are only sometimes used. for example, stylesheets
+  for a particular tool.
+
+stylesheets/ie/
+  stylesheets for ie6 and ie7 hacks.
+
+stylesheets/holygrail/
+  holygrail is the layout template that crabgrass uses. the pure,
+  unaltered holygrail stylesheets live here.
+
+
+core stylesheets
+-----------------
+
+These are loaded in this order:
+
+reset.css:
+  css reset to help deal with browser differences.
+
+layout.css
+  this file is for modifications to the default holygrail css.
+
+design.css:
+  general 'shell' css, fonts, and a catch-all for everything not in one of
+  the other files.
+
+landing.css:
+  css related specifically to the dashboard, the group home, and the
+  person profile. 
+
+page.css:
+  everything specific to content pages (ie wiki, discussion, gallery, etc).
+
+ui_elements.css:
+  common reusable css elements that are used everywhere.
+
+wiki.css:
+  formatting for the html that is generated from wiki markup by greencloth.
+
+images.css:
+  anything related to the display of images should go here.
+  this includes icons, thumbnails, avatars.
+
+

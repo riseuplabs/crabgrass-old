@@ -9,12 +9,11 @@ class GalleryController < BasePageController
 
 
   verify :method => :post, :only => [:add, :remove]
-  
-  prepend_before_filter :setup_gallery_view
 
   def show
     params[:page] ||= 1
     @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+    #@cover = @page.cover
   end
 
   def comment_image
@@ -57,18 +56,20 @@ class GalleryController < BasePageController
     @image_index = @showing.position
     @next = @showing.lower_item
     @previous = @showing.higher_item
+
     # we need to set @upart manually as we are not working on @page
     @upart = @image.page.participation_for_user(current_user)
-  end
-  
+
+    # the discussion for the detail view is not the discussion of the gallery,
+    # it is attached to the asset's hidden page:
+    @discussion = @image.page.discussion rescue nil
+    @discussion ||= Discussion.new
+    @create_post_url = url_for(:controller => 'gallery', :action => 'comment_image', :id => @image.id)
+    load_posts()
+  end  
   
   def change_image_title
-    # in non-ajax calls we need to render the form
-    if request.get?
-      detail_view
-      @change_title = true
-      render :template => 'detail_view'
-    else
+    if request.post?
       # whoever may edit the gallery, may edit the assets too.
       raise PermissionDenied unless current_user.may?(:edit, @page)
       @image = @page.images.find(params[:id])
@@ -76,13 +77,7 @@ class GalleryController < BasePageController
       page.title = params[:title]
       current_user.updated(page)
       page.save!
-      unless request.xhr?
-        redirect_to page_url(@page,
-                             :action => 'detail_view',
-                             :id => @image.id)
-      else
-        render :partial => 'update_image_title_xhr'
-      end
+      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
     end
   end
   
@@ -253,7 +248,6 @@ class GalleryController < BasePageController
         flash_message_now :exception => exc
       end
     end
-    @stylesheet = 'page_creation'
   end
   
   def upload
@@ -302,13 +296,18 @@ class GalleryController < BasePageController
     end  
   end
   
-  def setup_gallery_view
+  def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true
-    if params[:action] != 'show' && @page
-      @back_link = render_to_string(:partial => 'back_link')
+    if !action?(:show) && @page
+      @title_addendum = render_to_string(:partial => 'back_link')
     end
+    if action?(:detail_view)
+      @discussion = false # disable load_posts()
+      @show_posts = true
+   end
   end
 
+  
 end
 

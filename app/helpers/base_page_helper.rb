@@ -18,13 +18,23 @@ module BasePageHelper
   end
   
   def link_to_user_participation(upart)
-    label = content_tag :span, upart.user.display_name, :class => upart.access_sym
-    link_to_user(upart.user, :avatar => 'small', :label => label, :style => '')
+    klass = case upart.access_sym
+      when :admin : 'tiny_wrench_16'
+      when :edit : 'tiny_pencil_16'
+      when :view : ''
+    end
+    label = content_tag :span, upart.user.display_name, :class => klass
+    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)
-    label = content_tag :span, gpart.group.display_name, :class => gpart.access_sym
-    link_to_group(gpart.group, :avatar => 'small', :label => label, :style => '')
+    klass = case gpart.access_sym
+      when :admin : 'tiny_wrench_16'
+      when :edit : 'tiny_pencil_16'
+      when :view : ''
+    end
+    label = content_tag :span, gpart.group.display_name, :class => klass
+    link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   ## POSTS HELPERS
@@ -92,7 +102,7 @@ module BasePageHelper
       link_action = 'remove_star'
       link_text = 'Remove Star (:star_count)'[:remove_star_link]
     else
-      icon = 'star_empty_16'
+      icon = 'star_empty_dark_16'
       link_action = 'add_star'
       link_text = 'Add Star (:star_count)'[:add_star_link]
     end
@@ -108,7 +118,7 @@ module BasePageHelper
       link = link_to("Delete :page_class"[:delete_page_link] % { :page_class => page_class },
         page_xurl(@page, :action => 'destroy'),
         :method => 'post', :confirm => 'Are you sure you want to delete this page?')
-      content_tag :li, link, :class => 'small_icon minus_16'
+      content_tag :li, link, :class => 'small_icon trash_16'
     end
   end
 
@@ -213,7 +223,7 @@ module BasePageHelper
 
   def move_line
     if current_user.may? :admin, @page
-      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'application_go_16', :controller => 'participation')
+      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
     end
   end
 

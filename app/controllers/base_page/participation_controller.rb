@@ -100,7 +100,7 @@ class BasePage::ParticipationController < ApplicationController
       recipients = params[:recipients]
       options = {
         :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
-        :message => params[:message],
+        :message => params[:share_message],
         :send_emails => params[:send_emails],
         :mailer_options => mailer_options
       }

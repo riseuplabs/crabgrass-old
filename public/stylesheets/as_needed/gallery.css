@@ -1,84 +1,26 @@
-#gallery_overview {
-    padding:1em;
-    border:solid 1px #ddd;
-    max-height: 29em;
-    overflow:auto;
+.swatches {}
+.cover {
+  margin-bottom: 1em;
+}
+.swatch {
+  margin: 0 1em 1em 0;
+  float: left;
+}
+.cover .thumbnail {
+  margin: 0 auto;
+}
+.swatches a.thumbnail, .cover a.thumbnail {
+  border-width: 3px;
 }
 
-.gallery_swatch {
-    position:relative;
-    width:7em;
-    height:7em;
-    max-width:7em;
-    max-height:7em;
-    border-style:solid;
-    border-width:1px;
-    border-color:#ccc;
-    text-align:center;
-    overflow:hidden;
-    margin:1em;
-}
-
-.gallery_swatch_edit {
-    position:absolute !important;
-    margin:0em !important;
-}
-
-.gallery_swatch img {
-    vertical-align:middle;
-    text-align:center;
-}
-
+/*
 .gallery_swatch_landscape {
     max-height:7em;
 }
 .gallery_swatch_portrait {
     max-width:7em;
 }
-
-.swatch_container {
-    position:relative;
-    max-height:7em;
-    max-width:7em;
-    height:7em;
-    width:7em;
-    float:left;
-    margin:1em;
-    padding:0em;
-}
-
-.swatch_container:hover .image_control {
-    display:block;
-}
-
-.swatch_container_hover {
-    border:dashed 2px #ccc;
-    height:8em;
-    width:8em;
-}
-
-
-.image_control {
-    position:absolute;
-    bottom:0px;
-    display:none;
-}
-
-.image_control a img {
-    margin-left:0.2em;
-}
-
-
-#target_for_upload {
-    position:absolute;
-    left:40%;
-    width:40em;
-    top:55%;
-    padding:10px;
-    border:solid 2px #bbb;
-    background:white;
-    margin-left:-20em;
-}
+*/
 
 /* gallery page styles */
 .gallery-nav { 
@@ -139,4 +81,71 @@
 .gallery-nav a { color:#5A98C8; font-size:11px; }
 .gallery-nav .gallery-actions a { padding:2px 0px 4px 24px; margin-right:20px; }
 .title2 { text-align:left;}
-.posts { text-align:left;}
+
+/**
+ ** GALLERY EDIT
+ **/
+
+div.gallery_edit .gallery_swatch {
+  position:relative;
+  width:7em;
+  height:7em;
+  max-width:7em;
+  max-height:7em;
+  border-style:solid;
+  border-width:1px;
+  border-color:#ccc;
+  text-align:center;
+  overflow:hidden;
+  margin:1em;
+}
+
+.swatch_container {
+    position:relative;
+    max-height:7em;
+    max-width:7em;
+    height:7em;
+    width:7em;
+    float:left;
+    margin:1em;
+    padding:0em;
+}
+
+.swatch_container:hover .image_control {
+    display:block;
+}
+
+.swatch_container_hover {
+    border:dashed 2px #ccc;
+    height:8em;
+    width:8em;
+}
+
+
+.image_control {
+    position:absolute;
+    bottom:0px;
+    display:none;
+}
+
+.image_control a img {
+    margin-left:0.2em;
+}
+
+#target_for_upload {
+    position:absolute;
+    left:40%;
+    width:40em;
+    top:55%;
+    padding:10px;
+    border:solid 2px #bbb;
+    background:white;
+    margin-left:-20em;
+}
+
+.gallery_swatch_edit {
+  position: absolute !important;
+  margin: 0em !important;
+}
+
+

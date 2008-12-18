@@ -19,22 +19,22 @@
 </head>
 <body>
 
-<div id="header">
+<div id='header'>
   <div id='masthead'>
   <h1 id='site_title'><%= site_name %></h1>
   <%= call_hook :masthead %>
 <%= render :partial => 'layouts/menu' %>
   </div>
-	<div id="banner"><div id='bannercontent'><%= @banner %></div></div>
+	<div id='banner'><div class='content'><%= @banner %></div></div>
 </div>
 
 <div id='wrapper'>
 <%= render :partial => 'layouts/messages' %>
 <%= render :file => 'layouts/holygrail_'+type_of_column_layout %>
-<div id="content-bottom-shim" class="hg-<%= type_of_column_layout %>"></div>
+<!-- <div class='bottom_shim hg-<%= type_of_column_layout %>'></div> -->
 </div>
 
-<div id="footer"><div id='footercontent'>
+<div id='footer'><div class='content'>
   <%= render :partial => 'layouts/footer' %>
   <%= call_hook :footer_content %>
 </div></div>
