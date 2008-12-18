@@ -69,7 +69,8 @@ ActionController::Routing::Routes.draw do |map|
   # our default route is sent to the dispatcher
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
-  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
+  map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil,  :_context => /[\w\.\@\s-]+/
+
 end
 
 # debug routes
