@@ -128,7 +128,7 @@ table.share_page_recipients {
     background: #e0e0e0;
     text-transform: uppercase;
     font-size: 0.8em;
-    padding: 0.25em 0 0.25em .5em;
+    padding: 0.5em 0 0.5em .75em;
     margin: 2.5em 0 0.5em 0;
     -moz-border-radius: 4px; }
   #page_sidebar ul.rule {
