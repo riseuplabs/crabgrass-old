@@ -2,11 +2,12 @@
 <tr colspan='2'><td><%= header_with_more(:h3, :dim, "Recent Activity"[:recent_activity], nil) %></td></tr>
 <tr>
   <%- length = @activities.size -%>
+  <%- half = (length/2.0).ceil %>
   <td class="left">
-    <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(length/2-1)]} %>
+    <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
   </td>
   <td class="right">
-    <%= render :partial => 'activity/list', :locals => {:activities => @activities[(length/2)..(length-1)]} %>
+    <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
   </td>
 </tr>
 </table>

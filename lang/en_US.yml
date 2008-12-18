@@ -214,6 +214,7 @@ activity_user_joined_group: "{user} has joined {group_type} {group}"
 activity_user_destroyed: "{user} has retired"
 activity_group_created: "{user} created {group_type} {group}"
 activity_group_destroyed: "{group} was destroyed by {user}"
+activity_wall_message: "{author} wrote to {user}: {message}"
 
 ##
 ## ASSETS

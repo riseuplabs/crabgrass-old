@@ -32,10 +32,7 @@ class MessageWallActivity < Activity
     if extra[:type] == "status"
       txt = '{user} {message}' % {:user => user_span(:author), :message => extra[:snippet]}
     else
-      txt = '{user} wrote: {message}'[
-         :activity_wall_message, 
-         {:user => user_span(:author), :message => extra[:snippet]}
-      ]
+      txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_span(:user), :author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
     end
     if txt[-3..-1] == '...'
       commands << content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
