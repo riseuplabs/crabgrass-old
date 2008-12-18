@@ -63,7 +63,7 @@ require 'rubygems'
 begin
   # try redcloth 4.1
   require 'redcloth'
-rescue Exception
+#rescue Exception
   # try redcloth 4.0
   require 'RedCloth'
 end
