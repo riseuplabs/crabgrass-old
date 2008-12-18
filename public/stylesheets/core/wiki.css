@@ -54,26 +54,21 @@
   .wiki p.right img,
   .post p.right img {
     margin-left: 1em; }
-.wiki table,
-.post table {
+
+.wiki table {
   border-collapse: collapse; }
-.wiki td,
-.post td {
+.wiki td {
   padding: 4px;
   border: 1px solid #CCC; }
-.wiki th,
-.post th {
+.wiki th {
   padding: 4px;
   border: 1px solid #CCC;
   background: #ddd; }
-.wiki tr.odd,
-.post tr.odd {
+.wiki tr.odd {
   background-color: #F2F2F2; }
-.wiki tr.even,
-.post tr.even {
+.wiki tr.even {
   background-color: white; }
-.wiki code,
-.post code {
+.wiki code {
   background-color: #fff6dd; }
 
 div.diff {

@@ -5,16 +5,20 @@ body {
 
 h1 {
   font-family: arial, helvetica, sans-serif;
-  font-size: 2.1em; }
+  font-size: 2.1em;
+  line-height: 1em; }
 
 h2, h3, h4, h5 {
-  font-family: verdana, bitstream vera sans, helvetica, sans-serif; }
+  font-family: verdana, bitstream vera sans, helvetica, sans-serif;
+  line-height: 1em; }
 
 h2 {
-  font-size: 1.125em; }
+  font-size: 1.125em;
+  line-height: 1.125em; }
 
 h3 {
-  font-size: 1em; }
+  font-size: 1em;
+  line-height: 1.125em; }
 
 div#wrapper {
   padding: 1.5em;
@@ -134,8 +138,7 @@ form.minisearch {
     top: 0;
     right: 0; }
   .title_box h1 {
-    color: #666699;
-    padding: 0.25em 0; }
+    color: #666699; }
     .title_box h1 span {
       margin-left: 3em; }
   .title_box .breadcrumb {

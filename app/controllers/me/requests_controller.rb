@@ -31,12 +31,12 @@ class Me::RequestsController < Me::BaseController
 
   def context
     me_context('small')
-    add_context 'requests', url_for(:controller => 'me/requests', :action => nil)
-    if action?(:to_me)
-      add_context "to me".t, url_for(:controller => '/me/requests', :action => 'to_me')
-    elsif action?(:from_me)
-      add_context "from me".t, url_for(:controller => '/me/requests', :action => 'from_me')
-    end
+    #add_context 'requests', url_for(:controller => 'me/requests', :action => nil)
+    #if action?(:to_me)
+    #  add_context "to me".t, url_for(:controller => '/me/requests', :action => 'to_me')
+    #elsif action?(:from_me)
+    #  add_context "from me".t, url_for(:controller => '/me/requests', :action => 'from_me')
+    #end
   end
   
 end

@@ -7,7 +7,7 @@ class UserDestroyedActivity < Activity
   alias_attr :recipient,  :subject
   alias_attr :username,   :extra
 
-  def description
+  def description(options={})
     "{user} has retired"[
        :activity_user_destroyed, {:user => username}
     ]

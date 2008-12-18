@@ -227,9 +227,10 @@ table.posts
     border-left: 1px solid #ccc
     padding: 0 10px
     // the first and last <p> should not have an outer margin
-    p:first-child,
+    p:first-child
+      margin-top: 0
     p:last-child
-      margin: auto
+      margin-bottom: 0
   td:hover .post_action_icon
     display: block
 

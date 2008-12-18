@@ -1,8 +1,8 @@
-<% form_tag url_for(:controller => '/me/dashboard', :action => 'add_status_message') do %>
+<% form_tag url_for(:controller => '/messages', :action => 'set_status', :user => current_user.login) do %>
 <table class='set_status'><tr>
   <td><strong><%=h current_user.display_name %>...</strong></td>
   <td style='width:100%'>
-    <%= text_field :post, :body, :value =>  @current_status || "", :style=>'width:100%' %>
+    <%= text_field :post, :body, :value =>  @current_status || "", :style=>'width:100%', 'maxlength' => 140 %>
     <%# "What are you doing right now?"[:set_status_messsage] %>
   </td>
   <td><a><%= submit_tag "Set Status"[:set_status_button] %></a></td>

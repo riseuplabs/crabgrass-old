@@ -15,7 +15,7 @@ class FriendActivity < Activity
     end
   end
 
-  def description
+  def description(options={})
     "{user} added {other_user} as a contact"[
        :activity_contact_created, 
        {:user => user_span(:user), :other_user => user_span(:other_user)}

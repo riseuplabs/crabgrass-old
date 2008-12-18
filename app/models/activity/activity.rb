@@ -1,3 +1,25 @@
+# Activity schema:
+#
+#  create_table "activities", :force => true do |t|
+#    t.integer  "subject_id",   :limit => 11
+#    t.string   "subject_type"
+#    t.string   "subject_name"
+#    t.integer  "object_id",    :limit => 11
+#    t.string   "object_type"
+#    t.string   "object_name"
+#    t.string   "type"
+#    t.string   "extra"
+#    t.integer  "related_id",
+#    t.integer  "key",          :limit => 11
+#    t.datetime "created_at"
+#    t.integer  "access",       :limit => 1,  :default => 2
+#  end
+#
+#
+# related_id and extra are used for generic storage and association, whatever 
+# the subclass wants to use it for.
+# 
+
 class Activity < ActiveRecord::Base
 
   # activity access:
@@ -20,6 +42,13 @@ class Activity < ActiveRecord::Base
     self.subject_name ||= self.subject.name if self.subject and self.subject.respond_to?(:name)
     self.object_name  ||= self.object.name if self.object and self.object.respond_to?(:name)
   end
+
+  ##
+  ## TO BE DEFINED BY SUBCLASSES
+  ## 
+
+  def icon() end
+  def description(options={}) end
 
   ##
   ## FINDERS
@@ -126,8 +155,6 @@ class Activity < ActiveRecord::Base
       group_type.downcase.t
     end
   end
-
-  def icon() end
   
   ##
   ## DYNAMIC MAGIC
@@ -137,6 +164,7 @@ class Activity < ActiveRecord::Base
     if self.method_defined? old
       alias_method new, old
       alias_method "#{new}=", "#{old}="
+      define_method("#{new}_id")   { read_attribute("#{old}_id") }
       define_method("#{new}_name") { read_attribute("#{old}_name") }
       define_method("#{new}_type") { read_attribute("#{old}_type") }
     else

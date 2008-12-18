@@ -19,15 +19,16 @@ body
 h1
   font-family= !headline_font_family
   font-size= !h1_font_size
-
+  line-height: 1em
 h2, h3, h4, h5
   font-family= !body_text_font_family 
-
+  line-height: 1em
 h2
   font-size= !h2_font_size
-
+  line-height= !h2_font_size
 h3
   font-size= !h3_font_size
+  line-height= !h2_font_size
 
 div#wrapper
   padding= !outer_margin
@@ -177,7 +178,6 @@ form.minisearch
     right: 0
   h1
     color= !title_box_heading_color
-    padding: 0.25em 0
     span
       margin-left: 3em
   .breadcrumb

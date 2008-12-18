@@ -51,6 +51,7 @@ no_search_results: "No Results"
 empty_results: "None"
 search_headline: "Search"
 see_more_link: "More"
+details_link: "Details"
 
 edit: "Edit"
 preview: "Preview"
@@ -389,7 +390,6 @@ location_state: state/province
 location_postal_code: postal code
 location_country: country
 
-users_wall: ":user's Wall"
 #users_recent_activity: ":user's Recent Activity"
 #users_recent_work: ":user's Recent Work"
 recent_contributions: "Recent Contributions"
@@ -786,8 +786,13 @@ insert_image_instructions: "Click on an image thumbnail to insert it into the wi
 
 set_status_button: "Set Status"
 my_status_heading: "Your Current Status"
+# ^^ no longer used
+users_wall: ":user's Wall"
+## ^^ no longer used
 recent_wall_posts: "Recent Wall Posts"
-
+## ^^ no longer used
+wall_heading: "Public Message Wall"
+wall_post_button: "Post New Message"
 
 ##
 ## EMAIL

@@ -15,7 +15,7 @@ class GroupGainedUserActivity < Activity
     end
   end
 
-  def description
+  def description(options={})
     "{user} joined {group_type} {group}"[
       :activity_user_joined_group, {
         :user => user_span(:user),
