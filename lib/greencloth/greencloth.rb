@@ -119,8 +119,9 @@ class GreenCloth < RedCloth::TextileDoc
   attr_accessor :offtags
   attr_accessor :formatter
 
-  def initialize(string, default_group_name = 'page')
+  def initialize(string, default_group_name = 'page', restrictions = [])
     @default_group = default_group_name
+    restrictions.each { |r| method("#{r}=").call( true ) }
     super(string)
   end
 
@@ -136,8 +137,6 @@ class GreenCloth < RedCloth::TextileDoc
   def to_html(*before_filters, &block)
     @block = block
 
-    strip_enclosing_p = before_filters.delete(:no_enclosing_p)
-
     before_filters += [:normalize_code_blocks, :offtag_obvious_code_blocks,
       :bracket_links, :auto_links, :headings, :embedded, :quoted_block,
       :tables_with_tabs, :wrap_long_words]
@@ -147,7 +146,6 @@ class GreenCloth < RedCloth::TextileDoc
 
     apply_rules(before_filters)
     html = to(GreenClothFormatterHTML)
-    html.gsub!(/\A<p>|<\/p>\Z/,'') if strip_enclosing_p
     extract_offtags(html)
 
     return html

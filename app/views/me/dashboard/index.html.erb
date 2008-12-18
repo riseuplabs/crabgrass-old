@@ -1,8 +1,15 @@
 <%- @title_box = capture do -%>
-  <h1><%= "My Dashboard"[:my_dashboard] %></h1>
+<table>
+  <tr>
+   <td class='left'><h1><%= "My Dashboard"[:my_dashboard] %></h1></td>
+   <td class='right'><%= render :partial => 'messages/status_form' %></td>
+  </tr>
+</table>
 <%- end -%>
-<%- @info_box = capture do -%>
-  <%= render :partial => 'me/dashboard/info_box' %>
+<%- if @activities.any? -%>
+  <%- @info_box = capture do -%>
+    <%= render :partial => 'me/dashboard/info_box' %>
+  <%- end -%>
 <%- end -%>
 
 <div class='landing'>

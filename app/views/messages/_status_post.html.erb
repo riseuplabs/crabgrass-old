@@ -1,0 +1,9 @@
+<tr>
+  <td class='icon'><%= avatar_for(post.user, 'small') %></td>
+  <td>
+     <%= link_to_user(post.user) %>
+     <%= post.body_html %><br/>
+     <%= link_line(:bullet, friendly_date(post.created_at), delete_post(post)) %>
+  </td>
+</tr>
+

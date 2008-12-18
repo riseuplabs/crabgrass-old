@@ -10,7 +10,7 @@ see PeopleController.
 
 class PersonController < ApplicationController
 
-  helper 'task_list_page', 'wall', 'profile'
+  helper 'task_list_page', 'profile'
   stylesheet 'tasks', :action => :tasks
 
   def initialize(options={})
@@ -20,14 +20,7 @@ class PersonController < ApplicationController
     
   def show
     @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
-    
-    @wall_discussion = @user.ensure_discussion
-    if params[:show_full_wall]
-      @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')
-    else
-      @wall_posts = @wall_discussion.posts.all(:order => 'created_at DESC')[0..9]
-    end
-    
+        
     params[:path] ||= ""
     params[:path] = params[:path].split('/')
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
@@ -60,36 +53,14 @@ class PersonController < ApplicationController
     @pages = Page.find_by_path('type/task/pending', options)
     @task_lists = @pages.collect{|p|p.data}
   end
-  
-   def add_wall_message
-    # 1. get the user, whos discussionis edited
-    # 2. get the userr, who is editing the discussion
-    # if it's  private, we get UserRelation.blabla
-    # if not, we take @user.discussion
-    # @user = User.find(params[:id])
-    if @user.discussion.nil?
-      @user.discussion = Discussion.create
-    end
-    @discussion = @user.discussion
-    # TODO how do we find out if user is allowed to post  in here?
-    @post = Post.new(params[:post])
-    @post.discussion  = @user.discussion
-    # don't see the reason for ensure_wall
-    # @post.discussion = @user.ensure_wall
-    @post.user = current_user
-    @post.save!
-    @user.discussion.save
     
-    redirect_to(url_for_user(@user))
-  end
-   
   protected
   
   def context
     person_context
-    unless ['show'].include? params[:action]
-      add_context params[:action], people_url(:action => params[:action], :id => @user)
-    end
+    #unless ['show'].include? params[:action]
+    #  add_context params[:action], people_url(:action => params[:action], :id => @user)
+    #end
   end
   
   prepend_before_filter :fetch_user

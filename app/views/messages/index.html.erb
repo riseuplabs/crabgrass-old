@@ -1,11 +1,12 @@
+<% @title_box = content_tag :h1, "Public Message Wall"[:wall_heading] %>
 <%
-  # locals: posts
 
   today = []
   yesterday = []
   week = []
   later = []
   
+  posts = @posts.dup
   post = posts.shift
 
   while post and after_day_start?(post.updated_at)
@@ -28,31 +29,36 @@
     post = posts.shift
   end
 -%>
+
+<%= pagination_links @posts %>
+
 <div class="wall_posts">
 <table><tr>
 <% if today.any? -%>
   <tr><td colspan='2' class='date'><%= "Today"[:date_today] -%></td></tr>
   <% today.each do |post| -%>
-    <%= wall_post(post) -%>
+    <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if yesterday.any? -%>
   <tr><td colspan='2' class='date'><%= "Yesterday"[:date_yesterday] -%></td></tr>
   <% yesterday.each do |post| -%>
-    <%= wall_post(post) -%>
+    <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if week.any? -%>
   <tr><td colspan='2' class='date'><%= "This Past Week"[:date_this_week] -%></td></tr>
   <% week.each do |post| -%>
-    <%= wall_post(post) -%>
+    <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if later.any? -%>
   <tr><td colspan='2' class='date'><%= "Older"[:date_older] -%></td></tr>
   <% later.each do |post| -%>
-    <%= wall_post(post) -%>
+    <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 </tr></table>
 </div>
+
+<%= pagination_links @posts %>

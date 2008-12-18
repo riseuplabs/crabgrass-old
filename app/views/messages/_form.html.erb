@@ -1,0 +1,6 @@
+<% form_tag(url_for(:controller => '/messages', :action => 'create', :user => @user.login)) do %>
+  <div class='fieldset'>
+    <%= text_area :post, :body, :size => '40x4', :style => 'width:99%' %>
+    <%= submit_tag "Post New Message"[:wall_post_button] %>
+  </div>
+<% end %>

@@ -1,3 +1,14 @@
+#  create_table "posts", :force => true do |t|
+#    t.integer  "user_id",       :limit => 11
+#    t.integer  "discussion_id", :limit => 11
+#    t.text     "body"
+#    t.text     "body_html"
+#    t.datetime "created_at"
+#    t.datetime "updated_at"
+#    t.datetime "deleted_at"
+#    t.string   "type"
+#  end
+
 class Post < ActiveRecord::Base
 
   ##

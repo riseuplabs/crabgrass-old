@@ -43,7 +43,7 @@ class Me::SearchController < Me::BaseController
   
   def context
     me_context('large')
-    add_context 'search', url_for(:controller => 'me/search', :action => nil)
+    #add_context 'search', url_for(:controller => 'me/search', :action => nil)
   end
 
   def add_excerpts_to_pages(pages)

@@ -1,5 +1,5 @@
 class GroupLostUserActivity < GroupGainedUserActivity  
-  def description
+  def description(options={})
     "{user} has left {group_type} {group}"[
       :activity_user_left_group, {
         :user => user_span(:user),

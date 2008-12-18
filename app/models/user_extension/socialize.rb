@@ -37,7 +37,7 @@ module UserExtension::Socialize
     end
   end
     
-    ## STATUS / WALL
+  ## STATUS / WALL
   
   # returns the users current status by returning his latest status_posts.body
   def current_status
@@ -46,7 +46,9 @@ module UserExtension::Socialize
 
   ## CONTACTS
 
-  # this should be the ONLY way that contacts are created
+  # this should be the ONLY way that contacts are created.
+  # as a side effect of the FriendActivity created when a contact is added, 
+  # profiles will be created for self if they do not already exist. 
   def add_contact!(other_user, type=nil)
     unless self.contacts.find_by_id(other_user.id)
       Contact.create!(:user_id => self.id, :contact_id => other_user.id)

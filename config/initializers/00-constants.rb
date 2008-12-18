@@ -17,6 +17,7 @@ MEDIA_TYPE = {
 }.freeze
 
 ARROW = " &raquo; "
+BULLET = " &bull; "
 
 # This is the time in years a password should hold for a brute force attack at
 # minimum, assuming 1000 attempts per second.

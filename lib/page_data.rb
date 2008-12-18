@@ -24,11 +24,17 @@ module PageData
       end
     }
 
-    base.has_many :pages, :as => :data
-    base.belongs_to :page_terms
-    base.class_eval do
-      def page; pages.first; end
+    # ruby has unexpected syntax for checking if Page is a superclass of base
+    unless base <= Page
+      base.has_many :pages, :as => :data
+      base.belongs_to :page_terms
+      base.class_eval do
+        def page; pages.first; end
+      end
+    else
+      base.class_eval do
+        def page; self; end
+      end
     end
-
   end
 end

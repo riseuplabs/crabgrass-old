@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::BaseController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.find(:all)
+    @users = User.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,4 +82,5 @@ class Admin::UsersController < Admin::BaseController
       format.xml  { head :ok }
     end
   end
+
 end

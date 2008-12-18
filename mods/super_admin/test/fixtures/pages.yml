@@ -1,0 +1,16 @@
+page301:
+  id: 3
+  title: A Bad Rating
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  resolved: 1
+  public: 
+  created_by_id: 1
+  updated_by_id: 1 
+  summary: 
+  type: MessagePage
+  updated_by_login: blue
+  created_by_login: blue
+  flow: 
+  public_requested: 1
+  vetted: false

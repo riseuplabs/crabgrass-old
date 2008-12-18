@@ -32,9 +32,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.me      'me/:action/:id', :controller => 'me/base'
   
-  map.people 'people/:action/:id', :controller => 'people'
+  map.people  'people/:action/:id', :controller => 'people'
   map.connect 'person/:action/:id/*path', :controller => 'person'
-  
+  map.connect 'messages/:user/:action/:id', :controller => 'messages', :action => 'index', :id => nil
+
   map.groups   'groups/:action/:id', :controller => 'groups'
   map.group    'group/:action/:id', :controller => 'group'
   map.networks 'networks/:action/:id', :controller => 'networks'

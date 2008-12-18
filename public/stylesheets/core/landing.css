@@ -1,17 +1,8 @@
-.title_box h1 em.status {
-  font-weight: 100; }
-
 .dash_box {
   float: left;
   margin: 0 2em 1.5em 0; }
   .dash_box div.link_line {
     line-height: 0.8em; }
-
-.activities li, .user_activities {
-  color: #666;
-  margin: 7px 0px;
-  padding: 3px 0px;
-  padding-left: 24px; }
 
 .left_column h2.alert {
   margin: 1em 0; }
@@ -102,13 +93,6 @@ div.tags ul {
 
 .landing h2.alert {
   padding-bottom: 0.5em; }
-.landing .activities, .landing .user_activities {
-  clear: left;
-  float: none; }
-.landing .photos_activities {
-  margin-left: 1.8em; }
-.landing ul li {
-  font-size: 11px; }
 .landing table td.left {
   width: 40%;
   border-right: 1px dotted #ccc; }
@@ -123,16 +107,11 @@ div.tags ul {
   .box1 .description {
     padding-top: 1em; }
 
-.profile-fun {
-  width: 100%;
-  background-color: #EFF9FE; }
-  .profile-fun td {
-    padding-right: 1em;
-    vertical-align: top; }
-  .profile-fun .profile-wall {
-    width: 70%; }
-    .profile-fun .profile-wall .fieldset a {
-      float: right; }
+.title_box h1 em.status {
+  font-weight: 100; }
+
+.info_box h3 {
+  padding-bottom: 0.5em; }
 
 .set_status {
   width: 100%; }
@@ -140,23 +119,19 @@ div.tags ul {
     vertical-align: middle;
     padding: 0.5em; }
 
-.wall_posts {
-  clear: both;
-  height: 10em;
-  overflow: auto;
-  background: #fff;
-  border: 1px solid #ccc; }
-  .wall_posts table td.icon {
-    width: 1%; }
-  .wall_posts td {
-    vertical-align: top;
-    padding: 0.25em;
-    border-bottom: 1px solid #ccc; }
-    .wall_posts td.date {
-      background: #eee;
-      color: #738899;
-      text-transform: capitalize;
-      font-weight: bold; }
+.title_box table {
+  width: 100%; }
+  .title_box table td.left {
+    width: 1%;
+    white-space: nowrap; }
+  .title_box table td.right {
+    padding-left: 4em;
+    width: 99%;
+    text-align: right; }
 
-ul.plain li a span {
-  font-size: 11px; }
+.activities li {
+  color: #666;
+  margin-bottom: 0.75em;
+  padding-left: 24px; }
+  .activities li span.commands a {
+    text-transform: lowercase; }
