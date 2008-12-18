@@ -171,11 +171,6 @@ table.share_page_recipients {
     #posts .post-author div.username,
     #posts .post-author div.date {
       margin-right: 40px; }
-  #posts .post_action_icon {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    display: none; }
 
 table.posts {
   width: 100%;
@@ -202,6 +197,11 @@ table.posts {
       margin-bottom: 0; }
   table.posts td:hover .post_action_icon {
     display: block; }
+  table.posts td .post_action_icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none; }
 
 div.title_box form .h1 {
   line-height: 1em;
