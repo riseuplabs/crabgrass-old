@@ -38,9 +38,9 @@ class ProfileTest < Test::Unit::TestCase
     
     red.add_contact!(blue)
     
-    blue.profiles.create :friend => true, :organization => 'rainbows'
-    blue.profiles.create :stranger => true, :organization => 'none'
-        
+    blue.profiles.private.update_attribute(:organization, 'rainbows')
+    blue.profiles.public.update_attribute(:organization, 'none')
+    
     profile = blue.profiles.visible_by(red)
     assert profile, 'red should be able to view blue profile'
     assert_equal "rainbows", profile.organization, "should show organization 'rainbows' in profile"
