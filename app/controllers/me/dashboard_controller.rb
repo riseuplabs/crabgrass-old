@@ -24,7 +24,7 @@ class Me::DashboardController < Me::BaseController
   
   def context
     me_context('large')
-    #add_context 'dashboard', url_for(:controller => 'me/dashboard', :action => nil)
+    add_context 'Dashboard'[:me_dashboard_link], url_for(:controller => 'me/dashboard', :action => nil)
   end
   
 end

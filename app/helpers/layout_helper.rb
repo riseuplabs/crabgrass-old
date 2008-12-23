@@ -3,12 +3,7 @@ module LayoutHelper
   ##########################################
   # DISPLAYING BREADCRUMBS and CONTEXT
   
-  def link_to_breadcrumbs
-    if @active_tab == :people || @active_tab == :groups || @active_tag == :networks
-      min_length = 3
-    else
-      min_length = 2
-    end
+  def link_to_breadcrumbs(min_length = 3)
     if @breadcrumbs and @breadcrumbs.length >= min_length
       content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
     else
