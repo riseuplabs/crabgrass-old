@@ -193,23 +193,36 @@ span.break {
 
 h1.dim {
   color: #738899;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h1.bright {
   color: #5B97CB;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h1.alert {
   color: #CE4A48;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 
 h2.dim {
   color: #738899;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h2.bright {
   color: #5B97CB;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h2.alert {
   color: #CE4A48;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
+h2.section {
+  color: #333;
+  margin-bottom: 0.5em;
+  background-color: #dfdfdf;
+  border: 1px solid #bbb;
+  padding: 0.25em;
+  -moz-border-radius: 6px; }
 h2 span {
   font-size: 0.6em;
   white-space: nowrap;
@@ -217,13 +230,16 @@ h2 span {
 
 h3.dim {
   color: #738899;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h3.bright {
   color: #5B97CB;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h3.alert {
   color: #CE4A48;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h3 span {
   font-size: 0.6em;
   white-space: nowrap;
