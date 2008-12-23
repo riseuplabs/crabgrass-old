@@ -52,22 +52,32 @@ class BasePage::ParticipationController < ApplicationController
     render :template => 'base_page/participation/show_' + params[:name] + '_popup'
   end
 
-  # alter the group_participations so that the primary group is
-  # different.
-  # requires :admin access
+  # moves this page to a new group.
+  # requires :admin access.
   def move
     if params[:cancel]
       redirect_to page_url(@page)
     elsif params[:group_id].any?
       group = Group.find params[:group_id]
+      raise PermissionDenied.new unless current_user.member_of?(group)
       @page.remove(@page.group) if @page.group
-      @page.add(group, :access => :admin)
-      @page.group = group
+      @page.owner = group
       current_user.updated(@page)
-      @page.save
+      @page.save!
       clear_referer(@page)
       redirect_to page_url(@page)      
     end
+  end
+
+  # this is very similar to move.
+  # only allow changing the owner to someone who is already an admin
+  def set_owner
+    owner = (User.find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
+    raise PermissionDenied.new unless owner.may?(:admin,@page)
+    @page.owner = owner
+    @page.save!
+    clear_referer(@page)
+    redirect_to page_url(@page)
   end
   
   ##
@@ -159,7 +169,6 @@ class BasePage::ParticipationController < ApplicationController
       page.hide dom_id(upart || gpart)
     end
   end
-
   
   protected
   
@@ -172,7 +181,7 @@ class BasePage::ParticipationController < ApplicationController
   end
 
   def authorized?
-    if ['update_public', 'move', 'create','destroy'].include? params[:action]
+    if action?('update_public','create','destroy', 'move','set_owner')
       current_user.may? :admin, @page
     else
       current_user.may? :view, @page

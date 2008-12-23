@@ -280,6 +280,15 @@ table.pretty {
     table.pretty a:hover {
       text-decoration: underline; }
 
+table.plain {
+  border-collapse: collapse;
+  width: 100%; }
+  table.plain td {
+    padding: 0.5em; }
+    table.plain td.label {
+      text-align: right;
+      font-weight: bold; }
+
 .pagination {
   padding: 1em 0;
   text-align: center; }
