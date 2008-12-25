@@ -206,8 +206,8 @@ class AssetTest < Test::Unit::TestCase
 
   def test_doc
     @asset = Asset.make :uploaded_data => upload_data('msword.doc')
-    assert_equal TextAsset, @asset.class, 'asset should be a TextdocAsset'
-    assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextdocAsset'
+    assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
+    assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal false, thumb.failure?, 'generating thumbnail "%s" should have succeeded' % thumb.name
