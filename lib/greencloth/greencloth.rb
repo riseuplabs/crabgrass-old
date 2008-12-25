@@ -3,13 +3,15 @@
 passing a block to to_html()
 -----------------------------
 
-  html = GreenCloth.new(test_text,'mygroup').to_html() do |label, url|
-    process_link(label,url)
+  html = GreenCloth.new(test_text,'mygroup').to_html() do |link_data|
+    process_link(link_data)
   end
 
   process_link should return either nil or an <a> tag. If nil, then
-  the greencloth defaul is used.
+  the greencloth default is used.
   
+  link_date is a hash that might include: url, label, context_name, page_name
+
 custom GreenCloth filters, without messing up <code> blocks
 ------------------------------------------------------------
 
@@ -467,17 +469,6 @@ class GreenCloth < RedCloth::TextileDoc
   ##
 
   private
-  
-  # 
-  # convert text so that it is in a form that matches our 
-  # convention for page names and group names:
-  # - all lowercase
-  # - no special characters
-  # - replace spaces with hypens
-  # 
-  #def nameize(text)
-  #  text.strip.downcase.gsub(/[^-a-z0-9_ \+]/,'').gsub(/[ ]+/,'-') if text
-  #end
   
   # from actionview texthelper
   def truncate(text, length = 30, truncate_string = "...")
