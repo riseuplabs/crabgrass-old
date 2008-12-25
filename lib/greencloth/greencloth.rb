@@ -3,10 +3,13 @@
 passing a block to to_html()
 -----------------------------
 
-  html = GreenCloth.new(test_text,'mygroup').to_html() do |link|
-    link_is_valid(link)
+  html = GreenCloth.new(test_text,'mygroup').to_html() do |label, url|
+    process_link(label,url)
   end
 
+  process_link should return either nil or an <a> tag. If nil, then
+  the greencloth defaul is used.
+  
 custom GreenCloth filters, without messing up <code> blocks
 ------------------------------------------------------------
 
@@ -54,21 +57,26 @@ offtags
 offtags work like this:
 
   "<p>hello <code>there</code></p>"
-  "<p>hello <code>{offtag#1}</code></p>"
+  "<p>hello <code>}offtag#1{</code></p>"
 
 =end
 
 require 'rubygems'
-
 begin
   # try redcloth 4.1
+  gem 'redcloth', '>= 4.1'
   require 'redcloth'
 rescue Exception
   # try redcloth 4.0
+  gem 'RedCloth', '>= 4.0'
   require 'RedCloth'
 end
-
 require 'redcloth/formatters/html'
+
+##
+## GREENCLOTH HTML FORMATTER
+##
+
 module GreenClothFormatterHTML
   include RedCloth::Formatters::HTML
 
@@ -112,6 +120,13 @@ module GreenClothFormatterHTML
   end
     
 end
+
+
+############################################################################
+
+##
+## GREENCLOTH PARSER
+##
 
 class GreenCloth < RedCloth::TextileDoc
 
@@ -259,6 +274,9 @@ class GreenCloth < RedCloth::TextileDoc
   OFFTAG_RE = /\}#{OFFTAG_PREFIX}#([\d]+)\{/  # matches }offtag#55{ -> $1 == 55
                                               # why }{ instead of {}? so offtags will work with tables.
 
+  # text: the text to offtag
+  # original: the original raw text before transformation. we keep it in case
+  #           we need to undo the offtagging for a particular block.
   def offtag_it(text, original='')
     @count ||= 0
     @offtags ||= []
@@ -323,9 +341,17 @@ class GreenCloth < RedCloth::TextileDoc
           d = first_char
           c.chop! # remove last char from c.
         end
-        text = truncate c, 42
+        label = c
         url = %(#{b=="www."?"http://www.":b}#{c})
-        a + offtag_it( %(<a href="#{url}">#{text.sub(/\/$/,'')}</a>), b+c ) + d
+        link = nil
+        if @block
+          link = @block.call(:auto => true, :url => url)
+        end
+        unless link
+          text = truncate label, 42
+          link = %(<a href="#{url}">#{text.sub(/\/$/,'')}</a>)
+        end
+        a + offtag_it(link, b+c ) + d
       end
     end
   end
@@ -344,40 +370,53 @@ class GreenCloth < RedCloth::TextileDoc
 
   def bracket_links( text ) 
     text.gsub!( BRACKET_LINK_RE ) do |m|
-      all, preceding_char, first_char, text, last_char = $~[0..4]
+      all, preceding_char, first_char, link_text, last_char = $~[0..4]
       if preceding_char == '\\'
+        # the bracket is escaped and so we should ignore
         all.sub('\\[', '[').sub('\\]', ']')
       elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
+        # the brackets are for wiki formatting, not links
         all
       else
-        text = first_char + text + last_char
-        # text == "from -> to"
-        from, to = text.split(/\s*->\s*/)[0..1]
-        to ||= from
+        # we got an actual bracket style link!
+        a_tag = nil # the eventual <a> tag
+        link_text = first_char + link_text + last_char
+        if link_text =~ /^.+\s*->\s*.+$/
+          # link_text == "from -> to"
+          from, to = link_text.split(/\s*->\s*/)[0..1]
+        else
+          # link_text == "to" (ie, no link label)
+          from = nil
+          to = link_text
+        end
         if to =~ /^(\/|#{PROTOCOL}:\/\/)/
+          # the link is a fully formed url or an absolute path, eg: 
           # to == https://riseup.net
           # to == /an/absolute/path
-          text = from.sub(/#{PROTOCOL}:\/\//, '').sub(/\/$/, '')
+          from ||= to.gsub(/(^#{PROTOCOL}:\/\/|^\/|\/$)/, '')
         else
-          # to == "group_name / page_name"
-          group_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
+          # the link is a wiki style link, eg
+          # to == "context_name / page_name"
+          # to == "page_name"
+          context_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
           unless page_name
-            # there was no group indicated, so $group_name is really the $page_name
-            page_name = group_name
-            group_name = @default_group
+            # there was no context indicated, so context_name is really the page_name
+            page_name = context_name
+            #group_name = @default_group
+            context_name = nil
           end
-          text = from =~ /\// ? page_name : from
-          #atts = " href=\"/#{nameize group_name}/#{nameize page_name}\""
-          to = '/%s/%s' % [nameize(group_name), nameize(page_name)]
+          if @block
+            a_tag = @block.call(:label => from, :context => context_name, :page => page_name)
+          end          
+          unless a_tag
+            from ||= page_name.nameized? ? page_name.denameize : page_name
+            context_name ||= @default_group
+            to = '/%s/%s' % [context_name.nameize, page_name.nameize]
+          end
         end
-        if @block
-          valid = @block.call(to)
-        else
-          valid = true
-        end
-        valid_class = valid ? '' : 'class="dead"'
+        a_tag ||= '<a href="%s">%s</a>' % [to,from]
         all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
-        preceding_char + offtag_it('<a%s href="%s">%s</a>' % [valid_class,to,text], all)
+        preceding_char + offtag_it(a_tag, all)
       end
     end
   end
@@ -436,9 +475,9 @@ class GreenCloth < RedCloth::TextileDoc
   # - no special characters
   # - replace spaces with hypens
   # 
-  def nameize(text)
-    text.strip.downcase.gsub(/[^-a-z0-9_ \+]/,'').gsub(/[ ]+/,'-') if text
-  end
+  #def nameize(text)
+  #  text.strip.downcase.gsub(/[^-a-z0-9_ \+]/,'').gsub(/[ ]+/,'-') if text
+  #end
   
   # from actionview texthelper
   def truncate(text, length = 30, truncate_string = "...")
@@ -449,3 +488,38 @@ class GreenCloth < RedCloth::TextileDoc
 
 end
 
+##
+## CORE STRING EXTENSIONS
+##
+
+unless "".respond_to? 'nameize'
+
+  require 'iconv'
+  class String
+    def nameize
+      translation_to   = 'ascii//ignore//translit'
+      translation_from = 'utf-8'
+      # Iconv transliteration seems to be broken right now in ruby, but
+      # if it was working, this should do it.
+      s = Iconv.iconv(translation_to, translation_from, self).to_s
+      s.gsub!(/\W+/, ' ') # all non-word chars to spaces
+      s.strip!            # ohh la la
+      s.downcase!         # upper case characters in urls are confusing
+      s.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
+      s = "-#{s}" if s =~ /^(\d+)$/ # don't allow all numbers
+      s
+    end
+    def denameize
+      translation_from   = 'ascii//ignore//translit'
+      translation_to     = 'utf-8'
+      s = Iconv.iconv(translation_to, translation_from, self).to_s
+      s.gsub('-',' ')
+    end
+    # returns false if any char is detected that is not allowed in
+    # 'nameized' strings
+    def nameized?
+      self =~ /^[-a-z0-9_\+]+$/ and self =~ /-/
+    end
+  end
+
+end

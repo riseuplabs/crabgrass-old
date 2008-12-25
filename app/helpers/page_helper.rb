@@ -31,6 +31,8 @@ module PageHelper
     options.delete(:action) if options[:action] == 'show' and not options[:id]
     if @group and @group.is_a?(Group) and page.group_ids.include?(@group.id)
       path = page_path(@group.name, page.name_url, options)
+    elsif page.owner_name
+      path = page_path(page.owner_name, page.name_url, options)
     elsif page.group_name
       path = page_path(page.group_name, page.name_url, options)
     elsif page.created_by_id

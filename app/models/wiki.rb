@@ -113,40 +113,45 @@ class Wiki < ActiveRecord::Base
   end  
 
   ##### RENDERING #################################
-  
-  # lazy rendering of body_html:
-  # the body_html is only rendered when it is requested
-  # and if it doesn't exist already.
-  def body_html
-    html = read_attribute(:body_html)
-    if body and not html
-      without_timestamps do
-        html = format_wiki_text(body)
-        self.body_html = html
-        self.save_without_revision!
-      end
-    end
-    return html    
-  end
  
   def body=(value)
     write_attribute(:body, value)
-    write_attribute(:body_html, format_wiki_text(body))
-  end
-  
-  # called internally
-  def format_wiki_text(text)
-    if text
-      GreenCloth.new(text, default_group_name).to_html
-    else
-      "<p></p>"
-    end
+    write_attribute(:body_html, "")
   end
  
   def clear_html
     update_attribute(:body_html, nil)
   end
 
+  # render_html is responsible for rendering wiki text to html markup.
+  #
+  # This rendering, however, is not handled by the wiki class: the block passed
+  # to render_html() does the conversion.
+  #
+  # render_html() should be called whenever the body_html needs to be shown, but
+  # the block will only actually get called if body_html needs updating.
+  #
+  # Example usage:
+  #
+  #   wiki.body_html # << not valid yet
+  #   wiki.render_html do |text|
+  #      GreenCloth.new(text).to_html
+  #   end
+  #   wiki.body_html # << now it is valid
+  #
+  def render_html(&block)
+    if body.empty?
+      self.body_html = "<p></p>"
+    elsif body_html.empty? 
+      self.body_html = block.call(body)
+    end
+    if body_html_changed?
+      without_timestamps do
+        save_without_revision!
+      end
+    end
+  end
+  
   ##### RELATIONSHIP TO GROUPS ###################
   
   # clears the rendered html. this is called

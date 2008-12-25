@@ -3,7 +3,7 @@
  WikiController
 
  This is the controller for the in-place wiki editor, not for the
- the wiki page type (which is in controllers/tool/wiki_controller.rb).
+ the wiki page type (wiki_page_controller.rb).
 
  Everything here is entirely ajax, for now.
 
@@ -11,10 +11,13 @@
 
 class WikiController < ApplicationController
   
+  include ControllerExtension::WikiRenderer
+  
   before_filter :login_required, :except => [:show]
   
   # show the rendered wiki
   def show
+    @wiki.render_html{|body| render_wiki_html(body, @group.name)}
   end
   
   # show the entire edit form
@@ -35,8 +38,9 @@ class WikiController < ApplicationController
       @wiki.smart_save!(:body => params[:body], 
         :user => current_user, :version => params[:version])
       @wiki.unlock(current_user)
+      @wiki.render_html{|body| render_wiki_html(body, @group.name)}
     rescue Exception => exc
-     @message = exc.to_s
+      @message = exc.to_s
       return render(:action => 'error')
     end    
   end

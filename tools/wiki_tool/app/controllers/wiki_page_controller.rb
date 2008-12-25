@@ -1,5 +1,7 @@
 class WikiPageController < BasePageController
 
+  include ControllerExtension::WikiRenderer
+  
   stylesheet 'wiki_edit', :action => :edit
   javascript 'wiki_edit', :action => :edit
 
@@ -31,9 +33,12 @@ class WikiPageController < BasePageController
   def show
     if @wiki.body.empty?
       redirect_to page_url(@page,:action=>'edit')
+      return
     elsif @upart and !@upart.viewed? and @wiki.version > 1
       @last_seen = @wiki.first_since( @upart.viewed_at )
     end
+    # render if needed
+    @wiki.render_html{|body| render_wiki_html(body, @page.group_name)}
   end
 
   def version
@@ -56,6 +61,8 @@ class WikiPageController < BasePageController
   end
 
   def print
+    # render if needed
+    @wiki.render_html{|body| render_wiki_html(body, @page.group_name)}
     render :layout => "printer-friendly"
   end
 
