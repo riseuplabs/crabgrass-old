@@ -118,7 +118,13 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   end
   
   def test_move
-  # TODO: Write this test
+    group1 = groups(:animals)
+    group2 = groups(:rainbow)
+    user = users(:blue)
+    page = Page.create! :title => 'snowy snow', :user => user, :share_with => group2, :access => :admin
+    login_as :blue
+    post :move, :page_id => page.id, :group_id => group2.id
+    assert_equal group2, page.owner.reload
   end
   
   def test_share

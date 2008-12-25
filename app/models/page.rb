@@ -250,6 +250,19 @@ class Page < ActiveRecord::Base
     end
   end
 
+  # a list of people and groups that have admin access to this page
+  def admins
+    # sometimes the owner is not in the list, this is a grave error, but
+    # we ensure that the owner is included in the list of admins.
+    groups = group_participations.select{|p|p.access_sym == :admin}.collect{|p|p.group}
+    users = user_participations.select{|p|p.access_sym == :admin}.collect{|p|p.user}
+    if owner
+      groups.unshift(owner) if owner.is_a? Group and !groups.include?(owner)
+      users.unshift(owner) if owner.is_a? User and !users.include?(owner)
+    end
+    return groups + users
+  end
+  
   #######################################################################
   ## DENORMALIZATION
 

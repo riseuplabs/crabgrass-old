@@ -42,6 +42,9 @@
 .post h3 {
   font-size: 1.1em;
   margin-top: 0.75em; }
+.wiki span.caps,
+.post span.caps {
+  font-size: 80%; }
 .wiki p.left,
 .post p.left {
   margin: 0; }

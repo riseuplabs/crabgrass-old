@@ -138,7 +138,8 @@ form.minisearch {
     top: 0;
     right: 0; }
   .title_box h1 {
-    color: #666699; }
+    color: #666699;
+    margin: 0; }
     .title_box h1 span {
       margin-left: 3em; }
   .title_box .breadcrumb {

@@ -173,6 +173,8 @@ class ApplicationController < ActionController::Base
           language_code = current_user.language.to_sym
         end
       end
+    else
+      session[:language_code] = 'en_US'
     end
     if session[:language_code]
       Gibberish.use_language(session[:language_code]) { yield }

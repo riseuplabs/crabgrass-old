@@ -3,7 +3,6 @@
 <% multipart = sections.grep 'file' -%>
 
 <% @title_box = capture do -%>
-  <%= link_to_breadcrumbs %>
   <div class='big_icon <%=@page_class.icon%>_48'>
     <h1><%= :create_a_new_thing.t%{ :thing => class_display_name } %></h1>
   </div>

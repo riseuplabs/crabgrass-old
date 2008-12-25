@@ -308,7 +308,7 @@ class GreenCloth < RedCloth::TextileDoc
       (?:\?[\w\+%&=.;-]+?)?    # query string
       (?:\#[\w\-\.]*)?         # trailing anchor
     )?
-    (\1|$|[#{URL_PUNCT}](\s|$))  #(d) TRAILING TEXT
+    (\1|\r?\n|$|[#{URL_PUNCT}](\s|\r?\n|$))  #(d) TRAILING TEXT
   }x
 
   def auto_links(text)
