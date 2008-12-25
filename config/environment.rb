@@ -28,7 +28,7 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
-require "#{RAILS_ROOT}/lib/extends_to_engines.rb"
+require "#{RAILS_ROOT}/lib/extension/engines.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 require "#{RAILS_ROOT}/lib/zip/zip.rb"
 
