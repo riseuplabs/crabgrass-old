@@ -68,7 +68,10 @@ module PageExtension::Index
   module InstanceMethods    
   
     def update_page_terms_in_background
-      if backgroundrb_running?
+      if false # backgroundrb_running?
+        ## ^^^ I have disabled background updating of page terms for two reasons:
+        ## (1) it doesn't seem to be working right now, and i have no idea why
+        ## (2) the delta index is fast enough without running in the background.
         begin
           # first, immediately update access, because that needs to always be up to date.
           Page.with_deltas_disabled do 
