@@ -142,7 +142,8 @@ table.share_page_recipients {
     #page_sidebar ul.names li span {
       background-position: 100% 0;
       background-repeat: no-repeat;
-      padding-right: 20px; }
+      padding-right: 20px;
+      margin-right: -20px; }
   #page_sidebar input.check {
     position: absolute;
     left: 0;

@@ -14,6 +14,18 @@ out: <p>this is a <a href="/namespace/something-else">link to</a> in some text</
 in: this is a [link to -> /an/absolute/path] in some text
 out: <p>this is a <a href="/an/absolute/path">link to</a> in some text</p>
 ---
+in: this is a [link to -> https://riseup.net] a url
+out: <p>this is a <a href="https://riseup.net">link to</a> a url</p>
+---
+in: url in brackets [https://riseup.net/]
+out: <p>url in brackets <a href="https://riseup.net/">riseup.net</a></p>
+---
+in: a [name-link] in need of humanizing
+out: <p>a <a href="/page/name-link">name link</a> in need of humanizing</p>
+---
+in: link to a user [/blue]
+out: <p>link to a user <a href="/blue">blue</a></p>
+---
 in: "[link to -> /-dashes/in/the/link-]"
 out: <p><a href="/-dashes/in/the/link-">link to</a></p>
 ---
