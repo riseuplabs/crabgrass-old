@@ -102,8 +102,12 @@ class RequestsController < ApplicationController
         raise ErrorMessage.new('recipient required'.t)
       end
       users.each do |user|
-        reqs << RequestToJoinUs.create(:created_by => current_user,
-          :recipient => user, :requestable => @group)
+        if params[:email_all]
+          emails << user.email     
+        else
+          reqs << RequestToJoinUs.create(:created_by => current_user,
+            :recipient => user, :requestable => @group)
+        end
       end
       groups.each do |group|
         reqs << RequestToJoinOurNetwork.create(:created_by=>current_user,
@@ -234,8 +238,8 @@ class RequestsController < ApplicationController
       @request.may_destroy?(current_user)
     elsif action?(:redeem)
       true
-    else
-      false
+    else #this should be true, otherwise prevents mods from adding actions
+      true
     end
   end
   
