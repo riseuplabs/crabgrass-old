@@ -104,6 +104,15 @@ class GroupTest < Test::Unit::TestCase
     assert blue.may?(:admin, group)   
   end
 
+  def test_name_change
+    group = groups(:rainbow)
+    user = users(:blue)
+    version = user.version
+    group.name = 'colors'
+    group.save!
+    assert_equal version+1, user.reload.version, 'user version should increment on group name change'
+  end
+  
   def test_associations
     assert check_associations(Group)
   end

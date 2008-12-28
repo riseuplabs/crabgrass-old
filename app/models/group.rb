@@ -441,6 +441,7 @@ class Group < ActiveRecord::Base
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
       committees.each {|c| c.parent_name_changed }
+      User.increment_version(self.user_ids)
     end
   end
    

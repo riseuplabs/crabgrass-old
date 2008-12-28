@@ -207,6 +207,21 @@ module UserExtension
         ])
       end
 
+      # Takes an array of user ids and increments the version of all these
+      # users. This should be called when something has changed for these users
+      # that might invalidate something they have cached in their dashboard.
+      # For example, when the name of a group they are part of has changed.
+      # This method does not need to be called when membership is changed, the
+      # version increment for that is already handled elsewhere.
+      def increment_version(ids)
+        return unless ids.any?
+        self.connection.execute(
+          public_sanitize_sql(
+            ["UPDATE `users` SET version=version+1 WHERE id IN (?)", ids]
+          )
+        )
+      end
+      
       ## serialize_as
       ## ---------------------------------
       ##
