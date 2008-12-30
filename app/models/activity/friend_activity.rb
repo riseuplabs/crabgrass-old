@@ -10,12 +10,18 @@ class FriendActivity < Activity
   
   before_create :set_access
   def set_access
-    unless user.profiles.private.may_see_contacts?
+    # this has a weird side effect of creating public and private
+    # profiles if they don't already exist.
+    if user.profiles.public.may_see_contacts?
+      self.access = Activity::PUBLIC
+    elsif user.profiles.private.may_see_contacts?
+      self.access = Activity::DEFAULT
+    else
       self.access = Activity::PRIVATE
     end
   end
 
-  def description
+  def description(options={})
     "{user} added {other_user} as a contact"[
        :activity_contact_created, 
        {:user => user_span(:user), :other_user => user_span(:other_user)}

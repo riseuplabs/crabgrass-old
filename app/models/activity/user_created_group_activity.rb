@@ -8,7 +8,7 @@ class UserCreatedGroupActivity < Activity
   alias_attr :user,  :subject
   alias_attr :group, :object
   
-  def description
+  def description(options={})
     "{user} created {group_type} {group}"[
       :activity_group_created, {
         :user => user_span(:user),

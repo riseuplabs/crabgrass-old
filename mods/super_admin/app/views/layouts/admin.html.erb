@@ -13,8 +13,8 @@
 <div id='header'>
   <div class='toplink'><%= link_to "Logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %> </div>
   <div class='toplink'><%= link_to "Exit admin", :controller => '/me' %> </div>
-  <h1>Crabgrass Administration Panel</h1>
-  <%= link_to 'users', users_path %> <%= link_to 'groups', groups_path %>  
+  <h1><a href='/admin'>Crabgrass Administration Panel</a></h1>
+  <%= link_to 'admin home', '/admin' %> <%= link_to 'users', users_path %> <%= link_to 'groups', groups_path %>  <%= link_to 'pages', pages_path %> <%= link_to 'comments', posts_path %> <%= link_to 'announcements', announcements_path %>
 </div>
 <div id='content'>
   <%= flash_notice %>

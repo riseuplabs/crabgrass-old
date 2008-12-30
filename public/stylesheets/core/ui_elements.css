@@ -25,6 +25,9 @@ ul.floatlist li {
   float: left;
   margin-right: 1em; }
 
+.nowrap {
+  white-space: nowrap; }
+
 a {
   text-decoration: none;
   color: #0000ee;
@@ -42,6 +45,9 @@ a {
     text-decoration: none;
     outline: 0;
     border-bottom: 1px #999 dotted; }
+  a.invert {
+    color: white;
+    background-color: #0000ee; }
   a.active {
     font-weight: bold; }
   a.imglink {
@@ -187,23 +193,36 @@ span.break {
 
 h1.dim {
   color: #738899;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h1.bright {
   color: #5B97CB;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h1.alert {
   color: #CE4A48;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 
 h2.dim {
   color: #738899;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h2.bright {
   color: #5B97CB;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h2.alert {
   color: #CE4A48;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
+h2.section {
+  color: #333;
+  margin-bottom: 0.5em;
+  background-color: #dfdfdf;
+  border: 1px solid #bbb;
+  padding: 0.25em;
+  -moz-border-radius: 6px; }
 h2 span {
   font-size: 0.6em;
   white-space: nowrap;
@@ -211,13 +230,16 @@ h2 span {
 
 h3.dim {
   color: #738899;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h3.bright {
   color: #5B97CB;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h3.alert {
   color: #CE4A48;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  margin: 0; }
 h3 span {
   font-size: 0.6em;
   white-space: nowrap;
@@ -257,6 +279,15 @@ table.pretty {
     text-decoration: none; }
     table.pretty a:hover {
       text-decoration: underline; }
+
+table.plain {
+  border-collapse: collapse;
+  width: 100%; }
+  table.plain td {
+    padding: 0.5em; }
+    table.plain td.label {
+      text-align: right;
+      font-weight: bold; }
 
 .pagination {
   padding: 1em 0;

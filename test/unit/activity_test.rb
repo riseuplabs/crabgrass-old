@@ -3,8 +3,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ActivityTest < ActiveSupport::TestCase
   fixtures :users, :groups, :activities, :memberships, :federatings
 
-=begin
-  renable this when user_relations table is back
   def test_contact
     u1 = users(:kangaroo)
     u2 = users(:iguana)
@@ -15,7 +13,6 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal u1, act.user
     assert_equal u2, act.other_user
   end
-=end
 
   def test_user_destroyed
     u1 = users(:kangaroo)
@@ -60,8 +57,7 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal group.id, act.group.id
   end
 
-=begin
-  renable this when user_relations table is back.
+
   def test_deleted_subject
     u1 = users(:kangaroo)
     u2 = users(:iguana)
@@ -74,7 +70,6 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal 'iguana', act.other_user_name
     assert_equal '<span class="user">iguana</span>', act.user_span(:other_user)
   end
-=end
 
   def test_associations
     assert check_associations(Activity)

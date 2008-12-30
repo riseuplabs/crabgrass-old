@@ -4,8 +4,6 @@
 // THIS IS A MESS AND NEEDS TO BE CLEANED UP
 //
 
-.title_box h1 em.status
-  font-weight: 100
 
 .dash_box
   float: left
@@ -13,11 +11,6 @@
   div.link_line
     line-height: 0.8em
 
-.activities li, .user_activities
-  color: #666
-  margin: 7px 0px
-  padding: 3px 0px
-  padding-left: 24px
 
 .left_column h2.alert
   margin: 1em 0
@@ -116,13 +109,13 @@ div
 .landing
   h2.alert
     padding-bottom: 0.5em
-  .activities, .user_activities
-    clear: left
-    float: none
-  .photos_activities
-    margin-left: 1.8em
-  ul li
-    font-size: 11px
+  //.activities, .user_activities
+  //  clear: left
+  //  float: none
+  //.photos_activities
+  //  margin-left: 1.8em
+  //ul li
+  //  font-size: 11px
   table td
     &.left
       width: 40%
@@ -139,44 +132,48 @@ div
   .description
     padding-top: 1em
 
+//
+// TITLE_BOX
+//
 
-.profile-fun
-  width: 100%
-  background-color: #EFF9FE
-  td
-    padding-right: 1em
-    vertical-align: top
-  .profile-wall
-    width: 70%
-    .fieldset a
-      float: right
+.title_box h1 em.status
+  font-weight: 100
 
+//
+// INFO_BOX
+
+.info_box h3
+  padding-bottom: 0.5em
+
+
+//
+// STATUS
+// 
 
 .set_status
   width: 100%
-
   td
     vertical-align: middle
     padding: 0.5em
 
-
-.wall_posts
-  clear: both
-  height: 10em
-  overflow: auto
-  background: #fff
-  border: 1px solid #ccc
-  table td.icon
+.title_box table
+  width: 100%
+  td.left
     width: 1%
-  td
-    vertical-align: top
-    padding: 0.25em
-    border-bottom: 1px solid #ccc
-    &.date
-      background: #eee
-      color: #738899
-      text-transform: capitalize
-      font-weight: bold
+    white-space: nowrap
+  td.right
+    padding-left: 4em
+    width: 99%
+    text-align: right
 
-ul.plain li a span
-  font-size: 11px
+//
+// ACTIVITIES
+//
+
+.activities li
+  color: #666
+  margin-bottom: 0.75em
+  padding-left: 24px
+  span.commands a
+    text-transform: lowercase
+

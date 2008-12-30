@@ -84,12 +84,12 @@ module PageExtension::Create
           groups << entity
         elsif entity.is_a? User
           users << entity
-        elsif entity =~ RFC822::EmailAddress
-          emails << entity
-        elsif g = Group.find_by_name(entity)
-          groups << g
         elsif u = User.find_by_login(entity)
           users << u
+        elsif g = Group.find_by_name(entity)
+          groups << g
+        elsif entity =~ RFC822::EmailAddress
+          emails << entity
         elsif entity.any?
           errors << '"%s" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found] % entity
         end

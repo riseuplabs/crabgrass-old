@@ -24,7 +24,8 @@ ul.plain
 ul.floatlist li
   float: left
   margin-right: 1em
-
+.nowrap
+  white-space: nowrap
 
 //
 // LINKS
@@ -47,9 +48,9 @@ a
     text-decoration: none
     outline: 0
     border-bottom: 1px #999 dotted
-  //&.invert
-  //  color: white
-  //  background-color: #003399
+  &.invert
+    color: white
+    background-color= !link_color
   &.active
     font-weight: bold
   //&.selected
@@ -241,22 +242,35 @@ h1
   &.dim
     color: #738899
     text-transform: capitalize
+    margin: 0
   &.bright
     color: #5B97CB
     text-transform: capitalize
+    margin: 0
   &.alert
     color: #CE4A48
     text-transform: capitalize
+    margin: 0
 h2
   &.dim
     color: #738899
     text-transform: capitalize
+    margin: 0
   &.bright
     color: #5B97CB
     text-transform: capitalize
+    margin: 0
   &.alert
     color: #CE4A48
     text-transform: capitalize
+    margin: 0
+  &.section
+    color: #333
+    margin-bottom: 0.5em
+    background-color: #dfdfdf
+    border: 1px solid #bbb
+    padding: 0.25em
+    -moz-border-radius: 6px
   span
     font-size: 0.6em
     white-space: nowrap
@@ -265,12 +279,15 @@ h3
   &.dim
     color: #738899
     text-transform: capitalize
+    margin: 0
   &.bright
     color: #5B97CB
     text-transform: capitalize
+    margin: 0
   &.alert
     color: #CE4A48
     text-transform: capitalize
+    margin: 0
   span
     font-size: 0.6em
     white-space: nowrap
@@ -318,6 +335,14 @@ table.pretty
     &:hover
       text-decoration: underline
 
+table.plain
+  border-collapse: collapse
+  width: 100%
+  td 
+    padding: 0.5em
+    &.label
+      text-align: right
+      font-weight: bold
 
 //
 // PAGINATION

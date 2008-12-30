@@ -4,18 +4,18 @@
   &bull;
   <%= link_to "Logout"[:menu_link_logout] + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
   <%= call_hook :top_right_links %>
-<% else -%>
+<% elsif !@login_form_already_rendered -%>
   <span><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('login_popup').toggle(); Field.focus('login'); return false;" } %></span>
   <div id="login_popup" style="display: none;">
     <% form_tag :controller => 'account', :action => 'login' do -%>
-      <label for="username"><%= "Username".t %></label>
-      <%= text_field_tag 'login' %>
-      &nbsp;&nbsp;
-      <label for="password"><%= "Password".t %></label>
-      <%= password_field_tag 'password' %>
-      &nbsp;&nbsp;
-      <%= submit_tag _('Log in') %>
-      <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
+      <div>
+        <label for="username"><%= "Username".t %></label>
+        <%= text_field_tag 'login' %> &nbsp;
+        <label for="password"><%= "Password".t %></label>
+        <%= password_field_tag 'password' %> &nbsp;&nbsp;
+        <%= submit_tag _('Log in') %>
+        <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
+      </div>
     <% end -%>
   </div>
 <% end -%>

@@ -1,20 +1,13 @@
 <table class="columns">
+<tr colspan='2'><td><%= header_with_more(:h3, :dim, "Recent Activity"[:recent_activity], nil) %></td></tr>
 <tr>
+  <%- length = @activities.size -%>
+  <%- half = (length/2.0).ceil %>
   <td class="left">
-    <%= header_with_more(:h3, :dim, "Recent Activity"[:recent_activity], nil) %>
-    <%= render :partial => 'activity/list' %>
+    <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
   </td>
   <td class="right">
-    <div class=''>
-      <h3 class="dim"><%= "Your Current Status"[:my_status_heading] %></h3>
-      <%= render :partial => 'me/dashboard/status_form' %>
-    </div>
-    <% unless @wall_posts.empty? %>
-      <div class='status'>
-	<h3 class="dim"><%= "Recent Wall Posts"[:recent_wall_posts] %></h3>
-	<%= render :partial => 'profile/wall_discussion', :locals => {:posts => @wall_posts} %>
-      </div>
-    <% end %>
+    <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
+  </td>
 </tr>
 </table>
-

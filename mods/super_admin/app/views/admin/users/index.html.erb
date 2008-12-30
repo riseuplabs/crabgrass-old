@@ -3,22 +3,24 @@
 <table>
   <tr>
     <th>Login</th>
-    <th>Email</th>
     <th>Display name</th>
+    <th>Email</th>
   </tr>
 
 <% for user in @users %>
   <tr>
-    <td><%=h user.login %></td>
-    <td><%=h user.email %></td>
+    <td><%= link_to_user user, {:login => true} %></td>
     <td><%=h user.display_name %></td>
+    <td><%=h user.email %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id %></td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<%= pagination_links @pages %>
 
-<%= link_to 'New user', new_user_path %>
+<p><%= link_to 'New user', new_user_path %></p>
+

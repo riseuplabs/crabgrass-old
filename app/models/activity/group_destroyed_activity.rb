@@ -8,7 +8,7 @@ class GroupDestroyedActivity < Activity
   alias_attr :destroyed_by,  :object
   alias_attr :groupname,     :extra
 
-  def description
+  def description(options={})
     "{group} was destroyed by {user}"[:activity_group_destroyed, {
        :user => user_span(:destroyed_by),
        :group => groupname

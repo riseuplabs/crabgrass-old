@@ -1,0 +1,43 @@
+<table>
+  <tr>
+    <th>Page</th>
+    <th>Comment</th>
+	<th>Created</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><%=will_paginate @posts %></td>
+  </tr>
+  <% for post in @posts %>
+    <% if post.discussion.page
+	 page_link = link_to(post.discussion.page.title, page_url(post.discussion.page))
+	 post_link = link_to_if(post.deleted_at.nil?, post.body[0..240] + '...', "#{page_url(post.discussion.page)}#posts-#{post.id}")
+       elsif post.discussion.commentable
+	 page_link = link_to(post.discussion.commentable.display_name, url_for_user(post.discussion.commentable))
+	 post_link = link_to_if(post.deleted_at.nil?, post.body[0..240] + '...', url_for_user(post.discussion.user))
+       end %>
+	  <tr>
+		<td style=" width:300px">
+		  <%= page_link %>
+		</td>
+	    <td style=" width:300px"><%= post_link %></td>
+		<td ><%=h post.created_at.strftime("%d %b, %Y ") %></td>
+	<% if @current_view == 'pending' %>
+		<td style=" width:120px">
+		<%= button_to "Approve", :action => "approve", :params => {:id => post.id, :view => @current_view} %></td>
+		<td style=" width:120px"><%= button_to "Trash", :action => "trash", :params => {:id => post.id, :view => @current_view} %></td>
+        <%else%>
+                <td style=" width:120px">
+                <%- if post.deleted_at.nil? -%>
+		  <%= button_to "Trash", :action => "trash", :params => {:id => post.id, :view => @current_view} %>
+                <%- else -%>
+		  <%= button_to "Undelete", :action => "undelete", :params => {:id => post.id, :view => @current_view} %>
+                <%- end -%>
+                </td>	
+	<%end%>
+	  </tr>
+	<% end %>
+	  <tr>
+	    <td><%=will_paginate @posts %></td>
+	  </tr>>
+</table>

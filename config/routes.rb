@@ -32,9 +32,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.me      'me/:action/:id', :controller => 'me/base'
   
-  map.people 'people/:action/:id', :controller => 'people'
+  map.people  'people/:action/:id', :controller => 'people'
   map.connect 'person/:action/:id/*path', :controller => 'person'
-  
+  map.connect 'messages/:user/:action/:id', :controller => 'messages', :action => 'index', :id => nil
+
   map.groups   'groups/:action/:id', :controller => 'groups'
   map.group    'group/:action/:id', :controller => 'group'
   map.networks 'networks/:action/:id', :controller => 'networks'
@@ -70,6 +71,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
   map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
+  # i am not sure what this was for, but it breaks routes for committees. this
+  # could be fixed by adding \+, but i am just commenting it out for now. -e
+  # :_context => /[\w\.\@\s-]+/
+
 end
 
 # debug routes

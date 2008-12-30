@@ -17,4 +17,9 @@ default:
   - Asset
   - Gallery
   - ExternalVideo
+  evil:
+    google_analytics:
+      enabled: false
+      site_id: UA-XXXXXX-X
+      https: false
 

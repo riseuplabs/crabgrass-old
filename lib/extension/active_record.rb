@@ -2,22 +2,29 @@
 
 ActiveRecord::Base.class_eval do
   
-  # used to auto-format body  
+  # used to automatically apply greencloth to a field and store it in another field.
+  # for example:
+  # 
+  #    format_attribute :description
+  #
+  # Will save an html copy in description_html. This other column must exist
+  #
   def self.format_attribute(attr_name)
     #class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
     define_method(:body)       { read_attribute attr_name }
     define_method(:body_html)  { read_attribute "#{attr_name}_html" }
     define_method(:body_html=) { |value| write_attribute "#{attr_name}_html", value }
-    before_save do |record|
-      unless record.body.blank?
-        record.body.strip!
-        if record.respond_to?('group_name')
-          record.body_html = GreenCloth.new(record.body,record.group_name).to_html #(:no_enclosing_p)
+    before_save :format_body
+    define_method(:format_body) {
+      if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
+        body.strip!
+        if respond_to?('group_name')
+          self.body_html = GreenCloth.new(body,group_name).to_html
         else
-          record.body_html = GreenCloth.new(record.body).to_html #(:no_enclosing_p)
+          self.body_html = GreenCloth.new(body).to_html
         end
       end
-    end
+    }
   end
   
   def dom_id

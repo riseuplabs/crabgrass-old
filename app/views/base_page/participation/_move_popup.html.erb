@@ -1,6 +1,6 @@
 <%
   def to_select(arry)
-    arry.sort_by{|x|x.short_name}.collect {|x|[x.short_name.to_s,x.id.to_s]}
+    arry.sort_by{|x|x.short_name}.collect {|x|[x.both_names.to_s,x.id.to_s]}
   end
 
   options = []
@@ -12,7 +12,7 @@
       committees = to_select(group.committees)
     end
     if committees.any?
-      options << '<optgroup label="%s">' % 'committees'
+      options << '<optgroup label="%s">' % 'committees'[:committees]
       options << options_for_select(committees)
       options << '</optgroup>'
     end
@@ -21,7 +21,7 @@
   groups = to_select(current_user.groups)
   if groups.any?
     selected = group ? group.id.to_s : ''
-    options << '<optgroup label="%s">' % 'groups'
+    options << '<optgroup label="%s">' % 'groups'[:groups]
     options << options_for_select(groups, selected)
     options << '</optgroup>'
   end

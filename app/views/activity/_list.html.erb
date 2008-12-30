@@ -1,8 +1,8 @@
-<% if @activities and @activities.any? -%>
+<% if activities and activities.any? -%>
 <div class='activities'>
   <ul class='plain'>
-    <% @activities.each do |activity| -%>
-      <li class="small_icon <%=activity.icon%>_16"><%= expand_links(activity.description) %> <span>(<%= friendly_date(activity.created_at) %>)</span></li>
+    <% activities.each do |activity| -%>
+      <li class="small_icon <%=activity.icon%>_16"><%= expand_links(activity.description({:current_user => (current_user if logged_in?)})) %> <%= BULLET + friendly_date(activity.created_at) %></li>
     <% end -%>
   </ul>
 </div>

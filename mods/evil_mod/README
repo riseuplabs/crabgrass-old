@@ -1,0 +1,14 @@
+evil_mod
+========
+
+This is the evil_mod for crabgrass. It allows you to integrate Google 
+Analytics into your application, and maybe other evil things in the future.
+
+Configuration
+=============
+
+Open up config/sites.yml and look for the evil: key. Turn 'enabled' to true,
+set the site id, and configure if you would like the google code to be
+requested over https or not.
+
+Also don't forget to enable the module in config/mods_enabled.list.

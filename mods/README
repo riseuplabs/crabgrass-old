@@ -194,4 +194,19 @@ This methods support this :plugin argument:
 Each one of these methods now accepts the key/value pair :plugin => "plugin_name",
 which can be used to specify the originating plugin for any assets.
 
+Customizing the stylesheets and favicon from a module
+=======================================================
+
+Define LayoutHelper for your module and then define mods_styles and favicon_link.
+
+For example, mods/mymod/app/helpers/layout_helper.rb:
+
+  module LayoutHelper
+    def mod_styles
+      stylesheet_link_tag('theme', :plugin => 'mymod')
+    end
+    def favicon_link
+      '<link rel="shortcut icon" href="/plugin_assets/mymod/favicon.ico" type="image/x-icon" /><link rel="icon" href="/plugin_assets/mymod/favicon.png" type="image/x-icon" />]'
+    end
+  end
 

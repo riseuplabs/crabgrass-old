@@ -1,13 +1,15 @@
 class NetworkController < GroupController
 
   def initialize(options={})
-    super()
-    @group = options[:group] # the group context, if any
+    super(options)
   end
 
   def show
     super
-    @group_pages = Page.find_by_path(['descending', 'updated_at', 'limit','10'], options_for_groups(@group.group_ids))
+    if @group
+      # there might not be @group if the profile is hidden
+      @group_pages = Page.find_by_path(['descending', 'updated_at', 'limit','10'], options_for_groups(@group.group_ids))
+    end
   end
 
   protected

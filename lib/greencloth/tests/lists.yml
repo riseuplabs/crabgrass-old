@@ -287,4 +287,12 @@ out: |-
   	<li><b>one:</b> fish</li>
   	<li><b>two:</b> fish</li>
   </ul>
+---
+name: lists with links and linefeed
+in: "* http://riseup.net\r\n* http://riseup.net"
+out: |-
+  <ul>
+  	<li><a href="http://riseup.net">riseup.net</a></li>
+  	<li><a href="http://riseup.net">riseup.net</a></li>
+  </ul>
 

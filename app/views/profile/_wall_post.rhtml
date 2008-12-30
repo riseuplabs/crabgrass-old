@@ -1,8 +1,0 @@
-<tr>
-  <td class='icon'><%= avatar_for(wall_post.user, 'small') %></td>
-  <td>
-     <%= wall_post.body_html %>
-     <%= link_line(:bullet, link_to_user(wall_post.user), friendly_date(wall_post.created_at), delete_wall_post(wall_post)) %>
-  </td>
-</tr>
-

@@ -31,6 +31,8 @@ module PageHelper
     options.delete(:action) if options[:action] == 'show' and not options[:id]
     if @group and @group.is_a?(Group) and page.group_ids.include?(@group.id)
       path = page_path(@group.name, page.name_url, options)
+    elsif page.owner_name
+      path = page_path(page.owner_name, page.name_url, options)
     elsif page.group_name
       path = page_path(page.group_name, page.name_url, options)
     elsif page.created_by_id
@@ -164,7 +166,7 @@ module PageHelper
       link = page_path_link(text, "descending/#{action}")
       selected = options[:selected]
     end
-    content_tag :th, "#{link} #{arrow}", :nowrap => 'nowrap', :class => "#{selected ? 'selected' : ''} #{options[:class]}"
+    content_tag :th, "#{link} #{arrow}", :class => "#{selected ? 'selected' : ''} #{options[:class]} nowrap"
   end
 
   ## used to create the page list headings
@@ -248,7 +250,7 @@ module PageHelper
     label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date]
+    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
   end
 
   def page_list_title(page, column, participation = nil)

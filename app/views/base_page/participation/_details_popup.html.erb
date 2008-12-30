@@ -1,10 +1,18 @@
 <% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
 
-    <table class='fieldset'><tr>
-      <td><b><%= :created.t %>:</b> <%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
-      <td>&nbsp;&nbsp;&nbsp;</td>
-      <td><b><%= :updated.t %>:</b> <%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
-    </tr></table><br/>
+    <table class='fieldset plain'>
+    <tr>
+      <td><b><%= 'Owner'[:page_list_heading_owner] %></b></td>
+      <td><%= select_page_owner(_erbout) %></td>
+    </tr>
+    <tr>
+      <td><b><%= 'Created'[:page_list_heading_created] %></b></td>
+      <td><%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
+    <tr>
+      <td><b><%= 'Updated'[:page_list_heading_updated] %></b></td>
+      <td><%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
+    </tr>
+    </table><br/>
 
     <%= render :partial => 'base_page/participation/details_tabs' -%>
     <div class='tab-content tab-area' id='permissions_tab'>

@@ -128,7 +128,7 @@ table.share_page_recipients {
     background: #e0e0e0;
     text-transform: uppercase;
     font-size: 0.8em;
-    padding: 0.25em 0 0.25em .5em;
+    padding: 0.5em 0 0.5em .75em;
     margin: 2.5em 0 0.5em 0;
     -moz-border-radius: 4px; }
   #page_sidebar ul.rule {
@@ -142,7 +142,8 @@ table.share_page_recipients {
     #page_sidebar ul.names li span {
       background-position: 100% 0;
       background-repeat: no-repeat;
-      padding-right: 20px; }
+      padding-right: 20px;
+      margin-right: -20px; }
   #page_sidebar input.check {
     position: absolute;
     left: 0;
@@ -171,11 +172,6 @@ table.share_page_recipients {
     #posts .post-author div.username,
     #posts .post-author div.date {
       margin-right: 40px; }
-  #posts .post_action_icon {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    display: none; }
 
 table.posts {
   width: 100%;
@@ -196,11 +192,17 @@ table.posts {
   table.posts td.post-body {
     border-left: 1px solid #ccc;
     padding: 0 10px; }
-    table.posts td.post-body p:first-child,
+    table.posts td.post-body p:first-child {
+      margin-top: 0; }
     table.posts td.post-body p:last-child {
-      margin: auto; }
+      margin-bottom: 0; }
   table.posts td:hover .post_action_icon {
     display: block; }
+  table.posts td .post_action_icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none; }
 
 div.title_box form .h1 {
   line-height: 1em;
