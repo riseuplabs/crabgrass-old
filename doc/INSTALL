@@ -1,3 +1,13 @@
+= Install the necessary packages
+
+These packages are required:
+
+Make sure your git-core is a version => 1.5.6.5, there is a newer version available in etch-backports if you are running etch
+
+apt-get install git-core
+
+apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
+
 = Grab The Code
 
 To get a copy of the most recent code:
@@ -5,13 +15,9 @@ To get a copy of the most recent code:
   cd ~/development
   git clone git://labs.riseup.net/crabgrass.git
 
-See https://labs.riseup.net/code for information on releases.
+See https://labs.riseup.net/code/projects/show/crabgrass for information on releases.
 
-= Prepare Your System
-
-These packages are required:
-
-  apt-get install ruby1.8 ruby1.8-dev libmysql-ruby
+= Install optional packages
 
 These packages are optional, but necessary for image thumbnails
 and document previews:
