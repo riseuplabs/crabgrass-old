@@ -17,11 +17,29 @@ class PeopleController < ApplicationController
   end
 
   def list
-    # @user_pages, @users = paginate :users, :per_page => 10
+    page = params[:page] || 1
+    per_page = 10
+    
+    @users = User.paginate :page => page, :per_page => per_page if @type.nil? || @type == "users"
     if logged_in?
-      @contacts = current_user.contacts
-      @peers = current_user.peers
+      @contacts = current_user.contacts.paginate :page => page, :per_page => per_page if @type.nil? || @type == "contacts"
+      @peers = current_user.peers.paginate :page => page, :per_page => per_page if @type.nil? || @type == "peers"
     end
+  end
+     
+  def users
+    @type = "users"
+    index
+  end
+  
+  def contacts
+    @type = "contacts"
+    index
+  end
+    
+  def peers
+    @type = "peers"
+    index
   end
     
   protected

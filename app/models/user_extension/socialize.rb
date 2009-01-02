@@ -15,7 +15,19 @@ module UserExtension::Socialize
       
       # (peer_id_cache defined in UserExtension::Organize)
       has_many :peers, :class_name => 'User',
-        :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})'
+        :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})' do
+            # will_paginate bug: Association with finder_sql raises TypeError
+            #  http://sod.lighthouseapp.com/projects/17958/tickets/120-paginate-association-with-finder_sql-raises-typeerror#ticket-120-5
+            def find(*args)
+              options = args.extract_options!
+              sql = @finder_sql
+      
+              sql += sanitize_sql [" LIMIT ?", options[:limit]] if options[:limit]
+              sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
+      
+              User.find_by_sql(sql)
+            end
+          end  
       
       # discussion
       has_one :discussion, :as => :commentable
