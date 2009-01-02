@@ -1,5 +1,7 @@
 = Crabgrass
 
+link:files/public/images/crabgrass.png
+
 Crabgrass is a software libre web application designed for group and network organizing, and tailored to the needs of the global justice movement. The long term goal is to provide the technical tools to facilitate active, confederal, and directly democratic social change networks.
 
 = License
@@ -24,10 +26,10 @@ Optional:
 
 = Support
 
-* {Crabgrass code documentation}[https://labs.riseup.net/crabgrass]
-* {Code repository browser}[https://labs.riseup.net/code]
-* {Crabgrass bug tracker}[https://labs.riseup.net/code]
-* {Feature requests}[https://labs.riseup.net/code]
+* {Crabgrass code documentation}[https://labs.riseup.net/crabgrass-doc]
+* {Code repository browser}[https://labs.riseup.net/code/repositories/show/crabgrass]
+* {Crabgrass bug tracker}[https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1]
+* {Feature requests}[https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2]
 * {More information on Crabgrass}[https://we.riseup.net/crabgrass]
 
 = Development
