@@ -3,8 +3,8 @@
 #   Copyright (C) 2006-2008  Jean-Philippe Lang
 #   License: GPL v2 or later
 
-module Crabgrass
-  module Hook
+module Crabgrass #:nodoc:
+  module Hook #:nodoc:
     @@listener_classes = []
     @@listeners = nil
     @@hook_listeners = {}
