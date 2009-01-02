@@ -5,21 +5,17 @@ development:
   username: root
   password: 
   host: localhost
+#  socket: /var/run/mysqld/mysqld.sock
 
 test:
   encoding: utf8
-<% if ENV['ADAPTER'] == 'mysql' %>
   adapter: mysql
   database: crabgrass_test
   username: root
   password: 
   host: localhost
-<% else %>
-  adapter: sqlite3
-  database: db/test.sqlite3
-  timeout: 5000
-<% end %>
-
+#  socket: /var/run/mysqld/mysqld.sock
+  
 production:
   encoding: utf8
   adapter: mysql
@@ -27,3 +23,5 @@ production:
   username: root
   password: 
   host: localhost
+#  socket: /var/run/mysqld/mysqld.sock
+
