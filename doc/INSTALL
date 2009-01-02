@@ -1,0 +1,104 @@
+= Grab The Code
+
+To get a copy of the most recent code:
+
+  cd ~/development
+  git clone git://labs.riseup.net/crabgrass.git
+
+See https://labs.riseup.net/code for information on releases.
+
+= Prepare Your System
+
+These packages are required:
+
+  apt-get install ruby1.8 ruby1.8-dev libmysql-ruby
+
+These packages are optional, but necessary for image thumbnails
+and document previews:
+
+  apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
+
+For more information on generating previews, see ASSETS[link:files/doc/ASSETS.html].
+
+= Install Gems
+
+You can use Crabgrass with the debian packages for ruby libraries, but this is difficult and unstable. It is recommended that you install the required gems using rubygems. 
+
+Basic gems to get rails working:
+
+  gem install rake --no-ri --no-rdoc
+  gem install -v=2.1.0 rails --no-ri --no-rdoc
+
+These gems are required for Crabgrass:
+
+  gem install rmagick tzinfo RedCloth --no-ri --no-rdoc
+
+These gems are optional:
+
+  gem install haml ruby-debug hpricot mime-types chronic packet --no-ri --no-rdoc
+
+See GEMS[link:files/doc/GEMS.html] for a description of what these gems are used for.
+
+= Setup Mysql Database
+
+Crabgrass only works with mysql.
+
+Install mysql and create the databases:
+
+  apt-get install mysql-server
+  mysqladmin -u root -p create crabgrass create crabgrass_development create crabgrass_test
+
+There is a sample database configuration file in the <tt>config</tt> directory of the
+crabgrass application. Use that to create a <tt>config/database.yml</tt> file:
+
+  cd ~/development/crabgrass/config
+  cp database.yml.example database.yml
+
+For development mode, the example database.yml should be good to go, unless you have a set
+a password for mysql. 
+
+For some linux distributions, you may need to specify a socket file for mysql like so:
+<tt>socket: /var/run/mysqld/mysqld.sock</tt>. You can probably figure out what socket
+to use by running <tt>ps -ef | grep mysql</tt>.
+
+The final step is to load the crabgrass schema and populate it with test data:
+
+  cd ~/development/crabgrass
+  rake db:schema:load
+  rake db:fixtures:load
+  rake cg:load_default_data
+
+To upgrade the crabgrass database after pulling in new code:
+
+  cd ~/development/crabgrass
+  git pull
+  rake db:migrate
+  rake db:fixtures:load
+  rake cg:load_default_data
+
+Also, <tt>rake --version</tt> must be 0.8.1 or greater.
+
+= Running Crabgrass
+
+  cd ~/development/crabgrass
+  script/server
+
+This will run crabgrass in development mode, which is probably what you want. If
+you don’t want to use webbrick (the mini-web-server that comes with rails) you
+can install the mongrel gem or debian package. If installed, script/server will
+pick them instead.
+
+Once the server is running, just point your web browser at http://localhost:3000.
+
+If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch of test data
+loaded, including users. To get started, you can login as user 'blue' with
+password 'blue'.
+
+= Troubleshooting
+
+If you get:
+
+  extconf.rb:11:in `require': no such file to load -- mkmf (LoadError)
+
+...then you need also to install ruby1.8-dev.
+

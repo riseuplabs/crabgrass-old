@@ -1,0 +1,18 @@
+= Testing Crabgrass
+
+TODO: this needs a lot of help.
+
+== Testings Mods
+
+A great deal of the crabgrass code is in the form of engines-enhanced
+and crabgrass-specific plugins. See mods/README and tools/README for
+more information. To run the tests for these special plugins:
+
+  rake test:tools
+  rake test:mods
+
+To run the test for a particular tool or mod:
+
+  rake test:tools TOOL=gallery_tool
+  rake test:mods MOD=gibberize
+

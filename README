@@ -1,317 +1,40 @@
-CRABGRASS
-========================================================
+= Crabgrass
 
-Crabgrass is a software libre web application designed for group and network
-organizing, and tailored to the needs of the global justice movement. The long
-term goal is to provide the technical tools to facilitate active, confederal,
-and directly democratic social change networks.
+Crabgrass is a software libre web application designed for group and network organizing, and tailored to the needs of the global justice movement. The long term goal is to provide the technical tools to facilitate active, confederal, and directly democratic social change networks.
 
-Further reading:
-* for running the sphinx search daemon, see doc/SPHINX_README
-* for adminstration notes, see doc/ADMIN_README
-* for details about what the gems are used for, see doc/GEMS_README
-* for multilingual support, see doc/MULTILINGUAL_README
-* for plugin details, see vendor/plugins/README
-* for more information on crabgrass, visit https://we.riseup.net/crabgrass
+= License
 
-INSTALL FOR DEVELOPMENT
-========================================================
+Crabgrass is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License (AGPL) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-grab the code
--------------
+Crabgrass is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the {GNU Affero General Public License}[http://www.gnu.org/licenses/agpl.txt] for more details.
 
-To get a copy of the most recent code:
+Crabgrass includes and depends upon many third party libraries that are not licensed AGPL. These are, however, all in the public domain or compatible with a free software license.
 
-/--
-cd ~/development
-git clone git://labs.riseup.net/crabgrass.git
-\--
+= Requirements
 
-See https://labs.riseup.net/code for information on releases.
+* Ruby 1.8.7
+* Rails 2.1.0
+* Mysql >5.0
 
-prepare your system
--------------------
+Optional:
 
-These packages are required:
+* Python
+* OpenOffice
+* GraphicsMagick
 
-/--
-apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
-\--
+= Support
 
-These packages are optional, but necessary for image thumbnails
-and document previews:
+* {Crabgrass code documentation}[https://labs.riseup.net/crabgrass]
+* {Code repository browser}[https://labs.riseup.net/code]
+* {Crabgrass bug tracker}[https://labs.riseup.net/code]
+* {Feature requests}[https://labs.riseup.net/code]
+* {More information on Crabgrass}[https://we.riseup.net/crabgrass]
 
-/--
-apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
-\--
+= Development
 
-Graphicsmagick is needed for building thumbnails. OfficeOffice is needed for
-previewing Microsoft Office and OpenOffice documents. OpenOffice should be at
-least version 2.4 or greater. If you are running etch, you can install the
-backport of openoffice:
-
-/--
-apt-get -t etch-backports install openoffice.org openoffice.org-headless
-\--
-For more details, see docs/ASSETS_README.
-
-Additional packages may be required for special features of crabgrass. See the
-README files in the docs folder.
-
-install gems
----------------------
-
-These gems are required:
-
-/--
-gem install -y rails rmagick tzinfo RedCloth haml --no-ri --no-rdoc
-\--
-
-Note: crabgrass requires RedCloth version > 4.0. Additionally, if a version 3.0
-is installed on the same machine, crabgrass will not work.
-
-These gems are optional:
-
-/--
-gem install ruby-debug hpricot mime-types chronic packet --no-ri --no-rdoc
-\--
-
-The gem 'mime-types' is use to overcome a file uploading bug in ie6.
-
-The gems 'hpricot' and 'ruby-debug' are used for testing.
-
-The gems 'chronic' and 'packet' are required for backgroundrb. 
-
-setup mysql database
---------------------
-
-Crabgrass only works with mysql (although most tests may be run from sqlite).
-
-Install mysql and create the databases:
-
-/--
-apt-get install mysql-server
-mysqladmin -u root -p create crabgrass create crabgrass_development create crabgrass_test
-\--
-
-There is a sample database configuration file in the 'config' directory of the
-crabgrass application. Use that to create a config/database.yml file. For some
-linux distributions, you may need to specify a socket file for mysql like so:
-"socket: /var/run/mysqld/mysqld.sock". You can probably figure out what socket
-to use by running "ps -ef | grep mysql".
-
-The final step is to load the crabgrass schema and populate it with test data:
-
-/--
-cd ~/development/crabgrass
-rake db:schema:load
-rake db:fixtures:load
-rake cg:load_default_data
-\--
-
-To upgrade the crabgrass database after pulling in new code:
-
-/--
-cd ~/development/crabgrass
-git pull
-rake db:migrate
-rake db:fixtures:load
-rake cg:load_default_data
-\--
-
-Also, 'rake --version' must be 0.8.1 or greater.
-
-run crabgrass
--------------
-
-/--
-cd ~/development/crabgrass
-script/server
-\--
-
-This will run crabgrass in development mode, which is probably what you want. If
-you don’t want to use webbrick (the mini-web-server that comes with rails) you
-can install the mongrel gem or debian package. If installed, script/server will
-pick them instead.
-
-Once the server is running, just point your web browser at http://localhost:3000.
-
-If you have run 'rake db:fixtures:load', there will be a bunch of test data
-loaded, including users. To get started, you can login as user 'blue' with
-password 'blue'.
-
-testing
---------
-
-A great deal of the crabgrass code is in the form of engines-enhanced
-and crabgrass-specific plugins. See mods/README and tools/README for
-more information. To run the tests for these special plugins:
-
-  rake test:tools
-  rake test:mods
-
-To run the test for a particular tool or mod:
-
-  rake test:tools TOOL=gallery_tool
-  rake test:mods MOD=gibberize
-
-INSTALL FOR PRODUCTION
-========================================================
-
-setup database
-----------------
-
-For installing on a production server, most everything is the same
-as a development setup except for these differences.
-
-For development work, there is not much need to create a database user for
-crabgrass. For deployment, however, this is a typical permissions setup:
-
-/--
-GRANT USAGE ON *.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
-GRANT ALL PRIVILEGES ON crabgrass.* TO 'crabgrass'@'localhost';
-flush privileges;
-\--
-
-Edit config/database.yml accordingly. 
-
-To create the production database is the same as for development, except
-that we don't want to load the test fixture data:
-
-/--
-cd ~/development/crabgrass
-rake db:schema:load RAILS_ENV=production
-rake cg:load_default_data RAILS_ENV=production
-\--
-
-configure for your system
---------------------------
-
-There are several required configuration files:
-
-* config/database.yml
-* config/sites.yml
-* config/email.yml
-* config/environments/production.rb
-
-If you are not running over https only, then you must comment out this line in
-production.rb:
-
-@@ Crabgrass::Config.https_only = true
-
-It is important that you specify your own secret in the sites.yml file. 
-You can use 'rake secret' to generate a secret value. 
-
-running background tasks
--------------------------
-
-There are many tasks which crabgrass needs to run regularly in the background,
-including cleaning out cache files and recreating the sphinx index.
-
-These tasks will be run if you have backgroundrb running. You can configure the
-frequency of these tasks by editing config/backgroundrb.yml.
-
-First, install the backgroundrb requirements:
-
-/--
-sudo gem install chronic packet --no-ri --no-rdoc
-\--
-
-Start backgroundrb:
-
-/--
-script/backgroundrb start -e production
-\--
-
-running sphinx
---------------
-
-Sphinx must be running when crabgrass is started for it to be used. If sphinx
-searchd daemon is not detected, then crabgrass will not use fulltext searching.
-
-First make sure that you have an up to date sphinx database:
-
-/--
-rake ts:index RAILS_ENV=production
-\--
-
-Then to start sphinx, run this:
-
-/--
-rake ts:start RAILS_ENV=production
-\--
-
-other tips
-------------
-
-You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
-gem is installed.
-
-There is an example capistrano deploy.rb in the config directory.
-
-
-GEMS
-==========================================
-
-required
----------
-
-* tzinfo: required for timezone support
-* redcloth: greencloth derives from redcloth
-* rmagick: used to scale avatars and build thumbnails.
-* chronic, packet: required for production mode in order to run backgroundrb
-* haml: an alternate templating engine used to generate the .css files
-
-optional
---------
-
-* open4: A better way to run open pipes. Used by latex renderer. 
-* SyslogLogger: allows for performance analysis of the logs. 
-* mime-types: used to detect mime-types of uploaded files
-* hpricot: required for running tests. Used by the plugin webrat.
-
-
-TROUBLESHOOTING
-========================================================
-
-If you get:
-
-/--
-extconf.rb:11:in `require': no such file to load -- mkmf (LoadError)
-\--
-
-...then you need also to install ruby1.8-dev.
-
-  
-ADMINISTRATION
-========================================================
-
-Via the console
-----------------
-
-One goal in Crabgrass system design is to avoid creating different levels of
-privilege for users.  Shall this be an egalitarian social network, or shall we
-build another anarchist bureaucracy? But what about when people need a new
-password, etc? 
-
-Example:  RESETING A PASSWORD
-
-/--
-$ script/console production
->> u = User.find_for_forget("user's email")
->> u.password = u.password_confirmation = "new password"
->> u.save
-\--
-
-Via super_admin mod
--------------------
-
-There is a mod that is disabled by default that gives certain users
-a super admin interface. 
-
-(1) Edit config/sites.yml to add which users should be super admins
-(2) Edit config/mods_enabled.list to enable super_admin module
-(3) Edit config/routes.rb and uncomment the super_admin routes
-(4) restart rails, login, and browse to /admin
-
+* {Installing Crabgrass for local development}[link:files/doc/INSTALL.html]
+* {Development overview}[link:files/doc/DEVELOPMENT.html]
+* {Running and writing Crabgrass tests}[link:files/doc/TESTING.html]
+* {Code changes}[link:files/CHANGES.html]
+* {Running Crabgrass in production mode}[link:files/doc/PRODUCTION.html]
 

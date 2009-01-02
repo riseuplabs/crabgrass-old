@@ -1,0 +1,75 @@
+This is a general overview of the Crabgrass code and how to begin making contributions. 
+
+= Related Documents
+
+* MODS[link:files/doc/MODS.html]
+* TOOLS[link:files/doc/TOOLS.html]
+
+= Coding Standards
+
+There are many people who contribute to the Crabgrass code, often for short periods of time. Few of these contributors have enough time to understand all of Crabgrass. 
+
+For this reason, it is absolutely imperative that all contributions to the source code include the following:
+
+* Complete unit and functional tests.
+* Inline RDoc comments for every method and class that another programmer might need to call from somewhere else in crabgrass.
+
+The top priority in writing code for Crabgrass is to make something that someone else will be able to understand, maintain, and debug long after you are gone.
+
+Additionally, all Crabgrass contributions should follow these generally accepted coding practices:
+
+* Variable names should be descriptive and verbose. Don't save on typing at the expense of reability and maintainability.
+* Don't be too clever: don't write something compact and tricky if it is going to be difficult for the next person to figure out.
+* In ruby, we use two spaces instead of tabs for indents. Get used to it.
+* Ruby source files should be kept small and managable. 
+* Class methods should be kept small and managable, ideally under 20 lines.
+* Thin controllers, fat models: as much logic as possible should be put in the models. The controllers should be light weight. Certainly, one strategy for thin controllers is REST or CRUD based controllers, but these patterns do not guarentee thin controllers, nor are thin controllers dependent on these patterns.
+* More controllers is more better: it is better to have more controllers than more lengthy controllers. As with a strict REST strategy, try to think of ways to have at least one controller for every table.
+
+= Core Classes
+
+=== User
+
+=== Group
+
+=== Page
+
+A 'page' is the basic model for all content in crabgrass. examples are a wiki page, an uploaded file/image/audio/video, a poll, a task list. 
+
+these specific page types are subclasses of Page and they have their own controller and views. In effect, every page is its own rails application.
+
+the page controller is subclass from BasePageController. it defines a particular api of variables to set, callbacks to hook into, methods to implement, or methods to override. 
+
+all pages are actually implemented as plugins, but plugins that live in a special folder called 'tools'
+
+= Core Relationships
+
+main relationships in crabgrass:
+
+  user <> user
+
+  user <> group
+
+  user <> page
+
+  group <> page
+
+  group <> group
+
+  page <> page data, discussion, tags, etc.
+
+= Permissions
+
+the historical focus of crabgrass has not been social networking. it has been to allow small groups to work together on projects. 
+
+for this reason, there is a very complicated system for access to pages. any page can have :admin, :edit, :view access to a page by any group and user. what :admin, :edit, :view actually means depends on the particular page controller. things are further complicated by inherited access: if a committee has access to a page, then the committee's parent group also has the same access.
+
+the advantage of this system is total freedom in designating permissions and in collaborating on any page with any mix of users and groups.
+ 
+the ui also shows total transparency in displaying the permissions, so you are never left wondering what the access rights are.
+
+this makes the queries very complex and slow. 
+
+= Finding Pages
+
+to be written...
