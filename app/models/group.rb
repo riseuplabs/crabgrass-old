@@ -447,6 +447,7 @@ class Group < ActiveRecord::Base
    
   def update_group_name_of_pages
     Page.connection.execute "UPDATE pages SET `group_name` = '#{self.name}' WHERE pages.group_id = #{self.id}"
+    Page.connection.execute "UPDATE pages SET `owner_name` = '#{self.name}' WHERE pages.owner_id = #{self.id} AND pages.owner_type = 'Group'"
   end
     
 end
