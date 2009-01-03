@@ -63,6 +63,7 @@ module ControllerExtension::WikiRenderer
     rescue ActiveRecord::RecordNotFound => exc
       # not found
       label ||= page_name.nameized? ? page_name.denameize : page_name
+      label = html_escape(label)
       url = '/%s/%s' % [context_name.nameize, page_name.nameize]
       content_tag :a, label, :href => url, :class => 'dead_link'
     end
