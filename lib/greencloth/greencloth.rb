@@ -74,6 +74,7 @@ rescue Exception
   require 'RedCloth'
 end
 require 'redcloth/formatters/html'
+require 'cgi'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -117,7 +118,7 @@ module GreenClothFormatterHTML
   ## convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
   ##
   def li_open(opts)
-    opts[:text].sub!(/^([\w\s]+):: /, '<b>\1:</b> ')
+    opts[:text].sub!(/^(.+):: /, '<b>\1:</b> ')
     "#{li_close unless opts.delete(:first)}#{"\t" * opts[:nest]}<li#{pba(opts)}>#{opts[:text]}"
   end
     
@@ -217,6 +218,7 @@ class GreenCloth < RedCloth::TextileDoc
       leading_character = $1
       tag        = $2  # eg '<code>'
       codebody   = $4  # what is between <code> and </code>
+      tag.gsub!(/<(.+)? (.*)>/,'<\\1>') # prevent <code onmouseover='something nasty'>
       leading_character + format_block_code(tag, codebody, leading_character)
     end
   end
@@ -350,8 +352,8 @@ class GreenCloth < RedCloth::TextileDoc
           link = @block.call(:auto => true, :url => url)
         end
         unless link
-          text = truncate label, 42
-          link = %(<a href="#{url}">#{text.sub(/\/$/,'')}</a>)
+          text = truncate(label, 42).sub(/\/$/,'')
+          link = '<a href="%s">%s</a>' % [url, self.formatter.html_esc(text)]
         end
         a + offtag_it(link, b+c ) + d
       end
@@ -372,52 +374,60 @@ class GreenCloth < RedCloth::TextileDoc
 
   def bracket_links( text ) 
     text.gsub!( BRACKET_LINK_RE ) do |m|
-      all, preceding_char, first_char, link_text, last_char = $~[0..4]
-      if preceding_char == '\\'
-        # the bracket is escaped and so we should ignore
-        all.sub('\\[', '[').sub('\\]', ']')
-      elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
-        # the brackets are for wiki formatting, not links
-        all
-      else
-        # we got an actual bracket style link!
-        a_tag = nil # the eventual <a> tag
-        link_text = first_char + link_text + last_char
-        if link_text =~ /^.+\s*->\s*.+$/
-          # link_text == "from -> to"
-          from, to = link_text.split(/\s*->\s*/)[0..1]
+      begin
+        all, preceding_char, first_char, link_text, last_char = $~[0..4]
+        if preceding_char == '\\'
+          # the bracket is escaped and so we should ignore
+          all.sub('\\[', '[').sub('\\]', ']')
+        elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
+          # the brackets are for wiki formatting, not links
+          all
         else
-          # link_text == "to" (ie, no link label)
-          from = nil
-          to = link_text
-        end
-        if to =~ /^(\/|#{PROTOCOL}:\/\/)/
-          # the link is a fully formed url or an absolute path, eg: 
-          # to == https://riseup.net
-          # to == /an/absolute/path
-          from ||= to.gsub(/(^#{PROTOCOL}:\/\/|^\/|\/$)/, '')
-        else
-          # the link is a wiki style link, eg
-          # to == "context_name / page_name"
-          # to == "page_name"
-          context_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
-          unless page_name
-            # there was no context indicated, so context_name is really the page_name
-            page_name = context_name
-            #group_name = @default_group
-            context_name = nil
+          # we got an actual bracket style link!
+          a_tag = nil # the eventual <a> tag
+          link_text = first_char + link_text + last_char
+          if link_text =~ /^.+\s*->\s*.+$/
+            # link_text == "from -> to"
+            from, to = link_text.split(/\s*->\s*/)[0..1]
+            from = "" unless from.instance_of? String # \ sanity check for 
+            to   = "" unless from.instance_of? String # / badly formed links
+          else
+            # link_text == "to" (ie, no link label)
+            from = nil
+            to = link_text
           end
-          if @block
-            a_tag = @block.call(:label => from, :context => context_name, :page => page_name)
-          end          
-          unless a_tag
-            from ||= page_name.nameized? ? page_name.denameize : page_name
-            context_name ||= @default_group
-            to = '/%s/%s' % [context_name.nameize, page_name.nameize]
+          if to =~ /^(\/|#{PROTOCOL}:\/\/)/
+            # the link is a fully formed url or an absolute path, eg: 
+            # to == https://riseup.net
+            # to == /an/absolute/path
+            from ||= to.gsub(/(^#{PROTOCOL}:\/\/|^\/|\/$)/, '')
+          else
+            # the link is a wiki style link, eg
+            # to == "context_name / page_name"
+            # to == "page_name"
+            context_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
+            unless page_name
+              # there was no context indicated, so context_name is really the page_name
+              page_name = context_name
+              context_name = nil
+            end
+            if @block
+              a_tag = @block.call(:label => from, :context => context_name, :page => page_name)
+            end
+            unless a_tag
+              from ||= page_name.nameized? ? page_name.denameize : page_name
+              context_name ||= @default_group
+              to = '/%s/%s' % [context_name.nameize, page_name.nameize]
+            end
           end
+          a_tag ||= '<a href="%s">%s</a>' % [htmlesc(to), htmlesc(from)]
+          all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+          preceding_char + offtag_it(a_tag, all)
         end
-        a_tag ||= '<a href="%s">%s</a>' % [to,from]
-        all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+      rescue Exception => exc
+        # something horribly wrong has happened
+        a_tag = '<a href="%s">%s</a>' % ["#error",from]
+        #comment = '<!-- %s -->' % exc.to_s
         preceding_char + offtag_it(a_tag, all)
       end
     end
@@ -475,6 +485,10 @@ class GreenCloth < RedCloth::TextileDoc
     if text.nil? then return end
     l = length - truncate_string.length
     text.length > length ? text[0...l] + truncate_string : text
+  end
+
+  def htmlesc(string)
+    self.formatter.html_esc(string)
   end
 
 end
