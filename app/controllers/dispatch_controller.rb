@@ -43,11 +43,13 @@ class DispatchController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       @user = current_user
       @site = Site.default
-      render :action => "not_found", :status => :not_found
+      set_language do
+        render :action => "not_found", :status => :not_found
+      end
     end
   end
 
-   private
+  private
   
   #
   # attempt to find a page by its name, and return a new instance of the
