@@ -3,30 +3,23 @@ require 'iconv'
 class String
 
   def nameize
-    translation_to   = 'ascii//ignore//translit'
-    translation_from = 'utf-8'
-    # Iconv transliteration seems to be broken right now in ruby, but
-    # if it was working, this should do it.
-    s = Iconv.iconv(translation_to, translation_from, self).to_s
-    s.gsub!(/\W+/, ' ') # all non-word chars to spaces
-    s.strip!            # ohh la la
-    s.downcase!         # upper case characters in urls are confusing
-    s.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-    s = "-#{s}" if s =~ /^(\d+)$/ # don't allow all numbers
-    s
+    str = self.dup
+    str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
+    str.strip!            # ohh la la
+    str.downcase!         # upper case characters in urls are confusing
+    str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
+    str = "-#{s}" if str =~ /^(\d+)$/ # don't allow all numbers
+    return str[0..49]
   end
   
   def denameize
-    translation_from   = 'ascii//ignore//translit'
-    translation_to     = 'utf-8'
-    s = Iconv.iconv(translation_to, translation_from, self).to_s
-    s.gsub('-',' ')
+    self.gsub('-',' ')
   end
 
   # returns false if any char is detected that is not allowed in
   # 'nameized' strings
   def nameized?
-    self =~ /^[-a-z0-9_\+]+$/ and self =~ /-/
+    self == self.nameize
   end
   
   def shell_escape

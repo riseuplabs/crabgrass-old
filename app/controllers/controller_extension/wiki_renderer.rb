@@ -4,7 +4,8 @@ module ControllerExtension::WikiRenderer
 
   protected
 
-  def render_wiki_html(body, context_name='page')
+  def render_wiki_html(body, context_name)
+    context_name ||= 'page'
     GreenCloth.new(body).to_html do |link_data|
       if link_data[:auto]
         generate_wiki_auto_link(link_data[:url])

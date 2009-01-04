@@ -38,7 +38,7 @@ class WikiPageController < BasePageController
       @last_seen = @wiki.first_since( @upart.viewed_at )
     end
     # render if needed
-    @wiki.render_html{|body| render_wiki_html(body, @page.group_name)}
+    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
   end
 
   def version
@@ -62,7 +62,7 @@ class WikiPageController < BasePageController
 
   def print
     # render if needed
-    @wiki.render_html{|body| render_wiki_html(body, @page.group_name)}
+    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
     render :layout => "printer-friendly"
   end
 
