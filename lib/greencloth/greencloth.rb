@@ -121,7 +121,23 @@ module GreenClothFormatterHTML
     opts[:text].sub!(/^(.+):: /, '<b>\1:</b> ')
     "#{li_close unless opts.delete(:first)}#{"\t" * opts[:nest]}<li#{pba(opts)}>#{opts[:text]}"
   end
-    
+
+  def tr_open(opts)
+    opts[:class] = [opts[:class], even_odd].compact.join(' ')
+    "\t<tr#{pba(opts)}>\n"
+  end
+
+  def table_open(opts)
+    @parity = 'even'
+    super
+  end
+
+  def even_odd()
+    @parity ||= 'even'
+    @parity = @parity == 'odd' ? 'even' : 'odd'
+    @parity
+  end
+
 end
 
 
@@ -263,7 +279,7 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
-  TABLE_TABS_RE = /^\t.*\t$/
+  TABLE_TABS_RE = /^\t.*\t(\r?\n|$)/
   def tables_with_tabs( text )
     text.gsub!( TABLE_TABS_RE ) do |row|
       row.gsub /\t/, '|'
