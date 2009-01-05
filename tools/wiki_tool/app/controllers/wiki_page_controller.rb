@@ -49,9 +49,20 @@ class WikiPageController < BasePageController
   end
   
   def diff
+    # require 'ruby-debug'; debugger
     old_id, new_id = params[:id].split('-')
     @old = @wiki.versions.find_by_version(old_id)
+
+    # FIXME: @old.body_html is blank now, it needs to be rendered, but
+    # Wiki::Version does not have the render_html method
+    # render if needed
+    # @old.render_html{|body| render_wiki_html(body, @page.group_name)}
+
+    # FIXME: same for @new.body_html / @new.render_html
     @new = @wiki.versions.find_by_version(new_id)
+    # render if needed
+    # @new.render_html{|body| render_wiki_html(body, @page.group_name)}
+
     @old_markup = @old.body_html || ''
     @new_markup = @new.body_html || ''
     @difftext = HTMLDiff.diff( @old_markup , @new_markup)

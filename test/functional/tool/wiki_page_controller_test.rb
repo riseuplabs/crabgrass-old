@@ -123,7 +123,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
 #    assert_template 'diff'
     assert_equal assigns(:wiki).versions.reload.find_by_version(4).body_html, assigns(:old_markup)
     assert_equal assigns(:wiki).versions.reload.find_by_version(5).body_html, assigns(:new_markup)
-    assert_not_nil assigns(:difftext)
+    assert assigns(:difftext).length > 10, "difftext should contain something substantial"
   end
 
   def test_print
