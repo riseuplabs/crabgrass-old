@@ -1,4 +1,4 @@
-Copyright © 2007 Riseup Labs
+Copyright © 2007-2009 Riseup Labs
 
 Crabgrass is free software; you can redistribute it and/or modify
 it under the terms of the Affero General Public License as published by
@@ -12,8 +12,7 @@ Affero General Public License for more details.
 You should have received a copy of the Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-CRABGRASS AUTHORS
-=================
+= Crabgrass Authors
 
 Abie Flaxman
 Daniel Scott
@@ -21,8 +20,7 @@ Elijah Saxon
 Jessi Berkelhammer
 Seth Walker
 
-AUTHORS OF INCLUDED SOFTWARE 
-=============================
+= Authors of Included Software
 
 Crabgrass includes many libraries and images created by third parties
 and distributed under various licenses.
@@ -49,15 +47,8 @@ Whatever:hover
   GNU Lesser General Public v2.1 or >
 
 
-To be added to the list
------------------------
-
-sphinx search
-
-BackgroundDB
-
-Tesseract
-
-OCRopus
+To be added to the list:
+* sphinx search
+* BackgroundDB
 
 

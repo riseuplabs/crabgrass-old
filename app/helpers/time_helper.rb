@@ -11,7 +11,7 @@ module TimeHelper
   # The date is then wrapped in a label, so that if you hover over the text
   # you will see the full details.
   def friendly_date(*times)
-    return nil unless times.any?
+    return "" unless times.any?
 
     time  = times.compact.max
     today = Time.zone.today

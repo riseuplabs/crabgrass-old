@@ -24,11 +24,11 @@ class Page < ActiveRecord::Base
   #######################################################################
   ## PAGE NAMING
   
-  validates_format_of  :name, :with => /^$|^[a-z0-9]+([-_]*[a-z0-9]+){1,39}$/
-
   def validate
     if (name_changed? or group_id_changed?) and name_taken?
       errors.add 'name', 'is already taken'
+    elsif name_changed?
+      errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
 

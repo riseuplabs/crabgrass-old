@@ -74,6 +74,7 @@ rescue Exception
   require 'RedCloth'
 end
 require 'redcloth/formatters/html'
+require 'cgi'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -117,10 +118,26 @@ module GreenClothFormatterHTML
   ## convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
   ##
   def li_open(opts)
-    opts[:text].sub!(/^([\w\s]+):: /, '<b>\1:</b> ')
+    opts[:text].sub!(/^(.+):: /, '<b>\1:</b> ')
     "#{li_close unless opts.delete(:first)}#{"\t" * opts[:nest]}<li#{pba(opts)}>#{opts[:text]}"
   end
-    
+
+  def tr_open(opts)
+    opts[:class] = [opts[:class], even_odd].compact.join(' ')
+    "\t<tr#{pba(opts)}>\n"
+  end
+
+  def table_open(opts)
+    @parity = 'even'
+    super
+  end
+
+  def even_odd()
+    @parity ||= 'even'
+    @parity = @parity == 'odd' ? 'even' : 'odd'
+    @parity
+  end
+
 end
 
 
@@ -217,6 +234,7 @@ class GreenCloth < RedCloth::TextileDoc
       leading_character = $1
       tag        = $2  # eg '<code>'
       codebody   = $4  # what is between <code> and </code>
+      tag.gsub!(/<(.+)? (.*)>/,'<\\1>') # prevent <code onmouseover='something nasty'>
       leading_character + format_block_code(tag, codebody, leading_character)
     end
   end
@@ -261,7 +279,7 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
-  TABLE_TABS_RE = /^\t.*\t$/
+  TABLE_TABS_RE = /^\t.*\t(\r?\n|$)/
   def tables_with_tabs( text )
     text.gsub!( TABLE_TABS_RE ) do |row|
       row.gsub /\t/, '|'
@@ -350,8 +368,8 @@ class GreenCloth < RedCloth::TextileDoc
           link = @block.call(:auto => true, :url => url)
         end
         unless link
-          text = truncate label, 42
-          link = %(<a href="#{url}">#{text.sub(/\/$/,'')}</a>)
+          text = truncate(label, 42).sub(/\/$/,'')
+          link = '<a href="%s">%s</a>' % [url, self.formatter.html_esc(text)]
         end
         a + offtag_it(link, b+c ) + d
       end
@@ -372,52 +390,60 @@ class GreenCloth < RedCloth::TextileDoc
 
   def bracket_links( text ) 
     text.gsub!( BRACKET_LINK_RE ) do |m|
-      all, preceding_char, first_char, link_text, last_char = $~[0..4]
-      if preceding_char == '\\'
-        # the bracket is escaped and so we should ignore
-        all.sub('\\[', '[').sub('\\]', ']')
-      elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
-        # the brackets are for wiki formatting, not links
-        all
-      else
-        # we got an actual bracket style link!
-        a_tag = nil # the eventual <a> tag
-        link_text = first_char + link_text + last_char
-        if link_text =~ /^.+\s*->\s*.+$/
-          # link_text == "from -> to"
-          from, to = link_text.split(/\s*->\s*/)[0..1]
+      begin
+        all, preceding_char, first_char, link_text, last_char = $~[0..4]
+        if preceding_char == '\\'
+          # the bracket is escaped and so we should ignore
+          all.sub('\\[', '[').sub('\\]', ']')
+        elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
+          # the brackets are for wiki formatting, not links
+          all
         else
-          # link_text == "to" (ie, no link label)
-          from = nil
-          to = link_text
-        end
-        if to =~ /^(\/|#{PROTOCOL}:\/\/)/
-          # the link is a fully formed url or an absolute path, eg: 
-          # to == https://riseup.net
-          # to == /an/absolute/path
-          from ||= to.gsub(/(^#{PROTOCOL}:\/\/|^\/|\/$)/, '')
-        else
-          # the link is a wiki style link, eg
-          # to == "context_name / page_name"
-          # to == "page_name"
-          context_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
-          unless page_name
-            # there was no context indicated, so context_name is really the page_name
-            page_name = context_name
-            #group_name = @default_group
-            context_name = nil
+          # we got an actual bracket style link!
+          a_tag = nil # the eventual <a> tag
+          link_text = first_char + link_text + last_char
+          if link_text =~ /^.+\s*->\s*.+$/
+            # link_text == "from -> to"
+            from, to = link_text.split(/\s*->\s*/)[0..1]
+            from = "" unless from.instance_of? String # \ sanity check for 
+            to   = "" unless from.instance_of? String # / badly formed links
+          else
+            # link_text == "to" (ie, no link label)
+            from = nil
+            to = link_text
           end
-          if @block
-            a_tag = @block.call(:label => from, :context => context_name, :page => page_name)
-          end          
-          unless a_tag
-            from ||= page_name.nameized? ? page_name.denameize : page_name
-            context_name ||= @default_group
-            to = '/%s/%s' % [context_name.nameize, page_name.nameize]
+          if to =~ /^(\/|#{PROTOCOL}:\/\/)/
+            # the link is a fully formed url or an absolute path, eg: 
+            # to == https://riseup.net
+            # to == /an/absolute/path
+            from ||= to.gsub(/(^#{PROTOCOL}:\/\/|^\/|\/$)/, '')
+          else
+            # the link is a wiki style link, eg
+            # to == "context_name / page_name"
+            # to == "page_name"
+            context_name, page_name = to.split(/[ ]*\/[ ]*/)[0..1]
+            unless page_name
+              # there was no context indicated, so context_name is really the page_name
+              page_name = context_name
+              context_name = nil
+            end
+            if @block
+              a_tag = @block.call(:label => from, :context => context_name, :page => page_name)
+            end
+            unless a_tag
+              from ||= page_name.nameized? ? page_name.denameize : page_name
+              context_name ||= @default_group
+              to = '/%s/%s' % [context_name.nameize, page_name.nameize]
+            end
           end
+          a_tag ||= '<a href="%s">%s</a>' % [htmlesc(to), htmlesc(from)]
+          all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+          preceding_char + offtag_it(a_tag, all)
         end
-        a_tag ||= '<a href="%s">%s</a>' % [to,from]
-        all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+      rescue Exception => exc
+        # something horribly wrong has happened
+        a_tag = '<a href="%s">%s</a>' % ["#error",from]
+        #comment = '<!-- %s -->' % exc.to_s
         preceding_char + offtag_it(a_tag, all)
       end
     end
@@ -477,6 +503,10 @@ class GreenCloth < RedCloth::TextileDoc
     text.length > length ? text[0...l] + truncate_string : text
   end
 
+  def htmlesc(string)
+    self.formatter.html_esc(string)
+  end
+
 end
 
 ##
@@ -487,30 +517,27 @@ unless "".respond_to? 'nameize'
 
   require 'iconv'
   class String
+
     def nameize
-      translation_to   = 'ascii//ignore//translit'
-      translation_from = 'utf-8'
-      # Iconv transliteration seems to be broken right now in ruby, but
-      # if it was working, this should do it.
-      s = Iconv.iconv(translation_to, translation_from, self).to_s
-      s.gsub!(/\W+/, ' ') # all non-word chars to spaces
-      s.strip!            # ohh la la
-      s.downcase!         # upper case characters in urls are confusing
-      s.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-      s = "-#{s}" if s =~ /^(\d+)$/ # don't allow all numbers
-      s
-    end
+    str = self.dup
+    str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
+    str.strip!            # ohh la la
+    str.downcase!         # upper case characters in urls are confusing
+    str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
+    str = "-#{s}" if str =~ /^(\d+)$/ # don't allow all numbers
+    return str[0..49]
+  end
+    
     def denameize
-      translation_from   = 'ascii//ignore//translit'
-      translation_to     = 'utf-8'
-      s = Iconv.iconv(translation_to, translation_from, self).to_s
-      s.gsub('-',' ')
+      self.gsub('-',' ')
     end
+
     # returns false if any char is detected that is not allowed in
     # 'nameized' strings
     def nameized?
-      self =~ /^[-a-z0-9_\+]+$/ and self =~ /-/
+      self == self.nameize
     end
+
   end
 
 end

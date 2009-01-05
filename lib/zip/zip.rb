@@ -18,7 +18,7 @@ module Zlib  #:nodoc:all
   end
 end
 
-module Zip
+module Zip #:nodoc:all
 
   VERSION = '0.9.1'
 

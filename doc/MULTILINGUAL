@@ -1,5 +1,6 @@
-Getting the UI to appear localized
-----------------------------------
+= Multilingual Support in Crabgrass
+
+== Enable Localized User Interface
 
 All crabgrass localizations are stored in RAILS_ROOT/lang/*.yml. The
 name of the file is the code of the language. These localizations
@@ -17,9 +18,7 @@ Then run this command:
 This will populate the languages table in the database. Now the files
 in lang/*.yml will get picked up.
 
-
-Getting multi-byte character encoding to work
----------------------------------------------
+== Get multi-byte character encoding to work
 
 In order to store multibyte unicode, run this:
 
@@ -28,9 +27,7 @@ In order to store multibyte unicode, run this:
 Now you should be able to store arabic, chinese, hebrew, etc.
 This task only works with mysql. You should only have to do this once.
 
-
-Editing crabgrass UI translations
-----------------------------------
+== Editing crabgrass UI translations
 
 You can edit the UI translations in crabgrass using the gibberize plugin.
 For information on how to use, see mods/gibberize/README

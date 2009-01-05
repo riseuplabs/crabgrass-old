@@ -50,8 +50,11 @@ class PagesController < ApplicationController
       render :text => '', :layout => 'default'
     elsif page = group.pages.find_by_name(params[:name])
       redirect_to page_url(page)
-    else
-      page = Page.make :wiki, {:user => current_user, :group => group, :name => params[:name]}
+    elsif params[:name].any?
+      raise PermissionDenied.new unless current_user.may_pester!(group)
+      name = params[:name]
+      page = WikiPage.create!(:title => name.titleize, :name => name.nameize,
+        :data => Wiki.create(:user => current_user), :user => current_user, :owner => group)
       redirect_to page_url(page)
     end
   end

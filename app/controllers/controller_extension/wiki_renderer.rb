@@ -4,7 +4,8 @@ module ControllerExtension::WikiRenderer
 
   protected
 
-  def render_wiki_html(body, context_name='page')
+  def render_wiki_html(body, context_name)
+    context_name ||= 'page'
     GreenCloth.new(body).to_html do |link_data|
       if link_data[:auto]
         generate_wiki_auto_link(link_data[:url])
@@ -63,6 +64,7 @@ module ControllerExtension::WikiRenderer
     rescue ActiveRecord::RecordNotFound => exc
       # not found
       label ||= page_name.nameized? ? page_name.denameize : page_name
+      label = html_escape(label)
       url = '/%s/%s' % [context_name.nameize, page_name.nameize]
       content_tag :a, label, :href => url, :class => 'dead_link'
     end

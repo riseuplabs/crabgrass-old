@@ -1,8 +1,6 @@
-Crabgrass Mods
-===============================================================================
+= Crabgrass Mods
 
-Crabgrass has a plugin system that is the reverse of most: normally, plugins
-provide behavior for an application that the plugin knows nothing about.
+Crabgrass has a plugin system that is the reverse of most rails applications: normally, plugins provide behavior for an application that the plugin knows nothing about.
 
 With crabgrass, however, the plugins stored in mods/ and tools/ directories
 know about crabgrass and only work for crabgrass.
@@ -29,9 +27,7 @@ would in a normal Rails application.
 
 See http://api.rails-engines.org/
 
-
-Plugin Views
-===============================================================================
+== Overriding Views in a Plugin
 
 If this is in the init.rb of your plugin:
 
@@ -40,9 +36,7 @@ If this is in the init.rb of your plugin:
 Then any view file in the plugin's app/views folder will override what is in the
 main application. Otherwise, the views in the main application take precedence. 
 
-
-Plugin View Listeners
-===============================================================================
+== View Listeners
 
 Suppose the main application had this in a view:
 
@@ -71,8 +65,7 @@ In this case, the 'call_hook' command will return 'hi'.
 
 In your ViewListener, you can use any method that is available to a view.
 
-Plugin Models
-===============================================================================
+== Modifying Models in the Plugin
 
 Some plugins have a problem: if a plugin applies a mixing directly to a model in
 app/models, this mixin gets unloaded by rails after the first request. This only
@@ -126,19 +119,17 @@ Plugins loaded first problem:
 
 Plugin classes unloaded after first refresh in development mode:
 
-  * http://weblog.techno-weenie.net/2007/1/26/understanding-the-rails-plugin-initialization-process
-  * http://rails-engines.org/development/common-issues-when-overloading-code-from-plugins/
-  * http://blog.nanorails.com/articles/2007/2/15/after_method
-  * http://www.ruby-forum.com/topic/111410
+* http://weblog.techno-weenie.net/2007/1/26/understanding-the-rails-plugin-initialization-process
+* http://rails-engines.org/development/common-issues-when-overloading-code-from-plugins/
+* http://blog.nanorails.com/articles/2007/2/15/after_method
+* http://www.ruby-forum.com/topic/111410
 
 Reloading changed code problem:
 
-  * http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
-  * crabgrass has its own method. see lib/extends_to_engines.rb
+* http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
+* crabgrass has its own method. see lib/extends_to_engines.rb
 
-
-Plugin assets
-===============================================================================
+== Adding Assets To A Plugin
 
 The engines plugin makes it trivial to share public assets using plugins. 
 To do this, include an "assets" directory within your plugin, and put
@@ -161,9 +152,7 @@ Files within the "asset" structure are automatically mirrored into
 a publicly-accessible folder each time your application starts
 (ie app/public/plugin_assets/<plugin name>/)
 
-
-Using plugin assets in views
-===============================================================================
+== Using Plugin Assets in Views
 
 It's also simple to use Rails' helpers in your views to use plugin assets.
 The default helper methods have been enhanced by the engines plugin to accept
@@ -171,14 +160,14 @@ a :plugin option, indicating the plugin containing the desired asset.
 
 For example, it's easy to use plugin assets in your layouts:
 
-#   <%= stylesheet_link_tag "my_styles", :plugin => "my_plugin", :media => "screen" %>
-#   <%= javascript_include_tag "my_functions", :plugin => "my_plugin" %>
+  <%= stylesheet_link_tag "my_styles", :plugin => "my_plugin", :media => "screen" %>
+  <%= javascript_include_tag "my_functions", :plugin => "my_plugin" %>
  
 ... and similarly in views and partials, it's easy to use plugin images:
 
-#   <%= image_tag "my_face", :plugin => "my_plugin" %>
-#   <!-- or -->
-#   <%= image_path "my_face", :plugin => "my_plugin" %>
+  <%= image_tag "my_face", :plugin => "my_plugin" %>
+  <!-- or -->
+  <%= image_path "my_face", :plugin => "my_plugin" %>
 
 Where the default helpers allow the specification of more than one file (i.e. the
 javascript and stylesheet helpers), you can do similarly for multiple assets from 
@@ -186,16 +175,15 @@ within a single plugin.
 
 This methods support this :plugin argument:
 
- * stylesheet_link_tag
- * javascript_include_tag
- * image_path
- * image_tag
+* stylesheet_link_tag
+* javascript_include_tag
+* image_path
+* image_tag
 
 Each one of these methods now accepts the key/value pair :plugin => "plugin_name",
 which can be used to specify the originating plugin for any assets.
 
-Customizing the stylesheets and favicon from a module
-=======================================================
+== Customizing the stylesheets and favicon from a plugin
 
 Define LayoutHelper for your module and then define mods_styles and favicon_link.
 

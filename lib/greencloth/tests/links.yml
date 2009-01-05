@@ -45,6 +45,15 @@ out: |-
   <ul>
   	<li><a href="https://riseup.net/">riseup.net</a></li>
   </ul>
+---
+in: "[bad ->-> link]"
+out: <p><a href="#error">bad</a></p>
+---
+in: "[bad link -> ]"
+out: <p><a href="#error">bad link</a></p>
+---
+in: "[ -> bad link]"
+out: <p><a href="/page/bad-link"></a></p>
 
 ##
 ## failing tests

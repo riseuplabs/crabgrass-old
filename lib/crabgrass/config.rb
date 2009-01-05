@@ -11,8 +11,8 @@
 
 require 'active_support'
 
-module Crabgrass
-  class Config
+module Crabgrass #:nodoc:
+  class Config #:nodoc:
     @@settings = {}
     
     def self.method_missing(name, *args)

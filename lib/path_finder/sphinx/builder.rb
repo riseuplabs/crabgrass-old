@@ -14,12 +14,11 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
 
   private
   
-  # :nodoc:
   # every time we reference @with[:access_ids] we want to create
   # a unique key like :access_ids_X where X is a number.
   # This will allow us to create multiple filters on the same attribute
   # because of a hack to the thinking sphinx code we added in search.rb
-  def access_ids_key
+  def access_ids_key # :nodoc:
     @access_ids_key_count ||= 0
     @access_ids_key_count += 1
     "access_ids_#{@access_ids_key_count}".to_sym 

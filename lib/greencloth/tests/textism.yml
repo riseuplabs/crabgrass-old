@@ -157,39 +157,18 @@ in: h3=. centered header
 out: <h3 style="text-align:center;">centered header</h3>
 ---
 in: |-
-  |This|is|a|simple|table|
-  |This|is|a|simple|row|
-out: |-
-  <table>
-  	<tr>
-  		<td>This</td>
-  		<td>is</td>
-  		<td>a</td>
-  		<td>simple</td>
-  		<td>table</td>
-  	</tr>
-  	<tr>
-  		<td>This</td>
-  		<td>is</td>
-  		<td>a</td>
-  		<td>simple</td>
-  		<td>row</td>
-  	</tr>
-  </table>
----
-in: |-
   table{border:1px solid black}.
   |This|is|a|row|
   |This|is|a|row|
 out: |-
   <table style="border:1px solid black;">
-  	<tr>
+  	<tr class="odd">
   		<td>This</td>
   		<td>is</td>
   		<td>a</td>
   		<td>row</td>
   	</tr>
-  	<tr>
+  	<tr class="even">
   		<td>This</td>
   		<td>is</td>
   		<td>a</td>
@@ -200,7 +179,7 @@ out: |-
 in: '{background:#ddd}. |This|is|a|row|'
 out: |-
   <table>
-  	<tr style="background:#ddd;">
+  	<tr style="background:#ddd;" class="odd">
   		<td>This</td>
   		<td>is</td>
   		<td>a</td>
@@ -215,16 +194,16 @@ in: |-
   |>. Right-aligned cell|
 out: |-
   <table>
-  	<tr>
+  	<tr class="odd">
   		<td style="background:#ddd;">Cell with gray background</td>
   	</tr>
-  	<tr>
+  	<tr class="even">
   		<td colspan="2">Cell spanning 2 columns</td>
   	</tr>
-  	<tr>
+  	<tr class="odd">
   		<td rowspan="3">Cell spanning 3 rows</td>
   	</tr>
-  	<tr>
+  	<tr class="even">
   		<td style="text-align:right;">Right-aligned cell</td>
   	</tr>
   </table>
@@ -353,18 +332,18 @@ in: |-
   |this|<>{padding:10px}. is|^. another|(bob#bob). row|
 out: |-
   <table style="border:1px solid black;">
-  	<tr>
+  	<tr class="odd">
   		<th>this</th>
   		<th>is</th>
   		<th>a</th>
   		<th>header</th>
   	</tr>
-  	<tr style="text-align:left;background:gray;">
+  	<tr style="text-align:left;background:gray;" class="even">
   		<td colspan="2">this is</td>
   		<td style="background:red;width:200px;">a</td>
   		<td style="vertical-align:top;text-align:justify;height:200px;">row</td>
   	</tr>
-  	<tr>
+  	<tr class="odd">
   		<td>this</td>
   		<td style="text-align:justify;padding:10px;">is</td>
   		<td style="vertical-align:top;">another</td>
