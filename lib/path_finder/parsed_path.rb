@@ -119,7 +119,7 @@ class PathFinder::ParsedPath < Array
       path.each do |pair|
         key, value = pair
         next unless PATH_KEYWORDS[key]
-        if key == 'page_state' # handle special pseudo keyword... (where is this used? -e)
+        if key == 'page_state' and value.any? # handle special pseudo keyword... 
           self << [value]
         elsif PATH_KEYWORDS[key] == 0
           self << [key] if value == 'true'

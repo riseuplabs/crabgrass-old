@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
   map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
-  map.connect 'me/search/*path',    :controller => 'me/search'
+  map.connect 'me/search/*path',    :controller => 'me/search', :action => 'index'
   map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.me      'me/:action/:id', :controller => 'me/base'

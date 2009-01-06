@@ -76,7 +76,7 @@ class Me::InboxController < Me::BaseController
   
   def context
     me_context('large')
-    #add_context 'inbox', url_for(:controller => 'me/inbox', :action => params[:action], :path => params[:path])
+    add_context 'Inbox'[:me_inbox_link], url_for(:controller => '/me/inbox', :action => params[:action], :path => params[:path])
   end
 
 end

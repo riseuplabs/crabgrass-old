@@ -68,8 +68,7 @@ module PathFinder::Options
 
   private
   
-  # :nodoc:
-  def default_options
+  def default_options   # :nodoc:
     options = {
       :controller => get_controller,
       :public => false,
@@ -84,10 +83,9 @@ module PathFinder::Options
     options
   end
 
-  # :nodoc:
   # this module might be included in helpers and it might be included
   # in controllers. either way, we want to know what the controller is.
-  def get_controller
+  def get_controller   # :nodoc:
     if self.is_a? ActionController::Base
       return self
     else

@@ -56,13 +56,23 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   def find
     # puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
+    # 'with' is used to limit the query using an attribute.
+    # 'conditions' is used to search for on specific fields in the fulltext index.
+    # 'search_text' is used to search all the fulltext index.
     page_terms = PageTerms.search @search_text, :with => @with, :without => @without, 
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page
 
     # page_terms has all of the will_paginate magic included, it just needs to
-    # actually have the pages
-    page_terms.replace(page_terms.collect{|pt| pt.page})
+    # actually have the pages, which we supply with page_terms.replace(pages).
+    pages = []
+    page_terms.each do |pt|
+      pages << pt.page unless pt.nil?
+      # Why might pt be nil? If the PageTerms was destroyed but sphinx has
+      # not been reindex. This should not ever happen when things are working,
+      # but sometimes it does, and if it does we don't want to bomb out.
+    end
+    page_terms.replace(pages)
   end
 
   def paginate
