@@ -19,8 +19,8 @@ class CronWorker < BackgrounDRb::MetaWorker
 
   # updates page.views_count from the data in the page_views table.
   # this should be called frequently.
-  def update_page_views_count
-    PageView.update_page_views_count
+  def update_trackings
+    Tracking.update_trackings
   end
 
   # the output of this is logged to: log/backgroundrb_debug_11006.log

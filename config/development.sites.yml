@@ -7,7 +7,7 @@ default:
   email_sender: 'crabgrass-system@localhost'
   secret: '3d3dc74473a8a65696b564a4214b3'
   pagination_size: 29
-  super_admin_group_id: 1
+  super_admin_group_id: 35
   translation_group: animals
   default_language:
   - en_US
@@ -22,8 +22,5 @@ default:
   - Gallery
   - ExternalVideo
   - Article
-  evil:
-    google_analytics:
-      enabled: false
-      site_id: UA-XXXXXX-X
-      https: false
+  tracking: true
+

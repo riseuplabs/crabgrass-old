@@ -16,6 +16,7 @@ class Site
   attr_accessor :default_language
   attr_accessor :evil
   attr_writer   :available_page_types
+  attr_accessor :tracking
   #attr_accessor :profiles
 
   # the default site when no others match
