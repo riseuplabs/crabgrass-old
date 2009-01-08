@@ -54,6 +54,12 @@ out: <p><a href="#error">bad link</a></p>
 ---
 in: "[ -> bad link]"
 out: <p><a href="/page/bad-link"></a></p>
+---
+in: "make anchors [#here#] or [# maybe here #] or [# over -> there #]"
+out: "<p>make anchors <a name=\"here\">here</a> or <a name=\"maybe-here\">maybe here</a> or <a name=\"there\">over</a></p>"
+---
+in: "link to [anchors # like so] or [ maybe -> like #so ] or [just -> #so] or [#so]"
+out: "<p>link to <a href=\"/page/anchors#like-so\">anchors </a> or <a href=\"/page/like#so\"> maybe</a> or <a href=\"#so\">just</a> or <a href=\"#so\">so</a></p>"
 
 ##
 ## failing tests

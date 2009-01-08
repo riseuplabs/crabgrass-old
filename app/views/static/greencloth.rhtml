@@ -152,6 +152,19 @@ END
 # If you want a square bracket in your text, you can disable linking \\[like so\\].
 END
 
+  header('Anchors') +
+  row(<<END) +
+You can create anchors in text:
+
+* a flock of crows is a [# murder #]
+* but a flock of ravens is [# called a congress -> congress #]
+
+And also link to these anchors:
+
+* jump to [ crows -> static/greencloth #murder]
+* or, more simply: [#congress]
+END
+
   header('Headings') +
   row(<<END) +
 h1. Top level

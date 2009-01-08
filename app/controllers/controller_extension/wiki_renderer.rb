@@ -10,7 +10,7 @@ module ControllerExtension::WikiRenderer
       if link_data[:auto]
         generate_wiki_auto_link(link_data[:url])
       elsif link_data[:page]
-        generate_wiki_page_link(link_data[:label], (link_data[:context]||context_name), link_data[:page])
+        generate_wiki_page_link(link_data[:label], (link_data[:context]||context_name), link_data[:page], link_data[:anchor])
       else
         nil # default link
       end
@@ -56,11 +56,11 @@ module ControllerExtension::WikiRenderer
   #  [ wiki_name ]
   #  [ blah -> wiki_name ]
   #
-  def generate_wiki_page_link(label, context_name, page_name)
+  def generate_wiki_page_link(label, context_name, page_name, anchor)
     begin
       entity, page = resolve_context(context_name, page_name)
       label ||= page.title
-      content_tag :a, label, :href => page_url(page)
+      content_tag :a, label, :href => page_url(page) + anchor
     rescue ActiveRecord::RecordNotFound => exc
       # not found
       label ||= page_name.nameized? ? page_name.denameize : page_name

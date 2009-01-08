@@ -395,6 +395,13 @@ class GreenCloth < RedCloth::TextileDoc
         if preceding_char == '\\'
           # the bracket is escaped and so we should ignore
           all.sub('\\[', '[').sub('\\]', ']')
+        elsif first_char == '#' and last_char == '#'
+          # make this a named anchor tag, instead of a link
+          label, anchor = link_text.split(/\s*->\s*/)[0..1]
+          anchor ||= label
+          a_tag = '<a name="%s">%s</a>' % [anchor.nameize, htmlesc(label.strip)]
+          all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
+          preceding_char + offtag_it(a_tag, all)
         elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS
           # the brackets are for wiki formatting, not links
           all
@@ -427,13 +434,27 @@ class GreenCloth < RedCloth::TextileDoc
               page_name = context_name
               context_name = nil
             end
-            if @block
-              a_tag = @block.call(:label => from, :context => context_name, :page => page_name)
+            if page_name =~ /#/
+              # handle link to anchor
+              if page_name =~ /^#/
+                # relative anchor on this page
+                page_name = page_name[1..-1] # chomp first char
+                from ||= page_name.denameize
+                a_tag = '<a href="#%s">%s</a>' % [page_name.nameize, htmlesc(from)]
+              else
+                page_name = page_name.sub(/#(.*)$/, '')
+                anchor = '#' + $1.nameize if $1  # everything after the # in the link.
+              end
+            else
+              anchor = ''
+            end
+            if @block and a_tag.nil?
+              a_tag = @block.call(:label => from, :context => context_name, :page => page_name, :anchor => anchor)
             end
             unless a_tag
               from ||= page_name.nameized? ? page_name.denameize : page_name
               context_name ||= @default_group
-              to = '/%s/%s' % [context_name.nameize, page_name.nameize]
+              to = '/%s/%s%s' % [context_name.nameize, page_name.nameize, anchor]
             end
           end
           a_tag ||= '<a href="%s">%s</a>' % [htmlesc(to), htmlesc(from)]

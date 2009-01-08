@@ -55,6 +55,13 @@ a {
     a.imglink span {
       text-decoration: underline; }
 
+a[name] {
+  color: black;
+  text-decoration: none; }
+  a[name]:hover {
+    color: black;
+    text-decoration: none; }
+
 .link_line em {
   color: #ccc; }
 
