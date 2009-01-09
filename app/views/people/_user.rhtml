@@ -1,22 +1,22 @@
 <% if user %>
   <% profile = user.profiles.visible_by(current_user) %>
     <tr>
-      <th>
-        <div <% if user.online? %>class="online"<% end %> style='float: left; text-align: center; margin: 1em;'>
+      <td>
+        <div <% if user.online? %>class="online"<% end %> style='text-align: center;'>
         <%=  
           link_to "#{avatar_for user, 'small'}",
           url_for_user(user),:class=>'imglink'
         %>
         </div>
-      </th>
-      <th><%=  link_to "#{user.login}", url_for_user(user) %></th>
-      <th><%= profile.full_name %></th>
-      <th><%= profile.organization %></th>
-      <th>
+      </td>
+      <td><%=  link_to "#{user.login}", url_for_user(user) %></th>
+      <td><%= profile.full_name %></th>
+      <td><%= profile.organization %></th>
+      <td>
         <% if profile.locations.any? %>
           <%= profile.locations.first.city %> <%= profile.locations.first.state %> <%= profile.locations.first.country_name %>
         <% end %>
-      </th>
-      <th><%= user.last_seen_at ? user.last_seen_at.strftime("%Y-%m-%d") : "" %></th>
+      </td>
+      <td><%= user.last_seen_at ? user.last_seen_at.strftime("%Y-%m-%d") : "" %></td>
     </tr>
 <% end %>
