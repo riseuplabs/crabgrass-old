@@ -290,6 +290,11 @@ class GroupController < ApplicationController
     end
   end    
 
+  after_filter :update_view_count
+  def update_view_count
+    Tracking.insert_delayed(nil, @group, current_user) if @site.tracking
+  end
+
   # called when we don't want to let on that a group exists
   # when a user doesn't have permission to see it.  
   def clear_context

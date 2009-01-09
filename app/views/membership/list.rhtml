@@ -12,12 +12,26 @@ table.members td {padding: 12px;}
 <% end %>
 
 <h2><%= "members".t %></h2>
+
+<% if @site.tracking %>
+<b>Visits:</b>
+<%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month, 
+<%= @group.memberships.count(:all, :conditions => "visited_at  is not null") %> all time
+<% end %>
+
+<p/>
+
 <div>
 <% if @group.memberships.any? %>
   <table class='members pretty'>
   <tr>
     <th>User</th>
     <th>Joined</th>
+    <% if @site.tracking %>
+    <th>Last Visit</th>
+    <th>Total Visits</th>
+<!--    <th>Joined by</th> -->
+    <% end %>
     <th></th>
   </tr>
   <%= render :partial => 'membership', :collection => @group.memberships %>

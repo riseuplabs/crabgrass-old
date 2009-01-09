@@ -32,7 +32,7 @@
       :trigger_args: <%= daily %>
     :clean_session_cache:
       :trigger_args: <%= daily %>
-    :update_page_views_count:
+    :update_trackings:
       :trigger_args: <%= hourly %>
     :reindex_sphinx:
       :trigger_args: <%= hourly %>
