@@ -292,7 +292,7 @@ class GroupController < ApplicationController
 
   after_filter :update_view_count
   def update_view_count
-    Tracking.insert_delayed(nil, @group, current_user) if @site.tracking
+    Tracking.insert_delayed(:group => @group, :user => current_user) if @site.tracking
   end
 
   # called when we don't want to let on that a group exists

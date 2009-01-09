@@ -104,11 +104,13 @@ class BasePageController < ApplicationController
   
   after_filter :update_view_count
   def update_view_count
+    return true unless @page and @page.id
     if @site.tracking
-      Tracking.insert_delayed(@page, @group, current_user) if @page && !@page.id.nil?
+      Tracking.insert_delayed(:page => @page, :group => @group, :user => current_user)
     else
-      Tracking.insert_delayed(@page, nil, nil) if @page && !@page.id.nil?
+      Tracking.insert_delayed(:page => @page)
     end
+    return true
   end
   
   def setup_default_view

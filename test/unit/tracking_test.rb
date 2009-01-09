@@ -5,15 +5,18 @@ class TrackingTest < Test::Unit::TestCase
   fixtures :users, :groups, :memberships, :pages
 
   def setup
-    u = User.find(:first)
-    g = u.groups.first
   end
 
   def test_group_view_tracked
-    Tracking.insert_delayed(nil, u, g)
-    visits = u.memberships.find_by_group_id(g.id).total_visits
+    user = users(:blue)
+    group = groups(:rainbow)
+    assert user.memberships.find_by_group_id(group.id)
+    Tracking.insert_delayed(:user => user, :group => group)
     Tracking.update_trackings
-    assert visits = u.memberships.find_by_group_id(g.id).total_visits + 1
+    visits = user.memberships.find_by_group_id(group.id).total_visits
+    Tracking.insert_delayed(:user => user.id, :group => group.id)
+    Tracking.update_trackings
+    assert_equal visits+1, user.memberships.find_by_group_id(group.id).total_visits, 'total_visits should increment'
   end
   
 end
