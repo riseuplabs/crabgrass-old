@@ -1,5 +1,9 @@
+class DiscussionPage < Page #:nodoc:
 
-class DiscussionPage < Page
+  # limit comments to people who can edit
+  def comment_access
+    :edit
+  end
 
   # indexing hooks
 

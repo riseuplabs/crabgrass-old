@@ -170,7 +170,7 @@ class Page < ActiveRecord::Base
   # because of participation objects, NOT because the page is public.
   #
   def has_access!(perm, user)
-    perm = :edit if perm == :comment
+    perm = comment_access if perm == :comment
     upart = self.participation_for_user(user)
     gparts = self.participation_for_groups(user.all_group_ids)
     allowed = false
@@ -189,6 +189,12 @@ class Page < ActiveRecord::Base
     else
       raise PermissionDenied.new
     end
+  end
+
+  # by default, if a user can edit the page, they can comment.
+  # this can be overridden by subclasses.
+  def comment_access
+    :view
   end
 
   #######################################################################

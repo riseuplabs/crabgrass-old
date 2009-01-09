@@ -1,6 +1,8 @@
 <div id="posts">
 
-   <%= link_to_function "Add Comment"[:add_comment] + ARROW, "Element.show('reply_container'); Element.hide('show_reply_link')", :class => 'small_icon page_discussion_16 p', :id=>'show_reply_link' unless @show_reply %>
+  <%- if current_user.may?(:comment,@page) and !@show_reply -%>
+    <%= link_to_function "Add Comment"[:add_comment] + ARROW, "Element.show('reply_container'); Element.hide('show_reply_link')", :class => 'small_icon page_discussion_16 p', :id=>'show_reply_link' %>
+  <%- end -%>
 
   <table border="0" cellspacing="0" cellpadding="0" class="posts">
     <%= post_pagination_links %>
