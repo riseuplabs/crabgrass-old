@@ -9,9 +9,9 @@
         %>
         </div>
       </td>
-      <td><%=  link_to "#{user.login}", url_for_user(user) %></th>
-      <td><%= profile.full_name %></th>
-      <td><%= profile.organization %></th>
+      <td><%=  link_to "#{user.login}", url_for_user(user) %></td>
+      <td><%= profile.full_name %></td>
+      <td><%= profile.organization %></td>
       <td>
         <% if profile.locations.any? %>
           <%= profile.locations.first.city %> <%= profile.locations.first.state %> <%= profile.locations.first.country_name %>
