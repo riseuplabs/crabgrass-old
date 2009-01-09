@@ -108,7 +108,8 @@ ul.tabset.top {
     position: relative;
     left: 1em;
     line-height: 1.3em;
-    padding: 0.5em 1em; }
+    padding: 0.5em 1em;
+    cursor: pointer; }
     ul.tabset.top a.active {
       background: white;
       border: 1px solid #999;

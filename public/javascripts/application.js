@@ -9,8 +9,11 @@ function quickRedReference() {
 }
 
 function show_tab(tab_link, tab_content) {
+  tabset = tab_link.parentNode.parentNode
   $$('ul.tabset a').each( function(elem) {
-    elem.removeClassName('active');
+    if (tabset == elem.parentNode.parentNode) {
+      elem.removeClassName('active');
+    }
   })
   $$('.tab-content').each( function(elem) {
     elem.hide();
