@@ -61,7 +61,7 @@ class Me::SearchController < Me::BaseController
       :around           => 20
     )
     results.each_with_index do |result, i|
-      pages[i].flag[:exerpt] = result
+      pages[i].flag[:excerpt] = result
     end
   end
     

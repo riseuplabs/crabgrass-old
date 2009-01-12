@@ -26,20 +26,20 @@ class MeSearchControllerTest < Test::Unit::TestCase
     return unless sphinx_working?(:test_text_search)
     login_as :blue
 
-    get :index, :path => ["text", "inar"]
+    get :index, :path => ["text", "test"]
     assert_response :success
     assert assigns(:pages).any?, "should find a page"
-    assert_not_nil assigns(:excerpts), "should generate an excerpt"
+    assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"
   end
 
  def test_text_search_and_sort
     return unless sphinx_working?(:test_text_search_and_sort)
     login_as :blue
 
-    get :index, :path => ["text", "inar", "ascending", "group_name"]
+    get :index, :path => ["text", "test", "ascending", "group_name"]
     assert_response :success
     assert assigns(:pages).any?, "should find a page"
-    assert_not_nil assigns(:excerpts), "should generate an excerpt"
+    assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"
   end
 
 end
