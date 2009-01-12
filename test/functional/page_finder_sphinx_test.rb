@@ -129,6 +129,7 @@ class PageFinderSphinxTest < Test::Unit::TestCase
 
     searches.each do |search_str, search_code|
       pages = Page.find_by_path(search_str, options)
+      # require 'ruby_debug'; debugger
       assert_equal page_ids(search_code.call), page_ids(pages), "#{search_str} should match results for user when paginated"
     end
   end
@@ -174,7 +175,6 @@ class PageFinderSphinxTest < Test::Unit::TestCase
       puts 'error in page_ids(%s)' % array.class
       puts array.first.class.to_s
       puts caller().inspect
-      exit
     end
   end
 end
