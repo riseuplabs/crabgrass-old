@@ -1,0 +1,72 @@
+# == Schema Information
+# Schema version: 24
+#
+# Table name: group_settings
+#
+# t.id
+# t.integer :group_id
+# t.string :template_data
+# t.string :allowed_tools 
+      
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+true_levellers:
+  id: 1
+  group_id: 1
+  template_data: 
+  allowed_tools: 
+
+animals:
+  id: 2
+  group_id: 2
+  template_data: 
+  allowed_tools: 
+
+rainbow:
+  id: 3
+  group_id: 3
+  template_data:
+  allowed_tools:
+  
+cold:
+  id: 32
+  group_id: 32
+  template_data: 
+  allowed_tools: 
+
+
+public_group:
+  id: 1000
+  group_id: 1000
+  template_data: 
+  allowed_tools: 
+  
+public_committee:
+  id: 1001
+  group_id: 1001
+  template_data: 
+  allowed_tools: 
+  
+private_committee:
+  id: 1002
+  group_id: 1002
+  template_data: 
+  allowed_tools: 
+
+
+private_group:
+  id: 2000
+  group_id: 2000
+  template_data: 
+  allowed_tools: 
+
+cnt:
+  id: 3001
+  group_id: 3001
+  template_data: 
+  allowed_tools: 
+  
+fai:
+  id: 3002
+  group_id: 3002
+  template_data: 
+  allowed_tools: 

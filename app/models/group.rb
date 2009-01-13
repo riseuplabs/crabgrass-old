@@ -431,7 +431,14 @@ class Group < ActiveRecord::Base
     profiles.public.update_attribute :may_request_membership, val
   end
 
-
+  has_one :group_setting
+  # can't remember the way to do this automatically
+  after_create :create_group_setting
+  def create_group_setting
+    self.group_setting = GroupSetting.new
+    self.group_setting.save
+  end
+  
   protected
   
   after_save :update_name

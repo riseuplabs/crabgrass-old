@@ -40,6 +40,7 @@ class PagesController < ApplicationController
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool). 
   def create
+    @available_tools = (@group && @group.group_setting.allowed_tools ? @group.group_setting.allowed_tools : @site.available_page_types)
   end
          
   # for quickly creating a wiki
@@ -73,6 +74,7 @@ class PagesController < ApplicationController
   def context
 #    return true unless request.get?  #I don't know what the purpose of this is, but commenting it out makes access look better after removing access  --af
     @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
+    @group ||= Group.find_by_name(params[:group]) if params[:group]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
     page_context

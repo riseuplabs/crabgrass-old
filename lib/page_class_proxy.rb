@@ -11,8 +11,8 @@ class PageClassProxy
 
   attr_accessor :controller, :model, :icon, :controller_class_name
   attr_accessor :class_display_name, :class_description, :class_group
-  attr_accessor :class_name, :full_class_name, :internal, :order
-
+  attr_accessor :class_name, :full_class_name, :internal, :order, :short_class_name
+  
 #  cattr_accessor :quiet
 
   def initialize(arg=nil)
@@ -26,6 +26,8 @@ class PageClassProxy
       self.class_group = [self.class_group] unless self.class_group.is_a? Array
       self.full_class_name = self.class_name
       self.controller_class_name = "#{controller.camelcase}Controller"
+    	#The names used in Site.available_page_types; inverse of class_name_to_class
+      self.short_class_name = self.class_name.sub("Page","")
       self.order ||= 100
     else
       throw Exception.new('no longer used')

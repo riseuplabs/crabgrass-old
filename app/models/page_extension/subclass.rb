@@ -107,6 +107,10 @@ module PageExtension::Subclass
     def class_description
       class_definition.class_description
     end
+    #The names used in Site.available_page_types; inverse of class_name_to_class
+    def short_class_name
+      class_definition.full_class_name.sub("Page","")
+    end
   end
   
 end

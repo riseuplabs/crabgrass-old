@@ -3,7 +3,7 @@
 <% end -%>
 
 <div id='listing-of-page-classes' class='workarea'>
-<% @site.available_page_types.each_with_index do |page_class,i| -%>
+<% @available_tools.each do |page_class| -%>
 <% page_class = Page.class_name_to_class(page_class) -%>
 <div class="page-class"><div>
   <%= link_to "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}",

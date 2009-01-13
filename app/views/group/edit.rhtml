@@ -25,4 +25,13 @@
 <% end -%></p>
 </p>
 
+<h2 class='section'><div style='padding: 8px;'>
+    <%= "Available Tools".t %>
+</div></h2>
+
+<p/>
+<%= link_to 'Choose Tools', url_for(:action=>'edit_tools', :id=>@group) %>:
+<%= (@group.group_setting.allowed_tools.nil? ? @site.available_page_types : @group.group_setting.allowed_tools).join(", ") %>
+<p/>
+
 <%= call_hook :group_edit %>

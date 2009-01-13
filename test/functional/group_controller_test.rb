@@ -5,7 +5,7 @@ require 'group_controller'
 class GroupController; def rescue_action(e) raise e end; end
 
 class GroupControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :profiles, :pages, :group_participations, :user_participations, :tasks, :page_terms
+  fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages, :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 
@@ -254,6 +254,20 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_nil Group.find_by_name('hack-committee').parent
   end
 
+  def test_edit_tools
+    login_as :blue
+    
+    post :edit_tools, :id => groups(:rainbow).name, :Discussion => "on", :Message => "on", :Wiki => "on"
+    groups(:rainbow).reload
+    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Discussion"),
+                   "group should have Discussion page allowed"
+    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Message"),
+                   "group should have Message page allowed"
+    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Wiki"),
+                   "group should have Wiki page allowed"
+    assert_equal false, groups(:rainbow).group_setting.allowed_tools.include?("Asset")
+                   "group should not have Asset page allowed" 
+  end
 
   def test_destroy
     login_as :gerrard

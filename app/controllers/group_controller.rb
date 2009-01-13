@@ -197,6 +197,19 @@ class GroupController < ApplicationController
     end
   end
   
+  def edit_tools   
+    @available_tools = @site.available_page_types
+    if request.post?
+      @group.group_setting.allowed_tools = []
+      @available_tools.each do |p|
+        @group.group_setting.allowed_tools << p if params[p]
+      end
+      @group.group_setting.save
+    end      
+
+    @allowed_tools =  ( ! @group.group_setting.allowed_tools.nil? ? @group.group_setting.allowed_tools : @available_tools)
+  end
+  
   # login required
   # post required
   def destroy
@@ -276,7 +289,7 @@ class GroupController < ApplicationController
 
   @@non_members_post_allowed = %w(archive tags tasks search)
   @@non_members_get_allowed = %w(show members search discussions) + @@non_members_post_allowed
-  @@admin_only = %w(update) 
+  @@admin_only = %w(update, edit_tools) 
    
   def authorized?
     if request.get? and @@non_members_get_allowed.include? params[:action]
