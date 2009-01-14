@@ -1,47 +1,764 @@
 --- 
-add_contact_info: Wenn ein anderer User dein Kontakt ist kann er/sie sehen ob du eingeloggt bist und bekommt Zugang zu deinem Profil. Sobald eine andere Person dein Kontakt wird wirst du auch sein Kontakt.
-add_another_file: Weitere Datei hinzuf&uuml;gen
-logout_success_message: Du hast dich abgemeldet.
-add_comment: Kommentar hinzuf&uuml;gen
-error_saving_new_order: Beim speichern der neuen Reihenfolge ist ein Fehler aufgetreten!
-download: Herunterladen
-saved_new_order: Neue Reihenfolge gespeichert!
-upload_new_image: Neues Bild hochladen
-forgot_password_link: Ich habe mein Passwort vergessen
-menu_groups: Gruppen
-menu_home: Start
-cancel_link: Abbrechen
-logout: Abmelden
-drag_and_drop_to_rearrange_photos: Benutze Drag&amp;Drop um die Reihenfolge der bilder zu ver&auml;ndern
-add_photo_to_gallery: Bild zur Gallerie hinzuf&uuml;gen
-menu_people: Personen
-image_count: Bild :number von :count gesamt
-undo: r&uuml;ckg&auml;ngig
+small: klein
+group_not_allowed_to_view_image_error: "Die Gruppe, der diese Seite geh\xC3\xB6rt, darf dieses Bild nicht anschauen."
+Personal: "Pers\xC3\xB6nlich"
+add_encryption_key: "Schl\xC3\xBCssel hinzuf\xC3\xBCgen"
+user_profile_description_may_pester: Erlaube anderen, Inhalte mit Dir zu teilen und Dir Einladungen zu senden.
 menu_networks: Netzwerke
-show_gallery: Gallerie &Uuml;berblick
-successful_undelete_image: L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht.
-activate_js_to_rearrange_photos: Aktiviere JavaScript und die Reihenfolge mit Drag&amp;Drop zu ver&auml;ndern!
-no_images_in_gallery: In dieser Gallerie sind noch keine Bilder
-add_existing_image: Existierendes Bild hinzuf&uuml;gen
-contact_request_message_label: Sage %s warum du sein Kontakt werden willst.
-menu_me: Ich
-remove_from_gallery: Aus Gallerie entfernen
-no_title_given: Kein Titel angegeben
-logout_success: auf Wiedersehn
-order_changed: Reihenfolge ge&auml;ndert.
-sucessfully_removed_image: Bild erfolgreich entfernt (:undo_link)
-edit_gallery: Gallerie bearbeiten
-removing_image: Entferne Bild...
+request_to_friend_description: ":user w\xC3\xBCrde gerne :other_user zu seinen/ihren Kontakten hinzuf\xC3\xBCgen"
+title: Titel
+groups: Gruppen
+group_summary: Kurzinformation zu dieser %s.
+my_requests_headline: Meine Anfragen
+month_short_april: Apr
 move_image_left: Bild nach links verschieben
-login_failed: Anmeldung fehlgeschlagen
-login_button: Anmelden
-already_contacts_info: Du bist schon ein Kontakt dieser Person.
-approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. M\xC3\xB6chtest du diese annehmen?"
-login: Anmelden
+peers: Peers
+add_star_link: "Stern hinzuf\xC3\xBCgen (:star_count)"
+wiki: Wiki
+current_video_sources: "derzeit Unterst\xC3\xBCtzung f\xC3\xBCr: youtube, blip.tv, google video, vimeo"
+wall_post_button: Neue Nachricht schreiben
+group_profile_description_may_see: "Untenstehende Infos werden sichtbar sein, wenn das K\xC3\xA4stchen angekreuzt ist. Andernfalls wird das Profil f\xC3\xBCr diese {group_type} komplett versteckt."
+request_to_join_us_description: ":user wurde eingeladen, sich :group anzuschlie\xC3\x9Fen"
+break_lock: Sperre aufheben
+left_the_chatroom: hat den Chatroom verlassen
+or_image_url: oder URL zum Bild
+add_comment: Kommentar hinzuf&uuml;gen
+login_password: Passwort
+folder: Verzeichnis
+users_wall: ":user's Wand"
+profile_option_may_see_groups: Gruppenmitgliedschaften anzeigen
+organizational_role: Organisatorische Rolle
+upload_attachment: Lade Anhang hoch
+toggle_selection: Setze Auswahl
+order_changed: Reihenfolge ge&auml;ndert.
+email_addresses: Email Adressen
+join_chat: am schwatz teilnehmen
+at_least_one_recipient_is_required: "Mindestens eine Empf\xC3\xA4ngerin angeben"
+media_videos: Videos
+recent_wall_posts: "J\xC3\xBCngste Beitr\xC3\xA4ge auf der Mauer"
+directory_of_people: Verzeichnis von Personen
+add_location: "Ort hinzuf\xC3\xBCgen"
+friends: Freunde
+prev_change: "Letzte \xC3\x84nderung"
+saturday: Samstag
+welcome_text: "*Willkommen*\r\n\
+  \r\n\
+  Hallo. Das ist eine kurze Einf\xC3\xBChrung f\xC3\xBCr neue BenutzerInnen. Beim n\xC3\xA4chsten Mal einloggen wirst du bei [deiner \xC3\x9Cbersicht -> /me/dashboard] landen, welche aber kalt und leer bleiben wird, bis du dich Gruppen anschlie\xC3\x9Ft und Kontakte kn\xC3\xBCpfst.\r\n\
+  \r\n\
+  Also, das beste was du als neueR BenutzerIn machen kannst, ist eine neue Gruppe zu gr\xC3\xBCnden oder dich einer bestehenden Gruppe anzuschlie\xC3\x9Fen. Um das zu machen, gehe zur [Gruppen\xC3\xBCbersicht -> /groups] and klicke entweder \"Erstelle eine neue Gruppe\" oder klicke auf die Gruppe, welcher du dich anschlie\xC3\x9Fen willst - dort dr\xC3\xBCcke dann \"Anschlie\xC3\x9Fen\".\r\n\
+  \r\n\
+  Sobald deine Anfrage akzeptiert ist kannst du Dateien hochladen, Aufgabenlisten erstellen, Wikis bearbeiten, Umfragen ins Leben rufen und Nachrichten erzeugen zum Kommunizieren, oder sonst irgendwie innerhalb der Gruppe mitarbeiten. Wie bei jeder neuen Platform wirst du dich auch hier erst einarbeiten m\xC3\xBCssen. Wenn du Fragen hast, wie zum Beispiel was der Unterschied zwischen dem Eingang und der \xC3\x9Cbersicht ist, kannst du bei den [Hilfeseiten -> /crabgrass/table-of-contents] nachsehen.\r\n\
+  \r\n\
+  Die Entwicklung wird vom BenutzerInnenfeedback vorangetrieben, also bitte [schlie\xC3\x9Fe -> /users] dich der BenutzerInnenfeedbackgruppe an und beteilige dich, indem du auf den \"Mitmachen\"-Link am unterem Ende jeder Seite klickst.\r\n"
+share_page_recipients: Teile diese {page_class} mit
+group_information: ":group_type Information"
+wall_heading: "\xC3\x96ffentliches Schwarzes Brett"
+time_zone: Zeitzone
+share_page_recipients_sections: "W\xC3\xA4hle aus deinen Gruppen oder Freunden"
+delete: "L\xC3\xB6schen"
+page_not_part_of_group: Seite nicht Teil dieser Gruppe
+you_are_not_member_of_any_group: Du bist bei keiner Gruppe Mitglied.
+try_again: Versuch's nochmal
+contact: Kontakt
+usage_agreement_required: Hier gibts nix ohne Akzeptanz der Nutzungsvereinbarung.
+medium: mittel
+file_size: "Dateigr\xC3\xB6\xC3\x9Fe"
+dont_have_permission_to_create_committees: Du kannst keine Arbeitsgruppen unter %s anlegen.
+activate_js_to_rearrange_photos: Aktiviere JavaScript und die Reihenfolge mit Drag&amp;Drop zu ver&auml;ndern!
+media_for_group: "%s in %s"
+achive: Archiv
+reject_button: Abweisen
+websites: Websites
+group_publicly_visible_description: "Die Gruppe erscheint im \xC3\xB6ffentlichen Verzeichnis und das  <i>Profil</i> kann von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
+Language: Sprache
+coordinator: Koordinator
+delete_version_confirm: "Willst Du diese Version tats\xC3\xA4chlich l\xC3\xB6schen?"
+featured_content_header: Angeboten
+tasks: Aufgaben
+signup_title: Erstelle dein Konto
+Personal_Interests: "Pers\xC3\xB6nliche Interessen"
+logout_success: auf Wiedersehn
+menu_chat: Chat
+user: BenutzerIn
 image_count_total: ":count Bilder"
-view_slideshow: Diashow ansehen
-download_gallery: Gallerie herunterladen
-About_Me: "&Uuml;ber mich"
-recipient_tip: "Trenne Empf\xC3\xA4nger mit Kommata, Leerzeichen oder Zeilenspr\xC3\xBCungen."
+group_profile_description_may_see_networks: "Andere d\xC3\xBCrfen sehen, zu welchem Netzwerk diese {group_type} geh\xC3\xB6rt."
+profile_last_login: Letzter Login
+usage_agreement_text: |
+  h1. Riseup Networks' Social Contract
+  
+  Riseup.net exists because we feel it is vital for communities of resistance to be able to provide for their own communication needs. We must not be forced to rely on insecure, profit driven means of communication which bombard us with mind numbing advertising and expose us to mass surveillance. 
+  
+  Riseup.net believes in direct democracy, anti-sexism, anti-racism, anti-capitalism, self determination, local autonomy, ecology, and communal economics. For more information, you can view our [purpose -> http://help.riseup.net/purpose] and [political principles -> http://help.riseup.net/political-principles].
+  
+  Riseup.net affirms common cause and solidarity with a broad spectrum of the political left. However, there are some things which we cannot support. We ask that you do not use riseup.net services to advocate any of the following: 
+  
+  * Support for capitalism, domination, or hierarchy.
+  * The idea that class oppression supersedes race or gender oppression.
+  * A vanguard strategy for revolution.
+  * Population control in countries other than your own.
+  
+  If you disagree with this, then riseup.net is not for you.
+  
+  h1. Riseup Networks' Privacy Policy
+  
+  h3. We keep minimal logs
+  
+  Most Online Service Providers keep detailed records of all connections. In general, we do not keep information which uniquely identifies you or could be used to build a profile of your usage and associations. We do not log IP addresses. For troubleshooting, we may enable increased logging for brief periods of time. These extra logs are deleted immediately after they are used.
+  
+  h3. We do not share data with anyone
+  
+  We do not share any user information with any other groups or individuals. Within the Riseup Collective, members of the collective have access only to information which they need in order to perform their work.
+  
+  h3. We will defend your data
+  
+  We will actively fight any attempt to force Riseup Networks to disclose user information or logs.
+  
+  h3. We will not monitor your communications
+  
+  We will not read, search, or process any of your incoming or outgoing mail other than to protect you from viruses and spam or when directed to do so by you when troubleshooting.
+  
+  h3. Your data is encrypted
+  
+  The content of your communications, the calendar date of your last login, your addressbook, and all backups are stored in encrypted format.
+  
+  h1. Riseup Networks' Terms of Service
+  
+  Riseup Networks services currently include email, email list hosting, website hosting, domain registration, colocation, and other services common to ISP/OSPs.  These services may change from time to time and are provided AS IS.  You understand and agree that Riseup Networks assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services.  Furthermore, you understand and agree that Riseup Networks assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. Riseup Networks makes no warranties or guarantees as to the security of any machine or wesite operated or hosted by Riseup Networks, nor do we make any warranties or guarantees at all.
+  
+  Riseup Networks complies with the [Digital Millennium Copyright Act's -> http://www.chillingeffects.org/dmca512/faq.cgi#QID128] notice and take-down procedures.  Your use of Riseup Networks' services is subject to Riseup's [DMCA Policy -> http://help.riseup.net/policy/dmca/].
+  
+  In consideration for your use of the Riseup Networks services you agree to the following conditions:
+  
+  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable  through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
+  
+  You also agree not to use our services to:
+  
+  * harass other people;
+  * harm or exploit minors;
+  * impersonate or cause others to believe that you are another person;
+  * send unsolicited messages;
+  * collect personal data from Riseup Networks users without their express consent; and
+  * interfere with or disrupt our services, those of our users or any other person or service;
+  
+  Further, you agree to:
+  
+  * avoid excessive use of our services, including but not limited to network bandwidth, computer system resources, and domain registrations;
+  * be responsible for maintaining the confidentiality of your accounts and passwords;
+  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
+  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
+  * hold patience in your heart for the hard work we do.
+  
+  Riseup Networks does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
+  
+  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with Riseup Networks, OR FOR ANY OTHER REASON OR NO REASON, at Riseup Network's sole discretion and without limiting its other remedies, Riseup Networks may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+  
+  h3. Your Privacy
+  
+  Your privacy is important to Riseup Networks. By agreeing to this User Agreement, you also consent to the privacy practices detailed in our [Privacy Policy -> http://help.riseup.net/privacy], which may be modified at any time.
+  
+  h3. No Warranty
+  
+  YOU UNDERSTAND AND AGREE THAT WE, AND OUR SUPPLIERS, PROVIDE OUR ONLINE SERVICES "AS IS" AND WITHOUT ANY WARRANTY OR CONDITION, EXPRESS, IMPLIED OR STATUTORY. WE AND OUR SUPPLIERS SPECIFICALLY DISCLAIM ANY IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. YOU FURTHER UNDERSTAND AND AGREE THAT WE, AND OUR SUPPLIERS, MAKE NO WARRANTY AS TO THE RELIABILITY, ACCESSIBILITY, ACCURACY, LEGITIMACY OR QUALITY OF THE ONLINE SERVICES OR THE CONTENT AVAILABLE THROUGH THE ONLINE SERVICES. YOU AGREE THAT USE OF THE ONLINE SERVICES AND THEIR CONTENT IS AT YOUR SOLE AND EXCLUSIVE RISK. Some jurisdictions do not allow the disclaimer of implied warranties, so the foregoing disclaimer may not apply to you.
+  
+  h3. Liability Limitation
+  
+  YOU EXPRESSLY UNDERSTAND AND AGREE THAT Riseup Networks SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA OR OTHER INTANGIBLE LOSSES (EVEN IF Riseup Networks HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES), RESULTING FROM: (i) THE USE OR THE INABILITY TO USE THE ONLINE SERVICES; (ii) THE COST OF PROCUREMENT OF SUBSTITUTE GOODS AND SERVICES RESULTING FROM ANY GOODS, DATA, INFORMATION OR SERVICES PURCHASED OR OBTAINED OR MESSAGES RECEIVED OR TRANSACTIONS ENTERED INTO THROUGH OR FROM THE ONLINE SERVICES; (iii) UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR TRANSMISSIONS OR DATA; OR (iv) ANY OTHER MATTER RELATING TO THE ONLINE SERVICES.
+  
+  Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitations or exclusions may not apply to you. 
+  
+  h3. Indemnity
+  
+  You agree to indemnify and hold Riseup Networks and (as applicable) our parent, subsidiaries, affiliates, officers, directors, agents, volunteers and employees, harmless from any claim or demand, including reasonable attorneys' fees, made by any third party due to or arising out of your breach of this Agreement or your violation of any law or the rights of a third party.
+  
+  h3. Modification and Termination
+  
+  You agree that Riseup Networks may amend this Agreement at any time by posting the amended terms on our site at http://help.riseup.net/tos we will contact you via email when any changes are made. All amendments shall automatically be effective 10 days after they are initially posted on our site. Your use of our services following the effective date of any modifications shall constitute your binding acceptance of those modifications. Furthermore, you agree that this Agreement and all incorporated agreements may be automatically assigned by Riseup Networks, in our sole discretion, to a third party in the event of a merger, acquisition or other transfer. This Agreement may not be otherwise amended except by a member of Riseup Networks. This agreement was last modified April 15th, 2005.
+  
+  You agree that Riseup Networks may terminate your use of any Riseup Networks services at any time and for any reason whether you violate this User Agreement or not.  You further understand and agree that Riseup Networks, at its complete discretion, may remove or alter the services or any of content available through them at any time and for any reason or no reason.  
+  
+  h3. Complaints
+  
+  Riseup Networks respects the rights of others.  If you have a complaint regarding abuse of our services, please send an e-mail to abuse@riseup.net. Riseup Networks will review the complaint and, at its sole discretion, take action Riseup Networks believes to be appropriate. 
+  
+  General Headings in this Agreement are for reference purposes only and in no way define, limit, construe or describe the scope or extent of such section. This Agreement sets forth the entire and exclusive understanding and agreement between you and Riseup Networks with respect to the subject matter hereof. This Agreement supercedes and cancels all previous and contemporaneous agreements, commitments and writings with respect to this subject matter. You agree that if any provision of this Agreement is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall be enforced 
+
+page_locked_header: Seite gesperrt
+all_page_types: alle Seitenarten
+contribute_content_link: Link eintragen
+media_document: Dokument
+activity_user_left_group: "{user} hat {group_type} {group} verlassen"
+collection: Sammlung
+no_images_in_gallery: In dieser Gallerie sind noch keine Bilder
+joins_the_chatroom: Chatraum betreten
+my_settings: "Einstellungen f\xC3\xBCr {user}"
+locations: Orte
+Home: Home
+last_change: "letzte \xC3\x84nderung"
+archive_filter_created_link: erzeugt am
+public_checkbox: "\xC3\x96ffentlich"
+join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage \xC3\xBCberpr\xC3\xBCfen, indem Du \"%s\" besuchst."
+group_language: Die Hauptsprache dieser %s.
+add_email_address: "Email Adresse hinzuf\xC3\xBCgen"
+edit_attachments_link: Bearbeiten
+create_page_data: "{page_class} Daten"
+month_short_may: Mai
+Committee: Arbeitsgruppe
+contributed: Mitgearbeitet
+group: Gruppe
+format: Format
+media_image: Bild
+confirm_new_password: "Best\xC3\xA4tige neues Passwort"
+group_publicly_visible: "%s \xC3\xB6ffentlich sichtbar machen"
+logout_success_message: Du hast dich abgemeldet.
+undo: r&uuml;ckg&auml;ngig
+me_inbox_link: Eingang
+action: Aktion
+profile_option_may_request_membership: Erlaube Mitgliedschaftsanfragen
+Founded: "Gegr\xC3\xBCndet"
+new_network: Neues Netzwerk
+my_contacts: Meine Kontakte
+password_reset_ok_text: "Dein Passwort wurde erfolgreich zur\xC3\xBCckgesetzt. Du kannst dich jetzt mit deinem neuen Passwort einloggen."
+set_status_messsage: Was machst du gerade?
+public_profile: "\xC3\x96ffentliches Profil"
+page_is_not_static: Seite wird bearbeitet
+requests_to_me: An mich
+empty_results: Nichts
+invalid_token_text: "Der Link zum R\xC3\xBCcksetzen des Passwortes ist ung\xC3\xBCltig. Wahrscheinlich wurde er schon benutzt oder seine G\xC3\xBCltigkeit ist abgelaufen."
+back_button: "Zur\xC3\xBCck"
+recent_pages: Aktuelle Seiten
+invite_accept_via_existing_account: Ich habe bereits einen Zugang.
+create_a_new_page: Erstelle eine neue Seite
+display_name: Namen anzeigen
+status_resolved: "gel\xC3\xB6st"
+join_group_success: Du hast dich der Gruppe {group_name} angeschlossen.
+you_have_no_contacts: Du hast keine Kontakte
+sunday: Sonntag
+signup_link: Brauchst du ein neues Konto?
+invite_accept_via_register: Ich will einen neuen Zugang anmelden.
+edit_featured_content_for_group: "Ausgew\xC3\xA4hlte Inhalte von :group_name bearbeiten"
 move_image_right: Bild nach rechts verschieben
+download: Herunterladen
+all_groups: alle Gruppen
+save_button: Speichern
+pagination_previous: "zur\xC3\xBCck"
+committees: Arbeitsgruppen
+create_page_information: "{page_class} Information"
+media_video: Video
+committee_publicly_visible: "Arbeitsgruppen \xC3\xB6ffentlich sichtbar machen"
+personal_message_class_description: "Eine pers\xC3\xB6nliche Nachricht an individuelle Empf\xC3\xA4nger."
+media_without_group: Alle %s
+no_peers_msg: Du hast keine Peers.
+votes: Votes
+media_audio: Tonaufnahme
+article: Artikel
+date_weeks: Wochen
+reset_password_mail_greeting: "%s, dein Passwort wurde auf deine Anfrage zur\xC3\xBCckgesetzt."
+working_group: Arbeitsgruppe
+location_country: Land
+login_name: Anmeldename
+leave_group: "%s verlassen"
+permission_denied: Zugriff verweigert
+add_one_or_more_tags: "F\xC3\xBCge ein oder mehr Tags hinzu (getrennt durch Kommas)"
+forgot_password_text: "Falls Du Dein Passwort vergessen hast k\xC3\xB6nnen wir Dir einen Link schicken, mit dem Du ein neues generieren kannst."
+login: Anmelden
+add_new_attachment: "Neuen Anhang hinzuf\xC3\xBCgen"
+separate_tags: Mehrere Tags mit einem Beistrich trennen.
+participant: TeilnehmerIn
+inbox_description: "Liste von Seiten, an denen ich aktiv teilhabe oder bei denen ich \xC3\x84nderungen registriere."
+Mobile: Handy
+share_page_recipients_results: Diese {page_class} wird geteilt mit
+all_content: Gesamter Inhalt
+delete_page_link: "L\xC3\xB6sche :page_class"
+search: Suche
+state: Status
+share_link: Teile :page_class
+invalid_token: "Ung\xC3\xBCltiger Token"
+page_list_heading_last_updated: Letzte Aktualisierung
+page_list_heading_stars: Sterne
+month_short_july: Jul
+delete_post: "Eintrag l\xC3\xB6schen"
+my_world_heading: Meine Welt
+email: Email
+create_a_new_thing: Neue :thing erstellen
+minimum_stars_for_important_pages_description: Mindestanzahl Sterne, die eine Seite braucht, um auf der "wichtig" - Liste der Gruppenstartseite zu erscheinen.
+your_login: Dein Login
+view_requests: Zeige Anfragen
+slideshow_delay_input: Aktualisiere alle :input_field Sekunden
+my_dashboard: "Meine \xC3\x9Cbersicht"
+network: Netzwerk
+date_older: "\xC3\x84lter"
+next_change: "n\xC3\xA4chste \xC3\x84nderung"
+preview: Vorschau
+signup_email_info: "Optional: Wird gebraucht, wenn du dein Passwort vergisst"
+create_task_list: Neue Aufgabenliste erstellen
+my_status_heading: Dein derzeitiger Status
+folder_class_description: Eine Sammlung von Ressourcen.
+archive_headline: Archiv
+signup_email: Deine E-Mailadresse
+alert_error: Error
+coordinating_council: Koordinierendes Gremium
+full: komplett
+videos: Videos
+login_button: Anmelden
+remove_from_gallery: Aus Gallerie entfernen
+destroy_group: "%s aufl\xC3\xB6sen"
+group_has_no_public_profile: "Diese Gruppe hat kein \xC3\xB6ffentlich einsehbares Profil."
+Category: Kategorie
+invalid_email: "Ung\xC3\xBCltige Emailadresse"
+month_short_march: "M\xC3\xA4r"
+file_must_be_image_error: "Nur Bilddateien k\xC3\xB6nnen zur Galerie hinzugef\xC3\xBCgt werden."
+month_short_february: Feb
+descriptions: Beschreibungen
+Fax: Fax
+edit_gallery: Gallerie bearbeiten
+send_invites: Sende Einladungen
+group_home_welcome: Willkommen
+version_number: Version :version
+uploaded_image_cropped: Hochgeladenes Bild wird auf 96x96 Pixel zugeschnitten/gestreckt.
+Top_Rated: "H\xC3\xB6chste Bewertung"
+signup_login_name: Dein Nick
+create_page: Seite erstellen
+Highest_Contributors: Aktivste Mitwirkende
+media_images: Bilder
+pending: Offen
+file_class_description: Eine hochgeladene Datei.
+approve: zustimmen
+unknown: unbekannt
+summary: Zusammenfassung
+signup_info: "W\xC3\xA4hle deinen Nick und dein Passwort, dann klicke \"%s\""
+only_last_menber_can_delete_group: "Du kannst eine Gruppe nur l\xC3\xB6schen, wenn du der/die letzte TeilnehmerIn bist"
+gallery_class_description: Eine Bilder-Sammlung.
+allow_membership_requests: Erlaube Mitgliedschaftsanfragen
+approval_vote: "Bef\xC3\xBCrwortungsabstimmung"
+committee_type_description: "Was f\xC3\xBCr eine Art Arbeitsgruppe soll es werden?"
+Admin: Admin
+link_name: Linkname
+my_tasks_description: Aufgabenlisten, zu denen ich Zugang habe
+location_address: Adresse
+print_underlined_p: <u>D</u>ruck
+me_tasks_link: Aufgaben
+month_short_december: Dez
+profile_option_may_see_committees: Zeige Arbeitsgruppen
+post_message: Poste Nachricht
+login_required: Login erforderlich
+reset_password_mail_sent: "Eine E-Mail wurde gesendet, welche eine Anleitung zum Zur\xC3\xBCcksetzen deines Passworts enth\xC3\xA4lt."
+commitee_type: Art des Gremiums
+my_completed_tasks_link: Erledigt
+galleries: Galerien
+user_profile_description_may_see_contacts: "Anderen erlauben, Deine Liste pers\xC3\xB6nlicher Kontakte einzusehen."
+read: gelesen
+reset_password_mail_warning: "Wenn du keine Anfrage, dein Passwort zur\xC3\xBCckzusetzen, gestellt hast, kontaktiere uns bitte."
+alert_permission_denied: Keine Berechtigung
+page_notice_message: Seite von {user} am {date} gesendet.
+typing: tippt
+activity_user_status: "{user} ist jetzt {status}"
+location_city: Ort
+friday: Freitag
+my_groups_link: Meine Gruppen
+ranked_vote_class_description: "M\xC3\xB6glichkeiten nach ihrer Attraktivit\xC3\xA4t ordnen."
+pending_tasks: Offene Aufgaben.
+data_for_page_missing: Es gibt keine Daten zu dieser Seite.
+monday: Montag
+activity_user_destroyed: "{user} hat sich gel\xC3\xB6scht"
+profile_option_may_see: Profil ist sichtbar.
+details_link: Details
+rejected: abgewiesen
+signup_confirm_password: "Passwort best\xC3\xA4tigen"
+me_dashboard_link: "\xC3\x9Cbersicht"
+delete_this_version: "L\xC3\xB6sche diese Version"
+password_was_reset: "Dein Passwort wurde zur\xC3\xBCckgesetzt"
+article_class_description: Blogeintrag oder Nachricht.
+Work: |
+  Arbeit
+
+remove_contact_info: "Wenn du Personen von deiner Kontaktliste entfernst, wirst du nicht mehr sehen k\xC3\xB6nnen, wann sich die Personen eingeloggt haben - au\xC3\x9Ferdem wirst du keinen Zugang zu deren kompletten Profil mehr haben. Wenn du eine Person von deiner Kontaktliste entfernst, wirst du auch nicht mehr auf der Kontaktliste der entfernten Person erscheinen."
+group_directory_link: Gruppen-Verzeichnis
+date_seconds: Sekunden
+from: von
+discuss_request_link: Diese Anfrage mit :person_or_group bereden
+user_profile_description_may_request_contact: Erlaube Personen, dir eine Kontaktanfrage zu schicken.
+no_contacts_msg: Du hast keine Kontakte.
+group_administration_not_allowed: Du kannst diese Gruppe nicht administrieren.
+menu_people: Personen
+send_button: Sende
 saving_your_changes: "&Auml;nderungen werden gespeichert..."
+gallery: Galerie
+add_another_file: Weitere Datei hinzuf&uuml;gen
+ranked_vote: Abgestufte Abstimmung
+Other: Andere
+page_list_heading_owner: ErstellerIn
+username: Username
+media_audios: Tonaufnahmen
+close_button: "Schlie\xC3\x9Fen"
+fullname: "vollst\xC3\xA4ndiger Name"
+page_list_heading_created_by: Erstellt von
+download_gallery: Gallerie herunterladen
+Pager: Pager
+recent_activity: "Letzte Aktivit\xC3\xA4ten"
+password: Passwort
+access: Zugang
+current_featured_content: Aktuelle Inhalte
+create_committee: Arbeitsgruppe erstellen
+date_this_week: Diese Woche
+drag_and_drop_to_rearrange_photos: Benutze Drag&amp;Drop um die Reihenfolge der bilder zu ver&auml;ndern
+remove_contact_confirmation: Bist du sicher, dass du den Kontakt zu %s abbrechen willst?
+subject_must_not_be_empty: Betreff darf nicht leer sein
+share_this_page: Teile diese Seite
+page_list_heading_created: erstellt
+date_days: Tage
+view_all: Alles ansehen
+group_wiki: Wiki der Gruppe
+group_successfully_created: Die Gruppe wurde angelegt.
+approve_button: zustimmen
+create_page_button: "{page_class} erstellen"
+recent_contributions: "Aktuelle Beitr\xC3\xA4ge"
+remove_friend_link: Entferne von meinen Kontakten
+add_description: "Beschreibung hinzuf\xC3\xBCgen"
+menu_home: Start
+menu_me: Ich
+directory_of_groups: Verzeichnis der Gruppen
+my_peers: Meine Peers
+date_hours: Stunden
+request_to_join_our_network_description: "Gruppe :group wurde eingeladen, sich beim Netzwerk :network anzuschlie\xC3\x9Fen"
+wont_be_able_to_save: "Du wirst diese Seite nicht speichern k\xC3\xB6nnen"
+personal_message: "Pers\xC3\xB6nliche Nachricht"
+name: Name
+page_details: Seitendetails
+recipients: "Empf\xC3\xA4nger"
+profile_private_description: "Dieses Profil ist privat und nur f\xC3\xBCr deine Kontakte sichtbar."
+remove_from_inbox: Entferne von Eingang
+no_members: (keine TeilnehmerInnen)
+descriptive_name_for_display: "Ein aussagef\xC3\xA4higer Name zur Anzeige"
+remove_star_link: Entferne Stern (:star_count)
+signup_password: Dein Passwort
+move_page_to_different_group: Verschiebe diese Seite in eine andere Gruppe
+alert_not_saved: "\xC3\x84nderungen konnten nicht gespeichert werden"
+formatting_reference_link: Hinweise zur Formatierung
+group_profile_description_may_see_groups: "Anderen erlauben, die Gruppen, die zu dieser {group_type} geh\xC3\xB6ren, zu sehen."
+created: erstellt
+group_members_publicly_visible_description: "Nichtmitglieder k\xC3\xB6nnen eine Liste mit Mitgliedern unter we.riseup.net/DeinGruppenName einsehen. Ausserdem wird der Gruppenname auf der Profilseite eines jeden Mitglieds gelistet. (we.riseup.net/Nutzername)"
+edit: bearbeiten
+phone_numbers: Telefonnummern
+requests_for_group: "Anfragen f\xC3\xBCr %s"
+video: Video
+view_slideshow: Diashow ansehen
+page_details_link: ":page_class Details"
+wiki_is_locked: Dieses Wiki ist momentan gesperrt von :user
+date_months: Monate
+add_im_address: "IM Adresse hinzuf\xC3\xBCgen"
+my_peers_description: BenutzerInnen, mit denen ich eine Gruppe teile
+removing_image: Entferne Bild...
+version_doesnt_exist: Es gibt keine Version :version
+task_list_class_description: "Eine Liste an To-Do-Eintr\xC3\xA4gen."
+task_list: Aufgabenliste
+coordinating_council_description: "Mitglieder dieses Gremiums k\xC3\xB6nnen <i>administrative Aufgaben</i> f\xC3\xBCr :group_type <b>:group_name</b> wahrnehmen."
+group_members_publicly_visible: "Mitglieder \xC3\xB6ffentlich sichtbar machen"
+send_message_link: Sende Nachricht
+page_list_heading_updated_by: Aktualisiert von
+image_count: Bild :number von :count gesamt
+invite_accept_headline: Einladung zum Bitritt zur Gruppe annehmen
+recent_network_pages: Neue Netzwerk-Seiten
+requested_forgot_password: "Du hast eine \xC3\x84nderung deines Passworts angefordert"
+media_documents: Dokumente
+feature_button: "Ver\xC3\xB6ffentlichen!"
+ranked_vote_instructions: "Ziehe die Items von der folgenden Liste solange, bis sie in der gew\xC3\xBCnschten Reihenfolge sind. Die am meisten bevorzugte M\xC3\xB6glichkeit steht am oberen, die am wenigsten bevorzugte M\xC3\xB6glichkeit am unteren Ende der Liste. Wenn du fertig best, dr\xC3\xBCcke Best\xC3\xA4tigen, um deine Stimme abzugeben."
+no_title_given: Kein Titel angegeben
+no_public_profiles: "Noch keine \xC3\xB6ffentlichen Profile..."
+page_list_heading_updated: Aktualisiert
+successful_undelete_image: L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht.
+share_page_link: Teile :page_class
+back_to_group: "zur\xC3\xBCck zu :group_name"
+contact_request_message_label: Sage %s warum du sein Kontakt werden willst.
+people: Personen
+cancel_link: Abbrechen
+my_tasks_headline: Meine Aufgaben
+starred: "Sternen\xC3\xBCbers\xC3\xA4ht"
+activity_contact_created: "{user} hat {other_user} als Kontakt hinzugef\xC3\xBCgt"
+no_search_results: Keine Suchergebnisse
+file_version_deleted: "Dateiversion gel\xC3\xB6scht"
+add_phone_number: "Telefonnummer hinzuf\xC3\xBCgen"
+created_by: Erstellt von
+Work_Life: Arbeitsleben
+minimum_stars_for_important_pages: "Mindestanzahl an Sternen f\xC3\xBCr wichtige Seiten"
+tags: Tags
+message_must_not_be_empty: Nachricht darf nicht leer sein
+my_tasks: Aufgaben
+month_short_november: Nov
+new_password: Neues Passwort
+my_pages: Meine Seiten
+reactivate_button: Reaktivieren!
+save_changes: "Speichere \xC3\x84nderungen"
+edit_profile_link: Profil bearbeiten
+recent_member_group_pages: Aktuelle Mitgliedsgruppenseiten
+approve_or_reject_link: "Anfrage best\xC3\xA4tigen oder zur\xC3\xBCckweisen"
+login_required_description: "F\xC3\xBCr diese Aktion logge Dich bitte ein."
+permissions: Rechte
+password_reset: "Passwort zur\xC3\xBCcksetzen"
+collection_class_description: Spezialseiten, die andere Seiten enthalten.
+remove: Entfernen
+unread: ungelesen
+new_group: Neue Gruppe
+share: Teile
+add_button: "Hinzuf\xC3\xBCgen"
+group_profile_description_may_see_committees: Erlaube Personen, welche Arbeitsgruppen diese {group_type} besitzt.
+diff_link: Unterschiede
+away: abwesend
+rss_feed: RSS Feed
+sucessfully_removed_image: Bild erfolgreich entfernt (:undo_link)
+locking_error: "Fehler. Kann Deine Daten nicht sichern - jemand anders hat zuerst neue \xC3\x84nderungen \xC3\xBCbermittelt. "
+media_all: Medien
+first_name: Vorname
+select_image_file: "W\xC3\xA4hle Bilddatei"
+discussions: Diskussionen
+edit_tags: Markierungen bearbeiten
+set_status_button: "\xC3\x84ndere Status"
+login_failure_reason: Nutzername oder Passwort falsch.
+group_invite_email: |-
+  {from_user} hat Dich eingeladen, der Gruppe "{group}" beizutreten.
+  
+  Hier kannst Du dieser Einladung folgen:
+  
+    {accept_invite_link}
+  
+  Die Homepage der Gruppe findest Du hier:
+  
+    {group_home_link}
+  
+  Wenn Du der Gruppe nicht beitreten magst ignoriere einfach diese Mail.
+footer_text_riseup: |-
+  <span>This site is run by <a href="http://riseup.net">riseup.net</a>, your friendly autonomous tech collective since 1999.</span>
+  <ul>
+    <li><a href="http://help.riseup.net/policy/privacy/">privacy policy</a></li>
+    <li><a href="http://help.riseup.net/about-us/">about us</a></li>
+    <li><a href="https://mail.riseup.net/">email accounts</a></li>
+    <li><a href="https://lists.riseup.net/">mailing lists</a></li>
+    <li><a href="http://status.riseup.net/">system status</a></li>
+    <li><a href="http://riseup.net/donate/">donate to riseup.net</a></li>
+  </ul>
+see_more_link: Mehr
+media_alls: Medien
+not_featured_content: Noch nicht angebotene Inhalte
+edit_settings: Einstellungen bearbeiten
+create_button: Erstellen
+location_state: Bundesland
+requests_from_me: Von mir
+share_button: Teile
+edit_attachments: "Anh\xC3\xA4nge bearbeiten"
+participation: Teilnahme
+wiki_class_description: Ein allgemeines Textdokument
+invalid_email_text: "Die von Dir angegebene Emailadresse ist ung\xC3\xBCltig."
+send_invites_headline: "Sende Einladung f\xC3\xBCr Teilnahme bei {group}"
+create_page_share: Wer hat Zugriff auf diese {page_class}?
+assets: Anlagen
+group_join_chat: Am Plausch teilnehmen
+viewed: Gesehen
+accept_usage_agreement: Ich akzeptiere die Benutzungsbedingungen
+profile_option_may_request_contact: "Darf um pers\xC3\xB6nlichen Kontakt bitten."
+current_tags: "Gew\xC3\xA4hlte Tags"
+subject: Betreff
+destroy: "Zerst\xC3\xB6ren"
+add_existing_image: Existierendes Bild hinzuf&uuml;gen
+add_contact_info: Wenn ein anderer User dein Kontakt ist kann er/sie sehen ob du eingeloggt bist und bekommt Zugang zu deinem Profil. Sobald eine andere Person dein Kontakt wird wirst du auch sein Kontakt.
+member_groups_of_network: Gruppen im Netzwerk
+recipient_tip: "Trenne Empf\xC3\xA4nger mit Kommata, Leerzeichen oder Zeilenspr\xC3\xBCungen."
+alert_saved: "\xC3\x84nderungen gespeichert"
+month_short_september: Sep
+featured_content: Angebotene Inhalte
+profile_public_description: "Dieses Profil ist \xC3\xB6ffentlich und kann von allen BesucherInnen dieser Website gelesen werden.\r\n\
+  Die Informationen, die du hier angegeben hast, sind au\xC3\x9Ferdem von allen anderen Menschen \xC3\xBCber diverse Suchmaschinen zu finden.\r\n\
+  Bedenke das, wenn du pers\xC3\xB6nliche Informationen von dir in deinem \xC3\xB6ffentlichen Profil bekannt gibst."
+request_to_join_you_description: ":user w\xC3\xBCrde sich gerne :group anschlie\xC3\x9Fen"
+request_friend_link: "Zu meinen Kontakten hinzuf\xC3\xBCgen"
+updated: aktualisiert
+forgot_password_mail_expiry: "Dieser Link beh\xC3\xA4lt seine G\xC3\xBCltigkeit f\xC3\xBCr 24 Stunden. Willst Du Dein Passwort sp\xC3\xA4ter r\xC3\xBCcksetzen musst Du Dir auf der \"Passwort vergessen\"-Seite einen neuen Link zuschicken lassen."
+general_info: Generelle Infos
+date_today: Heute
+forgot_password_mail_greeting: "%s, um Dein Passwort zur\xC3\xBCckzusetzen besuche bitte"
+group_discussion_class_description: Eine Gruppendiskussion zu einem bestimmten Thema.
+versions: Versionen
+create_group_link: Gruppe erstellen
+history: Verlauf
+group_invite_subject: Einladung, der Gruppe "{group}" beizutreten
+School: Schule
+group_home_headline: "{group_type} Home"
+last_name: Familienname
+directory_of_networks: Verzeichnis der Netzwerke
+create_page_headline: Erstelle eine neue {page_class}
+forgotten_email_address: Welche Email-Adresse hast Du bei der Anmeldung angegeben?
+edit_title: Titel bearbeiten
+no_change: "keine \xC3\x84nderung"
+you_have_no_peers: Du hast keine Peers
+status_pending: offen
+invite_not_found: Einladung nicht gefunden
+invite_info: Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser %s beizutreten, ein.
+attachments: "Anh\xC3\xA4nge"
+link_name_description: "Dieser Name dient als Bezeichner der Gruppe in Links und URLs. Es d\xC3\xBCrfen nur alphanumerische Zeichen und keine Leerzeichen enthalten sein."
+message: Nachricht
+user_profile_description_allow_peers: "Wenn gesetzt, k\xC3\xB6nnen Personen, mit denen du eine Gruppe teilst (Peers) dein privates Profil einsehen."
+this_is_committee: Diese Arbeitsgruppe ist Teil von {parent_group}.
+me_requests_link: Anfragen
+group_profile_description_may_request_membership: Erlaube Personen, eine Mitgliedschaftsanfrage an diese {group_type} zu stellen.
+none: nichts
+upload_image: Lade Bild hoch
+signup_success_message: "Danke f\xC3\xBCr die Registrierung!"
+date_yesterday: Gestern
+show_gallery: Gallerie &Uuml;berblick
+created_when_by: Erstellt :when von :user
+signup_button: Registrieren
+approval_vote_class_description: "Zustimmung oder Ablehnung von jeder M\xC3\xB6glichkeit"
+password_confirmation: "Passwortbest\xC3\xA4tigung"
+menu_groups: Gruppen
+month_short_october: Okt
+create_a_new_something: Neue {something} erstellen
+profile_option_allow_peers: "F\xC3\xBCr Kollegen (\"Peers\") sichtbar"
+profile_option_may_pester: "darf mir auf die Pelle r\xC3\xBCcken."
+created_on: Erstellt an
+share_page_message: Sende eine Nachricht (optional)
+dont_understand_group_type: Gruppentyp :type ist unbekannt.
+to: An
+activity_group_created: "{user} hat {group_type} {group} erstellt"
+other_formats: Andere Formate
+organization: Organisation
+approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. M\xC3\xB6chtest du diese annehmen?"
+wikis: Wikis
+thursday: Donnerstag
+group_successfully_updated: Die Gruppe wurde aktualisiert.
+date_years: Jahre
+large: "gro\xC3\x9F"
+committee_publicly_visible_description: "Arbeitsgruppen k\xC3\xB6nnen von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
+menu_link_logout: Abmelden
+description: Beschreibung
+outgoing: ausgehend
+reject: Abweisen
+month_short_august: Aug
+request_status: "Diese Anfrage wurde von :user um :time :status "
+viewer: BesucherInnen
+video_service_is_not_supported: "wird nicht unterst\xC3\xBCtzt (momentan nur YouTube, Google Video, blip.tv und vimeo)"
+user_or_group_name: BenutzerInnen- oder Gruppenname
+messages: Nachrichten
+all_people: alle Personen
+working_group_description: "Eine Mitgliedschaft in dieser Gruppe gew\xC3\xA4hrt keinen Zugang zur :group_type <b>:group_name</b>."
+private_profile: Privates Profil
+request_to_join_your_network_description: ":group stellte eine Anfrage, sich dem Netzwerk :network anzuschlie\xC3\x9Fen"
+login_failed: Anmeldung fehlgeschlagen
+add_photo_to_gallery: Bild zur Gallerie hinzuf&uuml;gen
+location_postal_code: Postleitzahl
+error_saving_new_order: Beim speichern der neuen Reihenfolge ist ein Fehler aufgetreten!
+page_list_heading_title: Titel
+profile_option_may_see_networks: Netzwerke anzeigen
+video_embed_code_prompt: Embedcode eines externen Videos
+cancel_button: Abbrechen
+profile_option_may_see_members: Gruppenmitglieder anzeigen
+not_set: nicht aktiv
+tuesday: Dienstag
+settings: Einstellungen
+information: Information
+file: Datei
+expired_featured_content: Abgelaufene Inhalte
+most_viewed: Meistangeschaut
+middle_name: zweiter Vorname
+locked_by_user: gesperrt durch :user
+move_page_link: Verschiebe :page_class
+month_short_january: Jan
+signup_success: Registration erfolgreich
+invite_accept_info: Du willst die Einladung annehmen. Hast Du schon einen Zugang zu diesem Server?
+usage_agreement_heading: Nutzungsvereinbarung
+search_headline: Suche
+edit_featured_content: Aktuelle Inhalte bearbeiten
+alert_field_errors: Es gibt Probleme mit den folgenden Feldern
+move_this_page: Verschiebe diese Seite
+comparing_changes_header: "Vergleich der \xC3\x84nderungen durch :user am :when zwischen :old_version und :new_version"
+this_is_coordinating: Dieses Gremium ist der <strong>koordinierende Rat</strong> von {parent_group}.
+share_page_recipients_selection: "W\xC3\xA4hle aus"
+edit_council_help_text: Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun.
+csrf_error_message: "Dein Loginversuch erweckt den Anschein eines Einbruchsversuches. Keine Sorge, das passiert gelegentlich auch bei harmlosen Anfragen. Wir sind halt besonders paranoid. Lade die Seite neu, um es noch einmal zu versuchen. Dazu kannst Du folgenden Link verwenden:"
+type_your_messages_here: "Tippe deine Nachricht hier und dr\xC3\xBCcke Enter..."
+send_invites_button: Sende Einladungen
+user_profile_description_may_see_groups: "Anderen Deine Gruppenzugeh\xC3\xB6rigkeiten offenbaren."
+page_list: Seitenliste
+current_attachments: "aktuelle Anh\xC3\xA4nge"
+date: Datum
+networks: Netzwerke
+date_centuries: Jahrhunderte
+menu_link_account: Konto
+me_search_description: Suche in allen zugriffsberechtigten Seiten
+no_committees: Keine Arbeitsgruppen
+you_are_viewing_version: Du betrachtest Version :version von :user
+move_button: Verschieben
+grant_access: "Zugang gew\xC3\xA4hren"
+About_Me: "&Uuml;ber mich"
+profile_option_may_see_contacts: "Pers\xC3\xB6nliche Kontakte anzeigen"
+profile_member_since: Mitglied seit
+you_have_no_groups: Du hast keine Gruppen
+video_class_description: Zeige ein Video, welches auf einer externen Seite gespeichert ist.
+share_page_options: "W\xC3\xA4hle Optionen"
+group_privacy_settings: "%s Datenschutz Einstellungen"
+pagination_next: weiter
+activity_user_joined_group: "{user} ist der {group_type} {group} beigetreten"
+network_invite_info: Gib die Namen der Gruppen ein, welche du in dieses Netzwerk einladen willst.
+make_album_cover: "dieses Bild als Albumcover ausw\xC3\xA4hlen"
+public_key: Public Key
+no_group_named: Es gibt keine Gruppe namens <b>:name</b>.
+im_addresses: IM Adressen
+page_list_heading_posts: Posts
+user_profile_description_may_see: "Angeklickt: Profilinfos unten werden sichtbar, wenn diese Option aktiviert wird. Ansonsten ist Dein Profil versteckt."
+Social_Change_Interests: Interessen im Zusammenhang mit sozialem Wandel
+users_world: ":user's Welt"
+archive_filter_updated_link: "zuletzt ge\xC3\xA4ndert am"
+approved: genehmigt
+date_minutes: Minuten
+request_to_join_us_via_email_description: ":email wurde eingeladen, sich :group anzuschlie\xC3\x9Fen"
+upload_images: Hochladen
+upload_new_image: Neues Bild hochladen
+page_info: Seiteninformation
+regenerate: Aktualisiere Thumbnails
+watch_checkbox: Benachrichtigung bei Aktualisierungen
+wednesday: Mittwoch
+Announcements: "Ank\xC3\xBCndigungen"
+add_tags: "Tags hinzuf\xC3\xBCgen"
+include_full_checkbox: "Link zum ganzen Bild einf\xC3\xBCgen"
+logout: Abmelden
+group_directory: |
+  Gruppen-Verzeichnis 
+
+month_short_june: Jun
+incoming: Eingang
+when_does_feature_expire: Ab wann ist dieses Feature nicht mehr aktuell?
+activity_wall_message: "{author} schrieb zu {user}: {message}"
+break_lock_button: Sperre aufheben
+members: BenutzerInnen
+edit_underlined_e: <u>B</u>earbeiten
+all_states: "alle Zust\xC3\xA4nde"
+no_tags: Keine Tags
+activity_group_destroyed: "{group} wurde durch {user} zerst\xC3\xB6rt"
+contacts: Kontakte
+insert_image_instructions: "Klicke auf das kleine Bild um es in den Wikitext einzuf\xC3\xBCgen."
+unfeature_button: Defeature!
+profile_saved: Dein Profil wurde gespeichert.
+reset_password: "Setze Passwort zur\xC3\xBCck"
+permission_denied_description: "Du hast nicht gen\xC3\xBCgend Rechte um diese Aktion auszuf\xC3\xBChren."
+already_contacts_info: Du bist schon ein Kontakt dieser Person.
+share_page_email: Sende eine E-Mailbenachrichtigung
+my_peers_explain: BenutzerInnen, mit denen ich eine Gruppe teile
+mark_pages_as_featured_content_for_group: Hier kannst du Seiten als besonderen Inhalt dieser Gruppe kennzeichen.
+group_profile_description_may_see_members: Anderen erlauben, die Mitgliederliste dieser {group_type} einzusehen.
+edit_tags_link: Bearbeiten
+saved_new_order: Neue Reihenfolge gespeichert!
+add_websites: "Webseiten hinzuf\xC3\xBCgen"
+forgot_password_link: Ich habe mein Passwort vergessen
+me_search_link: Suchen
+my_groups: Meine Gruppen
+page_with_message: mit Botschaft
+group_discussion: Diskussion
+my_pending_tasks_link: Offen
+footer_text_crabgrass: |-
+  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
+  <ul>
+    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
+    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
+    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
+    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
+  </ul>
+insert_image_heading: "Bild einf\xC3\xBCgen"
+reset_password_text: Hallo %s. Wenn du dein Passwort zum Einloggen vergessen hast, kannst du hier ein Neues erstellen.
+image_title: "Bildtitel: %s"
