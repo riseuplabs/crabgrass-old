@@ -63,12 +63,12 @@ module UserExtension::Socialize
   # profiles will be created for self if they do not already exist. 
   def add_contact!(other_user, type=nil)
     unless self.contacts.find_by_id(other_user.id)
-      Contact.create!(:user_id => self.id, :contact_id => other_user.id)
+      self.contacts << other_user
       self.contacts.reset
       self.update_contacts_cache
     end
     unless other_user.contacts.find_by_id(self.id)
-      Contact.create!(:user_id => other_user.id, :contact_id => self.id)
+      other_user.contacts << self
       other_user.contacts.reset
       other_user.update_contacts_cache
     end
@@ -76,11 +76,11 @@ module UserExtension::Socialize
 
   # this should be the ONLY way contacts are deleted
   def remove_contact!(other_user, type=nil)    
-    if contact = Contact.find_by_user_id_and_contact_id(self.id, other_user.id)
+    if self.contacts.find(other_user.id)
       self.contacts.delete(other_user)
       self.update_contacts_cache
     end
-    if contact = Contact.find_by_user_id_and_contact_id(other_user.id,self.id)
+    if other_user.contacts.find(self.id)
        other_user.contacts.delete(self)
        other_user.update_contacts_cache
     end
