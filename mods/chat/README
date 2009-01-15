@@ -1,0 +1,36 @@
+Chat
+====
+
+XMPP (Jabber) based chat for Crabgrass.
+
+Usage
+=======
+
+Install ejabberd:
+
+$ sudo apt-get install ejabberd
+
+Copy mysql beam files:
+
+$ sudo cp files/ebin/* /usr/lib/ejabberd/ebin
+
+Configure ejabberd (edit /etc/ejabberd/ejabberd.cfg):
+  add an admin
+  change hostname
+  change auth to external and use full path to the auth script (files/ejabberd-auth.rb).
+  uncomment and add mysql settings
+  add '_odbc' suffix to following mods: mod_last, mod_offline, mod_roster, mod_vcard, mod_privacy, mod_private
+
+Add chat to config/mods_enabled.list
+
+Run Chat Migrations:
+
+$ ./script/generate plugin_migration
+$ rake db:migrate
+
+Change DOMAIN on app/models/user_extension.rb to match the hostname you set on your ejabberd.cfg
+
+Credits
+=======
+
+Written by Pietro Ferrari <pietro@riseup.net> for the Riseup Labs <http://riseuplabs.org>

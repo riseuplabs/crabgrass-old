@@ -20,3 +20,7 @@ design_tester
 
 ## Google analytics
 #evil_mod
+
+
+## The chat mod provides user-to-user and multi-user chat using the Ejabberd XMPP server
+#chat
