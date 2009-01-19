@@ -34,9 +34,7 @@ module UserExtension
                             :ask          => 'N',
                             :server       => 'N',
                             :type         => 'item'}
-      if UserRoster.create!(user_roster_data)
-        logger.warn("XXXXXXXXXX")
-      end
+      UserRoster.create!(user_roster_data)
 
       group_roster_data  = { :username     => self.login,
                              :jid          => "#{contact.login}@#{DOMAIN}",
