@@ -19,8 +19,7 @@ See https://labs.riseup.net/code/projects/show/crabgrass for information on rele
 
 = Install optional packages
 
-These packages are optional, but necessary for image thumbnails
-and document previews:
+These packages are optional, but necessary for image thumbnails and document previews. Note: there are etch backports available for graphicsmagick.
 
   apt-get install graphicsmagick openoffice.org openoffice.org-headless msttcorefonts
 
