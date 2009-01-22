@@ -167,7 +167,7 @@ footer_text_crabgrass: |-
   <ul>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
+    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>crabgrass help pages</a></li>
     <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
   </ul>
 move_image_right: "Flytta bilden \xC3\xA5t h\xC3\xB6ger"
