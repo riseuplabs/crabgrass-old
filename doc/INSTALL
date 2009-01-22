@@ -37,7 +37,7 @@ Basic gems to get rails working:
 
 These gems are required for Crabgrass:
 
-  gem install rmagick tzinfo RedCloth --no-ri --no-rdoc
+  gem install tzinfo RedCloth --no-ri --no-rdoc
 
 These gems are optional:
 

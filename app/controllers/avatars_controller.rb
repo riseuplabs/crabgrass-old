@@ -27,8 +27,8 @@ class AvatarsController < ActionController::Base
     else
       avatar = Avatar.create(params[:image])
       thing.avatar = avatar
-      thing.save!
     end
+    thing.save! # make sure thing.updated_at has been updated.
     redirect_to params[:redirect]
   #rescue Exception => exc
   #  flash_message_now :exception => exc

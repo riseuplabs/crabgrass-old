@@ -2,11 +2,13 @@ require 'open-uri'
 require 'base64'
 
 # Load RMagick
-begin
-  require 'RMagick'
-rescue MissingSourceFile => e
-  puts %{ERROR :: FlexImage requires the RMagick gem.  http://rmagick.rubyforge.org/install-faq.html}
-  raise e
+unless defined? Magick
+  begin
+    require 'RMagick'
+  rescue MissingSourceFile => e
+    puts %{ERROR :: FlexImage requires the RMagick gem.  http://rmagick.rubyforge.org/install-faq.html}
+    raise e
+  end
 end
 
 # Load dsl_accessor from lib

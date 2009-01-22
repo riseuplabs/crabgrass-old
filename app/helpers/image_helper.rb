@@ -58,7 +58,7 @@ module ImageHelper
   ## creates an img tag based avatar
   def avatar_for(viewable, size='medium', options={})
     image_tag(
-      avatar_url(:id => (viewable.avatar_id||0), :size => size),
+      avatar_url_for(viewable, size),
       :alt => 'avatar', :size => Avatar.pixels(size),
       :class => (options[:class] || "avatar avatar_#{size}")
     )
@@ -66,7 +66,8 @@ module ImageHelper
   
   ## returns the url for the user's or group's avatar
   def avatar_url_for(viewable, size='medium')
-    avatar_url(:id => (viewable.avatar_id||0), :size => size)
+    #avatar_url(:id => (viewable.avatar_id||0), :size => size)
+    '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
   end
 
   ##
