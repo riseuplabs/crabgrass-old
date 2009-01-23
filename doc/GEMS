@@ -1,7 +1,7 @@
 = Required Gems
 
 tzinfo:: required for timezone support
-rmagick:: Used to scale avatars and build thumbnails.
+
 RedCloth:: The Crabgrass markup language, GreenCloth, is derived from RedCloth.
 
 = Suggested Gems
