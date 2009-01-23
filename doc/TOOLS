@@ -1,24 +1,14 @@
 = Crabgrass Tools
 
-Crabgrass has a special type of plugin called a "tool". These plugins are stored in the "tools" directory, and consist of:
+This is documentation specific to Crabgras Tools.
 
-* A model that is a subclass of Page
-* A controller that is a subclass of BasePageController
-* A set of custom views and helpers
-* Anything else the author wants
+A tool can do pretty much anything. It can be an entire rails
+application. However, the typical case is that whenever a Page of the
+type defined in the tool is to be shown, then crabgrass will use the
+controllers and views defined in that tool. 
 
-Tools, in short, are engines (ie plugins enhanced with the 'engines' plugin),
-except that tools are stored in the directory /tools and they are only loaded
-if the directory name appears in <tt>config/tools_enabled.list</tt>.
-
-You should also add your tool to <tt>config/sites.yml</tt> and <tt>config/development.sites.yml</tt> if you want actually to be able to use it.
-
-A tool can do pretty much anything. It can be an entire rails application. 
-However, the typical case is that whenever a Page of the type defined
-in the tool is to be shown, then crabgrass will use the controllers and views
-defined in that tool. 
-
-How does it know? Because of a call like this placed in the init.rb of the tool:
+How does it know? Because of a call like this placed in the init.rb of
+the tool:
 
   PageClassRegistrar.add(
     'WikiPage',
@@ -32,48 +22,8 @@ How does it know? Because of a call like this placed in the init.rb of the tool:
 
 In this example, whenever a page of type WikiPage is displayed, the
 controller WikiPageController will be called (derived from the
-camelcase of :controller). This could live anywhere, but we happen
-to have bundled this controller in the tool under:
+camelcase of :controller). This could live anywhere, but we happen to
+have bundled this controller in the tool under:
 
   tools/wiki_tool/app/controllers/wiki_page_controller.rb
-
-You should also put this in init.rb:
-
-  self.load_once = false
-
-This will make it so that in development mode the plugin is not only loaded once.
-Without this, you need to restart rails each time you modify a source file in
-the plugin.
-
-== Running Tool Tests
-
-Run all tool tests:
-
-  rake test:tools:all
-
-To run the test for a particular tool:
-
-  rake test:tools:all TOOL=gallery_tool
-
-Instead of 'all', you can also specify 'functionals', 'integration', or 
-'units'.
-
-== Writing Tool Tests
-
-Example:
-
-  require 'test/unit'
-  # Add your module file here
-  require File.dirname(__FILE__) + '/../lib/meta_tag_helper'
-
-  class MetaTagTest < Test::Unit::TestCase
-
-    # Explicitly include the module
-    include MetaTagHelper
-
-    def test_end_html_tag
-      assert_equal "</html>", end_html_tag
-    end
-
-  end
 

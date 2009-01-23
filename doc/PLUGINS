@@ -1,0 +1,237 @@
+= Crabgrass Plugins
+
+Crabgrass has a plugin system that is the reverse of the Ruby on Rails
+plugin system: normally, rails plugins provide behavior for an
+application that the plugin knows nothing about.
+
+With crabgrass, however, crabgrass plugins know about crabgrass and
+only work for crabgrass. The crabgrass plugin system is based on
+customizations to {Rails Engines}[http://rails-engines.org]. Thus all
+the {Rails Engines docs}[http://api.rails-engines.org] apply to
+crabgrass plugins.
+
+Normal rails engines load the plugin code first, then the application
+code is loaded. This allows the application to override the plugin.
+For crabgrass, we want the opposite: the plugin should override the
+application.
+
+Additionally, crabgrass has view listeners: plugins can add themselves
+as listeners to certain hooks within the view code of the main
+application. This allows a plugin to add custom view elements at just
+the right spot without needing to override the entire view.
+
+== Mods and Tools
+
+Crabgrass has two types of crabgrass specific plugins: Mods and Tools.
+
+Tools are exclusively for creating new page types. For example, the
+WikiPage is a tool in <tt>tools/wiki_tool</tt>. All tools live in the directory
+<tt>tools</tt>.
+
+Mods have the added ability to replace the views in <tt>app/views</tt> with
+the views in <tt>mods/modname/app/views</tt>. Modes live in the directory
+<tt>mods</tt>. Mods directly modify the behavior of crabgrass.
+
+Mods[link:files/doc/MODS.html] and Tools[link:files/doc/TOOLS.html]
+have their own documentation files with information specific to each
+one of them.
+
+== Creating a Mod or Tool
+
+Every crabgrass mod/tool starts out life as a regular plugin. To
+create a skeleton:
+
+  ./script/generate plugin your_plugin_name
+
+This will create a new plugin in your vendor/plugins directory.
+
+Move this directory to mods or tools directory:
+
+  mv vendor/plugin/your_plugin_name mods
+
+The first thing to do is edit the init.rb file. Adding:
+
+  self.load_once = false
+
+will make it so that in development mode the plugin is not only loaded
+once. Without this, you need to restart rails each time you modify a
+source file in the plugin.
+
+Options specific to Mods ans Tools are listed on their respective
+documentation.
+
+As with every engine, mods and tools may contain an 'app' subfolder.
+This app folder mirrors the app in the rails root. Files in the mod's
+app will append or overwrite the files in the main app folder.
+
+For example:
+
+  app
+  |-- controllers
+  |   |-- account_controller.rb
+  |   '-- application.rb
+  '-- views
+      '-- account
+          |-- index.html.erb
+          '-- login.html.erb
+  mods
+  |-- mymod1
+  |-- mymod2
+  '-- mymod3
+      '-- app
+          |-- controllers
+          |   '-- account_controller.rb
+          '-- views
+              '-- account
+                  '-- login.html.erb
+
+The file <tt>mods/mymod3/app/views/account/login.html.erb</tt> will
+*override* <tt>app/views/account/login.html.erb</tt> (but only if
+<tt>override_views</tt> is set to true). The file
+<tt>mods/mymod3/app/controllers/account_controller.rb</tt> will add new
+methods or change existing methods of
+<tt>app/controllers/account_controller.rb</tt>.
+
+== Finalize
+
+Another thing that mods can do is to run some code after everything
+else has been run. This is not so useful for plugins, but for mods it
+is often needed: Suppose, for example, you want to extend the Page
+class. Normally, plugins are not written to know anything about your
+particular rails application, but in the case of mods they are
+intended to modify a very specific rails application.
+
+If we were to try to modify the Page class in the init.rb of our mod,
+we would create many errors trying to reference Page too early in
+rail's startup process.
+
+To get around this, mods can pass a block to self.finalize and this
+code will only get called once everything is loaded. 
+
+For example:
+
+mods/mymode/init.rb:
+  self.finalize do
+    Page.class_eval do
+      acts_as_rateable
+    end
+  end
+
+== Plugin Migrations
+
+If your plugin requires database migrations, you can generate new
+migrations and put them in a db/migrate folder in the plugin.
+
+Then, to add these migrations to the main rails app, you run this:
+
+  ./script/generate plugin_migration
+
+That will generate a new app level migration that will run your plugin
+migrations.
+
+== Adding Assets To A Plugin
+
+The engines plugin makes it trivial to share public assets using
+plugins. To do this, include an "assets" directory within your plugin,
+and put your javascripts, stylesheets and images in subdirectories of
+that folder:
+
+  my_plugin
+    |- init.rb
+    |- lib/
+    |- assets/
+         |- javascripts/
+         |    |- my_functions.js
+         |
+         |- stylesheets/
+         |    |- my_styles.css
+         |
+         |- images/
+              |- my_face.jpg
+
+Files within the "asset" structure are automatically mirrored into a
+publicly-accessible folder each time your application starts (ie
+<tt>app/public/plugin_assets/<plugin name>/</tt>).
+
+== Using Plugin Assets in Views
+
+It's also simple to use Rails' helpers in your views to use plugin
+assets. The default helper methods have been enhanced by the engines
+plugin to accept a :plugin option, indicating the plugin containing
+the desired asset.
+
+For example, it's easy to use plugin assets in your layouts:
+
+  <%= stylesheet_link_tag "my_styles", :plugin => "my_plugin", :media => "screen" %>
+  <%= javascript_include_tag "my_functions", :plugin => "my_plugin" %>
+ 
+... and similarly in views and partials, it's easy to use plugin images:
+
+  <%= image_tag "my_face", :plugin => "my_plugin" %>
+  <!-- or -->
+  <%= image_path "my_face", :plugin => "my_plugin" %>
+
+Where the default helpers allow the specification of more than one
+file (i.e. the javascript and stylesheet helpers), you can do
+similarly for multiple assets from within a single plugin.
+
+This methods support this :plugin argument:
+
+* stylesheet_link_tag
+* javascript_include_tag
+* image_path
+* image_tag
+
+Each one of these methods now accepts the key/value pair :plugin =>
+"plugin_name", which can be used to specify the originating plugin for
+any assets.
+
+== Configuration
+
+Mods may be enabled or disabled by editing <tt>config/mods_enabled.list</tt>.
+Likewise for tools with <tt>config/tools_enabled.list</tt>.
+
+Additionally, your mod may need extra routes. An example might be:
+
+config/routes.rb:
+  map.from_plugin :gibberize
+
+See the mod README to find out if a routes entry is required.
+
+Tools can be made visible or hidden on a per site basis. See
+<tt>config/sites.yml</tt> and <tt>config/development.sites.yml</tt>.
+
+== Running Tests
+
+Run all tool tests:
+
+  rake test:tools:all
+
+To run the test for a particular tool:
+
+  rake test:tools:all TOOL=gallery_tool
+
+Instead of 'all', you can also specify 'functionals', 'integration',
+or 'units'.
+
+Mods tests can be runned the same way. Just change 'tools' to 'mods'
+and 'TOOL' to 'MODS' on the rake command line.
+
+== Writing Tests
+
+Example:
+
+  require 'test/unit'
+  # Add your module file here
+  require File.dirname(__FILE__) + '/../lib/meta_tag_helper'
+
+  class MetaTagTest < Test::Unit::TestCase
+
+    # Explicitly include the module
+    include MetaTagHelper
+
+    def test_end_html_tag
+      assert_equal "</html>", end_html_tag
+    end
+  end
+

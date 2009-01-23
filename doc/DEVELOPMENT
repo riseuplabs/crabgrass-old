@@ -2,8 +2,7 @@ This is a general overview of the Crabgrass code and how to begin making contrib
 
 = Related Documents
 
-* MODS[link:files/doc/MODS.html]
-* TOOLS[link:files/doc/TOOLS.html]
+* {Crabgrass Plugins}[link:files/doc/PLUGINS.html]
 
 = Coding Standards
 
