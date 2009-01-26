@@ -290,16 +290,6 @@ desc: A block can be tagged with a CSS class by circling the class in parenthese
 in: p(example1). An example
 out: <p class="example1">An example</p>
 --- 
-name: css id
-desc: An element ID can be given by prefixing the ID with a pound symbol and using it in place of the class.
-in: p(#big-red). Red here
-out: <p id="big-red">Red here</p>
---- 
-name: class and id combined
-desc: Class and ID can be combined by placing the class first.
-in: p(example1#big-red2). Red here
-out: <p class="example1" id="big-red2">Red here</p>
---- 
 name: css style
 desc: Style settings can be provided directly by surrounding them in curly braces.
 in: p{color:blue;margin:30px}. Spacey blue
@@ -535,3 +525,17 @@ in: |-
    "one (two _three four_) five"
 out: |-
   <p>&#8220;one (two <em>three four</em>) five&#8221;</p>
+
+
+# ids are disabled in greencloth
+#--- 
+#name: css id
+#desc: An element ID can be given by prefixing the ID with a pound symbol and using it in place of the class.
+#in: p(#big-red). Red here
+#out: <p id="big-red">Red here</p>
+#--- 
+#name: class and id combined
+#desc: Class and ID can be combined by placing the class first.
+#in: p(example1#big-red2). Red here
+#out: <p class="example1" id="big-red2">Red here</p>
+

@@ -2,17 +2,17 @@
 in: |-
   <!--[if gte IE 4]><SCRIPT>alert('XSS');</SCRIPT><![endif]-->
 out: |-
-  <p>&lt;!--<a href="/page/if-gte-ie-4">if gte IE 4</a>&gt;&lt;SCRIPT&gt;alert('XSS');&lt;/SCRIPT&gt;&lt;!<a href="/page/endif">endif</a>--&gt;</p>
+  <p><!--<a href="/page/if-gte-ie-4">if gte IE 4</a>>alert('XSS');<!<a href="/page/endif">endif</a>--></p>
 ---
 in: |-
   <script>alert(1)</script>
 out: |-
-  &lt;script&gt;alert(1)&lt;/script&gt;
+  <p>alert(1)</p>
 ---
 in: |-
   <a href='javascript:alert(1)'>hello</a>
 out: |-
-  <p>&lt;a href='javascript:alert(1)'&gt;hello&lt;/a&gt;</p>
+  <p><a>hello</a></p>
 ---
 in: |-
   [ hello -> javascript:alert(1) ]
@@ -22,7 +22,7 @@ out: |-
 in: |-
   <img src=javascript:alert('XSS')>  
 out: |-
-  <p>&lt;img src=javascript:alert('XSS')&gt;</p>
+  <p><img></p>
 ---
 in: |-
   !javascript:alert('XSS')!
@@ -53,4 +53,8 @@ in: |-
   [ nasty -> http://riseup.net/"> <script>alert(1)</script> ]
 out: |-
   <p><a href="http://riseup.net/&quot;&gt; &lt;script&gt;alert(1)&lt;/script&gt; "> nasty</a></p>
-
+---
+in: |-
+  <notextile><script>alert(6)</script></notextile>
+out: |-
+  alert(6)

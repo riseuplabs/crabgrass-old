@@ -79,6 +79,10 @@ require 'cgi'
 ##
 ## GREENCLOTH HTML FORMATTER
 ##
+## Our modifications to RedCloth take two forms: changes to the html formatter
+## and changes to the TextileDoc. Here lie the changes to the formatter. For
+## changes to TextileDoc, see below.
+##
 
 module GreenClothFormatterHTML
   include RedCloth::Formatters::HTML
@@ -101,18 +105,17 @@ module GreenClothFormatterHTML
     "<p#{pba(opts)}#{klass}>#{opts[:text]}</p>\n"
   end
 
-  ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/
-
   ##
   ## Allow some html, but not all
-  ##
-  def inline_html(opts)
-    if opts[:text] =~ ALLOWED_HTML_TAGS_RE
-      "#{opts[:text]}" # nil-safe
-    else
-      html_esc(opts[:text], :html_escape_preformatted)    
-    end
-  end
+  ## (now handled by ALLOWED_TAGS)
+  #ALLOWED_HTML_TAGS_RE = /<\/?(blockquote|em|strong|pre|code)>/
+  #def inline_html(opts)
+  #  if opts[:text] =~ ALLOWED_HTML_TAGS_RE
+  #    "#{opts[:text]}" # nil-safe
+  #  else
+  #    html_esc(opts[:text], :html_escape_preformatted)    
+  #  end
+  #end
 
   ##
   ## convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
@@ -138,13 +141,61 @@ module GreenClothFormatterHTML
     @parity
   end
 
+  ## Most notably, we do not allow <script>, <div>, <textarea>, or <form>.
+  ## These tags might really mess up the layout of the page or are a security
+  ## risk. Also, unsafe attributes like 'onmouseover' are not allowed.
+  ALLOWED_TAGS = {
+    'a' => ['href', 'title'],
+    'img' => ['src', 'alt', 'title'],
+    'br' => [],
+    'i' => nil,
+    'u' => nil, 
+    'b' => nil,
+    'pre' => nil,
+    'kbd' => nil,
+    'code' => ['lang'],
+    'cite' => nil,
+    'strong' => nil,
+    'em' => nil,
+    'ins' => nil,
+    'sup' => nil,
+    'sub' => nil,
+    'del' => nil,
+    'table' => nil,
+    'tr' => nil,
+    'td' => ['colspan', 'rowspan'],
+    'th' => nil,
+    'ol' => ['start'],
+    'ul' => nil,
+    'li' => nil,
+    'p' => ['class','style'],
+    'span' => ['class','style'],
+    'h1' => nil,
+    'h2' => nil,
+    'h3' => nil,
+    'h4' => nil,
+    'h5' => nil,
+    'h6' => nil,
+    'notextile' => nil, 
+    'blockquote' => ['cite'],
+    'object' => ['width', 'height'],
+    'param' => ['name','value'],
+    'embed' => ['src','type','width','height','allowscriptaccess', 'allowfullscreen']
+  }
+
+  def before_transform(text)
+    clean_html(text, ALLOWED_TAGS) if sanitize_html # (sanitize_html should always be true)
+  end
+
 end
 
 
-############################################################################
-
 ##
 ## GREENCLOTH PARSER
+##
+## Our modifications to RedCloth take two forms: changes to the html formatter
+## and changes to the TextileDoc. Here lie the changes to the TextileDoc. For
+## changes to formatter, see above.
 ##
 
 class GreenCloth < RedCloth::TextileDoc
@@ -156,7 +207,11 @@ class GreenCloth < RedCloth::TextileDoc
   def initialize(string, default_group_name = 'page', restrictions = [])
     @default_group = default_group_name
     restrictions.each { |r| method("#{r}=").call( true ) }
-    super(string)
+
+    # filter_ids    -- don't allow the user to set dom ids in the markup. This can
+    #                  royally mess with the display of a page.
+    # sanitize_html -- allows some basic html, see ALLOWED_TAGS aboved.
+    super(string, [:filter_ids, :sanitize_html])
   end
 
   # RedCloth calls clone of the GreenCloth object before 
@@ -172,7 +227,7 @@ class GreenCloth < RedCloth::TextileDoc
     @block = block
 
     before_filters += [:normalize_code_blocks, :offtag_obvious_code_blocks,
-      :bracket_links, :auto_links, :headings, :embedded, :quoted_block,
+      :bracket_links, :auto_links, :headings, :quoted_block,
       :tables_with_tabs, :wrap_long_words]
 
     formatter = self.clone()                   # \  in case one of the before filters
@@ -497,19 +552,19 @@ class GreenCloth < RedCloth::TextileDoc
   ## EMBED
   ##
 
-  EMBEDDED_RE = /(<embed .*><\/embed>|<object .*><\/object>)/
+  #EMBEDDED_RE = /(<embed .*><\/embed>|<object .*><\/object>)/
 
-  ALLOWED_EMBEDDED_TAGS = {
-    'object' => ['width', 'height'],
-    'param' => ['name','value'],
-    'embed' => ['src','type','width','height','allowscriptaccess', 'allowfullscreen']
-  }.freeze
+  #ALLOWED_EMBEDDED_TAGS = {
+  #  'object' => ['width', 'height'],
+  #  'param' => ['name','value'],
+  #  'embed' => ['src','type','width','height','allowscriptaccess', 'allowfullscreen']
+  #}.freeze
 
-  def embedded( text )
-    text.gsub!(EMBEDDED_RE) do |blk|
-      offtag_it( formatter.clean_html($1, ALLOWED_EMBEDDED_TAGS) )
-    end
-  end
+  #def embedded( text )
+  #  text.gsub!(EMBEDDED_RE) do |blk|
+  #    offtag_it( formatter.clean_html($1, ALLOWED_EMBEDDED_TAGS) )
+  #  end
+  #end
   
   ##
   ## UTILITY
@@ -538,27 +593,23 @@ unless "".respond_to? 'nameize'
 
   require 'iconv'
   class String
-
     def nameize
-    str = self.dup
-    str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
-    str.strip!            # ohh la la
-    str.downcase!         # upper case characters in urls are confusing
-    str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-    str = "-#{s}" if str =~ /^(\d+)$/ # don't allow all numbers
-    return str[0..49]
-  end
-    
+      str = self.dup
+      str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
+      str.strip!            # ohh la la
+      str.downcase!         # upper case characters in urls are confusing
+      str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
+      str = "-#{s}" if str =~ /^(\d+)$/ # don't allow all numbers
+      return str[0..49]
+    end
     def denameize
       self.gsub('-',' ')
     end
-
     # returns false if any char is detected that is not allowed in
     # 'nameized' strings
     def nameized?
       self == self.nameize
     end
-
   end
 
 end

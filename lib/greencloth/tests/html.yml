@@ -1,11 +1,35 @@
 ---
 in: |-
-  this line <b>has</b> a lot of <a>html</a> in it.
+  this line <b>has</b> a lot of safe <a>html</a> in it, that is <em>allowed</em>
 out: |-
-  <p>this line &lt;b&gt;has&lt;/b&gt; a lot of &lt;a&gt;html&lt;/a&gt; in it.</p>
+  <p>this line <b>has</b> a lot of safe <a>html</a> in it, that is <em>allowed</em></p>
+---
+in: |-
+  but we do not allow <b id='5'>some</b> dangerous <span onmouseover='javascript:alert(1)'>attributes</span>
+out: |-
+  <p>but we do not allow <b>some</b> dangerous <span>attributes</span></p>
 ---
 in: |-
   this line ==<b>has</b> a lot of <a>html</a> in it==.
 out: |-
   <p>this line <b>has</b> a lot of <a>html</a> in it.</p>
-
+---
+in: |-
+  we do not allow dangerous </div></textarea>html
+out: |-
+  <p>we do not allow dangerous html</p>
+---
+in: |-
+  <notextile>the notextile _tag_ turns off *textile*</notextile>
+out: |-
+  the notextile _tag_ turns off *textile*
+---
+in: |-
+  <!-- comments are ok -->
+out: |-
+  <p><!-- comments are ok --></p>
+---
+in: |-
+  <!-- unterminated comments are not ok
+out: |-
+  <p>&lt;!&#8212; unterminated comments are not ok</p>

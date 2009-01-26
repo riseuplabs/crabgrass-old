@@ -347,7 +347,7 @@ out: |-
   		<td>this</td>
   		<td style="text-align:justify;padding:10px;">is</td>
   		<td style="vertical-align:top;">another</td>
-  		<td class="bob" id="bob">row</td>
+  		<td class="bob">row</td>
   	</tr>
   </table>
 ---
