@@ -1,0 +1,83 @@
+.section.details
+  %p
+    = f.label :description, 'Full Description'
+    = f.text_area 'description', :rows => 10, :cols => 50
+.section.time
+  %h2
+    When
+  %p
+    = f.check_box :is_all_day , :id => 'event_is_all_day' 
+    %label{ :for => 'event_is_all_day' }
+      Event is all day
+
+  .row
+    %p.colmun
+      = f.label :date_start, 'Date'
+      = f.text_field :date_start, :size => 10, :id => 'event_date_start'#, :onfocus => "this.select();lcs(this)", :onclick => "event.cancelBubble=true;this.select();lcs(this)"
+    .time-details
+      %p
+        = f.label :hour_start, 'Start time'
+        = f.text_field :hour_start, :size => 8
+
+      %p.column
+        = f.label :date_end, 'To'
+        = f.text_field :date_end, :size => 10, :id => 'event_date_end' # :onfocus => "this.select();lcs(this)", :onclick => "event.cancelBubble=true;this.select();lcs(this)"
+      %p
+        = f.label :hour_end, 'End time'
+        = f.text_field :hour_end, :size => 8
+
+  %p.time-details
+    = f.label :time_zone, 'Time Zone'
+    = f.time_zone_select :time_zone
+
+.section.place
+  %h2
+    Where
+  %p
+    %p 
+      = f.label :address1, 'Street Address 1:'
+      = f.text_field :address1, :size =>50
+    %p
+      = f.label :address2, 'Street Address 2:'
+      = f.text_field :address2, :size =>50
+    %p
+      = f.label :city, 'City:'
+      = f.text_field :city, :size => 20
+      
+    %p
+      = f.label :state, 'State/Province:'
+      - f.object.state_other = ((ActionView::Helpers::FormOptionsHelper::US_STATES + ActionView::Helpers::FormOptionsHelper::CANADA_STATES).include?(f.object.state) ? '' : f.object.state )
+      = f.state_select :state, ['US','CANADA'], :include_blank => true
+      -#= f.state_select :state, (state_options_for_select(@event.state, 'US') + state_options_for_select(@event.state, 'CANADA')), :include_blank => true
+      -#= f.select :state, state_options_for_select(@event.state, 'US') + state_options_for_select(@event.state, 'CANADA') + options_for_select([['',''],['Other', 'Other']], other_state ? 'Other' : @event.state))
+    -#%p  
+      = f.label :state_other, 'Other State/Province:'
+      = f.text_field :state_other, :size => 40
+    %p 
+      = f.label :postal_code, 'Postal Code:'
+      = f.text_field :postal_code, :size => 20
+
+    %p
+      = f.label :country, 'Country:'
+      = f.country_select :country, ['United States','Canada','United Kingdom'], :include_blank => true
+
+.section.details
+  %p
+    = f.label :directions, 'Directions'
+    = f.text_area :directions, :rows => 10, :cols => 50
+
+- content_for :javascript do
+  = prototype_library
+  = javascript_include_tag 'calendar_date_select/calendar_date_select'
+  = stylesheet_link_tag 'calendar_date_select/blue'
+
+- content_for :javascript_onload do
+  jQ$("#event_date_start").focus( function(ev) { 
+  var calselect = new CalendarDateSelect( 'event_date_start', { year_range: 10  } );
+  });
+  jQ$("#event_date_end").focus( function(ev) { 
+  var calselect = new CalendarDateSelect( 'event_date_end', { year_range: 10  } );
+  });
+  if( jQ$("#event_is_all_day").attr('checked') ) jQ$(".time-details").hide();
+  jQ$("#event_is_all_day").click( function(ev) { jQ$(".time-details").toggle() });
+

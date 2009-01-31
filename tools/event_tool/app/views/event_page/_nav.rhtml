@@ -1,0 +1,12 @@
+<br />
+<% if (@date == nil) %>
+    <%= link_to (image_tag ('/images/calendar/date.png')), scoped_path(:events, :action => 'calendar') %> <%= link_to "calendar view", scoped_path(:events,  :action => 'calendar') %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_month.png')), scoped_path(:events, :action => 'month') %> <%= link_to "month list", scoped_path(:events, :action => 'month') %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_week.png')), scoped_path(:events, :action => 'week') %> <%= link_to "week list", scoped_path(:events, :action => 'week') %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_day.png')), scoped_path(:events, :action => 'day') %> <%= link_to "day list", scoped_path(:events, :action => 'day') %>
+<% else %>
+  <%= link_to (image_tag ('/images/calendar/date.png')), scoped_path(:events, :action => 'calendar', :date => @date) %> <%= link_to "calendar view", scoped_path(:events, :action => 'calendar', :date => @date) %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_month.png')), scoped_path(:events, :action => 'month', :date => @date) %> <%= link_to "month list", scoped_path(:events, :action => 'month', :date => @date) %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_week.png')), scoped_path(:events, :action => 'week', :date => @date) %> <%= link_to "week list", scoped_path(:events, :action => 'week', :date => @date) %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_day.png')), scoped_path(:events, :action => 'day', :date => @date) %> <%= link_to "day list", scoped_path(:events, :action => 'day', :date => @date) %>
+<% end %>

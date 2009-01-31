@@ -1,25 +1,70 @@
 <table cellpadding='4'>
+<% if @event.is_all_day %>
+<tr>
+  <td align='right'><b><%='all day event on'.t %>:</b></td>
+  <td><%= event_date_only(@page.starts_at,@event.time_zone) %></td>
+</tr>
+<% else %>
 <tr>
   <td align='right'><b><%='starts at'.t %>:</b></td>
-  <td><%= full_time @page.starts_at %></td>
+  <td><%= event_full_time(@page.starts_at,@event.time_zone) %></td>
 </tr>
 <tr>
-  <td align='right'><b><%= if !@event.is_all_day then 'ends at'.t+' :' else 'all day event'.t end%></b></td>
-  <td><%= if !@event.is_all_day then full_time @page.ends_at end%></td>
+  <td align='right'><b><%= 'ends at'.t %>:</b></td>
+  <td><%= event_full_time(@page.ends_at,@event.time_zone) %></td>
 </tr>
+<tr>
+  <td align='right'><b><%= 'timezone'.t %>:</b></td>
+  <td><%= @event.time_zone %></td>
+</tr>
+<% end %>
 <tr>
   <td align='right'><b><%='place'.t %>:</b></td>
-  <td><%= @event.location %></td>
+  <td><%=h @event.address1 %>, <%=h @event.address2 %><br />
+    <%=h @event.city %>, <%=h @event.state %> <%=h @event.postal_code %><br />
+    <%=h @event.country %>
+</td>
 </tr>
 <tr>
   <td align='right'><b><%='description'.t %>:</b></td>
   <td>
-	  <%= in_place_editor_field :event, :description, {}, { :url => page_xurl(@page, :action => 'set_event_description') } %>
+	  <%= @event.description %>
   </td>
 </tr>
+
+<% if @event.latitude and @event.longitude %>
+<%# default :controls = :zoom, :type, :overview, :scale %>
+  <%
+  map = GoogleMap.new(:controls => [:zoom])
+  map.markers << GoogleMapMarker.new(:map => map, 
+                                     :lat => Float(@event.latitude), 
+                                     :lng => Float(@event.longitude),
+                                     :html => @page.title )
+  %>
+  <%= map.to_html %>
+  <div id="google_map">
+    <%= map.div %>
+  </div>
+<% end %>
+
+<tr>
+  <td align='right'><b><%='directions'.t %>:</b></td>
+  <td>
+    <%=h @event.directions %>
+  </td>
+</tr>
+<% if current_user.may?(:admin, @page) %>
+<tr>
+  <td>
+    <%= link_to (image_tag 'actions/pencil.png'), edit_event_url(@page) %> <%= link_to 'Edit', edit_event_url(@page) %>
+  </td>
+</tr>
+<% end %>
+<% if logged_in? %>
 <tr>
 <td>
 	 <%= render :partial => 'participation' %>
  </td>
 </tr>
+<% end %>
 </table>

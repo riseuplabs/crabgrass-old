@@ -1,0 +1,60 @@
+- content_for :title do
+  = render :partial => 'pages/title'
+
+.event.show.landing
+  - event = @page.data
+  .section.date
+    %h3
+      Time
+    - if event.is_all_day
+      %label
+        All day event on:
+      = event_date_only(event.starts_at,event.time_zone)
+    - else
+      %label
+        Starts at:
+      = event_full_time(@page.starts_at,event.time_zone)
+      %br
+      %label
+        Ends at:
+      = event_full_time(@page.ends_at,event.time_zone)
+      %br
+      %label
+        Time zone:
+      = event.time_zone
+
+  .section.location
+    %h3
+      Place
+    .address
+      = h event.address1
+      = h ", " + event.address2 if event.address2
+    .csz
+      = h event.city
+      = h ", " + event.state if event.state
+      = h event.postal_code
+    .country
+      = h event.country
+
+  .section.description
+    %h3
+      Description
+    = event.description
+    %br/
+  .section.directions
+    %h3
+      Directions
+      - if event.latitude and event.longitude and Crabgrass::Config.geokit_google_api_key
+        - map = GoogleMap.new(:controls => [:zoom])
+        - map.markers << GoogleMapMarker.new(:map => map, :lat => Float(event.latitude), :lng => Float(event.longitude), :html => @page.title )
+        .section.google-map
+          = map.to_html
+          #google_map{:style => "width: 450px; height: 300px"}
+            = map.div
+    = h event.directions
+
+      
+    
+
+= render :partial => 'pages/comments'
+

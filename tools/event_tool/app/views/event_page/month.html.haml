@@ -1,0 +1,9 @@
+= render(:partial => "nav")
+%h1
+  = "#{@date.strftime('%B')} #{@date.year}"
+%p
+  = link_to("#{@date.<<(12).year}", scoped_path(:events, :action => 'month', :date => @date.<<(12)))
+  = link_to("#{@date.<<(1).strftime('%B')}", scoped_path(:events, :action => 'month', :date => @date.<<(1)))
+  = link_to("#{@date.>>(1).strftime('%B')}", scoped_path(:events, :action => 'month', :date => @date.>>(1)))
+  = link_to("#{@date.>>(12).year}", scoped_path(:events, :action => 'month', :date=>@date.>>(12)))
+= render(:partial => "list", :object => @events)

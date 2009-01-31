@@ -1,0 +1,7 @@
+= render(:partial => "nav")
+%h1
+  = "#{@date.strftime('%A %B %d, %G')}"
+%p
+  = link_to("Previous day: #{(@date-1).strftime('%D')}", scoped_path(:events, :action => 'day', :date => @date-1))
+  = link_to("Next day: #{(@date+1).strftime('%D')}", scoped_path(:events, :action => 'day', :date => @date+1))
+= render(:partial => "list", :object => @events)
