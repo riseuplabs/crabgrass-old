@@ -9,7 +9,7 @@ class NetworksController < GroupsController
   def create
     @group_type = 'network'
     if request.get?
-      Network.new(params[:group])
+      @group = Network.new(params[:group])
     elsif request.post?
       if group = Group.find_by_id(params[:group_id])
         verify_access_to!(group)

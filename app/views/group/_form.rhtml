@@ -81,10 +81,11 @@
   <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
 </p>
 
-<% if ! @parent and @group.new_record? %>
+<% if !@parent and @group.new_record? and false%>
+<%# this is a nice idea, but it doesn't appear to be working at all, so i have disabled it -elijah %>
   <p>
     <label for="group_add_council">
-    <input type="checkbox" name="add_council" value="true" CHECKED /><b><%= 'Add Council'[:add_council] %></b><br/>
+    <input type="checkbox" name="add_council" value="true" /><b><%= 'Add Council'[:add_council] %></b><br/>
     <%= 'If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so.'[:edit_council_help_text] %><br/>
     </label>
   </p>
