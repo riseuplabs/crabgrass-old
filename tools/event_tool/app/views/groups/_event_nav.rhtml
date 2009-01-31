@@ -1,0 +1,12 @@
+<% if (@date == nil) %>
+    <%= link_to (image_tag ('/images/calendar/date.png')), :action => 'calendar_month', :id => @group %> <%= link_to "calendar view", :action => 'calendar_month', :id => @group %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_month.png')), :action => 'list_by_month', :id => @group %> <%= link_to "month list", :action => 'list_by_month', :id => @group %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_week.png')), :action => 'list_by_week', :id => @group %> <%= link_to "week list", :action => 'list_by_week', :id => @group %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_day.png')), :action => 'list_by_day', :id => @group %> <%= link_to "day list", :action => 'list_by_day', :id => @group %>
+<% else %>
+    <%= link_to (image_tag ('/images/calendar/date.png')), :action => 'calendar_month', :id => @group, :date => @date %> <%= link_to "calendar view", :action => 'calendar_month', :id => @group, :date => @date %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_month.png')), :action => 'list_by_month', :id => @group, :date => @date %> <%= link_to "month list", :action => 'list_by_month', :id => @group, :date => @date %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_week.png')), :action => 'list_by_week', :id => @group, :date => @date %> <%= link_to "week list", :action => 'list_by_week', :id => @group, :date => @date %>
+    <%= link_to (image_tag ('/images/calendar/calendar_view_day.png')), :action => 'list_by_day', :id => @group, :date => @date %> <%= link_to "day list", :action => 'list_by_day', :id => @group, :date => @date %>
+<% end %>
+

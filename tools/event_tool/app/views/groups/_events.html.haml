@@ -1,0 +1,8 @@
+.toolbar.calendar.wide
+  .icon
+    = link_to "Today's Events", day_group_events_path(@group), :class => 'action index today'
+  .icon
+    = link_to "Week Events", week_group_events_path(@group), :class => 'action index week'
+  .icon
+    = link_to "Month Events", month_group_events_path(@group), :class => 'action index month'
+

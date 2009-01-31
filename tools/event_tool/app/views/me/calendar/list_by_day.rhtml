@@ -1,0 +1,6 @@
+<%= render(:partial => "event_nav") %>
+<h1><%= "#{@date.strftime('%A %B %d, %G')}" %></h1>
+<p><%= link_to("Previous day: #{(@date-(1)).strftime('%D')}", :date=>@date.-(1)) %>
+   <%= link_to("Next day: #{(@date+(1)).strftime('%D')}", :date=>@date.+(1)) %>
+</p> 
+<%= render(:partial => "event_list", :object => @events) %>

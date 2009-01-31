@@ -1,0 +1,34 @@
+-#TODO: move this into the models
+- page = event.data_snapshot[:page]
+- page.instance_variable_set(:@attributes_cache, Hash.new)
+- page.freeze
+- page_created_by = event.data_snapshot[:page_created_by].freeze
+- page_created_by.instance_variable_set(:@attributes_cache, Hash.new)
+- page_created_by.freeze
+- page_updated_by = event.data_snapshot[:page_updated_by].freeze
+- page_updated_by.instance_variable_set(:@attributes_cache, Hash.new)
+- page_updated_by.freeze
+%li.row.list-item{ :class => cycle( 'shade-odd', 'shade-even', :name => 'activity_entry_cycle' )}
+  .owner.row-block.first
+    - owner, owner_path = page.group, group_path( page.group ) if page.group
+    - owner, owner_path = page_created_by, person_path( page_created_by ) if page_created_by
+    - if owner
+      = link_to ' ', owner_path, html_options_for_icon_for( owner, :size => :small )
+      = link_to owner.name, owner_path, :class => 'name'
+  .page-icon.row-block
+    = link_to ' ', tool_pages_url(page, scoped_by_context? ), html_options_for_icon_for(page, :size => :small, :title => tool_pages_title(page))
+  .row-block
+    .title.row-block
+      = link_to page.title, page_url(page)#page_list_cell(page, :title)
+    .clear
+    .changes.row-block
+      - if page.updated_at != page.created_at
+        Updated by
+        = link_to_user(page_updated_by)
+        = time_ago_in_words(page.updated_at)
+        ago.
+      - else
+        Created by
+        = link_to_user(page_created_by)
+        = time_ago_in_words(page.created_at)
+        ago.

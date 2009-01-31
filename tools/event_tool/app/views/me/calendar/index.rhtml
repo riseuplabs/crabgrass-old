@@ -13,7 +13,7 @@
 	<tr>
 		<td><b><%= friendly_date event.starts_at %></b></td>
 		<td><%# location %></td>
-		<td><%= link_to event.title, page_url(event) %></td>
+		<td><%= link_to event.title, event_url(event) %></td>
 	</tr>
 	<% end -%>
 	<% end -%>

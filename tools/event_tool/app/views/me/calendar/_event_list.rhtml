@@ -1,0 +1,10 @@
+<% event_list.each do |event| %>
+<div class="post">
+  <h1 class="title"><%= link_to(h(event.title), page_url(event)) %></h1>
+  <p class="byline"><small><%=h long_date(event.starts_at,event.data.time_zone) %> - <%=h long_date(event.ends_at,event.data.time_zone) %></small></p>
+  <div class="entry">
+    <p><%= event.data.description %></p>
+    <p class="links"><%= link_to h("Read More"), page_url(event) %></p>
+  </div>
+</div>
+<% end %>

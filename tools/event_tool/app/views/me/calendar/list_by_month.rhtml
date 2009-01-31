@@ -1,0 +1,8 @@
+<%= render(:partial => "event_nav") %>
+<h1><%= "#{@date.strftime('%B')}"%> <%= @date.year %></h1>
+<p><%= link_to("#{@date.<<(12).year}", :date=>@date.<<(12)) %>
+   <%= link_to("#{@date.<<(1).strftime('%B')}", :date=>@date.<<(1)) %>
+   <%= link_to("#{@date.>>(1).strftime('%B')}", :date=>@date.>>(1)) %>
+   <%= link_to("#{@date.>>(12).year}", :date=>@date.>>(12)) %>  
+</p>        
+<%= render(:partial => "event_list", :object => @events) %>
