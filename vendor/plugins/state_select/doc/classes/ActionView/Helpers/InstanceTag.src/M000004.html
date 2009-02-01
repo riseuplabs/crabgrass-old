@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>to_state_select_tag (ActionView::Helpers::InstanceTag)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/state_select.rb, line 32</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_state_select_tag</span>(<span class="ruby-identifier">country</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">html_options</span>)
+    <span class="ruby-identifier">html_options</span> = <span class="ruby-identifier">html_options</span>.<span class="ruby-identifier">stringify_keys</span>
+    <span class="ruby-identifier">add_default_name_and_id</span>(<span class="ruby-identifier">html_options</span>)
+    <span class="ruby-identifier">selected_value</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:selected</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:selected</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;select&quot;</span>, <span class="ruby-identifier">add_options</span>(<span class="ruby-identifier">state_options_for_select</span>(<span class="ruby-identifier">selected_value</span>, <span class="ruby-identifier">country</span>), <span class="ruby-identifier">options</span>, <span class="ruby-identifier">value</span>), <span class="ruby-identifier">html_options</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

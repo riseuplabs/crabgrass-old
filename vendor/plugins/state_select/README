@@ -1,0 +1,25 @@
+StateSelect
+=============
+ state_select plugin allows you to easyly create dropdown list of states for a country provided as an option.
+ Default counrty is US.
+
+ Usage:
+ state_select(object, method, country='US', options = {}, html_options = {})
+  
+	Currently it supports only INDIA US, CANADA, AUSTRALIA, SPAIN, FRANCE and UGANDA
+	
+	*Thanks keith(http://rubygreenblue.com/) for Australia states
+	*Thanks Vicent (http://www.vicentgozalbes.com/) for Spain states
+	*Thanks Chuck Phillips for Uganda states
+	*Thanks Jonathan Tron for France states
+
+ If you want to add other country plese send me the list of states and I will add them.
+
+
+Author:
+   Akhil Bansal 
+   bansalakhil30.10@gmail.com
+   http://webonrails.com
+   Vinayak Solutions Pvt. Ltd.(http://vinsol.com)
+   New Delhi, India
+   
