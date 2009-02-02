@@ -10,7 +10,7 @@
 # 
 # A route using this dispatcher would look like this:
 # 
-#   /riseup/40
+#   /riseup/title+40
 # 
 # The second one is prettier, but perhaps it is slower? This remains to be seen.
 # 
@@ -22,7 +22,7 @@
 # /:context/:page/:page_action/:id
 # 
 # :context can be a group name or user login
-# :page can be the name or id of the page.
+# :page can be the name of the page or "#{title}+#{page_id}"
 # :page_action is the action that should be passed on to the page's controller
 # :id is just there as a catch all id for extra fun in case the
 #     page's controller wants it.
@@ -81,11 +81,11 @@ class DispatchController < ApplicationController
       return controller_for_group(@group) if @group
       return controller_for_people if @user
       raise ActiveRecord::RecordNotFound.new
-    elsif page_handle =~ /[ +](\d+)$/ || page_handle =~ /^(\d+)$/
-      # if page handle ends with [:space:][:number:] or entirely just numbers
-      # then find by page id. (the url actually looks like "my-page+52", but
-      # pluses are interpreted as spaces). find by id will always return a
-      #  globally unique page so we can ignore context
+    elsif page_handle =~ /[ +](\d+)$/
+      # if page handle ends with [:space:][:number:] then find by page id.
+      # (the url actually looks like "page-title+52", but pluses are interpreted
+      # as spaces). find by id will always return a globally unique page so we
+      # can ignore context
       @page = find_page_by_id( $~[1] )
     elsif @group
       # find just pages with the name that are owned by the group

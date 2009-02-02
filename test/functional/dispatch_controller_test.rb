@@ -26,6 +26,18 @@ class DispatchControllerTest < Test::Unit::TestCase
     get :dispatch, :_page => 'garble+5'
     assert assigns(:page)
     assert assigns(:page).is_a?(DiscussionPage)
+    assert_equal 5, assigns(:page).id
+  end
+
+  def test_routes_with_all_numbers
+    page = DiscussionPage.create! :name => '2006', :title => '2006', :public => true
+    get :dispatch, :_page => '2006'
+    assert assigns(:page)
+    assert_equal '2006', assigns(:page).name
+
+    get :dispatch, :_page => '+' + page.id.to_s
+    assert assigns(:page)
+    assert_equal page.id, assigns(:page).id
   end
 
   # I put this in dispatch_controller_test instead of pages_controller_test

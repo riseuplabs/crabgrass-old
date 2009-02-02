@@ -599,7 +599,7 @@ unless "".respond_to? 'nameize'
       str.strip!            # ohh la la
       str.downcase!         # upper case characters in urls are confusing
       str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-      str = "-#{s}" if str =~ /^(\d+)$/ # don't allow all numbers
+      #str = "#{str}" if str =~ /^(\d+)$/ # don't allow all numbers
       return str[0..49]
     end
     def denameize

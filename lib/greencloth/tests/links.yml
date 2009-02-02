@@ -60,6 +60,9 @@ out: "<p>make anchors <a name=\"here\">here</a> or <a name=\"maybe-here\">maybe 
 ---
 in: "link to [anchors # like so] or [ maybe -> like #so ] or [just -> #so] or [#so]"
 out: "<p>link to <a href=\"/page/anchors#like-so\">anchors </a> or <a href=\"/page/like#so\"> maybe</a> or <a href=\"#so\">just</a> or <a href=\"#so\">so</a></p>"
+---
+in: "[link -> #5] to a numeric anchor [# 5 #]"
+out: "<p><a href=\"#5\">link</a> to a numeric anchor <a name=\"5\">5</a></p>"
 
 ##
 ## failing tests
