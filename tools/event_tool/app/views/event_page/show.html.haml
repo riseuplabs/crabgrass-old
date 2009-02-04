@@ -1,5 +1,5 @@
-- content_for :title do
-  = render :partial => 'pages/title'
+content_for :title do
+ssrender :partial => 'pages/title'
 
 .event.show.landing
   - event = @page.data
@@ -9,15 +9,15 @@
     - if event.is_all_day
       %label
         All day event on:
-      = event_date_only(event.starts_at,event.time_zone)
+      = event.starts_at
     - else
       %label
         Starts at:
-      = event_full_time(event.starts_at,event.time_zone)
+      = event.starts_at
       %br
       %label
         Ends at:
-      = event_full_time(event.ends_at,event.time_zone)
+      = event.ends_at
       %br
       %label
         Time zone:
@@ -56,5 +56,5 @@
       
     
 
-= render :partial => 'pages/comments'
+render :partial => 'pages/comments'
 

@@ -13,4 +13,8 @@ class EventPage < Page
     'date'
   end
 
+  def delta=(val) 
+    debugger
+  end
+
 end
