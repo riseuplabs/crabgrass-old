@@ -15,7 +15,7 @@
   <div class='left'>
     <h2 class='section'><%= '{page_class} information'[:create_page_information, {:page_class => class_display_name}].capitalize %></h2>
     <%= render :partial => 'base_page/create/information' %>
-    <% if sections.any_in? ['file','files','external_video','body', 'image'] -%>
+    <% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
       <h2 class='section'><%= '{page_class} data'[:create_page_data, {:page_class => class_display_name}].capitalize %></h2>
       <table>
       <% sections.each do |section| %>

@@ -1,0 +1,71 @@
+- form_for :event, @event  do |f|
+  .section.details
+    %p
+      = f.label :description, 'Full Description'
+      = f.text_area :description, :rows => 10, :cols => 50
+  .section.time
+    %h2
+      When
+    %p
+      = f.check_box :is_all_day , :id => 'event_is_all_day' 
+      %label{ :for => 'event_is_all_day' }
+        Event is all day
+  
+    .row
+      %p.colmun
+        = f.label :date_start, 'From:'
+        = f.datetime_select(:starts_at)
+  
+      %p.column
+        = f.label :date_end, 'To:'
+        = f.datetime_select(:ends_at)
+    %p.time-details
+      = f.label :time_zone, 'Time Zone'
+      = f.time_zone_select :time_zone
+  
+  .section.place
+    %h2
+      Where
+    %p
+      %p 
+        = f.label :address1, 'Street Address 1:'
+        = f.text_field :address1, :size =>50
+      %p
+        = f.label :address2, 'Street Address 2:'
+        = f.text_field :address2, :size =>50
+      %p
+        = f.label :city, 'City:'
+        = f.text_field :city, :size => 20
+        
+      %p
+        = f.label :state, 'State/Province:'
+      -#%p  
+        = f.label :state_other, 'Other State/Province:'
+        = f.text_field :state_other, :size => 40
+      %p 
+        = f.label :postal_code, 'Postal Code:'
+        = f.text_field :postal_code, :size => 20
+  
+      %p
+        = f.label :country, 'Country:'
+        = f.country_select :country, ['United States','Canada','United Kingdom'], :include_blank => true
+  
+  .section.details
+    %p
+      = f.label :directions, 'Directions'
+      = f.text_area :directions, :rows => 10, :cols => 50
+  
+  - content_for :javascript do
+    = javascript_include_tag 'calendar_date_select/calendar_date_select'
+    = stylesheet_link_tag 'calendar_date_select/blue'
+  
+  - content_for :javascript_onload do
+    jQ$("#event_date_start").focus( function(ev) { 
+    var calselect = new CalendarDateSelect( 'event_date_start', { year_range: 10  } );
+    });
+    jQ$("#event_date_end").focus( function(ev) { 
+    var calselect = new CalendarDateSelect( 'event_date_end', { year_range: 10  } );
+    });
+    if( jQ$("#event_is_all_day").attr('checked') ) jQ$(".time-details").hide();
+    jQ$("#event_is_all_day").click( function(ev) { jQ$(".time-details").toggle() });
+  

@@ -1,4 +1,4 @@
-require 'google_map'
+
 require 'google_map_marker'
 require 'calendar_dates/month_display.rb'
 require 'calendar_dates/week.rb'
@@ -32,9 +32,9 @@ class EventPageController < BasePageController
     list
     @month_display = MonthDisplay.new(@date)
   end
-  
+
   def show
-    @page = Tool::Event.find params[:id]
+    @page = EventPage.find params[:id]
     current_user.may! :view, @page
 #    @user_participation= UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => current_user.id})  
 #    if @user_participation.nil?
@@ -49,12 +49,12 @@ class EventPageController < BasePageController
   end
 
   def edit
-    @page = Tool::Event.find params[:id]
+    @page = EventPage.find params[:id]
     current_user.may! :edit, @page
   end
   
   def update
-    @page = Tool::Event.find params[:id]
+    @page = EventPage.find params[:id]
     current_user.may! :edit, @page
     @event = @page.data
     # greenchange_note: currently, you aren't able to change a group
@@ -73,30 +73,12 @@ class EventPageController < BasePageController
   end
 
   def new 
-    @page = Tool::Event.new :group_id => params[:group_id], :starts_at => (TzTime.now.at_midnight + 9.hours).utc, :ends_at => (TzTime.now.at_midnight + 17.hours).utc, :public => true, :public_participate => true
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    @page = EventPage.new :group_id => params[:group_id], :event => { :starts_at => (TzTime.now.at_midnight + 9.hours).utc, :ends_at => (TzTime.now.at_midnight + 17.hours).utc }, :public => true, :public_participate => true
     @event = @page.build_data(:time_zone => current_user.time_zone)
     @event.page = @page
   end
 
-  def create
-    @event = ::Event.new params[:page].delete(:page_data)
-    @page = Tool::Event.new params[:page]
-
-    # greenchange_note: all events are public right now per green change / seth
-    @page.public = true
-
-    @page.data = @event
-    @page.created_by = current_user
-    @event.page = @page
-    if @page.save
-      add_participants!(@page, params)
-      return redirect_to(event_url(@page))
-    else
-      message :object => @page
-      render :action => 'new'
-    end
-  end
- 
   def set_event_description
     @event.description =  params[:value]
     @event.save
@@ -126,14 +108,41 @@ class EventPageController < BasePageController
     
   end
   
-  protected
+  def create
+    @page_class = EventPage
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
+      begin
+        @event = Event.new(params[:event])
+        unless @event.valid?
+          flash_message_now :object => @event
+          return
+        end
+        debugger
+        @page = @page_class.create!(params[:page].merge(
+          :user => current_user,
+          :share_with => params[:recipients],
+          :access => params[:access],
+          :data => @event
+          ))
+        @event.page = @page
+        redirect_to(page_url(@page))
+      rescue Exception => exc
+        @page = exc.record
+        flash_message_now :exception => exc
+      end
+    end
+  end
 
+  protected
+  
   def fetch_event
     return true unless @page
     @page.data ||= ::Event.new(:description => 'new event', :page => @page)
     @event = @page.data
   end
-  
+
   def setup_view
   end
   
@@ -178,18 +187,32 @@ class EventPageController < BasePageController
     if @group
       @events = Page.send( *context_finder(@group)).page_type(:event).occurs_between_dates(
         @start_date, @end_date
-      ).find(:all, :order => "pages.starts_at ASC")
+      ).find(:all, :order => "starts_at ASC")
     elsif @person || @me
       @person ||= @me
       @events = @person.pages.page_type(:event).occurs_between_dates(
         @start_date, @end_date
-      ).find(:all, :order => "pages.starts_at ASC")
+      ).find(:all, :order => "starts_at ASC")
     else
       @events = Page.allowed(current_user, :view).page_type(:event).occurs_between_dates(
         @start_date, @end_date
-      ).find(:all, :order => "pages.starts_at ASC")
+      ).find(:all, :order => "starts_at ASC")
     end
 
     @events.uniq!
   end
 end
+=begin
+
+might have to include some of this...
+  def create
+    if @page.save
+      add_participants!(@page, params)
+      return redirect_to(event_url(@page))
+    else
+#      message :object => @page
+ #     render :action => 'new'
+    end
+  end
+=end
+ 

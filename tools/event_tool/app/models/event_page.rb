@@ -6,9 +6,11 @@ class EventPage < Page
     set_property :delta => true
   end
 
-  icon 'date.png'
-  class_display_name 'event'
-  class_description 'An event added to the personal/group/public calendar.'
-    
-  belongs_to :data, :class_name => '::Event', :foreign_key => 'data_id'
+  alias_method(:event, :data)
+  alias_method(:event=, :data=)
+  
+  def icon
+    'date'
+  end
+
 end

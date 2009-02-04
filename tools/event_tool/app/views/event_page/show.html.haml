@@ -13,11 +13,11 @@
     - else
       %label
         Starts at:
-      = event_full_time(@page.starts_at,event.time_zone)
+      = event_full_time(event.starts_at,event.time_zone)
       %br
       %label
         Ends at:
-      = event_full_time(@page.ends_at,event.time_zone)
+      = event_full_time(event.ends_at,event.time_zone)
       %br
       %label
         Time zone:

@@ -46,7 +46,6 @@ class Event < ActiveRecord::Base
     TzTime.new(tz_time_zone.utc_to_local(time), TimeZone[time_zone] )
   end
 
-  attr_writer :date_start
   attr_writer :date_end, :hour_start, :hour_end
   def date_start(format = '%Y-%m-%d')
     #@date_start ||= (page.starts_at.loc('%Y-%m-%d') if page && page.starts_at )
@@ -69,7 +68,7 @@ class Event < ActiveRecord::Base
     #@hour_end ||= ( page.ends_at.loc('%I:%M %p') if page && page.ends_at )
     tz_time_zone.utc_to_local(ends_at).loc('%I:%M %p') if ends_at
   end
-
+=begin
   def starts_at
     @date_start ||= (page.starts_at.loc('%Y-%m-%d') if page && page.starts_at )
     @hour_start ||= ( page.starts_at.loc('%I:%M %p') if page && page.starts_at )
@@ -85,7 +84,7 @@ class Event < ActiveRecord::Base
     return if end_time.empty?
     Time.parse end_time.join(' ')
   end
-
+=end
   def tz_time_zone
     time_zone ? TimeZone[time_zone] : TzTime.zone
   end
@@ -116,7 +115,7 @@ class Event < ActiveRecord::Base
       @hour_end = "12:00"
       self.time_zone = "London"
     end
-
+=begin
     #return true if [ starts_at, ends_at].compact.empty?
     page_settings = {}
     page_settings[:starts_at] = TzTime.new( starts_at, tz_time_zone ).utc if starts_at
@@ -125,6 +124,7 @@ class Event < ActiveRecord::Base
     unless page_settings.values.compact.empty? || ( page.starts_at == page_settings[:starts_at] and page.ends_at == page_settings[:ends_at] )
       page.new_record? ? page.attributes = page_settings : page.update_attributes( page_settings )
     end
+=end
     
     true
   end

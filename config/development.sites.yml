@@ -22,6 +22,7 @@ default:
   - Gallery
   - ExternalVideo
   - Article
+  - Event
   tracking: true
   network_id:3001
 

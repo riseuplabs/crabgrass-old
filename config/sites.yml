@@ -18,6 +18,7 @@ default:
   - Asset
   - Gallery
   - ExternalVideo
+  - Event
   evil:
     google_analytics:
       enabled: false
