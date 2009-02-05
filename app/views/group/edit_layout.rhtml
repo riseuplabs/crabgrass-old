@@ -1,0 +1,17 @@
+<% @title_box = capture do -%>
+<h1><%= 'Edit Layout'.t %></h1>
+<% end %>
+
+<%- form_tag(:controller => '/group', :action => 'edit_layout', :id => @group) do -%>
+
+  <%= select_tag ("section1", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section1'))) %>
+<br/>
+  <%= select_tag ("section2", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section2'))) %>
+<br/>  
+  <%= select_tag ("section3", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section3'))) %>
+<br/>    
+  <%= select_tag ("section4", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section4'))) %>
+
+  <br/>
+  <input type="submit">
+<% end %>  
