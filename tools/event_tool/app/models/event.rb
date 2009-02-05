@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   include PageData
+  has_one :page_terms, :dependent => :destroy
   before_save :update_page_terms
 
   include GeoKit::Geocoders  # for geocoding
@@ -90,6 +91,10 @@ class Event < ActiveRecord::Base
   def tz_time_zone
     time_zone ? TimeZone[time_zone] : TzTime.zone
   end
+  
+  def update_page_terms
+    self.page_terms = page.page_terms unless page.nil?
+  end
 
   protected
 
@@ -129,10 +134,5 @@ class Event < ActiveRecord::Base
 =end
     true
   end
-  
-  def update_page_terms
-    self.page_terms = page.page_terms unless page.nil?
-  end
-
     
 end
