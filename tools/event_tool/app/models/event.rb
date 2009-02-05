@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
-  include GeoKit::Geocoders  # for geocoding
+  include PageData
+  before_save :update_page_terms
 
+  include GeoKit::Geocoders  # for geocoding
   before_save :save_latitude_and_longitude  # attempt to geocode address
   before_save :check_time_conversion
   before_validation {|event| state = @state_other if @state_other && (state == 'Other' || state.blank? ) }
@@ -125,8 +127,11 @@ class Event < ActiveRecord::Base
       page.new_record? ? page.attributes = page_settings : page.update_attributes( page_settings )
     end
 =end
-    
     true
+  end
+  
+  def update_page_terms
+    self.page_terms = page.page_terms unless page.nil?
   end
 
     

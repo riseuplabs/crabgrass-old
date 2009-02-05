@@ -73,9 +73,6 @@ page<%=i%>:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 <% if rand(3) == 0 %>
-  starts_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-<% end %>
-<% if rand(3) == 0 %>
   resolved: false
 <% end %>
 <% group_name, group_id = owner_groups[rand(2)] %>
@@ -144,8 +141,7 @@ tasklist2:
 event1:
   id: 202
   title : an event
-  starts_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
+
   type: EventPage
   data_type: Event
   data_id: 1
@@ -160,8 +156,6 @@ event1:
 event2:
   id: 203
   title : other event
-  starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   type: EventPage
   data_type: Event
   data_id: 2
@@ -176,8 +170,6 @@ event2:
 event3:
   id: 204
   title : one other event
-  starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   type: EventPage
   data_type: Event
   data_id: 3
@@ -235,7 +227,6 @@ asset1:
   title: bee
   data_type: Asset
   type: AssetPage
-  starts_at: 
   updated_by_login: blue
   group_id: "2"
   message_count: "0"
@@ -244,7 +235,6 @@ asset1:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "1"
 <% updated = rand(4320); created = updated + rand(4320) %>
@@ -261,7 +251,6 @@ asset2:
   title: sunset
   data_type: Asset
   type: AssetPage
-  starts_at: 
   updated_by_login: blue
   group_id: "2"
   message_count: "0"
@@ -270,7 +259,6 @@ asset2:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "2"
 <% updated = rand(4320); created = updated + rand(4320) %>
@@ -287,7 +275,6 @@ asset3:
   title: crabgrass
   data_type: Asset
   type: AssetPage
-  starts_at: 
   updated_by_login: blue
   group_id: "2"
   message_count: "0"
@@ -296,7 +283,6 @@ asset3:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "3"
 <% updated = rand(4320); created = updated + rand(4320) %>
