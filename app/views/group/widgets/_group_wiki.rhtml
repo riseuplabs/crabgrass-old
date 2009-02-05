@@ -1,0 +1,8 @@
+<%= header_with_more(:h2, :alert, "Group Wiki"[:group_wiki], group_search_url('type','wiki','descending', 'updated_at')) %>
+<% if @access == :public -%>
+  <div class='wiki'>
+    <%= @profile.wiki.body_html %>
+  </div>
+<% else -%>
+  <%= render :partial => 'wiki/show' %>
+<% end -%>
