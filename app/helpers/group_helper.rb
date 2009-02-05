@@ -150,4 +150,12 @@ module GroupHelper
     end
   end
 
+  #Defaults!
+  def show_section(name)
+    widgets = @group.group_setting.template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
+    widget = widgets[name]
+    #template = widget[0]
+    #local_vars = widget[1]
+    render :partial => 'group/widgets/' + widget if widget.length > 0#, :locals => local_vars
+  end
 end

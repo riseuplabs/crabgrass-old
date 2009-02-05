@@ -197,8 +197,9 @@ class GroupController < ApplicationController
     end
   end
   
+  @@additional_tools = ["chat"]
   def edit_tools   
-    @available_tools = @site.available_page_types
+    @available_tools = @site.available_page_types + @@additional_tools
     if request.post?
       @group.group_setting.allowed_tools = []
       @available_tools.each do |p|
@@ -207,7 +208,21 @@ class GroupController < ApplicationController
       @group.group_setting.save
     end      
 
+    #site defaults?
     @allowed_tools =  ( ! @group.group_setting.allowed_tools.nil? ? @group.group_setting.allowed_tools : @available_tools)
+  end
+  
+  @@layout_widgets = ["group_wiki", "recent_pages"]
+  def edit_layout
+    @widgets = [''] + @@layout_widgets
+    if request.post?
+      @group.group_setting.template_data = {}
+      @group.group_setting.template_data['section1'] = params['section1']
+      @group.group_setting.template_data['section2'] = params['section2']
+      @group.group_setting.template_data['section3'] = params['section3']
+      @group.group_setting.template_data['section4'] = params['section4']
+      @group.group_setting.save
+    end
   end
   
   # login required

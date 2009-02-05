@@ -3,14 +3,21 @@
 <% end %>
 
 <%- form_tag(:controller => '/group', :action => 'edit_tools', :id => @group) do -%>
-<div id='listing-of-page-classes' class='workarea'>
-<% @available_tools.each do |page_class| -%>
-<% page_class = Page.class_name_to_class(page_class) -%>
-<div class="page-class"><div>
-  <input type="checkbox" name="<%= page_class.short_class_name %>" <%= @allowed_tools.index( page_class.short_class_name ) ? "CHECKED" : "" %> />
-  <%= "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}" %>
-</div></div>
-<% end -%>
-</div>
-<input type="submit">
+  <div id='listing-of-page-classes' class='workarea'>
+  <% @available_tools.each do |klass| -%>
+    <% page_class = Page.class_name_to_class(klass) -%>
+    <% if ! page_class.nil? %>
+      <div class="page-class"><div>
+        <input type="checkbox" name="<%= page_class.short_class_name %>" <%= @allowed_tools.index( page_class.short_class_name ) ? "CHECKED" : "" %> />
+        <%= "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}" %>
+      </div></div>
+    <% else %>
+      <div class="page-class"><div>
+        <input type="checkbox" name="<%= klass %>" <%= @allowed_tools.index( klass ) ? "CHECKED" : "" %> />
+        <%= "<b>#{klass}</b>:" %>
+      </div></div>
+    <% end %>  
+  <% end -%>
+  </div>
+  <input type="submit">
 <%- end %>

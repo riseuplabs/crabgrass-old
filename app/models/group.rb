@@ -439,6 +439,17 @@ class Group < ActiveRecord::Base
     self.group_setting.save
   end
   
+  #Defaults!
+  def tool_allowed(tool)
+    group_setting.allowed_tools.nil? or group_setting.allowed_tools.index(tool)
+  end
+
+  #Defaults!
+  def layout(section)
+    template_data = group_setting.template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
+    template_data[section]
+  end
+  
   protected
   
   after_save :update_name
