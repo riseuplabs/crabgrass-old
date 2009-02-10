@@ -122,6 +122,7 @@ module GroupHelper
     else
       path << name
     end
+    options[:title] = tag.name
     link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
 
