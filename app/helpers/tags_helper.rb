@@ -21,8 +21,11 @@ module TagsHelper
     max_count = tags.sort_by(&:count).last.count.to_f
     max_list_count = tags.sort_by(&:count)[0-max_list].count if max_list
     
+    tag_count = 0
+    debugger
     tags.each do |tag|
-      next if max_list and tag.count < max_list_count
+      next if max_list and (tag.count < max_list_count || (tag.count == max_list_count && tag_count >= max_list))
+      tag_count += 1
       index = ((tag.count / max_count) * (classes.size - 1)).round
       yield tag, classes[index]
     end
