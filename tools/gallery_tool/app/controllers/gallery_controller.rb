@@ -237,8 +237,7 @@ class GalleryController < BasePageController
         @page = create_new_page!(@page_class)
         params[:assets].each do |file|
           next if file.size == 0 # happens if no file was selected
-          asset = Asset.make(:uploaded_data =>  file,
-                             :page => { :flow => :gallery })
+          asset = Asset.make(:uploaded_data => file)
           @page.add_image!(asset, current_user)
         end
         return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
@@ -257,8 +256,7 @@ class GalleryController < BasePageController
     elsif request.post?
       params[:assets].each do |file|
         next if file.size == 0
-        asset = Asset.make(:uploaded_data => file,
-                           :page => { :flow => :gallery})
+        asset = Asset.make(:uploaded_data => file)
         @page.add_image!(asset, current_user)
       end
       redirect_to page_url(@page)

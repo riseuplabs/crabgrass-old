@@ -116,7 +116,7 @@ class Gallery < Page
     unless asset.page
       up=0
       gp=0
-      page = asset.pages.create!(:title => asset.filename, :data_id => asset.id,
+      page = AssetPage.create!(:title => asset.basename, :data => asset,
                                  :flow => FLOW[:gallery])
       self.group_participations.each do |gpart|
         page.group_participations.create(:group_id => gpart.group_id,

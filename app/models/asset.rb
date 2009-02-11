@@ -242,13 +242,8 @@ class Asset < ActiveRecord::Base
   end
   
   def self.make!(attributes = nil)
-    page_attrs = attributes.delete(:page)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset = asset_class.create!(attributes)
-    if page_attrs
-      AssetPage.create!({:data_id => asset.id, :title => asset.filename}.merge(page_attrs))
-    end
-    asset
+    asset_class.create!(attributes)
   end
 
   # like make(), but builds the asset in memory and does not save it.
