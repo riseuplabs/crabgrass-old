@@ -5,12 +5,14 @@
 <div id='listing-of-page-classes' class='workarea'>
 <% @available_tools.each do |page_class| -%>
 <% page_class = Page.class_name_to_class(page_class) -%>
-<div class="page-class"><div>
-  <%= link_to "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}",
-    {:controller => page_class.controller, :action => 'create',
-     :id => page_class.class_display_name.nameize, :group => params[:group]},
-    {:class => "page-link big_icon #{page_class.icon}_48"} %>
-</div></div>
+<% unless page_class.nil? -%>
+  <div class="page-class"><div>
+    <%= link_to "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}",
+      {:controller => page_class.controller, :action => 'create',
+       :id => page_class.class_display_name.nameize, :group => params[:group]},
+      {:class => "page-link big_icon #{page_class.icon}_48"} %>
+  </div></div>
+<% end -%>
 <% end -%>
 </div>
 
