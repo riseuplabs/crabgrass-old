@@ -24,6 +24,7 @@ class PageSharingTest < Test::Unit::TestCase
 
   def test_share_with_view_access
     user = users(:kangaroo)
+    other_user = users(:dolphin)
     group = groups(:animals)
     recipients = [group]
     page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => recipients, :access => :view)
@@ -32,6 +33,9 @@ class PageSharingTest < Test::Unit::TestCase
 
     assert group.may?(:view, page), 'group must have view access'
     assert !group.may?(:admin, page), 'group must not have admin access'
+
+    assert page.user_participations.find_by_user_id(other_user.id)
+    assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?
   end
 
   def test_add_page

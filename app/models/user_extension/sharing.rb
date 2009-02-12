@@ -227,8 +227,12 @@ module UserExtension::Sharing
     attrs = {}
 
     if options[:message]
-      attrs[:notice] = {:user_login => self.login,
-        :message => options[:message], :time => Time.now}
+      attrs.merge( {:notice => {:user_login => self.login,
+        :message => options[:message], :time => Time.now}, :inbox => true} )
+    end
+    if true 
+    #if options[:notify] <- always notify, for now.
+      attrs[:inbox] = true
     end
 
     if options.key?(:access) # might be nil
@@ -258,14 +262,21 @@ module UserExtension::Sharing
     users_to_pester = group.users.select do |user|
       self.may_pester?(user)
     end
+    attrs = {}
     if options[:message]
-      attrs = {:notice => {:user_login => self.login,
-        :message => options[:message], :time => Time.now}}
-      users_to_pester.each do |user|
-        upart = page.add(user, attrs)
-        upart.save! unless page.changed?
-      end
+      attrs.merge( {:notice => {:user_login => self.login,
+        :message => options[:message], :time => Time.now}, :inbox => true} )
     end
+    if true
+    #if options[:notify] <- always notify, for now.
+      attrs[:inbox] = true
+    end
+
+    users_to_pester.each do |user|
+      upart = page.add(user, attrs)
+      upart.save! unless page.changed?
+    end
+
     users_to_pester # returns users to pester so they can get an email, maybe.
   end
 
