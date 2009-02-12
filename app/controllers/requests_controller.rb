@@ -16,7 +16,7 @@ class RequestsController < ApplicationController
       @incoming = Request.to_group(@group).having_state(params[:state]).by_created_at.paginate(:page => params[:in_page])
 
       @outgoing = Request.from_group(@group).appearing_as_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
-      # hide postponed states
+      # hide ignored states
       @outgoing.each {|r| r.state = 'pending'} if params[:state] == 'pending'
     end
   end
@@ -48,9 +48,9 @@ class RequestsController < ApplicationController
     end
   end
 
-  def postpone
+  def ignore
     begin
-      @request.postpone_by!(current_user)
+      @request.ignore_by!(current_user)
     rescue Exception => exc
       flash_message :exception => exc
     end

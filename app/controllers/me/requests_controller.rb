@@ -17,7 +17,7 @@ class Me::RequestsController < Me::BaseController
   def from_me
     @requests = Request.created_by(current_user).appearing_as_state(params[:state]).by_created_at.paginate(:page => params[:page])
 
-    # let's be polite. don't tell them they are getting 'postponed'
+    # let's be polite. don't tell them they are getting 'ignored'
     @requests.each {|r| r.state = 'pending'.t} if params[:state] == 'pending'
   end
 

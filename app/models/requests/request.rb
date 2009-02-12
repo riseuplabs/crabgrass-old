@@ -46,7 +46,7 @@ class Request < ActiveRecord::Base
   }
   named_scope :appearing_as_state, lambda { |state|
     if state == 'pending'
-      {:conditions => "state='pending' OR state='postponed'"}
+      {:conditions => "state='pending' OR state='ignored'"}
     else
       {:conditions => [ "requests.state = ?", state]}
     end
@@ -84,7 +84,7 @@ class Request < ActiveRecord::Base
     # reject unless we know the state
     commands = Hash.new('reject')
     commands['approved'] = 'approve'
-    commands['postponed'] = 'postpone'
+    commands['ignored'] = 'ignore'
 
     command = commands[newstate]
 
@@ -110,8 +110,8 @@ class Request < ActiveRecord::Base
     set_state!('rejected',user)
   end
 
-  def postpone_by!(user)
-    set_state!('postponed',user)
+  def ignore_by!(user)
+    set_state!('ignored',user)
   end
 
   # triggered by FSM
@@ -151,19 +151,19 @@ class Request < ActiveRecord::Base
   state :pending
   state :approved, :after => :after_approval
   state :rejected
-  state :postponed
+  state :ignored
 
   event :approve do
     transitions :from => :pending,  :to => :approved, :guard => :approval_allowed
     transitions :from => :rejected, :to => :approved, :guard => :approval_allowed
-    transitions :from => :postponed,  :to => :approved, :guard => :approval_allowed
+    transitions :from => :ignored,  :to => :approved, :guard => :approval_allowed
   end
   event :reject do
     transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed
-    transitions :from => :postponed,  :to => :rejected, :guard => :approval_allowed
+    transitions :from => :ignored,  :to => :rejected, :guard => :approval_allowed
   end
-  event :postpone do
-    transitions :from => :pending,  :to => :postponed,  :guard => :approval_allowed
+  event :ignore do
+    transitions :from => :pending,  :to => :ignored,  :guard => :approval_allowed
   end
 
   ##

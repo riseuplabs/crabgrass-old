@@ -9,7 +9,7 @@
 
 <%= pagination_links(@incoming, :in_page) %>
 
-<% unless params[:state] == 'postponed' -%>
+<% unless params[:state] == 'ignored' -%>
   <h2><%= "Outgoing"[:outgoing] %></h2>
   <%= render :partial => 'requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
 
