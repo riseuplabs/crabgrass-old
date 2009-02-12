@@ -7,17 +7,21 @@ class GalleryToolTest < Test::Unit::TestCase
   def test_add_and_remove
     gal = Gallery.create! :title => 'kites'
     a1 = Asset.find 1
-    a2 = Asset.find 2
+    a2 = Asset.find 2 # this one does not have an AssetPage so far.
 
     assert_nothing_raised do
       gal.add_image!(a1)
-      gal.add_image!(a2)
+      gal.add_image!(a2) # this should create the AssetPage.
     end
 
     assert gal.images.include?(a1)
     assert gal.images.include?(a2)
     assert a1.galleries.include?(gal)
     assert a2.galleries.include?(gal)
+
+    # testing the AssetPage of a2
+    assert a2.page.data==a2
+    assert a2.page.is_a(AssetPage)
 
     assert_nothing_raised do
       gal.remove_image!(a1)
