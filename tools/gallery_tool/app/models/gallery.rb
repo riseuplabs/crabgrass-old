@@ -29,7 +29,7 @@ class Gallery < Page
   # announce that this gallery was updated by her.
   # 
   # This method always returns true. On failure an error is raised.
-  def add_image!(asset, user=nil, position = nil)
+  def add_image!(asset, user, position = nil)
     check_for_page(asset, user)
     check_permissions!(asset, user)
     check_type!(asset)
