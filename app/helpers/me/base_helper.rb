@@ -6,11 +6,15 @@ module Me::BaseHelper
 
   def request_state_links
     hash = {:controller => params[:controller], :action => params[:action]}
-    link_line(
-      link_to_active(:pending.t, hash.merge(:state => 'pending')), 
-      link_to_active(:approved.t, hash.merge(:state => 'approved')),
-      link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
-    )
+    links = []
+
+    links << link_to_active(:pending.t, hash.merge(:state => 'pending'))
+    links << link_to_active(:approved.t, hash.merge(:state => 'approved'))
+    links << link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
+    # don't them their requests have been postponed
+    links << link_to_active(:postponed.t, hash.merge(:state => 'postponed')) if params[:action] != 'from_me'
+
+    link_line(*links)
   end
  
   def request_source_links

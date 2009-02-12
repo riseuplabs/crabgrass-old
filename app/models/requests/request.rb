@@ -44,6 +44,13 @@ class Request < ActiveRecord::Base
   named_scope :having_state, lambda { |state|
     {:conditions => [ "requests.state = ?", state]}
   }
+  named_scope :appearing_as_state, lambda { |state|
+    if state == 'pending'
+      {:conditions => "state='pending' OR state='postponed'"}
+    else
+      {:conditions => [ "requests.state = ?", state]}
+    end
+  }
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
   named_scope :by_updated_at, :order => 'updated_at DESC'
@@ -71,11 +78,15 @@ class Request < ActiveRecord::Base
     end
   end
 
-  # state one of 'approved' 'rejected'
+  # state one of 'approved' 'rejected' or 'ignore'
   # user the person doing the change
-
   def set_state!(newstate, user)
-    command = newstate == 'approved' ? 'approve' : 'reject'
+    # reject unless we know the state
+    commands = Hash.new('reject')
+    commands['approved'] = 'approve'
+    commands['postponed'] = 'postpone'
+
+    command = commands[newstate]
 
     if new_record?
       raise Exception.new('record must be saved first')
@@ -97,6 +108,10 @@ class Request < ActiveRecord::Base
 
   def reject_by!(user)
     set_state!('rejected',user)
+  end
+
+  def postpone_by!(user)
+    set_state!('postponed',user)
   end
 
   # triggered by FSM
@@ -136,18 +151,19 @@ class Request < ActiveRecord::Base
   state :pending
   state :approved, :after => :after_approval
   state :rejected
-  state :ignored
+  state :postponed
 
   event :approve do
     transitions :from => :pending,  :to => :approved, :guard => :approval_allowed
     transitions :from => :rejected, :to => :approved, :guard => :approval_allowed
-    transitions :from => :ignored,  :to => :approved, :guard => :approval_allowed
+    transitions :from => :postponed,  :to => :approved, :guard => :approval_allowed
   end
   event :reject do
     transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed
+    transitions :from => :postponed,  :to => :rejected, :guard => :approval_allowed
   end
-  event :ignore do
-    transitions :from => :pending,  :to => :ignored,  :guard => :approval_allowed
+  event :postpone do
+    transitions :from => :pending,  :to => :postponed,  :guard => :approval_allowed
   end
 
   ##
