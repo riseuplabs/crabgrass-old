@@ -153,7 +153,9 @@ module GroupHelper
 
   #Defaults!
   def show_section(name)
-    widgets = @group.group_setting.template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
+    @group.group_setting ||= GroupSetting.new
+    @group.group_setting.template_data ||= {"section1" => "group_wiki", "section2" => "recent_pages"}
+    widgets = @group.group_setting.template_data
     widget = widgets[name]
     #template = widget[0]
     #local_vars = widget[1]
