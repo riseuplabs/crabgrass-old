@@ -206,7 +206,9 @@ class GroupController < ApplicationController
         @group.group_setting.allowed_tools << p if params[p]
       end
       @group.group_setting.save
-    end      
+
+      redirect_to :action => 'edit', :id => @group
+    end
 
     #site defaults?
     @allowed_tools =  ( ! @group.group_setting.allowed_tools.nil? ? @group.group_setting.allowed_tools : @available_tools)
@@ -222,6 +224,8 @@ class GroupController < ApplicationController
       @group.group_setting.template_data['section3'] = params['section3']
       @group.group_setting.template_data['section4'] = params['section4']
       @group.group_setting.save
+
+      redirect_to :action => 'edit', :id => @group
     end
   end
   
