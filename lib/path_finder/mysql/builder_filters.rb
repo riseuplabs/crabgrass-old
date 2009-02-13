@@ -202,6 +202,12 @@ module PathFinder::Mysql::BuilderFilters
   ## ASSOCIATION
   ##
 
+  def filter_featured_by(group_id)
+    @conditions << 'group_participations.group_id = ? AND group_participations.static = TRUE'
+    @values << [group_id.to_i]
+    @order = "group_participations.static_expires DESC"
+  end
+
   def filter_contributed(user_id)
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]

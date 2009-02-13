@@ -173,7 +173,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       joins << :user_participations
     end
     if /group_participations\./ =~ conditions_string
-      join << :group_participations
+      joins << :group_participations
     end
     if /page_terms\./ =~ conditions_string
       joins << :page_terms
@@ -199,8 +199,12 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     elsif flow.instance_of? Array
       cond = []
       flow.each do |f|
-        cond << 'pages.flow = ?'
-        @values << FLOW[f]
+        if f.nil?
+          cond << 'pages.flow IS NULL'
+        else
+          cond << 'pages.flow = ?'
+          @values << FLOW[f]
+        end
       end
       @conditions << "(" + cond.join(' OR ') + ")"
     end

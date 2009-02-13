@@ -45,6 +45,7 @@ class PathFinder::ParsedPath < Array
     'created_by' => 1,
     'not_created_by' => 1,
     'contributed' => 1,
+    'featured_by' => 1,
     
     # date
     'date' => 1,

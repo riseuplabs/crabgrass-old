@@ -90,6 +90,8 @@ available filters
   /group/<group id>
   /created_by/<user name>
   /not_created_by/<user name>
+  /contributed/<user name>
+  /featured_by/<group name>
     
 # date
   /month/MM
