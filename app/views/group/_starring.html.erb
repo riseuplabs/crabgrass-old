@@ -1,10 +1,26 @@
-<% if (@featured_pages = @group.find_static(:order => "pages.updated_at DESC")).any? || current_user.may?(:admin,@group) %>
+<% @featured_pages = Page.find_by_path(
+  [ 'featured_by', @group.id, 
+    'descending', 'updated_at'],
+  options_for_group(@group).merge (
+    :flow => [nil, :gallery]))
+  if @featured_pages.any? || current_user.may?(:admin,@group) %>
 <hr class="thick" />
-<h2 class="alert"><%= "Featured"[:featured_content_header] %><%= link_to("edit".t, group_url(:action => 'edit_featured_content', :id => @group), :style => "margin-left:20px; font-weight:normal;") if current_user.may?(:admin,@group)%></h2>
+<h2 class="alert">
+  <%= "Featured"[:featured_content_header] %>
+  <% if current_user.may?(:admin,@group) %>
+  <%= link_to("edit".t,
+              group_url(:action => 'edit_featured_content', :id => @group), 
+              :style => "margin-left:20px; font-weight:normal;") %>
+  <% end %>
+</h2> 
 <%= render :partial => "featured_item", :collection => @featured_pages %>
 <% end %>
 
-<% if false and (@important_pages=@group.pages.find_by_path(['stars',@group.min_stars,'limit',7],options_for_group(@group))).any?%>
+<% @important_pages = Page.find_by_path(
+  [ 'stars',@group.min_stars,
+    'limit',7],
+  options_for_group(@group))
+  if false and @important_pages.any?%>
 <hr class="thick" />
 <h2 class="section"><%= "Popular".t %></h2>
 <%= render :partial => "featured_item", :collection => @important_pages %>

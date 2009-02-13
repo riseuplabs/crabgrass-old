@@ -190,23 +190,24 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   end
     
   def add_flow(flow)
-    if flow.nil?
-      @conditions << 'pages.flow IS NULL'
-    elsif flow.instance_of? Symbol
-      raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
-      @conditions << 'pages.flow = ?'
-      @values << FLOW[flow]
-    elsif flow.instance_of? Array
+    if flow.instance_of? Array
       cond = []
       flow.each do |f|
-        if f.nil?
-          cond << 'pages.flow IS NULL'
-        else
-          cond << 'pages.flow = ?'
-          @values << FLOW[f]
-        end
+        cond << cond_for_flow(f)
       end
       @conditions << "(" + cond.join(' OR ') + ")"
+    else
+      @conditions << cond_for_flow(flow)
+    end
+  end
+
+  def cond_for_flow(flow)
+    if flow.nil?
+      return 'pages.flow IS NULL'
+    elsif flow.instance_of? Symbol
+      raise Exception.new('Flow "%s" does not exist' % flow) unless FLOW[flow]
+      @values << FLOW[flow]
+      return 'pages.flow = ?'
     end
   end
 
