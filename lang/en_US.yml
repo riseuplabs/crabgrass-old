@@ -81,7 +81,7 @@ menu_link_account: "Account"
 
 group_information: ":group_type Information"
 
-
+redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."
 subject_must_not_be_empty: subject must not be empty
 at_least_one_recipient_is_required: at least one recipient is required
 message_must_not_be_empty: message must not be empty
