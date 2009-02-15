@@ -14,7 +14,7 @@ class InfovizControllerTest < Test::Unit::TestCase
   end
 
   def test_visualize
-    login_as :quentin
+    login_as :blue
 
     get :visualize, :format => 'png'
     assert_response :success
