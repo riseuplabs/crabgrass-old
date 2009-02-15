@@ -11,7 +11,7 @@ require 'graphviz'
 
 class Me::InfovizController < Me::BaseController
 
-  def index
+  def visualize
     format = params[:format] || 'svg'
 
     g = GraphViz::new( "structs", :output => "svg" )
