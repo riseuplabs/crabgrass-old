@@ -328,9 +328,15 @@ class GraphViz
         xFile = "-o #{@filename}" if @filename.nil? == false
         xCmd = "#{cmd} -T#{@format} #{xFile} #{t.path}"
 
+        # patch the following block so that if the output :file arg is
+        # not specified, the data is returned, instead of being
+        # printed to stdout
+
         f = IO.popen( xCmd )
-        print f.readlines
+        out_data = f.readlines
         f.close
+
+        return out_data
       else
         puts xDOTScript
       end
