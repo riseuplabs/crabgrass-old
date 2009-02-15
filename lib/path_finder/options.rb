@@ -1,9 +1,12 @@
-=begin
-
-to be included in the Application class so that all controllers have access
-to these methods.
-
-=end
+# = PathFinder::Options
+#
+# This module should be included in the Application class 
+# so that all controllers have access to these methods.
+#
+# They are used as options for find_by_path in PathFinder::FindByPath
+#
+# The corresponding callbacks are in PathFinder::Mysql::Options,
+# PathFinder::Sphinx::Options and PathFinder::Sql::Options.
 
 module PathFinder::Options
 

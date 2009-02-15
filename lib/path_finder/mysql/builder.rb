@@ -1,53 +1,58 @@
-=begin
-
-Concrete subclass of Builder
-
-This class uses a fulltext index on page_terms in order to resolve permissions for pages.
-This bypasses potentially really hairy four-way joins on user_participations and group_participations tables.
-(not to mention a potential 5th,6th,7th joins for tags, ugh!)
-
-An example query:
-
-  SELECT * FROM pages
-  JOIN page_terms ON pages.id = page_terms.page_id
-  WHERE
-    MATCH(page_terms.access_ids)
-    AGAINST('+(0001 0011 0081 0082) +0081' IN BOOLEAN MODE)
-
-* this is an inner join, because *every* page should
-  have a corresponding page_term.
-* page_term.access_ids is a text column with a fulltext index.
-  the format of the values in access_ids is thus:
-  * user ids are prefixed with 1
-  * group ids are prefixed with 8
-  * every id is at least four characters in length, 
-    padded with zeros if necessary.
-  * if page is public, id 0001 is present.
-
-So, suppose the current user was id 1, and they were
-members of groups 1 and 2. 
-
-To find all the pages of group 1 that current_user may access:
-
-   (current_user.id OR public OR current_user.all_group_ids) AND group.id
-
-In fulltext boolean mode search on access_ids, this becomes:
-
-   +(0011 0001 0081 0082) +0081
-
-The first part of this condition is called the access_me_clause. This is where we
-resolve the question "what does current user have access to?". This clause is
-based entirely on the current_user variable.
-
-The next AND clause is called the access_target_clause. This is where we ask "who's
-pages are we searching for?". This clause is based entirely on what options
-are used (ie options_for_group() or options_for_user())
-
-There can be additional AND clauses. These are called access_filter_clauses.
-This is for additional limits that pop up in the path itself. It is based
-entirely on what is in the filter path.
-
-=end
+# = PathFinder::Mysql::Builder
+#
+# Concrete subclass of PathFinder::Builder
+#
+# == Usage:
+# This class generates the SQL and makes the call to find_by_sql.
+# It is called from find_by_path in PathFinder::FindByPath. Look there
+# for an example how to use it.
+#
+# == Resolving Permissions
+# It uses a fulltext index on page_terms in order to resolve permissions for pages.
+# This bypasses potentially really hairy four-way joins on user_participations and group_participations tables.
+# (not to mention a potential 5th,6th,7th joins for tags, ugh!)
+#
+# An example query:
+#
+#  SELECT * FROM pages
+#  JOIN page_terms ON pages.id = page_terms.page_id
+#  WHERE
+#    MATCH(page_terms.access_ids)
+#    AGAINST('+(0001 0011 0081 0082) +0081' IN BOOLEAN MODE)
+#
+# * this is an inner join, because *every* page should
+#   have a corresponding page_term.
+# * page_term.access_ids is a text column with a fulltext index.
+# * the format of the values in access_ids is thus:
+#   * user ids are prefixed with 1
+#   * group ids are prefixed with 8
+#   * every id is at least four characters in length, 
+#     padded with zeros if necessary.
+#   * if page is public, id 0001 is present.
+#
+# So, suppose the current user was id 1, and they were
+# members of groups 1 and 2. 
+#
+# To find all the pages of group 1 that current_user may access:
+#
+#    (current_user.id OR public OR current_user.all_group_ids) AND group.id
+#
+# In fulltext boolean mode search on access_ids, this becomes:
+#
+#    +(0011 0001 0081 0082) +0081
+#
+# The first part of this condition is called the access_me_clause. This is where we
+# resolve the question "what does current user have access to?". This clause is
+# based entirely on the current_user variable.
+#
+# The next AND clause is called the access_target_clause. This is where we ask "who's
+# pages are we searching for?". This clause is based entirely on what options
+# are used (ie options_for_group() or options_for_user())
+#
+# There can be additional AND clauses. These are called access_filter_clauses.
+# This is for additional limits that pop up in the path itself. It is based
+# entirely on what is in the filter path.
+#
 
 class PathFinder::Mysql::Builder < PathFinder::Builder
 
@@ -55,6 +60,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   public
 
+  # initializes all the arrays for conditions, aliases, clauses and so on
   def initialize(path, options)
 
     ## page_terms stuff

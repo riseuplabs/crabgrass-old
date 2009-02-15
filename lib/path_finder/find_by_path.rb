@@ -1,14 +1,20 @@
-# TODO: put some rdoc notes here
+#= PathFinder::FindByPath
+#
+#:include:EXAMPLES
+#
 
 module PathFinder
+
   module FindByPath
 
-    # TODO: move readme stuff here  
+    # For path see ParsedPath.
+    # For options see Options.
     def find_by_path(path, options={})
       builder(path, options).find
     end
 
-    # See options for find_by_path.
+    # For path see ParsedPath.
+    # For options see Options.
     # Additionally accepts options :page and :per_page.
     # We are paginating pages, so the term page is ambiguous. In options, :page
     # and :per_page are used for pagination, and don't refer to the type of pages
@@ -17,11 +23,14 @@ module PathFinder
       builder(path, options).paginate
     end
 
-    # see options for find_by_path
+    # For path see ParsedPath.
+    # For options see Options.
     def count_by_path(path, options={})
       builder(path, options).count
     end
 
+    # For path see ParsedPath.
+    # For options see Options.
     def ids_by_path(path, options={})
       builder(path, options).ids
     end

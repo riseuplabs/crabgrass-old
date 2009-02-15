@@ -33,7 +33,15 @@ namespace :cg do
 
   ##
   ## this code seems to produce duplicate html rendering steps...
-  ## 
+  ##
+  ## i think they differ. the first seems to be a call to the app:doc
+  ## task in rails itself. At least removing all the redoc_files_include
+  ## lines but one from the app:doc task in 
+  ##  /var/lib/gems/1.8/gems/rails-2.1.0/
+  ## really seems to speed things up.
+  ## the second seems to be this task.
+  ## no idea why. 
+  ##    --azul
 
   desc "Generate documentation for Crabgrass"
   # (creates tasks cg:rdoc, cg:clobber_rdoc, cg:rerdoc)
@@ -47,8 +55,10 @@ namespace :cg do
     rdoc.rdoc_files.include('[A-Z]*[^~]')  # uppercase files only
     rdoc.rdoc_files.include('doc/[A-Z]*[^~]')  # uppercase files only
     rdoc.rdoc_files.include('app/**/*.rb')
-    #rdoc.rdoc_files.include('app/**/**/*.rb')
-    #rdoc.rdoc_files.include('lib/**/*.rb')
+    rdoc.rdoc_files.include('app/**/**/*.rb')
+    rdoc.rdoc_files.include('lib/path_finder/**/*.rb')
+    rdoc.rdoc_files.include('lib/path_finder/[A-Z]*[^~]')
+    rdoc.rdoc_files.include('lib/path_finder.rb')
   }
 
 end

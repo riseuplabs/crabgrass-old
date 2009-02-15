@@ -1,0 +1,45 @@
+== available filters
+
+=== boolean filters 
+  /or
+
+=== conditions
+  /unread
+  /pending
+  /interesting
+  /attending
+  /watching
+  /starred
+  /stars/<num>
+  /type/<page type>
+  /tag/<tag>
+  /name/<page name>
+  /changed
+  /text/<page text>
+    
+=== associations
+  /person/<user id>
+  /group/<group id>
+  /created_by/<user name>
+  /not_created_by/<user name>
+  /contributed/<user name>
+  /featured_by/<group name>
+    
+=== date
+  /month/MM
+  /year/YYYY
+  /ago/?/?
+  /upcoming
+  /created_after/YYYY-MM-DD
+  /created_before/YYYY
+  /starts
+  /before/YYYY-MM-DD
+  /after/YYYY-MM-DD
+
+=== limit
+  /limit/<number of pages>
+        
+=== sorting
+  /ascending/<column name>
+  /descending/<column name>
+    
