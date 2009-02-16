@@ -55,7 +55,7 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :contact_observer # :user_relation_observer
+    :group_observer, :contact_observer, :message_page_observer #, :user_relation_observer
 
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based

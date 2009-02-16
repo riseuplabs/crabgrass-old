@@ -1,4 +1,9 @@
-# Activity schema:
+# = Activity
+# Activities are used to populate the recent activity list on the dashboard.
+# They are usually created by Observers on the corresponding object.
+# Activities will show up on the subjects landing page.
+#
+# == Database Schema:
 #
 #  create_table "activities", :force => true do |t|
 #    t.integer  "subject_id",   :limit => 11
@@ -31,7 +36,7 @@ class Activity < ActiveRecord::Base
   belongs_to :object, :polymorphic => true
 
   before_create :set_defaults
-  def set_defaults
+  def set_defaults # :nodoc:
     # the key is used to filter out twin activities so that we don't show
     # duplicates. for example, if two of your friends become friends, you don't
     # need to know about it twice. 
@@ -43,16 +48,15 @@ class Activity < ActiveRecord::Base
     self.object_name  ||= self.object.name if self.object and self.object.respond_to?(:name)
   end
 
-  ##
-  ## TO BE DEFINED BY SUBCLASSES
-  ## 
-
+  # to be defined by subclases
   def icon() end
+
+  # to be defined by subclases
   def description(options={}) end
 
-  ##
+  #--
   ## FINDERS
-  ##
+  #++
 
   named_scope :newest, {:order => 'created_at DESC', :limit => 10}
 
