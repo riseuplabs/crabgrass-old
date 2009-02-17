@@ -11,8 +11,6 @@ module Me::BaseHelper
     links << link_to_active(:pending.t, hash.merge(:state => 'pending'))
     links << link_to_active(:approved.t, hash.merge(:state => 'approved'))
     links << link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
-    # don't them their requests have been ignored
-    links << link_to_active(:ignored.t, hash.merge(:state => 'ignored')) if params[:action] != 'from_me'
 
     link_line(*links)
   end

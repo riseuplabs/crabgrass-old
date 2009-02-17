@@ -49,11 +49,11 @@ class RequestsController < ApplicationController
   end
 
   def ignore
-    begin
-      @request.ignore_by!(current_user)
-    rescue Exception => exc
-      flash_message :exception => exc
-    end
+    # begin
+    #   @request.ignore_by!(current_user)
+    # rescue Exception => exc
+    #   flash_message :exception => exc
+    # end
     redirect_to referer
   end
 

@@ -110,8 +110,7 @@ module GroupHelper
     content_tag :div, link_line(
       link_to_active(:pending.t, hash.merge(:state => 'pending')),
       link_to_active(:approved.t, hash.merge(:state => 'approved')),
-      link_to_active(:rejected.t, hash.merge(:state => 'rejected')),
-      link_to_active(:ignored.t, hash.merge(:state => 'ignored'))
+      link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
     ), :style => 'margin-bottom: 1em'
   end
 
