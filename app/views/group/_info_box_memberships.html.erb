@@ -6,7 +6,7 @@
       :after => link_line(:bullet, list_membership_link, invite_link, requests_link),
       :show_empty => true } %>
   <%= render :partial => 'avatars/entity_boxes',
-      :locals => {:header => 'member groups'[:member_groups_of_network], :entities => @group.groups, :more_link => link_to("{count} members"[:group_membership_count, {:count=>(@group.groups.size).to_s}] + ARROW, list_membership_url),
+      :locals => {:header => 'member groups'[:member_groups_of_network], :entities => @group.groups.select{ |g| may_see_members_of? g },
       :after => link_line(:bullet, list_membership_link, invite_link, requests_link) } %>
   <% end -%>
 <% end -%>

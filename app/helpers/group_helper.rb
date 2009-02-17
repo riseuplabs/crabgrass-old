@@ -127,12 +127,16 @@ module GroupHelper
     options[:title] = tag.name
     link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
-
+  
   def may_see_members?
+    may_see_members_of?(@group)
+  end
+
+  def may_see_members_of? group
     if logged_in?
-      current_user.may?(:admin,@group) || current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+      current_user.may?(:admin,group) || current_user.member_of?(group) || group.profiles.visible_by(current_user).may_see_members?
     else
-      @group.profiles.public.may_see_members?
+      group.profiles.public.may_see_members?
     end
   end
 
