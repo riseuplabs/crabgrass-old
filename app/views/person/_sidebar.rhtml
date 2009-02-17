@@ -11,14 +11,14 @@
   <%= edit_profile_link %>
 </ul>
 
-<%- if @profile.may_see_groups? or @profile.may_see_contacts? -%>
+<%- if logged_in? and (@profile.may_see_groups? or @profile.may_see_contacts? )-%>
   <h2 class="alert"><%= ":user's World"[:users_world]%{:user => @user.display_name } %></h2>
         
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:networks], :entities => @user.all_groups.networks } if @profile.may_see_groups? %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Networks"[:networks], :entities => @user.all_groups.visible_by(current_user).networks } if @profile.may_see_groups? %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:hroups], :entities => @user.groups.normals } if @profile.may_see_groups? %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:hroups], :entities => @user.groups.visible_by(current_user).normals } if @profile.may_see_groups? %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => @user.groups.committees } if @profile.may_see_groups? %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => @user.groups.visible_by(current_user).committees } if @profile.may_see_groups? %>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:friends], :entities => @user.contacts } if @profile.may_see_contacts? %> 
 
