@@ -26,7 +26,7 @@ class GroupController < ApplicationController
       @access = :public
     else
       clear_context
-      return render(:template => 'dispatch/not_found')
+      return render(:template => 'dispatch/not_found', :status => 401)
     end
 
     params[:path] ||= ""
