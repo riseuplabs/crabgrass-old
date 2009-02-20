@@ -73,19 +73,32 @@ module GroupHelper
   end
   
   def list_membership_url() {:controller => 'membership', :action => 'list', :id => @group.name} end
+  def groups_membership_url() {:controller => 'membership', :action => 'groups', :id => @group.name} end
+  def edit_membership_url() {:controller => 'membership', :action => 'edit', :id => @group.name} end
+
 
   def list_membership_link(link_suffix='')
     text = ''
-    if may_admin_group?
+    if may_admin_group? and committee?
       text = 'edit'.t
+      url = edit_membership_url
     elsif may_see_members?
       text = 'see all'.t
+      url = list_membership_url
     end
     if text.any?
-      link_to_active text+link_suffix, list_membership_url
+      link_to_active text+link_suffix, url
     end
   end
-  
+
+  def group_membership_link(link_suffix='')
+    if may_see_members?
+      link_to_active 'see all'.t + link_suffix, groups_membership_url
+    else
+      ''
+    end
+  end
+
   def invite_link(suffix='')
     if may_admin_group?
       link_to_active('send invites'[:send_invites] + suffix, {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})

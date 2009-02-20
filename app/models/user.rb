@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
+  RECENT_SINCE = 2.weeks.ago
+  # named scopes
+  named_scope :recent, :order => 'created_at DESC', :conditions => ["created_at > ?", RECENT_SINCE]
+  named_scope :alphabetized, :order => 'login ASC'
+
   # custom validation
   include CrabgrassDispatcher::Validations
   validates_handle :login

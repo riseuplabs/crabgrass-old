@@ -9,9 +9,18 @@ class MembershipController < ApplicationController
   before_filter :login_required
 
   ###### PUBLIC ACTIONS #########################################################
-  
+
+  # list all members of the group
   def list
-    
+    @memberships = @group.memberships.paginate(:page => @page_number, :per_page => @per_page)
+  end
+
+  # list groups belonging to a network
+  def groups
+  end
+
+  # edit committee settings (add/remove users) or admin a group (currently n/a)
+  def edit
   end
   
   ###### MEMBER ACTIONS #########################################################
@@ -55,7 +64,7 @@ class MembershipController < ApplicationController
     
   def context
     group_context
-    add_context 'membership', url_for(:controller=>'membership', :action => 'list', :id => @group)
+    add_context 'Membership', url_for(:controller=>'membership', :action => 'list', :id => @group)
   end
   
   prepend_before_filter :fetch_group
@@ -69,6 +78,12 @@ class MembershipController < ApplicationController
     @title_box = render_to_string :partial => 'title_box'
   end
   
+  before_filter :prepare_pagination
+  def prepare_pagination
+    @page_number = params[:page] || 1
+    @per_page = 20
+  end
+
   def authorized?
     return false unless logged_in?
     if action?(:list)

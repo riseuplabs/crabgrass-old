@@ -2,16 +2,7 @@
 table.members td {padding: 12px;}
 <% end -%>
 
-<% if logged_in? %>
-  <% if current_user.may?(:admin,@group) -%>
-    <%= render :partial => 'admin' %>
-  <% end -%>
-  <% if committee? and current_user.may?(:admin,@group)-%>
-    <%= render :partial => 'committee' %>
-  <% end -%>
-<% end %>
-
-<h2><%= "members".t %></h2>
+<%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
 
 <% if @site.tracking %>
 <b>Visits:</b>
@@ -22,7 +13,7 @@ table.members td {padding: 12px;}
 <p/>
 
 <div>
-<% if @group.memberships.any? %>
+<% if @memberships.any? %>
   <table class='members pretty'>
   <tr>
     <th>User</th>
@@ -34,21 +25,12 @@ table.members td {padding: 12px;}
     <% end %>
     <th></th>
   </tr>
-  <%= render :partial => 'membership', :collection => @group.memberships %>
+  <%= render :partial => 'membership', :collection => @memberships %>
   </table>
   <br/>
 <% end -%>
 
-<% if @group.federatings.any? %>
-<h2><%= "group members".t %></h2>
-  <table class='members pretty'>
-  <tr>
-    <th>Group</th>
-    <th>Joined</th>
-  </tr>
-  <%= render :partial => 'federating', :collection => @group.federatings %>
-  </table>
-<% end -%>
-
 </div>
+
+<%= pagination_links(@memberships) -%>
 

@@ -7,7 +7,7 @@
       :show_empty => true } %>
   <%= render :partial => 'avatars/entity_boxes',
       :locals => {:header => 'member groups'[:member_groups_of_network], :entities => @group.groups.select{ |g| may_see_members_of? g },
-      :after => link_line(:bullet, list_membership_link, invite_link, requests_link) } %>
+      :after => link_line(:bullet, group_membership_link, invite_link, requests_link) } %>
   <% end -%>
 <% end -%>
 

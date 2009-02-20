@@ -46,7 +46,13 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  
+  named_scope :alphabetized, :order => 'groups.full_name ASC, groups.name ASC'
+
+  RECENT_SINCE = 2.weeks.ago
+  named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE]
+
+
+
   ##
   ## GROUP INFORMATION
   ##

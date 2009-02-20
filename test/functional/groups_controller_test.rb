@@ -29,6 +29,13 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:groups)
   end
 
+  def test_index
+    login_as :gerrard
+    get :directory
+    assert_response :success
+    assert_not_nil assigns(:groups)
+  end
+
   def test_get_create
     login_as :gerrard
     get :create

@@ -241,3 +241,6 @@ div.fieldWithErrors {
   display: table-cell; }
   div.fieldWithErrors + div.fieldWithErrors {
     display: none; }
+
+.pagination_label {
+  text-align: center; }

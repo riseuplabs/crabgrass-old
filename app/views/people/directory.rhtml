@@ -1,0 +1,15 @@
+<% if logged_in? %>
+  <% @title_box = content_tag :h1, :all_people.t -%>
+
+  <div class='workarea'>
+  <%= render :partial => 'users' %>
+  <br class='clear' />
+
+  <%= pagination_links @users %>
+  </div>
+
+  <%= call_hook :bottom_people_list %>
+
+<% else %>
+  <%= "No public profiles yet..."[:no_public_profiles] %>
+<% end %>

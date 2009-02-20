@@ -23,7 +23,8 @@
   .name_icon.xsmall {
     padding: 5px 0 5px 26px; }
   .name_icon.small {
-    padding: 8px 0 8px 36px; }
+    padding: 8px 0 8px 36px;
+    display: block; }
   .name_icon.medium {
     padding: 16px 0 16px 52px; }
 

@@ -15,19 +15,21 @@ class PeopleControllerTest < Test::Unit::TestCase
 
   # Replace this with your real tests.
   def test_index_without_login
-    get :index
-    assert_response :success
+    %w(index contacts peers directory).each do |action|
+      get action
+      assert_response :success
 #    assert_template 'list'
-    assert_nil assigns(:contacts) 
-    assert_nil assigns(:peers) 
+      assert_nil assigns(:users)
+    end
+
   end
-  
+
   def test_index_with_login
     login_as :quentin
-    get :index
-    assert_response :success
-#    assert_template 'list'
-    assert_not_nil assigns(:contacts) 
-    assert_not_nil assigns(:peers) 
+    %w(index contacts peers directory).each do |action|
+      get action
+      assert_response :success
+      assert_not_nil assigns(:users)
+    end
   end
 end

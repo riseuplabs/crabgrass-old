@@ -12,37 +12,29 @@ For processing a single user, see PersonController.
 class PeopleController < ApplicationController
   
   def index
-    list
-    render :action => 'list'
+    @users = User.recent.paginate :page => @page_number, :per_page => @per_page if logged_in?
   end
 
-  def list
-    page = params[:page] || 1
-    per_page = 10
-    
-    @users = User.paginate :page => page, :per_page => per_page if @type.nil? || @type == "users"
-    if logged_in?
-      @contacts = current_user.contacts.paginate :page => page, :per_page => per_page if @type.nil? || @type == "contacts"
-      @peers = current_user.peers.paginate :page => page, :per_page => per_page if @type.nil? || @type == "peers"
-    end
-  end
-     
-  def users
-    @type = "users"
-    index
-  end
-  
   def contacts
-    @type = "contacts"
-    index
+    @users = current_user.contacts.alphabetized.paginate :page => @page_number, :per_page => @per_page if logged_in?
   end
-    
+
   def peers
-    @type = "peers"
-    index
+    # peers are alphabetized by default
+    @users = current_user.peers.paginate :page => @page_number, :per_page => @per_page if logged_in?
   end
-    
+
+  def directory
+    @users = User.alphabetized.paginate :page => @page_number, :per_page => @per_page if logged_in?
+  end
+
   protected
+
+  before_filter :prepare_pagination
+  def prepare_pagination
+    @page_number = params[:page] || 1
+    @per_page = 10
+  end
   
   def context
     person_context
