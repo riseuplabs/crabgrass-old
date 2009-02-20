@@ -4,12 +4,20 @@ rescue LoadError => exc
   # no ruby debug installed
 end
 
+begin
+  require 'redgreen'
+rescue LoadError => exc
+  # no redgreen installed
+end
+
 ENV["RAILS_ENV"] = "test"
 $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
 module Tool; end
+
+
 
 #
 # put this at the top of your test, before the class def, to see 
