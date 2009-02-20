@@ -30,7 +30,7 @@
 <%= select_tag 'search[type]', options_for_select_page_type(parsed.arg_for('type')) %>
 <% end -%>
 
-<% if users -%>
+<% if users && may_see_members?-%>
 <%= select_tag 'search[person]', "<option value=''>#{'all people'.t}</option>"+
 options_from_collection_for_select(users, "id", "name", parsed.int_for('person')) %>
 <% end -%>

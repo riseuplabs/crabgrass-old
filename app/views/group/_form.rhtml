@@ -14,7 +14,7 @@
 #  * and we have admin privileges on the group.
 # Yes, this is confusing.
 -%>
-<% if @parent and may_admin_group? and @group.new_record? and @parent.real_council.nil? %>
+<% if @parent and may_admin_group? and @group and @group.new_record? and @parent.real_council.nil? %>
 <p>
   <label for="group_type">
     <b><%= "Committee type"[:commitee_type]%></b><br/>
@@ -25,7 +25,7 @@
    <li><label><%= radio_button(:group, 'is_council', "false") %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
   </ul>
 </p>
-<%- elsif @group.is_council? && !@parent.nil? -%>
+<%- elsif @group && @group.is_council? && !@parent.nil? -%>
 <p>
   <%= "This committee is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
     {:parent_group => link_to_group(@parent)}] %>
