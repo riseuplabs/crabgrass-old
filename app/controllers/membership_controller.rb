@@ -12,11 +12,12 @@ class MembershipController < ApplicationController
 
   # list all members of the group
   def list
-    @memberships = @group.memberships.paginate(:page => @page_number, :per_page => @per_page)
+    @memberships = @group.memberships.alphabetized_by_user.paginate(:page => @page_number, :per_page => @per_page)
   end
 
   # list groups belonging to a network
   def groups
+    @federatings = @group.federatings.alphabetized_by_group
   end
 
   # edit committee settings (add/remove users) or admin a group (currently n/a)

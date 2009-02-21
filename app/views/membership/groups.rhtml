@@ -6,13 +6,13 @@ table.members td {padding: 12px;}
 
 <div>
 
-<% if @group.federatings.any? %>
+<% if @federatings.any? %>
   <table class='members pretty'>
   <tr>
     <th>Group</th>
     <th>Joined</th>
   </tr>
-  <%= render :partial => 'federating', :collection => @group.federatings %>
+  <%= render :partial => 'federating', :collection => @federatings %>
   </table>
 <% end -%>
 

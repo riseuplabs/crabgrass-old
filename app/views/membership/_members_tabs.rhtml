@@ -1,12 +1,10 @@
 <%- @info_box_class = 'tabs' -%>
 <%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
-  if group.memberships.any?
-    f.tab do |t|
-      t.label 'People'[:people]
-      t.url url_for(:controller => 'membership', :action => 'list', :id => group)
-      t.selected params[:controller] == '/membership' && params[:action] == 'list'
-    end
+  f.tab do |t|
+    t.label 'People'[:people]
+    t.url url_for(:controller => 'membership', :action => 'list', :id => group)
+    t.selected params[:controller] == '/membership' && params[:action] == 'list'
   end
   if group.federatings.any?
     f.tab do |t|
