@@ -263,6 +263,8 @@ class GroupController < ApplicationController
       else
         @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
       end
+      # don't show group members to everyone
+      @visible_users = may_see_members? ? @group.users : []
     end
     handle_rss :title => @group.name, :description => @group.summary,
                :link => url_for_group(@group),
