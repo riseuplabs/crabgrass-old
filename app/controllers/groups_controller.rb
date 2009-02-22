@@ -100,6 +100,16 @@ class GroupsController < ApplicationController
     
     @group.add_committee!(@council, true)
   end
-  
+
+  def groups_available_pagination_letters(groups)
+    pagination_letters = []
+    groups.each do |g|
+      pagination_letters << g.full_name.first.upcase if g.full_name
+      pagination_letters << g.name.first.upcase if g.name
+    end
+
+    return pagination_letters.uniq!
+  end
+
 end
 
