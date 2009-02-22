@@ -3,7 +3,12 @@ class NetworksController < GroupsController
   def index() redirect_to(:action => 'list') end
 
   def list
-    @networks = Network.visible_by(current_user).paginate(:all, :page => params[:page], :order => 'full_name')
+    letter_page = params[:letter] || ''
+    @networks = Network.visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+
+    # get the starting letters of all networks
+    networks_with_names = Network.visible_by(current_user).names_only
+    @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
   def create

@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
 
     # get the starting letters of all groups
     groups_with_names = Group.visible_by(user).only_groups.names_only
-    @pagination_letters = groups_available_pagination_letters(groups_with_names)
+    @pagination_letters = Group.pagination_letters_for(groups_with_names)
   end
 
   def my
@@ -99,16 +99,6 @@ class GroupsController < ApplicationController
     @council.add_user!(current_user)
     
     @group.add_committee!(@council, true)
-  end
-
-  def groups_available_pagination_letters(groups)
-    pagination_letters = []
-    groups.each do |g|
-      pagination_letters << g.full_name.first.upcase if g.full_name
-      pagination_letters << g.name.first.upcase if g.name
-    end
-
-    return pagination_letters.uniq!
   end
 
 end

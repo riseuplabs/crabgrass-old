@@ -392,7 +392,17 @@ class Group < ActiveRecord::Base
       end
     end
   end
-    
+
+  def self.pagination_letters_for(groups)
+    pagination_letters = []
+    groups.each do |g|
+      pagination_letters << g.full_name.first.upcase if g.full_name
+      pagination_letters << g.name.first.upcase if g.name
+    end
+
+    return pagination_letters.uniq!
+  end
+
   # Returns a list of group ids for the page namespace of every group id
   # passed in. wtf does this mean? for each group id, we get the ids
   # of all its relatives (parents, children, siblings).
