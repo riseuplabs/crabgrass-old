@@ -33,23 +33,35 @@ class Group < ActiveRecord::Base
 
   # finds groups that user may see
   named_scope :visible_by, lambda { |user|
-    select = 'groups.*'
     group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
     joins = "LEFT OUTER JOIN profiles ON profiles.entity_id = groups.id AND profiles.entity_type = 'Group'"
     # The grouping serves as a distinct.
     # A DISTINCT term in the select seems to get striped of by rails.
     # The other way to solve duplicates would be to put profiles.friend = true
     # in other side of OR
-    {:select => select, :joins => joins, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
+    {:joins => joins, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
   }
 
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope :alphabetized, :order => 'groups.full_name ASC, groups.name ASC'
+  named_scope :alphabetized, lambda { |letter|
+    opts = {
+      :order => 'groups.full_name ASC, groups.name ASC'
+    }
 
-  RECENT_SINCE = 2.weeks.ago
-  named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE]
+    if letter == '#'
+      opts[:conditions] = ['(groups.full_name REGEXP ? OR groups.name REGEXP ?)', "^[^a-z]", "^[^a-z]"]
+    elsif not letter.blank?
+      opts[:conditions] = ['(groups.full_name LIKE ? OR groups.name LIKE ?)', "#{letter}%", "#{letter}%"]
+    end
+
+    opts
+  }
+
+  named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE_TIME]
+
+  named_scope :names_only, :select => 'full_name, name'
 
 
 

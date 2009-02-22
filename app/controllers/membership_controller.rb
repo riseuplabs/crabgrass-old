@@ -12,7 +12,8 @@ class MembershipController < ApplicationController
 
   # list all members of the group
   def list
-    @memberships = @group.memberships.alphabetized_by_user.paginate(:page => @page_number, :per_page => @per_page)
+    @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
   end
 
   # list groups belonging to a network
@@ -83,6 +84,7 @@ class MembershipController < ApplicationController
   def prepare_pagination
     @page_number = params[:page] || 1
     @per_page = 20
+    @letter_page = params[:letter] || ''
   end
 
   def authorized?

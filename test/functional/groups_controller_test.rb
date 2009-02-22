@@ -29,6 +29,15 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:groups)
   end
 
+  def test_directory_letter
+    login_as :blue
+    get :directory, :letter => 'r'
+    assert_response :success
+
+    assert_equal 1, assigns(:groups).size
+    assert_equal "rainbow", assigns(:groups)[0].name
+  end
+
   def test_index
     login_as :gerrard
     get :directory

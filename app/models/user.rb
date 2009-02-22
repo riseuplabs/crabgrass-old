@@ -8,10 +8,25 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
-  RECENT_SINCE = 2.weeks.ago
   # named scopes
-  named_scope :recent, :order => 'created_at DESC', :conditions => ["created_at > ?", RECENT_SINCE]
-  named_scope :alphabetized, :order => 'login ASC'
+  named_scope :recent, :order => 'created_at DESC', :conditions => ["created_at > ?", RECENT_SINCE_TIME]
+
+  # alphabetized and (optional) limited to +letter+
+  named_scope :alphabetized, lambda {|letter|
+    opts = {
+      :order => 'login ASC'
+    }
+    if letter == '#'
+      opts[:conditions] = ['login REGEXP ?', "^[^a-z]"]
+    elsif not letter.blank?
+      opts[:conditions] = ['login LIKE ?', "#{letter}%"]
+    end
+
+    opts
+  }
+
+  # select only logins
+  named_scope :logins_only, :select => 'login'
 
   # custom validation
   include CrabgrassDispatcher::Validations

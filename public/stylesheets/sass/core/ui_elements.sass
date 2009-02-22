@@ -387,3 +387,26 @@ table.plain
       border: 1px solid #929292
       color: #929292
 
+.letter_pagination
+  padding: 1em 0
+  text-align: center
+  a
+    padding: 0 5px 1px 5px
+    color: #8aae48
+    font-size= !h2_font_size
+    &:visited
+      padding: 0
+      text-decoration: none
+      color: #8aae48
+    &:hover, &:active
+      color: #303b1c
+      text-decoration: none
+  span
+    font-size= !h2_font_size
+    &.current
+      padding: 0 5px 1px 5px
+      border: 1px solid #929292
+      color: #303b1c
+    &.disabled
+      padding: 0
+      color: #edf2e3

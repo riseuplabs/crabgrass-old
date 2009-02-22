@@ -1,0 +1,14 @@
+<div class ="letter_pagination">
+  <% letter_labels.each do |letter| %>
+    <% if available_letters && available_letters.grep(%r{#{letter}}i).empty? %>
+      <span class="disabled"><%= letter %></span>
+    <% elsif params[:letter] == letter %>
+      <span class="current"><%= letter %></span>
+    <% else %>
+      <% letter_url_opts = url_opts.merge({:letter => letter}) -%>
+      <%= link_to letter, url_proc.call(letter_url_opts) %>
+    <% end %>
+  <% end %>
+  <%= link_to 'ALL', url_proc.call(url_opts) %>
+  
+</div>

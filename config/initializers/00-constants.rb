@@ -19,6 +19,9 @@ MEDIA_TYPE = {
 ARROW = " &raquo; "
 BULLET = " &bull; "
 
+# a time to use when displaying recent records
+RECENT_SINCE_TIME = 2.weeks.ago.freeze
+
 # This is the time in years a password should hold for a brute force attack at
 # minimum, assuming 1000 attempts per second.
 unless defined? MIN_PASSWORD_STRENGTH

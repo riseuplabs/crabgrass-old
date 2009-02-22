@@ -63,6 +63,26 @@ module ApplicationHelper
     end
   end
 
+  def letter_pagination_labels
+    $letter_pagination_labels_list ||= ("A".."Z").to_a + ["#"]
+  end
+
+  def letter_pagination_links(url_opts = {}, pagination_opts = {}, &url_proc)
+    url_proc = method :url_for if url_proc.nil?
+    available_letters = pagination_opts[:available_letters]
+    if available_letters and !available_letters.grep(/^[^a-z]/i).empty?
+      # we have things that are not letters in the mix
+      available_letters << "#"
+    end
+
+    render  :partial => 'pages/letter_pagination',
+                        :locals => {:letter_labels => letter_pagination_labels,
+                                    :available_letters => pagination_opts[:available_letters],
+                                    :url_proc => url_proc,
+                                    :url_opts => url_opts,
+                                    }
+  end
+
   def pagination_links(things, param_name='page')
     will_paginate things, :param_name => param_name, :renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]
   end

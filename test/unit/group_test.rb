@@ -120,4 +120,19 @@ class GroupTest < Test::Unit::TestCase
     assert check_associations(Group)
   end
 
+  def test_alphabetized
+    assert_equal Group.all.size, Group.alphabetized('').size
+
+    # find numeric group names
+    assert_equal 0, Group.alphabetized('#').size
+    Group.create :name => '1more'
+    assert_equal 1, Group.alphabetized('#').size
+
+    # case insensitive
+    assert_equal Group.alphabetized('r').size, Group.alphabetized('R').size
+
+    # nothing matches
+    assert Group.alphabetized('z').empty?
+  end
+
 end

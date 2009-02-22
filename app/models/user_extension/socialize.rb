@@ -15,7 +15,7 @@ module UserExtension::Socialize
       
       # (peer_id_cache defined in UserExtension::Organize)
       has_many :peers, :class_name => 'User',
-        :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql}) ORDER BY users.login ASC' do
+        :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})' do
             # will_paginate bug: Association with finder_sql raises TypeError
             #  http://sod.lighthouseapp.com/projects/17958/tickets/120-paginate-association-with-finder_sql-raises-typeerror#ticket-120-5
             def find(*args)
@@ -29,7 +29,13 @@ module UserExtension::Socialize
             end
 
           end
-      
+
+      # same as results as has_many peers, but chainable with other named scopes
+      named_scope :peers_of, lambda { |user|
+        {
+          :conditions => ['users.id in (?)', user.peer_id_cache]
+        }
+      }
       # has_many :peeps, :class_name => 'User', :conditions => ['user.id IN ?', "#{peer_id_cache.to_sql}"]
       # discussion
       has_one :discussion, :as => :commentable
@@ -45,6 +51,10 @@ module UserExtension::Socialize
             find( :all, 
               :conditions => ['users.last_seen_at > ?',10.minutes.ago],
               :order => 'users.last_seen_at DESC' )
+          end
+
+          def logins_only
+            find( :all, :select => 'users.login')
           end
       end
 

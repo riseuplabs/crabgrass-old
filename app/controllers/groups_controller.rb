@@ -12,11 +12,17 @@ class GroupsController < ApplicationController
 
   def directory
     user = logged_in? ? current_user : nil
-    @groups = Group.visible_by(user).only_groups.alphabetized.paginate(:all, :page => params[:page])
+    letter_page = params[:letter] || ''
+
+    @groups = Group.visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
+
+    # get the starting letters of all groups
+    groups_with_names = Group.visible_by(user).only_groups.names_only
+    @pagination_letters = groups_available_pagination_letters(groups_with_names)
   end
 
   def my
-    @groups = current_user.groups.alphabetized
+    @groups = current_user.groups.alphabetized('')
     @groups.each {|g| g.display_name = g.parent.display_name + "+" + g.display_name if g.committee?}
   end
 

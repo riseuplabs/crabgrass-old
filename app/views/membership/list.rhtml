@@ -12,6 +12,8 @@ table.members td {padding: 12px;}
 
 <p/>
 
+<%= letter_pagination_links({:controller => 'membership', :action => 'list', :id => @group}, :available_letters => @pagination_letters) %>
+
 <div>
 <% if @memberships.any? %>
   <table class='members pretty'>

@@ -1,6 +1,8 @@
 <% if logged_in? %>
   <% @title_box = content_tag :h1, :my_peers.t -%>
 
+  <%= letter_pagination_links({:controller => 'people', :action => 'peers'}, :available_letters => @pagination_letters) %>
+
   <div class='workarea'>
   <%= render :partial => 'users' %>
   <br class='clear' />

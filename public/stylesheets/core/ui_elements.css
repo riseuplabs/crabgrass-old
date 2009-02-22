@@ -324,3 +324,27 @@ table.plain {
     padding: 0 5px 1px 5px;
     border: 1px solid #929292;
     color: #929292; }
+
+.letter_pagination {
+  padding: 1em 0;
+  text-align: center; }
+  .letter_pagination a {
+    padding: 0 5px 1px 5px;
+    color: #8aae48;
+    font-size: 1.125em; }
+    .letter_pagination a:visited {
+      padding: 0;
+      text-decoration: none;
+      color: #8aae48; }
+    .letter_pagination a:hover, .letter_pagination a:active {
+      color: #303b1c;
+      text-decoration: none; }
+  .letter_pagination span {
+    font-size: 1.125em; }
+    .letter_pagination span.current {
+      padding: 0 5px 1px 5px;
+      border: 1px solid #929292;
+      color: #303b1c; }
+    .letter_pagination span.disabled {
+      padding: 0;
+      color: #edf2e3; }
