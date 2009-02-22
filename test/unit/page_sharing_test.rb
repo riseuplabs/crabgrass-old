@@ -7,6 +7,28 @@ class PageSharingTest < Test::Unit::TestCase
   def setup
   end
 
+  def test_group_sharing_takes_precedence
+    creator = users(:kangaroo)
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    page = Page.create(:title => 'a very popular page', :user => creator)
+    assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
+
+    assert creator.may?(:admin, page), 'creator should be able to admin page'
+    assert_equal false, red.may?(:view, page), 'user red should not see the page'
+
+    # share with user
+    creator.share_page_with!(page, "red", :message => "hi red", :grant_access => :view)
+    assert_equal true, red.may?(:view, page), 'user red should see the page'
+    assert_equal false, red.may?(:edit, page), 'user red should not be able to edit the page'
+
+    # share with group
+    creator.share_page_with!(page, "rainbow", :message => "hi rainbow", :grant_access => :edit)
+    assert_equal true, red.may?(:edit, page), 'user red should be able to edit the page'
+    assert_equal true, rainbow.may?(:edit, page), 'group rainbow should be able to edit the page'
+  end
+
   def test_share_page_with_owner
     user = users(:kangaroo)
     group = groups(:animals)
