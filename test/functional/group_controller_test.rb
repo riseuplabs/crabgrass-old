@@ -147,6 +147,26 @@ class GroupControllerTest < Test::Unit::TestCase
     assert assigns(:pages).length > 0, "should have some search results when filter for text"
   end
 
+  def test_search_pagination
+    blue = users(:blue)
+    rainbow = groups(:rainbow)
+    # we need enough pages to test pagination
+    30.times {|i| Page.create!(:title => "page #{i}", :user => blue, :share_with => rainbow, :access => :view)}
+
+    login_as :blue
+
+    get :search, :id => rainbow.name, :path => ["descending", "updated_at"]
+
+    assert_response :success
+    assert_select 'div.pagination' do |es|
+      assert_select 'a', {:text => "2"} do |as|
+        as.each do |a|
+          assert_equal "/group/search/rainbow/descending/updated_at?page=2", a.attributes["href"]
+        end
+      end
+    end
+  end
+
   def test_search_when_not_logged_in
     get :search, :id => groups(:public_group).name
     assert_response :success
