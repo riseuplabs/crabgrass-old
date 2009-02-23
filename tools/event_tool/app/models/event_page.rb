@@ -3,7 +3,8 @@ class EventPage < Page
 
   # return a string for fulltext search...
   def body_terms
-    [title, summary, data.description, data.city, data.state, data.country].join "\t"
+    return "" unless data and data.description
+    return "\n#{data.description}\t#{data.address1}\t#{data.address2}\t#{data.city}\t#{data.directions}"
   end
 
   alias_method(:event, :data)
@@ -14,7 +15,7 @@ class EventPage < Page
   end
 
   def delta=(val) 
-    debugger
+#    debugger
   end
 
 end

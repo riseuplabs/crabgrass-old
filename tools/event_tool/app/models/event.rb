@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   include PageData
-  has_one :page_terms, :dependent => :destroy
+#  has_one :page_terms, :dependent => :destroy
   before_save :update_page_terms
 
   include GeoKit::Geocoders  # for geocoding
@@ -93,6 +93,7 @@ class Event < ActiveRecord::Base
   end
   
   def update_page_terms
+    debugger
     self.page_terms = page.page_terms unless page.nil?
   end
 

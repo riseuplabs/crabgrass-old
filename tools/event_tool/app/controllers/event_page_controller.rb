@@ -119,14 +119,19 @@ class EventPageController < BasePageController
           flash_message_now :object => @event
           return
         end
-        debugger
         @page = @page_class.create!(params[:page].merge(
           :user => current_user,
           :share_with => params[:recipients],
           :access => params[:access],
           :data => @event
           ))
+          # FIXME: not sure if this is the appropriate way of setting page
+          # terms. Problem is @event gets saved before page is set. So page
+          # terms have not been set so far.
+          # This might also need to be fixed for Assets and ExternalVideos
+          #
         @event.page = @page
+        @event.update_page_terms
         redirect_to(page_url(@page))
       rescue Exception => exc
         @page = exc.record
