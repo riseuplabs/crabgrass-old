@@ -1,0 +1,36 @@
+  <tr>
+    <td class='label'><%= 'Description'.t %></td>
+    <td><%= text_area 'event', 'description', :size => '38x3' %></td>
+  </tr>
+    <td class='label'></td>
+    <td>
+      <%= check_box 'event', 'is_all_day', :id => 'event_is_all_day' %>
+      <%= label :event_is_all_day,  'Event is all day'.t %>
+    </td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'From'.t %></td>
+    <td id='start_select'>
+        <%= datetime_select 'event','starts_at',
+          :use_short_month => true,
+          :default => 25.hours.from_now,
+          :minute_step => 5,
+          :start_year => Time.now.year %>
+    </td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'To'.t %></td>
+    <td id='end_select'>
+      <%= datetime_select 'event', 'ends_at',
+        :use_short_month => true,
+        :default => 26.hours.from_now,
+        :minute_step => 5,
+        :start_year => Time.now.year %>
+    </td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'Timezone'.t %></td>
+    <td> <%= time_zone_select 'event', 'time_zone', nil,
+        :default => "UTC",
+        :include_blank => true %> </td>
+  </tr>

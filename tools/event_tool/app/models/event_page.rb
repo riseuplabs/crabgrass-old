@@ -4,7 +4,7 @@ class EventPage < Page
   # return a string for fulltext search...
   def body_terms
     return "" unless data and data.description
-    return "\n#{data.description}\t#{data.address1}\t#{data.address2}\t#{data.city}\t#{data.directions}"
+    return "\n#{data.description}\t#{data.location.street}\t#{data.location.city}\t#{data.location.country_name}\t#{data.location.directions}"
   end
 
   alias_method(:event, :data)

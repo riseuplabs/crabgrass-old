@@ -3,10 +3,7 @@ class Event < ActiveRecord::Base
 #  has_one :page_terms, :dependent => :destroy
   before_save :update_page_terms
 
-  include GeoKit::Geocoders  # for geocoding
-  before_save :save_latitude_and_longitude  # attempt to geocode address
   before_save :check_time_conversion
-  before_validation {|event| state = @state_other if @state_other && (state == 'Other' || state.blank? ) }
 
   has_one :page, :as => :data
   format_attribute :description
@@ -19,6 +16,8 @@ class Event < ActiveRecord::Base
   belongs_to :host, :class_name => 'User'#, :foreign_key => 'host_id'
   delegate :allows?, :display_name, :to => :page
 
+  belongs_to :location
+
   validate :validates_date_range
   def validates_date_range
     return true if is_all_day?
@@ -29,21 +28,6 @@ class Event < ActiveRecord::Base
       errors.add_to_base("Event start time must be before end time.")
     end
   end
-
-  def save_latitude_and_longitude
-    address = "#{self.address1},#{self.address2},#{self.city},#{self.state},#{self.postal_code},#{self.country}"
-    location = GoogleGeocoder.geocode(address)
-    coords = location.ll.scan(/[0-9\.\-\+]+/)
-    if coords.length == 2
-      self.longitude = coords[1]
-      self.latitude = coords[0]
-    else
-      self.longitude = nil
-      self.latitude = nil
-    end
-  end
-
-  attr_accessor :state_other
 
   def to_local(time )
     TzTime.new(tz_time_zone.utc_to_local(time), TimeZone[time_zone] )

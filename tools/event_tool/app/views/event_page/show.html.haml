@@ -1,6 +1,3 @@
-content_for :title do
-ssrender :partial => 'pages/title'
-
 .event.show.landing
   - event = @page.data
   .section.date
@@ -13,48 +10,42 @@ ssrender :partial => 'pages/title'
     - else
       %label
         Starts at:
-      = event.starts_at
+      = friendly_date(event.starts_at)
       %br
       %label
         Ends at:
-      = event.ends_at
+      = friendly_date(event.ends_at)
       %br
       %label
         Time zone:
       = event.time_zone
-
-  .section.location
-    %h3
-      Place
-    .address
-      = h event.address1
-      = h ", " + event.address2 if event.address2
-    .csz
-      = h event.city
-      = h ", " + event.state if event.state
-      = h event.postal_code
-    .country
-      = h event.country
-
+    
   .section.description
     %h3
       Description
     = event.description
     %br/
+
+  .section.location
+    %h3
+      Place
+    .address
+      = h event.location.street
+    .csz
+      = h event.location.city
+      = h ", " + event.location.state if event.location.state
+      = h event.location.postal_code
+    .country
+      = h event.location.country_name
+
   .section.directions
     %h3
       Directions
-      - if event.latitude and event.longitude and Crabgrass::Config.geokit_google_api_key
+      - if event.location.latitude and event.location.longitude
         - map = GoogleMap.new(:controls => [:zoom])
-        - map.markers << GoogleMapMarker.new(:map => map, :lat => Float(event.latitude), :lng => Float(event.longitude), :html => @page.title )
+        - map.markers << GoogleMapMarker.new(:map => map, :lat => Float(event.location.latitude), :lng => Float(event.location.longitude), :html => @page.title )
         .section.google-map
           = map.to_html
           #google_map{:style => "width: 450px; height: 300px"}
             = map.div
-    = h event.directions
-
-      
-    
-
-render :partial => 'pages/comments'
-
+    = h event.location.directions

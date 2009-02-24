@@ -114,7 +114,14 @@ class EventPageController < BasePageController
       return redirect_to(create_page_url(nil, :group => params[:group]))
     elsif request.post?
       begin
-        @event = Event.new(params[:event])
+        @location = Location.new(params[:location])
+        unless @location.valid?
+          flash_message_now :object => @location
+          return
+        end
+        @event = Event.new(params[:event].merge(
+          :location => @location
+        ))
         unless @event.valid?
           flash_message_now :object => @event
           return

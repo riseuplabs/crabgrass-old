@@ -1,0 +1,20 @@
+  <tr>
+    <td class='label'><%= 'Street'.t %></td>
+    <td><%= text_area 'location', 'street', :size => '38x2' %></td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'Postal Code'.t %></td>
+    <td><%= text_field 'location','postal_code', :maxlength => 8, :style =>"width: 72px" %></td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'City'.t %></td>
+    <td><%= text_field 'location','city', :size => 28 %></td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'State/Province'.t %></td>
+    <td><%= text_field 'location', 'state', :size => 38 %></td>
+  </tr>
+  <tr>
+    <td class='label'><%= 'Country'.t %></td>
+    <td><%= country_select 'location', 'country_name', nil, :include_blank => true %></td>
+  </tr>

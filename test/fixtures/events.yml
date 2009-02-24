@@ -7,8 +7,6 @@
   is_all_day: false
   is_cancelled: false
   is_tentative: false
-  address1: <%= event_name %> address1
-  address2: <%= event_name %> address2
-  city: <%= event_name %> city
-  state: <%= event_name %> state
+  starts_at: <%= n.hours.from_now %>
+  ends_at: <%= (n+2).hours.from_now %>
 <% end %>
