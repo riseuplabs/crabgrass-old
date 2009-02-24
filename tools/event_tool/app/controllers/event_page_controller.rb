@@ -130,8 +130,7 @@ class EventPageController < BasePageController
           # terms have not been set so far.
           # This might also need to be fixed for Assets and ExternalVideos
           #
-        @event.page = @page
-        @event.update_page_terms
+        @event.save
         redirect_to(page_url(@page))
       rescue Exception => exc
         @page = exc.record

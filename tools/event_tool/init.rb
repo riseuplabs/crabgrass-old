@@ -2,7 +2,7 @@ PageClassRegistrar.add(
   'EventPage',
   :controller => 'event_page',
   :model => 'Event',
-  :icon => 'date',
+  :icon => 'page_event',
   :class_display_name => 'event',
   :class_description => 'An event added to the personal/group/public calendar.',
   :class_group => 'event',

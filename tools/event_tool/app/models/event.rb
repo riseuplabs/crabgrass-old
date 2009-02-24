@@ -93,8 +93,15 @@ class Event < ActiveRecord::Base
   end
   
   def update_page_terms
-    debugger
-    self.page_terms = page.page_terms unless page.nil?
+    # appearently this seems to be necessary. no idea why.
+    # When the EventPage is saved the Event is saved first. At that point it does not
+    # have an id itself. So the page_terms can't be updated.
+    # At the next call of event.safe we do have an id - but page still seems to be nil.
+    # so we figure it out "by hand".
+    if self.page.nil? and not id.nil?
+      self.page = Page.find(:first, :conditions => {:data_id => id, :data_type => "Event"})
+    end
+    self.page_terms = self.page.page_terms unless self.page.nil?
   end
 
   protected
