@@ -1,0 +1,17 @@
+<table><tbody>
+  <tr><td style="border: 1px solid ; padding: 2px; text-align: center; background-color: #cde; width:5em">
+    <%= datetime.year %>
+  </td></tr>
+  <tr><td style="border-width: 0px 1px; border-style: solid ; padding: 5px; text-align: center;">
+    <%= datetime.strftime("%B") %>
+  </td></tr>
+  <tr><th style="border-style: solid; border-width: 0px 1px; padding: 5px; font-size: 25px;">
+    <%= datetime.day %>
+  </th></tr>
+  <tr><td style="border-style: solid; border-color: rgb(0, 0, 0); border-width: 0px 1px 1px 1px; padding: 5px; text-align: center; color: rgb(153, 153, 153);">
+    <%= datetime.strftime("%a") %>
+  </td></tr>
+  <tr><td style="text-align: center; font-size: 17px;">
+    <%= datetime.strftime("%H:%M") %>
+  </td></tr>
+</tbody></table>

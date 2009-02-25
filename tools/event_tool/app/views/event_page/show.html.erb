@@ -1,0 +1,42 @@
+<div class='create_page'>
+  <div class='left'>
+    <h2 class='section'>Event information</h2>
+    <div style='display:inline; float:left; width: 13.5em'>
+    
+    <table>
+      <tr><td class='label'>from:</td><td class='label'>to:</td></tr>
+      <tr>
+        <td>
+          <%= render :partial => 'datetime', :object => @event.starts_at %>
+          </td> <td>
+          <%= render :partial => 'datetime', :object => @event.ends_at %>
+    </table>
+  </div>
+    <div style='display:inline; float:right; width: 22em'>
+      <%= @event.description %>
+    </div>
+  </div>
+  <div class='right'>
+    <h2 class='section'>Location: <%= @location.name %></h2>
+    <p>
+    <div style='display:inline; float:right; width: 22em; height: 15em'>
+      <% if @location.latitude and @location.longitude %>
+        <% map = GoogleMap.new(:controls => [:zoom]) %>
+        <% map.markers << GoogleMapMarker.new(:map => map,
+                                              :lat => Float(@location.latitude),
+                                              :lng => Float(@location.longitude),
+                                              :html => @page.title ) %> 
+        <%= map.to_html %>
+        <%= map.div %>
+      <% end %>
+    </div>
+    <div style='width: 13.5em; height: 15em'>
+      <%= render :partial => 'location', :object => @location %>
+    </div>
+
+    <div style="clear: right; width: 35.5em; font-style: italic">
+      <%= @location.directions %>
+    </div>
+  </div>
+  <div class='clear'></div>
+</div>

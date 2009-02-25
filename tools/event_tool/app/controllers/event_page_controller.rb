@@ -32,9 +32,9 @@ class EventPageController < BasePageController
     list
     @month_display = MonthDisplay.new(@date)
   end
-=begin
+  
   def show
-    @page = EventPage.find params[:id]
+#    @page = EventPage.find params[:id]
     current_user.may! :view, @page
 #    @user_participation= UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => current_user.id})  
 #    if @user_participation.nil?
@@ -45,9 +45,10 @@ class EventPageController < BasePageController
 #    end    
     #@watchers = UserParticipation.find(:all, :conditions => {:page_id => @page.id, :watch => TRUE})  
     #@attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})  
-
+    @event=@page.data
+    @location=@event.location
   end
-=end
+  
   def edit
     @page = EventPage.find params[:id]
     current_user.may! :edit, @page
