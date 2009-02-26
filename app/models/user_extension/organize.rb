@@ -64,10 +64,10 @@ module UserExtension::Organize
       end
       
       serialize_as IntArray,
-        :direct_group_id_cache, :all_group_id_cache, :peer_id_cache
+        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache, :peer_id_cache
 
       initialized_by :update_membership_cache,
-        :direct_group_id_cache, :all_group_id_cache, :peer_id_cache
+        :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache, :peer_id_cache
 
 
       #this seems to be the only way to override the A/R created method
@@ -84,6 +84,10 @@ module UserExtension::Organize
   # alias for the cache
   def all_group_ids
     self.all_group_id_cache
+  end
+
+  def admin_for_group_ids
+    self.admin_for_group_id_cache
   end
     
   # is this user a member of the group?
