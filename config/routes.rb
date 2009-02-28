@@ -75,6 +75,9 @@ ActionController::Routing::Routes.draw do |map|
   # could be fixed by adding \+, but i am just commenting it out for now. -e
   # :_context => /[\w\.\@\s-]+/
 
+  map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
+
+
 end
 
 # debug routes
