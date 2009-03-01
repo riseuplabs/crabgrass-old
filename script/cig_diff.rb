@@ -254,6 +254,7 @@ end
 
 class Git
   def stash_work
+    return if no_changes?
     puts "git: Stashing your working tree and index. If this fails you can restore your work with 'git stash pop --index'"
     %x{git stash save '__CIG_DIFF__ stash'}
     @stashed = true
@@ -292,6 +293,10 @@ class Git
       puts "git: WARNING - you have untracked files. These can't be stashed away and will present when older code is checked out. See 'git status'."
     end
   end
+
+  def no_changes?
+    return %x[git diff].empty? && %x[git diff --cached].empty?
+  end
 end
 
 class Driver
@@ -308,6 +313,11 @@ class Driver
   end
 
   def compare_commit_with_current_work(label)
+    if @git.no_changes?
+      puts "git: No changes in working tree or index."
+      return
+    end
+
     @git.warn_about_untracked
     rev = @git.rev_parse(label)
     if rev.nil?
@@ -361,6 +371,10 @@ class Driver
   end
 
   def stats_for_work
+    if @git.no_changes?
+      puts "git: No changes in working tree or index."
+      return
+    end
     label = "working tree"
     results = @analyzer.run_tests(label)
     @analyzer.print_results(results)
