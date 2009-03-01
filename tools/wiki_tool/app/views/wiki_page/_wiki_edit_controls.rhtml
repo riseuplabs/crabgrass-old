@@ -6,7 +6,7 @@ access_keys ||= false
 %>
 
 <div class='edit-tab'><span>
-  <% if !@locked_for_me -%>
+  <% if !locked_for_me? -%>
     <%= link_to('<u>e</u>dit'[:edit_underlined_e], page_url(@page,:action=>'edit'), access_keys ? {:accesskey => 'e'} : nil) %>
   <% else -%>
     <%= "locked by :user"[:locked_by_user] % { :user => link_to_user(@wiki.locked_by_id) } %>

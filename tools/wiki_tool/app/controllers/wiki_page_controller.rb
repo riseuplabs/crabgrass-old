@@ -39,6 +39,7 @@ class WikiPageController < BasePageController
     end
     # render if needed
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
+    @wiki_html = generate_wiki_html_for_user(@wiki, current_user)
   end
 
   def version
@@ -49,7 +50,6 @@ class WikiPageController < BasePageController
   end
   
   def diff
-    # require 'ruby-debug'; debugger
     old_id, new_id = params[:id].split('-')
     @old = @wiki.versions.find_by_version(old_id)
     @old.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
@@ -74,25 +74,34 @@ class WikiPageController < BasePageController
   ##
   ## ACCESS: :edit
   ##
-
- def edit
+  def edit
     if params[:cancel]
       cancel
     elsif params[:break_lock]
-      @wiki.unlock
+      unlock
       lock
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
+      # update
       save
+      # render only the section if saving fails
+      @wiki.body = @wiki.sections[@section.to_i] unless (@section.blank? or @section == :all)
     elsif request.get?
       lock
+      @wiki.body = @wiki.sections[@section.to_i] unless (@section.blank? or @section == :all)
     end
+  end
+
+  def cancel
+    unlock if @wiki.locked_by_id(@section) == current_user.id
+    redirect_to page_url(@page, :action => 'show')
   end
 
   # TODO: make post only    
   def break_lock
+    # will unlock all sections
     @wiki.unlock
-    redirect_to page_url(@page, :action => 'edit')
+    redirect_to page_url(@page, :action => 'edit', :section => @section)
   end
   
   # xhr only
@@ -119,15 +128,11 @@ class WikiPageController < BasePageController
 
   protected
 
-  def cancel
-    @wiki.unlock(current_user)
-    redirect_to page_url(@page, :action => 'show')
-  end
-
   def save
     begin
-      @wiki.smart_save!( params[:wiki].merge(:user => current_user) )
-      @wiki.unlock(current_user)
+      @wiki.smart_save!( params[:wiki].merge(:user => current_user, :section => @section) )
+      # unlock if we have the lock
+      unlock if @wiki.locked_by_id(@section) == current_user.id
       current_user.updated(@page)
       #@page.save
       redirect_to page_url(@page, :action => 'show')
@@ -138,25 +143,36 @@ class WikiPageController < BasePageController
     rescue ErrorMessage => exc
       flash_message_now :error => exc.to_s
     end
-  end 
+  end
+
+  def unlock
+    @wiki.unlock(@section)
+  end
 
   def lock
-    if @wiki.editable_by? current_user
-      @locked_for_me = false # not locked for ourselves
-      @wiki.lock(Time.now, current_user)
+    if @wiki.editable_by? current_user, @section
+      # @locked_for_me = false # not locked for ourselves
+      @wiki.lock(Time.zone.now, current_user, @section)
     end
   end
-  
+
   # called early in filter chain
   def fetch_data
+    @section = :all
     return true unless @page
+
     @wiki = @page.data
-    @locked_for_me = !@wiki.editable_by?(current_user) if logged_in?
+
+    # get up to date section index
+    # because the user submitted index might refer to a wrong section
+    # if sections were split or merged
+    @section = @wiki.resolve_updated_section_index(params[:section], current_user)
   end
-  
+
+  # before filter
   def setup_view
     @show_attach = true
-    if @locked_for_me
+    unless @wiki.nil? or @wiki.editable_by?(current_user, @section)
       @title_addendum = render_to_string(:partial => 'locked_notice')
     end
   end

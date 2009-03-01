@@ -48,5 +48,13 @@ module WikiPageHelper
     "function img_button_clicked() { #{on_click} }"
   end
 
+  def locked_for_me?(section = :all)
+    if @wiki and logged_in?
+      !@wiki.editable_by?(current_user, section)
+    else
+      false
+    end
+  end
+
 end
 

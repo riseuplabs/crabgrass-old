@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   include PathFinder::Options       # for Page.find_by_path options
   include ContextHelper
   include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::AssetTagHelper
   include ImageHelper
 
   # don't allow passwords in the log file.

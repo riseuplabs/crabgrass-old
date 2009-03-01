@@ -663,11 +663,10 @@ ActiveRecord::Schema.define(:version => 20090226132927) do
     t.datetime "updated_at"
     t.integer  "user_id",      :limit => 11
     t.integer  "version",      :limit => 11
-    t.datetime "locked_at"
-    t.integer  "locked_by_id", :limit => 11
+    t.integer  "lock_version", :limit => 11, :default => 0
+    t.text     "edit_locks"
   end
 
   add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
-  add_index "wikis", ["locked_by_id"], :name => "index_wikis_locked_by_id"
 
 end

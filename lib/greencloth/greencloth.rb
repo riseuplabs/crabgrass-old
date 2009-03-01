@@ -73,6 +73,7 @@ rescue Exception
   gem 'RedCloth', '>= 4.0'
   require 'RedCloth'
 end
+
 require 'redcloth/formatters/html'
 require 'cgi'
 
@@ -86,6 +87,8 @@ require 'cgi'
 
 module GreenClothFormatterHTML
   include RedCloth::Formatters::HTML
+
+  attr_reader :wiki_section_marked
 
   # alas, so close, but so far away. most times this is called with a single
   # char at a time, so this won't work:
@@ -199,10 +202,12 @@ end
 ##
 
 class GreenCloth < RedCloth::TextileDoc
+  include GreenClothTextSections
 
   attr_accessor :original
   attr_accessor :offtags
   attr_accessor :formatter
+  attr_accessor :wrap_section_html
 
   def initialize(string, default_group_name = 'page', restrictions = [])
     @default_group = default_group_name
@@ -222,11 +227,13 @@ class GreenCloth < RedCloth::TextileDoc
     self.original = arg
     arg.formatter = self
   end
-
+  
   def to_html(*before_filters, &block)
     @block = block
 
-    before_filters += [:normalize_code_blocks, :offtag_obvious_code_blocks,
+    section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
+
+    before_filters += [:delete_leading_whitespace, :normalize_code_blocks, :offtag_obvious_code_blocks,
       :bracket_links, :auto_links, :headings, :quoted_block,
       :tables_with_tabs, :wrap_long_words]
 
@@ -235,8 +242,11 @@ class GreenCloth < RedCloth::TextileDoc
 
     apply_rules(before_filters)
     html = to(GreenClothFormatterHTML)
+    html = add_wiki_section_divs(html) if wrap_section_html
+
     extract_offtags(html)
 
+    # mark off
     return html
   end
 
@@ -244,15 +254,6 @@ class GreenCloth < RedCloth::TextileDoc
     bracket_links(text)
     auto_links(text)
     text
-  end
-
-  # allow setext style headings
-  HEADINGS_RE = /^(.+?)\r?\n([=-])[=-]+ */
-  def headings(text)
-    text.gsub!(HEADINGS_RE) do
-      tag = $2=="=" ? "h1" : "h2"
-      "#{ tag }. #{$1}\n\n"
-    end
   end
 
   ##
@@ -263,6 +264,21 @@ class GreenCloth < RedCloth::TextileDoc
   # the syntax slightly. In these cases, we simply modify the source text to
   # replace the greencloth markup with the equivelent redcloth markup before
   # any other processing is done.
+  
+  TEXTILE_HEADING_RE = /^h[123]\./
+
+  # allow setext style headings
+  HEADINGS_RE = /^(.+?)\r?\n([=-])[=-]+ */
+  def headings(text)
+    text.gsub!(HEADINGS_RE) do
+      tag = $2=="=" ? "h1" : "h2"
+      "#{ tag }. #{$1}\n\n"
+    end
+  end
+  
+  def delete_leading_whitespace(text)
+    self.sub!(/\A\s*/, '')
+  end
 
   def normalize_code_blocks(text)
     ## make funky code blocks behave like a normal code block.
