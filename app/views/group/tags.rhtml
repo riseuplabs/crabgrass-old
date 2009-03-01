@@ -3,6 +3,10 @@
 <p><%= render :partial => 'tags' %></p>
 
 <div>
-  <%= render :partial => 'pages/list', :locals => {:heading => false} %>
+  <% if @pages %>
+    <%= render :partial => 'pages/list', :locals => {:heading => false} %>
+  <% else %>
+    <%= "Pages for selected tags will be displayed here." %>
+  <% end %>
 </div>
 
