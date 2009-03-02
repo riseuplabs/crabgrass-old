@@ -62,8 +62,8 @@ class TestAnalyzer
 
     puts "=============================="
     puts "* Test Failures Summary:"
-    print_columns "  #{label_from}\t\t", bad_test_totals(results_from)
-    print_columns "  #{label_to}\t\t", bad_test_totals(results_to)
+    print_columns "  #{label_from}", bad_test_totals(results_from)
+    print_columns "  #{label_to}", bad_test_totals(results_to)
 
     fixed, broken = sort_out_broken_tests(results_from, results_to)
     puts
@@ -80,8 +80,8 @@ class TestAnalyzer
     puts
     if results_from[:stats] and results_to[:stats]
       puts "* Coverage:"
-      print_columns "  #{label_from}\t\t", ("%2.1f%%" % results_from[:stats][:coverage])
-      print_columns "  #{label_to}\t\t", ("%2.1f%%" % results_to[:stats][:coverage])
+      print_columns "  #{label_from}", ("%2.1f%%" % results_from[:stats][:coverage])
+      print_columns "  #{label_to}", ("%2.1f%%" % results_to[:stats][:coverage])
     end
     puts
     puts "* Analysis: " + get_comparison_analysis(results_from, results_to, fixed, broken)
@@ -108,7 +108,7 @@ Coverage:
 Analysis:
 }
   private
-  def print_columns(col1, col2, col1_width = 25)
+  def print_columns(col1, col2, col1_width = 30)
     col1_padding = col1_width - col1.length
     col1_padding = 0 if col1_padding < 0
 
