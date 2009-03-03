@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def fetch_site
-    @site = Site.default
+    @site = Site.find_by_domain(request.host)
   end
 
   before_filter :header_hack_for_ie6
