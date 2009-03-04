@@ -26,4 +26,5 @@ class Me::RequestsControllerTest < Test::Unit::TestCase
     get :to_me
     assert_response :success
   end
+
 end

@@ -37,6 +37,27 @@ class ActivityTest < ActiveSupport::TestCase
     acts = Activity.for_dashboard(user).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
     assert_equal groupname, act.groupname
+    assert_in_description(act, group)
+  end
+
+  def test_group_created
+    user = users(:green)
+    notified_user = users(:kangaroo)
+    group = Group.create!(:name => "plants",
+                          :fullname =>"All the plants",
+                          :summary =>"the plants can party tooo!" ) do |group|
+      group.avatar = Avatar.new
+      group.created_by = user
+    end
+    act = GroupCreatedActivity.find(:last)
+    assert_activity_for_user_group(act, user, group)
+
+    act = UserCreatedGroupActivity.find(:last)
+    assert_activity_for_user_group(act, user, group)
+    assert_equal group.id, act.group.id
+    assert_equal user.id, act.user.id
+    assert_in_description(act, group)
+    assert_in_description(act, user)
   end
 
   def test_membership
@@ -46,15 +67,26 @@ class ActivityTest < ActiveSupport::TestCase
 
     group.add_user!(user)
 
-    act = GroupGainedUserActivity.for_dashboard(notified_user).find(:first)
-    assert_equal group.id, act.group.id
+    act = GroupGainedUserActivity.for_dashboard(notified_user).find(:last)
+    assert_activity_for_user_group(act, user, group)
 
     act = GroupGainedUserActivity.for_group(group, notified_user).find(:first, :order => 'created_at DESC')
-    assert_equal GroupGainedUserActivity, act.class
-    assert_equal group.id, act.group.id
+    assert_activity_for_user_group(act, user, group)
 
-    act = UserJoinedGroupActivity.for_dashboard(user).find(:first)
-    assert_equal group.id, act.group.id
+    act = UserJoinedGroupActivity.for_dashboard(user).find(:last)
+    assert_activity_for_user_group(act, user, group)
+
+    group.remove_user!(user)
+  
+    act = GroupLostUserActivity.for_dashboard(notified_user).find(:first)
+    assert_activity_for_user_group(act, user, group)
+
+    act = GroupLostUserActivity.for_group(group, notified_user).find(:first, :order => 'created_at DESC')
+    assert_activity_for_user_group(act, user, group)
+
+    act = UserLeftGroupActivity.for_dashboard(user).find(:first)
+    assert_activity_for_user_group(act, user, group)
+
   end
 
 
@@ -85,6 +117,18 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal u2, act.user
     assert_equal u1, act.other_user
     assert_equal @page.id, act.message_id
+  end
+
+  def assert_activity_for_user_group(act, user, group)
+    assert_equal group.id, act.group.id
+    assert_equal user.id, act.user.id
+    assert_in_description(act, group)
+    assert_in_description(act, user)
+    assert_not_nil act.icon
+  end
+
+  def assert_in_description(act, thing)
+    assert_match thing.name, act.description
   end
 
 end

@@ -96,4 +96,14 @@ wiki_blue:
   page_id: 210
   user_id: 4
   access: 1
+message_gerrard:
+  id: <%= id+=1 %>
+  page_id: 220
+  user_id: 3
+  access: 1
+message_blue:
+  id: <%= id+=1 %>
+  page_id: 220
+  user_id: 4
+  access: 1
 

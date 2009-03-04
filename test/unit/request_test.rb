@@ -49,9 +49,9 @@ class RequestTest < ActiveSupport::TestCase
         :created_by => insider, :recipient => outsider, :requestable => group)
     end
 
-    assert_equal req, Request.to_user(outsider).having_state('pending').find(:first)
-    assert_equal req, Request.created_by(insider).having_state('pending').find(:first)
-    assert_equal req, Request.from_group(group).having_state('pending').find(:first)
+    assert_equal req, Request.to_user(outsider).having_state('pending').find(:last)
+    assert_equal req, Request.created_by(insider).having_state('pending').find(:last)
+    assert_equal req, Request.from_group(group).having_state('pending').find(:last)
 
     assert_raises PermissionDenied do
       req.approve_by!(insider)
@@ -102,7 +102,7 @@ class RequestTest < ActiveSupport::TestCase
       RequestToJoinYou.create!(:created_by => outsider, :recipient => group)
     end
 
-    assert_equal req, Request.to_user(insider).having_state('pending').find(:first)
+    assert_equal req, Request.to_user(insider).having_state('pending').find(:first, :conditions => {:created_by_id => outsider})
 
     assert_raises PermissionDenied do
       req.approve_by!(outsider)
