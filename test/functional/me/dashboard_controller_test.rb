@@ -5,7 +5,7 @@ require 'me/dashboard_controller'
 class Me::DashboardController; def rescue_action(e) raise e end; end
 
 class DashboardControllerTest < Test::Unit::TestCase
-  fixtures :users, :user_participations, :groups, :group_participations, :pages, :sites
+  fixtures :users, :user_participations, :groups, :group_participations, :pages, :sites, :activities
 
   def setup
     @controller = Me::DashboardController.new
@@ -20,4 +20,9 @@ class DashboardControllerTest < Test::Unit::TestCase
 #    assert_template 'index'
   end
 
+  def test_activities
+    login_as :blue
+    get :index
+    assert_response :success
+  end
 end
