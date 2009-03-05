@@ -43,6 +43,7 @@ class UserParticipation < ActiveRecord::Base
     value = ACCESS[value] if value.is_a? Symbol
     write_attribute(:access, value)
   end
-
+ 
+  
 end
 
