@@ -51,8 +51,8 @@ class Site
     self.default = self.sites['default']
   end
 
-  def self.find_by_domain()
-    self.default
+  def self.find_by_domain(domain)
+    self.sites[domain] || self.default
   end
 
 end

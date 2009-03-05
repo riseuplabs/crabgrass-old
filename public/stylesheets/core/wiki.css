@@ -73,6 +73,19 @@
   background-color: white; }
 .wiki code {
   background-color: #fff6dd; }
+.wiki .wiki_section {
+  position: relative; }
+  .wiki .wiki_section .editsection {
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 18px;
+    text-transform: none;
+    text-decoration: none;
+    font-size: 13px;
+    font-variant: normal;
+    font-weight: normal;
+    font-style: normal; }
 
 div.diff {
   background: #f4f4f4;
