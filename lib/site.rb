@@ -32,6 +32,10 @@ class Site
     #setup_profile_methods
   end
 
+  def network
+    Network.first
+  end
+  
   def available_page_types
     @available_page_types ||= PAGES.collect.sort_by{|p|p[1].order}.collect{|p|
       p[1].class_name unless p[1].internal

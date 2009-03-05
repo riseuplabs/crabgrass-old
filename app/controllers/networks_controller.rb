@@ -13,7 +13,12 @@ class NetworksController < GroupsController
 
   def create
     @group_type = 'network'
-    if request.get?
+
+    # [NOTE] next three lines are the site-network -binding
+    if @site.network
+      flash_message :exception => "We don't need another network."
+      redirect_to url_for_group(@site.network)
+    elsif request.get?
       @group = Network.new(params[:group])
     elsif request.post?
       if group = Group.find_by_id(params[:group_id])
