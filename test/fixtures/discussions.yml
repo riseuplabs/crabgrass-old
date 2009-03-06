@@ -5,3 +5,11 @@ first:
 
 another:
   id: 2
+
+about_blue:
+  id: 3
+  commentable_type: User
+  commentable_id: 4
+  posts_count: 1
+  replied_by_id: 3
+  last_post_id: 3

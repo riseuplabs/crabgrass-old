@@ -145,3 +145,20 @@ activities_011:
   related_id: "220"
   object_id: "3"
   created_at: "<%= 10.minutes.ago.to_s(:db) %>"
+activities_012:
+  object_name: gerrard
+  subject_name: blue
+  type: MessageWallActivity
+  id: "12"
+  subject_type: User
+  subject_id: "4"
+  access: "1"
+  object_type: User
+  key: "1146383224"
+  extra: "--- \n\
+    :snippet: Hi Blue, Just testing messages\n\
+    :type: comment\n"
+  related_id: "3"
+  object_id: "3"
+  created_at: "<%= 10.minutes.ago.to_s(:db) %>"
+
