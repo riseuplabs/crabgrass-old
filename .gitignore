@@ -6,6 +6,7 @@ tmp/**/*
 :2eDS_Store
 :2e_*
 config/*.sphinx.conf
+config/secret.txt
 doc/api
 doc/app
 database.yml

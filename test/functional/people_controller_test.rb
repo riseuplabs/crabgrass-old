@@ -5,7 +5,7 @@ require 'people_controller'
 class PeopleController; def rescue_action(e) raise e end; end
 
 class PeopleControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :sites
 
   def setup
     @controller = PeopleController.new

@@ -5,7 +5,7 @@ require 'me/inbox_controller'
 class Me::InboxController; def rescue_action(e) raise e end; end
 
 class InboxControllerTest < Test::Unit::TestCase
-  fixtures :users, :user_participations, :groups, :group_participations, :pages
+  fixtures :users, :user_participations, :groups, :group_participations, :pages, :sites
 
   def setup
     @controller = Me::InboxController.new

@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
-
   session :session_secure => true if Crabgrass::Config.https_only
   protect_from_forgery :secret => Crabgrass::Config.secret
   layout 'default'
@@ -32,7 +31,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def fetch_site
-    @site = Site.find_by_domain(request.host)
+    Site.current = Site.find_by_domain(request.host) || Site.default
   end
 
   before_filter :header_hack_for_ie6
@@ -49,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def mailer_options
-    opts = {:site => @site, :current_user => current_user, :host => request.host,
+    opts = {:site => Site.current, :current_user => current_user, :host => request.host,
      :protocol => request.protocol, :page => @page}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
@@ -167,7 +166,7 @@ class ApplicationController < ActionController::Base
     if LANGUAGES.any?
       session[:language_code] ||= begin
         if !logged_in? or current_user.language.nil?
-          language = LANGUAGES.detect{|l|l.code == @site.default_language}
+          language = LANGUAGES.detect{|l|l.code == Site.current.default_language}
           language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
           language_code = language.code.to_sym
         else

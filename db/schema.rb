@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090226132927) do
+ActiveRecord::Schema.define(:version => 20090305232813) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -490,6 +490,21 @@ ActiveRecord::Schema.define(:version => 20090226132927) do
 
   add_index "showings", ["gallery_id", "asset_id"], :name => "ga"
   add_index "showings", ["asset_id", "gallery_id"], :name => "ag"
+
+  create_table "sites", :force => true do |t|
+    t.string  "name"
+    t.string  "domain"
+    t.string  "email_sender"
+    t.integer "pagination_size",      :limit => 11
+    t.integer "super_admin_group_id", :limit => 11
+    t.text    "translators"
+    t.string  "translation_group"
+    t.string  "default_language"
+    t.text    "available_page_types"
+    t.text    "evil"
+    t.boolean "tracking"
+    t.boolean "default",                            :default => false
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "taggable_id",   :limit => 11

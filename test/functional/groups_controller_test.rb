@@ -5,7 +5,8 @@ require 'groups_controller'
 class GroupsController; def rescue_action(e) raise e end; end
 
 class GroupsControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :profiles, :pages, :group_participations, :user_participations, :tasks, :page_terms
+  fixtures :groups, :users, :memberships, :profiles, :pages, :sites,
+            :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 

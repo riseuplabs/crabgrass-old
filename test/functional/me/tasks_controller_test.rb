@@ -5,7 +5,7 @@ require 'me/tasks_controller'
 class Me::TasksController; def rescue_action(e) raise e end; end
 
 class MeTasksControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups,
+  fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :tasks, :task_participations, :task_lists
 

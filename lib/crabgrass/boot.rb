@@ -5,16 +5,17 @@ require 'lib/crabgrass/config'
 MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").freeze
 TOOLS_ENABLED = File.read("#{RAILS_ROOT}/config/tools_enabled.list").split("\n").freeze
 
-require "#{RAILS_ROOT}/lib/site.rb"
-Site.load_from_file("#{RAILS_ROOT}/config/#{"development." unless RAILS_ENV=='production'}sites.yml")
+begin
+  secret_path = File.join(RAILS_ROOT, "config/secret.txt")
+  Crabgrass::Config.secret = File.read(secret_path).chomp
+rescue
+  unless ARGV.first == "create_a_secret"
+    raise "Can't load the secret key from file #{secret_path}. Have you run 'rake create_a_secret'?"
+  end
+end  
 
-# legacy configurations that should now be removed and changed to 
-# reference via @site in the code:
-Crabgrass::Config.site_name     = Site.default.name
-Crabgrass::Config.host          = Site.default.domain
-Crabgrass::Config.email_sender  = Site.default.email_sender
-Crabgrass::Config.secret        = Site.default.secret
-SECTION_SIZE = Site.default.pagination_size
+# TODO: banish SECTION_SIZE and replace with Site.current.pagination_size
+SECTION_SIZE = 29
 
 
 # this is not actually used, but i think it is so cool that i want to keep

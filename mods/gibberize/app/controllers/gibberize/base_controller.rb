@@ -19,11 +19,11 @@ class Gibberize::BaseController < ApplicationController
 
   def authorized?
     ret = false
-    if @site.translators.any?
-      ret = true if @site.translators.include?(current_user.login)
+    if Site.current.translators.any?
+      ret = true if Site.current.translators.include?(current_user.login)
     end
-    if @site.translation_group.any?
-      ret = true if current_user.member_of?(Group.find_by_name(@site.translation_group))
+    if Site.current.translation_group.any?
+      ret = true if current_user.member_of?(Group.find_by_name(Site.current.translation_group))
     end
     ret
   end

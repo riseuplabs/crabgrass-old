@@ -42,7 +42,7 @@ class DispatchController < ApplicationController
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       @user = current_user
-      @site = Site.default
+      @site = Site.current
       set_language do
         render :action => "not_found", :status => :not_found
       end

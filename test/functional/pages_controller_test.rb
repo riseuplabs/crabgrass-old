@@ -6,7 +6,7 @@ require 'set'
 class PagesController; def rescue_action(e) raise e end; end
 
 class PagesControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups,
+  fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,
            :taggings, :tags
