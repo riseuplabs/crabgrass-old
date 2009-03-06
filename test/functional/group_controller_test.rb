@@ -48,7 +48,7 @@ class GroupControllerTest < Test::Unit::TestCase
     
     # show nothing for a private group you don't belong to
     get :show, :id => groups(:private_group).name
-    assert_response :success
+    assert_response 404
 #    assert_template 'show_nothing'
   end
 
@@ -80,15 +80,15 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_show_private_when_not_logged_in
     get :show, :id => groups(:private_group).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private group"
     
     get :show, :id => groups(:warm).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private committee"
 
     get :show, :id => groups(:private_committee).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private committee of public group"    
   end
 
