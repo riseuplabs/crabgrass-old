@@ -4,6 +4,8 @@ class MessagesController < ApplicationController
   helper 'messages', 'context'
   stylesheet 'messages'
 
+  before_filter :login_required
+
   def index
     @posts = @discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
   end
@@ -80,7 +82,7 @@ class MessagesController < ApplicationController
   def authorized?
     if !logged_in? or @user.nil?
       false
-    elsif action?(:delete, :set_status)
+    elsif action?(:destroy, :set_status)
       current_user == @user
     else
       @profile = @user.profiles.visible_by(current_user)
