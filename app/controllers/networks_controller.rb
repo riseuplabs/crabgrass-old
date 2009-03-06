@@ -31,6 +31,9 @@ class NetworksController < GroupsController
       flash_message :success => '%s was successfully created.'.t % 'Network'.t
       redirect_to url_for_group(@group)
     end
+  rescue PermissionDenied => exc
+    flash_message :exception => exc
+    redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
   rescue Exception => exc
     @group = exc.record
     flash_message :exception => exc
