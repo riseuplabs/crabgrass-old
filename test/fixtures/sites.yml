@@ -2,7 +2,7 @@
 localhost:
   id: 1
   name: localhost Crabgrass
-  default: false
+  default: true
   evil: 
     google_analytics: 
       site_id: UA-XXXXXX-X
@@ -27,7 +27,7 @@ localhost:
   - Gallery
   - ExternalVideo
   pagination_size: 29
-<%= `hostname`.chomp %>:
+testhost:
   id: 2
   name:  crabgrass
   default: false
@@ -37,11 +37,11 @@ localhost:
       https: false
       enabled: false
   translators: 
-  domain: <%= `hostname`.chomp %>
+  domain: test.host
   default_language: en_US
   tracking: true
   translation_group: animals
-  email_sender: crabgrass-system@<%= `hostname`.chomp %>
+  email_sender: crabgrass-system@test.host
   super_admin_group_id: 35
   available_page_types: 
   - Message
