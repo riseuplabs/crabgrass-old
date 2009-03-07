@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090305232813) do
+ActiveRecord::Schema.define(:version => 20090306235933) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(:version => 20090305232813) do
     t.integer  "version",    :limit => 11, :default => 0
     t.boolean  "is_council",               :default => false
     t.integer  "min_stars",  :limit => 11, :default => 1
+    t.integer  "site_id",    :limit => 11
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
