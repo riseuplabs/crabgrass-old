@@ -5,7 +5,7 @@ require 'requests_controller'
 class RequestsController; def rescue_action(e) raise e end; end
 
 class RequestsControllerTest < Test::Unit::TestCase
-  fixtures :users, :memberships, :groups, :profiles, :federatings
+  fixtures :users, :memberships, :groups, :profiles, :federatings, :sites
 
   def setup
     @controller = RequestsController.new

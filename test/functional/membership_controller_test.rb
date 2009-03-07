@@ -5,7 +5,7 @@ require 'membership_controller'
 class MembershipController; def rescue_action(e) raise e end; end
 
 class MembershipControllerTest < Test::Unit::TestCase
-  fixtures :users, :memberships, :groups, :profiles
+  fixtures :users, :memberships, :groups, :profiles, :sites
 
   def setup
     @controller = MembershipController.new

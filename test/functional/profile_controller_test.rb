@@ -5,7 +5,7 @@ require 'profile_controller'
 class ProfileController; def rescue_action(e) raise e end; end
 
 class ProfileControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :sites
 
   def setup
     @controller = ProfileController.new

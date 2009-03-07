@@ -4,7 +4,7 @@ table.members td {padding: 12px;}
 
 <%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
 
-<% if @site.tracking %>
+<% if Site.current.tracking %>
 <b>Visits:</b>
 <%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month, 
 <%= @group.memberships.count(:all, :conditions => "visited_at  is not null") %> all time
@@ -20,7 +20,7 @@ table.members td {padding: 12px;}
   <tr>
     <th>User</th>
     <th>Joined</th>
-    <% if @site.tracking %>
+    <% if Site.current.tracking %>
     <th>Last Visit</th>
     <th>Total Visits</th>
 <!--    <th>Joined by</th> -->

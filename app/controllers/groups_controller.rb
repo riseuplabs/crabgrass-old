@@ -28,18 +28,17 @@ class GroupsController < ApplicationController
 
   # login required
   def create
-     @group_class = get_group_class
-     @group_type = @group_class.to_s.downcase
-     
+    @group_class = get_group_class
+    @group_type = @group_class.to_s.downcase
 
-    # network - binding
-     if @group_type == "network"
+       # network - binding
+    if @group_type == "network"
       raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
-     end  
-     @network = @site.network
+    end
+    @network = Site.current.network || Network.find(:first)
 
-     @parent = get_parent
-    
+    @parent = get_parent
+
     if request.get?
       @group = @group_class.new(params[:group])
     elsif request.post?
@@ -47,16 +46,16 @@ class GroupsController < ApplicationController
         group.avatar = Avatar.new
         group.created_by = current_user
       end
-     
+
       # network - binding
       @network.groups << @group
-      
+
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.add_user!(current_user)
       @parent.add_committee!(@group, params[:group][:is_council] == "true" ) if @parent
 
       add_council if params[:add_council] == "true"
-      
+
       redirect_to url_for_group(@group)
     end
   rescue Exception => exc

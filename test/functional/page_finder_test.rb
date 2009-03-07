@@ -20,7 +20,7 @@ require 'set'
 class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :pages,
+  fixtures :groups, :users, :memberships, :pages, :sites,
    :user_participations, :group_participations, :taggings, :tags
   
   def setup

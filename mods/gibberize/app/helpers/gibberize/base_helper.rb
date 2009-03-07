@@ -3,10 +3,8 @@ module Gibberize::BaseHelper
     "<div class='errorExplanation'>#{flash[:notice]}</div>" if flash[:notice]
   end
 
-  # this is set on RAILS_ROOT/config/sites.yml
   def site_default_language
-    # the application controller sets @site in a before_filter
-    Language.find_by_code(@site.default_language)
+    Language.find_by_code(Site.current.default_language)
   end
 
   # Crabgrass UI is written in English

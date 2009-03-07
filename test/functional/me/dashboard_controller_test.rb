@@ -5,7 +5,7 @@ require 'me/dashboard_controller'
 class Me::DashboardController; def rescue_action(e) raise e end; end
 
 class DashboardControllerTest < Test::Unit::TestCase
-  fixtures :users, :user_participations, :groups, :group_participations, :pages
+  fixtures :users, :user_participations, :groups, :group_participations, :pages, :sites
 
   def setup
     @controller = Me::DashboardController.new

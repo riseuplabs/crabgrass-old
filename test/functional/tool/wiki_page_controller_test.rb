@@ -5,7 +5,7 @@ require 'wiki_page_controller'
 class WikiPageController; def rescue_action(e) raise e end; end
 
 class WikiPageControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users, :user_participations, :wikis, :groups
+  fixtures :pages, :users, :user_participations, :wikis, :groups, :sites
 
   def setup
     @controller = WikiPageController.new
