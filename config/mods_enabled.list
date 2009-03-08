@@ -8,11 +8,11 @@
 
 ## The super_admin mod allows certain 'super admin' to control everything about
 ## a particular crabgrass site.
-#super_admin
+super_admin
 
 ## design tester mode is a little sandbox for testing template/css changes
 ## available at localhost:3000/design
-design_tester
+#design_tester
 
 ## The gibberize mod allows certain 'translator' to translate
 ## a crabgrass site user interface.
@@ -21,6 +21,7 @@ design_tester
 ## Google analytics
 #evil_mod
 
+unido
 
 ## The chat mod provides user-to-user and multi-user chat using the Ejabberd XMPP server
 #chat

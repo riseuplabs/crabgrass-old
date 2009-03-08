@@ -1,10 +1,10 @@
 default:
-  name: crabgrass
-  domain: localhost
-  email_sender: 'crabgrass-system@localhost'
+  name: MRUyouthplatform.org
+  domain: my.MRUyouthplatform.org
+  email_sender: 'my@MRUyouthplatform.org'
   secret: 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
   pagination_size: 29
-  super_admin_group_id: 35
+  super_admin_group_id: 16
   default_language:
   - en_US
   available_page_types:

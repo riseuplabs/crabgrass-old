@@ -12,7 +12,7 @@ config.action_controller.consider_all_requests_local = true
 ##
 
 # set cookies to 'secure'; prevent some kinds of session-stealing attacks
-Crabgrass::Config.https_only = true
+Crabgrass::Config.https_only = false
 
 ##
 ## CACHING
@@ -21,9 +21,12 @@ Crabgrass::Config.https_only = true
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true
+#config.cache_classes =false
 
 config.action_controller.perform_caching             = true
 config.action_view.cache_template_loading            = true
+#config.action_controller.perform_caching             = false
+#config.action_view.cache_template_loading            = false
 
 # bundled_assets plugin:
 # in production mode, compress css and js files and page cache the result
