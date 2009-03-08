@@ -17,6 +17,13 @@ module BasePageHelper
     content_tag(:p, link_to('&laquo; ' + 'return to'[:return_to] + ' <b>%s</b>' % @page.title, page_url(@page)))
   end
   
+  # creates a line with a checkbox, avatar and name for a user or group that participates to a page
+  def participator_checkbox_line(participator)
+    field_name = (participator.kind_of?(User) ? 'user' : 'group')
+    field_name += participator.id.to_s
+    check_box(:participators, field_name.to_sym) + avatar_for(participator,'small') + participator.name
+  end
+  
   def link_to_user_participation(upart)
     klass = case upart.access_sym
       when :admin : 'tiny_wrench_16'
@@ -24,7 +31,7 @@ module BasePageHelper
       when :view : ''
     end
     label = content_tag :span, upart.user.display_name, :class => klass
-    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
+    upart.access.to_s+upart.access_sym.to_s+'bla'+link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)
@@ -221,6 +228,12 @@ module BasePageHelper
     end
   end
 
+  def notify_line
+    if current_user.may? :view, @page
+      popup_line(:name => 'notify', :label => "Notify about :page_class"[:notify_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
+    end
+  end
+  
   def move_line
     if current_user.may? :admin, @page
       popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
@@ -375,7 +388,9 @@ module BasePageHelper
   end
 
   def select_page_access(name, options={})
-    selected = params[name]
+    selected = options[:selected]
+    # i found this assignment here, but it doesn't seem to make any sense to me
+    selected ||= params[:name]
     options = {:blank => true, :expand => false}.merge(options)
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]

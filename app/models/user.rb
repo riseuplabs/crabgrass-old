@@ -117,6 +117,12 @@ class User < ActiveRecord::Base
   # message.
   def wants_notification_email?
     self.email.any?
+    # [TODO] make this dependable on configuration options
+  end
+  
+  # dummy for [TODO] implement protection against notification
+  def wants_inbox_notification?
+    true
   end
 
   ##
@@ -164,9 +170,9 @@ class User < ActiveRecord::Base
   end
   
   def may!(perm, protected_thing)
-    return true if protected_thing.new_record?
-    @access ||= {}
-    (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+      return true if protected_thing.new_record?
+      @access ||= {}
+      (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
   end
 
   # zeros out the in-memory page access cache. generally, this is called for
@@ -194,5 +200,4 @@ class User < ActiveRecord::Base
   def clear_email
     self.email = nil if email.empty?
   end
-  
 end

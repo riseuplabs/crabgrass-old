@@ -1,4 +1,5 @@
 <% popup('Share This Page'[:share_this_page], :id => 'share_popup', :width => '40em') do -%>
+  <%= render :partial => 'base_page/participators' %>
   <% form_remote_tag(
     :url => {:controller => 'base_page/participation', :action => 'share', :page_id => @page.id},
     :loading => show_spinner('popup'),

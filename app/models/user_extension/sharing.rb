@@ -152,7 +152,7 @@ module UserExtension::Sharing
   ##
 
   # valid options:
-  #  :access -- one of nil, :admin, :edit, :view (nil will remove access)
+  #  :access -- one of nil, :admin, :edit, :view, :none (nil will remove access)
   #  :grant_access -- like :access, but is only used to improve access, not remove it.
   #  :message -- text message to send
   #  :send_emails -- true or false. send email to recipients?
@@ -165,11 +165,13 @@ module UserExtension::Sharing
   def share_page_with!(page, recipients, options)
     return true unless recipients
     options[:notify] = true if options[:message] or options[:send_emails]
-
+ 
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
-    send_emails    = options.delete(:send_emails)
-    mailer_options = options.delete(:mailer_options)
+                                              # you cannot pass them if you delete them
+    notify         = options[:notify]         # options.delete(:notify)
+    send_emails    = options[:send_emails]    # options.delete(:send_emails)
+    mailer_options = options[:mailer_options] # options.delete(:mailer_options)
     message        = options[:message]
 
     ## add users to page
@@ -193,7 +195,8 @@ module UserExtension::Sharing
     # end
 
     ## send notification emails
-    if send_emails and mailer_options
+    ## [NOTE] there is no support for secure email in the moment
+    if send_emails and mailer_options and !send_only_with_encryption
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
         Mailer.deliver_share_notice(user, message, mailer_options)
@@ -201,6 +204,44 @@ module UserExtension::Sharing
     end
   end
 
+  
+# share with a collection of recipients with different options
+# expects a hash with the recipients and their selected options
+def share_page_by_options!(page, options_with_recipients)
+  #  options_with_recipients = collect_recipients_by_options(recipients_with_options) # in controller now
+  options_with_recipients.each_pair do |options,recipients|
+    recipients.each do |recipient|
+      self.share_page_with!(page,recipient,options)
+    end  
+  end
+end
+
+=begin
+#outdated
+
+# collects all the recipients with the same options,
+# so that we can still use the User.share_with!
+def collect_recipients_by_options(recipients_with_options)
+  
+  options_with_recipients = {}
+   recipients_with_options.each_pair do |k,v|
+    #raise v.inspect
+   #
+   # this should be nonsense:
+   #
+   # new_options = true
+   # options_with_recipients.keys.each do |o|
+     #   new_options = false if(v==o)
+    # end
+    # options << v if new_options
+    options_with_recipients[v] ||= []
+    options_with_recipients[v] << k.to_sym
+  end
+  return options_with_recipients
+end
+=end
+  
+  
   # just like share_page_with, but don't do any actual sharing, just
   # raise an exception of there are any problems with sharing.
   def may_share_page_with!(page,recipients,options)
@@ -226,7 +267,6 @@ module UserExtension::Sharing
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
-
     if options[:notify]
       attrs[:inbox] = true
     end
@@ -237,9 +277,9 @@ module UserExtension::Sharing
     if options.key?(:access) # might be nil
       attrs[:access] = options[:access]
     else
-      options[:grant_access] ||= :view
+      options[:grant_access] ||= nil # :view
       unless user.may?(options[:grant_access], page)
-        attrs[:grant_access] = options[:grant_access] || :view
+        attrs[:grant_access] = options[:grant_access] || nil #:view
       end
     end
 
@@ -252,7 +292,7 @@ module UserExtension::Sharing
     if options.key?(:access) # might be nil
       gpart = page.add(group, :access => options[:access])
     else
-      options[:grant_access] ||= :view
+      options[:grant_access] ||= nil #:view
       gpart = page.add(group, :grant_access => options[:grant_access])
     end
     gpart.save! unless page.changed?

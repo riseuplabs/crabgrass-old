@@ -2,17 +2,11 @@
 <%
   #trying to create less queries for that
   group_ids = @page.group_participations.find(:all, :select => :group_id).map(&:group_id)
-  users_in_groups = if respond_to?(:group_participation_ids) && group_participation_ids.any?
-		      User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id IN (#{group_ids.join(' ')})")
-		    else
-		      []
-		    end
-		      
+
   possible_contributors = {}
-  raise group_ids.inspect
   group_ids.each do |group_id|
     group_name = Group.find(group_id, :select => :name).name
-    users = User.find(:all, :joins => ["INNER JOIN memberships ON membership.group_id = ?", group_id])
+    users = User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id = #{group_id}")
     possible_contributors[group_name] = users   
   end
 

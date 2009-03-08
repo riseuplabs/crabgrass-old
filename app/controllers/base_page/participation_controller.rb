@@ -10,12 +10,42 @@ This is a controller for managing participations with a page
 
 class BasePage::ParticipationController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :except => [:auto_complete_for_recipient_name, :new_recipient]
 
   verify :method => :post, :only => [:move]
 
   helper 'base_page', 'base_page/participation'
+  
+  include BasePageHelper
 
+  #auto_complete_for :recipient, :name
+  
+  protect_from_forgery :except => [:auto_complete_for_recipient_name, :new_recipient]
+  #       if @share_groups.nil?
+  #       @share_page_groups    = @page ? @page.namespace_groups : []
+  #       @share_contributors   = @page ? @page.contributors : []
+  #       all_groups = current_user.all_groups.sort_by {|g|g.name}
+  #       @share_groups      = current_user.all_groups.select {|g|g.normal?}
+  #       @share_networks    = current_user.all_groups.select {|g|g.network?}
+  #       @share_committees  = current_user.all_groups.select {|g|g.committee?}
+  #       @share_friends        = current_user.contacts.sort_by{|u|u.name}
+  #       @share_peers          = current_user.peers.sort_by{|u|u.name}
+
+  #       params[:recipients] ||= {}
+
+  def auto_complete_for_recipient_name
+    setup_sharing_populations
+    @recipients = [@share_page_groups, @share_contributors, @share_groups,
+                   @share_networks, @share_committees, @share_friends,
+                   @share_peers].flatten.compact.uniq
+    @recipients = @recipients.select { |rcpt|
+      (rcpt.name =~ Regexp.new(params[:recipient][:name]) ||
+       rcpt.display_name =~ Regexp.new(params[:recipient][:name]))
+    }
+    render :partial => 'base_page/auto_complete/recipient'
+  end
+  
+  
   # TODO: add non-ajax version
   # TODO: send a 'made public' message to watchers
   # Requires :admin access
@@ -42,6 +72,7 @@ class BasePage::ParticipationController < ApplicationController
     @upart.save!
     render :template => 'base_page/participation/reset_watch_line'
   end
+  
   def remove_watch
     @upart = @page.add(current_user, :watch => false)
     @upart.save!
@@ -102,25 +133,206 @@ class BasePage::ParticipationController < ApplicationController
   # you cannot share to users/groups that you cannot pester, unless
   # the page is private and they already have access.
   #
+  # def share
+  #     if params[:cancel]
+  #       close_popup and return
+  #     end
+  #     begin
+  #       recipients = params[:recipients]
+  #       options = {
+  #         :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
+  #         :message => params[:share_message],
+  #         :send_emails => params[:send_emails],
+  #         :mailer_options => mailer_options
+  #       }
+  #       current_user.share_page_with!(@page, recipients, options)
+  #       @page.save!
+  #       close_popup
+  #     rescue Exception => exc
+  #       flash_message_now :exception => exc
+  #       show_error_message
+  #     end
+  #   end
+  
+  # called by ajax - adds a new recipient to the share with recipients form
+  def new_recipient
+    if recipient_name = params[:recipient][:name].strip      
+      if(@participant = User.find_by_login(recipient_name)) &&
+         (@participant.may_be_pestered_by?(current_user))
+        # do weird stuff
+        # render rjs partial that adds the user to the recipients list
+        render :update do |p| 
+          p.insert_html(:top, 'share_page_recipients', :partial => 'share_page_recipient', :locals => { :recipient => @participant, :access => params[:recipient][:access], :unsaved => true })
+        end
+        return
+      elsif(@participant = Group.find_by_name(recipient_name)) && 
+            (@participant.may_be_pestered_by?(current_user))
+        # do other weird stuff
+        # render rjs partial that adds the user to the recipients list
+        render :update do |p| 
+          p.insert_html(:top, 'share_page_recipients', :partial => 'share_page_recipient', :locals => { :recipient => @participant, :access => params[:recipient][:access], :unsaved => true })
+        end
+        return
+      else
+        # inform user that there was no real weird stuff to do
+        # render rjs partial that adds an note to the user that something went massivley wrong
+      end
+    end
+  end
+  
+  
   def share
+    #raise params[:recipient][:name].inspect
     if params[:cancel]
       close_popup and return
     end
+  
     begin
-      recipients = params[:recipients]
+      # now get the recipients from the prebuild hash:
+      # recipients with options, that looks like
+      # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
+      recipients_with_options = get_recipients_with_options(params[:recipients])
+      
+      # now we use default_options to handle the recipients simply given by a list of names
+      # they don't have the options supported
+      # [TODO] call a after - method that offers the ability to postconfigure those on a new screen:
+      # The user should get a list of all the user, he selected without options.
+      default_options = { 
+        :grant_access => nil,
+        :message => nil,
+        :send_emails => nil,
+        :mailer_options => mailer_options,
+        :send_via_chat => false,
+        :send_via_email => false,
+        :send_only_with_encryption => false,
+        :send_to_inbox => false,
+      }
+    
+      
       options = {
         :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
         :message => params[:share_message],
         :send_emails => params[:send_emails],
+        :send_via_email => params[:send_via_email],
+        :send_via_chat => params[:send_via_chat],
+        :send_only_with_encryption => params[:send_only_with_encryption],
+        :send_to_inbox => params[:send_to_inbox],
         :mailer_options => mailer_options
       }
-      current_user.share_page_with!(@page, recipients, options)
+      
+      # now we can have totally different options for the single recipients
+      # [TODO] maybe we want to reflect on overlapping recipients and exclusions? 
+      #  current_user.share_page_with!(@page, recipients, options)
+      current_user.share_page_by_options!(@page, recipients_with_options)
+      
+#      close_popup
+
+     flash_message :success => "You Successfully shared #{@page.class.to_s} with \n #{@recipients.join(', ')} !".t
+      
+      render :update do |page|
+        page.replace 'page_sidebar', :partial => 'base_page/sidebar'
+        page.replace_html 'message', display_messages
+        page.select('submit').each do |submit|
+          submit.disable = false
+        end
+        page.hide 'popup_holder'
+      end
+
+         
+      
       @page.save!
-      close_popup
+      
+      
     rescue Exception => exc
       flash_message_now :exception => exc
-      show_error_message
+      show_error_message     
     end
+  end
+  
+  # given the params[:recipients] returns an options-hash for recipients
+  def get_recipients_with_options(recipients_with_options)  
+    options_with_recipients = {}
+    recipients_with_options.each_pair do |recipient,options|
+      options_with_recipients[symbolize_options(options)] ||= []
+      options_with_recipients[symbolize_options(options)] << recipient
+      @recipients ||= []
+      @recipients << recipient
+    end
+    options_with_recipients   
+  end
+
+  
+  def symbolize_options options
+    symbolized_options = {}
+    options.each do |k,v|
+      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
+      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
+      symbolized_options[k] = v
+    end
+    symbolized_options
+  end
+
+
+  # handles the notification with or without sharing
+  def notify
+    
+    # we need all the user, that have different access options
+    #raise params[:recipient][:name].inspect
+    if params[:cancel]
+      close_popup and return
+    end
+ 
+    begin
+      # now we get the recipients from list separated 
+      # recipients = [params[:recipient][:name].strip]
+      recipients_from_list = [params[:recipient][:name].strip]
+      
+      # now get the recipients from the prebuild hash:
+      # recipients with options, that looks like
+      # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
+      recipients_with_options = get_recipients_with_options(params[:recipients])
+      
+      
+     default_options = { 
+      :grant_access => nil,
+      :message => nil,
+      :send_emails => nil,
+      :mailer_options => mailer_options,
+      :send_via_chat => false,
+      :send_via_email => false,
+      :send_only_with_encryption => false,
+      :send_to_inbox => false,
+    }
+    
+      
+      options = {
+        :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
+        :message => params[:share_message],
+        :send_emails => params[:send_emails],
+        :send_via_email => params[:send_via_email],
+        :send_via_chat => params[:send_via_chat],
+        :send_only_with_encryption => params[:send_only_with_encryption],
+        :send_to_inbox => params[:send_to_inbox],
+        :mailer_options => mailer_options
+      }
+     
+      # now we can have totally different options for the single recipients
+      # [TODO] maybe we want to react on overlapping recipients and exclusions? 
+      #  current_user.share_page_with!(@page, recipients, options)
+      current_user.share_page_by_options!(@page, recipients_with_options)
+      
+      recipients_from_list.each do |r|
+        current_user.share_page_with!(r,default_options.merge(options))
+      end
+      
+      @page.save!
+      render :template => 'base_page/new_participation_added'
+    rescue Exception => exc
+      flash_message_now :exception => exc
+      show_error_message     
+    end
+
+    
   end
 
   ##
@@ -148,7 +360,7 @@ class BasePage::ParticipationController < ApplicationController
       show_error_message
     end
   end
-  
+
   ## technically, we should probably not destroy the participations
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access. 
@@ -169,9 +381,9 @@ class BasePage::ParticipationController < ApplicationController
       page.hide dom_id(upart || gpart)
     end
   end
-  
+
   protected
-  
+
   def close_popup
     render :template => 'base_page/reset_sidebar'
   end
@@ -187,7 +399,7 @@ class BasePage::ParticipationController < ApplicationController
       current_user.may? :view, @page
     end
   end
-  
+
   prepend_before_filter :fetch_page
   def fetch_page
     if params[:page_id]
@@ -196,5 +408,5 @@ class BasePage::ParticipationController < ApplicationController
     end
     true
   end
-  
+
 end

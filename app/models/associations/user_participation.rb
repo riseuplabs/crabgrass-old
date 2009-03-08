@@ -22,6 +22,9 @@ class UserParticipation < ActiveRecord::Base
   #use this for counting stars :)
   include PageExtension::Static::UserParticipationMethods
   
+  # maybe later use this to replace all the notification stuff
+  #  include ParticipationExtension::Subscribe
+  
   def access_sym
     ACCESS_TO_SYM[self.access]
   end

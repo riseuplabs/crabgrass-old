@@ -4,8 +4,8 @@
  -%>
 <ul class='side_list names'>
   <% if contributors.any? -%>
-    <% contributors.each do |cont| %>
-      <li style="display:inline; margin-left:12px;"><%= participator_checkbox_line(cont) %></li>
+    <% contributors.each_with_index do |k,v| %>
+      <li style="display:inline; margin-left:12px;">k<%# participator_checkbox_line(cont) %></li>
     <% end -%>
   <% end -%>
 </ul>>

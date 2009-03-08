@@ -171,6 +171,7 @@ class Page < ActiveRecord::Base
   #
   def has_access!(perm, user)
     perm = comment_access if perm == :comment
+
     upart = self.participation_for_user(user)
     gparts = self.participation_for_groups(user.all_group_ids)
     allowed = false
@@ -182,7 +183,7 @@ class Page < ActiveRecord::Base
         (a.access||100) <=> (b.access||100)
       }
       # allow :view if the participation exists at all
-      allowed = ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+      allowed = (ACCESS[perm.to_sym] >= ( part_with_best_access.access || ACCESS[:view]))
     end
     if allowed
       return true

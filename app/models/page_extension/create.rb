@@ -65,7 +65,7 @@ module PageExtension::Create
     # objects as appropriate.
     # returns array [users, groups, emails]
     def parse_recipients!(recipients)
-      users = []; groups = []; emails = []; errors = []
+       users = []; groups = []; emails = []; errors = []
       if recipients.is_a? Hash
         entities = []
         recipients.each do |key,value|

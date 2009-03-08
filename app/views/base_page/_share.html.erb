@@ -2,41 +2,43 @@
 <% type = 'send' if type.nil? -%>
 
 <div class='share_page'>
-  <h2><%= 'Share this {page_class} with'[:share_page_recipients, {:page_class => class_display_name}] %>:</h2>
+  <h2><%= 'Share this {page_class}'[:share_page_recipients, {:page_class => class_display_name}] %></h2>
   <div class='fieldset'>
-  <table class='share_page_recipients'>
-    <tr>
-      <th><%= "Choose from your groups or friends"[:share_page_recipients_sections] %></th>
-      <th><%= "Make your selection"[:share_page_recipients_selection] %></th>
-      <th><%= "This {page_class} will be shared with"[:share_page_recipients_results, {:page_class => class_display_name}] %></th>
-    </tr>
-    <tr>
-      <td>
-        <div class='scroll'><%= share_page_recipient_tabs %></div>
-      </td>
-      <td nowrap="nowrap">
-        <div class='scroll'><%= share_page_recipient_panes %></div>
-      </td>
-      <td>
-        <div class='scroll'><%= share_page_recipient_results %></div>
-      </td>
-    </tr>
-  </table>
+    <%= render :partial => 'base_page/participation/share_page_recipients' %>    
   </div>
 
-  <h2><%= 'Choose options'[:share_page_options] %>:</h2>
+  <%= link_to_function("Send optional message...",
+		       "$('notify_box').show();$('send_optional_message').hide();",
+		       :id => "send_optional_message") %>
+  <div id="notify_box" style="display:none">
+  <h2><%= 'Notify'[:notify] %></h2>
   <div class='fieldset'>
-  <%- if @page.nil? or current_user.may?(:admin,@page) -%>
-   <%= 'Grant Access'[:grant_access] %>: <%= select_page_access 'access', :blank => (type=='send') %>
-  <%- end -%>
-  <%- if type == 'send' -%>
-    <label><%= check_box_tag('send_emails') %> <%= 'send an email notification.'[:share_page_email] %></label>
-  <%- end -%>
+    <table class='notify_page_recipients'>
+    <tr>
+      <td><%= check_box :notification, :send_to_inbox %></td>
+      <td><%= 'Send message to inbox'[:send_message_to_inbox]%></td>
+    </tr>
+    <tr>
+      <td><%= check_box :notification, :message %></td>
+      <td><%= 'Include this message'[:include_this_message] %>:</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= text_area_tag 'message', '', :id => 'share_message', :rows => 6, :cols => 60 %></td>
+    <tr>
+    <tr>
+      <td></td>
+      <td>
+	<%= 'Send a copy of this message via'[:send_a_copy_of_this_message_via] %>:
+<br/>
+	<%= check_box :notification, :send_via_email %> <%= 'Email'[:email] %>
+	<%= check_box :notification, :send_via_textmessage %> <%= 'Text Message'[:text_message] %>
+	<%= check_box :notification, :send_via_chat %> <%= 'Chat'[:chat] %>
+	<br/>
+	<%= check_box :notification, :send_only_with_encryption %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %>
+      </td>
+    <tr>
+    </table>
   </div>
-  <%- if type == 'send' -%>
-		<h2><%= 'Send a Message (optional)'[:share_page_message] %></h2>
-    <div class='fieldset'>
-		<%= text_area_tag 'message', '', :id => 'share_message', :rows => 6, :cols => 60 %>
-    </div>
-  <%- end -%>
+  </div><!-- notify_box -->
 </div>
