@@ -1,0 +1,81 @@
+
+<%
+  #trying to create less queries for that
+  group_ids = @page.group_participations.find(:all, :select => :group_id).map(&:group_id)
+  users_in_groups = if respond_to?(:group_participation_ids) && group_participation_ids.any?
+		      User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id IN (#{group_ids.join(' ')})")
+		    else
+		      []
+		    end
+		      
+  possible_contributors = {}
+  raise group_ids.inspect
+  group_ids.each do |group_id|
+    group_name = Group.find(group_id, :select => :name).name
+    users = User.find(:all, :joins => ["INNER JOIN memberships ON membership.group_id = ?", group_id])
+    possible_contributors[group_name] = users   
+  end
+
+  contributors = @page.contributors
+      
+  # OLD WAY
+#  users = @page.user_participations.find(:all, :include => :user).map(&:user)
+#  group_ids = @page.group_participations.find(:all, :select => :group_id).map(&:group_id)
+#  users_in_groups = if group_ids.any?
+#    User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id IN (#{group_ids.join(' ')})")
+#  else
+#    []
+#  end
+#  contributors = []
+#  possible_contributors = []
+#  users.each do |user|
+#    if user.may?(:edit, @page)
+#      contributors << user
+#    else
+#      possible_contributors << user
+#    end
+#  end
+#  possible_contributors = possible_contributors|users_in_groups
+-%>
+
+<% class_display_name = 'page'.t if class_display_name.nil? -%>
+<% type = 'send' if type.nil? -%>
+
+<div class='notify_about_page'>
+  <h2><%= 'Notify about this {page_class}'[:notify_page_recipients, {:page_class => class_display_name}] %></h2>
+  <div class='fieldset'>    
+    <%= check_box :notification, :notify_contributors, :onChange => "$('share_page_recipients_contributors').toggle();" %> <%= label :notification, :notify_contributors, 'Notify people who have contributed to this page'[:notify_contributors] %>
+        
+    <div class='share_page_recipients_list' style="height:80px; background-color:white; overflow:auto; border:1px solid darkgrey;display:none;" scroll="vertical" id="share_page_recipients_contributors">
+      <ul class='side_list names'>
+	<% if contributors.any? -%>
+	  <% contributors.each do |cont| %>
+            <li style="display:inline; margin-left:12px;"><%= participator_checkbox_line(cont) %></li>
+	  <% end -%>
+	<% end -%>
+      </ul>
+    </div>
+
+    <br/>
+    <%= check_box :notification, :notify_possible_contributors,{ :onChange => "$('share_page_recipients_possible_contributors').toggle();" }%> <%= label :notification, :notify_possible_contributors, 'Notify people and groups with access to this page'[:notify_possible_contributors] %>
+
+    <div class='share_page_recipients_list' style="height:80px; background-color:white; overflow:auto; border:1px solid darkgrey;display:none;" scroll="vertical" id="share_page_recipients_possible_contributors">
+        <%= render :partial => 'base_page/notify_possible_contributors', :locals => { :contributors => possible_contributors } %>
+    </div>
+
+    <br/>
+    <%= check_box :notification, :share_with_new, :onChange => "$('share_page_recipients_new').toggle();" %> <%= label :notification, :share_with_new, 'Share page and notify new users and groups'[:share_page_with_new_and_notify] %>
+    <div class='share_page_recipients_list' id="share_page_recipients_new" style="display:none;">     
+      <%= render :partial => 'share_page_recipients', :locals => {:empty_box => true} %>
+    </div>
+
+    <br/>
+    <%= check_box :notification, :share_with_new_via_list, :onChange => "$('share_page_recipients_new_via_list').toggle();" %> <%= label :notification, :share_with_new_via_list, 'Share page and notify new users and groups via list'[:share_page_with_new_and_notify_via_list] %> 
+    <div class='share_page_recipients_list' style="height:80px; background-color:white; overflow:auto; border: 1px solid darkgrey; display:none;" scroll="vertical" id="share_page_recipients_new_via_list">
+    </div>
+    <%#= render :partial => 'share_with_new_via_list' %>
+  </div>
+  
+ <h2><%= 'Notification Message'[:notify] %></h2>
+ <%= render :partial => 'base_page/notification_message' %> 
+</div>
