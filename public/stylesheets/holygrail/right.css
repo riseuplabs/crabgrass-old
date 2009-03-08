@@ -1,27 +1,35 @@
+
 /* 2 column right menu settings */
+.rightmenu{
+
+}
+.rightmenu {
+  background:#cfc;
+}
 .rightmenu .colleft {
-  float:left;
+  float:right;
   width:200%;
-  margin-left:-12em;
   position:relative;
-  right:100%;
+  right:12em;
+  background:#fff;
 }
 .rightmenu .col1wrap {
-  float:left;
+  float:right;
   width:50%;
   position:relative;
-  left:50%;
-  padding-bottom:1em;
+	right:12em;
+	padding-bottom:1em;
 }
 .rightmenu .col1 {
-  margin:0pt 0pt 0pt 13.2em;
+  margin:0 1em 0 13em;
+  position:relative;
+  right:100%;
   overflow:hidden;
-  background:#fff;
 }
 .rightmenu .col2 {
   float:right;
   width:10em;
   position:relative;
-  left:11em;
+  right:11em;
 }
 

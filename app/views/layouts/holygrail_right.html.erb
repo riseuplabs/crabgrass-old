@@ -1,17 +1,10 @@
-<div class="colmask rightmenu">
-  <div class="colleft"><div class="border">
-    <div class="col1wrap">
-      <div class="col1 main_column">
-<!-- main column start -->
-<%= yield %>
-<!-- main column end -->
-      </div>
-    </div>
-    <div class="col2 right_column">
-<!-- right column start -->
-<%= @right_column %>
-<!-- right column end -->
-    </div>
-  </div></div>
-</div>
-
+<%# render :partial => 'layouts/messages' %>
+<div id="colmask" class="rightmenu selfclear">
+  <div class="column col1">
+  <%= yield %>
+  </div><!-- /.col1 -->
+  <div class="column col2">
+  <%= @right_column %>
+  </div><!-- /.col2 -->
+  <div class="col-clear"></div>
+</div><!-- /#colmask -->

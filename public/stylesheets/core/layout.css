@@ -1,51 +1,60 @@
-.leftmenu {
+body {
+  min-width: 38em; }
+
+#colmask {
+  overflow: hidden;
+  position: relative; }
+
+* html #colmask {
+  overflow: visible;
+  height: 1px; }
+
+div.col-clear {
+  clear: both; }
+
+* html div.col-clear {
+  height: 1.5em;
+  background: #d6d6d6;
+  position: relative;
+  margin: 0 0 -1.5em; }
+
+.ltr .leftmenu, .rtl .rightmenu {
   background-color: #fafdf9;
   border: 1px solid #999;
-  border-width: 1px; }
-  .leftmenu .colright {
+  border-width: 1px;
+  padding-left: 19em; }
+  .ltr .leftmenu .column,   .rtl .rightmenu .column {
+    position: relative;
+    float: left; }
+  .ltr .leftmenu .col1,   .rtl .rightmenu .col1 {
+    padding: 0 0 1001em;
+    margin: 0 0 -1000em;
+    width: 100%; }
+  .ltr .leftmenu .col2,   .rtl .rightmenu .col2 {
+    width: 17em;
+    padding: 1em 1em 1001em;
+    margin: 0 0 -1000em -100%;
+    right: 19em;
+    border-right: 1px solid #ccc; }
+
+.ltr .rightmenu, .rtl .leftmenu {
+  background-color: #fafdf9;
+  border: 1px solid #999;
+  border-width: 1px;
+  padding-right: 19em; }
+  .ltr .rightmenu .column,   .rtl .leftmenu .column {
+    position: relative;
+    float: right; }
+  .ltr .rightmenu .col1,   .rtl .leftmenu .col1 {
+    padding: 0 0 1001em;
+    margin: 0 0 -1000em;
+    width: 100%; }
+  .ltr .rightmenu .col2,   .rtl .leftmenu .col2 {
+    width: 17em;
+    padding: 1em 1em 1001em;
+    margin: 0 -100% -1000em 0;
     left: 19em;
     border-left: 1px solid #ccc; }
-  .leftmenu .col1wrap {
-    right: 19em; }
-  .leftmenu .col1 {
-    margin: 0;
-    margin-left: 19em; }
-  .leftmenu .col2 {
-    width: 16.7em;
-    right: 18em;
-    margin: 1em 0; }
-  .leftmenu .rightmenu .col1 {
-    border: 1px solid #999;
-    border-width: 1px;
-    margin: 0 0 0 17em; }
-  .leftmenu .rightmenu .col2 {
-    width: 16em;
-    left: 17em; }
-  .leftmenu .rightmenu .colleft {
-    margin-left: -17em; }
-  .leftmenu .rightmenu .col1wrap {
-    padding-bottom: 0em; }
-
-.rightmenu {
-  border-left: 1px solid #999; }
-  .rightmenu .border {
-    background: white;
-    border: 1px solid #999;
-    border-left: 0;
-    float: left;
-    position: relative;
-    right: 0;
-    width: 100%; }
-  .rightmenu .col1 {
-    margin: 0 0 0 17em; }
-  .rightmenu .col2 {
-    width: 16em;
-    left: 17em;
-    /* padding-left= !right_column_margin */ */ }
-  .rightmenu .colleft {
-    margin-left: -17em; }
-  .rightmenu .col1wrap {
-    padding-bottom: 0em; }
 
 .fullpage .col1 {
   margin: 0;

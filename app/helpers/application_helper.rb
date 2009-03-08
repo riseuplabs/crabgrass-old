@@ -115,4 +115,17 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
+  # to support rtl languages
+  def language_direction
+    if session[:lang] == 'ar' or session[:lang] == "he"
+      "rtl"
+    else
+      "ltr"
+    end
+  end
+  
+  def language_specific_stylesheet
+    stylesheet_link_tag 'rtl' if language_direction == 'rtl'
+  end
+
 end

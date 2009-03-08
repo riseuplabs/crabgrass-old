@@ -1,0 +1,63 @@
+div#top_menu {
+padding: 0 1em 0 0;
+}
+
+div#top_menu ul li {
+float: right;
+}
+
+div#top_menu ul li:first-child a {
+border-right: 1px solid #000;
+}
+
+div#top_menu ul li a {
+border-left: 1px solid #000;
+border-right: 0 none transparent;
+}
+
+div#top_menu div.account_links {
+float: left;
+}
+
+form.minisearch {
+float: left;
+}
+
+form.minisearch .minisearch_submit {
+background:transparent url(/images/gif/16/magnifier.gif) no-repeat scroll 100% 50%;
+padding: 0 16px 0 0;
+}
+
+.info_box td.right {
+border-left: 0 none transparent;
+border-right: 1px dotted #ccc;
+padding-left: 0;
+padding-right: 1em;
+}
+
+.activities li {
+padding-left: 0;
+padding-right: 24px;
+}
+
+.small_icon {
+background-position: 100% 50%;
+}
+
+a.contribute {
+float: right;
+}
+
+ul.side_list li.small_icon {
+background-position: 100% 50%;
+padding-left: 0;
+padding-right: 25px;
+}
+
+ul.icon_boxes li {
+float: right;
+}
+
+.page_list th {
+text-align: right;
+}

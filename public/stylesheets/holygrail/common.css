@@ -71,13 +71,7 @@ body {
 */
 
 /* column container */
-.colmask {
-  position:relative;  /* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
-  clear:both;
-  float:left;
-  width:100%;    /* width of whole page */
-  overflow:hidden; /* This chops off any overhanging divs */
-}
+
 /* Footer styles */
 #footer {
   clear:both;
