@@ -19,7 +19,8 @@ enabled_languages:
   - pt_BR
   - ar_EG
 enabled_mods:
-#  - super_admin
+  - super_admin
+  - unido
 enabled_tools:
   - asset_tool
   - core_tools
@@ -48,10 +49,10 @@ email:
 ##
 
 sites:
-  - name: blue
-    admin_group: blueadmins
-  - name: red
-    admin_group: redadmins
+  - name: MRUyouthplatform.org
+    domain: my.MRUyouthplatform.org
+    email_sender: 'my@MRUyouthplatform.org'
+    admin_group: superadmin
 
 ##
 ## SITE DEFAULTS
