@@ -12,4 +12,7 @@ Dispatcher.to_prepare do
   require 'super_admin_listener'
 end
 
-apply_mixin_to_model(User, SuperAdminUserExtension)
+
+# this leads to horrible behaviour!
+#
+#apply_mixin_to_model(User, SuperAdminUserExtension)

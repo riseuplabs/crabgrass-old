@@ -195,4 +195,5 @@ class User < ActiveRecord::Base
     self.email = nil if email.empty?
   end
   
+  include UserExtension::SuperAdmin rescue NameError
 end
