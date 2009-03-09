@@ -6,7 +6,7 @@ module WikiHelper
   end
   
   def wiki_edit_link
-    if may_admin_group?
+    if logged_in? and current_user.may?(:admin, @group)
       link_to_remote(
         'edit wiki'.t + ' &raquo; ',
         {
