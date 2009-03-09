@@ -27,7 +27,7 @@ module LayoutHelper
   end
 
   def site_name
-   (Site.current||Site.new(:name => 'unknown')).name
+   (current_site||Site.new(:name => 'unknown')).name
   end
       
   ###########################################
@@ -73,7 +73,7 @@ module LayoutHelper
     #lines << context_styles
     lines << @content_for_style
     lines << '</style>'
-    lines << stylesheet_link_tag("site/#{Site.current.domain}/main.css")
+    lines << stylesheet_link_tag("site/#{current_site.domain}/main.css")
     lines << '<!--[if IE 6]>'
     lines << stylesheet_link_tag('ie/ie6')
     lines << stylesheet_link_tag('icon_gif')

@@ -31,7 +31,7 @@
 
 <p/>
 <%= link_to 'Choose Tools', url_for(:action=>'edit_tools', :id=>@group) %>:
-<%= (@group.group_setting.allowed_tools.nil? ? Site.current.available_page_types : @group.group_setting.allowed_tools).join(", ") %>
+<%= (@group.group_setting.allowed_tools.nil? ? current_site.available_page_types : @group.group_setting.allowed_tools).join(", ") %>
 <p/>
 
 <p/>

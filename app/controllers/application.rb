@@ -16,7 +16,10 @@ class ApplicationController < ActionController::Base
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
-  
+
+  attr_reader :current_site
+  # make current_site available to view code
+  helper_method :current_site
 
   # the order of these filters matters. change with caution.
   prepend_before_filter :fetch_site # needs to come before fetch_profile in
@@ -31,7 +34,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def fetch_site
-    Site.current = Site.find_by_domain(request.host) || Site.default
+    @current_site = Site.find_by_domain(request.host) || Site.default
   end
 
   before_filter :header_hack_for_ie6
@@ -48,7 +51,7 @@ class ApplicationController < ActionController::Base
   end
 
   def mailer_options
-    opts = {:site => Site.current, :current_user => current_user, :host => request.host,
+    opts = {:site => current_site, :current_user => current_user, :host => request.host,
      :protocol => request.protocol, :page => @page}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
@@ -166,7 +169,7 @@ class ApplicationController < ActionController::Base
     if LANGUAGES.any?
       session[:language_code] ||= begin
         if !logged_in? or current_user.language.nil?
-          language = LANGUAGES.detect{|l|l.code == Site.current.default_language}
+          language = LANGUAGES.detect{|l|l.code == current_site.default_language}
           language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
           language_code = language.code.to_sym
         else

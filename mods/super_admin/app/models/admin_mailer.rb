@@ -17,8 +17,8 @@ class AdminMailer < ActionMailer::Base
 
   def setup_email(user)
     @recipients   = "#{user.email}"
-    @from         = Site.current.email_sender
-    @subject      = Site.current.name + ": "
+    @from         = current_site.email_sender
+    @subject      = current_site.name + ": "
     @sent_on      = Time.now    
   end
 

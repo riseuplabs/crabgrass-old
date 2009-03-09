@@ -15,9 +15,9 @@ class NetworksController < GroupsController
     @group_type = 'network'
 
     # [NOTE] next three lines are the site-network -binding
-    if Site.current.network
+    if current_site.network
       flash_message :exception => "We don't need another network."
-      redirect_to url_for_group(Site.current.network)
+      redirect_to url_for_group(current_site.network)
     elsif request.get?
       @group = Network.new(params[:group])
     elsif request.post?

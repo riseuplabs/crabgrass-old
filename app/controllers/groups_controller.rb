@@ -35,7 +35,7 @@ class GroupsController < ApplicationController
     if @group_type == "network"
       raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
     end
-    @network = Site.current.network || Network.find(:first)
+    @network = current_site.network || Network.find(:first)
 
     @parent = get_parent
 

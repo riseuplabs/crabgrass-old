@@ -4,7 +4,7 @@ module Gibberize::BaseHelper
   end
 
   def site_default_language
-    Language.find_by_code(Site.current.default_language)
+    Language.find_by_code(current_site.default_language)
   end
 
   # Crabgrass UI is written in English

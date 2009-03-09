@@ -395,7 +395,7 @@ module PageHelper
 
   ## options for a page type dropdown menu
   def options_for_select_page_type(default_selected)
-    array = Site.current.available_page_types.collect do |page_class_string|
+    array = current_site.available_page_types.collect do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
       page_group = page_class.class_group.first
       [page_group.pluralize.t, page_group]

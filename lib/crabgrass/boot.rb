@@ -14,7 +14,7 @@ rescue
   end
 end  
 
-# TODO: banish SECTION_SIZE and replace with Site.current.pagination_size
+# TODO: banish SECTION_SIZE and replace with current_site.pagination_size
 SECTION_SIZE = 29
 
 

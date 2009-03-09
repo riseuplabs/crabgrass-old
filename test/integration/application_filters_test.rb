@@ -12,11 +12,11 @@ class ApplicationFiltersTest < ActionController::IntegrationTest
     @hosts.each do |hostname|
       host! hostname
       get '/'
-      assert_equal hostname, Site.current.domain, "application controller should set the correct 'Site.current'"
+      assert_equal hostname, @controller.current_site.domain, "application controller should set the correct 'current_site'"
     end
 
     host! "fakekyfake.host"
     get '/'
-    assert_equal 'localhost', Site.current.domain, "application controller should fallback to default site for 'Site.current'"
+    assert_equal 'localhost', @controller.current_site.domain, "application controller should fallback to default site for 'current_site'"
   end
 end
