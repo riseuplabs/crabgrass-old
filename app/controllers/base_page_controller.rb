@@ -75,6 +75,8 @@ class BasePageController < ApplicationController
       true
     elsif action?(:show)
       current_user.may?(:view, @page)
+    elsif action?(:destroy)
+      current_user.may?(:delete, @page)
     else
       current_user.may?(:admin, @page)
     end

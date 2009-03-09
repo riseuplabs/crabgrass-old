@@ -114,7 +114,7 @@ module BasePageHelper
   end
 
   def destroy_page_line
-    if current_user.may?(:admin, @page)
+    if current_user.may?(:delete, @page)
       link = link_to("Delete :page_class"[:delete_page_link] % { :page_class => page_class },
         page_xurl(@page, :action => 'destroy'),
         :method => 'post', :confirm => 'Are you sure you want to delete this page?')
@@ -222,7 +222,7 @@ module BasePageHelper
   end
 
   def move_line
-    if current_user.may? :admin, @page
+    if current_user.may? :delete, @page
       popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
     end
   end
