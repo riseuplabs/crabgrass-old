@@ -18,7 +18,11 @@ class Network < Group
    has_many :federatings, :dependent => :destroy
    has_many :groups, :through => :federatings
 
-   belongs_to :site
+
+# We want a network having several sites.  
+#  That's why we change the put the network_id into the site  
+# belongs_to :site
+has_many :sites 
 
    # only this method should be used for adding groups to a network
    def add_group!(group, delegation=nil)

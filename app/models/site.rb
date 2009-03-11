@@ -28,8 +28,12 @@ See sites.yml for example of the stuff that gets serialized to :translators,
 =end
 class Site < ActiveRecord::Base
 
-  has_one :network
-
+  
+# We want a network having several sites.  
+#  That's why we change the put the network_id into the site
+#  has_one :network
+  belongs_to :network
+  
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
