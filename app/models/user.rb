@@ -194,5 +194,6 @@ class User < ActiveRecord::Base
   def clear_email
     self.email = nil if email.empty?
   end
-  
+
+  include UserExtension::SuperAdmin rescue NameError
 end
