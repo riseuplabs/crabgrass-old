@@ -47,11 +47,10 @@ class Site < ActiveRecord::Base
   end
 
   def self.default
-    if @default_site.nil?
-      @default_site = Site.find :first, :conditions => ["sites.default = '?'", true]
-      @default_site ||= Site.find :first
-    end
-    @default_site
+    @default_site ||= 
+      Site.find(:first, :conditions => ["sites.default = '?'", true]) ||
+      Site.find(:first) ||
+      Site.new(:name => 'unknown')
   end
 
   # def stylesheet_render_options(path)
