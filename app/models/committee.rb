@@ -64,7 +64,17 @@ class Committee < Group
     ok or raise PermissionDenied.new
   end
 
+#
+# SITES
+#
+#############################  
 
+  # returns true if self is part of given network
+  def belongs_to_network?(network)
+    return true if self.groups.include?(network)
+  end
+  
+  
   ####################################################################
   ## relationships to users
   def may_be_pestered_by?(user)

@@ -7,7 +7,19 @@ class GroupsController < ApplicationController
 
   def index
     user = logged_in? ? current_user : nil
-    @groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
+
+     # TODO maybe create a cache for all the site's groups?
+     @groups = current_site.network.groups.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
+    
+    # This is, what we had
+#    @_groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])    
+    
+    #  This is basically, what we want to do    
+#    @all_groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
+#    @groups = []
+#    @all_groups.each do |group|
+#      @groups << group if current_site.network.groups.include?(group)
+#    end
   end
 
   def directory

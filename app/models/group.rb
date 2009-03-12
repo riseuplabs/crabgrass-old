@@ -26,6 +26,13 @@ end
 =end
 
 class Group < ActiveRecord::Base
+
+  # returns true if self is part of a specific network
+  def belongs_to_network?(network)
+    true if self.networks.include?(network)
+  end
+  
+  
   attr_accessible :name, :full_name, :short_name, :summary, :language
 
    # not saved to database, just used by activity feed:

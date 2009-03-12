@@ -22,8 +22,13 @@ class Network < Group
 # We want a network having several sites.  
 #  That's why we change the put the network_id into the site  
 # belongs_to :site
-has_many :sites 
-
+   has_many :sites 
+ 
+  # returns true if thing is part of the network
+  def has?(thing)
+    return true if thing.belongs_to_network?(self)
+  end
+  
    # only this method should be used for adding groups to a network
    def add_group!(group, delegation=nil)
      self.federatings.create!(:group => group, :delegation => delegation, :council => council)

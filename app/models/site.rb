@@ -46,6 +46,7 @@ class Site < ActiveRecord::Base
     Site.find :all
   end
 
+  
   def self.default
     if @default_site.nil?
       @default_site = Site.find :first, :conditions => ["sites.default = '?'", true]

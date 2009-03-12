@@ -154,6 +154,18 @@ class Page < ActiveRecord::Base
     end
     true
   end
+#
+# SITES
+#
+#############################  
+  
+  # returns true if self is part of given network
+  def belongs_to_network?(network)
+    return true if self.groups.include?(network)
+  end
+
+####  
+  
   
   # This method should never be called directly. It should only be called
   # from User#may?()

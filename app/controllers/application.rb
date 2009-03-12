@@ -33,10 +33,45 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  
+#
+# SITES
+#
+#############################  
+  
   def fetch_site
     @current_site = Site.find_by_domain(request.host) || Site.default
   end
 
+  
+  # validates, if the user has access under the circumstance that we use sites
+  # therefore, in model Network we use the method has?
+  # that calls "belongs_to_network? in the following models:
+  # - Group
+  # - Page
+  # - Committee
+  # - Asset
+  # which is everywhere, where has_access! is called
+  before_filter :access_for_site?
+  def access_for_site?
+    network = current_site.network || Network.first || raise(current_site.inspect)
+    
+    things = []    
+    things << @group if @group
+    things << @page if @page
+    things << @asset if @asset
+    things << @committee if @committee
+    
+    no_access = false
+    things.each do |thing|
+      break if no_access == true
+      no_access = true if network.has?(thing) || (thing.kind_of?(Network) && thing != network)
+    end
+    raise PermissionDenied.new if no_access
+  end
+#####
+  
+  
   before_filter :header_hack_for_ie6
   def header_hack_for_ie6
     #
