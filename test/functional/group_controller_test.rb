@@ -188,6 +188,22 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:pages)
   end
 
+  def test_tags_not_allowed
+    login_as :kangaroo
+    get :tags, :id => groups(:private_group).name
+    assert_response :missing
+#    assert_template 'tags'
+    assert_equal [], assigns(:pages)
+  end
+
+  def test_tags_sql_inject
+    login_as :blue
+    get :tags, :id => groups(:private_group).name, :path => "'))#"
+    assert_response :success
+#    assert_template 'tags'
+    assert_equal [], assigns(:pages)
+  end
+
   def test_tasks
     login_as :blue
 
@@ -197,6 +213,14 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:pages)
     assert_not_nil assigns(:task_lists)
     assert assigns(:pages).length > 0, "should find some tasks"
+  end
+
+  def test_tasks_not_allowed
+    login_as :kangaroo
+    get :tasks, :id => groups(:private_group).name
+    assert_response :missing
+#    assert_template 'tags'
+    assert_equal [], assigns(:pages)
   end
 
   def test_edit
@@ -215,7 +239,11 @@ class GroupControllerTest < Test::Unit::TestCase
 
     group = Group.find(groups(:rainbow).id)
 
-    post :update, :id => groups(:rainbow).name, :group => {:full_name => new_full_name, :name => new_name, :summary => new_summary}
+    post :update, :id => groups(:rainbow).name, :group => {
+      :name => new_name,
+      :full_name => new_full_name,
+      :summary => new_summary
+    }
     assert_response :redirect
     assert_redirected_to :action => 'edit', :id => groups(:rainbow)
 
@@ -314,7 +342,9 @@ class GroupControllerTest < Test::Unit::TestCase
   end
 
   def test_login_required
-    [:create, :edit, :destroy, :update].each do |action|
+    [:create, :edit, :destroy, :update,
+      :edit_featured_content, :feature_content, :update_featured_pages
+    ].each do |action|
       assert_requires_login(nil, @request.host) do |c|
         c.get action, :id => groups(:public_group).name
       end
@@ -362,5 +392,48 @@ class GroupControllerTest < Test::Unit::TestCase
     get :show
     assert_select "a[href=?]", @controller.page_url(group_page), false
   end
+
+  def test_edit_featured_content
+    login_as :blue
+    get :edit_featured_content, :mode => "expired", :id => groups(:animals).name
+    assert_select "tr.even", false, "No content should be expired so far."
+    get :edit_featured_content, :id => groups(:animals).name
+    assert_select "tr.even", false, "No content should be featured so far."
+    get :edit_featured_content, :mode => "unfeatured", :id => groups(:animals).name
+    assert_select "tr.even"
+    tr = css_select("tr.even").first
+    id_input = css_select(tr, "input#featured_content_id").first
+    id = id_input.attributes["value"]
+    feature_me = Page.find(id)
+    assert feature_me.valid?
+
+    get :feature_content, :id => groups(:animals).name, :featured_content => {
+      :id => feature_me.id,
+      :expires => Time.now + 1.year,
+      :mode => "feature"
+    }
+
+    get :edit_featured_content, :id => groups(:animals).name
+    assert_select "tr.even"
+    tr = css_select("tr.even").first
+    id_input = css_select(tr, "input#featured_content_id").first
+    id = id_input.attributes["value"]
+    assert_equal feature_me, Page.find(id)
+
+    get :feature_content, :id => groups(:animals).name, :featured_content => {
+      :id => feature_me.id,
+      :mode => "unfeature"
+    }
+
+    get :edit_featured_content, :mode => "expired", :id => groups(:animals).name
+    assert_select "tr.even", false, "No content should be expired so far."
+    get :edit_featured_content, :id => groups(:animals).name
+    assert_select "tr.even", false, "No content should be featured so far."
+    get :edit_featured_content, :mode => "unfeatured", :id => groups(:animals).name
+    assert_select "tr.even"
+
+  end
+
+# TODO: test featuring already featured content, expiring features and so on.
 
 end
