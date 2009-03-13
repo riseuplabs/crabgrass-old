@@ -23,10 +23,19 @@ class Network < Group
 #  That's why we change the put the network_id into the site  
 # belongs_to :site
    has_many :sites 
- 
+  
   # returns true if thing is part of the network
   def has?(thing)
-    return true if thing.belongs_to_network?(self)
+    thing.belongs_to_network?(self) ? true : false
+  end
+  
+  def pages_for_network
+    own_pages = pages
+    groups_pages = []
+    self.groups.each do |group|
+      groups_pages << group.pages
+    end  
+    (own_pages | groups_pages).uniq.flatten!
   end
   
    # only this method should be used for adding groups to a network

@@ -61,7 +61,8 @@ class Activity < ActiveRecord::Base
   named_scope :newest, {:order => 'created_at DESC', :limit => 10}
 
   named_scope :unique, {:group => '`key`'}
-  
+
+=begin  
   # for current_user's dashboard
   #
   # show all activity for:
@@ -79,7 +80,27 @@ class Activity < ActiveRecord::Base
       current_user.all_group_id_cache
     ]}
   }
-
+=end
+  
+  # for current_user's dashboard IN SITE MODE
+  #
+  # show all activity for:
+  #
+  # (1) subject is current_user
+  # (2) subject is friend of current_user
+  # (3) subject is a group current_user is in. 
+  #
+  named_scope :for_dashboard, lambda {|current_user,site|
+    {:conditions => [
+      "(subject_type = 'User'  AND subject_id = ?) OR
+       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+       (subject_type = 'Group' AND subject_id IN (?))",
+      current_user.id, current_user.friend_id_cache, Activity::PRIVATE,
+      site.network.group_ids
+    ]}
+  }
+  
+  
   # for user's landing page
   #
   # show all activity for:
@@ -103,7 +124,9 @@ class Activity < ActiveRecord::Base
       ]}
     end
   }
-
+  
+  
+  
   # for group's landing page
   #
   # show all activity for:

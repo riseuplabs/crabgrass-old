@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     no_access = false
     things.each do |thing|
       break if no_access == true
-      no_access = true if network.has?(thing) || (thing.kind_of?(Network) && thing != network)
+      no_access = true if !network.has?(thing) || (thing.kind_of?(Network) && thing != network)
     end
     raise PermissionDenied.new if no_access
   end

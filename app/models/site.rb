@@ -46,6 +46,13 @@ class Site < ActiveRecord::Base
     Site.find :all
   end
 
+  before_save :ensure_network
+  
+  def ensure_network
+    self.network = Network.first
+  end
+  
+  
   
   def self.default
     @default_site ||= 

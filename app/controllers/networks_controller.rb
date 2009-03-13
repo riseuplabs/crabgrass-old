@@ -4,10 +4,14 @@ class NetworksController < GroupsController
 
   def list
     letter_page = params[:letter] || ''
-    @networks = Network.visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+    
+    @networks = [current_site.network]
+    # we don't need this, as long as we have sites
+    # @networks = Network.visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
 
     # get the starting letters of all networks
-    networks_with_names = Network.visible_by(current_user).names_only
+    networks_with_names = [Network.visible_by(current_user).find(@networks[0].id)]
+    # networks_with_names = Network.visible_by(current_user).names_only
     @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
