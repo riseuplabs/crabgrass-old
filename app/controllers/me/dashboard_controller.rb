@@ -4,7 +4,7 @@ class Me::DashboardController < Me::BaseController
     params[:path] = ['descending', 'updated_at'] if params[:path].empty?
     params[:path] += ['limit','40']
     
-    # Sites mode
+    # Sites mode    
     groups = [current_site.network] | current_site.network.groups
     @pages = Page.find_by_path(params[:path], options_for_groups(groups))
  #  @pages = Page.find_by_path(params[:path], options_for_me)  
