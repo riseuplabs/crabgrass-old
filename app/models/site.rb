@@ -89,13 +89,14 @@ class Site < ActiveRecord::Base
 # RELATIONS
 #  
   
-  # [TODO] a user can be autoregistered in site.network
-  # def add_user
-  # end
+  # a user can be autoregistered in site.network
+   def add_user!(user)
+     self.network.add_user!(user)
+   end
   
   # returns true if the thing is part of the network
   def has? arg
-    self.site.has?(arg)
+    self.network.has?(arg)
   end
   
   
