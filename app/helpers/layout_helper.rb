@@ -56,24 +56,15 @@ module LayoutHelper
 
   def crabgrass_stylesheets
     lines = []
-    lines << stylesheet_link_tag(
-      'core/reset',
-      'core/layout',
-      'core/ui_elements',
-      'core/design',
-      'core/landing',
-      'core/page',
-      'core/wiki',
-      'core/images',
-      :cache => 'core'
-    )
+
+    lines << stylesheet_link_tag('screen.css')
     lines << stylesheet_link_tag('icon_png')
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
     #lines << context_styles
     lines << @content_for_style
     lines << '</style>'
-    lines << stylesheet_link_tag("site/#{current_site.domain}/main.css")
+    # lines << stylesheet_link_tag("site/#{current_site.domain}/main.css")
     lines << '<!--[if IE 6]>'
     lines << stylesheet_link_tag('ie/ie6')
     lines << stylesheet_link_tag('icon_gif')

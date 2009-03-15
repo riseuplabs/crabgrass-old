@@ -131,3 +131,5 @@ ActiveRecord::Base.partial_updates = false
 # build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
 
+# we'll handle sass template handling ourselves
+Sass::Plugin.options[:never_update] = true

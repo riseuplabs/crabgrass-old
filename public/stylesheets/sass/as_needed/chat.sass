@@ -1,0 +1,68 @@
+@import constants.sass
+
+#conversation
+  :overflow auto
+  :font-size 11px
+  :height 400px
+  :line-height 14px
+  :border 1px solid #ccc
+  :background #fff
+  :margin-right 10px
+  :margin-bottom 10px
+
+  .message
+    .time
+      :color #aaa
+
+    .sender
+      :color #66f
+      :font-weight bold
+
+    .content
+      :color #333
+
+    &.sys
+      .time
+        :color #aaa
+
+      .sender
+        :color #5b0
+        :font-weight bold
+
+      .content
+        :color #5b0
+        :font-weight bold
+
+    &.action .content
+      :color #66f
+      :font-weight bold
+
+
+#userlist
+  :float right
+  :overflow auto
+  :width 160px
+  :height 400px
+  :background-color #fff
+  :line-height 14px
+  :border 1px solid #ccc
+
+  .user
+    :border-bottom 1px solid #ccc
+    :padding 4px
+
+
+td#handle
+  :padding 0 6px
+  :font-weight bold
+
+
+table#typebox
+  :background #efefef
+  :width 100%
+
+
+#entryfield
+  :font-size 14px
+  :width 100%
+

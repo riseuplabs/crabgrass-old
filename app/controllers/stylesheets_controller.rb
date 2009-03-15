@@ -4,15 +4,20 @@ class StylesheetsController < ApplicationController
 
   def site_specific
     path = params[:path].clone
-    site_domain = path.shift
-    site = Site.find_by_domain(site_domain)
-    
-    if site.nil?
-      raise ActionController::RoutingError, "This looks like site-specific css, but the site does not exist - \"#{request.path}\""
-    end
-    
-    # fresh_when(:last_modified => Time.now)
-    render :text => "" #site.stylesheet_render_options(path)
+    sass_root_path = './public/stylesheets/sass'
+    sass_load_paths = ['.', sass_root_path]
+
+    fpath = File.join([sass_root_path] + path).gsub(".css", ".sass")
+    engine = Sass::Engine.new(File.read(fpath), :load_paths => sass_load_paths)
+
+    # site_domain = path.shift
+    # site = Site.find_by_domain(site_domain)
+
+    # if site.nil?
+    #       raise ActionController::RoutingError, "This looks like site-specific css, but the site does not exist - \"#{request.path}\""
+    #     end
+
+    render :text => engine.render
   end
 
   private

@@ -1,4 +1,7 @@
 /* holy grail 3 column settings */
+/* seems to be unused right now, but if it is, colors values should be
+   turned into parameters through sass */
+
 .holygrail {
   background:#CDEAFF;    	/* Right column background colour */
 }
