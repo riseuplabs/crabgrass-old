@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090306235933) do
+ActiveRecord::Schema.define(:version => 20090311171519) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -505,6 +505,7 @@ ActiveRecord::Schema.define(:version => 20090306235933) do
     t.text    "evil"
     t.boolean "tracking"
     t.boolean "default",                            :default => false
+    t.integer "network_id",           :limit => 11
   end
 
   create_table "taggings", :force => true do |t|
