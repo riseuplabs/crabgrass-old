@@ -32,6 +32,10 @@ class Group < ActiveRecord::Base
     true if self.networks.include?(network)
   end
   
+  named_scope :visible_on, lambda { |site| 
+    { :conditions => ["groups.id IN (?)",site.network.group_ids] }
+  }
+  
   
   attr_accessible :name, :full_name, :short_name, :summary, :language
 
@@ -443,8 +447,6 @@ class Group < ActiveRecord::Base
   ######################################################
   ## temp stuff for profile transition
   ## should be removed eventually
-    
-
   def publicly_visible_group
     profiles.public.may_see?
   end

@@ -83,4 +83,77 @@ class Site < ActiveRecord::Base
   def evil
     read_attribute(:evil) || write_attribute(:evil, {})
   end
+
+  
+  
+  
+# 
+# RELATIONS
+#  
+  
+  # [TODO] a user can be autoregistered in site.network
+  # def add_user
+  # end
+  
+  # returns true if the thing is part of the network
+  def has? arg
+    self.site.has?(arg)
+  end
+  
+  
+  # gets all the users in the site
+  def users
+    self.network.users
+  end
+  
+  # gets all the user ids in the site #TODO cache this
+  def user_ids
+    self.network.user_ids
+  end
+  
+  # gets all the pages for all the groups in the site
+  def pages
+    pages = []
+    self.network.pages.each do |page|
+      pages <<  page unless pages.include?(page)
+    end
+    self.network.users.each do |user|
+      user.pages.each do |page|
+        pages << page unless pages.include?(page)
+      end
+    end
+    pages
+  end
+ 
+  
+  # gets all the groups in the site's network
+  def groups
+    self.network.groups
+  end
+  
+  # gets all the ids of all the groups in the site
+  def group_ids
+    self.network.group_ids
+  end
+  
+  # gets the intersection of the groups visible for user and the site's groups
+  def groups_for_user(user)
+    Group.visible_by(user) &  groups
+  end
+  
+  # gets the intersection of the user's contacts with the site's users
+  def friends_for_user(user)
+    user.contacts & users
+  end
+  
+  # gets the intersection of the user's peers with the site's users
+  def peers_for_user(user)
+    user.pears & users
+  end
+  
+  # gets the intersection of the user's pages with the site's pages
+  def pages_for_user(user)
+    user.pages & pages
+  end
+  
 end

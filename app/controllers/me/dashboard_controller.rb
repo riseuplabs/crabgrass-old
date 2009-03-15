@@ -5,8 +5,9 @@ class Me::DashboardController < Me::BaseController
     params[:path] += ['limit','40']
     
     # Sites mode
-    groups = [current_site.network] | current_site.network.groups
-    @pages = Page.find_by_path(params[:path], options_for_groups(groups))
+    groups = [current_site.network] | current_site.groups_for_user(current_user)
+    pages = Page.find_by_path(params[:path], options_for_me)
+    @pages = pages & current_site.pages
  #  @pages = Page.find_by_path(params[:path], options_for_me)  
     @activities = Activity.for_dashboard(current_user,current_site).newest.unique.find(:all, :limit => 12)
     @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_groups(groups, :flow => :announcement))

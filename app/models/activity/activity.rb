@@ -89,16 +89,17 @@ class Activity < ActiveRecord::Base
   # (1) subject is current_user
   # (2) subject is friend of current_user
   # (3) subject is a group current_user is in. 
-  #
+  # (4) take the intersection with the contents of site
   named_scope :for_dashboard, lambda {|current_user,site|
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
        (subject_type = 'Group' AND subject_id IN (?))",
-      current_user.id, current_user.friend_id_cache, Activity::PRIVATE,
-      site.network.group_ids
+      current_user.id, (current_user.friend_id_cache & site.user_ids), Activity::PRIVATE,
+      (site.group_ids & current_user.all_group_id_cache)
     ]}
   }
+  
   
   
   # for user's landing page
@@ -111,19 +112,20 @@ class Activity < ActiveRecord::Base
   # (2) subject matches 'user'
   #     (AND activity.public == true)
   #
-  named_scope :for_user, lambda {|user, current_user|
-    if current_user and (current_user.friend_of?(user) or current_user == user)
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access != ?",
-        user.id, Activity::PRIVATE
-      ]}
-    else
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access = ?",
-        user.id, Activity::PUBLIC
-      ]}
-    end
+  named_scope :for_user, lambda {|user, current_user, site|
+   if(current_user and current_user.friend_of?(user) or current_user == user)
+     {:conditions => [
+       "subject_type = 'User' AND subject_id = ? AND access != ?",
+       user.id, Activity::PRIVATE
+     ]} 
+   else
+     {:conditions => [
+       "subject_type = 'User' AND subject_id = ? AND access = ?",
+       user.id, Activity::PUBLIC
+     ]}
+   end
   }
+  
   
   
   

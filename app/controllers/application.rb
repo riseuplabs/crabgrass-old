@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
     network = current_site.network || Network.first || raise(current_site.inspect)
     
     things = []    
-    things << @group if @group
+ #   things << @group if @group
     things << @page if @page
     things << @asset if @asset
     things << @committee if @committee
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
       break if no_access == true
       no_access = true if !network.has?(thing) || (thing.kind_of?(Network) && thing != network)
     end
-    raise PermissionDenied.new if no_access
+    raise "you are leaving your site" if no_access
   end
 #####
   

@@ -161,7 +161,13 @@ class Page < ActiveRecord::Base
   
   # returns true if self is part of given network
   def belongs_to_network?(network)
-    return true if self.groups_with_access(:view).include?(network)
+    groups = self.groups_with_access(:view)
+    groups | self.groups_with_access(:edit)
+    groups | self.groups_with_access(:admin)
+    groups | self.groups_with_access(:comment)
+    
+    groups.include?(network) ? true : false 
+    true
   end
 
 ####  

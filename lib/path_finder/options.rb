@@ -78,10 +78,12 @@ module PathFinder::Options
     }
     if logged_in?
       options[:user_ids] = [current_user.id]
-      options[:group_ids] = current_user.all_group_ids
+   #  options[:group_ids] = current_user.all_group_ids
+      options[:group_ids] = current_user.all_group_ids # & current_site.group_ids
       options[:current_user] = current_user
     else
       options[:public] = true
+      options[:group_ids] = current_site.network.group_ids
     end
     options
   end
