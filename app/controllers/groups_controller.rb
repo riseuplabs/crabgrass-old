@@ -26,22 +26,15 @@ class GroupsController < ApplicationController
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-  
-  
-    @groups = current_site.network.groups.visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
-  #  @groups = Group.visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
+    @groups = Group.visible_on(current_site).visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
 
     # get the starting letters of all groups
-    groups_with_names = current_site.network.groups.visible_by(user).only_groups.names_only
+    groups_with_names = Group.visible_on(current_site).visible_by(user).only_groups.names_only
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
   end
 
   def my
-    
-    @my_groups = current_user.groups.alphabetized('')
-    @groups = @my_groups && current_site.network.groups.visible_by(current_user).alphabetized('')
-    
-    # @groups = current_user.groups.alphabetized('')
+    @groups = current_user.groups.visible_on(current_site).alphabetized('')
     @groups.each {|g| g.display_name = g.parent.display_name + "+" + g.display_name if g.committee?}
   end
 

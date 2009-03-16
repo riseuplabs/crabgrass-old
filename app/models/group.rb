@@ -29,11 +29,13 @@ class Group < ActiveRecord::Base
 
   # returns true if self is part of a specific network
   def belongs_to_network?(network)
-    true if self.networks.include?(network)
+    ( self.networks.include?(network) or 
+      self == network )
   end
   
   named_scope :visible_on, lambda { |site| 
-    { :conditions => ["groups.id IN (?)",site.network.group_ids] }
+    { :conditions => ["(groups.id IN (?) OR groups.parent_id IN (?)",
+      site.network.group_ids, site.network.group_ids] }
   }
   
   

@@ -5,25 +5,17 @@ class NetworksController < GroupsController
   def list
     letter_page = params[:letter] || ''
     
-    @networks = Network.visible_on(current_site).visible_by(current_user).names_only
-    
-    # we don't need this, as long as we have sites
-    # @networks = Network.visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+    @networks = Network.visible_on(current_site).visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
 
     # get the starting letters of all networks
-    networks_with_names = [Network.visible_on(current_site).visible_by(current_user).find(@networks[0].id)]
-    # networks_with_names = Network.visible_by(current_user).names_only
+    networks_with_names = Network.visible_on(current_site).visible_by(current_user).names_only
     @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
   def create
     @group_type = 'network'
 
-    # [NOTE] next three lines are the site-network -binding
-    if current_site.network
-      flash_message :exception => "We don't need another network."
-      redirect_to url_for_group(current_site.network)
-    elsif request.get?
+    if request.get?
       @group = Network.new(params[:group])
     elsif request.post?
       if group = Group.find_by_id(params[:group_id])
@@ -35,6 +27,7 @@ class NetworksController < GroupsController
       else
         @group.add_user!(current_user)
       end
+      current_site.network.add_group!(@group)
       flash_message :success => '%s was successfully created.'.t % 'Network'.t
       redirect_to url_for_group(@group)
     end
