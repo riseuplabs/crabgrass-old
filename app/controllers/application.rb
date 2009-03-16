@@ -70,16 +70,6 @@ class ApplicationController < ActionController::Base
     raise "you are leaving your site" if no_access
   end
   
-  # makes it so, that a user, lurking around on a site, is eventually added to the site.network
-  #
-  #
-  before_filter :ensure_site_membership
-  def ensure_site_membership
-    unless current_site.users.include?(current_user)
-      current_site.add_user!(current_user)
-    end
-  end
-  
 #####
   
   

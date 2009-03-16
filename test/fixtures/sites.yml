@@ -27,6 +27,7 @@ localhost:
   - Gallery
   - ExternalVideo
   pagination_size: 29
+  network_id: 3001
 testhost:
   id: 2
   name:  crabgrass
@@ -55,3 +56,4 @@ testhost:
   - ExternalVideo
   - Article
   pagination_size: 29
+  network_id: 3002
