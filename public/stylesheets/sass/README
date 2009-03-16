@@ -1,0 +1,3 @@
+DO NOT INCLUDE '@import constants.sass' IN ANY SASS FILES
+
+or this will break the custom appearances system, which loads and overrides this file manually

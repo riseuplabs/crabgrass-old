@@ -106,6 +106,12 @@ Rails::Initializer.run do |config|
   ###     If you want to control the load order, change their names!
   ###
 
+  # we want handle sass templates ourselves
+  # so we must not load the 'plugins/rails.rb' part of Sass
+  module Sass
+    RAILS_LOADED = true
+  end
+
   ###
   ### (5) INITIALIZERS
   ###     config/initializers/*.rb
@@ -130,6 +136,3 @@ ActiveRecord::Base.partial_updates = false
 
 # build an array of PageClassProxy objects
 PAGES = PageClassRegistrar.proxies.dup.freeze
-
-# we'll handle sass template handling ourselves
-Sass::Plugin.options[:never_update] = true

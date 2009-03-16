@@ -33,6 +33,9 @@ class Site < ActiveRecord::Base
 #  That's why we change the put the network_id into the site
 #  has_one :network
   belongs_to :network
+
+  # associate with appearances
+  belongs_to :custom_appearance
   
   serialize :translators, Array
   serialize :available_page_types, Array

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090311171519) do
+ActiveRecord::Schema.define(:version => 20090316014728) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -110,6 +110,13 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.string  "fingerprint"
     t.string  "name"
     t.string  "description"
+  end
+
+  create_table "custom_appearances", :force => true do |t|
+    t.text     "parameters"
+    t.integer  "parent_id",  :limit => 11
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "discussions", :force => true do |t|
@@ -506,6 +513,7 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.boolean "tracking"
     t.boolean "default",                            :default => false
     t.integer "network_id",           :limit => 11
+    t.integer "custom_appearance_id", :limit => 11
   end
 
   create_table "taggings", :force => true do |t|
