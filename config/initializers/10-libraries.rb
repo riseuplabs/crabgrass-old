@@ -1,4 +1,4 @@
-%w(string core action_pack active_record engines sass).each do |file|
+%w(string core action_pack active_record engines).each do |file|
   require "#{RAILS_ROOT}/lib/extension/#{file}"
 end
 

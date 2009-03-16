@@ -27,6 +27,7 @@ localhost:
   - Gallery
   - ExternalVideo
   pagination_size: 29
+  custom_appearance_id: 2
 testhost:
   id: 2
   name:  crabgrass
