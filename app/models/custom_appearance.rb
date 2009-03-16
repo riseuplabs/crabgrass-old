@@ -15,7 +15,7 @@ end
 class CustomAppearance < ActiveRecord::Base
   CUSTOM_CSS_PATH = 'themes'
   CSS_ROOT_PATH = './public/stylesheets'
-  
+
   serialize :parameters, Hash
 
   def sass_override_text
@@ -23,22 +23,22 @@ class CustomAppearance < ActiveRecord::Base
     parameters.each {|k, v| text << %Q[!#{k} = "#{v}"\n]}
     text << "\n"
   end
-  
+
   def write_css_cache(css_path, css_text)
-    # don't overwrite    
+    # don't overwrite
     return if has_cached_css?(css_path)
 
     write_path = cached_css_full_path(css_path)
     write_dir = File.dirname(write_path)
     FileUtils.mkpath(write_dir)
-    File.open(write_path, "w+") {|f| f.write css_text} 
+    File.open(write_path, "w+") {|f| f.write css_text}
   end
-  
+
   # returns true if this custom appearances has +css_path+ file cached.
   def has_cached_css?(css_path)
     File.exists?(cached_css_full_path(css_path))
   end
-  
+
   # returns the location where css specific for this CustomAppearance should be stored
   # this path is relative to RAILS_ROOT
   # :cal-seq:
@@ -48,7 +48,7 @@ class CustomAppearance < ActiveRecord::Base
     css_path = css_path + ".css" unless css_path =~ /\.css$/
     File.join(CSS_ROOT_PATH, cached_css_root, css_path)
   end
-  
+
   # returns the location where css specific for this CustomAppearance should be stored
   # this path is relative to css root (like 'public/stylesheets')
   # :cal-seq:
@@ -58,7 +58,7 @@ class CustomAppearance < ActiveRecord::Base
     css_path = css_path + ".css" unless css_path =~ /\.css$/
     File.join(cached_css_root, css_path)
   end
-  
+
   # returns the root location for cached css file specific to this CustomAppearance
   # the updated_at timestamp is used to generate th path
   # :cal-seq:
@@ -87,7 +87,7 @@ class CustomAppearance < ActiveRecord::Base
 
     def generate_css(css_path, appearance = nil)
       appearance ||= CustomAppearance.default
-      
+
       full_sass_path = File.join(SASS_ROOT_PATH, css_path).gsub(".css", ".sass")
       sass_text = ""
 

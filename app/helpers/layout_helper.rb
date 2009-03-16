@@ -44,16 +44,16 @@ module LayoutHelper
       stylesheet_link_tag(path)
     end
   end
-  
+
   # custom stylesheet
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
-    sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}    
+    sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
     sheets.collect {|s| cached_stysheet_link_tag(s)}
-  end 
- 
+  end
+
   # crabgrass_stylesheets()
   # this is the main helper that is in charge of returning all the needed style
   # elements for HTML>HEAD. There are five (5!) types of stylings:
