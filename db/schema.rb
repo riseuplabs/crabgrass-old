@@ -589,6 +589,7 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.datetime "tracked_at"
   end
 
+  execute "ALTER TABLE trackings ENGINE = MyISAM"
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id",       :limit => 11
     t.integer  "user_id",       :limit => 11
