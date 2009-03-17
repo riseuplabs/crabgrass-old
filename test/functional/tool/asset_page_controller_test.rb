@@ -5,13 +5,14 @@ require 'asset_page_controller'
 class AssetPageController; def rescue_action(e) raise e end; end
 
 class Tool::AssetControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups
+  fixtures :users, :groups, :sites
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
     @controller = AssetPageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)

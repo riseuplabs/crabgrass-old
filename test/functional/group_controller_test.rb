@@ -13,6 +13,7 @@ class GroupControllerTest < Test::Unit::TestCase
   def setup
     @controller = GroupController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
@@ -49,7 +50,7 @@ class GroupControllerTest < Test::Unit::TestCase
     
     # show nothing for a private group you don't belong to
     get :show, :id => groups(:private_group).name
-    assert_response :success
+    assert_response :missing
 #    assert_template 'show_nothing'
   end
 
@@ -81,15 +82,15 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_show_private_when_not_logged_in
     get :show, :id => groups(:private_group).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private group"
     
     get :show, :id => groups(:warm).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private committee"
 
     get :show, :id => groups(:private_committee).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private committee of public group"    
   end
 
@@ -310,7 +311,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_login_required
     [:create, :edit, :destroy, :update].each do |action|
-      assert_requires_login do |c|
+      assert_requires_login(nil, @request.host) do |c|
         c.get action, :id => groups(:public_group).name
       end
     end

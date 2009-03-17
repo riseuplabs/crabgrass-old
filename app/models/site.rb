@@ -46,12 +46,6 @@ class Site < ActiveRecord::Base
     Site.find :all
   end
 
-  before_save :ensure_network
-
-  def ensure_network
-    self.network = Network.first if self.network.nil?
-  end
-
   def self.default
     @default_site ||=
       Site.find(:first, :conditions => ["sites.default = '?'", true]) ||

@@ -10,6 +10,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
   def setup
     @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
     HTMLDiff.log_to_stdout = false # set to true for debugging
   end

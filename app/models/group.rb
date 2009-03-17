@@ -34,8 +34,10 @@ class Group < ActiveRecord::Base
   end
   
   named_scope :visible_on, lambda { |site| 
-    { :conditions => ["groups.id IN (?) OR groups.parent_id IN (?)",
-      site.network.group_ids, site.network.group_ids] }
+    site.network.nil? ? 
+      {} :
+      { :conditions => ["groups.id IN (?) OR groups.parent_id IN (?)",
+        site.network.group_ids, site.network.group_ids] }
   }
   
   

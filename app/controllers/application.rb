@@ -65,10 +65,10 @@ class ApplicationController < ActionController::Base
     
     no_access = false
     things.each do |thing|
-      break if no_access == true
-      no_access = true if !network.has?(thing)
+      if !network.has?(thing)
+        raise "You (#{current_user.login}) are leaving #{current_site.domain} accessing #{thing}"
+      end
     end
-    raise "you are leaving your site accessing #{things}" if no_access
   end
   
 #####

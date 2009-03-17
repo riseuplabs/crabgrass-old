@@ -94,7 +94,7 @@ class Activity < ActiveRecord::Base
   # (2) subject matches 'user'
   #     (AND activity.public == true)
   #
-  named_scope :for_user, lambda {|user, current_user, site|
+  named_scope :for_user, lambda {|user, current_user|
    if(current_user and current_user.friend_of?(user) or current_user == user)
      {:conditions => [
        "subject_type = 'User' AND subject_id = ? AND access != ?",

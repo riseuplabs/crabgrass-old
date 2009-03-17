@@ -10,6 +10,7 @@ class Tool::RateManyPageControllerTest < Test::Unit::TestCase
   def setup
     @controller = RateManyPageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
   end
 

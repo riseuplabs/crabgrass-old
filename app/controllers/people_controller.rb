@@ -26,7 +26,7 @@ class PeopleController < ApplicationController
   def peers
     return unless logged_in?
 
-    @users = (User.peers_of(current_user).on(current_site).alphabetized(@letter_page)&site_users).paginate :page => @page_number, :per_page => @per_page
+    @users = User.peers_of(current_user).on(current_site).alphabetized(@letter_page).paginate :page => @page_number, :per_page => @per_page
      # what letters can be used for pagination
     @pagination_letters = (User.peers_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end

@@ -10,6 +10,7 @@ class Tool::InfoPageControllerTest < Test::Unit::TestCase
   def setup
     @controller = InfoPageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
   end
 

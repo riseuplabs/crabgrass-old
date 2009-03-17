@@ -17,6 +17,7 @@ class PagesControllerTest < Test::Unit::TestCase
   def setup
     @controller = PagesController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
