@@ -27,7 +27,7 @@ class NetworksController < GroupsController
       else
         @group.add_user!(current_user)
       end
-      current_site.network.add_group!(@group)
+      current_site.network.add_group!(@group) unless current_site.network.nil?
       flash_message :success => '%s was successfully created.'.t % 'Network'.t
       redirect_to url_for_group(@group)
     end

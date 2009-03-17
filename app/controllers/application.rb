@@ -54,8 +54,9 @@ class ApplicationController < ActionController::Base
   # which is everywhere, where has_access! is called
   before_filter :access_for_site?
   def access_for_site?
-    network = current_site.network || Network.first || raise(current_site.inspect)
-    
+    return true if current_site.network.nil?
+    network = current_site.network
+
     things = []    
     things << @group if @group
     things << @page if @page

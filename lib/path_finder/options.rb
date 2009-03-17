@@ -78,12 +78,16 @@ module PathFinder::Options
     }
     if logged_in?
       options[:user_ids] = [current_user.id]
-   #  options[:group_ids] = current_user.all_group_ids
-      options[:group_ids] = current_user.all_group_ids # & current_site.group_ids
+      # TODO:
+      # this does not work for sites yet. Problems are:
+      # * we would need current_site.all_group_ids - including committees
+      options[:group_ids] = current_site.network.nil? ?
+        current_user.all_group_ids :
+        current_user.all_group_ids # & current_site.group_ids
       options[:current_user] = current_user
     else
       options[:public] = true
-      options[:group_ids] = current_site.network.group_ids
+      # options[:group_ids] = current_site.group_ids unless current_site.network.nil?
     end
     options
   end

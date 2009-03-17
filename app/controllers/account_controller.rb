@@ -41,7 +41,7 @@ class AccountController < ApplicationController
       else
         session[:language_code] = previous_language
       end
-      current_site.add_user!(current_user) unless current_site.users.include?(current_user)
+      current_site.add_user!(current_user) unless current_site.network.nil? or current_site.users.include?(current_user)
       redirect_to params[:redirect] || {:controller => '/me/dashboard', :action => 'index'}
     else
       flash_message :title => "Could not log in"[:login_failed],

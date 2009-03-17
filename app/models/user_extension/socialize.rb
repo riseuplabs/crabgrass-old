@@ -44,16 +44,6 @@ module UserExtension::Socialize
         }
       }
 
-      named_scope :on, lambda { |site|
-        if site.network.nil?
-          {}
-        else
-          { :joins => :memberships,
-            :conditions => ["memberships.group_id = ?", site.network.id] 
-          }
-        end
-      }
-
       # discussion
       has_one :discussion, :as => :commentable
       #has_many :discussions, :through => :user_relations

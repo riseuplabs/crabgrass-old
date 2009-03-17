@@ -20,11 +20,7 @@ class Me::InboxController < Me::BaseController
   def list
     params[:path] = ['descending', 'updated_at'] if params[:path].empty?
   
-    # Site mode
-    pages = Page.paginate_by_path(params[:path], options_for_inbox(:page => params[:page]))
-    @pages = current_site.network.pages_for_network
-    
-#    @pages = Page.paginate_by_path(params[:path], options_for_inbox(:page => params[:page]))
+    @pages = Page.paginate_by_path(params[:path], options_for_inbox(:page => params[:page]))
     add_user_participations(@pages)
     handle_rss(
       :title => 'Crabgrass Inbox',

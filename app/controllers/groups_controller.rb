@@ -9,17 +9,7 @@ class GroupsController < ApplicationController
     user = logged_in? ? current_user : nil
 
      # TODO maybe create a cache for all the site's groups?
-     @groups = current_site.network.groups.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
-    
-    # This is, what we had
-#    @_groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])    
-    
-    #  This is basically, what we want to do    
-#    @all_groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
-#    @groups = []
-#    @all_groups.each do |group|
-#      @groups << group if current_site.network.groups.include?(group)
-#    end
+     @groups = Group.visible_on(current_site).visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
   end
 
   def directory
@@ -43,12 +33,6 @@ class GroupsController < ApplicationController
     @group_class = get_group_class
     @group_type = @group_class.to_s.downcase
 
-       # network - binding
-    if @group_type == "network"
-      raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
-    end
-    @network = current_site.network || Network.find(:first)
-
     @parent = get_parent
 
     if request.get?
@@ -60,7 +44,7 @@ class GroupsController < ApplicationController
       end
 
       # network - binding
-      @network.groups << @group
+      current_site.network.groups << @group unless current_site.network.nil?
 
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.add_user!(current_user)

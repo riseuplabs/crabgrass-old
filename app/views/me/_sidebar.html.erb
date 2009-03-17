@@ -43,18 +43,13 @@
 <%- cache(me_cache_key) do -%>
   <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.on(current_site).networks } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.on(current_site).select{|g| g.network?}} %>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.visible_on(current_site).normals } %>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.visible_on(current_site).committees } %>
 
-  <%- if current_site.network.nil? -%>
-    <%- contacts = current_user.contacts -%>
-  <%- else -%>
-    <%- contacts = current_site.network.users & current_user.contacts -%>
-  <%- end -%>
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => contacts } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => User.contacts_of(current_user).on(current_site) } %>
 
 <%- end -%>
 
