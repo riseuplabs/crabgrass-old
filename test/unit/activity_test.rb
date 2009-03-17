@@ -4,7 +4,7 @@ class ActivityTest < ActiveSupport::TestCase
   fixtures :users, :groups, :activities, :memberships, :federatings, :sites
 
   def current_site
-    Site.find :first
+    Site.find_by_network_id(3002)  # we are using the second site with animals here.
   end
 
   def test_contact

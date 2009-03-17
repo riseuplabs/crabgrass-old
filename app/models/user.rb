@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   include UserExtension::AuthenticatedUser
 
   # named scopes
-  named_scope :recent, :order => 'created_at DESC', :conditions => ["created_at > ?", RECENT_SINCE_TIME]
+  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
 
   # alphabetized and (optional) limited to +letter+
   named_scope :alphabetized, lambda {|letter|

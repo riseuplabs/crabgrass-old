@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   # - Group
   # - Page
   # - Committee
-  # - Asset
+  # - Asset not right now.
   # which is everywhere, where has_access! is called
   before_filter :access_for_site?
   def access_for_site?
@@ -59,14 +59,17 @@ class ApplicationController < ActionController::Base
 
     things = []    
     things << @group if @group
-    things << @page if @page
-    things << @asset if @asset
+
+    # not checking pages so far because page_finder has not been limited to site yet
+    # things << @page if @page
+    # not checking assets so far because we can't figure out which assets belong to site
+    # things << @asset if @asset
     things << @committee if @committee
     
     no_access = false
     things.each do |thing|
       if !network.has?(thing)
-        raise "You (#{current_user.login}) are leaving #{current_site.domain} accessing #{thing}"
+        raise "You (#{current_user.login}) are leaving #{current_site.domain} accessing #{thing}: #{thing.name}"
       end
     end
   end
