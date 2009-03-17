@@ -14,7 +14,7 @@ class RequestToFriend < Request
     if Contact.find_by_user_id_and_contact_id(created_by_id, recipient_id)
       errors.add_to_base('Contact already exists')
     end
-    if RequestToFriend.find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
+    if RequestToFriend.appearing_as_state(state).find_by_created_by_id_and_recipient_id(created_by_id, recipient_id)
       errors.add_to_base('Request already exists for %s'[:request_exists_error] % recipient.name)
     end
   end

@@ -15,6 +15,11 @@ class AccountController < ApplicationController
   end
 
   def login
+    if !( params[:redirect].empty? || params[:redirect] =~ /^http:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
+      flash_message(:title => 'Illegal redirect'[:illegal_redirect],
+      :error => "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."[:redirect_to_foreign_domain]%{ :url => params.delete(:redirect)})
+      redirect_to params and return
+    end
     return unless request.post?
     previous_language = session[:language_code]
     reset_session # important!!

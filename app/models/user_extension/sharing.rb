@@ -164,6 +164,7 @@ module UserExtension::Sharing
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
+    options[:notify] = true if options[:message] or options[:send_emails]
 
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
@@ -180,8 +181,8 @@ module UserExtension::Sharing
 
     ## add groups to page
     groups.each do |group|
-      users_succeeded = self.share_page_with_group!(page, group, options)
-      users_succeeded.each do |user|
+      users_to_pester = self.share_page_with_group!(page, group, options)
+      users_to_pester.each do |user|
         users_to_email << user if user.wants_notification_email?
       end
     end
@@ -226,9 +227,11 @@ module UserExtension::Sharing
     may_share!(page,user,options)
     attrs = {}
 
+    if options[:notify]
+      attrs[:inbox] = true
+    end
     if options[:message]
-      attrs[:notice] = {:user_login => self.login,
-        :message => options[:message], :time => Time.now}
+      attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
     end
 
     if options.key?(:access) # might be nil
@@ -255,17 +258,23 @@ module UserExtension::Sharing
     gpart.save! unless page.changed?
 
     # when we get here, the group should be able to view the page.
-    users_to_pester = group.users.select do |user|
-      self.may_pester?(user)
-    end
-    if options[:message]
-      attrs = {:notice => {:user_login => self.login,
-        :message => options[:message], :time => Time.now}}
+
+    attrs = {}
+    users_to_pester = []
+    if options[:notify]
+      attrs[:inbox] = true
+      users_to_pester = group.users.select do |user|
+        self.may_pester?(user)
+      end
+      if options[:message]
+        attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
+      end
       users_to_pester.each do |user|
         upart = page.add(user, attrs)
         upart.save! unless page.changed?
       end
     end
+
     users_to_pester # returns users to pester so they can get an email, maybe.
   end
 

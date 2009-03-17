@@ -409,6 +409,8 @@ class GreenCloth < RedCloth::TextileDoc
       all, a, b, c, d = $&, $1, $2, $3, $4
       if a =~ /<a\s/i # don't replace URL's that are already linked
         all
+      elsif c.nil?
+        all
       else
         first_char = a[0..0]
         if first_char =~ BRACKET_FORMATTERS and (first_char == c[-1..-1])

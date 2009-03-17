@@ -50,7 +50,7 @@ class ContactController < ApplicationController
   def fetch_user
     @user = User.find_by_login params[:id] if params[:id]
     @is_contact = (logged_in? and current_user.friend_of?(@user))
-    @past_request = RequestToFriend.created_by(@user).to_user(current_user).having_state('pending')
+    @past_request = RequestToFriend.created_by(@user).to_user(current_user).appearing_as_state('pending')
     true
   end
   

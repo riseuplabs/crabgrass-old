@@ -47,6 +47,17 @@ class Asset < ActiveRecord::Base
   ## ACCESS
   ##
   
+  # checks wether the given `user' has permission `perm' on this Asset.
+  # Permission to an Asset will be granted in any of the following ways:
+  #  * The Asset belongs to an AssetPage and the given `user' is given 
+  #    access to it
+  #  * The Asset is part of a Gallery with access for `user'
+  #  * The Asset is an attachment of a Page `user' may access.
+  # Return value:
+  #   returns always true
+  #   raises PermissionDenied if the user has no access.
+  # Note: This method is normally called through User#may! or the 
+  #       weaker User#may?
   def has_access! perm, user
     raise PermissionDenied unless self.page
     p = self.page.has_access!(perm, user)
@@ -76,6 +87,8 @@ class Asset < ActiveRecord::Base
   ## FINDERS
   ##
   
+  # Returns true if this Asset is currently the cover of the given `gallery'.
+  # A Gallery can only have one cover at a time.
   def is_cover_of? gallery
     raise ArgumentError.new() unless gallery.kind_of? Gallery
     showing = gallery.showings.find_by_asset_id(self.id)

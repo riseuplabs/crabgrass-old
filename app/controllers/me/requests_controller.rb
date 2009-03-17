@@ -15,7 +15,10 @@ class Me::RequestsController < Me::BaseController
   helper 'requests'
 
   def from_me
-    @requests = Request.created_by(current_user).having_state(params[:state]).by_created_at.paginate(:page => params[:page])
+    @requests = Request.created_by(current_user).appearing_as_state(params[:state]).by_created_at.paginate(:page => params[:page])
+
+    # let's be polite. don't tell them they are getting 'ignored'
+    @requests.each {|r| r.state = 'pending'.t} if params[:state] == 'pending'
   end
 
   def to_me

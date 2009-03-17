@@ -9,7 +9,9 @@
 
 <%= pagination_links(@incoming, :in_page) %>
 
-<h2><%= "Outgoing"[:outgoing] %></h2>
-<%= render :partial => 'requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
+<% unless params[:state] == 'ignored' -%>
+  <h2><%= "Outgoing"[:outgoing] %></h2>
+  <%= render :partial => 'requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
 
-<%= pagination_links(@outgoing, :out_page) %>
+  <%= pagination_links(@outgoing, :out_page) %>
+<% end -%>

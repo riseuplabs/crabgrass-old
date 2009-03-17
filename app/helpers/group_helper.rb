@@ -106,10 +106,12 @@ module GroupHelper
   
   def request_state_links
     hash = {:controller => params[:controller], :action => params[:action], :group_id => params[:group_id]}
+
     content_tag :div, link_line(
-      link_to_active(:pending.t, hash.merge(:state => 'pending')), 
+      link_to_active(:pending.t, hash.merge(:state => 'pending')),
       link_to_active(:approved.t, hash.merge(:state => 'approved')),
-      link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
+      link_to_active(:rejected.t, hash.merge(:state => 'rejected')),
+      link_to_active(:ignored.t, hash.merge(:state => 'ignored'))
     ), :style => 'margin-bottom: 1em'
   end
 
@@ -153,7 +155,9 @@ module GroupHelper
 
   #Defaults!
   def show_section(name)
-    widgets = @group.group_setting.template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
+    @group.group_setting ||= GroupSetting.new
+    @group.group_setting.template_data ||= {"section1" => "group_wiki", "section2" => "recent_pages"}
+    widgets = @group.group_setting.template_data
     widget = widgets[name]
     #template = widget[0]
     #local_vars = widget[1]

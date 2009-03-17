@@ -14,7 +14,7 @@ class RequestToJoinUs < Request
     if Membership.find_by_user_id_and_group_id(recipient_id, requestable_id)
       errors.add_to_base('Membership already exists for %s'[:membership_exists_error] % recipient.name)
     end
-    if RequestToJoinUs.find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
+    if RequestToJoinUs.appearing_as_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
       errors.add_to_base('Request already exists for %s'[:request_exists_error] % recipient.name)
     end
   end

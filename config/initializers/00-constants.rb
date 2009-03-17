@@ -29,6 +29,6 @@ begin
   LANGUAGES = Language.find(:all).freeze
 rescue Exception
   # the database doesn't exist yet.
-  LANGAUGES = []
+  LANGUAGES = []
 end
 

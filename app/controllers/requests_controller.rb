@@ -14,7 +14,10 @@ class RequestsController < ApplicationController
     if @group
       params[:state] ||= 'pending'
       @incoming = Request.to_group(@group).having_state(params[:state]).by_created_at.paginate(:page => params[:in_page])
-      @outgoing = Request.from_group(@group).having_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
+
+      @outgoing = Request.from_group(@group).appearing_as_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
+      # hide ignored states
+      @outgoing.each {|r| r.state = 'pending'} if params[:state] == 'pending'
     end
   end
 
@@ -34,6 +37,20 @@ class RequestsController < ApplicationController
   def approve
     begin
       @request.approve_by!(current_user)
+    rescue Exception => exc
+      flash_message :exception => exc
+    end
+
+    unless referer =~ /\/approve/ # don't redirect to the approve action
+      redirect_to referer
+    else
+      redirect_to url_for_user(@request.created_by)
+    end
+  end
+
+  def ignore
+    begin
+      @request.ignore_by!(current_user)
     rescue Exception => exc
       flash_message :exception => exc
     end

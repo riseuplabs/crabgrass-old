@@ -24,6 +24,7 @@ class PageSharingTest < Test::Unit::TestCase
 
   def test_share_with_view_access
     user = users(:kangaroo)
+    other_user = users(:dolphin)
     group = groups(:animals)
     recipients = [group]
     page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => recipients, :access => :view)
@@ -31,7 +32,35 @@ class PageSharingTest < Test::Unit::TestCase
     #user.share_page_with!(page, recipients, :access => :view)
 
     assert group.may?(:view, page), 'group must have view access'
-    assert !group.may?(:admin, page), 'group must not have admin access'
+    assert !group.may?(:admin, page), 'group must not have admin access'   
+  end
+
+  def test_share_inbox_rules
+    user       = users(:kangaroo)
+    other_user = users(:dolphin)
+    group      = groups(:animals)
+    other_group = groups(:rainbow)
+    user_in_other_group = users(:red)
+    assert user_in_other_group.member_of?(other_group)
+
+    page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => group, :access => :view)
+
+    assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
+    
+    user.share_page_with!(page, other_user, :access => :admin, :notify => true)
+    assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
+    assert_equal true, other_user.may?(:admin, page), 'should be in other users inbox'
+
+    assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
+    user.share_page_with!(page, other_group, :access => :view)
+    page.save!
+    assert user_in_other_group.may?(:view, page)
+    assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
+
+    user.share_page_with!(page, other_group, :notify => :true)
+    page.save!
+    assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
+    assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
   end
 
   def test_add_page

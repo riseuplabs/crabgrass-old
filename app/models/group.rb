@@ -446,7 +446,7 @@ class Group < ActiveRecord::Base
 
   #Defaults!
   def layout(section)
-    template_data = group_setting.template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
+    template_data = (group_setting || GroupSetting.new).template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
     template_data[section]
   end
   
