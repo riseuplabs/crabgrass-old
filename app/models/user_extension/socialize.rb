@@ -37,6 +37,23 @@ module UserExtension::Socialize
         }
       }
       # has_many :peeps, :class_name => 'User', :conditions => ['user.id IN ?', "#{peer_id_cache.to_sql}"]
+
+      named_scope :contacts_of, lambda { |user|
+        {
+          :conditions => ['users.id in (?)', user.friend_id_cache]
+        }
+      }
+
+      named_scope :on, lambda { |site|
+        if site.network.nil?
+          {}
+        else
+          { :joins => :memberships,
+            :conditions => ["memberships.group_id = ?", site.network.id] 
+          }
+        end
+      }
+
       # discussion
       has_one :discussion, :as => :commentable
       #has_many :discussions, :through => :user_relations

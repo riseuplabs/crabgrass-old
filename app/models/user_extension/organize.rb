@@ -61,8 +61,22 @@ module UserExtension::Organize
         def committees
           self.select{|group|group.committee?}
         end
-      end
-      
+        def on(site)
+          # this does not work - probably due to the finder_sql
+          # self.find(:all, :joins => :federatings, :conditions => ["federatings.network_id = ?",site.network_id])
+          # FIXME: this does not work for committees
+          site.network.nil? ? self : self.find(site.network.group_ids)
+        end
+        def committees_on(site)
+          # so here is the work around...
+          if site.network.nil?
+            return committees
+          else
+            self.select{|g|g.committee? and site.network.group_ids.include? g.parent_id}
+          end
+        end
+        end
+
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache, :peer_id_cache
 

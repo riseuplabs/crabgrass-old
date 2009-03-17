@@ -111,6 +111,8 @@ class Site < ActiveRecord::Base
   end
   
   # gets all the pages for all the groups in the site
+  # this does not work. network.pages only contains
+  # the pages that have a group_participation by the network itself.
   def pages
     pages = []
     self.network.pages.each do |page|
