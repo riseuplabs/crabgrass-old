@@ -92,3 +92,19 @@ green_def:
 blue_def:
   group_id: 3001
   user_id: 4
+
+# animals on the second site
+
+gs:
+  group_id: 3002
+  user_id: 10
+hs:
+  group_id: 3002
+  user_id: 11
+is:
+  group_id: 3002
+  user_id: 12
+js:
+  group_id: 3002
+  user_id: 13
+

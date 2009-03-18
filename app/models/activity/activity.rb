@@ -69,17 +69,35 @@ class Activity < ActiveRecord::Base
   # (1) subject is current_user
   # (2) subject is friend of current_user
   # (3) subject is a group current_user is in.
-  # (4) take the intersection with the contents of site
+  # (4) take the intersection with the contents of site if site.network.nil?
   named_scope :for_dashboard, lambda {|user,site|
+    site.network.nil? ?
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-       (subject_type = 'Group' AND subject_id IN (?))",
+       (subject_type = 'Group' AND subject_id IN (?)) ",
       user.id,
-      site.network.nil? ? user.friend_id_cache : (user.friend_id_cache & site.user_ids),
+      user.friend_id_cache,
       Activity::PRIVATE,
-      site.network.nil? ? user.all_group_id_cache : (user.all_group_id_cache & site.group_ids)
-    ]}
+      user.all_group_id_cache]
+    } : 
+    {:conditions => [
+      "((subject_type = 'User'  AND subject_id = ?) OR
+        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+        (subject_type = 'Group' AND subject_id IN (?)) )
+        AND
+       ((object_type = 'User'  AND object_id = ?) OR
+        (object_type = 'User'  AND object_id IN (?)) OR
+        (object_type = 'Group' AND object_id IN (?)) OR
+        (object_type != 'User' AND object_type != 'Group')) ",
+      user.id,
+      user.friend_id_cache & site.user_ids,
+      Activity::PRIVATE,
+      user.all_group_id_cache & site.group_ids,
+      user.id,
+      site.user_ids,
+      site.group_ids]
+    }
   }
 
 

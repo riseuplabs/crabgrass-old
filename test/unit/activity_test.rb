@@ -49,8 +49,13 @@ class ActivityTest < ActiveSupport::TestCase
     notified_user = users(:kangaroo)
 
     group.add_user!(user)
+    # user is not on current_site.
+    assert_nil UserJoinedGroupActivity.for_dashboard(notified_user,current_site).find(:first)
 
-    # animals are on other site...
+    # this would be normally happen on login: 
+    current_site.network.add_user!(user)
+
+    # animals are on current_site which is not the default one...
     assert_nil GroupGainedUserActivity.for_dashboard(notified_user,Site.default).find(:first)
     act = GroupGainedUserActivity.for_dashboard(notified_user,current_site).find(:first)
     assert_equal group.id, act.group.id
@@ -62,8 +67,6 @@ class ActivityTest < ActiveSupport::TestCase
     # users own activity should always show up:
     act = UserJoinedGroupActivity.for_dashboard(user,current_site).find(:first)
     assert_equal group.id, act.group.id
-    # user is not on current_site.
-    assert_nil UserJoinedGroupActivity.for_dashboard(notified_user,current_site).find(:first)
   end
 
 
