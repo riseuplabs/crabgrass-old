@@ -69,8 +69,8 @@ class ApplicationController < ActionController::Base
     no_access = false
     things.each do |thing|
       if !network.has?(thing)
-        debugger
-        raise "You (#{current_user.login}) are leaving #{current_site.domain} accessing #{thing}: #{thing.name}"
+        flash_message  :title => "Leaving sites scope"[:leaving_site_title],
+          :error => "You are leaving the scope of ':domain' accessing :class :name"[:leaving_scope_of_site]%{ :domain => current_site.domain, :class => thing.class, :name => thing.name}
       end
     end
   end
