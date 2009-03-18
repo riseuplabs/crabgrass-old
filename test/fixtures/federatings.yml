@@ -12,6 +12,10 @@ federation2:
   group_id: 2 # animals
   network_id: 3002   # animals are on the other site.
 
+federation2b:
+  group_id: 2 # animals
+  network_id: 3003   # animals are in the fau for network test.
+
 federation3:
   group_id: 3 # rainbow
   network_id: 3001
@@ -28,3 +32,10 @@ federation5:
   group_id: 31 #warm
   network_id: 3001
 
+federation3003:
+  group_id: 3003 #fau
+  network_id: 3001
+
+federation3003b:
+  group_id: 3003 #fau
+  network_id: 3002  # on both sites so the animals can join.

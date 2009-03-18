@@ -58,17 +58,18 @@ class ApplicationController < ActionController::Base
     network = current_site.network
 
     things = []    
-    things << @group if @group
+    things << @group if @group and !@group.new_record?
 
     # not checking pages so far because page_finder has not been limited to site yet
     # things << @page if @page
     # not checking assets so far because we can't figure out which assets belong to site
     # things << @asset if @asset
-    things << @committee if @committee
+    things << @committee if @committee and !@committee.new_record?
     
     no_access = false
     things.each do |thing|
       if !network.has?(thing)
+        debugger
         raise "You (#{current_user.login}) are leaving #{current_site.domain} accessing #{thing}: #{thing.name}"
       end
     end

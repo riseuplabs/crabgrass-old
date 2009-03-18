@@ -50,6 +50,8 @@ class ActivityTest < ActiveSupport::TestCase
 
     group.add_user!(user)
 
+    # animals are on other site...
+    assert_nil GroupGainedUserActivity.for_dashboard(notified_user,Site.default).find(:first)
     act = GroupGainedUserActivity.for_dashboard(notified_user,current_site).find(:first)
     assert_equal group.id, act.group.id
 
@@ -57,8 +59,11 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal GroupGainedUserActivity, act.class
     assert_equal group.id, act.group.id
 
+    # users own activity should always show up:
     act = UserJoinedGroupActivity.for_dashboard(user,current_site).find(:first)
     assert_equal group.id, act.group.id
+    # user is not on current_site.
+    assert_nil UserJoinedGroupActivity.for_dashboard(notified_user,current_site).find(:first)
   end
 
 

@@ -95,7 +95,6 @@ class GroupsControllerTest < Test::Unit::TestCase
 
   def test_create_fails_when_name_is_taken
     login_as :gerrard
-    
     assert_difference 'Group.count', 1,  "should have created a new group" do
       post :create, :group => {:name => 'test-create-group'}
     end

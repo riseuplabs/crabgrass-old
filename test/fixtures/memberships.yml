@@ -77,3 +77,18 @@ j:
   group_id: 2
   user_id: 13
 
+# fau
+
+gerrard_in_fau:
+  group_id: 3003
+  user_id: 3
+
+# users on the default site
+
+green_def:
+  group_id: 3001
+  user_id: 9
+
+blue_def:
+  group_id: 3001
+  user_id: 4
