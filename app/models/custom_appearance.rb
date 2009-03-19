@@ -13,7 +13,7 @@ end
 
 =end
 class CustomAppearance < ActiveRecord::Base
-  CUSTOM_CSS_PATH = 'themes'
+  CACHED_CSS_DIR = 'themes'
   CSS_ROOT_PATH = './public/stylesheets'
 
   serialize :parameters, Hash
@@ -64,7 +64,7 @@ class CustomAppearance < ActiveRecord::Base
   # :cal-seq:
   #   appearance.cached_css_root => 'themes/2/1237185316'
   def cached_css_root
-    File.join(CUSTOM_CSS_PATH, self.id.to_s, self.updated_at.to_i.to_s)
+    File.join(CACHED_CSS_DIR, self.id.to_s, self.updated_at.to_i.to_s)
   end
 
 ######### DEFAULT SERIALIZED VALUES ###########
@@ -110,6 +110,12 @@ class CustomAppearance < ActiveRecord::Base
       appearance.write_css_cache(css_path, css_text) if appearance
 
       css_text
+    end
+
+    def clear_cached_css
+      path = File.join(CSS_ROOT_PATH, CACHED_CSS_DIR)
+      pattern = path + "/**"
+      FileUtils.rm_rf(Dir.glob(pattern))
     end
   end
 end
