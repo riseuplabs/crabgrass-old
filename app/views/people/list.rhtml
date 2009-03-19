@@ -11,7 +11,7 @@
       <th>name</th>
       <th>organization</th>
       <th>location</th>
-      <th>last seen</th>         
+      <th>last log-in</th>         
     </tr>
 <%= render :partial => 'user', :collection => @contacts %>
 </table>
@@ -35,7 +35,7 @@
       <th>name</th>
       <th>organization</th>
       <th>location</th>
-      <th>last seen</th>         
+      <th>last log-in</th>         
     </tr>
 <%= render :partial => 'user', :collection => @peers %>
 </table>
@@ -58,7 +58,7 @@
       <th>name</th>
       <th>organization</th>
       <th>location</th>
-      <th>last seen</th>         
+      <th>last log-in</th>         
     </tr>
 <%= render :partial => 'user', :collection => @users %>
 </table>
@@ -72,4 +72,3 @@
 <% else %>
 <%= "No public profiles yet..."[:no_public_profiles] %>
 <% end %>
-
