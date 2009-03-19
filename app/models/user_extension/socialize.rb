@@ -22,6 +22,7 @@ module UserExtension::Socialize
               options = args.extract_options!
               sql = @finder_sql
       
+              sql += " ORDER BY " + sanitize_sql(options[:order]) if options[:order]
               sql += sanitize_sql [" LIMIT ?", options[:limit]] if options[:limit]
               sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
       

@@ -19,11 +19,12 @@ class PeopleController < ApplicationController
   def list
     page = params[:page] || 1
     per_page = 10
+    order = "login" # params[:order] || "id"
     
-    @users = User.paginate :page => page, :per_page => per_page if @type.nil? || @type == "users"
+    @users = User.paginate :page => page, :per_page => per_page, :order => order if @type.nil? || @type == "users"
     if logged_in?
-      @contacts = current_user.contacts.paginate :page => page, :per_page => per_page if @type.nil? || @type == "contacts"
-      @peers = current_user.peers.paginate :page => page, :per_page => per_page if @type.nil? || @type == "peers"
+      @contacts = current_user.contacts.paginate :page => page, :per_page => per_page, :order => order if @type.nil? || @type == "contacts"
+      @peers = current_user.peers.paginate :page => page, :per_page => per_page, :order => order if @type.nil? || @type == "peers"
     end
   end
      
