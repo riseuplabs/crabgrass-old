@@ -89,7 +89,7 @@ class Activity < ActiveRecord::Base
        ((object_type = 'User'  AND object_id = ?) OR
         (object_type = 'User'  AND object_id IN (?)) OR
         (object_type = 'Group' AND object_id IN (?)) OR
-        (object_type != 'User' AND object_type != 'Group')) ",
+        (NOT object_type <=> 'User' AND NOT object_type <=> 'Group')) ",
       user.id,
       user.friend_id_cache & site.user_ids,
       Activity::PRIVATE,

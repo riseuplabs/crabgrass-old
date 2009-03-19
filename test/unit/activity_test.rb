@@ -50,22 +50,30 @@ class ActivityTest < ActiveSupport::TestCase
 
     group.add_user!(user)
     # user is not on current_site.
-    assert_nil UserJoinedGroupActivity.for_dashboard(notified_user,current_site).find(:first)
+    assert_nil UserJoinedGroupActivity.for_dashboard(notified_user,current_site).find_by_subject_id(user.id)
 
-    # this would be normally happen on login: 
+    # this would be normally happen on login:
     current_site.network.add_user!(user)
 
+    # this will be joining :animals because current_site.network is not on current_site.
+    act = GroupGainedUserActivity.for_dashboard(notified_user,current_site).last
+
     # animals are on current_site which is not the default one...
-    assert_nil GroupGainedUserActivity.for_dashboard(notified_user,Site.default).find(:first)
-    act = GroupGainedUserActivity.for_dashboard(notified_user,current_site).find(:first)
+    if Site.default.network.nil?
+      # green joined current_site.network after :animals
+      assert_not_equal act, GroupGainedUserActivity.for_dashboard(notified_user,Site.default).last
+      assert_equal act, GroupGainedUserActivity.for_dashboard(notified_user,Site.default).find(:last, :conditions => {:subject_id => group.id})
+    else
+      assert_nil GroupGainedUserActivity.for_dashboard(notified_user,Site.default).last
+    end
     assert_equal group.id, act.group.id
 
-    act = GroupGainedUserActivity.for_group(group, notified_user).find(:first, :order => 'created_at DESC')
+    act = GroupGainedUserActivity.for_group(group, notified_user).last
     assert_equal GroupGainedUserActivity, act.class
     assert_equal group.id, act.group.id
 
     # users own activity should always show up:
-    act = UserJoinedGroupActivity.for_dashboard(user,current_site).find(:first)
+    act = UserJoinedGroupActivity.for_dashboard(user,current_site).last
     assert_equal group.id, act.group.id
   end
 
