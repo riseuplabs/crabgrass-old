@@ -165,8 +165,8 @@ class RequestsController < ApplicationController
   ##
   
   def accept
-    redeem_url = url_for(:controller => 'requests', :action => 'redeem',
-     :email => @email, :code => @code) 
+    # redeem_url must be *relative*
+    redeem_url = url_for(:only_path => true, :controller => 'requests', :action => 'redeem', :email => @email, :code => @code) 
 
     if @request
       if @request.state != 'pending'
