@@ -45,12 +45,13 @@ class GroupController < ApplicationController
   end
 
   def archive
+  debugger
     @path = params[:path] || []
     @parsed = parse_filter_path(params[:path])
     @field = @parsed.keyword?('updated') ? 'updated' : 'created'
 
     @months = Page.month_counts(:group => @group, :current_user => (current_user if logged_in?), :field => @field)
-
+debugger
     unless @months.empty?
       @current_year  = (Date.today).year
       @start_year    = @months[0]['year'] || @current_year.to_s
@@ -310,7 +311,7 @@ class GroupController < ApplicationController
 
   @@non_members_post_allowed = %w(archive tags tasks search)
   @@non_members_get_allowed = %w(show members search discussions) + @@non_members_post_allowed
-  @@admin_only = %w(update, edit_tools) 
+  @@admin_only = %w(update, edit_tools, edit_layout) 
    
   def authorized?
     if request.get? and @@non_members_get_allowed.include? params[:action]
