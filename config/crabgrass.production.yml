@@ -49,7 +49,7 @@ email:
 ##
 
 sites:
-  - name: MRUyouthplatform.org
+  - name: MRUyouthplatform
     domain: my.MRUyouthplatform.org
     email_sender: 'my@MRUyouthplatform.org'
     admin_group: superadmin
