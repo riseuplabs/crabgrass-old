@@ -1,8 +1,11 @@
 <% @title_box = content_tag :h1, 'My Groups'[:my_groups] -%>
 
+<%= pagination_links(@groups) %>
+
 <%- if @groups.any? -%>
   <%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => true } %>
 <%- else -%>
   <%= 'You have no groups'[:you_have_no_groups] %>
 <%- end -%>
 
+<%= pagination_links(@groups) %>

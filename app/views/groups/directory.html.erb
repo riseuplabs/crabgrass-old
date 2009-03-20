@@ -1,5 +1,5 @@
 <% @title_box = content_tag :h1, 'Group Directory'[:group_directory] -%>
-
+<%= pagination_links(@groups) %>
 <%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => true } %>
 <%= pagination_links(@groups) %>
 

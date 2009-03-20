@@ -15,11 +15,11 @@ class GroupsController < ApplicationController
 
   def directory
     user = logged_in? ? current_user : nil
-    @groups = Group.visible_by(user).only_groups.paginate(:all, :page => params[:page], :order => 'full_name')
+    @groups = Group.visible_by(user).only_groups.paginate(:all, :page => params[:page], :per_page => 10, :order => 'full_name')
   end
 
   def my
-    @groups = current_user.groups.only_groups.sort_by{|g| g.full_name.length > 0 ? g.full_name.downcase : g.name.downcase}
+    @groups = current_user.groups.only_groups.sort_by{|g| g.full_name.length > 0 ? g.full_name.downcase : g.name.downcase}.paginate(:page => params[:page], :per_page => 10)
   end
 
   # login required
