@@ -1,5 +1,7 @@
 <% color = cycle('shade-odd', 'shade-even') -%>
-<% author_style = "background: url(#{avatar_url_for(post.user,'small')}) no-repeat top right;" -%>
+<% if post.user %>
+  <% author_style = "background: url(#{avatar_url_for(post.user,'small')}) no-repeat top right;" -%>
+<% end %>
 <tbody id="<%=post.dom_id%>">
 <tr class="post-spacer-top <%= color %> <%= @posts.first == post ? 'post-border-top' : ''%> ">
   <td colspan="2">
@@ -9,7 +11,11 @@
 <tr class="post <%= color %>">
   <td>
     <div class="post-author" style="<%=author_style%>">
+<% if post.user %>
       <div class='username'><%= link_to_user post.user %></div>
+<% else %>
+      <div class='username'>Unknown User</div>
+<% end %>
       <div class='date'><%= created_modified_date(post.created_at, post.updated_at) %></div>   
     </div>
   </td>
