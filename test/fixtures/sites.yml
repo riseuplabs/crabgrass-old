@@ -26,6 +26,7 @@ localhost:
   - Asset
   - Gallery
   - ExternalVideo
+  - Event
   pagination_size: 29
   network_id: 3001
 testhost:
@@ -55,5 +56,6 @@ testhost:
   - Gallery
   - ExternalVideo
   - Article
+  - Event
   pagination_size: 29
   network_id: 3002
