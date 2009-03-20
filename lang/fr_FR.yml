@@ -39,15 +39,7 @@ share_page_recipients: "Partager cette {page_class} avec "
 saturday: Samedi
 prev_change: "modification pr\xC3\xA9c\xC3\xA9dente"
 group_information: Information de :group_type
-welcome_text: "*Bienvenue*\r\n\
-  \r\n\
-  Bonjour. Ceci est une introduction rapide pour les nouveaux utilisateurs. Lors de votre prochaine connexion, vous arriverez sur [votre tableau de bord -> /me/dashboard] qui restera un lieu froid et isol\xC3\xA9 jusqu'au moment o\xC3\xB9 vous rejoindrez des groupes et vous cr\xC3\xA9erez des contacts.\r\n\
-  \r\n\
-  Donc la meilleure chose \xC3\xA0 faire en tant que nouvel utilisateur est de cr\xC3\xA9er un groupe ou d'en rejoindre un. Pour ce faire, affichez le [r\xC3\xA9pertoire des groupes -> /groups] et cliquez \"Cr\xC3\xA9er un nouveau groupe\" ou bien cliquez sur le groupe que vous d\xC3\xA9sirez rejoindre pour trouver le lien \"rejoindre le groupe\".\r\n\
-  \r\n\
-  Une fois votre demande accept\xC3\xA9e, vous pouvez y placer des documents, cr\xC3\xA9er de listes \xC3\xA0 faire, des discussions, des wikis, des votes et des messages pour communiquer, collaborer et accomplir des t\xC3\xA2ches au sein du groupe. Comme pour tout nouvel outil, vous aurez \xC3\xA0 vous familiariser avec l'interface. Pour vous aider \xC3\xA0 r\xC3\xA9pondre aux diverses interrogations que vous ne manquerez pas de vous poser comme la diff\xC3\xA9rence entre la bo\xC3\xAEte de r\xC3\xA9ception et le tableau de bord, consultez les [pages d'aides -> /crabgrass/table-of-contents].\r\n\
-  \r\n\
-  Le d\xC3\xA9veloppement est dirig\xC3\xA9 \xC3\xA0 partir du retour des utilisateurs, aussi [rejoignez -> /users] le groupe \"user feed back\" /[retour des utilisateurs/] et impliquez-vous en cliquant le lien \"get involved\" pr\xC3\xA9sent au bas de toutes les page.\r\n"
+welcome_text: "Bienvenue à la Plateforme de Communication de l'UFM.\n\nCeci est votre plateforme! Servez vous-en judicieusement et\nrappelez-vous que vous êtes responsable de tout contenu que vous mettez\nen ligne. Les discussions et le contenu au sein de votre groupe est privé,\nmais un modérateur est présent sur le site, assurez-vous donc que le contenu\ndu site reste approprié.\n\nNous espérons que vous trouverez la plateforme facile d'accès, et un lieu vous\ndébattre de manière productive autour des thèmes de l'emploi des jeunes et\ndu développement a travers la participation des jeunes."
 time_zone: Fuseau Horaire
 share_page_recipients_sections: Choisissez parmi vos groupes ou amis
 delete: Supprimer

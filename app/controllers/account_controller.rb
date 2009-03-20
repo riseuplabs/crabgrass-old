@@ -15,6 +15,7 @@ class AccountController < ApplicationController
   end
 
   def login
+    @content_for_style = ".content_box {border:none;} .mail_column {border:none;}"
     if !( params[:redirect].empty? || params[:redirect] =~ /^http:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
       flash_message(:title => 'Illegal redirect'[:illegal_redirect],
       :error => "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."[:redirect_to_foreign_domain]%{ :url => params.delete(:redirect)})

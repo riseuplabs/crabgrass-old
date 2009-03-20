@@ -129,16 +129,7 @@ login_failed: "Could not log in"
 signup_login_name: "Your login name"
 login_button: "Log in"
 login: "Login"
-welcome_text: |
-  *Welcome*
-
-  Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
-
-  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link.
-
-  Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
-
-  Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the "get involved" link at the bottom over every page.
+welcome_text: "Greetings. Welcome to the MRU Youth Platform!\n\nThis is your platform! Use it wisely, and remember you are responsible\nfor everything you post. You will have semi-privacy within your groups.\nNo other user will be able to see the information in your group, unless\nyou choose to share it. However, this site has heavy moderation and\nmoderators can see all content on the site. So, keep in mind that the\ncontent of discussions must remain appropriate.\n\nWe hope that you find the platform easy to use, and a productive place\nto discuss issues around employment, youth-led develpment and\nempowerment"
 
 signup_title: "Create Your Account"
 signup_email: "Your Email"
