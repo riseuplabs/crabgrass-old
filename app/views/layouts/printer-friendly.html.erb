@@ -4,7 +4,21 @@
   <title><%=h title_from_context %></title>
 </head>
 <body>
+
+<h1><%=h title_from_context %></h1>
+
+<div>
+<h2>Summary</h2>
+<b><%=h @page.summary %></b>
+</div>
+
+<h2>Content</h2>
   <%= yield %>
+  
+<h2>Comments</h2>  
+<%- for post in @posts do -%>
+   <%= render :partial => 'posts/post_printer_friendly', :locals => {:post => post} %>
+<%- end -%>  
+
 </body>
 </html>
-

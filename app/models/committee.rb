@@ -16,7 +16,7 @@ class Committee < Group
   
   # what we show to the user
   def display_name
-    read_attribute(:display_name) || short_name
+    read_attribute(:full_name) || short_name
   end
         
   #has_many :delegations, :dependent => :destroy

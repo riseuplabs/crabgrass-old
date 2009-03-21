@@ -45,13 +45,12 @@ class GroupController < ApplicationController
   end
 
   def archive
-  debugger
     @path = params[:path] || []
     @parsed = parse_filter_path(params[:path])
     @field = @parsed.keyword?('updated') ? 'updated' : 'created'
 
     @months = Page.month_counts(:group => @group, :current_user => (current_user if logged_in?), :field => @field)
-debugger
+
     unless @months.empty?
       @current_year  = (Date.today).year
       @start_year    = @months[0]['year'] || @current_year.to_s
@@ -92,6 +91,7 @@ debugger
   def tasks
     @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
+    render :action => "print_tasks", :layout => false  if params[:print]
   end
 
   # login required
