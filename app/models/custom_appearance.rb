@@ -9,6 +9,7 @@ create_table "custom_appearances", :force => true do |t|
   t.integer  "parent_id",  :limit => 11
   t.datetime "created_at"
   t.datetime "updated_at"
+  t.integer  "admin_group_id", :limit => 11
 end
 
 =end
