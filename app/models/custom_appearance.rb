@@ -17,6 +17,7 @@ class CustomAppearance < ActiveRecord::Base
   CSS_ROOT_PATH = './public/stylesheets'
 
   serialize :parameters, Hash
+  belongs_to :admin_group, :class_name => 'Group'
 
   def sass_override_text
     text = ""
@@ -78,7 +79,8 @@ class CustomAppearance < ActiveRecord::Base
 
   class << self
     SASS_ROOT_PATH = './public/stylesheets/sass'
-    SASS_INCLUDES = ["constants.sass"]
+    CONSTANTS_FILE = "constants.sass"
+    SASS_INCLUDES = [CONSTANTS_FILE]
     SASS_LOAD_PATHS = ['.', SASS_ROOT_PATH]
 
     def default
@@ -116,6 +118,19 @@ class CustomAppearance < ActiveRecord::Base
       path = File.join(CSS_ROOT_PATH, CACHED_CSS_DIR)
       pattern = path + "/**"
       FileUtils.rm_rf(Dir.glob(pattern))
+    end
+
+    def available_parameters
+      parameters = {}
+      # parse the constants.sass file and return the hash
+      constants_lines = File.readlines(File.join(SASS_ROOT_PATH, CONSTANTS_FILE))
+      constants_lines.reject! {|l| l !~ /^\s*!\w+/ }
+      constants_lines.each do |l|
+        k, v = l.chomp.split(/\s*=\s*/)
+        k[/^!/] = ""
+        parameters[k] = v
+      end
+      parameters
     end
   end
 end

@@ -46,4 +46,8 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     css_text = CustomAppearance.generate_css("screen.css", appearance)
     assert css_text =~ /leftmenu\s*\{\s*background-color:\s*magenta/, "generated text must use updated background-color value"
   end
+
+  def test_available_parameters
+    assert CustomAppearance.available_parameters.is_a? Hash
+  end
 end

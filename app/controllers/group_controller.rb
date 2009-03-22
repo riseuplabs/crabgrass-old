@@ -96,6 +96,7 @@ class GroupController < ApplicationController
 
   # login required
   def edit
+    @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
   end
 
   # login required
