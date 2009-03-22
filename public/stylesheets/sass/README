@@ -1,3 +1,11 @@
 DO NOT INCLUDE '@import constants.sass' IN ANY SASS FILES
 
-or this will break the custom appearances system, which loads and overrides this file manually
+doing that will break the custom appearances system, which loads and overrides this file manually
+
+What is the custom appearances system?
+1. a model which stores the overrides for some values found in constants.sass
+2. a controller which catches .css requests (like '/stylesheets/as_needed/wiki.css') and drives the Sass engine to generate the requested css dynamically (by overriding some part of constants.sass)
+3. A caching scheme for #2. Generated css is cached to '/stylesheets/themes' and layout_helper links to the cached css when it is available and up to date (based on timestamps)
+
+
+As it is now, the current domain (and so the current site) determines which CustomAppearance object is used to generate/cache/load the css.
