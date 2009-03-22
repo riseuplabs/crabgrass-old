@@ -24,4 +24,5 @@ default:
       site_id: UA-XXXXXX-X
       https: false
   tracking: false
+  network_id: 3001
 

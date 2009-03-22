@@ -11,40 +11,32 @@ For processing a single user, see PersonController.
 class PeopleController < ApplicationController
   
   def index
-    # [TODO] problems occur with this solution:
-    # current_site.network.users.recent ...
-    site_users = current_site.network.users
-    @users = (User.recent & site_users).paginate :page => @page_number, :per_page => @per_page if logged_in?
+    @users = User.on(current_site).recent.paginate :page => @page_number, :per_page => @per_page if logged_in?
   end
 
   def contacts
     return unless logged_in?
 
-    site_users = current_site.network.users
-    @users = (current_user.contacts.alphabetized(@letter_page) & site_users).paginate :page => @page_number, :per_page => @per_page
+    @users = (User.contacts_of(current_user).on(current_site).alphabetized(@letter_page)).paginate :page => @page_number, :per_page => @per_page
 
     # what letters can be used for pagination
-    site_user_logins = current_site.network.users.logins_only
-    @pagination_letters = (current_user.contacts.logins_only & site_user_logins).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.contacts_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   def peers
     return unless logged_in?
 
-    site_users = current_site.network.users.alphabetized(@letter_page)
-    @users = (User.peers_of(current_user).alphabetized(@letter_page)&site_users).paginate :page => @page_number, :per_page => @per_page
+    @users = User.peers_of(current_user).on(current_site).alphabetized(@letter_page).paginate :page => @page_number, :per_page => @per_page
      # what letters can be used for pagination
-    site_user_logins = current_site.network.users.logins_only
-    @pagination_letters = (User.peers_of(current_user).logins_only & site_user_logins).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.peers_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   def directory
     return unless logged_in?
 
-    @users = current_site.network.users.alphabetized(@letter_page).paginate :page => @page_number, :per_page => @per_page
+    @users = User.on(current_site).alphabetized(@letter_page).paginate :page => @page_number, :per_page => @per_page
     # what letters can be used for pagination
-    site_users_logins = current_site.network.users.logins_only
-    @pagination_letters = (User.logins_only & site_users_logins).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   protected

@@ -4,7 +4,7 @@ Everything to do with user <> group relationships should be here.
 
 How to use
 -----------
- 
+
 There is only one valid way to establish membership between user and group:
 
 group.add_user! user
@@ -24,7 +24,7 @@ module UserExtension::Organize
       has_many :memberships, :foreign_key => 'user_id',
         :dependent => :destroy,
         :before_add => :check_duplicate_memberships
-      
+
       has_many :groups, :foreign_key => 'user_id', :through => :memberships do
         def <<(*dummy)
           raise Exception.new("don't call << on user.groups");
@@ -47,10 +47,10 @@ module UserExtension::Organize
           self.select{|group|group.committee?}
         end
       end
-        
+
       # all groups, including groups we have indirect access
       # to (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group', 
+      has_many :all_groups, :class_name => 'Group',
         :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
         def normals
           self.select{|group|group.normal?}
@@ -61,8 +61,32 @@ module UserExtension::Organize
         def committees
           self.select{|group|group.committee?}
         end
-      end
-      
+        def on(site)
+          # this does not work - probably due to the finder_sql
+          # self.find(:all, :joins => :federatings, :conditions => ["federatings.network_id = ?",site.network_id])
+          # FIXME: this does not work for committees
+          site.network.nil? ? self : self.find(site.network.group_ids)
+        end
+        def committees_on(site)
+          # so here is the work around...
+          if site.network.nil?
+            return committees
+          else
+            self.select{|g|g.committee? and site.network.group_ids.include? g.parent_id}
+          end
+        end
+        end
+
+      named_scope :on, lambda { |site|
+        if site.network.nil?
+          {}
+        else
+          { :joins => :memberships,
+            :conditions => ["memberships.group_id = ?", site.network.id]
+          }
+        end
+      }
+
       serialize_as IntArray,
         :direct_group_id_cache, :all_group_id_cache, :admin_for_group_id_cache, :peer_id_cache
 
@@ -80,7 +104,7 @@ module UserExtension::Organize
   def group_ids
     self.direct_group_id_cache
   end
-  
+
   # alias for the cache
   def all_group_ids
     self.all_group_id_cache
@@ -89,7 +113,7 @@ module UserExtension::Organize
   def admin_for_group_ids
     self.admin_for_group_id_cache
   end
-    
+
   # is this user a member of the group?
   # (or any of the associated groups)
   def member_of?(group)
@@ -101,7 +125,7 @@ module UserExtension::Organize
       all_group_ids.include?(group.id)
     end
   end
-  
+
   # is the user a direct member of the group?
   def direct_member_of?(group)
     if group.is_a? Array
@@ -112,7 +136,7 @@ module UserExtension::Organize
       group_ids.include?(group.id)
     end
   end
-    
+
   def check_duplicate_memberships(membership)
     raise AssociationError.new('you cannot have duplicate membership') if self.group_ids.include?(membership.group_id)
   end

@@ -28,15 +28,15 @@ See sites.yml for example of the stuff that gets serialized to :translators,
 =end
 class Site < ActiveRecord::Base
 
-  
-# We want a network having several sites.  
+
+# We want a network having several sites.
 #  That's why we change the put the network_id into the site
 #  has_one :network
   belongs_to :network
 
   # associate with appearances
   belongs_to :custom_appearance
-  
+
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
@@ -49,14 +49,8 @@ class Site < ActiveRecord::Base
     Site.find :all
   end
 
-  before_save :ensure_network
-  
-  def ensure_network
-    self.network = Network.first if self.network.nil?
-  end
-
   def self.default
-    @default_site ||= 
+    @default_site ||=
       Site.find(:first, :conditions => ["sites.default = '?'", true]) ||
       Site.find(:first) ||
       Site.new(:name => 'unknown')
@@ -84,4 +78,66 @@ class Site < ActiveRecord::Base
   def evil
     read_attribute(:evil) || write_attribute(:evil, {})
   end
+
+
+
+
+#
+# RELATIONS
+#
+
+  # a user can be autoregistered in site.network
+   def add_user!(user)
+     self.network.add_user!(user) unless self.network.nil?
+   end
+
+  # returns true if the thing is part of the network
+  def has? arg
+    self.network.nil? ? true : self.network.has?(arg)
+  end
+
+
+  # gets all the users in the site
+  def users
+    self.network.nil? ? User.find(:all) : self.network.users
+  end
+
+  # gets all the user ids in the site #TODO cache this
+  def user_ids
+    self.network.nil? ?
+      User.find(:all, :select => :id).collect{|user| user.id} :
+      self.network.user_ids
+  end
+
+  # gets all the pages for all the groups in the site
+  # this does not work. network.pages only contains
+  # the pages that have a group_participation by the network itself.
+  def pages
+    pages = []
+    self.network.pages.each do |page|
+      pages <<  page unless pages.include?(page)
+    end
+    self.network.users.each do |user|
+      user.pages.each do |page|
+        pages << page unless pages.include?(page)
+      end
+    end
+    pages
+  end
+
+
+  # gets all the groups in the site's network
+  def groups
+    self.network.nil? ?
+      Group.find(:all) :
+      self.network.groups
+  end
+
+  # gets all the ids of all the groups in the site
+  def group_ids
+    self.network.nil? ?
+      Group.find(:all, :select => :id).collect{|group| group.id} :
+      self.network.group_ids
+  end
+
 end

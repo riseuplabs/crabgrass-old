@@ -23,6 +23,7 @@ default:
   - ExternalVideo
   - Article
   tracking: true
+  network_id:3001
 
 hobo23:
   name: hobo23 Crabgrass
@@ -50,6 +51,7 @@ hobo23:
       site_id: UA-XXXXXX-X
       https: false
   tracking: false
+  network_id:3002
 
 localhost:
   name: localhost Crabgrass

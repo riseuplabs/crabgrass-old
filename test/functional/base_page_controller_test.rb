@@ -7,11 +7,12 @@ require 'base_page_controller'
 class BasePageController; def rescue_action(e) raise e end; end
 
 class Tool::BasePageControllerTest < Test::Unit::TestCase
-  fixtures :pages, :groups, :users, :memberships, :group_participations, :user_participations
+  fixtures :pages, :groups, :users, :memberships, :group_participations, :user_participations, :sites
 
   def setup
     @controller = BasePageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

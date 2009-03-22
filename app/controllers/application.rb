@@ -50,25 +50,31 @@ class ApplicationController < ActionController::Base
   # - Group
   # - Page
   # - Committee
-  # - Asset
+  # - Asset not right now.
   # which is everywhere, where has_access! is called
   before_filter :access_for_site?
   def access_for_site?
-    network = current_site.network || Network.first || raise(current_site.inspect)
-    
+    return true if current_site.network.nil?
+    network = current_site.network
+
     things = []    
-    things << @group if @group
-    things << @page if @page
-    things << @asset if @asset
-    things << @committee if @committee
+    things << @group if @group and !@group.new_record?
+
+    # not checking pages so far because page_finder has not been limited to site yet
+    # things << @page if @page
+    # not checking assets so far because we can't figure out which assets belong to site
+    # things << @asset if @asset
+    things << @committee if @committee and !@committee.new_record?
     
     no_access = false
     things.each do |thing|
-      break if no_access == true
-      no_access = true if !network.has?(thing) || (thing.kind_of?(Network) && thing != network)
+      if !network.has?(thing)
+        flash_message  :title => "Leaving sites scope"[:leaving_site_title],
+          :error => "You are leaving the scope of ':domain' accessing :class :name"[:leaving_scope_of_site]%{ :domain => current_site.domain, :class => thing.class, :name => thing.name}
+      end
     end
-    raise PermissionDenied.new if no_access
   end
+  
 #####
   
   

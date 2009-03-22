@@ -12,10 +12,10 @@ class MembershipController < ApplicationController
 
   # list all members of the group
   def list
-   @memberships =  @group.memberships.alphabetized_by_user(@letter_page).select{|ship| current_site.network.memberships.include?(ship)}.paginate(:page => @page_number, :per_page => @per_page)
-   # disabled for the sites mode 
-   # @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
-   # @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    # disabled for the sites mode - do we want membership by site?
+    # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+   @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+   @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
   end
 
   # list groups belonging to a network

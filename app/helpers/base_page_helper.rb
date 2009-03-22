@@ -240,11 +240,11 @@ module BasePageHelper
       @share_page_groups    = @page ? @page.namespace_groups : []
       @share_contributors   = @page ? @page.contributors : []
       all_groups = current_user.all_groups.sort_by {|g|g.name}
-      @share_groups      = current_user.all_groups.select {|g|g.normal?}
-      @share_networks    = current_user.all_groups.select {|g|g.network?}
-      @share_committees  = current_user.all_groups.select {|g|g.committee?}
-      @share_friends        = current_user.contacts.sort_by{|u|u.name}
-      @share_peers          = current_user.peers.sort_by{|u|u.name}
+      @share_groups      = current_user.all_groups.on(current_site).select {|g|g.normal?}
+      @share_networks    = current_user.all_groups.on(current_site).select {|g|g.network?}
+      @share_committees  = current_user.all_groups.committees_on(current_site)
+      @share_friends     = User.contacts_of(current_user).on(current_site).sort_by{|u|u.name}
+      @share_peers       = User.peers_of(current_user).on(current_site).sort_by{|u|u.name}
 
       params[:recipients] ||= {}
       if params[:group] and (group = Group.find_by_name(params[:group]))

@@ -10,6 +10,7 @@ class PeopleControllerTest < Test::Unit::TestCase
   def setup
     @controller = PeopleController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

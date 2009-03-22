@@ -13,15 +13,15 @@
 
 <%- if may_see_networks? -%>
   <%- cache(group_cache_key(@group, :what => 'networks')) do -%>
-    <%- if @group.networks.any? -%>
-      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "networks"[:networks], :entities => @group.networks, :after => '&nbsp'} %>
+    <%- if @group.networks.visible_on(current_site).any? -%>
+      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "networks"[:networks], :entities => @group.networks.visible_on(current_site), :after => '&nbsp'} %>
     <%- end -%>
   <%- end -%>
 <%- end %>
 
 <% if may_see_committees? -%>
   <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
-    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "committees"[:committees], :entities => @group.committees, :after => link_line(create_committee_link), :show_empty => true} %>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "committees"[:committees], :entities => @group.committees.visible_on(current_site), :after => link_line(create_committee_link), :show_empty => true} %>
   <%- end -%>
 <%- end %>
 

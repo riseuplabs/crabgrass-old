@@ -165,6 +165,11 @@ module UserExtension
 
     def get_peer_ids(group_ids)
       return [] unless self.id
+      # site networks are broad umbrella networks every user of the
+      # site is a member of - thus they should not be considered for
+      # determining who is a peer.
+      site_networks = Site.find(:all).collect{|s| s.network_id}
+      group_ids -= site_networks
       User.connection.select_values( %Q[
         SELECT DISTINCT users.id FROM users
         INNER JOIN memberships ON users.id = memberships.user_id

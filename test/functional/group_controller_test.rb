@@ -5,20 +5,22 @@ require 'group_controller'
 class GroupController; def rescue_action(e) raise e end; end
 
 class GroupControllerTest < Test::Unit::TestCase
-  fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages, 
-            :group_participations, :user_participations, :tasks, :page_terms, :sites
+  fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages,
+            :group_participations, :user_participations, :tasks, :page_terms, :sites,
+            :federatings
 
   include UrlHelper
 
   def setup
     @controller = GroupController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
   def test_show_when_logged_in
     login_as :red
-    
+
     # show a group you belong to
     get :show, :id => groups(:rainbow).name
     assert_response :success
@@ -29,13 +31,13 @@ class GroupControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:access)
     assert_equal :private, assigns(:access), "blue should have access to private group information for :rainbow"
-    
+
     #show a committee you belong to
     get :show, :id => groups(:warm).name
     assert_response :success
 #    assert_template 'show'
     assert assigns(:group).valid?
-    
+
     # show a public group you don't belong to
     get :show, :id => groups(:public_group).name
     assert_response :success
@@ -46,16 +48,16 @@ class GroupControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:access)
     assert_equal :public, assigns(:access), "blue should only have access to public group information for :public_group"
-    
+
     # show nothing for a private group you don't belong to
     get :show, :id => groups(:private_group).name
-    assert_response :success
+    assert_response :missing
 #    assert_template 'show_nothing'
   end
 
   def test_show_committees_when_logged_in
     login_as :blue
-    
+
     # show a group you belong to
     get :show, :id => groups(:public_group).name
     assert_response :success
@@ -63,16 +65,16 @@ class GroupControllerTest < Test::Unit::TestCase
 
     assert_equal :private, assigns(:access), "should have private access to public group"
     assert_equal 2, assigns(:committees).length, "should show 2 committee"
-    
+
   end
 
   def test_show_public_when_not_logged_in
-    get :show, :id => groups(:public_group).name    
+    get :show, :id => groups(:public_group).name
     assert_response :success
 #    assert_template 'show'
     assert_equal :public, assigns(:access), "should have public access to public group"
     assert_equal 1, assigns(:committees).length, "should show 1 committee"
-    
+
     get :show, :id => groups(:public_committee).name
     assert_response :success
 #    assert_template 'show'
@@ -81,21 +83,21 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_show_private_when_not_logged_in
     get :show, :id => groups(:private_group).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private group"
-    
+
     get :show, :id => groups(:warm).name
-    assert_response :success
+    assert_response 401
     assert_nil assigns(:access), "should have no access to private committee"
 
     get :show, :id => groups(:private_committee).name
-    assert_response :success
-    assert_nil assigns(:access), "should have no access to private committee of public group"    
+    assert_response 401
+    assert_nil assigns(:access), "should have no access to private committee of public group"
   end
 
   def test_visualize
   end
-  
+
   def test_archive_logged_in
     login_as :red
 
@@ -105,7 +107,7 @@ class GroupControllerTest < Test::Unit::TestCase
     assert assigns(:group).valid?
     assert_not_nil assigns(:months)
     assert assigns(:months).length > 0, "should have some months"
-    
+
     get :archive, :id => groups(:public_group).name
     assert_response :success, 'public group, logged in, should be found'
     assert assigns(:group).valid?
@@ -119,10 +121,10 @@ class GroupControllerTest < Test::Unit::TestCase
   end
 
   def test_archive_not_logged_in
-    get :archive, :id => groups(:public_group).name    
+    get :archive, :id => groups(:public_group).name
     assert_response :success
 #    assert_template 'archive'
-    
+
     get :archive, :id => groups(:private_group).name
 #    assert_template 'show_nothing'
   end
@@ -135,12 +137,12 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results"
-    
+
     get :search, :id => groups(:rainbow).name, :path => 'type/discussion'
     assert_response :success
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results when filter for discussions"
-    
+
     post :search, :id => groups(:rainbow).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
     assert_redirected_to 'group/search/rainbow/text/e'
@@ -171,15 +173,15 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_search_when_not_logged_in
     get :search, :id => groups(:public_group).name
     assert_response :success
-    
+
     post :search, :id => groups(:public_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
     assert_redirected_to "group/search/#{groups(:public_group).name}/text/e"
   end
-  
+
   def test_tags
     login_as :blue
-    
+
     get :tags, :id => groups(:rainbow).name
     assert_response :success
 #    assert_template 'tags'
@@ -188,7 +190,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_tasks
     login_as :blue
-    
+
     get :tasks, :id => groups(:rainbow).name
     assert_response :success
 #    assert_template 'tasks'
@@ -206,24 +208,25 @@ class GroupControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:group)
     assert assigns(:group).valid?
-    
+
     new_name = "not-rainbow"
     new_full_name = "not a rainbow"
     new_summary = "new summary"
-    
+
     group = Group.find(groups(:rainbow).id)
-    
+
     post :update, :id => groups(:rainbow).name, :group => {:full_name => new_full_name, :name => new_name, :summary => new_summary}
     assert_response :redirect
     assert_redirected_to :action => 'edit', :id => groups(:rainbow)
-    
+
     group.reload
     assert_equal new_full_name, group.full_name, "full name should now be '#{new_full_name}'"
     assert_equal new_name, group.name, "group name should now be '#{new_name}'"
     assert_equal new_summary, group.summary, "summary should now be '#{new_summary}'"
-    
+
     # a sneaky hacker attack to watch out for
-    Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
+    g = Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
+    Site.default.network.add_group! g unless Site.default.network.nil?
     assert_not_nil Group.find_by_name('hack-committee')
     post :edit, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
@@ -234,7 +237,7 @@ class GroupControllerTest < Test::Unit::TestCase
     post :update, :id => groups(:rainbow).name
     assert_response :redirect
     assert_redirected_to :action => 'edit', :id => groups(:rainbow).name
-    
+
     # try changing the visibility settings
     post :update, :id => groups(:private_group).name,
             :group => { :publicly_visible_group => "1",
@@ -267,9 +270,10 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_equal false, groups(:private_group).accept_new_membership_requests,
                    "private group should not accept new membership requests"
 
-    
+
     # try a sneaky hacker attack
-    Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
+    g = Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
+    Site.default.network.add_group! g unless Site.default.network.nil?
     assert_not_nil Group.find_by_name('hack-committee')
     post :update, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
@@ -277,7 +281,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_edit_tools
     login_as :blue
-    
+
     post :edit_tools, :id => groups(:rainbow).name, :Discussion => "on", :Message => "on", :Wiki => "on"
     groups(:rainbow).reload
     assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Discussion"),
@@ -287,21 +291,22 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Wiki"),
                    "group should have Wiki page allowed"
     assert_equal false, groups(:rainbow).group_setting.allowed_tools.include?("Asset")
-                   "group should not have Asset page allowed" 
+                   "group should not have Asset page allowed"
   end
 
   def test_destroy
     login_as :gerrard
-    
+
     assert_no_difference 'Group.count', "need to be only member to destroy a group" do
       post :destroy, :id => groups(:true_levellers).id
     end
-    
+
     group_name = 'short-lived-group'
-    
+
     group = Group.create! :name => group_name
+    Site.default.network.add_group! group unless Site.default.network.nil?
     group.add_user! users(:gerrard)
-    
+
     assert_difference 'Group.count', -1, "should delete newly created group" do
       post :destroy, :id => group_name
       assert_redirected_to :controller => 'groups'
@@ -310,7 +315,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_login_required
     [:create, :edit, :destroy, :update].each do |action|
-      assert_requires_login do |c|
+      assert_requires_login(nil, @request.host) do |c|
         c.get action, :id => groups(:public_group).name
       end
     end
@@ -325,9 +330,11 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
     User.current = nil
     g = Group.create :name => 'riseup'
+    Site.default.network.add_group! g unless Site.default.network.nil?
     c = Committee.create :name => 'outreach', :parent => g
     g.add_committee!(c)
     u = User.create! :login => 'user', :password => 'password', :password_confirmation => 'password'
+    Site.default.network.add_user! u unless Site.default.network.nil?
     assert u.id
     c.add_user! u
     c.save

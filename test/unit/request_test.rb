@@ -148,7 +148,7 @@ class RequestTest < ActiveSupport::TestCase
 
   def test_request_to_join_your_network
     user = users(:blue)
-    network = groups(:cnt)
+    network = groups(:fau)
     
     assert network.groups.include?(groups(:animals))
     assert_raises ActiveRecord::RecordInvalid, 'duplicate membership not allowed' do
@@ -177,7 +177,7 @@ class RequestTest < ActiveSupport::TestCase
     insider = users(:gerrard)
     group = groups(:rainbow)
     user  = users(:red)
-    network = groups(:cnt)
+    network = groups(:fau)
     
     assert network.groups.include?(groups(:animals))
     assert_raises ActiveRecord::RecordInvalid, 'duplicate membership not allowed' do

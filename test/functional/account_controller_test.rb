@@ -10,6 +10,7 @@ class AccountControllerTest < Test::Unit::TestCase
   def setup
     @controller = AccountController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

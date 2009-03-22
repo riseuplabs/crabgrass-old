@@ -5,11 +5,12 @@ require 'posts_controller'
 class PostsController; def rescue_action(e) raise e end; end
 
 class PostsControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users, :groups, :user_participations, :group_participations, :discussions, :memberships
+  fixtures :pages, :users, :groups, :user_participations, :group_participations, :discussions, :memberships, :sites
 
   def setup
     @controller = PostsController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

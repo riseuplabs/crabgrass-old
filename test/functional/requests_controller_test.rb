@@ -10,22 +10,23 @@ class RequestsControllerTest < Test::Unit::TestCase
   def setup
     @controller = RequestsController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
   def test_cant_create_invite
     login_as :green
     assert_no_difference 'RequestToJoinUs.count' do
-      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['red', 'blue']
+      post :create_invite, :group_id => groups(:fau).id, :recipients => ['red', 'blue']
     end
   end
 
   def test_create_invite
     login_as :gerrard
-    get :create_invite, :group_id => groups(:cnt).id
+    get :create_invite, :group_id => groups(:fau).id
     assert_response :success
     assert_difference 'RequestToJoinUs.count', 2 do
-      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['red', 'blue']
+      post :create_invite, :group_id => groups(:fau).id, :recipients => ['red', 'blue']
     end
   end
 
