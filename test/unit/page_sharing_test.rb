@@ -64,6 +64,7 @@ class PageSharingTest < Test::Unit::TestCase
     other_group = groups(:rainbow)
     user_in_other_group = users(:red)
     assert user_in_other_group.member_of?(other_group)
+    assert !user_in_other_group.member_of?(group)
 
     page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => group, :access => :view)
 
@@ -71,7 +72,8 @@ class PageSharingTest < Test::Unit::TestCase
     
     user.share_page_with!(page, other_user, :access => :admin, :notify => true)
     assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
-    assert_equal true, other_user.may?(:admin, page), 'should be in other users inbox'
+    assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
+    assert_equal true, other_user.may?(:admin, page), 'should have admin access'
 
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     user.share_page_with!(page, other_group, :access => :view)
@@ -83,6 +85,7 @@ class PageSharingTest < Test::Unit::TestCase
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
+    assert_equal false, page.user_participations.find_by_user_id(user_in_other_group.id).viewed?, 'should be marked unread'
   end
 
   def test_add_page
