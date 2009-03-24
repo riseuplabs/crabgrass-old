@@ -6,17 +6,15 @@ module WikiHelper
   end
   
   def wiki_edit_link
-    if may_admin_group?
-      link_to_remote(
-        'edit wiki'.t + ' &raquo; ',
-        {
-          :url => wiki_action('edit'),
-          :loading => show_spinner('wiki-edit'),
-          :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"  # firefox uses layerY, ie uses offsetY
-        },
-        {:style => "background: url(#{image_path('actions/pencil.png')}) no-repeat 0% 50%; padding-left: 20px;", :accesskey => 'e'}
-      ) + spinner('wiki-edit')
-    end
+    link_to_remote(
+      'edit wiki'.t + ' &raquo; ',
+      {
+         :url => wiki_action('edit'),
+         :loading => show_spinner('wiki-edit'),
+         :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"  # firefox uses layerY, ie uses offsetY
+      },
+      {:style => "background: url(#{image_path('actions/pencil.png')}) no-repeat 0% 50%; padding-left: 20px;", :accesskey => 'e'}
+    ) + spinner('wiki-edit')
   end
 
   def area_id(access)
