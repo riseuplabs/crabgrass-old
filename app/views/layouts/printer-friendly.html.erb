@@ -8,12 +8,10 @@
 <h1><%=h title_from_context %></h1>
 
 <div>
-<h2>Summary</h2>
-<b><%=h @page.summary %></b>
+<b><%= @page.summary %></b>
 </div>
 
-<h2>Content</h2>
-  <%= yield %>
+<%= yield %>
   
 <h2>Comments</h2>  
 <%- for post in @posts do -%>
