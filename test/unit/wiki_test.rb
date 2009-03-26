@@ -271,6 +271,10 @@ class WikiTest < Test::Unit::TestCase
     assert_equal 2, w.resolve_updated_section_index(2, users(:blue))
   end
 
+  def test_malformed_section_is_ignored
+    assert_equal 2, wikis(:malformed).sections.size, "A section that runs into a previous one should not be counted"
+  end
+
   def test_wiki_page
   end
 

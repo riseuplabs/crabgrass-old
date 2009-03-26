@@ -50,7 +50,23 @@ module GreenClothTextSections
       sections.shift
     end
 
-    return sections
+    # merge section sif there are no newlines between them
+    merged_sections = []
+    sections.each_with_index do |s, i|
+      if i == 0
+        merged_sections << s
+      else
+        # newline on the previous section
+        if sections[i - 1] =~ /\n\s*\n\Z/
+          # this one is bonafide sections
+          merged_sections << s
+        else
+          # this section runs into the last one
+          merged_sections.last << s
+        end
+      end
+    end
+    return merged_sections
   end
 
   module ClassMethods
