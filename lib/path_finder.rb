@@ -1,4 +1,4 @@
-
+# :include:path_finder/README
 module PathFinder
 
   #  this works, but seems like overkill:

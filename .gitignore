@@ -6,6 +6,7 @@ tmp/**/*
 :2eDS_Store
 :2e_*
 config/*.sphinx.conf
+config/secret.txt
 doc/api
 doc/app
 database.yml
@@ -19,6 +20,7 @@ db/development_structure.sql
 public/avatars/*/*
 !public/avatars/0/*
 public/stylesheets/all.css
+public/stylesheets/themes
 public/javascripts/all.js
 public/assets/*
 lang/la_US.yml

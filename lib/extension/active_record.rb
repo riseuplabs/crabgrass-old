@@ -101,7 +101,7 @@ module ActiveRecord
   class SchemaDumper #:nodoc:
     # modifies index support for MySQL full text indexes
     def indexes(table, stream)
-      if table == 'page_views'
+      if table == 'page_views' or table == 'trackings'
         stream.puts %(  execute "ALTER TABLE #{table} ENGINE = MyISAM")
       end
       indexes = @connection.indexes(table)

@@ -5,11 +5,12 @@ require 'wiki_page_controller'
 class WikiPageController; def rescue_action(e) raise e end; end
 
 class WikiPageControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users, :user_participations, :wikis
+  fixtures :pages, :users, :user_participations, :wikis, :groups, :sites
 
   def setup
     @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
     HTMLDiff.log_to_stdout = false # set to true for debugging
   end
@@ -67,8 +68,8 @@ class WikiPageControllerTest < Test::Unit::TestCase
     login_as :orange
     pages(:wiki).add users(:orange), :access => :edit
     get :edit, :page_id => pages(:wiki).id
-    assert_equal true, assigns(:wiki).locked?, "editing a wiki should lock it"
-    assert_equal users(:orange).id, assigns(:wiki).locked_by.id, "should be locked by orange"
+    assert_kind_of Hash, assigns(:wiki).locked?, "editing a wiki should lock it"
+    assert_equal users(:orange).id, assigns(:wiki).locked_by_id, "should be locked by orange"
     
     assert_no_difference 'pages(:wiki).updated_at' do
       post :edit, :page_id => pages(:wiki).id, :cancel => 'true'
@@ -86,15 +87,20 @@ class WikiPageControllerTest < Test::Unit::TestCase
 
   def test_version
     login_as :orange
-    pages(:wiki).add users(:orange), :access => :view
+    pages(:wiki).add groups(:rainbow), :access => :edit
 
     # create versions
-    (1..5).each do |i|
-      pages(:wiki).data.body = "text %d for the wiki" / i
-      pages(:wiki).data.save
+    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
+      login_as user
+      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
     end
-    
-    pages(:wiki).data.versions.reload    
+
+    # create another modification by the last user
+    # should not create a new version
+    pages(:wiki).data.smart_save!(:user => users(:purple), :body => "text 6 for the wiki")
+
+    login_as :orange
+    pages(:wiki).data.versions.reload
 
     # find versions
     (1..5).each do |i|
@@ -102,7 +108,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
       assert_response :success
       assert_equal i, assigns(:version).version
     end
-    
+
     # should fail gracefully for non-existant version
     get :version, :page_id => pages(:wiki).id, :id => 6
     assert_response :success
@@ -112,11 +118,11 @@ class WikiPageControllerTest < Test::Unit::TestCase
   def test_diff
     login_as :orange
 
-    (1..5).each do |i|
-      pages(:wiki).data.body = "text %d for the wiki" / i
-      pages(:wiki).data.save
+    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
+      #login_as user
+      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
     end
-    pages(:wiki).data.versions.reload
+    #pages(:wiki).data.versions.reload
 
     post :diff, :page_id => pages(:wiki).id, :id => "4-5"
     assert_response :success
@@ -149,7 +155,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
     
     post :break_lock, :page_id => pages(:wiki).id
     assert_equal nil, wiki.reload.locked?
-    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit', :section => 'all')
   end
 
 end

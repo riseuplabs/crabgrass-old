@@ -27,21 +27,33 @@ module LayoutHelper
   end
 
   def site_name
-   (@site||Site.new(:name => 'unknown')).name
+   (current_site||Site.new(:name => 'unknown')).name
   end
       
   ###########################################
   # STYLESHEET
   
+  # this will check if we have cached the request css path (like 'as_needed/wiki.css')
+  # specifically for the current custom appearance
+  # and will link to the cached version if it exists
+  def cached_stysheet_link_tag(path)
+    appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
+    if appearance.has_cached_css?(path)
+      stylesheet_link_tag(appearance.cached_css_stysheet_link_path(path))
+    else
+      stylesheet_link_tag(path)
+    end
+  end
+
   # custom stylesheet
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
     sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
-    stylesheet_link_tag(*sheets)
-  end 
- 
+    sheets.collect {|s| cached_stysheet_link_tag(s)}
+  end
+
   # crabgrass_stylesheets()
   # this is the main helper that is in charge of returning all the needed style
   # elements for HTML>HEAD. There are five (5!) types of stylings:
@@ -56,17 +68,8 @@ module LayoutHelper
 
   def crabgrass_stylesheets
     lines = []
-    lines << stylesheet_link_tag(
-      'core/reset',
-      'core/layout',
-      'core/ui_elements',
-      'core/design',
-      'core/landing',
-      'core/page',
-      'core/wiki',
-      'core/images',
-      :cache => 'core'
-    )
+
+    lines << cached_stysheet_link_tag('screen.css')
     lines << stylesheet_link_tag('icon_png')
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'

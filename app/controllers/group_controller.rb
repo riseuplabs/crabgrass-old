@@ -26,7 +26,8 @@ class GroupController < ApplicationController
       @access = :public
     else
       clear_context
-      return render(:template => 'dispatch/not_found')
+      return render(:template => 'dispatch/not_found',
+                    :status => (logged_in? ? 404 : 401))
     end
 
     params[:path] ||= ""
@@ -96,6 +97,7 @@ class GroupController < ApplicationController
 
   # login required
   def edit
+    @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
   end
 
   # login required
@@ -200,7 +202,7 @@ class GroupController < ApplicationController
   
   @@additional_tools = ["chat"]
   def edit_tools   
-    @available_tools = @site.available_page_types + @@additional_tools
+    @available_tools = current_site.available_page_types + @@additional_tools
     if request.post?
       @group.group_setting.allowed_tools = []
       @available_tools.each do |p|
@@ -327,7 +329,7 @@ class GroupController < ApplicationController
 
   after_filter :update_view_count
   def update_view_count
-    Tracking.insert_delayed(:group => @group, :user => current_user) if @site.tracking
+    Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking
   end
 
   # called when we don't want to let on that a group exists

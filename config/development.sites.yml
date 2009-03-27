@@ -5,7 +5,6 @@ default:
   name: crabgrass
   domain: localhost
   email_sender: 'crabgrass-system@localhost'
-  secret: '3d3dc74473a8a65696b564a4214b3'
   pagination_size: 29
   super_admin_group_id: 35
   translation_group: animals
@@ -23,4 +22,58 @@ default:
   - ExternalVideo
   - Article
   tracking: true
+
+hobo23:
+  name: "hobo23 Crabgrass"
+  domain: hobo23
+  email_sender: 'crabgrass-system@localhost'
+  pagination_size: 29
+  super_admin_group_id: 35
+  default_language:
+  - en_US
+  available_page_types:
+  - Message
+  - Discussion
+  - Wiki
+  - Article
+  - RateMany
+  - RankedVote
+  - TaskList
+  - Asset
+  - Gallery
+  - ExternalVideo
+  evil:
+    google_analytics:
+      enabled: false
+      site_id: UA-XXXXXX-X
+      https: false
+  tracking: false
+  network_id: 3002
+
+localhost:
+  name: "localhost Crabgrass"
+  domain: localhost
+  email_sender: 'crabgrass-system@localhost'
+  secret: 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
+  pagination_size: 29
+  super_admin_group_id: 35
+  default_language:
+  - en_US
+  available_page_types:
+  - Message
+  - Discussion
+  - Wiki
+  - Article
+  - RateMany
+  - RankedVote
+  - TaskList
+  - Asset
+  - Gallery
+  - ExternalVideo
+  evil:
+    google_analytics:
+      enabled: false
+      site_id: UA-XXXXXX-X
+      https: false
+  tracking: false
 

@@ -172,6 +172,7 @@ module UserExtension::Sharing
     mailer_options = options.delete(:mailer_options)
     message        = options[:message]
 
+    
     ## add users to page
     users.each do |user|
       if self.share_page_with_user!(page, user, options)
@@ -179,6 +180,7 @@ module UserExtension::Sharing
       end
     end
 
+    
     ## add groups to page
     groups.each do |group|
       users_to_pester = self.share_page_with_group!(page, group, options)
@@ -234,12 +236,13 @@ module UserExtension::Sharing
       attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
     end
 
+    default_Access_level = :none
     if options.key?(:access) # might be nil
       attrs[:access] = options[:access]
     else
-      options[:grant_access] ||= :view
+      options[:grant_access] ||= default_access_level
       unless user.may?(options[:grant_access], page)
-        attrs[:grant_access] = options[:grant_access] || :view
+        attrs[:grant_access] = options[:grant_access] || default_access_level
       end
     end
 
@@ -247,6 +250,8 @@ module UserExtension::Sharing
     upart.save! unless page.changed?
   end
 
+  
+  
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
     if options.key?(:access) # might be nil

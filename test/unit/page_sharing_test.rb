@@ -7,6 +7,28 @@ class PageSharingTest < Test::Unit::TestCase
   def setup
   end
 
+  def test_group_sharing_takes_precedence
+    creator = users(:kangaroo)
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    page = Page.create(:title => 'a very popular page', :user => creator)
+    assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
+
+    assert creator.may?(:admin, page), 'creator should be able to admin page'
+    assert_equal false, red.may?(:view, page), 'user red should not see the page'
+
+    # share with user
+    creator.share_page_with!(page, "red", :message => "hi red", :grant_access => :view)
+    assert_equal true, red.may?(:view, page), 'user red should see the page'
+    assert_equal false, red.may?(:edit, page), 'user red should not be able to edit the page'
+
+    # share with group
+    creator.share_page_with!(page, "rainbow", :message => "hi rainbow", :grant_access => :edit)
+    assert_equal true, red.may?(:edit, page), 'user red should be able to edit the page'
+    assert_equal true, rainbow.may?(:edit, page), 'group rainbow should be able to edit the page'
+  end
+
   def test_share_page_with_owner
     user = users(:kangaroo)
     group = groups(:animals)
@@ -42,6 +64,7 @@ class PageSharingTest < Test::Unit::TestCase
     other_group = groups(:rainbow)
     user_in_other_group = users(:red)
     assert user_in_other_group.member_of?(other_group)
+    assert !user_in_other_group.member_of?(group)
 
     page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => group, :access => :view)
 
@@ -49,7 +72,8 @@ class PageSharingTest < Test::Unit::TestCase
     
     user.share_page_with!(page, other_user, :access => :admin, :notify => true)
     assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
-    assert_equal true, other_user.may?(:admin, page), 'should be in other users inbox'
+    assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
+    assert_equal true, other_user.may?(:admin, page), 'should have admin access'
 
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     user.share_page_with!(page, other_group, :access => :view)
@@ -61,6 +85,7 @@ class PageSharingTest < Test::Unit::TestCase
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
+    assert_equal false, page.user_participations.find_by_user_id(user_in_other_group.id).viewed?, 'should be marked unread'
   end
 
   def test_add_page

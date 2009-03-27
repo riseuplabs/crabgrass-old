@@ -1,3 +1,11 @@
+# =PathFinder::Sql::Options
+#
+# Callback functions for PathFinder::Options in case of a plain Sql backend.
+#
+# The callback functions populate the arrays with query parts for options.
+# They are called from resolve_options in PathFinder::FindByPath
+#
+# We are currently only using Mysql.
 module PathFinder::Sql::Options
 
   def self.options_for_me(path, options)

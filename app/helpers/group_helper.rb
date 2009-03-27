@@ -73,19 +73,32 @@ module GroupHelper
   end
   
   def list_membership_url() {:controller => 'membership', :action => 'list', :id => @group.name} end
+  def groups_membership_url() {:controller => 'membership', :action => 'groups', :id => @group.name} end
+  def edit_membership_url() {:controller => 'membership', :action => 'edit', :id => @group.name} end
+
 
   def list_membership_link(link_suffix='')
     text = ''
-    if may_admin_group?
+    if may_admin_group? and committee?
       text = 'edit'.t
+      url = edit_membership_url
     elsif may_see_members?
       text = 'see all'.t
+      url = list_membership_url
     end
     if text.any?
-      link_to_active text+link_suffix, list_membership_url
+      link_to_active text+link_suffix, url
     end
   end
-  
+
+  def group_membership_link(link_suffix='')
+    if may_see_members?
+      link_to_active 'see all'.t + link_suffix, groups_membership_url
+    else
+      ''
+    end
+  end
+
   def invite_link(suffix='')
     if may_admin_group?
       link_to_active('send invites'[:send_invites] + suffix, {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
@@ -110,8 +123,7 @@ module GroupHelper
     content_tag :div, link_line(
       link_to_active(:pending.t, hash.merge(:state => 'pending')),
       link_to_active(:approved.t, hash.merge(:state => 'approved')),
-      link_to_active(:rejected.t, hash.merge(:state => 'rejected')),
-      link_to_active(:ignored.t, hash.merge(:state => 'ignored'))
+      link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
     ), :style => 'margin-bottom: 1em'
   end
 
@@ -127,12 +139,16 @@ module GroupHelper
     options[:title] = tag.name
     link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
-
+  
   def may_see_members?
+    may_see_members_of?(@group)
+  end
+
+  def may_see_members_of? group
     if logged_in?
-      current_user.may?(:admin,@group) || current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+      current_user.may?(:admin,group) || current_user.member_of?(group) || group.profiles.visible_by(current_user).may_see_members?
     else
-      @group.profiles.public.may_see_members?
+      group.profiles.public.may_see_members?
     end
   end
 

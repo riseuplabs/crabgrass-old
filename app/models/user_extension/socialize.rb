@@ -25,11 +25,26 @@ module UserExtension::Socialize
               sql += " ORDER BY " + sanitize_sql(options[:order]) if options[:order]
               sql += sanitize_sql [" LIMIT ?", options[:limit]] if options[:limit]
               sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
-      
+
               User.find_by_sql(sql)
             end
-          end  
-      
+
+          end
+
+      # same as results as has_many peers, but chainable with other named scopes
+      named_scope :peers_of, lambda { |user|
+        {
+          :conditions => ['users.id in (?)', user.peer_id_cache]
+        }
+      }
+      # has_many :peeps, :class_name => 'User', :conditions => ['user.id IN ?', "#{peer_id_cache.to_sql}"]
+
+      named_scope :contacts_of, lambda { |user|
+        {
+          :conditions => ['users.id in (?)', user.friend_id_cache]
+        }
+      }
+
       # discussion
       has_one :discussion, :as => :commentable
       #has_many :discussions, :through => :user_relations
@@ -45,6 +60,10 @@ module UserExtension::Socialize
               :conditions => ['users.last_seen_at > ?',10.minutes.ago],
               :order => 'users.last_seen_at DESC' )
           end
+
+          def logins_only
+            find( :all, :select => 'users.login')
+          end
       end
 
     end
@@ -59,17 +78,22 @@ module UserExtension::Socialize
 
   ## CONTACTS
 
-  # this should be the ONLY way that contacts are created.
-  # as a side effect of the FriendActivity created when a contact is added, 
-  # profiles will be created for self if they do not already exist. 
+  # Creates a friend relationship between self and other_user.
+  # This should be the ONLY way that contacts are created.
+  # 
+  # ContactObserver creates a new FriendActivity when a contact is created.
+  # As a side effect, this will create a profile for 'self' if it does not
+  # already exist. 
   def add_contact!(other_user, type=nil)
     unless self.contacts.find_by_id(other_user.id)
-      self.contacts << other_user
+      Contact.create!(:user => self, :contact => other_user)
+      # ^^ this form is used (instead of self.contacts << other_user) so that
+      # the ContactObserver will get called.
       self.contacts.reset
       self.update_contacts_cache
     end
     unless other_user.contacts.find_by_id(self.id)
-      other_user.contacts << self
+      Contact.create!(:user => other_user, :contact => self)
       other_user.contacts.reset
       other_user.update_contacts_cache
     end

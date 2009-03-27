@@ -1,3 +1,7 @@
+# = PathFinder::Sql::BuilderFilters
+# This contains all the filters for the different path elements.
+# It gets included from the Builder.
+#  
 
 module PathFinder::Sql::BuilderFilters
 
@@ -77,9 +81,11 @@ module PathFinder::Sql::BuilderFilters
     @conditions << 'pages.updated_at > pages.created_at'
   end
 
+  #--
   ### Time finders
   # dates in database are UTC
   # we assume the values pass to the finder are local
+  #++
   
   def filter_upcoming
     @conditions << 'pages.starts_at > ?'
@@ -109,7 +115,9 @@ module PathFinder::Sql::BuilderFilters
     @values << date.to_s(:db)
   end
  
+  #--
   # this is a grossly inefficient method
+  #++
   def filter_month(month)
     offset = Time.zone.utc_offset
     @conditions << "MONTH(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
@@ -167,10 +175,12 @@ module PathFinder::Sql::BuilderFilters
     @values << name
   end
   
+  #--
   #### sorting  ####
   # when doing UNION, you can only ORDER BY
   # aliased columns. So, in case we are doing a
   # union, the sorting will use an alias
+  #++
   
   def filter_ascending(sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
@@ -190,14 +200,18 @@ module PathFinder::Sql::BuilderFilters
     end
   end
 
+  #--
   #### BOOLEAN ####  
+  #++
   
   def filter_or
     @or_clauses << @conditions
     @conditions = []
   end
   
+  #--
   ### LIMIT ###
+  #++
   def filter_limit(limit)
     offset = 0
     if limit.instance_of? String 

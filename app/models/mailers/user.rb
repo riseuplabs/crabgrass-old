@@ -17,8 +17,8 @@ module Mailers::User
 
   def setup_email(user)
     @recipients   = "#{user.email}"
-    @from         = Crabgrass::Config.email_sender
-    @subject      = Crabgrass::Config.site_name + ": "
+    @from         = @site.email_sender
+    @subject      = @site.name + ": "
     @sent_on      = Time.now
     @body[:user]  = user
   end

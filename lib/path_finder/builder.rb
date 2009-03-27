@@ -1,22 +1,23 @@
-=begin
-
-An abstract super class of SqlBuilder and FerretBuilder
-
-=end
+# = PathFinder::Builder
+# 
+# An abstract super class of 
+# PathFinder::Sql::Builder,
+# PathFinder::Mysql::Builder and
+# PathFinder::Sphinx::Builder
+#
+# This is called from FindByPath.
 
 class PathFinder::Builder
 
+  # overridden by sub classes
   def initialize(path, options)
-    # overridden by sub classes
   end
   
+  # overridden by sub classes
   def build_query_hash()
-    # overridden by sub classes
   end
   
-  #
   # parses path into filters and applies each filter
-  #
   def apply_filters_from_path( path )
     filters = PathFinder::ParsedPath.new( path )
     filters.each do |filter|

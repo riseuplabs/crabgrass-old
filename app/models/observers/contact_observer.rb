@@ -1,6 +1,6 @@
 class ContactObserver < ActiveRecord::Observer
 
-  def before_save(contact)
+  def after_create(contact)
     if activity = FriendActivity.find_twin(contact.user, contact.contact)
       key = activity.key
     else

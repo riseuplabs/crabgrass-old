@@ -15,7 +15,7 @@ class Me::InfovizController < Me::BaseController
     format = params[:format] || 'svg'
 
     @pages = Page.find_by_path(params[:path], options_for_me)
-    @activities = Activity.for_dashboard(current_user).newest.unique.find(:all, :limit => 12)
+    @activities = Activity.for_dashboard(current_user, current_site).newest.unique.find(:all, :limit => 12)
 
     g = GraphViz::new( "structs", :output => "svg" )
     g[:rankdir] = "LR"

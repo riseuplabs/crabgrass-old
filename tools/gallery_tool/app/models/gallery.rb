@@ -29,7 +29,7 @@ class Gallery < Page
   # announce that this gallery was updated by her.
   # 
   # This method always returns true. On failure an error is raised.
-  def add_image!(asset, user=nil, position = nil)
+  def add_image!(asset, user, position = nil)
     check_for_page(asset, user)
     check_permissions!(asset, user)
     check_type!(asset)
@@ -116,7 +116,7 @@ class Gallery < Page
     unless asset.page
       up=0
       gp=0
-      page = asset.pages.create!(:title => asset.filename, :data_id => asset.id,
+      page = AssetPage.create!(:title => asset.basename, :data => asset,
                                  :flow => FLOW[:gallery])
       self.group_participations.each do |gpart|
         page.group_participations.create(:group_id => gpart.group_id,

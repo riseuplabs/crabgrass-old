@@ -18,7 +18,11 @@ class Committee < Group
   def display_name
     read_attribute(:full_name) || short_name
   end
-        
+
+  ## TODO: i do not like this. there is no attribute display_name.
+  def display_name=(name)
+    write_attribute(:display_name, name)
+  end
   #has_many :delegations, :dependent => :destroy
   #has_many :groups, :through => :delegations
   #def group()
@@ -29,7 +33,7 @@ class Committee < Group
   def parent_name_changed
     self.name = short_name
   end
-  
+
   # custom name setter so that we can ensure that the parent's
   # name is part of the committee's name.
   def name=(str)
@@ -61,7 +65,17 @@ class Committee < Group
     ok or raise PermissionDenied.new
   end
 
+#
+# SITES
+#
+#############################  
 
+  # returns true if self is part of given network
+  def belongs_to_network?(network)
+    self.parent.networks.include?(network)
+  end
+  
+  
   ####################################################################
   ## relationships to users
   def may_be_pestered_by?(user)

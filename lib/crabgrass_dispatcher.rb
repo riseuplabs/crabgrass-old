@@ -43,7 +43,7 @@ module CrabgrassDispatcher
             if Group.exists?({:name => value})
               record.errors.add(attr_name, 'is already taken')
             end
-          elsif record.instance_of? Group
+          elsif record.instance_of? Group or record.instance_of? Network
             if Group.exists?(['name = ? and id <> ?', value, record.id||-1])
               record.errors.add(attr_name, 'is already taken')
             end

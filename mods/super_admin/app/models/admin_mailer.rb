@@ -17,8 +17,8 @@ class AdminMailer < ActionMailer::Base
 
   def setup_email(user)
     @recipients   = "#{user.email}"
-    @from         = Crabgrass::Config.email_sender
-    @subject      = Crabgrass::Config.site_name + ": "
+    @from         = current_site.email_sender
+    @subject      = current_site.name + ": "
     @sent_on      = Time.now    
   end
 

@@ -55,7 +55,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
   map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil
   map.connect 'feeds/:type/:group', :controller => 'feeds', :action => 'index', :group => nil
-  
+
+  map.connect 'stylesheets/*path', :controller => 'stylesheets', :action => 'style'
+  map.resources :custom_appearances, :only => [:edit, :update]
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
 
@@ -64,7 +66,7 @@ ActionController::Routing::Routes.draw do |map|
   # This default route was added in Rails 1.2, but we did not add it then;
   # Do we want it?
   # map.connect ':controller/:action/:id.:format'
- 
+
 
   ##### DISPATCHER ROUTES ###################################
   

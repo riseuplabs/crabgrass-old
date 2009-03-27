@@ -1,3 +1,7 @@
+# = PathFinder::Sql::BuilderFilters
+# This contains all the filters for the different path elements.
+# It gets included from the Builder.
+#  
 
 module PathFinder::Sphinx::BuilderFilters
 
@@ -34,11 +38,12 @@ module PathFinder::Sphinx::BuilderFilters
   def filter_changed
     raise Exception.new("sphinx cannot search for changed")
   end
-      
+    
+  #--
   ### Time finders
   # dates in database are UTC
   # we assume the values pass to the finder are local
-  
+  #++
 
   def filter_starts
     @date_field = :starts_at
@@ -144,7 +149,9 @@ module PathFinder::Sphinx::BuilderFilters
     filter_stars(1)
   end
   
+  #--
   #### sorting  ####
+  #++
   
   def filter_ascending(sortkey)
     if sortkey == 'updated_at' or sortkey == 'created_at'
@@ -157,10 +164,12 @@ module PathFinder::Sphinx::BuilderFilters
     if sortkey == 'updated_at' or sortkey == 'created_at'
       sortkey = 'page_' + sortkey
     end
-    @order <<" #{sortkey} DESC"
+    @order << " #{sortkey} DESC"
   end
   
+  #--
   ### LIMIT ###
+  #++
   
   def filter_limit(limit)
     offset = 0
@@ -175,7 +184,9 @@ module PathFinder::Sphinx::BuilderFilters
     @search_text += " #{text}"
   end
 
+  #--
   ### HELPER ###
+  #++
 
   def range(min,max)
     min.to_i..max.to_i

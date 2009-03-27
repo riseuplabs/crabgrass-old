@@ -1,16 +1,23 @@
-#require 'path_finder/mysql/builder'
+# = PathFinder::Mysql::BuilderFilters
+# This contains all the filters for the different path elements.
+# It gets included from the Builder.
+#  
 
 module PathFinder::Mysql::BuilderFilters
 
   protected
 
+  #--
+  #Turning RDoc comments of. This is not commented yet and maybe not
+  #necessary either.
 
   ### TIME AND DATE FILTERS
 
   # for your health, use this to convert local time to utc
   # the dates in @values should be utc, all other date variables
-  # should be local time.  
-  def to_utc(time)
+  # should be local time. 
+  #++
+  def to_utc(time)  # :nodoc:
     time = time.to_time if time.is_a? Date
     Time.zone.local_to_utc(time)
   end
@@ -84,9 +91,11 @@ module PathFinder::Mysql::BuilderFilters
 #    @values << date.to_s(:db)
   end
  
+  #--
   # 2008      --> all pages from 2008-1-1 up to but not including 2009-1-1
   # 2008-12   --> all pages from 2008-12-1 up to but not including 2009-1-1
   # 2008-12-5 --> all pages from 2008-12-5 up to but not including 2008-12-6
+  #++
   def filter_date(date)
     start_year, start_month, start_day = date.split('-')
     if start_year.nil?
@@ -105,7 +114,9 @@ module PathFinder::Mysql::BuilderFilters
     @values << to_utc(start_time) << to_utc(end_time)
   end
   
+  #--
   #### FULLTEXT FILTERS
+  #++
     
   def filter_person(id)
     @access_filter_clause << "+" + Page.access_ids_for(
@@ -119,13 +130,17 @@ module PathFinder::Mysql::BuilderFilters
     ).first
   end
 
+  #--
   # TODO: allow multiple OR tags instead of only AND tags
   # ie "+(this_tag or_this_tag)" rather than "+this_tag +and_this_tag"
+  # ++
   def filter_tag(tag_name)
     @tags << "+" + Page.searchable_tag_list([tag_name]).first
   end
 
+  #--
   ### OTHER PAGE COLUMNS
+  #++
 
   def filter_type(page_class_group)
     page_class_names = Page.class_group_to_class_names(page_class_group)
@@ -148,7 +163,9 @@ module PathFinder::Mysql::BuilderFilters
     @values << name
   end
 
+  #--
   # in case sphinx is not available, but this should really never be used.
+  #++
   def filter_text(text)
     @conditions << 'pages.title LIKE ?'
     @values << "%#{text}%"
@@ -163,7 +180,9 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'pages.stars > 0'
   end
 
+  #--
   #### sorting  ####
+  #++
   
   def filter_ascending(sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
@@ -175,14 +194,18 @@ module PathFinder::Mysql::BuilderFilters
     @order << "pages.%s DESC" % sortkey
   end
 
-  #### BOOLEAN ####  
+  #--
+  #### BOOLEAN ####
+  #++
   
   def filter_or
     @or_clauses << @conditions
     @conditions = []
   end
   
+  #--
   ### LIMIT ###
+  #++
 
   def filter_limit(limit)
     offset = 0
@@ -198,15 +221,23 @@ module PathFinder::Mysql::BuilderFilters
     @per_page = per_page.to_i
   end
 
-  ##
+  #--
   ## ASSOCIATION
-  ##
+  #++
+
+  def filter_featured_by(group_id)
+    @conditions << 'group_participations.group_id = ? AND group_participations.static = TRUE'
+    @values << [group_id.to_i]
+  end
 
   def filter_contributed(user_id)
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]
-    @order = "user_participations.changed_at DESC"
+    @order << "user_participations.changed_at DESC" if @order
   end
 
+#turning RDoc comments back on. 
+#++ 
 end
+
 

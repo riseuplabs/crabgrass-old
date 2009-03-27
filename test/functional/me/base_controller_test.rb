@@ -6,7 +6,7 @@ class Me::BaseController; def rescue_action(e) raise e end; end
 
 class BaseControllerTest < Test::Unit::TestCase
 
-  fixtures :users, :languages
+  fixtures :users, :languages, :sites
   
   def setup
     @controller = Me::BaseController.new

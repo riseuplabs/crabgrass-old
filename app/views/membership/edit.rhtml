@@ -1,0 +1,15 @@
+<% content_for :style do -%>
+table.members td {padding: 12px;}
+<% end -%>
+
+<%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
+
+<% if logged_in? %>
+  <% if current_user.may?(:admin, @group) -%>
+    <%= render :partial => 'admin' %>
+  <% end -%>
+  <% if committee? and current_user.may?(:admin,@group)-%>
+    <%= render :partial => 'committee' %>
+  <% end -%>
+<% end %>
+

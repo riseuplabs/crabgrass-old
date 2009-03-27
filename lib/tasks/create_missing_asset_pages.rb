@@ -6,7 +6,7 @@ task :create_missing_asset_pages => :environment do
       nil
     else
       begin
-        page = asset.pages.create!(:title => asset.filename, :flow => :gallery, :type => 'AssetPage')
+        page = AssetPage.create!(:title => asset.basename, :flow => :gallery, :data => asset)
         $stdout.puts "Created page for #{asset.id}"
         page
       rescue => exc

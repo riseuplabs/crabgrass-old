@@ -5,29 +5,32 @@ require 'people_controller'
 class PeopleController; def rescue_action(e) raise e end; end
 
 class PeopleControllerTest < Test::Unit::TestCase
-  fixtures :users
+  fixtures :users, :sites
 
   def setup
     @controller = PeopleController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
   # Replace this with your real tests.
   def test_index_without_login
-    get :index
-    assert_response :success
+    %w(index contacts peers directory).each do |action|
+      get action
+      assert_response :success
 #    assert_template 'list'
-    assert_nil assigns(:contacts) 
-    assert_nil assigns(:peers) 
+      assert_nil assigns(:users)
+    end
+
   end
-  
+
   def test_index_with_login
     login_as :quentin
-    get :index
-    assert_response :success
-#    assert_template 'list'
-    assert_not_nil assigns(:contacts) 
-    assert_not_nil assigns(:peers) 
+    %w(index contacts peers directory).each do |action|
+      get action
+      assert_response :success
+      assert_not_nil assigns(:users)
+    end
   end
 end

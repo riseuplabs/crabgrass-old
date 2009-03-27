@@ -1,5 +1,4 @@
-PATH FINDER
-================================================
+= PATH FINDER
 
 A module to find crabgrass pages.
 
@@ -7,146 +6,37 @@ This module handles all the complicated code that makes page queries work.
 Currently, it handles SQL and sphinx queries. Eventually, we have plans to
 improve the SQL queries using a clever full text search approach.
 
-builder.rb      -- the class that converts between a path and actual
-                   database conditions.
+== How to use PathFinder ?
 
-parsed_path.rb  -- a subclass of Array used to represent a query filter path
-                   that has been parsed.
-                   
-options.rb      -- a module included in all controllers to help build
-                   the options hash needed by the page finders.
-                  
-find_by_path.rb -- a module that is included by Page to add the 
-                   find_by_path and count_by_path methods.
+Look at the examples for now: lib/path_finder/EXAMPLES
+
+There is also a list of the filters: lib/path_finder/FILTERS
+
+== Structure of PathFinder
+
+PathFinder::Builder::       the class that converts between a path and actual
+                            database conditions.
+
+PathFinder::ParsedPath::    a subclass of Array used to represent a query filter path
+                            that has been parsed.
+
+PathFinder::Options::       a module included in all controllers to help build
+                            the options hash needed by the page finders.
+
+PathFinder::FindByPath::    a module that is included by Page to add the 
+                            find_by_path and count_by_path methods. 
 
 Additionally, there are three backends:
 
-* SQL: for a generic sql database
-* MySQL: for a mysql database will fulltext index on page_terms
-* Sphinx: for fulltext searching of page body content.
+* PathFinder::Sql for a generic sql database
+* PathFinder::Mysql for a mysql database will fulltext index on page_terms
+* PathFinder::Sphinx for fulltext searching of page body content.
 
 Each of these backends is defined in x_builder.rb, x_builder_filters.rb, and x_options.rb
 
 Why all this sillyness? 
 
-(1) makes it easy to switch back and forth between urls and actual queries
-(2) makes it so that we can switch storage backends without changing application logic.
-(3) finding pages is way complicated, and it is nice to have all that
-    logic hidden away.
-
-
-how to use PathFinder
----------------------
-
-Look at the examples for now.
-
-
-examples
----------
-
-Find all the current user's pages that are starred and of type event:
-
-   Page.find_by_path('/starred/type/event', options_for_me)
-
-
-Find the twenty most recent pages for group 'rainbow'
-
-   rainbow = Group.find_by_name('rainbow')
-   Page.find_by_path('/descending/updated_at/limit/20', options_for_group(rainbow))
-
-   (if there is a current user, this will query all the pages that the current_user
-    has access to. otherwise, it will only query rainbow's public pages)
-    
-Find the twenty most recent pages I have access to, that group
-'rainbow' also does:
-
-   rainbow = Group.find_by_name('rainbow')
-   Page.find_by_path('/descending/updated_at/limit/20/group/%d' % rainbow.id, options_for_me)
-
-   (I am not sure if this query is the same as the previous one or not)
-   
-available filters
------------------
-
-# boolean filters 
-  /or
-
-# conditions
-  /unread
-  /pending
-  /interesting
-  /attending
-  /watching
-  /starred
-  /stars/<num>
-  /type/<page type>
-  /tag/<tag>
-  /name/<page name>
-  /changed
-  /text/<page text>
-    
-# associations
-  /person/<user id>
-  /group/<group id>
-  /created_by/<user name>
-  /not_created_by/<user name>
-    
-# date
-  /month/MM
-  /year/YYYY
-  /ago/?/?
-  /upcoming
-  /created_after/YYYY-MM-DD
-  /created_before/YYYY
-  /starts
-  /before/YYYY-MM-DD
-  /after/YYYY-MM-DD
-
-# limit
-  /limit/<number of pages>
-        
-# sorting
-  /ascending/<column name>
-  /descending/<column name>
-    
-
-A note on eager loading
------------------------
-
-Eager loading presents a huge problem. The way eager loading
-works is that you get multiple rows, potentially, for each row of data you want back.
-
-For example, suppose you want to query a list of pages, but you want that list
-to also pull in the group_participations. Since there might be more than one
-group_participation for each page, the result could look like this:
-
-page_id    page_name     group_participation_id
-1          apple         1
-1          apple         2
-1          apple         3
-2          pear          4
-3          banana        5
-3          banana        6
-
-The problem is, how do we limit this query? We can't, unless we know the counts
-in advance. For example, if we want to pull in at most three pages, the limit for
-the above query would have to be 6, even though there are only three pages in the
-result. The only way we could know this is if we run a separate query in advance
-to calculate the counts. 
-
-However!! In practice, all the eager loading we want to do looks like this:
-
-page_id    page_name     group_participation_id
-1          apple         1
-2          pear          4
-3          banana        6
-
-Because, in practice, we find ourselves in situations were we only want to eager
-load a single extra record: not all group participations, but just the group
-participation that is important for the current group.
-
-So, PathFinder should support eager loading, but only in the special case where you 
-only want one eager loaded row.
-
-Not sure how to do this.
-
+1. makes it easy to switch back and forth between urls and actual queries
+2. makes it so that we can switch storage backends without changing application logic.
+3. finding pages is way complicated, and it is nice to have all that
+   logic hidden away.

@@ -1,21 +1,19 @@
-=begin
-
-A simple class for parsing and generating 'readable url query paths'
-
-Given a path string like so:
-
-   /unread/tag/urgent/person/23/starred
-
-The corresponding ParsedPath would be an array that looks like this:
-
-  [ ['unread'], ['tag','urgent'], ['person',23], ['starred'] ]
-
-To create a ParsedPath, we identify the key words and their arguments, and split
-up that path into an array where each element is a different keyword (with its
-included arguments).
-
-=end
-
+#=PathFinder::ParsedPath
+#A simple class for parsing and generating 'readable url query paths'
+#
+#Given a path string like so:
+#
+#   /unread/tag/urgent/person/23/starred
+#
+#The corresponding ParsedPath would be an array that looks like this:
+#
+#  [ ['unread'], ['tag','urgent'], ['person',23], ['starred'] ]
+#
+#To create a ParsedPath, we identify the key words and their arguments, and split
+#up that path into an array where each element is a different keyword (with its
+#included arguments).
+#
+#:include:FILTERS
 class PathFinder::ParsedPath < Array
 
   # path keyword => number of arguments required for the keyword.
@@ -45,6 +43,7 @@ class PathFinder::ParsedPath < Array
     'created_by' => 1,
     'not_created_by' => 1,
     'contributed' => 1,
+    'featured_by' => 1,
     
     # date
     'date' => 1,
@@ -146,7 +145,7 @@ class PathFinder::ParsedPath < Array
     end
   end
   
-  # return the first argument of the pathkeyword
+  # returns the first argument of the pathkeyword
   # if:   path = "/person/23"
   # then: first_arg_for('person') == 23
   def first_arg_for(word)
@@ -155,11 +154,14 @@ class PathFinder::ParsedPath < Array
     return element[1]
   end
   alias :arg_for :first_arg_for
-  
+
+  # returns first argument of the keyword as an Integer
+  # or 0 if the argument is not set
   def int_for(word)
     (arg_for(word)||0).to_i
   end
   
+  # returns the arguments for the keyword
   def args_for(word)
     keyword?(word)
   end

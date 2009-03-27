@@ -18,12 +18,12 @@
     <%= select_tag('contact_drop',
         options_for_select(
            [["#{'contacts'.t}…",'']] + 
-           current_user.contacts.to_select(:both_names, :name), params[:user_ids]),
+           current_user.contacts.sort_by{|c|c.both_names}.to_select(:both_names, :name), params[:user_ids]),
         :onchange => "$('to').value += $('contact_drop').value + ' '") %>
     <%= select_tag('peer_drop',
         options_for_select(
            [["#{'peers'.t}…",'']] +
-           current_user.peers.to_select(:both_names, :name), params[:user_ids]),
+           current_user.peers.sort_by{|c|c.both_names}.to_select(:both_names, :name), params[:user_ids]),
         :onchange => "$('to').value += $('peer_drop').value + ' '") %>
 
   </td>

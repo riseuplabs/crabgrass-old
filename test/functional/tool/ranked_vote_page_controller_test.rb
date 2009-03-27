@@ -10,6 +10,7 @@ class Tool::RankedVotePageControllerTest < Test::Unit::TestCase
   def setup
     @controller = RankedVotePageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
 
     login_as :orange

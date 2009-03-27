@@ -96,4 +96,9 @@ wiki_blue:
   page_id: 210
   user_id: 4
   access: 1
+malformed_wiki_orange:
+  id: <%= id+=1 %>
+  page_id: 230
+  user_id: 5
+  access: 1
 

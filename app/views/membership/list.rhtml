@@ -2,18 +2,9 @@
 table.members td {padding: 12px;}
 <% end -%>
 
-<% if logged_in? %>
-  <% if current_user.may?(:admin,@group) -%>
-    <%= render :partial => 'admin' %>
-  <% end -%>
-  <% if committee? and current_user.may?(:admin,@group)-%>
-    <%= render :partial => 'committee' %>
-  <% end -%>
-<% end %>
+<%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
 
-<h2><%= "members".t %></h2>
-
-<% if @site.tracking %>
+<% if current_site.tracking %>
 <b>Visits:</b>
 <%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month, 
 <%= @group.memberships.count(:all, :conditions => "visited_at  is not null") %> all time
@@ -21,34 +12,27 @@ table.members td {padding: 12px;}
 
 <p/>
 
+<%= letter_pagination_links({:controller => 'membership', :action => 'list', :id => @group}, :available_letters => @pagination_letters) %>
+
 <div>
-<% if @group.memberships.any? %>
+<% if @memberships.any? %>
   <table class='members pretty'>
   <tr>
     <th>User</th>
     <th>Joined</th>
-    <% if @site.tracking %>
+    <% if current_site.tracking %>
     <th>Last Visit</th>
     <th>Total Visits</th>
 <!--    <th>Joined by</th> -->
     <% end %>
     <th></th>
   </tr>
-  <%= render :partial => 'membership', :collection => @group.memberships %>
+  <%= render :partial => 'membership', :collection => @memberships %>
   </table>
   <br/>
 <% end -%>
 
-<% if @group.federatings.any? %>
-<h2><%= "group members".t %></h2>
-  <table class='members pretty'>
-  <tr>
-    <th>Group</th>
-    <th>Joined</th>
-  </tr>
-  <%= render :partial => 'federating', :collection => @group.federatings %>
-  </table>
-<% end -%>
-
 </div>
+
+<%= pagination_links(@memberships) -%>
 

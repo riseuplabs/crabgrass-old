@@ -9,9 +9,22 @@ class MembershipController < ApplicationController
   before_filter :login_required
 
   ###### PUBLIC ACTIONS #########################################################
-  
+
+  # list all members of the group
   def list
-    
+    # disabled for the sites mode - do we want membership by site?
+    # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+   @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+   @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+  end
+
+  # list groups belonging to a network
+  def groups
+    @federatings = @group.federatings.alphabetized_by_group
+  end
+
+  # edit committee settings (add/remove users) or admin a group (currently n/a)
+  def edit
   end
   
   ###### MEMBER ACTIONS #########################################################
@@ -55,7 +68,7 @@ class MembershipController < ApplicationController
     
   def context
     group_context
-    add_context 'membership', url_for(:controller=>'membership', :action => 'list', :id => @group)
+    add_context 'Membership', url_for(:controller=>'membership', :action => 'list', :id => @group)
   end
   
   prepend_before_filter :fetch_group
@@ -69,6 +82,13 @@ class MembershipController < ApplicationController
     @title_box = render_to_string :partial => 'title_box'
   end
   
+  before_filter :prepare_pagination
+  def prepare_pagination
+    @page_number = params[:page] || 1
+    @per_page = 20
+    @letter_page = params[:letter] || ''
+  end
+
   def authorized?
     return false unless logged_in?
     if action?(:list)

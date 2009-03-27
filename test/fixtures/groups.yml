@@ -30,7 +30,7 @@ animals:
 rainbow:
   id: 3
   name: rainbow
-  summary: Butterfly in the sky, I can go twice as high / Take a look, it's in a book - Reading Rainbow.
+  summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
 warm:
   id: 31
   parent_id: 3
@@ -68,6 +68,7 @@ private_group:
   name: private_group_not_everyone_can_see
   summary: The private group that not everyone can see
 
+# these two are also the sites networks.
 cnt:
   id: 3001
   name: cnt
@@ -78,5 +79,10 @@ fai:
   name: fai
   full_name: Federación Anarquista Ibérica
   type: Network
-
+# lets have another one so we can access it from within the sites.
+fau:
+  id: 3003
+  name: fau
+  full_name: Freie Arbeiter Union
+  type: Network
 

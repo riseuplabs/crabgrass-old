@@ -822,10 +822,15 @@ directory_of_people: Directory of People
 no_contacts_msg: You have no contacts.
 my_peers_explain: users I share a common group with
 no_peers_msg: You have no peers.
-my_contacts: my contacts
+my_contacts_link: my contacts
+my_contacts: My Contacts
+new_people: New People
+new_people_link: new people
 no_public_profiles: No public profiles yet...
-all_people: all people
-my_peers: my peers
+all_people_link: all people
+all_people: All People
+my_peers_link: my peers
+my_peers: My Peers
 my_peers_description: users I share a common group with
 you_have_no_contacts: 'You have no contacts'
 you_have_no_peers: 'You have no peers'

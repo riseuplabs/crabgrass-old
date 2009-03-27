@@ -5,13 +5,15 @@ require 'groups_controller'
 class GroupsController; def rescue_action(e) raise e end; end
 
 class GroupsControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :profiles, :pages, :group_participations, :user_participations, :tasks, :page_terms
+  fixtures :groups, :users, :memberships, :profiles, :pages, :sites,
+            :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 
   def setup
     @controller = GroupsController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
@@ -23,6 +25,22 @@ class GroupsControllerTest < Test::Unit::TestCase
   end
 
   def test_directory
+    login_as :gerrard
+    get :directory
+    assert_response :success
+    assert_not_nil assigns(:groups)
+  end
+
+  def test_directory_letter
+    login_as :blue
+    get :directory, :letter => 'r'
+    assert_response :success
+
+    assert_equal 1, assigns(:groups).size
+    assert_equal "rainbow", assigns(:groups)[0].name
+  end
+
+  def test_index
     login_as :gerrard
     get :directory
     assert_response :success
@@ -77,7 +95,6 @@ class GroupsControllerTest < Test::Unit::TestCase
 
   def test_create_fails_when_name_is_taken
     login_as :gerrard
-    
     assert_difference 'Group.count', 1,  "should have created a new group" do
       post :create, :group => {:name => 'test-create-group'}
     end

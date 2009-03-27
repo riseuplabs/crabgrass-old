@@ -1,12 +1,9 @@
-
-=begin
-
-Concrete subclass of Builder
-
-This class calls the sphinx active record extension search_for_ids, or uses the Riddle plugin, if necessary.
-It is called from find_by_path.rb
-
-=end
+#=PathFinder::Sphinx::Builder
+#Concrete subclass of Builder
+#
+#This class calls the Sphinx active record extension search_for_ids, or uses the Riddle plugin, if necessary.
+#It is called from find_by_path in PathFinder::FindByPath
+#
 
 class PathFinder::Sphinx::Builder < PathFinder::Builder
 

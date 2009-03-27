@@ -4,6 +4,10 @@ module AuthenticatedTestHelper
     @request.session[:user] = user ? users(user).id : nil
   end
 
+  def select_host(host)
+    @request.host = host
+  end
+
   def content_type(type)
     @request.env['Content-Type'] = type
   end
@@ -38,8 +42,8 @@ module AuthenticatedTestHelper
   # 
   #   assert_requires_login(:bob) { |c| c.get :edit, :id => 1 }
   #
-  def assert_requires_login(login = nil)
-    yield HttpLoginProxy.new(self, login)
+  def assert_requires_login(login = nil, host = nil)
+    yield HttpLoginProxy.new(self, login, host)
   end
 
   def assert_http_authentication_required(login = nil)
@@ -58,9 +62,10 @@ end
 class BaseLoginProxy
   attr_reader :controller
   attr_reader :options
-  def initialize(controller, login)
+  def initialize(controller, login, host)
     @controller = controller
     @login      = login
+    @host       = host
   end
 
   private
@@ -84,6 +89,7 @@ class HttpLoginProxy < BaseLoginProxy
   protected
     def authenticate
       @controller.login_as @login if @login
+      @controller.select_host @host if @host
     end
     
     def check(method,*args)

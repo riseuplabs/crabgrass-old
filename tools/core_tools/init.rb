@@ -1,8 +1,9 @@
-PageClassRegistrar.add(
-  'Page',
-  :controller => 'page',
-  :class_display_name => 'basic page'
-)
+# this should not exist:
+#PageClassRegistrar.add(
+#  'Page',
+#  :controller => 'page',
+#  :class_display_name => 'basic page'
+#)
   
 PageClassRegistrar.add(
   'DiscussionPage',

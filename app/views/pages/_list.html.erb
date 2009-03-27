@@ -23,6 +23,7 @@ local variables which may be passed in
 
 =end
 
+
 pages   ||= @pages
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 colspan = columns.size
@@ -33,29 +34,9 @@ any_results = pages.any?
 sortable = true if sortable.nil?
 
 if show_time_dividers
-  today = []; yesterday = []; week = []; later = [];
-  pages = array_of_pages(pages).dup
-  page = pages.shift
-  while page and after_day_start?(page.updated_at)
-    today << page
-    page = pages.shift
-  end
-  while page and after_yesterday_start?(page.updated_at)
-    yesterday << page
-    page = pages.shift
-  end
-  while page and after_week_start?(page.updated_at)
-    week << page
-    page = pages.shift
-  end
-  unless today.size + yesterday.size + week.size > 0
-    show_time_dividers = false
-  else
-    while page
-      later << page
-      page = pages.shift
-    end
-  end
+  today, yesterday, week, later = divide_pages_by_recency(pages)
+  # don't show dividers if we have nothing to divide
+  show_time_dividers = false unless (today.size + yesterday.size + week.size > 0)
 end
 
 -%>

@@ -1,0 +1,60 @@
+--- 
+localhost:
+  id: 1
+  name: localhost Crabgrass
+  default: true
+  evil: 
+    google_analytics: 
+      site_id: UA-XXXXXX-X
+      https: false
+      enabled: false
+  translators: 
+  domain: localhost
+  default_language: en_US
+  tracking: false
+  translation_group: 
+  email_sender: crabgrass-system@localhost
+  super_admin_group_id: 35
+  available_page_types: 
+  - Message
+  - Discussion
+  - Wiki
+  - Article
+  - RateMany
+  - RankedVote
+  - TaskList
+  - Asset
+  - Gallery
+  - ExternalVideo
+  pagination_size: 29
+  custom_appearance_id: 2
+  network_id: 3001
+testhost:
+  id: 2
+  name:  crabgrass
+  default: false
+  evil: 
+    google_analytics: 
+      site_id: UA-XXXXXX-X
+      https: false
+      enabled: false
+  translators: 
+  domain: test.host
+  default_language: en_US
+  tracking: true
+  translation_group: animals
+  email_sender: crabgrass-system@test.host
+  super_admin_group_id: 35
+  available_page_types: 
+  - Message
+  - Discussion
+  - Wiki
+  - RateMany
+  - RankedVote
+  - TaskList
+  - Asset
+  - Gallery
+  - ExternalVideo
+  - Article
+  pagination_size: 29
+  network_id: 3002

@@ -154,6 +154,31 @@ class Page < ActiveRecord::Base
     end
     true
   end
+#
+# SITES
+#
+#############################  
+  
+  # returns true if self is part of given network
+  # -- TODO
+  #   i don't think this does what it is supposed to do.
+  #   this code would be better:
+  #     self.group_ids.any_in?(network.group_ids + [network.id])
+  #   this does a big intersection, slow but not that slow on the limited size of the arrays.
+  #   -elijah
+  # --
+  def belongs_to_network?(network)
+    groups = self.groups_with_access(:view)
+    groups | self.groups_with_access(:edit)
+    groups | self.groups_with_access(:admin)
+    groups | self.groups_with_access(:comment)
+    
+    groups.include?(network) ? true : false 
+    true
+  end
+
+####  
+  
   
   # This method should never be called directly. It should only be called
   # from User#may?()

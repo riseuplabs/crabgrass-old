@@ -1,12 +1,11 @@
-
-=begin
-
-Concrete subclass of Builder
-
-This class generates the SQL and makes the call to find_by_sql.
-It is called from find_by_path.rb
-
-=end
+# =PathFinder::Sql::Builder
+#
+# Concrete subclass of PathFinder::Builder
+#
+# This class generates the SQL and makes the call to find_by_sql.
+# It is called from find_by_path in PathFinder::FindByPath
+#
+# We are currently using Mysql::Builder.
 
 class PathFinder::Sql::Builder < PathFinder::Builder
   
@@ -17,6 +16,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   attr_accessor :and_clauses # used to build the current clause of the form (x and x)
   attr_accessor :values      # array of replacement values for the '?' in conditions
   
+  # initializes all the arrays for conditions, aliases, clauses and so on
   def initialize(path, options)
     @conditions  = []
     @order       = []
@@ -68,6 +68,11 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     end
   end
 
+  # uses @path to construct the sql query:
+  # * the filters in PathFinder::Sql::BuilderFilters are applyed and
+  #   populate the arrays for conditions, {and,or}_clauses and so on.
+  # * a hash of different parameters for the sql clause is constructed
+  # * finally the sql query is constructed and returned.
   def sql_for_find
     # parse the path and apply each filter
     apply_filters_from_path( @path )

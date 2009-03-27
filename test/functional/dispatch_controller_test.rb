@@ -6,11 +6,12 @@ class DispatchController; def rescue_action(e) raise e end; end
 
 class DispatchControllerTest < Test::Unit::TestCase
 
-  fixtures :pages, :users, :user_participations
+  fixtures :pages, :users, :user_participations, :sites
 
   def setup
     @controller = DispatchController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
 #    @controller.fetch_site # why is this necessary?
   end

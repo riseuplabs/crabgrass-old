@@ -10,6 +10,7 @@ class Tool::MessagePageControllerTest < Test::Unit::TestCase
   def setup
     @controller = MessagePageController.new
     @request    = ActionController::TestRequest.new
+    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
   end
 

@@ -6,7 +6,7 @@ require 'set'
 class PagesController; def rescue_action(e) raise e end; end
 
 class PagesControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups,
+  fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,
            :taggings, :tags
@@ -17,6 +17,7 @@ class PagesControllerTest < Test::Unit::TestCase
   def setup
     @controller = PagesController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)

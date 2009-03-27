@@ -5,13 +5,15 @@ class GalleryToolTest < Test::Unit::TestCase
   fixtures :users, :pages, :assets
 
   def test_add_and_remove
-    gal = Gallery.create! :title => 'kites'
+    user = User.find 4 # we need a user so we can check permissions.
+    wrong_user = User.find 1 # we need a user so we can check permissions.
+    gal = Gallery.create! :title => 'kites', :user => user
     a1 = Asset.find 1
     a2 = Asset.find 2
 
     assert_nothing_raised do
-      gal.add_image!(a1)
-      gal.add_image!(a2)
+      gal.add_image!(a1, user)
+      gal.add_image!(a2, user)
     end
 
     assert gal.images.include?(a1)
@@ -30,10 +32,37 @@ class GalleryToolTest < Test::Unit::TestCase
     assert !a2.galleries.include?(gal)
   end
 
+  def test_adding_without_asset_page
+    user = User.find 4 # we need a user so we can check permissions.
+    wrong_user = User.find 1 # we need a user so we can check permissions.
+    gal = Gallery.create! :title => 'kites', :user => user
+    # test asset without AssetPage:
+    a = Asset.make(:uploaded_data => upload_data('image.png'))
+
+    assert_nothing_raised do
+      gal.add_image!(a, user) # this should create the AssetPage.
+    end
+
+    assert gal.images.include?(a)
+    assert a.galleries.include?(gal)
+
+    # testing the AssetPage of a
+    assert a.page.data==a
+    assert a.page.is_a?(AssetPage)
+
+    assert_nothing_raised do
+      gal.remove_image!(a)
+    end
+
+    assert !gal.images.include?(a)
+    assert !a.galleries.include?(gal)
+  end
+
   def test_position
-    gal = Gallery.create! :title => 'kites'
+    user = User.find 4 # we need a user so we can check permissions.
+    gal = Gallery.create! :title => 'kites', :user => user
     Asset.media_type(:image).find(:all, :limit => 3).each do |asset|
-      gal.add_image!(asset)
+      gal.add_image!(asset, user)
     end
 
     positions = gal.images.collect{|image| image.id}

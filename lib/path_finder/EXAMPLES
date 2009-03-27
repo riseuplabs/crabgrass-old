@@ -1,0 +1,23 @@
+= Examples
+
+Find all the current user's pages that are starred and of type event:
+
+   Page.find_by_path('/starred/type/event', options_for_me)
+
+
+Find the twenty most recent pages for group 'rainbow'
+
+   rainbow = Group.find_by_name('rainbow')
+   Page.find_by_path('/descending/updated_at/limit/20', options_for_group(rainbow))
+
+_(if there is a current user, this will query all the pages that the current_user_
+_has access to. otherwise, it will only query rainbow's public pages)_
+    
+Find the twenty most recent pages I have access to, that group
+'rainbow' also does:
+
+   rainbow = Group.find_by_name('rainbow')
+   Page.find_by_path('/descending/updated_at/limit/20/group/%d' % rainbow.id, options_for_me)
+
+_(I am not sure if this query is the same as the previous one or not)_
+   

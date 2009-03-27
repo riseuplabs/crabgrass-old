@@ -20,12 +20,13 @@ require 'set'
 class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :pages,
+  fixtures :groups, :users, :memberships, :pages, :sites,
    :user_participations, :group_participations, :taggings, :tags
   
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

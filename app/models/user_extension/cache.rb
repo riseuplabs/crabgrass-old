@@ -60,11 +60,12 @@ module UserExtension
     # recurse forever.
     def update_membership_cache(membership=nil)
       clear_access_cache
-      direct, all = get_group_ids
+      direct, all, admin_for = get_group_ids
       peer = get_peer_ids(direct)
       update_attributes :version => version+1,
         :direct_group_id_cache => direct,
         :all_group_id_cache    => all,
+        :admin_for_group_id_cache    => admin_for,
         :peer_id_cache         => peer
     end
 
@@ -96,7 +97,8 @@ module UserExtension
        self.class.connection.execute(%Q[
          UPDATE users SET 
          tag_id_cache = NULL, direct_group_id_cache = NULL, foe_id_cache = NULL,
-         peer_id_cache = NULL, friend_id_cache = NULL, all_group_id_cache = NULL
+         peer_id_cache = NULL, friend_id_cache = NULL, all_group_id_cache = NULL,
+         admin_for_group_id_cache = NULL
          WHERE id = #{self.id}
        ])
     end
@@ -145,16 +147,29 @@ module UserExtension
             AND groups.is_council = 0
           ])
         end
+        admin_for = Group.connection.select_values(%Q[
+          SELECT groups.id FROM groups
+          WHERE groups.id IN (#{(direct + committee + network).join(',')})
+          AND (
+            groups.council_id IN (#{direct.join(',')}) OR
+            groups.council_id IS NULL )
+        ])
       else
-        committee, network = [],[]
+        committee, network, admin_for = [],[],[]
       end
       direct = direct.collect{|id| id.to_i}.uniq
       all = (direct + committee + network).collect{|id|id.to_i}.uniq
-      [direct, all]
+      admin_for = admin_for.collect{|id| id.to_i}.uniq
+      [direct, all, admin_for]
     end
 
     def get_peer_ids(group_ids)
       return [] unless self.id
+      # site networks are broad umbrella networks every user of the
+      # site is a member of - thus they should not be considered for
+      # determining who is a peer.
+      site_networks = Site.find(:all).collect{|s| s.network_id}
+      group_ids -= site_networks
       User.connection.select_values( %Q[
         SELECT DISTINCT users.id FROM users
         INNER JOIN memberships ON users.id = memberships.user_id
@@ -202,7 +217,8 @@ module UserExtension
         return unless ids.any?
         self.connection.execute(%Q[
           UPDATE users SET 
-          direct_group_id_cache = NULL, all_group_id_cache = NULL
+          direct_group_id_cache = NULL, all_group_id_cache = NULL,
+          admin_for_group_id_cache = NULL
           WHERE id IN (#{ ids.join(',') })
         ])
       end

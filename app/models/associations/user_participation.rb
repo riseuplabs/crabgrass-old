@@ -3,7 +3,7 @@
 # relationship with a particular page.
 # 
 # fields:
-# access, :integer      -- enum which determines page access. see environment.rb
+# access, :integer      -- enum which determines page access. see 00-constants.rb
 # viewed_at, :datetime  -- last visit
 # changed_at, :datetime -- last modification by user
 # watch, :boolean       -- is the user watching page for changes?
@@ -43,6 +43,7 @@ class UserParticipation < ActiveRecord::Base
     value = ACCESS[value] if value.is_a? Symbol
     write_attribute(:access, value)
   end
-
+ 
+  
 end
 

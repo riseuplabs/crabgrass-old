@@ -5,11 +5,12 @@ require 'account_controller'
 class AccountController; def rescue_action(e) raise e end; end
 
 class AccountControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups, :tokens
+  fixtures :users, :groups, :sites, :tokens
 
   def setup
     @controller = AccountController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

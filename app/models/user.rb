@@ -8,6 +8,26 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
+  # named scopes
+  named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
+
+  # alphabetized and (optional) limited to +letter+
+  named_scope :alphabetized, lambda {|letter|
+    opts = {
+      :order => 'login ASC'
+    }
+    if letter == '#'
+      opts[:conditions] = ['login REGEXP ?', "^[^a-z]"]
+    elsif not letter.blank?
+      opts[:conditions] = ['login LIKE ?', "#{letter}%"]
+    end
+
+    opts
+  }
+
+  # select only logins
+  named_scope :logins_only, :select => 'login'
+
   # custom validation
   include CrabgrassDispatcher::Validations
   validates_handle :login
@@ -174,5 +194,6 @@ class User < ActiveRecord::Base
   def clear_email
     self.email = nil if email.empty?
   end
-  
+
+  include UserExtension::SuperAdmin rescue NameError
 end
