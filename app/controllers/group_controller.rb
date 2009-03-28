@@ -304,6 +304,14 @@ class GroupController < ApplicationController
   
   def find_group
     @group = Group.find_by_name params[:id] if params[:id]
+
+    # find the profile visible by current user
+    profile = logged_in? && @group && @group.profiles.visible_by(current_user)
+    if profile
+      # make the group invisible if they can't see it
+      @group = nil unless profile.may_see?
+    end
+
     true
   end
 
