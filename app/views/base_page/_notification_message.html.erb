@@ -1,7 +1,7 @@
 <div class='fieldset'>
     <table class='notify_page_recipients'>
     <tr>
-      <td><%= check_box :notification, :send_to_inbox %></td>
+      <td><%= check_box :notification, :send_to_inbox, {:checked => true, :disabled => true}%></td>
       <td><%= 'Send message to inbox'[:send_message_to_inbox]%></td>
     </tr>
     <tr>
@@ -10,7 +10,7 @@
     </tr>
     <tr>
       <td></td>
-      <td><%= text_area_tag 'message', '', :id => 'share_message', :rows => 6, :cols => 60 %></td>
+      <td><%= text_area_tag 'notification[message]', '', :id => 'share_message', :rows => 6, :cols => 60 %></td>
     <tr>
     <tr>
       <td></td>

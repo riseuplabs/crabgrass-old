@@ -362,6 +362,26 @@ ul.recipients li div{
 }
 
 
+ul.menu li:hover {
+    background-color:green;;
+}
+
+li.active_menu_item {
+    background-color:green;
+}
+
+
+
 ul.participators_list li.unsaved {
     background-color:green;
 }
+
+table.tool {
+  width:100%;
+  background-color:white;
+  border:0.5px solid darkgrey;
+}
+
+  table.tool td {
+    border:0.5px solid darkgrey;
+  }

@@ -1,11 +1,15 @@
 <% 
-  # locals to take:
-  contributors ||= []
+   # locals to take:
+   contributors ||= []
  -%>
-<ul class='side_list names'>
-  <% if contributors.any? -%>
-    <% contributors.each_with_index do |k,v| %>
-      <li style="display:inline; margin-left:12px;">k<%# participator_checkbox_line(cont) %></li>
-    <% end -%>
-  <% end -%>
-</ul>>
+ 
+<table class="tool">
+ <tr>
+   <td style="width:50%;">Groups</td><td>Users <%= check_box(:check_all,'users') + label_tag('check_all_users',"check all"[:check_all])%></td>
+ </tr>
+ <tr>
+ 
+ <%= render :partial => 'notify_possible_contributors_groups', :locals => {:groups => groups} %>
+ <%= render :partial => 'notify_possible_contributors_users', :locals => {:contributors => contributors} %>
+</tr>
+</table>

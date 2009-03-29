@@ -1,15 +1,24 @@
 
 <%
   #trying to create less queries for that
-  group_ids = @page.group_participations.find(:all, :select => :group_id).map(&:group_id)
 
-  possible_contributors = {}
-  group_ids.each do |group_id|
-    group_name = Group.find(group_id, :select => :name).name
-    users = User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id = #{group_id}")
-    possible_contributors[group_name] = users   
+  possible_contributors ||= {}
+  possible_contributors_groups ||= []
+  groups = @page.group_participations.find(:all, :select => :group_id, :include => :group).map(&:group)
+  groups.each do |group|
+    possible_contributors[group.name] = group.users
+    possible_contributors_groups << group
   end
-
+    
+=begin
+# that's not useful:
+ group_ids.each do |group_id|
+    group = Group.find(group_id)
+    users = User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id = #{group_id}")
+    possible_contributors[group.name] = users
+    possible_contributors_groups << group
+  end
+=end
   contributors = @page.contributors
       
   # OLD WAY
@@ -34,7 +43,6 @@
 
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
-
 <div class='notify_about_page'>
   <h2><%= 'Notify about this {page_class}'[:notify_page_recipients, {:page_class => class_display_name}] %></h2>
   <div class='fieldset'>    
@@ -53,8 +61,8 @@
     <br/>
     <%= check_box :notification, :notify_possible_contributors,{ :onChange => "$('share_page_recipients_possible_contributors').toggle();" }%> <%= label :notification, :notify_possible_contributors, 'Notify people and groups with access to this page'[:notify_possible_contributors] %>
 
-    <div class='share_page_recipients_list' style="height:80px; background-color:white; overflow:auto; border:1px solid darkgrey;display:none;" scroll="vertical" id="share_page_recipients_possible_contributors">
-        <%= render :partial => 'base_page/notify_possible_contributors', :locals => { :contributors => possible_contributors } %>
+    <div class='share_page_recipients_list' style="display:none;" scroll="vertical" id="share_page_recipients_possible_contributors">
+        <%= render :partial => 'base_page/notify_possible_contributors', :locals => { :contributors => possible_contributors, :groups => possible_contributors_groups } %>
     </div>
 
     <br/>
@@ -64,12 +72,11 @@
     </div>
 
     <br/>
-    <%= check_box :notification, :share_with_new_via_list, :onChange => "$('share_page_recipients_new_via_list').toggle();" %> <%= label :notification, :share_with_new_via_list, 'Share page and notify new users and groups via list'[:share_page_with_new_and_notify_via_list] %> 
-    <div class='share_page_recipients_list' style="height:80px; background-color:white; overflow:auto; border: 1px solid darkgrey; display:none;" scroll="vertical" id="share_page_recipients_new_via_list">
-    </div>
-    <%#= render :partial => 'share_with_new_via_list' %>
   </div>
   
  <h2><%= 'Notification Message'[:notify] %></h2>
  <%= render :partial => 'base_page/notification_message' %> 
 </div>
+<script type="text/javascript"> 
+  notify_initialize();
+</script>

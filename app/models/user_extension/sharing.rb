@@ -169,10 +169,10 @@ module UserExtension::Sharing
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
                                               # you cannot pass them if you delete them
-    notify         = options[:notify]         # options.delete(:notify)
-    send_emails    = options[:send_emails]    # options.delete(:send_emails)
-    mailer_options = options[:mailer_options] # options.delete(:mailer_options)
-    message        = options[:message]
+     notify         = options[:send_to_inbox]         # options.delete(:notify)
+     send_emails    = options[:send_emails]    # options.delete(:send_emails)
+     mailer_options = options[:mailer_options] # options.delete(:mailer_options)
+     message        = options[:message]
 
     ## add users to page
     users.each do |user|
@@ -207,11 +207,11 @@ module UserExtension::Sharing
   
 # share with a collection of recipients with different options
 # expects a hash with the recipients and their selected options
-def share_page_by_options!(page, options_with_recipients)
+def share_page_by_options!(page, options_with_recipients, global_options={ })
   #  options_with_recipients = collect_recipients_by_options(recipients_with_options) # in controller now
   options_with_recipients.each_pair do |options,recipients|
     recipients.each do |recipient|
-      self.share_page_with!(page,recipient,options)
+      self.share_page_with!(page,recipient,options.merge(global_options))
     end  
   end
 end
@@ -267,7 +267,7 @@ end
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
-    if options[:notify]
+    if options[:send_to_inbox]
       attrs[:inbox] = true
     end
     if options[:message]

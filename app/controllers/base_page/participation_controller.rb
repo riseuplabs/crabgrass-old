@@ -180,52 +180,22 @@ class BasePage::ParticipationController < ApplicationController
     end
   end
   
-  #
-  # 
-  # share this page with a notice message to any number of recipients. 
-  #
-  # if the recipient is a user name, then the message and the page show up in
-  # user's inbox, and optionally they are alerted via email.
-  #
-  # if the recipient is an email address, an email is sent to the address with a
-  # magic url that lets the recipient view the page by clicking on a link
-  # and using their email as the password.
-  # 
-  # the sending user must have admin access to send to recipients
-  # who do not already have the ability to view the page.
-  # 
-  # the recipient may be an entire group, in which case we grant access
-  # to the group and send emails to each user in the group.
-  #
-  # you cannot share to users/groups that you cannot pester, unless
-  # the page is private and they already have access.
-  #
-  #= OPTIONS:
-  #     :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
-  #      :message => params[:share_message],
-  #      :send_emails => params[:send_emails],
-  #      :send_via_email => params[:send_via_email],
-  #      :send_via_chat => params[:send_via_chat],
-  #      :send_only_with_encryption => params[:send_only_with_encryption],
-  #      :send_to_inbox => params[:send_to_inbox],
-  #      :mailer_options => mailer_options   
+  
   def share
     if params[:cancel]
       close_popup and return
     end
-  
+ 
     begin
       # now get the recipients from the prebuild hash:
       # recipients with options, that looks like
       # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
       recipients_with_options = get_recipients_with_options(params[:recipients])
-      
-      # now we use default_options to handle the recipients simply given by a list of names
+        # now we use default_options to handle the recipients simply given by a list of names
       # they don't have the options supported
       # [TODO] call a after - method that offers the ability to postconfigure those on a new screen:
       # The user should get a list of all the user, he selected without options.
       default_options = { 
-        :grant_access => nil,
         :message => nil,
         :send_emails => nil,
         :mailer_options => mailer_options,
@@ -235,25 +205,26 @@ class BasePage::ParticipationController < ApplicationController
         :send_to_inbox => false,
       }
     
+      
       options = {
-        :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
-        :message => params[:share_message],
-        :send_emails => params[:send_emails],
-        :send_via_email => params[:send_via_email],
-        :send_via_chat => params[:send_via_chat],
-        :send_only_with_encryption => params[:send_only_with_encryption],
-        :send_to_inbox => params[:send_to_inbox],
+        :message => params[:notification][:message_text],
+        :send_emails => params[:notification][:send_emails],
+        :send_via_email => params[:notification][:send_via_email],
+        :send_via_chat => params[:notification][:send_via_chat],
+        :send_only_with_encryption => params[:notification][:send_only_with_encryption],
+        :send_to_inbox => params[:notification][:send_to_inbox],
         :mailer_options => mailer_options
       }
       
       # now we can have totally different options for the single recipients
       # [TODO] maybe we want to reflect on overlapping recipients and exclusions? 
       #  current_user.share_page_with!(@page, recipients, options)
-      current_user.share_page_by_options!(@page, recipients_with_options) 
-
-      flash_message :success => "You successfully shared #{@page.class.to_s} with \n #{@recipients.join(', ')} !".t
+      current_user.share_page_by_options!(@page, recipients_with_options, options)
       
-      # this is basically the close_popup
+#      close_popup
+
+     flash_message :success => "You Successfully shared #{@page.class.to_s} with \n #{@recipients.join(', ')} !".t
+      
       render :update do |page|
         page.replace 'page_sidebar', :partial => 'base_page/sidebar'
         page.replace_html 'message', display_messages
@@ -262,7 +233,11 @@ class BasePage::ParticipationController < ApplicationController
         end
         page.hide 'popup_holder'
       end
+
+         
+      
       @page.save!
+      
       
     rescue Exception => exc
       flash_message_now :exception => exc
@@ -270,22 +245,37 @@ class BasePage::ParticipationController < ApplicationController
     end
   end
   
+  # given the params[:recipients] returns an options-hash for recipients
+  def get_recipients_with_options(recipients_with_options)  
+    options_with_recipients = {}
+    recipients_with_options.each_pair do |recipient,options|
+      if options.kind_of?(Hash)
+        options_with_recipients[symbolize_options(options)] ||= []
+        options_with_recipients[symbolize_options(options)] << recipient.sub(" ", "+")
+      end
+      @recipients ||= []
+      @recipients << recipient
+    end
+    options_with_recipients   
+  end
 
-  # handles the notification
-  #
-  # [NOTE] is basically the same as share, refactor that!
-  #
-  #= OPTIONS:
-  #     :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
-  #      :message => params[:share_message],
-  #      :send_emails => params[:send_emails],
-  #      :send_via_email => params[:send_via_email],
-  #      :send_via_chat => params[:send_via_chat],
-  #      :send_only_with_encryption => params[:send_only_with_encryption],
-  #      :send_to_inbox => params[:send_to_inbox],
-  #      :mailer_options => mailer_options  
+  
+  def symbolize_options options
+    return options unless options.respond_to?(:each)
+    symbolized_options = {}
+    options.each do |k,v|
+      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
+      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
+      symbolized_options[k] = v
+    end
+    symbolized_options
+  end
+
+  # handles the notification with or without sharing
   def notify
-    
+    share 
+    return
+    raise params[:recipients].inspect
     # we need all the user, that have different access options
     #raise params[:recipient][:name].inspect
     if params[:cancel]
@@ -293,15 +283,13 @@ class BasePage::ParticipationController < ApplicationController
     end
  
     begin
-      # now we get the recipients from list separated 
-      # recipients = [params[:recipient][:name].strip]
-#      recipients_from_list = [params[:recipient][:name].strip]
-      
       # now get the recipients from the prebuild hash:
       # recipients with options, that looks like
       # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
-      recipients_with_options = get_recipients_with_options(params[:recipients])
+      #recipients_with_options = get_recipients_with_options(params[:recipients])
+      #raise recipients_with_options.inspect
       
+
       
      default_options = { 
       :grant_access => nil,
@@ -330,13 +318,6 @@ class BasePage::ParticipationController < ApplicationController
       # [TODO] maybe we want to react on overlapping recipients and exclusions? 
       #  current_user.share_page_with!(@page, recipients, options)
       current_user.share_page_by_options!(@page, recipients_with_options)
-  
-      
-      # to handle recipients from a unsorted list
-      # [NOTE] we don't use this
-#       recipients_from_list.each do |r|
-#         current_user.share_page_with!(r,default_options.merge(options))
-#       end
       
       @page.save!
       render :template => 'base_page/new_participation_added'
@@ -395,33 +376,6 @@ class BasePage::ParticipationController < ApplicationController
     end
   end
 
-  
-  private
-  
-  # given the params[:recipients] returns an options-hash for recipients
-  def get_recipients_with_options(recipients_with_options)  
-    options_with_recipients = {}
-    recipients_with_options.each_pair do |recipient,options|
-      options_with_recipients[symbolize_options(options)] ||= []
-      options_with_recipients[symbolize_options(options)] << recipient
-      @recipients ||= []
-      @recipients << recipient
-    end
-    options_with_recipients   
-  end
-
-  # returns symbols from the options
-  def symbolize_options options
-    symbolized_options = {}
-    options.each do |k,v|
-      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
-      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
-      symbolized_options[k] = v
-    end
-    symbolized_options
-  end
-  
-  
   protected
 
   def close_popup

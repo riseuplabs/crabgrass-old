@@ -18,10 +18,28 @@ module BasePageHelper
   end
   
   # creates a line with a checkbox, avatar and name for a user or group that participates to a page
-  def participator_checkbox_line(participator)
+  def participator_checkbox_line(participator,group=false)
     field_name = (participator.kind_of?(User) ? 'user' : 'group')
-    field_name += participator.id.to_s
-    check_box(:participators, field_name.to_sym) + avatar_for(participator,'small') + participator.name
+    field_name += '-group-' if group
+    field_name += group if group
+    field_name += '-user-'
+    field_name += participator.login.to_s
+    participator.kind_of?(Group) ? (recipient_name = participator.name) : (recipient_name = participator.login) 
+    ret = ""
+    ret << check_box_tag("recipients[#{recipient_name}][notify]", 1, false, {:id => field_name.to_sym})
+    ret << "&nbsp;"
+    ret << avatar_for(participator,'xsmall')
+    ret << "&nbsp;"
+    ret << participator.display_name
+  end
+  
+  # creates a line for the notify process with a menu item for a group to show checkbox_lines for all users of this group
+  def participator_group_selection_line(group)
+    ret = ""
+    ret << avatar_for(group,'xsmall')
+    ret << "&nbsp;"
+    ret << group.display_name
+    ret << "&nbsp;"
   end
   
   def link_to_user_participation(upart)
@@ -31,7 +49,7 @@ module BasePageHelper
       when :view : ''
     end
     label = content_tag :span, upart.user.display_name, :class => klass
-    upart.access.to_s+upart.access_sym.to_s+'bla'+link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
+    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
   end
 
   def link_to_group_participation(gpart)

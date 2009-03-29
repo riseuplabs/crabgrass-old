@@ -8,7 +8,7 @@ class BasePageController < ApplicationController
 
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
-  javascript 'page', :extra
+  javascript 'page', 'page2', :extra
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
