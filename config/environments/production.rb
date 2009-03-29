@@ -15,7 +15,7 @@ Crabgrass::Config.ignore_sass_file_timestamps = true
 ##
 
 # set cookies to 'secure'; prevent some kinds of session-stealing attacks
-Crabgrass::Config.https_only = true
+Crabgrass::Config.https_only = false
 
 ##
 ## CACHING

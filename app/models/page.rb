@@ -198,7 +198,11 @@ class Page < ActiveRecord::Base
     perm = comment_access if perm == :comment
     upart = self.participation_for_user(user)
     if perm == :delete
+      # this is a unicef specific hack. Group coordinators should be able
+      # to delete and move pages in their group independently of the groups
+      # access rights.
       gparts = self.participation_for_groups(user.admin_for_group_ids)
+      return true if gparts.any?
       perm = :admin
     else
       gparts = self.participation_for_groups(user.all_group_ids)
