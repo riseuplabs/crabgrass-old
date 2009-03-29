@@ -50,6 +50,8 @@ class AccountController < ApplicationController
   end
 
   def signup
+    redirect_to current_site.signup_redirect_url unless current_site.signup_redirect_url.nil?
+
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})
     return unless request.post?
 
