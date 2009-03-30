@@ -22,6 +22,8 @@ default:
   - ExternalVideo
   - Article
   tracking: true
+  has_networks: true
+#  signup_redirect_url: "http://CHANGE-ME"
 
 hobo23:
   name: "hobo23 Crabgrass"
@@ -49,6 +51,8 @@ hobo23:
       https: false
   tracking: false
   network_id: 3002
+  has_networks: true
+#  signup_redirect_url: "http://CHANGE-ME"
 
 localhost:
   name: "localhost Crabgrass"
@@ -76,4 +80,6 @@ localhost:
       site_id: UA-XXXXXX-X
       https: false
   tracking: false
+  has_networks: true
+#  signup_redirect_url: "http://CHANGE-ME"
 
