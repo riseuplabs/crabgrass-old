@@ -2,6 +2,6 @@
 
 <%= letter_pagination_links({:controller => 'networks', :action => 'list'}, :available_letters => @pagination_letters) %>
 
-<%= render :partial => 'group', :collection => @networks %>
+<%= render :partial => 'group', :collection => @networks, :locals => {:show_committees => false}%>
 
 <br style='clear:both' />
