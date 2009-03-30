@@ -25,6 +25,7 @@ globalpulse:
       https: false
   tracking: false
   network_id: 1
+  has_networks: false
 
 climatechange:
   name: climatechange
@@ -53,3 +54,4 @@ climatechange:
       https: false
   tracking: false
   network_id: 2
+  has_networks: false
