@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090322000446) do
+ActiveRecord::Schema.define(:version => 20090329214611) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -515,6 +515,8 @@ ActiveRecord::Schema.define(:version => 20090322000446) do
     t.boolean "default",                            :default => false
     t.integer "network_id",           :limit => 11
     t.integer "custom_appearance_id", :limit => 11
+    t.boolean "has_networks",                       :default => true
+    t.string  "signup_redirect_url"
   end
 
   create_table "taggings", :force => true do |t|

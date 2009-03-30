@@ -134,5 +134,5 @@ end
 # Lots of errors if this is enabled:
 ActiveRecord::Base.partial_updates = false
 
-# build an array of PageClassProxy objects
+# build a hash of PageClassProxy objects {'TaskListPage' => <TaskListPageProxy>}
 PAGES = PageClassRegistrar.proxies.dup.freeze

@@ -53,7 +53,7 @@ class Site < ActiveRecord::Base
     @default_site ||=
       Site.find(:first, :conditions => ["sites.default = '?'", true]) ||
       Site.find(:first) ||
-      Site.new(:name => 'unknown')
+      Site.new(:name => 'unknown', :available_page_types => PAGES.keys)
   end
 
   # def stylesheet_render_options(path)

@@ -34,10 +34,9 @@ class ApplicationController < ActionController::Base
   protected
 
   
-#
-# SITES
-#
-#############################  
+  ##
+  ## SITES
+  ##
   
   def fetch_site
     @current_site = Site.find_by_domain(request.host) || Site.default

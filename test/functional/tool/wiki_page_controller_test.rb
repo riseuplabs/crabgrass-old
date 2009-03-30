@@ -92,7 +92,6 @@ class WikiPageControllerTest < Test::Unit::TestCase
     # create versions
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
       login_as user
-
       pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
     end
 
@@ -119,11 +118,11 @@ class WikiPageControllerTest < Test::Unit::TestCase
   def test_diff
     login_as :orange
 
-    (1..5).each do |i|
-      pages(:wiki).data.body = "text %d for the wiki" / i
-      pages(:wiki).data.save
+    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
+      #login_as user
+      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
     end
-    pages(:wiki).data.versions.reload
+    #pages(:wiki).data.versions.reload
 
     post :diff, :page_id => pages(:wiki).id, :id => "4-5"
     assert_response :success

@@ -77,13 +77,19 @@ module PathFinder::Options
       :public => false,
     }
     if logged_in?
-      options[:user_ids] = [current_user.id]
       # TODO:
       # this does not work for sites yet. Problems are:
       # * we would need current_site.all_group_ids - including committees
-      options[:group_ids] = current_site.network.nil? ?
-        current_user.all_group_ids :
-        current_user.all_group_ids # & current_site.group_ids
+      # options[:group_ids] = current_site.network.nil? ?
+      #  current_user.all_group_ids :
+      #  current_user.all_group_ids # & current_site.group_ids
+      # --
+      #   ^^^ THERE IS A MUCH BETTER WAY TO DO THIS. -elijah
+      #       basically, what is needed is a complex intersect between
+      #       the site, the user's groups, and the pages groups. this is best
+      #       handled using a fulltext index on the access_ids field. 
+      options[:user_ids] = [current_user.id]
+      options[:group_ids] = current_user.all_group_ids
       options[:current_user] = current_user
     else
       options[:public] = true

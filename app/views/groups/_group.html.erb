@@ -1,8 +1,27 @@
 <% url = url_for_group(group) -%>
 <div class='group_entry'>
+  <table><tr><td>
   <%= link_to avatar_for(group, 'medium'), url -%>
+  </td><td>
   <%= link_to group.display_name, url -%>
   <div><%= h group.summary %></div>
+  </td></tr>
+  <% if show_committees %>
+  <tr>
+  <td></td>
+  <td>
+    <% group.committees.each do |committee| %>
+      <% if current_user && current_user.member_of?(committee) %>
+        <% url = url_for_group(committee) -%>
+        <%= link_to avatar_for(committee, 'small'), url, :title => committee.summary -%>
+        <%= link_to committee.display_name, url, :title => committee.summary -%>
+        <br style='clear:left' />
+      <% end %>  
+    <% end %>
+  </td></tr>  
+  <% end %>
+  </table>
   <br style='clear:left' />
 </div>
+
 

@@ -167,7 +167,8 @@ module Media
       'pdf' => 'application/pdf',
       'odt' => 'application/vnd.oasis.opendocument.text',
       'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-      'odp' => 'application/vnd.oasis.opendocument.presentation'
+      'odp' => 'application/vnd.oasis.opendocument.presentation',
+      'svg' => 'image/svg+xml'
     }.freeze
 
    

@@ -4,6 +4,9 @@
 <div class='title_box'>
   <%= link_to_breadcrumbs(2) %>
   <%= @title_box %>
+  <% if @show_print %>
+    <span style="position:absolute; right: 10px; top: 40px;"><%= link_to "print", page_url(@page, :action => "print") %></span>
+  <% end %>  
 </div>
 <% end -%>
 <% if @info_box.any? -%>

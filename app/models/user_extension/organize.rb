@@ -110,6 +110,7 @@ module UserExtension::Organize
     self.all_group_id_cache
   end
 
+  # a list of groups that the user is an admin for.
   def admin_for_group_ids
     self.admin_for_group_id_cache
   end

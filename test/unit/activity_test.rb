@@ -14,6 +14,7 @@ class ActivityTest < ActiveSupport::TestCase
     u1.add_contact!(u2)
 
     act = FriendActivity.for_dashboard(u1,current_site).find(:first)
+    assert act, 'there should be a friend activity created'
     assert_equal u1, act.user
     assert_equal u2, act.other_user
   end
@@ -27,6 +28,7 @@ class ActivityTest < ActiveSupport::TestCase
     u2.destroy
 
     act = UserDestroyedActivity.for_dashboard(u1,current_site).find(:first)
+    assert act, 'there should be a user destroyed activity created'
     assert_equal username, act.username
   end
 
@@ -86,6 +88,7 @@ class ActivityTest < ActiveSupport::TestCase
     act = FriendActivity.for_dashboard(u1,current_site).find(:first)
     u2.destroy
 
+    assert act, 'there should be a friend activity created'
     assert_equal nil, act.other_user
     assert_equal 'iguana', act.other_user_name
     assert_equal '<span class="user">iguana</span>', act.user_span(:other_user)
