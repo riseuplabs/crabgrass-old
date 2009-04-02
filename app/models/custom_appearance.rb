@@ -17,6 +17,12 @@ class CustomAppearance < ActiveRecord::Base
   CACHED_CSS_DIR = 'themes'
   CSS_ROOT_PATH = './public/stylesheets'
 
+  # by default we won't regenerate css when sass changes
+  # we only regenerate css when +self+ object is updated
+  # if this is set to _true_ we will compare css and sass timestamps
+  # every time and regenerate when css is older
+  cattr_accessor :ignore_file_timestamps
+
   serialize :parameters, Hash
   belongs_to :admin_group, :class_name => 'Group'
 
@@ -38,7 +44,21 @@ class CustomAppearance < ActiveRecord::Base
 
   # returns true if this custom appearances has +css_path+ file cached.
   def has_cached_css?(css_path)
-    File.exists?(cached_css_full_path(css_path))
+    cached = File.exists?(cached_css_full_path(css_path))
+
+    unless CustomAppearance.ignore_file_timestamps
+      cached &&= css_fresher_than_sass?(css_path)
+    end
+
+    cached
+  end
+
+  # check that source sass file is less recent
+  # then the css that was generated from it
+  def css_fresher_than_sass?(css_path)
+    full_css_path = cached_css_full_path(css_path)
+    full_sass_path = CustomAppearance.source_sass_full_path(css_path)
+    File.mtime(full_css_path) >= File.mtime(full_sass_path)
   end
 
   # returns the location where css specific for this CustomAppearance should be stored
@@ -91,7 +111,7 @@ class CustomAppearance < ActiveRecord::Base
     def generate_css(css_path, appearance = nil)
       appearance ||= CustomAppearance.default
 
-      full_sass_path = File.join(SASS_ROOT_PATH, css_path).gsub(".css", ".sass")
+      full_sass_path = source_sass_full_path(css_path)#File.join(SASS_ROOT_PATH, css_path).gsub(".css", ".sass")
       sass_text = ""
 
       # load sass includes manually
@@ -113,6 +133,16 @@ class CustomAppearance < ActiveRecord::Base
       appearance.write_css_cache(css_path, css_text) if appearance
 
       css_text
+    end
+
+    # returns the location where sass source for this +css_path+ can be found
+     # this path is relative to RAILS_ROOT
+    # :cal-seq:
+    #   appearance.cached_css_path('as_needed/wiki') => './public/stylesheets/themes/2/1237185316/as_needed/wiki.css'
+    def source_sass_full_path(css_path)
+     # append .css if missing
+     css_path = css_path + ".css" unless css_path =~ /\.css$/
+     full_sass_path = File.join(SASS_ROOT_PATH, css_path).gsub(".css", ".sass")
     end
 
     def clear_cached_css
