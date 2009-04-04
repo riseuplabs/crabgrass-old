@@ -24,6 +24,7 @@ class CustomAppearance < ActiveRecord::Base
   cattr_accessor :ignore_file_timestamps
 
   serialize :parameters, Hash
+  serialize_default :parameters, {}
   belongs_to :admin_group, :class_name => 'Group'
 
   def sass_override_text
@@ -87,13 +88,6 @@ class CustomAppearance < ActiveRecord::Base
   #   appearance.cached_css_root => 'themes/2/1237185316'
   def cached_css_root
     File.join(CACHED_CSS_DIR, self.id.to_s, self.updated_at.to_i.to_s)
-  end
-
-######### DEFAULT SERIALIZED VALUES ###########
-  # :cal-seq:
-  #   appearance.parameters => {"page_bg_color" => "#fff"}
-  def parameters
-    read_attribute(:parameters) || write_attribute(:parameters, {})
   end
 
 ########### CLASS METHODS #####################
