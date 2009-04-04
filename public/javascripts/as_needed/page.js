@@ -104,7 +104,7 @@ function notify_initialize_check_all_checkbox() {
 
 
 function check_all_users(){ 
-    group_user_items.first().childElements().each(function(e) {
+    active_possible_contributors_group_user_selection.childElements().each(function(e) {
 	    var checkbox = find_checkbox_in(e);
 	    checkbox.checked = check_all_checkbox.checked;
 	    var user_element_name = Element.identify(e);
@@ -128,7 +128,8 @@ function set_selected_group(group_id) {
     group_user_items.each(function(e) { 
 	    e.hide();
 	});
-    $('possible_contributors_from_group-'+group_id).show();
+    active_possible_contributors_group_user_selection = $('possible_contributors_from_group-'+group_id);
+    active_possible_contributors_group_user_selection.show();
 }
 
 // internal helper methods

@@ -171,7 +171,7 @@ module UserExtension::Sharing
     users_to_email = []
                                               # you cannot pass them if you delete them
      notify         = options[:send_to_inbox]         # options.delete(:notify)
-     send_emails    = options[:send_emails]    # options.delete(:send_emails)
+     send_via_email = options[:send_via_email]    # options.delete(:send_emails)
     send_only_with_encryption = options[:send_only_with_encryption]
      mailer_options = options[:mailer_options] # options.delete(:mailer_options)
      message        = options[:message]
@@ -199,8 +199,7 @@ module UserExtension::Sharing
 
     ## send notification emails
     ## [NOTE] there is no support for secure email in the moment
-    send_emails = true
-    if send_emails and mailer_options and !send_only_with_encryption
+    if send_via_email and mailer_options and !send_only_with_encryption
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
          bla = Mailer.deliver_share_notice(user, message, mailer_options)
