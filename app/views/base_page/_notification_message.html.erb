@@ -10,18 +10,18 @@
     </tr>
     <tr>
       <td></td>
-      <td><%= text_area_tag 'notification[message]', '', :id => 'share_message', :rows => 6, :cols => 60 %></td>
+      <td><%= text_area_tag 'notification[message_text]', '', :id => 'share_message', :rows => 6, :cols => 60 %></td>
     <tr>
     <tr>
       <td></td>
       <td>
 	<%= 'Send a copy of this message via'[:send_a_copy_of_this_message_via] %>:
 <br/>
-	<%= check_box :notification, :send_via_email %> <%= 'Email'[:email] %>
-	<%= check_box :notification, :send_via_textmessage %> <%= 'Text Message'[:text_message] %>
-	<%= check_box :notification, :send_via_chat %> <%= 'Chat'[:chat] %>
+	<%= check_box_tag 'notification[send_via_email]' %> <%= 'Email'[:email] %>
+	<%= check_box_tag 'notification[send_via_textmessage]' %> <%= 'Text Message'[:text_message] %>
+	<%= check_box_tag 'notification[send_via_chat]' %> <%= 'Chat'[:chat] %>
 	<br/>
-	<%= check_box :notification, :send_only_with_encryption %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %>
+	<%= check_box_tag 'notification[send_only_with_encryption]' %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %>
       </td>
     <tr>
     </table>

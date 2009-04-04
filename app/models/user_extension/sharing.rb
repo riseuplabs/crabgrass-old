@@ -164,17 +164,20 @@ module UserExtension::Sharing
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
+    
+    # wbere do we use options[:notify]? and if we'd use it it should be options[:send_to_inbox]
     options[:notify] = true if options[:message] or options[:send_emails]
- 
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
                                               # you cannot pass them if you delete them
      notify         = options[:send_to_inbox]         # options.delete(:notify)
      send_emails    = options[:send_emails]    # options.delete(:send_emails)
+    send_only_with_encryption = options[:send_only_with_encryption]
      mailer_options = options[:mailer_options] # options.delete(:mailer_options)
      message        = options[:message]
 
     ## add users to page
+    #raise users.inspect
     users.each do |user|
       if self.share_page_with_user!(page, user, options)
         users_to_email << user if user.wants_notification_email?
@@ -188,7 +191,7 @@ module UserExtension::Sharing
         users_to_email << user if user.wants_notification_email?
       end
     end
-
+    
     ## send access granted emails (TODO)
     # emails.each do |email|
     #   Mailer::page.deliver_share_notice_with_url_access(email, msg, mailer_options)
@@ -196,10 +199,11 @@ module UserExtension::Sharing
 
     ## send notification emails
     ## [NOTE] there is no support for secure email in the moment
+    send_emails = true
     if send_emails and mailer_options and !send_only_with_encryption
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_share_notice(user, message, mailer_options)
+         bla = Mailer.deliver_share_notice(user, message, mailer_options)
       end
     end
   end
@@ -267,13 +271,18 @@ end
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
+    
+    # send to inbox if send_to_inbox is true
     if options[:send_to_inbox]
       attrs[:inbox] = true
     end
+    
+    # include a notice if an additonal message is given
     if options[:message]
       attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
     end
-
+    
+    # if an access level is given, we set it
     if options.key?(:access) # might be nil
       attrs[:access] = options[:access]
     else

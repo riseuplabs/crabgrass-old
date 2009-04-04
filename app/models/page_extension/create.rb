@@ -69,7 +69,7 @@ module PageExtension::Create
       if recipients.is_a? Hash
         entities = []
         recipients.each do |key,value|
-          entities << key if value == '1'
+          entities << key if value.is_a?(Hash)
         end
       elsif recipients.is_a? Array
         entities = recipients

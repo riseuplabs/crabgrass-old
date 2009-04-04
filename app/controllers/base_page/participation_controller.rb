@@ -133,26 +133,6 @@ class BasePage::ParticipationController < ApplicationController
   # you cannot share to users/groups that you cannot pester, unless
   # the page is private and they already have access.
   #
-  # def share
-  #     if params[:cancel]
-  #       close_popup and return
-  #     end
-  #     begin
-  #       recipients = params[:recipients]
-  #       options = {
-  #         :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
-  #         :message => params[:share_message],
-  #         :send_emails => params[:send_emails],
-  #         :mailer_options => mailer_options
-  #       }
-  #       current_user.share_page_with!(@page, recipients, options)
-  #       @page.save!
-  #       close_popup
-  #     rescue Exception => exc
-  #       flash_message_now :exception => exc
-  #       show_error_message
-  #     end
-  #   end
   
   # called by ajax - adds a new recipient to the share with recipients form
   def new_recipient
@@ -182,11 +162,12 @@ class BasePage::ParticipationController < ApplicationController
   
   
   def share
-    if params[:cancel]
+    # if cancel button is pressed or if there is nothing else to do...
+    if params[:cancel] || !params[:recipients]
       close_popup and return
     end
  
-    begin
+   # begin
       # now get the recipients from the prebuild hash:
       # recipients with options, that looks like
       # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
@@ -201,6 +182,7 @@ class BasePage::ParticipationController < ApplicationController
         :mailer_options => mailer_options,
         :send_via_chat => false,
         :send_via_email => false,
+        :send_via_textmessage => false,
         :send_only_with_encryption => false,
         :send_to_inbox => false,
       }
@@ -210,11 +192,14 @@ class BasePage::ParticipationController < ApplicationController
         :message => params[:notification][:message_text],
         :send_emails => params[:notification][:send_emails],
         :send_via_email => params[:notification][:send_via_email],
+        :send_via_textmessage => params[:notification][:send_via_textmessage],
         :send_via_chat => params[:notification][:send_via_chat],
         :send_only_with_encryption => params[:notification][:send_only_with_encryption],
         :send_to_inbox => params[:notification][:send_to_inbox],
         :mailer_options => mailer_options
       }
+      
+      #raise options.inspect
       
       # now we can have totally different options for the single recipients
       # [TODO] maybe we want to reflect on overlapping recipients and exclusions? 
@@ -239,10 +224,10 @@ class BasePage::ParticipationController < ApplicationController
       @page.save!
       
       
-    rescue Exception => exc
-      flash_message_now :exception => exc
-      show_error_message     
-    end
+    #rescue Exception => exc
+    #  flash_message_now :exception => exc
+    #  show_error_message     
+    #end
   end
   
   # given the params[:recipients] returns an options-hash for recipients
@@ -275,60 +260,8 @@ class BasePage::ParticipationController < ApplicationController
   def notify
     share 
     return
-    raise params[:recipients].inspect
-    # we need all the user, that have different access options
-    #raise params[:recipient][:name].inspect
-    if params[:cancel]
-      close_popup and return
-    end
- 
-    begin
-      # now get the recipients from the prebuild hash:
-      # recipients with options, that looks like
-      # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
-      #recipients_with_options = get_recipients_with_options(params[:recipients])
-      #raise recipients_with_options.inspect
-      
-
-      
-     default_options = { 
-      :grant_access => nil,
-      :message => nil,
-      :send_emails => nil,
-      :mailer_options => mailer_options,
-      :send_via_chat => false,
-      :send_via_email => false,
-      :send_only_with_encryption => false,
-      :send_to_inbox => false,
-    }
-    
-      
-      options = {
-        :grant_access => (params[:access].any? ? params[:access].to_sym : nil),
-        :message => params[:share_message],
-        :send_emails => params[:send_emails],
-        :send_via_email => params[:send_via_email],
-        :send_via_chat => params[:send_via_chat],
-        :send_only_with_encryption => params[:send_only_with_encryption],
-        :send_to_inbox => params[:send_to_inbox],
-        :mailer_options => mailer_options
-      }
-     
-      # now we can have totally different options for the single recipients
-      # [TODO] maybe we want to react on overlapping recipients and exclusions? 
-      #  current_user.share_page_with!(@page, recipients, options)
-      current_user.share_page_by_options!(@page, recipients_with_options)
-      
-      @page.save!
-      render :template => 'base_page/new_participation_added'
-    rescue Exception => exc
-      flash_message_now :exception => exc
-      show_error_message     
-    end
-
-    
   end
-
+  
   ##
   ## PAGE DETAILS
   ## participation and access

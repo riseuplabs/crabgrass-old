@@ -10,35 +10,8 @@
     possible_contributors_groups << group
   end
     
-=begin
-# that's not useful:
- group_ids.each do |group_id|
-    group = Group.find(group_id)
-    users = User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id = #{group_id}")
-    possible_contributors[group.name] = users
-    possible_contributors_groups << group
-  end
-=end
   contributors = @page.contributors
       
-  # OLD WAY
-#  users = @page.user_participations.find(:all, :include => :user).map(&:user)
-#  group_ids = @page.group_participations.find(:all, :select => :group_id).map(&:group_id)
-#  users_in_groups = if group_ids.any?
-#    User.find(:all, :joins => "INNER JOIN memberships ON memberships.group_id IN (#{group_ids.join(' ')})")
-#  else
-#    []
-#  end
-#  contributors = []
-#  possible_contributors = []
-#  users.each do |user|
-#    if user.may?(:edit, @page)
-#      contributors << user
-#    else
-#      possible_contributors << user
-#    end
-#  end
-#  possible_contributors = possible_contributors|users_in_groups
 -%>
 
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
