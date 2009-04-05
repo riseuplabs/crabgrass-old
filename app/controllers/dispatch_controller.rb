@@ -39,6 +39,7 @@ class DispatchController < ApplicationController
 
   def dispatch
     begin
+      flash.keep
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       @user = current_user
