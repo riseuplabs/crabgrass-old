@@ -3,9 +3,15 @@ class SurveyQuestion < ActiveRecord::Base
   serialize :choices, Array
   serialize_default :choices, []
 
-  has_many :answers, :dependent => :destroy, :class_name => 'SurveyAnswer'
+  has_many(:answers, :dependent => :destroy, :class_name => 'SurveyAnswer',
+           :foreign_key => 'question_id')
+  
   acts_as_list :scope => :survey
-
+  
+  def answer!(response, value)
+    SurveyAnswer.new(:question => self, :response => response, :value => value).save!
+  end
+  
   def add_question_link_text
     self.class.to_s
   end

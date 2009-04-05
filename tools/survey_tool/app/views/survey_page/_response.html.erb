@@ -1,0 +1,24 @@
+<%= javascript_tag "
+  $('response_id').value = '#{resp.id}';
+  var checked;
+  checked = #{rating||0};
+  $$('input.rate_button').each(function(element) {
+      if(checked == element.value)
+        element.checked = true;
+      else
+        element.checked = false;
+  });
+  if(#{@next_link.to_s})
+    $('next_response_link').show();
+  else
+    $('next_response_link').hide();
+  " -%>
+<table class="answers">
+  <% resp.answers.each do |answer| -%>
+    <tr>
+      <td><%= answer.question.label %></td>
+      <td><%= answer.value %></td>
+    </tr>
+  <% end -%>
+</table>
+
