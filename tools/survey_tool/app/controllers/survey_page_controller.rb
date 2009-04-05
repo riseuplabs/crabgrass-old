@@ -5,7 +5,7 @@ class SurveyPageController < BasePageController
 
   def respond
     redirect_to(page_url(@page, :action => 'design')) unless @survey
-    
+
     if request.post?
       save_response
     else
@@ -28,10 +28,10 @@ class SurveyPageController < BasePageController
       redirect_to(page_url(@page, :action => 'design'))
     end
   end
-  
+
   def list
   end
-  
+
   def rate
     if(params[:response] && params[:rating] && params[:rating].to_i != 0 &&
        resp = @survey.responses.find(params[:response]))
@@ -43,7 +43,7 @@ class SurveyPageController < BasePageController
                        :rating => params[:rating])
       end
     end
-        
+
     ids = JSON::load(params[:next]) rescue nil
     @resp = @survey.responses.find(ids.any? ? ids.shift : :first)
     @next = @survey.responses.next_rateables(current_user, ids)
@@ -56,14 +56,14 @@ class SurveyPageController < BasePageController
       @survey_notice = "Select a rating to see the next item"[:select_a_rating]
       @next_link = false
     end
-    
+
     if request.xhr?
       render :update do |page|
         page.replace_html('response', :partial => 'response',
                           :locals => { :resp => @resp, :rating => @rating })
         page.replace_html('user_info', :partial => 'user_info',
                           :locals => { :resp => @resp })
-        page.replace_html('next_responses', :partial => 'next_responses', 
+        page.replace_html('next_responses', :partial => 'next_responses',
                           :locals => { :responses => @next })
         page.replace_html('current_rating', :partial => 'current_rating',
                           :locals => { :resp => @resp })
@@ -86,7 +86,7 @@ class SurveyPageController < BasePageController
 
   def save_response
     require 'ruby-debug';debugger
-    
+
     render :text => "Response Saved"
   end
 end
