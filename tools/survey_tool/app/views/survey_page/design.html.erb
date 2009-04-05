@@ -1,0 +1,15 @@
+<%= render :partial => 'tabs' %>
+<div id="design_questions_container">
+  <div id="add_questions_links_bar">
+    <span class="link_background">
+      <span class="label plus_16 small_icon">Add Questions:</span>
+      <%= add_questions_links %>
+    </span>
+  </div>
+  <% form_for :survey, @survey, :url => page_url(@page, :action => :save_design) do |f| %>
+    <div id="questions">
+    </div>
+    <%= submit_tag "Create", :class => "submit" %>
+  <% end %>
+  <%= javascript_tag "Sortable.create('questions', {elements:$$('#questions .question'), handles:$$('questions .drag_to_move') });"%>
+</div>

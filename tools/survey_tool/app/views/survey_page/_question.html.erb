@@ -1,0 +1,11 @@
+<div class="question">
+  <strong class="caption"><%= "Question:"[:question_label] %></strong>
+  <span class="drag_to_move small_icon change_order_16"><%= "drag to move"[:drag_to_move] %></span>
+  <%= delete_question_function %>
+  <div class="fields">
+    <% fields_for 'survey[new_questions_attributes][]', question do |qform| %>
+      <%= qform.hidden_field 'type' %>
+      <%= render :partial => question.class.to_s.underscore, :locals => {:form => qform, :question => question} %>
+    <% end %>
+  </div>
+</div>

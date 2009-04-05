@@ -1,0 +1,28 @@
+<%= if logged_in? and current_user.may? :edit, @page
+  Formy.tabs do |f|
+    f.tab do |t|
+      t.label 'Design Questions'.t
+      t.url page_url(@page, :action => 'design')
+      t.selected action?(:design)
+    end
+    f.tab do |t|
+      t.label 'Your Answers'.t
+      t.url page_url(@page, :action => 'show')
+      t.selected action?(:show)
+    end
+    f.tab do |t|
+      t.label 'Rate All Answers'.t
+      t.url page_url(@page, :action => 'rate')
+      t.selected action?(:rate)
+    end
+    f.tab do |t|
+      t.label 'List All Answers'.t
+      t.url page_url(@page, :action => 'list')
+      t.selected action?(:list)
+    end
+    
+  end
+end
+%>
+
+<br style='clear:both'/>
