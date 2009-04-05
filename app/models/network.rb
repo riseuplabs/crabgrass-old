@@ -19,16 +19,19 @@ class Network < Group
    has_many :groups, :through => :federatings
 
 
-# We want a network having several sites.  
-#  That's why we change the put the network_id into the site  
-# belongs_to :site
-   has_many :sites 
+  # We want a network having several sites.  
+  # That's why we change the put the network_id into the site  
+  # belongs_to :site
+  has_many :sites 
   
   # returns true if thing is part of the network
   def has?(thing)
     thing.belongs_to_network?(self) ? true : false
   end
   
+  # TODO: remove. 
+  # I don't think this is called anywhere, and would be amazingly slow
+  # if it was ever used.
   def pages_for_network
     own_pages = pages
     groups_pages = []
@@ -47,14 +50,14 @@ class Network < Group
      self.version += 1 # in case self is later saved
    end
    
-   # only this method should be used for removing groups from a network
-   def remove_group!(group)
-     self.federatings.detect{|f|f.group_id == group.id}.destroy
-     group.org_structure_changed
-     group.save!
-     Group.increment_counter(:version, self.id) # in case self is not saved
-     self.version += 1 # in case self is later saved
-   end
+  # only this method should be used for removing groups from a network
+  def remove_group!(group)
+    self.federatings.detect{|f|f.group_id == group.id}.destroy
+    group.org_structure_changed
+    group.save!
+    Group.increment_counter(:version, self.id) # in case self is not saved
+    self.version += 1 # in case self is later saved
+  end
 
   # Whenever the organizational structure of this network has changed 
   # this function should be called. Afterward, a save is required.

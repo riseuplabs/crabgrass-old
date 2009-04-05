@@ -99,7 +99,7 @@ class CustomAppearance < ActiveRecord::Base
     SASS_LOAD_PATHS = ['.', SASS_ROOT_PATH]
 
     def default
-      first
+      first || CustomAppearance.new
     end
 
     def generate_css(css_path, appearance = nil)

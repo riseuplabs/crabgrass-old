@@ -1,3 +1,4 @@
+require 'json'
 class SurveyPageController < BasePageController
   stylesheet 'survey'
   javascript :extra
@@ -25,6 +26,49 @@ class SurveyPageController < BasePageController
     else
       @survey.errors.each {|e| flash_message :error => e.message }
       redirect_to(page_url(@page, :action => 'design'))
+    end
+  end
+  
+  def list
+  end
+  
+  def rate
+    if(params[:response] && params[:rating] && params[:rating].to_i != 0 &&
+       resp = @survey.responses.find(params[:response]))
+      if rating = current_user.rating_for(resp)
+        rating.rating = params[:rating]
+        rating.save!
+      else
+        Rating.create!(:rateable => resp, :user => current_user,
+                       :rating => params[:rating])
+      end
+    end
+        
+    ids = JSON::load(params[:next]) rescue nil
+    @resp = @survey.responses.find(ids.any? ? ids.shift : :first)
+    @next = @survey.responses.next_rateables(current_user, ids)
+    if current_user.rated?(@resp)
+      @rating = current_user.rating_for(@resp).rating
+      @survey_notice = "you previously rated this item with :rating"[:you_previousely_rated]%{ :rating => @rating }
+      @next_link = true
+    else
+      @rating = 0
+      @survey_notice = "Select a rating to see the next item"[:select_a_rating]
+      @next_link = false
+    end
+    
+    if request.xhr?
+      render :update do |page|
+        page.replace_html('response', :partial => 'response',
+                          :locals => { :resp => @resp, :rating => @rating })
+        page.replace_html('user_info', :partial => 'user_info',
+                          :locals => { :resp => @resp })
+        page.replace_html('next_responses', :partial => 'next_responses', 
+                          :locals => { :responses => @next })
+        page.replace_html('current_rating', :partial => 'current_rating',
+                          :locals => { :resp => @resp })
+        page.replace_html('survey_notice', @survey_notice)
+      end
     end
   end
 

@@ -1,0 +1,7 @@
+<%= javascript_tag "$('next_ids').value = '#{responses.map(&:id).to_json}';" %>
+<% responses.each do |resp| -%>
+  <div class="big_icon page_text_48 <%='grey' if current_user.rated?(resp)%>">
+    <%= "survey response by :login"[:response_by_login]%{ 
+      :login => resp.user.login } %>
+  </div>
+<% end -%>

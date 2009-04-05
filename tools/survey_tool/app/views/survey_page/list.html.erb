@@ -1,0 +1,21 @@
+<%= render :partial => 'tabs' %>
+<table id="survey_answers">
+  <tr>
+    <th>user</th>
+    <th>rating</th>
+    <% (questions=@survey.questions[0..5]).each do |question| -%>
+      <th><%= truncate(question.label) %></th>
+    <% end -%>
+  </tr>
+  <% @survey.responses.each do |resp| -%>
+    <tr>
+      <td><%= resp.user.login %></td>
+      <td><%= resp.rating %></td>
+      <% questions.each do |question| -%>
+	<td>
+	  <%= truncate(resp.answers.find_by_question_id(question.id).value) %>
+	</td>
+      <% end -%>
+    </tr>
+  <% end -%>
+</table>

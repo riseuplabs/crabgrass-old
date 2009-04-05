@@ -22,6 +22,7 @@ module UserExtension::Socialize
               options = args.extract_options!
               sql = @finder_sql
       
+              sql += " ORDER BY " + sanitize_sql(options[:order]) if options[:order]
               sql += sanitize_sql [" LIMIT ?", options[:limit]] if options[:limit]
               sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
 
@@ -77,17 +78,22 @@ module UserExtension::Socialize
 
   ## CONTACTS
 
-  # this should be the ONLY way that contacts are created.
-  # as a side effect of the FriendActivity created when a contact is added, 
-  # profiles will be created for self if they do not already exist. 
+  # Creates a friend relationship between self and other_user.
+  # This should be the ONLY way that contacts are created.
+  # 
+  # ContactObserver creates a new FriendActivity when a contact is created.
+  # As a side effect, this will create a profile for 'self' if it does not
+  # already exist. 
   def add_contact!(other_user, type=nil)
     unless self.contacts.find_by_id(other_user.id)
-      self.contacts << other_user
+      Contact.create!(:user => self, :contact => other_user)
+      # ^^ this form is used (instead of self.contacts << other_user) so that
+      # the ContactObserver will get called.
       self.contacts.reset
       self.update_contacts_cache
     end
     unless other_user.contacts.find_by_id(self.id)
-      other_user.contacts << self
+      Contact.create!(:user => other_user, :contact => self)
       other_user.contacts.reset
       other_user.update_contacts_cache
     end

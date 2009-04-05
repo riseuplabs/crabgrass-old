@@ -4,4 +4,14 @@ module SurveyUserExtension
       has_many :responses, :dependent => :destroy
     }
   end
+  module InstanceMethods
+    def rating_for(rateable)
+      rateable.ratings.by_user(self).first
+    end
+  
+    def rated?(rateable)
+      rating_for(rateable) ? true : false
+    end 
+  end
 end
+  

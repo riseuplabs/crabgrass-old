@@ -1,0 +1,3 @@
+<h3 class="alert center"><%= "Rating"[:rating] %></h3>
+<div class="center rating"><%= resp.rating.round(2) %></div>
+<div class="center vote_count"><%= "based on median of :count votes"[:median_of_votes]%{:count => resp.ratings.size} %></div>

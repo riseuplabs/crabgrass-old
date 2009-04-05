@@ -78,6 +78,11 @@ class RateManyPageController < BasePageController
     render :nothing => true
   end
   
+  def print
+  	@possibles = @poll.possibles.sort_by{|p| p.position||0 }
+    render :layout => "printer-friendly"
+  end
+
   protected
   
   # eventually, add more fine grained permissions.
@@ -95,4 +100,7 @@ class RateManyPageController < BasePageController
     @poll = @page.data
   end
 
+  def setup_view
+    @show_print = true
+  end
 end

@@ -259,6 +259,9 @@ class Wiki < ActiveRecord::Base
   #   ActiveRecord::StaleObjectError
   #   ErrorMessage
   #
+  # NOTE: for some reason, I am not sure why, calling wiki.save directly will
+  #       not work, because the version number is not incremented.
+  #       so, smart_save! must be the only way that the wiki gets saved.
   def smart_save!(params)
     params[:section] ||= :all
 

@@ -1,0 +1,35 @@
+<tr><td>
+<%= calendar_date_select_includes "blue" %>
+<script src="/javascripts/calendar.js"></script>
+<table>
+
+<tr><td colspan="2">
+<h2>when</h2>
+</td></tr>
+
+<tr><td>
+<span>&nbsp;&nbsp;&nbsp;
+<%= text_field_tag 'date_start','dd/mm/yyyy', :size => 10, :onfocus => "this.select();lcs(this)", :onclick => "event.cancelBubble=true;this.select();lcs(this)" -%>
+</td><td>
+<span id="hour_start"<%= text_field_tag 'hour_start', '??:??', :size => 8 %></span>
+</span>
+</td></tr>
+
+<tr id="to"><td>
+to
+<%= text_field_tag 'date_end','dd/mm/yyyy', :size => 10, :onfocus => "this.select();lcs(this)", :onclick => "event.cancelBubble=true;this.select();lcs(this)" %>
+</td><td>
+<%= text_field_tag 'hour_end', '??:??', :size => 8 %> 
+</td></tr>
+
+<tr><td colspan="2">
+<b>all day</b> <%= check_box('event', 'is_all_day',:onclick => "if ($('event_is_all_day').checked) {$('hour_start').hide(); $('to').hide();} else {$('hour_start').show(); $('to').show();}") %>
+
+<p/>
+
+<b>where</b>:
+<%= text_field 'event', 'location', :size =>40 %>
+</td></tr>
+
+</table> 
+</td></tr>

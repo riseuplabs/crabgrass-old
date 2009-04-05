@@ -18,21 +18,22 @@ class GroupsController < ApplicationController
 
     @groups = Group.visible_on(current_site).visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
 
+    # WOW, this is incredibly expensive
     # get the starting letters of all groups
     groups_with_names = Group.visible_on(current_site).visible_by(user).only_groups.names_only
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
   end
 
   def my
-    @groups = current_user.groups.visible_on(current_site).alphabetized('')
+    @groups = current_user.groups.visible_on(current_site).alphabetized('').paginate(:all, :page => params[:page])
     @groups.each {|g| g.display_name = g.parent.display_name + "+" + g.display_name if g.committee?}
+    ## ^^^ I THINK THIS IS A HORRIBLE AND HACKY WAY TO DO THIS -elijah
   end
 
   # login required
   def create
     @group_class = get_group_class
     @group_type = @group_class.to_s.downcase
-
     @parent = get_parent
 
     if request.get?
@@ -89,7 +90,7 @@ class GroupsController < ApplicationController
   end
 
   def add_council
-    debugger
+    # publicly_visible_X is deprecated in favor of the profile.
     council_params = {
       :short_name => @group.short_name + '_admin',
       :full_name => @group.full_name + ' Admin',
@@ -103,9 +104,7 @@ class GroupsController < ApplicationController
       c.avatar = Avatar.new
       c.created_by = current_user
     end
-      
-    @council.add_user!(current_user)
-    
+    @council.add_user!(current_user)    
     @group.add_committee!(@council, true)
   end
 

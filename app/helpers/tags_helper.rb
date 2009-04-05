@@ -17,12 +17,13 @@
 module TagsHelper
   def tag_cloud(tags, classes, max_list=false)
     return if tags.empty?
-    
     max_count = tags.sort_by(&:count).last.count.to_f
-    max_list_count = tags.sort_by(&:count)[0-max_list].count if max_list
+    if max_list
+      max_list_count = tags.sort_by(&:count)[0-max_list].count if tags.size >= max_list
+      max_list_count = tags.sort_by(&:count)[0].count if tags.size < max_list
+    end
     
     tag_count = 0
-    debugger
     tags.each do |tag|
       next if max_list and (tag.count < max_list_count || (tag.count == max_list_count && tag_count >= max_list))
       tag_count += 1

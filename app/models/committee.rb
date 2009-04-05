@@ -16,9 +16,10 @@ class Committee < Group
   
   # what we show to the user
   def display_name
-    read_attribute(:display_name) || short_name
+    read_attribute(:full_name) || short_name
   end
 
+  ## TODO: i do not like this. there is no attribute display_name.
   def display_name=(name)
     write_attribute(:display_name, name)
   end

@@ -13,6 +13,7 @@ database.yml
 *~
 public/plugin_assets/*
 db/*.sqlite3
+db/*.sql
 db/sphinx
 db/development_structure.sql
 /assets

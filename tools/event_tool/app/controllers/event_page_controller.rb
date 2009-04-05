@@ -2,9 +2,6 @@ require 'calendar_date_select'
 
 class EventPageController < BasePageController
   append_before_filter :fetch_event
-  before_filter :login_required, :only => ['create', 'edit']
-  
-  #stylesheet 'event'
   
   def show
     @user_participation= UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})  
@@ -18,54 +15,59 @@ class EventPageController < BasePageController
     @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})  
   end
 
-  def edit
+#  def edit
 
-  end
+#  end
 
-  def update
-    @page.attributes = params[:page]
-    @event.attributes = params[:event]
-    if @page.save and @event.save
-      return redirect_to(page_url(@page))
-    else
-      flash_message_now :object => @page
-    end
-  end
-
-
-  def create
+#  def update
+#    @page.attributes = params[:page]
+#    @event.attributes = params[:event]
+#    if @page.save and @event.save
+#      return redirect_to(page_url(@page))
+#    else
+#      flash_message_now :object => @page
+#    end
+#  end
+ 
+ def create
     @page_class = EventPage
-    @event = Event.new
-    if request.post?
-      @page = @page_class.create(params[:page])
+    if params[:cancel]
+      return redirect_to(create_page_url(nil, :group => params[:group]))
+    elsif request.post?
+      begin    
 
-      d = params[:date_start].split("/")
-      params[:date_start] = [d[1], d[0], d[2]].join("/")
-      params[:time_start] =  params[:date_start] + " "+ params[:hour_start]
-
-      @page.starts_at = Time.zone.local_to_utc(params[:time_start].to_time)
-
-      d = params[:date_end].split("/")
-      params[:date_end] = [d[1], d[0], d[2]].join("/")
-
-      params[:time_end] =  params[:date_end] + " " + params[:hour_end]
-      @page.ends_at = Time.zone.local_to_utc(params[:time_end].to_time)
-      @event = Event.new params[:event]
-      @page.data = @event
-      if @page.save
-        add_participants!(@page, params)
-        return redirect_to(page_url(@page))
-      else
-        flash_message_now :object => @page
+        if params[:event][:is_all_day]
+          params[:hour_start] = "09:00"
+          params[:hour_end] = "17:00"
+          params[:date_end] = params[:date_start]
+        end  
+        d = params[:date_start].split("/")
+        params[:date_start] = [d[1], d[0], d[2]].join("/")
+        params[:time_start] =  params[:date_start] + " "+ params[:hour_start]
+        d = params[:date_end].split("/")
+        params[:date_end] = [d[1], d[0], d[2]].join("/")
+        params[:time_end] =  params[:date_end] + " " + params[:hour_end]
+      
+        @event = Event.new(params[:event])
+        unless @event.valid?
+          flash_message_now :object => @event
+          return
+        end
+        @page = @page_class.create!(params[:page].merge(
+          :user => current_user,
+          :share_with => params[:recipients],
+          :access => params[:access],
+          :data => @event,
+          :starts_at  => Time.zone.local_to_utc(params[:time_start].to_time),
+          :ends_at => Time.zone.local_to_utc(params[:time_end].to_time)
+          ))
+        redirect_to(page_url(@page))
+      rescue Exception => exc
+        @page = exc.record
+        flash_message_now :exception => exc
       end
     end
   end
- 
- def set_event_description
-   @event.description =  params[:value]
-   @event.save
-   render :text => @event.description_html
- end
 
  def participate
    @user_participation = UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})
@@ -87,14 +89,13 @@ class EventPageController < BasePageController
 
    @watchers = UserParticipation.find(:all, :conditions => {:page_id => @page.id, :watch => TRUE})
    @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})
-
  end
  
   protected
 
   def fetch_event
     return true unless @page
-    @page.data ||= Event.new(:body => 'new page', :page => @page)
+    #@page.data ||= Event.new(:body => 'new page', :page => @page)
     @event = @page.data
   end
   

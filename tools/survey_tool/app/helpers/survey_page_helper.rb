@@ -67,4 +67,12 @@ module SurveyPageHelper
   #     page.insert_html :bottom, page.literal("$(this).up('.fields')"), "z"
   #   end
   # end
+
+  def js_next_response_options(rating)
+    { :url => page_url(@page, :action => 'rate'), :loading => show_spinner('next_response'), :complete => hide_spinner('next_response'), :with =>  "'response='+$('response_id').value+'&next='+$('next_ids').value+'&rating=#{rating}'" }
+  end
+  
+  def js_next_response(rating)
+    remote_function(js_next_response_options(rating))
+  end
 end

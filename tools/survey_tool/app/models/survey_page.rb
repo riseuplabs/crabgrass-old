@@ -5,6 +5,9 @@ class SurveyPage < Page
     # return "" unless data and data.possibles
     # data.possibles.collect { |pos| "#{pos.name}\t#{pos.description}" }.join "\n"
   end
-
+  
+  def survey
+    data
+  end
 end
 

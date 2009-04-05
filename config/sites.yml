@@ -2,7 +2,6 @@ default:
   name: crabgrass
   domain: localhost
   email_sender: 'crabgrass-system@localhost'
-  secret: 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
   pagination_size: 29
   super_admin_group_id: 35
   default_language:
@@ -24,5 +23,4 @@ default:
       site_id: UA-XXXXXX-X
       https: false
   tracking: false
-  network_id: 3001
 

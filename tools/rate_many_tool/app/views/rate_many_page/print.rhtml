@@ -1,0 +1,18 @@
+<% @possibles.each do |possible| -%>
+<%
+vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
+vote ||= PollVote.new
+@allvotes = {}
+possible.votes.each do |v|
+  (@allvotes[map(v.value)] ||= []) << v.user.login
+end
+%>
+<%=h possible.name %>
+<%= possible.description_html %>
+<table>
+  <%= button_row(possible, vote, 'good') %>
+  <%= button_row(possible, vote, 'ok') %>
+  <%= button_row(possible, vote, 'bad') %>
+  <%= button_row(possible, vote, 'no') %>
+</table>
+<% end -%>

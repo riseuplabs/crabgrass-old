@@ -116,7 +116,7 @@ class BasePageController < ApplicationController
   def setup_default_view
     if request.get?
       setup_view        # allow subclass to override view defaults
-      @show_posts       = action?(:show) if @show_posts.nil?
+      @show_posts       = action?(:show) || action?(:print) if @show_posts.nil?
       @show_attachments = true           if @show_attachments.nil?
       @show_tags        = true           if @show_tags.nil? 
       @html_title       = @page.title    if @page && @html_title.nil?

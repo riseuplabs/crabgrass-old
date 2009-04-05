@@ -13,12 +13,12 @@ class AssetPageController < BasePageController
     @page_class = AssetPage
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
+    elsif request.post?      
+        return flash_message_now :error => "No data uploaded" unless params[:asset][:uploaded_data].any?
+        begin
         # create asset
         @asset = Asset.make params[:asset]
         unless @asset.valid?
-          @asset.errors.add('uploaded_data', 'required') unless params[:asset][:uploaded_data].any?
           flash_message_now :object => @asset
           return
         end
