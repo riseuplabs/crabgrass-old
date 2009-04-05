@@ -43,6 +43,24 @@ module SurveyPageHelper
   def their_answer_goes_here
     "Their answer goes here..."[:their_answer_goes_here]
   end
+  
+  def respond_to_question_form(response_form, question)
+    # require 'ruby-debug';debugger
+    case question
+      when ShortTextQuestion
+        response_form.fields_for :answers_attributes, TextAnswer.new, :index => question.id do |f|
+          f.text_field :value, :size => 83
+        end
+      when LongTextQuestion
+        response_form.fields_for :answers_attributes, TextAnswer.new, :index => question.id do |f|
+          f.text_area :value, :size => "72x6"
+        end
+      when SelectOneQuestion
+        response_form.fields_for :answers_attributes, TextAnswer.new, :index => question.id do |f|
+          f.text_area :value, :size => "72x6"
+        end
+    end
+  end
 
   # def add_answer_choice_button(form)
   #   button_to_function "Add Answer Choice" do |page|

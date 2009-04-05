@@ -17,6 +17,10 @@ class SurveyQuestion < ActiveRecord::Base
   def newline_delimited_choices
     self.choices.join("\n")
   end
+
+  def answer_class
+    TextAnswer
+  end
 end
 
 
@@ -64,6 +68,10 @@ end
 class ImageUploadQuestion < SurveyQuestion
   def add_question_link_text
     "Upload Image"[:upload_image_question_link]
+  end
+  
+  def answer_class
+    AssetAnswer
   end
 end
 
