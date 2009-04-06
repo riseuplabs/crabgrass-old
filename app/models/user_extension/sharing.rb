@@ -152,7 +152,7 @@ module UserExtension::Sharing
   ##
 
   # valid options:
-  #  :access -- one of nil, :admin, :edit, :view, :none (nil will remove access)
+  #  :access -- one of nil, :admin, :edit, :view, :none (:none will remove access)
   #  :grant_access -- like :access, but is only used to improve access, not remove it.
   #  :message -- text message to send
   #  :send_emails -- true or false. send email to recipients?
@@ -162,6 +162,13 @@ module UserExtension::Sharing
   # (assuming that page.save will get called eventually, which will then save
   # the new participation objects)
   #
+  # Regarding access:
+  #
+  #   :grant_access => nil    # ignored
+  #   :grant_access => :none  # no change, grant can only increase access.
+  #   :access => nil          # ignored
+  #   :access => :none        # removes all access
+  #
   def share_page_with!(page, recipients, options)
     return true unless recipients
     
@@ -170,11 +177,11 @@ module UserExtension::Sharing
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
                                               # you cannot pass them if you delete them
-     notify         = options[:send_to_inbox]         # options.delete(:notify)
-     send_via_email = options[:send_via_email]    # options.delete(:send_emails)
+    notify         = options[:send_to_inbox]         # options.delete(:notify)
+    send_via_email = options[:send_via_email]    # options.delete(:send_emails)
     send_only_with_encryption = options[:send_only_with_encryption]
-     mailer_options = options[:mailer_options] # options.delete(:mailer_options)
-     message        = options[:message]
+    mailer_options = options[:mailer_options] # options.delete(:mailer_options)
+    message        = options[:message]
 
     ## add users to page
     #raise users.inspect
