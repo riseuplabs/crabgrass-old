@@ -1,7 +1,6 @@
 module SurveyPageHelper
   def add_questions_links
     links = []
-    links
     links << add_question_function(:short_text)
     links << add_question_function(:long_text)
     links << add_question_function(:select_one)
@@ -29,10 +28,13 @@ module SurveyPageHelper
     end
   end
 
-  def delete_question_function
-    link_to_function("delete", :class => "delete_question") do |page|
+  def delete_question_function(question)
+    link_to_function("delete".t, :class => "delete_question") do |page|
       page.call "$(this).up('.question').remove"
-      make_questions_sortable(page)
+      unless question.new_record?
+        page.insert_html :bottom, :questions, "<input type='hidden' name='survey[new_questions_attributes][#{question.id}][deleted]' value='true'>"
+      end
+      #make_questions_sortable(page)
     end
   end
 

@@ -746,6 +746,14 @@ ranked_vote_instructions: |
   most preferred at the top to least preferred at the bottom. When you are done,
   press confirm to record your vote.
 
+
+##
+## SURVEY PAGE
+##
+
+design_survey: Design Survey
+save_survey: Save Survey
+
 ##
 ## EXTERNAL VIDEO
 ##
