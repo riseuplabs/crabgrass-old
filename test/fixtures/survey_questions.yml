@@ -3,7 +3,7 @@
     "YASQ (Yet Another Silly Question)"].each_with_index do |q, i| %>
 <%= i+1 %>:
   id: <%= i+1 %>
-  type: 
+  type: ShortTextQuestion
   survey_id: 1
   position: 1
   label: "<%= q %>"

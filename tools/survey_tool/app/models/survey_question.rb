@@ -23,6 +23,12 @@ class SurveyQuestion < ActiveRecord::Base
   def newline_delimited_choices
     self.choices.join("\n")
   end
+
+  # the name of the partial to use for this question
+  def partial
+    self.class.to_s.underscore
+  end
+
 end
 
 
