@@ -184,7 +184,6 @@ module UserExtension::Sharing
     message        = options[:message]
 
     ## add users to page
-    #raise users.inspect
     users.each do |user|
       if self.share_page_with_user!(page, user, options)
         users_to_email << user if user.wants_notification_email?
@@ -209,7 +208,7 @@ module UserExtension::Sharing
     if send_via_email and mailer_options and !send_only_with_encryption
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-         bla = Mailer.deliver_share_notice(user, message, mailer_options)
+        Mailer.deliver_share_notice(user, message, mailer_options)
       end
     end
   end
@@ -222,7 +221,7 @@ def share_page_by_options!(page, options_with_recipients, global_options={ })
   options_with_recipients.each_pair do |options,recipients|
     recipients.each do |recipient|
       self.share_page_with!(page,recipient,options.merge(global_options))
-    end  
+    end
   end
 end
 
@@ -288,13 +287,14 @@ end
       attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
     end
     
-    # if an access level is given, we set it
-    if options.key?(:access) # might be nil
+
+    # if an access level is given (and not nil), we set it
+    if options.key?(:access)
+       # TODO: why is there no user.may? here?
       attrs[:access] = options[:access]
-    else
-      options[:grant_access] ||= nil # :view
+    elsif options[:grant_access]
       unless user.may?(options[:grant_access], page)
-        attrs[:grant_access] = options[:grant_access] || nil #:view
+        attrs[:grant_access] = options[:grant_access]
       end
     end
 

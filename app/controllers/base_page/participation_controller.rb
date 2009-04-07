@@ -230,6 +230,22 @@ class BasePage::ParticipationController < ApplicationController
     #end
   end
   
+  ##
+  ## UI METHODS FOR THE SHARE & NOTIFY FORMS
+  ## 
+  
+  # called by ajax - adds a new recipient to the share with recipients form
+#  def new_recipient
+#    recipient_name = params[:recipient][:name].strip 
+#    recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
+#    return unless recipient and recipient.may_be_pestered_by?(current_user))
+#    # render rjs partial that adds the recipient to the recipients list
+#    render :update do |p| 
+#      p.insert_html(:top, 'share_page_recipients',:partial => 'share_page_recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
+#    end
+#  end
+
+
   # given the params[:recipients] returns an options-hash for recipients
   def get_recipients_with_options(recipients_with_options)  
     options_with_recipients = {}
