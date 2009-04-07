@@ -1,4 +1,9 @@
-<div class='share_page_recipients_list' style="height:100px; background-color:white; overflow:auto; border:1px solid darkgrey; ">
+<%# arguments:
+  # 
+  # empty_box -- boolean. If true, then hide the current participants
+  #
+  # %>
+<div class='share_page_recipients_list'>
   <ul class='side_list names participators_list' id="share_page_recipients">
     <% if ((@page && @page.group_participations.any?) && !empty_box) -%>
       <% @page.sorted_group_participations.each do |part| %>

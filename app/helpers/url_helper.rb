@@ -197,6 +197,14 @@ module UrlHelper
     end
   end
 
+  def link_to_entity(entity, options={})
+    if entity.is_a? User
+      link_to_user(entity, options)
+    elsif entity.is_a? Group
+      link_to_group(entity, options)
+    end
+  end
+
   # display a user or a group, without a link, with an avatar
   def display_entity(entity, size=:small)
     url = avatar_url(:id => (entity.avatar||0), :size => size)

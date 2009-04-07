@@ -1,10 +1,8 @@
-<ul class="recipients">
-  <% @recipients.each_with_index do |recipient, i| -%>
-    <%= "<li" + (i == 0 ? ' class="selected"' : '') + ">" -%>
-    <div class="image">
-      <%= avatar_for(recipient, 'small') %>
-    </div>
-    <div class="name"><%= recipient.name %></div>
-    <%= "</li>" -%>
-  <% end -%>
+<ul class="names">
+  <%- @recipients.each_with_index do |recipient, i| -%>
+    <li class="<%= 'selected' if i == 0 %>" >
+      <%= entity_line(recipient) %>
+    </li>
+  <%- end -%>
 </ul>
+

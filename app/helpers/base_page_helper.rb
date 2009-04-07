@@ -242,13 +242,13 @@ module BasePageHelper
 
   def share_line
     if current_user.may? :view, @page
-      popup_line(:name => 'share', :label => "Share :page_class"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
+      popup_line(:name => 'share', :label => "Share Page"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
     end
   end
 
   def notify_line
     if current_user.may? :view, @page
-      popup_line(:name => 'notify', :label => "Notify about :page_class"[:notify_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
+      popup_line(:name => 'notify', :label => "Send Notification"[:notify_page_link] % {:page_class => page_class }, :icon => 'whistle_16', :controller => 'participation')
     end
   end
   
