@@ -8,7 +8,7 @@
     <td></td>
   </tr>
   <tr>
-    <td><%= text_field_with_auto_complete :recipient, :name, :size=>28 %></td>
+    <td><%= text_field_with_auto_complete :recipient, :name, {:size=>28}, {:url => {:controller => 'base_page/participation', :action => 'auto_complete_for_recipient_name', :page_id => @page ? @page.id : 44 }, :after_update_element=> "function(field,value) {field.value = field.value.strip(); }"} %></td>
     <td>
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>
       <%= select_page_access 'recipient[access]', :blank => (type=='send') %>

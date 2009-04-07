@@ -15,6 +15,7 @@ var group_nav_items = [];
 var group_user_items = [];
 
 var check_all_checkbox = false;
+var new_participator_field = false;
 var active_possible_contributors_group_menu_item = false;
 var active_possible_contributors_group_user_selection = false;
 
@@ -37,6 +38,7 @@ function loadHTMLElements(context) {
 	group_nav_items = $('possible_contributors_group_selection').childElements();
 	group_user_items = $('possible_contributors_from_group_container').childElements();
 	check_all_checkbox = $('check_all_users');
+	new_participator_field = $('recipient_name');
 	break;
     default:
     }
@@ -100,7 +102,20 @@ function notify_initialize_check_all_checkbox() {
     Event.observe(element_name,'change',function() {
 	    check_all_users();
 	});
-} 
+}
+
+function notify_initialize_new_participator_field() {
+    var element_name = Element.identify(new_participator_field);
+    Event.observe(element_name,'change',function(){
+	   strip_value(new_participator_field);
+	});
+}
+
+
+function strip_value(field) {
+    alert(field.value());
+    field.value() = field.value().strip();
+}
 
 
 function check_all_users(){ 
