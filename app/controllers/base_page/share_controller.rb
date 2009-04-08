@@ -33,7 +33,29 @@ class BasePage::ShareController < ApplicationController
 
   
   helper 'base_page', 'base_page/share'
-  
+
+=begin  
+  def auto_complete_for_recipient_name
+     # getting all friends or peers of the user
+    @users = User.find(:all, :conditions => "login LIKE '%#{recipient_name}%' AND id IN (#{[current_user.contact_ids, current_user.peer_ids].flatten.uniq!.join(', ')})")
+    @groups = Group.find(:all, :conditions => "name LIKE '%#{recipient_name}%' AND id IN (#{current_user.group_ids.join(', ')})")
+   
+    @all_users = User.find(:all)
+    @all_users.select {|user| user.profiles.public.may_pester? }
+    
+   # @all_users = User.find(:all, :joins => :profiles, :group => "profiles.stranger HAVING profiles.stranger = true")
+        
+    @recipients = (@users + @groups + @all_users).uniq!
+ 
+    @recipients = @recipients.select { |rcpt|
+      (rcpt.name =~ Regexp.new(params[:recipient][:name]) ||
+       rcpt.display_name =~ Regexp.new(params[:recipient][:name]))
+    }
+    
+    render :partial => 'base_page/auto_complete/recipient'
+  end
+=end
+
   def auto_complete_for_recipient_name
     name_filter = params[:recipient][:name]
     if name_filter
