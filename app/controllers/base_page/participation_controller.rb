@@ -34,14 +34,27 @@ class BasePage::ParticipationController < ApplicationController
   #       params[:recipients] ||= {}
 
   def auto_complete_for_recipient_name
-    setup_sharing_populations
-    @recipients = [@share_page_groups, @share_contributors, @share_groups,
-                   @share_networks, @share_committees, @share_friends,
-                   @share_peers].flatten.compact.uniq
+    # setup_sharing_populations
+    # @recipients = [@share_page_groups, @share_contributors, @share_groups,
+    #               @share_networks, @share_committees, @share_friends,
+    #               @share_peers].flatten.compact.uniq
+
+     # getting all friends or peers of the user
+    @users = User.find(:all, :conditions => "login LIKE '%#{recipient_name}%' AND id IN (#{[current_user.contact_ids, current_user.peer_ids].flatten.uniq!.join(', ')})")
+    @groups = Group.find(:all, :conditions => "name LIKE '%#{recipient_name}%' AND id IN (#{current_user.group_ids.join(', ')})")
+   
+    @all_users = User.find(:all)
+    @all_users.select {|user| user.profiles.public.may_pester? }
+    
+   # @all_users = User.find(:all, :joins => :profiles, :group => "profiles.stranger HAVING profiles.stranger = true")
+        
+    @recipients = (@users + @groups + @all_users).uniq!
+ 
     @recipients = @recipients.select { |rcpt|
       (rcpt.name =~ Regexp.new(params[:recipient][:name]) ||
        rcpt.display_name =~ Regexp.new(params[:recipient][:name]))
     }
+    
     render :partial => 'base_page/auto_complete/recipient'
   end
   
