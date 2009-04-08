@@ -26,11 +26,14 @@ function show_tab(tab_link, tab_content) {
 
 // submits a form, from the onclick of a link. 
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
-function submit_form(link, name, value) {
-  e = link;
-  while(e = e.parentNode){if(e.tagName == 'FORM'){break}}
-  if (e) {
-    form = e;
+// value is optional.
+function submit_form(form_element, name, value) {
+  e = form_element;
+  form = null;
+  do {
+    if(e.tagName == 'FORM'){form = e; break}
+  } while(e = e.parentNode)
+  if (form) {
     input = document.createElement("input");
     input.name = name;
     input.type = "hidden";
@@ -43,7 +46,6 @@ function submit_form(link, name, value) {
     }
   }
 }
-
 
 /** editing textareas **/
 

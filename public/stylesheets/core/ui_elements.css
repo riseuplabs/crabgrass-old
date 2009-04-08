@@ -79,15 +79,7 @@ ul.side_list {
     text-transform: capitalize; }
   ul.side_list li.small_icon {
     padding-left: 25px;
-    background-position: 2px 50%; 
-}
-
-ul.participators_list li {
-    padding:5px;
-    border-bottom:1px solid darkgrey;
-    clear: left;
-}
-
+    background-position: 2px 50%; }
 
 .tab-area {
   background-color: white;
@@ -356,32 +348,3 @@ table.plain {
     .letter_pagination span.disabled {
       padding: 0;
       color: #edf2e3; }
-
-ul.recipients li div{
-    display:inline;
-}
-
-
-ul.menu li:hover {
-    background-color:green;;
-}
-
-li.active_menu_item {
-    background-color:green;
-}
-
-
-
-ul.participators_list li.unsaved {
-    background-color:green;
-}
-
-table.tool {
-  width:100%;
-  background-color:white;
-  border:0.5px solid darkgrey;
-}
-
-  table.tool td {
-    border:0.5px solid darkgrey;
-  }
