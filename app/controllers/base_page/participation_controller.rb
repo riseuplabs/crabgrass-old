@@ -134,60 +134,28 @@ class BasePage::ParticipationController < ApplicationController
   # the page is private and they already have access.
   #
   
-  # called by ajax - adds a new recipient to the share with recipients form
-  def new_recipient
-    if recipient_name = params[:recipient][:name].strip      
-      if(@participant = User.find_by_login(recipient_name)) &&
-         (@participant.may_be_pestered_by?(current_user))
-        # do weird stuff
-        # render rjs partial that adds the user to the recipients list
-        render :update do |p| 
-          p.insert_html(:top, 'share_page_recipients', :partial => 'share_page_recipient', :locals => { :recipient => @participant, :access => params[:recipient][:access], :unsaved => true })
-        end
-        return
-      elsif(@participant = Group.find_by_name(recipient_name)) && 
-            (@participant.may_be_pestered_by?(current_user))
-        # do other weird stuff
-        # render rjs partial that adds the user to the recipients list
-        render :update do |p| 
-          p.insert_html(:top, 'share_page_recipients', :partial => 'share_page_recipient', :locals => { :recipient => @participant, :access => params[:recipient][:access], :unsaved => true })
-        end
-        return
-      else
-        # inform user that there was no real weird stuff to do
-        # render rjs partial that adds an note to the user that something went massivley wrong
-      end
-    end
-  end
   
-  
+#  "recipient"=>{"name"=>"", "access"=>"admin"}, "recipients"=>{"aaron"=>{"access"=>"admin"}, "the-true-levellers"=>{"access"=>"admin"}}
+
   def share
-    # if cancel button is pressed or if there is nothing else to do...
+    #debugger
     if params[:cancel] || !params[:recipients]
-      close_popup and return
-    end
- 
-   # begin
-      # now get the recipients from the prebuild hash:
+      close_popup
+    elsif params[:recipient] and params[:recipient][:name].any?
+      # add one recipient to the list
+      recipient_name = params[:recipient][:name].strip 
+      @recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
+      if @recipient.nil?
+        flash_message :error => 'no such name'
+      elsif !@recipient.may_be_pestered_by?(current_user)
+        flash_message :error => 'you may not pester'
+      end
+      render :partial => 'base_page/participation/add_recipient'
+    else
       # recipients with options, that looks like
       # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
       recipients_with_options = get_recipients_with_options(params[:recipients])
-        # now we use default_options to handle the recipients simply given by a list of names
-      # they don't have the options supported
-      # [TODO] call a after - method that offers the ability to postconfigure those on a new screen:
-      # The user should get a list of all the user, he selected without options.
-      default_options = { 
-        :message => nil,
-        :send_emails => nil,
-        :mailer_options => mailer_options,
-        :send_via_chat => false,
-        :send_via_email => false,
-        :send_via_textmessage => false,
-        :send_only_with_encryption => false,
-        :send_to_inbox => false,
-      }
-    
-      
+
       options = {
         :message => params[:notification][:message_text],
         :send_emails => params[:notification][:send_emails],
@@ -198,78 +166,12 @@ class BasePage::ParticipationController < ApplicationController
         :send_to_inbox => params[:notification][:send_to_inbox],
         :mailer_options => mailer_options
       }
-      
-      #raise options.inspect
-      
-      # now we can have totally different options for the single recipients
-      # [TODO] maybe we want to reflect on overlapping recipients and exclusions? 
-      #  current_user.share_page_with!(@page, recipients, options)
-      current_user.share_page_by_options!(@page, recipients_with_options, options)
-      
-#      close_popup
-
-     flash_message :success => "You Successfully shared #{@page.class.to_s} with \n #{@recipients.join(', ')} !".t
-      
-      render :update do |page|
-        page.replace 'page_sidebar', :partial => 'base_page/sidebar'
-        page.replace_html 'message', display_messages
-        page.select('submit').each do |submit|
-          submit.disable = false
-        end
-        page.hide 'popup_holder'
-      end
-
-         
-      
+      # current_user.share_page_with!(@page, recipients, options)
+      current_user.share_page_by_options!(@page, recipients_with_options, options)      
       @page.save!
-      
-      
-    #rescue Exception => exc
-    #  flash_message_now :exception => exc
-    #  show_error_message     
-    #end
-  end
-  
-  ##
-  ## UI METHODS FOR THE SHARE & NOTIFY FORMS
-  ## 
-  
-  # called by ajax - adds a new recipient to the share with recipients form
-#  def new_recipient
-#    recipient_name = params[:recipient][:name].strip 
-#    recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
-#    return unless recipient and recipient.may_be_pestered_by?(current_user))
-#    # render rjs partial that adds the recipient to the recipients list
-#    render :update do |p| 
-#      p.insert_html(:top, 'share_page_recipients',:partial => 'share_page_recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
-#    end
-#  end
-
-
-  # given the params[:recipients] returns an options-hash for recipients
-  def get_recipients_with_options(recipients_with_options)  
-    options_with_recipients = {}
-    recipients_with_options.each_pair do |recipient,options|
-      if options.kind_of?(Hash)
-        options_with_recipients[symbolize_options(options)] ||= []
-        options_with_recipients[symbolize_options(options)] << recipient.sub(" ", "+")
-      end
-      @recipients ||= []
-      @recipients << recipient
+      flash_message :success => "You successfully shared this page."[:shared_page_success]
+      close_popup
     end
-    options_with_recipients   
-  end
-
-  
-  def symbolize_options options
-    return options unless options.respond_to?(:each)
-    symbolized_options = {}
-    options.each do |k,v|
-      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
-      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
-      symbolized_options[k] = v
-    end
-    symbolized_options
   end
 
   # handles the notification with or without sharing
@@ -326,6 +228,36 @@ class BasePage::ParticipationController < ApplicationController
   end
 
   protected
+
+  ##
+  ## UI METHODS FOR THE SHARE & NOTIFY FORMS
+  ## 
+
+  # given the params[:recipients] returns an options-hash for recipients
+  def get_recipients_with_options(recipients_with_options)  
+    options_with_recipients = {}
+    recipients_with_options.each_pair do |recipient,options|
+      if options.kind_of?(Hash)
+        options_with_recipients[symbolize_options(options)] ||= []
+        options_with_recipients[symbolize_options(options)] << recipient.sub(" ", "+")
+      end
+      @recipients ||= []
+      @recipients << recipient
+    end
+    options_with_recipients   
+  end
+
+  
+  def symbolize_options options
+    return options unless options.respond_to?(:each)
+    symbolized_options = {}
+    options.each do |k,v|
+      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
+      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
+      symbolized_options[k] = v
+    end
+    symbolized_options
+  end
 
   def close_popup
     render :template => 'base_page/reset_sidebar'

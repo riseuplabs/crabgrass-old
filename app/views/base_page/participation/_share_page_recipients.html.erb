@@ -1,4 +1,10 @@
-<% empty_box = false if empty_box.nil? %>
+<% 
+   # if the recipient is written "Mr. Red (red)", then reformat to be just 'red'
+   after_update_function = "function(field,value) {
+     field.value = field.value.strip().replace(/.*\\((.*)\\).*/, '$1');
+   }"
+   empty_box = false if empty_box.nil? 
+%>
 <%= render :partial => 'base_page/participation/share_page_recipient_list', :locals => {:empty_box => empty_box} %>   
 
 <table class='share_page_recipients'>
@@ -6,16 +12,21 @@
     <td><%= 'User or group name'[:user_or_group_name]%>:</td>
     <td><%= 'Grant Access'[:grant_access]%>:</td>
     <td></td>
+    <td></td>
   </tr>
   <tr>
-    <td><%= text_field_with_auto_complete :recipient, :name, {:size=>28}, {:url => {:controller => 'base_page/participation', :action => 'auto_complete_for_recipient_name', :page_id => @page ? @page.id : 44 }, :after_update_element=> "function(field,value) {field.value = field.value.strip(); }"} %></td>
+    <td><%= text_field_with_auto_complete :recipient, :name, {:style=>'width:100%'}, {:url => {:controller => 'base_page/participation', :action => 'auto_complete_for_recipient_name', :page_id => @page ? @page.id : 44 }, :after_update_element => after_update_function} %></td>
     <td>
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>
       <%= select_page_access 'recipient[access]', :blank => (type=='send') %>
       <%- end -%>
     </td>
     <td>
-      <%= button_to_function 'Add', 'new_recipient()' %>
+      <%# button_to_function 'Add'[:add], "submit_form(this, 'add_recipient')" %>
+      <%= submit_tag 'Add'[:add], :name => 'add_recipient' %>
+    </td>
+    <td>
+      <%= spinner('add_recipient') %>
     </td>
   </tr>
 </table>
