@@ -28,14 +28,14 @@
 -%>
 <% popup('Move This Page'[:move_this_page], :id => 'move_popup', :style => '') do -%>
   <% form_tag(:controller => 'base_page/participation', :action => 'move', :page_id => @page.id) do -%>
-    <%= "Move this page to a different group"[:move_page_to_different_group] %>:
-    <p>
-      <%= select_tag 'group_id', options.join("\n") %>
-    </p>
-    <p>
+    <blockquote>
+      <%= "Move this page to a different group"[:move_page_to_different_group] %>:
+      <p><%= select_tag 'group_id', options.join("\n") %></p>
+    </blockquote>
+    <div class='buttons'>
+      <%= submit_tag :close_button.t, :name => 'cancel' %> &nbsp;
       <%= submit_tag :move_button.t, :name => 'move' %>
-      <%= submit_tag :close_button.t, :name => 'cancel' %>
-    </p>
+    </div>
   <% end -%>
 <% end -%>
 

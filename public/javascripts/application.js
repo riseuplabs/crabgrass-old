@@ -8,6 +8,13 @@ function quickRedReference() {
   );
 }
 
+// toggle the visibility of another element based on if
+// a checkbox is checked or not.
+function checkbox_toggle_visibility(checkbox, element_id) {
+  if (checkbox.checked) {$(element_id).show();}
+  else {$(element_id).hide();}
+}
+
 function show_tab(tab_link, tab_content) {
   tabset = tab_link.parentNode.parentNode
   $$('ul.tabset a').each( function(elem) {

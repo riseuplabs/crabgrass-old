@@ -9,6 +9,6 @@ else
   page.replace_html 'share_message', ''
   # we just need to update the ui to add one more recipient to the list
   page << "$('recipient_name').value = ''"
-  page.insert_html(:top, 'share_page_recipients',:partial => 'share_page_recipient', :locals => { :recipient => @recipient, :access => params[:recipient][:access], :unsaved => true })
+  page.insert_html(:top, 'share_page_recipients',:partial => 'recipient', :locals => { :recipient => @recipient, :access => params[:recipient][:access], :unsaved => true })
 end
 

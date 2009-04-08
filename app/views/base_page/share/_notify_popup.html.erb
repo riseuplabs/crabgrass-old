@@ -1,0 +1,18 @@
+<% popup("Send Notification"[:notify_page_link], :id => 'notify_popup', :width => '40em') do -%>
+  <% form_remote_tag(
+    :url => {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id},
+    :loading => show_spinner('popup'),
+    :html => {:id => 'notify_page_form'}) do -%>
+
+    <blockquote>
+      <%= render :partial => 'base_page/share/notify_form' %>
+    </blocquote>
+
+    <div class='buttons'>
+      <%= spinner 'popup' %> &nbsp;
+      <%= submit_tag :notify_button.t, :name => 'notify' %> &nbsp;
+      <%= submit_tag :close_button.t, :name => 'cancel' %>
+    </div>
+
+  <% end -%>
+<% end -%>

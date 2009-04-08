@@ -586,9 +586,6 @@ join_group_success: "You have joined group {group_name}"
 ## PAGES
 ##
 
-
-share_this_page: "Share This Page"
-
 move_this_page: "Move This Page"
 move_page_to_different_group: "Move this page to a different group"
 all_page_types: "all page types"
@@ -662,7 +659,7 @@ information: "Information"
 
 share_page_link: "Share Page"
 share_page_options: "Choose options"
-share_page_recipients: "Share this {page_class} with"
+share_page_recipients: "Share this page with:"
 share_page_recipients_sections: "Choose from your groups or friends"
 share_page_recipients_selection: "Make your selection"
 share_page_recipients_results: "This {page_class} will be shared with"

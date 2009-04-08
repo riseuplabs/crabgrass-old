@@ -236,11 +236,16 @@ div.popup {
   top: -32px;
   right: 43px; }
   div.popup h1 {
-    background: #888;
+    background: #999;
     color: white;
+    border-bottom: 1px solid #666;
     padding: 10px;
-    margin: 0;
-    border-bottom: 1px solid #666; }
+    margin: 0; }
+  div.popup .buttons {
+    background: #ccc;
+    border-top: 1px solid #999;
+    text-align: right;
+    padding: 10px; }
   div.popup h2 {
     color: #cc0000;
     font-size: 1.1em;

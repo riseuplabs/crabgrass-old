@@ -1,0 +1,46 @@
+<% type = 'send' if type.nil? -%>
+
+<div class='share_page'>
+  <h2><%= 'Share this page with:'[:share_page_recipients] %></h2>
+
+  <div class='fieldset'>
+    <%= render :partial => 'base_page/share/add_recipient_widget' %>
+  </div>
+
+  <div id="notify_box" xstyle="display:none">
+  <h2><%= 'Notify'[:notify] %></h2>
+  <div class='fieldset'>
+    <table class='notify_page_recipients'>
+    <tr>
+      <td><%= check_box :notification, :send_to_inbox, :onclick => "checkbox_toggle_visibility(this, 'notification_details')" %></td>
+      <td><label for='notification_send_to_inbox'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
+    </tr>
+    <tbody id='notification_details' style='display:none'>
+    <tr>
+      <td></td>
+      <td>
+	      <%= 'Send additional notification via'[:share_additional_notification] %>:
+	      <label><%= check_box :notification, :send_via_email %> <%= 'Email'[:email] %></label>
+<!--	      <label><%= check_box :notification, :send_via_textmessage %> <%= 'Text Message'[:text_message] %></label>
+	      <label><%= check_box :notification, :send_via_chat %> <%= 'Chat'[:chat] %></label>
+	      <br/>
+	      <label><%= check_box :notification, :send_only_with_encryption %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %></label>
+-->
+      </td>
+    </tr>
+    <tr>
+      <td><%= check_box :notification, :message, :onclick => "checkbox_toggle_visibility(this, 'share_message_holder')" %></td>
+      <td><label for='notification_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><div id='share_message_holder' style='display:none'>
+        <%= text_area_tag 'message', '', :id => 'share_message', :rows => 6, :cols => 60 %>
+      </div></td>
+    <tr>
+    </tbody>
+    </table>
+  </div>
+  </div><!-- notify_box -->
+</div>
+

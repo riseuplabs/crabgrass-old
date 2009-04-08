@@ -10,41 +10,11 @@ This is a controller for managing participations with a page
 
 class BasePage::ParticipationController < ApplicationController
 
-  before_filter :login_required, :except => [:auto_complete_for_recipient_name, :new_recipient]
-
   verify :method => :post, :only => [:move]
 
   helper 'base_page', 'base_page/participation'
   
   include BasePageHelper
-
-  #auto_complete_for :recipient, :name
-  
-  protect_from_forgery :except => [:auto_complete_for_recipient_name, :new_recipient]
-  #       if @share_groups.nil?
-  #       @share_page_groups    = @page ? @page.namespace_groups : []
-  #       @share_contributors   = @page ? @page.contributors : []
-  #       all_groups = current_user.all_groups.sort_by {|g|g.name}
-  #       @share_groups      = current_user.all_groups.select {|g|g.normal?}
-  #       @share_networks    = current_user.all_groups.select {|g|g.network?}
-  #       @share_committees  = current_user.all_groups.select {|g|g.committee?}
-  #       @share_friends        = current_user.contacts.sort_by{|u|u.name}
-  #       @share_peers          = current_user.peers.sort_by{|u|u.name}
-
-  #       params[:recipients] ||= {}
-
-  def auto_complete_for_recipient_name
-    setup_sharing_populations
-    @recipients = [@share_page_groups, @share_contributors, @share_groups,
-                   @share_networks, @share_committees, @share_friends,
-                   @share_peers].flatten.compact.uniq
-    @recipients = @recipients.select { |rcpt|
-      (rcpt.name =~ Regexp.new(params[:recipient][:name]) ||
-       rcpt.display_name =~ Regexp.new(params[:recipient][:name]))
-    }
-    render :partial => 'base_page/auto_complete/recipient'
-  end
-  
   
   # TODO: add non-ajax version
   # TODO: send a 'made public' message to watchers
@@ -110,76 +80,7 @@ class BasePage::ParticipationController < ApplicationController
     clear_referer(@page)
     redirect_to page_url(@page)
   end
-  
-  ##
-  ## PAGE SHARING
-  ## 
-
-  # share this page with a notice message to any number of recipients. 
-  #
-  # if the recipient is a user name, then the message and the page show up in
-  # user's inbox, and optionally they are alerted via email.
-  #
-  # if the recipient is an email address, an email is sent to the address with a
-  # magic url that lets the recipient view the page by clicking on a link
-  # and using their email as the password.
-  # 
-  # the sending user must have admin access to send to recipients
-  # who do not already have the ability to view the page.
-  # 
-  # the recipient may be an entire group, in which case we grant access
-  # to the group and send emails to each user in the group.
-  #
-  # you cannot share to users/groups that you cannot pester, unless
-  # the page is private and they already have access.
-  #
-  
-  
-#  "recipient"=>{"name"=>"", "access"=>"admin"}, "recipients"=>{"aaron"=>{"access"=>"admin"}, "the-true-levellers"=>{"access"=>"admin"}}
-
-  def share
-    #debugger
-    if params[:cancel] || !params[:recipients]
-      close_popup
-    elsif params[:recipient] and params[:recipient][:name].any?
-      # add one recipient to the list
-      recipient_name = params[:recipient][:name].strip 
-      @recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
-      if @recipient.nil?
-        flash_message :error => 'no such name'
-      elsif !@recipient.may_be_pestered_by?(current_user)
-        flash_message :error => 'you may not pester'
-      end
-      render :partial => 'base_page/participation/add_recipient'
-    else
-      # recipients with options, that looks like
-      # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
-      recipients_with_options = get_recipients_with_options(params[:recipients])
-
-      options = {
-        :message => params[:notification][:message_text],
-        :send_emails => params[:notification][:send_emails],
-        :send_via_email => params[:notification][:send_via_email],
-        :send_via_textmessage => params[:notification][:send_via_textmessage],
-        :send_via_chat => params[:notification][:send_via_chat],
-        :send_only_with_encryption => params[:notification][:send_only_with_encryption],
-        :send_to_inbox => params[:notification][:send_to_inbox],
-        :mailer_options => mailer_options
-      }
-      # current_user.share_page_with!(@page, recipients, options)
-      current_user.share_page_by_options!(@page, recipients_with_options, options)      
-      @page.save!
-      flash_message :success => "You successfully shared this page."[:shared_page_success]
-      close_popup
-    end
-  end
-
-  # handles the notification with or without sharing
-  def notify
-    share 
-    return
-  end
-  
+    
   ##
   ## PAGE DETAILS
   ## participation and access

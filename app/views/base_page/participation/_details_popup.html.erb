@@ -1,5 +1,6 @@
 <% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
 
+  <blockquote>
     <table class='fieldset plain'>
     <tr>
       <td><b><%= 'Owner'[:page_list_heading_owner] %></b></td>
@@ -12,24 +13,25 @@
       <td><b><%= 'Updated'[:page_list_heading_updated] %></b></td>
       <td><%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
     </tr>
-    </table><br/>
+    </table>
+  </blockquote>
 
-    <%= render :partial => 'base_page/participation/details_tabs' -%>
-    <div class='tab-content tab-area' id='permissions_tab'>
-      <%= render :partial => 'base_page/participation/permissions' %>
-    </div>
-    <div class='tab-content tab-area' id='participation_tab' style='display:none'>
-      <%= render :partial => 'base_page/participation/participation' %>
-    </div>
+  <%= render :partial => 'base_page/participation/details_tabs' -%>
+  <div class='tab-content tab-area' id='permissions_tab'>
+    <%= render :partial => 'base_page/participation/permissions' %>
+  </div>
+  <div class='tab-content tab-area' id='participation_tab' style='display:none'>
+    <%= render :partial => 'base_page/participation/participation' %>
+  </div>
 
-    <p>
-      <% form_remote_tag(
-      :url => {:controller => 'participation', :action => 'close_details', :page_id => @page.id},
-      :loading => show_spinner('popup')) do -%>
+  <div class='buttons'>
+    <% form_remote_tag(
+    :url => {:controller => 'participation', :action => 'close_details', :page_id => @page.id},
+    :loading => show_spinner('popup')) do -%>
 
-       <%= submit_tag :close_button.t, :name => 'cancel' %>
-       <%= spinner 'popup' %>
-      <% end -%>
-    </p>
+     <%= submit_tag :close_button.t, :name => 'cancel' %>
+     <%= spinner 'popup' %>
+    <% end -%>
+  </div>
 
 <% end -%>

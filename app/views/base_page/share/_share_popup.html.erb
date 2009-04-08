@@ -1,0 +1,25 @@
+<%- form_url = {:controller => 'base_page/share', :action => 'update', :page_id => @page.id} -%>
+<%- cancel_function = "$('add_recipient_spinner').remove(); submit_form(this, 'cancel');"+show_spinner('popup') -%>
+<%- share_function = "$('add_recipient_spinner').remove(); submit_form(this, 'share');"+show_spinner('popup') -%>
+
+<% popup('Share Page'[:share_page_link], :id => 'share_popup', :width => '40em') do -%>
+
+  <% form_remote_tag( :url => form_url,
+    :loading => show_spinner('add_recipient'),
+    :html => {:id => 'share_page_form'}) do -%>
+
+    <blockquote>
+    <div id='share_message'></div>
+    <%= render :partial => 'base_page/share/share_form' %>
+    </blockquote>
+
+    <div class='buttons'>
+      <%# these buttons are not submit_tags so that we can control which spinner is displayed %>
+      <%= spinner 'popup' %> &nbsp;
+      <%= button_to_function :cancel_button.t, cancel_function %> &nbsp;
+      <%= button_to_function :share_button.t, share_function %>
+    </div>
+  <% end -%>
+
+<% end -%>
+
