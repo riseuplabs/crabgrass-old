@@ -27,6 +27,7 @@ module ProfileMethods
       :conditions => [conditions]+[true]*args.size,
       :order => 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
     )
+    
   end
   
   # a shortcut to grab the 'public' profile
