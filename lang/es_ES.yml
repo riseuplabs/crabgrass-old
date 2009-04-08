@@ -65,7 +65,7 @@ media_for_group: "%s en %s"
 medium: medio
 coordinator: Coordinador
 reject_button: eliminar
-group_publicly_visible_description: "El grupo que aparece en el directorio p\xC3\xBAblico y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de we.riseup.net/yourgroupname."
+group_publicly_visible_description: "El grupo que aparece en el directorio p\xC3\xBAblico y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de %s/yourgroupname."
 Language: Idioma
 delete_version_confirm: "\xC2\xBFEst\xC3\xA1s seguro de que desea eliminar esta versi\xC3\xB3n?"
 websites: Sitios Web
@@ -375,7 +375,7 @@ signup_password: "Tu Contrase\xC3\xB1a"
 alert_not_saved: Los cambios no han podido ser guardados
 formatting_reference_link: formato de referencia
 created: creado
-group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de we.riseup.net/yourgroupname. Adem\xC3\xA1s, el nombre del grupo ser\xC3\xA1 mostrado en el perfil de la p\xC3\xA1gina de cada uno de los miembros (we.riseup.net / nombre de usuario)"
+group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de %s/yourgroupname. Adem\xC3\xA1s, el nombre del grupo ser\xC3\xA1 mostrado en el perfil de la p\xC3\xA1gina de cada uno de los miembros (%s / nombre de usuario)"
 edit: editar
 phone_numbers: "N\xC3\xBAmeros Telef\xC3\xB3nicos"
 view_slideshow: "Ver presentaci\xC3\xB3n de diapositivas"
@@ -553,7 +553,7 @@ date_years: "a\xC3\xB1os"
 menu_link_logout: "Cerrar sesi\xC3\xB3n"
 group_successfully_updated: Grupo ha sido actualizado.
 large: grande
-committee_publicly_visible_description: "Los comit\xC3\xA9s pueden ser vistos por aquellos que no son miembros en we.riseup.net/yourgroupname"
+committee_publicly_visible_description: "Los comit\xC3\xA9s pueden ser vistos por aquellos que no son miembros en %s/yourgroupname"
 thursday: Jueves
 description: "descripci\xC3\xB3n"
 reject: rechazar

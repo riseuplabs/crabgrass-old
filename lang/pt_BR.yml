@@ -63,7 +63,7 @@ media_for_group: "%s em %s"
 medium: "interm\xC3\xA9dio"
 coordinator: Coordenador
 reject_button: recusar
-group_publicly_visible_description: "O grupo aparece em um diret\xC3\xB3rio p\xC3\xBAblico e o <i>profile</i> do grupo \xC3\xA9 vis\xC3\xADvel para n\xC3\xA3o membros do we.riseup.net/yourgroupname."
+group_publicly_visible_description: "O grupo aparece em um diret\xC3\xB3rio p\xC3\xBAblico e o <i>profile</i> do grupo \xC3\xA9 vis\xC3\xADvel para n\xC3\xA3o membros do %s/yourgroupname."
 Language: Idioma
 delete_version_confirm: "Voc\xC3\xAA tem certeza que quer apagar essa vers\xC3\xA3o?"
 websites: Sites
@@ -371,7 +371,7 @@ signup_password: Sua senha
 alert_not_saved: "As altera\xC3\xA7\xC3\xB5es n\xC3\xA3o puderam ser salvas"
 formatting_reference_link: "refer\xC3\xAAncia de formata\xC3\xA7\xC3\xA3o"
 created: criado
-group_members_publicly_visible_description: "Os membros s\xC3\xA3o vis\xC3\xADveis por n\xC3\xA3o membros do we.riseup.net/yourgroupname. Al\xC3\xA9m disso, o nome do grupo ser\xC3\xA1 listado na p\xC3\xA1gina de perfil de cada membro (we.riseup.net/username)"
+group_members_publicly_visible_description: "Os membros s\xC3\xA3o vis\xC3\xADveis por n\xC3\xA3o membros do %s/yourgroupname. Al\xC3\xA9m disso, o nome do grupo ser\xC3\xA1 listado na p\xC3\xA1gina de perfil de cada membro (%s/username)"
 edit: editar
 phone_numbers: Telefones
 view_slideshow: Ver Slideshow
@@ -549,7 +549,7 @@ date_years: anos
 menu_link_logout: Log off
 group_successfully_updated: O grupo foi atualizado.
 large: "extens\xC3\xA3o"
-committee_publicly_visible_description: "Os comit\xC3\xAAs podem ser vistos por n\xC3\xA3o-membros em we.riseup.net/yourgroupname"
+committee_publicly_visible_description: "Os comit\xC3\xAAs podem ser vistos por n\xC3\xA3o-membros em %s/yourgroupname"
 thursday: quinta-feira
 description: "descri\xC3\xA7\xC3\xA3o"
 reject: recusar

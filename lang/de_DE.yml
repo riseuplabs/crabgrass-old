@@ -69,7 +69,7 @@ media_for_group: "%s in %s"
 achive: Archiv
 reject_button: Abweisen
 websites: Websites
-group_publicly_visible_description: "Die Gruppe erscheint im \xC3\xB6ffentlichen Verzeichnis und das  <i>Profil</i> kann von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
+group_publicly_visible_description: "Die Gruppe erscheint im \xC3\xB6ffentlichen Verzeichnis und das  <i>Profil</i> kann von Nichtmitgliedern unter %s/DeinGruppenName eingesehen werden."
 Language: Sprache
 coordinator: Koordinator
 delete_version_confirm: "Willst Du diese Version tats\xC3\xA4chlich l\xC3\xB6schen?"
@@ -436,7 +436,7 @@ alert_not_saved: "\xC3\x84nderungen konnten nicht gespeichert werden"
 formatting_reference_link: Hinweise zur Formatierung
 group_profile_description_may_see_groups: "Anderen erlauben, die Gruppen, die zu dieser {group_type} geh\xC3\xB6ren, zu sehen."
 created: erstellt
-group_members_publicly_visible_description: "Nichtmitglieder k\xC3\xB6nnen eine Liste mit Mitgliedern unter we.riseup.net/DeinGruppenName einsehen. Ausserdem wird der Gruppenname auf der Profilseite eines jeden Mitglieds gelistet. (we.riseup.net/Nutzername)"
+group_members_publicly_visible_description: "Nichtmitglieder k\xC3\xB6nnen eine Liste mit Mitgliedern unter %s/DeinGruppenName einsehen. Ausserdem wird der Gruppenname auf der Profilseite eines jeden Mitglieds gelistet. (%s/Nutzername)"
 edit: bearbeiten
 phone_numbers: Telefonnummern
 requests_for_group: "Anfragen f\xC3\xBCr %s"
@@ -625,7 +625,7 @@ thursday: Donnerstag
 group_successfully_updated: Die Gruppe wurde aktualisiert.
 date_years: Jahre
 large: "gro\xC3\x9F"
-committee_publicly_visible_description: "Arbeitsgruppen k\xC3\xB6nnen von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
+committee_publicly_visible_description: "Arbeitsgruppen k\xC3\xB6nnen von Nichtmitgliedern unter %s/DeinGruppenName eingesehen werden."
 menu_link_logout: Abmelden
 description: Beschreibung
 outgoing: ausgehend
