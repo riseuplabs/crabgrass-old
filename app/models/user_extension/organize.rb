@@ -81,7 +81,8 @@ module UserExtension::Organize
         if site.network.nil?
           {}
         else
-          { :joins => :memberships,
+          { :select => "users.*",
+            :joins => :memberships,
             :conditions => ["memberships.group_id = ?", site.network.id]
           }
         end
