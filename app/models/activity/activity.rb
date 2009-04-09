@@ -21,9 +21,9 @@
 #  end
 #
 #
-# related_id and extra are used for generic storage and association, whatever 
+# related_id and extra are used for generic storage and association, whatever
 # the subclass wants to use it for.
-# 
+#
 
 class Activity < ActiveRecord::Base
 
@@ -39,10 +39,10 @@ class Activity < ActiveRecord::Base
   def set_defaults # :nodoc:
     # the key is used to filter out twin activities so that we don't show
     # duplicates. for example, if two of your friends become friends, you don't
-    # need to know about it twice. 
+    # need to know about it twice.
     self.key ||= rand(Time.now)
 
-    # sometimes the subject or object may be deleted. 
+    # sometimes the subject or object may be deleted.
     # therefor, we cache the name in case the subject or object doesn't exist.
     self.subject_name ||= self.subject.name if self.subject and self.subject.respond_to?(:name)
     self.object_name  ||= self.object.name if self.object and self.object.respond_to?(:name)
@@ -61,24 +61,46 @@ class Activity < ActiveRecord::Base
   named_scope :newest, {:order => 'created_at DESC', :limit => 10}
 
   named_scope :unique, {:group => '`key`'}
-  
-  # for current_user's dashboard
+
+  # for user's dashboard
   #
   # show all activity for:
   #
   # (1) subject is current_user
   # (2) subject is friend of current_user
-  # (3) subject is a group current_user is in. 
-  #
-  named_scope :for_dashboard, lambda {|current_user|
+  # (3) subject is a group current_user is in.
+  # (4) take the intersection with the contents of site if site.network.nil?
+  named_scope :for_dashboard, lambda {|user,site|
+    site.network.nil? ?
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-       (subject_type = 'Group' AND subject_id IN (?))",
-      current_user.id, current_user.friend_id_cache, Activity::PRIVATE,
-      current_user.all_group_id_cache
-    ]}
+       (subject_type = 'Group' AND subject_id IN (?)) ",
+      user.id,
+      user.friend_id_cache,
+      Activity::PRIVATE,
+      user.all_group_id_cache]
+    } : 
+    {:conditions => [
+      "((subject_type = 'User'  AND subject_id = ?) OR
+        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+        (subject_type = 'Group' AND subject_id IN (?)) )
+        AND
+       ((object_type = 'User'  AND object_id = ?) OR
+        (object_type = 'User'  AND object_id IN (?)) OR
+        (object_type = 'Group' AND object_id IN (?)) OR
+        (NOT object_type <=> 'User' AND NOT object_type <=> 'Group')) ",
+      user.id,
+      user.friend_id_cache & site.user_ids,
+      Activity::PRIVATE,
+      user.all_group_id_cache & site.group_ids,
+      user.id,
+      site.user_ids,
+      site.group_ids]
+    }
   }
+
+
 
   # for user's landing page
   #
@@ -91,18 +113,21 @@ class Activity < ActiveRecord::Base
   #     (AND activity.public == true)
   #
   named_scope :for_user, lambda {|user, current_user|
-    if current_user and (current_user.friend_of?(user) or current_user == user)
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access != ?",
-        user.id, Activity::PRIVATE
-      ]}
-    else
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access = ?",
-        user.id, Activity::PUBLIC
-      ]}
-    end
+   if(current_user and current_user.friend_of?(user) or current_user == user)
+     {:conditions => [
+       "subject_type = 'User' AND subject_id = ? AND access != ?",
+       user.id, Activity::PRIVATE
+     ]}
+   else
+     {:conditions => [
+       "subject_type = 'User' AND subject_id = ? AND access = ?",
+       user.id, Activity::PUBLIC
+     ]}
+   end
   }
+
+
+
 
   # for group's landing page
   #
@@ -140,7 +165,7 @@ class Activity < ActiveRecord::Base
     object = self.send(thing)
     if object
       name = object.name
-    else 
+    else
       name = self.send(thing.to_s + '_name')
       name ||= 'unknown'.t
     end
@@ -159,7 +184,7 @@ class Activity < ActiveRecord::Base
       group_type.downcase.t
     end
   end
-  
+
   ##
   ## DYNAMIC MAGIC
   ##

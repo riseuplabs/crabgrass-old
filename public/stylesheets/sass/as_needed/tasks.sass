@@ -1,0 +1,44 @@
+ul.task_list li
+  :padding 0
+  :margin 0
+  :list-style none
+  :padding 0.6em
+
+
+li
+  &.task
+    &:hover
+      :background= !box1_bg_color
+
+    &.spinning
+      :background #ffd url(/images/spinner.gif) no-repeat 0.75em 0.75em
+
+  &#add_task_link
+    :background= !box1_bg_color
+    :margin 0 4em
+    :padding 1em
+
+
+input
+  &.task_check
+    :position absolute
+    :cursor default
+
+  &.task_name
+    :font-family monospace
+    :width 100%
+
+
+ textarea.task_description
+  :font-family monospace
+  :width 100%
+
+
+div.task,  span.task
+  :margin-left 24px
+  :font-size 1.3em
+
+
+span.task_people
+  :margin-left 1em
+

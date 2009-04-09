@@ -2,16 +2,25 @@
 <h1><%= 'Edit Layout'.t %></h1>
 <% end %>
 
+<div>Select the widgets visible on your group's front page<p/></div>
+
 <%- form_tag(:controller => '/group', :action => 'edit_layout', :id => @group) do -%>
 
-  <%= select_tag ("section1", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section1'))) %>
-<br/>
-  <%= select_tag ("section2", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section2'))) %>
-<br/>  
-  <%= select_tag ("section3", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section3'))) %>
-<br/>    
-  <%= select_tag ("section4", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section4'))) %>
-
+  <b>Widget 1:</b> <%= select_tag ("section1", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section1'))) %>
+<p/>
+  <b>Widget 2:</b> <%= select_tag ("section2", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section2'))) %>
+  
+  <%- if @widgets.size > 3 %>  
+    <p/>  
+    <b>Widget 3:</b> <%= select_tag ("section3", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section3'))) %>   
+  <%- end %>
+  
+  <%- if @widgets.size > 4 %>
+     <p/>
+    <b>Widget 4:</b> <%= select_tag ("section4", options_for_select(@widgets.map {|w| [w,w]}, @group.layout('section4'))) %>
+  <%- end %>
+  
+  <p/>
   <br/>
   <input type="submit" value="Save Changes">
 <% end %>  

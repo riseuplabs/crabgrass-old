@@ -69,7 +69,7 @@ media_for_group: "%s w %s"
 medium: "\xC5\x9Bredni"
 websites: Strony internetowe
 reject_button: "odrzu\xC4\x87"
-group_publicly_visible_description: "Grupa b\xC4\x99dzie widoczna w publicznym katalogu i <i>profil</i> grupy b\xC4\x99dzie widoczny dla os\xC3\xB3b niezarejestrowanych pod adresem we.riseup.net/nazwatwojejgrupy."
+group_publicly_visible_description: "Grupa b\xC4\x99dzie widoczna w publicznym katalogu i <i>profil</i> grupy b\xC4\x99dzie widoczny dla os\xC3\xB3b niezarejestrowanych pod adresem %s/nazwatwojejgrupy."
 achive: Archiwum
 Language: "J\xC4\x99zyk"
 coordinator: Koordynator
@@ -444,7 +444,7 @@ move_page_to_different_group: "Przesu\xC5\x84 t\xC4\x85 stron\xC4\x99 do innej g
 alert_not_saved: "Zmiany nie mog\xC5\x82y zosta\xC4\x87 zapisane"
 formatting_reference_link: "formatowanie odsy\xC5\x82acza"
 created: stworzone
-group_members_publicly_visible_description: "Lista uczestniczek i uczestnik\xC3\xB3w b\xC4\x99dzie widoczna dla niezarejestrowanych pod adresem we.riseup.net/nazwatwojejgrupy. Poza tym nazwa grupy b\xC4\x99dzie wy\xC5\x9Bwietlana w profilach poszczeg\xC3\xB3lnych u\xC5\xBCytkownik\xC3\xB3w (we.riseup.net/u\xC5\xBCytkownik)."
+group_members_publicly_visible_description: "Lista uczestniczek i uczestnik\xC3\xB3w b\xC4\x99dzie widoczna dla niezarejestrowanych pod adresem %s/nazwatwojejgrupy. Poza tym nazwa grupy b\xC4\x99dzie wy\xC5\x9Bwietlana w profilach poszczeg\xC3\xB3lnych u\xC5\xBCytkownik\xC3\xB3w (%s/u\xC5\xBCytkownik)."
 group_profile_description_may_see_groups: "Pozw\xC3\xB3l ludziom na ogl\xC4\x85danie grup, kt\xC3\xB3re s\xC4\x85 cz\xC4\x99\xC5\x9Bci\xC4\x85 {group_type}."
 edit: edytuj
 view_slideshow: "Obejrzyj Pokaz Slajd\xC3\xB3w"
@@ -635,7 +635,7 @@ thursday: Czwartek
 group_successfully_updated: "Strona grupy zosta\xC5\x82a zaktualizowana."
 date_years: lata
 large: "powi\xC4\x99ksz"
-committee_publicly_visible_description: "Komitety b\xC4\x99d\xC4\x85 widoczne dla zalogowanych os\xC3\xB3b pod adresem we.riseup.net/nazwatwojejgrupy"
+committee_publicly_visible_description: "Komitety b\xC4\x99d\xC4\x85 widoczne dla zalogowanych os\xC3\xB3b pod adresem %s/nazwatwojejgrupy"
 menu_link_logout: Wyloguj
 description: opis
 reject: "odrzu\xC4\x87"

@@ -41,6 +41,7 @@ class AccountController < ApplicationController
       else
         session[:language_code] = previous_language
       end
+      current_site.add_user!(current_user) unless current_site.network.nil? or current_site.users.include?(current_user)
       redirect_to params[:redirect] || {:controller => '/me/dashboard', :action => 'index'}
     else
       flash_message :title => "Could not log in"[:login_failed],
@@ -49,6 +50,8 @@ class AccountController < ApplicationController
   end
 
   def signup
+    redirect_to current_site.signup_redirect_url unless current_site.signup_redirect_url.nil?
+
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})
     return unless request.post?
 
@@ -61,6 +64,7 @@ class AccountController < ApplicationController
     @user.save!
     session[:signup_email_address] = nil
     self.current_user = @user
+    current_site.add_user!(current_user)
     send_welcome_message(current_user)
     redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
     flash_message :title => 'Registration successful'[:signup_success],

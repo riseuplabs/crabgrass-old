@@ -1,0 +1,9 @@
+gerrard_to_blue:
+  id: 3
+  user_id: 3
+  discussion_id: 3
+  body: "Hi Blue, Just testing messages."
+  body_html: "Hi Blue, Just testing messages."
+<% updated = created = rand(46080) %>
+  updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
+  created_at: "<%= 10.minutes.ago.to_s(:db) %>"

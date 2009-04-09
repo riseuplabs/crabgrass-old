@@ -3,11 +3,18 @@ class NetworksController < GroupsController
   def index() redirect_to(:action => 'list') end
 
   def list
-    @networks = Network.visible_by(current_user).paginate(:all, :page => params[:page], :order => 'full_name')
+    letter_page = params[:letter] || ''
+    
+    @networks = Network.visible_on(current_site).visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+
+    # get the starting letters of all networks
+    networks_with_names = Network.visible_on(current_site).visible_by(current_user).names_only
+    @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
   def create
     @group_type = 'network'
+
     if request.get?
       @group = Network.new(params[:group])
     elsif request.post?
@@ -20,9 +27,13 @@ class NetworksController < GroupsController
       else
         @group.add_user!(current_user)
       end
+      current_site.network.add_group!(@group) unless current_site.network.nil?
       flash_message :success => '%s was successfully created.'.t % 'Network'.t
       redirect_to url_for_group(@group)
     end
+  rescue PermissionDenied => exc
+    flash_message :exception => exc
+    redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
   rescue Exception => exc
     @group = exc.record
     flash_message :exception => exc

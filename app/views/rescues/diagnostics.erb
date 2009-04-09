@@ -4,7 +4,7 @@
     in <%=h request.parameters['controller'].humanize %>Controller<% if request.parameters['action'] %>#<%=h request.parameters['action'] %><% end %>
   <% end %>
 </h1>
-<pre><%=h @exception.clean_message %></pre>
+<pre><%=h exception_detailed_message(@exception) %></pre>
 
 <%= render_file(rescues_path("_trace"), false) %>
 

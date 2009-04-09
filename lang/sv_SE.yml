@@ -161,7 +161,7 @@ create_page_headline: Skapa en ny {page_class}
 my_settings: "Inst\xC3\xA4llningar f\xC3\xB6r {user}"
 group_information: "Information f\xC3\xB6r :group_type"
 all_people: alla personer
-committee_publicly_visible_description: "Kommitt\xC3\xA9er kan ses av ickemedlemmar p\xC3\xA5 we.riseup.net/gruppnamn"
+committee_publicly_visible_description: "Kommitt\xC3\xA9er kan ses av ickemedlemmar p\xC3\xA5 %s/gruppnamn"
 footer_text_crabgrass: |-
   <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
   <ul>
@@ -202,7 +202,7 @@ coordinating_council_description: "Medlemmar i den h\xC3\xA4r kommitt\xC3\xA9n h
 add_existing_image: "L\xC3\xA4gg till existerande bild"
 image_count_total: ":count bilder"
 general_info: "Allm\xC3\xA4n information"
-group_publicly_visible_description: "Gruppen framtr\xC3\xA4der i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar p\xC3\xA5 we.riseup.net/gruppnamn."
+group_publicly_visible_description: "Gruppen framtr\xC3\xA4der i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar p\xC3\xA5 %s/gruppnamn."
 descriptions: Beskrivningar
 location_city: stad
 my_requests_headline: "Mina f\xC3\xB6rfr\xC3\xA5gningar"
@@ -235,7 +235,7 @@ already_contacts_info: "Du \xC3\xA4r redan den h\xC3\xA4r personens kontakt."
 approve: bifall
 group: Grupp
 alert_field_errors: "N\xC3\xA5got \xC3\xA4r fel med f\xC3\xB6ljande f\xC3\xA4lt"
-group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar p\xC3\xA5 we.riseup.net/gruppnamn. Dessutom syns gruppens namn i en lista p\xC3\xA5 varje medlems profilsida (we.riseup.net/anv\xC3\xA4ndarnamn)"
+group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar p\xC3\xA5 %s/gruppnamn. Dessutom syns gruppens namn i en lista p\xC3\xA5 varje medlems profilsida (%s/anv\xC3\xA4ndarnamn)"
 Highest_Contributors: "Fr\xC3\xA4msta bidragare"
 close_button: "St\xC3\xA4ng"
 menu_home: Hem

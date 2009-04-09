@@ -158,6 +158,7 @@ module UserExtension::Sharing
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
 
+    
     ## add users to page
     users.each do |user|
       if self.share_page_with_user!(page, user, options)
@@ -165,6 +166,7 @@ module UserExtension::Sharing
       end
     end
 
+    
     ## add groups to page
     groups.each do |group|
       users_to_pester = self.share_page_with_group!(page, group, options)

@@ -142,6 +142,26 @@ module ErrorHelper
     end
   end
 
-
+  def exception_detailed_message(exception)
+    message = exception.clean_message
+    file, line = exception.backtrace.first.split(":")[0, 2]
+    if File.exists?(file)
+      message << "\n\n"
+      code = File.readlines(file)
+      line = line.to_i
+      min = [line - 2, 0].max
+      max = line + 2
+      (min..max).each do |n|
+        if n == line
+          message << "=> "
+        else
+          message << "   "
+        end
+        message << ("%4d" % n)
+        message << code[n]
+      end
+    end
+    message
+  end
 end
 

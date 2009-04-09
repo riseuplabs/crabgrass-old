@@ -1,0 +1,14 @@
+<table class="pretty">
+  <tbody>
+  <tr>
+    <th>Name</th>
+    <th>Default value</th>
+  </tr>
+  <% @variables.each do |k, v| %>
+  <tr>
+    <td><%= k %></td>
+    <td><%= v %></td>
+  </tr>
+  <tbody>
+  <% end %>
+</table>

@@ -108,6 +108,13 @@ class RankedVotePageController < BasePageController
     redirect_to page_url(@page)
   end
 
+  def print
+    array_of_votes, @who_voted_for = build_vote_arrays    
+    @result = BordaVote.new( array_of_votes ).result
+    @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+    
+    render :layout => "printer-friendly"
+  end
   protected
 
   # returns:
@@ -173,6 +180,9 @@ class RankedVotePageController < BasePageController
 
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.value_by_user(current_user) }
   end
-  
+
+  def setup_view
+    @show_print = true
+  end  
 end
 

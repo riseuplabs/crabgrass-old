@@ -3,7 +3,7 @@
 <div class='wiki'>
   <%# render :partial => 'wiki_edit_controls' if @wiki.body_html.length > 3000 and current_user.may? :edit, @page%>
   <div id='wiki_html'>
-    <%= @wiki.body_html %>
+    <%= @wiki_html %>
   </div>
   <br style='clear:both' />
   <%# render :partial => 'wiki_edit_controls', :locals => {:access_keys => true} if current_user.may? :edit, @page %>

@@ -51,7 +51,7 @@ media_for_group: "%s in %s"
 medium: medium
 coordinator: Coordinatore
 reject_button: rifiuta
-group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo we.riseup.net/nomedeltuogruppo."
+group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo %s/nomedeltuogruppo."
 Language: Lingua
 delete_version_confirm: Sei sicuro/a di voler eliminare questa versione?
 websites: Siti Web
@@ -344,7 +344,7 @@ signup_password: La tua password
 alert_not_saved: Impossibile salvare le modifiche apportate
 formatting_reference_link: riferimenti per la formattazione
 created: creato
-group_members_publicly_visible_description: "I membri non sono visibili dai non membri a we.riseup.net/nomedeltuogruppo. Inoltre, il nome del gruppo sar\xC3\xA0 elencato nella pagina del profilo di ogni membro (all'indirizzo we.riseup.net/nomeutente)"
+group_members_publicly_visible_description: "I membri non sono visibili dai non membri a %s/nomedeltuogruppo. Inoltre, il nome del gruppo sar\xC3\xA0 elencato nella pagina del profilo di ogni membro (all'indirizzo %s/nomeutente)"
 edit: modifica
 phone_numbers: Numeri di Telefono
 view_slideshow: Vedi Presentazione
@@ -492,7 +492,7 @@ to: a
 menu_link_logout: Disconnetti
 group_successfully_updated: Gruppo aggiornato con successo.
 large: grande
-committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo we.riseup.net/nomedeltuogruppo
+committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo %s/nomedeltuogruppo
 thursday: "Gioved\xC3\xAC"
 description: descrizione
 reject: rifiuta

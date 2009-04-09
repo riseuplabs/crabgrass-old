@@ -1,7 +1,7 @@
 <tr>
   <td><%= link_to_user membership.user, :avatar => 'small' %></td>
   <td><%= friendly_date membership.created_at %></td>
-  <% if @site.tracking %>
+  <% if current_site.tracking %>
   <td><%= friendly_date membership.visited_at %></td>
   <td><%= membership.total_visits %></td>
   <% end %>

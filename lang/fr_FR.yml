@@ -63,7 +63,7 @@ media_for_group: "%s dans %s"
 medium: moyenne
 websites: sites web
 reject_button: rejeter
-group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 we.riseup.net/yourgroupname."
+group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 %s/yourgroupname."
 Language: Langue
 coordinator: Coordinateur
 delete_version_confirm: "\xC3\x8Ates-vous certain de vouloir supprimer cette version ?"
@@ -371,7 +371,7 @@ move_page_to_different_group: "D\xC3\xA9placer cette page dans un autre groupe"
 alert_not_saved: "Les modifications ne peuvent \xC3\xAAtre sauvegard\xC3\xA9es"
 formatting_reference_link: "Formatage de r\xC3\xA9f\xC3\xA9rence"
 created: "cr\xC3\xA9\xC3\xA9"
-group_members_publicly_visible_description: "Les membres sont visibles des non-membres \xC3\xA0 we.riseup.net/yourgroupname. De m\xC3\xAAme, le nom du groupe sera list\xC3\xA9 sur chaque profil des membres (we.riseup.net/username)"
+group_members_publicly_visible_description: "Les membres sont visibles des non-membres \xC3\xA0 %s/yourgroupname. De m\xC3\xAAme, le nom du groupe sera list\xC3\xA9 sur chaque profil des membres (%s/username)"
 edit: "\xC3\xA9diter"
 view_slideshow: Voir le diaporama
 video: "vid\xC3\xA9o"
@@ -552,7 +552,7 @@ thursday: Jeudi
 group_successfully_updated: "Le groupe est mis \xC3\xA0 jour."
 date_years: "ann\xC3\xA9es"
 large: grande
-committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 we.riseup.net/yourgroupname"
+committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 %s/yourgroupname"
 menu_link_logout: "D\xC3\xA9connexion"
 description: description
 outgoing: Sortant

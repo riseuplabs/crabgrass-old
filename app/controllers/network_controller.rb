@@ -5,6 +5,11 @@ class NetworkController < GroupController
   end
 
   def show
+    #if @group == current_site.network
+    #  clear_context
+    #  return render(:template => 'dispatch/not_found',
+    #                :status => (logged_in? ? 404 : 401))
+    #end
     super
     if @group
       # there might not be @group if the profile is hidden

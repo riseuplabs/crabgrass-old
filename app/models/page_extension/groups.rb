@@ -62,9 +62,26 @@ module PageExtension::Groups
   end
 
   # returns all the groups with a particular access level
+  # - use option :all for all the accesslevels
+  # --
+  #   TODO
+  #   what is the purpose of this method? 
+  #
+  #   i think it can be removed.
+  #
+  #   also, page.groups_with_access(:all) will always be equal to page.groups
+  #   groups don't have a group_participation record unless they have been
+  #   granted access (unlike user_participation records)
+  #
+  #   -elijah
+  # --
   def groups_with_access(access)
     group_participations.collect do |gpart|
-      gpart.group if gpart.access == ACCESS[access]
+      if access == :all
+        gpart.group if ACCESS.include?(gpart.access)
+      else  
+        gpart.group if gpart.access == ACCESS[access]
+      end  
     end.compact
   end
 
@@ -96,7 +113,7 @@ module PageExtension::Groups
 
       sql = "SELECT MONTH(pages.#{field}) AS month, YEAR(pages.#{field}) AS year, count(pages.id) as page_count "
       sql += "FROM pages JOIN page_terms ON pages.id = page_terms.page_id "
-      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) " % access_filter
+      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) AND pages.flow IS NULL " % access_filter
       sql += "GROUP BY year, month ORDER BY year, month"
       Page.connection.select_all(sql)
     end

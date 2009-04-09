@@ -105,7 +105,7 @@ class BasePageController < ApplicationController
   after_filter :update_view_count
   def update_view_count
     return true unless @page and @page.id
-    if @site.tracking
+    if current_site.tracking
       Tracking.insert_delayed(:page => @page, :group => @group, :user => current_user)
     else
       Tracking.insert_delayed(:page => @page)
@@ -116,7 +116,7 @@ class BasePageController < ApplicationController
   def setup_default_view
     if request.get?
       setup_view        # allow subclass to override view defaults
-      @show_posts       = action?(:show) if @show_posts.nil?
+      @show_posts       = action?(:show) || action?(:print) if @show_posts.nil?
       @show_attachments = true           if @show_attachments.nil?
       @show_tags        = true           if @show_tags.nil? 
       @html_title       = @page.title    if @page && @html_title.nil?

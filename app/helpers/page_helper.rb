@@ -358,12 +358,44 @@ module PageHelper
     end
   end
 
+  #
+  # Sometimes we want to divide a list of time ordered +pages+
+  # into several collections by recency.
+  #
+  def divide_pages_by_recency(pages)
+    today = []; yesterday = []; week = []; later = [];
+    pages = array_of_pages(pages).dup
+    page = pages.shift
+    while page and after_day_start?(page.updated_at)
+      today << page
+      page = pages.shift
+    end
+    while page and after_yesterday_start?(page.updated_at)
+      yesterday << page
+      page = pages.shift
+    end
+    while page and after_week_start?(page.updated_at)
+      week << page
+      page = pages.shift
+    end
+    # unless today.size + yesterday.size + week.size > 0
+    #   show_time_dividers = false
+    # else
+    while page
+      later << page
+      page = pages.shift
+    end
+    # end
+
+    return today, yesterday, week, later
+  end
+
   ######################################################
   ## FORM HELPERS
 
   ## options for a page type dropdown menu
   def options_for_select_page_type(default_selected)
-    array = @site.available_page_types.collect do |page_class_string|
+    array = current_site.available_page_types.collect do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
       page_group = page_class.class_group.first
       [page_group.pluralize.t, page_group]

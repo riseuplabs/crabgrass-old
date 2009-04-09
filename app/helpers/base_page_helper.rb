@@ -262,14 +262,14 @@ module BasePageHelper
      popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table_16', :controller => 'participation')
   end
 
-  def page_class
-    @page.class_display_name.t.capitalize
-  end
-
   def select_page_access(name, options={})
     selected = options[:selected]
-    # i found this assignment here, but it doesn't seem to make any sense to me
-    selected ||= params[:name]
+
+    # other mysterious code that was here at some time
+    # not sure what these did
+    # selected ||= params[:name]
+    # selected = params[name]
+
     options = {:blank => true, :expand => false}.merge(options)
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]
@@ -284,6 +284,11 @@ module BasePageHelper
       select_tag name, options_for_select(select_options, selected)
     end
   end
+
+  def page_class
+    @page.class_display_name.t.capitalize
+  end
+
   
   def select_page_owner(_erbout)
     owner_name = @page.owner ? @page.owner.name : ''

@@ -73,6 +73,17 @@ class Asset < ActiveRecord::Base
     end
     true
   end
+ 
+#
+# SITES
+#
+#############################  
+  
+  # returns true if self is part of the given network
+  # [TODO] make this work with assets without page
+  def belongs_to_network?(network)
+    return true if self.page && self.page.groups.include?(network)
+  end
   
   def participation_for_groups ids
     gparts = self.page.participation_for_groups(ids)

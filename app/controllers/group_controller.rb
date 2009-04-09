@@ -92,10 +92,12 @@ class GroupController < ApplicationController
   def tasks
     @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
+    render :action => "print_tasks", :layout => false  if params[:print]
   end
 
   # login required
   def edit
+    @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
   end
 
   # login required
@@ -200,7 +202,7 @@ class GroupController < ApplicationController
   
   @@additional_tools = ["chat"]
   def edit_tools   
-    @available_tools = @site.available_page_types + @@additional_tools
+    @available_tools = current_site.available_page_types + @@additional_tools
     if request.post?
       @group.group_setting.allowed_tools = []
       @available_tools.each do |p|
@@ -302,6 +304,14 @@ class GroupController < ApplicationController
   
   def find_group
     @group = Group.find_by_name params[:id] if params[:id]
+
+    # find the profile visible by current user
+    profile = logged_in? && @group && @group.profiles.visible_by(current_user)
+    if profile
+      # make the group invisible if they can't see it
+      @group = nil unless profile.may_see?
+    end
+
     true
   end
 
@@ -311,7 +321,7 @@ class GroupController < ApplicationController
 
   @@non_members_post_allowed = %w(archive tags tasks search)
   @@non_members_get_allowed = %w(show members search discussions) + @@non_members_post_allowed
-  @@admin_only = %w(update, edit_tools) 
+  @@admin_only = %w(update, edit_tools, edit_layout) 
    
   def authorized?
     if request.get? and @@non_members_get_allowed.include? params[:action]
@@ -327,7 +337,7 @@ class GroupController < ApplicationController
 
   after_filter :update_view_count
   def update_view_count
-    Tracking.insert_delayed(:group => @group, :user => current_user) if @site.tracking
+    Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking
   end
 
   # called when we don't want to let on that a group exists

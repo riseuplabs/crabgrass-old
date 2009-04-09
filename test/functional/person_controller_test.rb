@@ -5,11 +5,12 @@ require 'person_controller'
 class PersonController; def rescue_action(e) raise e end; end
 
 class PersonControllerTest < Test::Unit::TestCase
-  fixtures :users, :pages
+  fixtures :users, :pages, :sites
   
   def setup
     @controller = PersonController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
     
     #Page.all.each {|p| p.update_page_terms}

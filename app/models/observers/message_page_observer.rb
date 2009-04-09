@@ -3,8 +3,8 @@
 class MessagePageObserver < ActiveRecord::Observer
 
   def after_save(message_page)
-    message_page.users.each do |name|
-      unless name == message_page.created_by
+    message_page.users.each do |user|
+      unless user == message_page.updated_by
         # if you want only the first message to create an activity 
         # uncomment the following:
         # if activity = MessagePageActivity.find_page(message_page.id)
@@ -13,7 +13,7 @@ class MessagePageObserver < ActiveRecord::Observer
         #   key = rand(Time.now)
         # end
         key = rand(Time.now)
-        MessagePageActivity.create!(:user => name,
+        MessagePageActivity.create!(:user => user,
                                     :other_user => message_page.created_by,
                                     :related_id => message_page.id,
                                     :key => key)

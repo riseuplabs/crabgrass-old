@@ -37,7 +37,7 @@ class WikiController < ApplicationController
     begin
       @wiki.smart_save!(:body => params[:body], 
         :user => current_user, :version => params[:version])
-      @wiki.unlock(current_user)
+      @wiki.unlock if @wiki.locked_by?(current_user)
       @wiki.render_html{|body| render_wiki_html(body, @group.name)}
     rescue Exception => exc
       @message = exc.to_s
@@ -47,8 +47,8 @@ class WikiController < ApplicationController
   
   # unlock everything and show the rendered wiki
   def done
-    @private.unlock(current_user)
-    @public.unlock(current_user)
+    @private.unlock if @private.locked_by?(current_user)
+    @public.unlock if @public.locked_by?(current_user)
     
     if @private.body.nil? or @private.body == ''
       @wiki = @public

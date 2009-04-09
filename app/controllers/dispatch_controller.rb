@@ -39,10 +39,12 @@ class DispatchController < ApplicationController
 
   def dispatch
     begin
+      flash.keep
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       @user = current_user
-      @site = Site.default
+      # the filter chain is not run, but we need to have the site
+      fetch_site
       set_language do
         render :action => "not_found", :status => :not_found
       end

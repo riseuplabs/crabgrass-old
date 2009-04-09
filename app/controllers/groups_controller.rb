@@ -7,23 +7,27 @@ class GroupsController < ApplicationController
 
   def index
     user = logged_in? ? current_user : nil
-    @groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
+
+     # TODO maybe create a cache for all the site's groups?
+     @groups = Group.visible_on(current_site).visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
   end
 
   def directory
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-    @groups = Group.visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
+    @groups = Group.visible_on(current_site).visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
 
+    # WOW, this is incredibly expensive
     # get the starting letters of all groups
-    groups_with_names = Group.visible_by(user).only_groups.names_only
-    @pagination_letters = groups_available_pagination_letters(groups_with_names)
+    groups_with_names = Group.visible_on(current_site).visible_by(user).only_groups.names_only
+    @pagination_letters = Group.pagination_letters_for(groups_with_names)
   end
 
   def my
-    @groups = current_user.groups.alphabetized('')
+    @groups = current_user.groups.visible_on(current_site).alphabetized('').paginate(:all, :page => params[:page])
     @groups.each {|g| g.display_name = g.parent.display_name + "+" + g.display_name if g.committee?}
+    ## ^^^ I THINK THIS IS A HORRIBLE AND HACKY WAY TO DO THIS -elijah
   end
 
   # login required
@@ -31,6 +35,7 @@ class GroupsController < ApplicationController
     @group_class = get_group_class
     @group_type = @group_class.to_s.downcase
     @parent = get_parent
+
     if request.get?
       @group = @group_class.new(params[:group])
     elsif request.post?
@@ -38,12 +43,16 @@ class GroupsController < ApplicationController
         group.avatar = Avatar.new
         group.created_by = current_user
       end
+
+      # network - binding
+      current_site.network.groups << @group unless current_site.network.nil?
+
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.add_user!(current_user)
       @parent.add_committee!(@group, params[:group][:is_council] == "true" ) if @parent
 
       add_council if params[:add_council] == "true"
-      
+
       redirect_to url_for_group(@group)
     end
   rescue Exception => exc
@@ -81,7 +90,7 @@ class GroupsController < ApplicationController
   end
 
   def add_council
-    debugger
+    # publicly_visible_X is deprecated in favor of the profile.
     council_params = {
       :short_name => @group.short_name + '_admin',
       :full_name => @group.full_name + ' Admin',
@@ -95,20 +104,8 @@ class GroupsController < ApplicationController
       c.avatar = Avatar.new
       c.created_by = current_user
     end
-      
-    @council.add_user!(current_user)
-    
+    @council.add_user!(current_user)    
     @group.add_committee!(@council, true)
-  end
-
-  def groups_available_pagination_letters(groups)
-    pagination_letters = []
-    groups.each do |g|
-      pagination_letters << g.full_name.first.upcase if g.full_name
-      pagination_letters << g.name.first.upcase if g.name
-    end
-
-    return pagination_letters.uniq!
   end
 
 end

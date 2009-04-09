@@ -5,11 +5,12 @@ require 'contact_controller'
 class ContactController; def rescue_action(e) raise e end; end
 
 class ContactControllerTest < Test::Unit::TestCase
-  fixtures :users, :contacts
+  fixtures :users, :contacts, :sites
   
   def setup
     @controller = ContactController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

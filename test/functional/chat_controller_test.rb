@@ -5,11 +5,12 @@ require 'chat_controller'
 class ChatController; def rescue_action(e) raise e end; end
 
 class ChatControllerTest < Test::Unit::TestCase
-  fixtures :users, :groups, :memberships
+  fixtures :users, :groups, :memberships, :sites
 
   def setup
     @controller = ChatController.new
     @request    = ActionController::TestRequest.new
+    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

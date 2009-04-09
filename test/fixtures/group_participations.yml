@@ -21,27 +21,32 @@ srand(314159265359)
 
 <% for i in 1..40 %>
 grouppage_<%=i%>:
+  id: <%= i %>
   page_id: <%= rand(99)+1 %>
   group_id: <%= rand(3)+1 %>
   access: 1
 <% end %>
 
 rainbow_tasklist:
+  id: 41
   page_id: 201
   group_id: 3
   access: 1
 
 animals_asset1:
+  id: 42
   page_id: 211
   group_id: 2
   access: 1
 
 animals_asset2:
+  id: 43
   page_id: 212
   group_id: 2
   access: 1
 
 animals_asset3:
+  id: 44
   page_id: 213
   group_id: 2
   access: 1

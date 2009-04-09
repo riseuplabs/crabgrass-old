@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+---
+default_appearance:
+  id: 1
+  admin_group_id: 1
+  parameters:
+    box1_bg_color: "#eeeeef"
+localhost_appearance:
+  id: 2
+  admin_group_id: 31
+  parameters:
+    box1_bg_color: "#eeeeed"
+# one:
+#   column: value
+#
+# two:
+#   column: value

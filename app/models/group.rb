@@ -1,18 +1,22 @@
 =begin
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.string   "full_name"
-    t.string   "summary"
-    t.string   "url"
-    t.string   "type"
-    t.integer  "parent_id"
-    t.integer  "council_id"
-    t.boolean  "is_council"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "avatar_id"
-    t.string   "style"
-  end
+create_table "groups", :force => true do |t|
+  t.string   "name"
+  t.string   "full_name"
+  t.string   "summary"
+  t.string   "url"
+  t.string   "type"
+  t.integer  "parent_id",  :limit => 11
+  t.integer  "council_id", :limit => 11
+  t.datetime "created_at"
+  t.datetime "updated_at"
+  t.integer  "avatar_id",  :limit => 11
+  t.string   "style"
+  t.string   "language",   :limit => 5
+  t.integer  "version",    :limit => 11, :default => 0
+  t.boolean  "is_council",               :default => false
+  t.integer  "min_stars",  :limit => 11, :default => 1
+  t.integer  "site_id",    :limit => 11
+end
 
   associations:
   group.children   => groups
@@ -22,6 +26,21 @@
 =end
 
 class Group < ActiveRecord::Base
+
+  # returns true if self is part of a specific network
+  def belongs_to_network?(network)
+    ( self.networks.include?(network) or 
+      self == network )
+  end
+  
+  named_scope :visible_on, lambda { |site| 
+    site.network.nil? ? 
+      {} :
+      { :conditions => ["groups.id IN (?) OR groups.parent_id IN (?)",
+        site.network.group_ids, site.network.group_ids] }
+  }
+  
+  
   attr_accessible :name, :full_name, :short_name, :summary, :language
 
    # not saved to database, just used by activity feed:
@@ -392,7 +411,17 @@ class Group < ActiveRecord::Base
       end
     end
   end
-    
+
+  def self.pagination_letters_for(groups)
+    pagination_letters = []
+    groups.each do |g|
+      pagination_letters << g.full_name.first.upcase if g.full_name
+      pagination_letters << g.name.first.upcase if g.name
+    end
+
+    return pagination_letters.uniq!
+  end
+
   # Returns a list of group ids for the page namespace of every group id
   # passed in. wtf does this mean? for each group id, we get the ids
   # of all its relatives (parents, children, siblings).
@@ -422,8 +451,6 @@ class Group < ActiveRecord::Base
   ######################################################
   ## temp stuff for profile transition
   ## should be removed eventually
-    
-
   def publicly_visible_group
     profiles.public.may_see?
   end

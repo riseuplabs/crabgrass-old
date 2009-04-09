@@ -8,7 +8,7 @@
     t.class 'page_url'
   end
   if logged_in? and current_user.may?(:edit, @page)
-    if !@locked_for_me
+    if !locked_for_me?
       f.tab do |t|
         t.label "Edit"[:edit]
         t.url page_url(@page,:action=>'edit')
