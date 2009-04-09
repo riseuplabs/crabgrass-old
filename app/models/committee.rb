@@ -32,6 +32,7 @@ class Committee < Group
   # called when the parent's name has change
   def parent_name_changed
     self.name = short_name
+    self.save
   end
 
   # custom name setter so that we can ensure that the parent's
