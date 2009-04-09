@@ -16,7 +16,21 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td><%= text_field_with_auto_complete :recipient, :name, {:style=>'width:100%'}, {:url => {:controller => 'base_page/share', :action => 'auto_complete_for_recipient_name', :page_id => @page ? @page.id : 44 }, :after_update_element => after_update_function} %></td>
+    <td>
+      <%= text_field_with_auto_complete(
+            :recipient,
+            :name,
+            {:style=>'width:100%'},
+            {
+              :url => {
+                 :controller => 'base_page/share',
+                 :action => 'auto_complete_for_recipient_name'
+              },
+              :after_update_element => after_update_function,
+              :skip_style => true
+            }
+      ) %>
+    </td>
     <td>&nbsp;</td>
     <td>
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>

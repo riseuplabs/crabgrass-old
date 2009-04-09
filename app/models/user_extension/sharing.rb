@@ -57,37 +57,6 @@ module UserExtension::Sharing
     participation
   end
 
-  ## called only by add_page
-  def update_participation(participation, part_attrs)
-    if part_attrs[:notice]        
-      part_attrs[:viewed] = false
-      if participation.notice
-        if repeat_notice?(participation.notice, part_attrs[:notice])
-          part_attrs[:notice] = participation.notice # don't repeat
-        else
-          part_attrs[:notice] += participation.notice
-        end
-      end
-    end
-    participation.attributes = part_attrs
-  end
-  ## called only by update_participation
-  def repeat_notice?(current_notices, new_notice)
-    new_notice = new_notice.first
-    current_notices.detect do |notice|
-      notice[:message] == new_notice[:message] and notice[:user_login] == new_notice[:user_login]
-    end
-  end
-  ## called only by add_page
-  def build_participation(page, part_attrs)
-    # user_participations.build doesn't update the pages.users
-    # until it is saved. If you need an updated users list, then
-    # use user_participations directly.
-    page.user_participations.build(part_attrs.merge(
-      :page_id => page.id, :user_id => id,
-      :resolved => page.resolved?))
-  end
-
   # remove self from the page.
   # only call by page.remove(user)    
   def remove_page(page)
@@ -152,10 +121,15 @@ module UserExtension::Sharing
   ##
 
   # valid options:
-  #  :access -- one of nil, :admin, :edit, :view, :none (:none will remove access)
-  #  :grant_access -- like :access, but is only used to improve access, not remove it.
-  #  :message -- text message to send
-  #  :send_emails -- true or false. send email to recipients?
+  #
+  #  :access         -- one of nil, :admin, :edit, :view, :none
+  #                     (:none will remove access)
+  #  :grant_access   -- like :access, but is only used to improve access, not remove it.
+  #  :message        -- text message to send
+  #  :send_notice    -- if true, a notification is put in the recipient's crabgrass inbox.
+  #  :send_email     -- if true, send email notification
+  #  :send_sms       -- if true, send sms notification
+  #  :mailer_options -- the controller sets this with mailer_options() method.
   #
   # The needed user_participation and group_partication objects will get saved
   # unless page is modified, in which case they will not get saved.
@@ -171,17 +145,18 @@ module UserExtension::Sharing
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
+
+    if recipients.is_a? Hash
+      # recipients is in the form 
+      # {"red"=>{"access"=>"admin"}, "yellow"=>{"access"=>"admin"}, "gerrard"=>{"access"=>"admin"}}
+      recipients.each_pair do |recipient,local_options|
+        share_page_with!(page,recipient,options.merge(local_options))
+      end
+      return
+    end
     
-    # wbere do we use options[:notify]? and if we'd use it it should be options[:send_to_inbox]
-    options[:notify] = true if options[:message] or options[:send_emails]
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
-                                              # you cannot pass them if you delete them
-    notify         = options[:send_to_inbox]         # options.delete(:notify)
-    send_via_email = options[:send_via_email]    # options.delete(:send_emails)
-    send_only_with_encryption = options[:send_only_with_encryption]
-    mailer_options = options[:mailer_options] # options.delete(:mailer_options)
-    message        = options[:message]
 
     ## add users to page
     users.each do |user|
@@ -204,53 +179,14 @@ module UserExtension::Sharing
     # end
 
     ## send notification emails
-    ## [NOTE] there is no support for secure email in the moment
-    if send_via_email and mailer_options and !send_only_with_encryption
+    if options[:send_notice] and options[:send_email] and options[:mailer_options]
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_share_notice(user, message, mailer_options)
+        Mailer.deliver_share_notice(user, options[:message], options[:mailer_options])
       end
     end
   end
 
-  
-# share with a collection of recipients with different options
-# expects a hash with the recipients and their selected options
-def share_page_by_options!(page, options_with_recipients, global_options={ })
-  #  options_with_recipients = collect_recipients_by_options(recipients_with_options) # in controller now
-  options_with_recipients.each_pair do |options,recipients|
-    recipients.each do |recipient|
-      self.share_page_with!(page,recipient,options.merge(global_options))
-    end
-  end
-end
-
-=begin
-#outdated
-
-# collects all the recipients with the same options,
-# so that we can still use the User.share_with!
-def collect_recipients_by_options(recipients_with_options)
-  
-  options_with_recipients = {}
-   recipients_with_options.each_pair do |k,v|
-    #raise v.inspect
-   #
-   # this should be nonsense:
-   #
-   # new_options = true
-   # options_with_recipients.keys.each do |o|
-     #   new_options = false if(v==o)
-    # end
-    # options << v if new_options
-    options_with_recipients[v] ||= []
-    options_with_recipients[v] << k.to_sym
-  end
-  return options_with_recipients
-end
-=end
-  
-  
   # just like share_page_with, but don't do any actual sharing, just
   # raise an exception of there are any problems with sharing.
   def may_share_page_with!(page,recipients,options)
@@ -278,7 +214,7 @@ end
     attrs = {}
     
     # send to inbox if send_to_inbox is true
-    if options[:send_to_inbox]
+    if options[:send_notice]
       attrs[:inbox] = true
     end
     
@@ -287,15 +223,10 @@ end
       attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
     end
     
-
-    # if an access level is given (and not nil), we set it
-    if options.key?(:access)
-       # TODO: why is there no user.may? here?
+    if options[:access]
       attrs[:access] = options[:access]
     elsif options[:grant_access]
-      unless user.may?(options[:grant_access], page)
-        attrs[:grant_access] = options[:grant_access]
-      end
+      attrs[:grant_access] = options[:grant_access]
     end
 
     upart = page.add(user, attrs)
@@ -304,10 +235,10 @@ end
 
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
-    if options.key?(:access) # might be nil
+    if options[:access]
       gpart = page.add(group, :access => options[:access])
     else
-      options[:grant_access] ||= nil #:view
+      options[:grant_access] ||= :view
       gpart = page.add(group, :grant_access => options[:grant_access])
     end
     gpart.save! unless page.changed?
@@ -316,7 +247,7 @@ end
 
     attrs = {}
     users_to_pester = []
-    if options[:notify]
+    if options[:send_notice]
       attrs[:inbox] = true
       users_to_pester = group.users.select do |user|
         self.may_pester?(user)
@@ -364,5 +295,42 @@ end
     end
   end
 
+
+  ##
+  ## PRIVATE METHODS
+  ## 
+
+  ## called only by add_page
+  def update_participation(participation, part_attrs)
+    if part_attrs[:notice]        
+      part_attrs[:viewed] = false
+      if participation.notice
+        if repeat_notice?(participation.notice, part_attrs[:notice])
+          part_attrs[:notice] = participation.notice # don't repeat
+        else
+          part_attrs[:notice] += participation.notice
+        end
+      end
+    end
+    participation.attributes = part_attrs
+  end
+
+  ## called only by update_participation
+  def repeat_notice?(current_notices, new_notice)
+    new_notice = new_notice.first
+    current_notices.detect do |notice|
+      notice[:message] == new_notice[:message] and notice[:user_login] == new_notice[:user_login]
+    end
+  end
+
+  ## called only by add_page
+  def build_participation(page, part_attrs)
+    # user_participations.build doesn't update the pages.users
+    # until it is saved. If you need an updated users list, then
+    # use user_participations directly.
+    page.user_participations.build(part_attrs.merge(
+      :page_id => page.id, :user_id => id,
+      :resolved => page.resolved?))
+  end
 
 end

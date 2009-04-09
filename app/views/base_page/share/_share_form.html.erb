@@ -12,24 +12,27 @@
   <div class='fieldset'>
     <table class='notify_page_recipients'>
     <tr>
-      <td><%= check_box :notification, :send_to_inbox, :onclick => "checkbox_toggle_visibility(this, 'notification_details')" %></td>
-      <td><label for='notification_send_to_inbox'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
+      <td><%= check_box :notification, :send_notice, {:onclick => "checkbox_toggle_visibility(this, 'notification_details')"} %></td>
+      <td><label for='notification_send_notice'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
     </tr>
     <tbody id='notification_details' style='display:none'>
     <tr>
       <td></td>
       <td>
 	      <%= 'Send additional notification via'[:share_additional_notification] %>:
-	      <label><%= check_box :notification, :send_via_email %> <%= 'Email'[:email] %></label>
-<!--	      <label><%= check_box :notification, :send_via_textmessage %> <%= 'Text Message'[:text_message] %></label>
-	      <label><%= check_box :notification, :send_via_chat %> <%= 'Chat'[:chat] %></label>
-	      <br/>
-	      <label><%= check_box :notification, :send_only_with_encryption %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %></label>
+	      <label><%= check_box :notification, :send_email %> <%= 'Email'[:email] %></label>
+<!--
+
+        <label><%= check_box :notification, :send_sms %> <%= 'Text Message'[:text_message] %></label>
+	      <label><%= check_box :notification, :send_xmpp %> <%= 'Chat'[:chat] %></label>
+        <br/>
+        <label><%= check_box :notification, :send_encrypted %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %></label>
+
 -->
       </td>
     </tr>
     <tr>
-      <td><%= check_box :notification, :message, :onclick => "checkbox_toggle_visibility(this, 'share_message_holder')" %></td>
+      <td><%= check_box :notification, :include_message, :onclick => "checkbox_toggle_visibility(this, 'share_message_holder')" %></td>
       <td><label for='notification_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
     </tr>
     <tr>

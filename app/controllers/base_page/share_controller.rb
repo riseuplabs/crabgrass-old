@@ -26,40 +26,15 @@ class BasePage::ShareController < ApplicationController
 
   before_filter :login_required, :except => [:auto_complete_for_recipient_name]
   protect_from_forgery :except => [:auto_complete_for_recipient_name]
-
-#  verify :method => :post, :only => [:move]
-  #include BasePageHelper
-  #auto_complete_for :recipient, :name
-
-  
-  helper 'base_page', 'base_page/share'
-
-=begin  
-  def auto_complete_for_recipient_name
-     # getting all friends or peers of the user
-    @users = User.find(:all, :conditions => "login LIKE '%#{recipient_name}%' AND id IN (#{[current_user.contact_ids, current_user.peer_ids].flatten.uniq!.join(', ')})")
-    @groups = Group.find(:all, :conditions => "name LIKE '%#{recipient_name}%' AND id IN (#{current_user.group_ids.join(', ')})")
-   
-    @all_users = User.find(:all)
-    @all_users.select {|user| user.profiles.public.may_pester? }
-    
-   # @all_users = User.find(:all, :joins => :profiles, :group => "profiles.stranger HAVING profiles.stranger = true")
-        
-    @recipients = (@users + @groups + @all_users).uniq!
  
-    @recipients = @recipients.select { |rcpt|
-      (rcpt.name =~ Regexp.new(params[:recipient][:name]) ||
-       rcpt.display_name =~ Regexp.new(params[:recipient][:name]))
-    }
-    
-    render :partial => 'base_page/auto_complete/recipient'
-  end
-=end
+  helper 'base_page', 'base_page/share'
 
   def auto_complete_for_recipient_name
     name_filter = params[:recipient][:name]
     if name_filter
-      @recipients = User.find :all, :conditions => ["login LIKE ?", "#{name_filter}%"], :limit => 13
+      @recipients = Group.find :all, :conditions => ["groups.name LIKE ?", "#{name_filter}%"], :limit => 20
+      @recipients += User.find :all, :conditions => ["users.login LIKE ?", "#{name_filter}%"], :limit => 20
+      @recipients = @recipients[0..19]
       render :partial => 'base_page/auto_complete/recipient'
     end
   end
@@ -76,7 +51,6 @@ class BasePage::ShareController < ApplicationController
 #  "recipient"=>{"name"=>"", "access"=>"admin"}, "recipients"=>{"aaron"=>{"access"=>"admin"}, "the-true-levellers"=>{"access"=>"admin"}}
 
   def update
-    #debugger
     if params[:cancel] || !params[:recipients]
       close_popup
     elsif params[:recipient] and params[:recipient][:name].any?
@@ -90,22 +64,11 @@ class BasePage::ShareController < ApplicationController
       end
       render :partial => 'base_page/share/add_recipient'
     else
-      # recipients with options, that looks like
-      # {:animals => [:grant_access => :view], :blue => [:grant_access => :admin]
-      recipients_with_options = get_recipients_with_options(params[:recipients])
+      options = params[:notification] || {}
+      convert_checkbox_boolean(options)
+      options[:mailer_options] = mailer_options()
 
-      options = {
-        :message => params[:notification][:message_text],
-        :send_emails => params[:notification][:send_emails],
-        :send_via_email => params[:notification][:send_via_email],
-        :send_via_textmessage => params[:notification][:send_via_textmessage],
-        :send_via_chat => params[:notification][:send_via_chat],
-        :send_only_with_encryption => params[:notification][:send_only_with_encryption],
-        :send_to_inbox => params[:notification][:send_to_inbox],
-        :mailer_options => mailer_options
-      }
-      # current_user.share_page_with!(@page, recipients, options)
-      current_user.share_page_by_options!(@page, recipients_with_options, options)      
+      current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
       flash_message :success => "You successfully shared this page."[:shared_page_success]
       close_popup
@@ -114,8 +77,7 @@ class BasePage::ShareController < ApplicationController
 
   # handles the notification with or without sharing
   def notify
-    share 
-    return
+    share
   end
   
   protected
@@ -123,32 +85,6 @@ class BasePage::ShareController < ApplicationController
   ##
   ## UI METHODS FOR THE SHARE & NOTIFY FORMS
   ## 
-
-  # given the params[:recipients] returns an options-hash for recipients
-  def get_recipients_with_options(recipients_with_options)  
-    options_with_recipients = {}
-    recipients_with_options.each_pair do |recipient,options|
-      if options.kind_of?(Hash)
-        options_with_recipients[symbolize_options(options)] ||= []
-        options_with_recipients[symbolize_options(options)] << recipient.sub(" ", "+")
-      end
-      @recipients ||= []
-      @recipients << recipient
-    end
-    options_with_recipients   
-  end
-
-  
-  def symbolize_options options
-    return options unless options.respond_to?(:each)
-    symbolized_options = {}
-    options.each do |k,v|
-      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
-      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
-      symbolized_options[k] = v
-    end
-    symbolized_options
-  end
 
   def close_popup
     render :template => 'base_page/reset_sidebar'
@@ -170,5 +106,18 @@ class BasePage::ShareController < ApplicationController
     end
     true
   end
+
+  private
+
+   # convert {:checkbox => '1'} to {:checkbox => true}
+   def convert_checkbox_boolean(hsh)
+     hsh.each_pair do |key,val|
+       if val == '0'
+         hsh[key] = false
+       elsif val == '1'
+         hsh[key] = true
+       end
+     end
+   end
 
 end

@@ -69,7 +69,7 @@ class PageSharingTest < Test::Unit::TestCase
 
     assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
     
-    user.share_page_with!(page, other_user, :access => :admin, :notify => true)
+    user.share_page_with!(page, other_user, :access => :admin, :send_notice => true)
     assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
     assert_equal true, other_user.may?(:admin, page), 'should be in other users inbox'
 
@@ -79,7 +79,7 @@ class PageSharingTest < Test::Unit::TestCase
     assert user_in_other_group.may?(:view, page)
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
 
-    user.share_page_with!(page, other_group, :notify => :true)
+    user.share_page_with!(page, other_group, :send_notice => true)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?

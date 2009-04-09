@@ -79,32 +79,18 @@ div
 //
 
 table.share_page_recipients
-  //border: 1px solid #ccc
-  //border-collapse: collapse
-//  th
-//    width: 10em
-//    font-size: 0.85em
-//    line-height: 1.4em
-//    font-weight: bold
-//    text-align: left
-//    padding: 0.5em
-//    background: #ddd
-//  td
-//    vertical-align: top
-//    border: 1px solid #ccc
-//    padding: 0
-//    background: #fff
+  width: 100%
   div.scroll
     overflow: auto
     height: 20em
     width: 13em
     padding: 0.5em
     font-size: 0.8em
-  ul
-    margin: 0
-    padding: 0
-    li
-      padding: 0.25em 0
+//  ul
+//    margin: 0
+//    padding: 0
+//    li
+//      padding: 0.25em 0
 
 ul.participators_list
   li.unsaved
@@ -113,6 +99,12 @@ ul.participators_list
     padding: 5px
     border-bottom: 1px solid darkgrey
     clear: left
+
+div.share_page_recipients_list
+  height: 15em
+  overflow-y: scroll
+  border: 1px solid #999
+  background: white
 
 //
 // PAGE CREATION
@@ -175,7 +167,6 @@ ul.participators_list
     span
       background-position: 100% 0
       background-repeat: no-repeat
-      //display: block
       padding-right: 20px
       margin-right: -20px
   input.check
@@ -189,6 +180,7 @@ ul.participators_list
     white-space: nowrap
   .tags a:hover
     background-color: #eef
+
 
 //
 // POST
@@ -305,30 +297,12 @@ div.popup
     text-align: right
     padding: 10px
   h2
-    //margin: 0.5em 1em
-    //background: white
-    //color: white
-    //background: #666
-    //padding: 0 1em
-    //display: inline
     color: #cc0000
     font-size: 1.1em
     line-height: 1em
-//  .fieldset
-//    background-color: #eee
-//    padding: 1em
-//    border: 1px solid #666
-//    margin: 0 0 1em 0
   blockquote
     margin: 0
     padding: 1em
-  table.share_page_recipients
-    width: 100%
-  div.share_page_recipients_list
-    height: 15em
-    overflow-y: scroll
-    border: 1px solid #999
-    background: white
   div.error
     background: #fcc
     border: 1px solid red

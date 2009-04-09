@@ -63,17 +63,14 @@ div.buttons {
   width: 140px;
   font-weight: normal; }
 
-table.share_page_recipients div.scroll {
-  overflow: auto;
-  height: 20em;
-  width: 13em;
-  padding: 0.5em;
-  font-size: 0.8em; }
-table.share_page_recipients ul {
-  margin: 0;
-  padding: 0; }
-  table.share_page_recipients ul li {
-    padding: 0.25em 0; }
+table.share_page_recipients {
+  width: 100%; }
+  table.share_page_recipients div.scroll {
+    overflow: auto;
+    height: 20em;
+    width: 13em;
+    padding: 0.5em;
+    font-size: 0.8em; }
 
 ul.participators_list li.unsaved {
   background-color: #BBFF99; }
@@ -81,6 +78,12 @@ ul.participators_list li {
   padding: 5px;
   border-bottom: 1px solid darkgrey;
   clear: left; }
+
+div.share_page_recipients_list {
+  height: 15em;
+  overflow-y: scroll;
+  border: 1px solid #999;
+  background: white; }
 
 .create_page .left {
   display: inline;
@@ -253,13 +256,6 @@ div.popup {
   div.popup blockquote {
     margin: 0;
     padding: 1em; }
-  div.popup table.share_page_recipients {
-    width: 100%; }
-  div.popup div.share_page_recipients_list {
-    height: 15em;
-    overflow-y: scroll;
-    border: 1px solid #999;
-    background: white; }
   div.popup div.error {
     background: #fcc;
     border: 1px solid red; }
