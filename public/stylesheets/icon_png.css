@@ -2,6 +2,8 @@
 .application_view_gallery_16 {background-image: url(/images/png/16/application_view_gallery.png)}
 .application_view_list_16 {background-image: url(/images/png/16/application_view_list.png)}
 .archive_16 {background-image: url(/images/png/16/archive.png)}
+.arrow_down_16 {background-image: url(/images/png/16/arrow_down.png)}
+.arrow_up_16 {background-image: url(/images/png/16/arrow_up.png)}
 .attach_16 {background-image: url(/images/png/16/attach.png)}
 .book_open_16 {background-image: url(/images/png/16/book_open.png)}
 .burst_16 {background-image: url(/images/png/16/burst.png)}
@@ -22,6 +24,7 @@
 .key_16 {background-image: url(/images/png/16/key.png)}
 .left_16 {background-image: url(/images/png/16/left.png)}
 .lightning_16 {background-image: url(/images/png/16/lightning.png)}
+.lock_16 {background-image: url(/images/png/16/lock.png)}
 .lorry_16 {background-image: url(/images/png/16/lorry.png)}
 .magnifier_16 {background-image: url(/images/png/16/magnifier.png)}
 .membership_add_16 {background-image: url(/images/png/16/membership_add.png)}
@@ -64,6 +67,7 @@
 .page_notice_16 {background-image: url(/images/png/16/page_notice.png)}
 .page_package_16 {background-image: url(/images/png/16/page_package.png)}
 .page_ranked_16 {background-image: url(/images/png/16/page_ranked.png)}
+.page_survey_16 {background-image: url(/images/png/16/page_survey.png)}
 .page_tasks_16 {background-image: url(/images/png/16/page_tasks.png)}
 .page_text_16 {background-image: url(/images/png/16/page_text.png)}
 .page_video_16 {background-image: url(/images/png/16/page_video.png)}
@@ -105,8 +109,8 @@
 .beehive_48 {background-image: url(/images/png/48/beehive.png)}
 .clock_48 {background-image: url(/images/png/48/clock.png)}
 .collection_48 {background-image: url(/images/png/48/collection.png)}
+.date_48 {background-image: url(/images/png/48/date.png)}
 .error_48 {background-image: url(/images/png/48/error.png)}
-.date_48 {background-image: url(/images/png/48/page_event.png)}
 .info_48 {background-image: url(/images/png/48/info.png)}
 .lock_48 {background-image: url(/images/png/48/lock.png)}
 .page_approval_48 {background-image: url(/images/png/48/page_approval.png)}
@@ -117,6 +121,7 @@
 .page_message_48 {background-image: url(/images/png/48/page_message.png)}
 .page_package_48 {background-image: url(/images/png/48/page_package.png)}
 .page_ranked_48 {background-image: url(/images/png/48/page_ranked.png)}
+.page_survey_48 {background-image: url(/images/png/48/page_survey.png)}
 .page_tasks_48 {background-image: url(/images/png/48/page_tasks.png)}
 .page_text_48 {background-image: url(/images/png/48/page_text.png)}
 .page_video_48 {background-image: url(/images/png/48/page_video.png)}

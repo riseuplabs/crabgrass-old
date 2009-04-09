@@ -14,11 +14,15 @@ class SurveyPageController < BasePageController
   end
 
   def design
-    @survey = Survey.new
+    @survey ||= Survey.new
   end
 
   def save_design
-    @survey = Survey.new(params[:survey])
+    if @survey
+      @survey.update_attributes(params[:survey])
+    else
+      @survey = Survey.new(params[:survey])
+    end
     if @survey.save
       @page.data = @survey
       flash_message :success => 'Created a survey!'[:survey_created_message]

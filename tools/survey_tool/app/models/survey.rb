@@ -49,9 +49,22 @@ class Survey < ActiveRecord::Base
   end
 
   def new_questions_attributes=(question_attributes)
-    self.questions = []
-    question_attributes.each do |attribute|
-      self.questions << attribute["type"].constantize.create(attribute)
+    question_attributes.keys.each do |id|
+      if id[0..2] == "new"
+        # new question
+        attribute = question_attributes[id]
+        self.questions << attribute["type"].constantize.create(attribute)
+      else
+        # old question
+        question = self.questions.detect{|q|q.id.to_s == id}
+        next unless question
+        if question_attributes[id]['deleted']
+          question.destroy
+        else
+          question.update_attributes(question_attributes[id])
+        end
+      end
     end
   end
+
 end

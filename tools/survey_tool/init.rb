@@ -1,7 +1,7 @@
 PageClassRegistrar.add(
   'SurveyPage',
   :controller => 'survey_page',
-  :icon => 'page_tasks',
+  :icon => 'page_survey',
   :class_display_name => 'survey',
   :class_description => :survey_class_description,
   :class_group => 'surveys',

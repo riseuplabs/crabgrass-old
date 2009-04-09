@@ -7,9 +7,10 @@
     </span>
   </div>
   <% form_for :survey, @survey, :url => page_url(@page, :action => :save_design) do |f| %>
+    <%= submit_tag "Save Survey".t, :class => "submit" %>
     <div id="questions">
+      <%= render :partial => 'questions' %>
     </div>
-    <%= submit_tag "Create", :class => "submit" %>
   <% end %>
   <%= javascript_tag "Sortable.create('questions', {elements:$$('#questions .question'), handles:$$('questions .drag_to_move') });"%>
 </div>

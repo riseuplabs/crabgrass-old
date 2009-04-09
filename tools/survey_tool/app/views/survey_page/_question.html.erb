@@ -1,11 +1,12 @@
-<div class="question">
+<div class="question handle">
   <strong class="caption"><%= "Question:"[:question_label] %></strong>
   <span class="drag_to_move small_icon change_order_16"><%= "drag to move"[:drag_to_move] %></span>
-  <%= delete_question_function %>
+  <%= delete_question_function(question) %>
   <div class="fields">
-    <% fields_for 'survey[new_questions_attributes][]', question do |qform| %>
+    <% q_id = question.new_record? ? "new_#{rand}" : question.id %>
+    <% fields_for "survey[new_questions_attributes][#{q_id}]", question do |qform| %>
       <%= qform.hidden_field 'type' %>
-      <%= render :partial => question.class.to_s.underscore, :locals => {:form => qform, :question => question} %>
+      <%= render :partial => question.partial, :locals => {:form => qform, :question => question} %>
     <% end %>
   </div>
 </div>

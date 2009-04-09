@@ -1,3 +1,5 @@
+<%- @info_box_class = 'tabs' -%>
+<%- @info_box = capture do -%>
 <%= if logged_in? and current_user.may? :edit, @page
   Formy.tabs do |f|
     f.tab do |t|
@@ -20,9 +22,14 @@
       t.url page_url(@page, :action => 'list')
       t.selected action?(:list)
     end
-    
+#    f.tab do |t|
+#      t.label 'Results by Question'[:survey_tab_results_by_question]
+#      t.url page_url(@page, :action => 'stats')
+#      t.selected action?(:stats)
+#    end
   end
 end
 %>
+<%- end -%>
 
-<br style='clear:both'/>
+

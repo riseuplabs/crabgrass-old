@@ -24,9 +24,11 @@ class SurveyQuestion < ActiveRecord::Base
     self.choices.join("\n")
   end
 
-  def answer_class
-    TextAnswer
+  # the name of the partial to use for this question
+  def partial
+    self.class.to_s.underscore
   end
+
 end
 
 
