@@ -265,18 +265,13 @@ module BasePageHelper
   def select_page_access(name, options={})
     selected = options[:selected]
 
-    # other mysterious code that was here at some time
-    # not sure what these did
-    # selected ||= params[:name]
-    # selected = params[name]
-
     options = {:blank => true, :expand => false}.merge(options)
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]
       select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
       selected ||= ''
     else
-      selected ||= 'view'
+      selected ||= 'admin'
     end
     if options[:expand]
       select_tag name, options_for_select(select_options, selected), :size => select_options.size
