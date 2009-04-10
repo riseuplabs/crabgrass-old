@@ -40,12 +40,32 @@ module PageExtension::Index
       return id_array
     end
 
-    # converts a tag list array into a tag list array suitable for searching
-    # a fulltext index with (no spaces, at least four characters, prefix with _ if numeric).
+    # converts a tag list array into a tag list array suitable for searching a
+    # fulltext index.
+    # 
+    # The rules:
+    #  
+    #  * The tag must be CGI url escaped so that special characters are not in the
+    #    fulltext index. The fulltext matching does not work on characters like
+    #    !@#$%^&()=*.
+    #  * space and '.' are not allowed, we replace with '_'. (The character + is not
+    #    allowed and this is how CGI.escape encodes spaces).
+    #  * The character % is not allowed, so we replace it with 'QQ'. This is not
+    #    ideal, but it seems sufficiently unlikely that someone will tag something
+    #    QQ.
+    #  * The tag must be at least four characters in length for the fulltext index
+    #    to work, so we pad with _ if necessary.
+    #  * The tag must not be numeric, so we prefix with _ if the tag is a number.
+    #
     # example:
-    #   ['blue fish', 'tv', '12', '1234'] => ['blue_fish', '__tv', '__12', '_1234']
+    #   ['blue fish', 'tv',   '12',   '1234',  'café'] =>
+    #   ['blue_fish', '__tv', '__12', '_1234', 'cafQQC3QQA9']
+    #
     def searchable_tag_list(tags)
       tags.map do |s|
+        s = s.gsub(/[\s\.]/, '_') # characters that are skipped by CGI.escape
+        s = CGI.escape(s)
+        s = s.gsub('%', 'QQ')
         ("%4s" % s).gsub(/\s|^(\d)/,'_\1')
       end
     end
