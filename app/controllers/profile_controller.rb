@@ -84,7 +84,6 @@ class ProfileController < ApplicationController
  
   def fetch_profile
     return true unless params[:id]
-    #fetch_site unless @site
     if params[:id] == 'public' #&& @site.profiles.public?
       @profile = current_user.profiles.public
     elsif params[:id] == 'private' #&& @site.profiles.private?

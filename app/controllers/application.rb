@@ -17,13 +17,7 @@ class ApplicationController < ActionController::Base
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
 
-  attr_reader :current_site
-  # make current_site available to view code
-  helper_method :current_site
-
   # the order of these filters matters. change with caution.
-  prepend_before_filter :fetch_site # needs to come before fetch_profile in
-                                    # profile controller
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
@@ -31,52 +25,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :secret => Crabgrass::Config.secret
   layout 'default'
 
+  helper_method :current_site  # make available to views
+  def current_site
+    @current_site ||= Site.find_by_domain(request.host)
+    @current_site ||= Site.default 
+  end
+
   protected
-
-  
-  ##
-  ## SITES
-  ##
-  
-  def fetch_site
-    @current_site = Site.find_by_domain(request.host) || Site.default
-  end
-
-  
-  # validates, if the user has access under the circumstance that we use sites
-  # therefore, in model Network we use the method has?
-  # that calls "belongs_to_network? in the following models:
-  # - Group
-  # - Page
-  # - Committee
-  # - Asset not right now.
-  # which is everywhere, where has_access! is called
-  before_filter :access_for_site?
-  def access_for_site?
-    return true if current_site.network.nil?
-    network = current_site.network
-
-    things = []    
-    things << @group if @group and !@group.new_record?
-
-    # not checking pages so far because page_finder has not been limited to site yet
-    # things << @page if @page
-    # not checking assets so far because we can't figure out which assets belong to site
-    # things << @asset if @asset
-    things << @committee if @committee and !@committee.new_record?
     
-    no_access = false
-    things.each do |thing|
-      if !network.has?(thing)
-        flash_message  :title => "Leaving sites scope"[:leaving_site_title],
-          :error => "You are leaving the scope of ':domain' accessing :class :name"[:leaving_scope_of_site]%{ :domain => current_site.domain, :class => thing.class, :name => thing.name}
-      end
-    end
-  end
-  
-#####
-  
-  
   before_filter :header_hack_for_ie6
   def header_hack_for_ie6
     #

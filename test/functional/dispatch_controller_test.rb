@@ -13,7 +13,6 @@ class DispatchControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
-#    @controller.fetch_site # why is this necessary?
   end
 
   #really more like a unit test
