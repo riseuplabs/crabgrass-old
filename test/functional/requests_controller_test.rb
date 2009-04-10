@@ -23,28 +23,25 @@ class RequestsControllerTest < Test::Unit::TestCase
 
   def test_create_invite
     login_as :gerrard
-    get :create_invite, :group_id => groups(:fau).id
-    assert_response :success
-    # error message on empty recipients:
+
     assert_difference 'RequestToJoinUs.count', 3 do
-      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['red', 'blue', 'green']
+      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['yellow', 'purple', 'orange']
     end
 
-    login_as :red
-    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:red)})
+    login_as :yellow
+    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:yellow)})
     get :reject, :request => request
     assert_response :redirect
 
-    login_as :blue
-    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:blue)})
+    login_as :purple
+    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:purple)})
     get :approve, :request => request
     assert_response :redirect
 
     login_as :gerrard
-    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:green)})
+    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:orange)})
     get :destroy, :request => request
-    assert_response :redirect
-    
+    assert_response :redirect    
   end
 
   def test_create_join
