@@ -8,7 +8,7 @@ class GroupController < ApplicationController
   javascript :extra, :action => :tasks
 
   prepend_before_filter :find_group
-  
+  before_filter :check_group_visibility
   before_filter :login_required, :except => [:show, :archive, :tags, :search]
   before_filter :render_sidebar
   
@@ -20,16 +20,6 @@ class GroupController < ApplicationController
   end  
 
   def show
-    if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
-      @access = :private
-    elsif @group.publicly_visible_group
-      @access = :public
-    else
-      clear_context
-      return render(:template => 'dispatch/not_found',
-                    :status => (logged_in? ? 404 : 401))
-    end
-
     params[:path] ||= ""
     params[:path] = params[:path].split('/')
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
@@ -77,8 +67,11 @@ class GroupController < ApplicationController
   end
     
   def tags
+    # TODO: you can assign invalid tag names that cannot be searched on. For
+    # example, if the tag contains the chars ', +, ), (. These are stripped before
+    # searching, but you should not be allowed to set them at all.
     tags = params[:path] || []
-    path = tags.collect{|a|['tag',a.gsub('+',' ')]}.flatten
+    path = tags.collect{|t|['tag',t]}.flatten
     if path.any?
       @pages   = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
       page_ids = Page.ids_by_path(path, options_for_group(@group))
@@ -302,20 +295,32 @@ class GroupController < ApplicationController
     end
   end
   
+  # load the @group object if we can. If we can't, or the user does not have access to
+  # view the group then show an error page.
   def find_group
     @group = Group.find_by_name params[:id] if params[:id]
 
-    # find the profile visible by current user
-    profile = logged_in? && @group && @group.profiles.visible_by(current_user)
-    if profile
-      # make the group invisible if they can't see it
-      @group = nil unless profile.may_see?
+    if @group
+      if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
+        @access = :private
+      elsif @group.profiles.public.may_see?
+        @access = :public
+      else
+        @group = nil
+      end
     end
 
-    true
+    if @group
+      return true
+    else
+      clear_context
+      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
+      return false
+    end
   end
 
   def render_sidebar
+    ## TODO: redesign the featured system, and make it cached. This is ugly and slow.
     @left_column = render_to_string(:partial => 'sidebar') if @group
   end
 
@@ -333,7 +338,19 @@ class GroupController < ApplicationController
     else
       return (logged_in? && @group && (current_user.member_of?(@group) || current_user.may?(:admin,@group)))
     end
-  end    
+  end
+
+  def check_group_visibility
+    if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
+      @access = :private
+    elsif @group.profiles.public.may_see?
+      @access = :public
+    else
+      clear_context
+      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
+      return false
+    end
+  end
 
   after_filter :update_view_count
   def update_view_count

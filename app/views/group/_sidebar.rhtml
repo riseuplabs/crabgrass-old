@@ -4,4 +4,6 @@
 
 <%= render :partial => 'group/side_navigation' %>
 
-<%= render :partial => 'starring' %>
+<% if action?(:show) %>
+  <%= render :partial => 'starring' %>
+<% end %>

@@ -103,7 +103,6 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :archive, :id => groups(:rainbow).name
     assert_response :success, 'logged in, member of group should succeed'
-#    assert_template 'archive'
     assert assigns(:group).valid?
     assert_not_nil assigns(:months)
     assert assigns(:months).length > 0, "should have some months"
@@ -114,10 +113,9 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :archive, :id => groups(:public_group).name, :path => 'month/1/year/2008'
     assert_response :success
-#    assert_template 'archive'
 
     get :archive, :id => groups(:private_group).name
-#    assert_template 'show_nothing', 'private group, logged in, should not be found'
+
   end
 
   def test_archive_not_logged_in
@@ -184,7 +182,6 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :tags, :id => groups(:rainbow).name
     assert_response :success
-#    assert_template 'tags'
     assert_not_nil assigns(:pages)
   end
 
@@ -192,15 +189,13 @@ class GroupControllerTest < Test::Unit::TestCase
     login_as :kangaroo
     get :tags, :id => groups(:private_group).name
     assert_response :missing
-#    assert_template 'tags'
-    assert_equal [], assigns(:pages)
+    assert_equal nil, assigns(:pages)
   end
 
   def test_tags_sql_inject
     login_as :blue
-    get :tags, :id => groups(:private_group).name, :path => "'))#"
+    get :tags, :id => groups(:rainbow).name, :path => "'))#"
     assert_response :success
-#    assert_template 'tags'
     assert_equal [], assigns(:pages)
   end
 
@@ -209,7 +204,6 @@ class GroupControllerTest < Test::Unit::TestCase
 
     get :tasks, :id => groups(:rainbow).name
     assert_response :success
-#    assert_template 'tasks'
     assert_not_nil assigns(:pages)
     assert_not_nil assigns(:task_lists)
     assert assigns(:pages).length > 0, "should find some tasks"
@@ -219,8 +213,7 @@ class GroupControllerTest < Test::Unit::TestCase
     login_as :kangaroo
     get :tasks, :id => groups(:private_group).name
     assert_response :missing
-#    assert_template 'tags'
-    assert_equal [], assigns(:pages)
+    assert_equal nil, assigns(:pages)
   end
 
   def test_edit
@@ -228,7 +221,6 @@ class GroupControllerTest < Test::Unit::TestCase
     get :edit, :id => groups(:rainbow).name
 
     assert_response :success
-#    assert_template 'edit'
 
     assert_not_nil assigns(:group)
     assert assigns(:group).valid?

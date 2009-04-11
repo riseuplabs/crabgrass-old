@@ -23,7 +23,7 @@ class Tag < ActiveRecord::Base
       FROM tags
       INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
       INNER JOIN group_participations ON group_participations.page_id = taggings.taggable_id
-      AND group_participations.group_id = #{group.id}
+      AND group_participations.group_id IN (#{group.group_and_committee_ids.join(', ')})
       GROUP BY name
       ORDER BY name
     ])
