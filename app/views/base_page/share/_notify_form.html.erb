@@ -15,41 +15,58 @@
 
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
-<div class='notify_about_page'>
-  <h2><%= 'Notify about this {page_class}'[:notify_page_recipients, {:page_class => class_display_name}] %></h2>
-  <div class='fieldset'>    
-    <%= check_box :notification, :notify_contributors, :onChange => "$('share_page_recipients_contributors').toggle();" %> <%= label :notification, :notify_contributors, 'Notify people who have contributed to this page'[:notify_contributors] %>
-        
-    <div class='share_page_recipients_list' style="height:80px; background-color:white; overflow:auto; border:1px solid darkgrey;display:none;" scroll="vertical" id="share_page_recipients_contributors">
-      <ul class='side_list names'>
-	<% if contributors.any? -%>
-	  <% contributors.each do |cont| %>
-            <li style="display:inline; margin-left:12px;"><%= participator_checkbox_line(cont) %></li>
-	  <% end -%>
-	<% end -%>
-      </ul>
-    </div>
 
-    <br/>
-    <%= check_box :notification, :notify_possible_contributors,{ :onChange => "$('share_page_recipients_possible_contributors').toggle();" }%> <%= label :notification, :notify_possible_contributors, 'Notify people and groups with access to this page'[:notify_possible_contributors] %>
+<table class='notify'>
+  <tr>
+    <td colspan="2"><h2><%= 'Recipients'[:notify_recipients] %></h2></td>
+  </tr>
 
-    <div class='share_page_recipients_list' style="display:none;" scroll="vertical" id="share_page_recipients_possible_contributors">
-        <%= render :partial => 'base_page/share/notify_possible_contributors', :locals => { :contributors => possible_contributors, :groups => possible_contributors_groups } %>
-    </div>
+  <tr>
+    <td><%= check_box :notification, :notify_contributors, :onChange => "$('notify_contributor_area').toggle();" %></td>
+    <td><%= label :notification, :notify_contributors, '<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page.'[:notify_contribution] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <div id='notify_contributor_area' class='details' style='display:none'>
+        <%= render :partial => 'notify_recipient_list', :locals => {:recipients => contributors} %>
+      </div>
+    </td>
+  </tr>
 
-    <br/>
-    <%= check_box :notification, :share_with_new, :onChange => "$('share_page_recipients_new').toggle();" %> <%= label :notification, :share_with_new, 'Share page and notify new users and groups'[:share_page_with_new_and_notify] %>
+  <tr class='gap'>
+    <td><%= check_box :notification, :notify_current_access, { :onChange => "$('notify_current_access_area').toggle();" }%></td>
+    <td><%= label :notification, :notify_current_access, '<b>Current Access:</b> notify people or groups who currently have access to this page.'[:notify_current_access] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <div class='' style="display:none;" scroll="vertical" id='notify_current_access_area'>
+          <%= render :partial => 'base_page/share/notify_possible_contributors', :locals => { :contributors => possible_contributors, :groups => possible_contributors_groups } %>
+      </div>
+    </td>
+  </tr>
+
+  <tr class='gap'>
+    <td><%= check_box :notification, :share_with_new, :onChange => "$('share_page_recipients_new').toggle();" %></td>
+    <td><%= label :notification, :share_with_new, '<b>New Access:</b> share this page with new people or groups, and notify them.'[:notify_new_access] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
     <div class='share_page_recipients_list' id="share_page_recipients_new" style="display:none;">     
       <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => true} %>
     </div>
+    </td>
+  </tr>
+ 
+  <tr>
+   <td colspan="2"><h2><%= 'Notification Message'[:notify] %></h2></td>
+  </tr>
+  <tr>
+    <%# render :partial => 'base_page/share/notification_message' %> 
+  </tr>
+</table>
 
-    <br/>
-  </div>
-  
- <h2><%= 'Notification Message'[:notify] %></h2>
- <%= render :partial => 'base_page/share/notification_message' %> 
-</div>
-<script type="text/javascript"> 
-  notify_initialize();
-</script>
+
 

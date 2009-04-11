@@ -10,9 +10,9 @@
   <div id="notify_box" xstyle="display:none">
   <h2><%= 'Notify'[:notify] %></h2>
   <div class='fieldset'>
-    <table class='notify_page_recipients'>
+    <table class='notify'>
     <tr>
-      <td><%= check_box :notification, :send_notice, {:onclick => "checkbox_toggle_visibility(this, 'notification_details')"} %></td>
+      <td><%= check_box :notification, :send_notice, {:onchange => "checkbox_toggle_visibility(this, 'notification_details')"} %></td>
       <td><label for='notification_send_notice'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
     </tr>
     <tbody id='notification_details' style='display:none'>
@@ -32,7 +32,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= check_box :notification, :include_message, :onclick => "checkbox_toggle_visibility(this, 'share_message_holder')" %></td>
+      <td><%= check_box :notification, :include_message, :onchange => "checkbox_toggle_visibility(this, 'share_message_holder')" %></td>
       <td><label for='notification_include_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
     </tr>
     <tr>

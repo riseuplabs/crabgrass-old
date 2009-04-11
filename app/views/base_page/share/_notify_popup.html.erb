@@ -6,13 +6,12 @@
 
     <blockquote>
       <%= render :partial => 'base_page/share/notify_form' %>
-    </blocquote>
+    </blockquote>
 
     <div class='buttons'>
       <%= spinner 'popup' %> &nbsp;
-      <%= submit_tag :notify_button.t, :name => 'notify' %> &nbsp;
-      <%= submit_tag :close_button.t, :name => 'cancel' %>
+      <%= submit_tag :close_button.t, :name => 'cancel' %> &nbsp;
+      <%= submit_tag :notify_page_link.t, :name => 'notify' %>
     </div>
-
   <% end -%>
 <% end -%>

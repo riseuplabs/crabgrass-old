@@ -673,7 +673,6 @@ no_change: "no change"
 Announcements: "Announcements"
 
 watch_checkbox: "Watch For Updates"
-notify_page_link: "Send Notification"
 add_star_link: "Add Star (:star_count)"
 remove_star_link: "Remove Star (:star_count)"
 public_checkbox: "Public"
@@ -687,6 +686,12 @@ edit_attachments: "Edit Attachments"
 current_attachments: "Current Attachments"
 add_new_attachment: "Add New Attachment" 
 upload_attachment: "Upload Attachment"
+
+notify_page_link: "Send Notification"
+notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
+notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
+notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+notify_recipients: "Recipients"
 
 ##
 ## DATES

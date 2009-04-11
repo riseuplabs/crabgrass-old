@@ -1,0 +1,21 @@
+<% 
+   # locals to take:
+   recipients = [] if recipients.nil?
+-%>
+
+<%= column_layout(2, recipients) do |recipient| 
+  recipient_checkbox_line(recipient)
+end %>
+
+<!--
+<table>
+ <tr>
+   <td style="width:50%;">Groups</td><td>Users <%# check_box(:check_all,'users') + label_tag('check_all_users',"check all"[:check_all])%></td>
+ </tr>
+ <tr>
+ 
+ <%# render :partial => 'notify_possible_contributors_groups', :locals => {:groups => groups} %>
+ <%# render :partial => 'notify_possible_contributors_users', :locals => {:contributors => contributors} %>
+</tr>
+</table>
+-->

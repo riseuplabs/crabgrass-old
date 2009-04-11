@@ -195,7 +195,7 @@ module LayoutHelper
   # LAYOUT STRUCTURE
 
   # builds and populates a table with the specified number of columns
-  def column_layout(cols, items)
+  def column_layout(cols, items, &block)
     lines = []
     count = items.size
     rows = (count.to_f / cols).ceil
@@ -206,7 +206,11 @@ module LayoutHelper
          cell = ((r-1)*cols)+(c-1)
          next unless items[cell]
          lines << "  <td valign='top'>"
-         lines << '  %s' % items[cell]
+         if block
+           lines << yield(items[cell])
+         else
+           lines << '  %s' % items[cell]
+         end
          #lines << "r%s c%s i%s" % [r,c,cell]
          lines << '  </td>'
       end

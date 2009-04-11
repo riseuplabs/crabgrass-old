@@ -32,6 +32,20 @@ module BasePageHelper
     ret << "&nbsp;"
     ret << participator.display_name
   end
+
+  def recipient_checkbox_line(recipient)
+    #field_name = (participator.kind_of?(User) ? 'user' : 'group')
+    #field_name += '-group-' if group
+    #field_name += group if group
+    #field_name += '-user-'
+    #field_name += participator.login.to_s
+    #participator.kind_of?(Group) ? (recipient_name = participator.name) : (recipient_name = participator.login) 
+    ret = "<label>"
+    ret << check_box_tag("recipients[#{recipient.name}][notify]")
+    ret << entity_line(recipient)
+    ret << "</label>"
+  end
+
   
   # creates a line for the notify process with a menu item for a group to show checkbox_lines for all users of this group
   def participator_group_selection_line(group)
