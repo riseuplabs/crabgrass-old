@@ -39,7 +39,7 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
 
   def test_page_creation_access
     login_as :kangaroo
-    post :create, {"page_class"=>"DiscussionPage", "action"=>"create", "id"=>"group-discussion", "page"=>{"title"=>"aaaa"}, "recipients"=>{"animals"=>"1"}, "controller"=>"discussion_page", "access"=>"view", "create"=>"Create discussion »"}
+    post :create, {"page_class"=>"DiscussionPage", "action"=>"create", "id"=>"group-discussion", "page"=>{"title"=>"aaaa"}, "recipients"=>["animals"], "controller"=>"discussion_page", "access"=>"view", "create"=>"Create discussion »"}
     page = assigns(:page)
     assert page
     assert users(:kangaroo).may?(:admin,page)

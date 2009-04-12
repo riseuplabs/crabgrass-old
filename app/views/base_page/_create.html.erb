@@ -13,7 +13,7 @@
   <%= hidden_field_tag 'page_class', @page_class %>
   <%= hidden_field_tag('group', params[:group]) if params[:group] %>
   <div class='left'>
-    <h2 class='section'><%= '{page_class} information'[:create_page_information, {:page_class => class_display_name}].capitalize %></h2>
+    <h2 class='alert'><%= '{page_class} information'[:create_page_information, {:page_class => class_display_name}].capitalize %></h2>
     <%= render :partial => 'base_page/create/information' %>
     <% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
       <h2 class='section'><%= '{page_class} data'[:create_page_data, {:page_class => class_display_name}].capitalize %></h2>
@@ -25,7 +25,7 @@
     <% end %>
   </div>
   <div class='right'>
-    <h2 class='section'><%= 'Who has access to this {page_class}?'[:create_page_share, {:page_class => class_display_name}] %></h2>
+    <h2 class='alert'><%= 'Who has access to this {page_class}?'[:create_page_share, {:page_class => class_display_name}] %></h2>
     <%= render :partial => 'share', :locals => {:class_display_name => class_display_name, :type => 'share'} %>
   </div>
   <div class='clear'></div>

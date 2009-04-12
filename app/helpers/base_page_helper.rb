@@ -17,38 +17,21 @@ module BasePageHelper
     content_tag(:p, link_to('&laquo; ' + 'return to'[:return_to] + ' <b>%s</b>' % @page.title, page_url(@page)))
   end
   
-  # creates a line with a checkbox, avatar and name for a user or group that participates to a page
-  def participator_checkbox_line(participator,group=false)
-    field_name = (participator.kind_of?(User) ? 'user' : 'group')
-    field_name += '-group-' if group
-    field_name += group if group
-    field_name += '-user-'
-    field_name += participator.login.to_s
-    participator.kind_of?(Group) ? (recipient_name = participator.name) : (recipient_name = participator.login) 
-    ret = ""
-    ret << check_box_tag("recipients[#{recipient_name}][notify]", 1, false, {:id => field_name.to_sym})
-    ret << "&nbsp;"
-    ret << avatar_for(participator,'xsmall')
-    ret << "&nbsp;"
-    ret << participator.display_name
-  end
-
   def recipient_checkbox_line(recipient, options={})
     ret = "<label>"
     ret << check_box_tag("recipients[#{recipient.name}][send_notice]", 1, false, {:class => options[:class]})
     ret << entity_line(recipient)
     ret << "</label>"
   end
-
   
   # creates a line for the notify process with a menu item for a group to show checkbox_lines for all users of this group
-  def participator_group_selection_line(group)
-    ret = ""
-    ret << avatar_for(group,'xsmall')
-    ret << "&nbsp;"
-    ret << group.display_name
-    ret << "&nbsp;"
-  end
+#  def participator_group_selection_line(group)
+#    ret = ""
+#    ret << avatar_for(group,'xsmall')
+#    ret << "&nbsp;"
+#    ret << group.display_name
+#    ret << "&nbsp;"
+#  end
   
   def link_to_user_participation(upart)
     klass = case upart.access_sym
@@ -291,7 +274,6 @@ module BasePageHelper
   def page_class
     @page.class_display_name.t.capitalize
   end
-
   
   def select_page_owner(_erbout)
     owner_name = @page.owner ? @page.owner.name : ''

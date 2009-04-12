@@ -23,17 +23,15 @@ class InboxControllerTest < Test::Unit::TestCase
     login_as :blue
     get :index
     assert_response :success
-#    assert_template 'list'
+
     assert assigns(:pages).length > 0
     
     get :index, :path => ['ascending', 'title']
     assert_response :success
-#    assert_template 'list'
     assert assigns(:pages).length > 0
     
     get :index, :path => ['unread']
     assert_response :success
-#    assert_template 'list'
     assert assigns(:pages).length > 0
     
   end

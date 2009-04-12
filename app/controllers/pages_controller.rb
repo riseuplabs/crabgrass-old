@@ -19,7 +19,7 @@ so that each tool can define their own method of creation.
 
 class PagesController < ApplicationController
 
-  helper BasePageHelper
+#  helper BasePageHelper
   
   before_filter :login_required
   prepend_before_filter :fetch_page

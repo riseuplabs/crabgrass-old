@@ -84,17 +84,14 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     
     assert user.may?(:admin, page), "blue should have access to new wiki"
     
+    user.share_page_with!(page, user, :send_notice => true) # send a notice to ourselves.
     inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
     assert inbox_pages.find {|p| p.id = page.id}, "new wiki should be in blue's inbox"
     
     post :remove_watch, :page_id => page.id
     page.reload
     
-    # TODO: Figure out what the intended effect of removing a watch should be, and test for it
-    inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
-    #  assert inbox_pages.find {|p| p.id == page.id} == nil, "new wiki should not be in blue's inbox"
-    
-    assert user.may?(:admin, page), "blue should still have access to new wiki"
+    assert !page.participation_for_user(user).watch?, 'should not be watched'
   end
   
   def test_destroy
