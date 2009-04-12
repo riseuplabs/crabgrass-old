@@ -5,20 +5,19 @@
     <div id="current_rating">
       <%= render :partial => 'current_rating', :locals => { :resp => @resp } %>
     </div>
-    <div id="user_info" style="border:solid 2px black; padding:1.5em;">
+    <div id="user_info">
       <%= render :partial => 'user_info', :locals => { :resp => @resp} %>
     </div>
   </div>
   <div id="center">
     <span>
-      <%= spinner('next_response') %>
-      <h2 id="survey_notice" class="dim"><%= @survey_notice %></h2>
-      <%= link_to_remote("next"[:next], js_next_response_options(0),
-                         :id => 'next_response_link') %>
-    </span>
-    <div class="rate_bar round">
+      <span >
+	<h2 style="float:left;display:inline;" id="survey_notice" class="dim"><%= @survey_notice %></h2>&nbsp;(&nbsp;<%= link_to_remote("next"[:next], js_next_response_options(0),
+                         :id => 'next_response_link') %>&nbsp;)</span>
+    <div class="rate_bar round" style="clear:left;">
+      <span style="float:left;display:inline;"><%= spinner('next_response') %></span>
       <% form_tag(:controller => 'survey_tool', :action => 'rate') do -%>
-	<span class="not"><%= "NOT" %></span>
+	<span class="not">&nbsp;<%= "NOT" %></span>
 	<%= hidden_field_tag(:response, @resp.id, :id => 'response_id') %>
 	<%= hidden_field_tag(:next, @next.map(&:id).to_json, :id => 'next_ids') %>
 	<% 1.upto(10) do |i| -%>
@@ -26,7 +25,7 @@
                                :onClick => js_next_response(i)) %>
 	  <%= label(:answer, :rating, i.to_s, :class => "rate_button") %>
 	<% end -%>
-	<span class="hot"><%= "HOT" %></span>
+	<span class="hot">&nbsp;<%= "HOT" %></span>
       <% end -%>
     </div>
     <div id="response">
@@ -40,4 +39,6 @@
       <%= render :partial => 'next_responses', :locals => {:responses => @next} %>
     </div>
   </div>
+  <div style="clear:left;">
+   </div>
 </div>

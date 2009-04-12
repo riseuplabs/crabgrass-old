@@ -16,8 +16,13 @@
 <table class="answers">
   <% resp.answers.each do |answer| -%>
     <tr>
-      <td><%= answer.question.label %></td>
+      <td><strong><%= answer.question.label %>:</strong></td>
+    </tr>
+    <tr>
       <td><%= answer.value %></td>
+    </tr>
+   <tr>
+      <td>&nbsp;</td>
     </tr>
   <% end -%>
 </table>
