@@ -6,11 +6,13 @@ class SurveyPageController < BasePageController
   before_filter :fetch_response, :only => [:respond, :show]
 
   def respond
-    # don't show this page if we have the response
-    redirect_to page_url(@page, :action => 'show') unless @response.new_record?
-
     if request.post? and @response.valid?
-      @response.save!
+      if @response.new_record?
+        @response.save!
+      else
+        @response.update_attributes(params[:response])
+      end
+
       flash_message :success => 'Created a response!'[:response_created_message]
       redirect_to page_url(@page, :action => 'show')
     else
