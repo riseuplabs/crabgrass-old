@@ -1,0 +1,25 @@
+<%= render :partial => 'tabs' %>
+
+<% if @response %>
+
+  <p><%= link_line(
+     link_to(:pagination_previous.t, page_url(@page, :action => 'details', :id => @response.id, :jump => 'prev')),
+     link_to(:return.t, page_url(@page, :action => 'list')),
+     link_to(:pagination_next.t, page_url(@page, :action => 'details', :id => @response.id, :jump => 'next'))
+  ) %></p>
+
+  <% if @response.user %>
+    <p><%= link_to_user @response.user, :avatar => 'small' %></p>
+  <% else %>
+    <p><b><%=h @response.name %></b> <%=h @response.email %></p>
+  <% end %>
+
+  <%= render :partial => 'answers' %>
+
+<% else %>
+
+  <p><%= link_to :return.t, page_url(@page, :action => 'list') %></p>
+  <%= :no_search_results.t %>
+
+<% end %>
+

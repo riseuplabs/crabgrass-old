@@ -1,14 +1,8 @@
 <%= render :partial => 'tabs' %>
-<div id="respond_to_questions_container" class="survey_questions_container">
-    <div id="questions">
-      <% @survey.questions.each do |question| %>
-        <div class="question">
-          <span class="question_label"><%= question.label %></span>
-          <br/>
-          <%= show_answers_for_question(@response, question) %>
-        </div>
-      <% end %>
-    </div>
-</div>
 
+<% if current_user.may?(:admin, @page) %>
+<p><%= link_to :edit.t, page_url(@page, :action => 'respond') %></p>
+<% end %>
+
+<%= render :partial => 'answers' %>
 

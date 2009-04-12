@@ -1,21 +1,23 @@
 <%= render :partial => 'tabs' %>
-<table id="survey_answers">
+<table id='survey_answers' class='pretty'>
   <tr>
     <th>user</th>
     <th>rating</th>
-    <% (questions=@survey.questions[0..5]).each do |question| -%>
+    <%- (questions=@survey.questions[0..5]).each do |question| -%>
       <th><%= truncate(question.label) %></th>
-    <% end -%>
+    <%- end -%>
   </tr>
-  <% @survey.responses.each do |resp| -%>
-    <tr>
+  <%- @survey.responses.find(:all, :include => ['answers', 'ratings']).each do |resp| -%>
+    <% url = page_url(@page, :action => 'details', :id => resp.id) %>
+    <tr class="<%= cycle 'odd', 'even' %>">
       <td><%= resp.user.login %></td>
       <td><%= resp.rating %></td>
-      <% questions.each do |question| -%>
-	<td>
-	  <%= truncate(resp.answers.find_by_question_id(question.id).value) %>
-	</td>
-      <% end -%>
+      <%- questions.each do |question| -%>
+      <td>
+        <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
+        <%= answer && answer.value.any? ? link_to(truncate(answer.value), url) : '&nbsp;' %>
+      </td>
+      <%- end -%>
     </tr>
-  <% end -%>
+  <%- end -%>
 </table>

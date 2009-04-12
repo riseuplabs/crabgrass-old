@@ -20,7 +20,7 @@
     f.tab do |t|
       t.label 'List All Answers'.t
       t.url page_url(@page, :action => 'list')
-      t.selected action?(:list)
+      t.selected action?(:list) || action?(:details)
     end
 #    f.tab do |t|
 #      t.label 'Results by Question'[:survey_tab_results_by_question]
