@@ -59,7 +59,11 @@ class CustomAppearance < ActiveRecord::Base
   def css_fresher_than_sass?(css_path)
     full_css_path = cached_css_full_path(css_path)
     full_sass_path = CustomAppearance.source_sass_full_path(css_path)
-    File.mtime(full_css_path) >= File.mtime(full_sass_path)
+
+    # File.exists?(full_sass_path) && File.mtime(full_css_path) >= File.mtime(full_sass_path)
+    # this logic doesn't work right now because screen.sass depends on many *.sass files, but
+    # their timestamps can't be checked
+    return false
   end
 
   # returns the location where css specific for this CustomAppearance should be stored
@@ -132,7 +136,7 @@ class CustomAppearance < ActiveRecord::Base
     # returns the location where sass source for this +css_path+ can be found
      # this path is relative to RAILS_ROOT
     # :cal-seq:
-    #   appearance.cached_css_path('as_needed/wiki') => './public/stylesheets/themes/2/1237185316/as_needed/wiki.css'
+    #   appearance.cached_css_path('as_needed/wiki') => './public/stylesheets/sass/as_needed/wiki.sass'
     def source_sass_full_path(css_path)
      # append .css if missing
      css_path = css_path + ".css" unless css_path =~ /\.css$/

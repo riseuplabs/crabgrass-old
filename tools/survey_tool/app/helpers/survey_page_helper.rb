@@ -23,8 +23,6 @@ module SurveyPageHelper
                         :partial => 'question', :object => object
 
       make_questions_sortable(page)
-
-      # "Sortable.create('questions', {elements:$$('#questions .question'), handles:$$('questions .drag_to_move') });"
     end
   end
 
@@ -34,7 +32,6 @@ module SurveyPageHelper
       unless question.new_record?
         page.insert_html :bottom, :questions, "<input type='hidden' name='survey[new_questions_attributes][#{question.id}][deleted]' value='true'>"
       end
-      #make_questions_sortable(page)
     end
   end
 
@@ -46,16 +43,38 @@ module SurveyPageHelper
     "Their answer goes here..."[:their_answer_goes_here]
   end
 
-  # def add_answer_choice_button(form)
-  #   button_to_function "Add Answer Choice" do |page|
-  #     page.insert_html :bottom, page.literal("$(this).up('.fields')"), "z"
-  #   end
-  # end
+  def respond_to_question_form(response_form, question)
+    answer = response_form.object.find_or_build_answer_for_question(question)
+    render :partial => 'survey_page/response_form/' + question.partial,
+              :locals => {:question => question, :response_form => response_form, :answer => answer}
+  end
+  
+  def show_answers_for_question(response, question)
+    # filter answers for this response and ignore unchecked checkboxes
+    answers = @response.answers.select {|a| a.question == question && a.value != SurveyAnswer::CHOICE_FOR_UNCHECKED }
+    
+    tags = answers.collect do |answer|
+      content_tag(:div, answer.value, :class => 'answer')
+    end
+    
+    tags.join("\n")
+  end
+  
+  # takes a generated +html+ like '<textarea cols="72" id="tid_42" name="text[42]" rows="6">Data</textarea>'
+  # and an +instance+ object which is a TagInstance
+  # returns modified+ html+ with error markup
+  def wrap_error_html(html, instance)
+    if html =~ /(input|textarea|select)/ and html !~ /hidden/
+      content_tag(:span, html, :class => 'fieldWithErrors')
+    else
+      html
+    end
+  end
 
   def js_next_response_options(rating)
     { :url => page_url(@page, :action => 'rate'), :loading => show_spinner('next_response'), :complete => hide_spinner('next_response'), :with =>  "'response='+$('response_id').value+'&next='+$('next_ids').value+'&rating=#{rating}'" }
   end
-  
+
   def js_next_response(rating)
     remote_function(js_next_response_options(rating))
   end

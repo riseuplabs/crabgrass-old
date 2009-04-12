@@ -3,8 +3,21 @@ class SurveyPageController < BasePageController
   stylesheet 'survey'
   javascript :extra
 
-  def show
-    redirect_to(page_url(@page, :action => 'design')) unless @survey
+  before_filter :fetch_response, :only => [:respond, :show]
+
+  def respond
+    if request.post? and @response.valid?
+      if @response.new_record?
+        @response.save!
+      else
+        @response.update_attributes(params[:response])
+      end
+
+      flash_message :success => 'Created a response!'[:response_created_message]
+      redirect_to page_url(@page, :action => 'show')
+    else
+      flash_message_now :object => @response
+    end
   end
 
   def design
@@ -20,16 +33,21 @@ class SurveyPageController < BasePageController
     if @survey.save
       @page.data = @survey
       flash_message :success => 'Created a survey!'[:survey_created_message]
-      redirect_to(page_url(@page, :action => 'show'))
+      redirect_to(page_url(@page, :action => 'respond'))
     else
       @survey.errors.each {|e| flash_message :error => e.message }
       redirect_to(page_url(@page, :action => 'design'))
     end
   end
-  
+
   def list
   end
-  
+
+  def show
+    # if we don't have a saved response we can't view it
+    redirect_to page_url(@page, :action => 'respond') if @response.new_record?
+  end
+
   def rate
     if(params[:response] && params[:rating] && params[:rating].to_i != 0 &&
        resp = @survey.responses.find(params[:response]))
@@ -41,7 +59,7 @@ class SurveyPageController < BasePageController
                        :rating => params[:rating])
       end
     end
-        
+
     ids = JSON::load(params[:next]) rescue nil
     @resp = @survey.responses.find(ids.any? ? ids.shift : :first)
     @next = @survey.responses.next_rateables(current_user, ids)
@@ -54,14 +72,14 @@ class SurveyPageController < BasePageController
       @survey_notice = "Select a rating to see the next item"[:select_a_rating]
       @next_link = false
     end
-    
+
     if request.xhr?
       render :update do |page|
         page.replace_html('response', :partial => 'response',
                           :locals => { :resp => @resp, :rating => @rating })
         page.replace_html('user_info', :partial => 'user_info',
                           :locals => { :resp => @resp })
-        page.replace_html('next_responses', :partial => 'next_responses', 
+        page.replace_html('next_responses', :partial => 'next_responses',
                           :locals => { :responses => @next })
         page.replace_html('current_rating', :partial => 'current_rating',
                           :locals => { :resp => @resp })
@@ -70,9 +88,25 @@ class SurveyPageController < BasePageController
     end
   end
 
+  protected
+
   # called early in filter chain
   def fetch_data
     return true unless @page
     @survey = @page.data
   end
+
+  def fetch_response
+    redirect_to(page_url(@page, :action => 'design')) and return unless @survey
+
+    # try to find an existing response
+    @response = @survey.responses.find_by_user_id(current_user) if logged_in?
+
+    if @response.nil?
+      # build a new response
+      @response = @survey.responses.build(params[:response])
+      @response.user = current_user
+    end
+  end
+
 end

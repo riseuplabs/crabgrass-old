@@ -8,9 +8,17 @@ class SurveyQuestion < ActiveRecord::Base
   
   acts_as_list :scope => :survey
   
-  def answer!(response, value)
-    SurveyAnswer.new(:question => self, :response => response, :value => value).save!
+  def answer_class
+    TextAnswer
   end
+
+  def build_answer(answer_attributes = {})
+    answer_attributes[:question_id] = self.id
+    answer_class.new(answer_attributes)
+  end
+  # def answer!(response, value)
+  #   answer_class.new(:question => self, :response => response, :value => value).save!
+  # end
   
   def add_question_link_text
     self.class.to_s
@@ -77,12 +85,20 @@ class ImageUploadQuestion < SurveyQuestion
   def add_question_link_text
     "Upload Image"[:upload_image_question_link]
   end
+  
+  # def answer_class
+  #   AssetAnswer
+  # end
 end
 
 ######### VIDEO LINK ###################
 class VideoLinkQuestion < SurveyQuestion
   def add_question_link_text
     "Video Link"[:video_link_question_link]
+  end
+
+  def answer_class
+    VideoLinkAnswer
   end
 end
 

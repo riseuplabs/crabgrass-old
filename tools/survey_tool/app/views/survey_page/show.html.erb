@@ -1,7 +1,14 @@
 <%= render :partial => 'tabs' %>
-<p>DEBUG</p>
-<pre>
-<%= debug @survey %>
-<%= debug @survey.questions %>
+<div id="respond_to_questions_container" class="survey_questions_container">
+    <div id="questions">
+      <% @survey.questions.each do |question| %>
+        <div class="question">
+          <span class="question_label"><%= question.label %></span>
+          <br/>
+          <%= show_answers_for_question(@response, question) %>
+        </div>
+      <% end %>
+    </div>
+</div>
 
-</pre>
+
