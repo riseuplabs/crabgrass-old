@@ -3,10 +3,10 @@ page.hide('recipient_name_auto_complete')
 
 if @recipient.nil? or flash[:type] == 'error'
   # there must have been an error
-  page.replace_html 'share_message', display_messages
+  page.replace_html 'share_error_message', display_messages
   page.hide('popup_spinner')
 else
-  page.replace_html 'share_message', ''
+  page.replace_html 'share_error_message', ''
   # we just need to update the ui to add one more recipient to the list
   page << "$('recipient_name').value = ''"
   page.insert_html(:top, 'share_page_recipients',:partial => 'recipient', :locals => { :recipient => @recipient, :access => params[:recipient][:access], :unsaved => true })

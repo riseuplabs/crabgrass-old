@@ -4,13 +4,14 @@
 
 <% popup('Share Page'[:share_page_link], :id => 'share_popup', :width => '40em') do -%>
 
-  <% form_remote_tag( :url => form_url,
+  <% form_remote_tag(
+    :url => form_url,
     :loading => show_spinner('add_recipient'),
     :html => {:id => 'share_page_form'}) do -%>
 
     <blockquote>
-    <div id='share_message'></div>
-    <%= render :partial => 'base_page/share/share_form' %>
+      <div id='share_error_message'></div>
+      <%= render :partial => 'base_page/share/share_form' %>
     </blockquote>
 
     <div class='buttons'>

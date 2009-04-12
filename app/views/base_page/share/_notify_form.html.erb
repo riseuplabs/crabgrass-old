@@ -1,17 +1,7 @@
-<%
-  #trying to create less queries for that
-
-  possible_contributors ||= {}
-  possible_contributors_groups ||= []
-  groups = @page.group_participations.find(:all, :select => :group_id, :include => :group).map(&:group)
-  groups.each do |group|
-    possible_contributors[group.name] = group.users
-    possible_contributors_groups << group
-  end
-    
-  contributors = @page.contributors
-      
--%>
+<% 
+   current_access_users = []
+   @page.groups.each {|g| current_access_users += g.users }
+%>
 
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
@@ -28,8 +18,8 @@
   <tr>
     <td></td>
     <td>
-      <div id='notify_contributor_area' class='details' style='display:none'>
-        <%= render :partial => 'notify_recipient_list', :locals => {:recipients => contributors} %>
+      <div id='notify_contributor_area' class='notify_details' style='display:none'>
+        <%= render :partial => 'notify_recipient_list', :locals => {:users => @page.contributors} %>
       </div>
     </td>
   </tr>
@@ -41,8 +31,8 @@
   <tr>
     <td></td>
     <td>
-      <div class='' style="display:none;" scroll="vertical" id='notify_current_access_area'>
-          <%= render :partial => 'base_page/share/notify_possible_contributors', :locals => { :contributors => possible_contributors, :groups => possible_contributors_groups } %>
+      <div id='notify_current_access_area' class='notify_details' style='display:none'>
+        <%= render :partial => 'notify_recipient_list', :locals => {:users => current_access_users, :groups => @page.groups} %>
       </div>
     </td>
   </tr>
@@ -53,19 +43,16 @@
   </tr>
   <tr>
     <td></td>
-    <td>
-    <div class='share_page_recipients_list' id="share_page_recipients_new" style="display:none;">     
-      <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => true} %>
-    </div>
-    </td>
+    <td><div id='share_page_recipients_new' style='display:none;'>
+      <%= render :partial => 'add_recipient_widget', :locals => {:empty_box => true} %>
+    </div></td>
   </tr>
  
   <tr>
    <td colspan="2"><h2><%= 'Notification Message'[:notify] %></h2></td>
   </tr>
-  <tr>
-    <%# render :partial => 'base_page/share/notification_message' %> 
-  </tr>
+  <%= render :partial => 'notification_message_form', :locals => {:forced_send => true} %>
+
 </table>
 
 

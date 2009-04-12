@@ -98,11 +98,27 @@ ul.participators_list
     border-bottom: 1px solid darkgrey
     clear: left
 
-div.share_page_recipients_list
-  height: 15em
-  overflow-y: scroll
-  border: 1px solid #999
+//div.share_page_recipients_list
+//  height: 15em
+//  overflow-y: scroll
+//  border: 1px solid #999
+//  background: white
+
+div.notify_details,
+div.share_details
   background: white
+  border: 1px solid #999
+  max-height: 15em
+  min-height: 5em
+  overflow-y: auto
+  table
+    width: 100%
+    td
+      padding: 0.5em 0.25em
+      overflow: hidden
+
+div.notify_details
+  padding: 0.5em
 
 table.notify
   width: 100%
@@ -111,17 +127,7 @@ table.notify
   tr.gap
     td
       padding-top: 1em
-  div.details
-    background: white
-    border: 1px solid #ccc
-    padding: 0.5em
-    max-height: 10em
-    overflow-y: auto
-    table
-      width: 100%
-      td
-        padding: 0.5em 0.25em
-        overflow: hidden
+
 
 //
 // PAGE CREATION

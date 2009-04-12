@@ -1,21 +1,36 @@
 <% 
-   # locals to take:
-   recipients = [] if recipients.nil?
+   # locals:
+   users = [] if users.nil?
+   groups = [] if groups.nil?
+
+   users.sort!{|a,b|a.name<=>b.name}
+   groups.sort!{|a,b|a.name<=>b.name}
+
+   klass = 'recipient_checkbox_'+rand(1000000).to_s
 -%>
 
-<%= column_layout(2, recipients) do |recipient| 
-  recipient_checkbox_line(recipient)
-end %>
-
-<!--
 <table>
- <tr>
-   <td style="width:50%;">Groups</td><td>Users <%# check_box(:check_all,'users') + label_tag('check_all_users',"check all"[:check_all])%></td>
- </tr>
- <tr>
- 
- <%# render :partial => 'notify_possible_contributors_groups', :locals => {:groups => groups} %>
- <%# render :partial => 'notify_possible_contributors_users', :locals => {:contributors => contributors} %>
-</tr>
+
+  <tr><td cospan='2'><label>
+    <%= check_box_tag('check_all', 1, false, :onChange => "toggle_all_checkboxes(this, 'input.#{klass}')") %>
+    <%= "Check All"[:check_all] %>
+  </label></td></tr>
+
+  <% if groups.any? and !users.empty? %>
+  <tr><td cospan='2'><b><%= "Groups"[:groups] %></b></td></tr>
+  <% end %>
+
+  <%= column_layout(2, groups, :skip_table_tag => true) do |recipient| 
+    recipient_checkbox_line(recipient, :class => klass)
+  end %>
+
+  <% if users.any? and !groups.empty? %>
+  <tr><td cospan='2'><b><%= "Users"[:users] %></b></td></tr>
+  <% end %>
+
+  <%= column_layout(2, users, :skip_table_tag => true) do |recipient| 
+    recipient_checkbox_line(recipient, :class => klass)
+  end %>
+
 </table>
--->
+

@@ -51,7 +51,8 @@ class BasePage::ShareController < ApplicationController
 #  "recipient"=>{"name"=>"", "access"=>"admin"}, "recipients"=>{"aaron"=>{"access"=>"admin"}, "the-true-levellers"=>{"access"=>"admin"}}
 
   def update
-    if params[:cancel] || !params[:recipients]
+    @success_msg ||= "You successfully shared this page."[:shared_page_success]
+    if params[:cancel]
       close_popup
     elsif params[:recipient] and params[:recipient][:name].any?
       # add one recipient to the list
@@ -63,21 +64,24 @@ class BasePage::ShareController < ApplicationController
         flash_message :error => 'you may not pester'
       end
       render :partial => 'base_page/share/add_recipient'
-    else
+    elsif params[:recipients]
       options = params[:notification] || {}
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
 
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
-      flash_message :success => "You successfully shared this page."[:shared_page_success]
+      flash_message :success => @success_msg
+      close_popup
+    else
       close_popup
     end
   end
 
   # handles the notification with or without sharing
   def notify
-    share
+    @success_msg = "You successfully sent notifications."[:notify_success]
+    update
   end
   
   protected

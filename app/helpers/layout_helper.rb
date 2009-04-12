@@ -195,11 +195,14 @@ module LayoutHelper
   # LAYOUT STRUCTURE
 
   # builds and populates a table with the specified number of columns
-  def column_layout(cols, items, &block)
+  def column_layout(cols, items, options = {}, &block)
     lines = []
     count = items.size
     rows = (count.to_f / cols).ceil
-    lines << '<table>'
+    lines << '<table>' unless options[:skip_table_tag]
+    if options[:header]
+      lines << options[:header]
+    end
     for r in 1..rows
       lines << ' <tr>'
       for c in 1..cols
@@ -216,7 +219,7 @@ module LayoutHelper
       end
       lines << ' </tr>'
     end
-    lines << '</table>'
+    lines << '</table>' unless options[:skip_table_tag]
     lines.join("\n")
   end
 

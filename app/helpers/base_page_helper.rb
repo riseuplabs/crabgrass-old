@@ -33,15 +33,9 @@ module BasePageHelper
     ret << participator.display_name
   end
 
-  def recipient_checkbox_line(recipient)
-    #field_name = (participator.kind_of?(User) ? 'user' : 'group')
-    #field_name += '-group-' if group
-    #field_name += group if group
-    #field_name += '-user-'
-    #field_name += participator.login.to_s
-    #participator.kind_of?(Group) ? (recipient_name = participator.name) : (recipient_name = participator.login) 
+  def recipient_checkbox_line(recipient, options={})
     ret = "<label>"
-    ret << check_box_tag("recipients[#{recipient.name}][notify]")
+    ret << check_box_tag("recipients[#{recipient.name}][send_notice]", 1, false, {:class => options[:class]})
     ret << entity_line(recipient)
     ret << "</label>"
   end

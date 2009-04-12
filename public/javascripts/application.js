@@ -15,6 +15,12 @@ function checkbox_toggle_visibility(checkbox, element_id) {
   else {$(element_id).hide();}
 }
 
+// toggle all checkboxes of a particular css selected, based on the
+// checked status of the checkbox passed in.
+function toggle_all_checkboxes(checkbox, selector) {
+  $$(selector).each(function(cb) {cb.checked = checkbox.checked})
+}
+
 function show_tab(tab_link, tab_content) {
   tabset = tab_link.parentNode.parentNode
   $$('ul.tabset a').each( function(elem) {

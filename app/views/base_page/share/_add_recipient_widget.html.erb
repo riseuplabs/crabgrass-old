@@ -5,7 +5,10 @@
    }"
    empty_box = false if empty_box.nil? 
 %>
-<%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
+
+<div class='share_details'>
+  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
+</div>
 
 <table class='share_page_recipients'>
   <tr>

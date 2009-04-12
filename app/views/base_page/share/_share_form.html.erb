@@ -3,47 +3,11 @@
 <div class='share_page'>
   <h2><%= 'Share this page with:'[:share_page_recipients] %></h2>
 
-  <div class='fieldset'>
-    <%= render :partial => 'base_page/share/add_recipient_widget' %>
-  </div>
+  <%= render :partial => 'add_recipient_widget' %>
 
-  <div id="notify_box" xstyle="display:none">
   <h2><%= 'Notify'[:notify] %></h2>
-  <div class='fieldset'>
-    <table class='notify'>
-    <tr>
-      <td><%= check_box :notification, :send_notice, {:onchange => "checkbox_toggle_visibility(this, 'notification_details')"} %></td>
-      <td><label for='notification_send_notice'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
-    </tr>
-    <tbody id='notification_details' style='display:none'>
-    <tr>
-      <td></td>
-      <td>
-	      <%= 'Send additional notification via'[:share_additional_notification] %>:
-	      <label><%= check_box :notification, :send_email %> <%= 'Email'[:email] %></label>
-<!--
-
-        <label><%= check_box :notification, :send_sms %> <%= 'Text Message'[:text_message] %></label>
-	      <label><%= check_box :notification, :send_xmpp %> <%= 'Chat'[:chat] %></label>
-        <br/>
-        <label><%= check_box :notification, :send_encrypted %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %></label>
-
--->
-      </td>
-    </tr>
-    <tr>
-      <td><%= check_box :notification, :include_message, :onchange => "checkbox_toggle_visibility(this, 'share_message_holder')" %></td>
-      <td><label for='notification_include_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><div id='share_message_holder' style='display:none'>
-        <%= text_area_tag 'message', '', :id => 'share_message', :rows => 6, :cols => 60 %>
-      </div></td>
-    <tr>
-    </tbody>
-    </table>
-  </div>
-  </div><!-- notify_box -->
+  <table class='notify'>
+    <%= render :partial => 'notification_message_form' %>
+  </table>
 </div>
 
