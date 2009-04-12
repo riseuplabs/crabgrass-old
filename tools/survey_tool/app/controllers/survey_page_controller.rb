@@ -65,26 +65,12 @@ class SurveyPageController < BasePageController
     @next = @survey.responses.next_rateables(current_user, ids)
     if current_user.rated?(@resp)
       @rating = current_user.rating_for(@resp).rating
-      @survey_notice = "you previously rated this item with :rating"[:you_previousely_rated]%{ :rating => @rating }
+      @survey_notice = "you previously rated this item with {rating}"[:you_previousely_rated, {:rating => @rating.to_s}]
       @next_link = true
     else
       @rating = 0
       @survey_notice = "Select a rating to see the next item"[:select_a_rating]
       @next_link = false
-    end
-
-    if request.xhr?
-      render :update do |page|
-        page.replace_html('response', :partial => 'response',
-                          :locals => { :resp => @resp, :rating => @rating })
-        page.replace_html('user_info', :partial => 'user_info',
-                          :locals => { :resp => @resp })
-        page.replace_html('next_responses', :partial => 'next_responses',
-                          :locals => { :responses => @next })
-        page.replace_html('current_rating', :partial => 'current_rating',
-                          :locals => { :resp => @resp })
-        page.replace_html('survey_notice', @survey_notice)
-      end
     end
   end
 
