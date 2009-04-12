@@ -3,13 +3,18 @@ class SurveyPageController < BasePageController
   stylesheet 'survey'
   javascript :extra
 
-  def respond
-    redirect_to(page_url(@page, :action => 'design')) unless @survey
+  before_filter :fetch_response, :only => [:respond, :show]
 
-    if request.post?
-      save_response
+  def respond
+    # don't show this page if we have the response
+    redirect_to page_url(@page, :action => 'show') unless @response.new_record?
+
+    if request.post? and @response.valid?
+      @response.save!
+      flash_message :success => 'Created a response!'[:response_created_message]
+      redirect_to page_url(@page, :action => 'show')
     else
-      edit_response
+      flash_message_now :object => @response
     end
   end
 
@@ -34,6 +39,11 @@ class SurveyPageController < BasePageController
   end
 
   def list
+  end
+
+  def show
+    # if we don't have a saved response we can't view it
+    redirect_to page_url(@page, :action => 'respond') if @response.new_record?
   end
 
   def rate
@@ -84,13 +94,17 @@ class SurveyPageController < BasePageController
     @survey = @page.data
   end
 
-  def edit_response
-    @response = @survey.responses.build(:user_id => current_user)
+  def fetch_response
+    redirect_to(page_url(@page, :action => 'design')) and return unless @survey
+
+    # try to find an existing response
+    @response = @survey.responses.find_by_user_id(current_user) if logged_in?
+
+    if @response.nil?
+      # build a new response
+      @response = @survey.responses.build(params[:response])
+      @response.user = current_user
+    end
   end
 
-  def save_response
-    require 'ruby-debug';debugger
-
-    render :text => "Response Saved"
-  end
 end

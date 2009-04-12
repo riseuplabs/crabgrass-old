@@ -36,17 +36,17 @@ class Survey < ActiveRecord::Base
     self.responses_count = self.responses.size
   end
   
-  def respond!(user, values)
-    response = SurveyResponse.new(:survey => self, :user => user)
-    response.save!
-    self.responses << response
-    self.save!
-    values.each_pair do |q, a|
-      question = SurveyQuestion.find(q)
-      question.answer!(response, a)
-    end
-    response
-  end
+  # def respond!(user, values)
+  #   response = SurveyResponse.new(:survey => self, :user => user)
+  #   response.save!
+  #   self.responses << response
+  #   self.save!
+  #   values.each_pair do |q, a|
+  #     question = SurveyQuestion.find(q)
+  #     question.answer!(response, a)
+  #   end
+  #   response
+  # end
 
   def new_questions_attributes=(question_attributes)
     question_attributes.keys.each do |id|

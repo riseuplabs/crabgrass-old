@@ -9,8 +9,8 @@
     end
     f.tab do |t|
       t.label 'Your Answers'.t
-      t.url page_url(@page, :action => 'respond')
-      t.selected action?(:show)
+      t.url page_url(@page, :action => 'show')
+      t.selected action?(:respond, :show)
     end
     f.tab do |t|
       t.label 'Rate All Answers'.t
