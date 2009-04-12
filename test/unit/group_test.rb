@@ -105,14 +105,17 @@ class GroupTest < Test::Unit::TestCase
   end
 
   def test_name_change
-    group = groups(:rainbow)
-    user = users(:blue)
+    group = groups(:true_levellers)
+    user = users(:gerrard)
 
     version = user.version
 
-    group.name = 'colors'
+    group.name = 'diggers'
     group.save!
-   
+
+    # note: if the group has a committee, and the user is a member of that
+    # committee, then the user's version will increment by more than one, 
+    # since the committees also experience a name change.
     assert_equal version+1, user.reload.version, 'user version should increment on group name change'
   end
   
