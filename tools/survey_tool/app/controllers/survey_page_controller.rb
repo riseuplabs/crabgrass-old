@@ -6,15 +6,13 @@ class SurveyPageController < BasePageController
   before_filter :fetch_response, :only => [:respond, :show]
 
   def respond
-    if !@response.new_record? and !current_user.may?(:admin,@page)
-      # don't show this page if we have the response already, unless we are
-      # have admin access to this page.
-      redirect_to page_url(@page, :action => 'show')
-      return
-    end
-
     if request.post? and @response.valid?
-      @response.save!
+      if @response.new_record?
+        @response.save!
+      else
+        @response.update_attributes(params[:response])
+      end
+
       flash_message :success => 'Created a response!'[:response_created_message]
       redirect_to page_url(@page, :action => 'show')
     else
@@ -87,26 +85,6 @@ class SurveyPageController < BasePageController
                           :locals => { :resp => @resp })
         page.replace_html('survey_notice', @survey_notice)
       end
-    end
-  end
-
-  # show the details of a response. 
-  def details
-    if params[:jump]
-      begin
-        # what should the natural order be?
-        index = @survey.response_ids.find_index(params[:id].to_i)
-        if params[:jump] == 'next'
-          id = @survey.response_ids[(index + 1) % @survey.response_ids.length] 
-        elsif params[:jump] == 'prev'
-          id = @survey.response_ids[index - 1]
-        end
-        redirect_to(page_url(@page, :action => 'details', :id => id))
-      rescue
-        redirect_to(page_url(@page, :action => 'list'))
-      end
-    else
-      @response = @survey.responses.find_by_id(params[:id])
     end
   end
 

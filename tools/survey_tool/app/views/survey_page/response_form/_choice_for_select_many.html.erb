@@ -1,7 +1,7 @@
 <div class="answer_choice select_many_answer_choice">
   <% response_form.fields_for :answers_attributes, 
     response_form.object.find_or_build_answer_for_question(question, :choice_index => choice_for_select_many[:index]), 
-    :index => question.id.to_s + "_choice_" + choice_for_select_many[:index].to_s do |f| %>
+    :index => question.id.to_s + "_choice_%03d" % choice_for_select_many[:index].to_s do |f| %>
 
     <%= f.error_message_on :value %>
     <%= f.hidden_field :question_id %>
