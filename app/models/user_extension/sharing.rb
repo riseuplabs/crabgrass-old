@@ -150,15 +150,13 @@ module UserExtension::Sharing
       # recipients is in the form 
       # {"red"=>{"access"=>"admin"}, "yellow"=>{"access"=>"admin"}, "gerrard"=>{"access"=>"admin"}}
       recipients.each_pair do |recipient,local_options|
-        share_page_with!(page,recipient,options.merge(local_options))
+        share_page_with!(page,recipient,local_options.merge(options))
       end
       return
     end
-    
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
 
-    
     ## add users to page
     users.each do |user|
       if self.share_page_with_user!(page, user, options)
@@ -214,7 +212,6 @@ module UserExtension::Sharing
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
-    
     # send to inbox if send_to_inbox is true
     if options[:send_notice]
       attrs[:inbox] = true
@@ -226,9 +223,9 @@ module UserExtension::Sharing
     end
     
     if options[:access]
-      attrs[:access] = options[:access]
+      attrs[:access] = options[:access].to_sym
     elsif options[:grant_access]
-      attrs[:grant_access] = options[:grant_access]
+      attrs[:grant_access] = options[:grant_access].to_sym
     end
 
     upart = page.add(user, attrs)
@@ -238,13 +235,13 @@ module UserExtension::Sharing
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
     if options[:access]
-      gpart = page.add(group, :access => options[:access])
-    else
+      gpart = page.add(group, :access => options[:access].to_sym)  
+     else
       options[:grant_access] ||= :view
-      gpart = page.add(group, :grant_access => options[:grant_access])
+      gpart = page.add(group, :grant_access => options[:grant_access].to_sym)
     end
     gpart.save! unless page.changed?
-
+    
     # when we get here, the group should be able to view the page.
 
     attrs = {}

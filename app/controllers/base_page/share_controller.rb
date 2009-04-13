@@ -29,8 +29,8 @@ class BasePage::ShareController < ApplicationController
  
   helper 'base_page', 'base_page/share'
 
-  def auto_complete_for_recipient_name
-    name_filter = params[:recipient][:name]
+  def auto_complete_for_recipient_name 
+   name_filter = params[:recipient][:name]
     if name_filter
       @recipients = Group.find :all, :conditions => ["groups.name LIKE ?", "#{name_filter}%"], :limit => 20
       @recipients += User.find :all, :conditions => ["users.login LIKE ?", "#{name_filter}%"], :limit => 20
@@ -52,6 +52,7 @@ class BasePage::ShareController < ApplicationController
 
   def update
     @success_msg ||= "You successfully shared this page."[:shared_page_success]
+    # raise params[:recipients][:public_group_everyone_can_see].inspect
     if params[:cancel]
       close_popup
     elsif params[:recipient] and params[:recipient][:name].any?
