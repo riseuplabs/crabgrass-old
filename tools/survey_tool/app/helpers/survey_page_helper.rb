@@ -21,7 +21,7 @@ module SurveyPageHelper
     link_to_function object.add_question_link_text do |page|
       page.insert_html :bottom, :questions,
                         :partial => 'question', :object => object
-
+      page.update_positions
       make_questions_sortable(page)
     end
   end

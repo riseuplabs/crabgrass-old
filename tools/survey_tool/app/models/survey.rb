@@ -22,9 +22,9 @@ class Survey < ActiveRecord::Base
         x.sort! do |a, b|
           (user.rated?(a) && user.rated?(b)) ? 0 : -1
         end
-        resp += limit.times.map { 
+        resp += limit.times.map do
           x.delete(x.rand)
-        }
+        end
       end
       resp.compact
     end
