@@ -170,10 +170,10 @@ class GroupController < ApplicationController
     @group.update_attributes(params[:group])
     
     if params[:group]
-      @group.publicly_visible_group         = params[:group][:publicly_visible_group]
-      @group.publicly_visible_committees    = params[:group][:publicly_visible_committees]
-      @group.publicly_visible_members       = params[:group][:publicly_visible_members]
-      @group.accept_new_membership_requests = params[:group][:accept_new_membership_requests]
+      @group.profiles.public.update_attribute :may_see, params[:group][:publicly_visible_group]
+      @group.profiles.public.update_attribute :may_see_committees , params[:group][:publicly_visible_committees]
+      @group.profiles.public.update_attribute :may_see_members , params[:group][:publicly_visible_members]
+      @group.profiles.public.update_attribute :may_request_membership , params[:group][:accept_new_membership_requests]
       @group.min_stars = params[:group][:min_stars]
       if @group.valid? && may_admin_group? && (params[:group][:council_id] != @group.council_id)
         # unset the current council if there is one

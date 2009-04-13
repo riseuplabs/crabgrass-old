@@ -43,6 +43,10 @@ class GroupsController < ApplicationController
         group.avatar = Avatar.new
         group.created_by = current_user
       end
+      @group.profiles.public.update_attribute :may_see, params[:group][:publicly_visible_group]
+      @group.profiles.public.update_attribute :may_see_committees , params[:group][:publicly_visible_committees]
+      @group.profiles.public.update_attribute :may_see_members , params[:group][:publicly_visible_members]
+      @group.profiles.public.update_attribute :may_request_membership , params[:group][:accept_new_membership_requests]
 
       # network - binding
       current_site.network.groups << @group unless current_site.network.nil?
