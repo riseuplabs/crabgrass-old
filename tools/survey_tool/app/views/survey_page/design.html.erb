@@ -1,4 +1,5 @@
 <%= render :partial => 'tabs' %>
+<%= javascript_tag "function UpdatePositions() { if(!i) i = 0; $$('#questions .question .qposition').each(function(f) { f.value = (i+=1); });}" %>
 <div id="design_questions_container" class="survey_questions_container">
   <div id="add_questions_links_bar">
     <span class="link_background">
@@ -12,5 +13,10 @@
       <%= render :partial => 'questions' %>
     </div>
   <% end %>
-  <%= javascript_tag "Sortable.create('questions', {elements:$$('#questions .question'), handles:$$('questions .drag_to_move') });"%>
+
+  <%= javascript_tag "
+Sortable.create('questions', { elements:$$('#questions .question'), 
+                  handles:$$('questions .drag_to_move'),
+                  onChange:UpdatePositions
+                });" %>
 </div>

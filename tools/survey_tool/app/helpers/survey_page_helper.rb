@@ -21,7 +21,7 @@ module SurveyPageHelper
     link_to_function object.add_question_link_text do |page|
       page.insert_html :bottom, :questions,
                         :partial => 'question', :object => object
-
+      page.update_positions
       make_questions_sortable(page)
     end
   end
@@ -72,7 +72,10 @@ module SurveyPageHelper
   end
 
   def js_next_response_options(rating)
-    { :url => page_url(@page, :action => 'rate'), :loading => show_spinner('next_response'), :complete => hide_spinner('next_response'), :with =>  "'response='+$('response_id').value+'&next='+$('next_ids').value+'&rating=#{rating}'" }
+    { :url => page_url(@page, :action => 'rate', :response => @response.id, :rating => rating),
+      :loading => show_spinner('next_response'),
+      :complete => hide_spinner('next_response')
+    }
   end
 
   def js_next_response(rating)
