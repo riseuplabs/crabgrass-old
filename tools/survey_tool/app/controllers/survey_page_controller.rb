@@ -41,6 +41,7 @@ class SurveyPageController < BasePageController
   end
 
   def list
+    @responses = @survey.responses.paginate(:all, :include => ['answers', 'ratings'], :page => params[:page])
   end
 
   def show
@@ -72,6 +73,19 @@ class SurveyPageController < BasePageController
       @survey_notice = "Select a rating to see the next item"[:select_a_rating]
       @next_link = false
     end
+  end
+
+  def details
+    if params[:jump]  
+      begin
+        index = @survey.response_ids.find_index(params[:id].to_i)
+        id = @survey.response_ids[(index+1) % @survey.response_ids.size] if params[:jump] == 'next'      
+        id = @survey.response_ids[index-1] if params[:jump] == 'prev'
+        redirect_to page_url(@page, :action => 'details', :id => id)
+        return
+      end
+    end
+    @response = @survey.responses.find_by_id(params[:id])
   end
 
   protected
