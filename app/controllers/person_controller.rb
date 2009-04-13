@@ -19,7 +19,7 @@ class PersonController < ApplicationController
   end
     
   def show
-    @activities = Activity.for_user(@user, (current_user if logged_in?)).newest.unique.find(:all)
+    @activities = Activity.for_user(@user, (current_user if logged_in?)).only_visible_groups.newest.unique.find(:all)
         
     params[:path] ||= ""
     params[:path] = params[:path].split('/')
