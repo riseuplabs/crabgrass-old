@@ -1,7 +1,7 @@
 module SurveyUserExtension
   def self.add_to_class_definition
     lambda { 
-      has_many :responses, :dependent => :destroy
+      has_many :responses, :dependent => :destroy, :class_name => 'SurveyResponse'
     }
   end
   module InstanceMethods
@@ -14,4 +14,4 @@ module SurveyUserExtension
     end 
   end
 end
-  
+

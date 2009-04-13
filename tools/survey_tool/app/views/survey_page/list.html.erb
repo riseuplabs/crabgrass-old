@@ -1,16 +1,23 @@
 <%= render :partial => 'tabs' %>
+
+<%= pagination_links @responses, :params => {:action => 'list'} %>
+
 <table id='survey_answers' class='pretty'>
   <tr>
     <th>user</th>
+    <th>created</th>
+    <!-- <th>modified</th> -->
     <th>rating</th>
-    <%- (questions=@survey.questions[0..5]).each do |question| -%>
+    <%- (questions=@survey.questions[0..2]).each do |question| -%>
       <th><%= truncate(question.label) %></th>
     <%- end -%>
   </tr>
-  <%- @survey.responses.find(:all, :include => ['answers', 'ratings']).each do |resp| -%>
+  <%- @responses.each do |resp| -%>
     <% url = page_url(@page, :action => 'details', :id => resp.id) %>
     <tr class="<%= cycle 'odd', 'even' %>">
       <td><%= resp.user.login %></td>
+      <td><%= friendly_date resp.created_at %></td>
+      <!-- <td><%# friendly_date resp.updated_at %></td> -->
       <td><%= resp.rating %></td>
       <%- questions.each do |question| -%>
       <td>
@@ -21,3 +28,5 @@
     </tr>
   <%- end -%>
 </table>
+
+<%= pagination_links @responses, :params => {:action => 'list'} %>

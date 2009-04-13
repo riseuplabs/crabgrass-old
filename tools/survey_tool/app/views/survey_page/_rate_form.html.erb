@@ -1,0 +1,28 @@
+<table>
+<!-- ratings row -->
+<tr>
+  <td id="current_rating">
+    <%= render :partial => 'current_rating', :locals => { :resp => @resp } %>
+  </td>
+  <td id="your_rating">
+  	<h3 class='alert'>Your Rating Of This Response <span>(<%= link_to_remote("skip"[:skip], js_next_response_options(0), :id => 'next_response_link') %>)</span></h3>
+    <div class="rate_bar round">
+      <%= render :partial => 'rating_bar' %>
+    </div>
+
+    <%= @survey_notice %>
+  </td>
+</tr>
+<tr><td colspan='2'>&nbsp;</td></tr>
+<!-- survey data row -->
+<tr>
+  <td id="user_info">
+    <%= render :partial => 'user_info', :locals => { :resp => @resp} %>
+  </td>
+
+  <td id="response">
+    <%= render :partial => 'response', :locals => {:resp => @resp, :rating => @rating} %>
+  </td>
+</tr>
+</table>
+

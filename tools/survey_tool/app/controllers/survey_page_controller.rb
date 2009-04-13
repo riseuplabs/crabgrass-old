@@ -41,6 +41,7 @@ class SurveyPageController < BasePageController
   end
 
   def list
+    @responses = @survey.responses.paginate(:all, :include => ['answers', 'ratings'], :page => params[:page])
   end
 
   def show
@@ -65,27 +66,26 @@ class SurveyPageController < BasePageController
     @next = @survey.responses.next_rateables(current_user, ids)
     if current_user.rated?(@resp)
       @rating = current_user.rating_for(@resp).rating
-      @survey_notice = "you previously rated this item with :rating"[:you_previousely_rated]%{ :rating => @rating }
+      @survey_notice = "you previously rated this item with {rating}"[:you_previousely_rated, {:rating => @rating.to_s}]
       @next_link = true
     else
       @rating = 0
       @survey_notice = "Select a rating to see the next item"[:select_a_rating]
       @next_link = false
     end
+  end
 
-    if request.xhr?
-      render :update do |page|
-        page.replace_html('response', :partial => 'response',
-                          :locals => { :resp => @resp, :rating => @rating })
-        page.replace_html('user_info', :partial => 'user_info',
-                          :locals => { :resp => @resp })
-        page.replace_html('next_responses', :partial => 'next_responses',
-                          :locals => { :responses => @next })
-        page.replace_html('current_rating', :partial => 'current_rating',
-                          :locals => { :resp => @resp })
-        page.replace_html('survey_notice', @survey_notice)
+  def details
+    if params[:jump]  
+      begin
+        index = @survey.response_ids.find_index(params[:id].to_i)
+        id = @survey.response_ids[(index+1) % @survey.response_ids.size] if params[:jump] == 'next'      
+        id = @survey.response_ids[index-1] if params[:jump] == 'prev'
+        redirect_to page_url(@page, :action => 'details', :id => id)
+        return
       end
     end
+    @response = @survey.responses.find_by_id(params[:id])
   end
 
   protected

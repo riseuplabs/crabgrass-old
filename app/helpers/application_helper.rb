@@ -83,8 +83,24 @@ module ApplicationHelper
                                     }
   end
 
-  def pagination_links(things, param_name='page')
-    will_paginate things, :param_name => param_name, :renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]
+  # 
+  # Default pagination link options:
+  # 
+  #   :class        => 'pagination',
+  #   :prev_label   => '&laquo; Previous',
+  #   :next_label   => 'Next &raquo;',
+  #   :inner_window => 4, # links around the current page
+  #   :outer_window => 1, # links around beginning and end
+  #   :separator    => ' ',
+  #   :param_name   => :page,
+  #   :params       => nil,
+  #   :renderer     => 'WillPaginate::LinkRenderer',
+  #   :page_links   => true,
+  #   :container    => true
+  #
+  def pagination_links(things, options={})
+    defaults = {:renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+    will_paginate(things, defaults.merge(options))
   end
   
   def options_for_my_groups(selected=nil)
