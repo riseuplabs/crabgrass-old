@@ -72,7 +72,10 @@ module SurveyPageHelper
   end
 
   def js_next_response_options(rating)
-    { :url => page_url(@page, :action => 'rate'), :loading => show_spinner('next_response'), :complete => hide_spinner('next_response'), :with =>  "'response='+$('response_id').value+'&next='+$('next_ids').value+'&rating=#{rating}'" }
+    { :url => page_url(@page, :action => 'rate', :response => @response.id, :rating => rating),
+      :loading => show_spinner('next_response'),
+      :complete => hide_spinner('next_response')
+    }
   end
 
   def js_next_response(rating)
