@@ -54,7 +54,7 @@ module SurveyPageHelper
     answers = @response.answers.select {|a| a.question == question && a.value != SurveyAnswer::CHOICE_FOR_UNCHECKED }
     
     tags = answers.collect do |answer|
-      content_tag(:div, answer.value, :class => 'answer')
+      content_tag(:div, answer.display_value, :class => 'answer')
     end
     
     tags.join("\n")

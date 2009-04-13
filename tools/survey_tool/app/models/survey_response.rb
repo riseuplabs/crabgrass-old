@@ -2,7 +2,6 @@ class SurveyResponse < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # to truncate
 
   attr_accessible :answers_attributes
-  # validates_associated :answers, :message => ""
 
   belongs_to :user
   belongs_to :survey
@@ -20,7 +19,7 @@ class SurveyResponse < ActiveRecord::Base
     if candidates.empty?
       # we have nothing, create a new one
       answer = question.build_answer
-      self.answers << answer
+      self.answers.unshift answer
       answer
     else
       # we have more than one answer for this question

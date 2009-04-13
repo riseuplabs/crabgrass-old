@@ -526,7 +526,7 @@ ActiveRecord::Schema.define(:version => 20090412201502) do
     t.text     "value"
     t.string   "type"
     t.datetime "created_at"
-    t.integer  "external_gallery_id", :limit => 11
+    t.integer  "external_video_id", :limit => 11
   end
 
   create_table "survey_questions", :force => true do |t|
