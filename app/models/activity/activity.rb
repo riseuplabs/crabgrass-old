@@ -80,14 +80,12 @@ class Activity < ActiveRecord::Base
   # (2) subject is friend of current_user
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  # (5) if the object is a group make sure it is visible.
-  #
   named_scope :for_dashboard, lambda {|user,site|
     site.network.nil? ?
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
-        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-        (subject_type = 'Group' AND subject_id IN (?)) ",
+       (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
+       (subject_type = 'Group' AND subject_id IN (?)) ",
       user.id,
       user.friend_id_cache,
       Activity::PRIVATE,
