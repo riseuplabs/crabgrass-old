@@ -78,7 +78,7 @@ class GroupController < ApplicationController
       @tags    = Tag.for_taggables(Page,page_ids).find(:all)
     else 
       @pages = []
-      @tags  = Tag.page_tags_for_group(@group)
+      @tags  = Page.tags_for_group(:group => @group, :current_user => (current_user if logged_in?))
     end
   end
 

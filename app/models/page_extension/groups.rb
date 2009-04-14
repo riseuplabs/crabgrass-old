@@ -91,8 +91,6 @@ module PageExtension::Groups
     # (based on what pages the current_user can see)
     # 
     def month_counts(options)
-      group = options[:group]
-      current_user = options[:current_user]
       field = case options[:field]
         when 'created': 'created_at'
         when 'updated': 'updated_at'
@@ -100,22 +98,39 @@ module PageExtension::Groups
         else 'error'
       end
 
-      if current_user and current_user.may?(:edit, group)
-        # current_user can see all the group's pages
-        access_filter = PageTerms.access_filter_for(group)
-      elsif current_user
-        # current_user can see public pages OR pages it has access to.
-        access_filter = "(%s) (%s)" % [PageTerms.access_filter_for(group, :public), PageTerms.access_filter_for(group, current_user)]
-      else
-        # only show public pages
-        access_filter = PageTerms.access_filter_for(group, :public)
-      end
-
       sql = "SELECT MONTH(pages.#{field}) AS month, YEAR(pages.#{field}) AS year, count(pages.id) as page_count "
       sql += "FROM pages JOIN page_terms ON pages.id = page_terms.page_id "
-      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) AND pages.flow IS NULL " % access_filter
+      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) AND page_terms.flow IS NULL " % access_filter(options)
       sql += "GROUP BY year, month ORDER BY year, month"
       Page.connection.select_all(sql)
+    end
+
+    def tags_for_group(options)
+      Tag.find_by_sql(%Q[
+        SELECT tags.*, count(name) as count
+        FROM tags
+        INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
+        INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
+        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{access_filter(options)}' IN BOOLEAN MODE) AND page_terms.flow IS NULL
+        GROUP BY name
+        ORDER BY name
+      ])
+    end
+
+
+    def access_filter(options)
+      group = options[:group]
+      current_user = options[:current_user]
+      if current_user and current_user.may?(:edit, group)
+        # current_user can see all the group's pages
+        PageTerms.access_filter_for(group)
+      elsif current_user
+        # current_user can see public pages OR pages it has access to.
+        "(%s) (%s)" % [PageTerms.access_filter_for(group, :public), PageTerms.access_filter_for(group, current_user)]
+      else
+        # only show public pages
+        PageTerms.access_filter_for(group, :public)
+      end
     end
   end
 
