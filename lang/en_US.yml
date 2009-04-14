@@ -754,6 +754,8 @@ ranked_vote_instructions: |
 
 design_survey: Design Survey
 save_survey: Save Survey
+really_delete_your_response: "Do you really want to delete your response?"
+really_delete_users_response: "Do you really want to delete the response submitted by %s?"
 
 ##
 ## EXTERNAL VIDEO
@@ -870,4 +872,3 @@ add_one_or_more_tags: "Add one or more tags, separated by commas"
 separate_tags: "Separate tags using commas."
 add_tags: "Add Tags"
 current_tags: "Current Tags"
-

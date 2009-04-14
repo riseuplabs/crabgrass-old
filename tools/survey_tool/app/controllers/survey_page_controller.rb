@@ -5,6 +5,7 @@ class SurveyPageController < BasePageController
 
   before_filter :fetch_response, :only => [:respond, :show]
 
+  
   def respond
     if request.post?
       save_response
@@ -12,6 +13,28 @@ class SurveyPageController < BasePageController
       @response.valid?
       flash_message_now :object => @response
     end
+  end
+  
+  def delete_response
+    redirect_to page_url(@page) unless request.post?
+    if params[:id] && current_user.may?(:admin, @page)
+      @response = @survey.responses.find(params[:id])
+    else
+      @response = @response.find_by_user_id(current_user.id)
+    end
+    if @response
+      if params[:jump]
+        begin
+          index = @survey.response_ids.find_index(params[:id].to_i)
+          id = @survey.response_ids[(params[:jump] == 'prev') ? (index-1) : 
+                                    ((index+1) % @survey.response_ids.size)]
+        end
+      end
+      @response.destroy
+    end
+    redirect_to page_url(*[@page, (params[:jump] && @response ? {
+                                       :action => 'details', :id => id } : nil)
+                            ].compact)
   end
 
   def design
@@ -86,7 +109,7 @@ class SurveyPageController < BasePageController
   def authorized?
     if @page.nil?
       true
-    elsif action?(:details, :show, :rate, :respond)
+    elsif action?(:details, :show, :rate, :respond, :delete_response)
       current_user.may?(:edit, @page)
     else
       current_user.may?(:admin, @page)
