@@ -91,6 +91,12 @@ class ExternalVideo < ActiveRecord::Base
     service[:template ] % [media_key, width, height] if service
   end
   
+  def media_embed=(str)
+    # @service is a cache that needs to be cleared
+    @service = nil
+    write_attribute(:media_embed, str)
+  end
+
   def update_page_terms
     self.page_terms = page.page_terms unless page.nil?
   end

@@ -1,5 +1,7 @@
 <%= render :partial => 'tabs' %>
 
+<% if @response %>
+
 <div id='rate_survey'>
   <%= render :partial => 'rate_form' %>
 </div>
@@ -10,3 +12,8 @@
   </div>
 <% end %>
 
+<% else %>
+
+  <%= :no_search_results.t %>
+
+<% end %>

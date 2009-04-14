@@ -86,9 +86,9 @@ class ImageUploadQuestion < SurveyQuestion
     "Upload Image"[:upload_image_question_link]
   end
   
-  # def answer_class
-  #   AssetAnswer
-  # end
+  def answer_class
+    AssetAnswer
+  end
 end
 
 ######### VIDEO LINK ###################

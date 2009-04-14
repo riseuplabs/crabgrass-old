@@ -6,16 +6,10 @@ class SurveyPageController < BasePageController
   before_filter :fetch_response, :only => [:respond, :show]
 
   def respond
-    if request.post? and @response.valid?
-      if @response.new_record?
-        @response.save!
-      else
-        @response.update_attributes(params[:response])
-      end
-
-      flash_message :success => 'Created a response!'[:response_created_message]
-      redirect_to page_url(@page, :action => 'show')
+    if request.post?
+      save_response
     else
+      @response.valid?
       flash_message_now :object => @response
     end
   end
@@ -50,36 +44,35 @@ class SurveyPageController < BasePageController
   end
 
   def rate
+    # set the rating for the current response
     if(params[:response] && params[:rating] && params[:rating].to_i != 0 &&
-       resp = @survey.responses.find(params[:response]))
+      resp = @survey.responses.find(params[:response]))
       if rating = current_user.rating_for(resp)
-        rating.rating = params[:rating]
-        rating.save!
-      else
-        Rating.create!(:rateable => resp, :user => current_user,
-                       :rating => params[:rating])
+        # we must destroy the rating, so that the timestamp will change.
+        rating.destroy
       end
+      Rating.create!(:rateable => resp, :user => current_user, :rating => params[:rating])
     end
 
-    ids = JSON::load(params[:next]) rescue nil
-    @resp = @survey.responses.find(ids.any? ? ids.shift : :first)
-    @next = @survey.responses.next_rateables(current_user, ids)
-    if current_user.rated?(@resp)
-      @rating = current_user.rating_for(@resp).rating
-      @survey_notice = "you previously rated this item with {rating}"[:you_previousely_rated, {:rating => @rating.to_s}]
+    @next = @survey.responses.unrated_by(current_user, 4)
+    @next = @survey.responses.rated_by(current_user, 4) if @next.empty?
+    @response = @next.shift # pop off the first item
+    if current_user.rated?(@response)
+      @rating = current_user.rating_for(@response).rating
+      @survey_notice = "You previously rated this item with {rating}."[:you_previousely_rated, {:rating => @rating.to_s}]
       @next_link = true
     else
       @rating = 0
-      @survey_notice = "Select a rating to see the next item"[:select_a_rating]
+      @survey_notice = "Select a rating to see the next item."[:select_a_rating]
       @next_link = false
     end
   end
 
   def details
-    if params[:jump]  
+    if params[:jump]
       begin
         index = @survey.response_ids.find_index(params[:id].to_i)
-        id = @survey.response_ids[(index+1) % @survey.response_ids.size] if params[:jump] == 'next'      
+        id = @survey.response_ids[(index+1) % @survey.response_ids.size] if params[:jump] == 'next'
         id = @survey.response_ids[index-1] if params[:jump] == 'prev'
         redirect_to page_url(@page, :action => 'details', :id => id)
         return
@@ -90,10 +83,28 @@ class SurveyPageController < BasePageController
 
   protected
 
+  def save_response
+    begin
+      if @response.new_record?
+        @response.save!
+      else
+        @response.update_attributes!(params[:response])
+      end
+    rescue Exception => exc
+      # we have an error
+      flash_message_now :object => @response
+      return
+    end
+
+    # everything went well
+    flash_message :success => 'Created a response!'[:response_created_message]
+    redirect_to page_url(@page, :action => 'show')
+  end
+
   # called early in filter chain
   def fetch_data
     return true unless @page
-    @survey = @page.data
+    @survey = @page.data || Survey.new
   end
 
   def fetch_response

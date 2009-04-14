@@ -1,36 +1,28 @@
 class Survey < ActiveRecord::Base
+
   has_many(:questions, :order => :position, :dependent => :destroy,
            :class_name => 'SurveyQuestion')
+
   has_many(:responses, :dependent => :destroy,
            :class_name => 'SurveyResponse') do
+    
     # returns all responses, except the one of the user herself
-    def rateable_by(user)
-      self.find(:all, :conditions => ["user_id != ?", user.id])
-    end
+    #def rateable_by(user)
+    #  self.find(:all, :conditions => ["user_id != ?", user.id])
+    #end
   
     # returns `count' responses, the given `user' may rate on, but hasn't yet.
-    # if an Array of `ids' is given, those responses are fetched first and then
-    # filled up until `count' is reached.
-    def next_rateables(user, ids=nil, count=3)
-      resp = ((ids && ids.any?) ? self.find(ids) : [])
-      if (limit=(count-resp.size)) > 0
-        all = (self.rateable_by(user)-resp)
-        x = all.select { |r|
-          !(r.ratings.by_user(user).any?)
-        }
-        all-=x
-        resp += limit.times.map do
-          x.delete(x.rand)
-        end
-        resp.compact!
-        if resp.size < count
-          resp+=all[0..(count-resp.size-1)]
-        end
-      end
-      resp.compact
+    def unrated_by(user, count)
+      # (proxy_owner is the Survey)
+      self.find_by_sql([NEEDS_RATING_SQL, proxy_owner.id, user.id, user.id, count])
     end
-  end
 
+    # returns responses that the user has already rated.
+    def rated_by(user, count)
+      self.find(:all, :conditions => ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], :include => :ratings, :order => 'ratings.created_at ASC', :limit => count)
+    end
+
+  end
   
   before_save :update_response_count
   def update_response_count
@@ -68,4 +60,12 @@ class Survey < ActiveRecord::Base
     end
   end
 
+  # SQL for finding all the responses that a user has not yet rated.
+  # args: [survey_id, user_id, user_id, limit]
+  NEEDS_RATING_SQL = "SELECT survey_responses.* FROM survey_responses WHERE survey_responses.survey_id = ? AND survey_responses.user_id != ? AND survey_responses.id NOT IN (SELECT ratings.rateable_id FROM ratings WHERE ratings.rateable_type = 'SurveyResponse' AND ratings.user_id = ?) ORDER BY survey_responses.id LIMIT ?"
+
+  ALREADY_RATED_SQL = "SELECT survey_responses.* FROM survey_responses WHERE survey_responses.survey_id = ? AND survey_responses.user_id != ? AND survey_responses.id IN (SELECT ratings.rateable_id FROM ratings WHERE ratings.rateable_type = 'SurveyResponse' AND ratings.user_id = ?) ORDER BY survey_responses.id LIMIT ?"
+
+
 end
+

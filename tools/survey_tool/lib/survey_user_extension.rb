@@ -10,6 +10,7 @@ module SurveyUserExtension
     end
   
     def rated?(rateable)
+      return false unless rateable
       rating_for(rateable) ? true : false
     end 
   end
