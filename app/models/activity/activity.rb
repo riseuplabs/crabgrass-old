@@ -62,6 +62,16 @@ class Activity < ActiveRecord::Base
 
   named_scope :unique, {:group => '`key`'}
 
+  named_scope :only_visible_groups, 
+    {:joins => "LEFT JOIN profiles ON
+      object_type <=> 'Group' AND
+      profiles.entity_type <=> 'Group' AND 
+      profiles.entity_id <=> object_id AND
+      profiles.stranger = TRUE", 
+    :conditions => "NOT profiles.may_see <=> FALSE",
+    :select => "activities.*",
+  }
+
   # for user's dashboard
   #
   # show all activity for:
