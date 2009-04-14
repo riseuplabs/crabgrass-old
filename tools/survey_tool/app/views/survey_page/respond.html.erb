@@ -4,7 +4,11 @@
     <div id="questions">
       <% @survey.questions.each do |question| %>
         <div class="question">
-          <span class="question_label"><%= question.label %></span>
+          <h2 class="dim question_label"><%= h question.label %>
+            <% if question.private? -%>
+              <span>&bull;&nbsp;<%= "private"[:private] %></span>
+            <% end -%>
+          </h2>
           <br/>
           <% with_error_proc method(:wrap_error_html).to_proc do %>
             <%= respond_to_question_form(f, question) %>

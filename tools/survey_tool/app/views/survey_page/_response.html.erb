@@ -8,10 +8,10 @@
       else
         element.checked = false;
   });
-  if(#{@next_link.to_s})
+/*  if(#{@next_link.to_s})
     $('next_response_link').show();
   else
-    $('next_response_link').hide();
+    $('next_response_link').hide();*/
   " -%>
 <table class="answers">
   <% resp.answers.each do |answer| -%>
@@ -19,7 +19,8 @@
       <td><strong><%= answer.question.label %>:</strong></td>
     </tr>
     <tr>
-      <td><%= answer.value %></td>
+      <td>
+	<%= answer.question.private ? "(#{:private.t})" : answer.value  %></td>
     </tr>
    <tr>
       <td>&nbsp;</td>

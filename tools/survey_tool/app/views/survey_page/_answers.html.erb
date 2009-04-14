@@ -3,9 +3,13 @@
   <div id="questions">
     <%- @survey.questions.each do |question| -%>
       <div class="question">
-        <span class="question_label"><%= h question.label %></span>
+        <h2 class="dim question_label"><%= h question.label %>
+          <% if question.private? -%>
+            <span>&bull;&nbsp;<%= "private"[:private] %></span>
+          <% end -%>
+        </h2>
         <br/>
-        <%= show_answers_for_question(@response, question) %>
+	<%= show_answers_for_question(@response, question) %>
       </div>
     <%- end -%>
   </div>

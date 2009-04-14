@@ -24,8 +24,20 @@
       line-height: 3em
 
 .survey_questions_container
+  #survey_settings
+    float: right
+    background-color= !draggable_item_bg_color
+    border= !draggable_item_border
+    padding: 1em
+    #rating_details
+      label.disabled
+        color= !draggable_item_bg_label_color
+      margin-left: 1em
   .question_label
+    font-size: 1em
+    color: black
     font-weight: bold
+    padding-bottom: 0
   .question
     background-color= !draggable_item_bg_color
     border= !draggable_item_border
@@ -54,6 +66,14 @@
 //      input
 //        border: 1px grey solid
 //        height: 1.5em
+      .caption
+        margin-top: 1.5em
+    .private_question
+      label
+        font-size: 0.8em
+      top: 0px
+      left: 0px
+      position: absolute
     .caption
       float: left
 //      margin-left: 1.5em

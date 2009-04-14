@@ -1,9 +1,6 @@
 <%= render :partial => 'tabs' %>
 <%= javascript_tag "function UpdatePositions() { if(!i) i = 0; $$('#questions .question .qposition').each(function(f) { f.value = (i+=1); });}
-function UpdateSettingsView() {
-  if($('rating_enabled').checked) $('rating_details').show(); else $('rating_details').hide();
-}
-" %>
+function UpdateSettingsView() { e = $('participants_can_rate'); if($('rating_enabled').checked) { $('participants_can_rate_label').removeClassName('disabled');e.disabled = false; } else { e.disabled = true; e.checked = false;$('participants_can_rate_label').addClassName('disabled'); }}" %>
 <div id="design_questions_container" class="survey_questions_container">
   <div id="add_questions_links_bar">
     <span class="link_background">
@@ -13,18 +10,22 @@ function UpdateSettingsView() {
   </div>
   <% form_for :survey, @survey, :url => page_url(@page, :action => :save_design) do |f| %>
     <%= submit_tag "Save Survey".t, :class => "submit" %><br />
-    <%= f.check_box :rating_enabled, :id => 'rating_enabled', 
-                    :onChange => "UpdateSettingsView();" %>
-    <%= f.label :rating_enabled, "Allow rating on responses?"[:allow_rating] %>
-    <br />
-    <span id="rating_details" style="display:none;margin-left:1em;">
-      <%= f.check_box :participants_can_rate %>
-      <%= f.label :participants_can_rate, "Allow rating by participants?"[:allow_participant_rating] %>
+    <div id="survey_settings">
+      <strong class="caption"><%= "Settings"[:settings] %>:</strong>
       <br />
-    </span>
-    <%= javascript_tag("UpdateSettingsView();"); %>
-    <%= f.check_box :responses_enabled %>
-    <%= f.label :responses_enabled, "Enable responses?"[:allow_responses] %>
+      <%= f.check_box :rating_enabled, :id => 'rating_enabled', 
+          :onChange => "UpdateSettingsView();" %>
+      <%= f.label :rating_enabled, "Allow rating on responses?"[:allow_rating] %>
+      <br />
+      <span id="rating_details">
+	<%= f.check_box :participants_can_rate, :id => 'participants_can_rate' %>
+	<%= f.label :participants_can_rate, "Allow rating by participants?"[:allow_participant_rating], :id => 'participants_can_rate_label' %>
+	<br />
+      </span>
+      <%= javascript_tag("UpdateSettingsView();"); %>
+      <%= f.check_box :responses_enabled %>
+      <%= f.label :responses_enabled, "Enable responses?"[:allow_responses] %>
+    </div>
     <div id="questions">
       <%= render :partial => 'questions' %>
     </div>

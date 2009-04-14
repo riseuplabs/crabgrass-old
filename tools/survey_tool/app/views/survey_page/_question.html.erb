@@ -1,13 +1,18 @@
+<% q_id = question.new_record? ? "new_#{rand}" : question.id %>
+
 <div class="question handle">
+<% fields_for "survey[new_questions_attributes][#{q_id}]", question do |qform| %>
   <strong class="caption"><%= "Question:"[:question_label] %></strong>
   <span class="drag_to_move small_icon change_order_16"><%= "drag to move"[:drag_to_move] %></span>
   <%= delete_question_function(question) %>
   <div class="fields">
-    <% q_id = question.new_record? ? "new_#{rand}" : question.id %>
-    <% fields_for "survey[new_questions_attributes][#{q_id}]", question do |qform| %>
-      <%= qform.hidden_field 'type' %>
-      <%= qform.hidden_field 'position', :class => 'qposition' %>
-      <%= render :partial => question.partial, :locals => {:form => qform, :question => question} %>
-    <% end %>
+    <div class="private_question">
+      <%= qform.check_box(:private) %>
+      <%= qform.label(:private, "Private Question"[:private_question]) %>
+    </div>
+    <%= qform.hidden_field 'type' %>
+    <%= qform.hidden_field 'position', :class => 'qposition' %>
+    <%= render :partial => question.partial, :locals => {:form => qform, :question => question} %>
   </div>
+<% end %>
 </div>
