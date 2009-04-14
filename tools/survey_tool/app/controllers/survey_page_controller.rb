@@ -5,7 +5,6 @@ class SurveyPageController < BasePageController
 
   before_filter :fetch_response, :only => [:respond, :show]
 
-  
   def respond
     if request.post?
       save_response
@@ -109,8 +108,10 @@ class SurveyPageController < BasePageController
   def authorized?
     if @page.nil?
       true
-    elsif action?(:details, :show, :rate, :respond, :delete_response)
+    elsif action?(:details, :show, :respond, :delete_response)
       current_user.may?(:edit, @page)
+    elsif action?(:rate)
+      @survey.rating_enabled? && current_user.may?(:edit, @page)
     else
       current_user.may?(:admin, @page)
     end

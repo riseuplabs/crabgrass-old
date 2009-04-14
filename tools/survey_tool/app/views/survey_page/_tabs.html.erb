@@ -14,10 +14,12 @@
       t.url page_url(@page, :action => 'show')
       t.selected action?(:respond, :show)
     end
-    f.tab do |t|
-      t.label 'Rate All Answers'.t
-      t.url page_url(@page, :action => 'rate')
-      t.selected action?(:rate)
+    if @survey.rating_enabled?
+      f.tab do |t|
+        t.label 'Rate All Answers'.t
+        t.url page_url(@page, :action => 'rate')
+        t.selected action?(:rate)
+      end
     end
     if current_user.may?(:admin, @page)
       f.tab do |t|

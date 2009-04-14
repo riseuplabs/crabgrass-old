@@ -9,6 +9,8 @@
   </div>
   <% form_for :survey, @survey, :url => page_url(@page, :action => :save_design) do |f| %>
     <%= submit_tag "Save Survey".t, :class => "submit" %>
+    <%= f.check_box :rating_enabled %>
+    <%= f.label :rating_enabled, "Allow rating on responses?"[:allow_rating] %>
     <div id="questions">
       <%= render :partial => 'questions' %>
     </div>

@@ -756,6 +756,7 @@ design_survey: Design Survey
 save_survey: Save Survey
 really_delete_your_response: "Do you really want to delete your response?"
 really_delete_users_response: "Do you really want to delete the response submitted by %s?"
+allow_rating: "Allow rating on responses?"
 
 ##
 ## EXTERNAL VIDEO
