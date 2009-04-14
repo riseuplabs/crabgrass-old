@@ -20,7 +20,7 @@ class SurveyPageController < BasePageController
     if params[:id] && current_user.may?(:admin, @page)
       @response = @survey.responses.find(params[:id])
     else
-      @response = @response.find_by_user_id(current_user.id)
+      @response = @survey.responses.find_by_user_id(current_user.id)
     end
     if @response
       if params[:jump]
