@@ -6,16 +6,10 @@ class SurveyPageController < BasePageController
   before_filter :fetch_response, :only => [:respond, :show]
 
   def respond
-    if request.post? and @response.valid?
-      if @response.new_record?
-        @response.save!
-      else
-        @response.update_attributes(params[:response])
-      end
-
-      flash_message :success => 'Created a response!'[:response_created_message]
-      redirect_to page_url(@page, :action => 'show')
+    if request.post?
+      save_response
     else
+      @response.valid?
       flash_message_now :object => @response
     end
   end
@@ -75,10 +69,10 @@ class SurveyPageController < BasePageController
   end
 
   def details
-    if params[:jump]  
+    if params[:jump]
       begin
         index = @survey.response_ids.find_index(params[:id].to_i)
-        id = @survey.response_ids[(index+1) % @survey.response_ids.size] if params[:jump] == 'next'      
+        id = @survey.response_ids[(index+1) % @survey.response_ids.size] if params[:jump] == 'next'
         id = @survey.response_ids[index-1] if params[:jump] == 'prev'
         redirect_to page_url(@page, :action => 'details', :id => id)
         return
@@ -88,6 +82,24 @@ class SurveyPageController < BasePageController
   end
 
   protected
+
+  def save_response
+    begin
+      if @response.new_record?
+        @response.save!
+      else
+        @response.update_attributes!(params[:response])
+      end
+    rescue Exception => exc
+      # we have an error
+      flash_message_now :object => @response
+      return
+    end
+
+    # everything went well
+    flash_message :success => 'Created a response!'[:response_created_message]
+    redirect_to page_url(@page, :action => 'show')
+  end
 
   # called early in filter chain
   def fetch_data
