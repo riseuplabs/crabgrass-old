@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090412201502) do
+ActiveRecord::Schema.define(:version => 20090414191611) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -520,9 +520,9 @@ ActiveRecord::Schema.define(:version => 20090412201502) do
   end
 
   create_table "survey_answers", :force => true do |t|
-    t.integer  "question_id",         :limit => 11
-    t.integer  "response_id",         :limit => 11
-    t.integer  "asset_id",            :limit => 11
+    t.integer  "question_id",       :limit => 11
+    t.integer  "response_id",       :limit => 11
+    t.integer  "asset_id",          :limit => 11
     t.text     "value"
     t.string   "type"
     t.datetime "created_at"
@@ -557,6 +557,7 @@ ActiveRecord::Schema.define(:version => 20090412201502) do
     t.text     "description"
     t.datetime "created_at"
     t.integer  "responses_count", :limit => 11, :default => 0
+    t.boolean  "rating_enabled",                :default => false
   end
 
   create_table "taggings", :force => true do |t|
