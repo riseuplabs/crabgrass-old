@@ -14,16 +14,17 @@ class Survey < ActiveRecord::Base
     def next_rateables(user, ids=nil, count=3)
       resp = ((ids && ids.any?) ? self.find(ids) : [])
       if (limit=(count-resp.size)) > 0
-        all = self.rateable_by(user)
-        if (x=all.select { |r| !(ids && ids.include?(r.id)) &&
-              !r.ratings.by_user(user).any? }).size < limit
-          x += (all-x)[0..limit]
-        end
-        x.sort! do |a, b|
-          (user.rated?(a) && user.rated?(b)) ? 0 : -1
-        end
+        all = (self.rateable_by(user)-resp)
+        x = all.select { |r|
+          !(r.ratings.by_user(user).any?)
+        }
+        all-=x
         resp += limit.times.map do
           x.delete(x.rand)
+        end
+        resp.compact!
+        if resp.size < count
+          resp+=all[0..(count-resp.size-1)]
         end
       end
       resp.compact
