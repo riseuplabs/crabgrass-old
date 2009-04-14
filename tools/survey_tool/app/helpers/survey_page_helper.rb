@@ -1,4 +1,6 @@
 module SurveyPageHelper
+  include AssetPageHelper
+
   def add_questions_links
     links = []
     links << add_question_function(:short_text)
@@ -54,12 +56,29 @@ module SurveyPageHelper
     answers = @response.answers.select {|a| a.question == question && a.value != SurveyAnswer::CHOICE_FOR_UNCHECKED }
     
     tags = answers.collect do |answer|
-      content_tag(:div, answer.display_value, :class => 'answer')
+      if answer.asset
+        render_asset(answer.asset, answer.value)
+      else
+        content_tag(:div, answer.display_value, :class => 'answer')
+      end
     end
     
     tags.join("\n")
   end
   
+  def render_asset(asset, name)
+    if asset.embedding_partial.any?
+      render :partial => asset.embedding_partial
+    else
+      thumbnail = asset.thumbnails(:large)
+      if thumbnail.nil?
+        link_to(image_tag(asset.big_icon, :alt => name), asset.url )
+      else
+        link_to_asset(asset, :large, :class => '')
+      end
+    end
+  end
+
   # takes a generated +html+ like '<textarea cols="72" id="tid_42" name="text[42]" rows="6">Data</textarea>'
   # and an +instance+ object which is a TagInstance
   # returns modified+ html+ with error markup
