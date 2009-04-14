@@ -82,6 +82,16 @@ class SurveyPageController < BasePageController
   end
 
   protected
+  
+  def authorized?
+    if @page.nil?
+      true
+    elsif action?(:details, :show, :rate, :respond)
+      current_user.may?(:edit, @page)
+    else
+      current_user.may?(:admin, @page)
+    end
+  end
 
   def save_response
     begin
@@ -120,4 +130,7 @@ class SurveyPageController < BasePageController
     end
   end
 
+  def setup_view
+    @show_right_column = true
+  end
 end
