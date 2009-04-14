@@ -1,7 +1,7 @@
 <%= render :partial => 'tabs' %>
 
-<% if current_user.may?(:admin, @page) %>
-<p><%= link_to :edit.t, page_url(@page, :action => 'respond') %></p>
+<% if current_user.may?(:edit, @page) %>
+  <p><%= link_to :edit.t, page_url(@page, :action => 'respond') %></p>
 <% end %>
 
 <%= render :partial => 'answers' %>
