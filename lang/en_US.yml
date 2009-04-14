@@ -762,6 +762,8 @@ allow_responses: "Enable Responses?"
 survey_updated_message: "Saved Your Changes!"
 response_created_message: "Created a response!"
 response_updated_message: "Updated your response"
+settings: Settings
+private: private
 
 
 
