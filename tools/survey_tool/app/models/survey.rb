@@ -1,4 +1,8 @@
 class Survey < ActiveRecord::Base
+  
+  serialize :settings
+  serialize_default :settings, {:responses_enabled => true,
+    :rating_enabled => false, :participants_can_rate => true}
 
   has_many(:questions, :order => :position, :dependent => :destroy,
            :class_name => 'SurveyQuestion')
@@ -23,6 +27,23 @@ class Survey < ActiveRecord::Base
     end
 
   end
+  
+  def rating_enabled_for?(user)
+    rating_enabled ? (responses.find_by_user_id(user.id) ? (participants_can_rate? ? true : false) : true) : false
+  end
+  
+  def rating_enabled() settings[:rating_enabled] end
+  def rating_enabled=(v)
+    settings[:rating_enabled]=(v=='1' ? true : false) end
+  def responses_enabled() settings[:responses_enabled] end
+  def responses_enabled=(v)
+    settings[:responses_enabled]=(v=='1' ? true : false) end
+  def participants_can_rate() settings[:participants_can_rate] end
+  def participants_can_rate=(v)
+    settings[:participants_can_rate]=(v=='1' ? true : false) end
+  alias :rating_enabled? :rating_enabled
+  alias :responses_enabled? :responses_enabled
+  alias :participants_can_rate? :participants_can_rate
   
   before_save :update_response_count
   def update_response_count
@@ -65,7 +86,6 @@ class Survey < ActiveRecord::Base
   NEEDS_RATING_SQL = "SELECT survey_responses.* FROM survey_responses WHERE survey_responses.survey_id = ? AND survey_responses.user_id != ? AND survey_responses.id NOT IN (SELECT ratings.rateable_id FROM ratings WHERE ratings.rateable_type = 'SurveyResponse' AND ratings.user_id = ?) ORDER BY survey_responses.id LIMIT ?"
 
   ALREADY_RATED_SQL = "SELECT survey_responses.* FROM survey_responses WHERE survey_responses.survey_id = ? AND survey_responses.user_id != ? AND survey_responses.id IN (SELECT ratings.rateable_id FROM ratings WHERE ratings.rateable_type = 'SurveyResponse' AND ratings.user_id = ?) ORDER BY survey_responses.id LIMIT ?"
-
 
 end
 

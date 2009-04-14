@@ -756,7 +756,14 @@ design_survey: Design Survey
 save_survey: Save Survey
 really_delete_your_response: "Do you really want to delete your response?"
 really_delete_users_response: "Do you really want to delete the response submitted by %s?"
-allow_rating: "Allow rating on responses?"
+allow_rating: "Allow Rating On Responses?"
+allow_participant_rating: "Allow Rating By Participants?"
+allow_responses: "Enable Responses?"
+survey_updated_message: "Saved Your Changes!"
+response_created_message: "Created a response!"
+response_updated_message: "Updated your response"
+
+
 
 ##
 ## EXTERNAL VIDEO

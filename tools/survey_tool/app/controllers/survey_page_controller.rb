@@ -4,7 +4,7 @@ class SurveyPageController < BasePageController
   javascript :extra
 
   before_filter :fetch_response, :only => [:respond, :show]
-
+  
   def respond
     if request.post?
       save_response
@@ -48,8 +48,8 @@ class SurveyPageController < BasePageController
     end
     if @survey.save
       @page.data = @survey
-      flash_message :success => 'Created a survey!'[:survey_created_message]
-      redirect_to(page_url(@page, :action => 'respond'))
+      flash_message :success => 'Saved Your Changes!'[:survey_updated_message]
+      redirect_to(page_url(@page, :action => 'show'))
     else
       @survey.errors.each {|e| flash_message :error => e.message }
       redirect_to(page_url(@page, :action => 'design'))
@@ -106,20 +106,24 @@ class SurveyPageController < BasePageController
   protected
   
   def authorized?
-    if @page.nil?
-      true
-    elsif action?(:details, :show, :respond, :delete_response)
+    return true if @page.nil?
+    if action?(:details, :show, :delete_response)
       current_user.may?(:edit, @page)
     elsif action?(:rate)
-      @survey.rating_enabled? && current_user.may?(:edit, @page)
+      current_user.may?(:edit, @page) &&
+        @survey.rating_enabled_for?(current_user)
+    elsif action?(:respond)
+      @survey.responses_enabled? && current_user.may?(:edit, @page)
     else
       current_user.may?(:admin, @page)
     end
   end
+  
 
   def save_response
     begin
       if @response.new_record?
+        created = true
         @response.save!
       else
         @response.update_attributes!(params[:response])
@@ -131,7 +135,11 @@ class SurveyPageController < BasePageController
     end
 
     # everything went well
-    flash_message :success => 'Created a response!'[:response_created_message]
+    if created
+      flash_message :success => 'Created a response!'[:response_created_message]
+    else
+      flash_message :success => 'Updated your response'[:response_updated_message]
+    end
     redirect_to page_url(@page, :action => 'show')
   end
 

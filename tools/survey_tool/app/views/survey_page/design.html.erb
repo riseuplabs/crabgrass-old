@@ -1,5 +1,9 @@
 <%= render :partial => 'tabs' %>
-<%= javascript_tag "function UpdatePositions() { if(!i) i = 0; $$('#questions .question .qposition').each(function(f) { f.value = (i+=1); });}" %>
+<%= javascript_tag "function UpdatePositions() { if(!i) i = 0; $$('#questions .question .qposition').each(function(f) { f.value = (i+=1); });}
+function UpdateSettingsView() {
+  if($('rating_enabled').checked) $('rating_details').show(); else $('rating_details').hide();
+}
+" %>
 <div id="design_questions_container" class="survey_questions_container">
   <div id="add_questions_links_bar">
     <span class="link_background">
@@ -8,9 +12,19 @@
     </span>
   </div>
   <% form_for :survey, @survey, :url => page_url(@page, :action => :save_design) do |f| %>
-    <%= submit_tag "Save Survey".t, :class => "submit" %>
-    <%= f.check_box :rating_enabled %>
+    <%= submit_tag "Save Survey".t, :class => "submit" %><br />
+    <%= f.check_box :rating_enabled, :id => 'rating_enabled', 
+                    :onChange => "UpdateSettingsView();" %>
     <%= f.label :rating_enabled, "Allow rating on responses?"[:allow_rating] %>
+    <br />
+    <span id="rating_details" style="display:none;margin-left:1em;">
+      <%= f.check_box :participants_can_rate %>
+      <%= f.label :participants_can_rate, "Allow rating by participants?"[:allow_participant_rating] %>
+      <br />
+    </span>
+    <%= javascript_tag("UpdateSettingsView();"); %>
+    <%= f.check_box :responses_enabled %>
+    <%= f.label :responses_enabled, "Enable responses?"[:allow_responses] %>
     <div id="questions">
       <%= render :partial => 'questions' %>
     </div>
