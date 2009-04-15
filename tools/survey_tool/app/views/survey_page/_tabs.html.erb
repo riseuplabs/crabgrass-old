@@ -9,12 +9,10 @@
         t.selected action?(:design)
       end
     end
-    if @survey.responses_enabled?
-      f.tab do |t|
-        t.label 'Your Answers'.t
-        t.url page_url(@page, :action => 'show')
-        t.selected action?(:respond, :show)
-      end
+    f.tab do |t|
+      t.label 'Your Answers'.t
+      t.url page_url(@page, :action => 'show')
+      t.selected action?(:respond, :show)
     end
     if @survey.rating_enabled_for?(current_user)
       f.tab do |t|
