@@ -17,13 +17,13 @@
       <%= f.label :rating_enabled, "Allow rating on responses?"[:allow_rating] %>
       <br />
       <span id="rating_details">
-	<%= f.check_box :participants_can_rate, :id => 'participants_can_rate' %>
-	<%= f.label :participants_can_rate, "Allow rating by participants?"[:allow_participant_rating], :id => 'participants_can_rate_label' %>
+	<%= f.check_box :participants_cannot_rate, :id => 'participants_can_rate' %>
+	<%= f.label :participants_cannot_rate, "Deny rating by participants?"[:disallow_participant_rating], :id => 'participants_can_rate_label' %>
 	<br />
       </span>
       <%= javascript_tag("UpdateSettingsView();"); %>
-      <%= f.check_box :responses_enabled %>
-      <%= f.label :responses_enabled, "Enable responses?"[:allow_responses] %>
+      <%= f.check_box :responses_disabled %>
+      <%= f.label :responses_disabled, "Disable responses?"[:disallow_responses] %>
     </div>
     <div id="questions">
       <%= render :partial => 'questions' %>
