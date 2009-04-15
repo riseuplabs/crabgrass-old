@@ -6,9 +6,9 @@ module ControllerExtension::WikiRenderer
 
   def render_wiki_html(body, context_name)
     context_name ||= 'page'
-    greencloth = GreenCloth.new(body)
+    greencloth = GreenCloth.new(body, 'page', [:outline])
     # surround each section in divs
-    greencloth.wrap_section_html = true
+    #greencloth.wrap_section_html = true (disabled for now by elijah)
 
     greencloth.to_html do |link_data|
       if link_data[:auto]

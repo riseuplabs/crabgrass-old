@@ -17,6 +17,7 @@ div.swatch_list a {float: left; background: #000;}
    <%= hidden_field_tag 'section', @section %>
 
    <div class='fieldset'><%= text_area 'wiki', 'body', :rows => 30, :cols => 80 %></div>
+   <div class='formatting_reference'><a  href="javascript:quickRedReference();"><%= :formatting_reference_link.t %></a></div>
    <div>
      <% if locked_for_me?(@section) -%>
        <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>

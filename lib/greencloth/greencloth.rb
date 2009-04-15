@@ -16,7 +16,7 @@ custom GreenCloth filters, without messing up <code> blocks
 ------------------------------------------------------------
 
 We need to be able to apply global filters to the text, but we don't want our
-filters to apply preformatted code. Greencloth does not let us intervene in
+filters to apply to preformatted code. Greencloth does not let us intervene in
 the filtering process to just apply something to non-code blocks (or to just
 apply to code blocks). It comes close, but there is a bug in the way escape_pre
 is called.
@@ -43,7 +43,7 @@ So, this is our strategy:
 (2) then we apply our custom greencloth filters.
 
     a. one of the things these filters do is to offtag all the greencloth and 
-       auto rul links. this is necessary at this stage so that redcloth can't
+       auto url links. this is necessary at this stage so that redcloth can't
        mess up the urls
 
 (3) redcloth transformations are run
@@ -51,7 +51,7 @@ So, this is our strategy:
     a. if the formatter discovers code blocks during the redcloth run, we
        remove any offtags from those blocks (since the code block must not have
        formatting and the offtags is from our previous pass looking for
-       greencloth links). This happens i GreenClothFormatterHTML.code().
+       greencloth links). This happens in GreenClothFormatterHTML.code().
 
 offtags
 ----------------------------------
@@ -76,6 +76,10 @@ end
 
 require 'redcloth/formatters/html'
 require 'cgi'
+
+$: << File.dirname( __FILE__)  # add this dir to search path.
+require 'greencloth_outline'
+require 'greencloth_sections'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -120,9 +124,7 @@ module GreenClothFormatterHTML
   #  end
   #end
 
-  ##
-  ## convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
-  ##
+  # convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
   def li_open(opts)
     opts[:text].sub!(/^(.+):: /, '<b>\1:</b> ')
     "#{li_close unless opts.delete(:first)}#{"\t" * opts[:nest]}<li#{pba(opts)}>#{opts[:text]}"
@@ -143,6 +145,41 @@ module GreenClothFormatterHTML
     @parity = @parity == 'odd' ? 'even' : 'odd'
     @parity
   end
+
+  ##
+  ## TOC: support for table of contents
+  ## 
+
+  # How mediawiki does it:
+  # <p><a name="Notes" id="Notes"></a></p>
+  # <h2>
+  #   <span class="editsection">
+  #      [<a href="/w/index.php?title=XXXXX&action=edit&section=6">edit</a>]
+  #   </span>
+  #   <span class="mw-headline">Notes</span>
+  # </h2>
+  #
+  # How greencloth does it:
+  # <h2>
+  #   <a name="green-beans"></a>
+  #   Green Beans
+  #   <a class="anchor" href="#green-beans">¶</a>
+  # </h2>
+  #
+  def heading(number, opts)
+    original.add_heading(number,opts[:text])
+    if original.outline
+      anchor = opts[:text].nameize
+      %[<h%s%s><a name="%s"></a>%s<a class="anchor" href="#%s">&para;</a></h%s>\n] % [number, pba(opts), anchor, opts[:text], anchor, number]
+    else
+      %Q[<h#{number}#{pba(opts)}>#{opts[:text]}</h#{number}>\n]
+    end
+  end
+
+  def h1(opts); heading(1,opts); end
+  def h2(opts); heading(2,opts); end
+  def h3(opts); heading(3,opts); end
+  def h4(opts); heading(4,opts); end
 
   ## Most notably, we do not allow <script>, <div>, <textarea>, or <form>.
   ## These tags might really mess up the layout of the page or are a security
@@ -202,12 +239,16 @@ end
 ##
 
 class GreenCloth < RedCloth::TextileDoc
-  include GreenClothTextSections
+  include GreenclothSections
+  include GreenclothOutline
 
   attr_accessor :original
   attr_accessor :offtags
   attr_accessor :formatter
   attr_accessor :wrap_section_html
+
+  # custom restrictions
+  attr_accessor :outline   # if true, enable table of contents
 
   def initialize(string, default_group_name = 'page', restrictions = [])
     @default_group = default_group_name
@@ -233,10 +274,10 @@ class GreenCloth < RedCloth::TextileDoc
 
     section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
 
-    before_filters += [:delete_leading_whitespace, :normalize_code_blocks, :offtag_obvious_code_blocks,
-      :bracket_links, :auto_links, :headings, :quoted_block,
-      :tables_with_tabs, :wrap_long_words]
-
+    before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
+      :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
+      :headings, :quoted_block, :tables_with_tabs, :wrap_long_words]
+ 
     formatter = self.clone()                   # \  in case one of the before filters
     formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
 
@@ -246,10 +287,11 @@ class GreenCloth < RedCloth::TextileDoc
 
     extract_offtags(html)
 
-    # mark off
     return html
   end
 
+
+  # what is this used for???
   def apply_inline_filters(text)
     bracket_links(text)
     auto_links(text)
@@ -276,10 +318,13 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
   
+  # why is this needed?
   def delete_leading_whitespace(text)
-    self.sub!(/\A\s*/, '')
+    self.sub!(/\A */, '')
   end
 
+  # convert greencloth specific markup for code blocks into redcloth
+  # standard markup.
   def normalize_code_blocks(text)
     ## make funky code blocks behave like a normal code block.
     text.gsub!(/^\/--( .*)?\s*$/, '<code\1>')
@@ -368,16 +413,24 @@ class GreenCloth < RedCloth::TextileDoc
   # text: the text to offtag
   # original: the original raw text before transformation. we keep it in case
   #           we need to undo the offtagging for a particular block.
-  def offtag_it(text, original='')
+  # symbol: if set, when extracting this offtag, we use a callback instead of the text.
+  def offtag_it(text, original='', symbol=nil)
     @count ||= 0
     @offtags ||= []
     @count += 1
-    @offtags << [text, original]
+    @offtags << [text, original, symbol]
     '}offtag#%s{' % @count
   end
   def extract_offtags(html)
     html.gsub!(OFFTAG_RE) do |m|
-      str = self.offtags[$1.to_i-1][0] # replace offtag with the corresponding entry
+      offtag = self.offtags[$1.to_i-1]
+      if offtag[2]
+        # there is a dynamic symbol for this offtag
+        method = 'symbol_'+offtag[2]
+        self.send(method) if self.respond_to?(method)
+      else
+        offtag[0] # replace offtag with the corresponding entry
+      end
     end
     html
   end
@@ -566,23 +619,23 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
+  
   ##
-  ## EMBED
+  ## DYNAMIC SYMBOLS
   ##
+  
+  # dynamic symbols are expanded using some callback ruby code.
 
-  #EMBEDDED_RE = /(<embed .*><\/embed>|<object .*><\/object>)/
+  DYNAMIC_SYMBOLS = ['toc']
+  DYNAMIC_SYMBOLS_RE = /^\s*\[\[(#{DYNAMIC_SYMBOLS.join('|')})\]\]\s*$/
+  def dynamic_symbols(text)
+    text.gsub!(DYNAMIC_SYMBOLS_RE) do |line|
+      symbol = $1
+      "\n" + offtag_it('ignored', line, symbol) + "\n"
+    end
+  end
 
-  #ALLOWED_EMBEDDED_TAGS = {
-  #  'object' => ['width', 'height'],
-  #  'param' => ['name','value'],
-  #  'embed' => ['src','type','width','height','allowscriptaccess', 'allowfullscreen']
-  #}.freeze
-
-  #def embedded( text )
-  #  text.gsub!(EMBEDDED_RE) do |blk|
-  #    offtag_it( formatter.clean_html($1, ALLOWED_EMBEDDED_TAGS) )
-  #  end
-  #end
+  # symbol_toc defined in greencloth_outline
   
   ##
   ## UTILITY
