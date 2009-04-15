@@ -6,6 +6,7 @@
   <%= side_list_li :text => 'Tags'[:tags], :url => url_for_group(@group, :action => 'tags'), :icon => 'tag' %>
   <%= side_list_li :text => 'Tasks'[:tasks], :url => url_for_group(@group, :action => 'tasks'), :icon => 'page_tasks' %>
   <%= side_list_li :text => 'Discussions'[:discussions], :url => url_for_group(@group, :action => 'discussions'), :icon => 'page_discussion' %>
+  <%= side_list_li :text => 'Trash'[:trash], :url => url_for_group(@group, :action => 'trash'), :icon => 'trash' %>
   <%- if group_member? and !committee? -%>
     <%= side_list_li :text => 'Join Chat'[:group_join_chat], :url => {:controller => 'chat', :action => 'channel', :id => @group.name}, :icon => 'chat' %>
   <%- end -%>
