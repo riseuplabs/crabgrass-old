@@ -1,0 +1,32 @@
+<%= render :partial => 'tabs' %>
+
+<%= pagination_links @responses, :params => {:action => 'list'} %>
+
+<table id='survey_answers' class='pretty'>
+  <tr>
+    <th>user</th>
+    <th>created</th>
+    <!-- <th>modified</th> -->
+    <th>rating</th>
+    <%- (questions=@survey.questions[0..2]).each do |question| -%>
+      <th><%= truncate(question.label) %></th>
+    <%- end -%>
+  </tr>
+  <%- @responses.each do |resp| -%>
+    <% url = page_url(@page, :action => 'details', :id => resp.id) %>
+    <tr class="<%= cycle 'odd', 'even' %>">
+      <td><%= resp.user.login %></td>
+      <td><%= friendly_date resp.created_at %></td>
+      <!-- <td><%# friendly_date resp.updated_at %></td> -->
+      <td><%= resp.rating %></td>
+      <%- questions.each do |question| -%>
+      <td>
+        <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
+        <%= answer && answer.value.any? ? link_to(truncate(answer.value), url) : '&nbsp;' %>
+      </td>
+      <%- end -%>
+    </tr>
+  <%- end -%>
+</table>
+
+<%= pagination_links @responses, :params => {:action => 'list'} %>

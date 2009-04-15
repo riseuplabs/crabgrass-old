@@ -1,0 +1,21 @@
+<%= render :partial => 'tabs' %>
+<div id="respond_to_questions_container" class="survey_questions_container">
+  <% form_for :response, @response, :url => page_url(@page, :action => :respond), :html => { :multipart => true } do |f| %>
+    <div id="questions">
+      <% @survey.questions.each do |question| %>
+        <div class="question">
+          <h2 class="dim question_label"><%= h question.label %>
+            <% if question.private? -%>
+              <span>&bull;&nbsp;<%= "private"[:private] %></span>
+            <% end -%>
+          </h2>
+          <br/>
+          <% with_error_proc method(:wrap_error_html).to_proc do %>
+            <%= respond_to_question_form(f, question) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <%= submit_tag "Respond"[:respond_to_survey], :class => "submit" %>
+  <% end %>
+</div>

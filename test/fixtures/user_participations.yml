@@ -111,4 +111,10 @@ malformed_wiki_orange:
   page_id: 230
   user_id: 5
   access: 1
-
+<% 1.upto(13) do |i| %>
+survey_ipsum_<%= id+=1 %>:
+  id: <%= id %>
+  page_id: 214
+  user_id: <%= i %>
+  access: 1
+<% end %>

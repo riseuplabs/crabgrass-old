@@ -1,0 +1,30 @@
+<%= javascript_tag "
+  $('response_id').value = '#{resp.id}';
+  var checked;
+  checked = #{rating||0};
+  $$('input.rate_button').each(function(element) {
+      if(checked == element.value)
+        element.checked = true;
+      else
+        element.checked = false;
+  });
+/*  if(#{@next_link.to_s})
+    $('next_response_link').show();
+  else
+    $('next_response_link').hide();*/
+  " -%>
+<table class="answers">
+  <% resp.answers.each do |answer| -%>
+    <tr>
+      <td><strong><%= answer.question.label %>:</strong></td>
+    </tr>
+    <tr>
+      <td>
+	<%= answer.question.private ? "(#{:private.t})" : show_answers_for_question(resp, answer.question)  %></td>
+    </tr>
+   <tr>
+      <td>&nbsp;</td>
+    </tr>
+  <% end -%>
+</table>
+

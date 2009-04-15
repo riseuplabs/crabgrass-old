@@ -1,0 +1,139 @@
+
+
+#add_questions_links_bar
+  margin: 1em
+  margin-bottom: 2em
+  .label
+    color= !add_new_item_color
+  span.link_background
+    background-color= !box1_bg_color
+    padding: 0.5em
+
+#respond_to_questions_container
+  .question
+    padding: 1em
+    .answer_choice
+      margin: 0px
+    .formError
+      color= !error_color
+      padding: 1em
+    .fieldWithErrors
+      padding: 0
+      margin: 0
+    .response_icon_label
+      line-height: 3em
+
+.survey_questions_container
+  #survey_settings
+    margin-top: 0.5em
+    background-color= !draggable_item_bg_color
+    border= !draggable_item_border
+    padding: 1em
+    #rating_details
+      label.disabled
+        color= !draggable_item_bg_label_color
+      margin-left: 1em
+  .question_label
+    font-size: 1em
+    color: black
+    font-weight: bold
+    padding-bottom: 0
+  .question
+    background-color= !draggable_item_bg_color
+    border= !draggable_item_border
+    width: 48em
+//    height: 5em
+    margin: 1em 0
+    padding: 1em
+  .delete_question
+    float: right
+//    padding-top: 0.2em
+    padding-right: 0.5em
+  .question
+    .drag_to_move
+      color= !draggable_item_bg_label_color
+      float: left
+      margin-left: 13.5em
+      background-position: 0 100%
+//      padding-top: 0.3em
+    .fields
+//      margin-left: 1.5em
+//      margin-top: 2em
+//      margin-bottom: 0.5em
+      textarea, input
+        margin-bottom: 1em
+        width: 99%
+//      input
+//        border: 1px grey solid
+//        height: 1.5em
+      .caption
+        margin-top: 1.5em
+    .private_question
+      label
+        font-size: 0.8em
+      top: 0px
+      left: 0px
+      position: absolute
+    .caption
+      float: left
+//      margin-left: 1.5em
+//      margin-top: 0.5em
+      margin-bottom: 0.5em
+//  input.submit
+//    margin-left: 26em
+  input.fake_select
+    margin-left: 0px
+    margin-right: 1em
+  
+#rate_survey
+  td
+    vertical-align: top
+  .center
+    text-align: center
+  .rating
+    font-size: 1.3em
+  .vote_count
+    font-size: 0.7em
+//  #user_info
+//    margin-left: 0.3em
+//    margin-right: 0.3em
+//    border: solid 1px black
+//    padding: 1.5em
+  #current_rating,
+  #user_info
+    padding: 1em
+    background: #eee
+    border: 1px solid #ccc
+    border-right: 0
+  #your_rating,
+  #response
+    background: #f6f6f6
+    border: 1px solid #ccc
+    border-left: 0
+    padding: 1em
+//  #survey_notice
+//    clear: none
+  .rate_bar
+    background: url(/images/background/rate_bar.png) repeat-x
+    padding: 0.3em 0.5em
+    margin-top: 0.5em
+    margin-bottom: 0.5em
+    border-style: solid
+    border-width: 1px
+    border-color: #cfae45
+    input.rate_button
+      margin: 0 0 0 0.75em
+      vertical-align: sub
+    label
+      font-weight: bold
+  #response
+//    border: solid 1px #cfae45
+//   height: 30em
+//    overflow: auto
+//    max-width: 37em 
+    .answers
+      margin: 1em
+      tr
+        td
+          width: 40%
+

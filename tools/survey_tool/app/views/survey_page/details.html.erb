@@ -1,0 +1,33 @@
+<% 
+ if @response
+   navigation_links = [
+     link_to(:pagination_previous.t, page_url(@page, :action => 'details', :id => @response.id, :jump => 'prev')),
+     link_to(:return.t, page_url(@page, :action => 'list')),
+     link_to(:pagination_next.t, page_url(@page, :action => 'details', :id => @response.id, :jump => 'next'))]
+   if(current_user.may?(:admin, @page))
+     navigation_links << link_to(:delete.t, page_url(@page, :action => 'delete_response', :id => @response.id, :jump => 'next'), :method => :post, :confirm => :really_delete_users_response.t%@response.user.login)
+   end
+ end
+ -%>
+
+<%= render :partial => 'tabs' %>
+
+<% if @response %>
+
+  <p><%= link_line(*navigation_links) %></p>
+
+  <% if @response.user %>
+    <p><%= link_to_user @response.user, :avatar => 'small' %></p>
+  <% else %>
+    <p><b><%=h @response.name %></b> <%=h @response.email %></p>
+  <% end %>
+
+  <%= render :partial => 'answers' %>
+
+<% else %>
+
+  <p><%= link_to :return.t, page_url(@page, :action => 'list') %></p>
+  <%= :no_search_results.t %>
+
+<% end %>
+

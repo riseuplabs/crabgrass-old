@@ -52,6 +52,7 @@ empty_results: "None"
 search_headline: "Search"
 see_more_link: "More"
 details_link: "Details"
+return_link: "Return"
 
 edit: "Edit"
 preview: "Preview"
@@ -651,6 +652,8 @@ video_class_description: "Show a video hosted on an external website."
 video: "video"
 article: "article"
 article_class_description: "Blog post or news article."
+survey: "survey"
+survey_class_description: "A survey"
 
 title: "Title"
 summary: "Summary"
@@ -745,6 +748,26 @@ ranked_vote_instructions: |
   Drag and drop the items on the following list until they are in order from
   most preferred at the top to least preferred at the bottom. When you are done,
   press confirm to record your vote.
+
+
+##
+## SURVEY PAGE
+##
+
+design_survey: Design Survey
+save_survey: Save Survey
+really_delete_your_response: "Do you really want to delete your response?"
+really_delete_users_response: "Do you really want to delete the response submitted by %s?"
+allow_rating: "Activate the rating system: allow survey response to be rated."
+allow_participant_rating: "Allow people who responded to the survey to also rate other responses."
+allow_responses: "Disable Responses. You would select this when you want to end the submission process."
+survey_updated_message: "Saved Your Changes!"
+response_created_message: "Created a response!"
+response_updated_message: "Updated your response"
+settings: Settings
+private: private
+
+
 
 ##
 ## EXTERNAL VIDEO
@@ -861,4 +884,3 @@ add_one_or_more_tags: "Add one or more tags, separated by commas"
 separate_tags: "Separate tags using commas."
 add_tags: "Add Tags"
 current_tags: "Current Tags"
-

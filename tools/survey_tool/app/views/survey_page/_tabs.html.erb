@@ -1,0 +1,41 @@
+<%- @info_box_class = 'tabs' -%>
+<%- @info_box = capture do -%>
+<%= if logged_in? and current_user.may? :edit, @page
+  Formy.tabs do |f|
+    if current_user.may?(:admin, @page)
+      f.tab do |t|
+        t.label 'Design Questions'.t
+        t.url page_url(@page, :action => 'design')
+        t.selected action?(:design)
+      end
+    end
+    f.tab do |t|
+      t.label 'Your Answers'.t
+      t.url page_url(@page, :action => 'show')
+      t.selected action?(:respond, :show)
+    end
+    if @page.rating_enabled_for?(current_user)
+      f.tab do |t|
+        t.label 'Rate All Answers'.t
+        t.url page_url(@page, :action => 'rate')
+        t.selected action?(:rate)
+      end
+    end
+    if current_user.may?(:admin, @page)
+      f.tab do |t|
+        t.label 'List All Answers'.t
+        t.url page_url(@page, :action => 'list')
+        t.selected action?(:list) || action?(:details)
+      end
+    end
+#    f.tab do |t|
+#      t.label 'Results by Question'[:survey_tab_results_by_question]
+#      t.url page_url(@page, :action => 'stats')
+#      t.selected action?(:stats)
+#    end
+  end
+end
+%>
+<%- end -%>
+
+

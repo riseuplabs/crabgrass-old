@@ -1,0 +1,11 @@
+<% user = resp.user -%>
+<div class="center" >
+  <%= "survey response by"[:response_by] %><br />
+  <h2><%= link_to user.login, url_for_user(user) %></h2>
+  <br />
+  <%= avatar_for(user, 'xlarge') %>
+  <br /><br />
+  <%= "submitted"[:submitted] %>:
+  <br />
+  <%= friendly_date(resp.created_at) %>
+</div>

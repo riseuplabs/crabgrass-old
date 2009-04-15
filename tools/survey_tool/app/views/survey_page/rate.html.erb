@@ -1,0 +1,19 @@
+<%= render :partial => 'tabs' %>
+
+<% if @response %>
+
+<div id='rate_survey'>
+  <%= render :partial => 'rate_form' %>
+</div>
+
+<% @right_column = capture do %>
+  <div id="next_responses">
+    <%= render :partial => 'next_responses', :locals => {:responses => @next} %>
+  </div>
+<% end %>
+
+<% else %>
+
+  <%= :no_search_results.t %>
+
+<% end %>

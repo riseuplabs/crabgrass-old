@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090329214611) do
+ActiveRecord::Schema.define(:version => 20090414212813) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -517,6 +517,48 @@ ActiveRecord::Schema.define(:version => 20090329214611) do
     t.integer "custom_appearance_id", :limit => 11
     t.boolean "has_networks",                       :default => true
     t.string  "signup_redirect_url"
+  end
+
+  create_table "survey_answers", :force => true do |t|
+    t.integer  "question_id",       :limit => 11
+    t.integer  "response_id",       :limit => 11
+    t.integer  "asset_id",          :limit => 11
+    t.text     "value"
+    t.string   "type"
+    t.datetime "created_at"
+    t.integer  "external_video_id", :limit => 11
+  end
+
+  create_table "survey_questions", :force => true do |t|
+    t.string   "type"
+    t.text     "choices"
+    t.integer  "survey_id",  :limit => 11
+    t.integer  "position",   :limit => 11
+    t.string   "label"
+    t.text     "details"
+    t.boolean  "required"
+    t.datetime "created_at"
+    t.datetime "expires_at"
+    t.string   "regex"
+    t.integer  "maximum",    :limit => 11
+    t.integer  "minimum",    :limit => 11
+    t.boolean  "private",                  :default => false
+  end
+
+  create_table "survey_responses", :force => true do |t|
+    t.integer  "survey_id",   :limit => 11
+    t.integer  "user_id",     :limit => 11
+    t.string   "name"
+    t.string   "email"
+    t.integer  "stars_count", :limit => 11, :default => 0
+    t.datetime "created_at"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.text     "description"
+    t.datetime "created_at"
+    t.integer  "responses_count", :limit => 11, :default => 0
+    t.string   "settings"
   end
 
   create_table "taggings", :force => true do |t|

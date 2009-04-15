@@ -26,6 +26,7 @@ localhost:
   - Asset
   - Gallery
   - ExternalVideo
+  - Survey
   pagination_size: 29
   custom_appearance_id: 2
   network_id: 3001
@@ -56,5 +57,6 @@ testhost:
   - Gallery
   - ExternalVideo
   - Article
+  - Survey
   pagination_size: 29
   network_id: 3002

@@ -26,7 +26,16 @@ ActiveRecord::Base.class_eval do
       end
     }
   end
-  
+
+  # used to give a default value to serializable attributes
+  def self.serialize_default(attr_name, default_object)
+    attr_name = attr_name.to_sym
+
+    self.send :define_method, attr_name do
+      read_attribute(attr_name) || write_attribute(attr_name, default_object.clone)
+    end
+  end
+
   def dom_id
     [self.class.name.downcase.pluralize.dasherize, id] * '-'
   end

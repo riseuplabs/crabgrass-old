@@ -1,0 +1,13 @@
+<% response_form.fields_for :answers_attributes, answer, :index => question.id do |f| %>
+  <span class="small_icon mime_video_16 response_icon_label">
+    <%= 'Embed code from external video source'[:video_embed_code_prompt] %> 
+  </span>
+
+  <%= f.error_message_on :value %>
+  <%= f.hidden_field :question_id %>
+  <%= f.text_area(:value, :size => "72x6") %>
+  <em>
+    <%=  '(' + 'currently supported: youtube, blip.tv, google video, vimeo'[:current_video_sources] + ')' %>
+  </em>
+<% end %>
+

@@ -24,6 +24,8 @@ class CustomAppearance < ActiveRecord::Base
   cattr_accessor :ignore_file_timestamps
 
   serialize :parameters, Hash
+  # JUICE, LOOK HERE:
+  #serialize_default :parameters, {}
   belongs_to :admin_group, :class_name => 'Group'
 
   def sass_override_text
@@ -58,6 +60,14 @@ class CustomAppearance < ActiveRecord::Base
   def css_fresher_than_sass?(css_path)
     full_css_path = cached_css_full_path(css_path)
     full_sass_path = CustomAppearance.source_sass_full_path(css_path)
+
+    # JUICE, LOOK HERE:
+
+    # File.exists?(full_sass_path) && File.mtime(full_css_path) >= File.mtime(full_sass_path)
+    # this logic doesn't work right now because screen.sass depends on many *.sass files, but
+    # their timestamps can't be checked
+    # return false
+
     File.mtime(full_css_path) >= File.mtime(full_sass_path)
   end
 
@@ -89,6 +99,7 @@ class CustomAppearance < ActiveRecord::Base
     File.join(CACHED_CSS_DIR, self.id.to_s, self.updated_at.to_i.to_s)
   end
 
+# JUICE, LOOK HERE:
 ######### DEFAULT SERIALIZED VALUES ###########
   # :cal-seq:
   #   appearance.parameters => {"page_bg_color" => "#fff"}
@@ -136,7 +147,7 @@ class CustomAppearance < ActiveRecord::Base
     end
 
     # returns the location where sass source for this +css_path+ can be found
-     # this path is relative to RAILS_ROOT
+    # this path is relative to RAILS_ROOT
     # :cal-seq:
     #   appearance.cached_css_path('as_needed/wiki') => './public/stylesheets/themes/2/1237185316/as_needed/wiki.css'
     def source_sass_full_path(css_path)
