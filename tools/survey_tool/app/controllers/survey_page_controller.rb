@@ -32,7 +32,7 @@ class SurveyPageController < BasePageController
       @response.destroy
     end
     redirect_to page_url(*[@page, (params[:jump] && @response ? {
-                                       :action => 'details', :id => id } : nil)
+                                     :action => 'details', :id => id } : nil)
                             ].compact)
   end
 
@@ -130,7 +130,7 @@ class SurveyPageController < BasePageController
       end
     rescue Exception => exc
       # we have an error
-      flash_message_now :object => @response
+      flash_message_now :object => @response, :exc => exc
       return
     end
 
