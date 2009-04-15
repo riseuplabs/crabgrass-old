@@ -45,6 +45,8 @@ class Survey < ActiveRecord::Base
   alias :responses_disabled? :responses_disabled
   def participants_cannot_rate() !participants_can_rate end
   alias :participants_cannot_rate? :participants_cannot_rate
+  def responses_disabled=(v) responses_disabled=!v end
+  def participants_cannot_rate=(v) participants_can_rate=!v end
   
   before_save :update_response_count
   def update_response_count
