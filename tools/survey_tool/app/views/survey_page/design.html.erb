@@ -1,6 +1,5 @@
 <%= render :partial => 'tabs' %>
-<%= javascript_tag "function UpdatePositions() { if(!i) i = 0; $$('#questions .question .qposition').each(function(f) { f.value = (i+=1); });}
-function UpdateSettingsView() { e = $('participants_can_rate'); if($('rating_enabled').checked) { $('participants_can_rate_label').removeClassName('disabled');e.disabled = false; } else { e.disabled = true; e.checked = false;$('participants_can_rate_label').addClassName('disabled'); }}" %>
+<%= javascript_tag "function UpdateSettingsView() { e = $('participants_can_rate'); if($('rating_enabled').checked) { $('participants_can_rate_label').removeClassName('disabled');e.disabled = false; } else { e.disabled = true; e.checked = false;$('participants_can_rate_label').addClassName('disabled'); }}" %>
 <div id="design_questions_container" class="survey_questions_container">
   <div id="add_questions_links_bar">
     <span class="">
@@ -30,10 +29,6 @@ function UpdateSettingsView() { e = $('participants_can_rate'); if($('rating_ena
       <%= render :partial => 'questions' %>
     </div>
   <% end %>
-
-  <%= javascript_tag "
-Sortable.create('questions', { elements:$$('#questions .question'), 
-                  handles:$$('questions .drag_to_move'),
-                  onChange:UpdatePositions
-                });" %>
 </div>
+
+<%= javascript_tag "survey_designer_enable_sorting();" %>

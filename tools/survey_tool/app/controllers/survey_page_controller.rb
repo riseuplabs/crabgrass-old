@@ -2,6 +2,7 @@ require 'json'
 class SurveyPageController < BasePageController
   stylesheet 'survey'
   javascript :extra
+  javascript 'survey'
 
   before_filter :fetch_response, :only => [:respond, :show]
   

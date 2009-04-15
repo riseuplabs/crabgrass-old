@@ -6,8 +6,6 @@ class SurveyQuestion < ActiveRecord::Base
   has_many(:answers, :dependent => :destroy, :class_name => 'SurveyAnswer',
            :foreign_key => 'question_id')
   
-  acts_as_list :scope => :survey
-  
   def answer_class
     TextAnswer
   end

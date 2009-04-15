@@ -1,4 +1,4 @@
-<% q_id = question.new_record? ? "new_#{rand}" : question.id %>
+<% q_id = question.new_record? ? "new_NOID" : question.id %>
 
 <div class="question handle">
 <% fields_for "survey[new_questions_attributes][#{q_id}]", question do |qform| %>

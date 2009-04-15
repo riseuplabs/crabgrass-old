@@ -652,6 +652,8 @@ video_class_description: "Show a video hosted on an external website."
 video: "video"
 article: "article"
 article_class_description: "Blog post or news article."
+survey: "survey"
+survey_class_description: "A survey"
 
 title: "Title"
 summary: "Summary"

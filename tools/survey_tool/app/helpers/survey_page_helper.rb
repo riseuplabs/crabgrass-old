@@ -23,8 +23,8 @@ module SurveyPageHelper
     link_to_function object.add_question_link_text do |page|
       page.insert_html :bottom, :questions,
                         :partial => 'question', :object => object
-      page.update_positions
-      make_questions_sortable(page)
+
+      page.call 'survey_designer_enable_sorting'
     end
   end
 
@@ -37,10 +37,6 @@ module SurveyPageHelper
     end
   end
 
-  def make_questions_sortable(page)
-    page.call "Sortable.create", :questions, {:elements => page.literal('$$("#questions .question")')}
-  end
-
   def their_answer_goes_here
     "Their answer goes here..."[:their_answer_goes_here]
   end
@@ -50,11 +46,11 @@ module SurveyPageHelper
     render :partial => 'survey_page/response_form/' + question.partial,
               :locals => {:question => question, :response_form => response_form, :answer => answer}
   end
-  
+
   def show_answers_for_question(response, question)
     # filter answers for this response and ignore unchecked checkboxes
     answers = @response.answers.select {|a| a.question == question && a.value != SurveyAnswer::CHOICE_FOR_UNCHECKED }
-    
+
     tags = answers.collect do |answer|
       if answer.asset
         render_asset(answer.asset, answer.value)
@@ -62,10 +58,10 @@ module SurveyPageHelper
         content_tag(:div, answer.display_value, :class => 'answer')
       end
     end
-    
+
     tags.join("\n")
   end
-  
+
   def render_asset(asset, name)
     if asset.embedding_partial.any?
       render :partial => asset.embedding_partial
