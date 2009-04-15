@@ -49,7 +49,7 @@ class SurveyPageController < BasePageController
     if @survey.save
       @page.data = @survey
       flash_message :success => 'Saved Your Changes!'[:survey_updated_message]
-      redirect_to(page_url(@page, :action => 'show'))
+      redirect_to(page_url(@page, :action => 'design'))
     else
       @survey.errors.each {|e| flash_message :error => e.message }
       redirect_to(page_url(@page, :action => 'design'))
