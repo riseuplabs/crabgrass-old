@@ -758,9 +758,9 @@ design_survey: Design Survey
 save_survey: Save Survey
 really_delete_your_response: "Do you really want to delete your response?"
 really_delete_users_response: "Do you really want to delete the response submitted by %s?"
-allow_rating: "Allow Rating On Responses?"
-allow_participant_rating: "Allow Rating By Participants?"
-allow_responses: "Enable Responses?"
+allow_rating: "Activate the rating system: allow survey response to be rated."
+allow_participant_rating: "Allow people who responded to the survey to also rate other responses."
+allow_responses: "Disable Responses. You would select this when you want to end the submission process."
 survey_updated_message: "Saved Your Changes!"
 response_created_message: "Created a response!"
 response_updated_message: "Updated your response"
