@@ -382,7 +382,7 @@ module BasePageHelper
       select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
       selected ||= ''
     else
-      selected ||= 'view'
+      selected ||= 'admin'
     end
     if options[:expand]
       select_tag name, options_for_select(select_options, selected), :size => select_options.size
