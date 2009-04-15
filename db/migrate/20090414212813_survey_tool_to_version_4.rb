@@ -4,6 +4,6 @@ class SurveyToolToVersion4 < ActiveRecord::Migration
   end
 
   def self.down
-    Engines.plugins["survey_tool"].migrate(3)
+    Engines.plugins["survey_tool"].migrate(0)
   end
 end
