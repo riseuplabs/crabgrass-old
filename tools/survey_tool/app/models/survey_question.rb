@@ -35,6 +35,11 @@ class SurveyQuestion < ActiveRecord::Base
     self.class.to_s.underscore
   end
 
+  # for fulltext index
+  def to_s
+    label
+  end
+
 end
 
 

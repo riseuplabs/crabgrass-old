@@ -87,7 +87,10 @@ module SurveyPageHelper
   end
 
   def js_next_response_options(rating)
-    { :url => page_url(@page, :action => 'rate', :response => @response.id, :rating => rating),
+    # rating of 0 has special meaning: it creates a rating of nil, which is
+    # skipped in the rating calculation. These nil rating records help us keep
+    # track of the fact that the user decided to skip the current response.
+    { :url => page_url(@page, :action => 'rate', :response => @response.id, :rating => (rating||0)),
       :loading => show_spinner('next_response'),
       :complete => hide_spinner('next_response')
     }

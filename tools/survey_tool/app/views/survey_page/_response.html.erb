@@ -20,7 +20,7 @@
     </tr>
     <tr>
       <td>
-	<%= answer.question.private ? "(#{:private.t})" : answer.value  %></td>
+	<%= answer.question.private ? "(#{:private.t})" : show_answers_for_question(resp, answer.question)  %></td>
     </tr>
    <tr>
       <td>&nbsp;</td>

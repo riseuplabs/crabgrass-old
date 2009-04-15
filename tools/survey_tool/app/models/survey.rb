@@ -27,11 +27,7 @@ class Survey < ActiveRecord::Base
     end
 
   end
-  
-  def rating_enabled_for?(user)
-    rating_enabled ? (responses.find_by_user_id(user.id) ? (participants_can_rate? ? true : false) : true) : false
-  end
-  
+    
   def rating_enabled() settings[:rating_enabled] end
   def rating_enabled=(v)
     settings[:rating_enabled]=(v=='1' ? true : false) end
@@ -81,11 +77,14 @@ class Survey < ActiveRecord::Base
     end
   end
 
-  # SQL for finding all the responses that a user has not yet rated.
-  # args: [survey_id, user_id, user_id, limit]
+  # SQL for finding all the responses that a user has not yet rated
+  # (excluding their own responses) for a particular survey.
+  #
+  # vars: [survey_id, user_id, user_id, limit]
+  #
+  # This query has problems, and will get increasingly slow as the user rates
+  # more responses.
   NEEDS_RATING_SQL = "SELECT survey_responses.* FROM survey_responses WHERE survey_responses.survey_id = ? AND survey_responses.user_id != ? AND survey_responses.id NOT IN (SELECT ratings.rateable_id FROM ratings WHERE ratings.rateable_type = 'SurveyResponse' AND ratings.user_id = ?) ORDER BY survey_responses.id LIMIT ?"
-
-  ALREADY_RATED_SQL = "SELECT survey_responses.* FROM survey_responses WHERE survey_responses.survey_id = ? AND survey_responses.user_id != ? AND survey_responses.id IN (SELECT ratings.rateable_id FROM ratings WHERE ratings.rateable_type = 'SurveyResponse' AND ratings.user_id = ?) ORDER BY survey_responses.id LIMIT ?"
 
 end
 
