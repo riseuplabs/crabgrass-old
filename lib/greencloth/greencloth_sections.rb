@@ -1,4 +1,4 @@
-module GreenClothTextSections
+module GreenclothSections
 
   def extract_section_title(section_text)
     if /(^h[123]\.)(.*?$)(.*)/m =~ section_text
@@ -36,6 +36,9 @@ module GreenClothTextSections
   end
 
   # get all sections in an array
+  #
+  # is this called anywhere?
+  #
   def sections
     section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
     # get the sections

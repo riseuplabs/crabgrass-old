@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.join(File.expand_path(File.dirname(__FILE__), 'text_sections.rb'))
+require 'rubygems'
+require 'ruby-debug'
+
 require File.join(File.expand_path(File.dirname(__FILE__), 'greencloth'))
 require File.join(File.expand_path(File.dirname(__FILE__), '../extension/string'))
 
@@ -15,15 +17,19 @@ files.each do |testfile|
     in_markup = doc['in']
     out_markup = doc['out'] || doc['html']
     if in_markup and out_markup
-      greencloth = GreenCloth.new( in_markup )
       
-      # generate section edit links for section.yml
       if testfile =~ /sections\.yml/
+        greencloth = GreenCloth.new( in_markup )
         greencloth.wrap_section_html = true
         html = greencloth.to_html
+      elsif testfile =~ /outline\.yml/
+        greencloth = GreenCloth.new( in_markup, '', [:outline] )
+        html = greencloth.to_html
       else
+        greencloth = GreenCloth.new( in_markup )
         html = greencloth.to_html
       end
+
       html.gsub!( /\n+/, "\n" )
       out_markup.gsub!( /\n+/, "\n" )
       if html == out_markup
