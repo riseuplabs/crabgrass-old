@@ -1,13 +1,18 @@
 class SurveyPage < Page
-  # Return string of all poll possibilities, for the full text search index
+
   def body_terms
-    return ""
-    # return "" unless data and data.possibles
-    # data.possibles.collect { |pos| "#{pos.name}\t#{pos.description}" }.join "\n"
+    survey.questions.join("\n") if survey  # uses SurveyQuestion.to_s()
   end
   
   def survey
     data
   end
+
+  def rating_enabled_for?(user)
+    return false if !survey or !survey.rating_enabled
+
+    user.may?(:admin,self) or (user.may?(:edit, self) and survey.participants_can_rate? and survey.responses.find_by_user_id(user.id))
+  end
+
 end
 

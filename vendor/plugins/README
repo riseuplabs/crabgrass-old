@@ -1,3 +1,13 @@
+CRABGRASS HACKS TO PLUGINS:
+
+Before upgrading a plugin, check here to see if there are special crabgrass
+hacks have been applied.
+
+acts_as_rateable: allow a rating of nil. Also, the plugin's rating.rb is overridden by app/models/rating.rb. 
+
+acts_as_tree: hack to to allow whatever options you pass to acts_as_tree to be passed on to the has_many :children association that acts_as_tree creates.
+
+
 PLUGINS
 ==========================================================
 

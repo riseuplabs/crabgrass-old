@@ -65,19 +65,37 @@ class SurveyPageController < BasePageController
     redirect_to page_url(@page, :action => 'respond') if @response.new_record?
   end
 
+  # xhr and get
+  # The user may either rate the current response, or skip it. The response
+  # has either been rated already or not. If it has been rated already, it may
+  # have been given a rating of nil, to let us know that the user has skipped it.
+  #
+  # There is a slight problem, which I am not sure how to solve. If the user skips
+  # a response by choosing not to rate it, we cannot put it at the end of the 
+  # 'unrated' queue because this makes it impossible to skip the last unrated
+  # response. However, if we put the skipped item at the bottom of the rated
+  # queue, it makes it so you won't see it for a long time. 
+  #
+  # This is how it works now, which I guess is better. Skip, then, means that you
+  # really don't want to have to rate it.
+  #
   def rate
     # set the rating for the current response
-    if(params[:response] && params[:rating] && params[:rating].to_i != 0 &&
-      resp = @survey.responses.find(params[:response]))
+    if( params[:response] && params[:rating] &&
+        resp = @survey.responses.find(params[:response])
+    )
       if rating = current_user.rating_for(resp)
         # we must destroy the rating, so that the timestamp will change.
         rating.destroy
       end
+      # don't count zero rating, but create the record so we know the user
+      # didn't want to rate it:
+      params[:rating] = nil if params[:rating] == "0" 
       Rating.create!(:rateable => resp, :user => current_user, :rating => params[:rating])
     end
 
-    @next = @survey.responses.unrated_by(current_user, 4)
-    @next = @survey.responses.rated_by(current_user, 4) if @next.empty?
+    # display the current response
+    @next = next_four_responses(@survey)
     @response = @next.shift # pop off the first item
     if current_user.rated?(@response)
       @rating = current_user.rating_for(@response).rating
@@ -110,8 +128,7 @@ class SurveyPageController < BasePageController
     if action?(:details, :show, :delete_response)
       current_user.may?(:edit, @page)
     elsif action?(:rate)
-      current_user.may?(:edit, @page) &&
-        @survey.rating_enabled_for?(current_user)
+      @page.rating_enabled_for?(current_user)
     elsif action?(:respond)
       @survey.responses_enabled? && current_user.may?(:edit, @page)
     else
@@ -163,6 +180,15 @@ class SurveyPageController < BasePageController
   end
 
   def setup_view
-    @show_right_column = true
+    @show_right_column = true unless action?(:rate)
   end
+
+  def next_four_responses(survey)
+    responses = survey.responses.unrated_by(current_user, 4)
+    if responses.size < 4
+      responses += survey.responses.rated_by(current_user, 4-responses.size) 
+    end
+    return responses
+  end
+
 end

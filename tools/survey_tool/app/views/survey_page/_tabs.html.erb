@@ -14,7 +14,7 @@
       t.url page_url(@page, :action => 'show')
       t.selected action?(:respond, :show)
     end
-    if @survey.rating_enabled_for?(current_user)
+    if @page.rating_enabled_for?(current_user)
       f.tab do |t|
         t.label 'Rate All Answers'.t
         t.url page_url(@page, :action => 'rate')
