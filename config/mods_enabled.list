@@ -8,7 +8,7 @@
 
 ## The super_admin mod allows certain 'super admin' to control everything about
 ## a particular crabgrass site.
-#super_admin
+super_admin
 
 ## design tester mode is a little sandbox for testing template/css changes
 ## available at localhost:3000/design
