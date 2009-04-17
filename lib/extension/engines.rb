@@ -114,8 +114,8 @@ Engines::Plugin::FileSystemLocator.class_eval do
   def locate_plugins_under(base_path)
     Dir.glob(File.join(base_path, '*')).inject([]) do |plugins, path|
       ## begin crabgrass hack
-      next(plugins) if path =~ /#{RAILS_ROOT}\/mods\//  and !MODS_ENABLED.include?(File.basename(path))
-      next(plugins) if path =~ /#{RAILS_ROOT}\/tools\// and !TOOLS_ENABLED.include?(File.basename(path))
+      next(plugins) if path =~ /#{RAILS_ROOT}\/mods\//  and !Conf.enabled_mods.include?(File.basename(path))
+      next(plugins) if path =~ /#{RAILS_ROOT}\/tools\// and !Conf.enabled_tools.include?(File.basename(path))
       ## end crabgrass hack
       if plugin = create_plugin(path)
         plugins << plugin

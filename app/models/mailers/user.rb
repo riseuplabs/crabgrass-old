@@ -17,7 +17,7 @@ module Mailers::User
 
   def setup_email(user)
     @recipients   = "#{user.email}"
-    @from         = @site.email_sender
+    @from         = @from_address
     @subject      = @site.name + ": "
     @sent_on      = Time.now
     @body[:user]  = user

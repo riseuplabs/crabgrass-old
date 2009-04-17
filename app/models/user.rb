@@ -186,7 +186,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates_presence_of :email if Crabgrass::Config.require_user_email
+  validates_presence_of :email if Conf.require_user_email  # TODO: make this site specific
   
   validates_as_email :email
   before_validation :clear_email
@@ -195,5 +195,7 @@ class User < ActiveRecord::Base
     self.email = nil if email.empty?
   end
 
+  # TODO: this does not belong here, should be in the mod, but it was not working
+  # there.
   include UserExtension::SuperAdmin rescue NameError
 end

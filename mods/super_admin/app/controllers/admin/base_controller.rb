@@ -17,7 +17,7 @@ class Admin::BaseController < ActionController::Base
   include Admin::EmailBlastsHelper
   include Admin::AnnouncementsHelper
 
-  protect_from_forgery :secret => Crabgrass::Config.secret
+  protect_from_forgery :secret => Conf.secret
 
   def index
   end

@@ -1,11 +1,21 @@
 #
 # THINGS TO CONFIGURE
 # 
-# Hopefully, nothing here needs to be changed. But you should change stuff in:
+# There are three files that need to be configured for crabgrass: 
 # 
+#   * config/secret.txt  (rake make_secret)
 #   * config/database.yml
-#   * config/sites.yml
-#   * config/email.yml
+#   * config/crabgrass.[production|development|test].yml
+#
+# Hopefully, nothing in environment.rb will need to be changed.
+#
+# There are many levels of possible defaults for configuration options. 
+# In order of precedence, crabgrass will search:
+# 
+#   (1) the current site
+#   (2) the default site (if a site has default == true)
+#   (3) options configured in the file config/crabgrass.*.yml
+#   (4) last-stop hardcoded defaults in lib/crabgrass/conf.rb
 #
 # RAILS INITIALIZATION PROCESS:
 #
@@ -81,7 +91,7 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = false
 
   # the absolutely required gems
-  config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
+  #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
 
   #config.frameworks += [ :action_web_service]
@@ -127,6 +137,7 @@ end
 ###
 ### (7) FINALLY
 ###
+
 #require 'actionwebservice'
 #require RAILS_ROOT+'/vendor/plugins/actionwebservice/lib/actionwebservice'
 
@@ -136,3 +147,5 @@ ActiveRecord::Base.partial_updates = false
 
 # build a hash of PageClassProxy objects {'TaskListPage' => <TaskListPageProxy>}
 PAGES = PageClassRegistrar.proxies.dup.freeze
+Conf.available_page_types ||= PAGES.keys
+

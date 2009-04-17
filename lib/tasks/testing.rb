@@ -100,10 +100,10 @@ namespace :test do
       # FileList["mods/**/test/**/*_test.rb"]
       # find and add just the enabled  mods
       pwd = File.dirname(__FILE__)
-      mods_enabled = File.read(pwd + "/../../config/mods_enabled.list").split("\n")
-      mods_enabled = mods_enabled.select {|m| m =~/^\w+/}
 
-      mods_enabled.each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]}
+      conf = YAML.load_file(pwd + "/../../config/crabgrass.test.yml")
+      (conf['enabled_tools']||[]).each {|m| list += FileList["tools/#{m}/test/**/*_test.rb"]}
+      (conf['enabled_mods']||[]).each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]}
 
       return list
     end
@@ -111,7 +111,7 @@ namespace :test do
     begin
      require 'rcov/rcovtask'
     rescue LoadError
-     puts "rcov not installed"
+     STDERR.puts "rcov not installed"
     end
 
     task :load_plugin_fixtures => [:environment, "db:test:prepare"] do

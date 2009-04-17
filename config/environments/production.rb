@@ -11,13 +11,6 @@ CustomAppearance.ignore_file_timestamps = true
 # config.action_mailer.raise_delivery_errors = false
 
 ##
-## SECURITY
-##
-
-# set cookies to 'secure'; prevent some kinds of session-stealing attacks
-Crabgrass::Config.https_only = true
-
-##
 ## CACHING
 ## 
 
