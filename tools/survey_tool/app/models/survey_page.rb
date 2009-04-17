@@ -1,7 +1,8 @@
 class SurveyPage < Page
 
   def body_terms
-    survey.questions.join("\n") if survey  # uses SurveyQuestion.to_s()
+    # uses SurveyQuestion.to_s()
+    survey ? survey.questions.join("\n") : ""
   end
   
   def survey
