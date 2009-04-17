@@ -48,7 +48,7 @@ class CustomAppearance < ActiveRecord::Base
   def has_cached_css?(css_path)
     cached = File.exists?(cached_css_full_path(css_path))
 
-    unless CustomAppearance.ignore_file_timestamps
+    unless Crabgrass::Config.ignore_sass_file_timestamps
       cached &&= css_fresher_than_sass?(css_path)
     end
 
