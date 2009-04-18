@@ -22,12 +22,8 @@ module LayoutHelper
     (
       [@html_title] +
       (@context||[]).collect{|b|truncate(b[0])}.reverse +
-      [site_name]
+      [current_site.title]
     ).compact.join(' - ')
-  end
-
-  def site_name
-   (current_site||Site.new(:name => 'unknown')).name
   end
       
   ###########################################

@@ -3,7 +3,7 @@
 # 
 # There are three files that need to be configured for crabgrass: 
 # 
-#   * config/secret.txt  (rake make_secret)
+#   * config/secret.txt  (rake make_a_secret)
 #   * config/database.yml
 #   * config/crabgrass.[production|development|test].yml
 #
@@ -65,7 +65,8 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :contact_observer, :message_page_observer #, :user_relation_observer
+    :group_observer, :contact_observer, :message_page_observer
+    # :user_relation_observer
 
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based
@@ -101,6 +102,12 @@ Rails::Initializer.run do |config|
 
   # See Rails::Configuration for more options
 
+  # we want handle sass templates ourselves
+  # so we must not load the 'plugins/rails.rb' part of Sass
+  module Sass
+    RAILS_LOADED = true
+  end
+
   ###
   ### (3) ENVIRONMENT 
   ###     config/environments/development.rb
@@ -115,12 +122,6 @@ Rails::Initializer.run do |config|
   ###       tools/*/init.rb
   ###     If you want to control the load order, change their names!
   ###
-
-  # we want handle sass templates ourselves
-  # so we must not load the 'plugins/rails.rb' part of Sass
-  module Sass
-    RAILS_LOADED = true
-  end
 
   ###
   ### (5) INITIALIZERS
@@ -147,5 +148,6 @@ ActiveRecord::Base.partial_updates = false
 
 # build a hash of PageClassProxy objects {'TaskListPage' => <TaskListPageProxy>}
 PAGES = PageClassRegistrar.proxies.dup.freeze
-Conf.available_page_types ||= PAGES.keys
+Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
+
 

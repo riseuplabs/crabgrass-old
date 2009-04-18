@@ -1,3 +1,11 @@
+# try loading rcov
+begin
+  require 'rcov/rcovtask'
+rescue LoadError
+  # STDERR.puts "rcov not installed"
+  # ^^ I don't want to get this error every time.
+end
+
 def plugins_with_allowed_fixtures
   # skip plugins that load fixtures we don't have a schema for
   Engines.plugins.by_precedence.reject do |p|
@@ -100,18 +108,10 @@ namespace :test do
       # FileList["mods/**/test/**/*_test.rb"]
       # find and add just the enabled  mods
       pwd = File.dirname(__FILE__)
-
-      conf = YAML.load_file(pwd + "/../../config/crabgrass.test.yml")
-      (conf['enabled_tools']||[]).each {|m| list += FileList["tools/#{m}/test/**/*_test.rb"]}
-      (conf['enabled_mods']||[]).each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]}
+      conf = YAML.load_file(pwd + "/../../config/crabgrass.test.yml")    
+      (conf['enabled_mods']||[]).each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]} if conf
 
       return list
-    end
-    # try loading rcov
-    begin
-     require 'rcov/rcovtask'
-    rescue LoadError
-     STDERR.puts "rcov not installed"
     end
 
     task :load_plugin_fixtures => [:environment, "db:test:prepare"] do
@@ -161,3 +161,4 @@ namespace :test do
 
   end
 end
+

@@ -1,0 +1,263 @@
+= Crabgrass Configuration
+
+There are three required configuration files:
+
+* config/secret.txt
+* config/database.yml
+* config/crabgrass.[production|development|test].yml
+
+The file secret.txt can be created by running <tt>rake create_a_secret</tt>.
+
+Configuring dtabase.yml is covered in INSTALL[link:files/doc/INSTALL.html] and PRODUCTION[link:files/doc/PRODUCTION.html].
+
+Depending on what mode rails is run in, the appropriate <tt>crabgrass.*.yml</tt> file will be used. This page is about configuring the <tt>crabgrass.*.yml</tt> files.
+
+= Global Options
+
+=== Plugins
+
+Crabgrass has two custom plugin folders <tt>~/mods/</tt> and <tt>~/tools/</tt>. You can control which plugins are loaded with the <tt>enabled_mods</tt> and <tt>enabled_tools</tt> options:
+
+Enabled plugins stored in the <tt>~/mods/</tt> directory:
+
+  enabled_mods:
+    - super_admin
+
+If <tt>enabled_mods</tt> is left blank, then no mods are loaded.
+
+Enable plugins stored in the <tt>~/tools/</tt> directory:
+
+  enabled_tools:
+    - asset_tool
+    - core_tools
+    - rate_many_tool
+    - task_list_tool
+    - wiki_tool
+
+If <tt>enabled_tools</tt> is left blank, then all tools are enabled. 
+
+=== Languages
+
+If <tt>enabled_languages</tt> is left blank, then all available languages will be available. Otherwise, the options are limited to what is specified for <tt>enabled_languages</tt>. For a list of the possible language codes, see <tt>~/lang/*.yml</tt>.
+
+  enabled_languages:
+    - en_US
+    - es_ES
+    - pt_BR
+    - ar_EG
+
+=== Email
+
+The email configuration for crabgrass is a global setting and cannot be changed on a per-site basis. There are two delivery methods for email, sendmail or smtp. 
+
+If using sendmail, simply do this:
+
+  email:
+    delivery_method: :sendmail
+
+If using smtp, things get more complicated:
+
+  email:
+    delivery_method: :smtp
+    smtp_settings:
+      domain: localhost
+      address: smtp.gmail.com
+      port: 587
+      authentication: :plain
+      user_name: xxxxxx@gmail.com
+      password: xxxxxxx
+
+For SMTP, to enable ssl connection the port must be 587 or 465. Some SMTP auth requires a domain, which does not have to be a real domain, but it must exist.
+
+
+=== Sites
+
+Crabgrass can host multiple social networks on one installation, each with their own domain. Each social network is called a 'site', and they are enabled and disabled using the <tt>crabgrass.*.yml</tt> file. The actual data for the site is stored in the database, and can be configured through the admin web interface.
+
+Example sites configuration:
+
+  sites:
+    - name: blue
+      admin_group: blueadmins
+    - name: red
+      admin_group: redadmins
+
+This enables the sites named 'blue' and 'red' and assigns which group has administration access for each site.
+
+Before you can enable a site, it must be created in the database:
+  
+  rake cg:site:create NAME=<name> RAILS_ENV=<env>
+
+The <tt>name</tt> must match the "name:" part of the sites config in this file, and must be unique.
+
+To destroy a site:
+
+  rake cg:site:destroy NAME=<name> RAILS_ENV=<env>
+
+Use caution when destroying a site. This will remove from the database all the site's users, groups, and pages.
+
+If you want to disable a site without destroying it, simply remove the site's entry from the configuration file.
+
+To see what sites are available:
+
+  rake cg:site:list RAILS_ENV=<env>
+
+
+= Site Defaults
+
+Sites are stored in the database. However, if they do not have a particular attributed configured (the value is NULL), then the attribute's value defaults to whatever is configured in <tt>crabgrass.*.yml</tt>. 
+
+The following attributes may be set globally in <tt>crabgrass.*.yml</tt>, or on a per-site basis:
+
+  :title -- the title of the website.
+  :email_sender -- email address that outgoing emails are sent from.
+  :enforce_ssl -- if true, cookies will only work over tls/ssl.
+  :show_exceptions -- if true, exceptions are show to the user.
+  :require_user_email -- if true, user registration requires email address
+  :default_language -- language code of the default language to use
+  :tracking -- if true, we track user visits, logins and page views.
+  :available_page_types -- if set, limits what page types can be created.
+
+Unfrequently modified options:
+
+  :pagination_size -- how many items to show before paginating
+  :evil -- used for google analytic
+
+= Examples
+
+=== Example crabgrass.development.yml
+
+  title: "Crabgrass Development"
+  show_exceptions: true
+  email:
+    delivery_method: :sendmail
+  sites:
+    - name: site1
+      admin_group: animals
+    - name: site2
+      admin_group: rainbow
+
+
+=== Example crabgrass.production.yml
+
+
+  title: "my crabgrass site"
+  enforce_ssl: true
+  show_exceptions: false
+  tracking: true
+  available_page_types:
+    - WikiPage
+    - DiscussionPage
+  enabled_mods:
+    - super_admin
+  enabled_tools:
+    - core_tools
+    - wiki_tool
+  enabled_languages:
+    - en_US
+    - es_ES
+    - pt_BR
+    - ar_EG
+  email:
+    delivery_method: :smtp
+    smtp_settings:
+      domain: localhost
+      address: smtp.gmail.com
+      port: 587
+      authentication: :plain
+      user_name: xxxxxx@gmail.com
+      password: xxxxxxx
+  sites:
+    - name: blue
+      admin_group: blueadmins
+    - name: red
+      admin_group: redadmins
+
+
+=== All options
+
+  ##
+  ## GLOBAL OPTIONS
+  ##
+
+  ## enabled plugins stored in the mods/ directory
+
+  enabled_mods:
+    - super_admin
+
+  ## enable plugins stored in the tools/ directory
+  ## (to enable all tools, leave this empty)
+
+  enabled_tools:
+    - asset_tool
+    - core_tools
+    - event_tool
+    - ranked_vote_tool
+    - rate_many_tool
+    - task_list_tool
+    - wiki_tool
+    - gallery_tool
+    - external_video_tool
+    - announcement_tool
+    - feed_tool
+
+  ## enable languages
+  ## (to enable all languages, leave this empty)
+
+  enabled_languages:
+  - en_US
+  - es_ES
+  - pt_BR
+  - ar_EG
+
+  ## configure email
+
+  email:
+    delivery_method: :smtp
+    smtp_settings:
+      domain: localhost
+      address: smtp.gmail.com
+      port: 587
+      authentication: :plain
+      user_name: xxxxxx@gmail.com
+      password: xxxxxxx
+
+  ##
+  ## SITE ENABLING (optional)
+  ##
+
+  sites:
+    - name: blue
+      admin_group: blueadmins
+    - name: red
+      admin_group: redadmins
+
+  ##
+  ## DEFAULT VALUES FOR SITES (optional)
+  ##
+
+  pagination_size: 30
+  default_language: en_US
+  enforce_ssl: false
+  show_exceptions: false
+  email_sender: "robot@$current_host"
+  tracking: false
+
+  # if left blank, all page types are enabled
+  available_page_types:
+    - WikiPage
+    - AssetPage
+    - EventPage
+    - ExternalVideoPage
+    - TaskListPage
+    - AnnouncementPage
+    - SurveyPage
+    - DiscussionPage
+    - RateManyPage
+    - MessagePage
+    - RankedVotePage
+    - ArticlePage
+    - Gallery
+    - WikiPage
+
+

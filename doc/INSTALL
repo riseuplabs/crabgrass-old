@@ -83,6 +83,10 @@ To upgrade the crabgrass database after pulling in new code:
 
 Also, <tt>rake --version</tt> must be 0.8.1 or greater.
 
+= Configuration
+
+The default configuration is probably what you want for running in development mode. For more details on how to configure crabgrass, see CONFIGURATION[link:files/doc/CONFIGURATION.html].
+
 = Running Crabgrass
 
   cd ~/development/crabgrass

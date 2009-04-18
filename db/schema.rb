@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090414212813) do
+ActiveRecord::Schema.define(:version => 20090417181020) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -517,7 +517,13 @@ ActiveRecord::Schema.define(:version => 20090414212813) do
     t.integer "custom_appearance_id", :limit => 11
     t.boolean "has_networks",                       :default => true
     t.string  "signup_redirect_url"
+    t.string  "title"
+    t.boolean "enforce_ssl"
+    t.boolean "show_exceptions"
+    t.boolean "require_user_email"
   end
+
+  add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
 
   create_table "survey_answers", :force => true do |t|
     t.integer  "question_id",       :limit => 11

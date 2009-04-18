@@ -1,38 +1,20 @@
 #
-# This is the main global crabgrass configuration. Variables defined here are
-# available in the code as Config.variable_name
-#
+# This is the main global crabgrass configuration. 
+# 
 # Most of the time, no other configuration should be required other than the
 # options in this file. Unusual options might be configured elsewhere.
 #
 # For true/false and numeric values, you must not enclose the value in quotes.
 #
-# See crabgrass.production.yml for more details.
+# See doc/CONFIGURATION for more details.
 #
 
-name: crabgrass
-pagination_size: 30
-default_language: en_US
-enforce_ssl: false
-show_exceptions: true
-email_sender: "robot@$current_host"
-tracking: false
-enabled_mods:
-  - design_tester
-enabled_tools:
-  - asset_tool
-  - core_tools
-  - event_tool
-  - ranked_vote_tool
-  - rate_many_tool
-  - task_list_tool
-  - wiki_tool
-  - gallery_tool
-  - external_video_tool
-  - announcement_tool
-  - feed_tool
+title: "Crabgrass Development X"
 email:
   delivery_method: :sendmail
 sites:
-
+#  - name: site1
+#    admin_group: animals
+  - name: site2
+    admin_group: rainbow
 

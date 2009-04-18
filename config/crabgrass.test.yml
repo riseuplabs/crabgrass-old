@@ -1,16 +1,1 @@
-enabled_mods:
-enabled_tools:
-  - asset_tool
-  - core_tools
-  - event_tool
-  - ranked_vote_tool
-  - rate_many_tool
-  - task_list_tool
-  - wiki_tool
-  - gallery_tool
-  - external_video_tool
-  - announcement_tool
-  - feed_tool
-email:
-  delivery_method: :sendmail
-sites:
+# just defaults :)

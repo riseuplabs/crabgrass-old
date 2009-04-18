@@ -1,68 +1,23 @@
 #
 # This is the main global crabgrass configuration. 
-#
-# A word on sites
-# ---------------
-#
-# In this file, you define what sites are available, if any, and the names of
-# the groups that are syper admins of the sites, if any. The other site options
-# are stored in the database.
-#
-# We store this basic site information here for some degree of sanity: major
-# things like what group has super admin access are settings that should not be
-# trusted to web-based configuration. 
-#
-# Before you can configure a site, it must be created:
-#   
-#    rake cg:create_site NAME=<name>
-#
-# The <name> must match the 'name:' part of the sites config in this file, and
-# must be unique.
-#
-# To destroy a site:
-#
-#    rake cg:destroy_site NAME=<name>
 # 
-# Use caution when destroying a site. This will remove from the database
-# all the site's users, groups, and pages.
+# Most of the time, no other configuration should be required other than the
+# options in this file. Unusual options might be configured elsewhere.
 #
-# If you want to disable a site without destroying it, simply remove the 
-# site's entry from this file.
-# 
-# A word on email
-# ----------------
-# 
-# There are two delivery methods for email, sendmail or smtp. 
+# For true/false and numeric values, you must not enclose the value in quotes.
 #
-# If using sendmail, simply do this:
-#
-# email:
-#   delivery_method: :sendmail
-#
-# If using smtp, things get more complicated:
-#
-# email:
-#   delivery_method: :smtp
-#   smtp_settings:
-#     domain: localhost
-#     address: smtp.gmail.com
-#     port: 587
-#     authentication: :plain
-#     user_name: xxxxxx@gmail.com
-#     password: xxxxxxx
-#
-# For SMTP, to enable ssl connection the port must be 587 or 465.
-# Some SMTP auth requires a domain, which does not have to be a real domain,
-# but it must exist.
+# See doc/CONFIGURATION for more details.
 #
 
+##
+## GLOBAL
+##
 
-pagination_size: 30
-default_language: en_US
-enforce_ssl: false
-show_exceptions: false
-email_sender: "robot@$current_host"
-tracking: false
+enabled_languages:
+  - en_US
+  - es_ES
+  - pt_BR
+  - ar_EG
 enabled_mods:
   - super_admin
 enabled_tools:
@@ -86,12 +41,40 @@ email:
     authentication: :plain
     user_name: xxxxxx@gmail.com
     password: xxxxxxx
+
+##
+## SITES
+##
+
 sites:
   - name: blue
-    domain: blue.int
-    super_admins: blueadmins
+    admin_group: blueadmins
   - name: red
-    domain: red.int
-    super_admins: redadmins
+    admin_group: redadmins
 
+##
+## SITE DEFAULTS
+##
+
+pagination_size: 30
+default_language: en_US
+enforce_ssl: false
+show_exceptions: false
+email_sender: "robot@$current_host"
+tracking: true
+available_page_types:
+  - WikiPage
+  - AssetPage
+  - EventPage
+  - ExternalVideoPage
+  - TaskListPage
+  - AnnouncementPage
+  - SurveyPage
+  - DiscussionPage
+  - RateManyPage
+  - MessagePage
+  - RankedVotePage
+  - ArticlePage
+  - Gallery
+  - WikiPage
 

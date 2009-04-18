@@ -21,13 +21,13 @@ class ApplicationController < ActionController::Base
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
-  session :session_secure => Conf.enforce_ssl
+  session :session_secure => Conf.enforce_ssl # todo: figure out how to use current_site.enforce_ssl instead
   protect_from_forgery :secret => Conf.secret
   layout 'default'
 
   helper_method :current_site  # make available to views
   def current_site
-    @current_site ||= Site.find_by_domain(request.host)
+    @current_site ||= Site.for_domain(request.host).find(:first)
     @current_site ||= Site.default 
   end
 
