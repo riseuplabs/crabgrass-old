@@ -260,4 +260,11 @@ Unfrequently modified options:
     - Gallery
     - WikiPage
 
+  # evil google analytics
+  evil: 
+    google_analytics: 
+      site_id: UA-XXXXXX-X
+      https: false
+      enabled: false
+
 
