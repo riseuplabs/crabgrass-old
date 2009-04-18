@@ -52,28 +52,40 @@ class PageFinderSphinxTest < Test::Unit::TestCase
       ['/not_created_by/1', Proc.new {|p| p.created_by_id != 1} ]
     ]
 
+    ##
+    ## options_for_me
+    ##
+
     searches.each do |search_str, search_code|
       #puts 'trying... %s' % search_str
       sphinx_pages = Page.find_by_path(
         search_str, @controller.options_for_me(:method => :sphinx, :per_page => 1000)
       )
-      raw_pages = Page.all(:order => "updated_at DESC").select{|p|
+      raw_pages = Page.all(:order => "updated_at DESC").select{ |p|
         search_code.call(p) and user.may?(:view, p)
       }
-      assert_equal page_ids(raw_pages), page_ids(sphinx_pages), "#{search_str} should match results for user"
+      assert_equal page_ids(raw_pages), page_ids(sphinx_pages),
+        "#{search_str} should match results for user"
     end
+
+    ##
+    ## options_for_group
+    ##
 
     searches.each do |search_str, search_code|
       #puts 'trying... %s' % search_str
       sphinx_pages = Page.find_by_path(
-        search_str, @controller.options_for_group(groups(:rainbow), :method => :sphinx, :per_page => 1000)
+        search_str, @controller.options_for_group(
+          groups(:rainbow), :method => :sphinx, :per_page => 1000
+        )
       )
-      raw_pages = Page.find(:all).select{|p|
+      raw_pages = Page.find(:all).select{ |p|
         search_code.call(p) and groups(:rainbow).may?(:view, p) and user.may?(:view, p)
       }
-      assert_equal page_ids(raw_pages), page_ids(sphinx_pages), "#{search_str} should match results for group"
+      assert_equal page_ids(raw_pages), page_ids(sphinx_pages),
+        "#{search_str} should match results for group"
     end
-  end  
+  end
 
   def test_sphinx_searches
     return unless sphinx_working?(:test_sphinx_searches)
