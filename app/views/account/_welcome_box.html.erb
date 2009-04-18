@@ -1,0 +1,10 @@
+<% if closed == true %>
+    <%= link_to_remote "show welcome message".t, :url => {:controller => 'me/dashboard', :action => 'show_welcome_box'}, :update =>  "welcome_box" %>
+
+<% else %>
+
+<%= render :partial => 'account/welcome_message'%><br/><br/>
+
+<%= link_to_remote "close", :url => {:controller => '/me/dashboard', :action => 'close_welcome_box'}, :update => "welcome_box" %>
+
+<% end %>

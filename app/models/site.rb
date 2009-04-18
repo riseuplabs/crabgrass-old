@@ -142,4 +142,28 @@ class Site < ActiveRecord::Base
       self.network.group_ids
   end
 
+  # TODO : find a place to define all the elements, a site's user can see
+  #        (means: things, where we log, if he has already seen them)
+  #
+  
+  # tells the site, that a user has seen something 
+  def seen_by_user(user,element)
+   membership = self.network.memberships.find_by_user_id(user.id)
+   membership.seen ||= []
+   membership.seen.push(element).uniq
+   membership.save
+  end
+  
+  # the user forgot, that he had seen this
+  def unsee(user,element)
+    membership = self.network.memberships.find_by_user_id(user.id)
+    membership.seen.delete(element)
+  end
+  
+  # tells us, that a user of this site has already seen this  
+  def seen_for_user?(user,element)
+    membership = self.network.memberships.find_by_user_id(user.id)
+    ( membership.seen && membership.seen.include?(element.to_s)) ? true : false
+  end
+    
 end

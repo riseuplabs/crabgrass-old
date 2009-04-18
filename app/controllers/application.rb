@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_site  # make available to views
   def current_site
     @current_site ||= Site.for_domain(request.host).find(:first)
-    @current_site ||= Site.default 
+    @current_site ||= Site.default #not useful without default site
   end
 
   protected

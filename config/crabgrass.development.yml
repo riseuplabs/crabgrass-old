@@ -13,8 +13,8 @@ title: "Crabgrass Development X"
 email:
   delivery_method: :sendmail
 sites:
-#  - name: site1
-#    admin_group: animals
+  - name: site1
+    admin_group: animals
   - name: site2
     admin_group: rainbow
 

@@ -9,10 +9,16 @@
 <%- if @activities.any? -%>
   <%- @info_box = capture do -%>
     <%= render :partial => 'me/dashboard/info_box' %>
-  <%- end -%>
+  <%- end -%>x
 <%- end -%>
 
 <div class='landing'>
+ <div id="welcome_box">
+  <% closed = true if current_site.seen_for_user?(current_user,:welcome_box) %>
+      <%= render :partial => 'account/welcome_box', :locals => {:closed => closed} %>
+      <% current_site.seen_by_user(current_user, :welcome_box) unless closed == true %>
+  </div>
+</div>
 
   <%= render :partial => 'announcement_page/list'  %>
 
