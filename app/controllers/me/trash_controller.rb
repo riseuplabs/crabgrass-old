@@ -35,21 +35,6 @@ class Me::TrashController < Me::BaseController
       end
     end
     if params[:path]
-      redirect_to :action => 'trash', :id => @group, :path => params[:path]
-    else
-      redirect_to :action => 'trash', :id => @group
-    end
-  end
-
-  # login not required
-  def discussions
-    if params[:remove] 
-      remove
-    elsif params[:undelete]
-      undelete
-      ## add more actions here later
-    end
-    if params[:path]
       redirect_to :action => 'index', :path => params[:path]
     else
       redirect_to :action => 'index', :path => nil
