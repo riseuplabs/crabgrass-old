@@ -41,12 +41,16 @@ class AccountController < ApplicationController
       else
         session[:language_code] = previous_language
       end
+      
       current_site.add_user!(current_user) unless current_site.network.nil? or current_site.users.include?(current_user)
-      redirect_to params[:redirect] || {:controller => '/me/dashboard', :action => 'index'}
+         
+        redirect_to url_for_group(current_site.network) || params[:redirect] || { :controller =>'/me/dashboard',:action => 'index'}
+        # redirect_to params[:redirect] || {:controller => '/me/dashboard', :action => 'index'}
     else
       flash_message :title => "Could not log in"[:login_failed],
-        :error => "Username or password is incorrect."[:login_failure_reason]
+      :error => "Username or password is incorrect."[:login_failure_reason]
     end
+      
   end
 
   def signup
@@ -66,7 +70,16 @@ class AccountController < ApplicationController
     self.current_user = @user
     current_site.add_user!(current_user)
     send_welcome_message(current_user)
-    redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
+    
+    if current_site.welcome_page
+      if current_site.welcome_page == :true
+        redirect_to :controller => 'account', :action => 'welcome'
+      elsif current_site.welcome_page
+        redirect_to current_site.welcome_page
+      end  
+    else
+      redirect_to params[:redirect] || {:controller => '/me/dashboard'}
+    end
     flash_message :title => 'Registration successful'[:signup_success],
       :success => "Thanks for signing up!"[:signup_success_message]
   rescue Exception => exc
@@ -74,7 +87,7 @@ class AccountController < ApplicationController
     flash_message_now :exception => exc
     render :action => 'signup'
   end
-
+ 
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
@@ -93,7 +106,7 @@ class AccountController < ApplicationController
   end
 
   def welcome
-    render :text => GreenCloth.new(:welcome_text.t).to_html, :layout => 'default'
+   # render :text => GreenCloth.new(:welcome_text.t).to_html, :layout => 'default'
   end
 
   def forgot_password
@@ -149,4 +162,5 @@ class AccountController < ApplicationController
     page.save
   end
   
+
 end

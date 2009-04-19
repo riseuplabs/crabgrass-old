@@ -884,3 +884,11 @@ add_one_or_more_tags: "Add one or more tags, separated by commas"
 separate_tags: "Separate tags using commas."
 add_tags: "Add Tags"
 current_tags: "Current Tags"
+
+
+#
+# NEW CRABGRASS INTRODUCTIONS
+#
+
+welcome_page_title: "Welcome to Crabgrass." 
+welcome_page_text: "Feel free!"

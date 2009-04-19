@@ -108,7 +108,7 @@ namespace :test do
 
     def all_file_list
       # don't include mods by default
-      list = FileList["test/**/*_test.rb"] + FileList["tools/**/test/*_test.rb"]
+      list = FileList["test/**/*_test.rb"] + FileList["tools/**/test/**/*_test.rb"]
 
       # FileList["mods/**/test/**/*_test.rb"]
       # find and add just the enabled  mods

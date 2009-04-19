@@ -8,7 +8,7 @@ There are three required configuration files:
 
 The file secret.txt can be created by running <tt>rake create_a_secret</tt>.
 
-Configuring dtabase.yml is covered in INSTALL[link:files/doc/INSTALL.html] and PRODUCTION[link:files/doc/PRODUCTION.html].
+Configuring database.yml is covered in INSTALL[link:files/doc/INSTALL.html] and PRODUCTION[link:files/doc/PRODUCTION.html].
 
 Depending on what mode rails is run in, the appropriate <tt>crabgrass.*.yml</tt> file will be used. This page is about configuring the <tt>crabgrass.*.yml</tt> files.
 

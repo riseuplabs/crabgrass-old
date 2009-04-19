@@ -9,6 +9,7 @@ config/*.sphinx.conf
 config/secret.txt
 doc/api
 doc/app
+doc/coverage
 database.yml
 *~
 public/plugin_assets/*
