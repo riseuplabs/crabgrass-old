@@ -26,5 +26,5 @@ end
 
 # an array of id numbers of sites that are enabled. If a site does not
 # have an id in this array, then we pretend that the site doesn't exist.
-SITES_ENABLED = ids.freeze
+Conf.enabled_site_ids = ids.freeze
 

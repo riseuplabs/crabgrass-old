@@ -58,16 +58,25 @@ class Site < ActiveRecord::Base
   cattr_accessor :current
 
   named_scope :for_domain, lambda {|domain|
-    {:conditions => ['sites.domain = ? AND sites.id IN (?)', domain, SITES_ENABLED]}
+    {:conditions => ['sites.domain = ? AND sites.id IN (?)', domain, Conf.enabled_site_ids]}
   }
 
   def self.default
-    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, SITES_ENABLED]) || Site.new()
+    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids]) || Site.new()
   end
 
   # def stylesheet_render_options(path)
   #   {:text => "body {background-color: purple;} \n /* #{path.inspect} */"}
   # end
+
+  # returns true if this site should display content limited to this site only.
+  # the default for sites is to always display just the data for the site.
+  # however, some sites may be umbrella sites that have access to everything. 
+  # for now, if self is not actually a site in the database then we treat it
+  # as an umbrella site.
+  def limited?
+    not self.id.nil?
+  end
 
   ##
   ## DEFAULT VALUES
