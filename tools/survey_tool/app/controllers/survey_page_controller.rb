@@ -24,11 +24,9 @@ class SurveyPageController < BasePageController
     end
     if @response
       if params[:jump]
-        begin
-          index = @survey.response_ids.find_index(params[:id].to_i)
-          id = @survey.response_ids[(params[:jump] == 'prev') ? (index-1) :
-                                    ((index+1) % @survey.response_ids.size)]
-        end
+        index = @survey.response_ids.index(params[:id].to_i)
+        id = @survey.response_ids[(params[:jump] == 'prev') ? (index-1) :
+                                  ((index+1) % @survey.response_ids.size)]
       end
       @response.destroy
     end

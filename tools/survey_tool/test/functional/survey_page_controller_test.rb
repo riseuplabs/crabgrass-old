@@ -125,20 +125,106 @@ class SurveyPageControllerTest < ActionController::TestCase
     get :details, :page_id => pages("survey1").id, :id => surveys("1").responses[0].id
     assert_active_tab "List All Answers"
     assert_select "a[href='/blue/survey-ipsum+214/delete_response/#{assigns("response").id}?jump=next']"
-    
+
     # delete it
     post :delete_response, :page_id => pages("survey1").id, :id => assigns("response").id, :jump => "next"
+    assert_redirected_to  "_page_action" => "details", :id => surveys("1").responses[1].id
+  end
+
+  def test_rate_answers
+    # first, we enable ratings
+    login_as :blue
+    get :design, :page_id => pages("survey1").id
+    assert_response :success
+    assert_tabs ["Design Questions", "Your Answers", "List All Answers"]
+
+    # enable ratings
+    post :save_design, :page_id => pages("survey1").id, :survey => {"rating_enabled" => "1"}
+    assert_redirected_to "_page_action" => "design"
+
+    get :design, :page_id => pages("survey1").id
+    # new tab should be there
+    assert_tabs ["Design Questions", "Your Answers", "Rate All Answers", "List All Answers"]
+
+    # do some ratings
+    survey = surveys("1")
+    get :rate, :page_id => pages("survey1").id
+    assert_active_tab "Rate All Answers"
+    assert_equal survey.responses[0].id, assigns("response").id
+    assert_equal "Select a rating to see the next item.", assigns("survey_notice")
+    first_rated_response_id = assigns("response").id
+
+    # rate it
+    post :rate, :page_id => pages("survey1").id, :response => first_rated_response_id, :rating => "10"
+    assert_response :success
+
+    # rate it as different user
+    login_as :red
+
+    # rate again
+    post :rate, :page_id => pages("survey1").id, :response => first_rated_response_id, :rating => "2"
+    assert_response :success
+
+    # check that the average rating is listed
+    get :list, :page_id => pages("survey1").id
+    assert_response :success
+    rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
+
+    assert_not_nil rated_response
+    assert_equal 6.0, rated_response.rating
+  end
+
+  def test_overwrite_rating
+    login_as :blue
+
+    # enable ratings
+    post :save_design, :page_id => pages("survey1").id, :survey => {"rating_enabled" => "1"}
+    assert_redirected_to "_page_action" => "design"
+
+    # do some ratings
+    survey = surveys("1")
+    get :rate, :page_id => pages("survey1").id
+    first_rated_response_id = assigns("response").id
+
+    # rate the first response
+    post :rate, :page_id => pages("survey1").id, :response => first_rated_response_id, :rating => "10"
+    assert_response :success
+
+    # check that the rating is recorder
+    get :list, :page_id => pages("survey1").id
+    assert_response :success
+    rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
+
+    assert_not_nil rated_response
+    assert_equal 10.0, rated_response.rating
+
+    # re-rate everything
+    survey.responses.each do |response|
+      post :rate, :page_id => pages("survey1").id, :response => response.id, :rating => "7"
+      assert_response :success
+    end
+
+    # check that the rating is over written
+    get :list, :page_id => pages("survey1").id
+    assert_response :success
+    rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
+
+    assert_not_nil rated_response
+    assert_equal 7.0, rated_response.rating
   end
 
   def assert_active_tab(tab_text)
- 
+    assert_select ".tabset" do
+      assert_select "a.active", {:text => tab_text}
+    end
   end
-  
+
   def assert_tabs(tabs)
-    tabs.each do |tab_text|
-      assert_select ".tabset" do
-         assert_select ".tab a", {:text => tab_text}
-       end
+    assert_select ".tabset" do
+      assert_select ".tab a", {:count => tabs.size} do |tab_links|
+        links_text = tab_links.collect {|link| link.children.first.content}
+        assert_equal tabs, links_text
+      end
     end
   end
 
