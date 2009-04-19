@@ -147,23 +147,23 @@ class Site < ActiveRecord::Base
   #
   
   # tells the site, that a user has seen something 
-  def seen_by_user(user,element)
-   membership = self.network.memberships.find_by_user_id(user.id)
-   membership.seen ||= []
-   membership.seen.push(element).uniq
-   membership.save
-  end
+  #def seen_by_user(user,element)
+  # membership = self.network.memberships.find_by_user_id(user.id)
+  # membership.seen ||= []
+  # membership.seen.push(element).uniq
+  # membership.save
+  #end
   
   # the user forgot, that he had seen this
-  def unsee(user,element)
-    membership = self.network.memberships.find_by_user_id(user.id)
-    membership.seen.delete(element)
-  end
+  #def unsee(user,element)
+  #  membership = self.network.memberships.find_by_user_id(user.id)
+  #  membership.seen.delete(element)
+  #end
   
   # tells us, that a user of this site has already seen this  
-  def seen_for_user?(user,element)
-    membership = self.network.memberships.find_by_user_id(user.id)
-    ( membership.seen && membership.seen.include?(element.to_s)) ? true : false
-  end
+  #def seen_for_user?(user,element)
+  #  membership = self.network.memberships.find_by_user_id(user.id)
+  #  ( membership.seen && membership.seen.include?(element.to_s)) ? true : false
+  #end
     
 end
