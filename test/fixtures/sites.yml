@@ -1,8 +1,13 @@
+#
+# if you change the ideas of these sites, change the method 'enable_site_testing'
+# in conf.rb. 
+#
+
 --- 
 site1:
   id: 1
   name: "site1"
-  title: "one site"
+  title: "site1"
   default: true
   domain: localhost
   custom_appearance_id: 2
@@ -10,8 +15,14 @@ site1:
 site2:
   id: 2
   name: "site2"
-  title: "two site"
-  domain: test.host
-  translation_group: animals
+  title: "testing site"
+  # the domain for the testing site must be 'test.host'
+  # this is the request domain that is used by rails when testing.
+  # this site is not used for most tests, but for some it is enabled.
+  domain: "test.host"
+  translation_group: "animals"
   network_id: 3002
-
+  # this is normally overwritten at startup by crabgrass. however, 
+  # the way we enable sites for only some tests relies on their being
+  # a super_admin_group_id defined for the test site.
+  super_admin_group_id: 4001

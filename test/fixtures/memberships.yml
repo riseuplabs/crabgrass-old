@@ -108,3 +108,10 @@ js:
   group_id: 3002
   user_id: 13
 
+# user blue is a member of the superadmin group
+
+superadmin_blue:
+  group_id: 4001
+  user_id: 4
+
+
