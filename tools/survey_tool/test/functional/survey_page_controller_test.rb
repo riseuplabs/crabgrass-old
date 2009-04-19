@@ -9,7 +9,6 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_active_tab "Design Questions"
 
     assert_not_nil assigns(:survey)
-
     # this will create two new questions
     save_survey_to_blank_page({
       "new_questions_attributes"=>{
@@ -48,13 +47,13 @@ class SurveyPageControllerTest < ActionController::TestCase
             }
 
     assert_redirected_to "_page_action" => "show"
-    assert_active_tab "List All Answers"
     assert_equal "<ul><li>Created a response!</li></ul>", flash[:text]
     assert_equal dolphin_id, assigns("response").user_id
     assert_equal ["a1", "a2", "a3"], assigns("response").answers.map{|a| a.value}
 
     # check the listing
     get :list, :page_id => pages("survey1").id
+    assert_active_tab "List All Answers"
     assert_response :success
     response = assigns("responses").detect {|r| r.user_id == dolphin_id}
     assert_equal ["a1", "a2", "a3"], response.answers.map{|a| a.value}
@@ -115,7 +114,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     get :list, :page_id => pages("survey1").id
     response = assigns("responses").detect {|r| r.user_id == blue_id}
     assert_nil response
-    assert_tab "List All Answers"
+    assert_active_tab "List All Answers"
   end
 
   def test_delete_others_response
@@ -213,7 +212,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_equal 7.0, rated_response.rating
   end
 
-  def assert_active_tab(tab_text)
+  def assert_active_tab(tab_text)    
     assert_select ".tabset" do
       assert_select "a.active", {:text => tab_text}
     end
