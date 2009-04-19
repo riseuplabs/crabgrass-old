@@ -109,6 +109,23 @@ module ImageHelper
   end
   
   ##
+  ## LINKS WITH ICONS
+  ## 
+
+  # eg:
+  # 
+  def link_to_remote_with_icon(label, options)
+    id = "link_id_#{rand(10000000)}"
+    link_to_remote(
+      label, 
+      { :url => options[:url],
+        :loading => replace_class_name(id, options[:icon], 'spinner_icon'),
+        :complete => replace_class_name(id, 'spinner_icon', options[:icon])},
+      { :class => "small_icon #{options[:icon]}", :id => id }
+    )
+  end
+
+  ##
   ## ASSET THUMBNAILS
   ##
 
