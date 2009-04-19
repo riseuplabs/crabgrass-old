@@ -26,3 +26,9 @@ ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
 
 MIN_PASSWORD_STRENGTH = 0
+
+# however, rails engines are way too verbose, so set engines logging to info:
+if defined? Engines
+  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
+  Engines.logger.level = Logger::INFO
+end
