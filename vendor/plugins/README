@@ -3,6 +3,11 @@ CRABGRASS HACKS TO PLUGINS:
 Before upgrading a plugin, check here to see if there are special crabgrass
 hacks have been applied.
 
+thinking_sphinx: there is a very very important hack to thinking_sphinx! normally, you can only specify one array of values when limiting a sphinx filter on a particular attribute. ie: Page.search :with => {:access_ids => [1,3,4]}; This, however,
+won't work for crabgrass, because we need to be able to specify additional
+AND clauses. Our hack is to allow :access_ids_1 and :access_ids_2, and these
+become AND'ed together. 
+
 acts_as_rateable: allow a rating of nil. Also, the plugin's rating.rb is overridden by app/models/rating.rb. 
 
 acts_as_tree: hack to to allow whatever options you pass to acts_as_tree to be passed on to the has_many :children association that acts_as_tree creates.
