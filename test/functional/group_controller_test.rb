@@ -302,15 +302,15 @@ class GroupControllerTest < Test::Unit::TestCase
   def test_edit_tools
     login_as :blue
 
-    post :edit_tools, :id => groups(:rainbow).name, :Discussion => "on", :Message => "on", :Wiki => "on"
+    post :edit_tools, :id => groups(:rainbow).name, :DiscussionPage => "on", :MessagePage => "on", :WikiPage => "on"
     groups(:rainbow).reload
-    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Discussion"),
+    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("DiscussionPage"),
                    "group should have Discussion page allowed"
-    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Message"),
+    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("MessagePage"),
                    "group should have Message page allowed"
-    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("Wiki"),
+    assert_equal true, groups(:rainbow).group_setting.allowed_tools.include?("WikiPage"),
                    "group should have Wiki page allowed"
-    assert_equal false, groups(:rainbow).group_setting.allowed_tools.include?("Asset")
+    assert_equal false, groups(:rainbow).group_setting.allowed_tools.include?("AssetPage")
                    "group should not have Asset page allowed"
   end
 

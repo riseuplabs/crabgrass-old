@@ -29,9 +29,20 @@ unless defined? MIN_PASSWORD_STRENGTH
 end
 
 begin
-  LANGUAGES = Language.find(:all).freeze
+  # get a list of possible translations, ones there is a file for.
+  possible = Dir.glob([RAILS_ROOT,'lang','*.yml'].join('/')).collect{ |file|
+    File.basename(file).sub('.yml','')
+  }
+
+  # intersect with the enabled langs in configuration
+  if Conf.enabled_languages.any?
+    lang_codes = possible & Conf.enabled_languages 
+  else
+    lang_codes = possible
+  end
+  LANGUAGES = Language.find(:all, :conditions => ['code IN (?)',lang_codes]).freeze
 rescue Exception
-  # the database doesn't exist yet.
+  # something went wrong.
   LANGUAGES = []
 end
 

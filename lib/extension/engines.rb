@@ -108,14 +108,14 @@ Engines::Plugin::FileSystemLocator.class_eval do
   #     locate_plugins_under('vendor/plugins/acts/acts_as_chunky_bacon')
   #     => <Rails::Plugin name: 'acts_as_chunky_bacon' ... >
   #
-  # crabgrass hack: only load the plugins in mods/ and pages/ if they are in
-  # or MODS_ENABLED or PAGES_ENABLED
+  # crabgrass hack: only load the plugins in mods/ and pages/ if they are
+  # enabled by Conf.
   #
   def locate_plugins_under(base_path)
     Dir.glob(File.join(base_path, '*')).inject([]) do |plugins, path|
       ## begin crabgrass hack
-      next(plugins) if path =~ /#{RAILS_ROOT}\/mods\//  and !MODS_ENABLED.include?(File.basename(path))
-      next(plugins) if path =~ /#{RAILS_ROOT}\/tools\// and !TOOLS_ENABLED.include?(File.basename(path))
+      next(plugins) if path =~ /#{RAILS_ROOT}\/mods\//  and !Conf.mod_enabled?(File.basename(path))
+      next(plugins) if path =~ /#{RAILS_ROOT}\/tools\// and !Conf.tool_enabled?(File.basename(path))
       ## end crabgrass hack
       if plugin = create_plugin(path)
         plugins << plugin

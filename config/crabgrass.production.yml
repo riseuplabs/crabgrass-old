@@ -1,0 +1,80 @@
+#
+# This is the main global crabgrass configuration. 
+# 
+# Most of the time, no other configuration should be required other than the
+# options in this file. Unusual options might be configured elsewhere.
+#
+# For true/false and numeric values, you must not enclose the value in quotes.
+#
+# See doc/CONFIGURATION for more details.
+#
+
+##
+## GLOBAL
+##
+
+enabled_languages:
+  - en_US
+  - es_ES
+  - pt_BR
+  - ar_EG
+enabled_mods:
+  - super_admin
+enabled_tools:
+  - asset_tool
+  - core_tools
+  - event_tool
+  - ranked_vote_tool
+  - rate_many_tool
+  - task_list_tool
+  - wiki_tool
+  - gallery_tool
+  - external_video_tool
+  - announcement_tool
+  - feed_tool
+email:
+  delivery_method: :smtp
+  smtp_settings:
+    domain: localhost
+    address: smtp.gmail.com
+    port: 587
+    authentication: :plain
+    user_name: xxxxxx@gmail.com
+    password: xxxxxxx
+
+##
+## SITES
+##
+
+sites:
+  - name: blue
+    admin_group: blueadmins
+  - name: red
+    admin_group: redadmins
+
+##
+## SITE DEFAULTS
+##
+
+pagination_size: 30
+default_language: en_US
+enforce_ssl: false
+show_exceptions: false
+email_sender: "robot@$current_host"
+tracking: true
+available_page_types:
+  - WikiPage
+  - AssetPage
+  - EventPage
+  - ExternalVideoPage
+  - TaskListPage
+  - AnnouncementPage
+  - SurveyPage
+  - DiscussionPage
+  - RateManyPage
+  - MessagePage
+  - RankedVotePage
+  - ArticlePage
+  - Gallery
+  - WikiPage
+

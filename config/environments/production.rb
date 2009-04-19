@@ -5,17 +5,10 @@ config.action_controller.consider_all_requests_local = true
 #config.action_controller.consider_all_requests_local = false
 
 # don't compare source sass and generated css timestamps every time we link to css
-Crabgrass::Config.ignore_sass_file_timestamps = true
+Conf.ignore_sass_file_timestamps = true
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-
-##
-## SECURITY
-##
-
-# set cookies to 'secure'; prevent some kinds of session-stealing attacks
-Crabgrass::Config.https_only = true
 
 ##
 ## CACHING
