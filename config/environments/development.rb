@@ -31,8 +31,8 @@ end
 # development mode. very useful if working on a source file in lib!
 
 # TODO: for rails 2.1.1, change to ActiveSupport::Dependencies
-::Dependencies.mechanism = :load
-::Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
+ActiveSupport::Dependencies.mechanism = :load
+ActiveSupport::Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
 #::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/mods'])
 #::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/tools'])
 
