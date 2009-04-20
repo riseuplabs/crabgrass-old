@@ -31,7 +31,7 @@ module CrabgrassDispatcher
               record.errors.add(attr_name, 'may only contain letters, numbers, underscores, and hyphens')
             end
           end
-          if value =~ /^(groups|me|people|networks|places|avatars|page|pages|account|static|places|assets|files|chat|admin)$/
+          if FORBIDDEN_NAMES.include?(value)
             record.errors.add(attr_name, 'is already taken')
           end
           # TODO: make this dynamic so this function can be

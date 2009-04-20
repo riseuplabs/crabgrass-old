@@ -12,14 +12,17 @@ class Me::DashboardController < Me::BaseController
   end
   
   def show_welcome_box
-    render :partial => 'account/welcome_box', :update => "welcome_box"
+    current_user.update_or_create_setting(:show_welcome => true)
+    render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
   end
   
   def close_welcome_box
-    render :partial => 'account/welcome_box', :update => 'welcome_box', :locals => { :closed => true}
+    current_user.update_or_create_setting(:show_welcome => false)
+    render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
   end
   
   protected
+
   # it is impossible to see anyone else's me page,
   # so no authorization is needed.
   def authorized?

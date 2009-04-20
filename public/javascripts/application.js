@@ -44,6 +44,10 @@ function submit_form(link, name, value) {
   }
 }
 
+function replace_class_name(element, old_class, new_class) {
+  element.removeClassName(old_class);
+  element.addClassName(new_class);
+}
 
 /** editing textareas **/
 

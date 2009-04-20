@@ -201,20 +201,39 @@ form.minisearch
       width: 50%
     &.left
       width: 50%
-  .description
-    color: #738899
-    font-family: georgia, times
-    font-style: italic
-    font-size: 1.1em
-    letter-spacing: 0.03em
-    word-spacing: 0.1em
-    line-height: 1.6em
   .status h3
     margin: 0.5em 0
   &.tabs
     padding: 1em 0 0 0
     overflow: hidden
     border-bottom: 0
+
+.info_box .description,
+.inset_box .description
+  // color: #738899
+  color: #697D8C
+  font-family: georgia, times
+  font-style: italic
+  font-size: 1.1em
+  line-height: 1.6em
+  letter-spacing: 1px
+  word-spacing: 2px
+
+// 
+// INSET BOX
+//
+
+.inset_box
+  background: #eee url(/images/background/fade-light.png) repeat-x
+  margin-bottom: 1em
+  padding: 1em
+  border: 1px solid #ccc
+  h3
+    margin-top: 1em
+    margin-bottom: 0
+  td
+    padding: 0 1em 1em 0
+    vertical-align: top
 
 
 //
