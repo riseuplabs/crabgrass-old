@@ -9,7 +9,7 @@
 # See doc/CONFIGURATION for more details.
 #
 
-title: "Crabgrass Development X"
+title: "Crabgrass Development"
 email:
   delivery_method: :sendmail
 sites:
