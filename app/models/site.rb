@@ -83,7 +83,7 @@ class Site < ActiveRecord::Base
     end
   end
 
-  proxy_to_conf :title, :pagination_size, :default_language, :email_sender,
+  proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
     :require_user_email, :domain
 

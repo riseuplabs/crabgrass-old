@@ -1,0 +1,19 @@
+See CONFIGURATION for how to configure sites.
+
+== Custom strings for sites
+
+Suppose you have a site named 'cats' and you want to change the translation string :welcome_message.
+
+Create lang/custom/xx_XX.yml (where xx_XX is the language code), and create the entry:
+
+  welcome_message_for_site_cats: "This is a custom welcome message"
+
+Then restart rails. 
+
+This will not work for all strings. Only those translated strings in the code that use the helper <tt>site_string()</tt> will use this special site customization rule.
+
+You can also use suffix "_for_site_default" if you have sites running and you want to a customized string for only the cases where there is no site. Otherwise, you can always customize the string normally without the suffix if you want the customization to apply to all sites in the install.
+
+
+
+

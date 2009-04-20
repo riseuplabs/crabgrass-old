@@ -131,8 +131,19 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
-  def site_string(symbol)
-    current_site.string(symbol, session[:language_code]) || symbol.t
+  # Tests to see if this site has a custom translation defined for +key+.
+  # If it doesn't, then we fall back to the normal translation.
+  def site_string(key)
+    site_key = "#{key}_for_site_#{current_site.name}"
+    if Gibberish.translations[site_key]
+      # NOTE: ^^^ this relies on a hack to Gibberish which turns
+      # Gibberish.translations[x] from a Hash to a HashWithIndifferentAccess
+      # (we don't want to create a bunch of symbols that are never
+      # going to be used)
+      site_key.t
+    else
+      key.t
+    end
   end
 
 end
