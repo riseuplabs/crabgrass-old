@@ -45,17 +45,18 @@ Example data for serialized fields:
 =end
 
 class Site < ActiveRecord::Base
-
   belongs_to :network
-
-  # associate with appearances
-  belongs_to :custom_appearance
+  belongs_to :custom_appearance, :dependent => :destroy
 
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
 
   cattr_accessor :current
+
+  ##
+  ## FINDERS
+  ##
 
   named_scope :for_domain, lambda {|domain|
     {:conditions => ['sites.domain = ? AND sites.id IN (?)', domain, SITES_ENABLED]}
@@ -92,7 +93,7 @@ class Site < ActiveRecord::Base
 
   # a user can be autoregistered in site.network
   def add_user!(user)
-    self.network.add_user!(user) unless self.network.nil?
+    self.network.add_user!(user) unless self.network.nil? or user.member_of?(self.network)
   end
 
   # returns true if the thing is part of the network
@@ -112,6 +113,7 @@ class Site < ActiveRecord::Base
       self.network.user_ids
   end
 
+  
   # gets all the pages for all the groups in the site
   # this does not work. network.pages only contains
   # the pages that have a group_participation by the network itself.
@@ -140,6 +142,29 @@ class Site < ActiveRecord::Base
     self.network.nil? ?
       Group.find(:all, :select => :id).collect{|group| group.id} :
       self.network.group_ids
+  end
+
+  ##
+  ## CUSTOM STRINGS
+  ##
+
+  def string(symbol, language_code)
+    nil
+  end
+
+  ##
+  ## LOGGING IN 
+  ##
+
+  # Where does the user go when they login? Let the site decide.
+  def login_redirect(user)
+    if self.signup_redirect_url
+      self.signup_redirect_url
+    elsif self.network
+      '/' + self.network.name
+    else
+      {:controller =>'/me/dashboard'}
+     end
   end
 
   # TODO : find a place to define all the elements, a site's user can see

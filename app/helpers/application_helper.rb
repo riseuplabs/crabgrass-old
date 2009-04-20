@@ -131,4 +131,8 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
+  def site_string(symbol)
+    current_site.string(symbol, session[:language_code]) || symbol.t
+  end
+
 end

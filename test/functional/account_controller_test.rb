@@ -22,7 +22,7 @@ class AccountControllerTest < Test::Unit::TestCase
     post :login, :login => 'quentin', :password => 'quentin'
     assert session[:user]
     assert_response :redirect
-    assert_redirected_to :controller => 'me/dashboard', :action => 'index'
+    assert_redirected_to :controller => 'me/dashboard'
   end
 
   def test_should_fail_login_and_not_redirect

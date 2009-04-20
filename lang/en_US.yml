@@ -38,6 +38,7 @@ friends: "Friends"
 people: "People"
 members: "Members"
 all_content: "All Content"
+more_information: "More Information"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
@@ -130,17 +131,6 @@ login_failed: "Could not log in"
 signup_login_name: "Your login name"
 login_button: "Log in"
 login: "Login"
-welcome_text: |
-  *Welcome*
-
-  Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
-
-  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link.
-
-  Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
-
-  Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the "get involved" link at the bottom over every page.
-
 signup_title: "Create Your Account"
 signup_email: "Your Email"
 login_password: "Password"
@@ -887,8 +877,27 @@ current_tags: "Current Tags"
 
 
 #
-# NEW CRABGRASS INTRODUCTIONS
+# WELCOME BOX
 #
 
-welcome_page_title: "Welcome to Crabgrass." 
-welcome_page_text: "Feel free!"
+welcome_heading: "Welcome to {site_title}, {user_name}!"
+welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
+
+welcome_edit_profile_link: "Edit your profile"
+welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
+
+welcome_upload_icon_link: "Upload a user icon"
+welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
+
+welcome_find_people_link: "Find people"
+welcome_find_people_text: "Browse the user directory for people you know."
+
+welcome_find_groups_link: "Find groups"
+welcome_find_groups_text: "Browse the group directory for groups to join."
+
+welcome_create_group_link: "Create a new group"
+welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
+
+welcome_create_page_link: "Create a new page"
+welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
+

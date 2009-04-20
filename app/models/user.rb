@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
   has_one :setting, :class_name => 'UserSetting', :dependent => :destroy
 
   # allow us to call user.setting.x even if user.setting is nil
-  def setting_with_safety; setting_without_safety or UserSetting.new; end
+  def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
   alias_method_chain :setting, :safety
 
   def update_or_create_setting(attrs)

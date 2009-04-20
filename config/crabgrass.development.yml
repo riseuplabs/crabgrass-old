@@ -16,5 +16,5 @@ sites:
 #  - name: site1
 #    admin_group: animals
   - name: site2
-    admin_group: superadmin
+    admin_group: rainbow
 
