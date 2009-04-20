@@ -51,3 +51,9 @@ animals_asset3:
   group_id: 2
   access: 1
 
+rainbow_deleted:
+  id: 45
+  page_id: 207
+  group_id: 3
+  access: 3
+

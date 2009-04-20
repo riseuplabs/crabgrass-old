@@ -197,11 +197,15 @@ hello:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
-flow_test:
-  id: 206
-  title: flow test
+delete_test: # also serves as flow test.
+  id: 207
+  title: delete test
+  created_by_id: 4
+  created_by_login: blue
+  updated_by_id: 4
+  updated_by_login: blue
   type: DiscussionPage
-  flow: 3
+  flow: "<%= FLOW[:deleted] %>" 
   public: 1
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"

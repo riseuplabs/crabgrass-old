@@ -144,7 +144,7 @@ class PageFinderTest < Test::Unit::TestCase
   def test_flow
     dont_login
     
-    flow_page = pages(:flow_test)
+    flow_page = pages(:delete_test)
     pages = Page.find_by_path('/',:flow => :deleted)
     assert_not_nil pages, 'find with flow condition should return one page'
     assert_equal flow_page.id, pages.first.id, 'find with flow condition should return :flow_test'
