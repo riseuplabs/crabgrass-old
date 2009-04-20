@@ -8,7 +8,7 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     CustomAppearance.clear_cached_css
   end
 
-  def test_generate_css_and_clear_cache
+  def xtest_generate_css_and_clear_cache
     appearance = custom_appearances(:default_appearance)
 
     # update appearance
