@@ -51,6 +51,8 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_select 'li.unsaved'
     
+    # this request should not end in adding the user a second time
+    
     # a request that will not be successful, as the username doesn't exist.
     xhr :post, :update, { :page_id =>  1, :recipient => {:name => 'a_username_that_will_never_exist' } } 
     assert_response :success
@@ -97,11 +99,17 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     page.reload
     assert !group_private.may?(:admin, page), 'private group should still not have access to page'
 
+    # try to share with a user
     xhr :post, :update , { :page_id => page.id, :recipients => { users(:penguin).login.to_sym => { :access => :admin } } }
     page.reload
     users(:penguin).reload
-    # TODO: figure out why this assert fails intermittently
     assert users(:penguin).may?(:admin, page), 'user penguin should have access to page'
+    
+    # when the page is already shared with a user, it should not be possible to add it again as a recipient
+    xhr :post, :update, { :page_id =>  page.id, :recipient => {:name => 'penguin' } }
+    assert_response :success
+    assert_select 'div.error'
+        
   end
   
   # test if notifying an existing user works

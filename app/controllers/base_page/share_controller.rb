@@ -59,10 +59,13 @@ class BasePage::ShareController < ApplicationController
       # add one recipient to the list
       recipient_name = params[:recipient][:name].strip 
       @recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
+      
       if @recipient.nil?
-        flash_message :error => 'no such name'
+        flash_message :error => 'no such name'[:no_such_name]
       elsif !@recipient.may_be_pestered_by?(current_user)
-        flash_message :error => 'you may not pester'
+        flash_message :error => 'you may not pester'[:you_may_not_pester]
+      elsif @recipient.participations.find_by_page_id(@page.id)
+        flash_message :error => 'a participation for this user / group already exists'[:participation_already_exists]
       end
       render :partial => 'base_page/share/add_recipient'
     elsif params[:recipients]
