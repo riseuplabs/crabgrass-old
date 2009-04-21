@@ -1,30 +1,42 @@
-namespace :sites do
-  task :load_from_yml => :environment do
-    # bail if not empty
-    unless Site.find(:all).empty? or ENV["FORCE_OVERWRITE"] == "true"
-      raise "Refusing to destroy existing sites data. Run with 'FORCE_OVERWRITE=true'"
-    end
-    # destroy everything
-    Site.find(:all).each {|s| s.destroy}
+namespace :cg do
+  namespace :site do
 
-    if RAILS_ENV=="production"
-      config_file = 'sites.yml'
-    else
-      config_file = 'development.sites.yml'
-    end
-
-    config_path = File.join(RAILS_ROOT, "config", config_file)
-
-    site_configs = YAML.load_file(config_path)
-
-    site_configs.each do |label, config|
-      config.delete("secret")
-      if config["default_language"].is_a? Array
-        config["default_language"] = config["default_language"].first
+    desc 'creates a new site'
+    task :create => :environment do
+      unless ENV['NAME']
+        puts 'ERROR: site name required, use NAME=<name> to specify the name.'
+        exit
       end
-
-      site = Site.new(config)
-      site.save!
+      if Site.find_by_name(ENV["NAME"])
+        puts 'ERROR: a site with that name already exists.'
+        exit
+      end
+      Site.create! :name => ENV["NAME"]
+      puts 'Site "%s" created' % ENV["NAME"]
     end
+
+    desc 'destroys a site'
+    task :destroy => :environment do
+      unless ENV['NAME']
+        puts 'ERROR: site name required, use NAME=<name> to specify the name.'
+        exit
+      end
+      site = Site.find_by_name(ENV["NAME"])
+      unless site
+        puts 'ERROR: no site found with name ""' % ENV["NAME"]
+        exit
+      end
+      site.destroy
+      puts 'Site "%s" destroyed' % ENV["NAME"]
+    end
+
+    desc 'list the sites in the database'
+    task :list => :environment do
+      puts "%15s%15s%15s" % ['name', 'domain', 'admin id']
+      Site.find(:all, :order => 'name').each do |site|
+        puts "%15s%15s%15s" % [site.name, site.domain, site.super_admin_group_id]
+      end
+    end
+
   end
 end

@@ -3,18 +3,19 @@
 <ul>
   <%- if logged_in? -%>
     <%- if current_site.network -%>
-      <li id='menu_home' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-        <span><%= link_to_active 'Home'[:menu_home], url_for_group(current_site.network), @active_tab == :networks %></span>
+      <%- home_active = @active_tab == :networks && @group == current_site.network -%>
+      <li id='menu_home' class='<%= home_active ? 'active' : '' %>'>
+        <span><%= link_to_active 'Home'[:menu_home], url_for_group(current_site.network), home_active %></span>
       </li>
     <%- end -%>
     <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
       <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
     </li>
-  <% else -%>
+  <%- else -%>
     <li class='<%= params[:controller] == 'account' ? 'active' : '' %>'>
       <span><%= link_to_active "Home"[:menu_home], '/', params[:controller] == 'account' %></span>
     </li>    
-  <% end -%>
+  <%- end -%>
 
   <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
     <span><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
@@ -24,17 +25,18 @@
     <span><%= link_to_active "Groups"[:menu_groups], groups_url, @active_tab == :groups %></span>
   </li>
 
-  <% if current_site.has_networks? %>
-    <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-      <span><%= link_to_active "Networks"[:menu_networks], networks_url, @active_tab == :networks %></span>
+  <%- if current_site.has_networks? -%>
+    <%- network_active = @active_tab == :networks && @group != current_site.network -%>
+    <li id='menu_networks' class='<%= network_active ? 'active' : '' %>'>
+      <span><%= link_to_active "Networks"[:menu_networks], networks_url, network_active %></span>
     </li>
-  <% end %>
+  <%- end -%>
 
-  <% if logged_in? -%>
+  <%- if logged_in? -%>
   <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
     <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
-  <% end -%>
+  <%- end -%>
 
   <%= call_hook :top_menu %>
 </ul>

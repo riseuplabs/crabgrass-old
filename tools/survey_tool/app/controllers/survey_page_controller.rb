@@ -4,17 +4,35 @@ class SurveyPageController < BasePageController
   javascript :extra
   javascript 'survey'
 
-  before_filter :fetch_response, :only => [:respond, :show]
-  
+  before_filter :fetch_response, :only => [:respond, :your_answers]
+
   def respond
     if request.post?
-      save_response
+      begin
+        if @response.new_record?
+          created = true
+          @response.save!
+        else
+          @response.update_attributes!(params[:response])
+        end
+      rescue Exception => exc
+        # we have an error
+        flash_message_now :object => @response, :exc => exc
+        return
+      end
+      # everything went well
+      if created
+        flash_message :success => 'Created a response!'[:response_created_message]
+      else
+        flash_message :success => 'Updated your response'[:response_updated_message]
+      end
+      redirect_to page_url(@page, :action => 'your_answers')
     else
       @response.valid?
       flash_message_now :object => @response
     end
   end
-  
+
   def delete_response
     redirect_to page_url(@page) unless request.post?
     if params[:id] && current_user.may?(:admin, @page)
@@ -24,17 +42,17 @@ class SurveyPageController < BasePageController
     end
     if @response
       if params[:jump]
-        begin
-          index = @survey.response_ids.find_index(params[:id].to_i)
-          id = @survey.response_ids[(params[:jump] == 'prev') ? (index-1) : 
-                                    ((index+1) % @survey.response_ids.size)]
-        end
+        index = @survey.response_ids.index(params[:id].to_i)
+        id = @survey.response_ids[(params[:jump] == 'prev') ? (index-1) :
+                                  ((index+1) % @survey.response_ids.size)]
       end
       @response.destroy
     end
-    redirect_to page_url(*[@page, (params[:jump] && @response ? {
-                                     :action => 'details', :id => id } : nil)
-                            ].compact)
+    if params[:jump] && @response
+      redirect_to page_url(@page, :action => 'details', :id => id)
+    else
+      redirect_to page_url(@page, :action => 'respond')
+    end
   end
 
   def design
@@ -42,11 +60,8 @@ class SurveyPageController < BasePageController
   end
 
   def save_design
-    if @survey
-      @survey.update_attributes(params[:survey])
-    else
-      @survey = Survey.new(params[:survey])
-    end
+    @survey.update_attributes(params[:survey])
+
     if @survey.save
       @page.data = @survey
       flash_message :success => 'Saved Your Changes!'[:survey_updated_message]
@@ -62,8 +77,13 @@ class SurveyPageController < BasePageController
   end
 
   def show
+  end
+
+  def your_answers
     # if we don't have a saved response we can't view it
-    redirect_to page_url(@page, :action => 'respond') if @response.new_record?
+    if @response and @response.new_record?
+      redirect_to page_url(@page, :action => 'respond')
+    end
   end
 
   # xhr and get
@@ -72,10 +92,10 @@ class SurveyPageController < BasePageController
   # have been given a rating of nil, to let us know that the user has skipped it.
   #
   # There is a slight problem, which I am not sure how to solve. If the user skips
-  # a response by choosing not to rate it, we cannot put it at the end of the 
+  # a response by choosing not to rate it, we cannot put it at the end of the
   # 'unrated' queue because this makes it impossible to skip the last unrated
   # response. However, if we put the skipped item at the bottom of the rated
-  # queue, it makes it so you won't see it for a long time. 
+  # queue, it makes it so you won't see it for a long time.
   #
   # This is how it works now, which I guess is better. Skip, then, means that you
   # really don't want to have to rate it.
@@ -91,7 +111,7 @@ class SurveyPageController < BasePageController
       end
       # don't count zero rating, but create the record so we know the user
       # didn't want to rate it:
-      params[:rating] = nil if params[:rating] == "0" 
+      params[:rating] = nil if params[:rating] == "0"
       Rating.create!(:rateable => resp, :user => current_user, :rating => params[:rating])
     end
 
@@ -123,7 +143,7 @@ class SurveyPageController < BasePageController
   end
 
   protected
-  
+
   def authorized?
     return true if @page.nil?
     if action?(:details, :show, :delete_response)
@@ -135,30 +155,6 @@ class SurveyPageController < BasePageController
     else
       current_user.may?(:admin, @page)
     end
-  end
-  
-
-  def save_response
-    begin
-      if @response.new_record?
-        created = true
-        @response.save!
-      else
-        @response.update_attributes!(params[:response])
-      end
-    rescue Exception => exc
-      # we have an error
-      flash_message_now :object => @response, :exc => exc
-      return
-    end
-
-    # everything went well
-    if created
-      flash_message :success => 'Created a response!'[:response_created_message]
-    else
-      flash_message :success => 'Updated your response'[:response_updated_message]
-    end
-    redirect_to page_url(@page, :action => 'show')
   end
 
   # called early in filter chain
@@ -173,7 +169,7 @@ class SurveyPageController < BasePageController
     # try to find an existing response
     @response = @survey.responses.find_by_user_id(current_user) if logged_in?
 
-    if @response.nil?
+    if @response.nil? and logged_in?
       # build a new response
       @response = @survey.responses.build(params[:response])
       @response.user = current_user
@@ -187,7 +183,7 @@ class SurveyPageController < BasePageController
   def next_four_responses(survey)
     responses = survey.responses.unrated_by(current_user, 4)
     if responses.size < 4
-      responses += survey.responses.rated_by(current_user, 4-responses.size) 
+      responses += survey.responses.rated_by(current_user, 4-responses.size)
     end
     return responses
   end

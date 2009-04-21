@@ -21,14 +21,14 @@ class ApplicationController < ActionController::Base
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
-  session :session_secure => true if Crabgrass::Config.https_only
-  protect_from_forgery :secret => Crabgrass::Config.secret
+  session :session_secure => Conf.enforce_ssl # todo: figure out how to use current_site.enforce_ssl instead
+  protect_from_forgery :secret => Conf.secret
   layout 'default'
 
   helper_method :current_site  # make available to views
   def current_site
-    @current_site ||= Site.find_by_domain(request.host)
-    @current_site ||= Site.default 
+    @current_site ||= Site.for_domain(request.host).find(:first)
+    @current_site ||= Site.default #not useful without default site
   end
 
   protected
@@ -46,9 +46,14 @@ class ApplicationController < ActionController::Base
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
   end
 
+  #
+  # returns a hash of options to be given to the mailers. These can be
+  # overridden, but these defaults are pretty good. See models/mailer.rb.
+  #
   def mailer_options
+    from_address = current_site.email_sender.gsub('$current_host',request.host)
     opts = {:site => current_site, :current_user => current_user, :host => request.host,
-     :protocol => request.protocol, :page => @page}
+     :protocol => request.protocol, :page => @page, :from_address => from_address}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end

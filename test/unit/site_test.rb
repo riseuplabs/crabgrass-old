@@ -9,21 +9,9 @@ end
 class SiteTest < Test::Unit::TestCase
   fixtures :sites
 
-  def test_default
-    first_site = Site.find :first
-    first_default = Site.find :first, :conditions => ["sites.default = '?'", true]
-
-    site_default = Site.default
-
-    assert site_default.default, "site.default field should be true"
-    # unset the first default
-    site_default.default = false
-    site_default.save!
-    Site.uncache_default
-
-    default = Site.default
-    assert_equal false, default.default, "site.default field should be false"
-    assert_equal first_site, default
+  def test_defaults_to_conf
+    assert_equal Conf.title, Site.new.title
   end
+
 
 end

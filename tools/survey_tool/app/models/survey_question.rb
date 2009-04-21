@@ -5,7 +5,7 @@ class SurveyQuestion < ActiveRecord::Base
 
   has_many(:answers, :dependent => :destroy, :class_name => 'SurveyAnswer',
            :foreign_key => 'question_id')
-  
+
   def answer_class
     TextAnswer
   end
@@ -17,13 +17,17 @@ class SurveyQuestion < ActiveRecord::Base
   # def answer!(response, value)
   #   answer_class.new(:question => self, :response => response, :value => value).save!
   # end
-  
+
   def add_question_link_text
     self.class.to_s
   end
 
   def newline_delimited_choices=(text)
-    self.choices = text.split(/\r?\n/)
+    if text
+      self.choices = text.split(/\r?\n/)
+    else
+      self.choices = []
+    end
   end
 
   def newline_delimited_choices
@@ -88,7 +92,7 @@ class ImageUploadQuestion < SurveyQuestion
   def add_question_link_text
     "Upload Image"[:upload_image_question_link]
   end
-  
+
   def answer_class
     AssetAnswer
   end

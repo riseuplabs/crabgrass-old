@@ -1,0 +1,5 @@
+<%= header_with_more(:h2, :alert, "Recent Network Pages".t, group_search_url('descending', 'updated_at')) %>
+<%= render :partial => 'pages/list', :locals => {:pages => @pages, :columns => [:stars, :icon, :title, :last_updated]} %>
+<br/>
+<%= link_to "More"[:see_more_link] + ARROW, group_search_url('descending', 'updated_at') if @pages.any?%>
+

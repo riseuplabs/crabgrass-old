@@ -1,9 +1,0 @@
-#
-# Outgoing email settings
-# To enable ssl connection, port must be 587 or 465.
-# Some SMTP auth requires a domain, which does not have
-# to be a real domain, but it must exist.
-#
-
-production:
-  delivery_method: :sendmail

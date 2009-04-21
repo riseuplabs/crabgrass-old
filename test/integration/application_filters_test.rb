@@ -5,6 +5,7 @@ class ApplicationFiltersTest < ActionController::IntegrationTest
 
   def setup
     @hosts = ["localhost", "test.host"]
+    Conf.enable_site_testing
   end
 
   def test_set_site_from_host

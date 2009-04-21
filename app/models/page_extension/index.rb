@@ -32,11 +32,20 @@ module PageExtension::Index
     # returns:
     #   ["0001", "0081", "0082", "83000", "0014", "0015", "16000"]
     #
+    # The rules:
+    #
+    #  * pad with 0 to at least 4 chars.
+    #  * prefix user ids with 1
+    #  * prefix group ids with 8
+    #  * prefix site ids with 5
+    #  * 0001 means the page is marked public.
+    #
     def access_ids_for(args={})
       id_array = []
       id_array += ["0001"] if args[:public]
       id_array += args[:group_ids].collect {|id| "%04d" % "8#{id}"} if args[:group_ids]
       id_array += args[:user_ids].collect  {|id| "%04d" % "1#{id}"} if args[:user_ids]
+      id_array += args[:site_ids].collect  {|id| "%04d" % "5#{id}"} if args[:site_ids]
       return id_array
     end
 
@@ -147,7 +156,7 @@ module PageExtension::Index
       ).join(' ')
     end
 
-    # Returns the text to be included in teh body of the page index.
+    # Returns the text to be included in the body of the page index.
     # Subclasses of Page should override this method as appropriate.
     # For example WikiPage should return wiki.body, and TaskListPage
     # will merge all of the tasks associated with it.

@@ -1,3 +1,11 @@
+# try loading rcov
+begin
+  require 'rcov/rcovtask'
+rescue LoadError
+  # STDERR.puts "rcov not installed"
+  # ^^ I don't want to get this error every time.
+end
+
 def plugins_with_allowed_fixtures
   # skip plugins that load fixtures we don't have a schema for
   Engines.plugins.by_precedence.reject do |p|
@@ -39,7 +47,12 @@ namespace :test do
     desc "Mirrors plugin fixtures into a single location to help plugin tests"
     task :setup_plugin_fixtures => :environment do
       if ENV['MOD']
-        Engines::Testing.setup_plugin_fixtures([Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}])
+        plugin = Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}
+        unless plugin
+          puts 'ERROR: mod plugin named "%s" not found.' % ENV['MOD']
+          exit
+        end
+        Engines::Testing.setup_plugin_fixtures([plugin])
       else
         Engines::Testing.setup_plugin_fixtures
       end
@@ -95,23 +108,15 @@ namespace :test do
 
     def all_file_list
       # don't include mods by default
-      list = FileList["test/**/*_test.rb"] + FileList["tools/**/test/*_test.rb"]
+      list = FileList["test/**/*_test.rb"] + FileList["tools/**/test/**/*_test.rb"]
 
       # FileList["mods/**/test/**/*_test.rb"]
       # find and add just the enabled  mods
       pwd = File.dirname(__FILE__)
-      mods_enabled = File.read(pwd + "/../../config/mods_enabled.list").split("\n")
-      mods_enabled = mods_enabled.select {|m| m =~/^\w+/}
-
-      mods_enabled.each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]}
+      conf = YAML.load_file(pwd + "/../../config/crabgrass.test.yml")    
+      (conf['enabled_mods']||[]).each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]} if conf
 
       return list
-    end
-    # try loading rcov
-    begin
-     require 'rcov/rcovtask'
-    rescue LoadError
-     puts "rcov not installed"
     end
 
     task :load_plugin_fixtures => [:environment, "db:test:prepare"] do
@@ -161,3 +166,4 @@ namespace :test do
 
   end
 end
+

@@ -5,6 +5,7 @@ class Admin::BaseController < ActionController::Base
   include AuthenticatedSystem
 
   layout 'admin'
+
   helper 'admin/users', 'admin/groups', 'admin/memberships', 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', PageHelper, UrlHelper, ErrorHelper, LinkHelper, ApplicationHelper, TimeHelper
 
   before_filter :login_required
@@ -17,9 +18,15 @@ class Admin::BaseController < ActionController::Base
   include Admin::EmailBlastsHelper
   include Admin::AnnouncementsHelper
 
-  protect_from_forgery :secret => Crabgrass::Config.secret
+  protect_from_forgery :secret => Conf.secret
 
   def index
+  end
+
+  helper_method :current_site  # make available to views
+  def current_site
+    @current_site ||= Site.for_domain(request.host).find(:first)
+    @current_site ||= Site.default 
   end
 
   protected

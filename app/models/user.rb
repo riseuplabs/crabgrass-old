@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  # core user extenstions
+  # core user extentions
   include UserExtension::Cache      # should come first
   include UserExtension::Socialize  # user <--> user
   include UserExtension::Organize   # user <--> groups
@@ -8,7 +8,24 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
-  # named scopes
+  ##
+  ## VALIDATIONS
+  ##
+
+  include CrabgrassDispatcher::Validations
+  validates_handle :login
+
+  validates_presence_of :email if Conf.require_user_email
+  # ^^ TODO: make this site specific
+  
+  validates_as_email :email
+  before_validation 'self.email = nil if email.empty?'
+  # ^^ makes the validation succeed if email == ''
+
+  ##
+  ## NAMED SCOPES
+  ##
+
   named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
 
   # alphabetized and (optional) limited to +letter+
@@ -28,9 +45,6 @@ class User < ActiveRecord::Base
   # select only logins
   named_scope :logins_only, :select => 'login'
 
-  # custom validation
-  include CrabgrassDispatcher::Validations
-  validates_handle :login
   
   ##
   ## USER IDENTITY
@@ -112,6 +126,21 @@ class User < ActiveRecord::Base
   ## USER SETTINGS
   ##
 
+  has_one :setting, :class_name => 'UserSetting', :dependent => :destroy
+
+  # allow us to call user.setting.x even if user.setting is nil
+  def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
+  alias_method_chain :setting, :safety
+
+  def update_or_create_setting(attrs)
+    if setting.id
+      setting.update_attributes(attrs)
+    else
+      create_setting(attrs)
+    end
+  end
+
+
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
   # message.
@@ -186,14 +215,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates_presence_of :email if Crabgrass::Config.require_user_email
-  
-  validates_as_email :email
-  before_validation :clear_email
-  # makes the validation succeed if email == ''
-  def clear_email
-    self.email = nil if email.empty?
-  end
-
+  # TODO: this does not belong here, should be in the mod, but it was not working
+  # there.
   include UserExtension::SuperAdmin rescue NameError
 end

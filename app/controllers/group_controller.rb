@@ -90,6 +90,7 @@ class GroupController < ApplicationController
 
   # login required
   def edit
+    @group.group_setting ||= GroupSetting.new
     @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
   end
 
@@ -210,9 +211,14 @@ class GroupController < ApplicationController
     @allowed_tools =  ( ! @group.group_setting.allowed_tools.nil? ? @group.group_setting.allowed_tools : @available_tools)
   end
   
-  @@layout_widgets = ["group_wiki", "recent_pages"]
   def edit_layout
-    @widgets = [''] + @@layout_widgets
+    # this whole thing is quite a hack, as the widget system will be reworked soon anyway
+    # jrw, Apr 22th
+    default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}
+    default_template_data.merge!({"section3" => "recent_group_pages"}) if @group.network?
+    @group.group_setting ||= GroupSetting.new
+    @group.group_setting.template_data ||= default_template_data
+    @widgets = @group.group_setting.template_data
     if request.post?
       @group.group_setting.template_data = {}
       @group.group_setting.template_data['section1'] = params['section1']
