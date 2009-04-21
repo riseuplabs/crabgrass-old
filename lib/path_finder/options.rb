@@ -86,7 +86,7 @@ module PathFinder::Options
     end
  
     # limit pages to the current site.
-    if get_controller.current_site.limited?
+    if false and get_controller.current_site.limited?
       # why site_ids instead of just site_id? perhaps in the future
       # we will enable a user to login and see a configurable subset of the 
       # sites they have available to them.
