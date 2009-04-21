@@ -1,31 +1,38 @@
 <%- @info_box_class = 'tabs' -%>
 <%- @info_box = capture do -%>
-<%= if logged_in? and current_user.may? :edit, @page
+<%= 
   Formy.tabs do |f|
-    if current_user.may?(:admin, @page)
-      f.tab do |t|
-        t.label 'Design Questions'.t
-        t.url page_url(@page, :action => 'design')
-        t.selected action?(:design)
-      end
-    end
     f.tab do |t|
-      t.label 'Your Answers'.t
+      t.label 'Summary'.t
       t.url page_url(@page, :action => 'show')
-      t.selected action?(:respond, :show)
+      t.selected action?(:show)
     end
-    if @page.rating_enabled_for?(current_user)
-      f.tab do |t|
-        t.label 'Rate All Answers'.t
-        t.url page_url(@page, :action => 'rate')
-        t.selected action?(:rate)
+    if logged_in? and current_user.may?(:edit, @page)
+      if current_user.may?(:admin, @page)
+        f.tab do |t|
+          t.label 'Design Questions'.t
+          t.url page_url(@page, :action => 'design')
+          t.selected action?(:design)
+        end
       end
-    end
-    if current_user.may?(:admin, @page)
       f.tab do |t|
-        t.label 'List All Answers'.t
-        t.url page_url(@page, :action => 'list')
-        t.selected action?(:list) || action?(:details)
+        t.label 'Your Answers'.t
+        t.url page_url(@page, :action => 'your_answers')
+        t.selected action?(:respond, :your_answers)
+      end
+      if @page.rating_enabled_for?(current_user)
+        f.tab do |t|
+          t.label 'Rate All Answers'.t
+          t.url page_url(@page, :action => 'rate')
+          t.selected action?(:rate)
+        end
+      end
+      if current_user.may?(:admin, @page)
+        f.tab do |t|
+          t.label 'List All Answers'.t
+          t.url page_url(@page, :action => 'list')
+          t.selected action?(:list) || action?(:details)
+        end
       end
     end
 #    f.tab do |t|
@@ -34,7 +41,6 @@
 #      t.selected action?(:stats)
 #    end
   end
-end
 %>
 <%- end -%>
 
