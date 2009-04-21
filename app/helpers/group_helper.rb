@@ -172,11 +172,15 @@ module GroupHelper
   #Defaults!
   def show_section(name)
     @group.group_setting ||= GroupSetting.new
-    @group.group_setting.template_data ||= {"section1" => "group_wiki", "section2" => "recent_pages"}
+    if @group.network?
+    end
+    default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}
+    default_template_data.merge!({"section3" => "recent_group_pages"}) if @group.network?
+    
+    @group.group_setting.template_data ||= default_template_data
     widgets = @group.group_setting.template_data
     widget = widgets[name]
-    #template = widget[0]
-    #local_vars = widget[1]
-    render :partial => 'group/widgets/' + widget if widget.length > 0#, :locals => local_vars
+    @group.network? ? widget_folder =  'network' : widget_folder = 'group'
+    render :partial => widget_folder + '/widgets/' + widget if widget.length > 0
   end
 end
