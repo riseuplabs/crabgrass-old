@@ -236,7 +236,7 @@ module UserExtension::Sharing
       attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
     end
 
-    default_Access_level = :none
+    default_access_level = :none
     if options.key?(:access) # might be nil
       attrs[:access] = options[:access]
     else
