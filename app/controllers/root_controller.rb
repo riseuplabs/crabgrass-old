@@ -3,7 +3,6 @@
 #
 class RootController < ApplicationController
 
-#  stylesheet 'groups'
   helper :group
 
   def index
@@ -32,6 +31,7 @@ class RootController < ApplicationController
   end
 
   def login_page
+    @stylesheet = 'account'
     render :template => 'account/index'
   end
 
