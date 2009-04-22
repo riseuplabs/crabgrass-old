@@ -170,7 +170,7 @@ class Site < ActiveRecord::Base
     if self.signup_redirect_url
       self.signup_redirect_url
     elsif self.network
-      '/' + self.network.name
+      '/'
     else
       {:controller =>'/me/dashboard'}
      end

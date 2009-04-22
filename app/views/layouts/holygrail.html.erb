@@ -25,7 +25,7 @@
   <%= call_hook :masthead %>
 <%= render :partial => 'layouts/menu' %>
   </div>
-	<div id='banner'><div class='content'><%= @banner %></div></div>
+	<% if @banner %><div id='banner'><div class='content'><%= @banner %></div></div><% end %>
 </div>
 
 <div id='wrapper'>
