@@ -120,7 +120,8 @@ module ImageHelper
       label, 
       { :url => options[:url],
         :loading => replace_class_name(id, options[:icon], 'spinner_icon'),
-        :complete => replace_class_name(id, 'spinner_icon', options[:icon])},
+        :complete => replace_class_name(id, 'spinner_icon', options[:icon]),
+        :with => options[:with]},
       { :class => "small_icon #{options[:icon]}", :id => id }
     )
   end

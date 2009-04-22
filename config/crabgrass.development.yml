@@ -9,13 +9,28 @@
 # See doc/CONFIGURATION for more details.
 #
 
+#
+# development tips:
+# 
+#  * to work with super_admin, enable super_admin mod and site 'site1'.
+#
+
 title: "Crabgrass Development"
+#enabled_mods:
+#  - super_admin
 email:
   delivery_method: :sendmail
+
+##
+## SITES
+##
+
 sites:
+
 # bound to localhost:
 #  - name: site1
 #    admin_group: animals
+
 # bound to test.host
   - name: site2
     admin_group: superadmins

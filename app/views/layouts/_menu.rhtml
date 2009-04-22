@@ -5,7 +5,7 @@
     <%- if current_site.network -%>
       <%- home_active = @active_tab == :networks && @group == current_site.network -%>
       <li id='menu_home' class='<%= home_active ? 'active' : '' %>'>
-        <span><%= link_to_active 'Home'[:menu_home], url_for_group(current_site.network), home_active %></span>
+        <span><%= link_to_active 'Home'[:menu_home], '/', home_active %></span>
       </li>
     <%- end -%>
     <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>

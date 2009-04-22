@@ -27,6 +27,10 @@ class Conf
   cattr_accessor :translators
   cattr_accessor :translation_group
 
+  # are global, but might end up in site one day.
+  cattr_accessor :profiles
+  cattr_accessor :profile_fields
+
   # global instance options
   cattr_accessor :enabled_mods
   cattr_accessor :enabled_tools
@@ -41,7 +45,7 @@ class Conf
   # Global options that are set automatically by the code
   # For exampke, in initializers or in environments/*.rb.
   # Typically, you will never have to configured these.
-  cattr_accessor :ignore_sass_file_timestamps
+  cattr_accessor :always_renegerate_themed_stylesheet
   cattr_accessor :enabled_site_ids
 
   # used for error reporting
