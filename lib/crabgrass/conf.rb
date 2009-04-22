@@ -41,7 +41,7 @@ class Conf
   # Global options that are set automatically by the code
   # For exampke, in initializers or in environments/*.rb.
   # Typically, you will never have to configured these.
-  cattr_accessor :ignore_sass_file_timestamps
+  cattr_accessor :always_renegerate_themed_stylesheet
   cattr_accessor :enabled_site_ids
 
   # used for error reporting

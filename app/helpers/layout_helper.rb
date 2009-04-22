@@ -29,16 +29,13 @@ module LayoutHelper
   ###########################################
   # STYLESHEET
   
-  # this will check if we have cached the request css path (like 'as_needed/wiki.css')
-  # specifically for the current custom appearance
-  # and will link to the cached version if it exists
-  def cached_stysheet_link_tag(path)
+  # CustomAppearances model allows administrators to override the default css values
+  # this method will link to the appropriate overriden css
+  def themed_stylesheet_link_tag(path)
     appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
-    if appearance.has_cached_css?(path)
-      stylesheet_link_tag(appearance.cached_css_stysheet_link_path(path))
-    else
-      stylesheet_link_tag(path)
-    end
+
+    themed_stylesheet_url = appearance.themed_stylesheet_url(path)
+    stylesheet_link_tag(themed_stylesheet_url)
   end
 
   # custom stylesheet
@@ -47,7 +44,7 @@ module LayoutHelper
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
     sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
-    sheets.collect {|s| cached_stysheet_link_tag(s)}
+    sheets.collect {|s| themed_stylesheet_link_tag(s)}
   end
 
   # crabgrass_stylesheets()
@@ -65,7 +62,7 @@ module LayoutHelper
   def crabgrass_stylesheets
     lines = []
 
-    lines << cached_stysheet_link_tag('screen.css')
+    lines << themed_stylesheet_link_tag('screen.css')
     lines << stylesheet_link_tag('icon_png')
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
