@@ -46,7 +46,7 @@ class SurveyPageControllerTest < ActionController::TestCase
                 "3"=>{"question_id"=>"3", "value"=>"a3"}}
             }
 
-    assert_redirected_to "_page_action" => "show"
+    assert_redirected_to "_page_action" => "your_answers"
     assert_equal "<ul><li>Created a response!</li></ul>", flash[:text]
     assert_equal dolphin_id, assigns("response").user_id
     assert_equal ["a1", "a2", "a3"], assigns("response").answers.map{|a| a.value}
@@ -63,7 +63,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     blue_id = users(:blue).id
     login_as :blue
 
-    get :show, :page_id => pages("survey1").id
+    get :your_answers, :page_id => pages("survey1").id
     assert_response :success
 
     assert_select "a[href='/blue/survey-ipsum+214/respond']"
@@ -80,7 +80,7 @@ class SurveyPageControllerTest < ActionController::TestCase
                   "2"=>{"question_id"=>"2", "value"=>"ba2"},
                   "3"=>{"question_id"=>"3", "value"=>"ba3"}}
               }
-    assert_redirected_to "_page_action" => "show"
+    assert_redirected_to "_page_action" => "your_answers"
     assert_equal "<ul><li>Updated your response</li></ul>", flash[:text]
     assert_equal blue_id, assigns("response").user_id
     assert_equal ["ba1", "ba2", "ba3"], assigns("response").answers.map{|a| a.value}
@@ -98,17 +98,14 @@ class SurveyPageControllerTest < ActionController::TestCase
     blue_id = users(:blue).id
     login_as :blue
 
-    get :show, :page_id => pages("survey1").id
+    get :your_answers, :page_id => pages("survey1").id
     assert_response :success
     assert_active_tab "Your Answers"
-
 
     assert_select "a[href='/blue/survey-ipsum+214/delete_response/#{assigns("response").id}']"
 
     post :delete_response, :page_id => pages("survey1").id, :id => assigns("response").id
 
-    assert_redirected_to "_page_action" => "show"
-    get :show, :page_id => pages("survey1").id
     assert_redirected_to "_page_action" => "respond"
 
     get :list, :page_id => pages("survey1").id
@@ -135,7 +132,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     login_as :blue
     get :design, :page_id => pages("survey1").id
     assert_response :success
-    assert_tabs ["Design Questions", "Your Answers", "List All Answers"]
+    assert_tabs ["Summary", "Design Questions", "Your Answers", "List All Answers"]
 
     # enable ratings
     post :save_design, :page_id => pages("survey1").id, :survey => {"rating_enabled" => "1"}
@@ -143,7 +140,7 @@ class SurveyPageControllerTest < ActionController::TestCase
 
     get :design, :page_id => pages("survey1").id
     # new tab should be there
-    assert_tabs ["Design Questions", "Your Answers", "Rate All Answers", "List All Answers"]
+    assert_tabs ["Summary", "Design Questions", "Your Answers", "Rate All Answers", "List All Answers"]
 
     # do some ratings
     survey = surveys("1")
@@ -171,6 +168,11 @@ class SurveyPageControllerTest < ActionController::TestCase
 
     assert_not_nil rated_response
     assert_equal 6.0, rated_response.rating
+  end
+
+  def test_public
+    get :show, :page_id => pages("survey1").id
+    assert_response :success
   end
 
   def test_overwrite_rating

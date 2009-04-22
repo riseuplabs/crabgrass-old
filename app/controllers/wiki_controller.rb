@@ -14,6 +14,7 @@ class WikiController < ApplicationController
   include ControllerExtension::WikiRenderer
   
   before_filter :login_required, :except => [:show]
+  before_filter :fetch_wiki
   
   # show the rendered wiki
   def show
@@ -22,8 +23,12 @@ class WikiController < ApplicationController
   
   # show the entire edit form
   def edit
-    @private.lock(Time.now, current_user)
-    @public.lock(Time.now, current_user)
+    if @public and @private
+      @private.lock(Time.now, current_user)
+      @public.lock(Time.now, current_user)
+    else
+      @wiki.lock(Time.now, current_user)
+    end
   end
   
   # a re-edit called from preview, just one area.
@@ -47,33 +52,37 @@ class WikiController < ApplicationController
   
   # unlock everything and show the rendered wiki
   def done
-    @private.unlock if @private.locked_by?(current_user)
-    @public.unlock if @public.locked_by?(current_user)
-    
-    if @private.body.nil? or @private.body == ''
-      @wiki = @public
+    if @public and @private
+      @private.unlock if @private.locked_by?(current_user)
+      @public.unlock if @public.locked_by?(current_user)
+      if @private.body.nil? or @private.body == ''
+        @wiki = @public
+      else
+        @wiki = @private
+      end
     else
-      @wiki = @private
+      @wiki.unlock if @wiki.locked_by?(current_user)
     end
   end
 
   protected
   
-  def authorized?
-    
-    # common objects used by most actions
+  def fetch_wiki
+    if params[:wiki_id] and !params[:profile_id]
+      profile = @group.profiles.find_by_wiki_id(params[:wiki_id])
+      @wiki = profile.wiki || profile.create_wiki
+    elsif params[:profile_id]
+      @profile = @group.profiles.find(params[:profile_id])
+      @public = @group.profiles.public.wiki || @group.profiles.public.create_wiki
+      @private = @group.profiles.private.wiki || @group.profiles.private.create_wiki
+      
+      @wiki = @public if params[:wiki_id] == @public.id.to_s
+      @wiki = @private if params[:wiki_id] == @private.id.to_s
+    end 
+  end
+
+  def authorized?    
     @group = Group.find(params[:group_id])
-    @profile = @group.profiles.find(params[:profile_id])
-    @public = @group.profiles.public.wiki || @group.profiles.public.create_wiki
-    @private = @group.profiles.private.wiki || @group.profiles.private.create_wiki
-    
-    # some actions are keyed on either the private or public wiki.
-    if params[:access] == 'private'
-      @wiki = @private
-    elsif params[:access] == 'public'
-      @wiki = @public
-    end
-    
     logged_in? and current_user.member_of?(@group)
   end    
   

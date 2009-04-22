@@ -43,7 +43,7 @@ module LayoutHelper
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
-    sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
+    sheets = [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
     sheets.collect {|s| themed_stylesheet_link_tag(s)}
   end
 

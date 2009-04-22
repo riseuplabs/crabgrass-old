@@ -4,11 +4,29 @@ class SurveyPageController < BasePageController
   javascript :extra
   javascript 'survey'
 
-  before_filter :fetch_response, :only => [:respond, :show]
+  before_filter :fetch_response, :only => [:respond, :your_answers]
 
   def respond
     if request.post?
-      save_response
+      begin
+        if @response.new_record?
+          created = true
+          @response.save!
+        else
+          @response.update_attributes!(params[:response])
+        end
+      rescue Exception => exc
+        # we have an error
+        flash_message_now :object => @response, :exc => exc
+        return
+      end
+      # everything went well
+      if created
+        flash_message :success => 'Created a response!'[:response_created_message]
+      else
+        flash_message :success => 'Updated your response'[:response_updated_message]
+      end
+      redirect_to page_url(@page, :action => 'your_answers')
     else
       @response.valid?
       flash_message_now :object => @response
@@ -30,9 +48,11 @@ class SurveyPageController < BasePageController
       end
       @response.destroy
     end
-    redirect_to page_url(*[@page, (params[:jump] && @response ? {
-                                     :action => 'details', :id => id } : nil)
-                            ].compact)
+    if params[:jump] && @response
+      redirect_to page_url(@page, :action => 'details', :id => id)
+    else
+      redirect_to page_url(@page, :action => 'respond')
+    end
   end
 
   def design
@@ -57,8 +77,13 @@ class SurveyPageController < BasePageController
   end
 
   def show
+  end
+
+  def your_answers
     # if we don't have a saved response we can't view it
-    redirect_to page_url(@page, :action => 'respond') if @response.new_record?
+    if @response and @response.new_record?
+      redirect_to page_url(@page, :action => 'respond')
+    end
   end
 
   # xhr and get
@@ -132,30 +157,6 @@ class SurveyPageController < BasePageController
     end
   end
 
-
-  def save_response
-    begin
-      if @response.new_record?
-        created = true
-        @response.save!
-      else
-        @response.update_attributes!(params[:response])
-      end
-    rescue Exception => exc
-      # we have an error
-      flash_message_now :object => @response, :exc => exc
-      return
-    end
-
-    # everything went well
-    if created
-      flash_message :success => 'Created a response!'[:response_created_message]
-    else
-      flash_message :success => 'Updated your response'[:response_updated_message]
-    end
-    redirect_to page_url(@page, :action => 'show')
-  end
-
   # called early in filter chain
   def fetch_data
     return true unless @page
@@ -168,7 +169,7 @@ class SurveyPageController < BasePageController
     # try to find an existing response
     @response = @survey.responses.find_by_user_id(current_user) if logged_in?
 
-    if @response.nil?
+    if @response.nil? and logged_in?
       # build a new response
       @response = @survey.responses.build(params[:response])
       @response.user = current_user

@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
-  map.connect '', :controller => "account"
+  map.connect '', :controller => 'root'
   map.login   'account/login',   :controller => 'account',   :action => 'login'
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 
