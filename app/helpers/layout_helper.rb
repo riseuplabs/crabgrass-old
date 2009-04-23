@@ -125,7 +125,7 @@ module LayoutHelper
     extra = js_files.delete(:extra)
     js_files = js_files.collect{|i| "as_needed/#{i}" }
     if extra
-      js_files += ['effects', 'dragdrop', 'controls']
+      js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
     end
     javascript_include_tag(*js_files)
   end
