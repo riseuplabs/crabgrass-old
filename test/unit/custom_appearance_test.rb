@@ -65,10 +65,10 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     mtime1 = File.mtime(css_path)
 
     # generate again
-    sleep 0.5
+    sleep 1
     stylesheet_url = appearance.themed_stylesheet_url("screen.css")
     css_path = File.join("./public/stylesheets", stylesheet_url)
-    # remember the tyle
+    # remember the time
     mtime2 = File.mtime(css_path)
 
     assert mtime2 > mtime1, "themed_stylesheet_url should aways regenerate the css file when Conf.always_renegerate_themed_stylesheet is true"
@@ -79,14 +79,14 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     # generate once
     stylesheet_url = appearance.themed_stylesheet_url("screen.css")
     css_path = File.join("./public/stylesheets", stylesheet_url)
-    # remember the tyle
+    # remember the time
     mtime1 = File.mtime(css_path)
 
     # generate again
-    sleep 0.5
+    sleep 1
     stylesheet_url = appearance.themed_stylesheet_url("screen.css")
     css_path = File.join("./public/stylesheets", stylesheet_url)
-    # remember the tyle
+    # remember the time
     mtime2 = File.mtime(css_path)
 
     assert mtime2 == mtime1, "themed_stylesheet_url should not always regenerate the css file when Conf.always_renegerate_themed_stylesheet is false"
@@ -95,7 +95,6 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     appearance.save!
 
     # generate again
-    sleep 0.5
     stylesheet_url = appearance.themed_stylesheet_url("screen.css")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     # remember the tyle
