@@ -1,3 +1,7 @@
 <div class='tab-content tab-area' id="customize_color_theme" style="display:none">
-  <h3>Customize Color Theme</h3>
+  <% form_for @appearance do |f| %>
+    <%= hidden_field_tag 'editing_tab', 'customize_color_theme' %>
+
+    <%= submit_tag 'Update Color Theme'.t, :class => "submit" %>
+  <% end %>
 </div>

@@ -1,3 +1,14 @@
 <div class='tab-content tab-area' id="customize_welcome_text" style="display:none">
-  <h3>Customize Welcome Text</h3>
-</div>
+  <% form_for @appearance do |f| %>
+    <p>
+      <%= f.label :welcome_text_title %>
+      <br/>
+      <%= f.text_field :welcome_text_title %>
+    </p>
+    <p>
+      <%= f.label :welcome_text_body %>
+      <br/>
+      <%= f.text_area :welcome_text_body, :size => "60x30" %>
+    </p>
+    <%= submit_tag 'Update Welcome Text'.t, :class => "submit" %>
+  <% end %></div>
