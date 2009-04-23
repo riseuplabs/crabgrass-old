@@ -50,7 +50,7 @@ class CustomAppearance < ActiveRecord::Base
     def available_parameters
       parameters = {}
       # parse the constants.sass file and return the hash
-      constants_lines = File.readlines(File.join(SASS_ROOT, CONSTANTS_FILENAME))
+      constants_lines = File.readlines(File.join(CustomAppearance::SASS_ROOT, CustomAppearance::CONSTANTS_FILENAME))
       constants_lines.reject! {|l| l !~ /^\s*!\w+/ }
       constants_lines.each do |l|
         k, v = l.chomp.split(/\s*=\s*/)

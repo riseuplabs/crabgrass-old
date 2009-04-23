@@ -8,31 +8,35 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     CustomAppearance.clear_cached_css
   end
 
-  def xtest_generate_css_and_clear_cache
+  def test_generate_css_and_clear_cache
     appearance = custom_appearances(:default_appearance)
 
     # update appearance
     appearance.parameters["box1_bg_color"] = "green"
     appearance.save!
 
-    assert !appearance.has_cached_css?("screen.css")
-    css_text = CustomAppearance.generate_css("screen.css", appearance)
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+
+    assert File.exists?(css_path), "CustomAppearance#themed_stylesheet_url should generate a new file"
+
+    css_text = File.read(css_path)
+
     assert css_text.length > 0
-    # should have cached css
-    assert appearance.has_cached_css?("screen.css")
-    css_full_path = appearance.cached_css_full_path("screen.css")
-    # the file should exist and be the same as the text
-    assert File.exists?(css_full_path)
-    assert_equal css_text, File.read(css_full_path), "generated and cached css should be the same"
 
     # clear the cache
     CustomAppearance.clear_cached_css
-    assert !File.exists?(css_full_path), "clearing css cache should delete cached files"
+    # should be deleted
+    assert !File.exists?(css_path), "clearing css cache should delete cached files"
+
+    # should regerate
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    assert File.exists?(css_path), "CustomAppearance#themed_stylesheet_url should generate a new file"
   end
 
   def test_nonexisting_css
     assert_raise Errno::ENOENT do
-      CustomAppearance.generate_css("does_not_exists.css");
+      CustomAppearance.default.themed_stylesheet_url("does_not_exists.css");
     end
   end
 
@@ -43,11 +47,13 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     appearance.parameters["left_column_bg_color"] = "magenta"
     appearance.save!
 
-    css_text = CustomAppearance.generate_css("screen.css", appearance)
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+    css_text = File.read(css_path)
     assert css_text =~ /leftmenu\s*\{\s*background-color:\s*magenta/, "generated text must use updated background-color value"
   end
 
   def test_available_parameters
-    assert CustomAppearance.available_parameters.is_a? Hash
+    assert CustomAppearance.available_parameters.is_a?(Hash)
   end
 end
