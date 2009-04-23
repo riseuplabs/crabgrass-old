@@ -1,8 +1,6 @@
-<% form_for @appearance do |f| %>
-  <h2><%= "Style parameters for custom appearance #{@appearance.id}" %></h2>
-  <%= f.text_area :parameters, :size => "60x30"%>
-  <br/>
-  <%= submit_tag 'Update' %>
-  <%= link_to 'Available Options', {:action => 'available', :id => @appearance}, :popup => ['Available Custom Appearance Options', 'height=600,width=650,scrollbars=1']
-   %>
-<% end %>
+<%= render :partial => 'tabs' %>
+
+<%= render :partial => 'masthead' %>
+<%= render :partial => 'welcome_text' %>
+<%= render :partial => 'color_theme' %>
+<%= render :partial => 'advanced' %>

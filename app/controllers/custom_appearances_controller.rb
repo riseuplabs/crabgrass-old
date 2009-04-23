@@ -4,14 +4,18 @@ class CustomAppearancesController < ApplicationController
 
   # GET edit_custom_appearance_url
   def edit
-
   end
 
   # PUT custom_appearance_url
   def update
-    @appearance.parameters = params[:custom_appearance][:parameters]
-    @appearance.save!
-    flash_message :title => "Success", :success => "Updated custom appearance #{@appearance.id} options!"
+    begin
+      @appearance.update_attributes!(params[:custom_appearance])
+      flash_message :title => "Success".t,
+        :success => "Updated custom appearance #:appearance_id options!"[:succesfully_updated_custom_appearance] % {:appearance_id => @appearance.id }
+    rescue Exception => exc
+      flash_message :object => @appearance
+    end
+
     redirect_to :action => 'edit'
   end
 
@@ -25,6 +29,16 @@ protected
   end
 
   def authorized?
-    true if logged_in? and @appearance.admin_group and current_user.member_of?(@appearance.admin_group)
+    return false unless logged_in?
+    return true if @appearance.admin_group and current_user.member_of?(@appearance.admin_group)
+
+    if current_site and @appearance == current_site.custom_appearance and current_site.super_admin_group_id
+      admin_group = Group.find(current_site.super_admin_group_id)
+      if admin_group and current_user.may?(:admin, admin_group)
+        return true
+      end
+    end
+
+    return false
   end
 end

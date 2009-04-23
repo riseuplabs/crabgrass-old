@@ -14,9 +14,17 @@ end
 
 =end
 class CustomAppearance < ActiveRecord::Base
+  # how tall can the masthead image be
+  MASTHEAD_IMAGE_MAX_HEIGHT = 80
+
   include CustomAppearanceExtension::CssPaths
   include CustomAppearanceExtension::CssGeneration
 
+
+  # prevent insecure mass assignment
+  attr_accessible :masthead_asset_uploaded_data, :parameters
+
+  belongs_to :masthead_asset, :class_name => 'Asset', :dependent => :destroy
 
   serialize :parameters, Hash
   serialize_default :parameters, {}
@@ -36,6 +44,34 @@ class CustomAppearance < ActiveRecord::Base
 
     # get the url for themed css
     themed_css_url(css_url)
+  end
+
+  def masthead_asset_uploaded_data
+    masthead_asset.url if masthead_asset
+  end
+
+  def masthead_asset_uploaded_data=(data)
+    begin
+      asset = Asset.make!({:uploaded_data => data})
+      if !asset.is_image
+        # raise ActiveRecord::RecordInvalid.new "not an image"
+        self.errors.add_to_base("Uploaded data is not an image. Try png or jpeg files."[:not_an_image_error])
+      elsif asset.height > MASTHEAD_IMAGE_MAX_HEIGHT
+        # raise ActiveRecord::RecordInvalid.new("Too tall")
+        self.errors.add_to_base("Uploaded image is too tall (80 pixels is the max height)"[:too_tall_image_error])
+      else
+        # all good
+        # delete the old masthead asset
+        self.masthead_asset.destroy if self.masthead_asset
+        self.masthead_asset = asset
+      end
+    rescue ActiveRecord::RecordInvalid => exc
+      self.errors.add_to_base(exc.message)
+    end
+
+    unless self.errors.empty?
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
   end
 
   protected

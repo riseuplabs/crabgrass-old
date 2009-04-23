@@ -33,6 +33,9 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
+    if current_site.super_admin_group_id == @group.id
+      @editable_custom_appearance = current_site.custom_appearance
+    end
   end
 
   def archive

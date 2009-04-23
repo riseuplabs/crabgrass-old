@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090419190955) do
+ActiveRecord::Schema.define(:version => 20090423054704) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -114,10 +114,11 @@ ActiveRecord::Schema.define(:version => 20090419190955) do
 
   create_table "custom_appearances", :force => true do |t|
     t.text     "parameters"
-    t.integer  "parent_id",      :limit => 11
+    t.integer  "parent_id",         :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "admin_group_id", :limit => 11
+    t.integer  "admin_group_id",    :limit => 11
+    t.integer  "masthead_asset_id", :limit => 11
   end
 
   create_table "discussions", :force => true do |t|
