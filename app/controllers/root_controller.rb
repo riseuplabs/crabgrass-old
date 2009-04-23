@@ -2,8 +2,7 @@
 # This controller is in charge of rendering the root url.
 #
 class RootController < ApplicationController
-
-  helper :group
+  helper :group, :account
 
   def index
     if !logged_in?
