@@ -53,6 +53,60 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     assert css_text =~ /leftmenu\s*\{\s*background-color:\s*magenta/, "generated text must use updated background-color value"
   end
 
+  def test_always_regenerate_options
+    # first try always regenerate
+    Conf.always_renegerate_themed_stylesheet = true
+    appearance = custom_appearances(:default_appearance)
+
+    # generate once
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+    # remember the tyle
+    mtime1 = File.mtime(css_path)
+
+    # generate again
+    sleep 0.5
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+    # remember the tyle
+    mtime2 = File.mtime(css_path)
+
+    assert mtime2 > mtime1, "themed_stylesheet_url should aways regenerate the css file when Conf.always_renegerate_themed_stylesheet is true"
+
+    # mimick the production mode
+    Conf.always_renegerate_themed_stylesheet = false
+
+    # generate once
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+    # remember the tyle
+    mtime1 = File.mtime(css_path)
+
+    # generate again
+    sleep 0.5
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+    # remember the tyle
+    mtime2 = File.mtime(css_path)
+
+    assert mtime2 == mtime1, "themed_stylesheet_url should not always regenerate the css file when Conf.always_renegerate_themed_stylesheet is false"
+
+    # now save appearance. this should force regeneration
+    appearance.save!
+
+    # generate again
+    sleep 0.5
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    css_path = File.join("./public/stylesheets", stylesheet_url)
+    # remember the tyle
+    mtime3 = File.mtime(css_path)
+
+    assert mtime3 > mtime2, "themed_stylesheet_url should aways regenerate the css file when custom appearance is updated"
+
+    # restore the test default
+    Conf.always_renegerate_themed_stylesheet = true
+  end
+
   def test_available_parameters
     assert CustomAppearance.available_parameters.is_a?(Hash)
   end
