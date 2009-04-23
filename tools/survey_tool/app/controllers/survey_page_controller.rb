@@ -150,10 +150,10 @@ class SurveyPageController < BasePageController
       current_user.may?(:edit, @page)
     elsif action?(:rate)
       @page.rating_enabled_for?(current_user)
-    elsif action?(:respond)
+    elsif action?(:respond) || action?(:your_answers)
       @survey.responses_enabled? && current_user.may?(:edit, @page)
     else
-      current_user.may?(:admin, @page)
+        current_user.may?(:admin, @page)
     end
   end
 
