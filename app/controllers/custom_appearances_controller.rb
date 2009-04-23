@@ -1,4 +1,8 @@
 class CustomAppearancesController < ApplicationController
+  stylesheet :custom_appearance
+  javascript :extra
+  helper ColorPickerHelper
+
   before_filter :login_required
   prepend_before_filter :fetch_data
 

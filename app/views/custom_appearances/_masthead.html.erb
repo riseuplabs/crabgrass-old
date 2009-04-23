@@ -2,11 +2,26 @@
   <% form_for @appearance,:html => { :multipart => true }  do |f| %>
     <p> <%= "Upload an image for the masthead. It can't be taller than 80 pixels."[:upload_masthead_image_label] %></p>
     <p><%= display_masthead %></p>
-    <%= f.label :masthead_asset_uploaded_data, "select image file"[:select_image_file] %>
-    <br/>
-    <%= f.file_field :masthead_asset_uploaded_data, :size => "73" %>
-    <br/>
-    <br/>
-    <%= submit_tag 'Upload'.t, :class => "submit" %>
+
+    <p>
+      <%= f.label :masthead_asset_uploaded_data, "Select image file"[:select_image_file] %>
+      <br/>
+      <%= f.file_field :masthead_asset_uploaded_data, :size => "73" %>
+    </p>
+
+    <p>
+      <%= f.label :masthead_background_parameter, "Select masthead background color"[:select_masthead_background_color]%>
+      <br/>
+      <%= "#" %>
+      <%= f.text_field :masthead_background_parameter, :id => "masthead_background_color_picker" %>
+      <%= color_picker_tag "masthead_background_color_picker" %>
+    </p>
+
+    <p>
+      <%= f.check_box :masthead_enabled %>
+      <%= f.label :masthead_enabled, "Enable masthead?"[:enable_masthead_question]%>
+    <p>
+
+    <%= submit_tag 'Update Masthead'.t, :class => "submit" %>
   <% end %>
 </div>
