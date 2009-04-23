@@ -80,12 +80,16 @@ class Site < ActiveRecord::Base
   end
 
   ##
-  ## DEFAULT VALUES
+  ## CONFIGURATION & DEFAULT VALUES
   ##
 
-  # for the attributes, use the site's value first, if possible, and
-  # fall back to Conf if the value is not set. These defaults are defined in
-  # lib/crabgrass/conf.rb (and are changed by crabgrass.*.yml).
+  # For the attributes, use the site's value first, if possible, and
+  # fall back to Conf if the value is not set. We can also proxy attributes
+  # which do not actually exist in the sites table but which do exist in the
+  # configuration file.
+  #
+  # These defaults are defined in lib/crabgrass/conf.rb (and are changed by
+  # whatever crabgrass.*.yml gets loaded).
   def self.proxy_to_conf(*attributes)
     attributes.each do |attribute|
       define_method(attribute) { read_attribute(attribute) || Conf.send(attribute) }
@@ -94,7 +98,15 @@ class Site < ActiveRecord::Base
 
   proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain
+    :require_user_email, :domain, :profiles, :profile_fields
+
+  def profile_field_enabled?(field)
+    profile_fields.nil? or profile_fields.include?(field.to_s)
+  end
+
+  def profile_enabled?(profile)
+    profiles.nil? or profiles.include?(profile.to_s)
+  end
 
   ##
   ## RELATIONS

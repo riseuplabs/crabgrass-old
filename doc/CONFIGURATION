@@ -102,6 +102,25 @@ To see what sites are available:
 
   rake cg:site:list RAILS_ENV=<env>
 
+=== Profiles
+
+You can choose which fields can be filled out in a profile and which profile
+tabs are active. If not present, these options default to allowing all.
+
+Here is an example:
+
+  profiles:
+    - public
+    - private
+  profile_fields:
+    - basic
+    - notes
+    - phone_numbers
+    - email_addresses
+    - locations
+    - im_addresses
+    - websites
+    - cryptkeys
 
 = Site Defaults
 

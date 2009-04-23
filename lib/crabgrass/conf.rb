@@ -27,6 +27,10 @@ class Conf
   cattr_accessor :translators
   cattr_accessor :translation_group
 
+  # are global, but might end up in site one day.
+  cattr_accessor :profiles
+  cattr_accessor :profile_fields
+
   # global instance options
   cattr_accessor :enabled_mods
   cattr_accessor :enabled_tools
