@@ -877,9 +877,11 @@ current_tags: "Current Tags"
 
 
 #
-# WELCOME BOX
+# WELCOME 
 #
 
+
+welcome_title: "Welcome to {site_title}"
 welcome_heading: "Welcome to {site_title}, {user_name}!"
 welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
 

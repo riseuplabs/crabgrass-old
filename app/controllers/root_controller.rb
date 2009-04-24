@@ -31,6 +31,7 @@ class RootController < ApplicationController
 
   def login_page
     @stylesheet = 'account'
+    @active_tab = :home
     render :template => 'account/index'
   end
 

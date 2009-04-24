@@ -1,7 +1,4 @@
 <% @login_form_already_rendered = true -%>
-<div id="loginright">
-<div id="loginwrap">
-<div id="loginformbox">
 <% form_tag({:controller => 'account', :action => 'login'}, :id => "loginform") do -%>
 <table>
 <tr>
@@ -40,6 +37,4 @@
 
 <%= javascript_tag "Form.focusFirstElement('loginform');" %>
 <div><%# flash[:error] %></div>
-</div> <!-- end login -->
-</div>
-</div>
+
