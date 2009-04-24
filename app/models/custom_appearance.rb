@@ -6,17 +6,26 @@ These variables are used to override SASS constants defined in public/stylesheet
 
 create_table "custom_appearances", :force => true do |t|
   t.text     "parameters"
-  t.integer  "parent_id",  :limit => 11
+  t.integer  "parent_id",          :limit => 11
   t.datetime "created_at"
   t.datetime "updated_at"
-  t.integer  "admin_group_id", :limit => 11
+  t.integer  "admin_group_id",     :limit => 11
+  t.integer  "masthead_asset_id",  :limit => 11
+  t.string   "welcome_text_title"
+  t.text     "welcome_text_body"
 end
 
 =end
 class CustomAppearance < ActiveRecord::Base
   include CustomAppearanceExtension::CssPaths
   include CustomAppearanceExtension::CssGeneration
+  include CustomAppearanceExtension::Parameters
 
+  # prevent insecure mass assignment
+  attr_accessible :masthead_asset_uploaded_data, :masthead_enabled, :masthead_background_parameter,
+                    :welcome_text_title, :welcome_text_body, :parameters
+
+  belongs_to :masthead_asset, :class_name => 'Asset', :dependent => :destroy
 
   serialize :parameters, Hash
   serialize_default :parameters, {}
@@ -45,19 +54,6 @@ class CustomAppearance < ActiveRecord::Base
   class << self
     def default
       first || CustomAppearance.new
-    end
-
-    def available_parameters
-      parameters = {}
-      # parse the constants.sass file and return the hash
-      constants_lines = File.readlines(File.join(SASS_ROOT, CONSTANTS_FILENAME))
-      constants_lines.reject! {|l| l !~ /^\s*!\w+/ }
-      constants_lines.each do |l|
-        k, v = l.chomp.split(/\s*=\s*/)
-        k[/^!/] = ""
-        parameters[k] = v
-      end
-      parameters
     end
   end
 end

@@ -42,8 +42,8 @@ class NetworksController < GroupsController
   protected
 
   def setup_view
-     network_context
-     set_banner "networks/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
+    network_context
+    set_banner "networks/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
 
   # verifies that the membership list is kosher

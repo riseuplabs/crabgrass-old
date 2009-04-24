@@ -2,8 +2,7 @@
 # This controller is in charge of rendering the root url.
 #
 class RootController < ApplicationController
-
-  helper :group
+  helper :group, :account
 
   def index
     if !logged_in?
@@ -19,8 +18,8 @@ class RootController < ApplicationController
 
   def site_home
     @group = current_site.network
-    @active_tab = :networks # only tmp needed
-#    @banner = render_to_string(:partial => 'banner')
+    @active_tab = :home
+    # @banner = render_to_string(:partial => 'banner') no banner for now.
     @left_column = render_to_string(:partial => 'group/sidebar')
     @groups = Group.visible_on(current_site).visible_by(current_user).only_groups.recent.find(:all, :limit => 10)
     @users = current_site.users.find(:all, :order => 'memberships.total_visits', :limit => 10)

@@ -38,7 +38,24 @@ class SurveyPageControllerTest < ActionController::TestCase
   def test_new_response
     dolphin_id = users(:dolphin).id
     login_as :dolphin
-    post :respond, :page_id => pages("survey1").id, "response"=>
+    
+    # the user should exist and have access level :edit
+    
+    @user = users(:dolphin)
+    assert @user, 'the user should exist'
+    @page = pages("survey1")
+    assert @page, 'the page should exist'
+    
+    assert @user.may?(:edit,@page), 'the user should have the right to edit the page'
+    assert !@user.may?(:admin,@page), 'the user should not have the right to admin the page'
+    
+    # viewing the 'your answers' tab should redirect to action respond    
+    get :your_answers, :page_id => @page.id
+    assert_response 302, 'when no answers yet exist, the user should be redirected'
+    assert_redirected_to "_page_action" => "respond"
+ 
+    
+    post :respond, :page_id => @page.id, "response"=>
             {
               "answers_attributes"=> {
                 "1"=>{"question_id"=>"1", "value"=>"a1"},
@@ -51,8 +68,9 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_equal dolphin_id, assigns("response").user_id
     assert_equal ["a1", "a2", "a3"], assigns("response").answers.map{|a| a.value}
 
-    # check the listing
-    get :list, :page_id => pages("survey1").id
+    # check the listing - for only admins can see this, we have to login as blue again
+    login_as :blue
+    get :list, :page_id => @page.id
     assert_active_tab "List All Answers"
     assert_response :success
     response = assigns("responses").detect {|r| r.user_id == dolphin_id}
@@ -130,39 +148,43 @@ class SurveyPageControllerTest < ActionController::TestCase
   def test_rate_answers
     # first, we enable ratings
     login_as :blue
-    get :design, :page_id => pages("survey1").id
+    
+    @page = pages("survey1")
+    assert @page, 'the page should exist'    
+    
+    get :design, :page_id => @page.id
     assert_response :success
     assert_tabs ["Summary", "Design Questions", "Your Answers", "List All Answers"]
 
     # enable ratings
-    post :save_design, :page_id => pages("survey1").id, :survey => {"rating_enabled" => "1"}
+    post :save_design, :page_id => @page.id, :survey => {"rating_enabled" => "1"}
     assert_redirected_to "_page_action" => "design"
 
-    get :design, :page_id => pages("survey1").id
+    get :design, :page_id => @page.id
     # new tab should be there
     assert_tabs ["Summary", "Design Questions", "Your Answers", "Rate All Answers", "List All Answers"]
 
     # do some ratings
     survey = surveys("1")
-    get :rate, :page_id => pages("survey1").id
+    get :rate, :page_id => @page.id
     assert_active_tab "Rate All Answers"
     assert_equal survey.responses[0].id, assigns("response").id
     assert_equal "Select a rating to see the next item.", assigns("survey_notice")
     first_rated_response_id = assigns("response").id
 
     # rate it
-    post :rate, :page_id => pages("survey1").id, :response => first_rated_response_id, :rating => "10"
+    post :rate, :page_id => @page.id, :response => first_rated_response_id, :rating => "10"
     assert_response :success
 
-    # rate it as different user
+    # rate it as different user    
     login_as :red
-
+    
     # rate again
-    post :rate, :page_id => pages("survey1").id, :response => first_rated_response_id, :rating => "2"
+    post :rate, :page_id => @page.id, :response => first_rated_response_id, :rating => "2"
     assert_response :success
 
     # check that the average rating is listed
-    get :list, :page_id => pages("survey1").id
+    get :list, :page_id => @page.id
     assert_response :success
     rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
 
@@ -171,28 +193,33 @@ class SurveyPageControllerTest < ActionController::TestCase
   end
 
   def test_public
-    get :show, :page_id => pages("survey1").id
+    @page = pages("survey1")
+    assert @page, 'the page should exist'
+    get :show, :page_id => @page.id
     assert_response :success
   end
 
   def test_overwrite_rating
     login_as :blue
-
+    
+    @page = pages("survey1")
+    assert @page, 'the page should exist'
+    
     # enable ratings
-    post :save_design, :page_id => pages("survey1").id, :survey => {"rating_enabled" => "1"}
+    post :save_design, :page_id => @page.id, :survey => {"rating_enabled" => "1"}
     assert_redirected_to "_page_action" => "design"
 
     # do some ratings
     survey = surveys("1")
-    get :rate, :page_id => pages("survey1").id
+    get :rate, :page_id => @page.id
     first_rated_response_id = assigns("response").id
 
     # rate the first response
-    post :rate, :page_id => pages("survey1").id, :response => first_rated_response_id, :rating => "10"
+    post :rate, :page_id => @page.id, :response => first_rated_response_id, :rating => "10"
     assert_response :success
 
     # check that the rating is recorder
-    get :list, :page_id => pages("survey1").id
+    get :list, :page_id => @page.id
     assert_response :success
     rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
 
@@ -201,12 +228,12 @@ class SurveyPageControllerTest < ActionController::TestCase
 
     # re-rate everything
     survey.responses.each do |response|
-      post :rate, :page_id => pages("survey1").id, :response => response.id, :rating => "7"
+      post :rate, :page_id => @page.id, :response => response.id, :rating => "7"
       assert_response :success
     end
 
     # check that the rating is over written
-    get :list, :page_id => pages("survey1").id
+    get :list, :page_id => @page.id
     assert_response :success
     rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
 
