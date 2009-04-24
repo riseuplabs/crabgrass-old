@@ -11,8 +11,8 @@
       <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
     </li>
   <%- else -%>
-    <li class='<%= params[:controller] == 'account' ? 'active' : '' %>'>
-      <span><%= link_to_active "Home"[:menu_home], '/', params[:controller] == 'account' %></span>
+    <li class='<%= @active_tab == :home ? 'active' : '' %>'>
+      <span><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
     </li>    
   <%- end -%>
 
