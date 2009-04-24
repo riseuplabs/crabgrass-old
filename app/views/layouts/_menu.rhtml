@@ -3,9 +3,8 @@
 <ul>
   <%- if logged_in? -%>
     <%- if current_site.network -%>
-      <%- home_active = @active_tab == :networks && @group == current_site.network -%>
-      <li id='menu_home' class='<%= home_active ? 'active' : '' %>'>
-        <span><%= link_to_active 'Home'[:menu_home], '/', home_active %></span>
+      <li id='menu_home' class='<%= @active_tab == :home ? 'active' : '' %>'>
+        <span><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
       </li>
     <%- end -%>
     <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
@@ -26,9 +25,8 @@
   </li>
 
   <%- if current_site.has_networks? -%>
-    <%- network_active = @active_tab == :networks && @group != current_site.network -%>
-    <li id='menu_networks' class='<%= network_active ? 'active' : '' %>'>
-      <span><%= link_to_active "Networks"[:menu_networks], networks_url, network_active %></span>
+    <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
+      <span><%= link_to_active "Networks"[:menu_networks], networks_url, @active_tab == :networks %></span>
     </li>
   <%- end -%>
 

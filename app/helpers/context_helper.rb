@@ -85,6 +85,9 @@ module ContextHelper
     @active_tab = :networks
     add_context 'networks'.t, networks_url(:action => 'list')
     if @group
+      if @group == current_site.network
+        @active_tab = :home
+      end
       add_context @group.display_name, url_for_group(@group)
       set_banner "group/banner_#{size}", @group.banner_style
     end
