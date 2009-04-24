@@ -399,8 +399,13 @@ module BasePageHelper
     owner_name = @page.owner ? @page.owner.name : ''
     if current_user.may?(:admin, @page)
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
+        possibles = @page.admins.to_select('both_names', 'name') + [["(#{:none.t})",'']]
         concat(
-          select_tag('owner', options_for_select(@page.admins.to_select('both_names', 'name'), owner_name), :onchange => 'this.form.submit();'),
+          select_tag(
+            'owner',
+             options_for_select(possibles, owner_name),
+            :onchange => 'this.form.submit();'
+          ),
           binding
         )
       end
