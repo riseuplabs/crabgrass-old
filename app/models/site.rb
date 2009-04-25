@@ -194,8 +194,8 @@ class Site < ActiveRecord::Base
   # if user has +access+ to site, return true.
   # otherwise, raise PermissionDenied
   def has_access!(access, user)
-    if access == :admin
-      ok = self.council and user.member_of?(self.council)
+    if access == :admin and not self.council.nil?
+      ok = user.member_of?(self.council)
     end
     ok or raise PermissionDenied.new
   end

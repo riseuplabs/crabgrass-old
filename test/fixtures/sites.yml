@@ -12,6 +12,7 @@ site1:
   domain: localhost
   custom_appearance_id: 2
   network_id: 3001
+  council_id: 1 # true levellers
 site2:
   id: 2
   name: "site2"
