@@ -33,7 +33,7 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
-    if current_site.super_admin_group_id == @group.id
+    if logged_in? and current_site.council == @group and current_user.may?(:admin, current_site)
       @editable_custom_appearance = current_site.custom_appearance
     end
   end
@@ -94,7 +94,6 @@ class GroupController < ApplicationController
   # login required
   def edit
     @group.group_setting ||= GroupSetting.new
-    @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
   end
 
   # login required
