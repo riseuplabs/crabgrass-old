@@ -7,11 +7,24 @@ class Site < ActiveRecord::Base
 end
 
 class SiteTest < Test::Unit::TestCase
-  fixtures :sites
+  fixtures :sites, :users, :groups, :memberships
 
   def test_defaults_to_conf
     assert_equal Conf.title, Site.new.title
   end
 
+  def test_site_admin
+    blue = users(:blue)
+    kangaroo = users(:kangaroo)
+    site = Site.find_by_name("site1")
+    assert blue.may?(:admin, site), 'blue should have access to the first site.'
+    assert !kangaroo.may?(:admin, site), 'kangaroo should not have :admin access to the first site.'
+    # if no council is set no one may :admin
+    site.council=nil
+    site.save
+    assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
+      blue.may!(:admin, site)
+    end
+  end
 
 end

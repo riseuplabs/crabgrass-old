@@ -15,6 +15,7 @@ to hide data between sides)
     t.string  "email_sender"
     t.integer "pagination_size",      :limit => 11
     t.integer "super_admin_group_id", :limit => 11
+    t.integer "council_id",           :limit => 11
     t.text    "translators"
     t.string  "translation_group"
     t.string  "default_language"
@@ -26,6 +27,7 @@ to hide data between sides)
     t.integer "custom_appearance_id", :limit => 11
     t.boolean "has_networks",                       :default => true
     t.string  "signup_redirect_url"
+    t.string  "login_redirect_url"
     t.string  "title"
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
@@ -47,6 +49,7 @@ Example data for serialized fields:
 class Site < ActiveRecord::Base
   belongs_to :network
   belongs_to :custom_appearance, :dependent => :destroy
+  belongs_to :council, :class_name => 'Group'
 
   serialize :translators, Array
   serialize :available_page_types, Array
@@ -179,13 +182,22 @@ class Site < ActiveRecord::Base
 
   # Where does the user go when they login? Let the site decide.
   def login_redirect(user)
-    if self.signup_redirect_url
-      self.signup_redirect_url
+    if self.login_redirect_url
+      self.login_redirect_url
     elsif self.network
       '/'
     else
       {:controller =>'/me/dashboard'}
      end
+  end
+
+  # if user has +access+ to site, return true.
+  # otherwise, raise PermissionDenied
+  def has_access!(access, user)
+    if access == :admin and not self.council.nil?
+      ok = user.member_of?(self.council)
+    end
+    ok or raise PermissionDenied.new
   end
 
   # TODO : find a place to define all the elements, a site's user can see
