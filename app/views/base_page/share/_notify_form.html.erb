@@ -12,7 +12,7 @@
   </tr>
 
   <tr>
-    <td><%= check_box :notification, :notify_contributors, :onChange => "$('notify_contributor_area').toggle();" %></td>
+    <td><%= check_box :notification, :notify_contributors, :onClick => "$('notify_contributor_area').toggle();" %></td>
     <td><%= label :notification, :notify_contributors, '<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page.'[:notify_contribution] %></td>
   </tr>
   <tr>
@@ -25,7 +25,7 @@
   </tr>
 
   <tr class='gap'>
-    <td><%= check_box :notification, :notify_current_access, { :onChange => "$('notify_current_access_area').toggle();" }%></td>
+    <td><%= check_box :notification, :notify_current_access, { :onClick => "$('notify_current_access_area').toggle();" }%></td>
     <td><%= label :notification, :notify_current_access, '<b>Current Access:</b> notify people or groups who currently have access to this page.'[:notify_current_access] %></td>
   </tr>
   <tr>
@@ -38,7 +38,7 @@
   </tr>
 
   <tr class='gap'>
-    <td><%= check_box :notification, :share_with_new, :onChange => "$('share_page_recipients_new').toggle();" %></td>
+    <td><%= check_box :notification, :share_with_new, :onClick => "$('share_page_recipients_new').toggle();" %></td>
     <td><%= label :notification, :share_with_new, '<b>New Access:</b> share this page with new people or groups, and notify them.'[:notify_new_access] %></td>
   </tr>
   <tr>

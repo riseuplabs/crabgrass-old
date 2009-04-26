@@ -105,6 +105,10 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     users(:penguin).reload
     assert users(:penguin).may?(:admin, page), 'user penguin should have access to page'
     
+    # try to share with a committe (#bugfixing a problem caused by the "+" in the committee name
+    xhr :post, :update , { :page_id => page.id, :recipients => { "rainbow+the-warm-colors".to_sym => { :access => :admin } } }
+    assert :success
+    
     # when the page is already shared with a user, it should not be possible to add it again as a recipient
     xhr :post, :update, { :page_id =>  page.id, :recipient => {:name => 'penguin' } }
     assert_response :success

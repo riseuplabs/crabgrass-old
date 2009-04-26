@@ -19,7 +19,7 @@ unsaved = false if unsaved.nil?
     </div>
     <div style="float:right;">
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>
-      <%= select_page_access 'recipients['+recipient.name+'][access]', {:blank => blank, :selected => access} %>
+      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
       <%- end -%>
     </div>
     <div style="clear:left;"></div>

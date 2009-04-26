@@ -12,7 +12,7 @@
 <table>
 
   <tr><td cospan='2'><label>
-    <%= check_box_tag('check_all', 1, false, :onChange => "toggle_all_checkboxes(this, 'input.#{klass}')") %>
+    <%= check_box_tag('check_all', 1, false, :onClick => "toggle_all_checkboxes(this, 'input.#{klass}')") %>
     <%= "Check All"[:check_all] %>
   </label></td></tr>
 

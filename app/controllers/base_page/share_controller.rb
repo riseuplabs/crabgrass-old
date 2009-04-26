@@ -52,7 +52,6 @@ class BasePage::ShareController < ApplicationController
 
   def update
     @success_msg ||= "You successfully shared this page."[:shared_page_success]
-    # raise params[:recipients][:public_group_everyone_can_see].inspect
     if params[:cancel]
       close_popup
     elsif params[:recipient] and params[:recipient][:name].any?
@@ -69,6 +68,7 @@ class BasePage::ShareController < ApplicationController
       end
       render :partial => 'base_page/share/add_recipient'
     elsif params[:recipients]
+      #raise params[:recipients].inspect
       options = params[:notification] || {}
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()

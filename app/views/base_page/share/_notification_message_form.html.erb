@@ -28,7 +28,7 @@ these are not supported yet.
     </td>
   </tr>
   <tr>
-    <td><%= check_box :notification, :include_message, :onchange => "checkbox_toggle_visibility(this, 'share_message_holder'); $('share_message').focus()" %></td>
+    <td><%= check_box :notification, :include_message, :onClick => "checkbox_toggle_visibility(this, 'share_message_holder'); $('share_message').focus()" %></td>
     <td><label for='notification_include_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
   </tr>
   <tr>
