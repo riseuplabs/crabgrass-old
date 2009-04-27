@@ -8,13 +8,7 @@
 </div>
 <% if current_user.may? :edit, @page -%>
 <div id='title_edit_link'>
-  <%= spinner('edit_title') -%>
-  <%= link_to_remote(
-    :edit_title.t,
-    { :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id},
-      :loading => show_spinner('edit_title') },
-    :style => icon_style('actions/pencil.png')
-  ) %>
+  <%= link_to_remote_with_icon(:edit_title.t, {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}) %>
 </div>
 <% end -%>
 
