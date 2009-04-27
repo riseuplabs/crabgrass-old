@@ -169,6 +169,7 @@ module UrlHelper
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
     klass = options[:class] || 'name_icon'
+    style += " display:block" if options[:block]
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
