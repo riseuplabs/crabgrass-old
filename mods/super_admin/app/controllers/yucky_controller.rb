@@ -10,7 +10,7 @@ class YuckyController < ApplicationController
     
     case @rateable_type
       when :post
-        summary = truncate(@rateable.body,200) + (@rateable.body.size > 200 ? "…" : '')
+        summary = truncate(@rateable.body,400) + (@rateable.body.size > 400 ? "…" : '')
         url = page_url(@rateable.discussion.page, :only_path => false) + "#posts-#{@rateable.id}"
       when :page
         summary = @rateable.title
