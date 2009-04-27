@@ -41,7 +41,7 @@ module CustomAppearanceExtension
       sass_text = ""
 
       # read the constants
-      constants_sass_path = File.join(CustomAppearance::SASS_ROOT, CustomAppearance::CONSTANTS_FILENAME)
+      constants_sass_path = File.join(RAILS_ROOT, CustomAppearance::SASS_ROOT, CustomAppearance::CONSTANTS_FILENAME)
       sass_text << File.read(constants_sass_path)
 
       # load the custom appearance constants from +parameters+
