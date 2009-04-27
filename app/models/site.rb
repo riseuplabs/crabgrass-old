@@ -103,7 +103,7 @@ class Site < ActiveRecord::Base
 
   proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields
+    :require_user_email, :domain, :profiles, :profile_fields, :chat?
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)

@@ -22,7 +22,9 @@ class Conf
   cattr_accessor :show_exceptions
   cattr_accessor :require_user_email
   cattr_accessor :domain
-
+  cattr_accessor :chat
+  def self.chat?; self.chat; end
+  
   # are in site, but I think they should be global
   cattr_accessor :translators
   cattr_accessor :translation_group
@@ -66,7 +68,8 @@ class Conf
     self.enforce_ssl       = false
     self.show_exceptions   = true
     self.domain            = 'localhost'
-
+    self.chat              = true
+    
     # instance configuration
     self.enabled_mods  = []
     self.enabled_tools = []
@@ -83,7 +86,7 @@ class Conf
     hsh.each do |key, value|
       method = key.to_s + '='
       if self.respond_to?(method)
-        self.send(method,value) if value
+        self.send(method,value) unless value.nil?
       else
         puts "ERROR (%s): unknown option '%s'" % [configuration_filename,key]
       end
