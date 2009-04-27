@@ -184,6 +184,24 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     assert_equal 7.0, rated_response.rating
   end
 
+  def test_private_questions
+    # make a question private
+    page = pages(:survey1)    
+    question = page.data.questions.find_by_label("Another Question")
+    question.update_attribute(:private, true)
+    
+    login_as :blue
+    get :show, :page_id => page.id, :id => 5
+    assert_select "h2.question_label", /Another Question/, 'blue should see private question'
+    
+    login_as :dolphin
+    get :show, :page_id => page.id, :id => 5
+    assert_raise(Test::Unit::AssertionFailedError, 'dolphin should not see private Qs') do
+      assert_select "h2.question_label", /Another Question/
+    end
+  end
+  
+
   protected
   
   def assert_active_tab(tab_text)    

@@ -23,9 +23,10 @@ class CustomAppearance < ActiveRecord::Base
 
   # prevent insecure mass assignment
   attr_accessible :masthead_asset_uploaded_data, :masthead_enabled, :masthead_background_parameter,
-                    :welcome_text_title, :welcome_text_body, :parameters
+                    :favicon_uploaded_data, :parameters
 
   belongs_to :masthead_asset, :class_name => 'Asset', :dependent => :destroy
+  belongs_to :favicon, :class_name => 'Asset', :dependent => :destroy
 
   serialize :parameters, Hash
   serialize_default :parameters, {}

@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20090427080832) do
     t.integer  "masthead_asset_id",  :limit => 11
     t.string   "welcome_text_title"
     t.text     "welcome_text_body"
+    t.integer  "favicon_id",         :limit => 11
   end
 
   create_table "discussions", :force => true do |t|

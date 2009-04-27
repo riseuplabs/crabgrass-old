@@ -71,7 +71,7 @@ class AccountController < ApplicationController
     current_site.add_user!(current_user)
     #send_welcome_message(current_user)
     
-    redirect_to params[:redirect] || {:controller => '/me/dashboard'}
+    redirect_to params[:redirect] || current_site.login_redirect(current_user)
     flash_message :title => 'Registration successful'[:signup_success],
       :success => "Thanks for signing up!"[:signup_success_message]
   rescue Exception => exc

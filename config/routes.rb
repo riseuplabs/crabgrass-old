@@ -23,6 +23,8 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
+  map.favicon '/favicon.:format', :controller => 'custom_appearances', :action => 'favicon'
+
   ##### REGULAR ROUTES ####################################
   
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
