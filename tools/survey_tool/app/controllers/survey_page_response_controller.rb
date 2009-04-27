@@ -44,10 +44,12 @@ class SurveyPageResponseController < BasePageController
 
   def destroy
     @response.destroy
-    if @response.user_id == current_user.id
+    if @response.user_id == current_user.id and may_create_survey_response?
       redirect_to page_url(@page, :action => 'response-new')
-    else
+    elsif may_view_survey_response?
       redirect_to page_url(@page, :action => 'response-list')
+    else
+      redirect_to page_url(@page, :action => 'show')
     end
   end
 

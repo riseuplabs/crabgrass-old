@@ -10,7 +10,7 @@ module SurveyPagePermissionsHelper
     return false unless logged_in?
 
     if response and response.user_id == current_user.id
-      true
+      @survey.responses_enabled? # only edit while responses are still enabled.
     else
       current_user.may?(:admin, @page)
     end
