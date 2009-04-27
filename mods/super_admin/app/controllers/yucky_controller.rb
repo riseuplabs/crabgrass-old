@@ -9,7 +9,7 @@ class YuckyController < ApplicationController
     @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count) 
     
     case @rateable_type
-     when :post
+      when :post
         summary = truncate(@rateable.body,200) + (@rateable.body.size > 200 ? "…" : '')
         url = page_url(@rateable.discussion.page, :only_path => false) + "#posts-#{@rateable.id}"
       when :page
@@ -18,11 +18,11 @@ class YuckyController < ApplicationController
     end
     
     # Notify the admins that content has been marked as innapropriate
-     email_options = {:subject => "Inappropriate content", :body => summary, :url => url, :owner => current_user }
-     admins = Group.find(Site.default.super_admin_group_id).users.uniq   
-     admins.each do |admin|
+    email_options = mailer_options.merge({:subject => "Inappropriate content".t, :body => summary, :url => url, :owner => current_user})
+    admins = Group.find(Site.default.super_admin_group_id).users.uniq   
+    admins.each do |admin|
       AdminMailer.deliver_notify_inappropriate(admin,email_options)
-     end
+    end
     
     redirect_to referer
   end
@@ -54,10 +54,10 @@ class YuckyController < ApplicationController
     end
   end
 
-  def send_user_notification   
-    page = Page.make :private_message, :to => current_user, :from => current_user, :title => 'Your complaint has been noticed!', :body => :inapp_noticifation.t
-    page.save
-  end
+  #def send_user_notification   
+  #  page = Page.make :private_message, :to => current_user, :from => current_user, :title => 'Your complaint has been noticed!', :body => :inapp_noticifation.t
+  #  page.save
+  #end
 
 end
 
