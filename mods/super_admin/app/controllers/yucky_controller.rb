@@ -9,22 +9,9 @@ class YuckyController < ApplicationController
     @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count) 
     
     case @rateable_type
-      when :post
-        summary = truncate(@rateable.body,400) + (@rateable.body.size > 400 ? "…" : '')
-        url = page_url(@rateable.discussion.page, :only_path => false) + "#posts-#{@rateable.id}"
-      when :page
-        summary = @rateable.title
-        url = page_url(@rateable, :only_path => false)
+      when :post; add_post
+      when :page; add_page
     end
-    
-    # Notify the admins that content has been marked as innapropriate
-    email_options = mailer_options.merge({:subject => "Inappropriate content".t, :body => summary, :url => url, :owner => current_user})
-    admins = current_site.super_admin_group.users.uniq
-    admins.each do |admin|
-      AdminMailer.deliver_notify_inappropriate(admin,email_options)
-    end
-    
-    redirect_to referer
   end
 
   # removes any yucky marks from the rateable
@@ -33,10 +20,50 @@ class YuckyController < ApplicationController
       rating.destroy
       @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
     end
-    redirect_to referer
+    case @rateable_type
+      when :post; add_post
+      when :page; add_page
+    end
   end
 
   protected
+
+  def add_page
+    summary = @rateable.title
+    url = page_url(@rateable, :only_path => false)
+    send_moderation_notice(url, summary)
+    redirect_to referer
+  end
+
+  def add_post
+    summary = truncate(@rateable.body,400) + (@rateable.body.size > 400 ? "…" : '')
+    url = page_url(@rateable.discussion.page, :only_path => false) + "#posts-#{@rateable.id}"
+    send_moderation_notice(url, summary)
+    
+    render :update do |page|
+      page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
+    end
+  end
+
+  def remove_page
+    redirect_to referer
+  end
+  
+  def remove_post
+    render :update do |page|
+      page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
+    end  
+  end
+  
+  
+   # Notify the admins that content has been marked as innapropriate
+  def send_moderation_notice(url, summary)
+    email_options = mailer_options.merge({:subject => "Inappropriate content".t, :body => summary, :url => url, :owner => current_user})
+    admins = current_site.super_admin_group.users
+    admins.each do |admin|
+      AdminMailer.deliver_notify_inappropriate(admin, email_options)
+    end
+  end
   
   def authorized?
     # you can't flag your own content as (in)appropriate!
