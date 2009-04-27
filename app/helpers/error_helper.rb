@@ -37,6 +37,42 @@ module ErrorHelper
     end
   end
 
+  #
+  # Direct manipulation of the message display: 
+  #
+  #   flash_message :title => 'hello', :text => 'have a nice day', :type => 'info'
+  #   flash_message :title => 'wrong', :text => 'you messed up', :type => 'error'
+  #
+  # 
+  # Shortcuts:
+  # 
+  #   flash_message :success => true
+  #      (same as :type => 'info', :title => 'Changes saved')
+  #
+  #   flash_message :success => 'yeah'
+  #      (same as :type => 'info', :text => 'yeah', :title => 'Changes Saved')
+  #
+  #   flash_message :error => true
+  #      (same as :type => 'error', :title => 'Changes could not be saved')
+  #
+  #   flash_message :error => 'no'
+  #      (same as :type => 'error', :title => 'Changes could not be saved', :text => 'no')
+  #
+  # Special objects:
+  #
+  #   flash_message :exception => exc
+  #
+  #   flash_message :object => @robot
+  #
+  # Some things you can add more than once, and they will be appended to the display:
+  #
+  #   flash_message :error => 'could not save'
+  #   flash_message :error => 'and you are doing it wrong'
+  #
+  # In this case, both errors will be displayed. Other attributes can only be set once,
+  # like title or type.
+  #
+  #
   def flash_message(options)
     add_flash_message(flash, options)
   end
@@ -84,16 +120,15 @@ module ErrorHelper
   private
   
   def build_notice_area(type, title, text)
-    header = content_tag :h2, content_tag(:div, title, :class => "big_icon #{type}_48")
-    content_tag(
-     :div, 
-     content_tag(
-       :div,
-       header + text,
-       :class => type
-     ),
-     :class => 'notice'
-   )
+    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
+    heading = content_tag(:div, heading, :class => 'heading')
+    if text and text.any?
+      text = content_tag(:div, text, :class => 'text')
+    else
+      text = ""
+    end
+    heading_and_text = content_tag(:div, heading+text, :class => type)
+    content_tag(:div, heading_and_text, :class => 'notice')
   end
 
   #
@@ -131,14 +166,26 @@ module ErrorHelper
         flsh[:text] += content_tag :p, "There are problems with the following fields"[:alert_field_errors] + ":"
         flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
       end
-    elsif options[:error] and options[:error].to_s.any?
+    elsif options[:error]
       flsh[:type] = 'error'
-      errors = options[:error].is_a?(Enumerable) ? options[:error] : [options[:error].to_s]
-      flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
-    elsif options[:success] and options[:success].any?
+      if options[:error] === true
+        # use defaults
+      elsif options[:error].any?
+        flsh[:text] += content_tag :p, options[:text] if options[:text]
+        flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg|
+          content_tag :li, h(msg)
+        }
+      end
+    elsif options[:success]
       flsh[:type] = 'info'
-      flsh[:text] += content_tag :p, options[:text] if options[:text]
-      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
+      if options[:success] === true
+        # use defaults
+      elsif options[:success].any?
+        flsh[:text] += content_tag :p, options[:text] if options[:text]
+        flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg|
+          content_tag :li, h(msg)
+        }
+      end
     end
   end
 
