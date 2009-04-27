@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090425132642) do
+ActiveRecord::Schema.define(:version => 20090427080711) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20090425132642) do
     t.integer  "masthead_asset_id",  :limit => 11
     t.string   "welcome_text_title"
     t.text     "welcome_text_body"
+    t.integer  "favicon_id",         :limit => 11
   end
 
   create_table "discussions", :force => true do |t|

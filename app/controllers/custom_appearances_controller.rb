@@ -3,8 +3,8 @@ class CustomAppearancesController < ApplicationController
   javascript :extra
   helper ColorPickerHelper
 
-  before_filter :login_required
-  prepend_before_filter :fetch_data
+  before_filter :login_required, :except => [:favicon]
+  prepend_before_filter :fetch_data, :except => [:favicon]
 
   # GET edit_custom_appearance_url
   def edit
@@ -25,6 +25,30 @@ class CustomAppearancesController < ApplicationController
 
   def available
     @variables = CustomAppearance.available_parameters
+  end
+
+  # either send the public/favicon.png or use the current custom appearance
+  # to find a favicon
+  def favicon
+    favicon_formats = ['png', 'gif', 'ico']
+    if !favicon_formats.include?(params[:format])
+      # bad format
+      render(:text => '', :status => :not_found) and return
+    end
+
+    if current_appearance.favicon
+      redirect_to(current_appearance.favicon.url) and return
+    end
+
+    favicon_formats.each do |ext|
+      path = File.join(RAILS_ROOT, "public/favicons/favicon.#{ext}")
+      if File.exists?(path)
+        send_file path and return
+      end
+    end
+
+    # nothing found
+    render(:text => '', :status => :not_found) and return
   end
 
 protected

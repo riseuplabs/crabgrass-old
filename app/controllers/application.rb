@@ -31,8 +31,13 @@ class ApplicationController < ActionController::Base
     @current_site ||= Site.default #not useful without default site
   end
 
+  helper_method :current_appearance  # make available to views
+  def current_appearance
+    current_site.custom_appearance || CustomAppearance.default
+  end
+
   protected
-    
+
   before_filter :header_hack_for_ie6
   def header_hack_for_ie6
     #
