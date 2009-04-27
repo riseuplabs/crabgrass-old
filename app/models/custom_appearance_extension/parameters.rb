@@ -9,6 +9,10 @@ module CustomAppearanceExtension
       base.extend ClassMethods
     end
 
+    def delete_bad_parameters
+      parameters.delete_if {|k, v| v.nil?}
+    end
+
     def masthead_asset_uploaded_data
       masthead_asset.url if masthead_asset
     end
