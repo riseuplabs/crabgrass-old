@@ -25,7 +25,13 @@ class SurveyPageController < BasePageController
 
   def edit
     if request.post?
-      @survey.update_attributes!(params[:survey])
+      if @survey.new_record?
+        @survey = Survey.create!(params[:survey])
+        @page.data = @survey
+        @page.save!
+      else
+        @survey.update_attributes!(params[:survey])
+      end
       current_user.updated(@page)
       flash_message :success => true
       redirect_to page_url(@page, :action => 'edit')
@@ -43,8 +49,8 @@ class SurveyPageController < BasePageController
 
     if action?(:edit, :update)
       may_modify_survey?
-    else
-      false
+    elsif action?(:show)
+      current_user.may?(:view,@page)
     end
   end
 
