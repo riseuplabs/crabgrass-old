@@ -4,6 +4,6 @@ module AccountHelper
   end
 
   def welcome_body
-    site_string(:welcome_message)
+    :welcome_message.t
   end
 end

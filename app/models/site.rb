@@ -55,6 +55,8 @@ class Site < ActiveRecord::Base
   serialize :available_page_types, Array
   serialize :evil, Hash
 
+  # this is evil, but used by gibberish for site specific
+  # override ability.
   cattr_accessor :current
 
   ##
