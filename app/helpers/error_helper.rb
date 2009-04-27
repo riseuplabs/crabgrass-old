@@ -149,7 +149,7 @@ module ErrorHelper
     if options[:exception]
       exc = options[:exception]
       if exc.is_a? PermissionDenied
-        add_flash_message(flsh, :text => options[:text], :title => 'Permission Denied'[:alert_permission_denied], :error => exc)
+        add_flash_message(flsh, :text => options[:text], :title => 'Permission Denied'[:alert_permission_denied], :error => exc.to_s)
       elsif exc.is_a? ErrorMessages
         add_flash_message(flsh, :text => options[:text], :title => exc.title, :error => exc.errors)
       elsif exc.is_a? ErrorMessage
