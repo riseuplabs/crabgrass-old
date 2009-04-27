@@ -27,6 +27,7 @@ table.entities td {
   <%= render :partial => 'me/dashboard/welcome_box_content', :locals => {:hide_heading => true, :hide_profile => true} %>
 <% end %>
 
+
 <table class='entities'>
 <tr>
   <td>
@@ -40,6 +41,8 @@ table.entities td {
 </table>
 
 <%= render :partial => 'group/widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
+<%= edit_site_custom_appearance_link(current_site) %>
+<br/>
 <br/>
 <%= render :partial => 'group/widgets/page_list', :locals => {:pages => @recent_pages, :heading => 'Recent Pages'[:recent_pages]} %>
 <br/>
