@@ -65,6 +65,18 @@ class ApplicationController < ActionController::Base
   end
   helper_method :action?
 
+  # returns true if params[:controller] matches one of the args.
+  def controller?(*controllers)
+    controllers.include?(params[:controller].to_sym)
+  end
+  helper_method :controller?
+
+  # returns true if params[:id] matches the id passed in
+  def id?(*ids)
+    ids.include?(params[:id].to_i)
+  end
+  helper_method :id?
+
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included "as needed". A controller can set a custom stylesheet
   # using 'stylesheet' in the class definition:
