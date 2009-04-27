@@ -18,6 +18,8 @@ enabled_languages:
   - es_ES
   - pt_BR
   - ar_EG
+  - fr_FR
+  - ru_RU
 enabled_mods:
   - super_admin
 enabled_tools:
@@ -31,44 +33,38 @@ enabled_tools:
   - gallery_tool
   - external_video_tool
   - announcement_tool
-  - feed_tool
+  - survey_tool
 email:
-  delivery_method: :smtp
-  smtp_settings:
-    domain: localhost
-    address: smtp.gmail.com
-    port: 587
-    authentication: :plain
-    user_name: xxxxxx@gmail.com
-    password: xxxxxxx
+  delivery_method: :sendmail
 
 ##
 ## SITES
 ##
 
 sites:
-  - name: blue
-    admin_group: blueadmins
-  - name: red
-    admin_group: redadmins
+  - name: climatechange
+    admin_group: superadmin
+  - name: globalpulse
+    admin_group: superadmin
+  - name: speakafrica
+    admin_group: superadmin
 
 ##
 ## SITE DEFAULTS
 ##
 
+title: umbrella
 pagination_size: 30
 default_language: en_US
 enforce_ssl: false
 show_exceptions: false
-email_sender: "robot@$current_host"
+email_sender: "crabgrass-system@$current_host"
 tracking: true
 available_page_types:
   - WikiPage
   - AssetPage
-  - EventPage
   - ExternalVideoPage
   - TaskListPage
-  - AnnouncementPage
   - SurveyPage
   - DiscussionPage
   - RateManyPage
