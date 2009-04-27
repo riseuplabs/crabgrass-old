@@ -27,8 +27,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_site  # make available to views
   def current_site
-    @current_site ||= Site.for_domain(request.host).find(:first)
-    @current_site ||= Site.default #not useful without default site
+    @current_site ||= begin
+      site = Site.for_domain(request.host).find(:first)
+      site ||= Site.default
+      Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
+    end
   end
 
   protected
@@ -64,6 +67,18 @@ class ApplicationController < ActionController::Base
     actions.include?(params[:action].to_sym)
   end
   helper_method :action?
+
+  # returns true if params[:controller] matches one of the args.
+  def controller?(*controllers)
+    controllers.include?(params[:controller].to_sym)
+  end
+  helper_method :controller?
+
+  # returns true if params[:id] matches the id passed in
+  def id?(*ids)
+    ids.include?(params[:id].to_i)
+  end
+  helper_method :id?
 
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included "as needed". A controller can set a custom stylesheet

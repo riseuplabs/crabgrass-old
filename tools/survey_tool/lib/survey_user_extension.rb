@@ -5,14 +5,9 @@ module SurveyUserExtension
     }
   end
   module InstanceMethods
-    def rating_for(rateable)
-      rateable.ratings.by_user(self).first
+    def response_for_survey(survey)
+      @response ||= (survey.responses.find_by_user_id(self.id) || false)
     end
-  
-    def rated?(rateable)
-      return false unless rateable
-      rating_for(rateable) ? true : false
-    end 
   end
 end
 

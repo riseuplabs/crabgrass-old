@@ -15,6 +15,8 @@
 =end
 
 
-page.replace_html 'rate_survey', :partial => 'rate_form'
-page.replace_html 'next_responses', :partial => 'next_responses', :locals => {:responses => @next}
-
+page.replace_html 'rate_survey', :partial => 'survey_page_response/rate/form'
+page.replace_html 'next_responses', :partial => 'survey_page_response/rate/next_up', :locals => {:responses => @next}
+if @previous_response
+  page.replace_html 'previously', :partial => 'survey_page_response/rate/previously', :locals => {:response => @previous_response}
+end

@@ -1,3 +1,13 @@
+
+#  create_table "survey_responses", :force => true do |t|
+#    t.integer  "survey_id",   :limit => 11
+#    t.integer  "user_id",     :limit => 11
+#    t.string   "name"
+#    t.string   "email"
+#    t.integer  "stars_count", :limit => 11, :default => 0
+#    t.datetime "created_at"
+#  end
+
 class SurveyResponse < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # to truncate
 
@@ -51,4 +61,13 @@ class SurveyResponse < ActiveRecord::Base
       end
     end
   end
+  
+  def display_name
+    if self.user_id
+      self.user.display_name
+    else
+      "%s %s" % [self.name, self.email]
+    end
+  end
 end
+

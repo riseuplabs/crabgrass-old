@@ -21,9 +21,7 @@ module SurveyPageHelper
     object.choices = ["Answer choice 1", "Answer choice 2", "Answer choice 3"]
 
     link_to_function object.add_question_link_text do |page|
-      page.insert_html :bottom, :questions,
-                        :partial => 'question', :object => object
-
+      page.insert_html(:bottom, :questions, :partial => 'edit_question', :locals => {:question => object})
       page.call 'survey_designer_enable_sorting'
     end
   end
@@ -37,6 +35,10 @@ module SurveyPageHelper
     end
   end
 
+  def private_question_checkbox(form)
+   content_tag :label, form.check_box(:private) + " " + "Private Question"[:private_question]
+  end
+  
   def their_answer_goes_here
     "Their answer goes here..."[:their_answer_goes_here]
   end
@@ -90,7 +92,7 @@ module SurveyPageHelper
     # rating of 0 has special meaning: it creates a rating of nil, which is
     # skipped in the rating calculation. These nil rating records help us keep
     # track of the fact that the user decided to skip the current response.
-    { :url => page_url(@page, :action => 'rate', :response => @response.id, :rating => (rating||0)),
+    { :url => page_url(@page, :action => 'response-rate', :id => @response.id, :rating => (rating||0)),
       :loading => show_spinner('next_response'),
       :complete => hide_spinner('next_response')
     }
