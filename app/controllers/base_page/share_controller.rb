@@ -54,7 +54,7 @@ class BasePage::ShareController < ApplicationController
     @success_msg ||= "You successfully shared this page."[:shared_page_success]
     if params[:cancel]
       close_popup
-    elsif params[:recipient] and params[:recipient][:name].any?
+    elsif params[:recipient] and params[:recipient][:name].any? and !params[:share]
       # add one recipient to the list
       recipient_name = params[:recipient][:name].strip 
       @recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
