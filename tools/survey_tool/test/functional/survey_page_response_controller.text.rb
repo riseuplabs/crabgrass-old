@@ -43,7 +43,6 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     assert_equal ["a1", "a2", "a3"], response.answers.map{|a| a.value}
   end
 
-=begin
   def test_edit_response
     blue_id = users(:blue).id
     login_as :blue
@@ -54,55 +53,41 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     
     get :show, :page_id => page.id, :id => blue_response.id
     assert_response :success
-
-    assert_select "a[href='/blue/survey-ipsum+214/respond']"
-
-    get :respond, :page_id => pages("survey1").id
-    assert_response :success
-    assert_active_tab "Your Answers"
+    assert_active_tab "My Response"
 
     # save new reponse
-    post :respond, :page_id => pages("survey1").id, "response"=>
-              {
-                "answers_attributes"=> {
-                  "1"=>{"question_id"=>"1", "value"=>"ba1"},
-                  "2"=>{"question_id"=>"2", "value"=>"ba2"},
-                  "3"=>{"question_id"=>"3", "value"=>"ba3"}}
-              }
-    assert_redirected_to "_page_action" => "your_answers"
-    assert_equal "<ul><li>Updated your response</li></ul>", flash[:text]
+    post :update, :page_id => pages("survey1").id, :id => blue_response.id,
+      "response" => {
+        "answers_attributes"=> {
+          "1"=>{"question_id"=>"1", "value"=>"ba1"},
+          "2"=>{"question_id"=>"2", "value"=>"ba2"},
+          "3"=>{"question_id"=>"3", "value"=>"ba3"}
+        }
+      }
+      
     assert_equal blue_id, assigns("response").user_id
     assert_equal ["ba1", "ba2", "ba3"], assigns("response").answers.map{|a| a.value}
 
     # check the listing
     get :list, :page_id => pages("survey1").id
     assert_response :success
-    assert_active_tab "List All Answers"
+    assert_active_tab "List All Responses"
 
     response = assigns("responses").detect {|r| r.user_id == blue_id}
     assert_equal ["ba1", "ba2", "ba3"], response.answers.map{|a| a.value}
   end
 
   def test_delete_own_response
-    blue_id = users(:blue).id
     login_as :blue
+    user = users(:blue)
+    response = user.response_for_survey(pages("survey1").data)
 
-    get :your_answers, :page_id => pages("survey1").id
-    assert_response :success
-    assert_active_tab "Your Answers"
-
-    assert_select "a[href='/blue/survey-ipsum+214/delete_response/#{assigns("response").id}']"
-
-    post :delete_response, :page_id => pages("survey1").id, :id => assigns("response").id
-
-    assert_redirected_to "_page_action" => "respond"
-
-    get :list, :page_id => pages("survey1").id
-    response = assigns("responses").detect {|r| r.user_id == blue_id}
-    assert_nil response
-    assert_active_tab "List All Answers"
+    assert_difference 'SurveyResponse.count', -1 do
+      post :destroy, :page_id => pages("survey1").id, :id => response.id
+    end
   end
-
+  
+=begin
   def test_delete_others_response
     blue_id = users(:blue).id
     login_as :blue
