@@ -1,10 +1,15 @@
 <%= render :partial => 'tabs' %>
 
-<blockquote>
+<%=h @survey.description %>
+
+<h3>Questions (<%= @survey.question_ids.count %>)</h3>
+
+<%= render :partial => 'show_questions' %>
+
+<h3>Responses (<%= @survey.responses.count %>)</h3>
 
 <ul>
-  <li>questions: <%= @survey.question_ids.count %> </li>
-  <li>responses: <%= @survey.response_ids.count %> </li>
+  <li>from: <%= @survey.responses.collect{|r|r.display_name}.join(', ') %> </li>
 </ul>
 
-</blockquote>
+

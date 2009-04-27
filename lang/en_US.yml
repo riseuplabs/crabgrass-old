@@ -64,6 +64,8 @@ search: "Search"
 achive: "Archive"
 tasks: "Tasks"
 
+destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
+
 ##
 ## NAVIGATION
 ##
@@ -603,8 +605,8 @@ created: "created"
 unread: "unread"
 read: "read"
 starred: "starred"
-pagination_next: "next"
-pagination_previous: "prev"
+pagination_next: "Next"
+pagination_previous: "Previous"
 all_people: "all people"
 all_groups: "all groups"
 all_states: "all states"
@@ -642,8 +644,6 @@ video_class_description: "Show a video hosted on an external website."
 video: "video"
 article: "article"
 article_class_description: "Blog post or news article."
-survey: "survey"
-survey_class_description: "A survey"
 
 title: "Title"
 summary: "Summary"
@@ -744,16 +744,27 @@ ranked_vote_instructions: |
 ## SURVEY PAGE
 ##
 
-design_survey: Design Survey
-save_survey: Save Survey
-really_delete_your_response: "Do you really want to delete your response?"
-really_delete_users_response: "Do you really want to delete the response submitted by %s?"
+survey: "survey"
+survey_class_description: "A survey"
+
+survey_design: "Design Survey"
+survey_my_response: "My Response"
+survey_take: "Take Survey"
+survey_rate_responses: "Rate Responses"
+survey_list_all: "List All Responses"
+
+save_survey: "Save Survey"
+survey_response_by: "Response by {login}"
+
+survey_rate_this_response: "Rate This Response"
+survey_your_rating_of_this_response: "Your Rating of This Response"
+
 allow_rating: "Activate the rating system: allow survey response to be rated."
 disallow_participant_rating: "Disable rating for people who have submitted a response."
 disallow_responses: "Disable Responses. You would select this when you want to end the submission process."
-survey_updated_message: "Saved Your Changes!"
-response_created_message: "Created a response!"
-response_updated_message: "Updated your response"
+#survey_updated_message: "Saved Your Changes!"
+#response_created_message: "Created a response!"
+#response_updated_message: "Updated your response"
 settings: Settings
 private: private
 

@@ -1,3 +1,20 @@
+#  create_table "survey_questions", :force => true do |t|
+#    t.string   "type"
+#    t.text     "choices"
+#    t.integer  "survey_id",  :limit => 11
+#    t.integer  "position",   :limit => 11
+#    t.string   "label"
+#    t.text     "details"
+#    t.boolean  "required"
+#    t.datetime "created_at"
+#    t.datetime "expires_at"
+#    t.string   "regex"
+#    t.integer  "maximum",    :limit => 11
+#    t.integer  "minimum",    :limit => 11
+#    t.boolean  "private",                  :default => false
+#  end
+
+
 class SurveyQuestion < ActiveRecord::Base
   belongs_to :survey
   serialize :choices, Array

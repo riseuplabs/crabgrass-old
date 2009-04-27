@@ -1,4 +1,4 @@
-<%= render :partial => 'tabs' %>
+<%= render :partial => 'survey_page/tabs' %>
 
 <%= pagination_links @responses, :params => {:action => 'list'} %>
 
@@ -13,9 +13,9 @@
     <%- end -%>
   </tr>
   <%- @responses.each do |resp| -%>
-    <% url = page_url(@page, :action => 'details', :id => resp.id) %>
+    <% url = page_url(@page, :action => 'response-show', :id => resp.id) %>
     <tr class="<%= cycle 'odd', 'even' %>">
-      <td><%= resp.user.login %></td>
+      <td><%= resp.user.login if resp.user_id %></td>
       <td><%= friendly_date resp.created_at %></td>
       <!-- <td><%# friendly_date resp.updated_at %></td> -->
       <td><%= resp.rating %></td>
@@ -30,3 +30,5 @@
 </table>
 
 <%= pagination_links @responses, :params => {:action => 'list'} %>
+
+<br/>
