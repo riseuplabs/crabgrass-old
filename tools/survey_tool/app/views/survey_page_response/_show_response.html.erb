@@ -9,6 +9,7 @@
   
   <div id="questions">
     <%- @survey.questions.each do |question| -%>
+      <% next if question.private? and !may_view_private_survey_questions?(@response) %>
       <div class="question">
         <h2 class="dim question_label"><%= h question.label %>
           <% if question.private? -%>

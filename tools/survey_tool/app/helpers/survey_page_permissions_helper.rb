@@ -74,5 +74,15 @@ module SurveyPagePermissionsHelper
     current_user.may?(:admin, @page)    
   end
 
+  def may_view_private_survey_questions?(response=nil)
+    return false unless logged_in?
+    
+    if current_user.may?(:admin, @page)
+      true
+    elsif current_user.id == response.user_id
+      true
+    end
+  end
+  
 end
 
