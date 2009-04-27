@@ -6,7 +6,7 @@
       <p><%= 'coordinating committee'.t %></p>
     <% end -%>
     <p class="description"><%=h @group.summary %></p>
-    <%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link, edit_featured_link, edit_custom_appearance_link(@editable_custom_appearance)) %>
+    <%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link, edit_featured_link, edit_group_custom_appearance_link(@editable_custom_appearance)) %>
   </td>
   <td class='right'>
     <%= render :partial => 'group/info_box_memberships' %>

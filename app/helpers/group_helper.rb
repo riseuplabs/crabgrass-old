@@ -111,7 +111,7 @@ module GroupHelper
     end
   end
 
-  def edit_custom_appearance_link(appearance)
+  def edit_group_custom_appearance_link(appearance)
     if appearance and may_admin_group?
       link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(appearance)
     end

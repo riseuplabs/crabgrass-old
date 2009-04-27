@@ -131,6 +131,12 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
+  def edit_site_custom_appearance_link(site)
+    if site.custom_appearance and logged_in? and current_user.may?(:admin, site)
+      link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(site.custom_appearance)
+    end
+  end
+
   # Tests to see if this site has a custom translation defined for +key+.
   # If it doesn't, then we fall back to the normal translation.
 #  def site_string(key)
