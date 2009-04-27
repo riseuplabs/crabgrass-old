@@ -177,11 +177,16 @@ module UrlHelper
       url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
       style = "background-image:url(#{url});" + style
     end
-    avatar + link_to(label, path, :class => klass, :style => style)
+    avatar + link_to(label, path, :class => klass, :style => style) + person_featured_fields
   end
 
   def person_search_url(*path)
     url_for_user(@user, :action => 'search', :path => path)
+  end
+  
+  # placeholder for the showing of featured fields
+  def person_featured_fields
+    "<div class='featured_fields'>FEATURED FIELDS GO HERE</div>"
   end
 
 

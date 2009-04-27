@@ -66,6 +66,8 @@ class Profile < ActiveRecord::Base
 
   belongs_to :language
 
+  after_save { |record| record.user.update_featured_fields()}
+  
   ### relationship to user or group #########################################
   
   belongs_to :entity, :polymorphic => true

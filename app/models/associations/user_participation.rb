@@ -28,7 +28,9 @@ class UserParticipation < ActiveRecord::Base
 
   # can only be used to increase access, not remove it.
   def grant_access=(value)
-    value = ACCESS[value.to_sym] if value.is_a?(Symbol) or value.is_a?(String)
+      value = apply_forced_access do
+        ACCESS[value.to_sym] if value.is_a?(Symbol) or value.is_a?(String)
+      end
     if value
       if read_attribute(:access)
         write_attribute(:access, [value,read_attribute(:access)].min )
@@ -40,10 +42,22 @@ class UserParticipation < ActiveRecord::Base
 
   # can be used to add or remove access
   def access=(value)
-    value = ACCESS[value] if value.is_a? Symbol
+      value = apply_forced_access do
+        ACCESS[value] if value.is_a? Symbol
+      end  
     write_attribute(:access, value)
   end
  
+  
+private
+  
+  def apply_forced_access &block
+    if FORCED_ACCESS
+      return FORCED_ACCESS
+    else
+      return block.call
+    end
+  end
   
 end
 

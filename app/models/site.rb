@@ -51,9 +51,61 @@ class Site < ActiveRecord::Base
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
+  
 
   cattr_accessor :current
 
+  
+#
+# FEATURED FIELDS
+#  
+# Every site can enable single fields as featured fields
+#
+# They can have different options (this is to be extended)
+# - required : true|false this field will be used in validations and forms to be required
+# - show : true|false this field is enabled to be shown in a featured position
+#
+# show's default
+  serialize :featured_fields, Hash
+  after_save :update_featured_fields
+  
+  
+# we need to store any data, that a site's admin can set to
+# be a featured field in the user
+# We use User.update_featured_fields for that
+# TODO find a more general solution if needed
+# In the moment it's bound to the featured-fields functionality
+# that's boring. :)
+  def update_featured_fields_as_context(item,data)
+    items = self.users if item == :user
+    if items
+      items.each do |item|
+        item.update_featured_fields(self,data) if item.respond_to?(:update_featured_fields)
+      end    
+    end  
+  end  
+  
+  # calls the related model to update its featured fields
+  def update_featured_fields
+    data = featured_fields
+    update_featured_fields_as_context(:user,data)
+  end
+  
+  # sets the featured fields
+  # NOTE: normally use this method!
+  #
+  # takes as parameter:
+  # {:fieldname => {:required => false, :show => true}
+  # 
+  def set_featured_fields data
+    default_data = { :required => false, :show => true}
+    data.each do |field,options|
+      options=default_data.merge(options)
+      self.featured_fields[field] = options
+    end
+    save
+  end
+  
   ##
   ## FINDERS
   ##
