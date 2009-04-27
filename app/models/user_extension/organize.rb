@@ -65,7 +65,7 @@ module UserExtension::Organize
           # this does not work - probably due to the finder_sql
           # self.find(:all, :joins => :federatings, :conditions => ["federatings.network_id = ?",site.network_id])
           # FIXME: this does not work for committees
-          site.network.nil? ? self : self.select{|group| site.network.group_ids.include? group.id}
+          site.network.nil? ? self : self.select{|group| site.network.group_ids.include?(group.id)} + [site.network]
         end
         def committees_on(site)
           # so here is the work around...
