@@ -27,8 +27,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_site  # make available to views
   def current_site
-    @current_site ||= Site.for_domain(request.host).find(:first)
-    @current_site ||= Site.default #not useful without default site
+    @current_site ||= begin
+      site = Site.for_domain(request.host).find(:first)
+      site ||= Site.default
+      Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
+    end
   end
 
   helper_method :current_appearance  # make available to views

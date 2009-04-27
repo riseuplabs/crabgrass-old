@@ -335,17 +335,19 @@ asset3:
 
 survey1: 
   name: 
-  created_by_login: blue
+  created_by_id: "4"
   updated_by_id: "4"
+  created_by_login: blue
+  updated_by_login: blue
+  owner_id: 4
+  owner_type: User
   public: true
   resolved: "1"
   title: survey ipsum
   data_type: Survey
   type: SurveyPage
   starts_at: 
-  updated_by_login: blue
   message_count: "0"
-  created_by_id: "4"
   id: "214"
   summary: ""
   flow: 

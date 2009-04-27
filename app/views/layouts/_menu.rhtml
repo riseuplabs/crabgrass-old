@@ -30,7 +30,7 @@
     </li>
   <%- end -%>
 
-  <%- if logged_in? -%>
+  <%- if logged_in? and current_site.chat? -%>
   <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
     <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>

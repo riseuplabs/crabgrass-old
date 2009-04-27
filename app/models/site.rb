@@ -55,6 +55,8 @@ class Site < ActiveRecord::Base
   serialize :available_page_types, Array
   serialize :evil, Hash
 
+  # this is evil, but used by gibberish for site specific
+  # override ability.
   cattr_accessor :current
 
   ##
@@ -95,13 +97,13 @@ class Site < ActiveRecord::Base
   # whatever crabgrass.*.yml gets loaded).
   def self.proxy_to_conf(*attributes)
     attributes.each do |attribute|
-      define_method(attribute) { read_attribute(attribute) || Conf.send(attribute) }
+      define_method(attribute) { (value = read_attribute(attribute.to_s.sub(/\?$/,''))).nil? ? Conf.send(attribute) : value }
     end
   end
 
   proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields
+    :require_user_email, :domain, :profiles, :profile_fields, :chat?
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
