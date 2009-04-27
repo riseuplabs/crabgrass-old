@@ -19,7 +19,7 @@ class YuckyController < ApplicationController
     
     # Notify the admins that content has been marked as innapropriate
     email_options = mailer_options.merge({:subject => "Inappropriate content".t, :body => summary, :url => url, :owner => current_user})
-    admins = Group.find(Site.default.super_admin_group_id).users.uniq   
+    admins = current_site.super_admin_group.users.uniq
     admins.each do |admin|
       AdminMailer.deliver_notify_inappropriate(admin,email_options)
     end
