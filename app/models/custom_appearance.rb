@@ -30,6 +30,7 @@ class CustomAppearance < ActiveRecord::Base
 
   serialize :parameters, Hash
   serialize_default :parameters, {}
+  before_save :delete_bad_parameters
 
   belongs_to :admin_group, :class_name => 'Group'
 
