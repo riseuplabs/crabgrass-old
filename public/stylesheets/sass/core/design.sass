@@ -62,14 +62,15 @@ div#masthead
 div#top_menu
   background-color= !menu_bg_color
   padding-left: 1em
-  border-top= !banner_border_width "solid" 
+  border-width= !banner_border_width "0"
+  border-style: solid
   border-color= !banner_border_color
   div.account_links
     float: right
     color: #646360
     padding= !menu_item_padding
     a
-      color: #E1E2E2
+      color= !menu_fg_color
       margin: 0 0.5em
     div#login_popup
       position: absolute
@@ -136,7 +137,7 @@ div#top_menu
   background= !banner_background
   color= !banner_fg_color
   border-color= !banner_border_color
-  border-width= !banner_border_width "0"
+  border-width= "0 0" !banner_border_width "0"
   border-style: solid
   img
     border: 1px solid white
