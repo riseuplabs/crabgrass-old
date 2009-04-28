@@ -4,9 +4,11 @@ These packages are required:
 
 Make sure your git-core is a version => 1.5.6.5, there is a newer version available in etch-backports if you are running etch
 
-apt-get install git-core
+  apt-get install git-core
+  apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
+  apt-get install libopenssl-ruby1.8
 
-apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems rake
+On some systems, libopenssl-ruby1.8 is required.
 
 = Grab The Code
 
