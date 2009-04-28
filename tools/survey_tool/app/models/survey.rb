@@ -14,7 +14,7 @@ class Survey < ActiveRecord::Base
   has_many(:questions, :order => :position, :dependent => :destroy,
            :class_name => 'SurveyQuestion')
 
-  has_many(:responses, :dependent => :destroy, :class_name => 'SurveyResponse') do    
+  has_many(:responses, :dependent => :destroy, :class_name => 'SurveyResponse') do
     # returns `count' responses, the given `user' may rate on, but hasn't yet.
     def unrated_by(user, count)
       # (proxy_owner is the Survey)
@@ -46,12 +46,7 @@ class Survey < ActiveRecord::Base
     settings[:responses_enabled]=(v=='1' ? false : true) end
   def participants_cannot_rate=(v)
     settings[:participants_can_rate]=(v=='1' ? false : true) end
-  
-  before_save :update_response_count
-  def update_response_count
-    self.responses_count = self.responses.size
-  end
-  
+    
   # def respond!(user, values)
   #   response = SurveyResponse.new(:survey => self, :user => user)
   #   response.save!
@@ -81,6 +76,13 @@ class Survey < ActiveRecord::Base
         end
       end
     end
+  end
+
+  protected
+  
+  # i can't get the counter cache to work
+  def update_counter
+    self.update_attribute(:responses_count, self.response_ids.size)
   end
 
   # SQL for finding all the responses that a user has not yet rated

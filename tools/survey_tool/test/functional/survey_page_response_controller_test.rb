@@ -6,40 +6,45 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     :surveys, :survey_responses, :survey_answers
     
   def test_new_response
-    dolphin_id = users(:dolphin).id
     login_as :dolphin
     
     # the user should exist and have access level :edit
     
     @user = users(:dolphin)
     assert @user, 'the user should exist'
-    @page = pages(:survey1)
+    @page = pages(:survey_blank)
     assert @page, 'the page should exist'
     
     assert @user.may?(:edit,@page), 'the user should have the right to edit the page'
     assert !@user.may?(:admin,@page), 'the user should not have the right to admin the page'
-    
+    assert users(:blue).may?(:admin, @page)
+        
     get :new, :page_id => @page.id
     assert_response :success
-      
-    post :make, :page_id => @page.id, "response" => {
-      "answers_attributes"=> {
-        "1"=>{"question_id"=>"1", "value"=>"a1"},
-        "2"=>{"question_id"=>"2", "value"=>"a2"},
-        "3"=>{"question_id"=>"3", "value"=>"a3"}}
-    }
-
-#    assert_redirected_to "_page_action" => "show"
+    
+    assert_difference 'SurveyResponse.count' do
+      post :make, :page_id => @page.id, "response" => {
+        "answers_attributes"=> {
+          "1"=>{"question_id"=>"1", "value"=>"a1"},
+          "2"=>{"question_id"=>"2", "value"=>"a2"},
+          "3"=>{"question_id"=>"3", "value"=>"a3"}}
+      }
+    end
+    
+    #assert_equal 1, assigns(:survey).responses_count
+    # ^^ i can't get the counter cache working
     assert_equal "info", flash[:type]
-    assert_equal dolphin_id, assigns("response").user_id
+    assert_equal @user.id, assigns("response").user_id
     assert_equal ["a1", "a2", "a3"], assigns("response").answers.map{|a| a.value}
 
     # check the listing - for only admins can see this, we have to login as blue again
     login_as :blue
     get :list, :page_id => @page.id
-    assert_active_tab "List All Responses"
     assert_response :success
-    response = assigns("responses").detect {|r| r.user_id == dolphin_id}
+    assert_equal 1, assigns(:survey).responses.size
+    
+    assert_active_tab "List All Responses"
+    response = assigns("responses").detect {|r| r.user_id == @user.id}
     assert_equal ["a1", "a2", "a3"], response.answers.map{|a| a.value}
   end
 

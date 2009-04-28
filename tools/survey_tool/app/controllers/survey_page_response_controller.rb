@@ -20,9 +20,9 @@ class SurveyPageResponseController < BasePageController
   # this should be 'create', but that is currently used by BasePageController. 
   # grrr. that breaks our nice CRUD.
   def make
-    @response = @survey.responses.build(params[:response])
-    @response.user = current_user # (user_id is attr protected)
-    @response.save!
+    @response = @survey.responses.create!(params[:response]) do |resp|
+      resp.user = current_user # (user_id is protected)
+    end
     current_user.updated(@page)
     flash_message :success => true
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)

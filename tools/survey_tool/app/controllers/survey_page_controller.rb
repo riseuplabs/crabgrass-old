@@ -21,6 +21,8 @@ class SurveyPageController < BasePageController
 
   def show
     @survey = @page.data || Survey.new
+    @survey.responses(true)
+    # ^^ there is no good reason why this is necessary, but it seems to be the case.
   end
 
   def edit

@@ -14,7 +14,7 @@ class SurveyResponse < ActiveRecord::Base
   attr_accessible :answers_attributes
 
   belongs_to :user
-  belongs_to :survey
+  belongs_to :survey, :counter_cache => :responses_count
   has_many(:answers, :dependent => :destroy,
            :class_name => 'SurveyAnswer', :foreign_key => 'response_id')
   acts_as_rateable
