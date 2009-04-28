@@ -121,6 +121,8 @@ class SurveyPageResponseController < BasePageController
       may_view_survey_response?
     elsif action?(:rate)
       may_rate_survey_response?(@response)
+    else
+      current_user.may?(:admin,@page)
     end
   end
 
