@@ -895,6 +895,7 @@ current_tags: "Current Tags"
 welcome_title: "Welcome to {site_title}"
 welcome_heading: "Welcome to {site_title}, {user_name}!"
 welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
+welcome_login_message: ""
 
 welcome_edit_profile_link: "Edit your profile"
 welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
