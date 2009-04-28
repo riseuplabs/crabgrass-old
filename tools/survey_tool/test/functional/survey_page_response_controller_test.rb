@@ -41,7 +41,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     login_as :blue
     get :list, :page_id => @page.id
     assert_response :success
-    assert_equal 1, assigns(:survey).responses.size
+    assert_equal 1, assigns(:survey).responses(true).size
     
     assert_active_tab "List All Responses"
     response = assigns("responses").detect {|r| r.user_id == @user.id}

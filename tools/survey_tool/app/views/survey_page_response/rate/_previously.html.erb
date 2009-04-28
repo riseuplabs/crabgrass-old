@@ -8,7 +8,9 @@
 
 <ul>
   <li><b>Your Rating:</b> <%= (current_user.rating_for(response)||Rating.new).rating %></li>
-  <li><b>Averate Rating:</b> <%= response.rating.round(2) %></li>
+  <% if may_view_survey_response_ratings?(response) %>
+    <li><b>Averate Rating:</b> <%= response.rating.round(2) %></li>
+  <% end %>
   <li><b>Total Ratings:</b> <%= response.ratings.size %></li>
 </ul>
 

@@ -29,8 +29,8 @@ class SurveyPageControllerTest < ActionController::TestCase
         "new_0.4083156603636907"=>{"newline_delimited_choices"=>"sweet\r\nsour\r\npork-flavored\r\nstale", "private"=>"1", "type"=>"SelectOneQuestion", "label"=>"chips", "position"=>"1"},
         "new_0.19274031862237884"=>{"private"=>"0", "type"=>"ShortTextQuestion", "label"=>"how can we help you?", "position"=>"2"}},
       "rating_enabled"=>"1",
-      "participants_cannot_rate"=>"1",
-      "responses_disabled"=>"1"
+      "participants_may_rate"=>"0",
+      "responses_enabled"=>"0"
     })
 
     assert_redirected_to "_page_action" => "edit"
@@ -44,9 +44,9 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_equal "chips", survey.questions[0].label
     assert_equal ["sweet", "sour", "pork-flavored", "stale"], survey.questions[0].choices
     assert_equal "how can we help you?", survey.questions[1].label
-    assert_equal true, survey.rating_enabled
-    assert_equal true, survey.participants_cannot_rate
-    assert_equal true, survey.responses_disabled
+    assert_equal true, survey.rating_enabled?
+    assert_equal false, survey.participants_may_rate?
+    assert_equal false, survey.responses_enabled?
   end
 
   def test_destroy

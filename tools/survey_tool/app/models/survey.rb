@@ -9,7 +9,8 @@ class Survey < ActiveRecord::Base
   
   serialize :settings
   serialize_default :settings, {:responses_enabled => true,
-    :rating_enabled => false, :participants_can_rate => true}
+    :rating_enabled => false, :participants_may_rate => true, 
+    :ratings_visible => true }
 
   has_many(:questions, :order => :position, :dependent => :destroy,
            :class_name => 'SurveyQuestion')
@@ -25,40 +26,18 @@ class Survey < ActiveRecord::Base
       self.find(:all, :conditions => ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], :include => :ratings, :order => 'ratings.created_at ASC', :limit => count)
     end
   end
-    
-  def rating_enabled() settings[:rating_enabled] end
-  def rating_enabled=(v)
-    settings[:rating_enabled]=(v=='1' ? true : false) end
-  def responses_enabled() settings[:responses_enabled] end
-  def responses_enabled=(v)
-    settings[:responses_enabled]=(v=='1' ? true : false) end
-  def participants_can_rate() settings[:participants_can_rate] end
-  def participants_can_rate=(v)
-    settings[:participants_can_rate]=(v=='1' ? true : false) end
-  alias :rating_enabled? :rating_enabled
-  alias :responses_enabled? :responses_enabled
-  alias :participants_can_rate? :participants_can_rate
-  def responses_disabled() !responses_enabled end
-  alias :responses_disabled? :responses_disabled
-  def participants_cannot_rate() !participants_can_rate end
-  alias :participants_cannot_rate? :participants_cannot_rate
-  def responses_disabled=(v)
-    settings[:responses_enabled]=(v=='1' ? false : true) end
-  def participants_cannot_rate=(v)
-    settings[:participants_can_rate]=(v=='1' ? false : true) end
-    
-  # def respond!(user, values)
-  #   response = SurveyResponse.new(:survey => self, :user => user)
-  #   response.save!
-  #   self.responses << response
-  #   self.save!
-  #   values.each_pair do |q, a|
-  #     question = SurveyQuestion.find(q)
-  #     question.answer!(response, a)
-  #   end
-  #   response
-  # end
+  
+  def self.define_boolean_serialized_attrs(*args)
+    args.each do |attribute|
+      define_method(attribute) {settings[attribute]}
+      define_method("#{attribute}?") {settings[attribute]}
+      define_method("#{attribute}=") {|v| settings[attribute] = v=="1"}
+    end
+  end
 
+  define_boolean_serialized_attrs :rating_enabled, :responses_enabled, 
+    :participants_may_rate, :ratings_visible
+  
   def new_questions_attributes=(question_attributes)
     question_attributes.keys.each do |id|
       if id[0..2] == "new"

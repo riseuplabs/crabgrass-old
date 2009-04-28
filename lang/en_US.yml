@@ -57,6 +57,8 @@ return_link: "Return"
 
 edit: "Edit"
 preview: "Preview"
+private: "Private"
+options: "Options"
 
 discussions: "Discussions"
 tags: "Tags"
@@ -763,10 +765,6 @@ survey_responses_enabled: "Allow responses? If checked, people can take the surv
 survey_rating_enabled: "Allow rating of responses?"
 survey_participants_may_rate: "Allow respondents to rate?"
 survey_ratings_visible: "Allow respondents to see the ratings of others?"
-
-settings: Settings
-private: Private
-
 
 
 ##
