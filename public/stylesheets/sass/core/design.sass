@@ -62,6 +62,8 @@ div#masthead
 div#top_menu
   background-color= !menu_bg_color
   padding-left: 1em
+  border-top= !banner_border_width "solid" 
+  border-color= !banner_border_color
   div.account_links
     float: right
     color: #646360
@@ -134,7 +136,7 @@ div#top_menu
   background= !banner_background
   color= !banner_fg_color
   border-color= !banner_border_color
-  border-width= !banner_border_width
+  border-width= !banner_border_width "0"
   border-style: solid
   img
     border: 1px solid white
