@@ -759,14 +759,13 @@ survey_response_by: "Response by {login}"
 survey_rate_this_response: "Rate This Response"
 survey_your_rating_of_this_response: "Your Rating of This Response"
 
-allow_rating: "Activate the rating system: allow survey response to be rated."
-disallow_participant_rating: "Disable rating for people who have submitted a response."
-disallow_responses: "Disable Responses. You would select this when you want to end the submission process."
-#survey_updated_message: "Saved Your Changes!"
-#response_created_message: "Created a response!"
-#response_updated_message: "Updated your response"
+survey_responses_enabled: "Allow responses? If checked, people can take the survey."
+survey_rating_enabled: "Allow rating of responses?"
+survey_participants_may_rate: "Allow respondents to rate?"
+survey_ratings_visible: "Allow respondents to see the ratings of others?"
+
 settings: Settings
-private: private
+private: Private
 
 
 
