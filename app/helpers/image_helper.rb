@@ -129,7 +129,7 @@ module ImageHelper
         :loading => "replace_class_name(event.target, '#{options[:icon]}_16', 'spinner_icon')",
         :complete => "replace_class_name(event.target, 'spinner_icon', '#{options[:icon]}_16')",
         :with => options[:with]},
-      { :class => "small_icon #{options[:icon]}_16", :id => id }
+      { :class => "small_icon #{options[:icon]}_16" }
     )
   end
 

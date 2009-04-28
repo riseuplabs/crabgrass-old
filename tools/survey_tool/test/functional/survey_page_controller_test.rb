@@ -49,6 +49,14 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_equal true, survey.responses_disabled
   end
 
+  def test_destroy
+    login_as :blue
+    
+    assert_difference 'Survey.count', -1 do
+      post :destroy, :page_id => pages(:survey1).id
+    end
+  end
+  
   protected
   
   def assert_active_tab(tab_text)    

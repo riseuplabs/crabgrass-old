@@ -51,6 +51,8 @@ class SurveyPageController < BasePageController
       may_modify_survey?
     elsif action?(:show)
       current_user.may?(:view,@page)
+    else
+      current_user.may?(:admin,@page)
     end
   end
 
