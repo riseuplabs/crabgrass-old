@@ -1,5 +1,8 @@
 <table class="login"><tr>
   <td class="login"><%= render :partial => 'account/login_form_box' %></td>
-  <td class="login"><%= render :partial => 'account/login_welcome_message' %></td>
+  <td class="login">
+    <h1><%=h "Welcome to {site_title}"[:welcome_title, current_site.title] %></h1>
+    <p><%=h first_with_any(:welcome_login_message.t, :welcome_message.t) %></p>
+  </td>
 </tr></table>
 

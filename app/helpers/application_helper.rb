@@ -21,6 +21,13 @@ module ApplicationHelper
     content_tag(:span, links.compact.join(char), :class => 'link_line')
   end
 
+  # returns the first of the args where any? returns true
+  def first_with_any(*args)
+    for str in args
+      return str if str.any?
+    end
+  end
+  
   ## coverts bytes into something more readable 
   def friendly_size(bytes)
     return unless bytes
