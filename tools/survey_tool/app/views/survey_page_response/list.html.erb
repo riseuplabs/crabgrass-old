@@ -18,7 +18,11 @@
       <td><%= resp.user.login if resp.user_id %></td>
       <td><%= friendly_date resp.created_at %></td>
       <!-- <td><%# friendly_date resp.updated_at %></td> -->
-      <td><%= resp.rating %></td>
+      <% if may_view_survey_response_ratings?(resp) %>
+        <td><%= resp.rating.round(2) %></td>
+      <% else %>
+        <td>&mdash;</td>
+      <% end %>
       <%- questions.each do |question| -%>
       <td>
         <% answer = resp.answers.detect{|a|a.question_id == question.id} %>

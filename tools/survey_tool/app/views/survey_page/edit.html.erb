@@ -1,5 +1,19 @@
 <%= render :partial => 'tabs' %>
-<%= javascript_tag "function UpdateSettingsView() { e = $('participants_can_rate'); if($('rating_enabled').checked) { $('participants_can_rate_label').removeClassName('disabled');e.disabled = false; } else { e.disabled = true; e.checked = false;$('participants_can_rate_label').addClassName('disabled'); }}" %>
+<%#
+  javascript_tag( %Q[
+    function UpdateSettingsView() {
+      e = $('participants_may_rate');
+      if($('rating_enabled').checked) {
+        $('participants_may_rate_label').removeClassName('disabled');
+        e.disabled = false;
+      } else {
+        e.disabled = true;
+        e.checked = false;
+        $('participants_may_rate_label').addClassName('disabled');
+      }
+    }]
+  )
+%>
 <div id="design_questions_container" class="survey_questions_container">
   <div id="add_questions_links_bar">
     <span class="">
@@ -13,25 +27,33 @@
     Description:<br/>
     <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
     
-    <div id="survey_settings">
-      <strong class="caption"><%= "Settings"[:settings] %>:</strong>
-      <br />
-      <%= f.check_box :rating_enabled, :id => 'rating_enabled', 
-          :onChange => "UpdateSettingsView();" %>
-      <%= f.label :rating_enabled, "Allow rating on responses?"[:allow_rating] %>
-      <br />
-      <span id="rating_details">
-	<%= f.check_box :participants_cannot_rate, :id => 'participants_can_rate' %>
-	<%= f.label :participants_cannot_rate, "Deny rating by participants?"[:disallow_participant_rating], :id => 'participants_can_rate_label' %>
-	<br />
-      </span>
-      <%= javascript_tag("UpdateSettingsView();"); %>
-      <%= f.check_box :responses_disabled %>
-      <%= f.label :responses_disabled, "Disable responses?"[:disallow_responses] %>
-    </div>
+    <ul id="survey_settings" class="plain">
+      <li><b><%= "Options"[:options] %>:</b></li>
+      <li><label>
+        <%= f.check_box :responses_enabled %>
+        <%= "Allow participants to create responses?"[:survey_responses_enabled] %>
+      </label></li>      
+      <li><label>
+        <%= f.check_box :rating_enabled, :id => 'rating_enabled', :onChange => "$('rating_details').toggle()" %>
+        <%= "Allow rating of responses?"[:survey_rating_enabled] %>
+      </label></li>
+      <ul id='rating_details' style="<%= "display:none" unless @survey.rating_enabled? %>">
+        <li><label>
+          <%= f.check_box :participants_may_rate, :id => 'participants_may_rate' %>
+          <%= "Allow rating by participants?"[:survey_participants_may_rate] %>         
+        </label></li>
+      </ul>
+      <li><label>
+        <%= f.check_box :ratings_visible, :id => 'ratings_visible' %>
+        <%= "Allow participants to see the ratings of others?"[:survey_ratings_visible] %>         
+      </label></li>
+    </ul>
+    
     <div id="questions">
       <%= render :partial => 'edit_questions' %>
     </div>
+    
+    <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
   <% end %>
 </div>
 

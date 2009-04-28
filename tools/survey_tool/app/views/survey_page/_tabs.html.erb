@@ -41,7 +41,7 @@
           f.tab do |t|
             t.label 'List All Responses'[:survey_list_all]
             t.url page_url(@page, :action => 'response-list')
-            t.selected controller?(:survey_page_response) && action?(:list, :edit, :show) && !id?(my_response.id)
+            t.selected controller?(:survey_page_response) && action?(:list, :edit, :show) && !id?(my_response)
           end
         end
       end

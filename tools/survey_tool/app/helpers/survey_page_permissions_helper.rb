@@ -26,7 +26,7 @@ module SurveyPagePermissionsHelper
       true
     elsif current_user.may?(:edit, @page)
       if current_user.response_for_survey(@survey)
-        @survey.rating_enabled? and @survey.participants_can_rate?
+        @survey.rating_enabled? and @survey.participants_may_rate?
       else
         false
       end
@@ -46,7 +46,7 @@ module SurveyPagePermissionsHelper
       true
     elsif current_user.may?(:edit, @page)
       if current_user.response_for_survey(@survey)
-        @survey.rating_enabled? and @survey.participants_can_rate?
+        @survey.rating_enabled? and @survey.participants_may_rate?
       else
         false
       end
@@ -58,11 +58,9 @@ module SurveyPagePermissionsHelper
   def may_view_survey_response_ratings?(response=nil)
     return false unless logged_in?
 
-    if response and response.user_id == current_user.id
+    if current_user.may?(:admin,@page)
       true
-    elsif response and current_user.rated?(response)
-      true
-    elsif current_user.may?(:admin,@page)
+    elsif @survey.ratings_visible? and current_user.response_for_survey(@survey) 
       true
     else
       false

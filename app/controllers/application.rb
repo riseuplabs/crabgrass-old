@@ -80,8 +80,17 @@ class ApplicationController < ActionController::Base
   helper_method :controller?
 
   # returns true if params[:id] matches the id passed in
+  # the arguments may include the id in the form of an integer,
+  # string, or active record object.
   def id?(*ids)
-    ids.include?(params[:id].to_i)
+    for obj in ids
+      if obj.is_a?(ActiveRecord::Base)
+        return true if obj.id == params[:id].to_i
+      elsif obj.is_a?(Integer) or obj.is_a?(String)
+        return true if obj.to_i == params[:id].to_i
+      end
+    end
+    return false
   end
   helper_method :id?
 
