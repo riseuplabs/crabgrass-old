@@ -50,7 +50,8 @@ class Site < ActiveRecord::Base
   belongs_to :network
   belongs_to :custom_appearance, :dependent => :destroy
   belongs_to :council, :class_name => 'Group'
-
+  belongs_to :super_admin_group, :class_name => 'Group'
+  
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash

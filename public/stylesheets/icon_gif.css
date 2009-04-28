@@ -82,6 +82,9 @@
 .refresh_16 {background-image: url(/images/gif/16/refresh.gif)}
 .right_16 {background-image: url(/images/gif/16/right.gif)}
 .rss_16 {background-image: url(/images/gif/16/rss.gif)}
+.sad_16 {background-image: url(/images/gif/16/sad.gif)}
+.sad_minus_16 {background-image: url(/images/gif/16/sad_minus.gif)}
+.sad_plus_16 {background-image: url(/images/gif/16/sad_plus.gif)}
 .security-medium_16 {background-image: url(/images/gif/16/security-medium.gif)}
 .send_16 {background-image: url(/images/gif/16/send.gif)}
 .settings_16 {background-image: url(/images/gif/16/settings.gif)}
@@ -96,8 +99,10 @@
 .table_16 {background-image: url(/images/gif/16/table.gif)}
 .tag_16 {background-image: url(/images/gif/16/tag.gif)}
 .tags_16 {background-image: url(/images/gif/16/tags.gif)}
+.tiny_minus_16 {background-image: url(/images/gif/16/tiny_minus.gif)}
 .tiny_pencil_16 {background-image: url(/images/gif/16/tiny_pencil.gif)}
 .tiny_pending_16 {background-image: url(/images/gif/16/tiny_pending.gif)}
+.tiny_plus_16 {background-image: url(/images/gif/16/tiny_plus.gif)}
 .tiny_star_16 {background-image: url(/images/gif/16/tiny_star.gif)}
 .tiny_wrench_16 {background-image: url(/images/gif/16/tiny_wrench.gif)}
 .todo_16 {background-image: url(/images/gif/16/todo.gif)}
