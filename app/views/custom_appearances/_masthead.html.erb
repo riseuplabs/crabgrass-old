@@ -1,5 +1,6 @@
-<div class='tab-content tab-area' id="customize_masthead">
+<div class='tab-content tab-area' id="masthead_tab" <%= tab_style 'masthead' %> >
   <% form_for @appearance, :html => { :multipart => true }  do |f| %>
+    <%= input_selected_tab('masthead') %>
     <p> <%= "Upload an image for the masthead. It can't be taller than 80 pixels."[:upload_masthead_image_label] %></p>
     <p><%= display_masthead %></p>
 
