@@ -75,3 +75,23 @@ profile_for_warm:
   stranger: true
   may_see: false
 
+public_profile_for_red:
+  id: 8
+  entity_type: "User"
+  entity_id: 8
+  stranger: true
+  may_see: true
+
+public_profile_for_blue:
+  id: 9
+  entity_type: "User"
+  entity_id: 4
+  stranger: true
+  may_see: true
+
+public_profile_for_orange:
+  id: 10
+  entity_type: "User"
+  entity_id: 5
+  stranger: true
+  may_see: true

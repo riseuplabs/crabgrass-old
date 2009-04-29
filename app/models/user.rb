@@ -126,6 +126,140 @@ class User < ActiveRecord::Base
   ## USER SETTINGS
   ##
 
+  
+  ##
+  ## FEATURED FIELDS
+  #
+  #
+  # There are two ways. featured fields can be set:
+  # a) for a context (like a Site or Group)
+  #    use this for: defining fields from the same models to be different per site on a high-access-level. NOTE: This is semi-useful, as long as there is no site-id for the fields to have
+  #  different branches that are only uniq by the context
+  #
+  # b) for self. that means, there are no extra keys in the cache to separate data
+  #    NOTE: this is, what we use!
+  #
+  #  with context:
+  # {:site1 => {:field1 => {:show => true, required => true, :value => "whatevervalue"}}}
+  #
+  # without context
+  # {field1 => {:show => true, :required => :false, :value => "whateverelsevalue"}}
+  #
+  # They are updated via controller
+
+  # not used in the moment
+  # AVAILABLE_FEATURED_FIELDS = {:profile => [:location,:organization]}
+  
+  # featured_fields_for_context = {:site1 => {:field1 => {:show => true, required => true, :value => "whatevervalue"}}} 
+  # serialized data for performant lookup
+  serialize :featured_fields, Hash
+  serialize_default :featured_fields, {}
+  
+  # prepares us to find serialized data for a given context
+  # context can be:
+  # a Symbol
+  # a String
+  # a Group or Network
+  # a Site
+  def for_context context=nil, &block
+    if context.is_a?(Symbol)
+      con = context
+    elsif context.is_a?(String)
+      con = context.to_s
+    elsif context.kind_of?(Group)
+      con = context.name.to_sym
+    elsif context.is_a?(Site)
+      con = context.network.name.to_sym
+    end
+    con ||= nil
+    block.call(con)
+  end
+  
+
+  # We store featured fields for a context
+  # in a serialized hash and get it back from there
+  #
+  # To get the value, call [:value]
+  def featured_fields_for_context(context=nil)
+    fields=[]
+    for_context(context) do |identifier|
+      if identifier
+        fields = featured_fields[identifier]
+      else
+        fields = featured_fields
+      end
+    end
+    fields 
+  end
+ 
+  
+  # (1) Updating
+  # updates the serialized featured fields store
+  # for the given context
+  #
+  # * takes all the featured-fields, that can be updated
+  # * updates the field data in the cache
+  #
+  def update_featured_fields(data=nil)
+    self.update_attributes(:featured_fields => (data ? data :
+                                                featured_fields.keys).inject({}) { |f,e|
+                             f[e] = get_featured_field_value(e) ; f } )
+  end
+    
+  
+  # (2) Virtual Accessors
+  #     This is used as an alternative to (3)
+  # in case we want more featured fields, we should define a way to define them
+  # such, that the "path" (how to get the data) and the updater are created
+  #
+  # For proposals go: we.r.n/saf/featured_fields
+  def featured_location
+    profiles.public.locations.first
+  end
+  
+  def featured_organization
+    profiles.public.organization
+  end
+  
+  def location
+    featured_fields[:location]
+  end
+
+  def organization
+    featured_fields[:organization]
+  end
+  
+  # (3) Dynamic data access
+  # NOTE: this is not used 
+  #       use it for:
+  #
+  #         * the site-admin can define the fields, that should be featured
+  #           dynamically
+  #
+  #           Therefore you need a method, that creates an accessor to the data
+  #           The Admin can define the 'path' to the data, a example:
+  # 
+  #          {:user => [:location, :public_profile,  :locations, :first}
+  #
+  #          where the first parameter in the array is the name of the virtual field
+  #          and the rest of the array is joined together and evaluated
+  #          to get to the data
+  #
+  # eventually we don't need eval, just trying to get all kinds of relationships
+  # * if we define accessor methods in the model, we don't need it
+  # * if we want to store the information, how to access the data in
+  #   an HASH like the AVAILABLE_FEATURED_FIELD from above, we need it
+  def get_featured_field_value(query)
+    self.method("featured_#{query}").call
+   # value = eval("#{self}.#{query.to_s}")
+  end
+
+
+  
+  #
+  # SETTINGS
+  
+  
   has_one :setting, :class_name => 'UserSetting', :dependent => :destroy
 
   # allow us to call user.setting.x even if user.setting is nil
@@ -169,18 +303,17 @@ class User < ActiveRecord::Base
   def destroy_requests
     Request.destroy_for_user(self)
   end
-
+  
   # returns the rating object that this user created for a rateable
   def rating_for(rateable)
     rateable.ratings.by_user(self).first
   end
-  
+
   # returns true if this user rated the rateable
   def rated?(rateable)
     return false unless rateable
     rating_for(rateable) ? true : false
   end
-    
 
   ##
   ## PERMISSIONS
