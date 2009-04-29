@@ -25,8 +25,12 @@
       <% end %>
       <%- questions.each do |question| -%>
       <td>
-        <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
-        <%= answer && answer.value.any? ? link_to(truncate(answer.value), url) : '&nbsp;' %>
+        <%- if may_view_survey_question?(resp, question) -%>
+          <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
+          <%= answer && answer.value.any? ? link_to(truncate(answer.value), url) : '&nbsp;' %>
+        <%- else -%>
+          &mdash;
+        <%- end -%>
       </td>
       <%- end -%>
     </tr>

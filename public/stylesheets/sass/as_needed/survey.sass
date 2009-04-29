@@ -1,8 +1,6 @@
 
 
 #add_questions_links_bar
-  margin: 1em
-  margin-bottom: 2em
   .label
     color= !add_new_item_color
   span.link_background
@@ -24,6 +22,10 @@
       line-height: 3em
 
 .survey_questions_container
+  h2
+    border-bottom: 2px dotted #ccc
+  blockquote
+    margin: 1em
   #survey_settings
     margin-top: 0.5em
     background-color= !draggable_item_bg_color
@@ -98,4 +100,16 @@
   #response
     .answers
       margin: 1em
+
+table.permissions
+  width: 100%
+  tr.odd
+    background: #f6f6f6
+  tr.even
+    background: #eee
+  td, th
+    text-align: center
+    border-bottom: 1px solid #ccc
+    &.label
+      text-align: right
 

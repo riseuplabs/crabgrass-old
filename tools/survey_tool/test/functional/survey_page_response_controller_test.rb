@@ -112,7 +112,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     login_as :blue
     page = pages(:survey1)
     survey = page.data
-    survey.rating_enabled = "1"
+    survey.admin_may_rate = "1"
     survey.save
     
     get :rate, :page_id => page.id
@@ -152,7 +152,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     login_as :blue
     page = pages("survey1")
     survey = page.data
-    survey.rating_enabled = "1"
+    survey.admin_may_rate = "1"
     survey.save
     
     # do some ratings

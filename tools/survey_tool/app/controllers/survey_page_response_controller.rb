@@ -113,8 +113,10 @@ class SurveyPageResponseController < BasePageController
 
     if action?(:new, :make)
       may_create_survey_response?
-    elsif action?(:destroy, :update, :edit)
+    elsif action?(:update, :edit)
       may_modify_survey_response?(@response)
+    elsif action?(:destroy, :edit)
+      may_destroy_survey_response?(@response)
     elsif action?(:show)
       may_view_survey_response?(@response)
     elsif action?(:list)

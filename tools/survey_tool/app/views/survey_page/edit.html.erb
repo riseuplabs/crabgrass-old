@@ -15,44 +15,62 @@
   )
 %>
 <div id="design_questions_container" class="survey_questions_container">
-  <div id="add_questions_links_bar">
-    <span class="">
-      <span class="label plus_16 small_icon">Add Questions:</span>
-      <%= add_questions_links %>
-    </span>
-  </div>
+
   <% form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f| %>
     <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
     
-    Description:<br/>
-    <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
-    
-    <ul id="survey_settings" class="plain">
-      <li><b><%= "Options"[:options] %>:</b></li>
-      <li><label>
-        <%= f.check_box :responses_enabled %>
-        <%= "Allow participants to create responses?"[:survey_responses_enabled] %>
-      </label></li>      
-      <li><label>
-        <%= f.check_box :rating_enabled, :id => 'rating_enabled', :onChange => "$('rating_details').toggle()" %>
-        <%= "Allow rating of responses?"[:survey_rating_enabled] %>
-      </label></li>
-      <ul id='rating_details' style="<%= "display:none" unless @survey.rating_enabled? %>">
-        <li><label>
-          <%= f.check_box :participants_may_rate, :id => 'participants_may_rate' %>
-          <%= "Allow rating by participants?"[:survey_participants_may_rate] %>         
-        </label></li>
-      </ul>
-      <li><label>
-        <%= f.check_box :ratings_visible, :id => 'ratings_visible' %>
-        <%= "Allow participants to see the ratings of others?"[:survey_ratings_visible] %>         
-      </label></li>
-    </ul>
-    
+    <h2 class="alert"><%= "Description".t %></h2>
+    <blockquote>
+      <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
+    </blockquote>
+        
+    <h2 class="alert"><%= "Permissions".t %></h2>
+    <blockquote>
+    <table class="permissions">
+      <tr>
+        <th>&nbsp;</th>
+        <td><span class="small_icon wrench_16"><%= "Coordinators".t %></span></td>
+        <td><span class="small_icon pencil_16"><%= "Participants".t %></span></td>
+        <td><span class="small_icon magnifier_16"><%= "Viewers".t %></span></td>
+      </tr>
+      <tr class="odd">
+        <td class="label"><%="May create response?"[:survey_may_create_response]%></td>
+        <td><%= check_box_tag("", "", true, {:disabled => true}) %></td>
+        <td><%= f.check_box :edit_may_create %></td>
+        <td><%= f.check_box :view_may_create %></td>
+      </tr>
+      <tr class="even">
+        <td class="label"><%="May see responses?"[:survey_may_see_responses]%></td>
+        <td><%= check_box_tag("", "", true, {:disabled => true}) %></td>
+        <td><%= f.check_box :edit_may_see_responses %></td>
+        <td><%= f.check_box :view_may_see_responses %></td>
+      </tr>
+      <tr class="odd">
+        <td class="label"><%="May rate responses?"[:survey_may_rate]%></td>
+        <td><%= f.check_box :admin_may_rate %></td>
+        <td><%= f.check_box :edit_may_rate %></td>
+        <td><%= f.check_box :view_may_rate %></td>
+      </tr>
+      <tr class="even">
+        <td class="label"><%="May see ratings?"[:survey_may_see_ratings]%></td>
+        <td><%= check_box_tag("", "", true, {:disabled => true}) %></td>
+        <td><%= f.check_box :edit_may_see_ratings %></td>
+        <td><%= f.check_box :view_may_see_ratings %></td>
+      </tr>
+    </table>
+    </blockquote>
+
+    <h2 class="alert"><%= "Questions"[:survey_questions] %></h2>
+    <blockquote>
+    <div id="add_questions_links_bar">
+      <span class="label plus_16 small_icon">Add:</span>
+      <%= add_questions_links %>
+    </div>
     <div id="questions">
       <%= render :partial => 'edit_questions' %>
     </div>
-    
+    </blockquote>
+
     <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
   <% end %>
 </div>
