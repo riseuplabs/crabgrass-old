@@ -18,4 +18,16 @@ module CustomAppearancesHelper
       ""
     end
   end
+
+  def selected_tab?(name)
+    @selected_tab == name
+  end
+
+  def tab_style(name)
+    selected_tab?(name) ? "" : "style='display: none'"
+  end
+
+  def input_selected_tab(name)
+    hidden_field_tag 'tab', name
+  end
 end

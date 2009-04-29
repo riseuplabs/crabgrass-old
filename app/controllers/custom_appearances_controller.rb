@@ -3,6 +3,7 @@ class CustomAppearancesController < ApplicationController
   javascript :extra
   helper ColorPickerHelper
 
+  before_filter :view_setup, :except => [:favicon, :available]
   before_filter :login_required, :except => [:favicon]
   prepend_before_filter :fetch_data, :except => [:favicon]
 
@@ -20,7 +21,7 @@ class CustomAppearancesController < ApplicationController
       flash_message :object => @appearance
     end
 
-    redirect_to :action => 'edit'
+    redirect_to :action => 'edit', :tab => @selected_tab
   end
 
   def available
@@ -71,5 +72,9 @@ protected
     end
 
     return false
+  end
+
+  def view_setup
+    @selected_tab = params['tab'] || 'masthead'
   end
 end

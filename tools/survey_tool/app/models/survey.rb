@@ -8,9 +8,7 @@
 class Survey < ActiveRecord::Base
   
   serialize :settings
-  serialize_default :settings, {:responses_enabled => true,
-    :rating_enabled => false, :participants_may_rate => true, 
-    :ratings_visible => true }
+  serialize_default :settings, {:edit_may_create => true, :edit_may_see_responses => true}
 
   has_many(:questions, :order => :position, :dependent => :destroy,
            :class_name => 'SurveyQuestion')
@@ -35,9 +33,12 @@ class Survey < ActiveRecord::Base
     end
   end
 
-  define_boolean_serialized_attrs :rating_enabled, :responses_enabled, 
-    :participants_may_rate, :ratings_visible
-  
+  define_boolean_serialized_attrs :admin_may_rate,
+    :edit_may_create, :edit_may_see_responses,
+    :edit_may_rate,   :edit_may_see_ratings,
+    :view_may_create, :view_may_see_responses,
+    :view_may_rate,   :view_may_see_ratings
+      
   def new_questions_attributes=(question_attributes)
     question_attributes.keys.each do |id|
       if id[0..2] == "new"
