@@ -6,13 +6,11 @@ These variables are used to override SASS constants defined in public/stylesheet
 
 create_table "custom_appearances", :force => true do |t|
   t.text     "parameters"
-  t.integer  "parent_id",          :limit => 11
+  t.integer  "parent_id",         :limit => 11
   t.datetime "created_at"
   t.datetime "updated_at"
-  t.integer  "admin_group_id",     :limit => 11
-  t.integer  "masthead_asset_id",  :limit => 11
-  t.string   "welcome_text_title"
-  t.text     "welcome_text_body"
+  t.integer  "masthead_asset_id", :limit => 11
+  t.integer  "favicon_id",        :limit => 11
 end
 
 =end
