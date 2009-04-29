@@ -28,8 +28,8 @@ email:
 sites:
 
 # bound to localhost:
-#  - name: site1
-#    admin_group: animals
+  - name: site1
+    admin_group: animals
 
 # bound to test.host
   - name: site2
