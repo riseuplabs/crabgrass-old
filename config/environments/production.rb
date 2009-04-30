@@ -12,7 +12,7 @@ config.action_controller.consider_all_requests_local = true
 ##
 
 # set cookies to 'secure'; prevent some kinds of session-stealing attacks
-Crabgrass::Config.https_only = true
+Crabgrass::Config.https_only = false
 
 ##
 ## CACHING

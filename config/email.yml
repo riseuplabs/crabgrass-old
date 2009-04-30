@@ -6,15 +6,15 @@
 #
 
 production:
-#  delivery_method: :sendmail
-  delivery_method: :smtp
-  smtp_settings:
-    domain: localhost
-    address: mail.riseup.net
-    port: 587
-    authentication: :plain
-    user_name: "xxxxxxxxx"
-    password: "xxxxxxxxx"
+  delivery_method: :sendmail
+#  delivery_method: :smtp
+#  smtp_settings:
+#    domain: localhost
+#    address: mail.riseup.net
+#    port: 587
+#    authentication: :plain
+#    user_name: "xxxxxxxxx"
+#    password: "xxxxxxxxx"
   
 development:
 #  delivery_method: :sendmail
