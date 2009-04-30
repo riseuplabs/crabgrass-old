@@ -1,6 +1,8 @@
 <% 
    current_access_users = []
+   current_access_users += @page.contributors
    @page.groups.each {|g| current_access_users += g.users }
+   current_access_users.uniq!
 %>
 
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
