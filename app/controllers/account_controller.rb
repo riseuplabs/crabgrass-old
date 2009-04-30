@@ -1,7 +1,6 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
-  javascript 'account', :action => :signup
 
   before_filter :view_setup
   skip_before_filter :verify_authenticity_token, :only => :login

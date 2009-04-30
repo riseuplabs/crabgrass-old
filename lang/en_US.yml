@@ -50,6 +50,7 @@ add_button: "Add"
 cancel_button: "Cancel"
 no_search_results: "No Results"
 empty_results: "None"
+unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
 details_link: "Details"
@@ -133,10 +134,8 @@ forgot_password_link: "I forgot my password"
 signup_info: Choose your login name and your password then click "%s"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
-signup_confirm_password: "Confirm Password"
 login_name: "Login name"
 signup_success: "Registration successful"
-signup_password: "Your Password"
 logout_success: "Goodbye"
 logout_success_message: "You have been logged out."
 signup_button: "Sign up"
@@ -146,7 +145,6 @@ login_button: "Log in"
 login: "Login"
 signup_title: "Create Your Account"
 signup_email: "Your Email"
-login_password: "Password"
 csrf_error_message: |
   Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
 
@@ -206,6 +204,29 @@ usage_agreement_text: |
   The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
   
   If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+
+##
+## PASSWORD
+## 
+
+# seems like some duplication here!
+password: "Password"
+password_confirmation: "Password Confirmation"
+signup_confirm_password: "Confirm Password"
+login_password: "Password"
+signup_password: "Your Password"
+
+# password strength messages:
+password_ok: "is OK."
+password_error_default: "is not strong enough."
+password_error_username: "is no good, it is based on your username."
+password_error_too_short: "is no good, it is too short."
+password_error_whitespace: "is no good, it is all whitespace."
+password_error_too_similar: "is no good, it does not contain enough different characters."
+password_error_too_simple: "is no good, it is too simplistic or predictable." 
+password_error_too_common: "is no good, it is based on a dictionary word."
+password_error_confirmation: "does not match password confirmation."
+
 
 ##
 ## ACTIVITIES
@@ -334,8 +355,6 @@ display_name: Display name
 email: Email
 language: Language
 time_zone: Time Zone
-password: Password
-password_confirmation: Password confirmation
 set_status_messsage: What are you doing right now?
 
 votes: votes
@@ -492,7 +511,6 @@ Admin: Admin
 Founded: Founded
 Language: Language
 not_set: not set
-unknown: unknown
 edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups

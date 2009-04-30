@@ -1,0 +1,18 @@
+This mod will enforce good passwords using cracklib. 
+
+It uses ajax to connect to the server and test the password as the user types it.
+
+For this to work, cracklib runtime must be installed (in particular, the executable 'cracklib-check' must be in the path).
+
+On debian:
+
+  sudo aptitude install cracklib-runtime
+
+Also, you should install some dictionaries. These can then be converted into
+cracklib wordlists by running update-cracklib.
+
+  sudo aptitude install wamerican wbrazilian wspanish wgerman wfrench
+  sudo update-cracklib
+
+TODO: use the gem rubycracklib instead, if it installed.
+

@@ -25,12 +25,6 @@ FORBIDDEN_NAMES = %w(account admin assets avatars chat calendar calendars contac
 # a time to use when displaying recent records
 RECENT_SINCE_TIME = 2.weeks.ago.freeze
 
-# This is the time in years a password should hold for a brute force attack at
-# minimum, assuming 1000 attempts per second.
-unless defined? MIN_PASSWORD_STRENGTH
- MIN_PASSWORD_STRENGTH = 2
-end
-
 begin
   # get a list of possible translations, ones there is a file for.
   possible = Dir.glob([RAILS_ROOT,'lang','*.yml'].join('/')).collect{ |file|
@@ -48,4 +42,3 @@ rescue Exception
   # something went wrong.
   LANGUAGES = []
 end
-
