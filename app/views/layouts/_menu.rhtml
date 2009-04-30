@@ -21,12 +21,12 @@
   </li>
 
   <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
-    <span><%= link_to_active "Groups"[:menu_groups], groups_url, @active_tab == :groups %></span>
+    <span><%= link_to_active "Groups"[:menu_groups], groups_url(:action => :my), @active_tab == :groups %></span>
   </li>
 
   <%- if current_site.has_networks? -%>
     <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-      <span><%= link_to_active "Networks"[:menu_networks], networks_url, @active_tab == :networks %></span>
+      <span><%= link_to_active "Networks"[:menu_networks], networks_url(:action => :my), @active_tab == :networks %></span>
     </li>
   <%- end -%>
 

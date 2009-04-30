@@ -1,0 +1,10 @@
+<% @title_box = content_tag :h1, 'My Networks'[:my_networks] -%>
+
+<%- if @networks.any? -%>
+  <%= pagination_links(@networks) %>
+  <%= render :partial => 'groups/group', :collection => @networks, :locals => { :show_committees => true } %>
+  <%= pagination_links(@networks) %>
+<%- else -%>
+  <%= 'You have no networks'[:you_have_no_networks] %>
+<%- end -%>
+

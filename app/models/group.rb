@@ -70,6 +70,10 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
+  named_scope :all_networks_for, lambda { |user|
+    {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
+  }
+
   named_scope :alphabetized, lambda { |letter|
     opts = {
       :order => 'groups.full_name ASC, groups.name ASC'
