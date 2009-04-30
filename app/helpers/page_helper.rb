@@ -200,9 +200,9 @@ module PageHelper
     elsif column == :title
       page_list_title(page, column, participation)
     elsif column == :updated_by or column == :updated_by_login
-      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
+      page.updated_by_login ? link_to_user(page.updated_by_login)+"(#{page.updated_by_login.location} - #{page.updated_by_login.organization})" : '&nbsp;'
     elsif column == :created_by or column == :created_by_login
-      page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
+      page.created_by_login ? link_to_user(page.created_by_login)+" (#{page.updated_by_login.location} - #{page.updated_by_login.organization})" : '&nbsp;'
     elsif column == :updated_at
       friendly_date(page.updated_at)
     elsif column == :created_at

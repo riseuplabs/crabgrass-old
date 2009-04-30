@@ -130,12 +130,22 @@ class User < ActiveRecord::Base
   ##
   ## FEATURED FIELDS
   #
-  # Featured Fields are set by a context, e.g. a Site or a Group
-  # These fields are stored as Hash like this one:
   #
+  # There are two ways. featured fields can be set:
+  # a) for a context (like a Site or Group)
+  #    use this for: defining fields from the same models to be different per site on a high-access-level. NOTE: This is semi-useful, as long as there is no site-id for the fields to have
+  #  different branches that are only uniq by the context
+  #
+  # b) for self. that means, there are no extra keys in the cache to separate data
+  #    NOTE: this is, what we use!
+  #
+  #  with context:
   # {:site1 => {:field1 => {:show => true, required => true, :value => "whatevervalue"}}}
   #
-  # They are updated by the context model
+  # without context
+  # {field1 => {:show => true, :required => :false, :value => "whateverelsevalue"}}
+  #
+  # They are updated via controller
 
   # not used in the moment
   # AVAILABLE_FEATURED_FIELDS = {:profile => [:location,:organization]}
@@ -143,6 +153,7 @@ class User < ActiveRecord::Base
   # featured_fields_for_context = {:site1 => {:field1 => {:show => true, required => true, :value => "whatevervalue"}}} 
   # serialized data for performant lookup
   serialize :featured_fields, Hash
+  serialize_default :featured_fields, {}
   
   # prepares us to find serialized data for a given context
   # context can be:
@@ -169,7 +180,8 @@ class User < ActiveRecord::Base
   # in a serialized hash and get it back from there
   #
   # To get the value, call [:value]
-  def featured_fields_for_context(context)
+  def featured_fields_for_context(context=nil)
+    fields=[]
     for_context(context) do |identifier|
       if identifier
         fields = featured_fields[identifier]
@@ -180,7 +192,6 @@ class User < ActiveRecord::Base
     fields 
   end
  
-    
   
   # (1) Updating
   # updates the serialized featured fields store
@@ -188,33 +199,31 @@ class User < ActiveRecord::Base
   #
   # * takes all the featured-fields, that can be updated
   # * updates the field data in the cache
-  # * but only if the site wants it so
-  # * if not, the cache gets cleaned
   #
-  def update_featured_fields(context,data)
-    for_context(context) do |identifier|
-      featured_fields.dup[identifier].each do |field,set|
-        if context.featured_fields.keys.include?(field)
-          set[:value] = get_featured_field_value(field) # if it's still featured, we update it
-        else
-          featured_fields[identifier].delete # if it's not featured anymore, we delete it
-        end    
-      end  
-    end
-    save
+  def update_featured_fields(data=nil)
+    self.update_attributes(:featured_fields => (data ? data :
+                                                featured_fields.keys).inject({}) { |f,e|
+                             f[e] = get_featured_field_value(e) ; f } )
   end
+    
   
   # (2) Virtual Accessors
   #     This is used as an alternative to (3)
   # in case we want more featured fields, we should define a way to define them
   # such, that the "path" (how to get the data) and the updater are created
   #
-  # For proposals see: we.r.n/saf/featured_fields
+  # For proposals go: we.r.n/saf/featured_fields
+  def featured_location
+   profiles.public.locations.first
+  end
+  def featured_organization
+   profiles.public.organization
+  end
   def location
-    self.public_profile.location
+     featured_fields[:location]
   end
   def organization
-    self.public_profile.organization
+    featured_fields[:organization]
   end
   
   # (3) Dynamic data access
@@ -238,7 +247,7 @@ class User < ActiveRecord::Base
   # * if we want to store the information, how to access the data in
   #   an HASH like the AVAILABLE_FEATURED_FIELD from above, we need it
   def get_featured_field_value(query)
-   self.method(query).call
+    self.method("featured_#{query}").call
    # value = eval("#{self}.#{query.to_s}")
   end
 

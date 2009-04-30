@@ -52,6 +52,7 @@ class Site < ActiveRecord::Base
   serialize :available_page_types, Array
   serialize :evil, Hash
   
+  serialize_default :featured_fields, {}
 
   cattr_accessor :current
 
@@ -67,6 +68,7 @@ class Site < ActiveRecord::Base
 #
 # show's default
   serialize :featured_fields, Hash
+  serialize_default :featured_fields, {}
   after_save :update_featured_fields
   
   
@@ -77,17 +79,17 @@ class Site < ActiveRecord::Base
 # In the moment it's bound to the featured-fields functionality
 # that's boring. :)
   def update_featured_fields_as_context(item,data)
-    items = self.users if item == :user
+    items = self.users if(item == :user || item == nil)
     if items
       items.each do |item|
-        item.update_featured_fields(self,data) if item.respond_to?(:update_featured_fields)
-      end    
-    end  
-  end  
+        item.update_featured_fields(data) if item.respond_to?(:update_featured_fields)
+      end
+    end
+  end
   
   # calls the related model to update its featured fields
   def update_featured_fields
-    data = featured_fields
+    data = featured_fields.keys
     update_featured_fields_as_context(:user,data)
   end
   
@@ -101,9 +103,20 @@ class Site < ActiveRecord::Base
     default_data = { :required => false, :show => true}
     data.each do |field,options|
       options=default_data.merge(options)
-      self.featured_fields[field] = options
+      featured_fields[field] = options
     end
     save
+  end
+  
+  # returns the featured fields for the user that correspond to the (current) site configuration
+  def get_featured_fields_for_user(user)
+    fields = { }
+    # note, we give nil here to demonstrate, that also the current site or a group
+    # could be given as context to separate cached data
+    user.featured_fields_for_context(nil).each do |field,value|
+      fields[field] = value if (self.featured_fields[field] && self.featured_fields[field][:show])
+    end
+    return fields
   end
   
   ##

@@ -53,7 +53,7 @@ Order of profile presidence (user sees the first one that matches):
 
 Applies to both groups and users: may_see, may_see_groups
 
-Applies to sers only: may_see_contacts, may_request_contact, may_pester
+Applies to users only: may_see_contacts, may_request_contact, may_pester
 
 Applies to groups only: may_see_committees, may_see_networks, may_see_members,
   may_request_membership, membership_policy
@@ -66,7 +66,10 @@ class Profile < ActiveRecord::Base
 
   belongs_to :language
 
-  after_save { |record| record.user.update_featured_fields()}
+  after_save :update_featured_fields
+  def update_featured_fields
+    self.user.update_featured_fields if self.entity_type == "User"
+  end
   
   ### relationship to user or group #########################################
   

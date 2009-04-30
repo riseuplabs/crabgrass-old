@@ -524,6 +524,7 @@ ActiveRecord::Schema.define(:version => 20090423143227) do
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
+    t.text    "featured_fields"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -730,6 +731,7 @@ ActiveRecord::Schema.define(:version => 20090423143227) do
     t.binary   "tag_id_cache"
     t.string   "language",                  :limit => 5
     t.binary   "admin_for_group_id_cache"
+    t.text     "featured_fields"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

@@ -19,19 +19,12 @@ class ProfileController < ApplicationController
       
       @profile.save_from_params params['profile']
       if @profile.valid?
-        update_featured_fields(@user)
         flash_message :success => "Your profile has been saved."[:profile_saved]
         redirect_to :controller => 'profile', :action => 'edit', :id => @profile.type
       end
     end
   end
   
-  
-  # this is like a dummy and should be replaced by a better way
-  # to find out, what models have a featured-fields-relation on this model
-  def update_featured_fields model
-      model.classify.update_featured_fields(nil)
-  end
   
   # ajax
   def add_location
