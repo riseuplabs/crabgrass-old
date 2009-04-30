@@ -137,25 +137,43 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     @group.reload
     assert @group.may?(:admin,@group_page), 'the group should still have :admin-access'
     assert @group_user.may?(:admin,@group_page), 'the user should still have :admin-acces'
+  end
+  
+  def test_something_else
+    @login = login_as :red
+    assert_equal @login, 8
     
     # 2. GroupParticipation with :edit access exist. UserParticipation with admin access is requested
     # change the groups access to level :edit
+    
+    @group = groups(:rainbow)
+    @group_page = @group.pages.first
+    @group_user = users(:green)
+    
+    @user = users(:red)
+    
+    assert @user.may?(:admin,@group_page)
+    
+    assert_share_with(@group_page,@user,:admin)
+    
     xhr :post, :update , { :page_id => @group_page.id, :recipients => { @group.name.to_sym => { :access => :edit } }, :share => true }
-    login_as :purple
+
+
     @group.reload
     @group_page.reload
     assert !@group.may?(:admin,@group_page), 'the group should have admin access no longer'
     # we need a different group-user who has not yet a UserParticipation for this page
-    @group_user = users(:green)
+    @group_user = users(:purple)
     # the user should exist, be a member of rainbow, have :edit but no :admin access
-    assert @group_user, 'user green should exist'
+    assert @group_user, 'user blue should exist'
     assert @group_user.member_of?(@group)
     assert !@group_page.users.include?(@group_user)
     assert @group_user.may?(:edit,@group_page)
     assert !@group_user.may?(:admin,@group_page)
     # grant admin access to this individual user who is also a member of the group
     assert_share_with(@group_page,@group_user,:admin)
-        @group_user.reload
+    #raise @group_page.users.inspect
+    @group_user.reload
     @group_page.reload
     #raise @group_page.users.inspect
     assert @group_user.may?(:admin,@group_page), 'the user should now have admin access to the group'
@@ -163,6 +181,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
   
   # asserts both, adding the recipient to the recipient list, and then actually sharing the page
   def assert_share_with(page,recipient,access=:admin,success=true)
+    flash = nil
     # get the right name for the recipient (either name or login)
     recipient_name = recipient.kind_of?(Group) ? recipient.name : recipient.login
     # first add the recipient to the recipients list...

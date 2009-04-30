@@ -63,7 +63,7 @@ class BasePage::ShareController < ApplicationController
         flash_message :error => 'no such name'[:no_such_name]
       elsif !@recipient.may_be_pestered_by?(current_user)
         flash_message :error => 'you may not pester'[:you_may_not_pester]
-      elsif @recipient.participations.find_by_page_id(@page.id)
+      elsif (upart = @recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
         flash_message :error => 'a participation for this user / group already exists'[:participation_already_exists]
       end
       render :partial => 'base_page/share/add_recipient'
