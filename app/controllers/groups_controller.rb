@@ -26,8 +26,6 @@ class GroupsController < ApplicationController
 
   def my
     @groups = current_user.groups.visible_on(current_site).alphabetized('').paginate(:all, :page => params[:page])
-    @groups.each {|g| g.display_name = g.parent.display_name + "+" + g.display_name if g.committee?}
-    ## ^^^ I THINK THIS IS A HORRIBLE AND HACKY WAY TO DO THIS -elijah
   end
 
   # login required
