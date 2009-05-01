@@ -55,7 +55,7 @@ class SurveyResponse < ActiveRecord::Base
 
   def validate_associated_records_for_answers
     answers.each do |answer|
-      label = "'" + truncate(answer.question.label) + "'"
+      label = "'%s'" % truncate(answer.question.label)
       unless answer.valid?
         answer.errors.each {|attr, msg| self.errors.add(label, msg)}
       end
