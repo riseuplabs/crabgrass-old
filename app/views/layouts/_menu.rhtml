@@ -16,18 +16,24 @@
     </li>    
   <%- end -%>
 
+  <%# for now, i am disabling these tabs when not logged in. why? because
+      the controllers currently bomb out in bad ways if you are not logged in. %>
+  <%- if logged_in? -%>
   <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
     <span><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
   </li>
 
   <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
-    <span><%= link_to_active "Groups"[:menu_groups], groups_url(:action => :my), @active_tab == :groups %></span>
+    <% url = logged_in? ? groups_url(:action => :my) : groups_url %>
+    <span><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %></span>
   </li>
 
   <%- if current_site.has_networks? -%>
     <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-      <span><%= link_to_active "Networks"[:menu_networks], networks_url(:action => :my), @active_tab == :networks %></span>
+      <% url = logged_in? ? networks_url(:action => :my) : networks_url %>
+      <span><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
     </li>
+  <%- end -%>
   <%- end -%>
 
   <%- if logged_in? and current_site.chat? -%>
