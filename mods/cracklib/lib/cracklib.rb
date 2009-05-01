@@ -12,7 +12,13 @@ module Cracklib
       IO.popen(CRACKLIB_COMMAND, "w+") do |pipe|
         pipe.puts password
         pipe.close_write
-        pipe.gets.gsub(/^#{Regexp.escape(password)}: /,'').chomp
+        response = pipe.gets.chomp
+        if response == "enter potential passwords, one per line..."
+          response = pipe.gets.chomp
+        end
+        return_str = response.gsub(/^#{Regexp.escape(password)}: /,'')
+        return_str = "OK" if return_str == "ok"
+        return return_str
       end
     end
   end    
@@ -24,6 +30,7 @@ module Cracklib
     "OK" => :password_ok,
     BASED_ON_USERNAME => :password_error_username,
     "it is WAY too short" => :password_error_too_short,
+    "it's WAY too short" => :password_error_too_short,
     "it is too short" => :password_error_too_short,
     "it is all whitespace" => :password_error_whitespace,
     "it does not contain enough DIFFERENT characters" => :password_error_too_similar,
