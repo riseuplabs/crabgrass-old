@@ -57,8 +57,8 @@ module PageExtension::Index
     #  * The tag must be CGI url escaped so that special characters are not in the
     #    fulltext index. The fulltext matching does not work on characters like
     #    !@#$%^&()=*.
-    #  * space and '.' are not allowed, we replace with '_'. (The character + is not
-    #    allowed and this is how CGI.escape encodes spaces).
+    #  * space, '+', and '.' are not allowed, we replace with '_'. (The + 
+    #    character is not allowed since this is how CGI.escape encodes spaces).
     #  * The character % is not allowed, so we replace it with 'QQ'. This is not
     #    ideal, but it seems sufficiently unlikely that someone will tag something
     #    QQ.
@@ -72,7 +72,7 @@ module PageExtension::Index
     #
     def searchable_tag_list(tags)
       tags.map do |s|
-        s = s.gsub(/[\s\.]/, '_') # characters that are skipped by CGI.escape
+        s = s.gsub(/[\s\.\+]/, '_') # characters that should be skipped by CGI.escape
         s = CGI.escape(s)
         s = s.gsub('%', 'QQ')
         ("%4s" % s).gsub(/\s|^(\d)/,'_\1')
