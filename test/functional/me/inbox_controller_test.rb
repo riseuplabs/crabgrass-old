@@ -72,7 +72,11 @@ class InboxControllerTest < Test::Unit::TestCase
     
     # testing all pages with all page states    
     #todo: this should be dynamically loaded from the sites available pages
-    page_types = ["asset","video","discussion","gallery","message","vote","survey","task","wiki"]
+    page_types = Site.first.available_page_types.collect do |page_class_string|
+      page_class = Page.class_name_to_class(page_class_string)
+      page_group = page_class.class_group.first
+    end
+    
     #todo: this also should maybe loaded dynamically
     page_states = ["unread","pending","starred"]
     page_types.each do |type|
