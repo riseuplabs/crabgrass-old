@@ -1,7 +1,3 @@
-module LinkHelper
-
-# http://www.digital-web.com/articles/push_my_button/
-
 #
 # Here lies many helpers for making links and buttons.
 #
@@ -36,27 +32,42 @@ module LinkHelper
 # be anything if using translations). Normally, setting :name does not work for
 # ajax forms. This is changed with a modification of the default submit_tag
 # function. All the submit helpers accept the name parameter.
+#
 # 
 # Creating get requests
 # ---------------------
 # 
-# link_button
-# it looks like a button, but it is just a link that creates a get request.
-# 
-# link_to
+# link_to (built-in)
 # this is the built in function for links, no change here.
 #
-# 
-# Creating post requests
-# 
-# post_button
-# creates a button that creates a post request.
-# 
-# post_to
-# creates a link that will send a post. This is just the same
-# as link_to with :method => 'post'
+# button_to (built-in)
+# pass method get to options.
+# eg. button_to('label', {:action => 'xxx', :method => 'get'}, {:class => 'whatever'})
+#  
 #
-  
+# Creating post requests
+# ------------------------
+# 
+# button_to (built in)
+# creates a button that creates a post request.
+#
+# link_to (built-in)
+# pass with html_options {:method => 'post'}
+# eg: link_to 'destroy', {:action => 'destroy'}, {:method => 'post'}
+#
+#
+# Creating ajax requests
+# -----------------------
+#
+# link_to_remote (built in)
+# 
+# remote_form_for + submit_tag (built in)
+#
+# button_to_remote (not yet written)
+# would work like link_to_remote, but would create a button 
+# (by using remote_form_for and submit_tag)
+#
+module LinkHelper
   
   ### SUBMITS ###
 
@@ -73,43 +84,18 @@ module LinkHelper
 ='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{
 label}</a></span>)    
   end
-
-  ### BUTTONS ###
-  
-  def link_button(label,options={},htmloptions={})
-    accesskey = shortcut_key label
-    url = url_for options
-    aclass = htmloptions[:class]
-    %Q[<span class="button"><a href='#{url}' class='button #{aclass}' 
-accesskey='#{accesskey}'>#{label}</a></span>]
-  end
-    
-  def post_button(label,options={},html_options={})
-    accesskey = shortcut_key label
-    a = link_to(label, options, {:post => true, :class=>'button', :accesskey=>
-accesskey}.merge(html_options) )
-    "<span class='button'>#{a}</span>"
-  end
   
   ### AJAX ###
-  
-  def function_button(label, *args, &block)
-    accesskey = shortcut_key label
-    args << {:class => 'button', :accesskey=> accesskey}
-    link_to_function(label, *args, &block)
-  end
+ 
+  # def button_to_remote()
+  #  to be written
+  # end 
   
   ### UTIL ###
   
   def shortcut_key(label)
     label.gsub!(/\[(.)\]/, '<u>\1</u>')
     /<u>(.)<\/u>/.match(label).to_a[1]
-  end
-  
-  def post_to(label, options={}, html_options={})
-    accesskey = shortcut_key label
-    link_to(label, options, {:method => :post, :accesskey => accesskey}.merge(
-html_options))
   end
   
   # just like link_to, but sets the <a> tag to have class 'active'
