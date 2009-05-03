@@ -37,13 +37,12 @@ module GreenclothSections
 
   # get all sections in an array
   #
-  # is this called anywhere?
   #
   def sections
     section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
     # get the sections
     sections = self.index_split(section_start_re)
-
+    p sections
     # cut out leading whitespace and newlines, but preserve white space on the first line with text
     sections[0] = sections[0].sub(/\A\s*\n/, '')
 
@@ -69,6 +68,8 @@ module GreenclothSections
         end
       end
     end
+    p merged_sections
+    puts '---------------'
     return merged_sections
   end
 
