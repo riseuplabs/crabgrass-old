@@ -2,7 +2,7 @@ class Me::InboxController < Me::BaseController
  
   def search
     if request.post?
-      path = build_filter_path(params[:search], options_for_groups())
+      path = build_filter_path(params[:search])
       if path == '/'
         redirect_to url_for(:controller => '/me/inbox', :action => nil, :path => nil)
       else
