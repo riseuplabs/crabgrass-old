@@ -49,6 +49,10 @@ sites:
     admin_group: superadmin
   - name: speakafrica
     admin_group: superadmin
+  - name: iaids
+    admin_group: superadmin
+  - name: j8summit
+    admin_group: superadmin
 
 ##
 ## SITE DEFAULTS
