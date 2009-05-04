@@ -2,6 +2,8 @@ module CustomAppearanceExtension
   module Parameters
     # how tall can the masthead image be
     MASTHEAD_IMAGE_MAX_HEIGHT = 80
+    # [W, H]
+    FAVICON_DIMENSIONS = [[16, 16], [32, 32]]
 
     def self.included(base)
       base.extend ClassMethods
@@ -16,11 +18,11 @@ module CustomAppearanceExtension
       begin
         asset = Asset.make!({:uploaded_data => data})
         if !asset.is_image
-          # raise ActiveRecord::RecordInvalid.new "not an image"
           self.errors.add_to_base("Uploaded data is not an image. Try png or jpeg files."[:not_an_image_error])
+        elsif !asset.height
+          self.errors.add_to_base("Can't detect image height. Either the image is corrupted or the server has experienced an error"[:cant_detect_image_height_error])
         elsif asset.height > MASTHEAD_IMAGE_MAX_HEIGHT
-          # raise ActiveRecord::RecordInvalid.new("Too tall")
-          self.errors.add_to_base("Uploaded image is too tall (80 pixels is the max height)"[:too_tall_image_error])
+          self.errors.add_to_base("Uploaded image is too tall (%d pixels is the max height)"[:too_tall_image_error] % MASTHEAD_IMAGE_MAX_HEIGHT)
         else
           # all good
           # delete the old masthead asset
@@ -36,6 +38,35 @@ module CustomAppearanceExtension
       end
     end
 
+    def favicon_uploaded_data
+      favicon.url if favicon
+    end
+
+    def favicon_uploaded_data=(data)
+      return if data == ""
+      begin
+        asset = Asset.make!({:uploaded_data => data})
+        if !asset.is_image
+          self.errors.add_to_base("Uploaded data is not an favicon image format. Try png, gif files."[:not_a_favicon_image_error])
+        elsif !asset.height or !asset.width
+          self.errors.add_to_base("Can't detect image height. Either the image is corrupted or the server has experienced an error"[:cant_detect_image_height_error])
+        elsif !FAVICON_DIMENSIONS.include?([asset.width, asset.height])
+          self.errors.add_to_base("Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32"[:favicon_image_bad_dimensions_error])
+        else
+          # all good
+          # delete the old masthead asset
+          self.favicon.destroy if self.favicon
+          self.favicon = asset
+        end
+      rescue ActiveRecord::RecordInvalid => exc
+        self.errors.add_to_base(exc.message)
+      end
+
+      unless self.errors.empty?
+        raise ActiveRecord::RecordInvalid.new(self)
+      end
+    end
+    
     def masthead_background_parameter
       background = self.parameters['masthead_background'] || CustomAppearance.available_parameters['masthead_background'] || 'white'
       background.gsub /^#/, ""

@@ -65,6 +65,14 @@ Currently unused: membership_policy, may_burden, may_spy, language.
 class Profile < ActiveRecord::Base
 
   belongs_to :language
+  
+  after_save :update_featured_fields
+
+  
+  def update_featured_fields
+    self.user.update_featured_fields if self.entity_type == "User"
+  end
+
 
   after_save :update_featured_fields
   def update_featured_fields

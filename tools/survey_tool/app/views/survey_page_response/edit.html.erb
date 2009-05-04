@@ -1,0 +1,9 @@
+<%= render :partial => 'survey_page/tabs' %>
+
+<div id="respond_to_questions_container" class="survey_questions_container">
+  <% form_for :response, @response, :url => page_url(@page, :action => 'response-update', :id => @response.id), :html => { :multipart => true } do |f| %>
+
+    <%= render :partial => 'response_form', :locals => {:form => f} %>
+    <%= submit_tag "Respond"[:respond_to_survey], :class => "submit" %>
+  <% end %>
+</div>

@@ -1,5 +1,5 @@
 <% 1.upto(10) do |i| %>
-<%= i %>:
+resp<%= i %>:
   id: <%= i %>
   survey_id: 1
   user_id: <%= i %>

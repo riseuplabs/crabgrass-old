@@ -300,6 +300,17 @@ class User < ActiveRecord::Base
   def destroy_requests
     Request.destroy_for_user(self)
   end
+  
+  # returns the rating object that this user created for a rateable
+  def rating_for(rateable)
+    rateable.ratings.by_user(self).first
+  end
+
+  # returns true if this user rated the rateable
+  def rated?(rateable)
+    return false unless rateable
+    rating_for(rateable) ? true : false
+  end
 
   ##
   ## PERMISSIONS

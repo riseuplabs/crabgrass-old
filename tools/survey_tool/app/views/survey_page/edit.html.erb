@@ -7,8 +7,12 @@
       <%= add_questions_links %>
     </span>
   </div>
-  <% form_for :survey, @survey, :url => page_url(@page, :action => :save_design) do |f| %>
-    <%= submit_tag "Save Survey".t, :class => "submit" %><br />
+  <% form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f| %>
+    <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
+    
+    Description:<br/>
+    <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
+    
     <div id="survey_settings">
       <strong class="caption"><%= "Settings"[:settings] %>:</strong>
       <br />
@@ -26,7 +30,7 @@
       <%= f.label :responses_disabled, "Disable responses?"[:disallow_responses] %>
     </div>
     <div id="questions">
-      <%= render :partial => 'questions' %>
+      <%= render :partial => 'edit_questions' %>
     </div>
   <% end %>
 </div>

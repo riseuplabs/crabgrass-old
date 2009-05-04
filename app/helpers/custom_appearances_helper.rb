@@ -8,4 +8,14 @@ module CustomAppearancesHelper
       ""
     end
   end
+
+  def display_favicon
+    if @appearance.favicon
+      content_tag :div, :id => "favicon_preview" do
+        image_tag(@appearance.favicon.url, :alt => @appearance.favicon.filename)
+      end
+    else
+      ""
+    end
+  end
 end

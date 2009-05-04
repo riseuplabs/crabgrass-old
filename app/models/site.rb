@@ -15,6 +15,7 @@ to hide data between sides)
     t.string  "email_sender"
     t.integer "pagination_size",      :limit => 11
     t.integer "super_admin_group_id", :limit => 11
+    t.integer "council_id",           :limit => 11
     t.text    "translators"
     t.string  "translation_group"
     t.string  "default_language"
@@ -26,6 +27,7 @@ to hide data between sides)
     t.integer "custom_appearance_id", :limit => 11
     t.boolean "has_networks",                       :default => true
     t.string  "signup_redirect_url"
+    t.string  "login_redirect_url"
     t.string  "title"
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
@@ -47,6 +49,7 @@ Example data for serialized fields:
 class Site < ActiveRecord::Base
   belongs_to :network
   belongs_to :custom_appearance, :dependent => :destroy
+  belongs_to :council, :class_name => 'Group'
 
   serialize :translators, Array
   serialize :available_page_types, Array
@@ -54,7 +57,71 @@ class Site < ActiveRecord::Base
   
   serialize_default :featured_fields, {}
 
+  # this is evil, but used by gibberish for site specific
+  # override ability.
   cattr_accessor :current
+  
+  # FEATURED FIELDS
+  #
+  # Every site can enable single fields as featured fields
+  #
+  # They can have different options (this is to be extended)
+  # - required : true|false this field will be used in validations and forms to be required
+  # - show : true|false this field is enabled to be shown in a featured position
+  #
+  # show's default
+  serialize :featured_fields, Hash
+  serialize_default :featured_fields, {}
+  after_save :update_featured_fields
+
+
+  # we need to store any data, that a site's admin can set to
+  # be a featured field in the user
+  # We use User.update_featured_fields for that
+  # TODO find a more general solution if needed
+  # In the moment it's bound to the featured-fields functionality
+  # that's boring. :)
+  def update_featured_fields_as_context(item,data)
+    items = self.users if(item == :user || item == nil)
+    if items
+      items.each do |item|
+        item.update_featured_fields(data) if item.respond_to?(:update_featured_fields)
+      end
+    end
+  end
+
+  # calls the related model to update its featured fields
+  def update_featured_fields
+    data = featured_fields.keys
+    update_featured_fields_as_context(:user,data)
+  end
+
+  # sets the featured fields
+  # NOTE: normally use this method!
+  #
+  # takes as parameter:
+  # {:fieldname => {:required => false, :show => true}
+  #
+  def set_featured_fields data
+    default_data = { :required => false, :show => true}
+    data.each do |field,options|
+      options=default_data.merge(options)
+      featured_fields[field] = options
+    end
+    save
+  end
+
+  # returns the featured fields for the user that correspond to the (current) site configuration
+  def get_featured_fields_for_user(user)
+    fields = { }
+    # note, we give nil here to demonstrate, that also the current site or a group
+    # could be given as context to separate cached data
+    user.featured_fields_for_context(nil).each do |field,value|
+      fields[field] = value if (self.featured_fields[field] && self.featured_fields[field][:show])
+    end
+    return fields
+  end
+
 
   
 #
@@ -157,13 +224,13 @@ class Site < ActiveRecord::Base
   # whatever crabgrass.*.yml gets loaded).
   def self.proxy_to_conf(*attributes)
     attributes.each do |attribute|
-      define_method(attribute) { read_attribute(attribute) || Conf.send(attribute) }
+      define_method(attribute) { (value = read_attribute(attribute.to_s.sub(/\?$/,''))).nil? ? Conf.send(attribute) : value }
     end
   end
 
   proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields
+    :require_user_email, :domain, :profiles, :profile_fields, :chat?
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
@@ -244,13 +311,22 @@ class Site < ActiveRecord::Base
 
   # Where does the user go when they login? Let the site decide.
   def login_redirect(user)
-    if self.signup_redirect_url
-      self.signup_redirect_url
+    if self.login_redirect_url
+      self.login_redirect_url
     elsif self.network
       '/'
     else
       {:controller =>'/me/dashboard'}
      end
+  end
+
+  # if user has +access+ to site, return true.
+  # otherwise, raise PermissionDenied
+  def has_access!(access, user)
+    if access == :admin and not self.council.nil?
+      ok = user.member_of?(self.council)
+    end
+    ok or raise PermissionDenied.new
   end
 
   # TODO : find a place to define all the elements, a site's user can see
