@@ -23,11 +23,12 @@ module GreenclothOutline
     range = get_range_for_heading(heading_name)
     return self if range.nil?
 
-    # enforce an empty trailing line
+    # enforce an empty trailing line (in case the text immediately after us is another heading)
     new_text += "\n\n" unless new_text =~ /\n\r?\n\r?$/
 
     # enforce a heading element, restore the old one if it was removed
-    new_text.insert(0, node.markup + "\n\n") unless new_text =~ /^h#{node.heading_level}\. .*?\n\r?\n\r?/
+    # new_text.insert(0, node.markup + "\n\n") unless new_text =~ /^h#{node.heading_level}\. .*?\n\r?\n\r?/
+    # ^^^ I am not sure why i thought this was a good idea. I am leaving it disabled for now.
 
     # replace the text
     self[range] = new_text

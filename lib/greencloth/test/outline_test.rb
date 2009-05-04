@@ -39,9 +39,9 @@ class TestHeadings < Test::Unit::TestCase
   def test_set_text
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
 
-    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nxxxxx\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.set_text_for_heading('tasty-apples', 'xxxxx')
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nxxxxx\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', 'xxxxx')
 
-    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.set_text_for_heading('tasty-apples', "h2. Oranges\n\nooooo")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', "h2. Oranges\n\nooooo")
 
   end
 
