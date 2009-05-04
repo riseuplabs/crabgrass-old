@@ -219,8 +219,9 @@ module LayoutHelper
     if appearance and appearance.masthead_asset
       # use an image
       content_tag :div, :id => 'site_logo_wrapper' do
-        image_tag(appearance.masthead_asset.url, :id => 'site_logo') +
-        content_tag(:h1, current_site.title, :id => 'site_title')
+        content_tag :a, :href => '/', :alt => current_site.title do 
+          image_tag(appearance.masthead_asset.url, :id => 'site_logo')
+        end
       end
     else
       # no image
