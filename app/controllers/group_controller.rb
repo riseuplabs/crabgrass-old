@@ -3,6 +3,8 @@ class GroupController < ApplicationController
   include GroupHelper
   helper 'task_list_page', 'tags' # remove task_list_page when tasks are in a separate controller
 
+  permissions 'group'
+
   stylesheet 'groups'
   stylesheet 'tasks', :action => :tasks
   javascript :extra, :action => :tasks

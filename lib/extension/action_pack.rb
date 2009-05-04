@@ -101,5 +101,20 @@ class ActionView::Base
   end
 end
 
+###
+### PERMISSIONS DEFINITION
+###
+ActionController::Base.class_eval do
+  def self.permissions(class_name)
+    permission_class = "#{class_name}_permission".camelize.constantize
+    include(permission_class)
 
+    @@permissioner = Object.new
+    @@permissioner.extend(permission_class)
+  end
+
+  def permissioner
+    @@permissioner
+  end
+end
 
