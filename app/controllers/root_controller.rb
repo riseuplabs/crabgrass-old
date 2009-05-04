@@ -22,7 +22,7 @@ class RootController < ApplicationController
     # @banner = render_to_string(:partial => 'banner') no banner for now.
     @left_column = render_to_string(:partial => 'group/sidebar')
     @groups = Group.visible_on(current_site).visible_by(current_user).only_groups.recent.find(:all, :limit => 10)
-    @users = current_site.users.find(:all, :order => 'memberships.total_visits', :limit => 10)
+    @users = current_site.users.most_active_since(Time.now - 30.days).find(:all, :limit => 10)
     @recent_pages = Page.find_by_path(['descending', 'updated_at', 'limit','20'], options_for_group(@group))
     @most_viewed_pages = Page.find_by_path(['descending', 'views_count', 'limit','10'], options_for_group(@group))
 
