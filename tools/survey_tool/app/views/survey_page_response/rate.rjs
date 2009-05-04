@@ -1,0 +1,22 @@
+=begin
+    if request.xhr?
+      render :update do |page|
+        page.replace_html('response', :partial => 'response',
+                          :locals => { :resp => @resp, :rating => @rating })
+        page.replace_html('user_info', :partial => 'user_info',
+                          :locals => { :resp => @resp })
+        page.replace_html('next_responses', :partial => 'next_responses',
+                          :locals => { :responses => @next })
+        page.replace_html('current_rating', :partial => 'current_rating',
+                          :locals => { :resp => @resp })
+        page.replace_html('survey_notice', @survey_notice)
+      end
+    end
+=end
+
+
+page.replace_html 'rate_survey', :partial => 'survey_page_response/rate/form'
+page.replace_html 'next_responses', :partial => 'survey_page_response/rate/next_up', :locals => {:responses => @next}
+if @previous_response
+  page.replace_html 'previously', :partial => 'survey_page_response/rate/previously', :locals => {:response => @previous_response}
+end

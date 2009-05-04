@@ -4,8 +4,12 @@
 config.action_controller.consider_all_requests_local = true
 #config.action_controller.consider_all_requests_local = false
 
-# don't compare source sass and generated css timestamps every time we link to css
-Conf.ignore_sass_file_timestamps = true
+# if this is true, every time you refer to a themed stylesheet
+# by calling CustomAppearance#themed_css_path (with themed_stylesheet_link_tag helper for example)
+# the themed css file will get regenerated from sass.
+# if this is false, the theme stylesheets will only get updated
+# when the CustomAppearance object which generates them is updated
+Conf.always_renegerate_themed_stylesheet = false
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false

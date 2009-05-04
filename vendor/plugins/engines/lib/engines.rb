@@ -137,14 +137,16 @@ module Engines
     # if they are identical already (checked via FileUtils#identical?).
     def mirror_files_from(source, destination)
       return unless File.directory?(source)
-      
       # TODO: use Rake::FileList#pathmap?    
       source_files = Dir[source + "/**/*"]
       source_dirs = source_files.select { |d| File.directory?(d) }
       source_files -= source_dirs
       
       unless source_files.empty?
-        base_target_dir = File.join(destination, File.dirname(source_files.first))
+        #base_target_dir = File.join(destination, File.dirname(source_files.first))
+        ### CRABGRASS HACK: for some reason, this ^^^ was producing horrible
+        ### results
+        base_target_dir = File.join(destination)
         FileUtils.mkdir_p(base_target_dir)
       end
       
@@ -165,7 +167,7 @@ module Engines
           unless File.exist?(target) && FileUtils.identical?(file, target)
             ## CRABGRASS HACK XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             FileUtils.ln_sf(file, target)
-            ##FileUtils.cp(file, target)
+            #FileUtils.cp(file, target)
             ## XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
           end 
         rescue Exception => e

@@ -1,0 +1,25 @@
+<%# used to display a detailed view of a particular response %>
+<div id="respond_to_questions_container" class="survey_questions_container">
+
+  <% if @response.user %>
+    <p><%= link_to_user @response.user, :avatar => 'medium', :block => true %></p>
+  <% else %>
+    <p><b><%=h @response.name %></b> <%=h @response.email %></p>
+  <% end %>
+  
+  <div id="questions">
+    <%- @survey.questions.each do |question| -%>
+      <% next unless may_view_survey_question?(@response, question) %>
+      <div class="question">
+        <h2 class="dim question_label"><%= h question.label %>
+          <% if question.private? -%>
+            <span>&bull;&nbsp;<%= "private"[:private] %></span>
+          <% end -%>
+        </h2>
+        <br/>
+        <%= show_answers_for_question(@response, question) %>
+      </div>
+    <%- end -%>
+  </div>
+</div>
+

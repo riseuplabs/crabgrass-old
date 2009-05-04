@@ -1,3 +1,13 @@
+#  create_table "survey_answers", :force => true do |t|
+#    t.integer  "question_id",       :limit => 11
+#    t.integer  "response_id",       :limit => 11
+#    t.integer  "asset_id",          :limit => 11
+#    t.text     "value"
+#    t.string   "type"
+#    t.datetime "created_at"
+#    t.integer  "external_video_id", :limit => 11
+#  end
+
 class SurveyAnswer < ActiveRecord::Base
   CHOICE_FOR_UNCHECKED = "__UNCHECKED"
 
@@ -12,37 +22,4 @@ class SurveyAnswer < ActiveRecord::Base
   end
 end
 
-class VideoLinkAnswer < SurveyAnswer
-  belongs_to :external_video, :dependent => :destroy
 
-  validate :validate_video
-
-  before_validation :update_external_video
-
-  def validate_video
-    return true if value.empty?
-
-    valid = external_video.valid?
-    external_video.errors.each {|attr, msg| self.errors.add(:value, msg)}
-    valid
-  end
-
-  def display_value
-    if external_video and external_video.valid?
-      external_video.build_embed
-    else
-      super
-    end
-  end
-
-  def update_external_video
-    self.external_video ||= ExternalVideo.new
-    external_video.update_attribute(:media_embed, value)
-  end
-
-  def value=(val)
-    write_attribute(:value, val)
-    update_external_video
-  end
-
-end

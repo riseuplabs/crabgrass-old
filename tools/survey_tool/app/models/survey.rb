@@ -1,71 +1,44 @@
+#  create_table "surveys", :force => true do |t|
+#    t.text     "description"
+#    t.datetime "created_at"
+#    t.integer  "responses_count", :limit => 11, :default => 0
+#    t.string   "settings"
+#  end
+#
 class Survey < ActiveRecord::Base
   
   serialize :settings
-  serialize_default :settings, {:responses_enabled => true,
-    :rating_enabled => false, :participants_can_rate => true}
+  serialize_default :settings, {:edit_may_create => true, :edit_may_see_responses => true}
 
   has_many(:questions, :order => :position, :dependent => :destroy,
            :class_name => 'SurveyQuestion')
 
-  has_many(:responses, :dependent => :destroy,
-           :class_name => 'SurveyResponse') do
-    
-    # returns all responses, except the one of the user herself
-    #def rateable_by(user)
-    #  self.find(:all, :conditions => ["user_id != ?", user.id])
-    #end
-  
+  has_many(:responses, :dependent => :destroy, :class_name => 'SurveyResponse') do
     # returns `count' responses, the given `user' may rate on, but hasn't yet.
     def unrated_by(user, count)
       # (proxy_owner is the Survey)
       self.find_by_sql([NEEDS_RATING_SQL, proxy_owner.id, user.id, user.id, count])
     end
-
     # returns responses that the user has already rated.
     def rated_by(user, count)
       self.find(:all, :conditions => ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], :include => :ratings, :order => 'ratings.created_at ASC', :limit => count)
     end
-
-  end
-    
-  def rating_enabled() settings[:rating_enabled] end
-  def rating_enabled=(v)
-    settings[:rating_enabled]=(v=='1' ? true : false) end
-  def responses_enabled() settings[:responses_enabled] end
-  def responses_enabled=(v)
-    settings[:responses_enabled]=(v=='1' ? true : false) end
-  def participants_can_rate() settings[:participants_can_rate] end
-  def participants_can_rate=(v)
-    settings[:participants_can_rate]=(v=='1' ? true : false) end
-  alias :rating_enabled? :rating_enabled
-  alias :responses_enabled? :responses_enabled
-  alias :participants_can_rate? :participants_can_rate
-  def responses_disabled() !responses_enabled end
-  alias :responses_disabled? :responses_disabled
-  def participants_cannot_rate() !participants_can_rate end
-  alias :participants_cannot_rate? :participants_cannot_rate
-  def responses_disabled=(v)
-    settings[:responses_enabled]=(v=='1' ? false : true) end
-  def participants_cannot_rate=(v)
-    settings[:participants_can_rate]=(v=='1' ? false : true) end
-  
-  before_save :update_response_count
-  def update_response_count
-    self.responses_count = self.responses.size
   end
   
-  # def respond!(user, values)
-  #   response = SurveyResponse.new(:survey => self, :user => user)
-  #   response.save!
-  #   self.responses << response
-  #   self.save!
-  #   values.each_pair do |q, a|
-  #     question = SurveyQuestion.find(q)
-  #     question.answer!(response, a)
-  #   end
-  #   response
-  # end
+  def self.define_boolean_serialized_attrs(*args)
+    args.each do |attribute|
+      define_method(attribute) {settings[attribute]}
+      define_method("#{attribute}?") {settings[attribute]}
+      define_method("#{attribute}=") {|v| settings[attribute] = v=="1"}
+    end
+  end
 
+  define_boolean_serialized_attrs :admin_may_rate,
+    :edit_may_create, :edit_may_see_responses,
+    :edit_may_rate,   :edit_may_see_ratings,
+    :view_may_create, :view_may_see_responses,
+    :view_may_rate,   :view_may_see_ratings
+      
   def new_questions_attributes=(question_attributes)
     question_attributes.keys.each do |id|
       if id[0..2] == "new"
@@ -83,6 +56,13 @@ class Survey < ActiveRecord::Base
         end
       end
     end
+  end
+
+  protected
+  
+  # i can't get the counter cache to work
+  def update_counter
+    self.update_attribute(:responses_count, self.response_ids.size)
   end
 
   # SQL for finding all the responses that a user has not yet rated

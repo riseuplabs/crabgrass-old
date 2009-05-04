@@ -27,12 +27,20 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_site  # make available to views
   def current_site
-    @current_site ||= Site.for_domain(request.host).find(:first)
-    @current_site ||= Site.default 
+    @current_site ||= begin
+      site = Site.for_domain(request.host).find(:first)
+      site ||= Site.default
+      Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
+    end
+  end
+
+  helper_method :current_appearance  # make available to views
+  def current_appearance
+    current_site.custom_appearance || CustomAppearance.default
   end
 
   protected
-    
+
   before_filter :header_hack_for_ie6
   def header_hack_for_ie6
     #
@@ -64,6 +72,27 @@ class ApplicationController < ActionController::Base
     actions.include?(params[:action].to_sym)
   end
   helper_method :action?
+
+  # returns true if params[:controller] matches one of the args.
+  def controller?(*controllers)
+    controllers.include?(params[:controller].to_sym)
+  end
+  helper_method :controller?
+
+  # returns true if params[:id] matches the id passed in
+  # the arguments may include the id in the form of an integer,
+  # string, or active record object.
+  def id?(*ids)
+    for obj in ids
+      if obj.is_a?(ActiveRecord::Base)
+        return true if obj.id == params[:id].to_i
+      elsif obj.is_a?(Integer) or obj.is_a?(String)
+        return true if obj.to_i == params[:id].to_i
+      end
+    end
+    return false
+  end
+  helper_method :id?
 
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included "as needed". A controller can set a custom stylesheet

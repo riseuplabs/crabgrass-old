@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090417181020) do
+ActiveRecord::Schema.define(:version => 20090429074713) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -114,10 +114,11 @@ ActiveRecord::Schema.define(:version => 20090417181020) do
 
   create_table "custom_appearances", :force => true do |t|
     t.text     "parameters"
-    t.integer  "parent_id",      :limit => 11
+    t.integer  "parent_id",         :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "admin_group_id", :limit => 11
+    t.integer  "masthead_asset_id", :limit => 11
+    t.integer  "favicon_id",        :limit => 11
   end
 
   create_table "discussions", :force => true do |t|
@@ -521,6 +522,9 @@ ActiveRecord::Schema.define(:version => 20090417181020) do
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
+    t.integer "council_id",           :limit => 11
+    t.string  "login_redirect_url"
+    t.boolean "chat"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -674,6 +678,36 @@ ActiveRecord::Schema.define(:version => 20090417181020) do
   add_index "user_participations", ["star"], :name => "index_user_participations_star"
   add_index "user_participations", ["resolved"], :name => "index_user_participations_resolved"
   add_index "user_participations", ["attend"], :name => "index_user_participations_attend"
+
+  create_table "user_settings", :force => true do |t|
+    t.integer  "user_id",                    :limit => 11
+    t.string   "email_address"
+    t.string   "sms_number"
+    t.string   "sms_carrier"
+    t.string   "im_address"
+    t.string   "im_type"
+    t.boolean  "allow_insecure_email",                     :default => false
+    t.boolean  "allow_insecure_im",                        :default => false
+    t.boolean  "allow_insecure_sms",                       :default => false
+    t.integer  "email_crypt_key_id",         :limit => 11
+    t.integer  "sms_crypt_key_id",           :limit => 11
+    t.boolean  "email_allowed",                            :default => true
+    t.boolean  "sms_allowed",                              :default => false
+    t.boolean  "im_allowed",                               :default => false
+    t.boolean  "receive_digest",                           :default => true
+    t.integer  "digest_frequency",           :limit => 11, :default => 2
+    t.integer  "digest_day",                 :limit => 11
+    t.integer  "preferred_reception_method", :limit => 11, :default => 1
+    t.string   "languages_spoken"
+    t.integer  "level_of_expertise",         :limit => 11
+    t.boolean  "show_welcome",                             :default => true
+    t.integer  "login_landing",              :limit => 11, :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"
+  add_index "user_settings", ["receive_digest", "digest_frequency", "digest_day"], :name => "digest"
 
   create_table "users", :force => true do |t|
     t.string   "login"

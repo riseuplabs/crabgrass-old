@@ -1,10 +1,9 @@
 <p>
 <i>Sorry, page <b><%= h params[:_page]%></b> does not exist.</i>
 <ul>
-  <% if @group and @user and @user.member_of?(@group) %>
+  <% if logged_in? and @group and current_user.member_of?(@group) %>
   <li><%= link_to "create #{h params[:_page]}", {:controller => 'pages', :action => :create_wiki, :name => params[:_page], :group => @group.name }, :method=>:post %></li>
   <% end %>
-  <li>search for similar pages</li>
   <% if request.env["HTTP_REFERER"] %>
   <li><%= "<a href='%s'>return to previous page</a>" % request.env["HTTP_REFERER"] %></li>
   <% end %>

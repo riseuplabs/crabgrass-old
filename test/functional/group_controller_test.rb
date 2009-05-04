@@ -470,6 +470,50 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_select "tr.even"
 
   end
+  
+  # tests for group & network home
+  def test_edit_layout
+    login_as :blue
+    get :edit_layout, :id => groups(:rainbow).name
+    
+    assert_response :success
+    
+    @group = Group.find_by_name(groups(:rainbow).name)
+    assert @group, 'group should exist'
+    @network = Network.find_by_name('fau')
+    assert @network
+    
+    # test to change the default order for a group and a network
+    [@group, @network].each do |group|
+      # by default the groups first section should be the 'group_wiki'
+      assert_equal group.layout('section1'), 'group_wiki'
+      
+      # call the groups home, and check if it is in the default order
+      get :show, :id => group.name
+      assert_response :success
+      
+      assert_select '.section' do |sections|
+        assert_select sections.first, 'div#wiki-area'
+      end
+      
+      params = { :id => group.name,  :section1 => 'recent_pages', :section2 => 'group_wiki', :section4 => '' }
+      params.merge!({:section3 => 'recent_group_pages'}) if group.network?
+      post :edit_layout, params
+      assert_redirected_to 'group/edit/'+group.name
+      
+      # call the group home again, and make sure that the order changed
+      get :show, :id => group.name
+      assert_response :success
+      
+      assert_select '.section' do |sections|
+        assert_select sections.first, 'div.page_list'
+      end
+      
+      group.reload
+      
+      assert_equal group.layout('section1'), 'recent_pages'    
+    end  
+  end
 
 # TODO: test featuring already featured content, expiring features and so on.
 

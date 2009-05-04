@@ -19,7 +19,7 @@ class Admin::PostsController < Admin::BaseController
   end
 
   # for vetting:       params[:post][:vetted] == true
-  # for hiding:        params[:post][:deleted]   == true 
+  # for hiding:        params[:post][:deleted] == true 
   def update
     @posts = Post.find(params[:id])
     @posts.update_attributes(params[:post])
@@ -40,7 +40,7 @@ class Admin::PostsController < Admin::BaseController
   def trash
     post = Post.find params[:id]
     post.update_attribute(:deleted_at, Time.now)
-    post.discussion.page.update_page_terms_in_background if post.discussion.page
+    post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -48,7 +48,7 @@ class Admin::PostsController < Admin::BaseController
   def undelete
     post = Post.find params[:id]
     post.update_attribute(:deleted_at, nil)
-    post.discussion.page.update_page_terms_in_background
+    post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
 end

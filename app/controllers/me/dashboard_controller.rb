@@ -11,7 +11,18 @@ class Me::DashboardController < Me::BaseController
     @current_status = current_user.current_status
   end
   
+  def show_welcome_box
+    current_user.update_or_create_setting(:show_welcome => true)
+    render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
+  end
+  
+  def close_welcome_box
+    current_user.update_or_create_setting(:show_welcome => false)
+    render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
+  end
+  
   protected
+
   # it is impossible to see anyone else's me page,
   # so no authorization is needed.
   def authorized?
@@ -26,6 +37,5 @@ class Me::DashboardController < Me::BaseController
     me_context('large')
     add_context 'Dashboard'[:me_dashboard_link], url_for(:controller => 'me/dashboard', :action => nil)
   end
-  
 end
 

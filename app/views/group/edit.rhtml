@@ -51,11 +51,4 @@
 <%= link_to 'Choose Layout', url_for(:action=>'edit_layout', :id=>@group) %>
 <p/>
 
-<% if @editable_custom_appearance %>
-<h2 class='section'><div style='padding: 8px;'>
-    <%= "Custom Appearances".t %>
-</div></h2>
-<%= link_to 'Edit site appearance', edit_custom_appearance_url(@editable_custom_appearance) %>
-<% end %>
-
 <%= call_hook :group_edit %>

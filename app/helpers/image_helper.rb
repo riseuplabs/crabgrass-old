@@ -15,6 +15,19 @@ module ImageHelper
   ## images for the icon.
   ## 
 
+  # for example icon_tag('pencil')
+  def icon_tag(icon, size = 16)
+    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
+  end
+
+  def pushable_icon_tag(icon, size = 16)
+    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer'
+  end
+  
+  ##
+  ## DEPRECATED ::: WE ARE NOW USING CLASS BASED ICONS
+  ##
+  
   ## allows you to change the icon style of an element.
   ## for example, can be used to change the icon of a link
   ## to be a spinner.
@@ -33,22 +46,16 @@ module ImageHelper
 
   ## creates an <a> tag with an icon via a background image.
   def link_to_icon(text, icon, path={}, options={})
-#XXX
     link_to text, path, options.merge(:style => icon_style(icon))
   end
 
   ## return the style css text need to put the icon on the background
   def icon_style(icon)
-#XXX
     size = 16
     url = "/images/#{icon}"
     "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
   end
   
-  def icon_tag(icon, size = 16)
-    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
-  end
-
   ##
   ## AVATARS
   ##
@@ -108,6 +115,35 @@ module ImageHelper
     end
   end
   
+  ##
+  ## LINKS WITH ICONS
+  ## 
+
+  # eg:
+  # 
+  def link_to_remote_with_icon(label, options)
+    #id = "link_id_#{rand(10000000)}"
+    link_to_remote(
+      label, 
+      { :url => options[:url],
+        :loading => "replace_class_name(event.target, '#{options[:icon]}_16', 'spinner_icon')",
+        :complete => "replace_class_name(event.target, 'spinner_icon', '#{options[:icon]}_16')",
+        :with => options[:with]},
+      { :class => "small_icon #{options[:icon]}_16" }
+    )
+  end
+
+  def link_to_remote_icon(icon, options, html_options={})
+    link_to_remote(
+      pushable_icon_tag(icon), {
+        :url => options[:url],
+        :loading => "event.target.blur(); replace_class_name(event.target, '#{icon}_16', 'spinner_icon')",
+        :complete => "event.target.blur(); replace_class_name(event.target, 'spinner_icon', '#{icon}_16')",
+      }, 
+      html_options
+    )
+  end
+
   ##
   ## ASSET THUMBNAILS
   ##

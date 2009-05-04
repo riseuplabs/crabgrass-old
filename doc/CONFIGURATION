@@ -8,7 +8,7 @@ There are three required configuration files:
 
 The file secret.txt can be created by running <tt>rake create_a_secret</tt>.
 
-Configuring dtabase.yml is covered in INSTALL[link:files/doc/INSTALL.html] and PRODUCTION[link:files/doc/PRODUCTION.html].
+Configuring database.yml is covered in INSTALL[link:files/doc/INSTALL.html] and PRODUCTION[link:files/doc/PRODUCTION.html].
 
 Depending on what mode rails is run in, the appropriate <tt>crabgrass.*.yml</tt> file will be used. This page is about configuring the <tt>crabgrass.*.yml</tt> files.
 
@@ -102,6 +102,25 @@ To see what sites are available:
 
   rake cg:site:list RAILS_ENV=<env>
 
+=== Profiles
+
+You can choose which fields can be filled out in a profile and which profile
+tabs are active. If not present, these options default to allowing all.
+
+Here is an example:
+
+  profiles:
+    - public
+    - private
+  profile_fields:
+    - basic
+    - notes
+    - phone_numbers
+    - email_addresses
+    - locations
+    - im_addresses
+    - websites
+    - cryptkeys
 
 = Site Defaults
 
@@ -109,14 +128,15 @@ Sites are stored in the database. However, if they do not have a particular attr
 
 The following attributes may be set globally in <tt>crabgrass.*.yml</tt>, or on a per-site basis:
 
-  :title -- the title of the website.
-  :email_sender -- email address that outgoing emails are sent from.
-  :enforce_ssl -- if true, cookies will only work over tls/ssl.
-  :show_exceptions -- if true, exceptions are show to the user.
-  :require_user_email -- if true, user registration requires email address
-  :default_language -- language code of the default language to use
-  :tracking -- if true, we track user visits, logins and page views.
-  :available_page_types -- if set, limits what page types can be created.
+                title -- the title of the website.
+         email_sender -- email address that outgoing emails are sent from.
+          enforce_ssl -- if true, cookies will only work over tls/ssl.
+      show_exceptions -- if true, exceptions are show to the user.
+   require_user_email -- if true, user registration requires email address
+     default_language -- language code of the default language to use
+             tracking -- if true, we track user visits, logins and page views.
+ available_page_types -- if set, limits what page types can be created.
+                 chat -- if false, chat is disabled
 
 Unfrequently modified options:
 

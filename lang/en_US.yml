@@ -38,6 +38,7 @@ friends: "Friends"
 people: "People"
 members: "Members"
 all_content: "All Content"
+more_information: "More Information"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
@@ -49,6 +50,7 @@ add_button: "Add"
 cancel_button: "Cancel"
 no_search_results: "No Results"
 empty_results: "None"
+unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
 details_link: "Details"
@@ -56,12 +58,25 @@ return_link: "Return"
 
 edit: "Edit"
 preview: "Preview"
+private: "Private"
+options: "Options"
+permissions: "Permissions"
+description: "Description"
 
 discussions: "Discussions"
 tags: "Tags"
 search: "Search"
 achive: "Archive"
 tasks: "Tasks"
+
+coordinator: "Coordinator"
+participant: "Participant"
+viewer: "Viewer"
+coordinators: "Coordinators"
+participants: "Participants"
+viewers: "Viewers"
+
+destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
 
 ##
 ## NAVIGATION
@@ -119,10 +134,8 @@ forgot_password_link: "I forgot my password"
 signup_info: Choose your login name and your password then click "%s"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
-signup_confirm_password: "Confirm Password"
 login_name: "Login name"
 signup_success: "Registration successful"
-signup_password: "Your Password"
 logout_success: "Goodbye"
 logout_success_message: "You have been logged out."
 signup_button: "Sign up"
@@ -130,20 +143,8 @@ login_failed: "Could not log in"
 signup_login_name: "Your login name"
 login_button: "Log in"
 login: "Login"
-welcome_text: |
-  *Welcome*
-
-  Hi. This is a quick intro for new users. Next time you log in you will land at [your dashboard -> /me/dashboard] which will be a cold and lonely place until you join groups and make contacts.
-
-  So, the best thing to do as a new user is to create a group or join a group. To do so go to the [group directory -> /groups] and either click "create a new group" or click on the group you want to join and find the "join group" link.
-
-  Once your request is accepted you can upload assets, create task lists, discussions, wikis, polls, and messages to communicate, collaborate, and get things done within the group. Like any new platform you will need to familiarize yourself with the work flow. To help answer question such as whats the difference between the inbox and the dashboard check out the [help pages -> /crabgrass/table-of-contents].
-
-  Development is driven by user feedback, so please [join -> /users] the user feed back group and get involved by clicking the "get involved" link at the bottom over every page.
-
 signup_title: "Create Your Account"
 signup_email: "Your Email"
-login_password: "Password"
 csrf_error_message: |
   Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
 
@@ -203,6 +204,29 @@ usage_agreement_text: |
   The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
   
   If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+
+##
+## PASSWORD
+## 
+
+# seems like some duplication here!
+password: "Password"
+password_confirmation: "Password Confirmation"
+signup_confirm_password: "Confirm Password"
+login_password: "Password"
+signup_password: "Your Password"
+
+# password strength messages:
+password_ok: "is OK."
+password_error_default: "is not strong enough."
+password_error_username: "is no good, it is based on your username."
+password_error_too_short: "is no good, it is too short."
+password_error_whitespace: "is no good, it is all whitespace."
+password_error_too_similar: "is no good, it does not contain enough different characters."
+password_error_too_simple: "is no good, it is too simplistic or predictable." 
+password_error_too_common: "is no good, it is based on a dictionary word."
+password_error_confirmation: "does not match password confirmation."
+
 
 ##
 ## ACTIVITIES
@@ -331,8 +355,6 @@ display_name: Display name
 email: Email
 language: Language
 time_zone: Time Zone
-password: Password
-password_confirmation: Password confirmation
 set_status_messsage: What are you doing right now?
 
 votes: votes
@@ -489,7 +511,6 @@ Admin: Admin
 Founded: Founded
 Language: Language
 not_set: not set
-unknown: unknown
 edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups
@@ -560,7 +581,6 @@ requests_from_me: "from me"
 requests_for_group: Requests for %s
 incoming: "Incoming"
 outgoing: "Outgoing"
-description: "description"
 state: "state"
 action: "action"
 request_to_friend_description: ":user would like to be the contact of :other_user"
@@ -606,15 +626,14 @@ page_notice_message: "page sent by {user} on {date}"
 page_with_message: "with message"
 page_details: "Page Details"
 participation: "Participation"
-permissions: "Permissions"
 user_or_group_name: "User or group name"
 updated: "updated"
 created: "created"
 unread: "unread"
 read: "read"
 starred: "starred"
-pagination_next: "next"
-pagination_previous: "prev"
+pagination_next: "Next"
+pagination_previous: "Previous"
 all_people: "all people"
 all_groups: "all groups"
 all_states: "all states"
@@ -652,8 +671,6 @@ video_class_description: "Show a video hosted on an external website."
 video: "video"
 article: "article"
 article_class_description: "Blog post or news article."
-survey: "survey"
-survey_class_description: "A survey"
 
 title: "Title"
 summary: "Summary"
@@ -672,9 +689,6 @@ share_page_recipients_results: "This {page_class} will be shared with"
 grant_access: "Grant Access"
 share_page_email: "Send an email notification"
 share_page_message: "Send a message (optional)"
-coordinator: "Coordinator"
-participant: "Participant"
-viewer: "Viewer"
 no_change: "no change"
 Announcements: "Announcements"
 
@@ -754,20 +768,29 @@ ranked_vote_instructions: |
 ## SURVEY PAGE
 ##
 
-design_survey: Design Survey
-save_survey: Save Survey
-really_delete_your_response: "Do you really want to delete your response?"
-really_delete_users_response: "Do you really want to delete the response submitted by %s?"
-allow_rating: "Activate the rating system: allow survey response to be rated."
-disallow_participant_rating: "Disable rating for people who have submitted a response."
-disallow_responses: "Disable Responses. You would select this when you want to end the submission process."
-survey_updated_message: "Saved Your Changes!"
-response_created_message: "Created a response!"
-response_updated_message: "Updated your response"
-settings: Settings
-private: private
+survey: "survey"
+survey_class_description: "A survey"
 
+survey_design: "Design Survey"
+survey_my_response: "My Response"
+survey_take: "Take Survey"
+survey_rate_responses: "Rate Responses"
+survey_list_all: "List All Responses"
 
+save_survey: "Save Survey"
+survey_response_by: "Response by {login}"
+
+survey_rate_this_response: "Rate This Response"
+survey_your_rating_of_this_response: "Your Rating of This Response"
+
+survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
+survey_rating_enabled: "Enable the rating of responses?"
+
+survey_may_see_responses: "May see responses?"
+survey_may_rate: "May rate responses?"
+survey_may_see_ratings: "May see ratings?"
+
+survey_questions: "Questions"
 
 ##
 ## EXTERNAL VIDEO
@@ -884,3 +907,33 @@ add_one_or_more_tags: "Add one or more tags, separated by commas"
 separate_tags: "Separate tags using commas."
 add_tags: "Add Tags"
 current_tags: "Current Tags"
+
+
+#
+# WELCOME 
+#
+
+
+welcome_title: "Welcome to {site_title}"
+welcome_heading: "Welcome to {site_title}, {user_name}!"
+welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
+welcome_login_message: ""
+
+welcome_edit_profile_link: "Edit your profile"
+welcome_edit_profile_text: "Let other people know more about you by editing your public or private profiles."
+
+welcome_upload_icon_link: "Upload a user icon"
+welcome_upload_icon_text: "Upload an image to use as your icon. This icon will appear next to every comment you make."
+
+welcome_find_people_link: "Find people"
+welcome_find_people_text: "Browse the user directory for people you know."
+
+welcome_find_groups_link: "Find groups"
+welcome_find_groups_text: "Browse the group directory for groups to join."
+
+welcome_create_group_link: "Create a new group"
+welcome_create_group_text: "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."
+
+welcome_create_page_link: "Create a new page"
+welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
+

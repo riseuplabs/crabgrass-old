@@ -9,11 +9,11 @@ class PageViewListener < Crabgrass::Hook::ViewListener
     if rating.nil? or rating.rating != YUCKY_RATING
       link = link_to 'flag as inappropriate'[:flag_inappropriate], 
         :controller => 'yucky', :page_id => context[:page].id, :action => 'add'
-      page_sidebar_list(content_tag(:li, link, :class => 'small_icon yuck_icon'))
+      page_sidebar_list(content_tag(:li, link, :class => 'small_icon sad_plus_16'))
     elsif rating.rating == YUCKY_RATING
       link = link_to 'flag as appropriate'[:flag_appropriate], 
         :controller => 'yucky', :page_id => context[:page].id, :action => 'remove'
-      page_sidebar_list(content_tag(:li, link, :class => 'small_icon unyuck_icon'))
+      page_sidebar_list(content_tag(:li, link, :class => 'small_icon sad_minus_16'))
     end
   end
   
@@ -23,11 +23,13 @@ class PageViewListener < Crabgrass::Hook::ViewListener
     post = context[:post]
     rating = post.ratings.find_by_user_id(current_user.id)
     if rating.nil? or rating.rating != YUCKY_RATING
-      link = link_to image_tag('/plugin_assets/super_admin/images/face-sad.png'), 
-        :controller => 'yucky', :post_id => post.id, :action => 'add'
+      link = link_to_remote_icon('sad_plus', :url=>{:controller => 'yucky', :post_id => post.id, :action => 'add'})
+      #link = link_to image_tag('/plugin_assets/super_admin/images/face-sad.png'), 
+      #  :controller => 'yucky', :post_id => post.id, :action => 'add'
     elsif rating.rating == YUCKY_RATING
-      link = link_to image_tag('/plugin_assets/super_admin/images/face-smile.png'), 
-        :controller => 'yucky', :post_id => post.id, :action => 'remove'
+      link = link_to_remote_icon('sad_minus', :url=>{:controller => 'yucky', :post_id => post.id, :action => 'remove'})
+      #link = link_to image_tag('/plugin_assets/super_admin/images/face-smile.png'), 
+      #  :controller => 'yucky', :post_id => post.id, :action => 'remove'
     end
     content_tag :div, link, :class => 'post_action_icon', :style => 'margin-right:22px'
   end

@@ -7,7 +7,9 @@ module AuthenticatedSystem
 
   def load_user(id)
     update_last_seen_at(id)
-    User.find_by_id(id)
+    user = User.find_by_id(id)
+    user.current_site = current_site if user
+    return user
   end
   
   # Returns true or false if the user is logged in.

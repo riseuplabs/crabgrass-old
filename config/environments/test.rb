@@ -4,6 +4,11 @@
 # test suite.  You never need to work with it otherwise.  Remember that
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs.  Don't rely on the data there!
+
+# regenerate customized css every request
+# see docs/THEMING
+Conf.always_renegerate_themed_stylesheet = true
+
 config.cache_classes = true
 
 # Log error messages when you accidentally call methods on nil.
@@ -26,3 +31,9 @@ ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
 
 MIN_PASSWORD_STRENGTH = 0
+
+# however, rails engines are way too verbose, so set engines logging to info:
+if defined? Engines
+  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
+  Engines.logger.level = Logger::INFO
+end

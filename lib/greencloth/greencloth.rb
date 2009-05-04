@@ -167,10 +167,9 @@ module GreenClothFormatterHTML
   # </h2>
   #
   def heading(number, opts)
-    original.add_heading(number,opts[:text])
+    name = original.add_heading(number,opts[:text])
     if original.outline
-      anchor = opts[:text].nameize
-      %[<h%s%s><a name="%s"></a>%s<a class="anchor" href="#%s">&para;</a></h%s>\n] % [number, pba(opts), anchor, opts[:text], anchor, number]
+      %[<h%s%s><a name="%s"></a>%s<a class="anchor" href="#%s">&para;</a></h%s>\n] % [number, pba(opts), name, opts[:text], name, number]
     else
       %Q[<h#{number}#{pba(opts)}>#{opts[:text]}</h#{number}>\n]
     end
@@ -272,11 +271,11 @@ class GreenCloth < RedCloth::TextileDoc
   def to_html(*before_filters, &block)
     @block = block
 
-    section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
+    #section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
 
     before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
       :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
-      :headings, :quoted_block, :tables_with_tabs, :wrap_long_words]
+      :normalize_heading_blocks, :quoted_block, :tables_with_tabs, :wrap_long_words]
  
     formatter = self.clone()                   # \  in case one of the before filters
     formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
@@ -290,6 +289,14 @@ class GreenCloth < RedCloth::TextileDoc
     return html
   end
 
+  # populates @headings, and then restores the string to its original form.
+  def extract_headings()
+    original = self.dup
+    self.extend(GreenClothFormatterHTML)
+    apply_rules([:normalize_heading_blocks])
+    to(GreenClothFormatterHTML)
+    self.replace(original)
+  end
 
   # what is this used for???
   def apply_inline_filters(text)
@@ -311,7 +318,7 @@ class GreenCloth < RedCloth::TextileDoc
 
   # allow setext style headings
   HEADINGS_RE = /^(.+?)\r?\n([=-])[=-]+ */
-  def headings(text)
+  def normalize_heading_blocks(text)
     text.gsub!(HEADINGS_RE) do
       tag = $2=="=" ? "h1" : "h2"
       "#{ tag }. #{$1}\n\n"

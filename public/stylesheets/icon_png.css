@@ -57,6 +57,7 @@
 .ok_16 {background-image: url(/images/png/16/ok.png)}
 .open_letter_16 {background-image: url(/images/png/16/open_letter.png)}
 .open_quote_16 {background-image: url(/images/png/16/open_quote.png)}
+.page_add_16 {background-image: url(/images/png/16/page_add.png)}
 .page_approval_16 {background-image: url(/images/png/16/page_approval.png)}
 .page_article_16 {background-image: url(/images/png/16/page_article.png)}
 .page_default_16 {background-image: url(/images/png/16/page_default.png)}
@@ -81,6 +82,9 @@
 .refresh_16 {background-image: url(/images/png/16/refresh.png)}
 .right_16 {background-image: url(/images/png/16/right.png)}
 .rss_16 {background-image: url(/images/png/16/rss.png)}
+.sad_16 {background-image: url(/images/png/16/sad.png)}
+.sad_minus_16 {background-image: url(/images/png/16/sad_minus.png)}
+.sad_plus_16 {background-image: url(/images/png/16/sad_plus.png)}
 .security-medium_16 {background-image: url(/images/png/16/security-medium.png)}
 .send_16 {background-image: url(/images/png/16/send.png)}
 .settings_16 {background-image: url(/images/png/16/settings.png)}
@@ -95,14 +99,19 @@
 .table_16 {background-image: url(/images/png/16/table.png)}
 .tag_16 {background-image: url(/images/png/16/tag.png)}
 .tags_16 {background-image: url(/images/png/16/tags.png)}
+.tiny_minus_16 {background-image: url(/images/png/16/tiny_minus.png)}
 .tiny_pencil_16 {background-image: url(/images/png/16/tiny_pencil.png)}
 .tiny_pending_16 {background-image: url(/images/png/16/tiny_pending.png)}
+.tiny_plus_16 {background-image: url(/images/png/16/tiny_plus.png)}
 .tiny_star_16 {background-image: url(/images/png/16/tiny_star.png)}
 .tiny_wrench_16 {background-image: url(/images/png/16/tiny_wrench.png)}
 .todo_16 {background-image: url(/images/png/16/todo.png)}
 .trash_16 {background-image: url(/images/png/16/trash.png)}
+.user_16 {background-image: url(/images/png/16/user.png)}
 .user_add_16 {background-image: url(/images/png/16/user_add.png)}
 .user_delete_16 {background-image: url(/images/png/16/user_delete.png)}
+.user_icon_16 {background-image: url(/images/png/16/user_icon.png)}
+.weather_sun_16 {background-image: url(/images/png/16/weather_sun.png)}
 .world_16 {background-image: url(/images/png/16/world.png)}
 .wrench_16 {background-image: url(/images/png/16/wrench.png)}
 .announce_48 {background-image: url(/images/png/48/announce.png)}

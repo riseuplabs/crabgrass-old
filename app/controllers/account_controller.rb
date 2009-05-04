@@ -1,8 +1,8 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
-  javascript 'account', :action => :signup
 
+  before_filter :view_setup
   skip_before_filter :verify_authenticity_token, :only => :login
 
   # TODO: it would be good to require post for logout in the future
@@ -15,7 +15,7 @@ class AccountController < ApplicationController
   end
 
   def login
-    if !( params[:redirect].empty? || params[:redirect] =~ /^http:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
+    if !( params[:redirect].empty? || params[:redirect] =~ /^https?:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
       flash_message(:title => 'Illegal redirect'[:illegal_redirect],
       :error => "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."[:redirect_to_foreign_domain]%{ :url => params.delete(:redirect)})
       redirect_to params and return
@@ -41,12 +41,15 @@ class AccountController < ApplicationController
       else
         session[:language_code] = previous_language
       end
-      current_site.add_user!(current_user) unless current_site.network.nil? or current_site.users.include?(current_user)
-      redirect_to params[:redirect] || {:controller => '/me/dashboard', :action => 'index'}
+      
+      params[:redirect] = nil unless params[:redirect].any?
+      current_site.add_user!(current_user)
+      redirect_to(params[:redirect] || current_site.login_redirect(current_user))
     else
       flash_message :title => "Could not log in"[:login_failed],
-        :error => "Username or password is incorrect."[:login_failure_reason]
+      :error => "Username or password is incorrect."[:login_failure_reason]
     end
+      
   end
 
   def signup
@@ -65,8 +68,9 @@ class AccountController < ApplicationController
     session[:signup_email_address] = nil
     self.current_user = @user
     current_site.add_user!(current_user)
-    send_welcome_message(current_user)
-    redirect_to params[:redirect] || {:controller => '/account', :action => 'welcome'}
+    #send_welcome_message(current_user)
+    
+    redirect_to params[:redirect] || current_site.login_redirect(current_user)
     flash_message :title => 'Registration successful'[:signup_success],
       :success => "Thanks for signing up!"[:signup_success_message]
   rescue Exception => exc
@@ -74,7 +78,7 @@ class AccountController < ApplicationController
     flash_message_now :exception => exc
     render :action => 'signup'
   end
-
+ 
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
@@ -90,10 +94,6 @@ class AccountController < ApplicationController
   def language
     session[:language_code] = params[:id].to_sym
     redirect_to referer
-  end
-
-  def welcome
-    render :text => GreenCloth.new(:welcome_text.t).to_html, :layout => 'default'
   end
 
   def forgot_password
@@ -144,9 +144,13 @@ class AccountController < ApplicationController
   end
   
   protected
-  def send_welcome_message(user)
-    page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
-    page.save
-  end
+  #def send_welcome_message(user)
+  #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
+  #  page.save
+  #end
   
+  def view_setup
+    @active_tab = :home
+  end
+
 end

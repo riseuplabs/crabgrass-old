@@ -121,10 +121,27 @@ malformed_wiki_orange:
   page_id: 230
   user_id: 5
   access: 1
-<% 1.upto(13) do |i| %>
+survey_blank_blue:
+  id: <%= id+=1 %>
+  page_id: 215
+  user_id: 4
+  access: 1
+survey_blank_dolphin:
+  id: <%= id+=1 %>
+  page_id: 215
+  user_id: 11
+  access: 2
+<% 1.upto(5) do |i| %>
 survey_ipsum_<%= id+=1 %>:
   id: <%= id %>
   page_id: 214
   user_id: <%= i %>
   access: 1
+<% end %>
+<% 10.upto(13) do |i| %>
+survey_ipsum_<%= id+=1 %>:
+  id: <%= id %>
+  page_id: 214
+  user_id: <%= i %>
+  access: 2
 <% end %>

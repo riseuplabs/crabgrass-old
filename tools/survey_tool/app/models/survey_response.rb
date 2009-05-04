@@ -1,10 +1,20 @@
+
+#  create_table "survey_responses", :force => true do |t|
+#    t.integer  "survey_id",   :limit => 11
+#    t.integer  "user_id",     :limit => 11
+#    t.string   "name"
+#    t.string   "email"
+#    t.integer  "stars_count", :limit => 11, :default => 0
+#    t.datetime "created_at"
+#  end
+
 class SurveyResponse < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # to truncate
 
   attr_accessible :answers_attributes
 
   belongs_to :user
-  belongs_to :survey
+  belongs_to :survey, :counter_cache => :responses_count
   has_many(:answers, :dependent => :destroy,
            :class_name => 'SurveyAnswer', :foreign_key => 'response_id')
   acts_as_rateable
@@ -45,10 +55,19 @@ class SurveyResponse < ActiveRecord::Base
 
   def validate_associated_records_for_answers
     answers.each do |answer|
-      label = "'" + truncate(answer.question.label) + "'"
+      label = "'%s'" % truncate(answer.question.label)
       unless answer.valid?
         answer.errors.each {|attr, msg| self.errors.add(label, msg)}
       end
     end
   end
+  
+  def display_name
+    if self.user_id
+      self.user.display_name
+    else
+      "%s %s" % [self.name, self.email]
+    end
+  end
 end
+

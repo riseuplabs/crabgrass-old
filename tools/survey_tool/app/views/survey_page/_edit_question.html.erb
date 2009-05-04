@@ -1,0 +1,17 @@
+
+  <% q_id = question.new_record? ? "new_NOID" : question.id %>
+  <div class="question handle">
+  <% fields_for "survey[new_questions_attributes][#{q_id}]", question do |qform| %>
+    <strong class="caption"><%= "Question:"[:question_label] %></strong>
+    <span class="drag_to_move small_icon change_order_16"><%= "drag to move"[:drag_to_move] %></span>
+    <div class="fields">
+      <%= qform.hidden_field 'type' %>
+      <%= qform.hidden_field 'position', :class => 'qposition' %>
+      <%= render :partial => 'survey_page/design/' + question.partial, :locals => {:form => qform, :question => question} %>
+    </div>
+    <div>
+      <%= link_line delete_question_function(question), private_question_checkbox(qform) %>
+    </div>
+  <% end %>
+  </div>
+

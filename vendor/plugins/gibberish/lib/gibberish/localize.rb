@@ -52,7 +52,8 @@ module Gibberish
     def load_languages!
       language_files.each do |file| 
         key = File.basename(file, '.*').to_sym
-        @@languages[key] ||= {}
+        @@languages[key] ||= HashWithIndifferentAccess.new
+        # crabgrass hack     ^^^^^^ made the translations hash be indifferent.
         @@languages[key].merge! YAML.load_file(file).symbolize_keys
       end
       languages

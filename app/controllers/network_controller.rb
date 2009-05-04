@@ -16,7 +16,7 @@ class NetworkController < GroupController
       @group_pages = Page.find_by_path(['descending', 'updated_at', 'limit','10'], options_for_groups(@group.group_ids))
     end
   end
-
+  
   protected
   
   def context

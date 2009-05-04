@@ -1,0 +1,29 @@
+= THEMING
+
+Theming in crabgrass is done with CustomAppearance objects.
+
+== Custom Appearance
+Each CustomAppearance object defines a theme. Currently CustomAppearances are attached to Sites, but can also be easily added to Groups or Networks. Each Site has one CustomAppearance object, which describes how the site's appearance is different from the default crabgrass appearance. 
+
+
+== How does it work?
+CustomAppearances work by overriding Sass constants. In crabgrass we use Sass template language to generate css which is used by the browser. Sass, unlike css, has the concept of constants and all of our constants are defined in stylesheets/sass/constants.sass file. A CustomAppearance object knows how to produce a needed css file from Sass. It also knows how to override the definitions from constants.sass. The overrides are defined in CustomAppeance#parameters attribute. Since custom appearances are ActiveRecord objects, the overrides can be modified at any time.
+
+CustomAppearance also contains attributes that can tweak the crabgrass rendering logic. It can enable/disable or modify how parts of crabgrass are displayed. For example, it can link to a specific image to be used for a masthead.
+
+== Gotchas
+Conf.always_renegerate_themed_stylesheet - Usually CustomAppearances are used like this:
+
+stylesheet_link_tag(current_custom_appearance.themed_stylesheet_url("as_needed/wiki.css"))
+
+current_custom_appearance.themed_stylesheet_url("as_needed/wiki.css") will return a string like this: 
+"stylesheets/themes/23/20091235453/as_needed/wiki.css" where the first number is the id of the CustomAppearance object and the second number is the object's current timestamp. This css file is created using custom overrides for sass constants.
+
+If the css file doesn't exist the themed_stylesheet_url method will generate it, if the file exists and Conf.always_renegerate_themed_stylesheet is true it will also regenerate it.
+
+In development mode it makes a lot of sense to set Conf.always_renegerate_themed_stylesheet to true.
+
+
+
+
+

@@ -1,3 +1,20 @@
+#  create_table "survey_questions", :force => true do |t|
+#    t.string   "type"
+#    t.text     "choices"
+#    t.integer  "survey_id",  :limit => 11
+#    t.integer  "position",   :limit => 11
+#    t.string   "label"
+#    t.text     "details"
+#    t.boolean  "required"
+#    t.datetime "created_at"
+#    t.datetime "expires_at"
+#    t.string   "regex"
+#    t.integer  "maximum",    :limit => 11
+#    t.integer  "minimum",    :limit => 11
+#    t.boolean  "private",                  :default => false
+#  end
+
+
 class SurveyQuestion < ActiveRecord::Base
   belongs_to :survey
   serialize :choices, Array
@@ -5,7 +22,7 @@ class SurveyQuestion < ActiveRecord::Base
 
   has_many(:answers, :dependent => :destroy, :class_name => 'SurveyAnswer',
            :foreign_key => 'question_id')
-  
+
   def answer_class
     TextAnswer
   end
@@ -17,13 +34,17 @@ class SurveyQuestion < ActiveRecord::Base
   # def answer!(response, value)
   #   answer_class.new(:question => self, :response => response, :value => value).save!
   # end
-  
+
   def add_question_link_text
     self.class.to_s
   end
 
   def newline_delimited_choices=(text)
-    self.choices = text.split(/\r?\n/)
+    if text
+      self.choices = text.split(/\r?\n/)
+    else
+      self.choices = []
+    end
   end
 
   def newline_delimited_choices
@@ -88,7 +109,7 @@ class ImageUploadQuestion < SurveyQuestion
   def add_question_link_text
     "Upload Image"[:upload_image_question_link]
   end
-  
+
   def answer_class
     AssetAnswer
   end
