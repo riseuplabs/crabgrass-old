@@ -20,7 +20,14 @@ module UserExtension::Sharing
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
       end
-      
+
+      named_scope :most_active_since, lambda { |time|
+        { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
+          :group => "users.id",
+          :order => 'count(user_participations.id) DESC',
+          :conditions => ["user_participations.changed_at >= ?", time] }
+      }
+
       #has_many :pages_created,
       #  :class_name => "Page", :foreign_key => :created_by_id 
 

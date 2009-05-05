@@ -27,7 +27,10 @@ module PersonHelper
 
   def choose_profile_menu
     if logged_in? and current_user.id == @user.id
-      options = options_for_select([['Public Profile'[:public_profile],'public'],['Private Profile'[:private_profile],'private']], params[:profile])
+      arry = []
+      arry << ['Public Profile'[:public_profile],'public'] if current_site.profile_enabled?(:public)
+      arry << ['Private Profile'[:private_profile],'private'] if current_site.profile_enabled?(:private)
+      options = options_for_select(arry, params[:profile])
       form = form_tag('/'+@user.name, :method => 'get')
       form += select_tag('profile', options, :onchange => 'this.form.submit();')
       form += '</form>'

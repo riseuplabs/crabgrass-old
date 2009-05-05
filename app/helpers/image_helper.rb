@@ -133,13 +133,14 @@ module ImageHelper
     )
   end
 
-  def link_to_remote_icon(icon, options)
+  def link_to_remote_icon(icon, options, html_options={})
     link_to_remote(
       pushable_icon_tag(icon), {
         :url => options[:url],
         :loading => "event.target.blur(); replace_class_name(event.target, '#{icon}_16', 'spinner_icon')",
         :complete => "event.target.blur(); replace_class_name(event.target, 'spinner_icon', '#{icon}_16')",
-      }
+      }, 
+      html_options
     )
   end
 
