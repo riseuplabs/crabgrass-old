@@ -105,6 +105,15 @@ end
 ### PERMISSIONS DEFINITION
 ###
 ActionController::Base.class_eval do
+  # defines the permissioner to be in charge of instances of this controller
+  # class
+  #
+  # for example:
+  #   permissioner 'foo_bar'
+  # will attempt to load the +FooBarPermission+ class and apply it when
+  # considering permissions for the current controller class. You could also
+  # pass in a symbol (i.e., <tt>permissioner :foo_bar</tt>) if you're so
+  # inclined.
   def self.permissions(class_name)
     permission_class = "#{class_name}_permission".camelize.constantize
     include(permission_class)
@@ -113,6 +122,12 @@ ActionController::Base.class_eval do
     @@permissioner.extend(permission_class)
   end
 
+  # returns the permissioner in charge of instances of this controller class
+  def self.permissioner
+    @@permissioner
+  end
+
+  # returns the permissioner in charge of this controller class
   def permissioner
     @@permissioner
   end
