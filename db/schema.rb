@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090429074713) do
+ActiveRecord::Schema.define(:version => 20090505085632) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -447,6 +447,7 @@ ActiveRecord::Schema.define(:version => 20090429074713) do
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
     t.integer  "discussion_id",          :limit => 11
+    t.string   "place"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"

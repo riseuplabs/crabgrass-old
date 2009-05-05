@@ -13,6 +13,7 @@ site1:
   custom_appearance_id: 2
   network_id: 3001
   council_id: 1 # true levellers
+  login_redirect_url: /me/dashboard
 site2:
   id: 2
   name: "site2"
@@ -27,3 +28,5 @@ site2:
   # the way we enable sites for only some tests relies on their being
   # a super_admin_group_id defined for the test site.
   super_admin_group_id: 4001
+  login_redirect_url: /me/dashboard
+

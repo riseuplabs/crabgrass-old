@@ -4,6 +4,12 @@
    #profile ||= Profile.new -%>
 
 <div class="profile">
+  <%=
+    [ content_tag(:strong, [h(profile.first_name), h(profile.middle_name), h(profile.last_name)].join(' ')),
+      h(profile.organization),
+      h(profile.place)
+    ].select{|i|i.any?}.join('<br/>') 
+  %>
   <h2 class="alert"><%= :Info.t %></h2>
   <%= member_since_line(profile) if profile.user %>
   <% unless profile.phone_numbers.empty? -%>
