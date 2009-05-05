@@ -197,11 +197,7 @@ class RequestsController < ApplicationController
     request = RequestToJoinUsViaEmail.redeem_code!(current_user, code, email)
     request.approve_by!(current_user)
     flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
-    if current_user.created_at > 1.minutes.ago
-      redirect_to :controller => 'account', :action => 'welcome'
-    else
-      redirect_to '/me/dashboard'
-    end
+    redirect_to current_site.login_redirect(current_user)
     rescue Exception => exc
       flash_message_now :exception => exc    
   end

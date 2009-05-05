@@ -11,6 +11,7 @@ CustomAppearances work by overriding Sass constants. In crabgrass we use Sass te
 
 CustomAppearance also contains attributes that can tweak the crabgrass rendering logic. It can enable/disable or modify how parts of crabgrass are displayed. For example, it can link to a specific image to be used for a masthead.
 
+
 == Gotchas
 Conf.always_renegerate_themed_stylesheet - Usually CustomAppearances are used like this:
 
@@ -22,6 +23,11 @@ current_custom_appearance.themed_stylesheet_url("as_needed/wiki.css") will retur
 If the css file doesn't exist the themed_stylesheet_url method will generate it, if the file exists and Conf.always_renegerate_themed_stylesheet is true it will also regenerate it.
 
 In development mode it makes a lot of sense to set Conf.always_renegerate_themed_stylesheet to true.
+
+
+== Clear cache
+In production mode, use rake clear:css_cache after modifying a sass file to force new css to be generated.
+Alternatively, saving a CustomAppearance object will always cause new css to be generated for the new version. Old versions can be deleted with rake clear:css_cache
 
 
 
