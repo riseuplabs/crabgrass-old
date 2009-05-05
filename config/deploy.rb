@@ -23,9 +23,9 @@ set :keep_releases, 3
 ssh_options[:paranoid] = false  
 set :use_sudo, false   
 
-role :web, "bunting.riseup.net"
-role :app, "bunting.riseup.net"
-role :db, "bunting.riseup.net", :primary=>true
+role :web, "siskin.riseup.net"
+role :app, "siskin.riseup.net"
+role :db, "siskin.riseup.net", :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}_testing"
 set :user,      'crabgrass'
