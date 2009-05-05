@@ -296,9 +296,9 @@ class GroupController < ApplicationController
         if do_it == 'checked' and page_id
           page = Page.find_by_id(page_id)
           if page
-            if params[:undelete]
+            if params[:undelete] and may_undelete_page?(page)
               page.undelete
-            elsif params[:remove]
+            elsif params[:remove] and may_remove_page?(page)
               page.destroy
               ## add more actions here later
             end
@@ -387,6 +387,14 @@ class GroupController < ApplicationController
     end
   end
 
+  def may_undelete_page?(page)
+    current_user.may?(:admin, page)
+  end
+
+  def may_remove_page?(page)
+    current_user.may?(:delete, page)
+  end
+
   def check_group_visibility
     if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
       @access = :private
@@ -410,5 +418,6 @@ class GroupController < ApplicationController
     @group = nil
     no_context
   end
+
 
 end

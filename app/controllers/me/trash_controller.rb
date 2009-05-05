@@ -1,19 +1,36 @@
 class Me::TrashController < Me::BaseController
 
-  prepend_before_filter :login_with_http_auth
-  
-  def index
+  def search
     if request.post?
       path = build_filter_path(params[:search])
-      redirect_to me_url(:action => 'trash') + path   
+      if path == '/'
+        redirect_to url_for(:controller => '/me/trash', :action => nil, :path => nil)
+      else
+        redirect_to url_for(:controller => '/me/trash', :action => 'search', :path => nil) + path
+      end
     else
-      @pages = Page.paginate_by_path(params[:search], options_for_me(:method => :sphinx, :page => params[:page], :flow => :deleted))
-      
-      @columns = [:admin_checkbox, :icon, :title, :group, :deleted_by, :deleted_at, :contributors_count]
-      full_url = me_url(:action => 'trash') + '/' + String(parsed_path)
-      handle_rss :title => full_url, :link => full_url,
-                 :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+      list
     end
+  end
+
+  def index
+    list
+  end
+
+  def list
+    if params[:path].empty?
+      params[:path] = ['descending', 'updated_at']
+      full_url = url_for(:controller => '/me/trash', :action => nil, :path => nil)
+    else
+      full_url = url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
+    end
+    @pages = Page.paginate_by_path(params[:path], options_for_me(:method => :sphinx, :page => params[:page], :flow => :deleted))
+    @columns = [:admin_checkbox, :icon, :title, :group, :deleted_by, :deleted_at, :contributors_count]
+    handle_rss(
+      :title => 'Crabgrass Trash',
+      :link => full_url,
+      :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+    ) or render(:action => 'list')
   end
     
   # post required
@@ -24,9 +41,9 @@ class Me::TrashController < Me::BaseController
         if do_it == 'checked' and page_id
           page = Page.find_by_id(page_id)
           if page
-            if params[:undelete]
+            if params[:undelete] and may_undelete_page?(page)
               page.undelete
-            elsif params[:remove]
+            elsif params[:remove] and may_remove_page?(page)
               page.destroy
               ## add more actions here later
             end
@@ -35,9 +52,9 @@ class Me::TrashController < Me::BaseController
       end
     end
     if params[:path]
-      redirect_to :action => 'index', :path => params[:path]
+      redirect_to :action => 'search', :path => params[:path]
     else
-      redirect_to :action => 'index', :path => nil
+      redirect_to :action => nil, :path => nil
     end
   end
 
@@ -48,14 +65,18 @@ class Me::TrashController < Me::BaseController
   def authorized?
     return true
   end
-  
-  def fetch_user
-    @user = current_user
+
+  def may_undelete_page?(page)
+    current_user.may?(:admin, page)
   end
-  
+
+  def may_remove_page?(page)
+    current_user.may?(:delete, page)
+  end
+
   def context
     me_context('large')
-    add_context 'Trash'[:me_trash_link], url_for(:controller => '/me/trash', :action => nil, :path => params[:path])
+    add_context 'Trash'[:me_trash_link], url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
   end
 
 end
