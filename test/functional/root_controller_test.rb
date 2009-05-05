@@ -13,8 +13,8 @@ class RootControllerTest < Test::Unit::TestCase
   def setup
     @controller = RootController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
+    Conf.enable_site_testing
   end
 
   def test_index_logged_in
