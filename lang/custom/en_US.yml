@@ -1,6 +1,22 @@
-welcome_message_for_site_climatechange: "Unite for Climate enables youth organisations to get things done, get the word out, collaborate, and network"
+##
+## J8 SUMMIT
+## 
+
+welcome_message_for_site_j8summit: "The J8 community brings together Junior 8 Summit participants, alumni and others to share ideas on the G8 agenda and to connect with each other."
+welcome_title_for_site_j8summit: "Welcome to the J8 community"
+welcome_heading_for_site_j8summit: "Welcome to the J8 community"
+
+##
+## UNITE FOR CLIMATE
+##
+
+welcome_message_for_site_climatechange: "Unite for Climate enables youth organisations to get things done, get the word out, collaborate, and network."
 me_dashboard_link_for_site_climatechange: "My Unite4Climate"
 my_dashboard_for_site_climatechange: "My Unite4Climate"
+
+##
+## GENERAL
+##
 
 usage_agreement_text: |
   All members of this online community must agree to adhere to the conditions of this agreement. If you agree, please check the box that says ‘I accept the terms of the usage agreement’ and press the ‘Sign up’ button.
