@@ -27,7 +27,7 @@ role :web, "bunting.riseup.net"
 role :app, "bunting.riseup.net"
 role :db, "bunting.riseup.net", :primary=>true
 
-set :deploy_to, "/usr/apps/#{application}_testing"
+set :deploy_to, "/usr/apps/#{application}"
 set :user,      'crabgrass'
 
 set :app_db_host, 'localhost'
