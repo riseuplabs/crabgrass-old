@@ -12,6 +12,12 @@ class NetworksController < GroupsController
     @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
+  def my
+    letter_page = params[:letter] || ''
+
+    @networks = Group.all_networks_for(current_user).visible_on(current_site).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+  end
+
   def create
     @group_type = 'network'
 

@@ -39,7 +39,10 @@ class WikiPageController < BasePageController
     end
     # render if needed
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-    @wiki_html = generate_wiki_html_for_user(@wiki, current_user)
+    #@wiki_html = generate_wiki_html_for_user(@wiki, current_user)
+    # ^^ i would like to populate the edit links using js on the client instead, 
+    # why? i am not sure i have a great reason. i like the idea of keeping the markup
+    # unaltered. eventually, this could be useful for caching.
   end
 
   def version
@@ -126,6 +129,38 @@ class WikiPageController < BasePageController
     end
   end
 
+  ##
+  ## INLINE WIKI EDITING
+  ##
+
+  def edit_inline
+    heading = params[:id]    
+    greencloth = GreenCloth.new(@wiki.body)
+    text_to_edit = greencloth.get_text_for_heading(heading)
+    form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
+    next_heading = greencloth.heading_tree.successor(heading)
+    next_heading = next_heading ? next_heading.name : nil
+    wiki_plus_form = replace_section_with_form(@wiki.body_html, heading, next_heading, form)
+    render :update do |page|
+      page.replace_html(:wiki_html, wiki_plus_form)
+    end
+  end
+
+  def save_inline
+    if params[:save]
+      heading = params[:id]
+      body = params[:body]
+      greencloth = GreenCloth.new(@wiki.body)
+      greencloth.set_text_for_heading(heading, body)
+      @wiki.body = greencloth.to_s
+      @wiki.save
+      @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
+    end
+    render :update do |page|
+      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
+    end
+  end
+
   protected
 
   def save
@@ -190,6 +225,21 @@ class WikiPageController < BasePageController
       true
     end
   end
-  
+
+  # Takes some html and a section (defined from heading_start to heading_end)
+  # and replaces the section with the form. This is pretty crude, and might not
+  # work in all cases.
+  def replace_section_with_form(html, heading_start, heading_end, form)
+    index_start = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_start)}">/
+    if heading_end
+      index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
+      index_end -= 1
+    else
+      index_end = -1
+    end
+    html[index_start..index_end] = form
+    return html
+  end
+
 end
 

@@ -70,9 +70,6 @@ class GroupController < ApplicationController
   end
     
   def tags
-    # TODO: you can assign invalid tag names that cannot be searched on. For
-    # example, if the tag contains the chars ', +, ), (. These are stripped before
-    # searching, but you should not be allowed to set them at all.
     tags = params[:path] || []
     path = tags.collect{|t|['tag',t]}.flatten
     if path.any?

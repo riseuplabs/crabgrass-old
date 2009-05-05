@@ -1,11 +1,11 @@
 ---
-name: header outline
+name: fruity outline
 in: |-
   [[toc]]
 
   h1. Fruits
   
-  h2. Apples
+  h2. Tasty Apples  
 
   h3. Green
 
@@ -22,7 +22,7 @@ out: |-
   <p><ul class="toc">
   <li class="toc1"><a href="#fruits"><span>1</span> Fruits</a></li>
   <ul>
-  <li class="toc2"><a href="#apples"><span>1.1</span> Apples</a></li>
+  <li class="toc2"><a href="#tasty-apples"><span>1.1</span> Tasty Apples</a></li>
   <ul>
   <li class="toc3"><a href="#green"><span>1.1.1</span> Green</a></li>
   <li class="toc3"><a href="#red"><span>1.1.2</span> Red</a></li>
@@ -36,7 +36,7 @@ out: |-
   </ul>
   </ul></p>
   <h1><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
-  <h2><a name="apples"></a>Apples<a class="anchor" href="#apples">&para;</a></h2>
+  <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
   <h3><a name="green"></a>Green<a class="anchor" href="#green">&para;</a></h3>
   <h3><a name="red"></a>Red<a class="anchor" href="#red">&para;</a></h3>
   <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
@@ -53,3 +53,37 @@ out: |-
   </ul></p>
   <h1><a name="bats"></a>Bats<a class="anchor" href="#bats">&para;</a></h1>
   <h1><a name="squirrels"></a>Squirrels<a class="anchor" href="#squirrels">&para;</a></h1>
+---
+name: test name collisions
+in: |-
+  h1. Corvidae
+  
+  h2. Crow
+
+  h2. Raven
+
+  h2. Rook
+
+  h1. Chess Pieces
+
+  h2. Queen
+  
+  h2. Rook
+  
+  h1. Card Games
+  
+  h2. Hearts
+
+  h2. Rook
+out: |-
+  <h1><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
+  <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
+  <h2><a name="raven"></a>Raven<a class="anchor" href="#raven">&para;</a></h2>
+  <h2><a name="rook"></a>Rook<a class="anchor" href="#rook">&para;</a></h2>
+  <h1><a name="chess-pieces"></a>Chess Pieces<a class="anchor" href="#chess-pieces">&para;</a></h1>
+  <h2><a name="queen"></a>Queen<a class="anchor" href="#queen">&para;</a></h2>
+  <h2><a name="rook_2"></a>Rook<a class="anchor" href="#rook_2">&para;</a></h2>
+  <h1><a name="card-games"></a>Card Games<a class="anchor" href="#card-games">&para;</a></h1>
+  <h2><a name="hearts"></a>Hearts<a class="anchor" href="#hearts">&para;</a></h2>
+  <h2><a name="rook_3"></a>Rook<a class="anchor" href="#rook_3">&para;</a></h2>
+

@@ -120,7 +120,9 @@ class Site < ActiveRecord::Base
 
   # a user can be autoregistered in site.network
   def add_user!(user)
-    self.network.add_user!(user) unless self.network.nil? or user.member_of?(self.network)
+    unless self.network.nil? or user.member_of?(self.network) or self.new_record?
+      self.network.add_user!(user)
+    end
   end
 
   # returns true if the thing is part of the network

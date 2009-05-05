@@ -57,7 +57,7 @@ module GroupHelper
     if may_admin_group?
       # eventually, this should fire a request to destroy.
       if (@group.network? && @group.groups.size == 1) or (@group.users.uniq.size == 1)
-        post_to "destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
+        link_to("destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post)
       end
     end
   end

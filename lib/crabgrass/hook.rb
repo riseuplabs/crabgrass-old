@@ -8,10 +8,14 @@ module Crabgrass #:nodoc:
     @@listener_classes = []
     @@listeners = nil
     @@hook_listeners = {}
+
+    def self.listener_classes
+      @@listener_classes
+    end
     
     class << self
       # Adds a listener class.
-      # Automatically called when a class inherits from Redmine::Hook::Listener.
+      # Automatically called when a class inherits from Crabgrass::Hook::Listener.
       def add_listener(klass)
         raise "Hooks must include Singleton module." unless klass.included_modules.include?(Singleton)
         @@listener_classes << klass
@@ -85,7 +89,7 @@ module Crabgrass #:nodoc:
     # Current project is automatically added to the call context.
     module Helper
       def call_hook(hook, context={})
-        defaults = {:page => @page, :user => @user, :group => @group, :delegate_to => self, :session => session}
+        defaults = {:page => @page, :user => @user, :group => @group, :delegate_to => self, :session => session, :params => params}
         Crabgrass::Hook.call_hook(hook, defaults.merge(context))
       end
     end

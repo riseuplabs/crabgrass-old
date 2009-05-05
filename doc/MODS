@@ -100,6 +100,33 @@ apply_mixin_to_model that is available in the plugin's init.rb.
     end
   end
 
+(3) Some alternate examples
+
+Sometimes, the apply_mixin_to_model needs to be wrapped in Dispatcher.to_prepare.
+This does two things: first, it applies the code block later in init process;
+second, the code block gets re-applied on every request in development mode. 
+Sometimes, development mode will unload classes that you still want around, but
+if you wrap in Dispatcher.to_prepare, then your code will still work.
+
+  Dispatcher.to_prepare do
+    apply_mixin_to_model(User, CracklibUserExtension)
+  end
+
+You can also just extend a class directly:
+
+  Dispatcher.to_prepare do
+    User.class_eval do
+      validates_each(:password, :if => :password_required?) do |record, attr, value|
+        result = Cracklib.check(value)
+        unless result == "OK"
+          code = Cracklib.translation_key_from_error_message(result)
+          record.errors.add attr, result[code]
+        end
+      end
+    end
+  end
+
+
 Some further reading....
 
 Plugins loaded first problem:
@@ -118,19 +145,23 @@ Reloading changed code problem:
 * http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
 * crabgrass has its own method. see lib/extends_to_engines.rb
 
-== Customizing the stylesheets and favicon from a plugin
+== Customizing the stylesheets and javascript from a plugin
 
-Define LayoutHelper for your module and then define mods_styles and
-favicon_link.
+Simply define a listener for html_head. Whatever you return will get inserted there. 
 
-For example, <tt>mods/mymod/app/helpers/layout_helper.rb</tt>:
+For example, <tt>mods/mymod/lib/my_view_listener.rb</tt>:
 
-  module LayoutHelper
-    def mod_styles
-      stylesheet_link_tag('theme', :plugin => 'mymod')
-    end
-    def favicon_link
-      '<link rel="shortcut icon" href="/plugin_assets/mymod/favicon.ico" type="image/x-icon" /><link rel="icon" href="/plugin_assets/mymod/favicon.png" type="image/x-icon" />]'
+  class MyViewListener < Crabgrass::Hook::ViewListener
+    include Singleton
+
+    def html_head(context)
+      return unless params[:controller] == 'whatever'
+      stylesheet_link_tag('mycss', :plugin => 'mymod')
     end
   end
+
+Alternately, you could specify custom javascript or a favicon.
+
+In this case, the stylesheet_link_tag will link to the file <tt>mods/mymod/assets/stylesheets/mycss.css</tt>
+
 
