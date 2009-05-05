@@ -27,7 +27,7 @@ role :web, "siskin.riseup.net"
 role :app, "siskin.riseup.net"
 role :db, "siskin.riseup.net", :primary=>true
 
-set :deploy_to, "/usr/apps/#{application}_testing"
+set :deploy_to, "/usr/apps/#{application}"
 set :user,      'crabgrass'
 
 set :app_db_host, 'localhost'
