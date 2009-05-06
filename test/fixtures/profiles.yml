@@ -75,18 +75,18 @@ profile_for_warm:
   stranger: true
   may_see: false
 
-public_profile_for_yellow:
-  id: 8
-  entity_type: "User"
-  entity_id: 7
-  stranger: true
-  may_see: false
-  may_pester: false
-
-private_profile_for_yellow:
-  id: 9
-  entity_type: "User"
-  entity_id: 7
-  stranger: false
-  may_see: false
-  may_pester: false
+#public_profile_for_yellow:
+#  id: 8
+#  entity_type: "User"
+#  entity_id: 7
+#  stranger: true
+#  may_see: false
+#  may_pester: false
+#
+#private_profile_for_yellow:
+#  id: 9
+#  entity_type: "User"
+#  entity_id: 7
+#  stranger: false
+#  may_see: false
+#  may_pester: false

@@ -37,7 +37,7 @@
     <td>&nbsp;</td>
     <td>
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>
-      <%= select_page_access 'recipient[access]', :blank => (type=='send') %>
+      <%= select_page_access 'recipient[access]', :blank => false %>
       <%- end -%>
     </td>
     <td>
