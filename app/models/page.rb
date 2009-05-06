@@ -187,6 +187,7 @@ class Page < ActiveRecord::Base
   #   :view  -- user can see the page.
   #   :edit  -- user can participate.
   #   :admin -- user can destroy the page, change access.
+  #   :none  -- always returns false
   # conditional permissions:
   #   :comment -- sometimes viewers can comment and sometimes only participates can.
   #   (NOT SUPPORTED YET)
@@ -213,7 +214,9 @@ class Page < ActiveRecord::Base
         (a.access||100) <=> (b.access||100)
       }
       # allow :view if the participation exists at all
-      allowed = (ACCESS[perm.to_sym] >= ( part_with_best_access.access || ACCESS[:view]))
+      asked_access_level = ACCESS[perm.to_sym] || 0
+      actual_access_level = part_with_best_access.access || ACCESS[:view]
+      allowed = asked_access_level >= actual_access_level
     end
     if allowed
       return true
