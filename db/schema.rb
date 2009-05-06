@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090505085632) do
+ActiveRecord::Schema.define(:version => 20090506095212) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -346,6 +346,10 @@ ActiveRecord::Schema.define(:version => 20090505085632) do
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
