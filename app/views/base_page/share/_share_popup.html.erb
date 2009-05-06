@@ -3,7 +3,6 @@
 <%- share_function = "$('add_recipient_spinner').remove(); submit_form(this, 'share');"+show_spinner('popup') -%>
 
 <% popup('Share Page'[:share_page_link], :id => 'share_popup', :width => '40em') do -%>
-
   <% form_remote_tag(
     :url => form_url,
     :loading => show_spinner('add_recipient'),
