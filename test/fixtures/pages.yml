@@ -278,6 +278,7 @@ asset1:
   ends_at: 
   contributors_count: "0"
   data_id: "1"
+  is_image: "1"
 <% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -304,6 +305,7 @@ asset2:
   ends_at: 
   contributors_count: "0"
   data_id: "2"
+  is_image: "1"
 <% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -330,6 +332,7 @@ asset3:
   ends_at: 
   contributors_count: "0"
   data_id: "3"
+  is_image: "1"
 <% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"

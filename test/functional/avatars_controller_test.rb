@@ -10,7 +10,6 @@ class AvatarsControllerTest < Test::Unit::TestCase
   def setup
     @controller = AvatarsController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

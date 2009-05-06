@@ -102,7 +102,6 @@ redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (:ur
 subject_must_not_be_empty: subject must not be empty
 at_least_one_recipient_is_required: at least one recipient is required
 message_must_not_be_empty: message must not be empty
-# TODO: possible values for MessagePage.class_display_name.t
 subject: subject
 recipients: recipients
 message: message
@@ -357,12 +356,6 @@ email: Email
 language: Language
 time_zone: Time Zone
 set_status_messsage: What are you doing right now?
-
-votes: votes
-wikis: wikis
-assets: assets
-videos: videos
-messages: messages
 
 ##
 ## PROFILE
@@ -646,31 +639,6 @@ create_page: "Create Page"
 only_me: "Only Me"
 back_button: "Back"
 create_page_button: "Create {page_class}"
-wiki_class_description: "A free-form text document."
-wiki: "wiki"
-collection_class_description: "Special pages that hold other pages."
-collection: "collection"
-folder_class_description: "A collection of assets."
-folder: "folder"
-task_list_class_description: "A list of todo items."
-task_list: "task list"
-gallery_class_description: "A collection of images."
-gallery: "gallery"
-approval_vote_class_description: "Approve or disapprove of each possibility."
-approval_vote: "approval vote"
-group_discussion_class_description: "A group discussion on a particular topic."
-group_discussion: "discussion"
-personal_message_class_description: "A personal message sent to individual recipients."
-personal_message: "personal message"
-ranked_vote_class_description: "Rank possibilities in order of preference."
-ranked_vote: "ranked vote"
-file: "file"
-file_class_description: "An uploaded file."
-video_class_description: "Show a video hosted on an external website."
-video: "video"
-article: "article"
-article_class_description: "Blog post or news article."
-
 title: "Title"
 summary: "Summary"
 edit_title: "edit title"
@@ -678,7 +646,6 @@ summary: "Summary"
 separate_tags: "Separate tags using commas."
 data_for_page_missing: "The data for this page is missing."
 information: "Information"
-
 share_page_link: "Share :page_class"
 share_page_options: "Choose options"
 share_page_recipients: "Share this {page_class} with"
@@ -690,7 +657,6 @@ share_page_email: "Send an email notification"
 share_page_message: "Send a message (optional)"
 no_change: "no change"
 Announcements: "Announcements"
-
 watch_checkbox: "Watch For Updates"
 add_star_link: "Add Star (:star_count)"
 remove_star_link: "Remove Star (:star_count)"
@@ -711,6 +677,68 @@ notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <
 notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
 notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
 notify_recipients: "Recipients"
+
+##
+## PAGE TYPES
+##
+
+announcement_page_description: "An announcement."
+announcement_page_display: "Announcement"
+
+asset_page_description: "An uploaded file."
+asset_page_display: "File"
+
+external_video_page_description: "Show a video hosted on an external website."
+external_video_page_display: "External Video"
+
+article_page_description: "Blog post or news article."
+article_page_display: "Article"
+
+wiki_page_description: "A free-form text document."
+wiki_page_display: "Wiki"
+
+#collection_class_description: "Special pages that hold other pages."
+#collection_page_display: "collection"
+
+folder_class_description: "A collection of files."
+folder_display: "Folder"
+
+task_list_page_description: "A list of todo items."
+task_list_page_display: "Task List"
+
+gallery_description: "A collection of images."
+gallery_display: "Gallery"
+
+rate_many_page_description: "Approve or disapprove of each possibility."
+rate_many_page_display: "Approval Vote"
+
+discussion_page_description: "A group discussion on a particular topic."
+discussion_page_display: "Group Discussion"
+
+message_page_description: "A personal message sent to individual recipients."
+message_page_display: "Personal Message"
+
+ranked_vote_page_description: "Rank possibilities in order of preference."
+ranked_vote_page_display: "Ranked Vote"
+
+survey_page_description: "Create questions for people to answer."
+survey_page_display: "Survey"
+
+#event_page_description: "I wish that this worked."
+#event_page_display: "Event"
+
+# page type groupings
+
+page_group_vote: Voting
+page_group_text: Text
+page_group_collection: Collections
+page_group_discussion: Discussions
+page_group_event: Events
+page_group_task: Tasks
+page_group_media_image: Images
+page_group_media_audio: Audio
+page_group_media_video: Videos
+page_group_media_document: Documents
 
 ##
 ## DATES
@@ -771,9 +799,6 @@ ranked_vote_instructions: |
 ##
 ## SURVEY PAGE
 ##
-
-survey: "survey"
-survey_class_description: "A survey"
 
 survey_design: "Design Survey"
 survey_my_response: "My Response"

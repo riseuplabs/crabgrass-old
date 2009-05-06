@@ -1,14 +1,19 @@
-# just defaults :)
 # but i need sites to be activated...
+#
+# ^^ i don't know who wrote that, but if you keep turning sites
+# on for tests then you need to fix all the tests it breaks.
+# You can enable sites for a single test file by putting
+# Conf.enable_site_testing in the setup. -elijah
+#
 
 sites:
 
 # bound to localhost:
-  - name: site1
-    admin_group: animals
+#  - name: site1
+#    admin_group: animals
 
 # bound to test.host
-  - name: site2
-    admin_group: superadmins
-    chat: false
+#  - name: site2
+#    admin_group: superadmins
+#    chat: false
 
