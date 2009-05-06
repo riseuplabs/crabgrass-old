@@ -27,28 +27,28 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     FileUtils.rm_rf(@@public)
   end
 
-#   def test_update_public
-#     login_as(:blue)
-#     # blue can edit page 1
+  def test_update_public
+    login_as(:blue)
+    # blue can edit page 1
 
-#     xhr :post, :update_public, :public => 'true', :page_id => 1
-#     assert_equal true, Page.find(1).public?
+    xhr :post, :update_public, :public => 'true', :page_id => 1
+    assert_equal true, Page.find(1).public?
     
-#     xhr :post, :update_public, :public => 'null', :page_id => 1
-#     assert_equal false, Page.find(1).public?
+    xhr :post, :update_public, :public => 'null', :page_id => 1
+    assert_equal false, Page.find(1).public?
     
     
-#     # and what if the page has an attachment?
-#     @asset = Asset.create :uploaded_data => upload_data('photo.jpg'), :page_id => 1
-#     @asset.save
+    # and what if the page has an attachment?
+    @asset = Asset.create :uploaded_data => upload_data('photo.jpg'), :page_id => 1
+    @asset.save
 
-#     xhr :post, :update_public, :public => 'true', :page_id => 1
-#     assert_equal true, Page.find(1).public?
+    xhr :post, :update_public, :public => 'true', :page_id => 1
+    assert_equal true, Page.find(1).public?
     
-#     xhr :post, :update_public, :public => 'null', :page_id => 1
-#     assert_equal false, Page.find(1).public?
+    xhr :post, :update_public, :public => 'null', :page_id => 1
+    assert_equal false, Page.find(1).public?
     
-#   end
+  end
 
   def test_add_star
     login_as(:blue)

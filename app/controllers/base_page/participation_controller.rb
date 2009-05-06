@@ -19,14 +19,12 @@ class BasePage::ParticipationController < ApplicationController
   # TODO: add non-ajax version
   # TODO: send a 'made public' message to watchers
   # Requires :admin access
-  #
-  #def update_public
-  #  @page.public = ('true' == params[:public])
-  #  @page.updated_by = current_user
-  #  @page.save
-  #  render :template => 'base_page/participation/reset_public_line'
-  #end
-  
+  def update_public
+    @page.public = ('true' == params[:public])
+    @page.updated_by = current_user
+    @page.save
+    render :template => 'base_page/participation/reset_public_line'
+  end
 
   # post
   def add_star
