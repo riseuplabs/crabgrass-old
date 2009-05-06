@@ -12,7 +12,6 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
   def setup
     @controller = BasePageController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

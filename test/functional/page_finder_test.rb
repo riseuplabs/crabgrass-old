@@ -26,7 +26,6 @@ class PageFinderTest < Test::Unit::TestCase
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

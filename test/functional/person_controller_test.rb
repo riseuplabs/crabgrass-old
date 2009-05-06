@@ -10,7 +10,6 @@ class PersonControllerTest < Test::Unit::TestCase
   def setup
     @controller = PersonController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
     
     #Page.all.each {|p| p.update_page_terms}

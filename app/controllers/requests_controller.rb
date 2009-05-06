@@ -134,7 +134,7 @@ class RequestsController < ApplicationController
         req = RequestToJoinUsViaEmail.create(:created_by => current_user,
           :email => email, :requestable => @group, :language => Gibberish.current_language.to_s)
         begin
-          Mailer.deliver_request_to_join_us!(req, mailer_options, self.request.host)
+          Mailer.deliver_request_to_join_us!(req, mailer_options)
           reqs << req
         rescue Exception => exc
           flash_message_now :text => "#{'Could not deliver email'.t} (#{email}):", :exception => exc
