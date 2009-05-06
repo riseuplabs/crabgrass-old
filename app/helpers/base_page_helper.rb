@@ -380,10 +380,8 @@ module BasePageHelper
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]
       select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
-      selected ||= ''
-    else
-      selected ||= 'admin'
     end
+    selected ||= 'admin'
     if options[:expand]
       select_tag name, options_for_select(select_options, selected), :size => select_options.size
     else
