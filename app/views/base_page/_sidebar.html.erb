@@ -3,8 +3,8 @@
   <% if logged_in? -%>
     <% if @page.deleted? -%>
       <ul class='side_list commands'>
-        <%= undelete_page_line %>
-        <%= destroy_page_line %>
+        <%= undelete_line %>
+        <%= destroy_line %>
         <%= details_line %>
       </ul>
     <% else -%>
@@ -17,8 +17,7 @@
         <%= public_line %>
       </ul>
       <ul class='side_list commands rule'>
-        <%= delete_page_line %>
-        <%= destroy_page_line %>
+        <%= delete_line %>
         <%= move_line %>
         <%= details_line %>
       </ul>

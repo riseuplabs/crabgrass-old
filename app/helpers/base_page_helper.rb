@@ -113,29 +113,21 @@ module BasePageHelper
     content_tag :li, link, :class => "small_icon #{icon}"
   end
 
-  def delete_page_line
-    if current_user.may?(:admin, @page)
-      link = link_to("Move :page_class to trash"[:delete_page_link] % { :page_class => page_class },
-        page_xurl(@page, :action => 'delete'),
-        :method => 'post', :confirm => 'Are you sure you want to move this page into the trash?'[:confirm_delete_page])
-      content_tag :li, link, :class => 'small_icon trash_16'
-    end
-  end
-
-  def undelete_page_line
+  def undelete_line
     if current_user.may?(:admin, @page)
       link = link_to("Undelete :page_class"[:undelete_page_link] % { :page_class => page_class },
-        page_xurl(@page, :action => 'undelete'),
-        :method => 'post')
+                     page_xurl(@page, :controller => 'base_page/trash', :action => 'undelete'),
+                     :method => 'post')
       content_tag :li, link, :class => 'small_icon refresh_16'
     end
   end
 
-  def destroy_page_line
+  def destroy_line
     if current_user.may?(:delete, @page)
       link = link_to("Shred :page_class"[:destroy_page_link] % { :page_class => page_class },
-        page_xurl(@page, :action => 'destroy'),
-        :method => 'post', :confirm => 'Are you sure you want to destroy this page? It cannot be undeleted.'[:confirm_destroy_page])
+                     page_xurl(@page, :controller => 'base_page/trash', :action => 'destroy'),
+                     :method => 'post',
+                     :confirm => 'Are you sure you want to destroy this page? It cannot be undeleted.'[:confirm_destroy_page])
       content_tag :li, link, :class => 'small_icon minus_16'
     end
   end
@@ -236,6 +228,12 @@ module BasePageHelper
   def share_line
     if current_user.may? :view, @page
       popup_line(:name => 'share', :label => "Share :page_class"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
+    end
+  end
+
+  def delete_line
+    if current_user.may? :admin, @page
+      popup_line(:name => 'trash', :label => "Delete :page_class"[:delete_page_link] % {:page_class => page_class }, :icon => 'trash_16')
     end
   end
 

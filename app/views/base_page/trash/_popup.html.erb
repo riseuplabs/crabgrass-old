@@ -1,0 +1,20 @@
+<% popup('Delete Page'[:delete_page], :id => 'trash_popup', :style => '') do -%>
+
+  <%= "Put this page in the dumpster or destroy it completely"[:move_page_to_dumpster_or_destroy] %>
+  <div class='page_sidebar sub_menu'>
+      <ul class='side_list commands'>
+        <%= trash_page_line %>
+        <%= destroy_page_line %>
+      </ul>
+  </div>
+  <p>
+    <% form_remote_tag(
+      :url => {:controller => 'base_page/trash', :action => 'close', :page_id => @page.id},
+      :loading => show_spinner('popup')) do -%>
+         <%= submit_tag :close_button.t, :name => 'close' %>
+         <%= spinner 'popup' %>
+    <% end -%>
+  </p>
+
+<% end -%>
+

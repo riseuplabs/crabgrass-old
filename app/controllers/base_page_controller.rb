@@ -60,24 +60,6 @@ class BasePageController < ApplicationController
     render :template => 'base_page/create'
   end
 
-  def delete
-    url = from_url(@page)
-    @page.delete
-    redirect_to url
-  end
-
-  def undelete
-    url = page_url(@page)
-    @page.undelete
-    redirect_to url
-  end
-
-  def destroy
-    url = from_url(@page)
-    @page.destroy
-    redirect_to url
-  end
-
   protected
 
   def authorized?
