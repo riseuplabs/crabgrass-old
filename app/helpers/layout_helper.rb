@@ -22,27 +22,20 @@ module LayoutHelper
     (
       [@html_title] +
       (@context||[]).collect{|b|truncate(b[0])}.reverse +
-      [site_name]
+      [current_site.title]
     ).compact.join(' - ')
-  end
-
-  def site_name
-   (current_site||Site.new(:name => 'unknown')).name
   end
       
   ###########################################
   # STYLESHEET
   
-  # this will check if we have cached the request css path (like 'as_needed/wiki.css')
-  # specifically for the current custom appearance
-  # and will link to the cached version if it exists
-  def cached_stysheet_link_tag(path)
+  # CustomAppearances model allows administrators to override the default css values
+  # this method will link to the appropriate overriden css
+  def themed_stylesheet_link_tag(path)
     appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
-    if appearance.has_cached_css?(path)
-      stylesheet_link_tag(appearance.cached_css_stysheet_link_path(path))
-    else
-      stylesheet_link_tag(path)
-    end
+
+    themed_stylesheet_url = appearance.themed_stylesheet_url(path)
+    stylesheet_link_tag(themed_stylesheet_url)
   end
 
   # custom stylesheet
@@ -50,8 +43,8 @@ module LayoutHelper
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
-    sheets = [stylesheet[:all], stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
-    sheets.collect {|s| cached_stysheet_link_tag(s)}
+    sheets = [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
+    sheets.collect {|s| themed_stylesheet_link_tag(s)}
   end
 
   # crabgrass_stylesheets()
@@ -69,7 +62,7 @@ module LayoutHelper
   def crabgrass_stylesheets
     lines = []
 
-    lines << cached_stysheet_link_tag('screen.css')
+    lines << themed_stylesheet_link_tag('screen.css')
     lines << stylesheet_link_tag('icon_png')
     lines << optional_stylesheet_tag
     lines << '<style type="text/css">'
@@ -84,14 +77,9 @@ module LayoutHelper
     lines << stylesheet_link_tag('ie/ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
-    lines << mod_styles
     lines.join("\n")
   end
 
-  # to be overridden by mods, if they want.
-  def mod_styles
-    ""
-  end
   def favicon_link
     %q[<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />]
@@ -132,7 +120,7 @@ module LayoutHelper
     extra = js_files.delete(:extra)
     js_files = js_files.collect{|i| "as_needed/#{i}" }
     if extra
-      js_files += ['effects', 'dragdrop', 'controls']
+      js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
     end
     javascript_include_tag(*js_files)
   end
@@ -221,6 +209,27 @@ module LayoutHelper
     end
     lines << '</table>' unless options[:skip_table_tag]
     lines.join("\n")
+  end
+
+
+  ############################################
+  # CUSTOMIZED STUFF
+
+  # build a masthead, using a custom image if available
+  def custom_masthead_site_title
+    appearance = current_site.custom_appearance
+    if appearance and appearance.masthead_asset
+      # use an image
+      content_tag :div, :id => 'site_logo_wrapper' do
+        content_tag :a, :href => '/', :alt => current_site.title do 
+          image_tag(appearance.masthead_asset.url, :id => 'site_logo')
+        end
+      end
+    else
+      # no image
+      content_tag :h1, current_site.title, :id => 'site_title'
+      # <h1 id='site_title'><%= current_site.title %></h1>
+    end
   end
 
 end

@@ -28,6 +28,7 @@ Order of profile presidence (user sees the first one that matches):
     t.string   "nickname"
     t.string   "role"
     t.string   "organization"
+    t.string   "place"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "birthday",               :limit => 8
@@ -122,9 +123,10 @@ class Profile < ActiveRecord::Base
   # and saves it all to the database.
   def save_from_params(profile_params)
 
-    valid_params = ['first_name', 'middle_name', 'last_name', 'role', 'organization', 
-      "may_see", "may_see_committees", "may_see_networks", "may_see_members", "may_request_membership",
-      "membership_policy", "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
+    valid_params = ["first_name", "middle_name", "last_name", "role",
+      "organization", "place", "may_see", "may_see_committees", "may_see_networks",
+      "may_see_members", "may_request_membership", "membership_policy",
+      "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
       "may_burden", "may_spy"]
 
     collections = {

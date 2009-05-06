@@ -1,0 +1,7 @@
+<% 1.upto(10) do |i| %>
+resp<%= i %>:
+  id: <%= i %>
+  survey_id: 1
+  user_id: <%= i %>
+  created_at: <%= rand(14400).minutes.ago.to_s(:db) %>
+<% end %>

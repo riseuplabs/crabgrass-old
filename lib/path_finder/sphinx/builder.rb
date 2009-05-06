@@ -13,8 +13,9 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   
   # every time we reference @with[:access_ids] we want to create
   # a unique key like :access_ids_X where X is a number.
-  # This will allow us to create multiple filters on the same attribute
-  # because of a hack to the thinking sphinx code we added in search.rb
+  # This will allow us to create multiple filters on the same attribute,
+  # because of a hack to the thinking sphinx code we added in search.rb.
+  # This is what allows multiple AND clauses in the fulltext search.
   def access_ids_key # :nodoc:
     @access_ids_key_count ||= 0
     @access_ids_key_count += 1
@@ -24,20 +25,28 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   public
 
   def initialize(path, options)
+
+    # filter on access_ids:
     @with = {}
     if options[:group_ids] or options[:user_ids] or options[:public]
-      @with[access_ids_key] = Page.access_ids_for(
+      @with[access_ids_key()] = Page.access_ids_for(
         :public => options[:public],
         :group_ids => options[:group_ids],
         :user_ids => options[:user_ids]
       )
     end
     if options[:secondary_group_ids] or options[:secondary_user_ids]
-      @with[access_ids_key] = Page.access_ids_for(
+      @with[access_ids_key()] = Page.access_ids_for(
         :group_ids => options[:secondary_group_ids],
         :user_ids => options[:secondary_user_ids]
       )
     end
+    if options[:site_ids]
+      @with[access_ids_key()] = Page.access_ids_for(
+        :sites_ids => options[:site_ids]
+      )
+    end
+
     @without      = {}
     @conditions   = {}
     @order        = ""

@@ -73,10 +73,12 @@ class BasePage::ParticipationController < ApplicationController
   # this is very similar to move.
   # only allow changing the owner to someone who is already an admin
   def set_owner
-    owner = (User.find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
-    raise PermissionDenied.new unless owner.may?(:admin,@page)
-    @page.owner = owner
-    @page.save!
+    if params[:owner].any?
+      owner = (User.find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
+      raise PermissionDenied.new unless owner.may?(:admin,@page)
+      @page.owner = owner
+      @page.save!
+    end
     clear_referer(@page)
     redirect_to page_url(@page)
   end

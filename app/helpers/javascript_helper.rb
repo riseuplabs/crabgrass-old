@@ -21,7 +21,14 @@ module JavascriptHelper
   end
 
   def replace_class_name(element_id, old_class, new_class)
-    remove_class_name(element_id, old_class) + add_class_name(element_id, new_class)
+    if element_id.is_a? String
+      if element_id != 'this'
+        element_id = "$('" + element_id + "')"
+      end
+    else
+      element_id = "$('" + dom_id(element_id) + "')"
+    end
+    "replace_class_name(#{element_id}, '#{old_class}', '#{new_class}');"
   end
 
   def add_class_name(element_id, class_name)

@@ -110,7 +110,7 @@ module PathFinder::Sphinx::BuilderFilters
   ####
 
   def filter_type(page_class_group)
-    @conditions[:page_type] = Page.class_group_to_class_names(page_class_group).join(' ')
+    @conditions[:page_type] = Page.class_group_to_class_names(page_class_group).join('|')
   end
   
   def filter_person(id)

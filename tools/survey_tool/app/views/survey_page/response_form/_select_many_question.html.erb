@@ -1,0 +1,5 @@
+<% choices = [] %>
+<% # collect the choices with their index so we can pass them to render :partial as a collection %>
+<% question.choices.each_with_index {|c, index| choices << {:text => c, :index => index}} %>
+<%= render(:partial => 'survey_page/response_form/choice_for_select_many', :collection => choices, 
+        :locals => {:response_form => response_form, :question => question}) %>

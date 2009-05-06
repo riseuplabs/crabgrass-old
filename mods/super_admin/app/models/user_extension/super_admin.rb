@@ -10,9 +10,16 @@ module UserExtension
       end
     end
     
-    def superadmin?
-      self.group_ids.include?(Site.default.super_admin_group_id)
-      #(Site.default.super_admins||[]).include?(self.login)
+    # Returns true if self is a super admin. If self is the current_user
+    # then no arguments are required. However, to test superadmin? on any
+    # other user requires a site argument.
+    def superadmin?(site=nil)
+      site ||= self.current_site
+      if site
+        self.group_ids.include?(site.super_admin_group_id)
+      else
+        false
+      end
     end
 
     def member_of_with_superadmin?(group)

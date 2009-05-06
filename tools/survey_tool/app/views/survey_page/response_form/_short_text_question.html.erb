@@ -1,0 +1,5 @@
+<% response_form.fields_for :answers_attributes, answer, :index => question.id do |f| %>
+  <%= f.error_message_on :value %>
+  <%= f.hidden_field :question_id %>
+  <%= f.text_field :value, :style => 'width:100%' %>
+<% end %>

@@ -52,3 +52,11 @@ animals_asset3:
   group_id: 2
   access: 1
 
+<% for i in 1..20 %>
+networkpage_<%=i%>:
+  id: 5<%= i %>
+  page_id: <%= rand(99)+1 %>
+  group_id: 300<%= rand(3)+1 %>
+  access: 1
+<% end %>
+

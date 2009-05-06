@@ -14,13 +14,19 @@ class InfovizControllerTest < Test::Unit::TestCase
   end
 
   def test_visualize
-    login_as :blue
+    if enabled?
+      login_as :blue
 
-    get :visualize, :format => 'png'
-    assert_response :success
+      get :visualize, :format => 'png'
+      assert_response :success
 
-    get :visualize, :format => 'svg'
-    assert_response :success
+      get :visualize, :format => 'svg'
+      assert_response :success
+    end
+  end
+
+  def enabled?
+   `which fdp`.any?
   end
 
 end

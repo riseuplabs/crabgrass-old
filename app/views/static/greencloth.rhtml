@@ -51,6 +51,7 @@ div.codetitle {
   padding: 0.25em;
   font-weight: bold;
 }
+h1 a, h2 a, h3 a, h3 a {display:none}
 <% end %>
 <%
 
@@ -59,7 +60,7 @@ def row(text)
 <tr>
   <td class='code'><pre>#{text.gsub('<','&lt;').gsub("\n","<span class='light'>&para;</span>\n").gsub("\t","<span class='light'>&rarr;</span>")}</pre></td>
   <td><b>&rarr;</b></td>
-  <td class='rendered wiki'>#{GreenCloth.new(text).to_html}</td>
+  <td class='rendered wiki'>#{GreenCloth.new(text, 'page', [:outline]).to_html}</td>
 </tr>
   )
 end
@@ -105,7 +106,7 @@ END
 * ninjas are cool
 * crows are smart
 
-# first, overthrow capitalism.
+# first, be the change you want to see in the world.
 # then, relax.
 
 # or perhaps take a nap instead.
@@ -223,6 +224,22 @@ end
 
 @@ a single code block line
 END
+
+  header('Macros') +
+  row(<<END) +
+There are a few macros which generate special content:
+
+Table of Contents:
+
+[[toc]]
+
+h3. squirrels
+
+h4. grey
+
+h4. black
+END
+
 
 #  header('Definition Lists') +
 #  row(<<END) +

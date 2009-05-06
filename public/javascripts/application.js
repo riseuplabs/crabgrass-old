@@ -60,6 +60,11 @@ function submit_form(form_element, name, value) {
   }
 }
 
+function replace_class_name(element, old_class, new_class) {
+  element.removeClassName(old_class);
+  element.addClassName(new_class);
+}
+
 /** editing textareas **/
 
 /* element is a textarea object. value is some text */
@@ -125,4 +130,3 @@ function absolutePositionParams(obj) {
   page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
-

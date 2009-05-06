@@ -130,7 +130,7 @@ module BasePageHelper
   end
 
   def destroy_page_line
-    if current_user.may?(:admin, @page)
+    if current_user.may?(:delete, @page)
       link = link_to("Delete :page_class"[:delete_page_link] % { :page_class => page_class },
         page_xurl(@page, :action => 'destroy'),
         :method => 'post', :confirm => 'Are you sure you want to delete this page?')
@@ -244,7 +244,7 @@ module BasePageHelper
   end
   
   def move_line
-    if current_user.may? :admin, @page
+    if current_user.may? :delete, @page
       popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
     end
   end
@@ -279,8 +279,13 @@ module BasePageHelper
     owner_name = @page.owner ? @page.owner.name : ''
     if current_user.may?(:admin, @page)
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
+        possibles = @page.admins.to_select('both_names', 'name') + [["(#{:none.t})",'']]
         concat(
-          select_tag('owner', options_for_select(@page.admins.to_select('both_names', 'name'), owner_name), :onchange => 'this.form.submit();'),
+          select_tag(
+            'owner',
+             options_for_select(possibles, owner_name),
+            :onchange => 'this.form.submit();'
+          ),
           binding
         )
       end

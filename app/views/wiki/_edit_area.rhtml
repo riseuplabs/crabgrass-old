@@ -1,8 +1,8 @@
-<%# locals: wiki, access (one of :public or :private) -%>
+<%# locals: wiki -%>
 <% spinner_id = 'save-spinner-%s' % rand(1000000) -%>
 <% rows = [ 20, (params[:height]||0).to_i/16 ].max  # 16 here is a magic number. it might have to change if the font size of the wiki text changes. -%>
 <% form_remote_tag(
-     :url => wiki_action('save', :access => access),
+     :url => wiki_action('save', :wiki_id => wiki.id),
      :loading => show_spinner(spinner_id)
   ) do -%>
   <%= hidden_field_tag 'version', wiki.version %>

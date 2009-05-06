@@ -33,6 +33,9 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
+    if logged_in? and current_site.council == @group and current_user.may?(:admin, current_site)
+      @editable_custom_appearance = current_site.custom_appearance
+    end
   end
 
   def archive
@@ -67,9 +70,6 @@ class GroupController < ApplicationController
   end
     
   def tags
-    # TODO: you can assign invalid tag names that cannot be searched on. For
-    # example, if the tag contains the chars ', +, ), (. These are stripped before
-    # searching, but you should not be allowed to set them at all.
     tags = params[:path] || []
     path = tags.collect{|t|['tag',t]}.flatten
     if path.any?
@@ -78,7 +78,7 @@ class GroupController < ApplicationController
       @tags    = Tag.for_taggables(Page,page_ids).find(:all)
     else 
       @pages = []
-      @tags  = Tag.page_tags_for_group(@group)
+      @tags  = Page.tags_for_group(:group => @group, :current_user => (current_user if logged_in?))
     end
   end
 
@@ -90,7 +90,7 @@ class GroupController < ApplicationController
 
   # login required
   def edit
-    @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
+    @group.group_setting ||= GroupSetting.new
   end
 
   # login required
@@ -210,9 +210,14 @@ class GroupController < ApplicationController
     @allowed_tools =  ( ! @group.group_setting.allowed_tools.nil? ? @group.group_setting.allowed_tools : @available_tools)
   end
   
-  @@layout_widgets = ["group_wiki", "recent_pages"]
   def edit_layout
-    @widgets = [''] + @@layout_widgets
+    # this whole thing is quite a hack, as the widget system will be reworked soon anyway
+    # jrw, Apr 22th
+    default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}
+    default_template_data.merge!({"section3" => "recent_group_pages"}) if @group.network?
+    @group.group_setting ||= GroupSetting.new
+    @group.group_setting.template_data ||= default_template_data
+    @widgets = @group.group_setting.template_data
     if request.post?
       @group.group_setting.template_data = {}
       @group.group_setting.template_data['section1'] = params['section1']

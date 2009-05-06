@@ -7,23 +7,24 @@ class Site < ActiveRecord::Base
 end
 
 class SiteTest < Test::Unit::TestCase
-  fixtures :sites
+  fixtures :sites, :users, :groups, :memberships
 
-  def test_default
-    first_site = Site.find :first
-    first_default = Site.find :first, :conditions => ["sites.default = '?'", true]
+  def test_defaults_to_conf
+    assert_equal Conf.title, Site.new.title
+  end
 
-    site_default = Site.default
-
-    assert site_default.default, "site.default field should be true"
-    # unset the first default
-    site_default.default = false
-    site_default.save!
-    Site.uncache_default
-
-    default = Site.default
-    assert_equal false, default.default, "site.default field should be false"
-    assert_equal first_site, default
+  def test_site_admin
+    blue = users(:blue)
+    kangaroo = users(:kangaroo)
+    site = Site.find_by_name("site1")
+    assert blue.may?(:admin, site), 'blue should have access to the first site.'
+    assert !kangaroo.may?(:admin, site), 'kangaroo should not have :admin access to the first site.'
+    # if no council is set no one may :admin
+    site.council=nil
+    site.save
+    assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
+      blue.may!(:admin, site)
+    end
   end
 
 end

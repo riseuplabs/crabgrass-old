@@ -52,9 +52,9 @@ module PageExtension::Subclass
     def controller
       class_definition.controller
     end
-    def controller_class_name
-      class_definition.controller_class_name
-    end
+    #def controller_class_name
+    #  class_definition.controller_class_name
+    #end
   end
 
   module ClassMethods
@@ -98,9 +98,9 @@ module PageExtension::Subclass
     def controller
       class_definition.controller
     end
-    def controller_class_name
-      class_definition.controller_class_name
-    end
+    #def controller_class_name
+    #  class_definition.controller_class_name
+    #end
     def class_display_name
       class_definition.class_display_name
     end

@@ -68,7 +68,7 @@ module Juixe
         def rating
           average = 0.0
           ratings.each { |r|
-            average = average + r.rating
+            average = average + r.rating if r.rating
           }
           if ratings.size != 0
             average = average / ratings.size 

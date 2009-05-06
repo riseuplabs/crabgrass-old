@@ -21,11 +21,11 @@
 
 <div id='header'>
   <div id='masthead'>
-  <h1 id='site_title'><%= site_name %></h1>
+  <%= custom_masthead_site_title %>
   <%= call_hook :masthead %>
 <%= render :partial => 'layouts/menu' %>
   </div>
-	<div id='banner'><div class='content'><%= @banner %></div></div>
+	<% if @banner %><div id='banner'><div class='content'><%= @banner %></div></div><% end %>
 </div>
 
 <div id='wrapper'>

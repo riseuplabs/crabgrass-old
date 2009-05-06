@@ -36,6 +36,5 @@
   salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
   created_at: <%= 5.days.ago.to_s :db %>
-
 <% end %>
 

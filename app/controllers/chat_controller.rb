@@ -102,6 +102,7 @@ class ChatController < ApplicationController
   end
 
   def authorized?
+    return false unless current_site.chat?
     return true if params[:action] == 'index'
     return( @user and @channel and @user.member_of?(@channel.group_id) )
   end

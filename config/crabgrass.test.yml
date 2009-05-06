@@ -1,0 +1,14 @@
+# just defaults :)
+# but i need sites to be activated...
+
+sites:
+
+# bound to localhost:
+  - name: site1
+    admin_group: animals
+
+# bound to test.host
+  - name: site2
+    admin_group: superadmins
+    chat: false
+

@@ -198,7 +198,12 @@ class Page < ActiveRecord::Base
     perm = comment_access if perm == :comment
 
     upart = self.participation_for_user(user)
-    gparts = self.participation_for_groups(user.all_group_ids)
+    if perm == :delete
+      gparts = self.participation_for_groups(user.admin_for_group_ids)
+      perm = :admin
+    else
+      gparts = self.participation_for_groups(user.all_group_ids)
+    end
     allowed = false
     if upart or gparts.any?
       parts = []

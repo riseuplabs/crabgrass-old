@@ -123,4 +123,17 @@ class RequestsControllerTest < Test::Unit::TestCase
     end
   end
 
+  def test_redeem
+    login_as :blue
+    post :create_invite, :group_id => groups(:animals).id, :recipients => ['root@localhost']
+    req = RequestToJoinUsViaEmail.find(:first)
+    assert req
+    assert_equal req.created_by, users(:blue)
+
+    login_as :red
+    get :redeem, :code => req.code, :email => 'root@localhost'
+    assert_redirected_to :controller => '/me/dashboard'
+    assert users(:red).member_of?(groups(:animals))
+  end
+
 end

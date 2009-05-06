@@ -4,9 +4,10 @@ tzinfo:: required for timezone support
 
 RedCloth:: The Crabgrass markup language, GreenCloth, is derived from RedCloth.
 
+haml:: used to generate css from site themes (custom appearances)
+
 = Suggested Gems
 
-haml:: used in development mode to generate the css files.
 mime-types:: used to overcome a file uploading bug in ie6.
 hpricot:: used for testing.
 ruby-debug:: used for testing.

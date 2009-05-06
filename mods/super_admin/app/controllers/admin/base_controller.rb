@@ -5,6 +5,7 @@ class Admin::BaseController < ActionController::Base
   include AuthenticatedSystem
 
   layout 'admin'
+
   helper 'admin/users', 'admin/groups', 'admin/memberships', 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', PageHelper, UrlHelper, ErrorHelper, LinkHelper, ApplicationHelper, TimeHelper
 
   before_filter :login_required
@@ -17,11 +18,33 @@ class Admin::BaseController < ActionController::Base
   include Admin::EmailBlastsHelper
   include Admin::AnnouncementsHelper
 
-  protect_from_forgery :secret => Crabgrass::Config.secret
+  protect_from_forgery :secret => Conf.secret
 
   def index
   end
 
+  helper_method :current_site  # make available to views
+  def current_site
+    @current_site ||= begin
+      site = Site.for_domain(request.host).find(:first)
+      site ||= Site.default
+      Site.current = site
+    end
+  end
+  
+  #
+  # returns a hash of options to be given to the mailers. These can be
+  # overridden, but these defaults are pretty good. See models/mailer.rb.
+  #
+  def mailer_options
+    from_address = current_site.email_sender.gsub('$current_host',request.host)
+    opts = {:site => current_site, :current_user => current_user, :host => request.host,
+     :protocol => request.protocol, :page => @page, :from_address => from_address}
+    opts[:port] = request.port_string.sub(':','') if request.port_string.any?
+    return opts
+  end
+
+  
   protected
 
   def authorized?

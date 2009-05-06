@@ -1,4 +1,4 @@
-page.replace_html area_id(params[:access]),
+page.replace_html area_id(@wiki),
   :partial => 'wiki/edit_area',
-  :locals => {:wiki => @wiki, :access => params[:access]}
+  :locals => {:wiki => @wiki}
 

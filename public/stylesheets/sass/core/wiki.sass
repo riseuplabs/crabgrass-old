@@ -92,19 +92,69 @@ div.diff
   border: 1px solid #ddd
   padding: 8px 20px
   margin: 15px 0px
-
   p
     margin: 0
-
 
 del
   &.diffmod, &.diffins
     color: #999
     background-color: #ddd
 
-
 ins
   &.diffmod, &.diffins
     background-color: #cfc
     text-decoration: none
     color: #000
+
+//
+// editing
+//
+
+div.formatting_reference
+  float: right
+
+a.edit
+  display: none
+  margin-left: 6px
+  opacity: 0.5
+  position: absolute
+  .icon_16
+    vertical-align: middle
+a.edit:hover
+  opacity: 1
+
+h1:hover a.edit, 
+h2:hover a.edit,
+h3:hover a.edit
+  display: inline
+
+//
+// table of contents
+//
+
+a.anchor
+  display: none
+  margin-left: 6px
+  text-decoration: none
+  &:hover
+    color: #aaa !important
+    text-decoration: none
+
+h1:hover a.anchor, 
+h2:hover a.anchor,
+h3:hover a.anchor
+  display: inline
+  color: #ddd
+
+ul.toc
+  width: auto
+  padding-left: 0em
+  &,
+  ul
+    list-style-type: none
+    list-style-image: none
+    padding-left: 1.8em
+    line-height: 1.6em
+  span
+    padding-right: 0.3em
+

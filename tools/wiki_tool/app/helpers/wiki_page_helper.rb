@@ -56,5 +56,21 @@ module WikiPageHelper
     end
   end
 
+  
+
+  def decorate_with_edit_links
+    url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')
+    link = link_to_remote_icon('pencil', {:url => url}, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
+    link.gsub!('"','\"')
+    javascript_tag %Q[
+      $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
+        function(elem) {
+          link = "#{link}".replace('_change_me_', elem.href.replace(/^.*#/, ''))
+          elem.insert({after:link})
+        }
+      )
+    ]
+  end
+
 end
 

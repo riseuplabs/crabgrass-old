@@ -83,4 +83,23 @@ class ActionView::Base
   alias_method_chain :link_to, :pretty_plus_signs
 end
 
+###
+### CUSTOM FORM ERROR FIELDS
+###
+
+# Rails form helpers are brutal when it comes to generating
+# error markup for fields that fail validation
+# they will surround every input with .fieldWithErrors divs
+# and will mess up your layout. but there is a way to customize them
+# http://pivotallabs.com/users/frmorio/blog/articles/267-applying-different-error-display-styles
+class ActionView::Base
+  def with_error_proc(error_proc)
+    pre = ActionView::Base.field_error_proc
+    ActionView::Base.field_error_proc = error_proc
+    yield
+    ActionView::Base.field_error_proc = pre
+  end
+end
+
+
 

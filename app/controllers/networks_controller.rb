@@ -12,6 +12,12 @@ class NetworksController < GroupsController
     @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
+  def my
+    letter_page = params[:letter] || ''
+
+    @networks = Group.all_networks_for(current_user).visible_on(current_site).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+  end
+
   def create
     @group_type = 'network'
 
@@ -42,8 +48,8 @@ class NetworksController < GroupsController
   protected
 
   def setup_view
-     network_context
-     set_banner "networks/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
+    network_context
+    set_banner "networks/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
 
   # verifies that the membership list is kosher

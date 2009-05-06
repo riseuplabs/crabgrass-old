@@ -25,18 +25,13 @@ that we don't want to load the test fixture data:
 
 There are several required configuration files:
 
+* config/secret.txt
 * config/database.yml
-* config/sites.yml
-* config/email.yml
-* config/environments/production.rb
+* config/crabgrass.production.yml
 
-If you are not running over https only, then you must comment out this line in
-production.rb:
+The file secret.txt can be created by running <tt>rake create_a_secret</tt>.
 
-  Crabgrass::Config.https_only = true
-
-It is important that you specify your own secret in the sites.yml file. 
-You can use the command <tt>rake secret</tt> to generate a secret value. 
+See CONFIGURATION[link:files/doc/CONFIGURATION.html] for more details.
 
 == Running Background Tasks
 

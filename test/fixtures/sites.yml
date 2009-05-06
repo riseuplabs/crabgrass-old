@@ -1,60 +1,32 @@
+#
+# if you change the ideas of these sites, change the method 'enable_site_testing'
+# in conf.rb. 
+#
+
 --- 
-localhost:
+site1:
   id: 1
-  name: localhost Crabgrass
+  name: "site1"
+  title: "site1"
   default: true
-  evil: 
-    google_analytics: 
-      site_id: UA-XXXXXX-X
-      https: false
-      enabled: false
-  translators: 
   domain: localhost
-  default_language: en_US
-  tracking: false
-  translation_group: 
-  email_sender: crabgrass-system@localhost
-  super_admin_group_id: 35
-  available_page_types: 
-  - Message
-  - Discussion
-  - Wiki
-  - Article
-  - RateMany
-  - RankedVote
-  - TaskList
-  - Asset
-  - Gallery
-  - ExternalVideo
-  pagination_size: 29
   custom_appearance_id: 2
   network_id: 3001
-testhost:
+  council_id: 1 # true levellers
+  login_redirect_url: /me/dashboard
+site2:
   id: 2
-  name:  crabgrass
-  default: false
-  evil: 
-    google_analytics: 
-      site_id: UA-XXXXXX-X
-      https: false
-      enabled: false
-  translators: 
-  domain: test.host
-  default_language: en_US
-  tracking: true
-  translation_group: animals
-  email_sender: crabgrass-system@test.host
-  super_admin_group_id: 35
-  available_page_types: 
-  - Message
-  - Discussion
-  - Wiki
-  - RateMany
-  - RankedVote
-  - TaskList
-  - Asset
-  - Gallery
-  - ExternalVideo
-  - Article
-  pagination_size: 29
+  name: "site2"
+  title: "testing site"
+  # the domain for the testing site must be 'test.host'
+  # this is the request domain that is used by rails when testing.
+  # this site is not used for most tests, but for some it is enabled.
+  domain: "test.host"
+  translation_group: "animals"
   network_id: 3002
+  # this is normally overwritten at startup by crabgrass. however, 
+  # the way we enable sites for only some tests relies on their being
+  # a super_admin_group_id defined for the test site.
+  super_admin_group_id: 4001
+  login_redirect_url: /me/dashboard
+

@@ -1,6 +1,6 @@
 <%
   edit_loading_id = "spinner-#{post.id}"
-  stars = post.ratings.size
+  stars = post.ratings.with_rating(1).size
   @page ||= post.discussion.page # in case @page is not already set
 -%>
 <div style='position:relative'>
@@ -10,21 +10,15 @@
 <div class='negativespace'><%= post.body_html %></div>
 <% if logged_in? and post.user_id == current_user.id -%>
   <div style='display: block' class='post_action_icon'>
-    <span style="display: none" id="<%=edit_loading_id%>"><%=image_tag "spinner.gif"%></span><%= link_to_remote image_tag('actions/pencil.png'), 
-        :url => {:controller => 'posts', :action => 'edit', :id => post.id},
-        :loading => "Element.show('#{edit_loading_id}')" -%>
+    <%= link_to_remote_icon('pencil', {:url => {:controller => 'posts', :action => 'edit', :id => post.id}}) %>
   </div>
 <% end -%>
 <% if logged_in? and post.user_id != current_user.id and current_user.may?(:comment,@page)-%> 
   <div class='post_action_icon'>
-  <% if not post.rated_by_user?(current_user) -%>
-      <%= link_to_remote image_tag('actions/star-plus.png'), 
-        {:url => { :controller => 'posts', :action => 'twinkle', :id => post.id }}
-      %>
+  <% if !post.starred_by?(current_user) -%>
+    <%= link_to_remote_icon('star_plus', :url=>{:controller=>'posts', :action=>'twinkle', :id=>post.id}) %>
   <% else -%>
-    <%= link_to_remote image_tag('actions/star-minus.png'), 
-      {:url => { :controller => 'posts', :action => 'untwinkle', :id => post.id }}
-    %>
+    <%= link_to_remote_icon('star_minus', :url=>{:controller=>'posts', :action=>'untwinkle', :id=>post.id}) %>
   <% end -%>
   </div>
   <%= call_hook :post_actions, {:post => post} %>
