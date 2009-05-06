@@ -6,7 +6,7 @@ p#trash_buttons {
 <% @title_box = content_tag :h1, "Trash"[:my_trash_headline] %>
 <% @info_box = "All the deleted pages you have access to. You can only undelete or remove pages you are a coordinator for."[:me_trash_description] %>
 
-<%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
+<%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :url => url_for(:action => 'search')} %><br/>
 
 <br/>
 
