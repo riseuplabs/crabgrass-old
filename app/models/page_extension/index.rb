@@ -134,7 +134,10 @@ module PageExtension::Index
       terms.tags      = Page.searchable_tag_list(tag_list).join(' ')
       terms.body      = summary_terms + body_terms
       terms.comments  = comment_terms
+
+      # meta
       terms.page_type = type
+      terms.media = media_flags
 
       # access control
       terms.access_ids = access_ids
@@ -155,6 +158,18 @@ module PageExtension::Index
         :user_ids => user_ids
       ).join(' ')
     end
+
+    # Converts the boolean media flags to an array of integers
+    # page.is_image? -> [1]
+    def media_flags
+      ret = []
+      ret << MEDIA_TYPE[:audio] if is_audio?
+      ret << MEDIA_TYPE[:video] if is_video?
+      ret << MEDIA_TYPE[:image] if is_image?
+      ret << MEDIA_TYPE[:document] if is_document?
+      ret
+    end
+
 
     # Returns the text to be included in the body of the page index.
     # Subclasses of Page should override this method as appropriate.

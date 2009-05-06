@@ -204,7 +204,7 @@ class BasePageController < ApplicationController
   def get_page_type(param=nil)
     param ||= params[:id]
     raise ErrorMessage.new('page type required') unless param
-    return Page.display_name_to_class(param)
+    return Page.url_to_class(param)
   end
 
   def create_new_page!(page_class)

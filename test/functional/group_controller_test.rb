@@ -15,6 +15,7 @@ class GroupControllerTest < Test::Unit::TestCase
     @controller = GroupController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    Conf.enable_site_testing
   end
 
   def test_show_when_logged_in

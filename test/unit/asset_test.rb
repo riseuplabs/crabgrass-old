@@ -246,10 +246,12 @@ class AssetTest < Test::Unit::TestCase
   def test_search
     user = users(:kangaroo)
     correct_ids = Asset.find(:all).collect do |asset|
+      asset.page_terms = asset.page.page_terms
+      asset.save
       asset.id if user.may?(:view, asset.page)
     end.compact.sort
     ids = Asset.visible_to(user).media_type(:image).find(:all).collect{|asset| asset.id}
-    assert_equal correct_ids, ids
+    assert_equal correct_ids, ids.sort
   end
 
   def test_asset_page

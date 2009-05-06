@@ -5,9 +5,7 @@ PageClassRegistrar.add(
   :controller => 'asset_page',
   :model => 'Asset',
   :icon => 'page_package',
-  :class_display_name => 'file',
-  :class_description => :file_class_description,
-  :class_group => 'asset', 
+  :class_group => ['media:image', 'media:audio', 'media:video', 'media:document'],
   :order => 20
 )
 

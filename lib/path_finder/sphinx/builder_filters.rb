@@ -109,8 +109,29 @@ module PathFinder::Sphinx::BuilderFilters
   
   ####
 
-  def filter_type(page_class_group)
-    @conditions[:page_type] = Page.class_group_to_class_names(page_class_group).join('|')
+  # filter on page type or types, and maybe even media flag too!
+  # eg values:
+  # media-image+file, media-image+gallery, file,
+  # text+wiki, text, wiki
+  def filter_type(arg)
+    if arg =~ /[\+\ ]/
+      page_group, page_type = arg.split(/[\+\ ]/)
+    elsif Page.is_page_group?(arg)
+      page_group = arg
+    elsif Page.is_page_type?(arg)
+      page_type = arg
+    end
+
+    if page_group =~ /^media-(image|audio|video|document)$/
+      media_type = page_group.sub(/^media-/,'').to_sym
+      @conditions[:media] = MEDIA_TYPE[media_type] # indexed as multi array of ints.
+    end
+
+    if page_type
+      @conditions[:page_type] = Page.url_to_class_name(page_type)
+    elsif page_group
+      @conditions[:page_type] = Page.class_group_to_class_names(page_group).join('|')
+    end
   end
   
   def filter_person(id)

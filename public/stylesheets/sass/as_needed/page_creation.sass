@@ -1,24 +1,51 @@
-div.page-class
-  :margin-bottom 4px
+div.create_page
+  table
+    td
+      width: 50%
+      padding: 0 1em
+  h1
+    font-size: 2em
+    color: #ccc
+    border-bottom: 2px dotted #ccc
+  span
+    display: block
+    margin: 0.5em
+    margin-left: 3em
+    &:hover
+      :background #ffc
+      :outline 1px solid #cc9
+    a
+      text-decoration: none
+      display: block
+      outline: 0
+      background-position: 4px 50%
+      background-repeat: no-repeat
+      padding: 20px 10px 20px 60px
+      text-align: left
 
-  div:hover
-    :background #ffc
-    :outline 1px solid #cc9
-
-  .page-link
-    :text-decoration none
-    :padding 20px 0 20px 58px
-    :display block
-    :outline 0
-
-
-td.label
-  :text-transform capitalize
-  :vertical-align top
-
-
-h2.section
-  :font-size 2em
-  :color #666
-  :margin 1em 0 0.5em 0
+  .left
+    display: inline
+    float: left
+    table
+      margin-top: 1em
+      td.label
+        text-align: right
+        color: #999
+        font-weight: bold
+        padding-right: 1em
+  .right
+    display: inline
+    float: left
+    padding-left: 2em
+  input[type=text], textarea
+    width: 23em
+    font-family: serif
+    font-size: 1em
+  .share_page
+    h2
+      color: #999
+      font-size: 1em
+      margin: 1em 0
+    ul
+      list-style: none
 
