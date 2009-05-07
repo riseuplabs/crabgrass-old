@@ -18,13 +18,13 @@ class Tool::MessagePageControllerTest < Test::Unit::TestCase
     login_as :orange
     
     assert_no_difference 'Page.count' do
-      get :create, :id => MessagePage.class_display_name
+      get :create, :id => MessagePage.param_id
       assert_response :success
 #      assert_template 'message_page/create'
     end
   
     assert_difference 'MessagePage.count' do
-      post :create, :id => MessagePage.class_display_name, :title => 'test title', :to => 'red', :message => 'hey d00d'
+      post :create, :id => MessagePage.param_id, :title => 'test title', :to => 'red', :message => 'hey d00d'
       assert_response :redirect
     end
     

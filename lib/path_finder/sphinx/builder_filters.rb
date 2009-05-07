@@ -128,7 +128,7 @@ module PathFinder::Sphinx::BuilderFilters
     end
 
     if page_type
-      @conditions[:page_type] = Page.url_to_class_name(page_type)
+      @conditions[:page_type] = Page.param_id_to_class_name(page_type)
     elsif page_group
       @conditions[:page_type] = Page.class_group_to_class_names(page_group).join('|')
     end

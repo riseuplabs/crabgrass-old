@@ -5,12 +5,13 @@ FFMPEG_COMMAND   = `which ffmpeg`.chomp   unless defined? FFMPEG_COMMAND
 INKSCAPE_COMMAND = `which inkscape`.chomp unless defined? INKSCAPE_COMMAND
 GPG_COMMAND      = `which gpg`.chomp      unless defined? GPG_COMMAND
 
-if `which openoffice`.any?
+OPENOFFICE = `which openoffice`.chomp.any || `which openoffice.org`.chomp.any
+if OPENOFFICE
   OPENOFFICE_DAEMON_PORT = 8100
   OPENOFFICE_COMMAND = "#{RAILS_ROOT}/lib/od_converter.py"
-  OPENOFFICE_DAEMON_COMMAND = 'openoffice -headless -accept="socket,port=%s;urp;"' % OPENOFFICE_DAEMON_PORT
+  OPENOFFICE_DAEMON_COMMAND = '%s -headless -accept="socket,port=%s;urp;"' % [OPENOFFICE, OPENOFFICE_DAEMON_PORT]
 else
-  OPENOFFICE_COMMAND = false
+  OPENOFFICE_COMMAND = nil
 end
 
 THUMBNAIL_SEPARATOR = '_'

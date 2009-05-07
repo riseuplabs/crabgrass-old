@@ -14,7 +14,7 @@ class GroupsControllerTest < Test::Unit::TestCase
     @controller = GroupsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    #Conf.enable_site_testing
+    Conf.disable_site_testing
   end
 
   def test_my

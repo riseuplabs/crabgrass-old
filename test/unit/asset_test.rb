@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssetTest < Test::Unit::TestCase
-  fixtures :groups, :users, :page_terms, :assets, :pages
+  fixtures :groups, :users, :page_terms, :assets, :pages, :group_participations
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -11,6 +11,7 @@ class AssetTest < Test::Unit::TestCase
     FileUtils.mkdir_p(@@public)
     #Media::Process::Base.log_to_stdout_when = :always
     Media::Process::Base.log_to_stdout_when = :on_error
+    Conf.disable_site_testing
   end
 
   def teardown
@@ -208,6 +209,7 @@ class AssetTest < Test::Unit::TestCase
     @asset = Asset.make :uploaded_data => upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
+
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal false, thumb.failure?, 'generating thumbnail "%s" should have succeeded' % thumb.name

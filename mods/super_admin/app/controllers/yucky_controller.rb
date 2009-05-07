@@ -21,8 +21,8 @@ class YuckyController < ApplicationController
       @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
     end
     case @rateable_type
-      when :post; add_post
-      when :page; add_page
+      when :post; remove_post
+      when :page; remove_page
     end
   end
 

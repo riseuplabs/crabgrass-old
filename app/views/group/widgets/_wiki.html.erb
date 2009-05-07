@@ -1,5 +1,6 @@
 <%# this is a widget like _group_wiki, but more generic. It can be used to show any particular wiki object. %>
-<% wiki = Wiki.new if wiki.nil? %>
+<% # wiki = Wiki.new if wiki.nil? <-- if wiki is nil, we have a problem, because then we cannot save it. %>
+<% raise 'wiki cannot be nil' if wiki.nil? %>
 <% editable = false if editable.nil? %>
 
 <% if editable -%>

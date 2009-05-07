@@ -187,8 +187,13 @@ class DispatchController < ApplicationController
   def controller_for_group(group)
     params[:action] = 'show'
     if group.instance_of? Network
-      params[:controller] = 'network'
-      new_controller('NetworkController')
+      if current_site.network and current_site.network == group
+        params[:controller] = 'site_network'
+        new_controller('SiteNetworkController')
+      else
+        params[:controller] = 'network'
+        new_controller('NetworkController')
+      end
     else
       params[:controller] = 'group'
       new_controller('GroupController')

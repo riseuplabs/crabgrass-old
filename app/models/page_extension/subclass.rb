@@ -69,11 +69,22 @@ module PageExtension::Subclass
     #  } || [])[1]
     #end
     
-    def url_to_class(page_type)
+    def param_id_to_class(page_type)
       PAGES.values.each do |proxy|
         return proxy if proxy.url == page_type
       end
+      return nil
     end
+
+    # used by path finder.
+    # 'wiki' => 'WikiPage'
+    def param_id_to_class_name(page_type)
+      PAGES.values.each do |proxy|
+        return proxy.class_name if proxy.url == page_type
+      end
+      return nil
+    end
+
     
     # return an array of page classes that are members of class_group
     # eg: 'vote' -> ['RateManyPage', 'RankedVotePage', 'SurveyPage']
@@ -113,12 +124,6 @@ module PageExtension::Subclass
       end
     end
 
-    def url_to_class_name(page_type)
-      PAGES.values.each do |proxy|
-        return proxy.class_name if proxy.url == page_type
-      end
-    end
-
     # convert from a string representation of a class to the
     # real thing (actually, a proxy)
     def class_name_to_class(class_name)
@@ -151,7 +156,7 @@ module PageExtension::Subclass
       class_definition.full_class_name.sub("Page","")
     end
 
-    def class_url
+    def param_id
       class_definition.url
     end
   end

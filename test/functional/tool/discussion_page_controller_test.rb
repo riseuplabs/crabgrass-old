@@ -18,12 +18,12 @@ class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
     login_as :orange
     
     assert_no_difference 'Page.count' do
-      get :create, :id => DiscussionPage.class_url
+      get :create, :id => DiscussionPage.param_id
       assert_response :success
     end
   
     assert_difference 'DiscussionPage.count' do
-      post :create, :id => DiscussionPage.class_url, :page => { :title => 'test discussion', :tag_list => 'humma, yumma' }
+      post :create, :id => DiscussionPage.param_id, :page => { :title => 'test discussion', :tag_list => 'humma, yumma' }
     end
     page = assigns(:page)
     assert page

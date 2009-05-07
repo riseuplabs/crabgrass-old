@@ -83,15 +83,24 @@ module ContextHelper
   
   def network_context(size='large', update_breadcrumbs=true)
     @active_tab = :networks
-    add_context 'networks'.t, networks_url(:action => 'list')
     if @group
       if @group == current_site.network
-        @active_tab = :home
+        site_network_context(size, update_breadcrumbs)
+      else
+        add_context 'networks'.t, networks_url(:action => 'list')
+        add_context @group.display_name, url_for_group(@group)
+        set_banner "group/banner_#{size}", @group.banner_style
       end
-      add_context @group.display_name, url_for_group(@group)
-      set_banner "group/banner_#{size}", @group.banner_style
+    else
+      add_context 'networks'.t, networks_url(:action => 'list')
     end
     breadcrumbs_from_context if update_breadcrumbs
+  end
+
+  def site_network_context(size='large', update_breadcrumbs=true)
+    @active_tab = :home
+    @banner = nil
+    @banner_style = nil
   end
 
   def person_context(size='large', update_breadcrumbs=true)
