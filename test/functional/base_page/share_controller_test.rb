@@ -7,24 +7,24 @@ class BasePage::ShareController; def rescue_action(e) raise e end; end
 class BasePage::ShareControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
-           :pages, :profiles,
-           :taggings, :tags
+           :pages, :profiles
+          # :taggings, :tags
 
 
-  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
-  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
+  #@@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
+  #@@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
     @controller = BasePage::ShareController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    FileUtils.mkdir_p(@@private)
-    FileUtils.mkdir_p(@@public)
+    #FileUtils.mkdir_p(@@private)
+    #FileUtils.mkdir_p(@@public)
   end
 
   def teardown
-    FileUtils.rm_rf(@@private)
-    FileUtils.rm_rf(@@public)
+    #FileUtils.rm_rf(@@private)
+    #FileUtils.rm_rf(@@public)
   end
 
   # tests that the share popup loads
@@ -226,7 +226,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert upart, 'the userparticipation should already exist to notify the user'
     
     # try to push the participation to inbox
-    xhr :post, :update, { :page_id =>  1, :recipients => {user2.login.to_sym  => {:send_notice => 1} }, :notification => {:notify_contributors => 1, :include_message => 1, :send_notice => 1 }, :message => 'additional_message' }
+    xhr :post, :update, { :page_id =>  1, :recipients => [user2.login.to_sym], :send_notice => "1", :send_message => 'additional_message'}
     assert_response :success
     upart.reload
     assert upart.inbox, 'participation.inbox should be set to true now'

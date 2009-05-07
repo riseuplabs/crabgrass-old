@@ -26,7 +26,8 @@ class BasePage::ShareController < ApplicationController
 
   before_filter :login_required, :except => [:auto_complete_for_recipient_name]
   protect_from_forgery :except => [:auto_complete_for_recipient_name]
- 
+  verify :xhr => true
+
   helper 'base_page', 'base_page/share'
 
   def auto_complete_for_recipient_name 
@@ -48,8 +49,13 @@ class BasePage::ShareController < ApplicationController
     end
   end  
   
-#  "recipient"=>{"name"=>"", "access"=>"admin"}, "recipients"=>{"aaron"=>{"access"=>"admin"}, "the-true-levellers"=>{"access"=>"admin"}}
-
+  # params examples:
+  # 
+  # when updating the form: {"recipient"=>{"name"=>"", "access"=>"admin"}}
+  # 
+  # when submitting the form: {"recipients"=>{"aaron"=>{"access"=>"admin"},
+  #                              "the-true-levellers"=>{"access"=>"admin"}}
+  #
   def update
     @success_msg ||= "You successfully shared this page."[:shared_page_success]
     if params[:cancel]
@@ -68,8 +74,7 @@ class BasePage::ShareController < ApplicationController
       end
       render :partial => 'base_page/share/add_recipient'
     elsif params[:recipients]
-      #raise params[:recipients].inspect
-      options = params[:notification] || {}
+      options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
 

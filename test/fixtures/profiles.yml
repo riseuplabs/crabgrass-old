@@ -75,14 +75,16 @@ profile_for_warm:
   stranger: true
   may_see: false
 
-#public_profile_for_yellow:
-#  id: 8
-#  entity_type: "User"
-#  entity_id: 7
-#  stranger: true
-#  may_see: false
-#  may_pester: false
-#
+# this is used by page sharing test as an example of a user
+# that should not be pestered.
+public_profile_for_yellow:
+  id: 8
+  entity_type: "User"
+  entity_id: 7
+  stranger: true
+  may_see: true
+  may_pester: false
+
 #private_profile_for_yellow:
 #  id: 9
 #  entity_type: "User"

@@ -84,9 +84,9 @@ module PageExtension::Create
           groups << entity
         elsif entity.is_a? User
           users << entity
-        elsif u = User.find_by_login(entity)
+        elsif u = User.find_by_login(entity.to_s)
           users << u
-        elsif g = Group.find_by_name(entity)
+        elsif g = Group.find_by_name(entity.to_s)
           groups << g
         elsif entity =~ RFC822::EmailAddress
           emails << entity
