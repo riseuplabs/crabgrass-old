@@ -9,7 +9,7 @@ module BasePageHelper
 
   def header_for_page_create(page_class)
     style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
-    text = "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}"
+    text = "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}"
     content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
   end
 
@@ -380,10 +380,8 @@ module BasePageHelper
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]
       select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
-      selected ||= ''
-    else
-      selected ||= 'admin'
     end
+    selected ||= 'admin'
     if options[:expand]
       select_tag name, options_for_select(select_options, selected), :size => select_options.size
     else
@@ -392,7 +390,7 @@ module BasePageHelper
   end
 
   def page_class
-    @page.class_display_name.t.capitalize
+    @page.class_display_name.capitalize
   end
   
   def select_page_owner(_erbout)

@@ -10,7 +10,6 @@ class Tool::EventPageControllerTest < Test::Unit::TestCase
   def setup
     @controller = EventPageController.new
     @request    = ActionController::TestRequest.new
-    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
   end
 

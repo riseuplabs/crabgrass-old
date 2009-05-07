@@ -67,6 +67,7 @@ enforce_ssl: false
 show_exceptions: false
 email_sender: "crabgrass-system@$current_host"
 tracking: true
+require_user_email: true
 available_page_types:
   - WikiPage
   - AssetPage

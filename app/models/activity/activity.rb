@@ -174,7 +174,9 @@ class Activity < ActiveRecord::Base
   def thing_span(thing, type)
     object = self.send(thing)
     if object
-      name = object.name
+      name = object.respond_to?("display_name") ?
+        object.display_name :
+        object.name
     else
       name = self.send(thing.to_s + '_name')
       name ||= 'unknown'.t

@@ -1,4 +1,6 @@
 class NetworksController < GroupsController
+  
+  before_filter :check_site_settings
  
   def index() redirect_to(:action => 'list') end
 
@@ -60,4 +62,9 @@ class NetworksController < GroupsController
   #  raise ErrorMessage.new('You must add yourself or be a member of at least one group in the membership list'[:create_network_membership_error]) unless in_users or in_groups
   end
 
+  def check_site_settings
+    unless current_site.has_networks?
+      redirect_to (current_site.network ? '/' : '/me/dashboard')
+    end
+  end
 end

@@ -1,3 +1,4 @@
+
 =begin
 
 A definition of a site.
@@ -69,7 +70,7 @@ class Site < ActiveRecord::Base
   }
 
   def self.default
-    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids]) || Site.new()
+    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
   end
 
   # def stylesheet_render_options(path)

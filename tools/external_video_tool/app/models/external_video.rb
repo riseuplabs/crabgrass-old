@@ -100,4 +100,9 @@ class ExternalVideo < ActiveRecord::Base
   def update_page_terms
     self.page_terms = page.page_terms unless page.nil?
   end
+
+  def is_video?
+    true
+  end
+
 end
