@@ -43,7 +43,7 @@ class Mailer < ActionMailer::Base
   protected
 
   def link(path)
-    [@protocol,@host,@port,'/',path].join
+    [@protocol,@host,@port,'/',path.sub(/^\//, '')].join
   end
 
   def setup(options)
