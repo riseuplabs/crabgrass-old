@@ -53,6 +53,8 @@ sites:
     admin_group: superadmin
   - name: j8summit
     admin_group: superadmin
+  - name: factsforlife
+    admin_group: superadmin
 
 ##
 ## SITE DEFAULTS
