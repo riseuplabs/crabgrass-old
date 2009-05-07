@@ -70,11 +70,11 @@ class WikiController < ApplicationController
   def fetch_wiki
     if params[:wiki_id] and !params[:profile_id]
       profile = @group.profiles.find_by_wiki_id(params[:wiki_id])
-      @wiki = profile.wiki || profile.create_wiki
+      @wiki = profile.wiki || profile.create_wiki(:user => current_user)
     elsif params[:profile_id]
       @profile = @group.profiles.find(params[:profile_id])
-      @public = @group.profiles.public.wiki || @group.profiles.public.create_wiki
-      @private = @group.profiles.private.wiki || @group.profiles.private.create_wiki
+      @public = @group.profiles.public.wiki || @group.profiles.public.create_wiki(:user => current_user)
+      @private = @group.profiles.private.wiki || @group.profiles.private.create_wiki(:user => current_user)
       
       @wiki = @public if params[:wiki_id] == @public.id.to_s
       @wiki = @private if params[:wiki_id] == @private.id.to_s

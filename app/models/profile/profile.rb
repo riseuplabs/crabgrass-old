@@ -156,9 +156,10 @@ class Profile < ActiveRecord::Base
     self
   end
 
-  def create_wiki
+  def create_wiki(opts = {})
     return wiki unless wiki.nil?
-    wiki = Wiki.create :profile => self
+    opts[:profile] = self
+    wiki = Wiki.create opts
     save
     wiki
   end
