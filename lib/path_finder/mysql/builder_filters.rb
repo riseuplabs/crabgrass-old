@@ -163,7 +163,7 @@ module PathFinder::Mysql::BuilderFilters
 
     if page_type
       @conditions << 'pages.type = ?'
-      @values << Page.url_to_class_name(page_type) # eg 'RateManyPage'
+      @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
     elsif page_group
       @conditions << 'pages.type IN (?)'
       @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
