@@ -3,9 +3,7 @@ PageClassRegistrar.add(
   :controller => 'external_video_page',
   :model => 'ExternalVideo',
   :icon => 'page_video',
-  :class_display_name => 'video',
-  :class_description => :video_class_description,
-  :class_group => 'video', 
+  :class_group => 'media:video', 
   :order => 21
 )
 

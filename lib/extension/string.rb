@@ -94,6 +94,14 @@ class String
     
     return substrings
   end
+
+  # just like any?() but instead of true returns the actual string.
+  # useful like:
+  #  str = str_a.any or atr_b.any
+  #
+  def any
+    any? ? self : nil
+  end
   
 end
 

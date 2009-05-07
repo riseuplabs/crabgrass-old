@@ -289,17 +289,6 @@ class Asset < ActiveRecord::Base
   ## MEDIA TYPES
   ##
 
-  # Converts the boolean media flags to a list of integers.
-  # This is used for sphinx indexing.
-  def media_flag_enums
-    ret = []
-    ret << MEDIA_TYPE[:audio] if is_audio?
-    ret << MEDIA_TYPE[:video] if is_video?
-    ret << MEDIA_TYPE[:image] if is_image?
-    ret << MEDIA_TYPE[:document] if is_document?
-    ret.join ' '
-  end
-
   before_save :reset_media_flags
   def reset_media_flags
     if content_type_changed? 

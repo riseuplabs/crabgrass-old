@@ -129,6 +129,13 @@ class PathFinder::ParsedPath < Array
         end
       end
     end
+    # special post processing for some keywords
+    self.each do |element|
+      if element[0] == 'type'
+        element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
+      end
+    end
+    return self
   end
 
   #

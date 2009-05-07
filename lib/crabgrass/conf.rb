@@ -113,6 +113,10 @@ class Conf
     self.enabled_site_ids = [1,2]
   end
 
+  def self.disable_site_testing
+    self.enabled_site_ids = []
+  end
+
   ##
   ## PLUGINS
   ## 

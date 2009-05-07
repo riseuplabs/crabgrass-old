@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
     @current_site ||= begin
       site = Site.for_domain(request.host).find(:first)
       site ||= Site.default
+      site ||= Site.new(:domain => request.host) 
       Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
     end
   end
