@@ -64,6 +64,7 @@ title: umbrella
 pagination_size: 30
 default_language: en_US
 enforce_ssl: false
+chat: false
 show_exceptions: false
 email_sender: "crabgrass-system@$current_host"
 tracking: true

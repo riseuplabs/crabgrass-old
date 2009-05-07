@@ -193,9 +193,8 @@ class GroupController < ApplicationController
     end
   end
   
-  @@additional_tools = ["chat"]
   def edit_tools   
-    @available_tools = current_site.available_page_types + @@additional_tools
+    @available_tools = current_site.available_page_types
     if request.post?
       @group.group_setting.allowed_tools = []
       @available_tools.each do |p|
