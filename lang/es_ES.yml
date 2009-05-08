@@ -3,6 +3,7 @@ add_encryption_key: Agregar clave de cifrado
 group_not_allowed_to_view_image_error: "El grupo que es propietario de esta p\xC3\xA1gina no est\xC3\xA1 autorizado a ver esta foto."
 Personal: Personal
 small: "peque\xC3\xB1o"
+folder_page_description: "Una colecci\xC3\xB3n de activos."
 menu_networks: Redes
 group_summary: "Breve informaci\xC3\xB3n sobre este %s. "
 my_requests_headline: Mis peticiones
@@ -13,17 +14,16 @@ month_short_april: abril
 request_to_friend_description: ":user quiere ser el contacto de :other_user"
 move_image_left: Mover la foto hacia la izquierda
 peers: "Compa\xC3\xB1eros"
-wiki: wiki
 current_video_sources: |
   actualmente soporta: youtube, blip.tv, Google Video, vim
 
 left_the_chatroom: "salido de la sala de chat "
+wiki_page_display: Wiki
 request_to_join_us_description: ":user fue invitado a unirse :group"
 break_lock: rompe el candado
 or_image_url: o URL de la foto
 add_comment: comentar
 login_password: "Contrase\xC3\xB1a"
-folder: carpeta
 users_wall: ":user's Mural"
 upload_attachment: Cargar archivo adjunto
 order_changed: Orden cambiada.
@@ -54,6 +54,7 @@ delete: Borrar
 share_page_recipients_sections: Elige entre tus grupos o amigos
 time_zone: Zona Horaria
 page_not_part_of_group: "Esta p\xC3\xA1gina no forma parte de este grupo"
+task_list_page_description: Una lista de las cosas pendientes.
 you_are_not_member_of_any_group: "No eres miembro de ning\xC3\xBAn grupo. "
 contact: Contacto
 try_again: "Int\xC3\xA9ntelo de nuevo"
@@ -63,9 +64,10 @@ dont_have_permission_to_create_committees: "Usted no tiene permiso para crear co
 activate_js_to_rearrange_photos: Activar Javascript para usar Drag&Drop para reacomodar las fotos!
 media_for_group: "%s en %s"
 medium: medio
+achive: Archivo
 coordinator: Coordinador
 reject_button: eliminar
-group_publicly_visible_description: "El grupo que aparece en el directorio p\xC3\xBAblico y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de %s/yourgroupname."
+group_publicly_visible_description: "El grupo que aparece en el directorio p\xC3\xBAblico y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de we.riseup.net/yourgroupname."
 Language: Idioma
 delete_version_confirm: "\xC2\xBFEst\xC3\xA1s seguro de que desea eliminar esta versi\xC3\xB3n?"
 websites: Sitios Web
@@ -77,61 +79,6 @@ signup_title: Crea Tu Cuenta
 menu_chat: Charla
 user: Usuario
 image_count_total: ":count Fotos"
-usage_agreement_text: "h1. Riseup Networks' Social Contract\n\n\
-  Riseup.net existe porque sentimos que es vital para las comunidades de resistencia que puedan atender sus necesidades de comunicaci\xC3\xB3n. Estamos construyendo infraestructura alternativa para poder proteger nuestra habilidada para organizar, defender nuestro derecho a la privacidad y crear instituciones de liberaci\xC3\xB3n social, aqu\xC3\xAD y ahora.\n\n\
-  Riseup.net cree en la democracia directa, anti-sexismo, anti-racismo, anti-capitalismo, auto determinaci\xC3\xB3n, autonom\xC3\xADa local, ecolog\xC3\xADa y econom\xC3\xADa comunal. Para m\xC3\xA1s informaci\xC3\xB3n, puede ver nuestros [principios pol\xC3\xADticos -> http://help.riseup.net/principles].\n\n\
-  Riseup.net reafirma una causa com\xC3\xBAn y solidaridad con un amplio espectro de la izquierda pol\xC3\xADtica. Sin embargo, hay algunas cosas que no podemos apoyar. Le pedimos que no use los servicios de riseup.net para:\n\n\
-  * Apoyar el capitalismo, dominaci\xC3\xB3n o jerarqu\xC3\xADa.\n\
-  * La idea de que la opresi\xC3\xB3n de clases est\xC3\xA1 por encima de la opresi\xC3\xB3n de razas o g\xC3\xA9neros.\n\
-  * Una estrategia vanguardista para la revoluci\xC3\xB3n.\n\
-  * Control de poblaci\xC3\xB3n.\n\n\
-  Si no est\xC3\xA1 de acuerdo con esto, entonces riseup.net no es para usted.\n\n\
-  h1. Riseup Networks' Privacy Policy\n\n\
-  h3. Mantenemos registros m\xC3\xADnimos\n\n\
-  La mayor\xC3\xADa de proveedores de servicios en l\xC3\xADnea mantienen registros detallados de toda conexi\xC3\xB3n. En general, no mantenemos informaci\xC3\xB3n que pueda identificarlo de manera \xC3\xBAnica o que pueda ser usada para construir un perfil de uso o asociaciones. No registramos direcciones IP. Para depurar problemas, podr\xC3\xADamos habilitar un registro m\xC3\xA1s detallado por un corto per\xC3\xADodo de tiempo. Este registro adicional es eliminado despu\xC3\xA9s de ser usado.\n\n\
-  h3. No compartimos sus datos con nadie\n\n\
-  No compartimos ninguna informaci\xC3\xB3n de usuario con ning\xC3\xBAn otro grupo o individuos. Dentro del colectivo Riseup, miembros del colectivo tienen acceso solo a la informaci\xC3\xB3n que necesitan para realizar su trabajo.\n\n\
-  h3. Defenderemos su informaci\xC3\xB3n\n\n\
-  Nos opondremos activamente a cualquier intento de forzar a Riseup Networks a revelar informaci\xC3\xB3n o registros.\n\n\
-  h3. No monitorearemos sus comunicaciones\n\n\
-  No leeremos, buscaremos o procesaremos ninguno de sus correos entrantes o salientes, m\xC3\xA1s all\xC3\xA1 de protegerlo de virus y correo no deseado o cuando usted nos lo pida al depurar problemas.\n\n\
-  h3. Su informaci\xC3\xB3n ser\xC3\xA1 cifrada\n\n\
-  El contenido de sus comunicaciones, la fecha de su \xC3\xBAltimo ingreso, su libreta de direcciones y todas las copias de respaldo son almacenadas en un formato cifrado.\n\n\
-  h1. Riseup Networks' Terms of Service\n\n\
-  Riseup Networks services currently include email, email list hosting, website hosting, domain registration, colocation, and other services common to ISP/OSPs.  These services may change from time to time and are provided AS IS.  You understand and agree that Riseup Networks assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services.  Furthermore, you understand and agree that Riseup Networks assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. Riseup Networks makes no warranties or guarantees as to the security of any machine or wesite operated or hosted by Riseup Networks, nor do we make any warranties or guarantees at all.\n\n\
-  Riseup Networks complies with the [Digital Millennium Copyright Act's -> http://www.chillingeffects.org/dmca512/faq.cgi#QID128] notice and take-down procedures.  Your use of Riseup Networks' services is subject to Riseup's [DMCA Policy -> http://help.riseup.net/policy/dmca/].\n\n\
-  In consideration for your use of the Riseup Networks services you agree to the following conditions:\n\n\
-  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable  through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.\n\n\
-  You also agree not to use our services to:\n\n\
-  * harass other people;\n\
-  * harm or exploit minors;\n\
-  * impersonate or cause others to believe that you are another person;\n\
-  * send unsolicited messages;\n\
-  * collect personal data from Riseup Networks users without their express consent; and\n\
-  * interfere with or disrupt our services, those of our users or any other person or service;\n\n\
-  Further, you agree to:\n\n\
-  * avoid excessive use of our services, including but not limited to network bandwidth, computer system resources, and domain registrations;\n\
-  * be responsible for maintaining the confidentiality of your accounts and passwords;\n\
-  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;\n\
-  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);\n\
-  * hold patience in your heart for the hard work we do.\n\n\
-  Riseup Networks does not claim ownership of content you upload or otherwise transmit through our servers or networks.  \n\n\
-  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with Riseup Networks, OR FOR ANY OTHER REASON OR NO REASON, at Riseup Network's sole discretion and without limiting its other remedies, Riseup Networks may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.\n\n\
-  h3. Your Privacy\n\n\
-  Your privacy is important to Riseup Networks. By agreeing to this User Agreement, you also consent to the privacy practices detailed in our [Privacy Policy -> http://help.riseup.net/privacy], which may be modified at any time.\n\n\
-  h3. No Warranty\n\n\
-  YOU UNDERSTAND AND AGREE THAT WE, AND OUR SUPPLIERS, PROVIDE OUR ONLINE SERVICES \"AS IS\" AND WITHOUT ANY WARRANTY OR CONDITION, EXPRESS, IMPLIED OR STATUTORY. WE AND OUR SUPPLIERS SPECIFICALLY DISCLAIM ANY IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. YOU FURTHER UNDERSTAND AND AGREE THAT WE, AND OUR SUPPLIERS, MAKE NO WARRANTY AS TO THE RELIABILITY, ACCESSIBILITY, ACCURACY, LEGITIMACY OR QUALITY OF THE ONLINE SERVICES OR THE CONTENT AVAILABLE THROUGH THE ONLINE SERVICES. YOU AGREE THAT USE OF THE ONLINE SERVICES AND THEIR CONTENT IS AT YOUR SOLE AND EXCLUSIVE RISK. Some jurisdictions do not allow the disclaimer of implied warranties, so the foregoing disclaimer may not apply to you.\n\n\
-  h3. Liability Limitation\n\n\
-  YOU EXPRESSLY UNDERSTAND AND AGREE THAT Riseup Networks SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA OR OTHER INTANGIBLE LOSSES (EVEN IF Riseup Networks HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES), RESULTING FROM: (i) THE USE OR THE INABILITY TO USE THE ONLINE SERVICES; (ii) THE COST OF PROCUREMENT OF SUBSTITUTE GOODS AND SERVICES RESULTING FROM ANY GOODS, DATA, INFORMATION OR SERVICES PURCHASED OR OBTAINED OR MESSAGES RECEIVED OR TRANSACTIONS ENTERED INTO THROUGH OR FROM THE ONLINE SERVICES; (iii) UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR TRANSMISSIONS OR DATA; OR (iv) ANY OTHER MATTER RELATING TO THE ONLINE SERVICES.\n\n\
-  Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitations or exclusions may not apply to you. \n\n\
-  h3. Indemnity\n\n\
-  You agree to indemnify and hold Riseup Networks and (as applicable) our parent, subsidiaries, affiliates, officers, directors, agents, volunteers and employees, harmless from any claim or demand, including reasonable attorneys' fees, made by any third party due to or arising out of your breach of this Agreement or your violation of any law or the rights of a third party.\n\n\
-  h3. Modification and Termination\n\n\
-  You agree that Riseup Networks may amend this Agreement at any time by posting the amended terms on our site at http://help.riseup.net/tos we will contact you via email when any changes are made. All amendments shall automatically be effective 10 days after they are initially posted on our site. Your use of our services following the effective date of any modifications shall constitute your binding acceptance of those modifications. Furthermore, you agree that this Agreement and all incorporated agreements may be automatically assigned by Riseup Networks, in our sole discretion, to a third party in the event of a merger, acquisition or other transfer. This Agreement may not be otherwise amended except by a member of Riseup Networks. This agreement was last modified April 15th, 2005.\n\n\
-  You agree that Riseup Networks may terminate your use of any Riseup Networks services at any time and for any reason whether you violate this User Agreement or not.  You further understand and agree that Riseup Networks, at its complete discretion, may remove or alter the services or any of content available through them at any time and for any reason or no reason.  \n\n\
-  h3. Complaints\n\n\
-  Riseup Networks respects the rights of others.  If you have a complaint regarding abuse of our services, please send an e-mail to abuse@riseup.net. Riseup Networks will review the complaint and, at its sole discretion, take action Riseup Networks believes to be appropriate. \n\n\
-  General Headings in this Agreement are for reference purposes only and in no way define, limit, construe or describe the scope or extent of such section. This Agreement sets forth the entire and exclusive understanding and agreement between you and Riseup Networks with respect to the subject matter hereof. This Agreement supercedes and cancels all previous and contemporaneous agreements, commitments and writings with respect to this subject matter. You agree that if any provision of this Agreement is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall be enforced \n"
 contribute_content_link: Contribuir
 page_locked_header: "P\xC3\xA1gina bloqueada"
 all_page_types: "todos los tipos de p\xC3\xA1ginas"
@@ -177,6 +124,7 @@ invite_accept_via_existing_account: Ya tengo una cuenta
 recent_pages: Paginas Recientes
 create_a_new_page: "Crear una nueva p\xC3\xA1gina"
 display_name: Nombre visible
+join_group_success: Te has unido al grupo {group_name}
 invite_accept_via_register: Tengo que registrar una nueva cuenta
 you_have_no_contacts: Usted no tiene contactos
 sunday: Domingo
@@ -192,10 +140,8 @@ pagination_previous: anterior
 committees: "Comit\xC3\xA9s"
 save_button: Guardar
 media_video: Video
-votes: votos
 no_peers_msg: "No tienes compa\xC3\xB1eros."
 date_weeks: semanas
-article: "art\xC3\xADculo"
 media_audio: "Grabaci\xC3\xB3n de sonido"
 media_without_group: Todos %s
 personal_message_class_description: Un mensaje personal enviado a los distintos recipientes.
@@ -210,6 +156,7 @@ forgot_password_text: "Si ha olvidado la contrase\xC3\xB1a que utiliza para inic
 login: Ingresar
 add_new_attachment: Cargar nuevo archivo
 participant: participante
+article_page_description: "Blog o un art\xC3\xADculo period\xC3\xADstico."
 separate_tags: Separe las etiquetas utilizando comas.
 inbox_description: "El buz\xC3\xB3n con las p\xC3\xA1ginas en las que estoy participando activamente o esperando por cambios"
 all_content: Todo el contenido
@@ -234,16 +181,15 @@ view_requests: ver solicitudes
 minimum_stars_for_important_pages_description: "Establece el m\xC3\xADnimo numero de estrellas, una p\xC3\xA1gina necesita para poder ser asignada 'importante' - mu\xC3\xA9strala en p\xC3\xA1gina principal del grupo"
 date_older: Antiguo
 your_login: Tu nombre de usuario
+preview: Vista Previa
 my_status_heading: "My situaci\xC3\xB3n actual"
 signup_email_info: "Opcional: usa si olvidas tu contrase\xC3\xB1a"
 next_change: "pr\xC3\xB3ximo cambio"
 create_task_list: crear nueva lista de tareas
-folder_class_description: "Una colecci\xC3\xB3n de activos."
 coordinating_council: "consejo de coordinaci\xC3\xB3n"
 signup_email: "Tu correo electr\xC3\xB3nico"
 alert_error: Error
 full: completo
-videos: videos
 login_button: Ingresa
 remove_from_gallery: "Eliminar el \xC3\xA1lbum de fotos"
 destroy_group: eliminar %s
@@ -302,10 +248,6 @@ pending_tasks: tareas pendientes.
 data_for_page_missing: "Los datos de esta p\xC3\xA1gina no est\xC3\xA1n disponibles."
 monday: Lunes
 activity_user_destroyed: "{user} se ha jubilado"
-ranked_vote_class_description: |
-  Posibilidades clasificadas en orden de preferencia.
-
-article_class_description: "Blog o un art\xC3\xADculo period\xC3\xADstico."
 me_dashboard_link: Tablero
 rejected: rechazado
 signup_confirm_password: "Confirma la Contrase\xC3\xB1a"
@@ -320,12 +262,11 @@ discuss_request_link: discutir esta solicitud con :person_or_group
 no_contacts_msg: No tienes contactos.
 group_administration_not_allowed: Usted no puede administrar este grupo.
 menu_people: Gente
-gallery: "\xC3\xA1lbum"
+gallery_display: "\xC3\xA1lbum"
 send_button: Enviar
 saving_your_changes: Guardar tus cambios...
 add_another_file: Agregar otro archivo
 page_list_heading_owner: propietario
-ranked_vote: voto clasificado
 Other: Otro
 media_audios: "Grabaci\xC3\xB3n de sonidos"
 close_button: Cerrar
@@ -375,7 +316,7 @@ signup_password: "Tu Contrase\xC3\xB1a"
 alert_not_saved: Los cambios no han podido ser guardados
 formatting_reference_link: formato de referencia
 created: creado
-group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de %s/yourgroupname. Adem\xC3\xA1s, el nombre del grupo ser\xC3\xA1 mostrado en el perfil de la p\xC3\xA1gina de cada uno de los miembros (%s / nombre de usuario)"
+group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de we.riseup.net/yourgroupname. Adem\xC3\xA1s, el nombre del grupo ser\xC3\xA1 mostrado en el perfil de la p\xC3\xA1gina de cada uno de los miembros (we.riseup.net / nombre de usuario)"
 edit: editar
 phone_numbers: "N\xC3\xBAmeros Telef\xC3\xB3nicos"
 view_slideshow: "Ver presentaci\xC3\xB3n de diapositivas"
@@ -390,14 +331,13 @@ wiki_is_locked: Este wiki se encuentra actualmente bloqueado por :user
 invite_accept_headline: "Acepta invitaci\xC3\xB3n para participar en grupo"
 send_message_link: Enviar Mensaje
 coordinating_council_description: "La participaci\xC3\xB3n en este comit\xC3\xA9 concede especial <i>administrative access</i> to the :group_type <b>:group_name</b>."
-task_list_class_description: Una lista de las cosas pendientes.
 group_members_publicly_visible: Hacer Publico Los Miembros
-task_list: lista de tareas
 page_list_heading_updated_by: actualizado por
 version_doesnt_exist: "No hay versi\xC3\xB3n :version"
 image_count: Foto :number of :count
 recent_network_pages: "Paginas m\xC3\xA1s recientes de la red"
 media_documents: Documentos
+folder_page_display: Carpeta
 requested_forgot_password: "Usted ha solicitado un cambio de contrase\xC3\xB1a"
 ranked_vote_instructions: "Arrastrar y soltar los temas de la siguiente lista hasta que se encuentren en orden desde el m\xC3\xA1s preferido situado en la parte superior al menos preferido en la parte inferior. Cuando haya terminado, confirmar para registrar su voto."
 no_title_given: (no tiene titulo)
@@ -419,6 +359,7 @@ add_phone_number: "Agregar N\xC3\xBAmero de Tel\xC3\xA9fono"
 created_by: Creado por
 Work_Life: La vida laboral
 minimum_stars_for_important_pages: "El m\xC3\xADnimo numero de estrellas asignado a las p\xC3\xA1ginas importantes"
+wiki_page_description: Un documento con texto de formato libre
 tags: Etiquetas
 message_must_not_be_empty: "el mensaje no debe estar vac\xC3\xADo"
 my_tasks: Tareas
@@ -460,16 +401,6 @@ select_image_file: seleccionar archivo de foto
 discussions: Debates
 login_failure_reason: "El usuario o contrase\xC3\xB1a es incorrecto."
 rss_feed: "RSS Feed "
-footer_text_riseup: |-
-  <span>This site is run by <a href="http://riseup.net">riseup.net</a>, your friendly autonomous tech collective since 1999.</span>
-  <ul>
-    <li><a href="http://help.riseup.net/policy/privacy/">privacy policy</a></li>
-    <li><a href="http://help.riseup.net/about-us/">about us</a></li>
-    <li><a href="https://mail.riseup.net/">email accounts</a></li>
-    <li><a href="https://lists.riseup.net/">mailing lists</a></li>
-    <li><a href="http://status.riseup.net/">system status</a></li>
-    <li><a href="http://riseup.net/donate/">donate to riseup.net</a></li>
-  </ul>
 see_more_link: "M\xC3\xA1s"
 media_alls: "Medios de comunicaci\xC3\xB3n"
 location_state: estado/provincia
@@ -481,11 +412,9 @@ participation: "Participaci\xC3\xB3n"
 edit_attachments: Editar archivos adjuntos
 requests_from_me: Peticiones mias
 create_page_share: "\xC2\xBFQui\xC3\xA9n tiene acceso a este/a {page_class}?"
-wiki_class_description: Un documento con texto de formato libre
 invalid_email_text: "La direcci\xC3\xB3n de correo electr\xC3\xB3nico que proporcionaste no es v\xC3\xA1lida."
 send_invites_headline: Enviar invitaciones para unirse a (group)
 viewed: Visto(s)
-assets: activos
 accept_usage_agreement: "Accepto el acuerdo de t\xC3\xA9rminos de uso"
 destroy: destruir
 add_existing_image: "Agregar Foto  "
@@ -525,7 +454,6 @@ attachments: Archivos adjuntos
 no_change: "ning\xC3\xBAn cambio"
 invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente que te gustar\xC3\xADa que se uniera a este/a %s"
 status_pending: pendiente
-message: mensaje
 this_is_committee: "Este comit\xC3\xA9 es parte de {parent_group}."
 me_requests_link: Solicitudes
 none: ninguno/a
@@ -545,22 +473,21 @@ created_on: Creado en
 dont_understand_group_type: No se puede entender la clase de grupo :type
 activity_group_created: "{user} creado {group_type} {group}"
 other_formats: Otros Formatos
+task_list_page_display: Lista de tareas
 organization: "organizaci\xC3\xB3n"
 approve_contact_info: "Una petici\xC3\xB3n de contacto ya existe de esta/e usuario. \xC2\xBFQuieres aprobarla?"
 to: para
-wikis: wikis
 date_years: "a\xC3\xB1os"
 menu_link_logout: "Cerrar sesi\xC3\xB3n"
 group_successfully_updated: Grupo ha sido actualizado.
 large: grande
-committee_publicly_visible_description: "Los comit\xC3\xA9s pueden ser vistos por aquellos que no son miembros en %s/yourgroupname"
+committee_publicly_visible_description: "Los comit\xC3\xA9s pueden ser vistos por aquellos que no son miembros en we.riseup.net/yourgroupname"
 thursday: Jueves
-description: "descripci\xC3\xB3n"
+description: "Descripci\xC3\xB3n"
 reject: rechazar
 outgoing: Saliente
 month_short_august: agosto
 user_or_group_name: Nombre del usuario o nombre del grupo
-messages: mensajes
 viewer: Espectador
 request_status: Esta solicitud fue :status by :user on :time
 all_people: todas las personas
@@ -573,12 +500,16 @@ private_profile: Perfil Privado
 error_saving_new_order: Hubo un error al intentar guardar la nueva orden!
 page_list_heading_title: "t\xC3\xADtulo"
 request_to_join_your_network_description: ":group solicito unirse a la red :network"
+article_page_display: "art\xC3\xADculo"
 video_embed_code_prompt: "C\xC3\xB3digo incrustado en el video procedente de fuente externa"
 cancel_button: Cancelar
 not_set: No esta establecido
 tuesday: Martes
 settings: "configuraci\xC3\xB3n"
 information: "Informaci\xC3\xB3n"
+ranked_vote_page_description: |
+  Posibilidades clasificadas en orden de preferencia.
+
 file: archivo
 expired_featured_content: Contenido Destacado Expirado
 move_page_link: Mover :page_class
@@ -612,6 +543,7 @@ grant_access: Conceder el acceso
 About_Me: "Acerca de m\xC3\xAD"
 no_committees: "No hay comit\xC3\xA9s"
 you_are_viewing_version: "Usted est\xC3\xA1 viendo la versi\xC3\xB3n :version by :usuario"
+profile_member_since: Miembro desde
 group_privacy_settings: "%s Configuraci\xC3\xB3n de privacidad "
 share_page_options: Elegir opciones
 you_have_no_groups: "Usted no pertenece en ning\xC3\xBAn grupo"
@@ -621,6 +553,7 @@ activity_user_joined_group: "{user} se ha unido {group_type} {group}"
 network_invite_info: "Ingresa el nombre de los grupos que te gustar\xC3\xADa invitar a esta red."
 make_album_cover: "hacer esta foto la portada del \xC3\xA1lbum"
 public_key: "Clave P\xC3\xBAblica"
+ranked_vote_page_display: Voto clasificado
 no_group_named: No existe un grupo con el nombre de <b>:name</b>.
 im_addresses: Direcciones IM
 page_list_heading_posts: anuncios
@@ -632,10 +565,12 @@ upload_images: Cargar
 upload_new_image: cargar nueva imagen
 request_to_join_us_via_email_description: ":email fue invitado a unirse a :group"
 page_info: "Informaci\xC3\xB3n de p\xC3\xA1gina"
+message_page_display: Mensaje
 watch_checkbox: Ver las actualidades
 Announcements: Anuncios
 wednesday: Miercoles
 regenerate: "Regenerar las fotos peque\xC3\xB1as"
+add_tags: "A\xC3\xB1adir Etiqueta"
 include_full_checkbox: incluir el enlace en la foto
 logout: Desconectar
 group_directory: Directorio del grupo
@@ -671,7 +606,7 @@ footer_text_crabgrass: |-
   <ul>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>crabgrass help pages</a></li>
+    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
     <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
   </ul>
 insert_image_heading: "A\xC3\xB1ade Foto"
