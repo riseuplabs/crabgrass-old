@@ -53,6 +53,8 @@ sites:
     admin_group: superadmin
   - name: j8summit
     admin_group: superadmin
+  - name: factsforlife
+    admin_group: superadmin
 
 ##
 ## SITE DEFAULTS
@@ -62,9 +64,11 @@ title: umbrella
 pagination_size: 30
 default_language: en_US
 enforce_ssl: false
+chat: false
 show_exceptions: false
 email_sender: "crabgrass-system@$current_host"
 tracking: true
+require_user_email: true
 available_page_types:
   - WikiPage
   - AssetPage
