@@ -18,21 +18,13 @@ module BasePageHelper
   end
   
   def recipient_checkbox_line(recipient, options={})
+    name = CGI.escape(recipient.name) # so that '+' does show up as ' '
     ret = "<label>"
-    ret << check_box_tag("recipients[#{recipient.name}][send_notice]", 1, false, {:class => options[:class]})
-    ret << entity_line(recipient)
+    ret << check_box_tag("recipients[#{name}][send_notice]", 1, false, {:class => options[:class]})
+    ret << display_entity(recipient, :avatar => :xsmall, :format => :hover)
     ret << "</label>"
   end
-  
-  # creates a line for the notify process with a menu item for a group to show checkbox_lines for all users of this group
-#  def participator_group_selection_line(group)
-#    ret = ""
-#    ret << avatar_for(group,'xsmall')
-#    ret << "&nbsp;"
-#    ret << group.display_name
-#    ret << "&nbsp;"
-#  end
-  
+    
   def link_to_user_participation(upart)
     klass = case upart.access_sym
       when :admin : 'tiny_wrench_16'

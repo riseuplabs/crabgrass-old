@@ -77,15 +77,6 @@ module ImageHelper
     '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
   end
 
-  ## creates an entry for a user or group with avatar, sans
-  ## link. see link_to_user or link_to_group for linking.
-  def entity_line(entity)
-    klass = 'name_icon xsmall'
-    url = avatar_url(:id => (entity.avatar||0), :size => 'xsmall')
-    style = "background-image:url(#{url});"
-    content_tag :span, entity.both_names, :class => klass, :style => style
-  end
-
   ##
   ## PAGES
   ##

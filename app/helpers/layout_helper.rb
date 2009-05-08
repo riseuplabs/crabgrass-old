@@ -187,6 +187,9 @@ module LayoutHelper
     lines = []
     count = items.size
     rows = (count.to_f / cols).ceil
+    if options[:balanced]
+      width= (100.to_f/cols.to_f).to_i
+    end
     lines << '<table>' unless options[:skip_table_tag]
     if options[:header]
       lines << options[:header]
@@ -196,7 +199,7 @@ module LayoutHelper
       for c in 1..cols
          cell = ((r-1)*cols)+(c-1)
          next unless items[cell]
-         lines << "  <td valign='top'>"
+         lines << "  <td valign='top' #{"style='width:#{width}%'" if options[:balanced]}>"
          if block
            lines << yield(items[cell])
          else
