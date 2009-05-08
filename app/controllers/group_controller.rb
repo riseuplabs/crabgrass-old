@@ -193,7 +193,7 @@ class GroupController < ApplicationController
     end
   end
   
-
+  def edit_tools
     @available_tools = current_site.available_page_types
     if request.post?
       @group.group_setting.allowed_tools = []
