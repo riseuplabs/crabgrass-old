@@ -5,7 +5,7 @@
   include_message = true if include_message.nil?
   send_email      = true if send_email.nil?
 
-  check_box_options = {:checked => send_notice, :onchange => "checkbox_toggle_visibility(this, 'notification_details'); $('share_message').focus()"}
+  check_box_options = {:checked => send_notice, :onchange => "checkbox_toggle_visibility(this, 'notification_details'); $('notification_send_message').focus()"}
   if forced_send
     check_box_options.merge!({:checked => true, :disabled => true})
     send_notice = true

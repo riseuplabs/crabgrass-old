@@ -61,17 +61,13 @@ class BasePage::ShareController < ApplicationController
     if params[:cancel]
       close_popup
     elsif params[:recipient] and params[:recipient][:name].any? and !params[:share]
-      # add one recipient to the list
-      recipient_name = params[:recipient][:name].strip 
-      @recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)
-      
-      if @recipient.nil?
-        flash_message :error => 'no such name'[:no_such_name]
-      elsif !@recipient.may_be_pestered_by?(current_user)
-        flash_message :error => 'you may not pester'[:you_may_not_pester]
-      elsif (upart = @recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
-        flash_message :error => 'a participation for this user / group already exists'[:participation_already_exists]
+      # simply update the ui, don't actually do anything.
+      @recipients = []
+      recipients_names = params[:recipient][:name].strip.split(/[, ]/)
+      recipients_names.each do |recipient_name|
+        @recipients << find_recipient(recipient_name)
       end
+      @recipients.compact!
       render :partial => 'base_page/share/add_recipient'
     elsif params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
@@ -119,6 +115,23 @@ class BasePage::ShareController < ApplicationController
     end
     true
   end
+
+  def find_recipient(recipient_name)
+    recipient_name.strip!
+    return nil unless recipient_name.any?
+    recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
+    if recipient.nil?
+      flash_message(:error => 'no such name'[:no_such_name])
+    elsif !recipient.may_be_pestered_by?(current_user)
+      flash_message(:error => 'you may not pester'[:you_may_not_pester])
+    elsif (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
+      flash_message(:error => 'a participation for this user / group already exists'[:participation_already_exists])
+    else
+      return recipient
+    end
+    return nil
+  end
+
 
   private
 

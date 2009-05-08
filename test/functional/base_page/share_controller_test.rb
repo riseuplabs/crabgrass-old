@@ -200,7 +200,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
   def assert_successful_post(update='share')
     assert_response :success
     if update == 'add'
-      assert_not_nil assigns(:recipient)
+      assert_not_nil assigns(:recipients)
       assert_select 'li.unsaved'
     else
       assert_select 'div.notice'

@@ -169,7 +169,7 @@ module UserExtension::Sharing
   #       :send_email -- boolean, send a copy of notice via email?
   #         :send_sms -- boolean, send a copy of notice vis sms? (unsupported)
   #        :send_xmpp -- boolean, send a copy of notice vis jabber? (unsupported)
-  #    :end_encrypted -- boolean, only send if can be done securely.
+  #   :send_encrypted -- boolean, only send if can be done securely (unsupported)
   #     :send_message -- text, the message to include with the notification, if any.
   #   :mailer_options -- required when sending email
   #
@@ -177,7 +177,7 @@ module UserExtension::Sharing
   # unless page is modified, in which case they will not get saved.
   # (assuming that page.save will get called eventually, which will then save
   # the new participation objects. BasePageController has an after_filter that
-  # save the @page if has been changed.)
+  # auto saves the @page if has been changed.)
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
@@ -210,7 +210,7 @@ module UserExtension::Sharing
     if options[:send_notice] and options[:mailer_options] and options[:send_email]
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_share_notice(user, options[:send_message], mailer_options)
+        Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
       end
     end
   end
@@ -295,7 +295,7 @@ module UserExtension::Sharing
   end
 
   # takes recipients in hash form, like so {:blue => {:access => :admin}}.
-  # and then decides calls the appropriate share_page_with
+  # and then calls share_page_with! with the oppropriate options
   # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
   # must be HashWithIndifferentAccess. You have been warned.
   def share_page_with_hash!(page, recipient_hash, global_options=HashWithIndifferentAccess.new)
