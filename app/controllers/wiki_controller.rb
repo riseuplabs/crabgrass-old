@@ -30,7 +30,21 @@ class WikiController < ApplicationController
       @wiki.lock(Time.now, current_user)
     end
   end
-  
+
+  def old_version
+    # XHR
+
+    @wiki.lock(Time.now, current_user)
+    @showing_old_version = @wiki.versions[params[:old_version].to_i - 1]
+
+    @wiki.body = @showing_old_version.body
+    @wiki.body_html = @showing_old_version.body_html
+    # require 'ruby-debug';debugger
+
+    render :action => 'edit'
+
+  end
+
   # a re-edit called from preview, just one area.
   def edit_area
     return render(:action => 'done') if params[:close]
@@ -47,7 +61,7 @@ class WikiController < ApplicationController
     rescue Exception => exc
       @message = exc.to_s
       return render(:action => 'error')
-    end    
+    end
   end
   
   # unlock everything and show the rendered wiki

@@ -11,6 +11,8 @@
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
     <%= submit_tag 'Save', :name => 'save' %>
     <%= submit_tag 'Cancel', :name => 'cancel' %>
+    <%= 'Revert to previous version:'[:revert_to_previous_version] %>
+    <%= old_version_select_tag(wiki, spinner_id) %>
     <%= spinner(spinner_id) %>
   </div>
 <% end -%>
