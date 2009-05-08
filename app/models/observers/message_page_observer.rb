@@ -14,7 +14,7 @@ class MessagePageObserver < ActiveRecord::Observer
         # end
         key = rand(Time.now)
         MessagePageActivity.create!(:user => user,
-                                    :other_user => message_page.created_by,
+                                    :other_user => message_page.updated_by,
                                     :related_id => message_page.id,
                                     :key => key)
       end
