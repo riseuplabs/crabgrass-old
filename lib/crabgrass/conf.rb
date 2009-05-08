@@ -22,9 +22,11 @@ class Conf
   cattr_accessor :show_exceptions
   cattr_accessor :require_user_email
   cattr_accessor :domain
+  cattr_accessor :translation_group
   cattr_accessor :chat
   def self.chat?; self.chat; end
   
+
   # are in site, but I think they should be global
   cattr_accessor :translators
   cattr_accessor :translation_group
