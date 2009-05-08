@@ -156,10 +156,7 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   def assert_in_description(act, thing)
-    name = thing.respond_to?("display_name") ?
-      thing.display_name :
-      thing.name
-    assert_match name, act.description
+    assert_match thing.name, act.description
   end
 
 end
