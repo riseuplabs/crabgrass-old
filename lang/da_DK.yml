@@ -1,14 +1,4 @@
 --- 
-footer_text_riseup: |-
-  <span>This site is run by <a href="http://riseup.net">riseup.net</a>, your friendly autonomous tech collective since 1999.</span>
-  <ul>
-    <li><a href="http://help.riseup.net/policy/privacy/">privacy policy</a></li>
-    <li><a href="http://help.riseup.net/about-us/">about us</a></li>
-    <li><a href="https://mail.riseup.net/">email accounts</a></li>
-    <li><a href="https://lists.riseup.net/">mailing lists</a></li>
-    <li><a href="http://status.riseup.net/">system status</a></li>
-    <li><a href="http://riseup.net/donate/">donate to riseup.net</a></li>
-  </ul>
 add_contact_info: "N\xC3\xA5r en anden bruger er i din kontakt liste vil de have mulighed for at se n\xC3\xA5r du er logget ind og se din fulde profil. N\xC3\xA5r du bliver en kontakt til en anden person, bliver de automatisk ogs\xC3\xA5 din kontakt."
 logout_success_message: Du er nu logget ud
 network_invite_info: "Indtast navnene p\xC3\xA5 de grupper du har lyst til at invitere til dette netv\xC3\xA6rk."
@@ -20,7 +10,7 @@ footer_text_crabgrass: |-
   <ul>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>crabgrass help pages</a></li>
+    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
     <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
   </ul>
 signup_email_info: "Valgfrit: brugt hvis du glemmer dit kodeord"

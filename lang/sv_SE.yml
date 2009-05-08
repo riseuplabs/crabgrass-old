@@ -1,6 +1,5 @@
 --- 
 month_short_january: jan
-article_class_description: "Blogginl\xC3\xA4gg eller nyhetsartikel"
 drag_and_drop_to_rearrange_photos: "Drag & sl\xC3\xA4pp bilder f\xC3\xB6r att flytta runt dem."
 formatting_reference_link: formateringsreferens
 invalid_email: Ogiltig e-postadress
@@ -17,7 +16,7 @@ group_successfully_created: Gruppen skapades utan problem.
 date_hours: timmar
 add_phone_number: "L\xC3\xA4gg till telefonnummer"
 create_a_new_something: skapa en ny {something}
-folder: mapp
+message_page_display: Meddelande
 group_invite_email: "{from_user} har bjudit in dig till \"{group}\".\r\n\
   \r\n\
   Klicka h\xC3\xA4r om du vill g\xC3\xA5 med i gruppen:\r\n\
@@ -27,21 +26,10 @@ edit: "\xC3\xA4ndra"
 my_tasks_headline: Mina uppgifter
 Category: Kategori
 delete_version_confirm: "Vill du s\xC3\xA4kert radera den h\xC3\xA4r informationen?"
-folder_class_description: "En samling tillg\xC3\xA5ngar."
 action: handling
 description: beskrivning
 login_password: "L\xC3\xB6senord"
 add_another_file: "L\xC3\xA4gg till ny fil"
-footer_text_riseup: |-
-  <span>This site is run by <a href="http://riseup.net">riseup.net</a>, your friendly autonomous tech collective since 1999.</span>
-  <ul>
-    <li><a href="http://help.riseup.net/policy/privacy/">privacy policy</a></li>
-    <li><a href="http://help.riseup.net/about-us/">about us</a></li>
-    <li><a href="https://mail.riseup.net/">email accounts</a></li>
-    <li><a href="https://lists.riseup.net/">mailing lists</a></li>
-    <li><a href="http://status.riseup.net/">system status</a></li>
-    <li><a href="http://riseup.net/donate/">donate to riseup.net</a></li>
-  </ul>
 my_status_heading: Din nuvarande status
 image_count: Bild :number av :count
 media_videos: Videor
@@ -51,6 +39,7 @@ all_groups: alla grupper
 date_older: "\xC3\x84ldre"
 my_pending_tasks_link: "V\xC3\xA4ntlista"
 move_page_link: Flytta :page_class
+article_page_display: artikel
 group_has_no_public_profile: "Den h\xC3\xA4r gruppen har ingen offentlig profil."
 Committee: "kommitt\xC3\xA9"
 destroy_group: "f\xC3\xB6rst\xC3\xB6r %s"
@@ -59,7 +48,6 @@ month_short_may: maj
 from: "fr\xC3\xA5n"
 full: full
 me_search_description: "S\xC3\xB6k igenom alla sidor du har tillg\xC3\xA5ng till"
-message: meddelande
 menu_chat: Chatt
 location_state: delstat/provins
 incoming: Inkommande
@@ -69,7 +57,6 @@ insert_image_heading: "L\xC3\xA4gg in bild"
 alert_not_saved: "Det gick inte att spara f\xC3\xB6r\xC3\xA4ndringarna"
 date_this_week: Senaste veckan
 all_states: "alla tillst\xC3\xA5nd"
-gallery: galleri
 date_seconds: sekunder
 me_inbox_link: Inkorg
 edit_profile_link: "\xC3\x84ndra profil"
@@ -89,6 +76,7 @@ cancel_link: avbryt
 add_encryption_key: "L\xC3\xA4gg till krypteringsnyckel"
 date_days: dagar
 media_for_group: "%s i %s"
+folder_page_display: Mapp
 create_task_list: skapa en ny uppgiftslista
 edit_underlined_e: "\xC3\xA4ndra (<u>e</u>)"
 my_tasks: Uppgifter
@@ -130,6 +118,7 @@ date_weeks: veckor
 image_title: "Bildtitel: %s"
 approve_contact_info: "Det finns redan en kontaktans\xC3\xB6kan fr\xC3\xA5n den h\xC3\xA4r anv\xC3\xA4ndaren. Vill du godk\xC3\xA4nna den?"
 join_chat: delta i chatten
+article_page_description: "Blogginl\xC3\xA4gg eller nyhetsartikel"
 login: Logga in
 edit_attachments_link: "\xC3\x84ndra"
 message_must_not_be_empty: "ett meddelande f\xC3\xA5r inte vara tomt"
@@ -161,13 +150,13 @@ create_page_headline: Skapa en ny {page_class}
 my_settings: "Inst\xC3\xA4llningar f\xC3\xB6r {user}"
 group_information: "Information f\xC3\xB6r :group_type"
 all_people: alla personer
-committee_publicly_visible_description: "Kommitt\xC3\xA9er kan ses av ickemedlemmar p\xC3\xA5 %s/gruppnamn"
+committee_publicly_visible_description: "Kommitt\xC3\xA9er kan ses av ickemedlemmar p\xC3\xA5 we.riseup.net/gruppnamn"
 footer_text_crabgrass: |-
   <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
   <ul>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>crabgrass help pages</a></li>
+    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
     <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
   </ul>
 move_image_right: "Flytta bilden \xC3\xA5t h\xC3\xB6ger"
@@ -177,7 +166,6 @@ Admin: Admin
 insert_image_instructions: "Klicka p\xC3\xA5 en miniatyr f\xC3\xB6r att l\xC3\xA4gga in bilden i wikitexten."
 my_groups: Mina grupper
 delete_this_version: radera denna version
-article: artikel
 minimum_stars_for_important_pages_description: "Best\xC3\xA4m hur m\xC3\xA5nga stj\xC3\xA4rnor en sida beh\xC3\xB6ver f\xC3\xB6r att synas i \"viktigt\"-listan p\xC3\xA5 gruppens f\xC3\xB6rstasida"
 me_search_link: "S\xC3\xB6k"
 group_wiki: Gruppwiki
@@ -202,7 +190,7 @@ coordinating_council_description: "Medlemmar i den h\xC3\xA4r kommitt\xC3\xA9n h
 add_existing_image: "L\xC3\xA4gg till existerande bild"
 image_count_total: ":count bilder"
 general_info: "Allm\xC3\xA4n information"
-group_publicly_visible_description: "Gruppen framtr\xC3\xA4der i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar p\xC3\xA5 %s/gruppnamn."
+group_publicly_visible_description: "Gruppen framtr\xC3\xA4der i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar p\xC3\xA5 we.riseup.net/gruppnamn."
 descriptions: Beskrivningar
 location_city: stad
 my_requests_headline: "Mina f\xC3\xB6rfr\xC3\xA5gningar"
@@ -235,7 +223,7 @@ already_contacts_info: "Du \xC3\xA4r redan den h\xC3\xA4r personens kontakt."
 approve: bifall
 group: Grupp
 alert_field_errors: "N\xC3\xA5got \xC3\xA4r fel med f\xC3\xB6ljande f\xC3\xA4lt"
-group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar p\xC3\xA5 %s/gruppnamn. Dessutom syns gruppens namn i en lista p\xC3\xA5 varje medlems profilsida (%s/anv\xC3\xA4ndarnamn)"
+group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar p\xC3\xA5 we.riseup.net/gruppnamn. Dessutom syns gruppens namn i en lista p\xC3\xA5 varje medlems profilsida (we.riseup.net/anv\xC3\xA4ndarnamn)"
 Highest_Contributors: "Fr\xC3\xA4msta bidragare"
 close_button: "St\xC3\xA4ng"
 menu_home: Hem
@@ -264,6 +252,7 @@ member_groups_of_network: Medlemsgrupper
 groups: Grupper
 dont_have_permission_to_create_committees: "Du har inga r\xC3\xA4ttigheter att skapa kommitt\xC3\xA9er under %s"
 date_months: "m\xC3\xA5nader"
+gallery_display: galleri
 last_name: efternamn
 forgot_password_text: "Om du har gl\xC3\xB6mt l\xC3\xB6senordet du anv\xC3\xA4nder f\xC3\xB6r att logga in, kan vi skicka ett e-brev med en l\xC3\xA4nk som g\xC3\xB6r att du kan skapa ett nytt."
 contact_request_message_label: "S\xC3\xA4g %s varf\xC3\xB6r du vill vara deras kontakt."
@@ -278,6 +267,7 @@ date: datum
 grant_access: "Tilldela \xC3\xA5tkomst"
 date_years: "\xC3\xA5r"
 at_least_one_recipient_is_required: "det kr\xC3\xA4vs minst en mottagare"
+folder_page_description: "En samling tillg\xC3\xA5ngar."
 file_class_description: En uppladdad fil.
 group_home_headline: "{group_type} hem"
 forgot_password_mail_expiry: "Den h\xC3\xA4r l\xC3\xA4nken kommer att fungera i 24 timmar. Om du beh\xC3\xB6ver\r\n\
@@ -285,33 +275,6 @@ forgot_password_mail_expiry: "Den h\xC3\xA4r l\xC3\xA4nken kommer att fungera i 
   l\xC3\xB6senord igen och beg\xC3\xA4ra en ny l\xC3\xA4nk."
 group_successfully_updated: Gruppen uppdaterades utan problem.
 approval_vote_class_description: "Bifall eller inte om varje m\xC3\xB6jlighet."
-usage_agreement_text: |
-  The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
-  
-  In consideration for your use of this service you agree to the following conditions:
-  
-  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site. 
-  
-  You also agree not to use our services to:
-  
-  * harass other people;
-  * harm or exploit minors;
-  * impersonate or cause others to believe that you are another person;
-  * send unsolicited messages;
-  * collect personal data from users of this service without their express consent; and
-  * interfere with or disrupt our services, those of our users or any other person or service;
-  
-  Further, you agree to:
-  
-  * avoid excessive use of our services;
-  * be responsible for maintaining the confidentiality of your accounts and passwords;
-  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
-  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
-  
-  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
-  
-  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
-
 file_size: Filstorlek
 created: skapad
 create_page: Skapa sida

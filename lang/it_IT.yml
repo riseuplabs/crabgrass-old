@@ -3,6 +3,7 @@ add_encryption_key: Aggiungi Chiave di Cifratura
 group_not_allowed_to_view_image_error: "Non \xC3\xA8 permesso vedere questa immagine al gruppo che possiede questa pagina."
 Personal: Personale
 small: piccolo
+folder_page_description: Una collezione di risorse.
 menu_networks: Reti
 my_requests_headline: Le Mie Richieste
 add_star_link: Aggiungi Stella {:star_count}
@@ -12,14 +13,13 @@ month_short_april: Apr
 request_to_friend_description: ":user vorrebbe essere il contatto di :other_user"
 move_image_left: Sposta immagine a sinistra
 peers: peer
-wiki: wiki
 current_video_sources: "al momento sono supportati: youtube, blip.tv, google video, vimeo"
 request_to_join_us_description: ":user \xC3\xA8 stato invitato a entrare nel grupo :group"
+wiki_page_display: Wiki
 break_lock: annulla blocco
 or_image_url: o URL dell'immagine
-add_comment: aggiungi commento
+add_comment: Aggiungi Commento
 login_password: Password
-folder: cartella
 order_changed: Ordine cambiato.
 organizational_role: ruolo nell'organizzazione
 toggle_selection: Toggle selezione
@@ -42,6 +42,7 @@ welcome_text: "*Bevenuto*\r\n\
 prev_change: modifica precedente
 time_zone: Fuso Orario
 page_not_part_of_group: Questa pagina non fa parte di questo gruppo
+task_list_page_description: Una lista di cose da fare.
 contact: Contatto
 try_again: Prova di nuovo
 file_size: Dimensioni file
@@ -49,9 +50,10 @@ dont_have_permission_to_create_committees: Non hai i permessi necessari per crea
 activate_js_to_rearrange_photos: Devi attivare JavaScript per poter riordinare le foto con il Drag&Drop!
 media_for_group: "%s in %s"
 medium: medium
+achive: Archivio
 coordinator: Coordinatore
 reject_button: rifiuta
-group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo %s/nomedeltuogruppo."
+group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo we.riseup.net/nomedeltuogruppo."
 Language: Lingua
 delete_version_confirm: Sei sicuro/a di voler eliminare questa versione?
 websites: Siti Web
@@ -71,6 +73,8 @@ my_settings: Impostazioni per {user}
 locations: Indirizzi
 Home: Pagina Iniziale
 last_change: ultimo cambiamento
+create_page_data: dati {page_class}
+archive_filter_created_link: Data Creata
 edit_attachments_link: Modifica
 join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sar\xC3\xA0 stata approvata. Puoi controllare lo stato delle tue richieste visitando \"%s\"."
 add_email_address: Aggiungi Indirizzo Email
@@ -101,21 +105,26 @@ signup_link: Vuoi creare un nuovo account?
 download: Scarica
 status_resolved: risolto
 all_groups: tutti i gruppi
+create_page_information: informazioni {page_class}
+committee_publicly_visible: Rendi Comitati Visibili Pubblicamente
 pagination_previous: precedente
 committees: comitati
 save_button: Salva
 media_video: Video
-article: articolo
 media_audio: Registrazione audio
 media_without_group: Tuttti %s
 personal_message_class_description: Un messaggio personale inviato a diversi destinatari.
 location_country: paese
 reset_password_mail_greeting: "%s, la tua password \xC3\xA8 stata reimpostata come hai richiesto."
 login_name: Nome utente
+add_one_or_more_tags: "Aggiungi una o pi\xC3\xB9 etichette, separate da virgole"
 forgot_password_text: "Se hai dimenticato la password che usi per effettuare l'accesso, possiamo inviarti un link via email che ti permetter\xC3\xA0 di generarne una nuova."
 login: Accesso
+add_new_attachment: Aggiungi Nuovo Allegato
+article_page_description: Post di un blog o articolo di notizie.
 separate_tags: Separa i diversi tag con delle virgole.
 inbox_description: Elenco di pagine a cui sto partecipando attivamente o di cui seguo i cambiamenti
+all_content: Tutto il Contenuto
 delete_page_link: Elimina :page_class
 Mobile: Cellulare
 state: stato
@@ -136,7 +145,7 @@ my_status_heading: Il Tuo Stato Attuale
 signup_email_info: "Opzionale: usato se dimentichi la tua password"
 next_change: modifica successiva
 create_task_list: crea nuova lista dei compiti
-folder_class_description: Una collezione di risorse.
+archive_headline: Archivio
 signup_email: La tua e-mail
 alert_error: Errore
 full: pieno
@@ -169,6 +178,7 @@ gallery_class_description: Una collezione di immagini.
 unknown: sconosciuto
 approval_vote: voto di approvazione
 signup_info: Scegli il tuo nome utente e la tua password, poi fai click su "%s"
+committee_type_description: "Che tipo di comitato sar\xC3\xA0 questo?"
 location_address: indirizzo
 Admin: Amministratore
 link_name: Nome Link
@@ -188,8 +198,6 @@ pending_tasks: compiti pendenti.
 data_for_page_missing: Dati mancanti per questa pagina.
 monday: "Luned\xC3\xAC"
 activity_user_destroyed: "{user} si \xC3\xA8 congedato"
-ranked_vote_class_description: "Possibilit\xC3\xA0 di rank in ordine di preferenza."
-article_class_description: Post di un blog o articolo di notizie.
 me_dashboard_link: Bacheca
 rejected: rifiutato
 signup_confirm_password: Conferma password
@@ -202,10 +210,9 @@ discuss_request_link: discuti questa richiesta con :person_or_group
 group_administration_not_allowed: Non puoi amministrare questo gruppo.
 menu_people: Persone
 send_button: Invia
+gallery_display: galleria
 saving_your_changes: Salvataggio dei cambiamenti in corso...
-gallery: galleria
 add_another_file: Aggiungi un altro file
-ranked_vote: voto raggiunto
 Other: Altro
 media_audios: Registrazioni Audio
 close_button: Chiudi
@@ -213,6 +220,7 @@ fullname: Nome Completo
 username: Nome Utente
 page_list_heading_created_by: creata da
 download_gallery: Scarica Galleria
+access: Accesso
 password: Password
 Pager: Cercapersone
 current_featured_content: Contenuti in evidenza
@@ -220,6 +228,7 @@ create_committee: crea comitato
 date_this_week: Settimana passata
 recent_activity: "Attivit\xC3\xA0 Recenti"
 drag_and_drop_to_rearrange_photos: Trascina e rilascia le immagini per riordinarle
+date_days: giorni
 subject_must_not_be_empty: l'oggetto non deve essere vuoto
 page_list_heading_created: creata
 remove_contact_confirmation: Sei sicuro di voler rimuovere il contatto "%s"?
@@ -228,6 +237,7 @@ view_all: vedi tutti
 group_successfully_created: Gruppo creato con successo.
 approve_button: approva
 create_page_button: Crea pagina
+date_hours: ore
 remove_friend_link: Rimuovi Dai Miei Contatti
 add_description: Aggiungi Descrizione
 menu_home: Pagina iniziale
@@ -245,7 +255,7 @@ signup_password: La tua password
 alert_not_saved: Impossibile salvare le modifiche apportate
 formatting_reference_link: riferimenti per la formattazione
 created: creato
-group_members_publicly_visible_description: "I membri non sono visibili dai non membri a %s/nomedeltuogruppo. Inoltre, il nome del gruppo sar\xC3\xA0 elencato nella pagina del profilo di ogni membro (all'indirizzo %s/nomeutente)"
+group_members_publicly_visible_description: "I membri non sono visibili dai non membri a we.riseup.net/nomedeltuogruppo. Inoltre, il nome del gruppo sar\xC3\xA0 elencato nella pagina del profilo di ogni membro (all'indirizzo we.riseup.net/nomeutente)"
 edit: modifica
 phone_numbers: Numeri di Telefono
 view_slideshow: Vedi Presentazione
@@ -256,13 +266,12 @@ add_im_address: Aggiungi Indirizzo IM
 removing_image: Rimozione immagine in corso...
 wiki_is_locked: "Questo wiki \xC3\xA8 bloccato da :user"
 coordinating_council_description: L'appartenenza a questo comitato garantisce uno speciale <i>accesso amministrativo</i> al :group_type <b>:group_name</b>.
-task_list_class_description: Una lista di cose da fare.
 group_members_publicly_visible: Rendi i Membri Publicamente Visibili
 page_list_heading_updated_by: aggiornata da
-task_list: lista dei compiti
 version_doesnt_exist: Non esiste la versione :version
 image_count: Immagine :number di :count
 media_documents: Documenti
+folder_page_display: Cartella
 requested_forgot_password: Hai richiesto di cambiare la tua password
 ranked_vote_instructions: |-
   Trascina e rilascia gli elementi della lista per metterli nell'ordine che preferisci.
@@ -283,6 +292,7 @@ add_phone_number: Aggiungi Numero di Telefono
 created_by: Creato da
 Work_Life: Vita Lavorativa
 minimum_stars_for_important_pages: Numero minimo di stelle per pagine importanti
+wiki_page_description: Un documento di testo a forma libera.
 tags: Tag
 message_must_not_be_empty: il messaggio non deve essere vuoto
 my_tasks: Compiti
@@ -295,9 +305,11 @@ reactivate_button: Riattiva!
 approve_or_reject_link: approva o rifiuta questa richiesta
 password_reset: Reimpostazione Password
 collection_class_description: Pagine speciali che contengono altre pagine.
+add_button: Aggiungi
 remove: rimuovi
 unread: non letti
 new_group: Nuovo gruppo
+away: via
 diff_link: diff
 group_invite_email: |
   {from_user} ti ha invitato/a a entrare nel gruppo "{group}".
@@ -320,16 +332,6 @@ select_image_file: seleziona il file dell'immagine
 discussions: Discussioni
 login_failure_reason: Nome utente o password non corretti.
 rss_feed: Feed RSS
-footer_text_riseup: |-
-  <span>This site is run by <a href="http://riseup.net">riseup.net</a>, your friendly autonomous tech collective since 1999.</span>
-  <ul>
-    <li><a href="http://help.riseup.net/policy/privacy/">privacy policy</a></li>
-    <li><a href="http://help.riseup.net/about-us/">about us</a></li>
-    <li><a href="https://mail.riseup.net/">email accounts</a></li>
-    <li><a href="https://lists.riseup.net/">mailing lists</a></li>
-    <li><a href="http://status.riseup.net/">system status</a></li>
-    <li><a href="http://riseup.net/donate/">donate to riseup.net</a></li>
-  </ul>
 see_more_link: "Di Pi\xC3\xB9"
 media_alls: Media
 location_state: provincia
@@ -337,12 +339,13 @@ edit_settings: modifica impostazioni
 create_button: Crea
 not_featured_content: Non ancora un contenuto in evidenza
 requests_from_me: Richieste da me
-wiki_class_description: Un documento di testo a forma libera.
+create_page_share: Chi ha accesso a questo {page_class}?
 invalid_email_text: "L'indirizzo email che hai inserito non \xC3\xA8 valido."
 send_invites_headline: Invia inviti per entrare nel gruppo
 accept_usage_agreement: Accetto i termini di utilizzo
+current_tags: Etichette Correnti
 destroy: distruggi
-add_existing_image: aggiungi immagine esistente
+add_existing_image: Aggiungi Foto
 add_contact_info: "Quando aggiungi un utente alla lista dei tuoi contatti, sar\xC3\xA0 in grado di vedere se hai effettuato l'accesso e potr\xC3\xA0 vedere il tuo profilo. Inoltre, una volta che diventi un contatto per un'altro utente, anche l'altro utente diventa un tuo contatto."
 subject: oggetto
 recipient_tip: Separa i diversi destinatari con virgole, spazi o ritorni a capo.
@@ -359,6 +362,7 @@ featured_content: Contenuti in Evidenza
 profile_public_description: "Questo profilo \xC3\xA8 pubblico e sar\xC3\xA0 visibile a chiunque visiti questi sito.\r\n\
   Altri utenti potranno inoltre cercare tra le informazioni inserite.\r\n\
   Sii cauto quando aggiungi informazioni personali al tuo profilo pubblico."
+create_group_link: crea gruppo
 group_invite_subject: Invito a entrare nel gruppo "{group}"
 versions: versioni
 history: Storia
@@ -367,10 +371,10 @@ last_name: cognome
 create_page_headline: Crea una nuova {page_class}
 forgotten_email_address: Quale indirizzo email hai inserito quando hai creato il tuo account?
 School: Scuola
+attachments: Allegati
 no_change: nessun cambiamento
 invite_info: Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo %s.
 status_pending: pendente
-message: messaggio
 me_requests_link: Richieste
 date_yesterday: Ieri
 show_gallery: Mostra Galleria
@@ -387,13 +391,14 @@ created_on: Creato il
 dont_understand_group_type: Impossibile capire il tipo di gruppo :type
 activity_group_created: "{user} ha creato {group_type} {group}"
 other_formats: Altri Formati
+task_list_page_display: Lista dei compiti
 organization: organizzazione
 approve_contact_info: "Esiste gi\xC3\xA0 una richiesta di contatto da questo utente. Vuoi approvarla?"
 to: a
 menu_link_logout: Disconnetti
 group_successfully_updated: Gruppo aggiornato con successo.
 large: grande
-committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo %s/nomedeltuogruppo
+committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo we.riseup.net/nomedeltuogruppo
 thursday: "Gioved\xC3\xAC"
 description: descrizione
 reject: rifiuta
@@ -409,12 +414,14 @@ private_profile: Profilo Privato
 error_saving_new_order: Errore durante il salvataggio del riordinamento!
 page_list_heading_title: titolo
 request_to_join_your_network_description: ":group ha richiesto di entrare nella rete :network"
+article_page_display: articolo
 video_embed_code_prompt: Inserisci il codice per il video esterno
 cancel_button: Annulla
 not_set: non impostato
 tuesday: "Marted\xC3\xAC"
 settings: Impostazioni
 information: Informazioni
+ranked_vote_page_description: "Possibilit\xC3\xA0 di rank in ordine di preferenza."
 file: File
 expired_featured_content: Contenuti in Evidenza Scaduti
 move_page_link: Sposta :page_class
@@ -428,6 +435,8 @@ alert_field_errors: Ci sono problemi con i seguenti campi
 comparing_changes_header: Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version
 csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si pu\xC3\xB2 verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, \xC3\xA8 sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
 send_invites_button: Invia Inviti
+date_centuries: secoli
+current_attachments: Allegati Correnti
 networks: reti
 menu_link_account: Account
 page_list: Lista pagine
@@ -443,22 +452,29 @@ video_class_description: Mostra un video ospitato su un sito esterno
 pagination_next: successivo
 network_invite_info: Inserisci i nomi dei gruppi che vorresti invitare in questa rete.
 make_album_cover: rendi questa immagine la copertina dell'album
+ranked_vote_page_display: Voto raggiunto
 no_group_named: "non c'\xC3\xA8 nessun gruppo chiamato <strong>:name</strong>."
 im_addresses: Indirizzi IM
 page_list_heading_posts: post
+date_minutes: minuti
+archive_filter_updated_link: Ultimo Appuntamento Aggiornato
+all_people_link: nuove persone
 approved: approvato
 Social_Change_Interests: Interessi riguardanti il cambiamento sociale
 upload_new_image: carica nuova immagine
 request_to_join_us_via_email_description: ":email \xC3\xA8 stato invitato/a a entrare nel gruppo :group"
 page_info: Informazioni pagina
+message_page_display: Messaggio
 Announcements: Annunci
 wednesday: "Mercoled\xC3\xAC"
 regenerate: rigenera miniature
+add_tags: Aggiungi Etichette
 include_full_checkbox: includi link nell'immagine grande
 logout: Disconnetti
 group_directory: Elenco dei Gruppi
 month_short_june: Giu
 incoming: In arrivo
+activity_wall_message: "{author}ha scritto a {user}: {message}"
 when_does_feature_expire: "Quando questo contenuto in evidenza scadr\xC3\xA0?"
 break_lock_button: Annulla Blocco
 members: Membri
@@ -484,7 +500,7 @@ footer_text_crabgrass: |-
   <ul>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
     <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>crabgrass help pages</a></li>
+    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
     <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
   </ul>
 image_title: "Titolo immagine: %s"

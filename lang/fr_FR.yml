@@ -3,32 +3,36 @@ small: petit
 Personal: Personnel
 group_not_allowed_to_view_image_error: "Le groupe qui poss\xC3\xA8de cette image n'est pas autoris\xC3\xA9 \xC3\xA0 voir cette image."
 add_encryption_key: "ajouter une cl\xC3\xA9 de chiffrement"
+user_profile_description_may_pester: "Autoriser autrui \xC3\xA0 partager du contenu avec vous et vous envoyer des invitations."
+folder_page_description: Une collection.
 menu_networks: "R\xC3\xA9seaux"
 request_to_friend_description: ":user aimerait \xC3\xAAtre le contact de :other_user"
 groups: Groupes
 title: Titre
-group_summary: Information succincte sur %s.
+group_summary: Information succincte sur ce %s.
 my_requests_headline: "Mes requ\xC3\xAAtes"
 month_short_april: Avr
 move_image_left: "D\xC3\xA9placer l'image \xC3\xA0 gauche"
 peers: Pairs
 add_star_link: "Ajouter une \xC3\xA9toile (:star_count)"
-wiki: wiki
 current_video_sources: "actuellement support\xC3\xA9s: youtube, blip.tv, google video, vimeo"
+wall_post_button: "\xC3\x89crire un nouveau message"
+group_profile_description_may_see: "Si coch\xC3\xA9, les informations ci-dessous seront visibles. sinon, le profil de ce {group_type} seront compl\xC3\xA8tement cach\xC3\xA9es."
+wiki_page_display: Wiki
 request_to_join_us_description: ":user a \xC3\xA9t\xC3\xA9 invit\xC3\xA9 \xC3\xA0 rejoindre :group"
-break_lock: forcer le verrou
-left_the_chatroom: quitter l'espace de discussion
+break_lock: Forcer le verrou
+left_the_chatroom: quitter le salon
 or_image_url: ou URL de l'image
 add_comment: Ajouter un commentaire
 login_password: Mot de passe
-folder: dossier
+profile_option_may_see_groups: Affichers les groupes members
 users_wall: le mur de :user
 upload_attachment: Joindre un fichier
 toggle_selection: "Inverser la s\xC3\xA9lection"
 order_changed: "ordre modifi\xC3\xA9."
 organizational_role: "r\xC3\xB4le organisationnel"
 email_addresses: Adresses mail
-join_chat: Rejoindre le chat
+join_chat: Rejoindre le salon
 at_least_one_recipient_is_required: choisir au moins un destinataire
 media_videos: "Vid\xC3\xA9os"
 recent_wall_posts: "Messages r\xC3\xA9cents du mur"
@@ -37,7 +41,7 @@ add_location: Ajouter un lieu
 friends: Amis
 share_page_recipients: "Partager cette {page_class} avec "
 saturday: Samedi
-prev_change: "modification pr\xC3\xA9c\xC3\xA9dente"
+prev_change: "Modification pr\xC3\xA9c\xC3\xA9dente"
 group_information: Information de :group_type
 welcome_text: "*Bienvenue*\r\n\
   \r\n\
@@ -48,7 +52,9 @@ welcome_text: "*Bienvenue*\r\n\
   Une fois votre demande accept\xC3\xA9e, vous pouvez y placer des documents, cr\xC3\xA9er de listes \xC3\xA0 faire, des discussions, des wikis, des votes et des messages pour communiquer, collaborer et accomplir des t\xC3\xA2ches au sein du groupe. Comme pour tout nouvel outil, vous aurez \xC3\xA0 vous familiariser avec l'interface. Pour vous aider \xC3\xA0 r\xC3\xA9pondre aux diverses interrogations que vous ne manquerez pas de vous poser comme la diff\xC3\xA9rence entre la bo\xC3\xAEte de r\xC3\xA9ception et le tableau de bord, consultez les [pages d'aides -> /crabgrass/table-of-contents].\r\n\
   \r\n\
   Le d\xC3\xA9veloppement est dirig\xC3\xA9 \xC3\xA0 partir du retour des utilisateurs, aussi [rejoignez -> /users] le groupe \"user feed back\" /[retour des utilisateurs/] et impliquez-vous en cliquant le lien \"get involved\" pr\xC3\xA9sent au bas de toutes les page.\r\n"
+wall_heading: Mur public
 time_zone: Fuseau Horaire
+task_list_page_description: "Une liste de choses \xC3\xA0 faire."
 share_page_recipients_sections: Choisissez parmi vos groupes ou amis
 delete: Supprimer
 page_not_part_of_group: Page ne faisant pas partie de ce groupe
@@ -61,32 +67,36 @@ dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour cr\x
 activate_js_to_rearrange_photos: "Activer JavaScript pour pouvoir r\xC3\xA9arranger les photos !"
 media_for_group: "%s dans %s"
 medium: moyenne
+achive: Archive
 websites: sites web
 reject_button: rejeter
-group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 %s/yourgroupname."
+group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible des non-mebres \xC3\xA0 we.riseup.net/yourgroupname."
 Language: Langue
 coordinator: Coordinateur
 delete_version_confirm: "\xC3\x8Ates-vous certain de vouloir supprimer cette version ?"
 featured_content_header: Mis en avant
-tasks: "t\xC3\xA2ches"
+tasks: "T\xC3\xA2ches"
 Personal_Interests: "Int\xC3\xA9r\xC3\xAAts personnels"
 logout_success: Au revoir
 signup_title: "Cr\xC3\xA9ez votre compte"
-menu_chat: Chat
+menu_chat: Salon de discussion
 user: Utilisateur
 image_count_total: ":count Images"
+group_profile_description_may_see_networks: "Publiciser les r\xC3\xA9seaux dont ce {group_type} est membre."
+profile_last_login: "Derni\xC3\xA8re connexion"
 page_locked_header: "page verrouill\xC3\xA9e"
 all_page_types: tous les types de pages
 contribute_content_link: Contribuer
 media_document: Document
-activity_user_left_group: "{user} a quitt\xC3\xA9 {group_type} {group}"
+activity_user_left_group: "{user} a quitt\xC3\xA9 le {group_type} {group}"
 collection: collection
 no_images_in_gallery: Aucune image dans la galerie
-joins_the_chatroom: Rejoindre l'espace de discussion
+joins_the_chatroom: Rejoindre le salon de discussion
 my_settings: "Param\xC3\xA8tres pour {user}"
 locations: Lieux
 Home: Accueil
-last_change: "derni\xC3\xA8re modification"
+last_change: "Derni\xC3\xA8re modification"
+archive_filter_created_link: "Date de cr\xC3\xA9ation"
 public_checkbox: Public
 join_request_info: "Vous ne serez pas membre de ce groupe avant que votre demande ne soit approuv\xC3\xA9e. Vous pouvez v\xC3\xA9rifier l'\xC3\xA9tat de vos demandes en visitant \"%s\"."
 group_language: La langue principale de ce %s.
@@ -94,7 +104,7 @@ add_email_address: Ajouter une adresse mail
 edit_attachments_link: Modifier
 create_page_data: "{page_class} donn\xC3\xA9es"
 month_short_may: Mai
-Committee: Conseil
+Committee: Commission
 contributed: "Contribu\xC3\xA9"
 group: Groupe
 format: Format
@@ -105,6 +115,7 @@ undo: "d\xC3\xA9faire"
 logout_success_message: "Vous avez \xC3\xA9t\xC3\xA9 d\xC3\xA9connect\xC3\xA9."
 me_inbox_link: "Bo\xC3\xAEte de r\xC3\xA9ception"
 action: action
+profile_option_may_request_membership: Autorise les demandes pour rejoindre
 set_status_messsage: Que faites-vous actuellement ?
 password_reset_ok_text: "Votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\xC3\xA9. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
 Founded: "Fond\xC3\xA9"
@@ -120,6 +131,7 @@ recent_pages: "Pages r\xC3\xA9centes"
 invite_accept_via_existing_account: "J'ai d\xC3\xA9j\xC3\xA0 un compte"
 create_a_new_page: "Cr\xC3\xA9er une nouvelle page"
 display_name: "Nom affich\xC3\xA9"
+join_group_success: Vous avez rejoint le groupe {group_name}
 edit_featured_content_for_group: Modifier le contenu mis en avant du groupe :group_name
 you_have_no_contacts: Vous n'avez aucun contact
 sunday: Dimanche
@@ -129,17 +141,15 @@ move_image_right: "D\xC3\xA9placer l'image \xC3\xA0 droite"
 signup_link: Besoin d'un nouveau compte ?
 download: "T\xC3\xA9l\xC3\xA9chargement"
 all_groups: tous les groupes
-committee_publicly_visible: Publiciser les conseils
+committee_publicly_visible: Publier les commissions
 save_button: Sauvegarder
 pagination_previous: "pr\xC3\xA9c\xC3\xA9dent"
-committees: Conseils
+committees: Commissions
 create_page_information: "{page_class} information"
 media_video: "Vid\xC3\xA9o"
-votes: votes
 personal_message_class_description: "Un message personnel envoy\xC3\xA9 \xC3\xA0 des destinataires individuels."
 media_audio: Enregistrement audio
 media_without_group: Tous les %s
-article: article
 date_weeks: semaines
 no_peers_msg: Vous n'avez aucun pair.
 working_group: groupe de travail
@@ -154,6 +164,7 @@ login: Connexion
 separate_tags: "S\xC3\xA9parer les \xC3\xA9tiquettes par une virgule."
 participant: Participant
 add_new_attachment: Joindre un nouveau fichier
+article_page_description: "Billet de blog ou article d'actualit\xC3\xA9."
 inbox_description: Affiche les pages auxquelles je participe activement ou dont je suis les modifications
 share_page_recipients_results: "Cette {page_class} sera partag\xC3\xA9e avec"
 all_content: Tout les contenus
@@ -161,14 +172,14 @@ Mobile: Portable
 delete_page_link: Supprimer :page_class
 share_link: Partager :page_class
 page_list_heading_stars: "\xC3\xA9toiles"
-page_list_heading_last_updated: "derni\xC3\xA8re modification"
 state: "\xC3\xA9tat"
 invalid_token: Lien invalide
+page_list_heading_last_updated: "derni\xC3\xA8re modification"
 month_short_july: Juil
 delete_post: Supprimer le message
 search: Rechercher
 email: Mail
-create_a_new_thing: "Cr\xC3\xA9er un nouvel :thing"
+create_a_new_thing: "Cr\xC3\xA9er un nouveau :thing"
 my_world_heading: Mon Univers
 view_requests: Voir les demandes
 your_login: Votre identifiant
@@ -177,16 +188,16 @@ my_dashboard: Mon tableau de bord
 network: "R\xC3\xA9seau"
 minimum_stars_for_important_pages_description: "D\xC3\xA9terminer le minimum d'\xC3\xA9toile qu'une page doit avoir pour appara\xC3\xAEtre dans la liste 'important' de la page d'accueil du groupe"
 date_older: Plus Vieux
+preview: "Aper\xC3\xA7u"
 signup_email_info: "optionnel: utilis\xC3\xA9 si vous oubliez votre mot de passe"
-next_change: modification suivante
+next_change: Modification suivante
 create_task_list: "cr\xC3\xA9er une nouvelle liste de t\xC3\xA2ches"
 my_status_heading: Mon statut actuel
-folder_class_description: Une collection.
+archive_headline: Archive
 signup_email: Votre mail
 alert_error: Erreur
 coordinating_council: conseil de coordination
 full: plein
-videos: "vid\xC3\xA9os"
 remove_from_gallery: Retirer de la galerie
 login_button: Se connecter
 destroy_group: "d\xC3\xA9truire %s"
@@ -216,9 +227,9 @@ summary: Sommaire
 only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en \xC3\xAAtes le dernier membre"
 gallery_class_description: Une collection d'images.
 allow_membership_requests: "Autoriser les requ\xC3\xAAtes de membre"
-approval_vote: vote d'approbation
+approval_vote: vote par approbation
 signup_info: Choisissez votre nom d'utilisateur ainsi que votre mot de passe avec de cliquer sur "%s"
-committee_type_description: Quel type de conseil sera-ce ?
+committee_type_description: Quel type de commission sera-ce ?
 Admin: Administrer
 link_name: Nom du lien
 my_tasks_description: "Listes de t\xC3\xA2ches accessibles"
@@ -226,12 +237,15 @@ location_address: adresse
 print_underlined_p: im<u>p</u>rimer
 me_tasks_link: "T\xC3\xA2ches"
 month_short_december: "D\xC3\xA9c"
+profile_option_may_see_committees: Afficher les commissions
 post_message: Ecrire un message
 login_required: Connexion requise
-commitee_type: type conseil
+new_people_link: nouveaux
+commitee_type: type commission
 reset_password_mail_sent: "Un email contenant les instructions de r\xC3\xA9initialisation du mot de passe vous a \xC3\xA9t\xC3\xA9 envoy\xC3\xA9."
 my_completed_tasks_link: "Compl\xC3\xA9t\xC3\xA9es"
 galleries: Galeries
+user_profile_description_may_see_contacts: "autoriser autrui \xC3\xA0 voir votre liste de contacts personnels."
 reset_password_mail_warning: "Si vous n'avez pas demand\xC3\xA9 \xC3\xA0 r\xC3\xA9initialiser votre mot de passe, merci de nous contacter."
 read: lire
 alert_permission_denied: "Autorisation refus\xC3\xA9e"
@@ -241,32 +255,32 @@ activity_user_status: "{user} est maintenant {status}"
 location_city: ville
 friday: Vendredi
 my_groups_link: mes groupes
-ranked_vote_class_description: "Ordonner les propositions par ordre de pr\xC3\xA9f\xC3\xA9rence."
 pending_tasks: "t\xC3\xA2ches en cours."
 data_for_page_missing: Le contenu pour cette page est manquant.
 monday: Lundi
 activity_user_destroyed: "{user} s'est retir\xC3\xA9"
+profile_option_may_see: Profil visible
+details_link: "D\xC3\xA9tails"
 password_was_reset: "Votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\xC3\xA9"
 me_dashboard_link: Tableau de bord
 rejected: "rejet\xC3\xA9es"
 signup_confirm_password: Confirmation du mot de passe
 delete_this_version: effacer cette version
-article_class_description: "Billet de blog ou article d'actualit\xC3\xA9."
 Work: Travail
 group_directory_link: "r\xC3\xA9pertoire des groupes"
 remove_contact_info: "Si vous retirez quelqu'un de votre liste de contacts, vous ne serez plus en mesure de voir quand il est connect\xC3\xA9, ni de voir son profil complet. De m\xC3\xAAme, le retirer de vos contacts fera que vous serez \xC3\xA9galement retir\xC3\xA9 de la liste de ses contacts."
 date_seconds: secondes
 from: de
 discuss_request_link: Discuter de cette demande avec :person_or_group
+user_profile_description_may_request_contact: "Autoriser autrui \xC3\xA0 vous demander comme contact personnel."
 group_administration_not_allowed: Vous ne pouvez administrer ce groupe.
 no_contacts_msg: Vous n'avez aucun contact.
-menu_people: Personnes
+menu_people: Autrui
 send_button: Envoyer
 saving_your_changes: Sauvegarde de vos modifications...
-gallery: Galerie
+gallery_display: Galerie
 add_another_file: Ajouter un autre fichier
 page_list_heading_owner: "propri\xC3\xA9taire"
-ranked_vote: vote de classement
 Other: Autre
 username: Nom
 media_audios: Enregistrements audio
@@ -279,7 +293,7 @@ current_featured_content: Contenu mis en avant actuel
 recent_activity: "Activit\xC3\xA9 r\xC3\xA9cente"
 password: Mot de passe
 access: "Acc\xC3\xA8s"
-create_committee: "cr\xC3\xA9er une commission"
+create_committee: "Cr\xC3\xA9er une commission"
 date_this_week: "La Semaine Pass\xC3\xA9e"
 drag_and_drop_to_rearrange_photos: Attrapez et glissez les images pour les arranger
 subject_must_not_be_empty: "Le sujet ne doit pas \xC3\xAAtre vide"
@@ -315,9 +329,10 @@ signup_password: Votre mot de passe
 move_page_to_different_group: "D\xC3\xA9placer cette page dans un autre groupe"
 alert_not_saved: "Les modifications ne peuvent \xC3\xAAtre sauvegard\xC3\xA9es"
 formatting_reference_link: "Formatage de r\xC3\xA9f\xC3\xA9rence"
+group_profile_description_may_see_groups: Publier les groupes qui font partie de ce {group_type}.
 created: "cr\xC3\xA9\xC3\xA9"
-group_members_publicly_visible_description: "Les membres sont visibles des non-membres \xC3\xA0 %s/yourgroupname. De m\xC3\xAAme, le nom du groupe sera list\xC3\xA9 sur chaque profil des membres (%s/username)"
-edit: "\xC3\xA9diter"
+group_members_publicly_visible_description: "Les membres sont visibles des non-membres \xC3\xA0 we.riseup.net/yourgroupname. De m\xC3\xAAme, le nom du groupe sera list\xC3\xA9 sur chaque profil des membres (we.riseup.net/username)"
+edit: "\xC3\x89diter"
 view_slideshow: Voir le diaporama
 video: "vid\xC3\xA9o"
 requests_for_group: "Requ\xC3\xAAtes pour %s"
@@ -329,17 +344,16 @@ date_months: mois
 add_im_address: "Ajouter une adresse de messagerie instantan\xC3\xA9e"
 my_peers_description: utilisateurs inscrits dans au moins un de mes groupes
 version_doesnt_exist: Il n'y a pas de version :version
-task_list_class_description: "Une liste de choses \xC3\xA0 faire."
 send_message_link: Envoyer un message
 coordinating_council_description: Les membres de ce conseil ont des <i>droits d'administration</i> sur le :group_type <b>:group_name</b>.
 group_members_publicly_visible: Afficher publiquement les membres du groupe
 page_list_heading_updated_by: "mis \xC3\xA0 jour par"
-task_list: "liste de t\xC3\xA2ches"
 image_count: Image :number sur :count
 invite_accept_headline: "Accepter l'invitation \xC3\xA0 rejoindre le groupe"
 requested_forgot_password: "Vous avez demand\xC3\xA9 une modification du mot de passe"
 recent_network_pages: "Pages r\xC3\xA9centes du r\xC3\xA9seau"
 media_documents: Documents
+folder_page_display: Dossier
 feature_button: Mettre en avant!
 ranked_vote_instructions: "Glisser les objets dans la liste suivante pour les ordonner du pr\xC3\xA9f\xC3\xA9r\xC3\xA9 en haut au moins appr\xC3\xA9ci\xC3\xA9 en bas.\r\n\
   Quand vous avez fini, cliquez sur confirmer pour enregistrer votre choix."
@@ -349,6 +363,7 @@ share_page_link: Partager :page_class
 page_list_heading_updated: "mis \xC3\xA0 jour le"
 back_to_group: revenir au groupe :group_name
 no_public_profiles: Encore aucun profil public...
+my_peers_link: mes pairs
 people: Utilisateurs
 contact_request_message_label: "Expliquez \xC3\xA0 %s pourquoi vous voulez \xC3\xAAtre son contact."
 cancel_link: annuler
@@ -361,6 +376,7 @@ add_phone_number: "Ajouter un num\xC3\xA9ro de t\xC3\xA9l\xC3\xA9phone"
 created_by: "Cr\xC3\xA9\xC3\xA9e par"
 Work_Life: Vie de taff
 minimum_stars_for_important_pages: Etoiles minimum pour les pages importantes
+wiki_page_description: un formulaire de document texte.
 tags: "\xC3\x89tiquettes"
 message_must_not_be_empty: "Le message ne doit pas \xC3\xAAtre vide"
 my_tasks: "T\xC3\xA2ches"
@@ -381,6 +397,7 @@ share: Partager
 remove: retirer
 new_group: Nouveau groupe
 add_button: Ajouter
+group_profile_description_may_see_committees: Publier les commissions de ce {group_type}.
 diff_link: "diff\xC3\xA9rent"
 away: absent
 sucessfully_removed_image: "Image retir\xC3\xA9e ! (:undo_link)"
@@ -402,16 +419,7 @@ group_invite_email: "{from_user} vous a invit\xC3\xA9 \xC3\xA0 rejoindre le grou
   \r\n  {group_home_link}\r\n\
   \r\n\
   Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail."
-footer_text_riseup: |-
-  <span>This site is run by <a href="http://riseup.net">riseup.net</a>, your friendly autonomous tech collective since 1999.</span>
-  <ul>
-    <li><a href="http://help.riseup.net/policy/privacy/">privacy policy</a></li>
-    <li><a href="http://help.riseup.net/about-us/">about us</a></li>
-    <li><a href="https://mail.riseup.net/">email accounts</a></li>
-    <li><a href="https://lists.riseup.net/">mailing lists</a></li>
-    <li><a href="http://status.riseup.net/">system status</a></li>
-    <li><a href="http://riseup.net/donate/">donate to riseup.net</a></li>
-  </ul>
+new_people: nouveaux
 see_more_link: Plus
 media_alls: "M\xC3\xA9dias"
 not_featured_content: Contenu non encore mis en avant
@@ -422,13 +430,14 @@ share_button: Partager
 participation: Participation
 edit_attachments: Modifier les fichiers joints
 requests_from_me: de ma part
-wiki_class_description: un formulaire de document texte.
 send_invites_headline: "Envoyer des invitations \xC3\xA0 rejoindre {group}"
 invalid_email_text: L'adresse mail fournie est invalide.
 create_page_share: "Qui a un acc\xC3\xA8s \xC3\xA0 cette {page_class}?"
-assets: actifs
+group_join_chat: Rejoindre salon
 viewed: Vu
-accept_usage_agreement: J'accepte les termes de l'accord d'utilisation
+accept_usage_agreement: J'accepte les termes des conditions d'utilisation
+profile_option_may_request_contact: "Peut demander \xC3\xA0 \xC3\xAAtre en contact"
+current_tags: "\xC3\x89tiquettes actuelles"
 subject: sujet
 destroy: "d\xC3\xA9truire"
 add_existing_image: Ajouter une image existante
@@ -437,6 +446,7 @@ member_groups_of_network: Groupes membres
 recipient_tip: "S\xC3\xA9parez les destinataires par des virgules, des espaces ou de nouvelles lignes."
 alert_saved: "Modifications effectu\xC3\xA9es"
 month_short_september: Sep
+my_contacts_link: mes contacts
 featured_content: Contenu mis en avant
 updated: "mis \xC3\xA0 jour"
 request_to_join_you_description: ":user demande \xC3\xA0 rejoindre :group"
@@ -449,12 +459,12 @@ general_info: "Informations g\xC3\xA9n\xC3\xA9rales"
 date_today: Aujourd'hui
 forgot_password_mail_greeting: "%s, pour r\xC3\xA9g\xC3\xA9n\xC3\xA9rer votre mot de passe"
 group_discussion_class_description: Une discussion du groupe sur un sujet particulier.
-versions: versions
+versions: Versions
 create_group_link: "cr\xC3\xA9er un groupe"
 history: Historique
 group_invite_subject: "Invitation \xC3\xA0 rejoindre le groupe \"{group}\""
 School: "\xC3\x89cole"
-group_home_headline: "{group_type} Accueil"
+group_home_headline: Page d'accueil du {group_type}
 last_name: nom
 directory_of_networks: "R\xC3\xA9pertoire des r\xC3\xA9seaux"
 create_page_headline: "Cr\xC3\xA9er une nouvelle {page_class}"
@@ -467,9 +477,10 @@ invite_not_found: "Invitation non trouv\xC3\xA9e"
 invite_info: "Entrez une liste de noms d'utilisateur ou d'adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce %s."
 attachments: Fichiers joints
 link_name_description: "C'est ce nomp qui sera utilise pour identifier ce groupe dans les liens et les URLs. Il ne doit contenir que des caract\xC3\xA8res alphanum\xC3\xA9riques non accentu\xC3\xA9s sans espace."
-message: message
-this_is_committee: Ce conseil fait partie de {parent_group}.
+user_profile_description_allow_peers: "Si coch\xC3\xA9, les personnes avec qui vous partagez un groupe seront en mesure de voir votre profil priv\xC3\xA9."
+this_is_committee: Cette commission fait partie de {parent_group}.
 me_requests_link: Demandes
+group_profile_description_may_request_membership: Autoriser les demandes pour rejoindre ce {group_type}.
 show_gallery: Montrer la galerie
 date_yesterday: Hier
 upload_image: "T\xC3\xA9l\xC3\xA9charger une image"
@@ -482,22 +493,24 @@ menu_groups: Groupes
 signup_button: S'inscrire
 month_short_october: Oct
 create_a_new_something: "Cr\xC3\xA9er {something}"
+profile_option_may_pester: Peux pester contre moi
+profile_option_allow_peers: Visible des pairs
 share_page_message: Envoyer un message (optionnel)
 created_on: "Cr\xC3\xA9\xC3\xA9 sur"
 dont_understand_group_type: Ne peut comprendre le type de groupe :type
 to: !binary |
   w6A=
 
-activity_group_created: "{user} a cr\xC3\xA9\xC3\xA9 {group_type} {group}"
+activity_group_created: "{user} a cr\xC3\xA9\xC3\xA9 le {group_type} {group}"
 other_formats: autres formats
+task_list_page_display: "Liste de t\xC3\xA2ches"
 organization: organisation
 approve_contact_info: "Cet utilisateur vous a d\xC3\xA9j\xC3\xA0 demand\xC3\xA9 comme contact. Voulez-vous l'accepter ?"
-wikis: wikis
 thursday: Jeudi
 group_successfully_updated: "Le groupe est mis \xC3\xA0 jour."
 date_years: "ann\xC3\xA9es"
 large: grande
-committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 %s/yourgroupname"
+committee_publicly_visible_description: "Les commissions sont visibles de tous \xC3\xA0 we.riseup.net/yourgroupname"
 menu_link_logout: "D\xC3\xA9connexion"
 description: description
 outgoing: Sortant
@@ -507,8 +520,7 @@ video_service_is_not_supported: "n'est pas support\xC3\xA9 (actuellement seuleme
 viewer: Lecteur
 user_or_group_name: Utilisateur ou nom de groupe
 request_status: "Cette demande a \xC3\xA9t\xC3\xA9 :status par :user \xC3\xA0 :time"
-messages: messages
-all_people: toutes les personnes
+all_people: tout le monde
 working_group_description: "L'appartenance \xC3\xA0 ce conseil ne conf\xC3\xA8re <i>aucun acc\xC3\xA8s</i> au :group_type <b>:group_name</b>."
 request_to_join_your_network_description: ":group demande \xC3\xA0 rejoindre le r\xC3\xA9seau :network"
 login_failed: Connexion impossible
@@ -517,12 +529,16 @@ private_profile: "Profil priv\xC3\xA9"
 location_postal_code: code postal
 error_saving_new_order: Erreur lors de la sauvegarde de l'arrangement
 page_list_heading_title: titre
+profile_option_may_see_networks: "Afficher ses r\xC3\xA9seaux"
 video_embed_code_prompt: "Code import\xC3\xA9 depuis une source vid\xC3\xA9o ext\xC3\xA9rieure"
 cancel_button: Annuler
+article_page_display: article
+profile_option_may_see_members: Afficher les membres du groupe
 tuesday: Mardi
 not_set: "non d\xC3\xA9termin\xC3\xA9"
 settings: "Param\xC3\xA8tres"
 expired_featured_content: Expiration de la mise en avant du contenu
+ranked_vote_page_description: "Classer les propositions par ordre de pr\xC3\xA9f\xC3\xA9rence."
 information: Information
 file: fichier
 locked_by_user: "Verrouill\xC3\xA9 par :user"
@@ -538,12 +554,13 @@ search_headline: Recherche
 alert_field_errors: "Il y a un probl\xC3\xA8me avec les champs suivants"
 move_this_page: "D\xC3\xA9placer cette page"
 comparing_changes_header: "Comparaison des modifications de :user \xC3\xA0 :when de :old_version vers :new_version"
-this_is_coordinating: Ce conseil est le <strong>conseil de coordination</strong> de {parent_group}.
+this_is_coordinating: Cette commission est le <strong>conseil de coordination</strong> de {parent_group}.
 share_page_recipients_selection: Faites votre choix
-edit_council_help_text: "Si ce groupe poss\xC3\xA8de un conseil de coordination, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
+edit_council_help_text: "Si ce groupe poss\xC3\xA8de un conseil, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
 csrf_error_message: "Votre demande de connexion ressemble \xC3\xA0 une tentative de piratage de ce site. Pas d'inqui\xC3\xA9tude: cette erreur arrive fr\xC3\xA9quemment m\xC3\xAAme pour des demandes anodines. Nous sommes simplement particuli\xC3\xA8rement parano\xC3\xAFaques. Tout ce que vous avez \xC3\xA0 faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:"
 type_your_messages_here: "\xC3\x89crivez votre message ici et validez avec la touche Entr\xC3\xA9e..."
 send_invites_button: Envoyer des invitations
+user_profile_description_may_see_groups: "Autoriser autrui \xC3\xA0 voir les groupes dont vous \xC3\xAAtes membres."
 page_list: liste de page
 current_attachments: "Pi\xC3\xA8ces jointes actuelles"
 date: date
@@ -556,6 +573,8 @@ move_button: "D\xC3\xA9placer"
 grant_access: "Donner acc\xC3\xA8s"
 About_Me: Mes Informations
 no_committees: pas de commission
+profile_option_may_see_contacts: Montrer ses contacts personnels
+profile_member_since: Membre depuis le
 video_class_description: "Affiche une vid\xC3\xA9o h\xC3\xA9berg\xC3\xA9e sur un site ext\xC3\xA9rieur."
 share_page_options: Choisir les options
 you_have_no_groups: Vous n'avez aucun groupe
@@ -565,9 +584,13 @@ activity_user_joined_group: "{user} a rejoint le {group_type} {group}"
 network_invite_info: "\xC3\x89crivez les noms des groupes que vous d\xC3\xA9sirez inviter \xC3\xA0 rejoindre ce r\xC3\xA9seau."
 make_album_cover: Faire de cette image la couverture de l'album
 public_key: "Cl\xC3\xA9 Publique"
+ranked_vote_page_display: Vote par classement
 no_group_named: "Il n'existe pas de groupe nomm\xC3\xA9 <b>:name</b>."
 im_addresses: "Adresse de messagerie instantan\xC3\xA9e"
 page_list_heading_posts: messages
+all_people_link: Tout le monde
+user_profile_description_may_see: "Si coch\xC3\xA9, les informations du profil seront visibles. Sinon, votre profil sera enti\xC3\xA8rement cach\xC3\xA9."
+archive_filter_updated_link: "Date de mise \xC3\xA0 jour"
 users_world: le monde de :user
 Social_Change_Interests: "Int\xC3\xA9r\xC3\xAAts pour la transformation sociale"
 approved: "approuv\xC3\xA9es"
@@ -576,15 +599,18 @@ upload_new_image: "t\xC3\xA9l\xC3\xA9charger une nouvelle image"
 upload_images: "T\xC3\xA9l\xC3\xA9charger"
 request_to_join_us_via_email_description: ":email a \xC3\xA9t\xC3\xA9 invit\xC3\xA9 \xC3\xA0 rejoindre :group"
 page_info: Page d'Information
-watch_checkbox: "Rechercher les mises \xC3\xA0 jour"
+message_page_display: Message
+watch_checkbox: "Suivre les mises \xC3\xA0 jour"
 wednesday: Mercredi
 regenerate: "r\xC3\xA9g\xC3\xA9n\xC3\xA9rer les vignettes"
 Announcements: Annonces
+add_tags: "Ajouter \xC3\xA9tiquettes"
 include_full_checkbox: Inclus le lien vers l'image de taille originale
 logout: "D\xC3\xA9connecter"
 group_directory: "R\xC3\xA9pertoire du groupe"
 month_short_june: Juin
 incoming: A venir
+activity_wall_message: "{author} a \xC3\xA9crit \xC3\xA0 {user}: {message}"
 when_does_feature_expire: Quand cette mise en avant doit-elle expirer ?
 break_lock_button: forcer le verrou
 members: Membres
@@ -594,12 +620,14 @@ no_tags: aucun tag
 activity_group_destroyed: "{group} a \xC3\xA9t\xC3\xA9 d\xC3\xA9truit par {user}"
 contacts: Contacts
 insert_image_instructions: "Cliquer sur une image pour l'ins\xC3\xA9rer dans le texte du wiki."
+profile_saved: "Votre profil est sauvegard\xC3\xA9."
 unfeature_button: Retirer la mise en avant!
 share_page_email: Envoyer une notification par mail
 reset_password: "R\xC3\xA9initialiser le mot de passe"
 permission_denied_description: Vous n'avez pas les droits suffisants pour effectuer cette action.
 already_contacts_info: "Vous \xC3\xAAtes d\xC3\xA9j\xC3\xA0 contact de cette personne."
 my_peers_explain: utilisateurs inscrits dans au moins un de mes groupes
+group_profile_description_may_see_members: Publiciser la liste des membres de ce {group_type}.
 mark_pages_as_featured_content_for_group: "Ici, vous pouvez indiquer les pages \xC3\xA0 mettre en avant pour ce groupe."
 saved_new_order: "Nouvel ordre enregistr\xC3\xA9 !"
 edit_tags_link: Modifier
@@ -610,41 +638,9 @@ my_groups: Mes groupes
 page_with_message: avec message
 group_discussion: discussion
 my_pending_tasks_link: En attente
-footer_text_crabgrass: |-
-  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
-  <ul>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>crabgrass help pages</a></li>
-    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
-  </ul>
+footer_text_crabgrass: "<span>Ce site utilise <a href=\"https://we.riseup.net/crabgrass\">crabgrass</a>, <a href=\"http://www.fsf.org/licensing/licenses/agpl-3.0.html\">logiciel libre distribu\xC3\xA9 sous licence AGPL v.3</a> pour l'organisation des r\xC3\xA9seaux.</span>\r\n\
+  <ul>\r\n  <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>signaler une anomalie</a></li>\r\n  <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>demander une fonctionnalit\xC3\xA9</a></li>\r\n  <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>aide sur crabgrass</a></li>\r\n  <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>s'impliquer</a></li>\r\n\
+  </ul>"
 insert_image_heading: Ajouter une image
 reset_password_text: "Bonjour, %s. Si vous avez oubli\xC3\xA9 votre mot de passe pour vous connecter, vous pouvez en d\xC3\xA9finir un ici."
 image_title: "Titre de l'image: %s"
-usage_agreement_text: |
-  The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
-  
-  In consideration for your use of this service you agree to the following conditions:
-  
-  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site. 
-  
-  You also agree not to use our services to:
-  
-  * harass other people;
-  * harm or exploit minors;
-  * impersonate or cause others to believe that you are another person;
-  * send unsolicited messages;
-  * collect personal data from users of this service without their express consent; and
-  * interfere with or disrupt our services, those of our users or any other person or service;
-  
-  Further, you agree to:
-  
-  * avoid excessive use of our services;
-  * be responsible for maintaining the confidentiality of your accounts and passwords;
-  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
-  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
-  
-  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
-  
-  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
-

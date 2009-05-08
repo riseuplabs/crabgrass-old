@@ -5,7 +5,7 @@
 <h2 class='dim'><%= "Welcome to {site_title}, {user_name}!"[:welcome_heading, {:site_title => current_site.title, :user_name => current_user.display_name}] %></h2>
 <% end %>
 
-<p class='description'><%= :welcome_message.t %> <%# link_to "More Information"[:more_information]+ARROW, :welcome_message_more_information_url.t %> </p>
+<p class='description'><%= "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."[:welcome_message] %> <%# link_to "More Information"[:more_information]+ARROW, :welcome_message_more_information_url.t %> </p>
 
 <table>
 <% unless hide_profile %>
