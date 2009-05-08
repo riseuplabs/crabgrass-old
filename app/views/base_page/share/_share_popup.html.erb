@@ -16,8 +16,8 @@
     <div class='buttons'>
       <%# these buttons are not submit_tags so that we can control which spinner is displayed %>
       <%= spinner 'popup' %> &nbsp;
-      <%= button_to_function :cancel_button.t, cancel_function %> &nbsp;
-      <%= button_to_function :share_button.t, share_function %>
+      <%= button_to_function "Cancel"[:cancel_button], cancel_function %> &nbsp;
+      <%= button_to_function "Share"[:share_button], share_function %>
     </div>
   <% end -%>
 
