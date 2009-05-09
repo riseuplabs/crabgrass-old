@@ -10,8 +10,10 @@
 =end
 
 class WikiController < ApplicationController
-  
+  helper :wiki
+
   include ControllerExtension::WikiRenderer
+  include ControllerExtension::WikiImagePopup
   
   before_filter :login_required, :except => [:show]
   before_filter :fetch_wiki
@@ -39,10 +41,8 @@ class WikiController < ApplicationController
 
     @wiki.body = @showing_old_version.body
     @wiki.body_html = @showing_old_version.body_html
-    # require 'ruby-debug';debugger
 
     render :action => 'edit'
-
   end
 
   # a re-edit called from preview, just one area.
@@ -95,9 +95,13 @@ class WikiController < ApplicationController
     end 
   end
 
-  def authorized?    
+  def authorized?
     @group = Group.find(params[:group_id])
     logged_in? and current_user.member_of?(@group)
-  end    
-  
+  end
+
+  # which images should be displayed in the image upload popup
+  def image_popup_visible_images
+    Asset.visible_to(current_user, @group).media_type(:image).most_recent.find(:all, :limit=>20)
+  end
 end

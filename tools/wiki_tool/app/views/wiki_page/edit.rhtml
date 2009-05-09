@@ -4,13 +4,15 @@
 div.swatch_list a {float: left; background: #000;}
 <% end -%>
 <% content_for :script do -%>
-<%= image_button_for_editor() %>
+<%= image_button_for_wiki_toolbar %>
+document.observe('dom:loaded', function() {
+  <%= create_wiki_toolbar('wiki_body', 'wiki_page-markdown_toolbar') %>
+});
 <% end -%>
 
 <% @show_posts = false -%>
 <% locked_error_message -%>
-<%# add_image_button_to_textile_editor() -%>
-<div id='image_popup' style='display:none'></div>
+<div class='image_popup' style='display:none'></div>
 <div class='formbox'>
   <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
