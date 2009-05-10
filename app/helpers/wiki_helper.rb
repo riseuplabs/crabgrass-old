@@ -75,7 +75,7 @@ module WikiHelper
     if @images.any?
       items = @images.collect do |asset|
         urls = %['#{asset.thumbnail(:small).url}', '#{asset.thumbnail(:medium).url}', '#{asset.thumbnail(:large).url}', '#{asset.url}']
-        insert_text = %{'!' + [#{urls}][$('image_size').value] + '!' + ($('image_link').checked ? ':#{asset.url}' : '')}
+        insert_text = %{'!' + [#{urls}][$('#{'image_size-' + wiki.id.to_s}').value] + '!' + ($('#{'image_link-' + wiki.id.to_s}').checked ? ':#{asset.url}' : '')}
         function = %[insertAtCursor('#{wiki_body_id(wiki)}',#{insert_text})]
         img = thumbnail_img_tag(asset, :small, :scale => '64x64')
         link_to_function(img, function, :class => 'thumbnail', :title => asset.filename, :style => style)

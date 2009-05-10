@@ -1,8 +1,4 @@
 <%# render :partial => 'tabs' %>
-
-<% content_for :style do -%>
-div.swatch_list a {float: left; background: #000;}
-<% end -%>
 <% content_for :script do -%>
 <%= image_button_for_wiki_toolbar %>
 document.observe('dom:loaded', function() {
