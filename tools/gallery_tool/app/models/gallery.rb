@@ -7,6 +7,10 @@ class Gallery < Page
   has_many :showings, :order => 'position', :dependent => :destroy
   has_many :images, :through => :showings, :source => :asset, :order => 'showings.position'
 
+  def update_media_flags
+    self.is_image = true
+  end
+
   # Galleries currently do not support attachments.
   # hence #=> false
   def supports_attachments

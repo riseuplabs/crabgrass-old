@@ -25,6 +25,7 @@ class RootController < ApplicationController
     @users = current_site.users.most_active_since(Time.now - 30.days).find(:all, :limit => 10)
     @recent_pages = Page.find_by_path(['descending', 'updated_at', 'limit','20'], options_for_group(@group))
     @most_viewed_pages = Page.find_by_path(['descending', 'views_count', 'limit','10'], options_for_group(@group))
+    @group.profiles.public.create_wiki unless @group.profiles.public.wiki
 
     render :template => 'root/site_home'    
   end

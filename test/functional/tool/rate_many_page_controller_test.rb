@@ -19,13 +19,13 @@ class Tool::RateManyPageControllerTest < Test::Unit::TestCase
     login_as :orange
 
     assert_no_difference 'Page.count' do
-      get :create, :id => RateManyPage.class_display_name
+      get :create, :id => RateManyPage.param_id
       assert_response :success
 #      assert_template 'base_page/create'
     end
   
     assert_difference 'RateManyPage.count' do
-      post :create, :id => RateManyPage.class_display_name, :page => {:title => 'test title'}
+      post :create, :id => RateManyPage.param_id, :page => {:title => 'test title'}
       assert_response :redirect
     end
     

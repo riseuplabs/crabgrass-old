@@ -13,8 +13,8 @@ class GroupsControllerTest < Test::Unit::TestCase
   def setup
     @controller = GroupsController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
+    Conf.disable_site_testing
   end
 
   def test_my

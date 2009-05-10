@@ -14,18 +14,18 @@ class Tool::RankedVotePageControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
 
     login_as :orange
-    get :create, :id => RankedVotePage.class_display_name
+    get :create, :id => RankedVotePage.param_id
   end
 
   def test_create_show_add_and_show
     assert_no_difference 'Page.count' do
-      get :create, :id => RankedVotePage.class_display_name
+      get :create, :id => RankedVotePage.param_id
       assert_response :success
 #      assert_template 'base_page/create'
     end
   
     assert_difference 'RankedVotePage.count' do
-      post :create, :id => RankedVotePage.class_display_name, :page => {:title => 'test title'}
+      post :create, :id => RankedVotePage.param_id, :page => {:title => 'test title'}
       assert_response :redirect
     end
     

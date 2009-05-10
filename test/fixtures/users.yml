@@ -23,7 +23,7 @@
 #
 
 <% require 'digest/sha1' %>
-<% email = `git-config --get user.email`.chomp %>
+<% email = `git config --get user.email`.chomp %>
 <% email = nil unless email.any? %>
 
 <% i = 0 %>

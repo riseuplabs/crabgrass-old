@@ -11,7 +11,6 @@ class DispatchControllerTest < Test::Unit::TestCase
   def setup
     @controller = DispatchController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 

@@ -10,7 +10,6 @@ class PeopleControllerTest < Test::Unit::TestCase
   def setup
     @controller = PeopleController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
@@ -19,7 +18,6 @@ class PeopleControllerTest < Test::Unit::TestCase
     %w(index contacts peers directory).each do |action|
       get action
       assert_response :success
-#    assert_template 'list'
       assert_nil assigns(:users)
     end
 

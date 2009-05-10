@@ -24,30 +24,6 @@ module WikiPageHelper
    )
   end
 
-  def image_list
-    style = "height:64px;width:64px"
-    if @images.any?
-      items = @images.collect do |asset|
-        urls = %['#{asset.thumbnail(:small).url}', '#{asset.thumbnail(:medium).url}', '#{asset.thumbnail(:large).url}', '#{asset.url}']
-        insert_text = %{'!' + [#{urls}][$('image_size').value] + '!' + ($('image_link').checked ? ':#{asset.url}' : '')}
-        function = %[insertAtCursor('wiki_body',#{insert_text})]
-        img = thumbnail_img_tag(asset, :small, :scale => '64x64')
-        link_to_function(img, function, :class => 'thumbnail', :title => asset.filename, :style => style)
-      end
-      content_tag :div, items, :class => 'swatch_list'
-    end
-  end
-
-  def image_button_for_editor()
-    text = "<img src='/images/textile-editor/img.png'/>"
-    spinner = spinner('image', :show => true)
-    on_click = remote_function(
-      :loading => replace_html('markdown_image_button', spinner),
-      :complete => replace_html('markdown_image_button', ''),
-      :url => page_xurl(@page,:action => 'show_image_popup'))
-    "function img_button_clicked() { #{on_click} }"
-  end
-
   def locked_for_me?(section = :all)
     if @wiki and logged_in?
       !@wiki.editable_by?(current_user, section)
@@ -55,8 +31,6 @@ module WikiPageHelper
       false
     end
   end
-
-  
 
   def decorate_with_edit_links
     url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')

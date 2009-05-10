@@ -1,3 +1,4 @@
+
 =begin
 
 A definition of a site.
@@ -69,7 +70,7 @@ class Site < ActiveRecord::Base
   }
 
   def self.default
-    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids]) || Site.new()
+    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
   end
 
   # def stylesheet_render_options(path)
@@ -104,7 +105,7 @@ class Site < ActiveRecord::Base
 
   proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields, :chat?
+    :require_user_email, :domain, :profiles, :profile_fields, :chat?, :translation_group
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)

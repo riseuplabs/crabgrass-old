@@ -9,7 +9,7 @@ module BasePageHelper
 
   def header_for_page_create(page_class)
     style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
-    text = "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}"
+    text = "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}"
     content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
   end
 
@@ -392,7 +392,7 @@ module BasePageHelper
   end
 
   def page_class
-    @page.class_display_name.t.capitalize
+    @page.class_display_name.capitalize
   end
   
   def select_page_owner(_erbout)
