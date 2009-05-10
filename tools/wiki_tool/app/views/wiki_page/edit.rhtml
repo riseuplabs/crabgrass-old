@@ -1,20 +1,19 @@
 <%# render :partial => 'tabs' %>
 <% content_for :script do -%>
-<%= image_button_for_wiki_toolbar %>
 document.observe('dom:loaded', function() {
-  <%= create_wiki_toolbar('wiki_body', 'wiki_page-markdown_toolbar') %>
+  <%= create_wiki_toolbar(@wiki) %>
 });
 <% end -%>
 
 <% @show_posts = false -%>
 <% locked_error_message -%>
-<div class='image_popup' style='display:none'></div>
+<div id='<%= image_popup_id(@wiki) %>' class='image_popup' style='display:none'></div>
 <div class='formbox'>
   <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
    <%= hidden_field_tag 'section', @section %>
 
-   <div class='fieldset'><%= text_area 'wiki', 'body', :rows => 30, :cols => 80 %></div>
+   <div class='fieldset'><%= text_area 'wiki', 'body', :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
    <div class='formatting_reference'><a  href="javascript:quickRedReference();"><%= :formatting_reference_link.t %></a></div>
    <div>
      <% if locked_for_me?(@section) -%>

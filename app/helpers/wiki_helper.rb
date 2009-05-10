@@ -13,6 +13,7 @@ module WikiHelper
     )
   end
 
+  # used to mark private and public tabs
   def area_id(wiki)
     'edit_area-%s' % wiki.id
   end
@@ -102,10 +103,22 @@ module WikiHelper
   end
 
   def image_popup_upload_url(wiki)
-    wiki_action('image_popup_upload', :wiki_id => wiki.id)
+    # this method is used both by WikiPageController and WikiPage to
+    # upload files to the image insert popup
+    if @page and @page.data and @page.data == wiki
+      page_xurl(@page, :action => 'image_popup_upload', :wiki_id => wiki.id)
+    else
+      wiki_action('image_popup_upload', :wiki_id => wiki.id)
+    end
   end
 
   def image_popup_show_url(wiki)
-    wiki_action('image_popup_show', :wiki_id => wiki.id)
+    # this method is used both by WikiPageController and WikiPage to show the
+    # image insert popup
+    if @page and @page.data and @page.data == wiki
+      page_xurl(@page, :action => 'image_popup_show', :wiki_id => wiki.id)
+    else
+      wiki_action('image_popup_show', :wiki_id => wiki.id)
+    end
   end
 end

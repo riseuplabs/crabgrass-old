@@ -24,14 +24,6 @@ module WikiPageHelper
    )
   end
 
-  def image_popup_upload_url
-    page_xurl(@page, :action => 'image_popup_show')
-  end
-
-  def image_popul_show_url
-    page_xurl(@page,:action => 'image_popup_upload'))
-  end
-
   def locked_for_me?(section = :all)
     if @wiki and logged_in?
       !@wiki.editable_by?(current_user, section)
