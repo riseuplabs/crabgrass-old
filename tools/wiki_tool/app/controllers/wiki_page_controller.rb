@@ -1,9 +1,10 @@
 class WikiPageController < BasePageController
-
   include ControllerExtension::WikiRenderer
+  include ControllerExtension::WikiImagePopup
   
   stylesheet 'wiki_edit', :action => :edit
   javascript 'wiki_edit', :action => :edit
+  helper :wiki # for wiki toolbar stuff
 
   ##
   ## ACCESS: no restriction
@@ -100,33 +101,11 @@ class WikiPageController < BasePageController
     redirect_to page_url(@page, :action => 'show')
   end
 
-  # TODO: make post only    
+  # TODO: make post only
   def break_lock
     # will unlock all sections
     @wiki.unlock
     redirect_to page_url(@page, :action => 'edit', :section => @section)
-  end
-  
-  # xhr only
-  def show_image_popup
-    @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
-    render(:update) do |page| 
-      page.replace 'image_popup', :partial => 'image_popup'
-    end
-  end
-
-  # upload image via xhr
-  # response goes to an iframe, so requires responds_to_parent
-  def upload
-    asset = Asset.build params[:asset]
-    asset.parent_page = @page
-    asset.save
-    @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
-    responds_to_parent do
-      render(:update) do |page|
-        page.replace 'image_popup', :partial => 'image_popup'
-      end
-    end
   end
 
   ##
@@ -241,5 +220,9 @@ class WikiPageController < BasePageController
     return html
   end
 
+  # which images should be displayed in the image upload popup
+  def image_popup_visible_images
+    Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
+  end
 end
 

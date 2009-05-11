@@ -1,10 +1,13 @@
 
 class GroupController < ApplicationController
   include GroupHelper
-  helper 'task_list_page', 'tags' # remove task_list_page when tasks are in a separate controller
+  helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
+  stylesheet 'wiki_edit'
   stylesheet 'groups'
   stylesheet 'tasks', :action => :tasks
+
+  javascript 'wiki_edit'
   javascript :extra, :action => :tasks
 
   prepend_before_filter :find_group
