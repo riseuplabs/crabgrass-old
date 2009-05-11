@@ -37,30 +37,6 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
     end
   end
 
-  def test_destroy_with_login
-    login_as :orange
-    
-    get :create, :id => 'wiki'
-    assert_response :success
-  
-    assert_difference 'Page.count' do
-      post :create, :id => 'wiki', :page => { :title => 'test title' }
-      assert_response :redirect
-    end
-
-    assert_no_difference 'Page.count' do
-      post :delete, :id => 'wiki'
-      assert_response :redirect
-      post :undelete, :id => 'wiki'
-      assert_response :redirect
-    end
-
-    assert_difference 'Page.count', -1 do
-      post :destroy, :id => 'wiki'
-      assert_response :redirect
-    end
-  end
-
   def test_page_creation_access
     login_as :kangaroo
     post :create, {"page_class"=>"DiscussionPage", "action"=>"create", "id"=>"group-discussion", "page"=>{"title"=>"aaaa"}, "recipients"=>{"animals"=>"1"}, "controller"=>"discussion_page", "access"=>"view", "create"=>"Create discussion »"}

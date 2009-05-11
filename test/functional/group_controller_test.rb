@@ -209,7 +209,6 @@ class GroupControllerTest < Test::Unit::TestCase
 
   def test_trash_undelete
     login_as :red
-
     get :trash, :id => groups(:rainbow).name
     assert_response :success
     assert assigns(:pages).any?, "should find a deleted page"
