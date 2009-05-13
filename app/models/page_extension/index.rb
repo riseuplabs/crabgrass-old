@@ -136,11 +136,11 @@ module PageExtension::Index
       terms.comments  = comment_terms
 
       # meta
-      terms.page_type = type
-      terms.media = media_flags
+      terms.page_type = self.type
+      terms.media = self.media_flags()
 
       # access control
-      terms.access_ids = access_ids
+      terms.access_ids = self.access_ids()
    
       # additional hook for subclasses
       custom_page_terms(terms)
@@ -152,10 +152,13 @@ module PageExtension::Index
     
     # :nodoc:
     def access_ids
+      update_site_id # call manually, since we might be in a callback before 
+                     # the one that sets site_id
       Page.access_ids_for(
         :public => public?,
         :group_ids => group_ids,
-        :user_ids => user_ids
+        :user_ids => user_ids,
+        :site_ids => ([site_id] if site_id)
       ).join(' ')
     end
 

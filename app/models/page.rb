@@ -18,8 +18,9 @@ class Page < ActiveRecord::Base
   include PageExtension::Index
 #  include PageExtension::Linking
   include PageExtension::Static
-  acts_as_taggable_on :tags
 
+  acts_as_taggable_on :tags
+  acts_as_site_limited
 
   #######################################################################
   ## PAGE NAMING

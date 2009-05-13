@@ -168,6 +168,7 @@ module UserExtension
       # site networks are broad umbrella networks every user of the
       # site is a member of - thus they should not be considered for
       # determining who is a peer.
+      ## TODO: exclude all networks
       site_networks = Site.find(:all).collect{|s| s.network_id}
       group_ids -= site_networks
       User.connection.select_values( %Q[

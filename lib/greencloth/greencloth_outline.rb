@@ -73,20 +73,24 @@ module GreenclothOutline
 
   # called by the formatter whenever it encounters h1..h4 tags
   def add_heading(indent,text)
+    text = extract_offtags(text.dup)
+    formatter.clean_html(text, {}) # strip ALL markup, modifies variable text.
     @headings ||= []
     @heading_names ||= {}
-    name = text.nameize
-    if @heading_names[name]
-      name = find_available_name(@heading_names, name)
+    if text
+      name = text.nameize
+      if @heading_names[name]
+        name = find_available_name(@heading_names, name)
+      end
+      @heading_names[name] = true # mark as taken
+      @headings << [indent, text, name]
     end
-    @heading_names[name] = true # mark as taken
-    @headings << [indent, text, name]
     return name
   end
 
   # called by greencloth when [[toc]] is encountered
   def symbol_toc
-    return '' unless outline
+    return '' unless outline and !@headings.nil?
     tree = convert_to_tree(@headings)
     generate_toc_html(tree, 1)
   end
@@ -125,9 +129,9 @@ module GreenclothOutline
   # array: the flat array of detected headings
   # number: the current depth level
   def convert_to_subtree(array, number)
-    return [] if array.nil? or array.empty?
-
     result = GreenTree.new
+    return result if array.nil? or array.empty?
+
     positions_of_number = find_positions_of_number(array,number) do |element|
       heading_number, text, name = element
       result.add_child(text, name, heading_number)

@@ -1,4 +1,9 @@
 ---
+name: empty outline
+in: |-
+  [[toc]]
+out: "<p></p>"
+---
 name: fruity outline
 in: |-
   [[toc]]
@@ -86,4 +91,25 @@ out: |-
   <h1><a name="card-games"></a>Card Games<a class="anchor" href="#card-games">&para;</a></h1>
   <h2><a name="hearts"></a>Hearts<a class="anchor" href="#hearts">&para;</a></h2>
   <h2><a name="rook_3"></a>Rook<a class="anchor" href="#rook_3">&para;</a></h2>
+---
+name: test with links
+in: |-
+  h1. Russian Anarchists
+
+  h2. Michel [Bakunin -> http://en.wikipedia.org/wiki/Mikhail_Bakunin]
+
+  h2. [Peter -> http://en.wikipedia.org/wiki/Peter_Kropotkin] Kropotkin
+
+  h1. Russian-American Anarchists
+
+  h2. [Emma Goldman -> http://en.wikipedia.org/wiki/Emma_Goldman]
+
+  h2. Alexander [Berkman -> http://en.wikipedia.org/wiki/Alexander_Berkman]
+out: |-
+  <h1><a name="russian-anarchists"></a>Russian Anarchists<a class="anchor" href="#russian-anarchists">&para;</a></h1>
+  <h2><a name="michel-bakunin"></a>Michel <a href="http://en.wikipedia.org/wiki/Mikhail_Bakunin">Bakunin</a><a class="anchor" href="#michel-bakunin">&para;</a></h2>
+  <h2><a name="peter-kropotkin"></a><a href="http://en.wikipedia.org/wiki/Peter_Kropotkin">Peter</a> Kropotkin<a class="anchor" href="#peter-kropotkin">&para;</a></h2>
+  <h1><a name="russian-american-anarchists"></a>Russian-American Anarchists<a class="anchor" href="#russian-american-anarchists">&para;</a></h1>
+  <h2><a name="emma-goldman"></a><a href="http://en.wikipedia.org/wiki/Emma_Goldman">Emma Goldman</a><a class="anchor" href="#emma-goldman">&para;</a></h2>
+  <h2><a name="alexander-berkman"></a>Alexander <a href="http://en.wikipedia.org/wiki/Alexander_Berkman">Berkman</a><a class="anchor" href="#alexander-berkman">&para;</a></h2>
 
