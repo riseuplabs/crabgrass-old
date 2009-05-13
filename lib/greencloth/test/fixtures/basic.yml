@@ -1,11 +1,11 @@
 ---
 name: headers
 in: "header one\n=====\nheader two\n----"
-out: "<h1>header one</h1>\n<h2>header two</h2>"
+out: "<h1 class=\"first\">header one</h1>\n<h2>header two</h2>"
 ---
 name: headers
 in: "la la la\n\nheader one\n=====\nheader two\n----\nla la la"
-out: "<p>la la la</p>\n<h1>header one</h1>\n<h2>header two</h2>\n<p>la la la</p>"
+out: "<p>la la la</p>\n<h1 class=\"first\">header one</h1>\n<h2>header two</h2>\n<p>la la la</p>"
 --- 
 name: paragraphs
 desc: Textile looks for paragraphs in your text.  Paragraphs are separated by one blank line. Every paragraph is translated as an HTML paragraph.
@@ -308,7 +308,7 @@ out: <p style="padding-right:3em;">right ident 3em</p>
 name: indentation and alignment
 desc: Identation may be coupled with alignment.
 in: h2()>. Bingo.
-out: <h2 style="padding-left:1em;padding-right:1em;text-align:right;">Bingo.</h2>
+out: <h2 style="padding-left:1em;padding-right:1em;text-align:right;" class="first">Bingo.</h2>
 --- 
 name: numbered list
 desc: To make a numbered list, place each item in its own paragraph, preceded by &#8221;#&#8221;.

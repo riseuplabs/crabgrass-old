@@ -175,8 +175,24 @@ module GreenClothFormatterHTML
     end
   end
 
-  def h1(opts); heading(1,opts); end
-  def h2(opts); heading(2,opts); end
+  def h1(opts)
+    if !@hit_h_already
+      @hit_h_already = true
+      heading(1, {:class => 'first'}.merge(opts))
+    else
+      heading(1,opts)
+    end
+  end
+
+  def h2(opts)
+    if !@hit_h_already
+      @hit_h_already = true
+      heading(2, {:class => 'first'}.merge(opts))
+    else
+      heading(2,opts)
+    end
+  end
+
   def h3(opts); heading(3,opts); end
   def h4(opts); heading(4,opts); end
 
