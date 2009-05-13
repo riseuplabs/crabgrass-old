@@ -32,7 +32,7 @@ class UserParticipation < ActiveRecord::Base
   # can only be used to increase access. 
   # because access is only increased, you cannot remove access with grant_access. 
   def grant_access=(value)
-    value = ACCESS[value.to_sym] if value.is_a?(Symbol) or value.is_a?(String)
+    value = ACCESS[value] if value.is_a?(Symbol) or value.is_a?(String)
     if value
       if read_attribute(:access)
         write_attribute(:access, [value,read_attribute(:access)].min )
@@ -46,7 +46,7 @@ class UserParticipation < ActiveRecord::Base
   # if value is nil, no change is made. If value is :none, then access is removed.
   def access=(value)
     return if value.nil?
-    value = ACCESS[value] if value.is_a? Symbol
+    value = ACCESS[value] if value.is_a? Symbol or value.is_a?(String)
     write_attribute(:access, value)
   end 
 end

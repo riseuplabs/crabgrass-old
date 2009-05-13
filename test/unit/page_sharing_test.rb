@@ -129,6 +129,20 @@ class PageSharingTest < Test::Unit::TestCase
     end
   end
 
+  def test_share_hash
+    user = users(:kangaroo)
+    group = groups(:animals)
+    user2 = users(:red)
+ 
+    page = Page.create(:title => 'x', :user => user, :access => :admin)
+    user.share_page_with!(page, {:animals => {:access => "edit"}, :red => {:access => "edit"}}, {})
+
+    assert group.may?(:edit, page)
+    assert !group.may?(:admin, page)
+    assert user2.may?(:edit, page)
+    assert !user2.may?(:admin, page)
+  end
+
   protected
   
   def create_page(options = {})

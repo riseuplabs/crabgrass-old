@@ -38,7 +38,7 @@ class GroupParticipation < ActiveRecord::Base
 
   # can be used to add or remove access
   def access=(value)
-    value = ACCESS[value] if value.is_a? Symbol
+    value = ACCESS[value] if value.is_a? Symbol or value.is_a?(String)
     write_attribute(:access, value)
   end
 
