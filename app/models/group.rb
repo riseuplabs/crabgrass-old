@@ -33,20 +33,14 @@ class Group < ActiveRecord::Base
   include GroupExtension::Featured   # this makes this group's pages featureable
   include GroupExtension::Pages      # group <--> page behavior
 
-  # returns true if self is part of a specific network
+  acts_as_site_limited
+
+  # DEPRECATED
   def belongs_to_network?(network)
     ( self.networks.include?(network) or 
       self == network )
   end
-  
-  named_scope :visible_on, lambda { |site| 
-    site.network.nil? ? 
-      {} :
-      { :conditions => ["groups.id IN (?) OR groups.parent_id IN (?)",
-        site.network.group_ids, site.network.group_ids] }
-  }
-  
-  
+    
   attr_accessible :name, :full_name, :short_name, :summary, :language
 
   # not saved to database, just used by activity feed:

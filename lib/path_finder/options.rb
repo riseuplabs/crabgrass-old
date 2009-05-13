@@ -82,11 +82,10 @@ module PathFinder::Options
       options[:current_user] = current_user
     else
       options[:public] = true
-      # options[:group_ids] = current_site.group_ids unless current_site.network.nil?
     end
- 
+
     # limit pages to the current site.
-    if false and get_controller.current_site.limited?
+    if get_controller.current_site.limited?
       # why site_ids instead of just site_id? perhaps in the future
       # we will enable a user to login and see a configurable subset of the 
       # sites they have available to them.

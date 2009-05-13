@@ -111,7 +111,7 @@ module ApplicationHelper
   end
   
   def options_for_my_groups(selected=nil)
-    options_for_select([['','']] + current_user.groups.visible_on(current_site).sort_by{|g|g.name}.to_select(:name), selected)
+    options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
   
   def options_for_language(selected=nil)
