@@ -24,7 +24,12 @@ class SurveyPageResponseController < BasePageController
       resp.user = current_user # (user_id is protected)
     end
     current_user.updated(@page)
-    flash_message :success => true
+    flash_message :success => "Thank you for submitting your response."[:survey_thanks_submit]
+    if may_rate_survey_response?
+      flash_message :success => "Please check your answers and rate other peoples responses."[:survey_please_check_and_rate]
+    else
+      flash_message :success => "Please check your answers."[:survey_please_check]
+    end
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
   rescue Exception => exc
     flash_message_now :exception => exc, :object => @response
@@ -36,7 +41,12 @@ class SurveyPageResponseController < BasePageController
 
   def update
     @response.update_attributes!(params[:response])
-    flash_message :success => true
+    flash_message :success => "Thank you for submitting your response."[:survey_thanks_submit]
+    if may_rate_survey_response?
+      flash_message :success => "Please check your answers and rate other peoples responses."[:survey_please_check_and_rate]
+    else
+      flash_message :success => "Please check your answers."[:survey_please_check]
+    end
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
   rescue Exception => exc
     flash_message_now :object => @response, :exc => exc

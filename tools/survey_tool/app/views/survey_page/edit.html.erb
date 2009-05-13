@@ -20,7 +20,7 @@
     <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
     
     <h2 class="alert"><%= "Description".t %></h2>
-    <blockquote>
+    <blockquote> <%="This text will show up in the introduction tab, and will be the first thing that survey takers see."[:survey_description_explaination]%>
       <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
     </blockquote>
         
