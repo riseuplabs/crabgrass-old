@@ -66,6 +66,7 @@ class GreenTree < Array
     if self.text
       # find the first occurance of this node in the markup
       self.markup_index = markup.index(self.markup_regexp)
+      raise "Can't find heading with text: '#{text}' in markup" if self.markup_index.nil?
       # modify the markup, so that it will no longer match
       # the markup_regexp at this position
       markup[self.markup_index] = "\000"

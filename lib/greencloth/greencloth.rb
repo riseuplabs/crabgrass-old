@@ -307,9 +307,9 @@ class GreenCloth < RedCloth::TextileDoc
 
   # populates @headings, and then restores the string to its original form.
   def extract_headings()
-    original = self.dup
     self.extend(GreenClothFormatterHTML)
     apply_rules([:normalize_heading_blocks])
+    original = self.dup
     to(GreenClothFormatterHTML)
     self.replace(original)
   end
