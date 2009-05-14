@@ -7,7 +7,7 @@
 	<%= link_to(thumbnail_img_tag(asset, :small),
                     page_xurl(@page, :action => 'add', :id => asset.id),
                               :method => :post) %>
-	<%= asset.page.title %>
+	<%= asset.page.title if asset.page %>
       </span>
     </li>
   <% end %>
