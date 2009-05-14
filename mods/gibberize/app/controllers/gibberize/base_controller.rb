@@ -15,16 +15,16 @@ class Gibberize::BaseController < ApplicationController
     @languages = LANGUAGES
   end
 
+  def apply_translations
+    system('rake cg:l10n:extract_translations RAILS_ENV=%s' % RAILS_ENV)
+    system('touch', RAILS_ROOT+'/tmp/restart.txt')
+    flash_message :success => true
+    redirect_to :action => nil
+  end
+
   protected
 
   def authorized?
-    ret = false
-    if current_site.translators.any?
-      ret = true if current_site.translators.include?(current_user.login)
-    end
-    if current_site.translation_group.any?
-      ret = true if current_user.member_of?(Group.find_by_name(current_site.translation_group))
-    end
-    ret
+    current_site.translation_group.any? and current_user.member_of?(Group.find_by_name(current_site.translation_group))
   end
 end

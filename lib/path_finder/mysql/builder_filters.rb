@@ -142,10 +142,32 @@ module PathFinder::Mysql::BuilderFilters
   ### OTHER PAGE COLUMNS
   #++
 
-  def filter_type(page_class_group)
-    page_class_names = Page.class_group_to_class_names(page_class_group)
-    @conditions << 'pages.type IN (?)'
-    @values << page_class_names
+  # filter on page type or types, and maybe even media flag too!
+  # eg values:
+  # media-image+file, media-image+gallery, file,
+  # text+wiki, text, wiki
+  def filter_type(arg)
+    if arg =~ /[\+\ ]/
+      page_group, page_type = arg.split(/[\+\ ]/)
+    elsif Page.is_page_group?(arg)
+      page_group = arg
+    elsif Page.is_page_type?(arg)
+      page_type = arg
+    end
+
+    if page_group =~ /^media-(image|audio|video|document)$/
+      media_type = page_group.sub(/^media-/,'')
+      @conditions << "pages.is_#{media_type} = ?" # only safe because of regexp in if
+      @values << true
+    end
+
+    if page_type
+      @conditions << 'pages.type = ?'
+      @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
+    elsif page_group
+      @conditions << 'pages.type IN (?)'
+      @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+    end
   end
 
   def filter_created_by(id)

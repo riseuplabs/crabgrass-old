@@ -335,7 +335,7 @@ module PageHelper
     html = "<td class='excerpt', colspan='#{column_size}'>"
     html += "page sent by {user} on {date}"[:page_notice_message, {:user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time])}]
     if notice[:message].any?
-      html += 'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      html += ' '+'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
     end
     html += "</td>"
     content_tag(:tr, html, :class => "page_info")
@@ -395,14 +395,42 @@ module PageHelper
   ######################################################
   ## FORM HELPERS
 
-  ## options for a page type dropdown menu
-  def options_for_select_page_type(default_selected)
-    array = current_site.available_page_types.collect do |page_class_string|
+  def display_page_class_grouping(group)
+    "page_group_#{group.gsub(':','_')}".t 
+  end
+  
+  def tree_of_page_types(available_page_types=nil)
+    available_page_types ||= current_site.available_page_types
+    page_groupings = []
+    available_page_types.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      page_group = page_class.class_group.first
-      [page_group.pluralize.t, page_group]
+      page_groupings.concat page_class.class_group
     end
-    options_for_select([['all page types'.t,'']] + array, default_selected)
+    page_groupings.uniq!
+    tree = [] 
+    page_groupings.each do |grouping|
+      entry = {:name => grouping, :display => display_page_class_grouping(grouping),
+         :url => grouping.gsub(':','-')}
+      entry[:pages] = Page.class_group_to_class(grouping).collect
+      tree << entry
+    end
+    tree.sort!{|a,b| a[:display] <=> b[:display] }
+    return tree
+  end
+  
+  ## options for a page type dropdown menu for searching
+  def options_for_select_page_type(default_selected=nil)
+    default_selected.sub!(' ', '+') if default_selected
+    menu_items = []
+    tree_of_page_types.each do |grouping|
+      menu_items << [grouping[:display], grouping[:url]]
+      sub_items = grouping[:pages].collect do |page_class|
+         ["#{grouping[:display]} > #{page_class.class_display_name}",
+         "#{grouping[:url]}+#{page_class.url}"]
+       end
+       menu_items.concat sub_items if sub_items.size > 1
+    end
+    options_for_select([['all page types'.t,'']] + menu_items, default_selected)
   end
   
   ## Creates options useable in a select() for the various states

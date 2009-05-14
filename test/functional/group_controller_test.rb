@@ -14,8 +14,11 @@ class GroupControllerTest < Test::Unit::TestCase
   def setup
     @controller = GroupController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
+  end
+
+  def teardown
+   disable_site_testing
   end
 
   def test_show_when_logged_in
@@ -132,6 +135,7 @@ class GroupControllerTest < Test::Unit::TestCase
     login_as :blue
 
     get :search, :id => groups(:rainbow).name
+
     assert_response :success
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results"
@@ -217,6 +221,7 @@ class GroupControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
+
     login_as :blue
     get :edit, :id => groups(:rainbow).name
 
@@ -246,7 +251,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
     # a sneaky hacker attack to watch out for
     g = Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
-    Site.default.network.add_group! g unless Site.default.network.nil?
+    #Site.default.network.add_group! g unless Site.default.network.nil?
     assert_not_nil Group.find_by_name('hack-committee')
     post :edit, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
@@ -293,7 +298,7 @@ class GroupControllerTest < Test::Unit::TestCase
 
     # try a sneaky hacker attack
     g = Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
-    Site.default.network.add_group! g unless Site.default.network.nil?
+    #Site.default.network.add_group! g unless Site.default.network.nil?
     assert_not_nil Group.find_by_name('hack-committee')
     post :update, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
@@ -322,9 +327,7 @@ class GroupControllerTest < Test::Unit::TestCase
     end
 
     group_name = 'short-lived-group'
-
     group = Group.create! :name => group_name
-    Site.default.network.add_group! group unless Site.default.network.nil?
     group.add_user! users(:gerrard)
 
     assert_difference 'Group.count', -1, "should delete newly created group" do
@@ -350,13 +353,14 @@ class GroupControllerTest < Test::Unit::TestCase
   end
 
   def test_member_of_committee_but_not_of_group_cannot_access_group_pages
+#    enable_site_testing
     User.current = nil
     g = Group.create :name => 'riseup'
-    Site.default.network.add_group! g unless Site.default.network.nil?
+
     c = Committee.create :name => 'outreach', :parent => g
     g.add_committee!(c)
     u = User.create! :login => 'user', :password => 'password', :password_confirmation => 'password'
-    Site.default.network.add_user! u unless Site.default.network.nil?
+
     assert u.id
     c.add_user! u
     c.save
@@ -467,8 +471,20 @@ class GroupControllerTest < Test::Unit::TestCase
       group.reload
       
       assert_equal group.layout('section1'), 'recent_pages'    
-    end  
+    end
   end
+
+#  def test_xxx
+#    enable_site_testing do 
+#      assert true
+#      get :show, :id => 1
+#      debugger
+#      assert true
+#   end
+#   assert true
+#   debugger
+#   assert true
+#  end
 
 # TODO: test featuring already featured content, expiring features and so on.
 

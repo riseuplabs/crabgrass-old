@@ -1,12 +1,15 @@
 
 class GroupController < ApplicationController
   include GroupHelper
-  helper 'task_list_page', 'tags' # remove task_list_page when tasks are in a separate controller
+  helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
   permissions 'group'
 
+  stylesheet 'wiki_edit'
   stylesheet 'groups'
   stylesheet 'tasks', :action => :tasks
+
+  javascript 'wiki_edit'
   javascript :extra, :action => :tasks
 
   prepend_before_filter :find_group
@@ -195,9 +198,8 @@ class GroupController < ApplicationController
     end
   end
   
-  @@additional_tools = ["chat"]
-  def edit_tools   
-    @available_tools = current_site.available_page_types + @@additional_tools
+  def edit_tools
+    @available_tools = current_site.available_page_types
     if request.post?
       @group.group_setting.allowed_tools = []
       @available_tools.each do |p|

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090505085632) do
+ActiveRecord::Schema.define(:version => 20090510032300) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20090505085632) do
     t.datetime "created_at"
     t.integer  "access",       :limit => 1,  :default => 2
     t.integer  "related_id",   :limit => 11
+    t.integer  "site_id",      :limit => 11
   end
 
   add_index "activities", ["created_at"], :name => "created_at"
@@ -346,6 +347,11 @@ ActiveRecord::Schema.define(:version => 20090505085632) do
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.integer  "site_id",            :limit => 11
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -479,6 +485,7 @@ ActiveRecord::Schema.define(:version => 20090505085632) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "language"
+    t.integer  "site_id",               :limit => 11
   end
 
   execute "CREATE INDEX created_by_0_2 ON requests (created_by_id,state(2))"
@@ -526,6 +533,7 @@ ActiveRecord::Schema.define(:version => 20090505085632) do
     t.integer "council_id",           :limit => 11
     t.string  "login_redirect_url"
     t.boolean "chat"
+    t.boolean "limited"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true

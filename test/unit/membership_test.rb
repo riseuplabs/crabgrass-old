@@ -75,7 +75,6 @@ class MembershipTest < Test::Unit::TestCase
     # u.all_groups is already cached, and must be manually refreshed
     u.all_groups.reload
     assert_equal [g], u.all_groups, 'should be one group (all)'
-
   end
   
   def test_group_membership_caching_with_a_committee

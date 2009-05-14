@@ -26,6 +26,7 @@ animals:
   id: 2
   name: animals
   summary: all the animals party down!
+  site_id: 2
 
 rainbow:
   id: 3
@@ -74,11 +75,13 @@ cnt:
   name: cnt
   full_name: Confederación Nacional del Trabajo
   type: Network
+  site_id: 1
 fai:
   id: 3002
   name: fai
   full_name: Federación Anarquista Ibérica
   type: Network
+  site_id: 2
 # lets have another one so we can access it from within the sites.
 fau:
   id: 3003

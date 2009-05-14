@@ -26,8 +26,8 @@ class PageFinderTest < Test::Unit::TestCase
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
+    Conf.disable_site_testing
   end
 
   def test_group_pages_not_authed

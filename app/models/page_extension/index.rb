@@ -134,10 +134,13 @@ module PageExtension::Index
       terms.tags      = Page.searchable_tag_list(tag_list).join(' ')
       terms.body      = summary_terms + body_terms
       terms.comments  = comment_terms
-      terms.page_type = type
+
+      # meta
+      terms.page_type = self.type
+      terms.media = self.media_flags()
 
       # access control
-      terms.access_ids = access_ids
+      terms.access_ids = self.access_ids()
    
       # additional hook for subclasses
       custom_page_terms(terms)
@@ -149,12 +152,27 @@ module PageExtension::Index
     
     # :nodoc:
     def access_ids
+      update_site_id # call manually, since we might be in a callback before 
+                     # the one that sets site_id
       Page.access_ids_for(
         :public => public?,
         :group_ids => group_ids,
-        :user_ids => user_ids
+        :user_ids => user_ids,
+        :site_ids => ([site_id] if site_id)
       ).join(' ')
     end
+
+    # Converts the boolean media flags to an array of integers
+    # page.is_image? -> [1]
+    def media_flags
+      ret = []
+      ret << MEDIA_TYPE[:audio] if is_audio?
+      ret << MEDIA_TYPE[:video] if is_video?
+      ret << MEDIA_TYPE[:image] if is_image?
+      ret << MEDIA_TYPE[:document] if is_document?
+      ret
+    end
+
 
     # Returns the text to be included in the body of the page index.
     # Subclasses of Page should override this method as appropriate.

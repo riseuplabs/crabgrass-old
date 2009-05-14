@@ -25,15 +25,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :secret => Conf.secret
   layout 'default'
 
-  helper_method :current_site  # make available to views
-  def current_site
-    @current_site ||= begin
-      site = Site.for_domain(request.host).find(:first)
-      site ||= Site.default
-      Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
-    end
-  end
-
   helper_method :current_appearance  # make available to views
   def current_appearance
     current_site.custom_appearance || CustomAppearance.default
@@ -240,6 +231,37 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  ##
+  ## SITES
+  ##
 
+  public
+
+  # returns the current site. 
+  def current_site
+    if !@current_site_disabled
+      @current_site ||= begin
+        site = Site.for_domain(request.host).find(:first)
+        site ||= Site.default
+        site ||= Site.new(:domain => request.host) 
+        Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
+      end
+    else
+      Site.new()
+    end
+  end
+
+  # used for testing
+  def disable_current_site
+    @current_site_disabled = true
+  end
+
+  # used for testing
+  def enable_current_site
+    @current_site = nil
+    @current_site_disabled = false
+  end
+
+  helper_method :current_site  # make available to views
 
 end

@@ -1,0 +1,30 @@
+This is a crabgrass specific plugin.
+
+It will automatically assign an object to a site. If the Site.current is set, 
+(and Site.current.limited?) then all possible finders for the particular class
+will also limit based on this site. 
+
+Requires column 'page_id'.
+
+Usage:
+
+class CreateThings < ActiveRecord::Migration
+  def self.up
+    create_table "things" do |t|
+      t.integer :site_id
+    end
+  end
+end
+
+class Thing < ActiveRecord::Base
+  acts_as_site_limited
+end
+
+Site.current = Site.find(1)
+things = Thing.find(:all)
+# => returns just things for site 1
+
+Site.current = nil
+things = Thing.find(:all)
+# => returns all the things
+

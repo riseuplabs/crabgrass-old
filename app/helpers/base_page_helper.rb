@@ -9,7 +9,7 @@ module BasePageHelper
 
   def header_for_page_create(page_class)
     style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
-    text = "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}"
+    text = "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}"
     content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
   end
 
@@ -240,11 +240,11 @@ module BasePageHelper
       @share_page_groups    = @page ? @page.namespace_groups : []
       @share_contributors   = @page ? @page.contributors : []
       all_groups = current_user.all_groups.sort_by {|g|g.name}
-      @share_groups      = current_user.all_groups.on(current_site).select {|g|g.normal?}
-      @share_networks    = current_user.all_groups.on(current_site).select {|g|g.network?}
-      @share_committees  = current_user.all_groups.committees_on(current_site)
-      @share_friends     = User.contacts_of(current_user).on(current_site).sort_by{|u|u.name}
-      @share_peers       = User.peers_of(current_user).on(current_site).sort_by{|u|u.name}
+      @share_groups      = current_user.all_groups.select {|g|g.normal?}
+      @share_networks    = current_user.all_groups.select {|g|g.network?}
+      @share_committees  = current_user.all_groups
+      @share_friends     = User.contacts_of(current_user).sort_by{|u|u.name}
+      @share_peers       = User.peers_of(current_user).sort_by{|u|u.name}
 
       params[:recipients] ||= {}
       if params[:group] and (group = Group.find_by_name(params[:group]))
@@ -392,7 +392,7 @@ module BasePageHelper
   end
 
   def page_class
-    @page.class_display_name.t.capitalize
+    @page.class_display_name.capitalize
   end
   
   def select_page_owner(_erbout)

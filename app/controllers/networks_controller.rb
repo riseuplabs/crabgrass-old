@@ -1,21 +1,23 @@
 class NetworksController < GroupsController
+  
+  before_filter :check_site_settings
  
   def index() redirect_to(:action => 'list') end
 
   def list
     letter_page = params[:letter] || ''
     
-    @networks = Network.visible_on(current_site).visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+    @networks = Network.visible_by(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
 
     # get the starting letters of all networks
-    networks_with_names = Network.visible_on(current_site).visible_by(current_user).names_only
+    networks_with_names = Network.visible_by(current_user).names_only
     @pagination_letters = Network.pagination_letters_for(networks_with_names)
   end
 
   def my
     letter_page = params[:letter] || ''
 
-    @networks = Group.all_networks_for(current_user).visible_on(current_site).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
+    @networks = Group.all_networks_for(current_user).alphabetized(letter_page).paginate(:all, :page => params[:page], :order => 'full_name')
   end
 
   def create
@@ -60,4 +62,9 @@ class NetworksController < GroupsController
   #  raise ErrorMessage.new('You must add yourself or be a member of at least one group in the membership list'[:create_network_membership_error]) unless in_users or in_groups
   end
 
+  def check_site_settings
+    unless current_site.has_networks?
+      redirect_to (current_site.network ? '/' : '/me/dashboard')
+    end
+  end
 end

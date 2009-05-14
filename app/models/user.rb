@@ -227,6 +227,35 @@ class User < ActiveRecord::Base
     end
   end
 
+  ##
+  ## SITES
+  ##
+
+  # DEPRECATED
+  USER_SITES_SQL = 'SELECT sites.* FROM sites JOIN (groups, memberships) ON (sites.network_id = groups.id AND groups.id = memberships.group_id) WHERE memberships.user_id = #{self.id}'
+
+  # DEPRECATED
+  def site_id; self.site_ids.first; end
+
+  # DEPRECATED
+  has_many :sites, :finder_sql => USER_SITES_SQL
+
+  # DEPRECATED
+  named_scope(:on, lambda do |site|
+    if site.limited?
+      { :select => "users.*",
+        :joins => :memberships,
+        :conditions => ["memberships.group_id = ?", site.network.id]
+      }
+    else 
+      {}
+    end
+  end)
+
+  ##
+  ## DEPRECATED
+  ##
+
   # TODO: this does not belong here, should be in the mod, but it was not working
   # there.
   include UserExtension::SuperAdmin rescue NameError

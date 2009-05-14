@@ -6,10 +6,10 @@
   <div id='listing-of-page-classes' class='workarea'>
   <% @available_tools.each do |klass| -%>
     <% page_class = Page.class_name_to_class(klass) -%>
-    <% if ! page_class.nil? %>
+    <% if ! page_class.nil?%>
       <div class="page-class"><div>
-        <input type="checkbox" name="<%= page_class.short_class_name %>" <%= @allowed_tools.index( page_class.short_class_name ) ? "CHECKED" : "" %> />
-        <%= "<b>#{page_class.class_display_name.t}</b>: #{page_class.class_description.t}" %>
+        <input type="checkbox" name="<%= klass %>" <%= @allowed_tools.index( klass ) ? "CHECKED" : "" %> />
+        <%= "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}" %>
       </div></div>
     <% else %>
       <div class="page-class"><div>

@@ -12,23 +12,22 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
   def setup
     @controller = BasePageController.new
     @request    = ActionController::TestRequest.new
-    @request.host = Site.default.domain
     @response   = ActionController::TestResponse.new
   end
 
   def test_create_without_login
-    get :create, :id => 'wiki'
+    get :create, :id => WikiPage.param_id
     assert_response :redirect
     assert_redirected_to :controller => 'account', :action => 'login'
     
-    post :create, :id => 'wiki'
+    post :create, :id => WikiPage.param_id
     assert_redirected_to :controller => 'account', :action => 'login'
   end
 
   def test_create_with_login
     login_as :orange
     
-    get :create, :id => 'wiki'
+    get :create, :id => WikiPage.param_id
     assert_response :success
   
     assert_difference 'Page.count' do
@@ -39,7 +38,7 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
 
   def test_page_creation_access
     login_as :kangaroo
-    post :create, {"page_class"=>"DiscussionPage", "action"=>"create", "id"=>"group-discussion", "page"=>{"title"=>"aaaa"}, "recipients"=>{"animals"=>"1"}, "controller"=>"discussion_page", "access"=>"view", "create"=>"Create discussion »"}
+    post :create, {"id"=>DiscussionPage.param_id, "action"=>"create", "page"=>{"title"=>"aaaa"}, "recipients"=>{"animals"=>"1"}, "controller"=>"discussion_page", "access"=>"view", "create"=>"Create discussion »"}
     page = assigns(:page)
     assert page
     assert users(:kangaroo).may?(:admin,page)

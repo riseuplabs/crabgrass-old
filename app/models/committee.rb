@@ -1,5 +1,13 @@
 class Committee < Group
+  before_destroy :eliminate_councilship
   
+  def eliminate_councilship
+    if g = Group.find(:first, :conditions => { :council_id => self.id })
+      g.council_id = nil
+      g.save!
+    end
+  end
+
   # NAMING
   # the name of a committee includes the name of the parent, 
   # so the committee names are unique. however, for display purposes
