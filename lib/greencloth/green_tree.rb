@@ -6,6 +6,7 @@ class GreenTree < Array
   attr_accessor :tree_level
   attr_accessor :text
   attr_accessor :name
+  attr_accessor :markup_index
 
   def initialize(text=nil, name=nil, heading_level=nil)
     tree = super()
@@ -57,6 +58,24 @@ class GreenTree < Array
       end
     end
     return nil # not found
+  end
+
+  # modifies markup
+  # finds the location for each heading in the markup
+  def prepare_markup_index!(markup)
+    if self.text
+      # find the first occurance of this node in the markup
+      self.markup_index = markup.index(self.markup_regexp)
+      # modify the markup, so that it will no longer match
+      # the markup_regexp at this position
+      markup[self.markup_index] = "\000"
+    else
+      self.markup_index = 0
+    end
+
+    children.each do |node|
+      node.prepare_markup_index!(markup)
+    end
   end
 
   # greencloth specific

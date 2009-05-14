@@ -36,6 +36,14 @@ class TestHeadings < Test::Unit::TestCase
       greencloth.get_text_for_heading('vegetables')
   end
 
+  def test_duplicate_names
+    greencloth = GreenCloth.new( in_texts(:double_trouble) )
+
+    assert_equal "h1. Title\n\nh3. Under first", greencloth.get_text_for_heading('title')
+
+    assert_equal "h1. Title\n\nh3. Under second", greencloth.get_text_for_heading('title_2')
+  end
+
   def test_set_text
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
 

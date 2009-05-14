@@ -80,6 +80,7 @@ in: |-
   h2. Hearts
 
   h2. Rook
+  
 out: |-
   <h1 class="first"><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
   <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
@@ -112,4 +113,18 @@ out: |-
   <h1><a name="russian-american-anarchists"></a>Russian-American Anarchists<a class="anchor" href="#russian-american-anarchists">&para;</a></h1>
   <h2><a name="emma-goldman"></a><a href="http://en.wikipedia.org/wiki/Emma_Goldman">Emma Goldman</a><a class="anchor" href="#emma-goldman">&para;</a></h2>
   <h2><a name="alexander-berkman"></a>Alexander <a href="http://en.wikipedia.org/wiki/Alexander_Berkman">Berkman</a><a class="anchor" href="#alexander-berkman">&para;</a></h2>
-
+---
+name: double trouble
+in: |-
+  h1. Title
+  
+  h3. Under first
+  
+  h1. Title
+  
+  h3. Under second
+out: |-
+  <h1><a name="title"></a>Title<a class="anchor" href="#title">&para;</a></h1>
+  <h3><a name="under-first"></a>Under first<a class="anchor" href="#under-first">&para;</a></h3>
+  <h1><a name="title_2"></a>Title<a class="anchor" href="#title_2">&para;</a></h1>
+  <h3><a name="under-second"></a>Under second<a class="anchor" href="#under-second">&para;</a></h3>
