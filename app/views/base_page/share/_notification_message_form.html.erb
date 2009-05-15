@@ -2,8 +2,8 @@
   # defaults
   forced_send     = false if forced_send.nil?
   send_notice     = false if send_notice.nil?
-  include_message = true if include_message.nil?
-  send_email      = true if send_email.nil?
+  include_message = false if include_message.nil?
+  send_email      = false if send_email.nil?
 
   check_box_options = {:checked => send_notice, :onchange => "checkbox_toggle_visibility(this, 'notification_details'); $('notification_send_message').focus()"}
   if forced_send

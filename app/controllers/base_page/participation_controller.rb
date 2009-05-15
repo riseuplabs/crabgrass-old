@@ -114,13 +114,13 @@ class BasePage::ParticipationController < ApplicationController
   ## view access, then we need to destory them to remove access. 
   def destroy
     upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
-    if upart and upart.user_id != @page.created_by_id
+    if upart and upart.user_id != @page.owner_id and @page.owner.kind_of?(User)
       @page.remove(upart.user) # this is the only way users should be removed.
       @page.save!
     end
 
     gpart = (GroupParticipation.find(params[:gpart_id]) if params[:gpart_id])
-    if gpart and gpart.group_id != @page.group_id
+    if gpart and !(gpart.group_id == @page.owner_id and @page.owner.kind_of?(Group))
       @page.remove(gpart.group) # this is the only way groups should be removed.
       @page.save!
     end

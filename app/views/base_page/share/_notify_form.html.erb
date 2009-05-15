@@ -1,10 +1,3 @@
-<% 
-   current_access_users = []
-   current_access_users += @page.contributors
-   @page.groups.each {|g| current_access_users += g.users }
-   current_access_users.uniq!
-%>
-
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
 
@@ -34,7 +27,7 @@
     <td></td>
     <td>
       <div id='notify_current_access_area' class='notify_details' style='display:none'>
-        <%= render :partial => 'notify_recipient_list', :locals => {:users => current_access_users, :groups => @page.groups} %>
+        <%= render :partial => 'notify_recipient_list', :locals => {:users => @page.users, :groups => @page.groups} %>
       </div>
     </td>
   </tr>
