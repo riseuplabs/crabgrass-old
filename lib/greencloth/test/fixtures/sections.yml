@@ -17,7 +17,7 @@ in: |-
   here we go now!
 out: |-
   <div class="wiki_section" id="wiki_section-0">
-    <h2>are you ready?!!?</h2>
+    <h2 class="first">are you ready?!!?</h2>
     <p>here we go now!</p>
   </div>
 ---
@@ -34,7 +34,7 @@ in: |-
   more lalas
 out: |-
   <div class="wiki_section" id="wiki_section-0">
-    <h2>first section</h2>
+    <h2 class="first">first section</h2>
     <p>some blahs</p>
   </div>
   <div class="wiki_section" id="wiki_section-1">
@@ -59,7 +59,7 @@ out: |-
     <p>some blahs</p>
   </div>
   <div class="wiki_section" id="wiki_section-1">
-    <h1>first section heading here</h1>
+    <h1 class="first">first section heading here</h1>
     <p>more lalas</p>
   </div>
 ---
@@ -87,7 +87,7 @@ in: |-
   section 4 first non-blank line
 out: |-
   <div class="wiki_section" id="wiki_section-0">
-    <h2>Section One</h2>
+    <h2 class="first">Section One</h2>
     <p>section one line one is here<br />
     section one line two is next</p>
     <p>Here is section one still</p>

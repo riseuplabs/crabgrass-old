@@ -20,9 +20,14 @@ class SurveyPageController < BasePageController
 #  end
 
   def show
-    @survey = @page.data || Survey.new
-    @survey.responses(true)
-    # ^^ there is no good reason why this is necessary, but it seems to be the case.
+    if @page.data.nil?
+      @survey = Survey.new
+      redirect_to page_url(@page, :action => 'edit')
+    else
+      @survey = @page.data
+      @survey.responses(true)
+      # ^^ there is no good reason why this is necessary, but it seems to be the case.
+    end
   end
 
   def edit
