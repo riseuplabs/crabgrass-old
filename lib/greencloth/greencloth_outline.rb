@@ -24,7 +24,7 @@ module GreenclothOutline
     return self if range.nil?
 
     # enforce an empty trailing line (in case the text immediately after us is another heading)
-    new_text += "\n\n" unless new_text =~ /\n\r?\n\r?$/
+    new_text += "\n\n" unless new_text =~ /\n\r?\n\r?\Z/
 
     # enforce a heading element, restore the old one if it was removed
     # new_text.insert(0, node.markup + "\n\n") unless new_text =~ /^h#{node.heading_level}\. .*?\n\r?\n\r?/

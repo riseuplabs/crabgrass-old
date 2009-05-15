@@ -8,8 +8,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
-
-ActiveRecord::Schema.define(:version => 20090510032300) do
+ActiveRecord::Schema.define(:version => 20090515002003) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11

@@ -36,14 +36,17 @@ module WikiPageHelper
     url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')
     link = link_to_remote_icon('pencil', {:url => url}, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
     link.gsub!('"','\"')
-    javascript_tag %Q[
-      $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
-        function(elem) {
-          link = "#{link}".replace('_change_me_', elem.href.replace(/^.*#/, ''))
-          elem.insert({after:link})
-        }
-      )
-    ]
+
+    # locked_sections = @wiki.edit_locks.select {|heading, attributes| attributes[:locked_by_id] != current_user.id }
+    locked_sections = @wiki.locked_sections_not_by(current_user).collect{|s| s == :all ? ':all' : s }.inspect
+    # .each do |section|
+    #   locked_sections_string << section.inspect
+    #   locked_sections_string << ","
+    # end
+    # locked_sections_string.chop!
+
+
+    javascript_tag %Q[wiki_edit_decorate_with_edit_links("#{link}", #{locked_sections});]
   end
 
 end
