@@ -46,7 +46,8 @@ module PageHelper
   def page_path(context,name,options)
     # if controller is set, encode it with the action.
     action = [options.delete(:controller), options.delete(:action)].compact.join('-')
-    [context, name, action, options.delete(:id)].select(&:any?).join('/')
+    [context, name, action, options.delete(:id)].select{|x|
+      (x.respond_to?(:any?) && x.any?) || true }.join('/')
   end
   
   # like page_url, but it returns a direct URL that bypasses the dispatch
