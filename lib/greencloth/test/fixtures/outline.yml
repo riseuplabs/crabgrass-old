@@ -40,7 +40,7 @@ out: |-
   <li class="toc2"><a href="#green-beans"><span>2.2</span> Green Beans</a></li>
   </ul>
   </ul></p>
-  <h1><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
   <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
   <h3><a name="green"></a>Green<a class="anchor" href="#green">&para;</a></h3>
   <h3><a name="red"></a>Red<a class="anchor" href="#red">&para;</a></h3>
@@ -56,7 +56,7 @@ out: |-
   <li class="toc1"><a href="#bats"><span>1</span> Bats</a></li>
   <li class="toc1"><a href="#squirrels"><span>2</span> Squirrels</a></li>
   </ul></p>
-  <h1><a name="bats"></a>Bats<a class="anchor" href="#bats">&para;</a></h1>
+  <h1 class="first"><a name="bats"></a>Bats<a class="anchor" href="#bats">&para;</a></h1>
   <h1><a name="squirrels"></a>Squirrels<a class="anchor" href="#squirrels">&para;</a></h1>
 ---
 name: test name collisions
@@ -81,7 +81,7 @@ in: |-
 
   h2. Rook
 out: |-
-  <h1><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
+  <h1 class="first"><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
   <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
   <h2><a name="raven"></a>Raven<a class="anchor" href="#raven">&para;</a></h2>
   <h2><a name="rook"></a>Rook<a class="anchor" href="#rook">&para;</a></h2>
@@ -106,7 +106,7 @@ in: |-
 
   h2. Alexander [Berkman -> http://en.wikipedia.org/wiki/Alexander_Berkman]
 out: |-
-  <h1><a name="russian-anarchists"></a>Russian Anarchists<a class="anchor" href="#russian-anarchists">&para;</a></h1>
+  <h1 class="first"><a name="russian-anarchists"></a>Russian Anarchists<a class="anchor" href="#russian-anarchists">&para;</a></h1>
   <h2><a name="michel-bakunin"></a>Michel <a href="http://en.wikipedia.org/wiki/Mikhail_Bakunin">Bakunin</a><a class="anchor" href="#michel-bakunin">&para;</a></h2>
   <h2><a name="peter-kropotkin"></a><a href="http://en.wikipedia.org/wiki/Peter_Kropotkin">Peter</a> Kropotkin<a class="anchor" href="#peter-kropotkin">&para;</a></h2>
   <h1><a name="russian-american-anarchists"></a>Russian-American Anarchists<a class="anchor" href="#russian-american-anarchists">&para;</a></h1>

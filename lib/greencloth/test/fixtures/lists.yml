@@ -211,7 +211,7 @@ in: |-
   * Like this
 
 out: |-
-  <h2>End Notes</h2>
+  <h2 class="first">End Notes</h2>
   <ol>
   	<li>End Notes should be a numbered list</li>
   	<li>Like this</li>

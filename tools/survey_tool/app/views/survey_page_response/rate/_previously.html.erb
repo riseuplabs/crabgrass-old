@@ -7,10 +7,14 @@
 <% end %>
 
 <ul>
-  <li><b>Your Rating:</b> <%= (current_user.rating_for(response)||Rating.new).rating %></li>
+    <li><b><%= "Your Rating:"[:survey_your_rating] %></b> <%= (current_user.rating_for(response)||Rating.new).rating %></li>
   <% if may_view_survey_response_ratings?(response) %>
-    <li><b>Averate Rating:</b> <%= response.rating.round(2) %></li>
+      <li><b><%= "Average Rating:"[:survey_average_rating] %></b> <%= response.rating.round(2) %></li>
   <% end %>
-  <li><b>Total Ratings:</b> <%= response.ratings.size %></li>
+  <% if response.ratings.size == 1 %>
+      <li><b><%= "Rated by one person."[:survey_rated_by_1_person] %></b></li>
+  <% else %>
+      <li><b><%= "Rated by {count} people."[:survey_rated_by_x_people,response.ratings.size] %></b></li>
+  <% end %>
 </ul>
 

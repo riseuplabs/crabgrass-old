@@ -335,7 +335,7 @@ module PageHelper
     html = "<td class='excerpt', colspan='#{column_size}'>"
     html += "page sent by {user} on {date}"[:page_notice_message, {:user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time])}]
     if notice[:message].any?
-      html += 'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      html += ' '+'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
     end
     html += "</td>"
     content_tag(:tr, html, :class => "page_info")

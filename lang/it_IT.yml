@@ -132,7 +132,7 @@ invalid_token: Token Non Valido
 month_short_july: Lug
 search: Cerca
 my_world_heading: Il Mio Mondo
-create_a_new_thing: crea un nuovo :thing
+create_a_new_thing: Crea un nuovo :thing
 email: Email
 my_dashboard: La mia bacheca
 slideshow_delay_input: Aggiorna ogni :input_field secondi
@@ -495,13 +495,5 @@ forgot_password_link: Ho dimenticato la mia password.
 my_groups: I Miei Gruppi
 group_discussion: discussione di gruppo
 my_pending_tasks_link: Pendenti
-footer_text_crabgrass: |-
-  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
-  <ul>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
-    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
-  </ul>
 image_title: "Titolo immagine: %s"
 reset_password_text: Ciao, %s. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui.

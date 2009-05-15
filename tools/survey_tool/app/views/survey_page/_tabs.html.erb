@@ -3,14 +3,14 @@
 <%= 
   Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Summary'.t
+      t.label 'Introduction'.t
       t.url page_url(@page, :action => 'show')
       t.selected controller?(:survey_page) && action?(:show)
     end
     if logged_in?
       if may_modify_survey?
         f.tab do |t|
-          t.label 'Design Survey'[:survey_design]
+          t.label 'Create Survey'[:survey_create]
           t.url page_url(@page, :action => 'edit')
           t.selected controller?(:survey_page) && action?(:edit)
         end
