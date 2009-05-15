@@ -95,15 +95,29 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   end
   
   def test_destroy
-    owner = users(:blue)
-    friend = users(:red)
-    page = Page.create! :title => 'robot tea party', :user => owner, :share_with => friend
-
+    @owner = users(:blue)
+    friend_user = users(:red)
+    friend_group = groups(:rainbow)
+    @page = Page.create! :title => 'robot tea party', :user => @owner
+    assert @page
+    @owner.share_page_with!(@page, friend_user, :access => :admin)
+    @page.reload
+    assert @page.user_ids.include?(friend_user.id)
+    @owner.share_page_with!(@page, friend_group, :access => :admin)
+    @page.save!
+    @page.reload
+    assert @page.group_ids.include?(friend_group.id)
+    assert_equal @owner.id, @page.owner_id
+    @page.reload
+    
     login_as :blue
-    post :destroy, :page_id => page.id, :upart_id => page.user_participations.detect{|up|up.user==friend}.id
-
-    page = Page.find(page.id)
-    assert_equal [owner.id], page.user_ids
+    post :destroy, :page_id => @page.id, :upart_id => @page.user_participations.detect{|up|up.user==friend_user}.id
+    
+    post :destroy, :page_id => @page.id, :gpart_id => @page.group_participations.detect{|gp|gp.group==friend_group}.id
+    
+    @page = Page.find(@page.id)
+    assert_equal @owner.id, @page.owner_id
+    assert_equal [@owner.id], @page.user_ids
   end
 
   def test_details
@@ -128,7 +142,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   # TODO: Write this test
   end
   
-  
+ 
 =begin
 # these old tests might be useful in writing a new test for the share function
   def test_notify
