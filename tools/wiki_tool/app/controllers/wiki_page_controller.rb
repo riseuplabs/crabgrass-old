@@ -114,12 +114,6 @@ class WikiPageController < BasePageController
     # lock this section for the user
     @wiki.lock(Time.now, current_user, heading)
 
-    # replace every section this user has a lock on with a form
-    # wiki_plus_form = body_html_with_forms(current_user)
-    #
-    # render :update do |page|
-    #   page.replace_html(:wiki_html, wiki_plus_form)
-    # end
     update_inline_html
   end
 
@@ -209,6 +203,8 @@ class WikiPageController < BasePageController
   end
 
   def body_html_with_forms(user)
+    require 'ruby-debug';debugger
+    
     html = @wiki.body_html.dup
     editable_section_headings = @wiki.locked_sections_by(user)
     return html if editable_section_headings.empty?
@@ -230,8 +226,8 @@ class WikiPageController < BasePageController
   # Takes some html and a section (defined from heading_start to heading_end)
   # and replaces the section with the form. This is pretty crude, and might not
   # work in all cases.
-  def replace_section_with_form(html, heading_start, heading_end, form)
-    index_start = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_start)}">/
+  def replace_section_with_form(html, heading_start, heading_end, form)    
+    index_start = html.index /^<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
     if heading_end
       index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
       index_end -= 1

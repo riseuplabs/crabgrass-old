@@ -34,6 +34,10 @@ module WikiPageHelper
 
   def decorate_with_edit_links
     url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')
+    ####
+    #
+    #
+    ##### TODO: :confirm leaving alone the existing work
     link = link_to_remote_icon('pencil', {:url => url}, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
     link.gsub!('"','\"')
 
