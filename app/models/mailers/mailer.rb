@@ -42,8 +42,12 @@ class Mailer < ActionMailer::Base
 
   protected
 
-  def link(path)
-    [@protocol,@host,@port,'/',path.sub(/^\//, '')].join
+  def link(path=nil)
+    if path
+      [@protocol,@host,@port,'/',path.sub(/^\//, '')].join
+    else
+      [@protocol,@host,@port].join
+    end
   end
 
   def setup(options)
@@ -55,6 +59,7 @@ class Mailer < ActionMailer::Base
 
     @host = default_url_options[:host] = options[:host]
     @port = default_url_options[:port] = options[:port] if options[:port]
+    @port = ':' + @port if @port and @port !~ /^:/
     @protocol = default_url_options[:protocol] = options[:protocol]
     default_url_options[:only_path] = false
   end

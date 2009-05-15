@@ -69,6 +69,10 @@ If using smtp, things get more complicated:
 
 For SMTP, to enable ssl connection the port must be 587 or 465. Some SMTP auth requires a domain, which does not have to be a real domain, but it must exist.
 
+=== Miscellanous Global Options
+
+paranoid_emails
+if true, then urls sent in emails will be obscured.
 
 === Sites
 

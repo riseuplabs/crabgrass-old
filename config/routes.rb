@@ -53,6 +53,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # routes in emails:
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
+  map.connection '/code/:id', :controller => 'codes', :action => 'jump'
 
   map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
   map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil

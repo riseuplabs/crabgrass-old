@@ -884,7 +884,13 @@ group_invite_email: |
   
   If you do not wish to join this group, simply ignore this email.
 
+email_notice_subject: 'Check out page "{title}"'
+email_notice_hello_with_message: "Hello, {from} has sent you a web page with the following message: {message}"
+email_notice_hello: "Hello, {from} has sent you a web page."
+email_notice_access: "You may access this page here:"
+email_link_expires: "This link will expire in {days} days."
 
+ 
 ##
 ## PEOPLE (i.e., PeopleController)
 ##
@@ -934,9 +940,9 @@ add_tags: "Add Tags"
 current_tags: "Current Tags"
 
 
-#
-# WELCOME 
-#
+##
+## WELCOME 
+##
 
 
 welcome_title: "Welcome to {site_title}"
