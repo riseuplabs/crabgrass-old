@@ -25,6 +25,11 @@ class Me::BaseController < ApplicationController
     @unread_count  = Page.count_by_path('unread',  options_for_inbox)
     render :layout => false
   end
+  
+  def delete_avatar
+    @user.kill_avatar
+    render :text => avatar_for(@user,"x-large")
+  end
 
   protected
   

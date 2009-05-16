@@ -84,7 +84,13 @@ class BaseControllerTest < Test::Unit::TestCase
     
     # test that things which should not change, don't
     post :edit, :user => {:crypted_password => ""}
-    assert_equal users(:quentin).crypted_password, User.find(users(:quentin).id).crypted_password, "hackers should not be able to reset password"
-    
+    assert_equal users(:quentin).crypted_password, User.find(users(:quentin).id).crypted_password, "hackers should not be able to reset password"    
   end
+  
+  # tests if deleting an avatar works
+  def test_delete_avatar
+    #Todo: Write this test
+    # for this test we need a fixture user with an avatar already
+  end
+  
 end
