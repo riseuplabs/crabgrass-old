@@ -145,6 +145,13 @@ class Group < ActiveRecord::Base
   def destroy_requests
     Request.destroy_for_group(self)
   end
+  
+  after_destroy :update_networks
+  def update_networks
+    self.networks.each do |network|
+      Group.increment_counter(:version, network.id)
+    end
+  end
 
 
   ##
