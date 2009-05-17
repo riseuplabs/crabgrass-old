@@ -111,6 +111,21 @@ malformed_wiki_orange:
   page_id: 230
   user_id: 5
   access: 1
+malformed_wiki_orange:
+  id: <%= id+=1 %>
+  page_id: 230
+  user_id: 5
+  access: 1
+multi_section_wiki_blue:
+  id: <%= id+=1 %>
+  page_id: 240
+  user_id: 4
+  access: 1
+multi_section_wiki_gerrard:
+  id: <%= id+=1 %>
+  page_id: 240
+  user_id: 3
+  access: 1
 survey_blank_blue:
   id: <%= id+=1 %>
   page_id: 215

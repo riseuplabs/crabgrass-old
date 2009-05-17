@@ -34,16 +34,19 @@ module WikiPageHelper
 
   def decorate_with_edit_links
     url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')
-    link = link_to_remote_icon('pencil', {:url => url}, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
+    opts = {:url => url}
+
+    if @heading_with_form
+      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:confirm_unsaved_text_lost_label]
+    end
+
+    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
     link.gsub!('"','\"')
-    javascript_tag %Q[
-      $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
-        function(elem) {
-          link = "#{link}".replace('_change_me_', elem.href.replace(/^.*#/, ''))
-          elem.insert({after:link})
-        }
-      )
-    ]
+
+    unlocked_sections = @wiki.sections_not_locked_for(current_user).inspect
+    all_sections = @wiki.section_heading_names.inspect
+
+    javascript_tag %Q[wiki_edit_decorate_with_edit_links("#{link}", #{all_sections}, #{unlocked_sections});]
   end
 
 end

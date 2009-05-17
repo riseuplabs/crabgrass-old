@@ -53,7 +53,7 @@ module WikiHelper
       :onchange => (remote_function(:url => wiki_action('old_version', :wiki_id => wiki.id),
                                       :loading => show_spinner(spinner_id),
                                       :with => "'old_version=' + $('#{select_tag_name}').value",
-                                      :confirm => "Any unsaved text will be lost. Are you sure?"[:confirm_load_old_wiki_version]))
+                                      :confirm => "Any unsaved text will be lost. Are you sure?"[:confirm_unsaved_text_lost_label]))
   end
 
   # returns something like 'Version 3 created Fri May 08 12:22:03 UTC 2009 by Blue!'

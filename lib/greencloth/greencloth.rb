@@ -79,7 +79,6 @@ require 'cgi'
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_outline'
-require 'greencloth_sections'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -92,7 +91,7 @@ require 'greencloth_sections'
 module GreenClothFormatterHTML
   include RedCloth::Formatters::HTML
 
-  attr_reader :wiki_section_marked
+  # attr_reader :wiki_section_marked
 
   # alas, so close, but so far away. most times this is called with a single
   # char at a time, so this won't work:
@@ -254,13 +253,11 @@ end
 ##
 
 class GreenCloth < RedCloth::TextileDoc
-  include GreenclothSections
   include GreenclothOutline
 
   attr_accessor :original
   attr_accessor :offtags
   attr_accessor :formatter
-  attr_accessor :wrap_section_html
 
   # custom restrictions
   attr_accessor :outline   # if true, enable table of contents
@@ -287,8 +284,6 @@ class GreenCloth < RedCloth::TextileDoc
   def to_html(*before_filters, &block)
     @block = block
 
-    #section_start_re = Regexp.union(GreenCloth::TEXTILE_HEADING_RE, GreenCloth::HEADINGS_RE)
-
     before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
       :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
       :normalize_heading_blocks, :quoted_block, :tables_with_tabs, :wrap_long_words]
@@ -298,7 +293,6 @@ class GreenCloth < RedCloth::TextileDoc
 
     apply_rules(before_filters)
     html = to(GreenClothFormatterHTML)
-    html = add_wiki_section_divs(html) if wrap_section_html
 
     extract_offtags(html)
 
@@ -307,9 +301,9 @@ class GreenCloth < RedCloth::TextileDoc
 
   # populates @headings, and then restores the string to its original form.
   def extract_headings()
-    original = self.dup
     self.extend(GreenClothFormatterHTML)
     apply_rules([:normalize_heading_blocks])
+    original = self.dup
     to(GreenClothFormatterHTML)
     self.replace(original)
   end

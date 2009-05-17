@@ -29,11 +29,28 @@ class TestHeadings < Test::Unit::TestCase
   def test_get_text
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
 
-    assert_equal "h2. Tasty Apples  \n\nh3. Green\n\nh3. Red", 
+    assert_equal "h2. Tasty Apples  \n\nh3. Green\n\nh3. Red",
       greencloth.get_text_for_heading('tasty-apples')
 
-    assert_equal "h1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", 
+    assert_equal "h1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans",
       greencloth.get_text_for_heading('vegetables')
+
+    # test setext style headings
+    greencloth = GreenCloth.new( in_texts(:setext_trees) )
+
+    assert_equal "h1. Evergreens\n\n\n\nh3. Cedar\n\nh3. Redwood\n\nh3. Fir",
+      greencloth.get_text_for_heading('evergreens')
+
+    assert_equal "h2. Oaks\n\n\n\nh3. White Oak\n\nh3. Red Oak",
+      greencloth.get_text_for_heading('oaks')
+  end
+
+  def test_duplicate_names
+    greencloth = GreenCloth.new( in_texts(:double_trouble) )
+
+    assert_equal "h1. Title\n\nh3. Under first", greencloth.get_text_for_heading('title')
+
+    assert_equal "h1. Title\n\nh3. Under second", greencloth.get_text_for_heading('title_2')
   end
 
   def test_set_text
@@ -42,7 +59,6 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "[[toc]]\n\nh1. Fruits\n\nxxxxx\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', 'xxxxx')
 
     assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', "h2. Oranges\n\nooooo")
-
   end
 
   protected

@@ -24,7 +24,7 @@ module GreenclothOutline
     return self if range.nil?
 
     # enforce an empty trailing line (in case the text immediately after us is another heading)
-    new_text += "\n\n" unless new_text =~ /\n\r?\n\r?$/
+    new_text += "\n\n" unless new_text =~ /\n\r?\n\r?\Z/
 
     # enforce a heading element, restore the old one if it was removed
     # new_text.insert(0, node.markup + "\n\n") unless new_text =~ /^h#{node.heading_level}\. .*?\n\r?\n\r?/
@@ -39,9 +39,39 @@ module GreenclothOutline
     @headings
   end
 
+  # some of the stuff from @headings doesn't make it
+  # into the tree. this is a list of stuff that belogs to the tree
+  def heading_names
+    @heading_names ||= heading_tree.heading_names
+  end
+
+  def subheading_names(heading)
+    node = heading_tree.find(heading)
+    return [] unless node
+
+    node.heading_names
+  end
+
+  def parent_heading_names(heading)
+    node = heading_tree.find(heading)
+    return [] unless node
+    parent_headings = []
+
+    heading_tree.children.each do |child|
+      # this line of headings includes the one we're looking for
+      if child.heading_names.include?(heading)
+        # all the names that are the line from top to bottom
+        # except the ones that are children of the heading we're
+        # looking
+        return child.heading_names - node.heading_names
+      end
+    end
+    return []
+  end
+
   # returns the tree of headings
   # if this is called after to_html, we use the already existing @headings
-  # but be warned that to_html will mangled the string and it will not the 
+  # but be warned that to_html will mangled the string and it will not the
   # original!
   def heading_tree
     extract_headings unless @headings
@@ -57,17 +87,21 @@ module GreenclothOutline
     node = heading_tree.find(heading_name)
     return nil unless node
 
-    start_index = self.index(node.markup_regexp)
+    # start_index = self.index(node.markup_regexp)
+    start_index = node.markup_index
+
     return nil unless start_index
 
     next_node = heading_tree.successor(heading_name)
     if next_node
-      end_index = self.index(next_node.markup_regexp) - 1
+      # end_index = self.index(next_node.markup_regexp) - 1
+      end_index = next_node.markup_index - 1
+
       return nil unless end_index
     else
       end_index = -1
     end
-      
+
     start_index..end_index
   end
 
@@ -103,8 +137,8 @@ module GreenclothOutline
   # INPUT:
   #   number = 1
   #   array = [[1, "Fruits"], [2, "Apples"], [2, "Pears"], [1, "Vegetables"], [2, "Green Beans"]]
-  # OUTPUT: 
-  # 
+  # OUTPUT:
+  #
   # as a GreenTree:
   # "root" -> [
   #   "Fruits" -> ["Apples", "Pears"],
@@ -123,7 +157,9 @@ module GreenclothOutline
   # ]
   #
   def convert_to_tree(array)
-    convert_to_subtree(array, 1)
+    tree = convert_to_subtree(array, 1)
+    tree.prepare_markup_index!(self.to_s)
+    tree
   end
 
   # array: the flat array of detected headings
@@ -141,7 +177,7 @@ module GreenclothOutline
       return result # no more to do.
     elsif positions_of_number.empty?
       return convert_to_subtree(array, number+1) # search for lower level headings
-    end  
+    end
 
     # example data up to this point:
     #   positions_of_number = [0, 3]
@@ -150,7 +186,7 @@ module GreenclothOutline
       next_position = positions_of_number[i+1] || array.size
       # ex: (position+1)..(next_position-1) --> 1..2 or 4..4
       subarray = array[(position+1)..(next_position-1)]
-      subtree = convert_to_subtree(subarray, number+1 ) 
+      subtree = convert_to_subtree(subarray, number+1 )
       result.child(i).children = subtree if subtree.any?
     end
     result
@@ -181,7 +217,7 @@ module GreenclothOutline
     end
     return name
   end
-  
+
   #  EXAMPLE TOC:
   #
   #  <ul class="toc">
@@ -213,4 +249,3 @@ module GreenclothOutline
   end
 
 end
-
