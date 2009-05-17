@@ -4,6 +4,9 @@
 class RootController < ApplicationController
   helper :group, :account
 
+  stylesheet 'wiki_edit'
+  javascript 'wiki_edit'
+
   def index
     if !logged_in?
       login_page
