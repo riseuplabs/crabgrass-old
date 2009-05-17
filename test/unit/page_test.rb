@@ -91,6 +91,17 @@ class PageTest < Test::Unit::TestCase
     assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
+  def test_delete_and_undelete
+    page = RateManyPage.create :title => 'longer lived'
+    poll_id = page.data.id
+    assert_equal page.flow, nil, 'a new page should have flow nil'
+    page.delete
+    assert_equal page.flow, FLOW[:deleted]
+    assert_equal page.data, Poll.find_by_id(poll_id), 'the page data must be preserved when deleting the page'
+    page.undelete
+    assert_equal page.flow, nil, 'undeleting a page should turn it back to flow nil'
+  end
+
 =begin  
   def test_page_links
     p1 = create_page :title => 'red fish'

@@ -132,8 +132,8 @@ module PageHelper
   ## PAGE LISTINGS AND TABLES
 
   SORTABLE_COLUMNS = %w(
-    created_at created_by_login updated_at updated_by_login group_name owner_name 
-    title starts_at posts_count contributors_count stars
+    created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
+    group_name owner_name title starts_at posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -199,16 +199,26 @@ module PageHelper
       page_icon(page)
     elsif column == :checkbox
       check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+    elsif column == :admin_checkbox
+      if current_user.may? :admin, page
+        check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+      else
+        "&nbsp"
+      end
     elsif column == :title
       page_list_title(page, column, participation)
     elsif column == :updated_by or column == :updated_by_login
       page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :created_by or column == :created_by_login
       page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
+    elsif column == :deleted_by or column == :deleted_by_login
+      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :updated_at
       friendly_date(page.updated_at)
     elsif column == :created_at
       friendly_date(page.created_at)
+    elsif column == :deleted_at
+      friendly_date(page.updated_at)
     elsif column == :happens_at
       friendly_date(page.happens_at)
     elsif column == :group or column == :group_name
@@ -274,17 +284,21 @@ module PageHelper
       list_heading 'group'.t, 'group_name', options
     
     # empty <th>s contain an nbsp to prevent collapsing in IE
-    elsif column == :icon or column == :checkbox or column == :discuss
+    elsif column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
       "<th>&nbsp;</th>" 
     
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
       list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
+    elsif column == :deleted_by or column == :deleted_by_login
+      list_heading 'deleted by'[:page_list_heading_deleted_by], 'deleted_by_login', options
     elsif column == :updated_at
       list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
       list_heading 'created'[:page_list_heading_created], 'created_at', options
+    elsif column == :deleted_at
+      list_heading 'deleted'[:page_list_heading_deleted], 'deleted_at', options
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at

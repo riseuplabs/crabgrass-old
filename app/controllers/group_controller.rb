@@ -14,13 +14,13 @@ class GroupController < ApplicationController
   before_filter :check_group_visibility
   before_filter :login_required, :except => [:show, :archive, :tags, :search]
   before_filter :render_sidebar
-  
-  verify :method => :post, :only => [:destroy, :update]
+
+  verify :method => :post, :only => [:destroy, :update, :update_trash]
 
   def initialize(options={})
     super()
     @group = options[:group] # the group context, if any
-  end  
+  end
 
   def show
     params[:path] ||= ""
@@ -55,7 +55,7 @@ class GroupController < ApplicationController
 
       # normalize path
       unless @parsed.keyword?('date')
-        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']] 
+        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']]
       end
       @path.unshift(@field) unless @parsed.keyword?(@field)
       @parsed = parse_filter_path(@path)
@@ -71,7 +71,7 @@ class GroupController < ApplicationController
       end
     end
   end
-    
+
   def tags
     tags = params[:path] || []
     path = tags.collect{|t|['tag',t]}.flatten
@@ -79,7 +79,7 @@ class GroupController < ApplicationController
       @pages   = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
       page_ids = Page.ids_by_path(path, options_for_group(@group))
       @tags    = Tag.for_taggables(Page,page_ids).find(:all)
-    else 
+    else
       @pages = []
       @tags  = Page.tags_for_group(:group => @group, :current_user => (current_user if logged_in?))
     end
@@ -108,14 +108,14 @@ class GroupController < ApplicationController
       else
         @content = @group.find_static.paginate(:page => params[:page], :per_page => 20)
     end
-  
+
   end
 
   # login required
   # mark one page as featured content
   def feature_content
     raise ErrorMessage.new("Page not part of this group"[:page_not_part_of_group]) if !(@page = @group.participations.find_by_page_id(params[:featured_content][:id]))
-    if current_user.may?(:admin, @group) 
+    if current_user.may?(:admin, @group)
       year = params[:featured_content][:"expires(1i)"]
       month = params[:featured_content][:"expires(2i)"]
       day = params[:featured_content][:"expires(3i)"]
@@ -138,26 +138,26 @@ class GroupController < ApplicationController
     flash_message_now :exception => exc
     render :action => 'edit_featured_content'
   end
-  
+
   # login required
   # updates the list of featured pages
   def update_featured_pages
-    
-    # use this for group_level featured content 
-     
+
+    # use this for group_level featured content
+
     unstatic = @group.participations.find_all_by_static(true)
     static = @group.participations.find_all_by_page_id(params[:group][:featured_pages]) if params[:group] && params[:group][:featured_pages]
     if static
       unstatic = unstatic-static
-      
+
       static.each do |p|
         p.static! unless p.static
       end
-    end   
+    end
     unstatic.each do |p|
       p.unstatic! if p.static
     end
-        
+
    # use this for platformwide featured content
    # Page.find(params[:group][:featured_pages]).each(&:static!)
     redirect_to url_for_group(@group)
@@ -165,13 +165,13 @@ class GroupController < ApplicationController
      flash_message_now :exception => exc
      render :action => 'edit'
   end
-     
+
   # login required
   # post required
   # TODO: this is messed up.
   def update
     @group.update_attributes(params[:group])
-    
+
     if params[:group]
       @group.profiles.public.update_attribute :may_see, params[:group][:publicly_visible_group]
       @group.profiles.public.update_attribute :may_see_committees , params[:group][:publicly_visible_committees]
@@ -181,7 +181,7 @@ class GroupController < ApplicationController
       if @group.valid? && may_admin_group? && (params[:group][:council_id] != @group.council_id)
         # unset the current council if there is one
         @group.add_committee!(Group.find(@group.council_id), false) unless @group.council_id.nil?
-        
+
         # set the new council if there is one
         new_council = @group.committees.find(params[:group][:council_id]) unless params[:group][:council_id].empty?
         @group.add_committee!(new_council, true) unless new_council.nil?
@@ -192,10 +192,10 @@ class GroupController < ApplicationController
       redirect_to :action => 'edit', :id => @group
       flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
     else
-      flash_message_now :object => @group  
+      flash_message_now :object => @group
     end
   end
-  
+
   def edit_tools
     @available_tools = current_site.available_page_types
     if request.post?
@@ -231,7 +231,7 @@ class GroupController < ApplicationController
       redirect_to :action => 'edit', :id => @group
     end
   end
-  
+
   # login required
   # post required
   def destroy
@@ -250,7 +250,7 @@ class GroupController < ApplicationController
         redirect_to :controller => 'groups', :action => nil
       end
     end
-  end  
+  end
 
   # login not required
   def search
@@ -260,7 +260,7 @@ class GroupController < ApplicationController
     else
       params[:path] = ['descending', 'updated_at'] if params[:path].empty?
       @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page]))
-      if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')    
+      if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')
         @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
       else
         @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
@@ -272,7 +272,49 @@ class GroupController < ApplicationController
                :link => url_for_group(@group),
                :image => avatar_url_for(@group, 'xlarge')
   end
-  
+
+  # login not required
+  def trash
+    if request.post?
+      path = build_filter_path(params[:search])
+      redirect_to url_for_group(@group, :action => 'trash', :path => path)
+    else
+      params[:path] = ['descending', 'updated_at'] if params[:path].empty?
+      @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page], :flow => :deleted))
+      @columns = [:admin_checkbox, :icon, :title, :deleted_by, :deleted_at, :contributors_count]
+      # don't show group members to everyone
+      @visible_users = may_see_members? ? @group.users : []
+    end
+    handle_rss :title => @group.name, :description => @group.summary,
+               :link => url_for_group(@group),
+               :image => avatar_url_for(@group, 'xlarge')
+  end
+
+  # post required
+  def update_trash
+    pages = params[:page_checked]
+    if pages
+      pages.each do |page_id, do_it|
+        if do_it == 'checked' and page_id
+          page = Page.find_by_id(page_id)
+          if page
+            if params[:undelete] and may_undelete_page?(page)
+              page.undelete
+            elsif params[:remove] and may_remove_page?(page)
+              page.destroy
+              ## add more actions here later
+            end
+          end
+        end
+      end
+    end
+    if params[:path]
+      redirect_to :action => 'trash', :id => @group, :path => params[:path]
+    else
+      redirect_to :action => 'trash', :id => @group
+    end
+  end
+
   # login not required
   def discussions
     params[:path] = ['descending', 'updated_at'] if params[:path].empty?
@@ -282,7 +324,7 @@ class GroupController < ApplicationController
   end
 
   protected
-  
+
   # returns a private wiki if it exists, a public one otherwise
   def private_or_public_wiki
     if @access == :private and (@profile.wiki.nil? or @profile.wiki.body == '' or @profile.wiki.body.nil?)
@@ -294,14 +336,14 @@ class GroupController < ApplicationController
       @profile.wiki
     end
   end
-    
+
   def context
     group_context
     unless action?(:show)
       add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
     end
   end
-  
+
   # load the @group object if we can. If we can't, or the user does not have access to
   # view the group then show an error page.
   def find_group
@@ -333,8 +375,8 @@ class GroupController < ApplicationController
 
   @@non_members_post_allowed = %w(archive tags tasks search)
   @@non_members_get_allowed = %w(show members search discussions) + @@non_members_post_allowed
-  @@admin_only = %w(update, edit_tools, edit_layout) 
-   
+  @@admin_only = %w(update, edit_tools, edit_layout)
+
   def authorized?
     if request.get? and @@non_members_get_allowed.include? params[:action]
       return true
@@ -345,6 +387,14 @@ class GroupController < ApplicationController
     else
       return (logged_in? && @group && (current_user.member_of?(@group) || current_user.may?(:admin,@group)))
     end
+  end
+
+  def may_undelete_page?(page)
+    current_user.may?(:admin, page)
+  end
+
+  def may_remove_page?(page)
+    current_user.may?(:delete, page)
   end
 
   def check_group_visibility
@@ -365,10 +415,11 @@ class GroupController < ApplicationController
   end
 
   # called when we don't want to let on that a group exists
-  # when a user doesn't have permission to see it.  
+  # when a user doesn't have permission to see it.
   def clear_context
     @group = nil
     no_context
   end
+
 
 end

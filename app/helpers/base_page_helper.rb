@@ -121,12 +121,22 @@ module BasePageHelper
     content_tag :li, link, :class => "small_icon #{icon}"
   end
 
-  def destroy_page_line
+  def undelete_line
+    if current_user.may?(:admin, @page)
+      link = link_to("Undelete :page_class"[:undelete_page_link] % { :page_class => page_class },
+                     page_xurl(@page, :controller => 'base_page/trash', :action => 'undelete'),
+                     :method => 'post')
+      content_tag :li, link, :class => 'small_icon refresh_16'
+    end
+  end
+
+  def destroy_line
     if current_user.may?(:delete, @page)
-      link = link_to("Delete :page_class"[:delete_page_link] % { :page_class => page_class },
-        page_xurl(@page, :action => 'destroy'),
-        :method => 'post', :confirm => 'Are you sure you want to delete this page?')
-      content_tag :li, link, :class => 'small_icon trash_16'
+      link = link_to("Shred :page_class"[:destroy_page_link] % { :page_class => page_class },
+                     page_xurl(@page, :controller => 'base_page/trash', :action => 'destroy'),
+                     :method => 'post',
+                     :confirm => 'Are you sure you want to destroy this page? It cannot be undeleted.'[:confirm_destroy_page])
+      content_tag :li, link, :class => 'small_icon minus_16'
     end
   end
 
@@ -234,7 +244,13 @@ module BasePageHelper
       popup_line(:name => 'notify', :label => "Send Notification"[:notify_page_link] % {:page_class => page_class }, :icon => 'whistle_16', :controller => 'share')
     end
   end
-  
+ 
+  def delete_line
+    if current_user.may? :admin, @page
+      popup_line(:name => 'trash', :label => "Delete :page_class"[:delete_page_link] % {:page_class => page_class }, :icon => 'trash_16')
+    end
+  end
+
   def move_line
     if current_user.may? :delete, @page
       popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')

@@ -181,6 +181,50 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_redirected_to "group/search/#{groups(:public_group).name}/text/e"
   end
 
+  def test_trash
+    login_as :red
+
+    get :trash, :id => groups(:rainbow).name
+    assert_response :success
+    assert_not_nil assigns(:pages)
+    assert assigns(:pages).length > 0, "rainbow should have some page in the trash."
+
+    get :trash, :id => groups(:rainbow).name, :path => 'type/discussion'
+    assert_response :success
+    assert_not_nil assigns(:pages)
+    assert assigns(:pages).length > 0, "rainbow should have some discussion in the trash"
+
+    post :trash, :id => groups(:rainbow).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
+    assert_response :redirect
+    assert_redirected_to 'group/trash/rainbow/text/e'
+    assert_not_nil assigns(:pages)
+    assert assigns(:pages).length > 0, "should have some search results when filter for text"
+  end
+
+  def test_trash_not_allowed
+    login_as :kangaroo
+    get :trash, :id => groups(:private_group).name
+    assert_response :missing
+    assert_equal nil, assigns(:pages)
+    post :trash, :id => groups(:private_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
+    assert_response :missing
+    assert_equal nil, assigns(:pages)
+  end
+
+  def test_trash_undelete
+    login_as :red
+    get :trash, :id => groups(:rainbow).name
+    assert_response :success
+    assert assigns(:pages).any?, "should find a deleted page"
+    id = assigns(:pages).first.id
+    assert_equal id, 207, "expecting page 207 as deleted page for rainbow"
+    post :update_trash, :page_checked=>{"207"=>"checked"}, :path=>[], :undelete=>"Undelete", :id => groups(:rainbow).name
+    assert_response :redirect
+    get :trash
+    assert_response :success
+    assert assigns(:pages).empty?, "should not find a deleted page after undeleting"
+  end
+ 
   def test_tags
     login_as :blue
 

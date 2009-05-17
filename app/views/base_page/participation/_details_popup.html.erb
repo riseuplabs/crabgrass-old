@@ -9,8 +9,13 @@
     <tr>
       <td><b><%= 'Created'[:page_list_heading_created] %></b></td>
       <td><%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
+    </tr>
     <tr>
-      <td><b><%= 'Updated'[:page_list_heading_updated] %></b></td>
+      <% if @page.deleted? -%>
+        <td><b><%= 'Deleted'[:page_list_heading_deleted] %></b></td>
+      <% else -%>
+        <td><b><%= 'Updated'[:page_list_heading_updated] %></b></td>
+      <% end -%>
       <td><%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
     </tr>
     </table>

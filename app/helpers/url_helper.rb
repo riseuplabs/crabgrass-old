@@ -123,6 +123,10 @@ module UrlHelper
     url_for_group(@group, :action => 'search', :path => path)
   end
 
+  def group_trash_url(*path)
+    url_for_group(@group, :action => 'trash', :path => path)
+  end
+
   ##
   ## USERS
   ##

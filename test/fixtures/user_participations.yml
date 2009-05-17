@@ -83,6 +83,16 @@ ranked_vote_orange:
   page_id: 190
   user_id: 5
   access: 1
+deleted_blue:
+  id: <%= id+=1 %>
+  page_id: 207
+  user_id: 4
+  access: 1
+deleted_orange:
+  id: <%= id+=1 %>
+  page_id: 207
+  user_id: 5
+  access: 3
 wiki_orange:
   id: <%= id+=1 %>
   page_id: 210
