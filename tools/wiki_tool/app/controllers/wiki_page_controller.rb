@@ -42,7 +42,7 @@ class WikiPageController < BasePageController
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
 
     # this will return the default html if there are no edit forms for us
-    @wiki.body_html = body_html_with_forms(current_user)
+    @wiki.body_html = body_html_with_form(current_user)
   end
 
   def version
@@ -137,7 +137,7 @@ class WikiPageController < BasePageController
   def update_inline_html
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
     # render the edit remaining forms
-    @wiki.body_html = body_html_with_forms(current_user)
+    @wiki.body_html = body_html_with_form(current_user)
 
     render :update do |page|
       page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
@@ -202,24 +202,22 @@ class WikiPageController < BasePageController
     end
   end
 
-  def body_html_with_forms(user)
-    require 'ruby-debug';debugger
-    
+  def body_html_with_form(user)
     html = @wiki.body_html.dup
-    editable_section_headings = @wiki.locked_sections_by(user)
-    return html if editable_section_headings.empty?
+    heading = @wiki.locked_section_by(user)
+    return html if heading.blank?
 
     greencloth = GreenCloth.new(@wiki.body)
-    editable_section_headings.each do |heading|
-      text_to_edit = greencloth.get_text_for_heading(heading)
 
-      form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
-      form << "\n"
-      next_heading = greencloth.heading_tree.successor(heading)
-      next_heading = next_heading ? next_heading.name : nil
-      html = replace_section_with_form(html, heading, next_heading, form)
-    end
+    text_to_edit = greencloth.get_text_for_heading(heading)
 
+    form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
+    form << "\n"
+    next_heading = greencloth.heading_tree.successor(heading)
+    next_heading = next_heading ? next_heading.name : nil
+    html = replace_section_with_form(html, heading, next_heading, form)
+
+    @heading_with_form = heading
     html
   end
 

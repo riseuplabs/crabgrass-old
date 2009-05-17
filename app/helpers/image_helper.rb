@@ -139,6 +139,7 @@ module ImageHelper
         :url => options[:url],
         :loading => "event.target.blur(); replace_class_name(event.target, '#{icon}_16', 'spinner_icon')",
         :complete => "event.target.blur(); replace_class_name(event.target, 'spinner_icon', '#{icon}_16')",
+        :confirm => options[:confirm]
       }, 
       html_options
     )

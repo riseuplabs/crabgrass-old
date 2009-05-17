@@ -34,11 +34,13 @@ module WikiPageHelper
 
   def decorate_with_edit_links
     url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')
-    ####
-    #
-    #
-    ##### TODO: :confirm leaving alone the existing work
-    link = link_to_remote_icon('pencil', {:url => url}, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
+    opts = {:url => url}
+
+    if @heading_with_form
+      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:confirm_unsaved_text_lost_label]
+    end
+
+    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
     link.gsub!('"','\"')
 
     # locked_sections = @wiki.edit_locks.select {|heading, attributes| attributes[:locked_by_id] != current_user.id }

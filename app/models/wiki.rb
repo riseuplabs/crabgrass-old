@@ -57,12 +57,14 @@ class Wiki < ActiveRecord::Base
 
   # locks this wiki so that it cannot be edited by another user.
   # this method overwrites existing locks.
-  def lock(time, locked_by, section = :all)
+  def lock(time, user, section = :all)
     time = time.utc
 
+    # no one should be able to lock more than one section at a time
+    unlock_everything_by(user)
     # over write the existing lock if there's one. the caller is responsible
     # for not deleting important locks
-    edit_locks[section] = {:locked_at => time, :locked_by_id => locked_by.id}
+    edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
 
     # save without versions or timestamps
     update_edit_locks_attribute(edit_locks)
@@ -79,6 +81,12 @@ class Wiki < ActiveRecord::Base
 
     # save without versions or timestamps
     update_edit_locks_attribute(edit_locks)
+  end
+
+  def unlock_everything_by(user)
+    edit_locks.each do |heading, attributes|
+      unlock(heading) if attributes[:locked_by_id] == user.id
+    end
   end
 
   # returns true if +section+ is locked by anyone
@@ -147,12 +155,12 @@ class Wiki < ActiveRecord::Base
     edit_locks.keys
   end
 
-  def locked_sections_by(user)
+  def locked_section_by(user)
     sections = []
     edit_locks.each do |heading, attributes|
-      sections << heading if attributes[:locked_by_id] == user.id
+      return heading if attributes[:locked_by_id] == user.id
     end
-    sections
+    nil
   end
   
   def locked_sections_not_by(user)
