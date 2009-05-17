@@ -1,0 +1,8 @@
+this branch is a work in progress.
+
+so see all the places in the code that need to be checked for compability or fixed
+to make work with rails 2.3, run:
+
+rake notes:fixme
+
+
