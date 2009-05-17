@@ -19,7 +19,7 @@ so that each tool can define their own method of creation.
 
 class PagesController < ApplicationController
 
-  helper BasePageHelper
+#  helper BasePageHelper
   
   before_filter :login_required
   prepend_before_filter :fetch_page
@@ -72,12 +72,13 @@ class PagesController < ApplicationController
   end
 
   def context
-#    return true unless request.get?  #I don't know what the purpose of this is, but commenting it out makes access look better after removing access  --af
+    return true unless request.get? # skip the context on posts, it won't be shown anyway
     @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
     @group ||= Group.find_by_name(params[:group]) if params[:group]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
     page_context
+    add_context("Create Page"[:create_page], :controller => 'pages', :action => 'create', :group => params[:group])
     true
   end
   

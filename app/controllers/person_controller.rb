@@ -32,6 +32,7 @@ class PersonController < ApplicationController
   end
 
   def search
+    redirect_to :controller => 'people' unless @user
     if request.post?
       path = build_filter_path(params[:search])
       redirect_to url_for_user(@user, :action => 'search', :path => path)
@@ -116,7 +117,6 @@ class PersonController < ApplicationController
     else
       @profile = @user.profiles.public
     end
-
     unless @profile and @profile.may_see?
       # make it appear as if the user does not exist if may_see? is false. 
       # or should we show an empty profile page?

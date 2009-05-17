@@ -54,6 +54,7 @@ unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
 details_link: "Details"
+check_all: "Check All"
 return_link: "Return"
 
 edit: "Edit"
@@ -600,9 +601,6 @@ join_group_success: "You have joined group {group_name}"
 ## PAGES
 ##
 
-
-share_this_page: "Share This Page"
-
 move_this_page: "Move This Page"
 move_page_to_different_group: "Move this page to a different group"
 all_page_types: "all page types"
@@ -638,6 +636,7 @@ create_a_new_something: "create new {something}"
 create_page_button: "Create page"
 create_page_share: "Who has access to this {page_class}?"
 create_page: "Create Page"
+only_me: "Only Me"
 back_button: "Back"
 create_page_button: "Create {page_class}"
 title: "Title"
@@ -661,11 +660,10 @@ Announcements: "Announcements"
 watch_checkbox: "Watch For Updates"
 add_star_link: "Add Star (:star_count)"
 remove_star_link: "Remove Star (:star_count)"
-share_link: "Share :page_class"
 public_checkbox: "Public"
-delete_page_link: "Delete :page_class"
-move_page_link: "Move :page_class"
-page_details_link: ":page_class Details"
+delete_page_link: "Delete {page_class}"
+move_page_link: "Move {page_class}"
+page_details_link: "{page_class} Details"
 edit_tags_link: "Edit"
 edit_attachments_link: "Edit"
 attachments: "Attachments"
@@ -673,6 +671,12 @@ edit_attachments: "Edit Attachments"
 current_attachments: "Current Attachments"
 add_new_attachment: "Add New Attachment" 
 upload_attachment: "Upload Attachment"
+
+notify_page_link: "Send Notification"
+notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
+notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
+notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+notify_recipients: "Recipients"
 
 ##
 ## PAGE TYPES

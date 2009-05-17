@@ -17,6 +17,14 @@ module BasePageHelper
     content_tag(:p, link_to('&laquo; ' + 'return to'[:return_to] + ' <b>%s</b>' % @page.title, page_url(@page)))
   end
   
+  def recipient_checkbox_line(recipient, options={})
+    name = CGI.escape(recipient.name) # so that '+' does show up as ' '
+    ret = "<label>"
+    ret << check_box_tag("recipients[#{name}][send_notice]", 1, false, {:class => options[:class]})
+    ret << display_entity(recipient, :avatar => :xsmall, :format => :hover)
+    ret << "</label>"
+  end
+    
   def link_to_user_participation(upart)
     klass = case upart.access_sym
       when :admin : 'tiny_wrench_16'
@@ -217,10 +225,16 @@ module BasePageHelper
 
   def share_line
     if current_user.may? :view, @page
-      popup_line(:name => 'share', :label => "Share :page_class"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'participation')
+      popup_line(:name => 'share', :label => "Share Page"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'share')
     end
   end
 
+  def notify_line
+    if current_user.may? :view, @page
+      popup_line(:name => 'notify', :label => "Send Notification"[:notify_page_link] % {:page_class => page_class }, :icon => 'whistle_16', :controller => 'share')
+    end
+  end
+  
   def move_line
     if current_user.may? :delete, @page
       popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
@@ -231,151 +245,9 @@ module BasePageHelper
      popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table_16', :controller => 'participation')
   end
 
-  ##
-  ## PAGE SHARING FORM
-  ##
-
-  def setup_sharing_populations
-    if @share_groups.nil?
-      @share_page_groups    = @page ? @page.namespace_groups : []
-      @share_contributors   = @page ? @page.contributors : []
-      all_groups = current_user.all_groups.sort_by {|g|g.name}
-      @share_groups      = current_user.all_groups.select {|g|g.normal?}
-      @share_networks    = current_user.all_groups.select {|g|g.network?}
-      @share_committees  = current_user.all_groups
-      @share_friends     = User.contacts_of(current_user).sort_by{|u|u.name}
-      @share_peers       = User.peers_of(current_user).sort_by{|u|u.name}
-
-      params[:recipients] ||= {}
-      if params[:group] and (group = Group.find_by_name(params[:group]))
-        params[:recipients][group.name] = "1"
-        params[:access] = 'admin'
-      end
-    end
-  end
-
-  def share_page_recipient_tabs
-    setup_sharing_populations
-    Formy.tabs('class' => 'left') do |f|
-      if @share_page_groups.any?
-        f.tab do |t|
-          t.label "Page groups"[:share_page_groups]
-          t.show_tab 'share_population_groups'
-          t.selected false
-        end
-      end
-      if @share_contributors.any?
-        f.tab do |t|
-          t.label "Page contributors"[:share_page_contributors]
-          t.show_tab 'share_population_contributors'
-          t.selected false
-        end
-      end
-      if @share_groups.any?
-        f.tab do |t|
-          t.label "Groups"[:groups]
-          t.show_tab 'share_population_my_groups'
-          t.selected false
-        end
-      end
-      if @share_networks.any?
-        f.tab do |t|
-          t.label "Networks"[:networks]
-          t.show_tab 'share_population_my_networks'
-          t.selected false
-        end
-      end
-      if @share_committees.any?
-        f.tab do |t|
-          t.label "Committees"[:committees]
-          t.show_tab 'share_population_my_committees'
-          t.selected false
-        end
-      end
-      if @share_friends.any?
-        f.tab do |t|
-          t.label "Contacts"[:contacts]
-          t.show_tab 'share_population_friends'
-          t.selected false
-        end
-      end
-      if @share_peers.any?
-        f.tab do |t|
-          t.label "Peers"[:peers]
-          t.show_tab 'share_population_peers'
-          t.selected false
-        end
-      end
-    end
-  end
-
-  def share_page_recipient_panes
-    setup_sharing_populations
-    html = []
-    if @share_page_groups.any?
-      html << share_recipient_pane('share_population_groups', @share_page_groups)
-    end
-    if @share_contributors.any?
-      html << share_recipient_pane('share_population_contributors', @share_contributors)
-    end
-    if @share_groups.any?
-      html << share_recipient_pane('share_population_my_groups', @share_groups)
-    end
-    if @share_networks.any?
-      html << share_recipient_pane('share_population_my_networks', @share_networks)
-    end
-    if @share_committees.any?
-      html << share_recipient_pane('share_population_my_committees', @share_committees)
-    end
-    if @share_friends.any?
-      html << share_recipient_pane('share_population_friends', @share_friends)
-    end
-    if @share_peers.any?
-      html << share_recipient_pane('share_population_peers', @share_peers)
-    end
-    #html << share_freeform_recipient_pane()
-    html.join("\n")
-  end
-
-  def share_page_recipient_results
-    setup_sharing_populations
-    params[:recipients] ||= {}
-    sets = [
-      @share_page_groups + @share_groups + @share_networks + @share_committees,
-      @share_contributors + @share_friends + @share_peers
-    ]
-    sets.collect do |set|
-      set.sort_by{|e|e.name}.uniq.collect do |entity|
-        style = params[:recipients][entity.name] ? '' : 'display:none'
-        content_tag(:div, display_entity(entity, :xsmall), :id => entity.name+'_selected', :style=>style)
-      end.join("\n")
-    end.join("\n")
-  end
-
-  def share_recipient_pane(id,objects)
-    html = []
-    objects.each do |object|
-      html << content_tag(
-        :label,
-        check_box_tag(
-          "recipients[#{object.name}]",
-          "1", params[:recipients][object.name].any?,
-          :onclick => "recipient_checked(this, '#{object.name}');",
-          :class => "recipient_checkbox_#{object.name}"
-        ) +
-        '&nbsp;' + object.display_name
-      )
-      html << '<br/>'
-    end
-    content_tag :div, html.join("\n"), :id => id, :style => 'display:none', :class => 'tab-content'
-  end
-
-  def share_freeform_recipient_pane()
-    content_tag :div, text_area_tag('recipients_text_area', '', :style => 'width:100%', :id => 'recipient_list'), :id => 'share_freeform', :class => 'tab-content', :style => 'display:none'
-  end
-
   def select_page_access(name, options={})
-    selected = params[name]
+    selected = options[:selected]
+
     options = {:blank => true, :expand => false}.merge(options)
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]

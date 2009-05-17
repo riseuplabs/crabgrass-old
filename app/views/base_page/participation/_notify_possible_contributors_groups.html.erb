@@ -1,0 +1,9 @@
+<td style="width:30%;">
+    <ul class='side_list names menu' id="possible_contributors_group_selection" style="height:120px;  background-color:white;">
+     <% if groups.any? -%>
+      <% groups.each do |cont| %>
+	<li style=" margin-left:12px;" id="possible_contributors_group-<%=cont.name%>"><%= participator_group_selection_line(cont) %></li>
+      <% end -%>
+    <% end -%>
+  </ul>
+</td>

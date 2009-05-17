@@ -455,6 +455,30 @@ module PageHelper
     end
   end
 
+  def options_for_page_owner()
+    groups = current_user.groups.select { |group|
+      !group.committee?
+    }.sort { |a, b|
+       a.display_name.downcase <=> b.display_name.downcase
+    }
+    opts = [] 
+    if params[:group]
+      selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+    else
+      selected_group = nil
+    end
+    opts << content_tag(:option, 'Only me'[:only_me], :value => '', :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+    groups.collect do |group|
+      selected = selected_group == group.name ? 'selected' : nil
+      opts << content_tag( :option, group.display_name, :value => group.name, :class => 'spaced', :selected => selected )
+      group.committees.each do |committee|
+        selected = selected_group == committee.name ? 'selected' : nil
+        opts << content_tag( :option, committee.display_name, :value => committee.name, :class => 'indented', :selected => selected)
+      end
+    end  
+    opts.join("\n")
+  end
+
 #  def create_page_link(text,options={})
 #    url = url_for :controller => '/pages', :action => 'create'
 #    ret = ""

@@ -159,34 +159,39 @@ module UserExtension::Sharing
   ##
 
   # valid options:
-  #  :access -- one of nil, :admin, :edit, :view (nil will remove access)
+  #        :access -- sets access level directly. one of nil, :admin, :edit, or
+  #                   :view. (nil will remove access)
   #  :grant_access -- like :access, but is only used to improve access, not remove it.
-  #  :message -- text message to send
-  #  :send_emails -- true or false. send email to recipients?
+  #
+  #  :send_notice  -- boolean. If true, then the page will end up in the recipient's
+  #                   inbox and the following additional flags are taken into account:
+  #
+  #       :send_email -- boolean, send a copy of notice via email?
+  #         :send_sms -- boolean, send a copy of notice vis sms? (unsupported)
+  #        :send_xmpp -- boolean, send a copy of notice vis jabber? (unsupported)
+  #   :send_encrypted -- boolean, only send if can be done securely (unsupported)
+  #     :send_message -- text, the message to include with the notification, if any.
+  #   :mailer_options -- required when sending email
   #
   # The needed user_participation and group_partication objects will get saved
   # unless page is modified, in which case they will not get saved.
   # (assuming that page.save will get called eventually, which will then save
-  # the new participation objects)
+  # the new participation objects. BasePageController has an after_filter that
+  # auto saves the @page if has been changed.)
   #
   def share_page_with!(page, recipients, options)
     return true unless recipients
-    options[:notify] = true if options[:message] or options[:send_emails]
+    return share_page_with_hash!(page, recipients, options) if recipients.is_a?(Hash)
 
     users, groups, emails = Page.parse_recipients!(recipients)
     users_to_email = []
-    send_emails    = options.delete(:send_emails)
-    mailer_options = options.delete(:mailer_options)
-    message        = options[:message]
 
-    
     ## add users to page
     users.each do |user|
       if self.share_page_with_user!(page, user, options)
         users_to_email << user if user.wants_notification_email?
       end
     end
-
     
     ## add groups to page
     groups.each do |group|
@@ -202,10 +207,10 @@ module UserExtension::Sharing
     # end
 
     ## send notification emails
-    if send_emails and mailer_options
+    if options[:send_notice] and options[:mailer_options] and options[:send_email]
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_share_notice(user, message, mailer_options)
+        Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
       end
     end
   end
@@ -236,11 +241,11 @@ module UserExtension::Sharing
     may_share!(page,user,options)
     attrs = {}
 
-    if options[:notify]
+    if options[:send_notice]
       attrs[:inbox] = true
-    end
-    if options[:message]
-      attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
+      if options[:send_message].any?
+        attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}
+      end
     end
 
     default_access_level = :none
@@ -258,7 +263,6 @@ module UserExtension::Sharing
   end
 
   
-  
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
     if options.key?(:access) # might be nil
@@ -273,13 +277,13 @@ module UserExtension::Sharing
 
     attrs = {}
     users_to_pester = []
-    if options[:notify]
+    if options[:send_notice]
       attrs[:inbox] = true
       users_to_pester = group.users.select do |user|
         self.may_pester?(user)
       end
-      if options[:message]
-        attrs[:notice] = {:user_login => self.login, :message => options[:message], :time => Time.now}
+      if options[:send_message].any?
+        attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}
       end
       users_to_pester.each do |user|
         upart = page.add(user, attrs)
@@ -288,6 +292,16 @@ module UserExtension::Sharing
     end
 
     users_to_pester # returns users to pester so they can get an email, maybe.
+  end
+
+  # takes recipients in hash form, like so {:blue => {:access => :admin}}.
+  # and then calls share_page_with! with the oppropriate options
+  # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
+  # must be HashWithIndifferentAccess. You have been warned.
+  def share_page_with_hash!(page, recipient_hash, global_options=HashWithIndifferentAccess.new)
+    recipient_hash.each do |recipient,local_options|
+      self.share_page_with!(page, recipient, global_options.merge(local_options))
+    end
   end
 
   #

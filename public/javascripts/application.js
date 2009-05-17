@@ -8,6 +8,19 @@ function quickRedReference() {
   );
 }
 
+// toggle the visibility of another element based on if
+// a checkbox is checked or not.
+function checkbox_toggle_visibility(checkbox, element_id) {
+  if (checkbox.checked) {$(element_id).show();}
+  else {$(element_id).hide();}
+}
+
+// toggle all checkboxes of a particular css selected, based on the
+// checked status of the checkbox passed in.
+function toggle_all_checkboxes(checkbox, selector) {
+  $$(selector).each(function(cb) {cb.checked = checkbox.checked})
+}
+
 function show_tab(tab_link, tab_content) {
   tabset = tab_link.parentNode.parentNode
   $$('ul.tabset a').each( function(elem) {
@@ -26,11 +39,14 @@ function show_tab(tab_link, tab_content) {
 
 // submits a form, from the onclick of a link. 
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
-function submit_form(link, name, value) {
-  e = link;
-  while(e = e.parentNode){if(e.tagName == 'FORM'){break}}
-  if (e) {
-    form = e;
+// value is optional.
+function submit_form(form_element, name, value) {
+  e = form_element;
+  form = null;
+  do {
+    if(e.tagName == 'FORM'){form = e; break}
+  } while(e = e.parentNode)
+  if (form) {
     input = document.createElement("input");
     input.name = name;
     input.type = "hidden";
@@ -114,4 +130,3 @@ function absolutePositionParams(obj) {
   page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
-

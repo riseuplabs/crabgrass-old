@@ -1,0 +1,83 @@
+Script started on Wed 25 Feb 2009 08:25:31 PM CET
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ ssh -X wr@brainwr@192.168.0.100[5P-X wr@brain[Kssh -X wr@brain[Kex[K[Kscript/plugin install auto-complete [A
+
+Plugin not found: ["auto-complete"]
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ 
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ script/plugin install auto-complete [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1Pcomplete
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_complete [A]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+Plugin not found: ["auto_complete"]
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ script/plugin install http://svn.ru byonrails.org/rails/plugins/auto_complete
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ cd vendor/plugins/auto_complete/
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ ls
+[00m[m]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ 
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ ls
+[00m[m]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ ls
+[00m[m]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ sls[K[K[Kls
+[00m[m]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ lscd venddor/plugins/auto_complete/[A]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ script/plugin install http://svn.rubyonrails.org/rails/plugins/auto_complete[A]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ cd vend[44Por/plugins/auto_complete/[A]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/plugins/auto_completejrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete$ [4Pls
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kcd ..
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ cd ..
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendorjrw@sublime:~/workspace/crabgrass/crabgrass/vendor$ cd ..
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ cd ..[3Plscd vendor/plugins/auto_complete/script/plugin install http://svn.rubbyonrails.org/rails/plugins/auto_complete 00[K[K--force
+svn: '/home/jrw/workspace/crabgrass/crabgrass/vendor/plugins' is not a working copy
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ script/plugin install http://svn.rubbyonrails.org/rails/plugins/auto_complete --force[Acd ..[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3Plscd vendor/plugins/auto_complete/[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcd vendor/plugins/
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ git clone git://gith ub.com/rails/auto_complete.git
+fatal: destination directory 'auto_complete' already exists.
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ git clone git://githuub.com/rails/auto_complete.git --force
+error: unknown option `force'
+usage: git-clone [options] [--] <repo> [<dir>]
+
+    -q, --quiet           be quiet
+    -n, --no-checkout     don't create a checkout
+    --bare                create a bare repository
+    --naked               create a bare repository
+    -l, --local           to clone from a local repository
+    --no-hardlinks        don't use local hardlinks, always copy
+    -s, --shared          setup as shared repository
+    --template <path>     path the template repository
+    --reference <repo>    reference repository
+    -o, --origin <branch>
+                          use <branch> instead or 'origin' to track upstream
+    -u, --upload-pack <path>
+                          path to git-upload-pack on the remote
+    --depth <depth>       create a shallow clone of that depth
+
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ git clone git://githuub.com/rails/auto_complete.git --force[A]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crm -r auto_complete/ [A
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ rm -r auto_complete/ [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit clone git://githuub.com/rails/auto_complete.git --force[K[K[K[K[K[K[K[K[Kt
+Initialized empty Git repository in /home/jrw/workspace/crabgrass/crabgrass/vendor/plugins/auto_complete/.git/
+fatal: read error (Connection reset by peer)
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ git clone git://githuub.com/rails/auto_complete.git[A]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendor/pluginsjrw@sublime:~/workspace/crabgrass/crabgrass/vendor/plugins$ [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd.[K ..
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrass/vendorjrw@sublime:~/workspace/crabgrass/crabgrass/vendor$ cd ..
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ cd ..
+]0;jrw@sublime: ~/workspace/crabgrassjrw@sublime:~/workspace/crabgrass$ cd ..git clone git://github.com/rails/auto_completee.git
+Initialized empty Git repository in /home/jrw/workspace/crabgrass/auto_complete/.git/
+remote: Counting objects: 13, done.[K
+remote: Compressing objects:   8% (1/12)   [Kremote: Compressing objects:  16% (2/12)   [Kremote: Compressing objects:  25% (3/12)   [Kremote: Compressing objects:  33% (4/12)   [Kremote: Compressing objects:  41% (5/12)   [Kremote: Compressing objects:  50% (6/12)   [Kremote: Compressing objects:  58% (7/12)   [Kremote: Compressing objects:  66% (8/12)   [Kremote: Compressing objects:  75% (9/12)   [Kremote: Compressing objects:  83% (10/12)   [Kremote: Compressing objects:  91% (11/12)   [Kremote: Compressing objects: 100% (12/12)   [Kremote: Compressing objects: 100% (12/12), done.[K
+Receiving objects:   7% (1/13)   Receiving objects:  15% (2/13)   Receiving objects:  23% (3/13)   Receiving objects:  30% (4/13)   Receiving objects:  38% (5/13)   Receiving objects:  46% (6/13)   Receiving objects:  53% (7/13)   Receiving objects:  61% (8/13)   Receiving objects:  69% (9/13)   Receiving objects:  76% (10/13)   Receiving objects:  84% (11/13)   Receiving objects:  92% (12/13)   Receiving objects: 100% (13/13)   Receiving objects: 100% (13/13), 5.30 KiB, done.
+Resolving deltas:  50% (1/2)   Resolving deltas: 100% (2/2)   Resolving deltas: 100% (2/2), done.
+remote: Total 13 (delta 2), reused 0 (delta 0)[K
+]0;jrw@sublime: ~/workspace/crabgrassjrw@sublime:~/workspace/crabgrass$ mv auto_completec[Kcr[K[K crabgrass/vendor/plugins/aur [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kt[Kut co[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kut o_complete -f
+]0;jrw@sublime: ~/workspace/crabgrassjrw@sublime:~/workspace/crabgrass$ cd crabgrass/vendor/plugins/auto_complete/
+.git/ lib/  test/ 
+]0;jrw@sublime: ~/workspace/crabgrassjrw@sublime:~/workspace/crabgrass$ cd crabgrass/vendor/plugins/auto_complete/
+.git/ lib/  test/ 
+]0;jrw@sublime: ~/workspace/crabgrassjrw@sublime:~/workspace/crabgrass$ cd crabgrass/vendor/plugins/auto_complete/[K[K[K[K[K[K[K[K[K[K[K[K[K[Kl[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcdcr[K[Kcr[K[K crabgrass/
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ sp[K[Kps ax | grep firefox
+ 5862 ?        Rl    19:29 /usr/lib/iceweasel/firefox-bin -a iceweasel
+ 8067 pts/5    S+     0:00 grep firefox
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ kil[K[K[Kps ax | grep firefox5~[K[K[C[C[C[C[1@u
+gast      5862 37.3  4.8 247800 100224 ?       Sl   19:56  19:32 /usr/lib/iceweasel/firefox-bin -a iceweasel
+jrw       8075  0.0  0.0   3116   740 pts/5    S+   20:49   0:00 grep firefox
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ exi[K[K[Kf[K[H[2J]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ mv pa[K[Kapp/controllers/baes[K[Kse_page/auto_coomplete/ app/views/baes[K[Kse_page/
+]0;jrw@sublime: ~/workspace/crabgrass/crabgrassjrw@sublime:~/workspace/crabgrass/crabgrass$ script/console 
+Loading development environment (Rails 2.1.0)
+u = User.find :WARNING: haml is disabled....
+         no such file to load -- haml
+last
+>> u = User.find :last
+=> #<User id: 13, login: "iguana", email: "iguana@l

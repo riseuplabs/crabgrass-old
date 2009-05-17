@@ -104,7 +104,7 @@ class PageFinderTest < Test::Unit::TestCase
     login(:blue)
     user = users(:blue)
     
-    uparts = UserParticipation.find :all, :conditions => ['user_id = ? AND viewed = ?', user.id, false]  
+    uparts = UserParticipation.find :all, :conditions => ['user_id = ? AND inbox = ? AND viewed = ?', user.id, true, false]  
     unread_count = Page.count_by_path('unread', @controller.options_for_inbox)
     
     assert_equal uparts.size, unread_count, 'unread inbox counts should match'
@@ -114,7 +114,7 @@ class PageFinderTest < Test::Unit::TestCase
     login(:blue)
     user = users(:blue)
 
-    uparts = UserParticipation.find :all, :conditions => ['user_id = ? AND resolved = ?', user.id, false]
+    uparts = UserParticipation.find :all, :conditions => ['user_id = ? AND inbox = ? AND resolved = ?', user.id, true, false]
     reference_ids = page_ids(uparts)
     pages = Page.find_by_path('pending', @controller.options_for_inbox)
     path_ids = page_ids(pages)

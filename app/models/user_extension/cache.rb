@@ -111,7 +111,7 @@ module UserExtension
         :friend_id_cache => friend,
         :foe_id_cache    => foe
     end
-      
+    
     # include direct memberships, committees, and networks
     def get_group_ids
       if self.id
