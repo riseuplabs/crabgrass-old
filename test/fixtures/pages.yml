@@ -250,6 +250,20 @@ malformed_wiki:
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  
+multi_section_wiki:
+  id: 240
+  title: multi section wiki
+  type: WikiPage
+  data_type: Wiki
+  data_id: 3
+  created_by_id: 4
+  created_by_login: blue
+  updated_by_id: 3
+  updated_by_login: gerrard
+<% updated = rand(4608); created = updated + rand(4608) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
 ##
 ## ASSETS

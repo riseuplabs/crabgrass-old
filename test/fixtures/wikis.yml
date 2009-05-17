@@ -10,6 +10,7 @@ second:
   
 multi_section:
   id: 3
+  version: 1
   body: |-
     h2. section one
        
