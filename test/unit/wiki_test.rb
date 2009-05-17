@@ -121,7 +121,7 @@ class WikiTest < Test::Unit::TestCase
     w.lock(Time.now, users(:blue), 'section_two')
 
     # check list of all sections and per-users lists
-    assert_equal ['section_two', 'section_one'], w.locked_sections, "wiki should have sections one and two locked"
+    assert_equal ['section_two', 'section_one'].sort, w.locked_sections.sort, "wiki should have sections one and two locked"
     assert_equal 'section_one', w.currently_editing_section(users(:orange)), "wiki should list section one as locked by orange"
     assert_equal ['section_two'], w.locked_sections_not_by(users(:orange)), "wiki should list section two as locked by users other than orange"
   end
