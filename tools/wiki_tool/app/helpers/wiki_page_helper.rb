@@ -43,16 +43,10 @@ module WikiPageHelper
     link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
     link.gsub!('"','\"')
 
-    # locked_sections = @wiki.edit_locks.select {|heading, attributes| attributes[:locked_by_id] != current_user.id }
-    locked_sections = @wiki.locked_sections_not_by(current_user).collect{|s| s == :all ? ':all' : s }.inspect
-    # .each do |section|
-    #   locked_sections_string << section.inspect
-    #   locked_sections_string << ","
-    # end
-    # locked_sections_string.chop!
+    unlocked_sections = @wiki.sections_not_locked_for(current_user).inspect
+    all_sections = @wiki.section_heading_names.inspect
 
-
-    javascript_tag %Q[wiki_edit_decorate_with_edit_links("#{link}", #{locked_sections});]
+    javascript_tag %Q[wiki_edit_decorate_with_edit_links("#{link}", #{all_sections}, #{unlocked_sections});]
   end
 
 end

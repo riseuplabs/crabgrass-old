@@ -161,20 +161,60 @@ class Wiki < ActiveRecord::Base
     edit_locks.keys
   end
 
-  def locked_section_by(user)
+  # which section is the user currently editing
+  # edit_locks are used to determine this
+  def currently_editing_section(user)
     sections = []
     edit_locks.each do |heading, attributes|
       return heading if attributes[:locked_by_id] == user.id
     end
     nil
   end
-  
+
   def locked_sections_not_by(user)
     sections = []
     edit_locks.each do |heading, attributes|
       sections << heading if attributes[:locked_by_id] != user.id
     end
     sections
+  end
+
+  def sections_not_locked_for(user)
+    update_expired_locks
+
+    return [] if edit_locks[:all] and edit_locks[:locked_by_id] != user.id
+    # start with all headings
+    headings = section_heading_names.dup
+
+    # get the list of ones that are explicitly locked
+    headings_locked_for_user = locked_sections_not_by(user)
+    headings_locked_for_user.each do |locked_heading|
+      # remove them
+      headings.delete(locked_heading)
+      # and remove their sub-headings
+      subsection_heading_names(locked_heading).each {|subheading| headings.delete(subheading)}
+      # and their parent heading
+      parent_section_heading_names(locked_heading).each {|parent_heading| headings.delete(parent_heading)}
+    end
+
+    headings
+  end
+
+  def section_heading_names
+    greencloth.heading_names
+  end
+
+  def subsection_heading_names(section)
+    return section_heading_names if section == :all
+    greencloth.subheading_names(section)
+  end
+
+  def parent_section_heading_names(section)
+    greencloth.parent_heading_names(section)
+  end
+
+  def greencloth
+    @greencloth ||= GreenCloth.new(self.body)
   end
 
   ##

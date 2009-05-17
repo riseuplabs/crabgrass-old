@@ -204,7 +204,7 @@ class WikiPageController < BasePageController
 
   def body_html_with_form(user)
     html = @wiki.body_html.dup
-    heading = @wiki.locked_section_by(user)
+    heading = @wiki.currently_editing_section(user)
     return html if heading.blank?
 
     greencloth = GreenCloth.new(@wiki.body)

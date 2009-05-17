@@ -39,6 +39,36 @@ module GreenclothOutline
     @headings
   end
 
+  # some of the stuff from @headings doesn't make it
+  # into the tree. this is a list of stuff that belogs to the tree
+  def heading_names
+    @heading_names ||= heading_tree.heading_names
+  end
+
+  def subheading_names(heading)
+    node = heading_tree.find(heading)
+    return [] unless node
+
+    node.heading_names
+  end
+
+  def parent_heading_names(heading)
+    node = heading_tree.find(heading)
+    return [] unless node
+    parent_headings = []
+
+    heading_tree.children.each do |child|
+      # this line of headings includes the one we're looking for
+      if child.heading_names.include?(heading)
+        # all the names that are the line from top to bottom
+        # except the ones that are children of the heading we're
+        # looking
+        return child.heading_names - node.heading_names
+      end
+    end
+    return []
+  end
+
   # returns the tree of headings
   # if this is called after to_html, we use the already existing @headings
   # but be warned that to_html will mangled the string and it will not the

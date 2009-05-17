@@ -60,6 +60,17 @@ class GreenTree < Array
     return nil # not found
   end
 
+  # get the list of all the available heading names in this tree
+  # makes no guarantee about ordering
+  def heading_names
+    names = []
+    names << self.name
+    children.each do |child|
+      names.concat child.heading_names
+    end
+    names.compact
+  end
+
   # modifies markup
   # finds the location for each heading in the markup
   def prepare_markup_index!(markup)
