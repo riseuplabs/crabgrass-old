@@ -2,6 +2,13 @@
 # do this early because environments/*.rb need it
 require 'lib/crabgrass/conf'
 
+# load hook support early
+require 'lib/crabgrass/hook'
+Dispatcher.to_prepare do
+  # I don't understand why this is needed for crabgrass, but not for redmine
+  ApplicationHelper.send(:include, Crabgrass::Hook::Helper)
+end
+
 Conf.load("crabgrass.#{RAILS_ENV}.yml")
 
 begin

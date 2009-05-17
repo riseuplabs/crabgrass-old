@@ -10,7 +10,6 @@ class Tool::TasklistPageControllerTest < Test::Unit::TestCase
   def setup
     @controller = TaskListPageController.new
     @request    = ActionController::TestRequest.new
-    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
   end
 

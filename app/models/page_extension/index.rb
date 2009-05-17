@@ -32,11 +32,20 @@ module PageExtension::Index
     # returns:
     #   ["0001", "0081", "0082", "83000", "0014", "0015", "16000"]
     #
+    # The rules:
+    #
+    #  * pad with 0 to at least 4 chars.
+    #  * prefix user ids with 1
+    #  * prefix group ids with 8
+    #  * prefix site ids with 5
+    #  * 0001 means the page is marked public.
+    #
     def access_ids_for(args={})
       id_array = []
       id_array += ["0001"] if args[:public]
       id_array += args[:group_ids].collect {|id| "%04d" % "8#{id}"} if args[:group_ids]
       id_array += args[:user_ids].collect  {|id| "%04d" % "1#{id}"} if args[:user_ids]
+      id_array += args[:site_ids].collect  {|id| "%04d" % "5#{id}"} if args[:site_ids]
       return id_array
     end
 
@@ -48,8 +57,8 @@ module PageExtension::Index
     #  * The tag must be CGI url escaped so that special characters are not in the
     #    fulltext index. The fulltext matching does not work on characters like
     #    !@#$%^&()=*.
-    #  * space and '.' are not allowed, we replace with '_'. (The character + is not
-    #    allowed and this is how CGI.escape encodes spaces).
+    #  * space, '+', and '.' are not allowed, we replace with '_'. (The + 
+    #    character is not allowed since this is how CGI.escape encodes spaces).
     #  * The character % is not allowed, so we replace it with 'QQ'. This is not
     #    ideal, but it seems sufficiently unlikely that someone will tag something
     #    QQ.
@@ -63,7 +72,7 @@ module PageExtension::Index
     #
     def searchable_tag_list(tags)
       tags.map do |s|
-        s = s.gsub(/[\s\.]/, '_') # characters that are skipped by CGI.escape
+        s = s.gsub(/[\s\.\+]/, '_') # characters that should be skipped by CGI.escape
         s = CGI.escape(s)
         s = s.gsub('%', 'QQ')
         ("%4s" % s).gsub(/\s|^(\d)/,'_\1')
@@ -125,10 +134,13 @@ module PageExtension::Index
       terms.tags      = Page.searchable_tag_list(tag_list).join(' ')
       terms.body      = summary_terms + body_terms
       terms.comments  = comment_terms
-      terms.page_type = type
+
+      # meta
+      terms.page_type = self.type
+      terms.media = self.media_flags()
 
       # access control
-      terms.access_ids = access_ids
+      terms.access_ids = self.access_ids()
    
       # additional hook for subclasses
       custom_page_terms(terms)
@@ -140,14 +152,29 @@ module PageExtension::Index
     
     # :nodoc:
     def access_ids
+      update_site_id # call manually, since we might be in a callback before 
+                     # the one that sets site_id
       Page.access_ids_for(
         :public => public?,
         :group_ids => group_ids,
-        :user_ids => user_ids
+        :user_ids => user_ids,
+        :site_ids => ([site_id] if site_id)
       ).join(' ')
     end
 
-    # Returns the text to be included in teh body of the page index.
+    # Converts the boolean media flags to an array of integers
+    # page.is_image? -> [1]
+    def media_flags
+      ret = []
+      ret << MEDIA_TYPE[:audio] if is_audio?
+      ret << MEDIA_TYPE[:video] if is_video?
+      ret << MEDIA_TYPE[:image] if is_image?
+      ret << MEDIA_TYPE[:document] if is_document?
+      ret
+    end
+
+
+    # Returns the text to be included in the body of the page index.
     # Subclasses of Page should override this method as appropriate.
     # For example WikiPage should return wiki.body, and TaskListPage
     # will merge all of the tasks associated with it.

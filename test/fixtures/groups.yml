@@ -16,16 +16,17 @@
 #  avatar_id      :integer(11)   
 #
 
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 true_levellers:
   id: 1
   name: the-true-levellers
   full_name: The True Levellers
   summary: We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow
+
 animals:
   id: 2
   name: animals
   summary: all the animals party down!
+  site_id: 2
 
 rainbow:
   id: 3
@@ -74,15 +75,28 @@ cnt:
   name: cnt
   full_name: Confederación Nacional del Trabajo
   type: Network
+  site_id: 1
 fai:
   id: 3002
   name: fai
   full_name: Federación Anarquista Ibérica
   type: Network
+  site_id: 2
 # lets have another one so we can access it from within the sites.
 fau:
   id: 3003
   name: fau
   full_name: Freie Arbeiter Union
   type: Network
+
+#
+# super admin group
+#
+
+super_admin_group:
+  id: 4001
+  name: superadmins
+  full_name: group of superadmins
+  type: Group
+
 

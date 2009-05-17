@@ -1,0 +1,43 @@
+<%= render :partial => 'survey_page/tabs' %>
+
+<%= pagination_links @responses, :params => {:action => 'list'} %>
+
+<table id='survey_answers' class='pretty'>
+  <tr>
+    <th>user</th>
+    <th>created</th>
+    <!-- <th>modified</th> -->
+    <th>rating</th>
+    <%- (questions=@survey.questions[0..0]).each do |question| -%>
+      <th><%= truncate(question.label) %></th>
+    <%- end -%>
+  </tr>
+  <%- @responses.each do |resp| -%>
+    <% url = page_url(@page, :action => 'response-show', :id => resp.id) %>
+    <tr class="<%= cycle 'odd', 'even' %>">
+      <td><%= resp.user.login if resp.user_id %></td>
+      <td><%= friendly_date resp.created_at %></td>
+      <!-- <td><%# friendly_date resp.updated_at %></td> -->
+      <% if may_view_survey_response_ratings?(resp) %>
+        <td><%= resp.rating.round(2) %></td>
+      <% else %>
+        <td>&mdash;</td>
+      <% end %>
+      <%- questions.each do |question| -%>
+      <td>
+        <%- if may_view_survey_question?(resp, question) -%>
+          <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
+          <%= answer && answer.value.any? ? truncate(answer.value, 250, "...") : '&nbsp;' %>
+          <span class="more"> <%= link_to('see whole response'.t, url) %></span>
+         <%- else -%>
+          &mdash;
+        <%- end -%>
+      </td>
+      <%- end -%>
+    </tr>
+  <%- end -%>
+</table>
+
+<%= pagination_links @responses, :params => {:action => 'list'} %>
+
+<br/>

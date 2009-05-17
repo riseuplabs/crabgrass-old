@@ -19,6 +19,8 @@
       t.string   "type"
       t.datetime "created_at"
       t.datetime "updated_at"
+      
+      t.integer  "site_id"
     end
 =end
 
@@ -27,6 +29,8 @@
 # This includes invitations, requests to join, RSVP, etc. 
 # 
 class Request < ActiveRecord::Base
+
+  acts_as_site_limited
 
   belongs_to :created_by, :class_name => 'User'
   belongs_to :approved_by, :class_name => 'User'

@@ -88,6 +88,17 @@ el:
   name: Ελληνικά
   code: el_GR
 
+he:
+  id: 78
+  name: עִבְרִית
+  code: he_IL
+  rtl: true
+
+sv:
+  id: 79
+  name: Svenska
+  code: sv_SE
+
 da:
   id: 104
   name: Dansk

@@ -1,0 +1,18 @@
+This is the mod to do client-side password strength verification using javascript.
+
+This code has been superseded by the more accurate ajax server-based password
+strength test using cracklib, contained in the mod 'cracklib'
+
+The advantage to this client-side code over the cracklib code is that:
+
+(1) it does not require cracklib
+(2) it is very fast, since it is entirely client side.
+    (although there is also a server-side validation component as well)
+
+The advantage of cracklib:
+
+(1) it can use the full cracklib dictionaries
+(2) it is a more accurate assessment of a password's strength, where as the
+    client-side code is just a rough guess.
+
+

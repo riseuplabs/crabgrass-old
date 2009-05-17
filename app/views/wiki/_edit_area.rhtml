@@ -1,17 +1,23 @@
-<%# locals: wiki, access (one of :public or :private) -%>
+<%# locals: wiki -%>
 <% spinner_id = 'save-spinner-%s' % rand(1000000) -%>
 <% rows = [ 20, (params[:height]||0).to_i/16 ].max  # 16 here is a magic number. it might have to change if the font size of the wiki text changes. -%>
+<div id='<%= image_popup_id(wiki) %>' class='image_popup' style='display:none'></div>
 <% form_remote_tag(
-     :url => wiki_action('save', :access => access),
+     :url => wiki_action('save', :wiki_id => wiki.id),
      :loading => show_spinner(spinner_id)
   ) do -%>
   <%= hidden_field_tag 'version', wiki.version %>
-  <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80 %></div>
+  <%= %>
+  <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80, :id => wiki_body_id(wiki) %></div>
   <div>
     <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
     <%= submit_tag 'Save', :name => 'save' %>
     <%= submit_tag 'Cancel', :name => 'cancel' %>
+    <%= 'Revert to previous version:'[:revert_to_previous_version] %>
+    <%= old_version_select_tag(wiki, spinner_id) %>
     <%= spinner(spinner_id) %>
   </div>
 <% end -%>
+<%= javascript_tag(create_wiki_toolbar(wiki)) %>
+
 

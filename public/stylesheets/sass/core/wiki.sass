@@ -22,18 +22,18 @@
   h1
     font-size: 24pt
     line-height: 1.25em
-    margin-top: 1.5em
+    //margin-top: 1.5em
     color: #666
     border-bottom: 2px dotted #999
     font-family= !body_text_font_family 
-    &:first-child
+    &:first-child, &.first
       margin-top: 0
   h2
     font-size: 14pt
-    margin-top: 1.25em
+    //margin-top: 1.25em
     line-height: 1.25em
     border-bottom: 1px dashed #ccc
-    &:first-child
+    &:first-child, &.first
       margin-top: 0
   h3
     font-size: 1.1em
@@ -83,6 +83,13 @@
         weight: normal
         style: normal
 
+.post
+  blockquote
+    border-left: 6px solid #ddd
+    margin-left: 0
+    padding-left: 1.5em
+    font-style: italic
+
 //
 // diff
 //
@@ -113,6 +120,21 @@ ins
 div.formatting_reference
   float: right
 
+a.edit
+  display: none
+  margin-left: 6px
+  opacity: 0.5
+  position: absolute
+  .icon_16
+    vertical-align: middle
+a.edit:hover
+  opacity: 1
+
+h1:hover a.edit, 
+h2:hover a.edit,
+h3:hover a.edit
+  display: inline
+
 //
 // table of contents
 //
@@ -132,16 +154,19 @@ h3:hover a.anchor
   color: #ddd
 
 ul.toc
-  font-size: 0.90em
-  width: auto
+  display: table
+  background-color: #f9f9f9
+  border: 1px solid #e6e6e6
+  padding: 1em
+  margin: 0
   &,
   ul
     list-style-type: none
     list-style-image: none
     padding-left: 1.8em
-    line-height: 1.6em
+    //line-height: 1.6em
   span
     padding-right: 0.3em
+  li
+    font-size: 0.95em
 
-ul.toc
-  padding-left: 0em

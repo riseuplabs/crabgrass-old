@@ -3,23 +3,18 @@ GreenCloth is derived from RedCloth, the defacto text to html converter for ruby
 GreenCloth requires that RedCloth version > 4.0 is installed and that prior
 versions are NOT installed.
 
-Testing
-----------
+== Testing
 
 To run the all the tests:
 
-/--
-ruby run-tests.rb
-\--
+  rake test
 
-or a specific set of tests:
+Or to test the markup from a specific fixture:
 
-/--
-ruby run-tests.rb tests/basic.yml
-\--
+  ruby test/markup_test.rb test/fixtures/images.yml
 
-Changes from RedCloth
-----------------------
+
+== Changes from RedCloth
 
 New markup:
 
@@ -30,4 +25,10 @@ New markup:
 * Setext headers (h1 is formed by under line with ====, h2 underline with ----)
 * Allow embedded video tags, and sanitize these embeds. 
 * Tables can use tabs in addition to pipes (|)
+* Insert table of contents with [[toc]]
+
+== TODO
+
+greencloth does work with RedCloth 4.1.9
+the last known working version is 4.1.1
 

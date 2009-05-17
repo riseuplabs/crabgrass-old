@@ -1,0 +1,13 @@
+<%# this is an arbitrary page list. Because it is arbitrary, we don't support sorting or time sections %>
+<% heading = "" if heading.nil? %>
+<% pages = [] if pages.nil? %>
+<% columns = [:stars, :icon, :title, :last_updated] if columns.nil? %>
+<% sorted_by_time = false %>
+
+<% if heading %>
+<h2 class='alert'><%= heading %></h2>
+<% end %>
+
+<div class='page_scroll'>
+  <%= render :partial => 'pages/list', :locals => {:pages => pages, :columns => columns, :show_time_dividers => sorted_by_time, :sortable => false} %>
+</div>

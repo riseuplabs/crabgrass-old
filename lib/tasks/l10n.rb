@@ -129,7 +129,8 @@ namespace :cg do
         if l.code != 'en_US'
           buffer = {}
           l.translations.each do |t|
-            buffer[t.key.name] = t.text
+            buffer[t.key.name] = t.text unless t.custom?
+            # ^^ (the custom check should not be needed, but it is. why?)
           end
           if buffer.any?
             File.open(LANG_DIR + '/' + l.code + '.yml', 'w') {|f| f.write(buffer.to_yaml) }

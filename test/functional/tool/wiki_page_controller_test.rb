@@ -10,7 +10,6 @@ class WikiPageControllerTest < Test::Unit::TestCase
   def setup
     @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
-    @request.host = "localhost"
     @response   = ActionController::TestResponse.new
     HTMLDiff.log_to_stdout = false # set to true for debugging
   end
@@ -52,7 +51,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
     end
     
     assert_difference 'Page.count' do
-      post :create, :page_class=>"WikiPage", :id => 'wiki', :group_id=> "", :create => "Create page", :tag_list => "", 
+      post :create, :id => WikiPage.param_id, :group_id=> "", :create => "Create page", :tag_list => "", 
            :page => {:title => 'my title', :summary => ''}
       assert_response :redirect
       assert_not_nil assigns(:page)

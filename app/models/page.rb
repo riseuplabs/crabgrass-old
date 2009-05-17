@@ -18,8 +18,9 @@ class Page < ActiveRecord::Base
   include PageExtension::Index
 #  include PageExtension::Linking
   include PageExtension::Static
-  acts_as_taggable_on :tags
 
+  acts_as_taggable_on :tags
+  acts_as_site_limited
 
   #######################################################################
   ## PAGE NAMING
@@ -143,6 +144,18 @@ class Page < ActiveRecord::Base
     end
   end
 
+  # sets the default media flags. can be overridden by the subclasses.
+  before_save :update_media_flags
+  def update_media_flags
+    if self.data
+      self.is_image = self.data.is_image? if self.data.respond_to?('is_image?')
+      self.is_audio = self.data.is_audio? if self.data.respond_to?('is_audio?')
+      self.is_video = self.data.is_video? if self.data.respond_to?('is_video?')
+      self.is_document = self.data.is_document? if self.data.respond_to?('is_document?')
+    end
+    true
+  end
+  
   #######################################################################
   ## PAGE ACCESS CONTROL
   

@@ -19,14 +19,11 @@ MEDIA_TYPE = {
 ARROW = " &raquo; "
 BULLET = " &bull; "
 
+# group and user names which cannot be used
+FORBIDDEN_NAMES = %w(account admin assets avatars chat calendar calendars contact custom_appearances embed event events feeds files gibberize group groups images invites issues javascripts latex me membership messages network networks page pages people person posts profile places plugin_assets requests static stats stylesheets visualize wiki code codes).freeze
+
 # a time to use when displaying recent records
 RECENT_SINCE_TIME = 2.weeks.ago.freeze
-
-# This is the time in years a password should hold for a brute force attack at
-# minimum, assuming 1000 attempts per second.
-unless defined? MIN_PASSWORD_STRENGTH
- MIN_PASSWORD_STRENGTH = 2
-end
 
 begin
   # get a list of possible translations, ones there is a file for.
@@ -45,4 +42,3 @@ rescue Exception
   # something went wrong.
   LANGUAGES = []
 end
-

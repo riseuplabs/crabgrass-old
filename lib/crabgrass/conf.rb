@@ -22,10 +22,17 @@ class Conf
   cattr_accessor :show_exceptions
   cattr_accessor :require_user_email
   cattr_accessor :domain
+  cattr_accessor :translation_group
+  cattr_accessor :chat 
 
   # are in site, but I think they should be global
   cattr_accessor :translators
   cattr_accessor :translation_group
+
+  # are global, but might end up in site one day.
+  cattr_accessor :profiles
+  cattr_accessor :profile_fields
+  cattr_accessor :limited
 
   # global instance options
   cattr_accessor :enabled_mods
@@ -34,16 +41,25 @@ class Conf
   cattr_accessor :email
   cattr_accessor :sites
   cattr_accessor :secret
-  
+  cattr_accessor :paranoid_emails
+
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
 
-  # set in environments/*.rb as semi-hardcoded options
-  cattr_accessor :ignore_sass_file_timestamps
+  # Global options that are set automatically by the code
+  # For exampke, in initializers or in environments/*.rb.
+  # Typically, you will never have to configured these.
+  cattr_accessor :always_renegerate_themed_stylesheet
+  cattr_accessor :enabled_site_ids
 
   # used for error reporting
   cattr_accessor :configuration_filename
 
+  # cattr_accessor doesn't work with ?
+  def self.chat?; self.chat; end
+  def self.limited?; self.limited; end
+  def self.paranoid_emails?; self.paranoid_emails; end
+ 
   def self.load_defaults
     self.name                 = 'default'
     self.super_admin_group_id = nil
@@ -59,7 +75,8 @@ class Conf
     self.enforce_ssl       = false
     self.show_exceptions   = true
     self.domain            = 'localhost'
-
+    self.chat              = true
+    
     # instance configuration
     self.enabled_mods  = []
     self.enabled_tools = []
@@ -76,7 +93,7 @@ class Conf
     hsh.each do |key, value|
       method = key.to_s + '='
       if self.respond_to?(method)
-        self.send(method,value) if value
+        self.send(method,value) unless value.nil?
       else
         puts "ERROR (%s): unknown option '%s'" % [configuration_filename,key]
       end
@@ -93,14 +110,47 @@ class Conf
   #  end
   #end
 
-  # enabled a tool plugin or a mod plugin if explicitly enabled
-  def self.mod_enabled?(mod_name)
-    self.enabled_mods.include?(mod_name)
+  ##
+  ## SITES
+  ##
+
+  # can be called from a test's setup method in order to enable sites
+  # for a particular set of tests without enabling sites for all tests.
+  def self.enable_site_testing(site=nil)
+    self.enabled_site_ids = [1,2]
   end
 
-  # also allow by default if empty 
+  def self.disable_site_testing
+    self.enabled_site_ids = []
+  end
+
+  ##
+  ## PLUGINS
+  ## 
+
+  # Called by lib/extension/engines.rb in order to determine if a plugin should
+  # be loaded. Normal plugins are always loaded, we just might have disabled
+  # mods and tools. 
+  def self.plugin_enabled?(plugin_path)
+    if plugin_path =~ /^#{RAILS_ROOT}\/mods\//
+      self.mod_enabled?( File.basename(plugin_path) )
+    elsif plugin_path =~ /^#{RAILS_ROOT}\/tools\//
+      self.tool_enabled?( File.basename(plugin_path) )
+    else
+      true
+    end
+  end
+
+  # a mod will be enabled if explicitly configured to be so, or if 
+  # ENV['MOD'] is set. 
+  def self.mod_enabled?(mod_name)
+    self.enabled_mods.include?(mod_name) or ENV['MOD'] == mod_name
+  end
+
+  # tools are like mods, except that the default is to enable all tools
+  # unless only some are enabled.
   def self.tool_enabled?(tool_name)
-    self.enabled_tools.empty? or self.enabled_tools.include?(tool_name)
+    self.enabled_tools.empty? or self.enabled_tools.include?(tool_name) or ENV['TOOL'] == tool_name
   end
 
 end

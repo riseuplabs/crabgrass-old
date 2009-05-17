@@ -138,5 +138,27 @@ See also doc/SPHINX_README"
     end
   end
 
+  def disable_site_testing
+    Conf.disable_site_testing
+    Site.current = Site.new
+    @controller.disable_current_site if @controller
+  end
+
+  def enable_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name)
+      yield
+      disable_site_testing
+    else
+      if site_name
+        Conf.enable_site_testing(sites(site_name))
+        Site.current = sites(site_name) 
+      else
+        Conf.enable_site_testing()
+        Site.current = Site.new
+      end
+      @controller.enable_current_site if @controller
+    end
+  end
 
 end

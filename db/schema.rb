@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090311171519) do
+ActiveRecord::Schema.define(:version => 20090515071217) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.datetime "created_at"
     t.integer  "access",       :limit => 1,  :default => 2
     t.integer  "related_id",   :limit => 11
+    t.integer  "site_id",      :limit => 11
   end
 
   add_index "activities", ["created_at"], :name => "created_at"
@@ -95,6 +96,20 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
 
   add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
 
+  create_table "codes", :force => true do |t|
+    t.string   "code",       :limit => 10
+    t.integer  "page_id",    :limit => 11
+    t.integer  "user_id",    :limit => 11
+    t.integer  "access",     :limit => 11
+    t.datetime "expires_at"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
+  add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
+
   create_table "contacts", :id => false, :force => true do |t|
     t.integer "user_id",    :limit => 11
     t.integer "contact_id", :limit => 11
@@ -110,6 +125,15 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.string  "fingerprint"
     t.string  "name"
     t.string  "description"
+  end
+
+  create_table "custom_appearances", :force => true do |t|
+    t.text     "parameters"
+    t.integer  "parent_id",         :limit => 11
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "masthead_asset_id", :limit => 11
+    t.integer  "favicon_id",        :limit => 11
   end
 
   create_table "discussions", :force => true do |t|
@@ -337,6 +361,11 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.integer  "site_id",            :limit => 11
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -438,6 +467,7 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
     t.integer  "discussion_id",          :limit => 11
+    t.string   "place"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -469,6 +499,7 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "language"
+    t.integer  "site_id",               :limit => 11
   end
 
   execute "CREATE INDEX created_by_0_2 ON requests (created_by_id,state(2))"
@@ -506,6 +537,61 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
     t.boolean "tracking"
     t.boolean "default",                            :default => false
     t.integer "network_id",           :limit => 11
+    t.integer "custom_appearance_id", :limit => 11
+    t.boolean "has_networks",                       :default => true
+    t.string  "signup_redirect_url"
+    t.string  "title"
+    t.boolean "enforce_ssl"
+    t.boolean "show_exceptions"
+    t.boolean "require_user_email"
+    t.integer "council_id",           :limit => 11
+    t.string  "login_redirect_url"
+    t.boolean "chat"
+    t.boolean "limited"
+  end
+
+  add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
+
+  create_table "survey_answers", :force => true do |t|
+    t.integer  "question_id",       :limit => 11
+    t.integer  "response_id",       :limit => 11
+    t.integer  "asset_id",          :limit => 11
+    t.text     "value"
+    t.string   "type"
+    t.datetime "created_at"
+    t.integer  "external_video_id", :limit => 11
+  end
+
+  create_table "survey_questions", :force => true do |t|
+    t.string   "type"
+    t.text     "choices"
+    t.integer  "survey_id",  :limit => 11
+    t.integer  "position",   :limit => 11
+    t.string   "label"
+    t.text     "details"
+    t.boolean  "required"
+    t.datetime "created_at"
+    t.datetime "expires_at"
+    t.string   "regex"
+    t.integer  "maximum",    :limit => 11
+    t.integer  "minimum",    :limit => 11
+    t.boolean  "private",                  :default => false
+  end
+
+  create_table "survey_responses", :force => true do |t|
+    t.integer  "survey_id",   :limit => 11
+    t.integer  "user_id",     :limit => 11
+    t.string   "name"
+    t.string   "email"
+    t.integer  "stars_count", :limit => 11, :default => 0
+    t.datetime "created_at"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.text     "description"
+    t.datetime "created_at"
+    t.integer  "responses_count", :limit => 11, :default => 0
+    t.string   "settings"
   end
 
   create_table "taggings", :force => true do |t|
@@ -615,6 +701,36 @@ ActiveRecord::Schema.define(:version => 20090311171519) do
   add_index "user_participations", ["star"], :name => "index_user_participations_star"
   add_index "user_participations", ["resolved"], :name => "index_user_participations_resolved"
   add_index "user_participations", ["attend"], :name => "index_user_participations_attend"
+
+  create_table "user_settings", :force => true do |t|
+    t.integer  "user_id",                    :limit => 11
+    t.string   "email_address"
+    t.string   "sms_number"
+    t.string   "sms_carrier"
+    t.string   "im_address"
+    t.string   "im_type"
+    t.boolean  "allow_insecure_email",                     :default => false
+    t.boolean  "allow_insecure_im",                        :default => false
+    t.boolean  "allow_insecure_sms",                       :default => false
+    t.integer  "email_crypt_key_id",         :limit => 11
+    t.integer  "sms_crypt_key_id",           :limit => 11
+    t.boolean  "email_allowed",                            :default => true
+    t.boolean  "sms_allowed",                              :default => false
+    t.boolean  "im_allowed",                               :default => false
+    t.boolean  "receive_digest",                           :default => true
+    t.integer  "digest_frequency",           :limit => 11, :default => 2
+    t.integer  "digest_day",                 :limit => 11
+    t.integer  "preferred_reception_method", :limit => 11, :default => 1
+    t.string   "languages_spoken"
+    t.integer  "level_of_expertise",         :limit => 11
+    t.boolean  "show_welcome",                             :default => true
+    t.integer  "login_landing",              :limit => 11, :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"
+  add_index "user_settings", ["receive_digest", "digest_frequency", "digest_day"], :name => "digest"
 
   create_table "users", :force => true do |t|
     t.string   "login"

@@ -1,10 +1,13 @@
 
 class GroupController < ApplicationController
   include GroupHelper
-  helper 'task_list_page', 'tags' # remove task_list_page when tasks are in a separate controller
+  helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
+  stylesheet 'wiki_edit'
   stylesheet 'groups'
   stylesheet 'tasks', :action => :tasks
+
+  javascript 'wiki_edit'
   javascript :extra, :action => :tasks
 
   prepend_before_filter :find_group
@@ -33,6 +36,9 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
+    if logged_in? and current_site.council == @group and current_user.may?(:admin, current_site)
+      @editable_custom_appearance = current_site.custom_appearance
+    end
   end
 
   def archive
@@ -67,9 +73,6 @@ class GroupController < ApplicationController
   end
     
   def tags
-    # TODO: you can assign invalid tag names that cannot be searched on. For
-    # example, if the tag contains the chars ', +, ), (. These are stripped before
-    # searching, but you should not be allowed to set them at all.
     tags = params[:path] || []
     path = tags.collect{|t|['tag',t]}.flatten
     if path.any?
@@ -90,7 +93,7 @@ class GroupController < ApplicationController
 
   # login required
   def edit
-    @editable_custom_appearance = CustomAppearance.find :first, :conditions => ["admin_group_id = ?", @group.id]
+    @group.group_setting ||= GroupSetting.new
   end
 
   # login required
@@ -193,9 +196,8 @@ class GroupController < ApplicationController
     end
   end
   
-  @@additional_tools = ["chat"]
-  def edit_tools   
-    @available_tools = current_site.available_page_types + @@additional_tools
+  def edit_tools
+    @available_tools = current_site.available_page_types
     if request.post?
       @group.group_setting.allowed_tools = []
       @available_tools.each do |p|
@@ -210,9 +212,14 @@ class GroupController < ApplicationController
     @allowed_tools =  ( ! @group.group_setting.allowed_tools.nil? ? @group.group_setting.allowed_tools : @available_tools)
   end
   
-  @@layout_widgets = ["group_wiki", "recent_pages"]
   def edit_layout
-    @widgets = [''] + @@layout_widgets
+    # this whole thing is quite a hack, as the widget system will be reworked soon anyway
+    # jrw, Apr 22th
+    default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}
+    default_template_data.merge!({"section3" => "recent_group_pages"}) if @group.network?
+    @group.group_setting ||= GroupSetting.new
+    @group.group_setting.template_data ||= default_template_data
+    @widgets = @group.group_setting.template_data
     if request.post?
       @group.group_setting.template_data = {}
       @group.group_setting.template_data['section1'] = params['section1']

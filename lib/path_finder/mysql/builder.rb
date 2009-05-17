@@ -9,7 +9,8 @@
 #
 # == Resolving Permissions
 # It uses a fulltext index on page_terms in order to resolve permissions for pages.
-# This bypasses potentially really hairy four-way joins on user_participations and group_participations tables.
+# This bypasses potentially really hairy four-way joins on user_participations
+# and group_participations tables.
 # (not to mention a potential 5th,6th,7th joins for tags, ugh!)
 #
 # An example query:
@@ -63,7 +64,9 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   # initializes all the arrays for conditions, aliases, clauses and so on
   def initialize(path, options)
 
-    ## page_terms stuff
+    ## page_terms access clauses
+    ## (within each clause, the values are OR'ed, but the clauses are AND'ed
+    ##  together in the query).
     if options[:group_ids] or options[:user_ids] or options[:public]
       @access_me_clause = "+(%s)" % Page.access_ids_for(
         :public    => options[:public],
@@ -75,6 +78,11 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       @access_target_clause = "+(%s)" % Page.access_ids_for(
         :group_ids => options[:secondary_group_ids],
         :user_ids  => options[:secondary_user_ids]
+      ).join(' ')
+    end
+    if options[:site_ids]
+      @access_site_clause = "+(%s)" % Page.access_ids_for(
+        :site_ids => options[:site_ids]
       ).join(' ')
     end
     @access_filter_clause = [] # to be used by path filters
@@ -126,12 +134,13 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   private
 
   def options_for_find
-    fulltext_filter = [
-      @access_me_clause, @access_target_clause, @access_filter_clause, @tags
-    ].flatten.compact
+    fulltext_filter = [@access_me_clause, @access_target_clause,
+      @access_site_clause, @access_filter_clause, @tags].flatten.compact
 
     if fulltext_filter.any?
-      @conditions << " MATCH(page_terms.access_ids, page_terms.tags) AGAINST(? IN BOOLEAN MODE)"
+      # it is absolutely vital that we MATCH against both access_ids and tags, 
+      # because this is how the index is specified.
+      @conditions << " MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)"
       @values << fulltext_filter.join(' ') 
     end
 
@@ -186,7 +195,6 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     
     return joins
   end
-
     
   def sql_for_order
     return nil if @order.nil?

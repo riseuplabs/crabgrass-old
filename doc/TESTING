@@ -5,14 +5,24 @@ TODO: this needs a lot of help.
 == Testings Mods
 
 A great deal of the crabgrass code is in the form of engines-enhanced
-and crabgrass-specific plugins. See mods/README and tools/README for
+and crabgrass-specific plugins. See docs/MODS and docs/TOOLS for
 more information. To run the tests for these special plugins:
 
-  rake test:tools
-  rake test:mods
+  rake test:tools:all
+  rake test:mods:all
+
+You can replace 'all' with 'units' or 'functionals'. 
 
 To run the test for a particular tool or mod:
 
-  rake test:tools TOOL=gallery_tool
-  rake test:mods MOD=gibberize
+  rake test:tools:all TOOL=gallery_tool
+  rake test:mods:all MOD=gibberize
+
+== Tests and Sites
+
+When running tests, the request host is 'test.host'. There is a site with this domain setup in the fixtures. Normally, it is not enabled. 
+
+Those tests that would like to test sites can call Conf.enable_site_testing()
+in setup().
+
 

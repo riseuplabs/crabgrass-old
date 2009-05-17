@@ -1,0 +1,13 @@
+<% rows = word_wrap(text, 80).count("\n") + 4 %>
+<% form_remote_tag :loading => show_spinner('save'), 
+  :url => page_xurl(@page, :action => 'save_inline', :id => heading) do -%>
+  <div class='fieldset'>
+    <%= text_area_tag 'body', text, :rows => rows, :cols => 60, :style => 'width:99%'  %>
+    <div style="float: left">
+      <%= submit_tag "Save", :name => 'save' %>
+      <%= submit_tag 'Cancel', :name => 'cancel' %>
+      <%= spinner('save') %>
+    </div>
+    <div style="text-align: right"><a href="javascript:quickRedReference();">formatting reference</a></div>
+  </div>
+<% end -%>

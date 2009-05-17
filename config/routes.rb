@@ -23,6 +23,8 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
+  map.favicon '/favicon.:format', :controller => 'custom_appearances', :action => 'favicon'
+
   ##### REGULAR ROUTES ####################################
   
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
@@ -45,18 +47,18 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
-  map.connect '', :controller => "account"
+  map.connect '', :controller => 'root'
   map.login   'account/login',   :controller => 'account',   :action => 'login'
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 
   # routes in emails:
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
+  map.connection '/code/:id', :controller => 'codes', :action => 'jump'
 
   map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
   map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil
   map.connect 'feeds/:type/:group', :controller => 'feeds', :action => 'index', :group => nil
 
-  map.connect 'stylesheets/*path', :controller => 'stylesheets', :action => 'style'
   map.resources :custom_appearances, :only => [:edit, :update]
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/

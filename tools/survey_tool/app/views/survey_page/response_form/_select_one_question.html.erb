@@ -1,5 +1,4 @@
 <% response_form.fields_for :answers_attributes, answer, :index => question.id do |f| %>
-  <br/>
   <%= f.hidden_field :question_id %>
   <% #f.error_message_on :value %>
   <%= render(:partial => 'survey_page/response_form/choice_for_select_one', :collection => question.choices, :locals => {:form => f}) %>

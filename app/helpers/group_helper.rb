@@ -2,10 +2,6 @@ module GroupHelper
 
   include WikiHelper
 
-  def group_cache_key(group, options={})
-    params.merge(:version => group.version, :updated_at => group.updated_at.to_i, :lang => session[:language_code]).merge(options)
-  end
-
   def may_admin_group?
     logged_in? and current_user.may?(:admin, @group)
   end
@@ -57,7 +53,7 @@ module GroupHelper
     if may_admin_group?
       # eventually, this should fire a request to destroy.
       if (@group.network? && @group.groups.size == 1) or (@group.users.uniq.size == 1)
-        post_to "destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type
+        link_to("destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post)
       end
     end
   end
@@ -108,6 +104,12 @@ module GroupHelper
   def edit_featured_link
     if may_admin_group?
       link_to "edit featured content"[:edit_featured_content], group_url(:action => 'edit_featured_content', :id => @group)
+    end
+  end
+
+  def edit_group_custom_appearance_link(appearance)
+    if appearance and may_admin_group?
+      link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(appearance)
     end
   end
 
@@ -172,11 +174,15 @@ module GroupHelper
   #Defaults!
   def show_section(name)
     @group.group_setting ||= GroupSetting.new
-    @group.group_setting.template_data ||= {"section1" => "group_wiki", "section2" => "recent_pages"}
+    if @group.network?
+    end
+    default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}
+    default_template_data.merge!({"section3" => "recent_group_pages"}) if @group.network?
+    
+    @group.group_setting.template_data ||= default_template_data
     widgets = @group.group_setting.template_data
     widget = widgets[name]
-    #template = widget[0]
-    #local_vars = widget[1]
-    render :partial => 'group/widgets/' + widget if widget.length > 0#, :locals => local_vars
+    @group.network? ? widget_folder =  'network' : widget_folder = 'group'
+    render :partial => widget_folder + '/widgets/' + widget if widget.length > 0
   end
 end

@@ -104,36 +104,6 @@ table.share_page_recipients
     li
       padding: 0.25em 0
 
-//
-// PAGE CREATION
-//
-
-.create_page
-  .left
-    display: inline
-    float: left
-    table
-      margin-top: 1em
-      td.label
-        text-align: right
-        color: #999
-        font-weight: bold
-        padding-right: 1em
-  .right
-    display: inline
-    float: left
-    padding-left: 2em
-  input[type=text], textarea
-    width: 23em
-    font-family: serif
-    font-size: 1em
-  .share_page
-    h2
-      color: #999
-      font-size: 1em
-      margin: 1em 0
-    ul
-      list-style: none
 
 //
 // PAGE SIDEBAR
@@ -277,8 +247,8 @@ div.title_box
 //
 
 div.popup
-  background: #aaa
-  border: 8px solid #666
+  border= !popup_border
+  background= !popup_bg
   z-index: 101
   position: absolute
   top: -32px

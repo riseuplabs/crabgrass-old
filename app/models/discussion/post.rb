@@ -25,7 +25,8 @@ class Post < ActiveRecord::Base
 
   format_attribute :body
   validates_presence_of :discussion, :user, :body  
-
+  alias :created_by :user
+  
   ##
   ## methods
   ##
@@ -60,6 +61,12 @@ class Post < ActiveRecord::Base
     user.id == self.user_id
   end
 
+  def starred_by?(user)
+    self.ratings.detect do |rating|
+      rating.rating == 1 and rating.user_id == user.id
+    end
+  end
+  
   protected
 
   def after_create

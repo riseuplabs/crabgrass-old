@@ -43,33 +43,41 @@ div#masthead
     margin: 0
     padding: 0.5em
     display= !masthead_display
+  img#site_logo
+    margin: 0
+    padding: 0
+    display: block
+  #site_logo_wrapper
+    display= !masthead_display
 
 //
 // TOP_MENU
 //
 
+div#login_popup
+  border= !popup_border
+  background= !popup_bg
+  color= !popup_color
+  position: absolute
+  right: 2em
+  padding: 1em
+  z-index: 10
+  td
+    padding: 0.25em
+
 div#top_menu
   background-color= !menu_bg_color
   padding-left: 1em
+  border-width= !banner_border_width "0"
+  border-style: solid
+  border-color= !banner_border_color
   div.account_links
     float: right
     color: #646360
     padding= !menu_item_padding
     a
-      color: #E1E2E2
+      color= !menu_fg_color
       margin: 0 0.5em
-    div#login_popup
-      position: absolute
-      right: 2em
-      border= !popup_border
-      height: 2em
-      width: 30em
-      background: #333
-      padding: 1em
-      color: white
-      input
-        width: 5em
-        border: 1px solid white
   ul
     margin: 0
     padding: 0
@@ -87,7 +95,6 @@ div#top_menu
         border-left: 1px solid
         border-color= !menu_border_color
       span
-        //display: block
         border: 0
       a
         display: block
@@ -123,7 +130,7 @@ div#top_menu
   background= !banner_background
   color= !banner_fg_color
   border-color= !banner_border_color
-  border-width= !banner_border_width
+  border-width= "0 0" !banner_border_width "0"
   border-style: solid
   img
     border: 1px solid white
@@ -201,20 +208,39 @@ form.minisearch
       width: 50%
     &.left
       width: 50%
-  .description
-    color: #738899
-    font-family: georgia, times
-    font-style: italic
-    font-size: 1.1em
-    letter-spacing: 0.03em
-    word-spacing: 0.1em
-    line-height: 1.6em
   .status h3
     margin: 0.5em 0
   &.tabs
     padding: 1em 0 0 0
     overflow: hidden
     border-bottom: 0
+
+.info_box .description,
+.inset_box .description
+  // color: #738899
+  color: #697D8C
+  font-family: georgia, times
+  font-style: italic
+  font-size: 1.1em
+  line-height: 1.6em
+  letter-spacing: 1px
+  word-spacing: 2px
+
+// 
+// INSET BOX
+//
+
+.inset_box
+  background: #eee url(/images/background/fade-light.png) repeat-x
+  margin-bottom: 1em
+  padding: 1em
+  border: 1px solid #ccc
+  h3
+    margin-top: 1em
+    margin-bottom: 0
+  td
+    padding: 0 1em 1em 0
+    vertical-align: top
 
 
 //
@@ -279,29 +305,32 @@ form.minisearch
   div.notice
     padding: 0 4em 1.5em 4em
     h2
-      font-weight: bold
-      margin: 0
-      padding: 0.5em
-      background-color: #ccc
-      border-bottom: 1px solid #999
+      font-size: 1.2em
       img
         vertical-align: middle
     p, li
       color: black
       margin-left: 2em
+  div.text
+    border-top: 1px solid #999
+    background-color: #fafafa
+    // some kind of bug:
+    padding: 0.01em
+  div.heading
+    background-color: #dfdfdf
+    // some kind of bug:
+    padding: 0.01em
   div.error
     border: 2px solid red
     color: #900
-    background-color: #fafafa
   div.info
     border: 2px solid green
     color: #090
-    background-color: #fafafa
   div.update
     border: 2px solid blue
     color: #009
-    background-color: #fafafa
-
+    
+    
 div
   &.fieldWithErrors
     border: 2px solid red

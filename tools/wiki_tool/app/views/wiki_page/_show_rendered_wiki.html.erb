@@ -1,0 +1,6 @@
+<%= @wiki.body_html %>
+<% if @last_seen %>
+<%= load_lasted_change_diff %>
+<% elsif current_user.may?(:edit, @page) %>
+<%= decorate_with_edit_links if false %>
+<% end %>

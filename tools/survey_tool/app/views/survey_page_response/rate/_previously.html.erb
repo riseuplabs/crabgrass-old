@@ -1,0 +1,20 @@
+<h2 class="bright"><%= "Previously"[:survey_previous_result] %></h2>
+
+<% if response.user %>
+  <p><%= link_to_user response.user, :avatar => 'small' %></p>
+<% else %>
+  <p><b><%=h response.name %></b> <%=h response.email %></p>
+<% end %>
+
+<ul>
+    <li><b><%= "Your Rating:"[:survey_your_rating] %></b> <%= (current_user.rating_for(response)||Rating.new).rating %></li>
+  <% if may_view_survey_response_ratings?(response) %>
+      <li><b><%= "Average Rating:"[:survey_average_rating] %></b> <%= response.rating.round(2) %></li>
+  <% end %>
+  <% if response.ratings.size == 1 %>
+      <li><b><%= "Rated by one person."[:survey_rated_by_1_person] %></b></li>
+  <% else %>
+      <li><b><%= "Rated by {count} people."[:survey_rated_by_x_people,response.ratings.size] %></b></li>
+  <% end %>
+</ul>
+

@@ -1,0 +1,115 @@
+---
+name: empty outline
+in: |-
+  [[toc]]
+out: "<p></p>"
+---
+name: fruity outline
+in: |-
+  [[toc]]
+
+  h1. Fruits
+  
+  h2. Tasty Apples  
+
+  h3. Green
+
+  h3. Red
+
+  h2. Pears
+
+  h1. Vegetables
+  
+  h2. Turnips
+  
+  h2. Green Beans
+out: |-
+  <p><ul class="toc">
+  <li class="toc1"><a href="#fruits"><span>1</span> Fruits</a></li>
+  <ul>
+  <li class="toc2"><a href="#tasty-apples"><span>1.1</span> Tasty Apples</a></li>
+  <ul>
+  <li class="toc3"><a href="#green"><span>1.1.1</span> Green</a></li>
+  <li class="toc3"><a href="#red"><span>1.1.2</span> Red</a></li>
+  </ul>
+  <li class="toc2"><a href="#pears"><span>1.2</span> Pears</a></li>
+  </ul>
+  <li class="toc1"><a href="#vegetables"><span>2</span> Vegetables</a></li>
+  <ul>
+  <li class="toc2"><a href="#turnips"><span>2.1</span> Turnips</a></li>
+  <li class="toc2"><a href="#green-beans"><span>2.2</span> Green Beans</a></li>
+  </ul>
+  </ul></p>
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
+  <h3><a name="green"></a>Green<a class="anchor" href="#green">&para;</a></h3>
+  <h3><a name="red"></a>Red<a class="anchor" href="#red">&para;</a></h3>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="turnips"></a>Turnips<a class="anchor" href="#turnips">&para;</a></h2>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: test with \r\n
+in: "[[toc]]\r\n\r\nh1. Bats\r\n\r\nh1. Squirrels\r\n"
+out: |-
+  <p><ul class="toc">
+  <li class="toc1"><a href="#bats"><span>1</span> Bats</a></li>
+  <li class="toc1"><a href="#squirrels"><span>2</span> Squirrels</a></li>
+  </ul></p>
+  <h1 class="first"><a name="bats"></a>Bats<a class="anchor" href="#bats">&para;</a></h1>
+  <h1><a name="squirrels"></a>Squirrels<a class="anchor" href="#squirrels">&para;</a></h1>
+---
+name: test name collisions
+in: |-
+  h1. Corvidae
+  
+  h2. Crow
+
+  h2. Raven
+
+  h2. Rook
+
+  h1. Chess Pieces
+
+  h2. Queen
+  
+  h2. Rook
+  
+  h1. Card Games
+  
+  h2. Hearts
+
+  h2. Rook
+out: |-
+  <h1 class="first"><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
+  <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
+  <h2><a name="raven"></a>Raven<a class="anchor" href="#raven">&para;</a></h2>
+  <h2><a name="rook"></a>Rook<a class="anchor" href="#rook">&para;</a></h2>
+  <h1><a name="chess-pieces"></a>Chess Pieces<a class="anchor" href="#chess-pieces">&para;</a></h1>
+  <h2><a name="queen"></a>Queen<a class="anchor" href="#queen">&para;</a></h2>
+  <h2><a name="rook_2"></a>Rook<a class="anchor" href="#rook_2">&para;</a></h2>
+  <h1><a name="card-games"></a>Card Games<a class="anchor" href="#card-games">&para;</a></h1>
+  <h2><a name="hearts"></a>Hearts<a class="anchor" href="#hearts">&para;</a></h2>
+  <h2><a name="rook_3"></a>Rook<a class="anchor" href="#rook_3">&para;</a></h2>
+---
+name: test with links
+in: |-
+  h1. Russian Anarchists
+
+  h2. Michel [Bakunin -> http://en.wikipedia.org/wiki/Mikhail_Bakunin]
+
+  h2. [Peter -> http://en.wikipedia.org/wiki/Peter_Kropotkin] Kropotkin
+
+  h1. Russian-American Anarchists
+
+  h2. [Emma Goldman -> http://en.wikipedia.org/wiki/Emma_Goldman]
+
+  h2. Alexander [Berkman -> http://en.wikipedia.org/wiki/Alexander_Berkman]
+out: |-
+  <h1 class="first"><a name="russian-anarchists"></a>Russian Anarchists<a class="anchor" href="#russian-anarchists">&para;</a></h1>
+  <h2><a name="michel-bakunin"></a>Michel <a href="http://en.wikipedia.org/wiki/Mikhail_Bakunin">Bakunin</a><a class="anchor" href="#michel-bakunin">&para;</a></h2>
+  <h2><a name="peter-kropotkin"></a><a href="http://en.wikipedia.org/wiki/Peter_Kropotkin">Peter</a> Kropotkin<a class="anchor" href="#peter-kropotkin">&para;</a></h2>
+  <h1><a name="russian-american-anarchists"></a>Russian-American Anarchists<a class="anchor" href="#russian-american-anarchists">&para;</a></h1>
+  <h2><a name="emma-goldman"></a><a href="http://en.wikipedia.org/wiki/Emma_Goldman">Emma Goldman</a><a class="anchor" href="#emma-goldman">&para;</a></h2>
+  <h2><a name="alexander-berkman"></a>Alexander <a href="http://en.wikipedia.org/wiki/Alexander_Berkman">Berkman</a><a class="anchor" href="#alexander-berkman">&para;</a></h2>
+

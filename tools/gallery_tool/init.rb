@@ -2,9 +2,7 @@ PageClassRegistrar.add(
   'Gallery',
   :controller => 'gallery',
   :icon => 'page_gallery',
-  :class_display_name => 'gallery',
-  :class_description => :gallery_class_description,
-  :class_group => ['gallery', 'image'],
+  :class_group => ['media:image', 'collection'],
   :order => 31
 )
 

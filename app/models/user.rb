@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  # core user extenstions
+  # core user extentions
   include UserExtension::Cache      # should come first
   include UserExtension::Socialize  # user <--> user
   include UserExtension::Organize   # user <--> groups
@@ -8,7 +8,24 @@ class User < ActiveRecord::Base
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
-  # named scopes
+  ##
+  ## VALIDATIONS
+  ##
+
+  include CrabgrassDispatcher::Validations
+  validates_handle :login
+
+  validates_presence_of :email if Conf.require_user_email
+  # ^^ TODO: make this site specific
+  
+  validates_as_email :email
+  before_validation 'self.email = nil if email.empty?'
+  # ^^ makes the validation succeed if email == ''
+
+  ##
+  ## NAMED SCOPES
+  ##
+
   named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
 
   # alphabetized and (optional) limited to +letter+
@@ -28,9 +45,6 @@ class User < ActiveRecord::Base
   # select only logins
   named_scope :logins_only, :select => 'login'
 
-  # custom validation
-  include CrabgrassDispatcher::Validations
-  validates_handle :login
   
   ##
   ## USER IDENTITY
@@ -112,6 +126,21 @@ class User < ActiveRecord::Base
   ## USER SETTINGS
   ##
 
+  has_one :setting, :class_name => 'UserSetting', :dependent => :destroy
+
+  # allow us to call user.setting.x even if user.setting is nil
+  def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
+  alias_method_chain :setting, :safety
+
+  def update_or_create_setting(attrs)
+    if setting.id
+      setting.update_attributes(attrs)
+    else
+      create_setting(attrs)
+    end
+  end
+
+
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
   # message.
@@ -140,6 +169,18 @@ class User < ActiveRecord::Base
   def destroy_requests
     Request.destroy_for_user(self)
   end
+
+  # returns the rating object that this user created for a rateable
+  def rating_for(rateable)
+    rateable.ratings.by_user(self).first
+  end
+  
+  # returns true if this user rated the rateable
+  def rated?(rateable)
+    return false unless rateable
+    rating_for(rateable) ? true : false
+  end
+    
 
   ##
   ## PERMISSIONS
@@ -186,14 +227,34 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates_presence_of :email if Conf.require_user_email  # TODO: make this site specific
-  
-  validates_as_email :email
-  before_validation :clear_email
-  # makes the validation succeed if email == ''
-  def clear_email
-    self.email = nil if email.empty?
-  end
+  ##
+  ## SITES
+  ##
+
+  # DEPRECATED
+  USER_SITES_SQL = 'SELECT sites.* FROM sites JOIN (groups, memberships) ON (sites.network_id = groups.id AND groups.id = memberships.group_id) WHERE memberships.user_id = #{self.id}'
+
+  # DEPRECATED
+  def site_id; self.site_ids.first; end
+
+  # DEPRECATED
+  has_many :sites, :finder_sql => USER_SITES_SQL
+
+  # DEPRECATED
+  named_scope(:on, lambda do |site|
+    if site.limited?
+      { :select => "users.*",
+        :joins => :memberships,
+        :conditions => ["memberships.group_id = ?", site.network.id]
+      }
+    else 
+      {}
+    end
+  end)
+
+  ##
+  ## DEPRECATED
+  ##
 
   # TODO: this does not belong here, should be in the mod, but it was not working
   # there.

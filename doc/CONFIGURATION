@@ -69,6 +69,10 @@ If using smtp, things get more complicated:
 
 For SMTP, to enable ssl connection the port must be 587 or 465. Some SMTP auth requires a domain, which does not have to be a real domain, but it must exist.
 
+=== Miscellanous Global Options
+
+paranoid_emails
+if true, then urls sent in emails will be obscured.
 
 === Sites
 
@@ -102,21 +106,67 @@ To see what sites are available:
 
   rake cg:site:list RAILS_ENV=<env>
 
+=== Profiles
+
+You can choose which fields can be filled out in a profile and which profile
+tabs are active. If not present, these options default to allowing all.
+
+Here is an example:
+
+  profiles:
+    - public
+    - private
+  profile_fields:
+    - basic
+    - notes
+    - phone_numbers
+    - email_addresses
+    - locations
+    - im_addresses
+    - websites
+    - cryptkeys
+
 
 = Site Defaults
 
 Sites are stored in the database. However, if they do not have a particular attributed configured (the value is NULL), then the attribute's value defaults to whatever is configured in <tt>crabgrass.*.yml</tt>. 
 
-The following attributes may be set globally in <tt>crabgrass.*.yml</tt>, or on a per-site basis:
+The following attributes may be set globally in <tt>crabgrass.*.yml</tt>, or on a per-site basis (by using the database):
 
-  :title -- the title of the website.
-  :email_sender -- email address that outgoing emails are sent from.
-  :enforce_ssl -- if true, cookies will only work over tls/ssl.
-  :show_exceptions -- if true, exceptions are show to the user.
-  :require_user_email -- if true, user registration requires email address
-  :default_language -- language code of the default language to use
-  :tracking -- if true, we track user visits, logins and page views.
-  :available_page_types -- if set, limits what page types can be created.
+title:
+  the title of the website.
+ 
+email_sender:
+  email address that outgoing emails are sent from.
+ 
+enforce_ssl:
+  if true, cookies will only work over tls/ssl.
+ 
+show_exceptions:
+  if true, exceptions are show to the user.
+ 
+require_user_email:
+  if true, user registration requires email address
+
+default_language:
+  language code of the default language to use
+ 
+tracking:
+  if true, we track user visits, logins and page views.
+ 
+available_page_types:
+  if set, limits what page types can be created.
+ 
+chat:
+  if false, chat is disabled
+
+translation_group:
+  the name of a group that is allowed access to edit translations.
+
+limited:
+  if set to true, then a user can only see people, groups, and pages from the
+  current site. stuff from other sites will appear invisible. (note, currently, 
+  this is not actually stored in the database but must be globally configured).
 
 Unfrequently modified options:
 

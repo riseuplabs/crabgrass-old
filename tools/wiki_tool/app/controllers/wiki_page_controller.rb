@@ -1,9 +1,10 @@
 class WikiPageController < BasePageController
-
   include ControllerExtension::WikiRenderer
+  include ControllerExtension::WikiImagePopup
   
   stylesheet 'wiki_edit', :action => :edit
   javascript 'wiki_edit', :action => :edit
+  helper :wiki # for wiki toolbar stuff
 
   ##
   ## ACCESS: no restriction
@@ -39,7 +40,10 @@ class WikiPageController < BasePageController
     end
     # render if needed
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-    @wiki_html = generate_wiki_html_for_user(@wiki, current_user)
+    #@wiki_html = generate_wiki_html_for_user(@wiki, current_user)
+    # ^^ i would like to populate the edit links using js on the client instead, 
+    # why? i am not sure i have a great reason. i like the idea of keeping the markup
+    # unaltered. eventually, this could be useful for caching.
   end
 
   def version
@@ -97,32 +101,42 @@ class WikiPageController < BasePageController
     redirect_to page_url(@page, :action => 'show')
   end
 
-  # TODO: make post only    
+  # TODO: make post only
   def break_lock
     # will unlock all sections
     @wiki.unlock
     redirect_to page_url(@page, :action => 'edit', :section => @section)
   end
-  
-  # xhr only
-  def show_image_popup
-    @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
-    render(:update) do |page| 
-      page.replace 'image_popup', :partial => 'image_popup'
+
+  ##
+  ## INLINE WIKI EDITING
+  ##
+
+  def edit_inline
+    heading = params[:id]    
+    greencloth = GreenCloth.new(@wiki.body)
+    text_to_edit = greencloth.get_text_for_heading(heading)
+    form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
+    next_heading = greencloth.heading_tree.successor(heading)
+    next_heading = next_heading ? next_heading.name : nil
+    wiki_plus_form = replace_section_with_form(@wiki.body_html, heading, next_heading, form)
+    render :update do |page|
+      page.replace_html(:wiki_html, wiki_plus_form)
     end
   end
 
-  # upload image via xhr
-  # response goes to an iframe, so requires responds_to_parent
-  def upload
-    asset = Asset.build params[:asset]
-    asset.parent_page = @page
-    asset.save
-    @images = Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
-    responds_to_parent do
-      render(:update) do |page|
-        page.replace 'image_popup', :partial => 'image_popup'
-      end
+  def save_inline
+    if params[:save]
+      heading = params[:id]
+      body = params[:body]
+      greencloth = GreenCloth.new(@wiki.body)
+      greencloth.set_text_for_heading(heading, body)
+      @wiki.body = greencloth.to_s
+      @wiki.save
+      @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
+    end
+    render :update do |page|
+      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
     end
   end
 
@@ -190,6 +204,25 @@ class WikiPageController < BasePageController
       true
     end
   end
-  
+
+  # Takes some html and a section (defined from heading_start to heading_end)
+  # and replaces the section with the form. This is pretty crude, and might not
+  # work in all cases.
+  def replace_section_with_form(html, heading_start, heading_end, form)
+    index_start = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_start)}">/
+    if heading_end
+      index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
+      index_end -= 1
+    else
+      index_end = -1
+    end
+    html[index_start..index_end] = form
+    return html
+  end
+
+  # which images should be displayed in the image upload popup
+  def image_popup_visible_images
+    Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
+  end
 end
 

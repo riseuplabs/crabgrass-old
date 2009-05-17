@@ -87,9 +87,30 @@ module Media
       'application/vnd.ms-powerpoint' => [:ppt,:mspowerpoint,:doc_asset,'MS Powerpoint'],
       'application/vnd.ms-excel'      => [:xls,:msexcel,:spreadsheet_asset,'MS Excel'],
       'application/vnd.ms-access'     => [nil, :msaccess, :doc_asset,'MS Access'],
-      'application/msword-template'     => [:doc,:msword,:text_asset,'MS Word Template'],
+      'application/msword-template'     => [:dot,:msword,:text_asset,'MS Word Template'],
       'application/excel-template'      => [:xlt,:msexcel,:spreadsheet_asset,'MS Excel Template'],
       'application/powerpoint-template' => [:pot,:mspowerpoint,:doc_asset,'MS Powerpoint Template'],
+
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation' =>
+        [:pptx, :mspowerpoint,:doc_asset,'MS Powerpoint'],
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation' =>
+        [:pptm, :mspowerpoint,:doc_asset,'MS Powerpoint'],
+      'application/vnd.openxmlformats-officedocument.presentationml.template' => 
+        [:potx,:mspowerpoint,:doc_asset,'MS Powerpoint Template'],
+
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document' =>
+        [:docm,:msword,:text_asset,'MS Word'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document' =>
+        [:docx,:msword,:text_asset,'MS Word'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.template' =>
+        [:dotx,:msword,:text_asset,'MS Word Template'],
+
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' =>
+        [:xlsm,:msexcel,:spreadsheet_asset,'MS Excel'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' =>
+        [:xlsx,:msexcel,:spreadsheet_asset,'MS Excel'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.template' =>
+        [:xltx,:msexcel,:spreadsheet_asset,'MS Excel Template'],
 
       'application/executable'        => [nil,:binary,nil,'Program'],
       'application/ms-dos-executable' => [nil,:binary,nil,'Program'],
@@ -98,21 +119,35 @@ module Media
       'application/shellscript' => [:sh,:shell,nil,'Script'],
       'application/ruby'        => [:rb,:ruby,nil,'Script'],
           
-      'application/vnd.oasis.opendocument.spreadsheet'  => [:ods,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
-      'application/vnd.oasis.opendocument.formula'      => [nil,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Formula'],
-      'application/vnd.oasis.opendocument.chart'        => [nil,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Chart'],
-      'application/vnd.oasis.opendocument.image'        => [nil,:oo_graphics, :doc_asset, 'OpenDocument Image'],
-      'application/vnd.oasis.opendocument.graphics'     => [:odg,:oo_graphics, :doc_asset, 'OpenDocument Graphics'],
-      'application/vnd.oasis.opendocument.presentation' => [:odp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
-      'application/vnd.oasis.opendocument.database'     => [:odf,:oo_database,:doc_asset, 'OpenDocument Database'],
-      'application/vnd.oasis.opendocument.text-web'     => [:html,:oo_html,:doc_asset, 'OpenDocument Webpage'],
-      'application/vnd.oasis.opendocument.text'         => [:odt,:oo_text,:doc_asset, 'OpenDocument Text'],
-      'application/vnd.oasis.opendocument.text-master'  => [:odm,:oo_text,:doc_asset, 'OpenDocument Master'],
+      'application/vnd.oasis.opendocument.spreadsheet'  => 
+        [:ods,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
+      'application/vnd.oasis.opendocument.formula'      => 
+        [nil,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Formula'],
+      'application/vnd.oasis.opendocument.chart'        => 
+        [nil,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Chart'],
+      'application/vnd.oasis.opendocument.image'        => 
+        [nil,:oo_graphics, :doc_asset, 'OpenDocument Image'],
+      'application/vnd.oasis.opendocument.graphics'     => 
+        [:odg,:oo_graphics, :doc_asset, 'OpenDocument Graphics'],
+      'application/vnd.oasis.opendocument.presentation' => 
+        [:odp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
+      'application/vnd.oasis.opendocument.database'     => 
+        [:odf,:oo_database,:doc_asset, 'OpenDocument Database'],
+      'application/vnd.oasis.opendocument.text-web'     => 
+        [:html,:oo_html,:doc_asset, 'OpenDocument Webpage'],
+      'application/vnd.oasis.opendocument.text'         =>
+        [:odt,:oo_text,:doc_asset, 'OpenDocument Text'],
+      'application/vnd.oasis.opendocument.text-master'  =>
+        [:odm,:oo_text,:doc_asset, 'OpenDocument Master'],
 
-      'application/vnd.oasis.opendocument.presentation-template' => [:otp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
-      'application/vnd.oasis.opendocument.graphics-template'     => [:otg,:oo_graphics,:doc_asset, 'OpenDocument Graphics'],
-      'application/vnd.oasis.opendocument.spreadsheet-template'  => [:ots,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
-      'application/vnd.oasis.opendocument.text-template'         => [:ott,:oo_text,:doc_asset, 'OpenDocument Text'],
+      'application/vnd.oasis.opendocument.presentation-template' =>   
+        [:otp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
+      'application/vnd.oasis.opendocument.graphics-template'     =>
+        [:otg,:oo_graphics,:doc_asset, 'OpenDocument Graphics'],
+      'application/vnd.oasis.opendocument.spreadsheet-template'  =>
+        [:ots,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
+      'application/vnd.oasis.opendocument.text-template'         =>
+        [:ott,:oo_text,:doc_asset, 'OpenDocument Text'],
 
       'packages/'        => [nil,:archive,nil,'Archive'],
       'multipart/zip'    => [:zip,:archive,nil,'Archive'],
@@ -168,7 +203,18 @@ module Media
       'odt' => 'application/vnd.oasis.opendocument.text',
       'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
       'odp' => 'application/vnd.oasis.opendocument.presentation',
-      'svg' => 'image/svg+xml'
+      'svg' => 'image/svg+xml',
+      'mod' => 'video/mpeg',
+
+      'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'pptm' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'potx' => 'application/vnd.openxmlformats-officedocument.presentationml.template',
+      'docm' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+      'xlsm' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template'
     }.freeze
 
    

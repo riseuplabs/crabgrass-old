@@ -1,11 +1,15 @@
 <%= render :partial => 'tabs' %>
 
-<% if current_user.may?(:edit, @page) %>
-  <p>
-    <%= link_to :edit.t, page_url(@page, :action => 'respond') %>
-    <%= link_to :delete.t, page_url(@page, :action => 'delete_response', :id => @response.id), :method => :post, :confirm => "Do you really want to delete your response?"[:really_delete_your_response] %>
-  </p>
-<% end %>
+<%=h @survey.description %>
 
-<%= render :partial => 'answers' %>
+<h3>Questions (<%= @survey.questions.size %>)</h3>
+
+<%= render :partial => 'show_questions' %>
+
+<h3>Responses (<%= @survey.responses.size %>)</h3>
+
+<ul>
+  <li>from: <%= @survey.responses.collect{|r|r.display_name}.join(', ') %> </li>
+</ul>
+
 

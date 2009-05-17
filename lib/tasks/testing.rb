@@ -47,7 +47,12 @@ namespace :test do
     desc "Mirrors plugin fixtures into a single location to help plugin tests"
     task :setup_plugin_fixtures => :environment do
       if ENV['MOD']
-        Engines::Testing.setup_plugin_fixtures([Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}])
+        plugin = Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}
+        unless plugin
+          puts 'ERROR: mod plugin named "%s" not found.' % ENV['MOD']
+          exit
+        end
+        Engines::Testing.setup_plugin_fixtures([plugin])
       else
         Engines::Testing.setup_plugin_fixtures
       end

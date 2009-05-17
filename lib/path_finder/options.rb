@@ -77,24 +77,21 @@ module PathFinder::Options
       :public => false,
     }
     if logged_in?
-      # TODO:
-      # this does not work for sites yet. Problems are:
-      # * we would need current_site.all_group_ids - including committees
-      # options[:group_ids] = current_site.network.nil? ?
-      #  current_user.all_group_ids :
-      #  current_user.all_group_ids # & current_site.group_ids
-      # --
-      #   ^^^ THERE IS A MUCH BETTER WAY TO DO THIS. -elijah
-      #       basically, what is needed is a complex intersect between
-      #       the site, the user's groups, and the pages groups. this is best
-      #       handled using a fulltext index on the access_ids field. 
       options[:user_ids] = [current_user.id]
       options[:group_ids] = current_user.all_group_ids
       options[:current_user] = current_user
     else
       options[:public] = true
-      # options[:group_ids] = current_site.group_ids unless current_site.network.nil?
     end
+
+    # limit pages to the current site.
+    if get_controller.current_site.limited?
+      # why site_ids instead of just site_id? perhaps in the future
+      # we will enable a user to login and see a configurable subset of the 
+      # sites they have available to them.
+      options[:site_ids] = [current_site.id]
+    end
+
     options
   end
 

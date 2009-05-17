@@ -3,38 +3,44 @@
 <ul>
   <%- if logged_in? -%>
     <%- if current_site.network -%>
-      <li id='menu_home' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-        <span><%= link_to_active 'Home'[:menu_home], url_for_group(current_site.network), @active_tab == :networks %></span>
+      <li id='menu_home' class='<%= @active_tab == :home ? 'active' : '' %>'>
+        <span><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
       </li>
     <%- end -%>
     <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
       <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
     </li>
-  <% else -%>
-    <li class='<%= params[:controller] == 'account' ? 'active' : '' %>'>
-      <span><%= link_to_active "Home"[:menu_home], '/', params[:controller] == 'account' %></span>
+  <%- else -%>
+    <li class='<%= @active_tab == :home ? 'active' : '' %>'>
+      <span><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
     </li>    
-  <% end -%>
+  <%- end -%>
 
+  <%# for now, i am disabling these tabs when not logged in. why? because
+      the controllers currently bomb out in bad ways if you are not logged in. %>
+  <%- if logged_in? -%>
   <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
     <span><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
   </li>
 
   <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
-    <span><%= link_to_active "Groups"[:menu_groups], groups_url, @active_tab == :groups %></span>
+    <% url = logged_in? ? groups_url(:action => :my) : groups_url %>
+    <span><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %></span>
   </li>
 
-  <% if current_site.has_networks? %>
+  <%- if current_site.has_networks? -%>
     <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-      <span><%= link_to_active "Networks"[:menu_networks], networks_url, @active_tab == :networks %></span>
+      <% url = logged_in? ? networks_url(:action => :my) : networks_url %>
+      <span><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
     </li>
-  <% end %>
+  <%- end -%>
+  <%- end -%>
 
-  <% if logged_in? -%>
+  <%- if logged_in? and current_site.chat? -%>
   <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
     <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
-  <% end -%>
+  <%- end -%>
 
   <%= call_hook :top_menu %>
 </ul>

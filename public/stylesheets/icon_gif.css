@@ -57,6 +57,7 @@
 .ok_16 {background-image: url(/images/gif/16/ok.gif)}
 .open_letter_16 {background-image: url(/images/gif/16/open_letter.gif)}
 .open_quote_16 {background-image: url(/images/gif/16/open_quote.gif)}
+.page_add_16 {background-image: url(/images/gif/16/page_add.gif)}
 .page_approval_16 {background-image: url(/images/gif/16/page_approval.gif)}
 .page_article_16 {background-image: url(/images/gif/16/page_article.gif)}
 .page_default_16 {background-image: url(/images/gif/16/page_default.gif)}
@@ -81,6 +82,9 @@
 .refresh_16 {background-image: url(/images/gif/16/refresh.gif)}
 .right_16 {background-image: url(/images/gif/16/right.gif)}
 .rss_16 {background-image: url(/images/gif/16/rss.gif)}
+.sad_16 {background-image: url(/images/gif/16/sad.gif)}
+.sad_minus_16 {background-image: url(/images/gif/16/sad_minus.gif)}
+.sad_plus_16 {background-image: url(/images/gif/16/sad_plus.gif)}
 .security-medium_16 {background-image: url(/images/gif/16/security-medium.gif)}
 .send_16 {background-image: url(/images/gif/16/send.gif)}
 .settings_16 {background-image: url(/images/gif/16/settings.gif)}
@@ -95,14 +99,19 @@
 .table_16 {background-image: url(/images/gif/16/table.gif)}
 .tag_16 {background-image: url(/images/gif/16/tag.gif)}
 .tags_16 {background-image: url(/images/gif/16/tags.gif)}
+.tiny_minus_16 {background-image: url(/images/gif/16/tiny_minus.gif)}
 .tiny_pencil_16 {background-image: url(/images/gif/16/tiny_pencil.gif)}
 .tiny_pending_16 {background-image: url(/images/gif/16/tiny_pending.gif)}
+.tiny_plus_16 {background-image: url(/images/gif/16/tiny_plus.gif)}
 .tiny_star_16 {background-image: url(/images/gif/16/tiny_star.gif)}
 .tiny_wrench_16 {background-image: url(/images/gif/16/tiny_wrench.gif)}
 .todo_16 {background-image: url(/images/gif/16/todo.gif)}
 .trash_16 {background-image: url(/images/gif/16/trash.gif)}
+.user_16 {background-image: url(/images/gif/16/user.gif)}
 .user_add_16 {background-image: url(/images/gif/16/user_add.gif)}
 .user_delete_16 {background-image: url(/images/gif/16/user_delete.gif)}
+.user_icon_16 {background-image: url(/images/gif/16/user_icon.gif)}
+.weather_sun_16 {background-image: url(/images/gif/16/weather_sun.gif)}
 .world_16 {background-image: url(/images/gif/16/world.gif)}
 .wrench_16 {background-image: url(/images/gif/16/wrench.gif)}
 .announce_48 {background-image: url(/images/gif/48/announce.gif)}

@@ -169,17 +169,31 @@ class DispatchController < ApplicationController
   end
   
   def controller_for_page(page)
-    params[:action] = params[:_page_action] || 'show'
-    #params[:id] = page
-    params[:controller] = page.controller
-    new_controller(page.controller_class_name)
+    if params[:_page_action] =~ /-/
+      # decontruct action into controller-action
+      controller, action = params[:_page_action].split('-')
+      params[:action] = action
+      controller = page.controller + '_' + controller
+      params[:controller] = controller
+      new_controller("#{controller.camelcase}Controller")
+    else
+      # use the main controller for this response
+      params[:action] = params[:_page_action] || 'show'
+      params[:controller] = page.controller
+      new_controller("#{page.controller.camelcase}Controller")
+    end
   end
   
   def controller_for_group(group)
     params[:action] = 'show'
     if group.instance_of? Network
-      params[:controller] = 'network'
-      new_controller('NetworkController')
+      if current_site.network and current_site.network == group
+        params[:controller] = 'site_network'
+        new_controller('SiteNetworkController')
+      else
+        params[:controller] = 'network'
+        new_controller('NetworkController')
+      end
     else
       params[:controller] = 'group'
       new_controller('GroupController')

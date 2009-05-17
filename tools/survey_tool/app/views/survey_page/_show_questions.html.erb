@@ -1,0 +1,6 @@
+<ul class="questions">
+<% @survey.questions.each do |question| %>
+   <li><%= h question.label %></li>
+<% end %>
+</ul>
+
