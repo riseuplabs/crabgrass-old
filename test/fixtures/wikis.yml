@@ -11,17 +11,18 @@ second:
 multi_section:
   id: 3
   body: |-
-    h2. section one header
+    h2. section one
        
     s1 text 1
     s1 text 2
     
-    h3. section TWO header
+    section two
+    ===========
     
     s2 text #1
     s2 more text
     
-    h2. final section THREE headers
+    h2. section three
     
     s3 text first line
     s3 last lime

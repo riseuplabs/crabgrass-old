@@ -149,12 +149,12 @@ class WikiPageControllerTest < Test::Unit::TestCase
     user = users(:orange)
     page.add(user, :access => :admin)
 
-    wiki = pages(:wiki).data   
+    wiki = pages(:wiki).data
     wiki.lock(Time.now, user)
-    
+
     post :break_lock, :page_id => pages(:wiki).id
     assert_equal nil, wiki.reload.locked?
-    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit', :section => 'all')
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
   end
 
 end

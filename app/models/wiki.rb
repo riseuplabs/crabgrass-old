@@ -141,9 +141,15 @@ class Wiki < ActiveRecord::Base
       # we're being asked if we can edit :all (whole page).
       # no one has locked :all, but someone has locked one or more sections
       # so we can't edit :all
+
+      # there is only one section locked (which is not :all), but it's locked by this user
+      # so the user should be able to edit the whole document
+      return true if edit_locks.size == 1 and edit_locks.values.first[:locked_by_id] == user.id
+
+      # someone else has locked other sections
       return false
     elsif edit_locks[section].nil? or edit_locks[section][:locked_by_id] == user.id
-      # we have no lock for this section or the lock belongs to this user
+      # there is no lock for this section or the lock belongs to this user
       return true
     else
       return false
