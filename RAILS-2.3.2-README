@@ -6,3 +6,86 @@ to make work with rails 2.3, run:
 rake notes:fixme
 
 
+BIG THINGS THAT NEED DOING
+============================
+
+
+engines
+------------------------
+
+this is going to be a pain.
+
+the way normal engines/rails works: you can override plugin views and controllers in main app.
+
+the way crabgrass works: you can override main app from plugins.
+
+totally opposite! we need to figure out how to make this hack with new built in engine support in rails.
+
+also: the new engine plugin does not currently support controller/helper automatic mixins. we need this.
+
+mods/tools
+----------------------------
+
+modify mods with custom routes to use the new standard rails way of doing this.
+
+
+i18n
+--------------------------
+
+read this excellent guide
+http://guides.rubyonrails.org/i18n.html
+
+the variable substitution that is supported in rails looks like this:
+"blah blah {{var}} blah blah". change al lthe translations in all the lang files
+use this.
+
+the lang/*.yml files need to be renamed to lose the country.
+
+the lang/*.yml files need to be namespaced for language. ie, en.yml:
+  en:
+    my_key: "blah blah"
+
+or, perhaps we could write our own i18n storage backend, which we will probably
+have to do anyway because of these:
+
+(1) we need lang/custom/*.yml to override the other strings
+(2) we need key_with_site_xx to override everything else, depending on the current site.
+
+
+make crabgrass thread safe
+-----------------------------
+
+mod_passenger does not require this, but now that rails 2.3 is supposedly thread safe, we might as well be too. this means making every class variable or global variable READ ONLY. instead, we can use Thread.current[]
+
+To make crabgrass thread safe:
+
+(1) change Site.current to use Thread.current[:site] instead of @@current
+(2) same for User.current, or get rid of it.
+
+this needs to be made threadsafe:
+
+  # see http://blog.evanweaver.com/articles/2006/12/26/hacking-activerecords-automatic-timestamps/
+  # only works because rails is not thread safe. 
+  # but a thread safe version could be written.
+  def without_timestamps
+    self.class.record_timestamps = false
+    yield
+    self.class.record_timestamps = true
+  end
+
+ditto for this (although this is low priority, because it is not actually used since
+we don't currently do page_terms reindexing in the background):
+
+    # this is not thread safe.
+    def with_deltas_disabled
+      if block_given?
+        previous_deltas_enabled = ThinkingSphinx.deltas_enabled?
+        begin
+          ThinkingSphinx.deltas_enabled = false
+          yield
+        ensure
+          ThinkingSphinx.deltas_enabled = previous_deltas_enabled
+        end
+      end
+    end 
+
