@@ -1,0 +1,7 @@
+
+To make crabgrass thread safe:
+
+(1) change Site.current to Thread.current[:site]
+(2) same for User.current, or get rid of it.
+
+

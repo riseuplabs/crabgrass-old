@@ -1,3 +1,7 @@
+Upgrade to rails 2.3
+  requires rake >= 0.8.4
+  sessions are now activerecord base, for now. require migration.
+
 in development
   * sites
   * customization of css

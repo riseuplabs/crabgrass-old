@@ -26,27 +26,28 @@ ActionController::Base.class_eval do
   end
 end
 
-ActionView::PartialTemplate.class_eval do
-  private
-  def partial_pieces(view, partial_path)
-    if partial_path.include?('/')
-      return File.dirname(partial_path), File.basename(partial_path)
-    else
-      return partial_controller_find(view, partial_path)
-    end
-  end
+# FIXME: not sure what partial_pieces was doing. 
+#ActionView::PartialTemplate.class_eval do
+#  private
+#  def partial_pieces(view, partial_path)
+#    if partial_path.include?('/')
+#      return File.dirname(partial_path), File.basename(partial_path)
+#    else
+#      return partial_controller_find(view, partial_path)
+#    end
+#  end
 
-  def partial_controller_find(view, partial_path, klass = view.controller.class) 
-    if view.finder.file_exists?("#{klass.controller_path}/_#{partial_path}")  
-      return klass.controller_path, partial_path 
-    elsif !klass.superclass.method_defined?(:controller_path)  
-      # End of the inheritance line 
-      return view.controller.class.controller_path, partial_path 
-    else  
-      return partial_controller_find(view, partial_path, klass.superclass)  
-    end  
-  end
-end
+#  def partial_controller_find(view, partial_path, klass = view.controller.class) 
+#    if view.finder.file_exists?("#{klass.controller_path}/_#{partial_path}")  
+#      return klass.controller_path, partial_path 
+#    elsif !klass.superclass.method_defined?(:controller_path)  
+#      # End of the inheritance line 
+#      return view.controller.class.controller_path, partial_path 
+#    else  
+#      return partial_controller_find(view, partial_path, klass.superclass)  
+#    end  
+#  end
+#end
 
 ### 
 ### MULTIPLE SUBMIT BUTTONS

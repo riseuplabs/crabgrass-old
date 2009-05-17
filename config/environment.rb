@@ -32,26 +32,25 @@
 ### (1) FRAMEWORK
 ###
 
-# Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
-# Bootstrap the Rails environment, frameworks, and default configuration
-require File.join(File.dirname(__FILE__), 'boot')
-require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
-require "#{RAILS_ROOT}/lib/extension/engines.rb"
-require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
-require "#{RAILS_ROOT}/lib/zip/zip.rb"
+def rails_path(filename); "#{RAILS_ROOT}/#{filename}"; end
+def relative_path(filename); "#{File.dirname(__FILE__)}/#{filename}"; end
 
-# path in which zipped galleries (for download) will be stored.
+require relative_path('boot')
+require rails_path('vendor/plugins/engines/boot.rb')
+require rails_path('lib/extension/engines')
+require rails_path('lib/crabgrass/boot.rb')
+
+##
+## FIXME: move zip stuff to initializers where it belongs
+##
+require "#{RAILS_ROOT}/lib/zip/zip.rb"
 GALLERY_ZIP_PATH = "#{RAILS_ROOT}/public/gallery_download"
 unless File.exists?(GALLERY_ZIP_PATH)
   Dir.mkdir(GALLERY_ZIP_PATH)
 end
 
-# possible in plugin?
-#class Rails::Configuration
-#  attr_accessor :action_web_service
-#end
 
 Rails::Initializer.run do |config|
   ###
@@ -60,53 +59,55 @@ Rails::Initializer.run do |config|
 
   config.load_paths += %w(activity assets associations discussion chat observers profile poll task requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
 
+  config.frameworks -= [:active_resource]
+
+  config.active_record.observers = :user_observer, :membership_observer,
+    :group_observer, :contact_observer
+  # FIXME: can plugins add observers? then add this... :message_page_observer
+
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
 
-  # Activate observers that should always be running
-  config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :contact_observer, :message_page_observer
-    # :user_relation_observer
+  config.action_controller.session_store = :active_record_store
 
-  # currently, crabgrass stores an excessive amount of information in the session
-  # in order to do smart breadcrumbs. These means we cannot use cookie based
-  # sessions because they are too limited in size. If you want to switch to a different
-  # storage container, you need to disable breadcrumbs or store them someplace else,
-  # like an in-memory temporary table. 
-  config.action_controller.session_store = :p_store
+  # Specify gems that this application depends on and have them installed with rake gems:install
+  # config.gem "bj"
+  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
+  # config.gem "sqlite3-ruby", :lib => "sqlite3"
+  # config.gem "aws-s3", :lib => "aws/s3"
 
-  # store fragments on disk, we might have a lot of them.
-  config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
+  # Only load the plugins named here, in the order given.
+  config.plugins = [ :pseudo_rmagick, :validates_as_email, :all ]
 
-  # Make Active Record use UTC-base instead of local time
+  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
+  # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
-  config.active_record.default_timezone = :utc
 
-  # allow plugins in mods/ and pages/
-  config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
- 
+  # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+  # config.i18n.default_locale = :de
+
   # Deliveries are disabled by default. Do NOT modify this section.
   # Define your email configuration in email.yml instead.
   # It will automatically turn deliveries on
-
   config.action_mailer.perform_deliveries = false
 
-  # the absolutely required gems
-  #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
-  #config.gem 'redcloth', :version => '>= 4.0.0'
-
-  #config.frameworks += [ :action_web_service]
-  #config.action_web_service = Rails::OrderedOptions.new
-  #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
-  #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
-
-  # See Rails::Configuration for more options
+  # FIXME allow plugins in mods/ and pages/
+  #config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
 
   # we want handle sass templates ourselves
   # so we must not load the 'plugins/rails.rb' part of Sass
   module Sass
     RAILS_LOADED = true
   end
+
+  # FIXME support lang/custom. does this work? will later files override earlier?
+  config.i18n.load_path << Dir[File.join(RAILS_ROOT, 'lang', '*.yml')]
+  config.i18n.load_path << Dir[File.join(RAILS_ROOT, 'lang', 'custom', '*.yml')]
+  config.i18n.default_locale = :en
+
+  # see http://api.rubyonrails.org/classes/Rails/Configuration.html
+  # for the available options.
 
   ###
   ### (3) ENVIRONMENT 
@@ -139,15 +140,10 @@ end
 ### (7) FINALLY
 ###
 
-#require 'actionwebservice'
-#require RAILS_ROOT+'/vendor/plugins/actionwebservice/lib/actionwebservice'
-
-# There appears to be something wrong with dirty tracking in rails.
-# Lots of errors if this is enabled:
+# FIXME: should this be enabled or not?
 ActiveRecord::Base.partial_updates = false
 
 # build a hash of PageClassProxy objects {'TaskListPage' => <TaskListPageProxy>}
 PAGES = PageClassRegistrar.proxies.dup.freeze
 Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
-
 

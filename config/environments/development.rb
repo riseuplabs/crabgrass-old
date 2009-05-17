@@ -25,16 +25,16 @@ config.action_mailer.raise_delivery_errors = true
 # the default log level for development mode should be to log everything.
 config.log_level = :debug
 
+# FIXME is this still needed?
 # however, rails engines are way too verbose, so set engines logging to info:
-if defined? Engines
-  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
-  Engines.logger.level = Logger::INFO
-end
+#if defined? Engines
+#  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
+#  Engines.logger.level = Logger::INFO
+#end
 
 # this will cause classes in lib to be reloaded on each request in
 # development mode. very useful if working on a source file in lib!
 
-# TODO: for rails 2.1.1, change to ActiveSupport::Dependencies
 ActiveSupport::Dependencies.mechanism = :load
 ActiveSupport::Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
 #::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/mods'])
