@@ -43,7 +43,7 @@ module Engines
   
   # List of extensions to load, can be changed in init.rb before calling Engines.init
   mattr_accessor :rails_extensions
-  self.rails_extensions = %w(action_mailer asset_helpers routing migrations dependencies)
+  self.rails_extensions = %w(asset_helpers form_tag_helpers migrations dependencies)
   
   # The name of the public directory to mirror public engine assets into.
   # Defaults to <tt>RAILS_ROOT/public/plugin_assets</tt>.
@@ -68,7 +68,7 @@ module Engines
   mattr_accessor :disable_application_code_loading
   self.disable_application_code_loading = false
   
-  # Set this ti true if code should not be mixed (i.e. it will be loaded
+  # Set this to true if code should not be mixed (i.e. it will be loaded
   # from the first valid path on $LOAD_PATH)
   mattr_accessor :disable_code_mixing
   self.disable_code_mixing = false
@@ -81,7 +81,7 @@ module Engines
   self.code_mixing_file_types = %w(controller helper)
   
   class << self
-    def init
+    def init(initializer)
       load_extensions
       Engines::Assets.initialize_base_public_directory
     end
@@ -124,9 +124,9 @@ module Engines
     # and that they are placed within plugin/app/things (the pluralized form of 'thing').
     # 
     # It's important to note that you'll also want to ensure that the "things" are
-    # on your load path in your plugin's init.rb:
+    # on your load path by including them in Rails load path mechanism, e.g. in init.rb:
     #
-    #   Rails.plugins[:my_plugin].code_paths << "app/things"
+    #  ActiveSupport::Dependencies.load_paths << File.join(File.dirname(__FILE__), 'app', 'things'))
     #
     def mix_code_from(*types)
       self.code_mixing_file_types += types.map { |x| x.to_s.singularize }
@@ -137,16 +137,14 @@ module Engines
     # if they are identical already (checked via FileUtils#identical?).
     def mirror_files_from(source, destination)
       return unless File.directory?(source)
+      
       # TODO: use Rake::FileList#pathmap?    
       source_files = Dir[source + "/**/*"]
       source_dirs = source_files.select { |d| File.directory?(d) }
       source_files -= source_dirs
       
       unless source_files.empty?
-        #base_target_dir = File.join(destination, File.dirname(source_files.first))
-        ### CRABGRASS HACK: for some reason, this ^^^ was producing horrible
-        ### results
-        base_target_dir = File.join(destination)
+        base_target_dir = File.join(destination, File.dirname(source_files.first).gsub(source, ''))
         FileUtils.mkdir_p(base_target_dir)
       end
       
@@ -165,10 +163,7 @@ module Engines
         begin
           target = File.join(destination, file.gsub(source, ''))
           unless File.exist?(target) && FileUtils.identical?(file, target)
-            ## CRABGRASS HACK XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            FileUtils.ln_sf(file, target)
-            #FileUtils.cp(file, target)
-            ## XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            FileUtils.cp(file, target)
           end 
         rescue Exception => e
           raise "Could not copy #{file} to #{target}: \n" + e 
