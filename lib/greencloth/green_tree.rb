@@ -105,7 +105,11 @@ class GreenTree < Array
   # returns a regexp that can be used to find the original markup for 
   # this node in a body of greencloth text.
   def markup_regexp
-    heading_text = Regexp.escape(self.text)
+    # take out carriage returns
+    heading_text = Regexp.escape(self.text.gsub(/\r\n/, "\n"))
+    # add back carriage returns as optional
+    heading_text.gsub!('\\n', '\\r?\\n')
+    
     Regexp.union(
       /^#{heading_text}\s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)/,
       /^h#{heading_level}\. #{heading_text}\s*?(\r?\n\r?\n?|$)/
