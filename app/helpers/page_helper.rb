@@ -425,7 +425,7 @@ module PageHelper
     page_groupings.each do |grouping|
       entry = {:name => grouping, :display => display_page_class_grouping(grouping),
          :url => grouping.gsub(':','-')}
-      entry[:pages] = Page.class_group_to_class(grouping).collect
+      entry[:pages] = Page.class_group_to_class(grouping, available_page_types).collect
       tree << entry
     end
     tree.sort!{|a,b| a[:display] <=> b[:display] }
