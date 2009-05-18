@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging "password"
 
   # the order of these filters matters. change with caution.
+  before_filter :essential_initialization
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
@@ -28,6 +29,16 @@ class ApplicationController < ActionController::Base
   helper_method :current_appearance  # make available to views
   def current_appearance
     current_site.custom_appearance || CustomAppearance.default
+  end
+
+  # ensure that essential_initialization ALWAYS comes first
+  def self.prepend_before_filter(*filters, &block)
+    filter_chain.skip_filter_in_chain(:essential_initialization, &:before?)
+    filter_chain.prepend_filter_to_chain(filters, :before, &block)
+    filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
+  end
+  def essential_initialization
+    current_site
   end
 
   protected
