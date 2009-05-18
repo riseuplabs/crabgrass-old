@@ -161,5 +161,23 @@ out: |-
   <h2><a name="oaks"></a>Oaks<a class="anchor" href="#oaks">&para;</a></h2>
   <h3><a name="white-oak"></a>White Oak<a class="anchor" href="#white-oak">&para;</a></h3>
   <h3><a name="red-oak"></a>Red Oak<a class="anchor" href="#red-oak">&para;</a></h3>
+---
+name: multiline headings
+in: |-
+  h1. section one line one
+  line two
 
-  
+  section one text
+
+  h1. section two line one
+  line two
+
+  section two text
+out: |-
+  <h1 class="first"><a name="section-one-line-one-line-two"></a>section one line one<br />
+  line two<a class="anchor" href="#section-one-line-one-line-two">&para;</a></h1>
+  <p>section one text</p>
+  <h1><a name="section-two-line-one-line-two"></a>section two line one<br />
+  line two<a class="anchor" href="#section-two-line-one-line-two">&para;</a></h2>
+  <p>section two text</p>
+

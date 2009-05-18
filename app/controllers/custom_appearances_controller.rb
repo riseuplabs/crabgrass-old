@@ -59,10 +59,8 @@ protected
 
   def authorized?
     return false unless logged_in?
-
-    if current_site and @appearance == current_site.custom_appearance and current_site.super_admin_group_id
-      admin_group = Group.find(current_site.super_admin_group_id)
-      if admin_group and current_user.may?(:admin, admin_group)
+    if current_site and @appearance == current_site.custom_appearance and current_site.super_admin_group
+      if current_user.may?(:admin, current_site.super_admin_group)
         return true
       end
     end
