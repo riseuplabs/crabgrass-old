@@ -241,6 +241,41 @@ module GreenClothFormatterHTML
     clean_html(text, ALLOWED_TAGS) if sanitize_html # (sanitize_html should always be true)
   end
 
+  # this is an exact copy of the method by the same name defined in 
+  # lib/redcloth/formatters/html.rb (the mixin applied to this class),
+  # but for some reason everything blows up horribly if we try to call clean_html.
+  # This only happens with RedCloth 4.1.9. Debugging doesn't help, probably
+  # because it is calling some C code instead of this method. This method
+  # is copied here so that greencloth will work with redcloth 4.1.9.
+  def clean_html( text, allowed_tags = BASIC_TAGS )
+    text.gsub!( /<!\[CDATA\[/, '' )
+    text.gsub!( /<(\/*)([A-Za-z]\w*)([^>]*?)(\s?\/?)>/ ) do |m|
+      raw = $~
+      tag = raw[2].downcase
+      if allowed_tags.has_key? tag
+        pcs = [tag]
+        allowed_tags[tag].each do |prop|
+          ['"', "'", ''].each do |q|
+            q2 = ( q != '' ? q : '\s' )
+            if raw[3] =~ /#{prop}\s*=\s*#{q}([^#{q2}]+)#{q}/i
+              attrv = $1
+              next if (prop == 'src' or prop == 'href') and not attrv =~ %r{^(http|https|ftp):}
+              pcs << "#{prop}=\"#{attrv.gsub('"', '\\"')}\""
+              break
+            end
+          end
+        end if allowed_tags[tag]
+        "<#{raw[1]}#{pcs.join " "}#{raw[4]}>"
+      else # Unauthorized tag
+        if block_given?
+          yield m
+        else
+          ''
+        end
+      end
+    end
+  end
+
 end
 
 
