@@ -126,6 +126,17 @@ class WikiTest < Test::Unit::TestCase
     assert_equal ['section_two'], w.locked_sections_not_by(users(:orange)), "wiki should list section two as locked by users other than orange"
   end
 
+  def test_lock_race_condition
+    w = wikis(:multi_section)
+
+    w.lock(Time.now, users(:orange), 'section_one')
+    assert_raises WikiLockException do 
+      w.lock(Time.now, users(:blue), 'section_one')
+    end
+    assert_equal ['section_one'], w.reload.locked_sections
+    assert_equal users(:orange).id, w.locked_by_id('section_one')
+  end
+
   def test_can_lock_only_one_section
       w = wikis(:multi_section)
 

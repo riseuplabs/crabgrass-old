@@ -20,6 +20,8 @@ class ErrorMessages < Exception
   end
 end
 
+class WikiLockException < Exception; end
+
 # extend base Exception class to have record() method.
 # this is useful like so:
 #
