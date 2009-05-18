@@ -66,6 +66,16 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', "h2. Oranges\n\nooooo")
   end
 
+  def test_multinine_heading
+    greencloth = GreenCloth.new( in_texts(:multiline_headings) )
+
+    assert_equal "h1. section one line one\nline two\n\nsection one text",
+      greencloth.get_text_for_heading('section-one-line-one-line-two')
+
+    assert_equal "h1. section two line one\nline two\n\nsection two text",
+      greencloth.get_text_for_heading('section-two-line-one-line-two')
+  end
+
   protected
   
   def in_texts(name)
