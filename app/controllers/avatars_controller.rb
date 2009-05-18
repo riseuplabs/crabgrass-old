@@ -2,12 +2,7 @@
 ## Avatars are the little icons used for users and groups.
 ##
 
-class AvatarsController < ActionController::Base
-  session :off
-  caches_page :show
-
-#  include ActionView::Helpers::TagHelper
-#  include ErrorHelper
+class AvatarsController < ApplicationController
 
   def create 
     unless params[:image]
@@ -32,18 +27,6 @@ class AvatarsController < ActionController::Base
     redirect_to params[:redirect]
   #rescue Exception => exc
   #  flash_message_now :exception => exc
-  end
-
-  def show
-    @image = Avatar.find_by_id params[:id]
-    if @image.nil?
-      size = Avatar.pixels(params[:size])
-      size.sub!(/^\d\dx/,'')
-      filename = "#{File.dirname(__FILE__)}/../../public/images/default/#{size}.jpg"
-      send_data(IO.read(filename), :type => 'image/jpeg', :disposition => 'inline')
-    else
-      render :template => 'avatars/show.jpg.flexi'
-    end
   end
 
 end

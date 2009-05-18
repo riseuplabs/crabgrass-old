@@ -20,7 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
   map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
 
-  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
+  map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
   ##### REGULAR ROUTES ####################################
