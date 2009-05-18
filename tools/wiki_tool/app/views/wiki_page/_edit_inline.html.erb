@@ -2,7 +2,7 @@
   <blockquote class="error"><%=h @wiki_inline_error %></blockquote>
 <% end %>
 
-<% rows = [word_wrap(text, 80).count("\n")+4, 30].min %>
+<% rows = [word_wrap((text||""), 80).count("\n")+4, 30].min %>
 <% form_remote_tag :loading => show_spinner('save'), 
   :url => page_xurl(@page, :action => 'save_inline', :id => heading) do -%>
   <div class='fieldset'>

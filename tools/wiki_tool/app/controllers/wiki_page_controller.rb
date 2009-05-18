@@ -43,7 +43,11 @@ class WikiPageController < BasePageController
 
     if logged_in? and heading = @wiki.currently_editing_section(current_user)
       # if the user has a particular section locked, then show it to them.
-      @wiki.body_html = body_html_with_form(heading)
+      if heading == :all
+        redirect_to page_url(@page,:action=>'edit')
+      else
+        @wiki.body_html = body_html_with_form(heading)
+      end
     end
   end
 
@@ -228,7 +232,7 @@ class WikiPageController < BasePageController
   # Takes some html and a section (defined from heading_start to heading_end)
   # and replaces the section with the form. This is pretty crude, and might not
   # work in all cases.
-  def replace_section_with_form(html, heading_start, heading_end, form)    
+  def replace_section_with_form(html, heading_start, heading_end, form)
     index_start = html.index /^<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
     if heading_end
       index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
