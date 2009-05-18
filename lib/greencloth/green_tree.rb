@@ -7,6 +7,7 @@ class GreenTree < Array
   attr_accessor :text
   attr_accessor :name
   attr_accessor :markup_index
+  attr_accessor :type
 
   def initialize(text=nil, name=nil, heading_level=nil)
     tree = super()
@@ -77,10 +78,13 @@ class GreenTree < Array
     if self.text
       # find the first occurance of this node in the markup
       self.markup_index = markup.index(self.markup_regexp)
-      raise "Can't find heading with text: '#{text}' in markup" if self.markup_index.nil?
-      # modify the markup, so that it will no longer match
-      # the markup_regexp at this position
-      markup[self.markup_index] = "\000"
+      if self.markup_index.nil?
+        raise "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup" 
+      else
+        # modify the markup, so that it will no longer match
+        # the markup_regexp at this position
+        markup[self.markup_index] = "\000"
+      end
     else
       self.markup_index = 0
     end
@@ -90,14 +94,14 @@ class GreenTree < Array
     end
   end
 
-  # greencloth specific
+  # returns a regexp that can be used to find the original markup for 
+  # this node in a body of greencloth text.
   def markup_regexp
-    # (\n\r?){0,2}
-    /#{Regexp.escape(self.markup)}\s*?(\n\r?\n\r?|$)/
-  end
-
-  def markup
-    "h%s. %s" % [heading_level, text]
+    heading_text = Regexp.escape(self.text)
+    Regexp.union(
+      /^#{heading_text}\s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)/,
+      /^h#{heading_level}\. #{heading_text}\s*?(\r?\n\r?\n?|$)/
+    )
   end
 
 end

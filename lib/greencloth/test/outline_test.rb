@@ -34,14 +34,15 @@ class TestHeadings < Test::Unit::TestCase
 
     assert_equal "h1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans",
       greencloth.get_text_for_heading('vegetables')
-
-    # test setext style headings
+  end
+ 
+  def test_get_setext_style_headings
     greencloth = GreenCloth.new( in_texts(:setext_trees) )
 
-    assert_equal "h1. Evergreens\n\n\n\nh3. Cedar\n\nh3. Redwood\n\nh3. Fir",
+    assert_equal "Evergreens \n==========\n\nh3. Cedar\n\nh3. Redwood\n\nh3. Fir",
       greencloth.get_text_for_heading('evergreens')
 
-    assert_equal "h2. Oaks\n\n\n\nh3. White Oak\n\nh3. Red Oak",
+    assert_equal "Oaks\n----\n\nh3. White Oak\n\nh3. Red Oak",
       greencloth.get_text_for_heading('oaks')
   end
 

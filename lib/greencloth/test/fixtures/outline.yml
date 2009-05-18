@@ -124,15 +124,15 @@ in: |-
   
   h3. Under second
 out: |-
-  <h1><a name="title"></a>Title<a class="anchor" href="#title">&para;</a></h1>
+  <h1 class="first"><a name="title"></a>Title<a class="anchor" href="#title">&para;</a></h1>
   <h3><a name="under-first"></a>Under first<a class="anchor" href="#under-first">&para;</a></h3>
   <h1><a name="title_2"></a>Title<a class="anchor" href="#title_2">&para;</a></h1>
   <h3><a name="under-second"></a>Under second<a class="anchor" href="#under-second">&para;</a></h3>
 ---
 name: setext trees
 in: |-
-  Evergreens
-  ========
+  Evergreens 
+  ==========
   
   h3. Cedar
   
@@ -152,7 +152,7 @@ in: |-
   
   h3. Red Oak
 out: |-
-  <h1><a name="evergreens"></a>Evergreens<a class="anchor" href="#evergreens">&para;</a></h1>
+  <h1 class="first"><a name="evergreens"></a>Evergreens<a class="anchor" href="#evergreens">&para;</a></h1>
   <h3><a name="cedar"></a>Cedar<a class="anchor" href="#cedar">&para;</a></h3>
   <h3><a name="redwood"></a>Redwood<a class="anchor" href="#redwood">&para;</a></h3>
   <h3><a name="fir"></a>Fir<a class="anchor" href="#fir">&para;</a></h3>

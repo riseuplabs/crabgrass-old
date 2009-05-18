@@ -43,14 +43,14 @@ class TestMarkup < Test::Unit::TestCase
     end
   end
 
-  def test_sections
-    return unless @fixtures['sections.yml']
-    @fixtures['sections.yml'].each do |doc|
-      greencloth = GreenCloth.new( doc['in'] )
-      greencloth.wrap_section_html = true
-      assert_markup('sections.yml', doc, greencloth.to_html)
-    end
-  end
+  #def test_sections
+  #  return unless @fixtures['sections.yml']
+  #  @fixtures['sections.yml'].each do |doc|
+  #    greencloth = GreenCloth.new( doc['in'] )
+  #    greencloth.wrap_section_html = true
+  #    assert_markup('sections.yml', doc, greencloth.to_html)
+  #  end
+  #end
 
   protected
  

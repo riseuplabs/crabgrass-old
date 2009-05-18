@@ -302,8 +302,8 @@ class GreenCloth < RedCloth::TextileDoc
   # populates @headings, and then restores the string to its original form.
   def extract_headings()
     self.extend(GreenClothFormatterHTML)
-    apply_rules([:normalize_heading_blocks])
     original = self.dup
+    apply_rules([:normalize_heading_blocks])
     to(GreenClothFormatterHTML)
     self.replace(original)
   end
@@ -327,7 +327,7 @@ class GreenCloth < RedCloth::TextileDoc
   TEXTILE_HEADING_RE = /^h[123]\./
 
   # allow setext style headings
-  HEADINGS_RE = /^(.+?)\r?\n([=-])[=-]+ */
+  HEADINGS_RE = /^(.+?)\s*\r?\n([=-])[=-]+\s*?(\r?\n\r?\n?|$)/
   def normalize_heading_blocks(text)
     text.gsub!(HEADINGS_RE) do
       tag = $2=="=" ? "h1" : "h2"
