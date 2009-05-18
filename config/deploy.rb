@@ -64,8 +64,6 @@ namespace :passenger do
   end
 end
 
-after :deploy, "passenger:restart"
-
 # CREATING DATABASE.YML
 # inspired by http://www.jvoorhis.com/articles/2006/07/07/managing-database-yml-with-capistrano
 
@@ -153,7 +151,9 @@ namespace :debian do
   end
 end
 
+after  "deploy:setup",   "crabgrass:create_shared"
+after  "deploy:symlink", "crabgrass:link_to_shared"
 before "deploy:restart", "debian:symlinks"
-after "deploy", "crabgrass:link_to_shared"
-after "deploy:setup", "crabgrass:create_shared"
+after  "deploy:restart", "passenger:restart"
+
 
