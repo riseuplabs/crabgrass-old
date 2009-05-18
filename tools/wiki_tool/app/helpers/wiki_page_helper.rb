@@ -40,7 +40,7 @@ module WikiPageHelper
     opts = {:url => url}
 
     if @heading_with_form
-      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:confirm_unsaved_text_lost_label]
+      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
     end
 
     link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])

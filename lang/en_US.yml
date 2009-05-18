@@ -678,6 +678,11 @@ notify_current_access: "<b>Current Access:</b> notify people or groups who curre
 notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
 notify_recipients: "Recipients"
 
+destroy_page_link: "Shred {page_class}"
+confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
+trash_page_link: "Move {page_class} to trash"
+
+
 ##
 ## PAGE TYPES
 ##
@@ -855,6 +860,8 @@ diff_link: "diff"
 created_when_by: "created :when by :user"
 insert_image_heading: "Insert Image"
 insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
+wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
+wiki_section_edit: "Edit This Section"
 
 ##
 ## WALL
