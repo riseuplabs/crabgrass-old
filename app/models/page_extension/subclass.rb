@@ -99,11 +99,12 @@ module PageExtension::Subclass
     end
 
     # 'vote' -> PageClassProxy
-    def class_group_to_class(class_group)
+    # If available is given only pages from available will be included.
+    def class_group_to_class(class_group, available=PAGES.keys)
       class_group = class_group.gsub('-',':')
       return [] unless class_group.any?
-      PAGES.values.collect do |proxy|
-        proxy if proxy.class_group.include?(class_group)
+      available.collect do |key|
+        PAGES[key] if PAGES[key].class_group.include?(class_group)
       end.compact
     end
 
