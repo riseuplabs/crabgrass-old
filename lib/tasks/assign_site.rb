@@ -30,15 +30,30 @@ namespace :cg do
     end
 
     Page.find(:all, :conditions => 'site_id IS NULL').each do |page|
-      if page.owner and page.owner.site_id
+      if page.owner and page.owner.site_id and (page.owner.is_a? Group or page.owner.sites.count == 1)
         site_id = page.owner.site_id
         puts "page(%s).site_id = %s" % [page.id, site_id]
         Page.connection.execute "UPDATE pages SET site_id = #{site_id} WHERE id = #{page.id}"
       elsif page.owner and page.owner.is_a? User
         groups = page.groups
+        users = page.users
         if groups.any?
           site_id = groups.first.site_id
           if site_id
+            puts "page(%s).site_id = %s" % [page.id, site_id]
+            Page.connection.execute "UPDATE pages SET site_id = #{site_id} WHERE id = #{page.id}"
+          end
+        elsif users.any?
+          users.each do |user|
+            if user.sites.count == 1
+              if site_id == nil
+                site_id = user.site_id
+              elsif site_id != user.site_id
+                site_id = 0
+              end
+            end
+          end
+          if site_id and site_id != 0
             puts "page(%s).site_id = %s" % [page.id, site_id]
             Page.connection.execute "UPDATE pages SET site_id = #{site_id} WHERE id = #{page.id}"
           end
