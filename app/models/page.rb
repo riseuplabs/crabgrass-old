@@ -18,12 +18,13 @@ class Page < ActiveRecord::Base
   include PageExtension::Index
 #  include PageExtension::Linking
   include PageExtension::Static
-  acts_as_taggable_on :tags
 
+  acts_as_taggable_on :tags
+  acts_as_site_limited
 
   #######################################################################
   ## PAGE NAMING
-  
+
   def validate
     if (name_changed? or group_id_changed?) and name_taken?
       errors.add 'name', 'is already taken'
@@ -35,7 +36,7 @@ class Page < ActiveRecord::Base
   def name_url
     name.any? ? name : friendly_url
   end
-  
+
   def flow= flow
     if flow.kind_of? Integer
       write_attribute(:flow, flow)
@@ -45,7 +46,21 @@ class Page < ActiveRecord::Base
       raise TypeError.new("Flow needs to be an integer or one of [#{FLOW.keys.join(', ')}]")
     end
   end
-  
+
+  def delete
+    self.flow=:deleted
+    self.save
+  end
+
+  def undelete
+    write_attribute(:flow, nil)
+    self.save
+  end
+
+  def deleted?
+    flow == FLOW[:deleted]
+  end
+
   def friendly_url
     s = title.nameize
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
@@ -76,11 +91,11 @@ class Page < ActiveRecord::Base
 
   #######################################################################
   ## RELATIONSHIP TO PAGE DATA
-  
+
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
   has_many :assets, :dependent => :destroy
-      
+
   validates_presence_of :title
   validates_associated :data
   validates_associated :discussion
@@ -95,7 +110,7 @@ class Page < ActiveRecord::Base
     end
     self.resolved=value
     save
-  end  
+  end
 
   def build_post(post,user)
     # this looks like overkill, but it seems to be needed
@@ -157,7 +172,7 @@ class Page < ActiveRecord::Base
   
   #######################################################################
   ## PAGE ACCESS CONTROL
-  
+
   ## update attachment permissions
   after_save :update_access
   def update_access
@@ -169,8 +184,8 @@ class Page < ActiveRecord::Base
 #
 # SITES
 #
-#############################  
-  
+#############################
+
   # returns true if self is part of given network
   # -- TODO
   #   i don't think this does what it is supposed to do.
@@ -184,14 +199,14 @@ class Page < ActiveRecord::Base
     groups | self.groups_with_access(:edit)
     groups | self.groups_with_access(:admin)
     groups | self.groups_with_access(:comment)
-    
-    groups.include?(network) ? true : false 
+
+    groups.include?(network) ? true : false
     true
   end
 
-####  
-  
-  
+####
+
+
   # This method should never be called directly. It should only be called
   # from User#may?()
   #
@@ -199,6 +214,7 @@ class Page < ActiveRecord::Base
   #   :view  -- user can see the page.
   #   :edit  -- user can participate.
   #   :admin -- user can destroy the page, change access.
+  #   :none  -- always returns false
   # conditional permissions:
   #   :comment -- sometimes viewers can comment and sometimes only participates can.
   #   (NOT SUPPORTED YET)
@@ -206,8 +222,12 @@ class Page < ActiveRecord::Base
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
+  # :edit and :comment should return false for deleted pages.
   def has_access!(perm, user)
+    # do not allow comments or editing of deleted pages:
+    return false if self.deleted? and (perm == :edit or perm == :comment)
     perm = comment_access if perm == :comment
+
     upart = self.participation_for_user(user)
     if perm == :delete
       # this is a unicef specific hack. Group coordinators should be able
@@ -228,7 +248,9 @@ class Page < ActiveRecord::Base
         (a.access||100) <=> (b.access||100)
       }
       # allow :view if the participation exists at all
-      allowed = ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+      asked_access_level = ACCESS[perm.to_sym] || 0
+      actual_access_level = part_with_best_access.access || ACCESS[:view]
+      allowed = asked_access_level >= actual_access_level
     end
     if allowed
       return true
@@ -245,7 +267,7 @@ class Page < ActiveRecord::Base
 
   #######################################################################
   ## RELATIONSHIP TO ENTITIES (GROUPS OR USERS)
-    
+
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be added to pages!
@@ -258,11 +280,11 @@ class Page < ActiveRecord::Base
       entity.add_page(self,attributes)
     end
   end
-      
+
   # Remove a group or user from this page (by destroying the corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be removed from pages!
-  def remove(entity)    
+  def remove(entity)
     if entity.is_a? Enumerable
       entity.each do |e|
         e.remove_page(self)
@@ -314,7 +336,7 @@ class Page < ActiveRecord::Base
     end
     return groups + users
   end
-  
+
   #######################################################################
   ## DENORMALIZATION
 
@@ -331,7 +353,7 @@ class Page < ActiveRecord::Base
     end
     true
   end
-  
+
   # used to mark stuff that has been changed.
   # so that we know we need to update other stuff when saving.
   def dirty(what)
@@ -358,10 +380,10 @@ class Page < ActiveRecord::Base
   def class_display_name
     self.class.class_display_name
   end
-  
+
   # override this in subclasses…
   def supports_attachments
     true
   end
-  
+
 end

@@ -1,0 +1,4 @@
+page.replace_html 'popup_holder', :partial => 'base_page/share/share_popup'
+page['popup_holder'].setStyle( popup_holder_style )
+page.replace_html 'message', display_messages
+

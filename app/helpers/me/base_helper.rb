@@ -1,9 +1,5 @@
 module Me::BaseHelper
   
-  def me_cache_key
-    params.merge(:user_id => current_user.id, :version => current_user.version)
-  end
-
   def request_state_links
     hash = {:controller => params[:controller], :action => params[:action]}
     links = []

@@ -65,11 +65,11 @@ module PageExtension::Create
     # objects as appropriate.
     # returns array [users, groups, emails]
     def parse_recipients!(recipients)
-      users = []; groups = []; emails = []; errors = []
+       users = []; groups = []; emails = []; errors = []
       if recipients.is_a? Hash
         entities = []
         recipients.each do |key,value|
-          entities << key if value == '1'
+          entities << key if value.is_a?(Hash)
         end
       elsif recipients.is_a? Array
         entities = recipients
@@ -84,9 +84,9 @@ module PageExtension::Create
           groups << entity
         elsif entity.is_a? User
           users << entity
-        elsif u = User.find_by_login(entity)
+        elsif u = User.find_by_login(entity.to_s)
           users << u
-        elsif g = Group.find_by_name(entity)
+        elsif g = Group.find_by_name(entity.to_s)
           groups << g
         elsif entity =~ RFC822::EmailAddress
           emails << entity

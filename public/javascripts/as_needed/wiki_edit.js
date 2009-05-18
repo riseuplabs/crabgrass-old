@@ -464,6 +464,11 @@ Control.TextArea.ToolBar = Class.create(	{
 		var a = document.createElement('a');
 		a.href = '#';
     a.title = link_text; // crabgrass addition
+    // crabgrass addition
+    if(attrs['class']) {
+      a.addClassName(attrs['class']);
+      attrs['class'] = null;
+    }
 		this.attachButton(a,callback);
 		li.appendChild(a);
 		Object.extend(a,attrs || {});
@@ -478,82 +483,103 @@ Control.TextArea.ToolBar = Class.create(	{
 
 // --- ACTUAL CUSTOM CODE BEGINS HERE ---
 
+// add the toolbar controlling wiki body
+// each id used by the toolbar has a prefix, so that multiple toolbars
+// can be used on the same page
+function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image_popup_func)
+{
+  //setup
+  var textarea = new Control.TextArea(wiki_body_id);
+  var toolbar = new Control.TextArea.ToolBar(textarea);
+
+  toolbar.container.addClassName('markdown_toolbar'); //for css styles
+  toolbar.container.id = toolbar_id; //for css styles
+
+  //buttons
+  toolbar.addButton('Emphasis',function(){
+          this.wrapSelection('_','_');
+  },{
+          'class': 'markdown_italics_button',
+          id: 'markdown_italics_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Strong emphasis',function(){
+          this.wrapSelection('*','*');
+  },{
+          'class': 'markdown_bold_button',
+          id: 'markdown_bold_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Link',function(){
+          var selection = this.getSelection();
+          var response = prompt('Enter Link Target','');
+          if(response == null)
+                  return;
+          this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '->' + (response == '' ? 'http://link_url/' : response) + ']');
+  },{
+          'class': 'markdown_link_button',
+          id: 'markdown_link_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Image',function(){
+          // img_button_clicked();
+          image_popup_func();
+  },{
+          'class': 'markdown_image_button',
+          id: 'markdown_image_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Heading',function(){
+          var selection = this.getSelection();
+          if(selection == '')
+                  selection = 'Heading';
+          this.replaceSelection("\nh1. " + selection + "\n");
+  },{
+          'class': 'markdown_heading_button',
+          id: 'markdown_heading_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Unordered List',function(event){
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? (line.match(/^\*{2,}/) ? line.replace(/^\*/,'') : line.replace(/^\*\s/,'')) : (line.match(/\*+\s/) ? '*' : '* ') + line;
+          });
+  },{
+          'class': 'markdown_unordered_list_button',
+          id: 'markdown_unordered_list_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Ordered List',function(event){
+          var i = 0;
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? (line.match(/^\#{2,}/) ? line.replace(/^\#/,'') : line.replace(/^\#\s/,'')) : (line.match(/\#+\s/) ? '#' : '# ') + line;
+          });
+  },{
+          'class': 'markdown_ordered_list_button',
+          id: 'markdown_ordered_list_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Block Quote',function(event){
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? line.replace(/^\> /,'') : '> ' + line;
+          });
+  },{
+          'class': 'markdown_quote_button',
+          id: 'markdown_quote_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Code Block',function(event){
+          this.wrapSelection('<code>', '</code>');
+  },{
+          'class': 'markdown_code_button',
+          id: 'markdown_code_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Help',quickRedReference,{
+          'class': 'markdown_help_button',
+          id: 'markdown_help_button-' + button_id_suffix
+  });
+}
+
 document.observe('dom:loaded', function() {
-      //setup
-      var textarea = new Control.TextArea('wiki_body');
-      var toolbar = new Control.TextArea.ToolBar(textarea);
-      toolbar.container.id = 'markdown_toolbar'; //for css styles
-
-      //buttons
-      toolbar.addButton('Emphasis',function(){
-              this.wrapSelection('_','_');
-      },{
-              id: 'markdown_italics_button'
-      });
-
-      toolbar.addButton('Strong emphasis',function(){
-              this.wrapSelection('*','*');
-      },{
-              id: 'markdown_bold_button'
-      });
-
-      toolbar.addButton('Link',function(){
-              var selection = this.getSelection();
-              var response = prompt('Enter Link Target','');
-              if(response == null)
-                      return;
-              this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '->' + (response == '' ? 'http://link_url/' : response) + ']');
-      },{
-              id: 'markdown_link_button'
-      });
-
-      toolbar.addButton('Image',function(){
-              img_button_clicked();
-      },{
-              id: 'markdown_image_button'
-      });
-
-      toolbar.addButton('Heading',function(){
-              var selection = this.getSelection();
-              if(selection == '')
-                      selection = 'Heading';
-              this.replaceSelection("\nh1. " + selection + "\n");
-      },{
-              id: 'markdown_heading_button'
-      });
-
-      toolbar.addButton('Unordered List',function(event){
-              this.collectFromEachSelectedLine(function(line){
-                      return event.shiftKey ? (line.match(/^\*{2,}/) ? line.replace(/^\*/,'') : line.replace(/^\*\s/,'')) : (line.match(/\*+\s/) ? '*' : '* ') + line;
-              });
-      },{
-              id: 'markdown_unordered_list_button'
-      });
-
-      toolbar.addButton('Ordered List',function(event){
-              var i = 0;
-              this.collectFromEachSelectedLine(function(line){
-                      return event.shiftKey ? (line.match(/^\#{2,}/) ? line.replace(/^\#/,'') : line.replace(/^\#\s/,'')) : (line.match(/\#+\s/) ? '#' : '# ') + line;
-              });
-      },{
-              id: 'markdown_ordered_list_button'
-      });
-
-      toolbar.addButton('Block Quote',function(event){
-              this.collectFromEachSelectedLine(function(line){
-                      return event.shiftKey ? line.replace(/^\> /,'') : '> ' + line;
-              });
-      },{
-              id: 'markdown_quote_button'
-      });
-
-      toolbar.addButton('Code Block',function(event){
-              this.wrapSelection('<code>', '</code>');
-      },{
-              id: 'markdown_code_button'
-      });
-
-      toolbar.addButton('Help',quickRedReference,{
-              id: 'markdown_help_button'
-      });
+  //
 });

@@ -5,14 +5,6 @@ network_invite_info: "Indtast navnene p\xC3\xA5 de grupper du har lyst til at in
 remove_contact_info: "Hvis du fjerner nogen fra din kontakt liste vil du ikke have mulighed for at se n\xC3\xA5r de er logget ind eller se deres fulde profil. Desuden, hvis du fjerner dem som kontakt vil det betyde at du ogs\xC3\xA5 fjerner dem fra din kontakt liste."
 signup_link: Brug for en ny profil?
 join_request_info: "Du kan ikke blive medlem af denne gruppe f\xC3\xB8r din anmodning er blevet godkendt. Du kan holde styr p\xC3\xA5 dine anmodninger ved at bes\xC3\xB8ge \"%s\"."
-footer_text_crabgrass: |-
-  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
-  <ul>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
-    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
-  </ul>
 signup_email_info: "Valgfrit: brugt hvis du glemmer dit kodeord"
 menu_groups: Grupper
 menu_home: Hjem

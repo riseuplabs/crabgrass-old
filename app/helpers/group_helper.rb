@@ -2,10 +2,6 @@ module GroupHelper
 
   include WikiHelper
 
-  def group_cache_key(group, options={})
-    params.merge(:version => group.version, :updated_at => group.updated_at.to_i, :lang => session[:language_code]).merge(options)
-  end
-
   def may_admin_group?
     logged_in? and current_user.may?(:admin, @group)
   end

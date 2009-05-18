@@ -7,9 +7,18 @@
 <%= render :partial => 'profile_tabs' %>
 
   <table><tr>
-  <td valign='top'<%= avatar_for @user, 'xlarge' %></td>
+  <td valign='top' id='user_avatar'><%= avatar_for @user, 'xlarge' %></td>
   <td valign='top' style='padding-left: 10px'>
-  <%= link_to_function 'upload image'[:upload_image], "$('uploadimage').show(); this.hide();" %>
+  <%= link_to_function('upload image'[:upload_image], "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16") %><br />
+  <%= link_to_remote(
+		     'remove image'[:remove_image], {
+		       :url => {:action => 'delete_avatar'}, 
+		       :update=>'user_avatar',
+		       :loading => replace_class_name('remove_image_link', 'minus_16', 'spinner_icon'),
+		       :complete => replace_class_name('remove_image_link', 'spinner_icon','minus_16')+"$(\'remove_image_link\').hide();",
+		       :confirm => 'Do you really want to delete your user image?'[:confirm_delete_avatar]
+		       },
+		     :class => "small_icon minus_16", :id => "remove_image_link") if @user.avatar%>
   <div id='uploadimage' style='display:none'>
     <%= "Uploaded image will be cropped and stretched to 96 pixels square."[:uploaded_image_cropped] %><br/><br/>
     <% form_for(:image, @avatar, :url => {:controller => '/avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>

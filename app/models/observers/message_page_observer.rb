@@ -13,10 +13,17 @@ class MessagePageObserver < ActiveRecord::Observer
         #   key = rand(Time.now)
         # end
         key = rand(Time.now)
-        MessagePageActivity.create!(:user => user,
-                                    :other_user => message_page.created_by,
-                                    :related_id => message_page.id,
-                                    :key => key)
+        if activity = MessagePageActivity.find_page(message_page.id) && post = message_page.discussion.posts.last
+          MessageReplyActivity.create(:user => user,
+                                      :other_user => post.user,
+                                      :related_id => post.id,
+                                      :key => key)
+        else
+          MessagePageActivity.create!(:user => user,
+                                      :other_user => message_page.updated_by,
+                                      :related_id => message_page.id,
+                                      :key => key)
+        end
       end
     end
   end

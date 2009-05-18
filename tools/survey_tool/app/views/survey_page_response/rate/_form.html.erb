@@ -1,5 +1,5 @@
 <div class="current_rating">
-  <h3 class='alert'><%= @rating == 0 ? "Rate This Response"[:survey_rate_this_response] : "Your Rating Of This Response"[:survey_your_rating_of_this_response]%></h3>
+    <h3 class='alert'><%= @rating == 0 ? "Rate This Response"[:survey_rate_this_response] : "You already rated this response - You gave it a {rating}."[:survey_you_already_rated_response_with_rating, @rating.to_s]%></h3>
   <div class="rate_bar round">
     <%= render :partial => 'survey_page_response/rate/bar' %>
   </div>

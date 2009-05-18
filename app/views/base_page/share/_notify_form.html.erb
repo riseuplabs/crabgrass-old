@@ -1,0 +1,54 @@
+<% class_display_name = 'page'.t if class_display_name.nil? -%>
+<% type = 'send' if type.nil? -%>
+
+<table class='notify'>
+  <tr>
+    <td colspan="2"><h2><%= 'Recipients'[:notify_recipients] %></h2></td>
+  </tr>
+
+  <tr>
+    <td><%= check_box :ignored, :notify_contributors, :onClick => "$('notify_contributor_area').toggle();" %></td>
+    <td><%= label :ignored, :notify_contributors, '<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page.'[:notify_contribution] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <div id='notify_contributor_area' class='notify_details' style='display:none'>
+        <%= render :partial => 'notify_recipient_list', :locals => {:users => @page.contributors} %>
+      </div>
+    </td>
+  </tr>
+
+  <tr class='gap'>
+    <td><%= check_box :ignored, :notify_current_access, { :onClick => "$('notify_current_access_area').toggle();" }%></td>
+    <td><%= label :ignored, :notify_current_access, '<b>Current Access:</b> notify people or groups who currently have access to this page.'[:notify_current_access] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <div id='notify_current_access_area' class='notify_details' style='display:none'>
+        <%= render :partial => 'notify_recipient_list', :locals => {:users => @page.users, :groups => @page.groups} %>
+      </div>
+    </td>
+  </tr>
+
+  <tr class='gap'>
+    <td><%= check_box :ignored, :share_with_new, :onClick => "$('share_page_recipients_new').toggle();" %></td>
+    <td><%= label :ignored, :share_with_new, '<b>New Access:</b> share this page with new people or groups, and notify them.'[:notify_new_access] %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><div id='share_page_recipients_new' style='display:none;'>
+      <%= render :partial => 'add_recipient_widget', :locals => {:empty_box => true} %>
+    </div></td>
+  </tr>
+ 
+  <tr>
+   <td colspan="2"><h2><%= 'Notification Message'[:notify] %></h2></td>
+  </tr>
+  <%= render :partial => 'notification_message_form', :locals => {:forced_send => true} %>
+
+</table>
+
+
+

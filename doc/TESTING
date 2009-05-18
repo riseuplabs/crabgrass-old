@@ -25,4 +25,45 @@ When running tests, the request host is 'test.host'. There is a site with this d
 Those tests that would like to test sites can call Conf.enable_site_testing()
 in setup().
 
+== Adding a new page fixture
 
+In pages.yml copy and paste an existing page fixture. Give it a unique name and id. Set the 'data_type' and 'data_id' to point to your data model. For example 'Wiki' and 1 for a new wiki page. Set created_by and update_by fields.
+
+For examples sake, say you created a new page with these parameters (some stuff omitted):
+
+my_wiki_page:
+  id: 240
+  title: my wiki
+  type: WikiPage
+  data_type: Wiki
+  data_id: 2
+  created_by_id: 1
+  created_by_login: quentin
+  updated_by_id: 3
+  updated_by_login: gerrard
+
+
+Edit user_participation.yml to setup correct permissions. Check the existing entries for the most up to date reference, but what you need is one entry for each user who should be allowed to edit you page. Each entry looks like this.
+
+my_wiki_page_blue:
+  id: <%= id+=1 %>
+  page_id: 240
+  user_id: 4
+  access: 1
+
+It should have a name like 'page_name' + _ + 'user_name' and the correct user_id field. Access can be 1 in most cases. Available options are
+  admin: 1
+  edit:  2
+  view:  3
+  none:  4
+
+See config/initializers/00-constants.rb for reference.
+
+Finally, after creating new user_participation fields. You must run these commands:
+
+rake db:fixtures:load
+rake cg:update_page_terms
+rake cg:update_fixtures
+
+
+They will update page_terms.yml fixtures, which is what is actually used for resolving permissions.

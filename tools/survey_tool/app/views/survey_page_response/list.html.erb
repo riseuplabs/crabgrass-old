@@ -8,7 +8,7 @@
     <th>created</th>
     <!-- <th>modified</th> -->
     <th>rating</th>
-    <%- (questions=@survey.questions[0..2]).each do |question| -%>
+    <%- (questions=@survey.questions[0..0]).each do |question| -%>
       <th><%= truncate(question.label) %></th>
     <%- end -%>
   </tr>
@@ -27,8 +27,9 @@
       <td>
         <%- if may_view_survey_question?(resp, question) -%>
           <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
-          <%= answer && answer.value.any? ? link_to(truncate(answer.value), url) : '&nbsp;' %>
-        <%- else -%>
+          <%= answer && answer.value.any? ? truncate(answer.value, 250, "...") : '&nbsp;' %>
+          <span class="more"> <%= link_to('see whole response'.t, url) %></span>
+         <%- else -%>
           &mdash;
         <%- end -%>
       </td>

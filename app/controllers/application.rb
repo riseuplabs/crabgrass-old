@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper
+  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper, CacheHelper
 
   # TODO: remove these, access via ActionController::Base.helpers() instead.
   include AuthenticatedSystem	
@@ -24,16 +24,6 @@ class ApplicationController < ActionController::Base
   session :session_secure => Conf.enforce_ssl # todo: figure out how to use current_site.enforce_ssl instead
   protect_from_forgery :secret => Conf.secret
   layout 'default'
-
-  helper_method :current_site  # make available to views
-  def current_site
-    @current_site ||= begin
-      site = Site.for_domain(request.host).find(:first)
-      site ||= Site.default
-      site ||= Site.new(:domain => request.host) 
-      Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
-    end
-  end
 
   helper_method :current_appearance  # make available to views
   def current_appearance
@@ -241,6 +231,37 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  ##
+  ## SITES
+  ##
 
+  public
+
+  # returns the current site. 
+  def current_site
+    if !@current_site_disabled
+      @current_site ||= begin
+        site = Site.for_domain(request.host).find(:first)
+        site ||= Site.default
+        site ||= Site.new(:domain => request.host) 
+        Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
+      end
+    else
+      Site.new()
+    end
+  end
+
+  # used for testing
+  def disable_current_site
+    @current_site_disabled = true
+  end
+
+  # used for testing
+  def enable_current_site
+    @current_site = nil
+    @current_site_disabled = false
+  end
+
+  helper_method :current_site  # make available to views
 
 end

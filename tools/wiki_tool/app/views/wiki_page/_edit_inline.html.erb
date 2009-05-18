@@ -1,13 +1,18 @@
-<% rows = word_wrap(text, 80).count("\n") + 4 %>
+<% if @wiki_inline_error %>
+  <blockquote class="error"><%=h @wiki_inline_error %></blockquote>
+<% end %>
+
+<% rows = [word_wrap(text, 80).count("\n")+4, 30].min %>
 <% form_remote_tag :loading => show_spinner('save'), 
   :url => page_xurl(@page, :action => 'save_inline', :id => heading) do -%>
   <div class='fieldset'>
-    <%= text_area_tag 'body', text, :rows => rows, :cols => 60, :style => 'width:99%'  %>
-    <div style="float: left">
-      <%= submit_tag "Save", :name => 'save' %>
+    <%= text_area_tag 'body', text, :rows => rows, :cols => 60, :style => 'width:99%;'  %>
+    <div>
+      <%= submit_tag("Save", :name => 'save') unless @wiki_inline_error %>
       <%= submit_tag 'Cancel', :name => 'cancel' %>
       <%= spinner('save') %>
     </div>
     <div style="text-align: right"><a href="javascript:quickRedReference();">formatting reference</a></div>
   </div>
-<% end -%>
+<% end %>
+

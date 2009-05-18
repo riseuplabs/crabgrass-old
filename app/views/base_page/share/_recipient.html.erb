@@ -1,0 +1,27 @@
+<%-
+
+# locals to take
+
+# recipient -> the recipient to render the partial for
+# access    -> what access level do we want to give to the new participation
+# unsaved   -> flag: does this participation contain changes that need to be saved / is new
+# blank     -> include blank as an access level option.
+
+blank = false if blank.nil?
+access = 'admin' if access.nil?
+unsaved = false if unsaved.nil?
+%>
+
+<li class="<%= 'unsaved' unless !unsaved %>">
+    <div style="float:left;">
+      <%= avatar_for(recipient,'xsmall') %>
+      <%= recipient.display_name %>
+    </div>
+    <div style="float:right;">
+      <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
+      <%- end -%>
+    </div>
+    <div style="clear:left;"></div>
+</li>
+

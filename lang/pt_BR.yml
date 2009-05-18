@@ -62,6 +62,7 @@ dont_have_permission_to_create_committees: "Voc\xC3\xAA n\xC3\xA3o est\xC3\xA1 a
 activate_js_to_rearrange_photos: Ativar Javascript para usar Drag&Drop para reorganizar as fotos!
 media_for_group: "%s em %s"
 medium: "interm\xC3\xA9dio"
+achive: Arquivo
 coordinator: Coordenador
 reject_button: recusar
 group_publicly_visible_description: "O grupo aparece em um diret\xC3\xB3rio p\xC3\xBAblico e o <i>profile</i> do grupo \xC3\xA9 vis\xC3\xADvel para n\xC3\xA3o membros do we.riseup.net/yourgroupname."
@@ -592,14 +593,6 @@ my_groups: Meus Grupos
 page_with_message: com mensagem
 group_discussion: "discuss\xC3\xA3o em grupo "
 my_pending_tasks_link: Pendente
-footer_text_crabgrass: |-
-  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
-  <ul>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
-    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
-  </ul>
 insert_image_heading: Incluir Imagem
 image_title: "T\xC3\xADtulo da imagem: %s"
 reset_password_text: "Ol\xC3\xA1, %s. Se voc\xC3\xAA esqueceu sua senha, voc\xC3\xAA pode criar outra aqui.\r\n"

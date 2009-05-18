@@ -37,20 +37,20 @@ class TestMarkup < Test::Unit::TestCase
   end
 
   def test_outline
-    return if SINGLE_FILE_OVERRIDE
+    return unless @fixtures['outline.yml']
     @fixtures['outline.yml'].each do |doc|
       assert_markup('outline.yml', doc, GreenCloth.new(doc['in'], '', [:outline]).to_html)
     end
   end
 
-  def test_sections
-    return if SINGLE_FILE_OVERRIDE
-    @fixtures['sections.yml'].each do |doc|
-      greencloth = GreenCloth.new( doc['in'] )
-      greencloth.wrap_section_html = true
-      assert_markup('sections.yml', doc, greencloth.to_html)
-    end
-  end
+  #def test_sections
+  #  return unless @fixtures['sections.yml']
+  #  @fixtures['sections.yml'].each do |doc|
+  #    greencloth = GreenCloth.new( doc['in'] )
+  #    greencloth.wrap_section_html = true
+  #    assert_markup('sections.yml', doc, greencloth.to_html)
+  #  end
+  #end
 
   protected
  

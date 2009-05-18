@@ -151,11 +151,16 @@ ul.tabset
 input[type="hidden"]
   display: none
 
+input[type="checkbox"]
+  vertical-align: sub
+
 option
   &.indented
-    margin-left: 1em
+    margin-left: 1.5em
   &.section
     font-weight: bold
+  &.spaced
+    margin-top: 0.5em
 
 label.date span
   font-size: 0.8em
@@ -411,4 +416,34 @@ table.plain
       padding: 0
       color: #edf2e3
 
+//
+// AUTO COMPLETE
+//
+
+div.auto_complete
+  background: #fff
+  ul
+    border: 1px solid #888
+    margin: 0
+    padding: 0
+    width: 100%
+    list-style-type: none
+    li
+      margin: 0
+      padding: 8px
+    li.selected
+      background-color: #ffb
+    strong.highlight
+      color: #800
+      margin: 0
+      padding: 0
+
+//
+// ERRORS
+//
+
+blockquote.error
+  padding: 0.5em
+  background: #fcc
+  border: 1px solid red
 

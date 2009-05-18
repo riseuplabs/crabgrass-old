@@ -4,7 +4,7 @@
 #
 
 --- 
-site1:
+local:
   id: 1
   name: "site1"
   title: "site1"
@@ -14,7 +14,8 @@ site1:
   network_id: 3001
   council_id: 1 # true levellers
   login_redirect_url: /me/dashboard
-site2:
+  limited: true
+test:
   id: 2
   name: "site2"
   title: "testing site"
@@ -29,4 +30,22 @@ site2:
   # a super_admin_group_id defined for the test site.
   super_admin_group_id: 4001
   login_redirect_url: /me/dashboard
+  limited: true
+limited:
+  id: 3
+  name: "limited"
+  domain: "limited"
+  title: "a limited site"
+  limited: true
+unlimited:
+  id: 4
+  name: "unlimited"
+  domain: "unlimited"
+  title: "an unlimited site"
+  limited: false
+redwood:
+  id: 5
+  name: "redwood"
+  title: "just a random site for redwood trees"
+  limited: true
 

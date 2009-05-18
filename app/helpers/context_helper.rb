@@ -149,11 +149,11 @@ module ContextHelper
       # there is no page, but for some reason we are still using a page
       # context. so, we just use what we are given.
       if @group or @group = Group.find_by_id(params[:group_id])
-        group_context('small', false)
+        group_context('small', true)
       elsif @user and current_user != @user
-        person_context('small', false)
+        person_context('small', true)
       elsif @user and current_user == @user
-        me_context('small', false)
+        me_context('small', true)
       end
     end
 

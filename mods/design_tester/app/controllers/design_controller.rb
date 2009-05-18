@@ -9,7 +9,7 @@ class DesignController < ApplicationController
   layout 'design'
   helper 'base_page'
   before_filter :fetch_random_data, :fetch_site
-  stylesheet 'post'
+  #stylesheet 'post'
   stylesheet 'gallery'
   stylesheet 'contribute'
   
