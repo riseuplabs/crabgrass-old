@@ -81,8 +81,14 @@ module LayoutHelper
   end
 
   def favicon_link
-    %q[<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="/favicon.png" type="image/x-icon" />]
+    icon_urls = if current_appearance and current_appearance.favicon
+      [current_appearance.favicon.url] * 2
+    else
+      ['/favicon.ico', '/favicon.png']
+    end
+      
+    %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
+  <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
   # support for holygrail layout:
