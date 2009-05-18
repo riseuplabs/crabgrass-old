@@ -48,10 +48,10 @@ module UserExtension::Organize
         end
       end
 
-      # all groups, including groups we have indirect access
-      # to (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group',
-        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
+      # all groups, including groups we have indirect access to even when there
+      # is no membership join record. (ie committees and networks)
+      has_many :all_groups, :class_name => 'Group', 
+        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql}) AND /*SITE_LIMITED*/' do
         def normals
           self.select{|group|group.normal?}
         end
@@ -63,6 +63,7 @@ module UserExtension::Organize
         end
       end
 
+      # DEPRECATED!!
       named_scope :on, lambda { |site|
         if site.network.nil?
           {}
