@@ -38,6 +38,13 @@ enabled_tools:
 email:
   delivery_method: :sendmail
 
+profiles:
+  - private
+profile_fields:
+  - basic
+  - notes
+  - websites
+
 ##
 ## SITES
 ##
