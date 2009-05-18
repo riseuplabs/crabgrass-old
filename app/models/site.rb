@@ -33,6 +33,7 @@ to hide data between sides)
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
+    t.string "public_pages"
   end
 
 end
@@ -55,6 +56,8 @@ class Site < ActiveRecord::Base
   
   serialize :translators, Array
   serialize :available_page_types, Array
+  serialize :public_pages, Array
+  serialize_default :public_pages, []
   serialize :evil, Hash
 
   # this is evil, but used in several important places:
@@ -75,6 +78,7 @@ class Site < ActiveRecord::Base
   def self.default
     Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
   end
+  
 
   # def stylesheet_render_options(path)
   #   {:text => "body {background-color: purple;} \n /* #{path.inspect} */"}
@@ -215,4 +219,12 @@ class Site < ActiveRecord::Base
     network.add_user!(user) if network and !user.member_of?(network)
   end
 
+  ##
+  ## Public pages
+  ##
+  
+  def public_pages_for?(page_type)
+    (public_pages.include?("all") || public_pages.include?(page_type.to_s.underscore)) ? true : false 
+  end
+  
 end
