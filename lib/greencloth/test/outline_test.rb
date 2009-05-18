@@ -23,7 +23,7 @@ class TestHeadings < Test::Unit::TestCase
 
     assert_equal 'vegetables', greencloth.heading_tree.successor('fruits').name
     assert_equal 'pears', greencloth.heading_tree.successor('tasty-apples').name
-    assert_equal nil, greencloth.heading_tree.successor('pears')
+    assert_equal 'vegetables', greencloth.heading_tree.successor('pears').name
   end
   
   def test_get_text
@@ -35,7 +35,7 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "h1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans",
       greencloth.get_text_for_heading('vegetables')
 
-    assert_equal "h2. Pears\n\n", greencloth.get_text_for_heading('pears')
+    assert_equal "h2. Pears", greencloth.get_text_for_heading('pears')
   end
  
   def test_get_setext_style_headings
@@ -47,7 +47,7 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "Oaks\n----\n\nh3. White Oak\n\nh3. Red Oak",
       greencloth.get_text_for_heading('oaks')
 
-    assert_equal "h3. Fir\n\n", greencloth.get_text_for_heading('fir')
+    assert_equal "h3. Fir", greencloth.get_text_for_heading('fir')
   end
 
   def test_duplicate_names
@@ -64,6 +64,16 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "[[toc]]\n\nh1. Fruits\n\nxxxxx\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', 'xxxxx')
 
     assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', "h2. Oranges\n\nooooo")
+  end
+
+  def test_multinine_heading
+    greencloth = GreenCloth.new( in_texts(:multiline_headings) )
+
+    assert_equal "h1. section one line one\nline two\n\nsection one text",
+      greencloth.get_text_for_heading('section-one-line-one-line-two')
+
+    assert_equal "h1. section two line one\nline two\n\nsection two text",
+      greencloth.get_text_for_heading('section-two-line-one-line-two')
   end
 
   protected

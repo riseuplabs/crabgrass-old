@@ -8,12 +8,14 @@ class GreenTree < Array
   attr_accessor :name
   attr_accessor :markup_index
   attr_accessor :type
+  attr_accessor :parent
 
-  def initialize(text=nil, name=nil, heading_level=nil)
+  def initialize(text=nil, name=nil, heading_level=nil, parent=nil)
     tree = super()
     tree.text = text
     tree.heading_level = heading_level
     tree.name = name
+    tree.parent = parent
     tree
   end
 
@@ -32,14 +34,20 @@ class GreenTree < Array
   def children; self; end
 
   def add_child(txt, name, heading_level)
-    self << GreenTree.new(txt, name, heading_level)
+    self << GreenTree.new(txt, name, heading_level, self)
   end
 
   # returns the heading text for the one after the 'heading_name'
   def successor(heading_name)
     children.each_with_index do |node, i|
       if node.name == heading_name
-        return child(i+1)
+        next_child = child(i+1)
+        if self.parent.nil?
+          return next_child
+        else
+          # go up a level to find the next element if we have to
+          return next_child ? next_child : self.parent.successor(self.name)
+        end
       elsif !node.leaf?
         found = node.successor(heading_name)
         return found unless found.nil? 
