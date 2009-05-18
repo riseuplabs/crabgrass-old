@@ -10,7 +10,7 @@ namespace :cg do
   desc "improves site_id for pages with multiple users, if possible"
   task(:update_pages_site => :environment) do
 
-    Page.find(:all, :conditions => 'owner_type IS "User"').each do |page|
+    Page.find(:all, :conditions => 'owner_type = "User"').each do |page|
       site_id = find_site_id_for_page(page)
       if site_id and site_id != 0
         puts "page(%s).site_id = %s" % [page.id, site_id]
