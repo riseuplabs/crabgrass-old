@@ -178,6 +178,6 @@ out: |-
   line two<a class="anchor" href="#section-one-line-one-line-two">&para;</a></h1>
   <p>section one text</p>
   <h1><a name="section-two-line-one-line-two"></a>section two line one<br />
-  line two<a class="anchor" href="#section-two-line-one-line-two">&para;</a></h2>
+  line two<a class="anchor" href="#section-two-line-one-line-two">&para;</a></h1>
   <p>section two text</p>
 
