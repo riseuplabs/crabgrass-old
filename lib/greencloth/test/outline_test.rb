@@ -34,6 +34,8 @@ class TestHeadings < Test::Unit::TestCase
 
     assert_equal "h1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans",
       greencloth.get_text_for_heading('vegetables')
+
+    assert_equal "h2. Pears\n\n", greencloth.get_text_for_heading('pears')
   end
  
   def test_get_setext_style_headings
@@ -44,6 +46,8 @@ class TestHeadings < Test::Unit::TestCase
 
     assert_equal "Oaks\n----\n\nh3. White Oak\n\nh3. Red Oak",
       greencloth.get_text_for_heading('oaks')
+
+    assert_equal "h3. Fir\n\n", greencloth.get_text_for_heading('fir')
   end
 
   def test_duplicate_names
