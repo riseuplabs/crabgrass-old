@@ -80,8 +80,8 @@ module UrlHelper
     if arg.instance_of? Integer
       arg = Group.find(arg)
     elsif arg.instance_of? String
-      group = Group.find_by_name(arg)
       name = arg
+      group = Group.find_by_name(name)
       display_name = (group ? group.display_name : name)
     elsif arg.is_a? Group
       controller = arg.class.name.downcase if arg.network?
