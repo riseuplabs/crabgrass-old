@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <head>
+    <style type="text/css">
+      <!--
+	  body { font-family:monospace,courier; font-size:0.8em; }
+	  a { text-decoration:none; }
+	  a:hover { text-decoration:underline; }
+	-->
+    </style>
+  </head>
+  <body>
+    <ul>
+      <% @messages.map{|msg|[msg.mail.subject, msg.id]}.each do |subject, id| -%>
+	<li><a href="#<%= id -%>"><%= subject -%></a></li>
+      <% end -%>
+    </ul>
+    <% @messages.each do |message| -%>
+      <a name="<%= message.id -%>"></a><h3><%= message.mail.subject %></h3>
+      <p><%= message.body -%></p>
+      <a href="#top">/\ up</a>
+    <% end -%>
+  </body>
+</html>
