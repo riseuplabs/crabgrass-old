@@ -580,37 +580,6 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
   });
 }
 
-function wiki_edit_decorate_with_edit_links(ajax_link, all_sections, unlocked_sections) {
-  $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
-    function(elem) {
-      // edit link for heading name
-      var heading_name = elem.href.replace(/^.*#/, '');
-      // not each section can be edited
-      if(!all_sections.include(heading_name))
-      {
-        return;
-      }
-      // is this currently editing by someone else
-      var locked = !(unlocked_sections.include(heading_name));
-      // insert the link
-      var link = ajax_link.replace('_change_me_', heading_name);
-      elem.insert({after:link});
-
-      // find the children
-      var ajax_element = elem.next();
-      var button_element = ajax_element.select("button").first();
-
-      // disable the link if it's being locked
-      if(locked) {
-        ajax_element.writeAttribute("onclick", "");
-        ajax_element.writeAttribute("href", "#" + heading_name);
-        button_element.removeClassName("pencil_16");
-        button_element.addClassName("lock_16");
-      }
-    }
-  );
-}
-
 document.observe('dom:loaded', function() {
   //
 });

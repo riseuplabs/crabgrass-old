@@ -41,8 +41,10 @@ class WikiPageController < BasePageController
     # render if needed
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
 
-    # this will return the default html if there are no edit forms for us
-    @wiki.body_html = body_html_with_form(current_user)
+    if logged_in? and heading = @wiki.currently_editing_section(current_user)
+      # if the user has a particular section locked, then show it to them.
+      @wiki.body_html = body_html_with_form(heading)
+    end
   end
 
   def version
@@ -110,16 +112,18 @@ class WikiPageController < BasePageController
 
   def edit_inline
     heading = params[:id]
-
-    # lock this section for the user
     @wiki.lock(Time.now, current_user, heading)
-
-    update_inline_html
+    update_inline_html(heading)
+  rescue WikiLockException
+    @locker = User.find_by_id @wiki.locked_by_id(heading)
+    @locker ||= User.new :login => 'unknown'
+    @wiki_inline_error = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => @locker.display_name}
+    update_inline_html(heading)
   end
 
   def save_inline
     heading = params[:id]
-    @wiki.unlock(heading)
+    @wiki.unlock_everything_by(current_user)
 
     if params[:save]
       body = params[:body]
@@ -131,14 +135,15 @@ class WikiPageController < BasePageController
       @wiki.save
     end
 
-    update_inline_html
+    update_inline_html(nil)
   end
 
-  def update_inline_html
+  def update_inline_html(heading)
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
     # render the edit remaining forms
-    @wiki.body_html = body_html_with_form(current_user)
-
+    if heading
+      @wiki.body_html = body_html_with_form(heading)
+    end
     render :update do |page|
       page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
     end
@@ -202,13 +207,12 @@ class WikiPageController < BasePageController
     end
   end
 
-  def body_html_with_form(user)
+  # returns the body html, but with a form in the place of the named heading
+  def body_html_with_form(heading)
     html = @wiki.body_html.dup
-    heading = @wiki.currently_editing_section(user)
     return html if heading.blank?
 
     greencloth = GreenCloth.new(@wiki.body)
-
     text_to_edit = greencloth.get_text_for_heading(heading)
 
     form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}

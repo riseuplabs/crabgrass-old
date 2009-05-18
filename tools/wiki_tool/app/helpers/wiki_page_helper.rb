@@ -1,7 +1,7 @@
 module WikiPageHelper
 
   def locked_error_message
-    if @locked_for_me
+    if locked_for_me?
       msgs = [
         'This wiki is currently locked by :user'[:wiki_locked] % {:user => @wiki.locked_by.display_name},
         'You will not be able to save this page'[:wont_be_able_to_save]
@@ -43,10 +43,7 @@ module WikiPageHelper
     link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
     link.gsub!('"','\"')
 
-    unlocked_sections = @wiki.sections_not_locked_for(current_user).inspect
-    all_sections = @wiki.section_heading_names.inspect
-
-    javascript_tag %Q[wiki_edit_decorate_with_edit_links("#{link}", #{all_sections}, #{unlocked_sections});]
+    javascript_tag %Q[decorate_wiki_edit_links("#{link}")]
   end
 
 end
