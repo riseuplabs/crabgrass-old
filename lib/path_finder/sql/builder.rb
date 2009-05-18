@@ -33,7 +33,6 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     # limiting   (count not required)
     @limit       = options[:limit]
     @offset      = options[:offset]
-    
 
     @path        = cleanup_path(path)
     @and_clauses << [options[:conditions].dup] if options[:conditions]
@@ -124,6 +123,9 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   def build_query_hash()
     # add flow (must come first, because it might alter @conditions)
     add_flow( @flow )
+    if Site.current and Site.current.limited?
+      @conditions << "pages.site_id = #{Site.current.id}"
+    end
 
     # grab the remaining open conditions
     @or_clauses << @conditions if @conditions.any?
