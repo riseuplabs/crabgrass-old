@@ -4,22 +4,22 @@
 
 <% items = [] %>
 <div class='create_page'>
-  <% tree_of_page_types(@available_tools).collect do |grouping| %>
+  <% tree_of_page_types(@available_tools, {:simple => true}).collect do |grouping| %>
     <% items << capture do %>
-      <h1><%= grouping[:display] %></h1>
+      <h2><%= grouping[:display] %></h2>
       <div id="<%= "#{grouping[:url]}-area" %>" class="grouping">
       <% grouping[:pages].collect do |page_class| %>
         <span>
          <%= link_to "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}",
           {:controller => page_class.controller, :action => 'create',
            :id => page_class.url, :group => params[:group]},
-          {:class => "big_icon #{page_class.icon}_48"} %>
+          {:class => "small_icon #{page_class.icon}_16"} %>
         </span>
       <% end %>
       </div>
     <% end %>
   <% end %>
-  <%= column_layout 2, items %>
+  <%= column_layout 2, items, :class => 'create_table' %>
 </div>
 
 

@@ -61,11 +61,8 @@
 #
 # link_to_remote (built in)
 # 
-# remote_form_for + submit_tag (built in)
+# button_to_remote (built in)
 #
-# button_to_remote (not yet written)
-# would work like link_to_remote, but would create a button 
-# (by using remote_form_for and submit_tag)
 #
 module LinkHelper
   

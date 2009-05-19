@@ -5,8 +5,6 @@ class PageTest < Test::Unit::TestCase
   fixtures :pages, :users, :groups, :polls
 
   def setup
-    @page = create_page :title => 'this is a very fine test page'
-    # @page_tool_count = @page.tools.length
   end
 
   def test_unique_names
@@ -27,6 +25,7 @@ class PageTest < Test::Unit::TestCase
   # currently, we are using a single belongs_to that is polymorphic
   # for the relationship from page -> tool. 
   def disabled_test_multi_tool
+    @page = create_page :title => 'this is a very fine test page'
     assert @page.tools.blank?
     assert @page.tools.push(@discussion)
     assert @page.tools.push(Discussion.create)
@@ -49,6 +48,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_discussion
+    @page = create_page :title => 'this is a very fine test page'
     assert discussion = Discussion.create
     assert discussion.valid?, discussion.errors.full_messages
     #discussion.pages << @page
@@ -62,6 +62,7 @@ class PageTest < Test::Unit::TestCase
 
 
   def test_user_associations
+    @page = create_page :title => 'this is a very fine test page'
     user = User.find 3
     @page.created_by = user
     @page.save
@@ -141,6 +142,36 @@ class PageTest < Test::Unit::TestCase
     else
       puts "thinking sphinx is not included"
     end
+  end
+
+  def test_page_owner
+    page = nil
+    assert_nothing_raised do
+      page = DiscussionPage.create! :title => 'x', :owner => 'green'
+    end
+    assert_equal users(:green), page.owner
+    assert users(:green).may?(:admin, page)
+
+    page.update_attributes({:owner => users(:blue)})
+    page.reload
+    assert_equal users(:green), page.owner, 'owner should be protected'
+  end
+
+  def test_page_owner_and_others
+    page = nil
+    assert_nothing_raised do
+      page = DiscussionPage.create! :title => 'x', :user => users(:blue), :owner => 'blue', :share_with => {"green"=>{:access=>"edit"}}, :access => :view
+    end
+    assert_equal users(:blue), page.owner
+    assert users(:green).may?(:edit, page)
+  end
+
+  def test_page_default_owner
+    page = Page.create! :title => 'x', :user => users(:blue),
+      :share_with => groups(:animals), :access => :admin
+    assert_equal groups(:animals).name, page.owner_name
+    assert_equal groups(:animals).id, page.owner_id
+    assert_equal groups(:animals), page.owner
   end
 
   protected

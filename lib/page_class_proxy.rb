@@ -11,6 +11,8 @@ class PageClassProxy
 
   attr_accessor :controller, :model, :icon, :class_group
   attr_accessor :class_name, :full_class_name, :internal, :order, :short_class_name
+
+  ORDER = ['text', 'media', 'vote', 'planning']
   
 #  cattr_accessor :quiet
 
@@ -56,6 +58,10 @@ class PageClassProxy
 
   def create!(hash, &block)
     actual_class.create!(hash, &block)
+  end
+
+  def build!(hash, &block)
+    actual_class.build!(hash, &block)
   end
 
   def to_s

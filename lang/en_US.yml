@@ -636,7 +636,7 @@ create_a_new_something: "create new {something}"
 create_page_button: "Create page"
 create_page_share: "Who has access to this {page_class}?"
 create_page: "Create Page"
-only_me: "Only Me"
+only_me: "Me"
 back_button: "Back"
 create_page_button: "Create {page_class}"
 title: "Title"
@@ -732,18 +732,27 @@ survey_page_display: "Survey"
 #event_page_description: "I wish that this worked."
 #event_page_display: "Event"
 
-# page type groupings
+##
+## PAGE TYPE GROUPINGS
+##
 
-page_group_vote: Voting
-page_group_text: Text
-page_group_collection: Collections
-page_group_discussion: Discussions
-page_group_event: Events
-page_group_task: Tasks
+# the main four
+page_group_vote: Polls and Votes
+page_group_text: Text and Discussions
+page_group_media: Multimedia
+page_group_planning: Planning Tools
+
+# media types
 page_group_media_image: Images
 page_group_media_audio: Audio
 page_group_media_video: Videos
 page_group_media_document: Documents
+
+# alt ways of searching
+page_group_discussion: Discussions
+page_group_collection: Collections
+page_group_event: Events
+page_group_task: Tasks
 
 ##
 ## DATES

@@ -20,6 +20,8 @@ class AnnouncementPageController < WikiPageController
         @page = exc.record if exc.record.is_a? Page
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
   end
 

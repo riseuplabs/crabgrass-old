@@ -57,6 +57,8 @@ class BasePageController < ApplicationController
         @page = exc.record
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
     render :template => 'base_page/create'
   end
@@ -207,5 +209,16 @@ class BasePageController < ApplicationController
        :access => (params[:access]||'view').to_sym
      ))  
   end
+
+  def build_new_page(page_class)
+     params[:page] ||= HashWithIndifferentAccess.new
+     page_class.build!(params[:page])
+     #.merge(
+     #  :user => current_user,
+     #  :share_with => params[:recipients],
+     #  :access => (params[:access]||'view').to_sym
+     #))  
+  end
+
 end
 

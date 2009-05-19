@@ -101,5 +101,13 @@ class ActionView::Base
   end
 end
 
+###
+### HACK TO BE REMOVED WHEN UPGRADING TO RAILS 2.3
+###
 
+class ActionView::Base
+  def button_to_remote(name, options = {}, html_options = {})
+    button_to_function(name, remote_function(options), html_options)
+  end
+end
 

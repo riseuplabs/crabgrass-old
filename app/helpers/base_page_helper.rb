@@ -280,7 +280,7 @@ module BasePageHelper
   end
 
   def page_class
-    @page.class_display_name.capitalize
+    @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize
   end
   
   def select_page_owner(_erbout)

@@ -21,9 +21,11 @@ class Page < ActiveRecord::Base
 
   acts_as_taggable_on :tags
   acts_as_site_limited
+  attr_protected :owner
 
-  #######################################################################
+  ##
   ## PAGE NAMING
+  ##
 
   def validate
     if (name_changed? or group_id_changed?) and name_taken?
@@ -89,8 +91,9 @@ class Page < ActiveRecord::Base
     return self != p
   end
 
-  #######################################################################
+  ##
   ## RELATIONSHIP TO PAGE DATA
+  ##
 
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
@@ -170,8 +173,9 @@ class Page < ActiveRecord::Base
     true
   end
   
-  #######################################################################
+  ##
   ## PAGE ACCESS CONTROL
+  ##
 
   ## update attachment permissions
   after_save :update_access
@@ -181,12 +185,9 @@ class Page < ActiveRecord::Base
     end
     true
   end
-#
-# SITES
-#
-#############################
 
   # returns true if self is part of given network
+  # DEPRECATED
   # -- TODO
   #   i don't think this does what it is supposed to do.
   #   this code would be better:
@@ -204,65 +205,92 @@ class Page < ActiveRecord::Base
     true
   end
 
-####
-
-
   # This method should never be called directly. It should only be called
   # from User#may?()
   #
-  # basic permissions:
+  # possible permissions:
   #   :view  -- user can see the page.
   #   :edit  -- user can participate.
   #   :admin -- user can destroy the page, change access.
   #   :none  -- always returns false
-  # conditional permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   (NOT SUPPORTED YET)
   #
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
+  # DEPRECATED permissions:
+  #   :comment -- sometimes viewers can comment and sometimes only participates can.
+  #   :delete  -- can user destroy page?
+  #  
+  # DEPRECATED BEHAVIOR:
   # :edit and :comment should return false for deleted pages.
+  #
   def has_access!(perm, user)
-    # do not allow comments or editing of deleted pages:
-    return false if self.deleted? and (perm == :edit or perm == :comment)
-    perm = comment_access if perm == :comment
 
-    upart = self.participation_for_user(user)
-    if perm == :delete
-      gparts = self.participation_for_groups(user.admin_for_group_ids)
-      perm = :admin
+    ########################################################
+    ## THESE ARE TEMPORARY HACKS...
+    ## until the new permission system is working.
+    ## then, this logic should all be moved there. 
+    return false if tmp_hack_for_deleted_pages?(perm)
+    return tmp_hack_when_access_is_delete(user) if perm == :delete
+    perm = tmp_hack_for_comment() if perm == :comment
+    ## END TEMP HACKS
+    #########################################################
+
+    asked_access_level = ACCESS[perm] || ACCESS[:view]
+    participation = most_privileged_participation_for(user)
+    allowed = if participation.nil?
+      false
     else
-      gparts = self.participation_for_groups(user.all_group_ids)
+      actual_access_level = participation.access || ACCESS[:view]
+      asked_access_level >= actual_access_level
     end
-    allowed = false
-    if upart or gparts.any?
-      parts = []
-      parts += gparts if gparts.any?
-      parts += [upart] if upart
-      part_with_best_access = parts.min {|a,b|
-        (a.access||100) <=> (b.access||100)
-      }
-      # allow :view if the participation exists at all
-      asked_access_level = ACCESS[perm.to_sym] || 0
-      actual_access_level = part_with_best_access.access || ACCESS[:view]
-      allowed = asked_access_level >= actual_access_level
+    
+    allowed ? true : raise(PermissionDenied.new)
+  end
+
+  protected
+
+  # returns the participation object for entity with the highest access level. 
+  # If no participation exists, we return nil.
+  def most_privileged_participation_for(entity)
+    parts = []
+    if entity.is_a? User
+      parts << participation_for_user(entity)
+      parts.concat participation_for_groups(entity.all_group_ids)
+    elsif entity.is_a? Group
+      parts << participation_for_group(entity)
     end
-    if allowed
-      return true
-    else
-      raise PermissionDenied.new
-    end
+    parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
+  end
+
+  # this is some really horrible stuff that i want to go away very quickly.
+  # some sites want to restrict page deletion to only people who are admins
+  # of groups that have admin access to the page. crabgrass does not work this
+  # way and is a total violation of the permission logic. there is a better way,
+  # and it should be replaced for this.
+  def tmp_hack_when_access_is_delete(user)
+    parts = []
+    parts << participation_for_user(user)
+    parts.concat participation_for_groups(user.admin_for_group_ids)
+    return parts.compact.detect{|part| part.access == ACCESS[:admin]}
+  end
+
+  # do not allow comments or editing of deleted pages:
+  def tmp_hack_for_deleted_pages?(perm)
+    self.deleted? and (perm == :edit or perm == :comment)
   end
 
   # by default, if a user can edit the page, they can comment.
   # this can be overridden by subclasses.
-  def comment_access
+  def tmp_hack_for_comment
     :view
   end
 
-  #######################################################################
+  public
+
+  ##
   ## RELATIONSHIP TO ENTITIES (GROUPS OR USERS)
+  ##
 
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
@@ -291,9 +319,14 @@ class Page < ActiveRecord::Base
     entity
   end
 
-  # The owner may be a user or a group.
+  # The owner may be a user or a group, or their name.
+  # this attr is protected from mass assignment.
   def owner=(entity)
-    raise ArgumentError.new("owner= can't be nil") if entity.nil?
+    if entity.is_a? String
+      entity = User.find_by_login(entity) || Group.find_by_name(entity)
+    end
+    raise ArgumentError.new("cannot set page.owner to nil") if entity.nil?
+
     self.owner_id = entity.id
     self.owner_name = entity.name
     if entity.is_a? Group
@@ -305,12 +338,16 @@ class Page < ActiveRecord::Base
     else
       raise Exception.new('must be user or group')
     end
-    self.add(entity, :access => :admin) unless entity.may?(:admin, self)
+    part = most_privileged_participation_for(entity)
+    self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+    return self.owner(true)
   end
 
   before_create :ensure_owner
   def ensure_owner
-    if gp = self.group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+    if owner
+      ## do nothing!
+    elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
       self.owner = gp.group
     elsif self.created_by
       self.owner = self.created_by
@@ -333,8 +370,9 @@ class Page < ActiveRecord::Base
     return groups + users
   end
 
-  #######################################################################
+  ##
   ## DENORMALIZATION
+  ##
 
   # denormalize hack follows:
   before_save :denormalize
@@ -361,8 +399,9 @@ class Page < ActiveRecord::Base
     @dirty[what]
   end
 
-  #######################################################################
+  ##
   ## MISC. HELPERS
+  ##
 
   # tmp in-memory storage used by views
   def flag

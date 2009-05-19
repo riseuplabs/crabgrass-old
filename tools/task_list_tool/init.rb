@@ -5,7 +5,7 @@ PageClassRegistrar.add(
   :controller => 'task_list_page',
   :model => 'TaskList',
   :icon => 'page_tasks',
-  :class_group => 'task',
+  :class_group => ['planning', 'task'],
   :order => 3
 )
 
