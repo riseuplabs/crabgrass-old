@@ -77,16 +77,15 @@ email_sender: "crabgrass-system@$current_host"
 tracking: true
 require_user_email: true
 available_page_types:
-  - WikiPage
+  - ArticlePage
   - AssetPage
-  - ExternalVideoPage
-  - TaskListPage
-  - SurveyPage
   - DiscussionPage
-  - RateManyPage
+  - ExternalVideoPage
+  - Gallery
   - MessagePage
   - RankedVotePage
-  - ArticlePage
-  - Gallery
+  - RateManyPage
+  - SurveyPage
+  - TaskListPage
   - WikiPage
 
