@@ -140,7 +140,6 @@ class User < ActiveRecord::Base
     end
   end
 
-
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
   # message.
@@ -218,7 +217,8 @@ class User < ActiveRecord::Base
   end
 
   # as special call used in special places: This should only be called if you
-  # know for sure that you can't use user.may?(:admin,thing)
+  # know for sure that you can't use user.may?(:admin,thing).
+  # Significantly, this does not return true for new records.
   def may_admin?(thing)
     begin
       thing.has_access!(:admin,self)

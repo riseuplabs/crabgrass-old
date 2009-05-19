@@ -1,16 +1,19 @@
 div.create_page
-  table
+  table.create_table
     td
       width: 50%
       padding: 0 1em
-  h1
-    font-size: 2em
-    color: #ccc
+  h2
+    font-size: 1.5em
+    color: #aaa
     border-bottom: 2px dotted #ccc
+  dd
+    margin: 0 0 0.5em 0
+  dt
+    font-weight: bold
   span
     display: block
-    margin: 0.5em
-    margin-left: 3em
+    margin: 0.2em 0.2em 0.2em 1em
     &:hover
       :background #ffc
       :outline 1px solid #cc9
@@ -20,32 +23,38 @@ div.create_page
       outline: 0
       background-position: 4px 50%
       background-repeat: no-repeat
-      padding: 20px 10px 20px 60px
+      //padding: 20px 10px 20px 60px
+      padding: 5px 5px 5px 25px
+      //padding: 0.25em 
       text-align: left
 
   .left
     display: inline
     float: left
-    table
-      margin-top: 1em
-      td.label
-        text-align: right
-        color: #999
-        font-weight: bold
-        padding-right: 1em
+    padding-right: 2em
+    min-width: 25em
+    width: 40%
+    //table
+    //  margin-top: 1em
+    //  //td.label
+    //  //  text-align: right
+    //  //  color: #999
+    //  //  font-weight: bold
+    //  //  padding-right: 1em
   .right
     display: inline
     float: left
-    padding-left: 2em
+    min-width: 25em
+    width: 40%
   input[type=text], textarea
     width: 23em
     font-family: serif
     font-size: 1em
   .share_page
-    h2
-      color: #999
-      font-size: 1em
-      margin: 1em 0
-    ul
-      list-style: none
+    //h2
+    //  color: #999
+    //  font-size: 1em
+    //  margin: 1em 0
+    //ul
+    //  list-style: none
 

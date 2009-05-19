@@ -104,12 +104,16 @@ class BasePage::ShareController < ApplicationController
   end
 
   def authorized?
-    current_user.may? :admin, @page
+    if @page
+      current_user.may? :admin, @page
+    else
+      true
+    end
   end
 
   prepend_before_filter :fetch_page
   def fetch_page
-    if params[:page_id]
+    if params[:page_id].any?
       @page = Page.find_by_id(params[:page_id])
       @upart = @page.participation_for_user(current_user)
     end
@@ -124,7 +128,7 @@ class BasePage::ShareController < ApplicationController
       flash_message(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)
       flash_message(:error => 'you may not pester'[:you_may_not_pester])
-    elsif (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
+    elsif @page && (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
       flash_message(:error => 'a participation for this user / group already exists'[:participation_already_exists])
     else
       return recipient

@@ -1,3 +1,4 @@
+<!--
 <table>
   <tr>
     <td class='label'><%= 'Title'.t %></td>
@@ -16,4 +17,30 @@
     </td>
   </tr>
 </table>
+-->
+
+<h2><%= '{page_class} information'[:create_page_information, {:page_class => page_class}].capitalize %></h2>
+
+<dl>
+
+  <dt><%= 'Title'.t %></dt>
+  <dd><%= text_field 'page', 'title', :size => 38 %><%= javascript_tag %( $("page_title").focus() ) %></dd>
+
+  <dt><%= 'Summary'.t %></dt>
+  <dd><%= text_area 'page', 'summary', :size => '38x3' %></dd>
+
+  <dt><%= 'Tags'.t %></dt>
+  <dd><%= text_field 'page', 'tag_list', :size => 38 %><br/>
+<i>(<%= 'separate tags using commas'[:separate_tags]%>)</i></dd>
+
+</dl>
+
+<% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
+  <h2><%= '{page_class} data'[:create_page_data, {:page_class => page_class}].capitalize %></h2>
+  <dl>
+  <% sections.each do |section| %>
+    <%= render :partial => "base_page/create/#{section}" %>
+  <% end %>
+  </dl>
+<% end %>
 

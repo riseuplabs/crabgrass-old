@@ -4,6 +4,7 @@
      field.value = field.value.strip().replace(/.*\\((.*)\\).*/, '$1');
    }"
    empty_box = false if empty_box.nil? 
+   add_action = false if add_action.nil? 
 %>
 
 <div class='share_details'>
@@ -41,8 +42,11 @@
       <%- end -%>
     </td>
     <td>
-      <%# button_to_function 'Add'[:add], "submit_form(this, 'add_recipient')" %>
-      <%= submit_tag 'Add'[:add], :name => 'add_recipient' %>
+      <% if add_action %>
+       <%= button_to_remote 'Add'[:add], add_action %>
+      <% else %>
+        <%= submit_tag 'Add'[:add], :name => 'add_recipient' %>
+      <% end %>
     </td>
     <td>
       <%= spinner('add_recipient') %>

@@ -196,7 +196,7 @@ module LayoutHelper
     if options[:balanced]
       width= (100.to_f/cols.to_f).to_i
     end
-    lines << '<table>' unless options[:skip_table_tag]
+    lines << "<table class='#{options[:class]}'>" unless options[:skip_table_tag]
     if options[:header]
       lines << options[:header]
     end

@@ -158,6 +158,12 @@ module UserExtension::Sharing
   ## PAGE SHARING
   ##
 
+  # valid recipients:
+  # 
+  #  array form: ['green','blue','animals']
+  #  hash form: {'green' => {:access => :admin}} 
+  #  object form: [#<User id: 4, login: "blue">]
+  # 
   # valid options:
   #        :access -- sets access level directly. one of nil, :admin, :edit, or
   #                   :view. (nil will remove access)
@@ -180,6 +186,7 @@ module UserExtension::Sharing
   # auto saves the @page if has been changed.)
   #
   def share_page_with!(page, recipients, options)
+    options = HashWithIndifferentAccess.new(options)
     return true unless recipients
     return share_page_with_hash!(page, recipients, options) if recipients.is_a?(Hash)
 

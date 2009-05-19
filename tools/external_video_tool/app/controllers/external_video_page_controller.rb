@@ -21,6 +21,8 @@ class ExternalVideoPageController < BasePageController
         @page = exc.record
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
   end
 end

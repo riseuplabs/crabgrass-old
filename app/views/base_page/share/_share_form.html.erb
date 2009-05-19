@@ -1,13 +1,31 @@
 <% type = 'send' if type.nil? -%>
+<% notify = true if notify.nil? -%>
+<% add_action = false if add_action.nil? %>
+<% owner = false if owner.nil? %>
 
 <div class='share_page'>
-  <h2><%= 'Share this page with:'[:share_page_recipients, page_class] %></h2>
+  <h2><%= 'Share this page with:'[:share_page_recipients, page_class.downcase] %></h2>
 
-  <%= render :partial => 'add_recipient_widget' %>
+  <% if owner %>
+    <dl>
+    <dt><%= "Page Owner" %></dt>
+    <dd><%= select_tag 'page[owner]', options_for_page_owner %></dd>
+    <dt><%= "Additional Access" %></dt>
+    <dd>
+  <% end %>
 
-  <h2><%= 'Notify'[:notify] %></h2>
-  <table class='notify'>
-    <%= render :partial => 'notification_message_form' %>
-  </table>
+  <%= render :partial => 'base_page/share/add_recipient_widget', :locals => {:add_action => add_action} %>
+
+  <% if owner %>
+    </dl>
+  <% end %>
+
+  <% if notify %>
+    <h2><%= 'Notify'[:notify] %></h2>
+    <table class='notify'>
+      <%= render :partial => 'base_page/share/notification_message_form' %>
+    </table>
+  <% end %>
+
 </div>
 
