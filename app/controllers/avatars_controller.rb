@@ -15,7 +15,7 @@ class AvatarsController < ApplicationController
     thing = group || user
     if thing.avatar
       for size in %w(xsmall small medium large xlarge)
-        expire_page :controller => 'avatars', :action => 'show', :id => thing.avatar.id, :size => size
+        expire_page :controller => 'static', :action => 'avatar', :id => thing.avatar.id, :size => size
       end
       thing.avatar.image_file = params[:image][:image_file]
       thing.avatar.save!
