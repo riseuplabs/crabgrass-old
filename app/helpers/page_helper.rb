@@ -430,7 +430,9 @@ module PageHelper
     page_groupings.each do |grouping|
       entry = {:name => grouping, :display => display_page_class_grouping(grouping),
          :url => grouping.gsub(':','-')}
-      entry[:pages] = Page.class_group_to_class(grouping).select{|cl|!cl.internal}
+      entry[:pages] = Page.class_group_to_class(grouping).select{ |page_klass|
+       !page_klass.internal && available_page_types.include?(page_klass.full_class_name)
+      }
       tree << entry
     end
     return tree.sort_by{|entry| PageClassProxy::ORDER.index(entry[:name])||100 }
