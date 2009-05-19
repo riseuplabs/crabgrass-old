@@ -20,12 +20,22 @@ module UserExtension::Sharing
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
       end
+      
+      named_scope :most_active_on, lambda { |site, time|
+        { :joins => [:participations, :memberships],
+          :group => "users.id",
+          :order => 'count(user_participations.id) DESC',
+          :conditions => ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id],
+          :select => "users.*, memberships.group_id, user_participations.changed_at"
+        }
+      }
 
       named_scope :most_active_since, lambda { |time|
         { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :conditions => ["user_participations.changed_at >= ?", time] }
+          :conditions => ["user_participations.changed_at >= ?", time],
+          :select => "users.*" }
       }
 
       #has_many :pages_created,
