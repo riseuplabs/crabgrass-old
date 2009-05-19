@@ -276,7 +276,7 @@ class Page < ActiveRecord::Base
     parts = []
     parts << participation_for_user(user)
     parts.concat participation_for_groups(user.admin_for_group_ids)
-    parts.compact.detect{|part| part.access == ACCESS[:admin]}
+    hacky_delete = parts.compact.detect{|part| part.access == ACCESS[:admin]}
     hacky_delete || has_access!(:admin, user)
   end
 
