@@ -2,7 +2,7 @@
 <%- cancel_function = "$('add_recipient_spinner').remove(); submit_form(this, 'cancel');"+show_spinner('popup') -%>
 <%- share_function = "$('add_recipient_spinner').remove(); submit_form(this, 'share');"+show_spinner('popup') -%>
 
-<% popup('Share Page'[:share_page_link] % {:page_class => page_class}, :id => 'share_popup', :width => '40em') do -%>
+<% popup('Share Page'[:share_page_link] % {:page_class => page_class.titlecase}, :id => 'share_popup', :width => '40em') do -%>
   <% form_remote_tag(
     :url => form_url,
     :loading => show_spinner('add_recipient'),

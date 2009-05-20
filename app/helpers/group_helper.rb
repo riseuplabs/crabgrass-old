@@ -164,7 +164,9 @@ module GroupHelper
   end
 
   def may_see_networks?
-    if logged_in?
+    if !current_site.has_networks?
+      return false
+    elsif logged_in?
       current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
     else
       @group.profiles.public.may_see_members?

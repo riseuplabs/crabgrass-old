@@ -62,7 +62,7 @@ module BasePageHelper
   ## SIDEBAR HELPERS
   ##
 
-  def sidebar_checkbox(text, checked, url, li_id, checkbox_id)
+  def sidebar_checkbox(text, checked, url, li_id, checkbox_id, options = {})
     click = remote_function(
       :url => url,
       :loading  => hide(checkbox_id) + add_class_name(li_id, 'spinner_icon')
@@ -71,7 +71,7 @@ module BasePageHelper
     out = []
     #out << "<label id='#{checkbox_id}_label'>" # checkbox labels don't work in IE
     out << check_box_tag(checkbox_id, '1', checked, :class => 'check', :onclick => click)
-    out << link_to_function(text, click, :class => 'check')
+    out << link_to_function(text, click, :class => 'check', :title => options[:title])
     #out << '</label>'
     out.join
   end  
@@ -99,7 +99,7 @@ module BasePageHelper
       li_id = 'public_li' 
       checkbox_id = 'public_checkbox'
       url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :public => (!@page.public?).to_s}
-      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id)
+      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id, :title => "If checked, anyone may view this page."[:public_checkbox_help])
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     end
   end

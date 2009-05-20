@@ -22,6 +22,12 @@ class Gibberize::BaseController < ApplicationController
     redirect_to :action => nil
   end
 
+  def import_english
+    system('rake cg:l10n:load_translations FILE=en_US.yml RAILS_ENV=%s' % RAILS_ENV)
+    flash_message :success => true
+    redirect_to :action => nil
+  end
+
   protected
 
   def authorized?

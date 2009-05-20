@@ -77,6 +77,9 @@ end
 require 'redcloth/formatters/html'
 require 'cgi'
 
+$KCODE = 'u'    # \ set utf8 as the default
+require 'jcode' # / encoding
+
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_outline'
 
@@ -714,15 +717,19 @@ end
 
 unless "".respond_to? 'nameize'
 
-  require 'iconv'
+  ##
+  ## NOTE: you will want to translit non-ascii slugs to ascii.
+  ## resist this impulse. nameized strings must remain utf8.
+  ##
+ 
   class String
     def nameize
       str = self.dup
+      str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
       str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
       str.strip!            # ohh la la
       str.downcase!         # upper case characters in urls are confusing
       str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-      #str = "#{str}" if str =~ /^(\d+)$/ # don't allow all numbers
       return str[0..49]
     end
     def denameize
@@ -736,3 +743,4 @@ unless "".respond_to? 'nameize'
   end
 
 end
+

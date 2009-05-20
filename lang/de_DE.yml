@@ -142,7 +142,6 @@ invalid_token_text: "Der Link zum R\xC3\xBCcksetzen des Passwortes ist ung\xC3\x
 back_button: "Zur\xC3\xBCck"
 recent_pages: Aktuelle Seiten
 invite_accept_via_existing_account: Ich habe bereits einen Zugang.
-create_a_new_page: Neue Seite erstellen
 display_name: Namen anzeigen
 notify_page_link: Schicke Eine Benachrichtigung.
 welcome_find_people_text: Durchst&ouml;bere das Mitglieder-Verzeichnis nach anderen Benutzern.
@@ -530,7 +529,6 @@ School: Schule
 group_home_headline: "{group_type} Home"
 last_name: Familienname
 directory_of_networks: Verzeichnis der Netzwerke
-create_page_headline: Erstelle eine neue {page_class}
 forgotten_email_address: Welche Email-Adresse hast Du bei der Anmeldung angegeben?
 edit_title: Titel bearbeiten
 no_change: "keine \xC3\x84nderung"
@@ -556,7 +554,6 @@ approval_vote_class_description: "Zustimmung oder Ablehnung von jeder M\xC3\xB6g
 password_confirmation: "Passwortbest\xC3\xA4tigung"
 menu_groups: Gruppen
 month_short_october: Okt
-create_a_new_something: Neue {something} erstellen
 more_information: weitere Informationen
 profile_option_allow_peers: "F\xC3\xBCr Kollegen (\"Peers\") sichtbar"
 profile_option_may_pester: "darf mir auf die Pelle r\xC3\xBCcken."

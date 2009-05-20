@@ -74,9 +74,7 @@ html: |-
   <pre><code>./foo.pl%
   &lt;p&gt;foo outputs an HTML paragraph&lt;/p&gt;</code>
 
-  <code>&lt;p&gt;block of code keeps going until a different block signature is encountered&lt;/p&gt;</code>
-
-  </pre>
+  <code>&lt;p&gt;block of code keeps going until a different block signature is encountered&lt;/p&gt;</code></pre>
   <p>And then go back with a normal paragraph.</p>
 ---
 name: double-equals as inline notextile
@@ -105,8 +103,10 @@ in: |-
   <notextile>
   # *test*
 html: |-
-  # *test*
-valid_html: false
+  <p><notextile></p>
+  <ol>
+  	<li><strong>test</strong></li>
+  </ol>
 ---
 name: inline notextile tags
 in: 'This is how you make a link: <notextile>"link":http://www.redcloth.org</notextile>'
