@@ -8,9 +8,9 @@
 
   <% if owner %>
     <dl>
-    <dt><%= "Page Owner" %></dt>
+    <dt><%= "Page Owner"[:page_create_owner] %></dt>
     <dd><%= select_tag 'page[owner]', options_for_page_owner %></dd>
-    <dt><%= "Additional Access" %></dt>
+    <dt><%= "Additional Access"[:page_create_access] %></dt>
     <dd>
   <% end %>
 
@@ -21,7 +21,7 @@
   <% end %>
 
   <% if notify %>
-    <h2><%= 'Notify'[:notify] %></h2>
+    <h2><%= 'Send Notification'[:notify_page_link] %></h2>
     <table class='notify'>
       <%= render :partial => 'base_page/share/notification_message_form' %>
     </table>

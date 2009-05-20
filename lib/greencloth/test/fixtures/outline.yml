@@ -180,4 +180,15 @@ out: |-
   <h1><a name="section-two-line-one-line-two"></a>section two line one<br />
   line two<a class="anchor" href="#section-two-line-one-line-two">&para;</a></h1>
   <p>section two text</p>
+---
+name: weird chars
+in: |-
+  h1. i eat 'food'
+
+  h1. it is yŭmmy
+out: |-
+  <h1 class="first"><a name="i-eat-food"></a>i eat &#8216;food&#8217;<a class="anchor" href="#i-eat-food">&para;</a></h1>
+  <h1><a name="it-is-yŭmmy"></a>it is yŭmmy<a class="anchor" href="#it-is-yŭmmy">&para;</a></h1>
+
+
 

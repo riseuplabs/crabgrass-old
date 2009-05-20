@@ -1,8 +1,8 @@
 --- 
-add_encryption_key: Agregar clave de cifrado
 group_not_allowed_to_view_image_error: "El grupo que es propietario de esta p\xC3\xA1gina no est\xC3\xA1 autorizado a ver esta foto."
 Personal: Personal
 small: "peque\xC3\xB1o"
+add_encryption_key: Agregar clave de cifrado
 folder_page_description: "Una colecci\xC3\xB3n de activos."
 menu_networks: Redes
 group_summary: "Breve informaci\xC3\xB3n sobre este %s. "
@@ -84,8 +84,8 @@ image_count_total: ":count Fotos"
 contribute_content_link: Contribuir
 page_locked_header: "P\xC3\xA1gina bloqueada"
 all_page_types: "todos los tipos de p\xC3\xA1ginas"
-activity_user_left_group: "{user} ha dejado {group_type} {group}"
 media_document: Documento
+activity_user_left_group: "{user} ha dejado {group_type} {group}"
 collection: "colecci\xC3\xB3n"
 joins_the_chatroom: se une a la sala de chat
 no_images_in_gallery: "No hay fotos en el \xC3\xA1lbum"
@@ -125,7 +125,6 @@ back_button: Regresar
 page_is_not_static: "La pagina no esta est\xC3\xA1tica"
 invite_accept_via_existing_account: Ya tengo una cuenta
 recent_pages: Paginas Recientes
-create_a_new_page: "Crear una nueva p\xC3\xA1gina"
 display_name: Nombre visible
 notify_page_link: "Enviar Notificaci\xC3\xB3n"
 join_group_success: Te has unido al grupo {group_name}
@@ -457,7 +456,6 @@ edit_title: editar titulo
 directory_of_networks: Directorio de las redes
 group_home_headline: "{group_type} Inicio"
 last_name: apellido
-create_page_headline: Crear una nueva {page_class}
 forgotten_email_address: "Que correo electr\xC3\xB3nico usaste cuando creaste la cuenta?"
 School: Escuela
 invite_not_found: "No hay invitaci\xC3\xB3n  "
@@ -481,7 +479,6 @@ password_confirmation: "Confirmar contrase\xC3\xB1a"
 menu_groups: Grupos
 signup_button: "Ap\xC3\xBAntate"
 month_short_october: octubre
-create_a_new_something: crear nuevo {something}
 more_information: "M\xC3\xA1s informaci\xC3\xB3n"
 share_page_message: Enviar un mensaje (opcional)
 created_on: Creado en
