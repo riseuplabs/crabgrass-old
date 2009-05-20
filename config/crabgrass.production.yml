@@ -51,17 +51,17 @@ profile_fields:
 
 sites:
   - name: climatechange
-    admin_group: superadmin
+    admin_group: siteadminclimate
   - name: globalpulse
-    admin_group: superadmin
+    admin_group: siteadminpulse
   - name: speakafrica
-    admin_group: superadmin
+    admin_group: siteadminspeak
   - name: iaids
-    admin_group: superadmin
+    admin_group: siteadminiaids
   - name: j8summit
-    admin_group: superadmin
+    admin_group: siteadminj8
   - name: factsforlife
-    admin_group: superadmin
+    admin_group: siteadminffl
 
 ##
 ## SITE DEFAULTS
