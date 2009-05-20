@@ -5,7 +5,6 @@ require 'yaml'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../greencloth.rb'
-require test_dir + '/../../extension/string'
 
 class TestHeadings < Test::Unit::TestCase
 
@@ -36,6 +35,11 @@ class TestHeadings < Test::Unit::TestCase
       greencloth.get_text_for_heading('vegetables')
 
     assert_equal "h2. Pears", greencloth.get_text_for_heading('pears')
+  end
+
+  def test_weird_text
+    greencloth = GreenCloth.new( in_texts(:weird_chars) )
+    assert_equal "h1. i eat 'food'", greencloth.get_text_for_heading('i-eat-food')
   end
  
   def test_get_setext_style_headings
