@@ -24,6 +24,8 @@ welcome_message_for_site_speakafrica: "Speak Africa is an online community of yo
 ## GENERAL
 ##
 
+public_checkbox_help: "This submits your content for publication outside the platform. The page will be marked as pending until it is approved by a moderator."
+
 usage_agreement_text: |
   All members of this online community must agree to adhere to the conditions of this agreement. If you agree, please check the box that says ‘I accept the terms of the usage agreement’ and press the ‘Sign up’ button.
 
