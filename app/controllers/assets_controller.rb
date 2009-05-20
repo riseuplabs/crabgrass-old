@@ -29,7 +29,8 @@ class AssetsController < ApplicationController
         thumb.generate
         send_file(thumb.private_filename, :type => thumb.content_type, :disposition => disposition(thumb))
       else
-        send_file(@asset.private_filename, :type => @asset.content_type, :disposition => disposition(@asset))
+        content_type = (@asset.content_type || 'text/plain')
+        send_file(@asset.private_filename, :type => content_type, :disposition => disposition(@asset))
       end
     end
   end
