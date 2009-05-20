@@ -714,15 +714,40 @@ end
 
 unless "".respond_to? 'nameize'
 
-  require 'iconv'
+  # we would like to do this:
+  #   require 'iconv'
+  #   Iconv.iconv('ascii//translit', 'utf8', str)[0] rescue Exception
+  # 
+  # But that only works on irb, not via ruby!
+  #
+  # Iconv does not work in debian and there appears to be no way around it
+  # except through using gtk2. This requires package 'libgnome2-ruby'.
+  # 
+  # See this discussion for more on this sorry state of affairs: 
+  # http://www.ruby-forum.com/topic/70827
+  #
+  begin
+    require 'gtk2'
+    TRANSLIT_NAMES = true
+    def translit_utf8_to_ascii(str)
+      GLib.convert(str, "ASCII//translit", "UTF-8") rescue Exception
+    end
+  rescue
+    TRANSLIT_NAMES = false
+  end
+   
   class String
     def nameize
-      str = self.dup
+      if TRANSLIT_NAMES
+        str = translit_utf8_to_ascii(self)
+      else
+        str = self.dup
+      end
+      str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
       str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
       str.strip!            # ohh la la
       str.downcase!         # upper case characters in urls are confusing
       str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-      #str = "#{str}" if str =~ /^(\d+)$/ # don't allow all numbers
       return str[0..49]
     end
     def denameize
@@ -736,3 +761,4 @@ unless "".respond_to? 'nameize'
   end
 
 end
+
