@@ -91,6 +91,8 @@ Core Plugins
 thinking_sphinx
   full text searching.
 
+engines
+  updated plugin migration generator to check the existing migration files
 
 PLUGIN NOTES
 ===========================================================
