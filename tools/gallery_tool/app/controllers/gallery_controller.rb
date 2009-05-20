@@ -264,6 +264,18 @@ class GalleryController < BasePageController
       redirect_to page_url(@page)
     end
   end
+  
+  def upload_zip
+    if request.post?
+      @assets, @failures = Asset.make_from_zip(params[:zipfile])
+      @assets.each do |asset|
+        @page.add_image!(asset, current_user)
+      end
+      redirect_to page_url(@page)
+    else
+      render :partial => 'upload_zip'
+    end
+  end
 
   
   def remove

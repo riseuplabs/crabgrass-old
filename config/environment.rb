@@ -41,6 +41,7 @@ require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extension/engines.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 require "#{RAILS_ROOT}/lib/zip/zip.rb"
+require "#{RAILS_ROOT}/lib/extension/zip.rb"
 
 # path in which zipped galleries (for download) will be stored.
 GALLERY_ZIP_PATH = "#{RAILS_ROOT}/public/gallery_download"
