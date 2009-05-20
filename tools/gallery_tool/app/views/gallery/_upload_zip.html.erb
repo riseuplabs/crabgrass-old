@@ -1,0 +1,6 @@
+<% form_tag page_url(@page, :action => 'upload_zip'), :method => :post, :multipart => true do -%>
+  <%= spinner('upload') %>
+  <input type="file" size="38" name="zipfile" />
+  <%= submit_tag "upload".t, :onClick => "$('upload_spinner').show();" %>
+<% end -%>
+
