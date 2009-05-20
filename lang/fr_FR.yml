@@ -140,7 +140,6 @@ back_button: Revenir
 page_is_not_static: La page n'est pas statique
 recent_pages: "Pages r\xC3\xA9centes"
 invite_accept_via_existing_account: "J'ai d\xC3\xA9j\xC3\xA0 un compte"
-create_a_new_page: "Cr\xC3\xA9er une nouvelle page"
 display_name: "Nom affich\xC3\xA9"
 welcome_find_people_text: "Parcourir le r\xC3\xA9pertoire des utilisateurs \xC3\xA0 la recherche de celles et ceux que vous connaissez."
 page_group_media_document: Documents
@@ -191,10 +190,10 @@ Mobile: Portable
 delete_page_link: Supprimer {page_class}
 survey_responses_enabled: "Autoriser de nouvelles r\xC3\xA9ponses ? Si coch\xC3\xA9, les utilisateurs peuvent r\xC3\xA9pondre \xC3\xA0 l'enqu\xC3\xAAte. D\xC3\xA9cocher pour clore l'enqu\xC3\xAAte."
 share_link: Partager :page_class
-page_list_heading_stars: "\xC3\xA9toiles"
 state: "\xC3\xA9tat"
 invalid_token: Lien invalide
 page_list_heading_last_updated: "derni\xC3\xA8re modification"
+page_list_heading_stars: "\xC3\xA9toiles"
 month_short_july: Juil
 delete_post: Supprimer le message
 search: Rechercher
@@ -282,9 +281,9 @@ reset_password_mail_warning: "Si vous n'avez pas demand\xC3\xA9 \xC3\xA0 r\xC3\x
 read: lire
 alert_permission_denied: "Autorisation refus\xC3\xA9e"
 typing: "\xC3\xA9crit"
-page_notice_message: "page envoy\xC3\xA9e par {user} le {date}"
 activity_user_status: "{user} est maintenant {status}"
 location_city: ville
+page_notice_message: "page envoy\xC3\xA9e par {user} le {date}"
 friday: Vendredi
 my_groups_link: mes groupes
 pending_tasks: "t\xC3\xA2ches en cours."
@@ -314,8 +313,8 @@ gallery_display: Galerie
 add_another_file: Ajouter un autre fichier
 participants: Participants
 page_group_media_image: Images
-page_list_heading_owner: "propri\xC3\xA9taire"
 Other: Autre
+page_list_heading_owner: "propri\xC3\xA9taire"
 username: Nom d'utilisateur
 media_audios: Enregistrements Audio
 close_button: Fermer
@@ -523,7 +522,6 @@ School: "\xC3\x89cole"
 group_home_headline: Page d'Accueil du {group_type}
 last_name: nom
 directory_of_networks: "R\xC3\xA9pertoire des r\xC3\xA9seaux"
-create_page_headline: "Cr\xC3\xA9er une nouvelle {page_class}"
 forgotten_email_address: "Quelle adresse mail avez vous donn\xC3\xA9 lors de la cr\xC3\xA9ation du compte ?"
 edit_title: modifier le titre
 you_have_no_peers: Vous n'avez pas de pair
@@ -549,7 +547,6 @@ password_confirmation: Confirmation du Mot de Passe
 menu_groups: Groupes
 signup_button: S'inscrire
 month_short_october: Oct
-create_a_new_something: "Cr\xC3\xA9er {something}"
 more_information: Plus d'informations
 profile_option_may_pester: Peut me harceler
 profile_option_allow_peers: Visible des pairs
