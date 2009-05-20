@@ -1,12 +1,4 @@
-<%-
-#id = @page ? @page.id : nil
-add_action = {
-  :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil}, 
-  :loading => show_spinner('add_recipient'), 
-  :with => "'recipient[name]=' + $('recipient_name').value"
-} -%>
-
 <div id='share_error_message'></div>
-<%= render :partial => 'base_page/share/share_form', :locals => {:notify => false, :add_action => add_action, :owner => true} %>
+<%= render :partial => 'base_page/share/share_form', :locals => {:notify => false, :owner => true} %>
 
 

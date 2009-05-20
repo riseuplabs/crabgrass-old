@@ -1,7 +1,7 @@
 page.hide('add_recipient_spinner')
 page.hide('recipient_name_auto_complete') 
 
-if @recipients.empty? or flash[:type] == 'error'
+if flash[:type] == 'error'
   # there must have been an error
   page.replace_html 'share_error_message', display_messages
   page.hide('popup_spinner')
