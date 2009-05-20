@@ -49,27 +49,33 @@ class BasePage::ShareController < ApplicationController
     end
   end  
   
-  # params examples:
-  # 
-  # when updating the form: {"recipient"=>{"name"=>"", "access"=>"admin"}}
-  # 
-  # when submitting the form: {"recipients"=>{"aaron"=>{"access"=>"admin"},
-  #                              "the-true-levellers"=>{"access"=>"admin"}}
+  # there are three ways to submit the form:
+  # (1) cancel button (params[:cancel]==true)
+  # (2) add button or return in add field (params[:add]==true)
+  # (3) share button (params[:share]==true)
+  #
+  # recipient(s) examples:
+  # * when updating the form:
+  #   {"recipient"=>{"name"=>"", "access"=>"admin"}}
+  # * when submitting the form:
+  #   {"recipients"=>{"aaron"=>{"access"=>"admin"},
+  #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
     @success_msg ||= "You successfully shared this page."[:shared_page_success]
     if params[:cancel]
       close_popup
-    elsif params[:recipient] and params[:recipient][:name].any? and !params[:share]
-      # simply update the ui, don't actually do anything.
+    elsif params[:add]
       @recipients = []
-      recipients_names = params[:recipient][:name].strip.split(/[, ]/)
-      recipients_names.each do |recipient_name|
-        @recipients << find_recipient(recipient_name)
+      if params[:recipient] and params[:recipient][:name].any?
+        recipients_names = params[:recipient][:name].strip.split(/[, ]/)
+        recipients_names.each do |recipient_name|
+          @recipients << find_recipient(recipient_name)
+        end
+        @recipients.compact!
       end
-      @recipients.compact!
       render :partial => 'base_page/share/add_recipient'
-    elsif params[:recipients]
+    elsif params[:share] and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
@@ -79,7 +85,7 @@ class BasePage::ShareController < ApplicationController
       flash_message :success => @success_msg
       close_popup
     else
-      close_popup
+      # it is an error if we get here. 
     end
   end
 

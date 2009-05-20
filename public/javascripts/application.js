@@ -96,6 +96,13 @@ function decorate_wiki_edit_links(ajax_link) {
   );
 }
 
+// returns true if the enter key was pressed
+function enterPressed(event) {
+  if(event.which) { return(event.which == 13); }
+  else { return(event.keyCode == 13); }
+}
+
+
 /** menu navigation **/
 /*
 var SubMenu = Class.create({
