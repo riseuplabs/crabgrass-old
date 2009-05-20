@@ -77,6 +77,9 @@ end
 require 'redcloth/formatters/html'
 require 'cgi'
 
+$KCODE = 'u'    # \ set utf8 as the default
+require 'jcode' # / encoding
+
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_outline'
 
@@ -714,35 +717,14 @@ end
 
 unless "".respond_to? 'nameize'
 
-  # we would like to do this:
-  #   require 'iconv'
-  #   Iconv.iconv('ascii//translit', 'utf8', str)[0] rescue Exception
-  # 
-  # But that only works on irb, not via ruby!
-  #
-  # Iconv does not work in debian and there appears to be no way around it
-  # except through using gtk2. This requires package 'libgnome2-ruby'.
-  # 
-  # See this discussion for more on this sorry state of affairs: 
-  # http://www.ruby-forum.com/topic/70827
-  #
-  begin
-    require 'gtk2'
-    TRANSLIT_NAMES = true
-    def translit_utf8_to_ascii(str)
-      GLib.convert(str, "ASCII//translit", "UTF-8") rescue Exception
-    end
-  rescue
-    TRANSLIT_NAMES = false
-  end
-   
+  ##
+  ## NOTE: you will want to translit non-ascii slugs to ascii.
+  ## resist this impulse. nameized strings must remain utf8.
+  ##
+ 
   class String
     def nameize
-      if TRANSLIT_NAMES
-        str = translit_utf8_to_ascii(self)
-      else
-        str = self.dup
-      end
+      str = self.dup
       str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
       str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
       str.strip!            # ohh la la

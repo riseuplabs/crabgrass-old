@@ -188,7 +188,7 @@ in: |-
   h1. it is yŭmmy
 out: |-
   <h1 class="first"><a name="i-eat-food"></a>i eat &#8216;food&#8217;<a class="anchor" href="#i-eat-food">&para;</a></h1>
-  <h1><a name="it-is-yummy"></a>it is yŭmmy<a class="anchor" href="#it-is-yummy">&para;</a></h1>
+  <h1><a name="it-is-yŭmmy"></a>it is yŭmmy<a class="anchor" href="#it-is-yŭmmy">&para;</a></h1>
 
 
 
