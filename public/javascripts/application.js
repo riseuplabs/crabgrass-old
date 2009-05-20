@@ -6,6 +6,7 @@ function quickRedReference() {
     "directories=0,fullscreen=0,location=0,menubar=0," +
     "resizable=0,scrollbars=1,status=1,toolbar=0"
   );
+  return false;
 }
 
 // toggle the visibility of another element based on if

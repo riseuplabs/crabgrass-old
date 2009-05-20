@@ -31,7 +31,7 @@
         <%= hidden_field_tag('from_id', params[:from_id] || params[:group_name] ) %>
 
         <div style="float: left"><%= submit_tag "Post Message"[:post_message], :name => 'post_message' %></div>
-        <div style="text-align: right"><a  href="javascript:quickRedReference();"><%= :formatting_reference_link.t %></a></div>
+        <%= formatting_reference_link %>
       </div>
     <% end -%>
   </td>
