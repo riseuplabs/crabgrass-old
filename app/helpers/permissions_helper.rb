@@ -18,7 +18,7 @@ module PermissionsHelper
     if permission && block_given?
       yield
     else
-      nil
+      permission
     end
   end
 

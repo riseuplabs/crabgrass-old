@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
   include ImageHelper
+  include PermissionsHelper
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
