@@ -1005,3 +1005,6 @@ welcome_create_group_text: "Create a new group and invite other people to join. 
 welcome_create_page_link: "Create a new page"
 welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
 
+
+upload_zip_file_link: "Upload a ZIP-File"
+upload_images_link: "Upload Images"
