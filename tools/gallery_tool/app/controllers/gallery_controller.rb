@@ -230,8 +230,9 @@ class GalleryController < BasePageController
   end
   
   def upload_zip
-    begin
-    if request.post? && params[:zipfile]
+    if request.get?
+      redirect_to page_url(@page)
+    elsif request.post? && params[:zipfile]
       @assets, @failures = Asset.make_from_zip(params[:zipfile])
       @assets.each do |asset|
         @page.add_image!(asset, current_user)
@@ -240,11 +241,6 @@ class GalleryController < BasePageController
     else
       render :update do |page|
         page.replace_html 'target_for_upload', :partial => 'upload_zip'
-      end
-    end
-    rescue => exc
-      render :update do |page|
-        page.replace_html 'target_for_upload', exc.message+"\n"+exc.backtrace.join("\n")
       end
     end
   end

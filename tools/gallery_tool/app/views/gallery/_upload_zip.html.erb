@@ -5,7 +5,7 @@
   <%= "Upload ZIP - File"[:upload_a_zip_file_link] %></h2>
 <% form_tag page_url(@page, :action => 'upload_zip'), :method => :post, :multipart => true do -%>
   <%= spinner('upload') %>
-  <input type="file" size="38" name="zipfile" />
+  <input type="file" size="38" name="zipfile" /><br />
   <%= submit_tag "upload".t, :onClick => "$('upload_spinner').show();" %>
+  <%= button_to_function "cancel".t, "new Effect.SlideUp($('target_for_upload'));" %>
 <% end -%>
-
