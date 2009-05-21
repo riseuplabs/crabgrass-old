@@ -332,21 +332,9 @@ class GroupController < ApplicationController
     ## TODO: redesign the featured system, and make it cached. This is ugly and slow.
     @left_column = render_to_string(:partial => 'sidebar') if @group
   end
-
-  @@non_members_post_allowed = %w(archive tags tasks search)
-  @@non_members_get_allowed = %w(show members search discussions) + @@non_members_post_allowed
-  @@admin_only = %w(update, edit_tools, edit_layout) 
    
   def authorized?
-    if request.get? and @@non_members_get_allowed.include? params[:action]
-      return true
-    elsif request.post? and @@non_members_post_allowed.include? params[:action]
-      return true
-    elsif @@admin_only.include? params[:action]
-      return logged_in? && current_user.may?(:admin,@group)
-    else
-      return (logged_in? && @group && (current_user.member_of?(@group) || current_user.may?(:admin,@group)))
-    end
+    may_action?(params[:action], @group)
   end
 
   def check_group_visibility

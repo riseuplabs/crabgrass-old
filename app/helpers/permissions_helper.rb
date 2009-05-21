@@ -6,7 +6,7 @@ module PermissionsHelper
   #   <%= "YOU ARE MY CREATOR" if may?(:group, :create) %>
   #   <%= "don't be editing that" unless may?(:group, :edit, @some_group) %>
   #
-  #   <%- if may?(:group, :frobnotz, @group) -%>
+  #   <%- may?(:group, :frobnotz, @group) do -%>
   #     <h1>Frobnotzing Control</h1>
   #     <p>More stuff here…</p>
   #   <%- end -%>
