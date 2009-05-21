@@ -35,10 +35,10 @@ module AssetExtension
     end
 
     module ClassMethods
-      def make_from_zip(zipfile)
+      def make_from_zip(file)
         # Zip::ZipFile has been modified to make this work.
         # see lib/extension/zip.rb
-        zipfile = Zip::ZipFile.new(zipfile)
+        zipfile = BetterZipFile.new(file)
         assets = []
         # array of filenames for which processing failed
         failures = []
@@ -56,7 +56,7 @@ module AssetExtension
             exc.backtrace.each do |bt|
               logger.fatal(bt)
             end
-            failures << entry.name
+            failures << entry.name rescue nil
           end
         end
         # tidy up
@@ -66,7 +66,7 @@ module AssetExtension
           end
           Dir.rmdir(tmp_dir)
         end
-        return [assets, failures]
+        return [assets, failures.compact]
       end
     end
    
