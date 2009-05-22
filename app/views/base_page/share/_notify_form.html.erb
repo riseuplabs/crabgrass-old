@@ -1,5 +1,11 @@
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
+<% # DEPRECATED HACK...
+  users = @page.users
+  @page.groups.collect{|group| users.concat group.users}
+  users.uniq!
+  users.sort_by{|u|u.login}
+%>
 
 <table class='notify'>
   <tr>
@@ -27,7 +33,7 @@
     <td></td>
     <td>
       <div id='notify_current_access_area' class='notify_details' style='display:none'>
-        <%= render :partial => 'notify_recipient_list', :locals => {:users => @page.users, :groups => @page.groups} %>
+        <%= render :partial => 'notify_recipient_list', :locals => {:users => users, :groups => @page.groups} %>
       </div>
     </td>
   </tr>
