@@ -28,6 +28,47 @@ TODO:
     or should only get one thumbnail if the format differs. It is a waste of space
     to keep four copies of the same image! (albeit, a very tiny image)
 
+  create_table "asset_versions", :force => true do |t|
+    t.integer  "asset_id",       :limit => 11
+    t.integer  "version",        :limit => 11
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size",           :limit => 11
+    t.integer  "width",          :limit => 11
+    t.integer  "height",         :limit => 11
+    t.integer  "page_id",        :limit => 11
+    t.datetime "created_at"
+    t.string   "versioned_type"
+    t.datetime "updated_at"
+  end
+
+  add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
+  add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
+
+  create_table "assets", :force => true do |t|
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size",          :limit => 11
+    t.integer  "width",         :limit => 11
+    t.integer  "height",        :limit => 11
+    t.integer  "page_id",       :limit => 11
+    t.datetime "created_at"
+    t.integer  "version",       :limit => 11
+    t.string   "type"
+    t.integer  "page_terms_id", :limit => 11
+    t.boolean  "is_attachment",               :default => false
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.datetime "updated_at"
+  end
+
+  add_index "assets", ["version"], :name => "index_assets_version"
+  add_index "assets", ["page_id"], :name => "index_assets_page_id"
+  add_index "assets", ["page_terms_id"], :name => "pterms"
+
 =end
 
 class Asset < ActiveRecord::Base
@@ -142,6 +183,10 @@ class Asset < ActiveRecord::Base
 
     def format_description
       Media::MimeType.description_from_mime_type(content_type)
+    end
+
+    def content_type
+      read_attribute('content_type') || 'application/octet-stream'
     end
   end
   self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
