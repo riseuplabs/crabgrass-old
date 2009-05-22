@@ -85,7 +85,7 @@ class BasePage::ShareController < ApplicationController
       flash_message :success => @success_msg
       close_popup
     else
-      # it is an error if we get here. 
+      render :text => 'no button was pressed', :status => :error
     end
   end
 

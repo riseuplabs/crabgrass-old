@@ -17,7 +17,7 @@ class WikiPageController < BasePageController
     elsif request.post?
       begin
         @page = create_new_page!(@page_class)
-        if params[:asset][:uploaded_data].any?
+        if params[:asset] and params[:asset][:uploaded_data].any?
           @asset = Asset.make!(params[:asset].merge(:parent_page => @page))
           image_tag = "!<%s!:%s" % [@asset.thumbnail(:medium).url,@asset.url]
         end
