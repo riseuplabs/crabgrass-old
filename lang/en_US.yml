@@ -707,44 +707,44 @@ summary: "Summary"
 announcement_page_description: "An announcement."
 announcement_page_display: "Announcement"
 
-asset_page_description: "An uploaded file."
-asset_page_display: "File"
-
-external_video_page_description: "Show a video hosted on an external website."
-external_video_page_display: "External Video"
-
-article_page_description: "Blog post or news article."
+article_page_description: "Create a blog post or news article."
 article_page_display: "Article"
 
-wiki_page_description: "A free-form text document."
+wiki_page_description: "Create an editable free-form text document."
 wiki_page_display: "Wiki"
 
 #collection_class_description: "Special pages that hold other pages."
 #collection_page_display: "collection"
 
-folder_class_description: "A collection of files."
+folder_class_description: "Create a folder to organize other pages."
 folder_display: "Folder"
 
-task_list_page_description: "A list of todo items."
-task_list_page_display: "Task List"
-
-gallery_description: "A collection of images."
+gallery_description: "Upload multiple images or organize existing images into a set."
 gallery_display: "Gallery"
 
-rate_many_page_description: "Approve or disapprove of each possibility."
-rate_many_page_display: "Approval Vote"
+asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
+asset_page_display: "File"
 
-discussion_page_description: "A group discussion on a particular topic."
+external_video_page_description: "Show a video hosted on an external website."
+external_video_page_display: "External Video"
+
+discussion_page_description: "Discuss a particular topic with groups or other users."
 discussion_page_display: "Group Discussion"
 
-message_page_description: "A personal message sent to individual recipients."
+message_page_description: "Send a personal message to individual recipients."
 message_page_display: "Personal Message"
 
-ranked_vote_page_description: "Rank possibilities in order of preference."
+ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
 ranked_vote_page_display: "Ranked Vote"
 
-survey_page_description: "Create questions for people to answer."
+survey_page_description: "Create series of questions for people to answer."
 survey_page_display: "Survey"
+
+rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
+rate_many_page_display: "Approval Poll"
+
+task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
+task_list_page_display: "Task List"
 
 #event_page_description: "I wish that this worked."
 #event_page_display: "Event"
