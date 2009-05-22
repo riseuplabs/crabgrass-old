@@ -142,18 +142,19 @@ end
 namespace :debian do
   desc "Setup rails symlinks, for debian location"
   task :symlinks do
-    run "ln -s /usr/share/rails/actionmailer #{release_path}/vendor/actionmailer"
-    run "ln -s /usr/share/rails/actionpack #{release_path}/vendor/actionpack"
-    run "ln -s /usr/share/rails/activemodel #{release_path}/vendor/actionmodel"
-    run "ln -s /usr/share/rails/activerecord #{release_path}/vendor/activerecord"
-    run "ln -s /usr/share/rails/activeresource #{release_path}/vendor/activeresource"
-    run "ln -s /usr/share/rails/activesupport #{release_path}/vendor/activesupport"
-    run "ln -s /usr/share/rails #{release_path}/vendor/rails"
-    run "ln -s /usr/share/rails/railties #{release_path}/vendor/railties"
+    run "[ ! -L #{release_path}/vendor/actionmailer ] && ln -s /usr/share/rails/actionmailer #{release_path}/vendor/actionmailer"
+    run "[ ! -L #{release_path}/vendor/actionpack ] && ln -s /usr/share/rails/actionpack #{release_path}/vendor/actionpack"
+    run "[ ! -L #{release_path}/vendor/actionmodel ] && ln -s /usr/share/rails/activemodel #{release_path}/vendor/actionmodel"
+    run "[ ! -L #{release_path}/vendor/activerecord ] && ln -s /usr/share/rails/activerecord #{release_path}/vendor/activerecord"
+    run "[ ! -L #{release_path}/vendor/activeresource ] && ln -s /usr/share/rails/activeresource #{release_path}/vendor/activeresource"
+    run "[ ! -L #{release_path}/vendor/activesupport ] && ln -s /usr/share/rails/activesupport #{release_path}/vendor/activesupport"
+    run "[ ! -L #{release_path}/vendor/rails ] && ln -s /usr/share/rails #{release_path}/vendor/rails"
+    run "[ ! -L #{release_path}/vendor/railties ] && ln -s /usr/share/rails/railties #{release_path}/vendor/railties"
   end
 end
 
+after  "deploy:setup",   "crabgrass:create_shared"
+after  "deploy:symlink", "crabgrass:link_to_shared"
 before "deploy:restart", "debian:symlinks"
-after "deploy", "crabgrass:link_to_shared"
-after "deploy:setup", "crabgrass:create_shared"
-
+before "deploy:migrate", "debian:symlinks", "crabgrass:link_to_shared"
+after  "deploy:restart", "passenger:restart"
