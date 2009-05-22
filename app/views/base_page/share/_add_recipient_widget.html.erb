@@ -7,10 +7,11 @@
   add_action = {
     :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
     :loading => show_spinner('add_recipient'), 
-    :with => "'recipient[name]=' + $('recipient_name').value",
-    :condition => 'enterPressed(event)' # only submit if the enter key is pressed.
+    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value}
   }
-  key_pressed_function = remote_function(add_action) + "; return !enterPressed(event);"
+  # submit the form when the enter key is pressed in the text box:
+  key_pressed_function = remote_function(add_action.merge(:condition => 'enterPressed(event)')) + 
+    "; return !enterPressed(event);"
 %>
 <div class='share_details'>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   

@@ -47,10 +47,13 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     login_as :blue
     
     # a request that should be successful
-    xhr :post, :update, {:page_id =>  1, :recipient => {:name => 'penguin' }, :add => true } 
+    xhr :post, :update, {:page_id =>  1, :recipient => {:name => 'penguin', :access => 'edit'}, :add => true } 
     assert_response :success
-    assert_select 'li.unsaved'
-    
+    assert_select_rjs :insert, :top, 'share_page_recipients' do
+      assert_select 'li.unsaved'
+      assert_select 'option[selected=selected][value=edit]', 'Participant', 'new user should have edit access'
+    end
+
     # this request should not end in adding the user a second time
     
     # a request that will not be successful, as the username doesn't exist.
