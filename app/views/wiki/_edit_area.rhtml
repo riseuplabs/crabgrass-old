@@ -10,7 +10,7 @@
   <%= %>
   <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80, :id => wiki_body_id(wiki) %></div>
   <div>
-    <a style="float: right" href="javascript:quickRedReference();">formatting reference</a>
+    <%= formatting_reference_link %>
     <%= submit_tag 'Save', :name => 'save' %>
     <%= submit_tag 'Cancel', :name => 'cancel' %>
     <%= 'Revert to previous version:'[:revert_to_previous_version] %>

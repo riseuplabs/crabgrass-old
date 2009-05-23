@@ -432,7 +432,7 @@ module PageHelper
          :url => grouping.gsub(':','-')}
       entry[:pages] = Page.class_group_to_class(grouping).select{ |page_klass|
        !page_klass.internal && available_page_types.include?(page_klass.full_class_name)
-      }
+      }.sort_by{|page_klass| page_klass.order }
       tree << entry
     end
     return tree.sort_by{|entry| PageClassProxy::ORDER.index(entry[:name])||100 }

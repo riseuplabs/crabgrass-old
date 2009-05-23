@@ -7,6 +7,59 @@ A Page is the main content class. All actual content is a subclass of this class
 denormalization:
 all the relationship between a page and its groups is stored in the group_participations table. however, we denormalize some of it: group_name and group_id are used to store the info for the 'primary group'. what does this mean? the primary group is what is show when listing pages and it is the default group when linking from a wiki.
 
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "resolved",                         :default => true
+    t.boolean  "public"
+    t.integer  "created_by_id",      :limit => 11
+    t.integer  "updated_by_id",      :limit => 11
+    t.text     "summary"
+    t.string   "type"
+    t.integer  "message_count",      :limit => 11, :default => 0
+    t.integer  "data_id",            :limit => 11
+    t.string   "data_type"
+    t.integer  "contributors_count", :limit => 11, :default => 0
+    t.integer  "posts_count",        :limit => 11, :default => 0
+    t.string   "name"
+    t.integer  "group_id",           :limit => 11
+    t.string   "group_name"
+    t.string   "updated_by_login"
+    t.string   "created_by_login"
+    t.integer  "flow",               :limit => 11
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "static"
+    t.datetime "static_expires"
+    t.boolean  "static_expired"
+    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+    t.integer  "owner_id",           :limit => 11
+    t.string   "owner_type"
+    t.string   "owner_name"
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.integer  "site_id",            :limit => 11
+  end
+
+  add_index "pages", ["name"], :name => "index_pages_on_name"
+  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
+  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
+  add_index "pages", ["group_id"], :name => "index_page_group_id"
+  add_index "pages", ["type"], :name => "index_pages_on_type"
+  add_index "pages", ["flow"], :name => "index_pages_on_flow"
+  add_index "pages", ["public"], :name => "index_pages_on_public"
+  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
+  add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
+  add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
+  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
+  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
+  execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
+
+  Yeah, so, there are way too many indices on the pages table.
 =end
 
 class Page < ActiveRecord::Base

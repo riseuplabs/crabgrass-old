@@ -18,7 +18,7 @@ PageClassRegistrar.add(
   :controller => 'message_page',
   :icon => 'page_message',
   :class_group => ['text', 'discussion'],
-  :order => 1
+  :order => 3
 )
 
 

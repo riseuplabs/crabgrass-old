@@ -42,7 +42,12 @@ module Media
     
     def self.mime_type_from_extension(ext)
       ext = File.extname(ext).gsub('.','') if ext =~ /\./
-      EXTENSIONS[ext] || ((MIME::Types.type_for('.'+ext).first||MIME::Type.new('application/octet-stream')).content_type if defined?(MIME::Types))
+      mimetype = EXTENSIONS[ext]
+      if defined?(MIME::Types)
+        mimetype ||= MIME::Types.type_for('.'+ext).first.content_type
+      end
+      mimetype ||= 'application/octet-stream'
+      return mimetype
     end
 
     def self.description_from_mime_type(mime_type)

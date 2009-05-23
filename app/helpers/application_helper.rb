@@ -144,19 +144,8 @@ module ApplicationHelper
     end
   end
 
-  # Tests to see if this site has a custom translation defined for +key+.
-  # If it doesn't, then we fall back to the normal translation.
-#  def site_string(key)
-#    site_key = "#{key}_for_site_#{current_site.name}"
-#    if Gibberish.translations[site_key]
-#      # NOTE: ^^^ this relies on a hack to Gibberish which turns
-#      # Gibberish.translations[x] from a Hash to a HashWithIndifferentAccess
-#      # (we don't want to create a bunch of symbols that are never
-#      # going to be used)
-#      site_key.t
-#    else
-#      key.t
-#    end
-#  end
+  def formatting_reference_link
+   %Q{<div class='formatting_reference'><a href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+  end
 
 end
