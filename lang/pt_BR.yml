@@ -515,7 +515,7 @@ usage_agreement_heading: "Termos e Condi\xC3\xA7\xC3\xB5es de Uso"
 search_headline: Pesquisar
 edit_featured_content: "editar conte\xC3\xBAdo em destaque"
 alert_field_errors: "H\xC3\xA1 problemas com os campos seguintes"
-comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por :user em :when de :old_version para :new_version"
+comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por {user} em {when} de {old_version} para {new_version}"
 this_is_coordinating: "Este comit\xC3\xAA \xC3\xA9 o <strong>conselho coordenador</strong> do {parent_group}."
 edit_council_help_text: "Se este grupo tiver um conselho coordenador, ent\xC3\xA3o apenas um membro desse conselho pode administrar o grupo. Caso contr\xC3\xA1rio, qualquer membro do grupo pode faz\xC3\xAA-lo."
 share_page_recipients_selection: "Fa\xC3\xA7a sua sele\xC3\xA7\xC3\xA3o"

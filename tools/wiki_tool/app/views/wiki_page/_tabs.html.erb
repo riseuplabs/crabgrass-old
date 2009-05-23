@@ -4,7 +4,7 @@
   f.tab do |t|
     t.label "Show"[:show]
     t.url page_url(@page,:action=>'show')
-    t.selected action?(:show)
+    t.selected action?(:show) && controller?(:wiki_page)
     t.class 'page_url'
   end
   if logged_in? and current_user.may?(:edit, @page)
@@ -24,15 +24,15 @@
   last_change_id = "#{@wiki.version.to_i-1}-#{@wiki.version}"
   f.tab do |t|
     t.label "Versions"[:versions]
-    t.url page_url(@page,:action=>'versions')
-    t.selected action?(:versions) || action?(:version) || (action?(:diff) && params[:id] != last_change_id)
+    t.url page_url(@page,:action=>'version-list')
+    t.selected controller?(:wiki_page_version) && !(action?(:diff) && params[:id] == last_change_id)
     t.class 'page_url'
   end
   if @wiki.version > 1
     f.tab do |t|
       t.label "Last Change"[:last_change]
-      t.url page_url(@page, :action=>'diff', :id => last_change_id)
-      t.selected action?(:diff) && params[:id] == last_change_id
+      t.url page_url(@page, :action=>'version-diff', :id => last_change_id)
+      t.selected controller?(:wiki_page_version) && action?(:diff) && params[:id] == last_change_id
       t.class 'page_url'
     end
   end

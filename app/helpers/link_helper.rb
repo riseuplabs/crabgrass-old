@@ -66,6 +66,16 @@
 #
 module LinkHelper
   
+  # link to if and only if...
+  # like link_to_if, but return nil if the condition is false
+  def link_to_iff(condition, name, options = {}, html_options = {}, &block)
+    if condition
+      link_to(name, options, html_options, &block)
+    else
+      nil
+    end
+  end
+  
   ### SUBMITS ###
 
   def submit_link(label, options={})

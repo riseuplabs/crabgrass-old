@@ -539,7 +539,7 @@ usage_agreement_heading: "Acuerdo de uso "
 search_headline: Buscar
 edit_featured_content: editar contenido destacado
 alert_field_errors: Hay problemas con los siguientes campos
-comparing_changes_header: Comparando cambios para :user at :when from :old_version to :new_version
+comparing_changes_header: Comparando cambios para {user} at {when} from {old_version} to {new_version}
 this_is_coordinating: "Este comit\xC3\xA9 es el <strong>consejo de coordinaci\xC3\xB3n</strong> para {parent_group}."
 edit_council_help_text: "Si este grupo tiene un consejo de coordinaci\xC3\xB3n, entonces s\xC3\xB3lo un miembro de ese Consejo podr\xC3\xA1 administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
 share_page_recipients_selection: "Haz tu selecci\xC3\xB3n"

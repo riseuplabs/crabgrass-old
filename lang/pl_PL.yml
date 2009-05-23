@@ -587,7 +587,7 @@ search_headline: Szukaj
 edit_featured_content: "edytuj wyr\xC3\xB3\xC5\xBCnion\xC4\x85 zawarto\xC5\x9B\xC4\x87"
 alert_field_errors: "Przy nast\xC4\x99puj\xC4\x85cych polach wyst\xC4\x85pi\xC5\x82y problemy"
 move_this_page: "Przesu\xC5\x84 ta stron\xC4\x99"
-comparing_changes_header: "Por\xC3\xB3wnanie zmian dokonanych :when from :old_version przez :user z :new_version"
+comparing_changes_header: "Por\xC3\xB3wnanie zmian dokonanych {when} from {old_version} przez {user} z {new_version}"
 this_is_coordinating: "Ten komitet jest <strong>rad\xC4\x85 koorynuj\xC4\x85c\xC4\x85</strong> dla {parent_group}."
 share_page_recipients_selection: "Stw\xC3\xB3rz w\xC5\x82asny wyb\xC3\xB3r"
 edit_council_help_text: "Je\xC5\x9Bli ta grupa posiada rad\xC4\x99 koordynuj\xC4\x85c\xC4\x85, wtedy tylko cz\xC5\x82onek/ini tej rady mo\xC5\xBCe administrowa\xC4\x87 grup\xC4\x85. W innym przypadku jakikolwiek cz\xC5\x82onek/ini grupy mo\xC5\xBCe to robi\xC4\x87."

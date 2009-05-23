@@ -23,6 +23,8 @@ MEDIA_TYPE = {
 
 ARROW = " &raquo; "
 BULLET = " &bull; "
+RARROW = " &raquo; "
+LARROW = " &laquo; "
 
 # group and user names which cannot be used
 FORBIDDEN_NAMES = %w(account admin assets avatars chat calendar calendars contact custom_appearances embed event events feeds files gibberize group groups images invites issues javascripts latex me membership messages network networks page pages people person posts profile places plugin_assets requests static stats stylesheets visualize wiki code codes).freeze

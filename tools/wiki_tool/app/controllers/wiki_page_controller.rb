@@ -5,6 +5,7 @@ class WikiPageController < BasePageController
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
   helper :wiki # for wiki toolbar stuff
+  #verify :method => :post, :only => [:revert]
 
   ##
   ## ACCESS: no restriction
@@ -61,29 +62,6 @@ class WikiPageController < BasePageController
     end
   end
 
-  def version
-    @version = @wiki.versions.find_by_version(params[:id])
-  end
-
-  def versions
-  end
-
-  def diff
-    old_id, new_id = params[:id].split('-')
-    @old = @wiki.versions.find_by_version(old_id)
-    @old.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
-    @new = @wiki.versions.find_by_version(new_id)
-    @new.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
-    @old_markup = @old.body_html || ''
-    @new_markup = @new.body_html || ''
-    @difftext = HTMLDiff.diff( @old_markup , @new_markup)
-
-    # output diff html only for ajax requests
-    render :text => @difftext if request.xhr?
-  end
-
   def print
     # render if needed
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
@@ -93,6 +71,7 @@ class WikiPageController < BasePageController
   ##
   ## ACCESS: :edit
   ##
+
   def edit
     if params[:cancel]
       cancel
@@ -137,31 +116,19 @@ class WikiPageController < BasePageController
 
   def save_inline
     heading = params[:id]
-    @wiki.unlock_everything_by(current_user)
-
     if params[:save]
       body = params[:body]
       greencloth = GreenCloth.new(@wiki.body)
-
       greencloth.set_text_for_heading(heading, body)
-
-      @wiki.body = greencloth.to_s
-      @wiki.save
+      @wiki.smart_save!(:body => greencloth.to_s, :user => current_user, :heading => heading)
+      current_user.updated(@page)
     end
-
     update_inline_html(nil)
   end
 
-  def update_inline_html(heading)
-    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-    # render the edit remaining forms
-    if heading
-      @wiki.body_html = body_html_with_form(heading)
-    end
-    render :update do |page|
-      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
-    end
-  end
+  ##
+  ## PROTECTED
+  ##
 
   protected
 
@@ -209,7 +176,7 @@ class WikiPageController < BasePageController
 
   def authorized?
     if @page
-      if %w(show print diff version versions).include? params[:action]
+      if %w(show print).include? params[:action]
         @page.public? or current_user.may?(:view, @page)
       elsif %w(edit break_lock upload).include? params[:action]
         current_user.may?(:edit, @page)
@@ -218,6 +185,17 @@ class WikiPageController < BasePageController
       end
     else
       true
+    end
+  end
+
+  def update_inline_html(heading)
+    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
+    # render the edit remaining forms
+    if heading
+      @wiki.body_html = body_html_with_form(heading)
+    end
+    render :update do |page|
+      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
     end
   end
 
@@ -258,4 +236,5 @@ class WikiPageController < BasePageController
   def image_popup_visible_images
     Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
   end
+
 end

@@ -429,7 +429,7 @@ month_short_january: Gen
 signup_success: Registrazione eseguita con successo
 edit_featured_content: modifica contenuti in evidenza
 alert_field_errors: Ci sono problemi con i seguenti campi
-comparing_changes_header: Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version
+comparing_changes_header: "Confronto dei cambiamenti fatti da {user} alle {when} da {old_version} a {new_version}"
 csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si pu\xC3\xB2 verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, \xC3\xA8 sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
 send_invites_button: Invia Inviti
 date_centuries: secoli
