@@ -24,6 +24,8 @@ welcome_message_for_site_speakafrica: "Speak Africa is an online community of yo
 ## GENERAL
 ##
 
+contribute_content_link: "Contribute"
+
 public_checkbox_help: "This submits your content for publication outside the platform. The page will be marked as pending until it is approved by a moderator."
 
 usage_agreement_text: |
