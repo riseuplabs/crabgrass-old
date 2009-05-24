@@ -1,19 +1,19 @@
 module GroupPermission
 
-  def may_read(group = @group)
+  def may_read?(group = @group)
     may_see_private?(group) or may_see_public?(group)
   end
 
   %w(show members search discussions archive tags tasks search).each{ |action|
-    alias_method "may_#{action}".to_sym, :may_read
+    alias_method "may_#{action}?".to_sym, :may_read?
   }
 
-  def may_admin(group = @group)
+  def may_admin?(group = @group)
     logged_in? and current_user.may?(:admin, group)
   end
 
-  %w(update edit_tools edit_layout edit edit_featured_content feature_content).each{ |action|
-    alias_method "may_#{action}".to_sym, :may_admin
+  %w(update edit_tools edit_layout edit edit_featured_content feature_content edit).each{ |action|
+    alias_method "may_#{action}?".to_sym, :may_admin?
   }
 
   def may_destroy(group = @group)
@@ -47,14 +47,14 @@ module GroupPermission
     end
   end
 
-  def may_see_committees?(group = @group)
-    return if group.committee?
-    if logged_in?
-      group_member?(group) || group.profiles.visible_by(current_user).may_see_committees?
-    else
-      group.profiles.public.may_see_committees?
-    end
-  end
+#  def may_see_committees?(group = @group)
+#    return if group.committee?
+#    if logged_in?
+#      group_member?(group) || group.profiles.visible_by(current_user).may_see_committees?
+#    else
+#      group.profiles.public.may_see_committees?
+#    end
+#  end
 
   def may_see_networks?(group = @group)
     if logged_in?

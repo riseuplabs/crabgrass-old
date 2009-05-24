@@ -2,22 +2,27 @@ module GroupHelper
 
   include WikiHelper
 
+  ### DELETE ME!!!!!!!!! ###
+  def may_admin
+    false
+  end
+
   def group_cache_key(group, options={})
     params.merge(:version => group.version, :updated_at => group.updated_at.to_i, :lang => session[:language_code]).merge(options)
   end
 
+  ## DEPRECATED. use @group.committee?
   def committee?
     @group.instance_of? Committee
   end
   
+  ## DEPRECATED. use @group.network?
   def network?
     @group.instance_of? Network
   end
   
   def edit_settings_link
-    if may_admin
-      link_to 'edit settings'[:edit_settings], group_url(:action => 'edit', :id => @group)
-    end
+    link_to_iff(may_edit?, 'edit settings'[:edit_settings], group_url(:action => 'edit', :id => @group))
   end
   
   def join_group_link
@@ -53,19 +58,16 @@ module GroupHelper
   end
     
   def more_committees_link
-    link_to 'view all'[:view_all], ''
+    ## link_to_iff may_view_committee?, 'view all'[:view_all], ''
   end
   
   def create_committee_link
-    if may_admin
-      link_to 'create committee'[:create_committee], groups_url(:action => 'create', :parent_id => @group.id)
-    end
+    link_to_iff may_create_committee?, 'create committee'[:create_committee], groups_url(:action => 'create', :parent_id => @group.id)
   end
   
   def list_membership_url() {:controller => 'membership', :action => 'list', :id => @group.name} end
   def groups_membership_url() {:controller => 'membership', :action => 'groups', :id => @group.name} end
   def edit_membership_url() {:controller => 'membership', :action => 'edit', :id => @group.name} end
-
 
   def list_membership_link(link_suffix='')
     text = ''
