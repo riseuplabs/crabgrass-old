@@ -1,0 +1,56 @@
+<% 
+  # if the recipient is written "Mr. Red (red)", then reformat to be just 'red'
+  after_update_function = "function(field,value) {
+   field.value = field.value.strip().replace(/.*\\((.*)\\).*/, '$1');
+  }"
+  empty_box = false if empty_box.nil? 
+  add_action = {
+    :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
+    :loading => show_spinner('add_recipient'), 
+    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value}
+  }
+  # submit the form when the enter key is pressed in the text box:
+  key_pressed_function = remote_function(add_action.merge(:condition => 'enterPressed(event)')) + 
+    "; return !enterPressed(event);"
+%>
+<div class='share_details'>
+  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
+</div>
+
+<table class='share_page_recipients'>
+  <tr>
+    <td><%= 'User or group name'[:user_or_group_name]%>:</td>
+    <td>&nbsp;</td>
+    <td><%= 'Grant Access'[:grant_access]%>:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <%= text_field_with_auto_complete(:recipient, :name,
+            { :style=>'width:100%',
+              :onkeypress => key_pressed_function
+            },
+            { :url => {
+                :controller => 'base_page/share',
+                :action => 'auto_complete_for_recipient_name'
+              },
+              :after_update_element => after_update_function,
+              :skip_style => true
+            }
+          )%>
+    </td>
+    <td>&nbsp;</td>
+    <td>
+      <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+      <%= select_page_access 'recipient[access]', :blank => false %>
+      <%- end -%>
+    </td>
+    <td>
+      <%= button_to_remote 'Add'[:add], add_action %>
+    </td>
+    <td>
+      <%= spinner('add_recipient') %>
+    </td>
+  </tr>
+</table>

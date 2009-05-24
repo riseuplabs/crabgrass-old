@@ -2,7 +2,6 @@ module GroupHelper
 
   include WikiHelper
 
-  ### DELETE ME!!!!!!!!! ###
   def may_admin
     false
   end

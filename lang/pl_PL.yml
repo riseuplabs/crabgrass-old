@@ -140,7 +140,6 @@ requests_to_me: do mnie
 back_button: "Wr\xC3\xB3\xC4\x87"
 recent_pages: Ostatnie Strony
 invite_accept_via_existing_account: "Tak, mam ju\xC5\xBC konto"
-create_a_new_page: "Stw\xC3\xB3rz now\xC4\x85 stron\xC4\x99"
 display_name: "Wy\xC5\x9Bwietlane"
 welcome_find_people_text: "Przegl\xC4\x85daj spis u\xC5\xBCytkownik\xC3\xB3w/u\xC5\xBCytkowniczek, by znale\xC5\xBA\xC4\x87 ludzi kt\xC3\xB3rych znasz."
 you_have_no_contacts: "Nie masz \xC5\xBCadnych kontakt\xC3\xB3w"
@@ -190,8 +189,8 @@ state: stan
 share_link: "Udost\xC4\x99pnij :page_class"
 search: Szukaj
 page_list_heading_stars: gwiazdki
-page_list_heading_last_updated: ostatnie uaktualnienia
 invalid_token: Niepoprawna autoryzacja
+page_list_heading_last_updated: ostatnie uaktualnienia
 month_short_july: Lipiec
 delete_post: "Usu\xC5\x84 post"
 my_world_heading: "M\xC3\xB3j \xC5\x9Awiat"
@@ -301,8 +300,8 @@ saving_your_changes: "Zapisuj\xC4\x99 Twoje zmiany..."
 gallery_display: galeria
 add_another_file: Dodaj kolejny pilk
 participants: Uczestnicy
-page_list_heading_owner: "w\xC5\x82a\xC5\x9Bciciel/w\xC5\x82a\xC5\x9Bcicielka"
 Other: Inny
+page_list_heading_owner: "w\xC5\x82a\xC5\x9Bciciel/w\xC5\x82a\xC5\x9Bcicielka"
 username: "Imi\xC4\x99 U\xC5\xBCytkownika/U\xC5\xBCytkowniczki"
 media_audios: "Nagrania d\xC5\xBAwi\xC4\x99kowe"
 close_button: Zamknij
@@ -499,7 +498,6 @@ last_name: nazwisko
 School: "Szko\xC5\x82a"
 group_home_headline: "{group_type}"
 directory_of_networks: Katalog sieci
-create_page_headline: "Stw\xC3\xB3rz {page_class}"
 forgotten_email_address: "Jaki adres e-mail poda\xC5\x82e\xC5\x9B/poda\xC5\x82a\xC5\x9B nam kiedy Twoje konto zosta\xC5\x82o utwo\xC5\xBCone?"
 edit_title: "edytuj tytu\xC5\x82"
 you_have_no_peers: "Nie masz \xC5\xBCadnych znajomych"
@@ -525,7 +523,6 @@ approval_vote_class_description: "Zatwierdzenie lub odrzucenie ka\xC5\xBCdej mo\
 menu_groups: Grupy
 signup_button: "Do\xC5\x82\xC4\x85cz"
 month_short_october: "Pa\xC5\xBAdziernik"
-create_a_new_something: "stw\xC3\xB3rz {something}"
 more_information: "Wi\xC4\x99cej informacji"
 share_page_message: "Wy\xC5\x9Blij wiadomo\xC5\x9B\xC4\x87 (optional)"
 profile_option_may_pester: "Mo\xC5\xBCna mnie niepokoi\xC4\x87"
@@ -590,7 +587,7 @@ search_headline: Szukaj
 edit_featured_content: "edytuj wyr\xC3\xB3\xC5\xBCnion\xC4\x85 zawarto\xC5\x9B\xC4\x87"
 alert_field_errors: "Przy nast\xC4\x99puj\xC4\x85cych polach wyst\xC4\x85pi\xC5\x82y problemy"
 move_this_page: "Przesu\xC5\x84 ta stron\xC4\x99"
-comparing_changes_header: "Por\xC3\xB3wnanie zmian dokonanych :when from :old_version przez :user z :new_version"
+comparing_changes_header: "Por\xC3\xB3wnanie zmian dokonanych {when} from {old_version} przez {user} z {new_version}"
 this_is_coordinating: "Ten komitet jest <strong>rad\xC4\x85 koorynuj\xC4\x85c\xC4\x85</strong> dla {parent_group}."
 share_page_recipients_selection: "Stw\xC3\xB3rz w\xC5\x82asny wyb\xC3\xB3r"
 edit_council_help_text: "Je\xC5\x9Bli ta grupa posiada rad\xC4\x99 koordynuj\xC4\x85c\xC4\x85, wtedy tylko cz\xC5\x82onek/ini tej rady mo\xC5\xBCe administrowa\xC4\x87 grup\xC4\x85. W innym przypadku jakikolwiek cz\xC5\x82onek/ini grupy mo\xC5\xBCe to robi\xC4\x87."

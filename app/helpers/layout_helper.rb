@@ -81,8 +81,14 @@ module LayoutHelper
   end
 
   def favicon_link
-    %q[<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="/favicon.png" type="image/x-icon" />]
+    icon_urls = if current_appearance and current_appearance.favicon
+      [current_appearance.favicon.url] * 2
+    else
+      ['/favicon.ico', '/favicon.png']
+    end
+      
+    %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
+  <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
   # support for holygrail layout:
@@ -183,24 +189,34 @@ module LayoutHelper
   # LAYOUT STRUCTURE
 
   # builds and populates a table with the specified number of columns
-  def column_layout(cols, items)
+  def column_layout(cols, items, options = {}, &block)
     lines = []
     count = items.size
     rows = (count.to_f / cols).ceil
-    lines << '<table>'
+    if options[:balanced]
+      width= (100.to_f/cols.to_f).to_i
+    end
+    lines << "<table class='#{options[:class]}'>" unless options[:skip_table_tag]
+    if options[:header]
+      lines << options[:header]
+    end
     for r in 1..rows
       lines << ' <tr>'
       for c in 1..cols
          cell = ((r-1)*cols)+(c-1)
          next unless items[cell]
-         lines << "  <td valign='top'>"
-         lines << '  %s' % items[cell]
+         lines << "  <td valign='top' #{"style='width:#{width}%'" if options[:balanced]}>"
+         if block
+           lines << yield(items[cell])
+         else
+           lines << '  %s' % items[cell]
+         end
          #lines << "r%s c%s i%s" % [r,c,cell]
          lines << '  </td>'
       end
       lines << ' </tr>'
     end
-    lines << '</table>'
+    lines << '</table>' unless options[:skip_table_tag]
     lines.join("\n")
   end
 

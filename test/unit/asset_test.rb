@@ -268,6 +268,10 @@ class AssetTest < Test::Unit::TestCase
     assert "1", page.data.page_terms.media 
   end
   
+  def test_content_type
+    assert_equal 'application/octet-stream', Asset.new.content_type
+  end
+
   protected
 
   def debug

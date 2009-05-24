@@ -11,7 +11,6 @@ class WikiPageControllerTest < Test::Unit::TestCase
     @controller = WikiPageController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    HTMLDiff.log_to_stdout = false # set to true for debugging
   end
 
   def test_show
@@ -84,53 +83,6 @@ class WikiPageControllerTest < Test::Unit::TestCase
     end
   end
 
-  def test_version
-    login_as :orange
-    pages(:wiki).add groups(:rainbow), :access => :edit
-
-    # create versions
-    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      login_as user
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
-    end
-
-    # create another modification by the last user
-    # should not create a new version
-    pages(:wiki).data.smart_save!(:user => users(:purple), :body => "text 6 for the wiki")
-
-    login_as :orange
-    pages(:wiki).data.versions.reload
-
-    # find versions
-    (1..5).each do |i|
-      get :version, :page_id => pages(:wiki).id, :id => i
-      assert_response :success
-      assert_equal i, assigns(:version).version
-    end
-
-    # should fail gracefully for non-existant version
-    get :version, :page_id => pages(:wiki).id, :id => 6
-    assert_response :success
-    assert_nil assigns(:version)
-  end
-  
-  def test_diff
-    login_as :orange
-
-    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      #login_as user
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
-    end
-    #pages(:wiki).data.versions.reload
-
-    post :diff, :page_id => pages(:wiki).id, :id => "4-5"
-    assert_response :success
-#    assert_template 'diff'
-    assert_equal assigns(:wiki).versions.reload.find_by_version(4).body_html, assigns(:old_markup)
-    assert_equal assigns(:wiki).versions.reload.find_by_version(5).body_html, assigns(:new_markup)
-    assert assigns(:difftext).length > 10, "difftext should contain something substantial"
-  end
-
   def test_print
     login_as :orange
 
@@ -138,23 +90,55 @@ class WikiPageControllerTest < Test::Unit::TestCase
     assert_response :success
 #    assert_template 'print'    
   end
-  
+
   def test_preview
     # TODO:  write action and test
   end
-  
+
+  def test_edit_inline
+    login_as :blue
+    xhr :get, :edit_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three"
+
+    assert_response :success
+
+    wiki = assigns(:wiki)
+    blue = users(:blue)
+
+    assert_equal 1, wiki.edit_locks.size
+    assert_equal blue.id, wiki.locked_by_id("section-three"), "wiki section three should be locked by blue"
+
+    # nothing should appear locked to blue
+    assert_equal wiki.section_heading_names, wiki.sections_not_locked_for(users(:blue)), "no sections should look locked to blue"
+    assert_equal [], wiki.sections_not_locked_for(users(:gerrard)), "all sections should look locked to gerrard"
+  end
+
+  def test_save_inline
+    login_as :blue
+    xhr :get, :edit_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three"
+    # save the new (without a header)
+    xhr :post, :save_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three", :save => "Save",
+                  :body => "a line"
+
+    assert_response :success
+    wiki = assigns(:wiki)
+    wiki.reload
+
+    assert_equal ["section-two"], wiki.section_heading_names, "section three should have been deleted"
+    assert_equal "h2. section one\n\ns1 text 1\ns1 text 2\n\nsection two\n===========\n\ns2 text #1\ns2 more text\n\na line\n\n", wiki.body, "wiki body should be updated"
+  end
+
   def test_break_lock
     login_as :orange
     page = pages(:wiki)
     user = users(:orange)
     page.add(user, :access => :admin)
 
-    wiki = pages(:wiki).data   
+    wiki = pages(:wiki).data
     wiki.lock(Time.now, user)
-    
+
     post :break_lock, :page_id => pages(:wiki).id
     assert_equal nil, wiki.reload.locked?
-    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit', :section => 'all')
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
   end
 
 end

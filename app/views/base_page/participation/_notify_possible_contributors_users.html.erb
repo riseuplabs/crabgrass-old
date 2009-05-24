@@ -1,0 +1,14 @@
+<td id="possible_contributors_from_group_container" style="width:70%;">
+  <% if contributors.any? -%>
+    <% count = 0 %>
+    <% contributors.each do |group,v| %>
+      <ul class='side_list names' id="possible_contributors_from_group-<%=group%>" style="height:120px; overflow:auto;">
+	<% v.each do |cont| %>
+	  <li style="margin-left:12px;" id="possible_contributor_from_group-<%=group%>-user-<%=cont.login%>" class="possible_contributor-<%=cont.login%>"><%= participator_checkbox_line(cont,group) %></li>
+	<% end %>
+      </ul>
+      <% count += 1 %>
+    <% end -%>
+  <% end -%>
+</td>
+x

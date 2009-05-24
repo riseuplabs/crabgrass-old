@@ -1,0 +1,18 @@
+page.hide('add_recipient_spinner')
+page.hide('recipient_name_auto_complete') 
+
+if flash[:type] == 'error'
+  # there must have been an error
+  page.replace_html 'share_error_message', display_messages
+  page.hide('popup_spinner')
+else
+  page.replace_html 'share_error_message', ''
+
+  # update the ui by adding the recipients
+  @recipients.each do |recipient|
+    page.insert_html(:top, 'share_page_recipients',:partial => 'recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
+  end
+  page << "$('recipient_name').value = ''"
+  page << "$('recipient_name').focus()"
+end
+

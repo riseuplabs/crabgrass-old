@@ -1,0 +1,25 @@
+<%- form_url = {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id} -%>
+<%- cancel_function = "$('add_recipient_spinner').remove(); submit_form(this, 'cancel');"+show_spinner('popup') -%>
+<%- notify_function = "$('add_recipient_spinner').remove(); submit_form(this, 'notify');"+show_spinner('popup') -%>
+
+<% popup("Send Notification"[:notify_page_link], :id => 'notify_popup', :width => '40em') do -%>
+
+  <% form_remote_tag(
+    :url => form_url,
+    :loading => show_spinner('add_recipient'),
+    :html => {:id => 'notify_page_form'}) do -%>
+
+    <blockquote>
+      <div id='share_error_message'></div>
+      <%= render :partial => 'base_page/share/notify_form' %>
+    </blockquote>
+
+    <div class='buttons'>
+      <%# these buttons are not submit_tags so that we can control which spinner is displayed %>
+      <%= spinner 'popup' %> &nbsp;
+      <%= button_to_function :cancel_button.t, cancel_function %> &nbsp;
+      <%= button_to_function :notify_page_link.t, notify_function %>
+    </div>
+  <% end -%>
+
+<% end -%>

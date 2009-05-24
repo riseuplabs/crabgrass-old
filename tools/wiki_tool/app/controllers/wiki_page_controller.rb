@@ -1,10 +1,11 @@
 class WikiPageController < BasePageController
   include ControllerExtension::WikiRenderer
   include ControllerExtension::WikiImagePopup
-  
-  stylesheet 'wiki_edit', :action => :edit
-  javascript 'wiki_edit', :action => :edit
+
+  stylesheet 'wiki_edit'
+  javascript 'wiki_edit'
   helper :wiki # for wiki toolbar stuff
+  #verify :method => :post, :only => [:revert]
 
   ##
   ## ACCESS: no restriction
@@ -17,14 +18,24 @@ class WikiPageController < BasePageController
     elsif request.post?
       begin
         @page = create_new_page!(@page_class)
-        @page.update_attribute(:data, Wiki.create(:user => current_user))
-        return redirect_to(page_url(@page, :action => 'edit'))
+        if params[:asset] and params[:asset][:uploaded_data].any?
+          @asset = Asset.make!(params[:asset].merge(:parent_page => @page))
+          image_tag = "!<%s!:%s" % [@asset.thumbnail(:medium).url,@asset.url]
+        end
+        body = "%s\n\n%s" % [image_tag, params[:body]]
+        @page.update_attribute(:data, Wiki.create(:user => current_user, :body => body))
+        if body.strip.empty?
+          return redirect_to(page_url(@page, :action => 'edit'))
+        else
+          return redirect_to(page_url(@page, :action => 'show'))
+        end
       rescue Exception => exc
         @page = exc.record
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
-    render :template => 'base_page/create'
   end
 
   ##
@@ -40,33 +51,15 @@ class WikiPageController < BasePageController
     end
     # render if needed
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-    #@wiki_html = generate_wiki_html_for_user(@wiki, current_user)
-    # ^^ i would like to populate the edit links using js on the client instead, 
-    # why? i am not sure i have a great reason. i like the idea of keeping the markup
-    # unaltered. eventually, this could be useful for caching.
-  end
 
-  def version
-    @version = @wiki.versions.find_by_version(params[:id])
-  end
-
-  def versions
-  end
-  
-  def diff
-    old_id, new_id = params[:id].split('-')
-    @old = @wiki.versions.find_by_version(old_id)
-    @old.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
-    @new = @wiki.versions.find_by_version(new_id)
-    @new.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
-    @old_markup = @old.body_html || ''
-    @new_markup = @new.body_html || ''
-    @difftext = HTMLDiff.diff( @old_markup , @new_markup)
-
-    # output diff html only for ajax requests
-    render :text => @difftext if request.xhr?
+    if logged_in? and heading = @wiki.currently_editing_section(current_user)
+      # if the user has a particular section locked, then show it to them.
+      if heading == :all
+        redirect_to page_url(@page,:action=>'edit')
+      else
+        @wiki.body_html = body_html_with_form(heading)
+      end
+    end
   end
 
   def print
@@ -78,6 +71,7 @@ class WikiPageController < BasePageController
   ##
   ## ACCESS: :edit
   ##
+
   def edit
     if params[:cancel]
       cancel
@@ -88,24 +82,21 @@ class WikiPageController < BasePageController
     elsif request.post? and params[:save]
       # update
       save
-      # render only the section if saving fails
-      @wiki.body = @wiki.sections[@section.to_i] unless (@section.blank? or @section == :all)
     elsif request.get?
       lock
-      @wiki.body = @wiki.sections[@section.to_i] unless (@section.blank? or @section == :all)
     end
   end
 
   def cancel
-    unlock if @wiki.locked_by_id(@section) == current_user.id
+    unlock if @wiki.locked_by_id == current_user.id
     redirect_to page_url(@page, :action => 'show')
   end
 
   # TODO: make post only
   def break_lock
     # will unlock all sections
-    @wiki.unlock
-    redirect_to page_url(@page, :action => 'edit', :section => @section)
+    unlock
+    redirect_to page_url(@page, :action => 'edit')
   end
 
   ##
@@ -113,87 +104,79 @@ class WikiPageController < BasePageController
   ##
 
   def edit_inline
-    heading = params[:id]    
-    greencloth = GreenCloth.new(@wiki.body)
-    text_to_edit = greencloth.get_text_for_heading(heading)
-    form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
-    next_heading = greencloth.heading_tree.successor(heading)
-    next_heading = next_heading ? next_heading.name : nil
-    wiki_plus_form = replace_section_with_form(@wiki.body_html, heading, next_heading, form)
-    render :update do |page|
-      page.replace_html(:wiki_html, wiki_plus_form)
-    end
+    heading = params[:id]
+    @wiki.lock(Time.now, current_user, heading)
+    update_inline_html(heading)
+  rescue WikiLockException
+    @locker = User.find_by_id @wiki.locked_by_id(heading)
+    @locker ||= User.new :login => 'unknown'
+    @wiki_inline_error = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => @locker.display_name}
+    update_inline_html(heading)
   end
 
   def save_inline
+    heading = params[:id]
     if params[:save]
-      heading = params[:id]
       body = params[:body]
       greencloth = GreenCloth.new(@wiki.body)
       greencloth.set_text_for_heading(heading, body)
-      @wiki.body = greencloth.to_s
-      @wiki.save
-      @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
+      @wiki.smart_save!(:body => greencloth.to_s, :user => current_user, :heading => heading)
+      current_user.updated(@page)
     end
-    render :update do |page|
-      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
-    end
+    update_inline_html(nil)
   end
+
+  ##
+  ## PROTECTED
+  ##
 
   protected
 
   def save
     begin
-      @wiki.smart_save!( params[:wiki].merge(:user => current_user, :section => @section) )
+      @wiki.smart_save!( params[:wiki].merge(:user => current_user) )
       # unlock if we have the lock
-      unlock if @wiki.locked_by_id(@section) == current_user.id
       current_user.updated(@page)
       #@page.save
       redirect_to page_url(@page, :action => 'show')
     rescue ActiveRecord::StaleObjectError
-      # this exception is created by optimistic locking. 
+      # this exception is created by optimistic locking.
       # it means that @wiki has change since we fetched it from the database
       flash_message_now :error => "locking error. can't save your data, someone else has saved new changes first."[:locking_error]
     rescue ErrorMessage => exc
       flash_message_now :error => exc.to_s
+      @wiki.body = params[:wiki][:body]
     end
   end
 
   def unlock
-    @wiki.unlock(@section)
+    @wiki.unlock
   end
 
   def lock
-    if @wiki.editable_by? current_user, @section
-      # @locked_for_me = false # not locked for ourselves
-      @wiki.lock(Time.zone.now, current_user, @section)
+    if @wiki.editable_by? current_user
+      @wiki.lock(Time.zone.now, current_user)
     end
   end
 
   # called early in filter chain
   def fetch_data
-    @section = :all
     return true unless @page
 
     @wiki = @page.data
-
-    # get up to date section index
-    # because the user submitted index might refer to a wrong section
-    # if sections were split or merged
-    @section = @wiki.resolve_updated_section_index(params[:section], current_user)
   end
 
   # before filter
   def setup_view
     @show_attach = true
-    unless @wiki.nil? or @wiki.editable_by?(current_user, @section)
+    unless @wiki.nil? or @wiki.editable_by?(current_user)
       @title_addendum = render_to_string(:partial => 'locked_notice')
     end
   end
 
   def authorized?
     if @page
-      if %w(show print diff version versions).include? params[:action]
+      if %w(show print).include? params[:action]
         @page.public? or current_user.may?(:view, @page)
       elsif %w(edit break_lock upload).include? params[:action]
         current_user.may?(:edit, @page)
@@ -205,11 +188,40 @@ class WikiPageController < BasePageController
     end
   end
 
+  def update_inline_html(heading)
+    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
+    # render the edit remaining forms
+    if heading
+      @wiki.body_html = body_html_with_form(heading)
+    end
+    render :update do |page|
+      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
+    end
+  end
+
+  # returns the body html, but with a form in the place of the named heading
+  def body_html_with_form(heading)
+    html = @wiki.body_html.dup
+    return html if heading.blank?
+
+    greencloth = GreenCloth.new(@wiki.body)
+    text_to_edit = greencloth.get_text_for_heading(heading)
+
+    form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
+    form << "\n"
+    next_heading = greencloth.heading_tree.successor(heading)
+    next_heading = next_heading ? next_heading.name : nil
+    html = replace_section_with_form(html, heading, next_heading, form)
+
+    @heading_with_form = heading
+    html
+  end
+
   # Takes some html and a section (defined from heading_start to heading_end)
   # and replaces the section with the form. This is pretty crude, and might not
   # work in all cases.
   def replace_section_with_form(html, heading_start, heading_end, form)
-    index_start = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_start)}">/
+    index_start = html.index /^<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
     if heading_end
       index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
       index_end -= 1
@@ -224,5 +236,5 @@ class WikiPageController < BasePageController
   def image_popup_visible_images
     Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
   end
-end
 
+end

@@ -57,9 +57,12 @@ class Site < ActiveRecord::Base
   serialize :available_page_types, Array
   serialize :evil, Hash
 
-  # this is evil, but used by gibberish for site specific
-  # override ability.
-  cattr_accessor :current
+  # this is evil, but used in several important places:
+  # (1) for i18n, to be able to customize the strings on a per site basis
+  # (2) acts_as_site_limited, to be able to automatically limit all queries
+  #     to the current site.
+  def self.current; Thread.current[:site]; end
+  def self.current=(site); Thread.current[:site] = site; end
 
   ##
   ## FINDERS
@@ -209,7 +212,7 @@ class Site < ActiveRecord::Base
   ##
   
   def add_user!(user)
-    network.add_user!(user) if network
+    network.add_user!(user) if network and !user.member_of?(network)
   end
 
 end

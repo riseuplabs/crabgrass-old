@@ -66,39 +66,40 @@ in: |-
 out: |-
   <pre><code>  this is some really nice code
   </code></pre>
----
-in: |-
-  codetitle. hello there
-out: |-
-  <div class="codetitle">hello there</div>
----
-in: |-
-  <code with a title>
-  yippie
-  </code>
-out: |-
-  <div class="codetitle">with a title</div>
-  <pre><code>yippie
-  </code></pre>
-in: |-
-  /-- a little note
-  this is some really nice code
-  and it continues
-  \--
-out: |-
-  <div class="codetitle">a little note</div>
-  <pre><code>this is some really nice code
-  and it continues
-  </code></pre>
----
-in: |-
-  <code /etc/resolv.conf>
-  nameserver 127.0.0.1
-  </code>
-out: |-
-  <div class="codetitle">/etc/resolv.conf</div>
-  <pre><code>nameserver 127.0.0.1
-  </code></pre>
+#---
+#in: |-
+#  codetitle. hello there
+#out: |-
+#  <div class="codetitle">hello there</div>
+#---
+#in: |-
+#  <code with a title>
+#  yippie
+#  </code>
+#out: |-
+#  <div class="codetitle">with a title</div>
+#  <pre><code>yippie
+#  </code></pre>
+#---
+#in: |-
+#  /-- a little note
+#  this is some really nice code
+#  and it continues
+#  \--
+#out: |-
+#  <div class="codetitle">a little note</div>
+#  <pre><code>this is some really nice code
+#  and it continues
+#  </code></pre>
+#---
+#in: |-
+#  <code /etc/resolv.conf>
+#  nameserver 127.0.0.1
+#  </code>
+#out: |-
+#  <div class="codetitle">/etc/resolv.conf</div>
+#  <pre><code>nameserver 127.0.0.1
+#  </code></pre>
 ---
 in: |-
   <code>one fish</code>

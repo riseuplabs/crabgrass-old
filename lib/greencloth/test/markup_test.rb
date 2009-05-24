@@ -1,11 +1,10 @@
-require 'test/unit'
 require 'rubygems'
 require 'ruby-debug'
 require 'yaml'
+require 'test/unit'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
 require test_dir + '/../greencloth.rb'
-require test_dir + '/../../extension/string'
 
 SINGLE_FILE_OVERRIDE = if ARGV[0] and ARGV[0] !~ /\.rb/
   ARGV[0]
@@ -43,14 +42,14 @@ class TestMarkup < Test::Unit::TestCase
     end
   end
 
-  def test_sections
-    return unless @fixtures['sections.yml']
-    @fixtures['sections.yml'].each do |doc|
-      greencloth = GreenCloth.new( doc['in'] )
-      greencloth.wrap_section_html = true
-      assert_markup('sections.yml', doc, greencloth.to_html)
-    end
-  end
+  #def test_sections
+  #  return unless @fixtures['sections.yml']
+  #  @fixtures['sections.yml'].each do |doc|
+  #    greencloth = GreenCloth.new( doc['in'] )
+  #    greencloth.wrap_section_html = true
+  #    assert_markup('sections.yml', doc, greencloth.to_html)
+  #  end
+  #end
 
   protected
  

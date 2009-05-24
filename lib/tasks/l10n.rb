@@ -151,11 +151,15 @@ namespace :cg do
     # This tasks loads strings and its translation keys from 'lang/*.yml'.
     desc "Load translations from YAML files in the 'lang' directory"
     task (:load_translations => :environment) do
-      Dir["#{LANG_DIR}/*.yml"].sort.each do |lang_file|
-        load_language_file(lang_file, :custom => false)
-      end
-      Dir["#{CUSTOM_LANG_DIR}/*.yml"].sort.each do |lang_file|
-        load_language_file(lang_file, :custom => true)
+      if ENV["FILE"]
+        load_language_file(File.join(LANG_DIR,ENV["FILE"]), :custom => false)
+      else
+        Dir["#{LANG_DIR}/*.yml"].sort.each do |lang_file|
+          load_language_file(lang_file, :custom => false)
+        end
+        Dir["#{CUSTOM_LANG_DIR}/*.yml"].sort.each do |lang_file|
+          load_language_file(lang_file, :custom => true)
+        end
       end
     end
     

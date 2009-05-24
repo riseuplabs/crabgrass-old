@@ -22,13 +22,17 @@ class UserParticipation < ActiveRecord::Base
   #use this for counting stars :)
   include PageExtension::Static::UserParticipationMethods
   
+  # maybe later use this to replace all the notification stuff
+  #  include ParticipationExtension::Subscribe
+  
   def access_sym
     ACCESS_TO_SYM[self.access]
   end
 
-  # can only be used to increase access, not remove it.
+  # can only be used to increase access. 
+  # because access is only increased, you cannot remove access with grant_access. 
   def grant_access=(value)
-    value = ACCESS[value.to_sym] if value.is_a?(Symbol) or value.is_a?(String)
+    value = ACCESS[value] if value.is_a?(Symbol) or value.is_a?(String)
     if value
       if read_attribute(:access)
         write_attribute(:access, [value,read_attribute(:access)].min )
@@ -38,12 +42,12 @@ class UserParticipation < ActiveRecord::Base
     end
   end
 
-  # can be used to add or remove access
+  # sets the access level to be value, regardless of what it was before. 
+  # if value is nil, no change is made. If value is :none, then access is removed.
   def access=(value)
-    value = ACCESS[value] if value.is_a? Symbol
+    return if value.nil?
+    value = ACCESS[value] if value.is_a? Symbol or value.is_a?(String)
     write_attribute(:access, value)
-  end
- 
-  
+  end 
 end
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090510032300) do
+ActiveRecord::Schema.define(:version => 20090515071217) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -95,6 +95,20 @@ ActiveRecord::Schema.define(:version => 20090510032300) do
   end
 
   add_index "channels_users", ["channel_id", "user_id"], :name => "index_channels_users"
+
+  create_table "codes", :force => true do |t|
+    t.string   "code",       :limit => 10
+    t.integer  "page_id",    :limit => 11
+    t.integer  "user_id",    :limit => 11
+    t.integer  "access",     :limit => 11
+    t.datetime "expires_at"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
+  add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
   create_table "contacts", :id => false, :force => true do |t|
     t.integer "user_id",    :limit => 11

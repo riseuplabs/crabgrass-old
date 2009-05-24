@@ -29,5 +29,9 @@ class CronWorker < BackgrounDRb::MetaWorker
     system('rake', '--rakefile', RAILS_ROOT+'/Rakefile', 'ts:index', 'RAILS_ENV=production')
   end
 
+  def clean_codes
+    Code.cleanup_expired
+  end
+
 end
 

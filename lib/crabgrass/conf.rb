@@ -41,7 +41,8 @@ class Conf
   cattr_accessor :email
   cattr_accessor :sites
   cattr_accessor :secret
-  
+  cattr_accessor :paranoid_emails
+
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
 
@@ -57,7 +58,8 @@ class Conf
   # cattr_accessor doesn't work with ?
   def self.chat?; self.chat; end
   def self.limited?; self.limited; end
-
+  def self.paranoid_emails?; self.paranoid_emails; end
+ 
   def self.load_defaults
     self.name                 = 'default'
     self.super_admin_group_id = nil

@@ -80,8 +80,8 @@ image_count_total: ":count Fotos"
 contribute_content_link: Contribuir
 page_locked_header: "P\xC3\xA1gina bloqueada"
 all_page_types: "todos os tipos de p\xC3\xA1ginas"
-activity_user_left_group: "{user} abandonou o {group} {group_type} "
 media_document: Documento
+activity_user_left_group: "{user} abandonou o {group} {group_type} "
 collection: "cole\xC3\xA7\xC3\xA3o"
 joins_the_chatroom: entra no bate-papo
 no_images_in_gallery: "N\xC3\xA3o h\xC3\xA1 imagens na Galeria"
@@ -120,7 +120,6 @@ back_button: Voltar
 page_is_not_static: "A p\xC3\xA1gina n\xC3\xA3o \xC3\xA9 est\xC3\xA1tica"
 invite_accept_via_existing_account: "Eu j\xC3\xA1 tenho uma conta"
 recent_pages: "P\xC3\xA1ginas Recentes"
-create_a_new_page: "Criar uma nova p\xC3\xA1gina"
 display_name: Visualizar nome
 invite_accept_via_register: Eu preciso me cadastrar
 you_have_no_contacts: "Voc\xC3\xAA n\xC3\xA3o tem contatos"
@@ -440,7 +439,6 @@ edit_title: "editar t\xC3\xADtulo"
 directory_of_networks: "Diret\xC3\xB3rio de redes"
 group_home_headline: Home do {group_type}
 last_name: sobrenome
-create_page_headline: Criar uma nova {page_class}
 forgotten_email_address: "Qual foi o e-mail que voc\xC3\xAA forneceu quando criou sua conta?"
 School: Escola
 invite_not_found: "N\xC3\xA3o h\xC3\xA1 convite"
@@ -463,7 +461,6 @@ password_confirmation: "Confirma\xC3\xA7\xC3\xA3o da senha"
 menu_groups: Grupos
 signup_button: Cadastrar-se
 month_short_october: Out
-create_a_new_something: criar novo {something}
 share_page_message: Enviar uma mensagem (opcional)
 created_on: "Criado em "
 dont_understand_group_type: "N\xC3\xA3o foi poss\xC3\xADvel entender o tipo de grupo :type"
@@ -518,7 +515,7 @@ usage_agreement_heading: "Termos e Condi\xC3\xA7\xC3\xB5es de Uso"
 search_headline: Pesquisar
 edit_featured_content: "editar conte\xC3\xBAdo em destaque"
 alert_field_errors: "H\xC3\xA1 problemas com os campos seguintes"
-comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por :user em :when de :old_version para :new_version"
+comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por {user} em {when} de {old_version} para {new_version}"
 this_is_coordinating: "Este comit\xC3\xAA \xC3\xA9 o <strong>conselho coordenador</strong> do {parent_group}."
 edit_council_help_text: "Se este grupo tiver um conselho coordenador, ent\xC3\xA3o apenas um membro desse conselho pode administrar o grupo. Caso contr\xC3\xA1rio, qualquer membro do grupo pode faz\xC3\xAA-lo."
 share_page_recipients_selection: "Fa\xC3\xA7a sua sele\xC3\xA7\xC3\xA3o"
@@ -539,10 +536,10 @@ no_committees: "n\xC3\xA3o h\xC3\xA1 comit\xC3\xAAs"
 you_are_viewing_version: "Voc\xC3\xAA est\xC3\xA1 vendo a vers\xC3\xA3o :version por :user"
 group_privacy_settings: "Configura\xC3\xA7\xC3\xB5es de Privacidade do %s"
 share_page_options: "Escolher op\xC3\xA7\xC3\xB5es"
-activity_user_joined_group: "{user} uniu-se ao {group} {group_type} "
 you_have_no_groups: "Voc\xC3\xAA n\xC3\xA3o tem nenhum grupo"
 video_class_description: "Mostrar um v\xC3\xADdeo hospedado em site externo."
 pagination_next: seguinte
+activity_user_joined_group: "{user} uniu-se ao {group} {group_type} "
 network_invite_info: "Digite os nomes dos grupos que voc\xC3\xAA gostaria de convidar para entrarem nesta rede."
 make_album_cover: "use esta foto para a capa do \xC3\xA1lbum"
 public_key: "Chave P\xC3\xBAblica"

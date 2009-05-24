@@ -22,7 +22,8 @@ delete: "Delete"
 share: "Share"
 contributed: "Contributed"
 summary: Summary
-create_a_new_thing: "Create a new :thing"
+create_a_new_thing: "Create a new {thing}"
+thing_not_found: "{thing} not found"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
@@ -54,6 +55,7 @@ unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
 details_link: "Details"
+check_all: "Check All"
 return_link: "Return"
 
 edit: "Edit"
@@ -63,6 +65,7 @@ options: "Options"
 permissions: "Permissions"
 description: "Description"
 
+page: "Page"
 discussions: "Discussions"
 tags: "Tags"
 search: "Search"
@@ -77,6 +80,7 @@ participants: "Participants"
 viewers: "Viewers"
 
 destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
+confirmation: "Are you sure?"
 
 ##
 ## NAVIGATION
@@ -269,7 +273,7 @@ created_on: "Created on"
 file_size: "File size"
 format: "Format"
 regenerate: "regenerate thumbnails"
-version_number: "version :version"
+version_number: "version {version}"
 
 ##
 ## GALLERY
@@ -315,7 +319,7 @@ image_title: "Image title: %s"
 ## ME
 ## 
 
-contribute_content_link: "Contribute"
+contribute_content_link: "Create Page"
 me_dashboard_link: "Dashboard"
 me_inbox_link: "Inbox"
 me_search_link: "Search"
@@ -600,12 +604,21 @@ join_group_success: "You have joined group {group_name}"
 ## PAGES
 ##
 
-
-share_this_page: "Share This Page"
-
-move_this_page: "Move This Page"
-move_page_to_different_group: "Move this page to a different group"
 all_page_types: "all page types"
+edit_title: "edit title"
+data_for_page_missing: "The data for this page is missing."
+no_change: "no change"
+updated: "updated"
+created: "created"
+unread: "unread"
+read: "read"
+starred: "starred"
+all_people: "all people"
+all_groups: "all groups"
+all_states: "all states"
+
+# page list
+
 page_list_heading_updated_by: "updated by"
 page_list_heading_created_by: "created by"
 page_list_heading_title: "title"
@@ -617,62 +630,77 @@ page_list_heading_last_updated: "last updated"
 page_list_heading_stars: "stars"
 page_notice_message: "page sent by {user} on {date}"
 page_with_message: "with message"
-page_details: "Page Details"
-participation: "Participation"
-user_or_group_name: "User or group name"
-updated: "updated"
-created: "created"
-unread: "unread"
-read: "read"
-starred: "starred"
 pagination_next: "Next"
 pagination_previous: "Previous"
-all_people: "all people"
-all_groups: "all groups"
-all_states: "all states"
-create_a_new_page: "Create a new page"
-create_page_headline: "Create a new {page_class}"
-create_page_information: "{page_class} information"
-create_page_data: "{page_class} data"
-create_a_new_something: "create new {something}"
-create_page_button: "Create page"
-create_page_share: "Who has access to this {page_class}?"
-create_page: "Create Page"
-back_button: "Back"
-create_page_button: "Create {page_class}"
-title: "Title"
-summary: "Summary"
-edit_title: "edit title"
-summary: "Summary"
-separate_tags: "Separate tags using commas."
-data_for_page_missing: "The data for this page is missing."
-information: "Information"
-share_page_link: "Share :page_class"
-share_page_options: "Choose options"
-share_page_recipients: "Share this {page_class} with"
-share_page_recipients_sections: "Choose from your groups or friends"
-share_page_recipients_selection: "Make your selection"
-share_page_recipients_results: "This {page_class} will be shared with"
-grant_access: "Grant Access"
-share_page_email: "Send an email notification"
-share_page_message: "Send a message (optional)"
-no_change: "no change"
+
+# sidebar
+
+move_this_page: "Move This Page"
+move_page_to_different_group: "Move this page to a different group"
+destroy_page_link: "Shred {page_class}"
+confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
+trash_page_link: "Move {page_class} to trash"
 Announcements: "Announcements"
 watch_checkbox: "Watch For Updates"
 add_star_link: "Add Star (:star_count)"
 remove_star_link: "Remove Star (:star_count)"
-share_link: "Share :page_class"
 public_checkbox: "Public"
-delete_page_link: "Delete :page_class"
-move_page_link: "Move :page_class"
-page_details_link: ":page_class Details"
+public_checkbox_help: "If checked, anyone may view this page."
+delete_page_link: "Delete {page_class}"
+move_page_link: "Move {page_class}"
+page_details_link: "{page_class} Details"
+
+# details
+
+page_details: "Page Details"
+participation: "Participation"
+user_or_group_name: "User or group name"
+information: "Information"
+
+# tags
+
 edit_tags_link: "Edit"
+separate_tags: "Separate tags using commas."
+
+# attachments
+
 edit_attachments_link: "Edit"
 attachments: "Attachments"
 edit_attachments: "Edit Attachments"
 current_attachments: "Current Attachments"
 add_new_attachment: "Add New Attachment" 
 upload_attachment: "Upload Attachment"
+
+# share/notify
+
+grant_access: "Grant Access"
+share_page_email: "Send an email notification"
+share_page_message: "Send a message (optional)"
+share_page_link: "Share :page_class"
+share_page_options: "Choose options"
+share_page_recipients: "Share this {page_class} with"
+share_page_recipients_sections: "Choose from your groups or friends"
+share_page_recipients_selection: "Make your selection"
+share_page_recipients_results: "This {page_class} will be shared with"
+notify_page_link: "Send Notification"
+notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
+notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
+notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+notify_recipients: "Recipients"
+
+# creating
+
+page_create_owner: "Page Owner"
+page_create_access: "Additional Access"
+create_page_information: "{page_class} information"
+create_page_data: "{page_class} data"
+create_page_share: "Who has access to this {page_class}?"
+create_page: "Create Page"
+only_me: "Me"
+back_button: "Back"
+create_page_button: "Create {page_class}"
+title: "Title"
+summary: "Summary"
 
 ##
 ## PAGE TYPES
@@ -681,60 +709,69 @@ upload_attachment: "Upload Attachment"
 announcement_page_description: "An announcement."
 announcement_page_display: "Announcement"
 
-asset_page_description: "An uploaded file."
+article_page_description: "Create a blog post or news article."
+article_page_display: "Article"
+
+wiki_page_description: "Create an editable free-form text document."
+wiki_page_display: "Wiki Page"
+
+#collection_class_description: "Special pages that hold other pages."
+#collection_page_display: "collection"
+
+folder_class_description: "Create a folder to organize other pages."
+folder_display: "Folder"
+
+gallery_description: "Upload multiple images or organize existing images into a set."
+gallery_display: "Gallery"
+
+asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
 asset_page_display: "File"
 
 external_video_page_description: "Show a video hosted on an external website."
 external_video_page_display: "External Video"
 
-article_page_description: "Blog post or news article."
-article_page_display: "Article"
-
-wiki_page_description: "A free-form text document."
-wiki_page_display: "Wiki"
-
-#collection_class_description: "Special pages that hold other pages."
-#collection_page_display: "collection"
-
-folder_class_description: "A collection of files."
-folder_display: "Folder"
-
-task_list_page_description: "A list of todo items."
-task_list_page_display: "Task List"
-
-gallery_description: "A collection of images."
-gallery_display: "Gallery"
-
-rate_many_page_description: "Approve or disapprove of each possibility."
-rate_many_page_display: "Approval Vote"
-
-discussion_page_description: "A group discussion on a particular topic."
+discussion_page_description: "Discuss a particular topic with groups or other users."
 discussion_page_display: "Group Discussion"
 
-message_page_description: "A personal message sent to individual recipients."
+message_page_description: "Send a personal message to individual recipients."
 message_page_display: "Personal Message"
 
-ranked_vote_page_description: "Rank possibilities in order of preference."
+ranked_vote_page_description: "Create a list of choices for people to rank in order of preference."
 ranked_vote_page_display: "Ranked Vote"
 
-survey_page_description: "Create questions for people to answer."
+survey_page_description: "Create a series of questions for people to answer."
 survey_page_display: "Survey"
+
+rate_many_page_description: "Create a list of choices for people to approve or disapprove of."
+rate_many_page_display: "Approval Poll"
+
+task_list_page_description: "Create a list of todo items and assign tasks to yourself or others."
+task_list_page_display: "Task List"
 
 #event_page_description: "I wish that this worked."
 #event_page_display: "Event"
 
-# page type groupings
+##
+## PAGE TYPE GROUPINGS
+##
 
-page_group_vote: Voting
-page_group_text: Text
-page_group_collection: Collections
-page_group_discussion: Discussions
-page_group_event: Events
-page_group_task: Tasks
+# the main four
+page_group_vote: Polls and Votes
+page_group_text: Text and Discussions
+page_group_media: Multimedia
+page_group_planning: Planning Tools
+
+# media types
 page_group_media_image: Images
 page_group_media_audio: Audio
 page_group_media_video: Videos
 page_group_media_document: Documents
+
+# alt ways of searching
+page_group_discussion: Discussions
+page_group_collection: Collections
+page_group_event: Events
+page_group_task: Tasks
 
 ##
 ## DATES
@@ -841,16 +878,19 @@ versions: "Versions"
 last_change: "Last Change"
 print_underlined_p: "<u>p</u>rint"
 edit_underlined_e: "<u>e</u>dit"
-comparing_changes_header: "Comparing changes by :user at :when from :old_version to :new_version"
+comparing_changes_header: "Comparing changes by {user} at {when} from {old_version} to {new_version}"
 prev_change: "Previous Change"
 next_change: "Next Change"
 formatting_reference_link: "formatting reference"
 version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
-diff_link: "diff"
+diff_link: "view changes"
 created_when_by: "created :when by :user"
 insert_image_heading: "Insert Image"
 insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
+wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
+wiki_section_edit: "Edit This Section"
+wiki_revert_version: "Revert To Version {version}"
 
 ##
 ## WALL
@@ -884,7 +924,13 @@ group_invite_email: |
   
   If you do not wish to join this group, simply ignore this email.
 
+email_notice_subject: 'Check out page "{title}"'
+email_notice_hello_with_message: "Hello, {from} has sent you a web page with the following message: {message}"
+email_notice_hello: "Hello, {from} has sent you a web page."
+email_notice_access: "You may access this page here:"
+email_link_expires: "This link will expire in {days} days."
 
+ 
 ##
 ## PEOPLE (i.e., PeopleController)
 ##
@@ -934,9 +980,9 @@ add_tags: "Add Tags"
 current_tags: "Current Tags"
 
 
-#
-# WELCOME 
-#
+##
+## WELCOME 
+##
 
 
 welcome_title: "Welcome to {site_title}"

@@ -1,0 +1,11 @@
+<%
+# take a long time to return error, to prevent attacks.
+sleep(0.25)
+%>
+<blockquote>
+<h1>Sorry!</h1>
+<p>
+  The code "<%=params[:id]%>" has expired or does not exist.
+</p>
+</blockquote>
+

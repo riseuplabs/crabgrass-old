@@ -46,7 +46,7 @@ module PageHelper
   def page_path(context,name,options)
     # if controller is set, encode it with the action.
     action = [options.delete(:controller), options.delete(:action)].compact.join('-')
-    [context, name, action, options.delete(:id)].compact.join('/')
+    [context, name, action, options.delete(:id).to_s].select(&:any?).join('/')
   end
   
   # like page_url, but it returns a direct URL that bypasses the dispatch
@@ -132,8 +132,8 @@ module PageHelper
   ## PAGE LISTINGS AND TABLES
 
   SORTABLE_COLUMNS = %w(
-    created_at created_by_login updated_at updated_by_login group_name owner_name 
-    title starts_at posts_count contributors_count stars
+    created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
+    group_name owner_name title starts_at posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -199,16 +199,26 @@ module PageHelper
       page_icon(page)
     elsif column == :checkbox
       check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+    elsif column == :admin_checkbox
+      if current_user.may? :admin, page
+        check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+      else
+        "&nbsp"
+      end
     elsif column == :title
       page_list_title(page, column, participation)
     elsif column == :updated_by or column == :updated_by_login
       page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :created_by or column == :created_by_login
       page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
+    elsif column == :deleted_by or column == :deleted_by_login
+      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :updated_at
       friendly_date(page.updated_at)
     elsif column == :created_at
       friendly_date(page.created_at)
+    elsif column == :deleted_at
+      friendly_date(page.updated_at)
     elsif column == :happens_at
       friendly_date(page.happens_at)
     elsif column == :group or column == :group_name
@@ -274,17 +284,21 @@ module PageHelper
       list_heading 'group'.t, 'group_name', options
     
     # empty <th>s contain an nbsp to prevent collapsing in IE
-    elsif column == :icon or column == :checkbox or column == :discuss
+    elsif column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
       "<th>&nbsp;</th>" 
     
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
       list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
+    elsif column == :deleted_by or column == :deleted_by_login
+      list_heading 'deleted by'[:page_list_heading_deleted_by], 'deleted_by_login', options
     elsif column == :updated_at
       list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
       list_heading 'created'[:page_list_heading_created], 'created_at', options
+    elsif column == :deleted_at
+      list_heading 'deleted'[:page_list_heading_deleted], 'deleted_at', options
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
@@ -399,23 +413,29 @@ module PageHelper
     "page_group_#{group.gsub(':','_')}".t 
   end
   
-  def tree_of_page_types(available_page_types=nil)
+  def tree_of_page_types(available_page_types=nil, options={})
     available_page_types ||= current_site.available_page_types
     page_groupings = []
     available_page_types.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      page_groupings.concat page_class.class_group
+      next if page_class.internal
+      if options[:simple]
+        page_groupings << page_class.class_group.to_a.first
+      else
+        page_groupings.concat page_class.class_group
+      end
     end
     page_groupings.uniq!
     tree = [] 
     page_groupings.each do |grouping|
       entry = {:name => grouping, :display => display_page_class_grouping(grouping),
          :url => grouping.gsub(':','-')}
-      entry[:pages] = Page.class_group_to_class(grouping).collect
+      entry[:pages] = Page.class_group_to_class(grouping).select{ |page_klass|
+       !page_klass.internal && available_page_types.include?(page_klass.full_class_name)
+      }.sort_by{|page_klass| page_klass.order }
       tree << entry
     end
-    tree.sort!{|a,b| a[:display] <=> b[:display] }
-    return tree
+    return tree.sort_by{|entry| PageClassProxy::ORDER.index(entry[:name])||100 }
   end
   
   ## options for a page type dropdown menu for searching
@@ -453,6 +473,33 @@ module PageHelper
     else
       url_for(options.merge(:controller => '/pages', :action => 'create'))
     end
+  end
+
+  def options_for_page_owner(owner=nil)
+    groups = current_user.groups.select { |group|
+      !group.committee?
+    }.sort { |a, b|
+       a.display_name.downcase <=> b.display_name.downcase
+    }
+    opts = [] 
+    if owner
+      selected_group = owner.name
+    elsif params[:group]
+      selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+    else
+      selected_group = nil
+    end
+    me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
+    opts << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+    groups.collect do |group|
+      selected = selected_group == group.name ? 'selected' : nil
+      opts << content_tag( :option, group.display_name, :value => group.name, :class => 'spaced', :selected => selected )
+      group.committees.each do |committee|
+        selected = selected_group == committee.name ? 'selected' : nil
+        opts << content_tag( :option, committee.display_name, :value => committee.name, :class => 'indented', :selected => selected)
+      end
+    end  
+    opts.join("\n")
   end
 
 #  def create_page_link(text,options={})

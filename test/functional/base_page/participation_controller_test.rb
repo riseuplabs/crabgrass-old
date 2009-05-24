@@ -84,29 +84,40 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     
     assert user.may?(:admin, page), "blue should have access to new wiki"
     
+    user.share_page_with!(page, user, :send_notice => true) # send a notice to ourselves.
     inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
     assert inbox_pages.find {|p| p.id = page.id}, "new wiki should be in blue's inbox"
     
     post :remove_watch, :page_id => page.id
     page.reload
     
-    # TODO: Figure out what the intended effect of removing a watch should be, and test for it
-    inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
-    #  assert inbox_pages.find {|p| p.id == page.id} == nil, "new wiki should not be in blue's inbox"
-    
-    assert user.may?(:admin, page), "blue should still have access to new wiki"
+    assert !page.participation_for_user(user).watch?, 'should not be watched'
   end
   
   def test_destroy
-    owner = users(:blue)
-    friend = users(:red)
-    page = Page.create! :title => 'robot tea party', :user => owner, :share_with => friend
-
+    @owner = users(:blue)
+    friend_user = users(:red)
+    friend_group = groups(:rainbow)
+    @page = Page.create! :title => 'robot tea party', :user => @owner
+    assert @page
+    @owner.share_page_with!(@page, friend_user, :access => :admin)
+    @page.reload
+    assert @page.user_ids.include?(friend_user.id)
+    @owner.share_page_with!(@page, friend_group, :access => :admin)
+    @page.save!
+    @page.reload
+    assert @page.group_ids.include?(friend_group.id)
+    assert_equal @owner.id, @page.owner_id
+    @page.reload
+    
     login_as :blue
-    post :destroy, :page_id => page.id, :upart_id => page.user_participations.detect{|up|up.user==friend}.id
-
-    page = Page.find(page.id)
-    assert_equal [owner.id], page.user_ids
+    post :destroy, :page_id => @page.id, :upart_id => @page.user_participations.detect{|up|up.user==friend_user}.id
+    
+    post :destroy, :page_id => @page.id, :gpart_id => @page.group_participations.detect{|gp|gp.group==friend_group}.id
+    
+    @page = Page.find(@page.id)
+    assert_equal @owner.id, @page.owner_id
+    assert_equal [@owner.id], @page.user_ids
   end
 
   def test_details
@@ -131,7 +142,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   # TODO: Write this test
   end
   
-  
+ 
 =begin
 # these old tests might be useful in writing a new test for the share function
   def test_notify
