@@ -12,6 +12,7 @@ module PermissionsHelper
   #   <%- end -%>
   def may?(controller, action, *args)
     if controller.is_a?(Symbol)
+      debugger
       controller = "#{controller}_controller".camelize.constantize
     end
     permission = controller.send("may_#{action}", *args)

@@ -377,7 +377,7 @@ class GroupControllerTest < Test::Unit::TestCase
     @controller.stubs(:logged_in?).returns(true)
     @controller.instance_variable_set(:@group, c)
     assert u.may_admin?(c)
-    assert @controller.may_admin_group?
+    assert @controller.may?(:group,:admin)
 
     get :show
     assert_response :success

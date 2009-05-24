@@ -13,7 +13,6 @@ class GroupController < ApplicationController
   javascript :extra, :action => :tasks
 
   prepend_before_filter :find_group
-  before_filter :check_group_visibility
   before_filter :login_required, :except => [:show, :archive, :tags, :search]
   before_filter :render_sidebar
   
@@ -38,7 +37,7 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
-    if logged_in? and current_site.council == @group and current_user.may?(:admin, current_site)
+    if may_edit_site_appearance?  
       @editable_custom_appearance = current_site.custom_appearance
     end
   end
@@ -180,7 +179,7 @@ class GroupController < ApplicationController
       @group.profiles.public.update_attribute :may_see_members , params[:group][:publicly_visible_members]
       @group.profiles.public.update_attribute :may_request_membership , params[:group][:accept_new_membership_requests]
       @group.min_stars = params[:group][:min_stars]
-      if @group.valid? && may_admin_group? && (params[:group][:council_id] != @group.council_id)
+      if @group.valid? && may_admin && (params[:group][:council_id] != @group.council_id)
         # unset the current council if there is one
         @group.add_committee!(Group.find(@group.council_id), false) unless @group.council_id.nil?
         
@@ -310,9 +309,9 @@ class GroupController < ApplicationController
     @group = Group.find_by_name params[:id] if params[:id]
 
     if @group
-      if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
+      if may_see_private?
         @access = :private
-      elsif @group.profiles.public.may_see?
+      elsif may_see_public?
         @access = :public
       else
         @group = nil
@@ -335,18 +334,6 @@ class GroupController < ApplicationController
    
   def authorized?
     may_action?(params[:action], @group)
-  end
-
-  def check_group_visibility
-    if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
-      @access = :private
-    elsif @group.profiles.public.may_see?
-      @access = :public
-    else
-      clear_context
-      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
-      return false
-    end
   end
 
   after_filter :update_view_count
