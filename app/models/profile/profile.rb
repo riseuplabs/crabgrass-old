@@ -127,7 +127,7 @@ class Profile < ActiveRecord::Base
       "organization", "place", "may_see", "may_see_committees", "may_see_networks",
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
-      "may_burden", "may_spy", "peer"]
+      "may_burden", "may_spy", "peer", "city", "country"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
@@ -171,5 +171,69 @@ class Profile < ActiveRecord::Base
        self.save!
      end
      self.wall
+   end
+   
+   # UNICEF wants the "location" field in the general information section to
+   # be split into "city" and "country". This is an attempt to archieve this
+   # while keeping consistency with old data.
+   # Old data will be displayed as the city now.
+   
+   def place=(val)
+     if val.kind_of?(String)
+       write_attribute(:place, val)
+     elsif val.kind_of?(Hash)
+       write_attribute(:place, val.to_yaml)
+     end
+   end
+   
+   def place
+     val = read_attribute(:place)
+     if val =~ /^--- /
+       begin
+         YAML.load(val)
+       rescue => exc
+         val
+       end
+     elsif val.empty?
+       {}
+     else
+       val
+     end
+   end
+   
+   def city
+     val = place
+     if val.kind_of?(String)
+       val
+     else
+       val[:city]
+     end
+   end
+   
+   def city=(val)
+     place = self.place
+     if place.kind_of?(Hash)
+       self.place = place.merge(:city => val)
+     else
+       self.place = { :city => val}
+     end
+   end
+   
+   def country
+     val = place
+     if val.kind_of?(String)
+       ''
+     else
+       val[:country]
+     end
+   end
+   
+   def country=(val)
+     place = self.place
+     if place.kind_of?(Hash)
+       self.place = place.merge(:country => val)
+     else
+       self.place = { :country => val}
+     end
    end
 end # class
