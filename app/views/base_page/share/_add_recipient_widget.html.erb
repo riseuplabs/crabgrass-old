@@ -14,7 +14,7 @@
     "; return !enterPressed(event);"
  #if there are no recipients at all, we will never show the box
  if @page
-   (@page.group_participations.any? || @page.user_participations.any?) ? recipients_exist = true : recipient_exist = false
+   (@page.users + @page.groups - [@page.owner]).any? ? recipients_exist = true : recipient_exist = false
  end
 %>
 <table class='share_page_recipients'>
@@ -55,6 +55,6 @@
   </tr>
 </table>
 
-<div class='share_details' id="share_recipient_list"  <%='style="display:none;"' unless (recipients_exist && !empty_box)%>>
+<div class='share_details' id="share_recipient_list"  <%='style="display:none;"' if !recipients_exist || empty_box%>>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
 </div>
