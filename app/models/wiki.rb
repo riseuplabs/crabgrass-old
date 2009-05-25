@@ -37,8 +37,6 @@ class Wiki < ActiveRecord::Base
   serialize :edit_locks, Hash
   serialize_default :edit_locks, Hash.new
 
-  belongs_to :user
-
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
   has_one :profile
@@ -228,6 +226,10 @@ class Wiki < ActiveRecord::Base
   acts_as_versioned :if => :save_new_version? do 
     # these methods are added to both Wiki and Wiki::Version
 
+    def self.included(base)
+      base.belongs_to :user
+    end
+
     def body=(value) # :nodoc: 
       write_attribute(:body, value)
       write_attribute(:body_html, "")
@@ -294,6 +296,18 @@ class Wiki < ActiveRecord::Base
       :order => "updated_at DESC"
   end
 
+  # reverts and keeps all the old versions
+  def revert_to_version(version_number, user)
+    version = versions.find_by_version(version_number)
+    smart_save!(:body => version.body, :user => user)
+  end
+
+  # reverts and deletes all versions after the reverted version.
+  def revert_to_version!(version_number, user=nil)
+    revert_to(version_number)
+    destroy_versions_after(version_number)
+  end
+
   ##
   ## SAVING
   ##
@@ -311,6 +325,8 @@ class Wiki < ActiveRecord::Base
   #       not work, because the version number is not incremented.
   #       so, smart_save! must be the only way that the wiki gets saved.
   def smart_save!(params)
+    params[:heading] ||= :all
+
     if params[:version] and version > params[:version].to_i
       raise ErrorMessage.new("can't save your data, someone else has saved new changes first.")
     end
@@ -319,11 +335,10 @@ class Wiki < ActiveRecord::Base
       raise ErrorMessage.new("User is required.")
     end
 
-    unless editable_by?(params[:user])
+    unless editable_by?(params[:user], params[:heading])
       raise ErrorMessage.new("Cannot save your data, someone else has locked the page.")
     end
 
-    # reinsert the section into the body
     self.body = params[:body]
 
     if recent_edit_by?(params[:user])
@@ -337,7 +352,7 @@ class Wiki < ActiveRecord::Base
       without_locking {save!}
     end
 
-    unlock
+    unlock(params[:heading])
   end
 
   ##### RENDERING #################################
@@ -421,7 +436,10 @@ class Wiki < ActiveRecord::Base
     @page = p
   end
 
-  #### PROTECTED METHODS #######
+  ##
+  ## PROTECTED METHODS
+  ##
+
   protected
 
   def update_expired_locks
@@ -447,6 +465,12 @@ class Wiki < ActiveRecord::Base
     #    update_attribute(:edit_locks, updated_locks)
     #  end
     #end
+  end
+
+  def destroy_versions_after(version_number)
+    versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
+      version.destroy
+    end
   end
 
 end

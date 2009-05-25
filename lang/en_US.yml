@@ -23,6 +23,7 @@ share: "Share"
 contributed: "Contributed"
 summary: Summary
 create_a_new_thing: "Create a new {thing}"
+thing_not_found: "{thing} not found"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
@@ -79,6 +80,7 @@ participants: "Participants"
 viewers: "Viewers"
 
 destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
+confirmation: "Are you sure?"
 
 ##
 ## NAVIGATION
@@ -271,7 +273,7 @@ created_on: "Created on"
 file_size: "File size"
 format: "Format"
 regenerate: "regenerate thumbnails"
-version_number: "version :version"
+version_number: "version {version}"
 
 ##
 ## GALLERY
@@ -876,18 +878,19 @@ versions: "Versions"
 last_change: "Last Change"
 print_underlined_p: "<u>p</u>rint"
 edit_underlined_e: "<u>e</u>dit"
-comparing_changes_header: "Comparing changes by :user at :when from :old_version to :new_version"
+comparing_changes_header: "Comparing changes by {user} at {when} from {old_version} to {new_version}"
 prev_change: "Previous Change"
 next_change: "Next Change"
 formatting_reference_link: "formatting reference"
 version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
-diff_link: "diff"
+diff_link: "view changes"
 created_when_by: "created :when by :user"
 insert_image_heading: "Insert Image"
 insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
 wiki_section_edit: "Edit This Section"
+wiki_revert_version: "Revert To Version {version}"
 
 ##
 ## WALL

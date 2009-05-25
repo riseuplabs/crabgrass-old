@@ -130,7 +130,7 @@ break_lock: "bryt l\xC3\xA5s"
 group_directory: Gruppkatalog
 create_committee: "skapa kommitt\xC3\xA9"
 locked_by_user: "l\xC3\xA5st av :user"
-comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av :user :when fr\xC3\xA5n :old_version till :new_version"
+comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av {user} {when} fr\xC3\xA5n {old_version} till {new_version}"
 contribute_content_link: Bidra
 alert_saved: "\xC3\x84ndringarna sparades"
 email_addresses: E-postadresser

@@ -232,7 +232,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     xhr :post, :update, {:page_id => 1, :share => true, :recipients => [user2.login.to_sym], :send_notice => "1", :send_message => 'additional_message'}
     assert_response :success
     upart.reload
-    assert upart.inbox, 'participation.inbox should be set to true now'
+    assert !upart.inbox, 'participation.inbox should be set to false now'
   end
   
 end
