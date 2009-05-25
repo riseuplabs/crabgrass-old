@@ -111,5 +111,23 @@ class ProfileTest < Test::Unit::TestCase
     assert check_associations(Profile)
   end
   
+  def test_unicef_specific_place_adjustments
+    # The old way
+    p = Profile.first
+    p.place = "Hamburg"
+    p.save
+    p = Profile.first
+    assert_equal "Hamburg", p.place
+    
+    # The new way
+    p.city = "Hamburg"
+    p.country = "Germoney"
+    p.save
+    p = Profile.first
+    assert_equal({ :city => "Hamburg", :country => "Germoney" }, p.place)
+    assert_equal "Hamburg", p.city
+    assert_equal "Germoney", p.country
+  end
+  
 end
 

@@ -36,8 +36,14 @@
           </tr>
           <tr>
             <td colspan="3">
-            <%= text_field 'profile', 'place', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('location') -%></div>
+              <%= text_field 'profile', 'country', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
+              <div class="input label"><%= _('country') -%></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <%= text_field 'profile', 'city', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
+              <div class="input_label"><%= _('city') -%></div>
             </td>
           </tr>
         </table>
