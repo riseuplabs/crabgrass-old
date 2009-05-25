@@ -3,11 +3,7 @@ class WikiPage < Page
      
   def title=(value)
     write_attribute(:title, value)
-    # don't set the name to duplicate name, because it won't have a real url
-    if value and Page.find_by_name(value.nameize, :select => "name").nil?
-      # no page exists with this name
-      write_attribute(:name, value.nameize)
-    end
+    write_attribute(:name, value.nameize)
   end
 
   # Return string of all tasks, for the full text search index
