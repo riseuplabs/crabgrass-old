@@ -1,17 +1,10 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'discussion_page_controller'
+require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-# Re-raise errors caught by the controller.
-class DiscussionPageController; def rescue_action(e) raise e end; end
-
-class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
+class DiscussionPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations
 
   def setup
-    @controller = DiscussionPageController.new
-    @request    = ActionController::TestRequest.new
     @request.host = "localhost"
-    @response   = ActionController::TestResponse.new
   end
 
   def test_create_and_show
@@ -33,6 +26,29 @@ class Tool::DiscussionPageControllerTest < Test::Unit::TestCase
 
     get :show
     assert_response :success
+  end
+
+  def test_create_same_name
+    login_as :gerrard
+
+    page_ids, page_urls = [],[]
+    3.times do
+      post 'create', :id => DiscussionPage.param_id, :page => {:title => "dupe", :summary => ""}
+      page = assigns(:page)
+
+      assert_equal "dupe", page.title
+      assert_not_nil page.id
+
+      # check that we have:
+      # a new page
+      assert !page_ids.include?(page.id)
+      # a new url
+      assert !page_urls.include?(page.name_url)
+
+      # remember the values we saw
+      page_ids << page.id
+      page_urls << page.name_url
+    end
   end
 
 end
