@@ -2,8 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class WikiTest < Test::Unit::TestCase
 
-  fixtures :users
-  fixtures :wikis
+  fixtures :users, :wikis
 
   def setup
     @orange_id = users(:orange).id
@@ -155,6 +154,25 @@ class WikiTest < Test::Unit::TestCase
   end
 
   def test_wiki_page
+  end
+
+  def test_reverting
+    wiki = Wiki.create! :body => '1111'    
+    wiki.smart_save!(:body => '2222', :user => users(:red))
+    wiki.smart_save!(:body => '3333', :user => users(:green))
+    wiki.smart_save!(:body => '4444', :user => users(:blue))
+    assert_equal 4, wiki.versions.size
+    assert_equal '1111', wiki.versions.find_by_version(1).body
+    assert_equal '4444', wiki.versions.find_by_version(4).body
+
+    # soft revert
+    wiki.revert_to_version(3, users(:purple))
+    assert_equal '3333', wiki.versions.find_by_version(5).body
+
+    # hard revert
+    wiki.revert_to_version!(4, users(:purple))
+    assert_equal '4444', wiki.versions.find_by_version(4).body
+    assert_equal 4, wiki.versions(true).size
   end
 
   def test_associations

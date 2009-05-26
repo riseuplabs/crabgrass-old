@@ -14,5 +14,6 @@ else
   end
   page << "$('recipient_name').value = ''"
   page << "$('recipient_name').focus()"
+  page.show('share_recipient_list')
 end
 

@@ -1,5 +1,13 @@
 module WikiPageHelper
 
+  def may_destroy_wiki_version?
+    current_user.may?(:admin, @page)
+  end
+
+  def may_revert_wiki_version?
+    current_user.may?(:edit, @page)
+  end
+
   def locked_error_message
     if locked_for_me?
       user_id = @wiki.locked_by_id
@@ -19,7 +27,7 @@ module WikiPageHelper
        :update => 'wiki_html',
        :url => {
          :controller => :wiki_page,
-         :action => :diff,
+         :action => 'version-diff',
          :page_id => @page.id,
          :id => "%d-%d" % [@last_seen.version, @wiki.version]
        }

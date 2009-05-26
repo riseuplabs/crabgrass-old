@@ -622,7 +622,7 @@ search_headline: Suche
 edit_featured_content: Aktuelle Inhalte bearbeiten
 alert_field_errors: Es gibt Probleme mit den folgenden Feldern
 move_this_page: Verschiebe diese Seite
-comparing_changes_header: "Vergleich der \xC3\x84nderungen durch :user am :when zwischen :old_version und :new_version"
+comparing_changes_header: "Vergleich der \xC3\x84nderungen durch {user} am {when} zwischen {old_version} und {new_version}"
 welcome_find_groups_link: Finde Gruppen
 this_is_coordinating: Dieses Gremium ist der <strong>koordinierende Rat</strong> von {parent_group}.
 share_page_recipients_selection: "W\xC3\xA4hle aus"

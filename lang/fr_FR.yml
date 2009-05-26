@@ -617,7 +617,7 @@ edit_featured_content: modifier le contenu important
 search_headline: Recherche
 alert_field_errors: "Il y a un probl\xC3\xA8me avec les champs suivants"
 move_this_page: "D\xC3\xA9placer cette page"
-comparing_changes_header: "Comparaison des modifications de :user \xC3\xA0 :when de :old_version vers :new_version"
+comparing_changes_header: "Comparaison des modifications de {user} \xC3\xA0 {when} de {old_version} vers {new_version}"
 welcome_find_groups_link: Trouver des groupes
 this_is_coordinating: Cette commission est le <strong>conseil de coordination</strong> de {parent_group}.
 share_page_recipients_selection: Faites votre choix
