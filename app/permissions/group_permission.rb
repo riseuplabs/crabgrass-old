@@ -16,8 +16,8 @@ module GroupPermission
     alias_method "may_#{action}?".to_sym, :may_admin?
   }
 
-  def may_destroy(group = @group)
-    may_admin and
+  def may_destroy?(group = @group)
+    may_admin? and
     ( (group.network? and group.groups.size == 1) or group.users.uniq.size == 1)
   end
 
@@ -41,7 +41,7 @@ module GroupPermission
 
   def may_see_members?(group = @group)
     if logged_in?
-      may_admin || group_member?(group) || group.profiles.visible_by(current_user).may_see_members?
+      may_admin? || group_member?(group) || group.profiles.visible_by(current_user).may_see_members?
     else
       group.profiles.public.may_see_members?
     end
