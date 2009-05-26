@@ -7,7 +7,7 @@ class PageViewListener < Crabgrass::Hook::ViewListener
     return if context[:page].created_by == current_user
     rating = context[:page].ratings.find_by_user_id(current_user.id)
     if rating.nil? or rating.rating != YUCKY_RATING
-      link = link_to ('flag as inappropriate'[:flag_inappropriate],
+      link = link_to('flag as inappropriate'[:flag_inappropriate],
         {:controller => 'yucky', :page_id => context[:page].id, :action => 'add'},
         :confirm => 'Are you sure this page is inappropriate? Click \'yes\' *only if* you think this is offensive, rude or unkind. A moderator will look at the post soon.'[:confirm_inappropriate_page])
       page_sidebar_list(content_tag(:li, link, :class => 'small_icon sad_plus_16'))
@@ -20,12 +20,12 @@ class PageViewListener < Crabgrass::Hook::ViewListener
 
   def post_actions(context)
     return unless logged_in?
-    return if context[:page].created_by == current_user
+    return if context[:post].created_by == current_user
     post = context[:post]
     rating = post.ratings.find_by_user_id(current_user.id)
     if rating.nil? or rating.rating != YUCKY_RATING
       link = link_to_remote_icon('sad_plus',
-        {:url=>{:controller => 'yucky', :post_id => post.id, :action => 'add'},
+        :url=>{:controller => 'yucky', :post_id => post.id, :action => 'add'},
         :confirm => 'Are you sure this comment is inappropriate? Click \'yes\' *only if* you think this is offensive, rude or unkind. A moderator will look at the post soon.'[:confirm_inappropriate_comment])
       #link = link_to image_tag('/plugin_assets/super_admin/images/face-sad.png'),
       #  :controller => 'yucky', :post_id => post.id, :action => 'add'
