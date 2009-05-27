@@ -72,8 +72,8 @@ class ApplicationController < ActionController::Base
     session[:language_code] ||= begin
       if LANGUAGES.empty?
         'en_US'
-      elsif !logged_in? or current_user.language.nil?
-        code = request.preferred_language_from(AVAILABLE_LANGUAGE_CODES)
+      elsif !logged_in? || current_user.language.empty?
+        code = request.compatible_language_from(AVAILABLE_LANGUAGE_CODES)
         code ||= current_site.default_language
         code ||= 'en_US'
         code.sub('-', '_')
