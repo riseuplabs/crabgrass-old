@@ -4,11 +4,6 @@ module PostHelper
     content_tag(:tr, content_tag(:td, pagination_links(@posts, :param_name => 'posts'), :colspan => 2)) if @posts.any?
   end
 
-  # This function can be overwritten by mods to add information to the 
-  # author display next to a post.
-  def author_info(post)
-  end
-
   def edit_post_action(post)
     return unless logged_in? and post.user_id == current_user.id
     content_tag :div, :style=>'display: block', :class=>'post_action_icon' do

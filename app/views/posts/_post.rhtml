@@ -11,7 +11,7 @@
     <div class="post-author" style="<%=author_style%>">
       <div class='username'><%= link_to_user post.user %></div>
       <div class='date'><%= created_modified_date(post.created_at, post.updated_at) %></div>
-      <%= author_info(post) %>
+      <div class='fields'><%= call_hook :author_info, {:post => post} %></div>
     </div>
   </td>
   <td class="post-body" id="post-body-<%= post.id %>">
