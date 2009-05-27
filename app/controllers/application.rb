@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper, CacheHelper
 
-  # TODO: remove these, access via ActionController::Base.helpers() instead.
+  # TODO: remove these, access via self.view() instead.
   include AuthenticatedSystem	
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::AssetTagHelper
   include ImageHelper
 
+  include ControllerExtension::CurrentSite
+  
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
 
@@ -22,14 +24,13 @@ class ApplicationController < ActionController::Base
   around_filter :set_language
   before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
   around_filter :rescue_authentication_errors
-  session :session_secure => Conf.enforce_ssl # todo: figure out how to use current_site.enforce_ssl instead
-  protect_from_forgery :secret => Conf.secret
-  layout 'default'
+  before_filter :header_hack_for_ie6
 
-  helper_method :current_appearance  # make available to views
-  def current_appearance
-    current_site.custom_appearance || CustomAppearance.default
-  end
+  session :session_secure => Conf.enforce_ssl
+  # ^^ TODO: figure out how to use current_site.enforce_ssl instead
+  protect_from_forgery :secret => Conf.secret
+
+  layout 'default'
 
   # ensure that essential_initialization ALWAYS comes first
   def self.prepend_before_filter(*filters, &block)
@@ -37,13 +38,17 @@ class ApplicationController < ActionController::Base
     filter_chain.prepend_filter_to_chain(filters, :before, &block)
     filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
   end
-  def essential_initialization
-    current_site
-  end
 
   protected
 
-  before_filter :header_hack_for_ie6
+  ##
+  ## CALLBACK FILTERS
+  ## 
+
+  def essential_initialization
+    current_site
+  end
+  
   def header_hack_for_ie6
     #
     # the default http header cache-control in rails is:
@@ -55,6 +60,60 @@ class ApplicationController < ActionController::Base
     #
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
   end
+
+  # an around filter responsible for setting the current language.
+  # order of precedence in choosing a language:
+  # (1) the current session
+  # (2) the current_user's settings
+  # (3) the request's Accept-Language header
+  # (4) the site default
+  # (5) english
+  def set_language
+    session[:language_code] ||= begin
+      if LANGUAGES.empty?
+        'en_US'
+      elsif !logged_in? or current_user.language.nil?
+        code = request.preferred_language_from(AVAILABLE_LANGUAGE_CODES)
+        code ||= current_site.default_language
+        code ||= 'en_US'
+        code.sub('-', '_')
+      else
+        current_user.language.to_sym
+      end
+    end
+
+    if session[:language_code]
+      Gibberish.use_language(session[:language_code]) { yield }
+    else
+      yield
+    end
+  end
+
+  # set the current timezone, if the user has it configured.
+  def set_timezone
+    Time.zone = current_user.time_zone if logged_in?
+  end
+
+  # TODO: figure out what the hell is the purpose of this?
+  def pre_clean
+    User.current = nil
+  end
+
+  ##
+  ## HELPERS
+  ##
+
+  # In a view, we get access to the controller via controller(). The 'view' method
+  # lets controllers have access to the view helpers.
+  def view
+    #ActionController::Base.helpers
+    self.class.helpers
+  end
+
+  def current_appearance
+    current_site.custom_appearance || CustomAppearance.default
+  end
+  helper_method :current_appearance
 
   #
   # returns a hash of options to be given to the mailers. These can be
@@ -175,47 +234,12 @@ class ApplicationController < ActionController::Base
   
   private
   
-  def pre_clean
-    User.current = nil
-  end
-
-  def set_timezone
-    Time.zone = current_user.time_zone if logged_in?
-  end
-
   def rescue_authentication_errors
     yield
   rescue ActionController::InvalidAuthenticityToken
     render :template => 'account/csrf_error'
   rescue PermissionDenied
     access_denied
-  end
-
-  # an around filter responsible for setting the current language.
-  # order of precedence in choosing a language:
-  # (1) the current session
-  # (2) the current_user's settings
-  # (3) the site default
-  # (4) english
-  def set_language
-    if LANGUAGES.any?
-      session[:language_code] ||= begin
-        if !logged_in? or current_user.language.nil?
-          language = LANGUAGES.detect{|l|l.code == current_site.default_language}
-          language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
-          language_code = language.code.to_sym
-        else
-          language_code = current_user.language.to_sym
-        end
-      end
-    else
-      session[:language_code] = 'en_US'
-    end
-    if session[:language_code]
-      Gibberish.use_language(session[:language_code]) { yield }
-    else
-      yield
-    end
   end
  
   ## handy way to get back where we came from
@@ -241,38 +265,5 @@ class ApplicationController < ActionController::Base
       return super(template_name)
     end
   end
-
-  ##
-  ## SITES
-  ##
-
-  public
-
-  # returns the current site. 
-  def current_site
-    if !@current_site_disabled
-      @current_site ||= begin
-        site = Site.for_domain(request.host).find(:first)
-        site ||= Site.default
-        site ||= Site.new(:domain => request.host) 
-        Site.current = site # << yes, evil, don't use it! but gibberish still uses it for now.
-      end
-    else
-      Site.new()
-    end
-  end
-
-  # used for testing
-  def disable_current_site
-    @current_site_disabled = true
-  end
-
-  # used for testing
-  def enable_current_site
-    @current_site = nil
-    @current_site_disabled = false
-  end
-
-  helper_method :current_site  # make available to views
 
 end

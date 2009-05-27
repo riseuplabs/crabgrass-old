@@ -18,18 +18,11 @@ class Admin::BaseController < ActionController::Base
   include Admin::EmailBlastsHelper
   include Admin::AnnouncementsHelper
 
+  include ControllerExtension::CurrentSite
+
   protect_from_forgery :secret => Conf.secret
 
   def index
-  end
-
-  helper_method :current_site  # make available to views
-  def current_site
-    @current_site ||= begin
-      site = Site.for_domain(request.host).find(:first)
-      site ||= Site.default
-      Site.current = site
-    end
   end
   
   #
@@ -43,7 +36,6 @@ class Admin::BaseController < ActionController::Base
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
-
   
   protected
 
