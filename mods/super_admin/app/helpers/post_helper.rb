@@ -1,4 +1,4 @@
-Module PostHelper
+module PostHelper
   def star_post_action(post)
     return unless logged_in? and post.user_id != current_user.id and current_user.may?(:comment,@page)
     content_tag :div, :style => 'display: block', :class=>'post_action_icon' do
