@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-class WikiPageControllerTest < Test::Unit::TestCase
+class WikiPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :wikis, :groups, :sites
 
   def setup

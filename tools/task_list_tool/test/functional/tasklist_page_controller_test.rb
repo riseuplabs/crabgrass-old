@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-class TasklistPageControllerTest < ActionController::TestCase
+class TaskListPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :task_lists, :tasks
 
   def text_show
