@@ -45,25 +45,25 @@ class MeTrashControllerTest < Test::Unit::TestCase
     end
     get :index
     assert_response :success
-    assert assigns(:pages).empty?, "should not find a deleted page after undeleting"
- end
+    assert assigns(:pages).empty?, "should not find a deleted page after removing"
+  end
 
- def test_02_text_search
+  def test_02_text_search
     return unless sphinx_working?(:test_text_search)
     login_as :blue
 
     get :index, :path => ["text", "test"]
     assert_response :success
-    assert assigns(:pages).empty?, "should not find a deleted page"
+    assert assigns(:pages).any?, "should find a deleted page by contained text"
   end
 
- def test_03_text_search_and_sort
+  def test_03_text_search_and_sort
     return unless sphinx_working?(:test_text_search_and_sort)
     login_as :blue
 
     get :index, :path => ["text", "test", "ascending", "group_name"]
     assert_response :success
-    assert assigns(:pages).empty?, "should not find a deleted page"
+    assert assigns(:pages).any?, "should find a deleted page with group sorting."
   end
 
 end
