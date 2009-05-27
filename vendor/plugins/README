@@ -12,7 +12,10 @@ acts_as_rateable: allow a rating of nil. Also, the plugin's rating.rb is overrid
 
 acts_as_tree: hack to to allow whatever options you pass to acts_as_tree to be passed on to the has_many :children association that acts_as_tree creates.
 
-gibberish: we override the main String extension that allows for translations (method brackets_with_translation) in order to allow a site to customize the any translatable string (ie in lang/custom using 'key_for_site_sitex'). This also relies on a change to the Gibberish.translations hash to make it HashWithIndifferentAccess.
+gibberish:
+(1) we override the main String extension that allows for translations (method brackets_with_translation) in order to allow a site to customize the any translatable string (ie in lang/custom using 'key_for_site_sitex').
+(2) This also relies on a change to the Gibberish.translations hash to make it HashWithIndifferentAccess. (3) We alias the translation files with the locale to language codes without a local (ie, if file is pt_BR and current session language code is 'pt', it still works). 
+(4) we do not load all the translation files over again on each request in dev mode. you must now restart the server if you change a lang file.
 
 
 PLUGINS
