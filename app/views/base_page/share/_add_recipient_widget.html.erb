@@ -1,21 +1,31 @@
 <% 
-  # if the recipient is written "Mr. Red (red)", then reformat to be just 'red'
-  after_update_function = "function(field,value) {
-   field.value = field.value.strip().replace(/.*\\((.*)\\).*/, '$1');
-  }"
   empty_box = false if empty_box.nil? 
+
+  # the remote action that is triggered when the 'add' button is pressed (or 
+  # the popup item is selected).
   add_action = {
     :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
     :loading => show_spinner('add_recipient'), 
     :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value}
   }
-  # submit the form when the enter key is pressed in the text box:
-  key_pressed_function = remote_function(add_action.merge(:condition => 'enterPressed(event)')) + 
-    "; return !enterPressed(event);"
- #if there are no recipients at all, we will never show the box
- if @page
-   (@page.users + @page.groups - [@page.owner]).any? ? recipients_exist = true : recipient_exist = false
- end
+
+  # this is called after an item in the popup has been selected.
+  # it makes it so selecting an item is like hitting the add button
+  after_update_function = "function(field,value) { #{remote_function(add_action)} }"
+
+  # this does three things:
+  # (1) submit the form when the enter key is pressed in the text box
+  # (2) don't do this, however, if the autocomplete popup is showing
+  # (3) also eat the event by returning false on a enter key so that the form is not submitted.
+  key_pressed_function = remote_function(
+    add_action.merge(:condition => "enterPressed(event) && !$('recipient_name_auto_complete').visible()")
+  ) + "; return !enterPressed(event);"
+
+  #if there are no recipients at all, we will never show the box
+  if @page
+    (@page.users + @page.groups - [@page.owner]).any? ? recipients_exist = true : recipient_exist = false
+  end
+
 %>
 <table class='share_page_recipients'>
   <tr>
@@ -36,6 +46,7 @@
                 :action => 'auto_complete_for_recipient_name'
               },
               :after_update_element => after_update_function,
+              :select => 'name',
               :skip_style => true
             }
           )%>

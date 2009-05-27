@@ -217,27 +217,32 @@ module UrlHelper
   #
   # options:
   #   :avatar => nil | :xsmall | :small | :medium | :large | :xlarge (default: nil)
-  #   :format => :short | :full | :both | :hover (default: full)
+  #   :format => :short | :full | :both | :hover | :twolines (default: full)
   #   :block => false | true (default: false)
   #   :class => passed through to the tag as html class attr
   #   :style => passed through to the tag as html style attr
   def display_entity(entity, options={})
     options = {:format => :full}.merge(options)
     display = nil; hover = nil
+    options[:class] = [options[:class], 'entity'].join(' ')
+    options[:block] = true if options[:format] == :twolines
+
     if options[:avatar]
       url = avatar_url(:id => (entity.avatar||0), :size => options[:avatar])
       options[:class] = [options[:class], "name_icon", options[:avatar]].compact.join(' ')
       options[:style] = [options[:style], "background-image:url(#{url})"].compact.join(';')
     end
     display, title, hover = case options[:format]
-      when :short then [entity.name, entity.display_name, nil]
-      when :full then [entity.display_name, entity.name, nil]
-      when :both then [entity.both_names, nil, nil]
-      when :hover then [entity.name, nil, entity.display_name]
+      when :short then [entity.name, h(entity.display_name), nil]
+      when :full then [h(entity.display_name), entity.name, nil]
+      when :both then [h(entity.both_names), nil, nil]
+      when :hover then [entity.name, nil, h(entity.display_name)]
+      when :twolines then ["<div class='name'>%s</div>%s"%[entity.name, (h(entity.display_name) if entity.name != entity.display_name)], nil, nil]
     end
     if hover
       display += content_tag(:b,hover)
-      options[:style] = [options[:style], "position:relative"].compact.join(';') # to allow absolute popup with respect to the name
+      options[:style] = [options[:style], "position:relative"].compact.join(';')
+      # ^^ to allow absolute popup with respect to the name
     end
     element = options[:block] ? :div : :span
     content_tag(element, display, :style => options[:style], :class => options[:class], :title => title)
