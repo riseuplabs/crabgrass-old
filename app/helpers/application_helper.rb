@@ -114,9 +114,11 @@ module ApplicationHelper
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
   
-  def options_for_language(selected=nil)
+  def options_for_language(selected=nil)  
     selected ||= session[:language_code].to_s
-    options_for_select(LANGUAGES.to_select(:name, :code), selected)
+    selected = selected.sub(/_\w\w$/, '') # remove locale
+    options_array = LANGUAGES.collect {|lang| [lang.name, lang.code.sub(/_\w\w$/,'')]}
+    options_for_select(options_array, selected)
   end
 
   def header_with_more(tag, klass, text, more_url=nil)

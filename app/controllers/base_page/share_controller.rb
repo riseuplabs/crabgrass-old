@@ -92,6 +92,7 @@ class BasePage::ShareController < ApplicationController
   # handles the notification with or without sharing
   def notify
     @success_msg = "You successfully sent notifications."[:notify_success]
+    params[:share] = params[:notify] # act as if share button was pressed if notify pressed.
     update
   end
   

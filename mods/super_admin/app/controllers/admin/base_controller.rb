@@ -18,18 +18,11 @@ class Admin::BaseController < ActionController::Base
   include Admin::EmailBlastsHelper
   include Admin::AnnouncementsHelper
 
+  include ControllerExtension::CurrentSite
+
   protect_from_forgery :secret => Conf.secret
 
   def index
-  end
-
-  helper_method :current_site  # make available to views
-  def current_site
-    @current_site ||= begin
-      site = Site.for_domain(request.host).find(:first)
-      site ||= Site.default
-      Site.current = site
-    end
   end
   
   #
@@ -43,7 +36,7 @@ class Admin::BaseController < ActionController::Base
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
-  
+ 
   # using expire_frament et al. doesn't work here because generating the keys
   # requires knowledge of the context where the fragment is shown. however,
   # some fragments need expire after certain superadmin actions (e.g. removing
@@ -59,8 +52,7 @@ class Admin::BaseController < ActionController::Base
     end
     redirect_to :action => 'index'
   end
-
-  
+ 
   protected
 
   def authorized?

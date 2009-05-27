@@ -4,7 +4,7 @@ PageClassRegistrar.add(
   :model => 'ExternalVideo',
   :icon => 'page_video',
   :class_group => ['media', 'media:video'],
-  :order => 21
+  :order => 20
 )
 
 #self.override_views = true
