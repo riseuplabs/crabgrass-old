@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090515071217) do
+ActiveRecord::Schema.define(:version => 20090523034728) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -690,7 +690,7 @@ ActiveRecord::Schema.define(:version => 20090515071217) do
     t.integer  "message_count", :limit => 11, :default => 0
     t.boolean  "attend",                      :default => false
     t.text     "notice"
-    t.boolean  "inbox",                       :default => true
+    t.boolean  "inbox",                       :default => false
   end
 
   add_index "user_participations", ["page_id"], :name => "index_user_participations_page"
