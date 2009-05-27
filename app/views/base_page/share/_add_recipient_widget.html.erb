@@ -12,11 +12,11 @@
   # submit the form when the enter key is pressed in the text box:
   key_pressed_function = remote_function(add_action.merge(:condition => 'enterPressed(event)')) + 
     "; return !enterPressed(event);"
+ #if there are no recipients at all, we will never show the box
+ if @page
+   (@page.users + @page.groups - [@page.owner]).any? ? recipients_exist = true : recipient_exist = false
+ end
 %>
-<div class='share_details'>
-  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
-</div>
-
 <table class='share_page_recipients'>
   <tr>
     <td><%= 'User or group name'[:user_or_group_name]%>:</td>
@@ -54,3 +54,7 @@
     </td>
   </tr>
 </table>
+
+<div class='share_details' id="share_recipient_list"  <%='style="display:none;"' if !recipients_exist || empty_box%>>
+  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
+</div>
