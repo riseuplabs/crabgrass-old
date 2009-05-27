@@ -3,7 +3,7 @@ PageClassRegistrar.add(
   :controller => 'gallery',
   :icon => 'page_gallery',
   :class_group => ['media', 'media:image', 'collection'],
-  :order => 31
+  :order => 30
 )
 
 apply_mixin_to_model(Asset, AssetsHaveGalleries)
