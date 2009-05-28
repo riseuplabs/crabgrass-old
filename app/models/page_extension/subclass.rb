@@ -114,6 +114,7 @@ module PageExtension::Subclass
       PAGES.values.each do |proxy|
         return true if proxy.class_group.include?(class_group)
       end
+      false
     end
     
     # 'rate-many' -> true
@@ -122,6 +123,7 @@ module PageExtension::Subclass
       PAGES.values.each do |proxy|
         return true if proxy.url == page_type
       end
+      false
     end
 
     # convert from a string representation of a class to the
