@@ -12,17 +12,16 @@
   autocomplete_id_number = rand(1000000)
   #autocomplete_id = "Autocomplete_#{autocomplete_id_number}"
 
-  # this does two things:
   # (1) submit the form when the enter key is pressed in the text box
-  # (2) eat the event by returning false on a enter key so that the form is not submitted.
-  key_pressed_function = remote_function(
-    add_action.merge(:condition => "enterPressed(event)")
-  ) + "; return !enterPressed(event);"
+  # (2) don't submit the form if the recipient name field is empty
+  # (3) eat the event by returning false on a enter key so that the form
+  #     is not submitted.
+  key_pressed_function = remote_function(add_action.merge(:condition => "enterPressed(event) && $('recipient_name').value != ''")) + "; return !enterPressed(event);"
 
   # this is called after an item in the popup has been selected.
   # it makes it so selecting an item is like hitting the add button
-  # we disable the recipient_name field so that its onkeypress is not triggered
-  after_update_function = "function(value, data) { $('recipient_name').disable(); #{remote_function(add_action)} }"
+  # we clear the recipient_name field so that we don't get a double submit
+  after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
 
   # called in order to render a popup row
   # it is a little too complicated. basically, we want to just highlight
