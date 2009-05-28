@@ -136,3 +136,7 @@ div.edit-tab span {
 
 /* this hack makes the access icons appear */
 ul.names li span {border: 1px solid #d6d6d6;}
+
+/* autocomplete */
+.autocomplete-w1 {background: none; top: 1px;}
+.autocomplete {height: 350px; margin: 0px 6px 6px 0;}

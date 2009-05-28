@@ -6,6 +6,8 @@
 <div class='share_page'>
   <h2><%= 'Share this page with:'[:share_page_recipients, page_class.downcase] %></h2>
 
+  <div id='share_error_message'></div>
+
   <% if owner %>
     <dl>
     <dt><%= "Page Owner"[:page_create_owner] %></dt>

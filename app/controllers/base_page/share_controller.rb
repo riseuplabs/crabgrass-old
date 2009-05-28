@@ -24,20 +24,28 @@
 #
 class BasePage::ShareController < ApplicationController
 
-  before_filter :login_required, :except => [:auto_complete_for_recipient_name]
-  protect_from_forgery :except => [:auto_complete_for_recipient_name]
+  before_filter :login_required, :except => [:auto_complete]
+  protect_from_forgery :except => [:auto_complete]
   verify :xhr => true
 
   helper 'base_page', 'base_page/share'
 
-  def auto_complete_for_recipient_name 
-   name_filter = params[:recipient][:name]
-    if name_filter
-      @recipients = Group.find :all, :conditions => ["groups.name LIKE ?", "#{name_filter}%"], :limit => 20
-      @recipients += User.find :all, :conditions => ["users.login LIKE ?", "#{name_filter}%"], :limit => 20
-      @recipients = @recipients[0..19]
-      render :partial => 'base_page/auto_complete/recipient'
-    end
+  def auto_complete
+    # i am searching by display_name only under protest. this is going to
+    # make it s.l.o.w.
+    filter = "#{params[:query]}%"
+    recipients = Group.find(:all,
+      :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
+      :limit => 20)
+    recipients += User.find(:all,
+      :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
+      :limit => 20)
+    recipients = recipients.sort_by{|r|r.name}[0..19]
+    render :json => {
+      :query => params[:query],
+      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
+      :data => recipients.collect{|r|r.avatar_id||0}
+    }
   end
   
   # display the share popup via ajax
@@ -82,7 +90,7 @@ class BasePage::ShareController < ApplicationController
 
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
-      flash_message :success => @success_msg
+      flash_message_now :success => @success_msg
       close_popup
     else
       render :text => 'no button was pressed', :status => :error
@@ -132,11 +140,11 @@ class BasePage::ShareController < ApplicationController
     return nil unless recipient_name.any?
     recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
     if recipient.nil?
-      flash_message(:error => 'no such name'[:no_such_name])
+      flash_message_now(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)
-      flash_message(:error => 'you may not pester'[:you_may_not_pester])
+      flash_message_now(:error => 'you may not pester'[:you_may_not_pester])
     elsif @page && (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
-      flash_message(:error => 'a participation for this user / group already exists'[:participation_already_exists])
+      flash_message_now(:error => 'a participation for this user / group already exists'[:participation_already_exists])
     else
       return recipient
     end
@@ -156,5 +164,11 @@ class BasePage::ShareController < ApplicationController
        end
      end
    end
+
+  # this should be in a helper somewhere, but i don't know how to generate 
+  # json response in the view. 
+  def display_on_two_lines(entity)
+   "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+  end
 
 end

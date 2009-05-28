@@ -119,12 +119,21 @@ module LayoutHelper
   ############################################
   # JAVASCRIPT
 
+  # includes the correct javascript tags for the current request.
+  # if the special symbol :extra has been specified as a required js file,
+  # then this expands to all the scriptalicous files.
   def optional_javascript_tag
     scripts = controller.class.javascript || {}
     js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
     return unless js_files.any?
     extra = js_files.delete(:extra)
-    js_files = js_files.collect{|i| "as_needed/#{i}" }
+    js_files = js_files.collect do |jsfile|
+      if ['effects', 'dragdrop', 'controls', 'builder', 'slider'].include? jsfile
+        jsfile
+      else
+        "as_needed/#{jsfile}"
+      end
+    end
     if extra
       js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
     end
