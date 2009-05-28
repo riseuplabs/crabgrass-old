@@ -129,7 +129,7 @@ module BasePageHelper
   def page_tags
     if @page.tags.any?
       links = @page.tags.collect do |tag|
-        tag_link(tag, @page.group_name, @page.created_by_login)
+        tag_link(truncate(tag,30), @page.group_name, @page.created_by_login)
       end.join("\n")
       content_tag :div, links, :class => 'tags'
     elsif current_user.may? :edit, @page
