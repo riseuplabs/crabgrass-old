@@ -1,3 +1,6 @@
+<%# for some unknown reason, the autocomplete popup has a hard time guessing the right position when used with the share popup. so, we hardcode some different values here: %>
+<style>.autocomplete-w1 {top: 15px; left: 15px}</style>
+
 <%- form_url = {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id} -%>
 <% popup("Send Notification"[:notify_page_link], :id => 'notify_popup', :width => '40em') do -%>
   <% form_remote_tag(

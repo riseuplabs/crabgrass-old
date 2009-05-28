@@ -9,17 +9,38 @@
     :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value}
   }
 
+  autocomplete_id_number = rand(1000000)
+  #autocomplete_id = "Autocomplete_#{autocomplete_id_number}"
+
+  # this does two things:
+  # (1) submit the form when the enter key is pressed in the text box
+  # (2) eat the event by returning false on a enter key so that the form is not submitted.
+  key_pressed_function = remote_function(
+    add_action.merge(:condition => "enterPressed(event)")
+  ) + "; return !enterPressed(event);"
+
   # this is called after an item in the popup has been selected.
   # it makes it so selecting an item is like hitting the add button
-  after_update_function = "function(field,value) { #{remote_function(add_action)} }"
+  # we disable the recipient_name field so that its onkeypress is not triggered
+  after_update_function = "function(value, data) { $('recipient_name').disable(); #{remote_function(add_action)} }"
 
-  # this does three things:
-  # (1) submit the form when the enter key is pressed in the text box
-  # (2) don't do this, however, if the autocomplete popup is showing
-  # (3) also eat the event by returning false on a enter key so that the form is not submitted.
-  key_pressed_function = remote_function(
-    add_action.merge(:condition => "enterPressed(event) && !$('recipient_name_auto_complete').visible()")
-  ) + "; return !enterPressed(event);"
+  # called in order to render a popup row
+  render_popup_row_function = %Q[function(value, re, data){return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + Autocomplete.highlight(value,re) + '</p>';}]
+
+  # called to convert the row data into a value
+  extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
+
+  auto_complete_js = %Q[
+    new Autocomplete('recipient_name', { 
+      serviceUrl:'/base_page/share/auto_complete',
+      minChars:1, 
+      maxHeight:400,
+      width:300,
+      onSelect: #{after_update_function},
+      rowRenderer: #{render_popup_row_function},
+      selectValue: #{extract_value_from_row_function}
+    }, #{autocomplete_id_number});
+  ]
 
   #if there are no recipients at all, we will never show the box
   if @page
@@ -37,24 +58,14 @@
   </tr>
   <tr>
     <td>
-      <%= text_field_with_auto_complete(:recipient, :name,
-            { :style=>'width:100%',
-              :onkeypress => key_pressed_function
-            },
-            { :url => {
-                :controller => 'base_page/share',
-                :action => 'auto_complete_for_recipient_name'
-              },
-              :after_update_element => after_update_function,
-              :select => 'name',
-              :skip_style => true
-            }
-          )%>
+      <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
+          :onkeypress => key_pressed_function %>
+      <%= javascript_tag(auto_complete_js) %>
     </td>
     <td>&nbsp;</td>
     <td>
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>
-      <%= select_page_access 'recipient[access]', :blank => false %>
+        <%= select_page_access 'recipient[access]', :blank => false %>
       <%- end -%>
     </td>
     <td>
