@@ -1,19 +1,9 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'me/trash_controller'
 
-# Re-raise errors caught by the controller.
-class Me::TrashController; def rescue_action(e) raise e end; end
-
-class MeTrashControllerTest < Test::Unit::TestCase
+class Me::TrashControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :tasks, :task_participations, :task_lists, :page_terms
-
-  def setup
-    @controller = Me::TrashController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_01_index_and_undelete
     login_as :blue
