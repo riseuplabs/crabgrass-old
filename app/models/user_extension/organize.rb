@@ -48,10 +48,10 @@ module UserExtension::Organize
         end
       end
 
-      # all groups, including groups we have indirect access
-      # to (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group',
-        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql})' do
+      # all groups, including groups we have indirect access to even when there
+      # is no membership join record. (ie committees and networks)
+      has_many :all_groups, :class_name => 'Group', 
+        :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql}) AND /*SITE_LIMITED*/' do
         def normals
           self.select{|group|group.normal?}
         end
@@ -61,22 +61,9 @@ module UserExtension::Organize
         def committees
           self.select{|group|group.committee?}
         end
-        def on(site)
-          # this does not work - probably due to the finder_sql
-          # self.find(:all, :joins => :federatings, :conditions => ["federatings.network_id = ?",site.network_id])
-          # FIXME: this does not work for committees
-          site.network.nil? ? self : self.select{|group| site.network.group_ids.include?(group.id)} + [site.network]
-        end
-        def committees_on(site)
-          # so here is the work around...
-          if site.network.nil?
-            return committees
-          else
-            self.select{|g|g.committee? and site.network.group_ids.include? g.parent_id}
-          end
-        end
-        end
+      end
 
+      # DEPRECATED!!
       named_scope :on, lambda { |site|
         if site.network.nil?
           {}

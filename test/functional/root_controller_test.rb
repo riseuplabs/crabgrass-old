@@ -5,7 +5,7 @@ require 'root_controller'
 class RootController; def rescue_action(e) raise e end; end
 
 class RootControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :pages, :memberships,
+  fixtures :groups, :users, :pages, :memberships, 
             :user_participations, :page_terms, :sites
 
   include UrlHelper
@@ -34,15 +34,20 @@ class RootControllerTest < Test::Unit::TestCase
   end
 
   def test_site_home
-    login_as :red
-    site_name="site2"
-    @request.host = Site.find_by_name(site_name).domain
-    get :index
-    assert_response :success
-    # just make sure the Site specific stuff worked...
-    assert_equal assigns["current_site"].name, site_name, "Response did not come from the site we expected. Please check config/crabgrass.test.yml."
-    assert_not_equal assigns["users"], [], "Expecting a list of most active users."
-    assert_not_equal assigns["groups"], [], "Expecting a list of most recent groups."
+    enable_site_testing :test do
+      login_as :red
+      get :index
+      assert_response :success
+      # just make sure the Site specific stuff worked...
+      assert_not_nil assigns["current_site"].id, "Response did not come from the site we expected."
+      current_site=assigns["current_site"]
+      assert_not_equal assigns["users"], [], "Expecting a list of most active users."
+      assert_nil assigns["users"].detect{|u| !u.site_ids.include?(current_site.id)}, 
+        "All users should be on current_site."
+      assert_not_equal assigns["groups"], [], "Expecting a list of most recent groups."
+      assert_nil assigns["groups"].detect{|u|u.site_id != current_site.id}, 
+        "All groups should be on current_site."
+    end
   end
 
 end

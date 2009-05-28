@@ -8,24 +8,22 @@ class GroupsController < ApplicationController
   def index
     user = logged_in? ? current_user : nil
 
-     # TODO maybe create a cache for all the site's groups?
-     @groups = Group.visible_on(current_site).visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
+     @groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
   end
 
   def directory
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-    @groups = Group.visible_on(current_site).visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
+    @groups = Group.visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
 
-    # WOW, this is incredibly expensive
     # get the starting letters of all groups
-    groups_with_names = Group.visible_on(current_site).visible_by(user).only_groups.names_only
+    groups_with_names = Group.visible_by(user).only_groups.names_only
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
   end
 
   def my
-    @groups = current_user.groups.visible_on(current_site).alphabetized('').paginate(:all, :page => params[:page])
+    @groups = current_user.groups.alphabetized('').paginate(:all, :page => params[:page])
   end
 
   # login required

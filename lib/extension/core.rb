@@ -26,6 +26,10 @@ class NilClass
   def each
     nil
   end
+  
+  def to_sym
+    return self
+  end
 end
 
 class Object
@@ -33,6 +37,14 @@ class Object
     raise TypeError.new unless self.is_a? class_constant
     self
   end
+
+  def respond_to_any? *args
+    args.each do |arg|
+      return true if self.respond_to? arg
+    end
+    false
+  end
+  
 end
 
 class Array
@@ -63,6 +75,19 @@ class Array
   def path
     join('/')
   end
+
+=begin
+  # returns a copy of the hash with symbols
+  def symbolize
+    self.map {|i| 
+      if(!i.nil? && P(i.respond_to?(m=:to_sym) || i.respond_to?(m=:symbolize)))
+        m == :to_sym ? i.to_sym : i.symbolize
+      else
+        i
+      end                 
+    }
+  end
+=end  
 end
 
 
@@ -80,5 +105,22 @@ class Hash
     end
     hsh
   end
+  
+=begin  
+  # returns a copy of the hash with symbols
+  def symbolize
+    self.keys.inject({})  { |m, k|
+      m[k.kind_of?(Hash) ? k.symbolize : (k.respond_to?(:to_sym) ? k.to_sym : k)] = ((v = v.to_sym    rescue nil) ||
+                                                                                     (v = v.symbolize rescue nil) || v)
+      m
+    }
+  end 
+=end  
 end
 
+class Symbol
+  # should do the same as sym.to_s.any?. symbols are never empty, hence #=> true
+  def any?
+    true
+  end
+end

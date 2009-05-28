@@ -7,6 +7,59 @@ A Page is the main content class. All actual content is a subclass of this class
 denormalization:
 all the relationship between a page and its groups is stored in the group_participations table. however, we denormalize some of it: group_name and group_id are used to store the info for the 'primary group'. what does this mean? the primary group is what is show when listing pages and it is the default group when linking from a wiki.
 
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "resolved",                         :default => true
+    t.boolean  "public"
+    t.integer  "created_by_id",      :limit => 11
+    t.integer  "updated_by_id",      :limit => 11
+    t.text     "summary"
+    t.string   "type"
+    t.integer  "message_count",      :limit => 11, :default => 0
+    t.integer  "data_id",            :limit => 11
+    t.string   "data_type"
+    t.integer  "contributors_count", :limit => 11, :default => 0
+    t.integer  "posts_count",        :limit => 11, :default => 0
+    t.string   "name"
+    t.integer  "group_id",           :limit => 11
+    t.string   "group_name"
+    t.string   "updated_by_login"
+    t.string   "created_by_login"
+    t.integer  "flow",               :limit => 11
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "static"
+    t.datetime "static_expires"
+    t.boolean  "static_expired"
+    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+    t.integer  "owner_id",           :limit => 11
+    t.string   "owner_type"
+    t.string   "owner_name"
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.integer  "site_id",            :limit => 11
+  end
+
+  add_index "pages", ["name"], :name => "index_pages_on_name"
+  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
+  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
+  add_index "pages", ["group_id"], :name => "index_page_group_id"
+  add_index "pages", ["type"], :name => "index_pages_on_type"
+  add_index "pages", ["flow"], :name => "index_pages_on_flow"
+  add_index "pages", ["public"], :name => "index_pages_on_public"
+  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
+  add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
+  add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
+  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
+  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
+  execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
+
+  Yeah, so, there are way too many indices on the pages table.
 =end
 
 class Page < ActiveRecord::Base
@@ -18,12 +71,15 @@ class Page < ActiveRecord::Base
   include PageExtension::Index
 #  include PageExtension::Linking
   include PageExtension::Static
+
   acts_as_taggable_on :tags
+  acts_as_site_limited
+  attr_protected :owner
 
-
-  #######################################################################
+  ##
   ## PAGE NAMING
-  
+  ##
+
   def validate
     if (name_changed? or group_id_changed?) and name_taken?
       errors.add 'name', 'is already taken'
@@ -35,7 +91,7 @@ class Page < ActiveRecord::Base
   def name_url
     name.any? ? name : friendly_url
   end
-  
+
   def flow= flow
     if flow.kind_of? Integer
       write_attribute(:flow, flow)
@@ -45,7 +101,21 @@ class Page < ActiveRecord::Base
       raise TypeError.new("Flow needs to be an integer or one of [#{FLOW.keys.join(', ')}]")
     end
   end
-  
+
+  def delete
+    self.flow=:deleted
+    self.save
+  end
+
+  def undelete
+    write_attribute(:flow, nil)
+    self.save
+  end
+
+  def deleted?
+    flow == FLOW[:deleted]
+  end
+
   def friendly_url
     s = title.nameize
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
@@ -74,13 +144,14 @@ class Page < ActiveRecord::Base
     return self != p
   end
 
-  #######################################################################
+  ##
   ## RELATIONSHIP TO PAGE DATA
-  
+  ##
+
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
   has_many :assets, :dependent => :destroy
-      
+
   validates_presence_of :title
   validates_associated :data
   validates_associated :discussion
@@ -95,7 +166,7 @@ class Page < ActiveRecord::Base
     end
     self.resolved=value
     save
-  end  
+  end
 
   def build_post(post,user)
     # this looks like overkill, but it seems to be needed
@@ -155,9 +226,10 @@ class Page < ActiveRecord::Base
     true
   end
   
-  #######################################################################
+  ##
   ## PAGE ACCESS CONTROL
-  
+  ##
+
   ## update attachment permissions
   after_save :update_access
   def update_access
@@ -166,12 +238,9 @@ class Page < ActiveRecord::Base
     end
     true
   end
-#
-# SITES
-#
-#############################  
-  
+
   # returns true if self is part of given network
+  # DEPRECATED
   # -- TODO
   #   i don't think this does what it is supposed to do.
   #   this code would be better:
@@ -184,64 +253,98 @@ class Page < ActiveRecord::Base
     groups | self.groups_with_access(:edit)
     groups | self.groups_with_access(:admin)
     groups | self.groups_with_access(:comment)
-    
-    groups.include?(network) ? true : false 
+
+    groups.include?(network) ? true : false
     true
   end
 
-####  
-  
-  
   # This method should never be called directly. It should only be called
   # from User#may?()
   #
-  # basic permissions:
+  # possible permissions:
   #   :view  -- user can see the page.
   #   :edit  -- user can participate.
   #   :admin -- user can destroy the page, change access.
-  # conditional permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   (NOT SUPPORTED YET)
+  #   :none  -- always returns false
   #
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
+  # DEPRECATED permissions:
+  #   :comment -- sometimes viewers can comment and sometimes only participates can.
+  #   :delete  -- can user destroy page?
+  #  
+  # DEPRECATED BEHAVIOR:
+  # :edit and :comment should return false for deleted pages.
+  #
   def has_access!(perm, user)
-    perm = comment_access if perm == :comment
-    upart = self.participation_for_user(user)
-    if perm == :delete
-      gparts = self.participation_for_groups(user.admin_for_group_ids)
-      perm = :admin
+
+    ########################################################
+    ## THESE ARE TEMPORARY HACKS...
+    ## until the new permission system is working.
+    ## then, this logic should all be moved there. 
+    return false if tmp_hack_for_deleted_pages?(perm)
+    return tmp_hack_when_access_is_delete(user) if perm == :delete
+    perm = tmp_hack_for_comment() if perm == :comment
+    ## END TEMP HACKS
+    #########################################################
+
+    asked_access_level = ACCESS[perm] || ACCESS[:view]
+    participation = most_privileged_participation_for(user)
+    allowed = if participation.nil?
+      false
     else
-      gparts = self.participation_for_groups(user.all_group_ids)
+      actual_access_level = participation.access || ACCESS[:view]
+      asked_access_level >= actual_access_level
     end
-    allowed = false
-    if upart or gparts.any?
-      parts = []
-      parts += gparts if gparts.any?
-      parts += [upart] if upart
-      part_with_best_access = parts.min {|a,b|
-        (a.access||100) <=> (b.access||100)
-      }
-      # allow :view if the participation exists at all
-      allowed = ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+    
+    allowed ? true : raise(PermissionDenied.new)
+  end
+
+  protected
+
+  # returns the participation object for entity with the highest access level. 
+  # If no participation exists, we return nil.
+  def most_privileged_participation_for(entity)
+    parts = []
+    if entity.is_a? User
+      parts << participation_for_user(entity)
+      parts.concat participation_for_groups(entity.all_group_ids)
+    elsif entity.is_a? Group
+      parts << participation_for_group(entity)
     end
-    if allowed
-      return true
-    else
-      raise PermissionDenied.new
-    end
+    parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
+  end
+
+  # this is some really horrible stuff that i want to go away very quickly.
+  # some sites want to restrict page deletion to only people who are admins
+  # of groups that have admin access to the page. crabgrass does not work this
+  # way and is a total violation of the permission logic. there is a better way,
+  # and it should be replaced for this.
+  def tmp_hack_when_access_is_delete(user)
+    parts = []
+    parts << participation_for_user(user)
+    parts.concat participation_for_groups(user.admin_for_group_ids)
+    return parts.compact.detect{|part| part.access == ACCESS[:admin]}
+  end
+
+  # do not allow comments or editing of deleted pages:
+  def tmp_hack_for_deleted_pages?(perm)
+    self.deleted? and (perm == :edit or perm == :comment)
   end
 
   # by default, if a user can edit the page, they can comment.
   # this can be overridden by subclasses.
-  def comment_access
+  def tmp_hack_for_comment
     :view
   end
 
-  #######################################################################
+  public
+
+  ##
   ## RELATIONSHIP TO ENTITIES (GROUPS OR USERS)
-    
+  ##
+
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be added to pages!
@@ -254,11 +357,11 @@ class Page < ActiveRecord::Base
       entity.add_page(self,attributes)
     end
   end
-      
+
   # Remove a group or user from this page (by destroying the corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be removed from pages!
-  def remove(entity)    
+  def remove(entity)
     if entity.is_a? Enumerable
       entity.each do |e|
         e.remove_page(self)
@@ -269,9 +372,14 @@ class Page < ActiveRecord::Base
     entity
   end
 
-  # The owner may be a user or a group.
+  # The owner may be a user or a group, or their name.
+  # this attr is protected from mass assignment.
   def owner=(entity)
-    raise ArgumentError.new("owner= can't be nil") if entity.nil?
+    if entity.is_a? String
+      entity = User.find_by_login(entity) || Group.find_by_name(entity)
+    end
+    raise ArgumentError.new("cannot set page.owner to nil") if entity.nil?
+
     self.owner_id = entity.id
     self.owner_name = entity.name
     if entity.is_a? Group
@@ -283,12 +391,16 @@ class Page < ActiveRecord::Base
     else
       raise Exception.new('must be user or group')
     end
-    self.add(entity, :access => :admin) unless entity.may?(:admin, self)
+    part = most_privileged_participation_for(entity)
+    self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+    return self.owner(true)
   end
 
   before_create :ensure_owner
   def ensure_owner
-    if gp = self.group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+    if owner
+      ## do nothing!
+    elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
       self.owner = gp.group
     elsif self.created_by
       self.owner = self.created_by
@@ -310,9 +422,10 @@ class Page < ActiveRecord::Base
     end
     return groups + users
   end
-  
-  #######################################################################
+
+  ##
   ## DENORMALIZATION
+  ##
 
   # denormalize hack follows:
   before_save :denormalize
@@ -327,7 +440,7 @@ class Page < ActiveRecord::Base
     end
     true
   end
-  
+
   # used to mark stuff that has been changed.
   # so that we know we need to update other stuff when saving.
   def dirty(what)
@@ -339,8 +452,9 @@ class Page < ActiveRecord::Base
     @dirty[what]
   end
 
-  #######################################################################
+  ##
   ## MISC. HELPERS
+  ##
 
   # tmp in-memory storage used by views
   def flag
@@ -354,10 +468,10 @@ class Page < ActiveRecord::Base
   def class_display_name
     self.class.class_display_name
   end
-  
+
   # override this in subclasses…
   def supports_attachments
     true
   end
-  
+
 end

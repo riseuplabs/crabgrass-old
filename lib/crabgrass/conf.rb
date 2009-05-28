@@ -23,9 +23,7 @@ class Conf
   cattr_accessor :require_user_email
   cattr_accessor :domain
   cattr_accessor :translation_group
-  cattr_accessor :chat
-  def self.chat?; self.chat; end
-  
+  cattr_accessor :chat 
 
   # are in site, but I think they should be global
   cattr_accessor :translators
@@ -34,6 +32,7 @@ class Conf
   # are global, but might end up in site one day.
   cattr_accessor :profiles
   cattr_accessor :profile_fields
+  cattr_accessor :limited
 
   # global instance options
   cattr_accessor :enabled_mods
@@ -42,7 +41,8 @@ class Conf
   cattr_accessor :email
   cattr_accessor :sites
   cattr_accessor :secret
-  
+  cattr_accessor :paranoid_emails
+
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
 
@@ -55,6 +55,11 @@ class Conf
   # used for error reporting
   cattr_accessor :configuration_filename
 
+  # cattr_accessor doesn't work with ?
+  def self.chat?; self.chat; end
+  def self.limited?; self.limited; end
+  def self.paranoid_emails?; self.paranoid_emails; end
+ 
   def self.load_defaults
     self.name                 = 'default'
     self.super_admin_group_id = nil
@@ -111,7 +116,7 @@ class Conf
 
   # can be called from a test's setup method in order to enable sites
   # for a particular set of tests without enabling sites for all tests.
-  def self.enable_site_testing
+  def self.enable_site_testing(site=nil)
     self.enabled_site_ids = [1,2]
   end
 

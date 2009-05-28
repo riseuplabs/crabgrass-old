@@ -77,33 +77,69 @@ div
 //
 
 table.share_page_recipients
-  border: 1px solid #ccc
-  border-collapse: collapse
-  th
-    width: 10em
-    font-size: 0.85em
-    line-height: 1.4em
-    font-weight: bold
-    text-align: left
-    padding: 0.5em
-    background: #ddd
-  td
-    vertical-align: top
-    border: 1px solid #ccc
-    padding: 0
-    background: #fff
+  width: 100%
   div.scroll
     overflow: auto
     height: 20em
     width: 13em
     padding: 0.5em
     font-size: 0.8em
+//  ul
+//    margin: 0
+//    padding: 0
+//    li
+//      padding: 0.25em 0
+
+ul.participators_list
+  li.unsaved
+    background-color: #BBFF99
+  li
+    padding: 5px
+    border-bottom: 1px solid darkgrey
+    clear: left
+
+//div.share_page_recipients_list
+//  height: 15em
+//  overflow-y: scroll
+//  border: 1px solid #999
+//  background: white
+
+div.notify_details,
+div.share_details
+  background: white
+  border: 1px solid #999
+  border-bottom: 0
+  max-height: 15em
+  //min-height: 5em
+  overflow-y: auto
+  margin: 3px
+  table
+    width: 100%
+    td
+      padding: 0.5em 0.25em
+      //overflow: hidden
   ul
     margin: 0
-    padding: 0
-    li
-      padding: 0.25em 0
 
+div.notify_details
+  padding: 0.5em
+
+table.notify
+  width: 100%
+  td
+    vertical-align: top
+  tr.gap
+    td
+      padding-top: 1em
+
+.share_page
+  div.error
+    background: #fcc
+    border: 1px solid red
+    h2
+      border: 0
+      font-size: 1em
+      color: black
 
 //
 // PAGE SIDEBAR
@@ -135,7 +171,6 @@ table.share_page_recipients
     span
       background-position: 100% 0
       background-repeat: no-repeat
-      //display: block
       padding-right: 20px
       margin-right: -20px
   input.check
@@ -149,6 +184,7 @@ table.share_page_recipients
     white-space: nowrap
   .tags a:hover
     background-color: #eef
+
 
 //
 // POST
@@ -170,6 +206,8 @@ table.share_page_recipients
     div.username,
     div.date
       margin-right: 40px
+    div.fields
+      font-size: 10px
     
 table.posts
   width: 100%
@@ -247,37 +285,30 @@ div.title_box
 //
 
 div.popup
-  background: #aaa
-  border: 8px solid #666
+  border= !popup_border
+  background= !popup_bg
   z-index: 101
   position: absolute
   top: -32px
   right: 43px
   h1
-    background: #888
+    background: #999
     color: white
+    border-bottom: 1px solid #666
     padding: 10px
     margin: 0
-    border-bottom: 1px solid #666
+  .buttons
+    background: #ccc
+    border-top: 1px solid #999
+    text-align: right
+    padding: 10px
   h2
-    //margin: 0.5em 1em
-    //background: white
-    color: white
-    background: #666
-    padding: 0 1em
-    display: inline
-    font-size: 1em
+    color: #cc0000
+    font-size: 1.1em
     line-height: 1em
-  .fieldset
-    background-color: #eee
-    padding: 1em
-    border: 1px solid #666
-    margin: 0 0 1em 0
   blockquote
     margin: 0
     padding: 1em
-  table.share_page_recipients
-    width: 100%
 
 div.popup_arrow
   height: 29px
@@ -291,4 +322,8 @@ div#popup_holder
   position: absolute
   z-index: 100
   display: none
+
+// This is used by the delete page popup submenu.
+div.sub_menu
+  width: 200px
 

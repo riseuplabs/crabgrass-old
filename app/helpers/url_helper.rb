@@ -123,6 +123,10 @@ module UrlHelper
     url_for_group(@group, :action => 'search', :path => path)
   end
 
+  def group_trash_url(*path)
+    url_for_group(@group, :action => 'trash', :path => path)
+  end
+
   ##
   ## USERS
   ##
@@ -200,12 +204,48 @@ module UrlHelper
     end
   end
 
-  # display a user or a group, without a link, with an avatar
-  def display_entity(entity, size=:small)
-    url = avatar_url(:id => (entity.avatar||0), :size => size)
-    klass = "name_icon #{size}"
-    style = "background-image:url(#{url})"
-    content_tag :div, entity.display_name, :style => style, :class => klass
+  def link_to_entity(entity, options={})
+    if entity.is_a? User
+      link_to_user(entity, options)
+    elsif entity.is_a? Group
+      link_to_group(entity, options)
+    end
+  end
+
+  # Display a group or user, without a link. All such displays should be made by
+  # this method.
+  #
+  # options:
+  #   :avatar => nil | :xsmall | :small | :medium | :large | :xlarge (default: nil)
+  #   :format => :short | :full | :both | :hover | :twolines (default: full)
+  #   :block => false | true (default: false)
+  #   :class => passed through to the tag as html class attr
+  #   :style => passed through to the tag as html style attr
+  def display_entity(entity, options={})
+    options = {:format => :full}.merge(options)
+    display = nil; hover = nil
+    options[:class] = [options[:class], 'entity'].join(' ')
+    options[:block] = true if options[:format] == :twolines
+
+    if options[:avatar]
+      url = avatar_url(:id => (entity.avatar||0), :size => options[:avatar])
+      options[:class] = [options[:class], "name_icon", options[:avatar]].compact.join(' ')
+      options[:style] = [options[:style], "background-image:url(#{url})"].compact.join(';')
+    end
+    display, title, hover = case options[:format]
+      when :short then [entity.name, h(entity.display_name), nil]
+      when :full then [h(entity.display_name), entity.name, nil]
+      when :both then [h(entity.both_names), nil, nil]
+      when :hover then [entity.name, nil, h(entity.display_name)]
+      when :twolines then ["<div class='name'>%s</div>%s"%[entity.name, (h(entity.display_name) if entity.name != entity.display_name)], nil, nil]
+    end
+    if hover
+      display += content_tag(:b,hover)
+      options[:style] = [options[:style], "position:relative"].compact.join(';')
+      # ^^ to allow absolute popup with respect to the name
+    end
+    element = options[:block] ? :div : :span
+    content_tag(element, display, :style => options[:style], :class => options[:class], :title => title)
   end
 
   # used to build an rss link from the current params[:path]

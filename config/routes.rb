@@ -20,19 +20,18 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
   map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
 
-  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
+  map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
-  map.favicon '/favicon.:format', :controller => 'custom_appearances', :action => 'favicon'
-
   ##### REGULAR ROUTES ####################################
-  
+
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
   map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
   map.connect 'me/search/*path',    :controller => 'me/search', :action => 'index'
   map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',     :controller => 'me/infoviz', :action => 'visualize'
+  map.connect 'me/trash/:action/*path',    :controller => 'me/trash'
   map.me      'me/:action/:id', :controller => 'me/base'
   
   map.people  'people/:action/:id', :controller => 'people'
@@ -43,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.group    'group/:action/:id', :controller => 'group'
   map.networks 'networks/:action/:id', :controller => 'networks'
   map.network  'network/:action/:id', :controller => 'network'
-  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search|discussions/
+  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search|discussions|trash|update_trash/
 
   map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
             
@@ -53,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # routes in emails:
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
+  map.connection '/code/:id', :controller => 'codes', :action => 'jump'
 
   map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
   map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil

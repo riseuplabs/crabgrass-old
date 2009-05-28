@@ -65,8 +65,8 @@ image_count_total: ":count Immagini"
 contribute_content_link: Contribuisci
 page_locked_header: Pagina Bloccata
 all_page_types: tutti i tipi di pagina
-activity_user_left_group: "{user} ha lasciato {group_type} {group}"
 media_document: Documento
+activity_user_left_group: "{user} ha lasciato {group_type} {group}"
 collection: collezione
 no_images_in_gallery: Nessuna immagine nella galleria
 my_settings: Impostazioni per {user}
@@ -96,7 +96,6 @@ invalid_token_text: "Il link per la reimpostazione della password non \xC3\xA8 v
 requests_to_me: Richieste da me
 back_button: Indietro
 page_is_not_static: "La pagina non \xC3\xA8 statica"
-create_a_new_page: Crea una nuova pagina
 display_name: Nome visualizzato
 sunday: Domenica
 edit_featured_content_for_group: Modifica Contenuti in Evidenza per :group_name
@@ -132,7 +131,7 @@ invalid_token: Token Non Valido
 month_short_july: Lug
 search: Cerca
 my_world_heading: Il Mio Mondo
-create_a_new_thing: crea un nuovo :thing
+create_a_new_thing: Crea un nuovo :thing
 email: Email
 my_dashboard: La mia bacheca
 slideshow_delay_input: Aggiorna ogni :input_field secondi
@@ -368,7 +367,6 @@ versions: versioni
 history: Storia
 group_home_headline: Pagina iniziale {group_type}
 last_name: cognome
-create_page_headline: Crea una nuova {page_class}
 forgotten_email_address: Quale indirizzo email hai inserito quando hai creato il tuo account?
 School: Scuola
 attachments: Allegati
@@ -386,7 +384,6 @@ password_confirmation: Conferma password
 menu_groups: Gruppi
 signup_button: Registrati
 month_short_october: Ott
-create_a_new_something: Crea nuovo {something}
 created_on: Creato il
 dont_understand_group_type: Impossibile capire il tipo di gruppo :type
 activity_group_created: "{user} ha creato {group_type} {group}"
@@ -432,7 +429,7 @@ month_short_january: Gen
 signup_success: Registrazione eseguita con successo
 edit_featured_content: modifica contenuti in evidenza
 alert_field_errors: Ci sono problemi con i seguenti campi
-comparing_changes_header: Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version
+comparing_changes_header: "Confronto dei cambiamenti fatti da {user} alle {when} da {old_version} a {new_version}"
 csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si pu\xC3\xB2 verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, \xC3\xA8 sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
 send_invites_button: Invia Inviti
 date_centuries: secoli
@@ -446,10 +443,10 @@ grant_access: Permetti Accesso
 About_Me: Dico di me
 no_committees: nessun comitato
 you_are_viewing_version: Stai vedendo la versione :version di :user
-activity_user_joined_group: "{user} si \xC3\xA8 unito a {group_type} {group}"
 you_have_no_groups: Non sei membro di alcun gruppo
 video_class_description: Mostra un video ospitato su un sito esterno
 pagination_next: successivo
+activity_user_joined_group: "{user} si \xC3\xA8 unito a {group_type} {group}"
 network_invite_info: Inserisci i nomi dei gruppi che vorresti invitare in questa rete.
 make_album_cover: rendi questa immagine la copertina dell'album
 ranked_vote_page_display: Voto raggiunto
@@ -495,13 +492,5 @@ forgot_password_link: Ho dimenticato la mia password.
 my_groups: I Miei Gruppi
 group_discussion: discussione di gruppo
 my_pending_tasks_link: Pendenti
-footer_text_crabgrass: |-
-  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
-  <ul>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
-    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
-  </ul>
 image_title: "Titolo immagine: %s"
 reset_password_text: Ciao, %s. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui.

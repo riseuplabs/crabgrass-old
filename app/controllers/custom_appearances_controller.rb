@@ -28,30 +28,6 @@ class CustomAppearancesController < ApplicationController
     @variables = CustomAppearance.available_parameters
   end
 
-  # either send the public/favicon.png or use the current custom appearance
-  # to find a favicon
-  def favicon
-    favicon_formats = ['png', 'gif', 'ico']
-    if !favicon_formats.include?(params[:format])
-      # bad format
-      render(:text => '', :status => :not_found) and return
-    end
-
-    if current_appearance.favicon
-      redirect_to(current_appearance.favicon.url) and return
-    end
-
-    favicon_formats.each do |ext|
-      path = File.join(RAILS_ROOT, "public/favicons/favicon.#{ext}")
-      if File.exists?(path)
-        send_file path and return
-      end
-    end
-
-    # nothing found
-    render(:text => '', :status => :not_found) and return
-  end
-
 protected
   def fetch_data
     @appearance = CustomAppearance.find(params[:id])
@@ -59,10 +35,8 @@ protected
 
   def authorized?
     return false unless logged_in?
-
-    if current_site and @appearance == current_site.custom_appearance and current_site.super_admin_group_id
-      admin_group = Group.find(current_site.super_admin_group_id)
-      if admin_group and current_user.may?(:admin, admin_group)
+    if current_site and @appearance == current_site.custom_appearance and current_site.super_admin_group
+      if current_user.may?(:admin, current_site.super_admin_group)
         return true
       end
     end

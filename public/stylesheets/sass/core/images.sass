@@ -25,7 +25,7 @@
   background-repeat: no-repeat
   background-position: 1px 50%
   &.tiny
-    padding: 0px 0 0px 12px
+    padding: 0px 0 0px 17px
   &.xsmall
     padding: 5px 0 5px 26px
   &.small
@@ -33,7 +33,22 @@
     display: block
   &.medium
     padding: 16px 0 16px 52px
+  b
+    display: none
 
+.name_icon:hover
+  b
+    display: block
+    position: absolute
+    background: transparent url(/images/ui/mini_popup_bg.gif) no-repeat bottom left
+    color: white
+    bottom: 25px
+    left: -5px
+    z-index: 10
+    padding: 3px 5px 9px 5px
+    // ^^ must be in px to match gif bg
+    &:hover
+      display: none
 
 button
   &.icon_16

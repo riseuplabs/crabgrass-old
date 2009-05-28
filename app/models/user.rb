@@ -140,7 +140,6 @@ class User < ActiveRecord::Base
     end
   end
 
-
   # returns true if the user wants to receive
   # and email when someone sends them a page notification
   # message.
@@ -218,7 +217,8 @@ class User < ActiveRecord::Base
   end
 
   # as special call used in special places: This should only be called if you
-  # know for sure that you can't use user.may?(:admin,thing)
+  # know for sure that you can't use user.may?(:admin,thing).
+  # Significantly, this does not return true for new records.
   def may_admin?(thing)
     begin
       thing.has_access!(:admin,self)
@@ -226,6 +226,35 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  ##
+  ## SITES
+  ##
+
+  # DEPRECATED
+  USER_SITES_SQL = 'SELECT sites.* FROM sites JOIN (groups, memberships) ON (sites.network_id = groups.id AND groups.id = memberships.group_id) WHERE memberships.user_id = #{self.id}'
+
+  # DEPRECATED
+  def site_id; self.site_ids.first; end
+
+  # DEPRECATED
+  has_many :sites, :finder_sql => USER_SITES_SQL
+
+  # DEPRECATED
+  named_scope(:on, lambda do |site|
+    if site.limited?
+      { :select => "users.*",
+        :joins => :memberships,
+        :conditions => ["memberships.group_id = ?", site.network.id]
+      }
+    else 
+      {}
+    end
+  end)
+
+  ##
+  ## DEPRECATED
+  ##
 
   # TODO: this does not belong here, should be in the mod, but it was not working
   # there.

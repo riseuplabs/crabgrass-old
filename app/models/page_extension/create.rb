@@ -26,32 +26,10 @@ module PageExtension::Create
   # 
   module ClassMethods
     def create!(attributes = {}, &block)
-      if attributes.is_a?(Array)
-        # act like normal create
-        super(attributes, &block)
-      else
-        # extract extra attributes
-        user       = attributes.delete(:user)
-        recipients = attributes.delete(:share_with)
-        access     = (attributes.delete(:access) || :admin).to_sym
-        attributes[:created_by] ||= user
-        attributes[:updated_by] ||= user
-        Page.transaction do
-          page = new(attributes)
-          yield(page) if block_given?
-          if user
-            if recipients
-              user.share_page_with!(page, recipients, :access => access)
-            end
-            unless user.may_admin?(page)
-              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
-            end
-          end
-          page.save!
-          page
-        end # transaction
-      end
-    end # create
+      page = build!(attributes, &block)
+      page.save!
+      page
+    end
     
     def create(attributes={}, &block)
       begin
@@ -61,15 +39,45 @@ module PageExtension::Create
       end
     end
 
+    def build!(attributes={}, &block)
+      if attributes.is_a?(Array)
+        # act like normal create
+        super(attributes, &block)
+      else
+        # extract extra attributes
+        user       = attributes.delete(:user)
+        owner      = attributes.delete(:owner)
+        recipients = attributes.delete(:share_with)
+        access     = (attributes.delete(:access) || :admin).to_sym
+        attributes[:created_by] ||= user
+        attributes[:updated_by] ||= user
+
+        Page.transaction do
+          page = new(attributes)
+          page.owner = owner if owner
+          yield(page) if block_given?
+          if user
+            if recipients
+              user.share_page_with!(page, recipients, :access => access)
+            end
+            unless user.may_admin?(page)
+              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
+            end
+          end
+          page
+        end
+      end      
+    end
+
     # parses a list of recipients, turning them into email, user, or group
     # objects as appropriate.
     # returns array [users, groups, emails]
     def parse_recipients!(recipients)
-      users = []; groups = []; emails = []; errors = []
+       users = []; groups = []; emails = []; errors = []
       if recipients.is_a? Hash
         entities = []
         recipients.each do |key,value|
-          entities << key if value == '1'
+          entities << key if value.is_a?(Hash)
         end
       elsif recipients.is_a? Array
         entities = recipients
@@ -84,9 +92,9 @@ module PageExtension::Create
           groups << entity
         elsif entity.is_a? User
           users << entity
-        elsif u = User.find_by_login(entity)
+        elsif u = User.find_by_login(entity.to_s)
           users << u
-        elsif g = Group.find_by_name(entity)
+        elsif g = Group.find_by_name(entity.to_s)
           groups << g
         elsif entity =~ RFC822::EmailAddress
           emails << entity

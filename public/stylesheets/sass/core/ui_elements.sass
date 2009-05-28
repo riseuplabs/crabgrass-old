@@ -78,6 +78,14 @@ a[name]
   color: #ccc
 
 //
+// ENTITIES
+//
+
+.entity .name
+  font-weight: bold
+  overflow: hidden
+
+//
 // SIDE LIST
 // 
 
@@ -151,11 +159,16 @@ ul.tabset
 input[type="hidden"]
   display: none
 
+input[type="checkbox"]
+  vertical-align: sub
+
 option
   &.indented
-    margin-left: 1em
+    margin-left: 1.5em
   &.section
     font-weight: bold
+  &.spaced
+    margin-top: 0.5em
 
 label.date span
   font-size: 0.8em
@@ -411,4 +424,65 @@ table.plain
       padding: 0
       color: #edf2e3
 
+//
+// AUTO COMPLETE
+//
+
+.autocomplete-w1
+  background: url(/images/ui/shadow.png) no-repeat bottom right
+  position: absolute
+  top: 7px
+  left: 6px
+  z-index: 200
+
+.autocomplete
+  width: 300px
+  border: 1px solid #999
+  background-color: white
+  cursor: pointer
+  text-align: left
+  max-height: 350px
+  overflow: auto
+  margin: -6px 6px 6px -6px
+  overflow-x: hidden
+  .selected
+    background: #eee
+  div
+    padding: 1px 0 1px 5px
+    white-space: nowrap
+  p
+    margin: 0
+  strong
+    font-weight: normal
+    color: #3399FF
+  em
+    font-weight: bold
+    font-style: normal
+// div.auto_complete
+//  background: #fff
+//  ul
+//    border: 1px solid #888
+//    margin: 0
+//    padding: 0
+//    width: 100%
+//    list-style-type: none
+//    li
+//      margin: 0
+//      padding: 8px
+//      cursor: pointer
+//    li.selected
+//      background-color: #ffb
+//    strong.highlight
+//      color: #800
+//      margin: 0
+//      padding: 0
+
+//
+// ERRORS
+//
+
+blockquote.error
+  padding: 0.5em
+  background: #fcc
+  border: 1px solid red
 

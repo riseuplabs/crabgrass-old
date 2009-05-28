@@ -14,7 +14,7 @@ module CustomAppearanceExtension
     # :cal-seq:
     #   'as_needed/wiki.css' => './public/stylesheets/themes/2/2009081233/as_needed/wiki.css'
     def themed_css_path(css_url)
-      File.join(STYLESHEETS_ROOT, themed_css_url(css_url))
+      File.join(RAILS_ROOT, STYLESHEETS_ROOT, themed_css_url(css_url))
     end
 
     # :cal-seq:

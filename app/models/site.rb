@@ -57,9 +57,12 @@ class Site < ActiveRecord::Base
   serialize :available_page_types, Array
   serialize :evil, Hash
 
-  # this is evil, but used by gibberish for site specific
-  # override ability.
-  cattr_accessor :current
+  # this is evil, but used in several important places:
+  # (1) for i18n, to be able to customize the strings on a per site basis
+  # (2) acts_as_site_limited, to be able to automatically limit all queries
+  #     to the current site.
+  def self.current; Thread.current[:site]; end
+  def self.current=(site); Thread.current[:site] = site; end
 
   ##
   ## FINDERS
@@ -70,21 +73,12 @@ class Site < ActiveRecord::Base
   }
 
   def self.default
-    @default_site ||= Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
+    Site.find(:first, :conditions => ["sites.default = ? AND sites.id in (?)", true, Conf.enabled_site_ids])
   end
 
   # def stylesheet_render_options(path)
   #   {:text => "body {background-color: purple;} \n /* #{path.inspect} */"}
   # end
-
-  # returns true if this site should display content limited to this site only.
-  # the default for sites is to always display just the data for the site.
-  # however, some sites may be umbrella sites that have access to everything. 
-  # for now, if self is not actually a site in the database then we treat it
-  # as an umbrella site.
-  def limited?
-    not self.id.nil?
-  end
 
   ##
   ## CONFIGURATION & DEFAULT VALUES
@@ -105,7 +99,8 @@ class Site < ActiveRecord::Base
 
   proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
     :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields, :chat?, :translation_group
+    :require_user_email, :domain, :profiles, :profile_fields, :chat?, 
+    :translation_group, :limited?
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
@@ -125,24 +120,6 @@ class Site < ActiveRecord::Base
       self.network.add_user!(user)
     end
   end
-
-  # returns true if the thing is part of the network
-  def has? arg
-    self.network.nil? ? true : self.network.has?(arg)
-  end
-
-  # gets all the users in the site
-  def users
-    self.network.nil? ? User.find(:all) : self.network.users
-  end
-
-  # gets all the user ids in the site #TODO cache this
-  def user_ids
-    self.network.nil? ?
-      User.find(:all, :select => :id).collect{|user| user.id} :
-      self.network.user_ids
-  end
-
   
   # gets all the pages for all the groups in the site
   # this does not work. network.pages only contains
@@ -229,5 +206,13 @@ class Site < ActiveRecord::Base
   #  membership = self.network.memberships.find_by_user_id(user.id)
   #  ( membership.seen && membership.seen.include?(element.to_s)) ? true : false
   #end
-    
+  
+  ##
+  ## RELATIONSHIP TO USERS
+  ##
+  
+  def add_user!(user)
+    network.add_user!(user) if network and !user.member_of?(network)
+  end
+
 end

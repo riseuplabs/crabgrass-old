@@ -36,20 +36,28 @@
     active
   ) %></li>
 
+  <%- active = params[:controller] == 'me/trash' -%>
+  <li id='trash_line' class='small_icon trash_16<%= active ? ' active' : '' %>'><%= link_to_active(
+    'Trash'[:me_trash_link],
+    {:controller => '/me/trash'},
+    active
+  ) %></li>
+
 </ul>
 
 <hr class="thick" />
 
 <%- cache(me_cache_key) do -%>
   <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
+  <%- if current_site.has_networks? -%>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.select{|g| g.network?}} %>
+  <%- end -%>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.on(current_site).select{|g| g.network?}} %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.normals } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.visible_on(current_site).normals } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.committees } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.visible_on(current_site).committees } %>
-
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => User.contacts_of(current_user).on(current_site) } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => User.contacts_of(current_user) } %>
 
 <%- end -%>
 

@@ -18,6 +18,7 @@
 #    t.integer  "key",          :limit => 11
 #    t.datetime "created_at"
 #    t.integer  "access",       :limit => 1,  :default => 2
+#    t.integer  "site_id",      :limite => 11
 #  end
 #
 #
@@ -34,6 +35,8 @@ class Activity < ActiveRecord::Base
 
   belongs_to :subject, :polymorphic => true
   belongs_to :object, :polymorphic => true
+
+  acts_as_site_limited
 
   before_create :set_defaults
   def set_defaults # :nodoc:
@@ -62,6 +65,8 @@ class Activity < ActiveRecord::Base
 
   named_scope :unique, {:group => '`key`'}
 
+  ### I DON'T THINK THIS IS NEEDED
+  ### you should be able to resolve this when the activity is created.
   named_scope :only_visible_groups, 
     {:joins => "LEFT JOIN profiles ON
       object_type <=> 'Group' AND
@@ -80,8 +85,7 @@ class Activity < ActiveRecord::Base
   # (2) subject is friend of current_user
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  named_scope :for_dashboard, lambda {|user,site|
-    site.network.nil? ?
+  named_scope :for_dashboard, lambda {|user|
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
@@ -90,27 +94,8 @@ class Activity < ActiveRecord::Base
       user.friend_id_cache,
       Activity::PRIVATE,
       user.all_group_id_cache]
-    } : 
-    {:conditions => [
-      "((subject_type = 'User'  AND subject_id = ?) OR
-        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
-        (subject_type = 'Group' AND subject_id IN (?)) )
-        AND
-       ((object_type = 'User'  AND object_id = ?) OR
-        (object_type = 'User'  AND object_id IN (?)) OR
-        (object_type = 'Group' AND object_id IN (?)) OR
-        (NOT object_type <=> 'User' AND NOT object_type <=> 'Group')) ",
-      user.id,
-      user.friend_id_cache & site.user_ids,
-      Activity::PRIVATE,
-      user.all_group_id_cache & site.group_ids,
-      user.id,
-      site.user_ids,
-      site.group_ids]
     }
   }
-
-
 
   # for user's landing page
   #
@@ -136,9 +121,6 @@ class Activity < ActiveRecord::Base
    end
   }
 
-
-
-
   # for group's landing page
   #
   # show all activity for:
@@ -162,7 +144,6 @@ class Activity < ActiveRecord::Base
       ]}
     end
   }
-
 
   ##
   ## DISPLAY HELPERS

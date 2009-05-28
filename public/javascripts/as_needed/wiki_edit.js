@@ -499,14 +499,14 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
   toolbar.addButton('Emphasis',function(){
           this.wrapSelection('_','_');
   },{
-          class: 'markdown_italics_button',
+          'class': 'markdown_italics_button',
           id: 'markdown_italics_button-' + button_id_suffix
   });
 
   toolbar.addButton('Strong emphasis',function(){
           this.wrapSelection('*','*');
   },{
-          class: 'markdown_bold_button', 
+          'class': 'markdown_bold_button',
           id: 'markdown_bold_button-' + button_id_suffix
   });
 
@@ -517,7 +517,7 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
                   return;
           this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '->' + (response == '' ? 'http://link_url/' : response) + ']');
   },{
-          class: 'markdown_link_button',
+          'class': 'markdown_link_button',
           id: 'markdown_link_button-' + button_id_suffix
   });
 
@@ -525,7 +525,7 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
           // img_button_clicked();
           image_popup_func();
   },{
-          class: 'markdown_image_button',
+          'class': 'markdown_image_button',
           id: 'markdown_image_button-' + button_id_suffix
   });
 
@@ -535,7 +535,7 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
                   selection = 'Heading';
           this.replaceSelection("\nh1. " + selection + "\n");
   },{
-          class: 'markdown_heading_button',
+          'class': 'markdown_heading_button',
           id: 'markdown_heading_button-' + button_id_suffix
   });
 
@@ -544,7 +544,7 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
                   return event.shiftKey ? (line.match(/^\*{2,}/) ? line.replace(/^\*/,'') : line.replace(/^\*\s/,'')) : (line.match(/\*+\s/) ? '*' : '* ') + line;
           });
   },{
-          class: 'markdown_unordered_list_button',
+          'class': 'markdown_unordered_list_button',
           id: 'markdown_unordered_list_button-' + button_id_suffix
   });
 
@@ -554,7 +554,7 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
                   return event.shiftKey ? (line.match(/^\#{2,}/) ? line.replace(/^\#/,'') : line.replace(/^\#\s/,'')) : (line.match(/\#+\s/) ? '#' : '# ') + line;
           });
   },{
-          class: 'markdown_ordered_list_button',
+          'class': 'markdown_ordered_list_button',
           id: 'markdown_ordered_list_button-' + button_id_suffix
   });
 
@@ -563,23 +563,23 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
                   return event.shiftKey ? line.replace(/^\> /,'') : '> ' + line;
           });
   },{
-          class: 'markdown_quote_button',
+          'class': 'markdown_quote_button',
           id: 'markdown_quote_button-' + button_id_suffix
   });
 
   toolbar.addButton('Code Block',function(event){
           this.wrapSelection('<code>', '</code>');
   },{
-          class: 'markdown_code_button',
+          'class': 'markdown_code_button',
           id: 'markdown_code_button-' + button_id_suffix
   });
 
   toolbar.addButton('Help',quickRedReference,{
-          class: 'markdown_help_button',
+          'class': 'markdown_help_button',
           id: 'markdown_help_button-' + button_id_suffix
   });
 }
 
 document.observe('dom:loaded', function() {
-  // 
+  //
 });

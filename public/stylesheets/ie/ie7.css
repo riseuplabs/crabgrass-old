@@ -71,4 +71,6 @@ div.page_list {width: 100%;} /* this is required to get ie7 to actually show scr
 }
 */
 
-
+/* autocomplete */
+.autocomplete-w1 {background: none; top: 1px;}
+.autocomplete {height: 350px; margin: 0px 6px 6px 0;}

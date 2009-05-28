@@ -1,0 +1,21 @@
+<%# arguments:
+  # 
+  # empty_box -- boolean. If true, then hide the current participants
+  #
+  # %>
+
+<ul class='side_list names participators_list' id="share_page_recipients">
+  <% if ((@page && @page.group_participations.any?) && !empty_box) -%>
+    <% @page.sorted_group_participations.each do |part| %>
+      <% next if part.group == @page.owner %>
+<%= render :partial => 'base_page/share/recipient', :locals => {:recipient => part.group, :access => part.access_sym.to_s, :unsaved => false} %>
+    <% end -%>
+  <% end -%> 
+  <% if ((@page && @page.user_participations.any?) && !empty_box) -%>
+    <% @page.sorted_user_participations.each do |part| %>
+      <% next if part.user == current_user %>
+<%= render :partial => 'base_page/share/recipient', :locals => {:recipient => part.user, :access => part.access_sym.to_s, :unsaved => false} %>
+    <% end -%>
+  <% end -%>
+</ul>
+

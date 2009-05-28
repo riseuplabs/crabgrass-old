@@ -115,8 +115,10 @@ module PageExtension::Static
     end    
     
     def update_stars
-      new_stars_count = page.get_stars
-      page.update_attribute(:stars, page.get_stars) unless new_stars_count == page.stars
+      if page
+        new_stars_count = page.get_stars
+        page.update_attribute(:stars, page.get_stars) unless new_stars_count == page.stars
+      end
     end
 
   end  

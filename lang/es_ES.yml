@@ -1,8 +1,8 @@
 --- 
-add_encryption_key: Agregar clave de cifrado
 group_not_allowed_to_view_image_error: "El grupo que es propietario de esta p\xC3\xA1gina no est\xC3\xA1 autorizado a ver esta foto."
 Personal: Personal
 small: "peque\xC3\xB1o"
+add_encryption_key: Agregar clave de cifrado
 folder_page_description: "Una colecci\xC3\xB3n de activos."
 menu_networks: Redes
 group_summary: "Breve informaci\xC3\xB3n sobre este %s. "
@@ -24,11 +24,13 @@ break_lock: rompe el candado
 or_image_url: o URL de la foto
 add_comment: comentar
 login_password: "Contrase\xC3\xB1a"
+notify_contribution: "<b>Contribuci\xC3\xB3n Anterior:</b> notificar a las personas que han hecho una <b>contribuci\xC3\xB3n</b> a esta p\xC3\xA1gina."
 users_wall: ":user's Mural"
 upload_attachment: Cargar archivo adjunto
 order_changed: Orden cambiada.
 organizational_role: "rol en la organizaci\xC3\xB3n"
 toggle_selection: "Cambiar la selecci\xC3\xB3n"
+page_group_text: Texto
 email_addresses: "Direcci\xC3\xB3n de Correos Electr\xC3\xB3nicos"
 join_chat: "\xC3\x9Anete a la charla"
 at_least_one_recipient_is_required: por lo menos un destinatario es necesario
@@ -82,8 +84,8 @@ image_count_total: ":count Fotos"
 contribute_content_link: Contribuir
 page_locked_header: "P\xC3\xA1gina bloqueada"
 all_page_types: "todos los tipos de p\xC3\xA1ginas"
-activity_user_left_group: "{user} ha dejado {group_type} {group}"
 media_document: Documento
+activity_user_left_group: "{user} ha dejado {group_type} {group}"
 collection: "colecci\xC3\xB3n"
 joins_the_chatroom: se une a la sala de chat
 no_images_in_gallery: "No hay fotos en el \xC3\xA1lbum"
@@ -103,6 +105,7 @@ Committee: "Comit\xC3\xA9"
 group: Grupo
 format: Formato
 media_image: Foto
+discussion_page_display: Group Discussion
 group_publicly_visible: Hacer %s Publico
 confirm_new_password: "Confirmar nueva contrase\xC3\xB1a"
 logout_success_message: Has salido.
@@ -122,8 +125,8 @@ back_button: Regresar
 page_is_not_static: "La pagina no esta est\xC3\xA1tica"
 invite_accept_via_existing_account: Ya tengo una cuenta
 recent_pages: Paginas Recientes
-create_a_new_page: "Crear una nueva p\xC3\xA1gina"
 display_name: Nombre visible
+notify_page_link: "Enviar Notificaci\xC3\xB3n"
 join_group_success: Te has unido al grupo {group_name}
 invite_accept_via_register: Tengo que registrar una nueva cuenta
 you_have_no_contacts: Usted no tiene contactos
@@ -193,6 +196,7 @@ full: completo
 login_button: Ingresa
 remove_from_gallery: "Eliminar el \xC3\xA1lbum de fotos"
 destroy_group: eliminar %s
+destroy_confirmation: "\xC2\xBFEst\xC3\xA1s seguro de que deseas eliminar esta/o {thing}? Esta acci\xC3\xB3n no se puede anular."
 group_has_no_public_profile: "Este grupo no tiene un perfil p\xC3\xBAblico."
 Category: "Categor\xC3\xADa"
 invalid_email: "Correo electr\xC3\xB3nico no es valido"
@@ -231,6 +235,7 @@ print_underlined_p: <u>p</u>rint
 month_short_december: diciembre
 post_message: Publicar Mensaje
 login_required: Se requiere ingresar
+new_people_link: gente nueva
 commitee_type: "Clase de comit\xC3\xA9"
 my_completed_tasks_link: Completo
 galleries: "\xC3\x81lbumes de fotos"
@@ -248,6 +253,7 @@ pending_tasks: tareas pendientes.
 data_for_page_missing: "Los datos de esta p\xC3\xA1gina no est\xC3\xA1n disponibles."
 monday: Lunes
 activity_user_destroyed: "{user} se ha jubilado"
+details_link: Detalles
 me_dashboard_link: Tablero
 rejected: rechazado
 signup_confirm_password: "Confirma la Contrase\xC3\xB1a"
@@ -347,6 +353,7 @@ no_public_profiles: "Todav\xC3\xADa no hay perfiles p\xC3\xBAblicos..."
 page_list_heading_updated: actualizado
 successful_undelete_image: La foto ha sido recuperada exitosamente
 back_to_group: regresar :group_name
+my_peers_link: "mis compa\xC3\xB1eros"
 people: Gente
 my_tasks_headline: Mis Tareas
 contact_request_message_label: "Cu\xC3\xA9ntale a %s por qu\xC3\xA9 quieres ser su contacto."
@@ -401,6 +408,7 @@ select_image_file: seleccionar archivo de foto
 discussions: Debates
 login_failure_reason: "El usuario o contrase\xC3\xB1a es incorrecto."
 rss_feed: "RSS Feed "
+new_people: Nuevas Personas
 see_more_link: "M\xC3\xA1s"
 media_alls: "Medios de comunicaci\xC3\xB3n"
 location_state: estado/provincia
@@ -411,19 +419,23 @@ share_button: Compartir
 participation: "Participaci\xC3\xB3n"
 edit_attachments: Editar archivos adjuntos
 requests_from_me: Peticiones mias
+announcement_page_display: Anuncio
 create_page_share: "\xC2\xBFQui\xC3\xA9n tiene acceso a este/a {page_class}?"
 invalid_email_text: "La direcci\xC3\xB3n de correo electr\xC3\xB3nico que proporcionaste no es v\xC3\xA1lida."
 send_invites_headline: Enviar invitaciones para unirse a (group)
 viewed: Visto(s)
 accept_usage_agreement: "Accepto el acuerdo de t\xC3\xA9rminos de uso"
+current_tags: Etiquetas Actualizadas
 destroy: destruir
 add_existing_image: "Agregar Foto  "
 add_contact_info: Cuando otro usuario es tu contacto, ellos pueden ver cuando te encuentras conectado y tienen acceso a ver tu perfil completo. Una vez que te vuelves contacto de otra persona, ellos a su vez se convierten en tus contactos.
 subject: tema
+discussion_page_description: "Un grupo de debate sobre un tema especifico. "
 member_groups_of_network: Miembros de los grupos
 recipient_tip: "Separa a los destinatarios con comas, espacios o escribiendolos en l\xC3\xADneas nuevas."
 alert_saved: Cambios guardados
 month_short_september: septiembre
+my_contacts_link: mis contactos
 request_friend_link: "A\xC3\xB1adir a mis contactos"
 forgot_password_mail_expiry: "Este enlace es valido por 24 horas. Si usted necesita restablecer su contrase\xC3\xB1a despu\xC3\xA9s de la expiraci\xC3\xB3n, tendr\xC3\xA1 que visitar la p\xC3\xA1gina de contrase\xC3\xB1a olvidada y pedir un nuevo enlace."
 general_info: "Informaci\xC3\xB3n General"
@@ -444,7 +456,6 @@ edit_title: editar titulo
 directory_of_networks: Directorio de las redes
 group_home_headline: "{group_type} Inicio"
 last_name: apellido
-create_page_headline: Crear una nueva {page_class}
 forgotten_email_address: "Que correo electr\xC3\xB3nico usaste cuando creaste la cuenta?"
 School: Escuela
 invite_not_found: "No hay invitaci\xC3\xB3n  "
@@ -456,6 +467,7 @@ invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente 
 status_pending: pendiente
 this_is_committee: "Este comit\xC3\xA9 es parte de {parent_group}."
 me_requests_link: Solicitudes
+group_profile_description_may_request_membership: Permite a las personas pedir ser miembro de este {group_type}.
 none: ninguno/a
 date_yesterday: Ayer
 show_gallery: "Mostrar \xC3\x81lbum de fotos"
@@ -467,7 +479,7 @@ password_confirmation: "Confirmar contrase\xC3\xB1a"
 menu_groups: Grupos
 signup_button: "Ap\xC3\xBAntate"
 month_short_october: octubre
-create_a_new_something: crear nuevo {something}
+more_information: "M\xC3\xA1s informaci\xC3\xB3n"
 share_page_message: Enviar un mensaje (opcional)
 created_on: Creado en
 dont_understand_group_type: No se puede entender la clase de grupo :type
@@ -484,6 +496,7 @@ large: grande
 committee_publicly_visible_description: "Los comit\xC3\xA9s pueden ser vistos por aquellos que no son miembros en we.riseup.net/yourgroupname"
 thursday: Jueves
 description: "Descripci\xC3\xB3n"
+coordinators: Coordinadores
 reject: rechazar
 outgoing: Saliente
 month_short_august: agosto
@@ -500,6 +513,7 @@ private_profile: Perfil Privado
 error_saving_new_order: Hubo un error al intentar guardar la nueva orden!
 page_list_heading_title: "t\xC3\xADtulo"
 request_to_join_your_network_description: ":group solicito unirse a la red :network"
+only_me: Solo Yo
 article_page_display: "art\xC3\xADculo"
 video_embed_code_prompt: "C\xC3\xB3digo incrustado en el video procedente de fuente externa"
 cancel_button: Cancelar
@@ -519,12 +533,13 @@ middle_name: segundo nombre
 month_short_january: enero
 invite_accept_info: "Te gustar\xC3\xADa aceptar la solicitud para participar. \xC2\xBFYa tienes una cuenta en este servidor?"
 signup_success: Registro completo
+options: Opciones
 move_this_page: "Mueve esta p\xC3\xA1gina"
 usage_agreement_heading: "Acuerdo de uso "
 search_headline: Buscar
 edit_featured_content: editar contenido destacado
 alert_field_errors: Hay problemas con los siguientes campos
-comparing_changes_header: Comparando cambios para :user at :when from :old_version to :new_version
+comparing_changes_header: Comparando cambios para {user} at {when} from {old_version} to {new_version}
 this_is_coordinating: "Este comit\xC3\xA9 es el <strong>consejo de coordinaci\xC3\xB3n</strong> para {parent_group}."
 edit_council_help_text: "Si este grupo tiene un consejo de coordinaci\xC3\xB3n, entonces s\xC3\xB3lo un miembro de ese Consejo podr\xC3\xA1 administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
 share_page_recipients_selection: "Haz tu selecci\xC3\xB3n"
@@ -557,6 +572,7 @@ ranked_vote_page_display: Voto clasificado
 no_group_named: No existe un grupo con el nombre de <b>:name</b>.
 im_addresses: Direcciones IM
 page_list_heading_posts: anuncios
+page_group_vote: Votar
 date_minutes: minutos
 users_world: ":user's Mundo"
 approved: aprobado
@@ -570,12 +586,14 @@ watch_checkbox: Ver las actualidades
 Announcements: Anuncios
 wednesday: Miercoles
 regenerate: "Regenerar las fotos peque\xC3\xB1as"
+announcement_page_description: Un anuncio.
 add_tags: "A\xC3\xB1adir Etiqueta"
 include_full_checkbox: incluir el enlace en la foto
 logout: Desconectar
 group_directory: Directorio del grupo
 month_short_june: junio
 incoming: Entrante
+activity_wall_message: "{author} escribi\xC3\xB3 a {user}: {message}"
 when_does_feature_expire: "Cu\xC3\xA1ndo expirar\xC3\xA1 esta caracter\xC3\xADstica?"
 break_lock_button: Rompe Candado
 members: Miembros
@@ -601,14 +619,6 @@ my_groups: Mis Grupos
 page_with_message: con mensaje
 group_discussion: debate
 my_pending_tasks_link: Pendiente
-footer_text_crabgrass: |-
-  <span>This site is powered by <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL software libre</a> for network organizing.</span>
-  <ul>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1'>report a bug</a></li>
-    <li><a href='https://labs.riseup.net/code/projects/crabgrass/issues?query_id=2'>request a feature</a></li>
-    <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>help with crabgrass</a></li>
-    <li><a href='https://we.riseup.net/crabgrass-dev/get-involved'>get involved</a></li>
-  </ul>
 insert_image_heading: "A\xC3\xB1ade Foto"
 image_title: "T\xC3\xADtulo de la foto: %s"
 reset_password_text: "Hola, %s. Si ha olvidado la contrase\xC3\xB1a que utiliza para acceder, puede establecer una nueva aqu\xC3\xAD. "

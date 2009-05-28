@@ -8,21 +8,9 @@
   <div style='background-position: <%= rand(100) %>% <%= rand(100) %>%; background-repeat: no-repeat' class='post_twinkle_<%=rand(3)%>_48'>  
 <% end -%>
 <div class='negativespace'><%= post.body_html %></div>
-<% if logged_in? and post.user_id == current_user.id -%>
-  <div style='display: block' class='post_action_icon'>
-    <%= link_to_remote_icon('pencil', {:url => {:controller => 'posts', :action => 'edit', :id => post.id}}) %>
-  </div>
-<% end -%>
-<% if logged_in? and post.user_id != current_user.id and current_user.may?(:comment,@page)-%> 
-  <div class='post_action_icon'>
-  <% if !post.starred_by?(current_user) -%>
-    <%= link_to_remote_icon('star_plus', :url=>{:controller=>'posts', :action=>'twinkle', :id=>post.id}) %>
-  <% else -%>
-    <%= link_to_remote_icon('star_minus', :url=>{:controller=>'posts', :action=>'untwinkle', :id=>post.id}) %>
-  <% end -%>
-  </div>
-  <%= call_hook :post_actions, {:post => post} %>
-<% end -%>
+<%= edit_post_action(post) %>
+<%= star_post_action(post) %>
+<%= call_hook :post_actions, {:post => post} %>
 <% (1..stars).each do -%>
   </div>  
 <% end -%>

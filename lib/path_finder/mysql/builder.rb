@@ -82,7 +82,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     end
     if options[:site_ids]
       @access_site_clause = "+(%s)" % Page.access_ids_for(
-        :sites_ids => options[:site_ids]
+        :site_ids => options[:site_ids]
       ).join(' ')
     end
     @access_filter_clause = [] # to be used by path filters

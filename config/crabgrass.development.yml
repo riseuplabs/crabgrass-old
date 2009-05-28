@@ -16,8 +16,8 @@
 #
 
 title: "Crabgrass Development"
-#enabled_mods:
-#  - super_admin
+enabled_mods:
+  - design_tester
 email:
   delivery_method: :sendmail
 
