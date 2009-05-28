@@ -25,7 +25,9 @@
   after_update_function = "function(value, data) { $('recipient_name').disable(); #{remote_function(add_action)} }"
 
   # called in order to render a popup row
-  render_popup_row_function = %Q[function(value, re, data){return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + Autocomplete.highlight(value,re) + '</p>';}]
+  # it is a little too complicated. basically, we want to just highlight
+  # the text but not the html tags.
+  render_popup_row_function = %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
 
   # called to convert the row data into a value
   extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
@@ -33,7 +35,7 @@
   auto_complete_js = %Q[
     new Autocomplete('recipient_name', { 
       serviceUrl:'/base_page/share/auto_complete',
-      minChars:1, 
+      minChars:2,
       maxHeight:400,
       width:300,
       onSelect: #{after_update_function},
