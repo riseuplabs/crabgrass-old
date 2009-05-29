@@ -51,7 +51,6 @@ class Mailer < ActionMailer::Base
   end
 
   def setup(options)
-raise    options[:site].inspect
     @site = options[:site]
     @user = options[:user]
     @current_user = options[:current_user]
