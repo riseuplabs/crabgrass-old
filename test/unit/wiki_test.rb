@@ -23,6 +23,15 @@ class WikiTest < Test::Unit::TestCase
     assert !b.valid?, 'should not be able to have two wikis with the same name'
   end
 
+  def test_creation_user_space
+    a = WikiPage.create :title => 'x61', :owner => 'blue', :user => users(:blue)
+    b = WikiPage.create :title => 'x61', :owner => 'blue', :user => users(:blue)
+
+    assert_equal 'x61', a.name, 'name should equal title'
+    assert b.name_taken?, 'name should already be taken'
+    assert !b.valid?, 'should not be able to have two wikis with the same name'
+  end
+
   def test_lock
     w = Wiki.create :body => 'watermelon'
     w.lock(Time.now, users(:blue))

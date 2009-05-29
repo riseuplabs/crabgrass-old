@@ -134,12 +134,14 @@ class Page < ActiveRecord::Base
   # returns true if self's unique page name is already in use.
   # what pages are in the namespace? all pages connected to all
   # groups connected to this page (include the group's committees too).
+  # it also includes the user owner of this page
   def name_taken?
     return false unless self.name.any?
     p = Page.find(:first,
       :conditions => ['pages.name = ? and group_participations.group_id IN (?)', self.name, self.namespace_group_ids],
       :include => :group_participations
     )
+    p ||= Page.find_by_name_and_owner_id(self.name, self.owner.id) if self.owner_type == 'User'
     return false if p.nil?
     return self != p
   end
