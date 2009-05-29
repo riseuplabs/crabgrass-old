@@ -1,7 +1,7 @@
 <ul class="side_list names">
   <%- @recipients.each_with_index do |recipient, i| -%>
     <li class="<%= 'selected' if i == 0 %>" >
-      <%= display_entity(recipient, :avatar => :xsmall, :format => :both, :block => true) %>
+      <%= display_entity(recipient, :avatar => :xsmall, :format => :twolines, :block => true) %>
     </li>
   <%- end -%>
 </ul>

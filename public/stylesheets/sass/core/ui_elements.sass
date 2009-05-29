@@ -78,6 +78,14 @@ a[name]
   color: #ccc
 
 //
+// ENTITIES
+//
+
+.entity .name
+  font-weight: bold
+  overflow: hidden
+
+//
 // SIDE LIST
 // 
 
@@ -420,23 +428,54 @@ table.plain
 // AUTO COMPLETE
 //
 
-div.auto_complete
-  background: #fff
-  ul
-    border: 1px solid #888
+.autocomplete-w1
+  background: url(/images/ui/shadow.png) no-repeat bottom right
+  position: absolute
+  top: 7px
+  left: 6px
+  z-index: 200
+
+.autocomplete
+  width: 300px
+  border: 1px solid #999
+  background-color: white
+  cursor: pointer
+  text-align: left
+  max-height: 350px
+  overflow: auto
+  margin: -6px 6px 6px -6px
+  overflow-x: hidden
+  .selected
+    background: #eee
+  div
+    padding: 1px 0 1px 5px
+    white-space: nowrap
+  p
     margin: 0
-    padding: 0
-    width: 100%
-    list-style-type: none
-    li
-      margin: 0
-      padding: 8px
-    li.selected
-      background-color: #ffb
-    strong.highlight
-      color: #800
-      margin: 0
-      padding: 0
+  strong
+    font-weight: normal
+    color: #3399FF
+  em
+    font-weight: bold
+    font-style: normal
+// div.auto_complete
+//  background: #fff
+//  ul
+//    border: 1px solid #888
+//    margin: 0
+//    padding: 0
+//    width: 100%
+//    list-style-type: none
+//    li
+//      margin: 0
+//      padding: 8px
+//      cursor: pointer
+//    li.selected
+//      background-color: #ffb
+//    strong.highlight
+//      color: #800
+//      margin: 0
+//      padding: 0
 
 //
 // ERRORS

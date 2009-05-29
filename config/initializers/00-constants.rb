@@ -45,6 +45,7 @@ begin
     lang_codes = possible
   end
   LANGUAGES = Language.find(:all, :conditions => ['code IN (?)',lang_codes]).freeze
+  AVAILABLE_LANGUAGE_CODES = lang_codes.collect{|code| code.sub('_','-')}.freeze
 rescue Exception
   # something went wrong.
   LANGUAGES = []

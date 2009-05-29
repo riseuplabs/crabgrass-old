@@ -1,21 +1,53 @@
 <% 
-  # if the recipient is written "Mr. Red (red)", then reformat to be just 'red'
-  after_update_function = "function(field,value) {
-   field.value = field.value.strip().replace(/.*\\((.*)\\).*/, '$1');
-  }"
   empty_box = false if empty_box.nil? 
+
+  # the remote action that is triggered when the 'add' button is pressed (or 
+  # the popup item is selected).
   add_action = {
     :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
     :loading => show_spinner('add_recipient'), 
     :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value}
   }
-  # submit the form when the enter key is pressed in the text box:
-  key_pressed_function = remote_function(add_action.merge(:condition => 'enterPressed(event)')) + 
-    "; return !enterPressed(event);"
- #if there are no recipients at all, we will never show the box
- if @page
-   (@page.users + @page.groups - [@page.owner]).any? ? recipients_exist = true : recipient_exist = false
- end
+
+  autocomplete_id_number = rand(1000000)
+  #autocomplete_id = "Autocomplete_#{autocomplete_id_number}"
+
+  # (1) submit the form when the enter key is pressed in the text box
+  # (2) don't submit the form if the recipient name field is empty
+  # (3) eat the event by returning false on a enter key so that the form
+  #     is not submitted.
+  key_pressed_function = remote_function(add_action.merge(:condition => "enterPressed(event) && $('recipient_name').value != ''")) + "; return !enterPressed(event);"
+
+  # this is called after an item in the popup has been selected.
+  # it makes it so selecting an item is like hitting the add button
+  # we clear the recipient_name field so that we don't get a double submit
+  after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
+
+  # called in order to render a popup row
+  # it is a little too complicated. basically, we want to just highlight
+  # the text but not the html tags.
+  render_popup_row_function = %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
+
+  # called to convert the row data into a value
+  extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
+
+  auto_complete_js = %Q[
+    new Autocomplete('recipient_name', { 
+      serviceUrl:'/base_page/share/auto_complete',
+      minChars:2,
+      maxHeight:400,
+      width:300,
+      onSelect: #{after_update_function},
+      rowRenderer: #{render_popup_row_function},
+      selectValue: #{extract_value_from_row_function}
+    }, #{autocomplete_id_number});
+  ]
+
+  #if there are no recipients at all, we will never show the box
+  if @page
+    (@page.users + @page.groups - [@page.owner]).any? ? recipients_exist = true : recipient_exist = false
+  end
+
 %>
 <table class='share_page_recipients'>
   <tr>
@@ -27,23 +59,14 @@
   </tr>
   <tr>
     <td>
-      <%= text_field_with_auto_complete(:recipient, :name,
-            { :style=>'width:100%',
-              :onkeypress => key_pressed_function
-            },
-            { :url => {
-                :controller => 'base_page/share',
-                :action => 'auto_complete_for_recipient_name'
-              },
-              :after_update_element => after_update_function,
-              :skip_style => true
-            }
-          )%>
+      <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
+          :onkeypress => key_pressed_function %>
+      <%= javascript_tag(auto_complete_js) %>
     </td>
     <td>&nbsp;</td>
     <td>
       <%- if @page.nil? or current_user.may?(:admin,@page) -%>
-      <%= select_page_access 'recipient[access]', :blank => false %>
+        <%= select_page_access 'recipient[access]', :blank => false %>
       <%- end -%>
     </td>
     <td>
