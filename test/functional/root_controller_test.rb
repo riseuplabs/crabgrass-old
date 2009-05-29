@@ -42,8 +42,8 @@ class RootControllerTest < Test::Unit::TestCase
       assert_not_nil assigns["current_site"].id, "Response did not come from the site we expected."
       current_site=assigns["current_site"]
       assert_not_equal assigns["users"], [], "Expecting a list of most active users."
-      assert_nil assigns["users"].detect{|u| !u.site_ids.include?(current_site.id)},         "All users should be on current_site."
-      assert_nil assigns["users"].detect{ |u| u.groups.include?(current_site.super_admin_group)},      " There should be no superadmin in the most active users"
+      assert_nil assigns["users"].detect{|u| !u.site_ids.include?(current_site.id)}, 
+        "All users should be on current_site."
       assert_not_equal assigns["groups"], [], "Expecting a list of most recent groups."
       assert_nil assigns["groups"].detect{|u|u.site_id != current_site.id}, 
         "All groups should be on current_site."
