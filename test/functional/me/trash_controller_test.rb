@@ -5,7 +5,16 @@ class Me::TrashControllerTest < ActionController::TestCase
            :memberships, :user_participations, :group_participations,
            :pages, :tasks, :task_participations, :task_lists, :page_terms
 
-  def test_01_index_and_undelete
+  def teardown
+    # we use transactional fixtures for everything except page terms
+    # page_terms is a different table type (MyISAM) which doesn't support transactions
+    # so let's reload page_terms from the db each time
+    fixture_path = ActiveSupport::TestCase.fixture_path
+    Fixtures.reset_cache
+    Fixtures.create_fixtures(fixture_path, ["page_terms"])
+  end
+
+  def test_index_and_undelete
     login_as :blue
 
     get :index
@@ -18,10 +27,9 @@ class Me::TrashControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert assigns(:pages).empty?, "should not find a deleted page after undeleting"
- end
- 
-  def test_10_remove
-    # this one should not run before index_and_undelete - otherwise the Page will be gone.
+  end
+
+  def test_remove
     login_as :blue
 
     get :index
@@ -38,7 +46,7 @@ class Me::TrashControllerTest < ActionController::TestCase
     assert assigns(:pages).empty?, "should not find a deleted page after removing"
   end
 
-  def test_02_text_search
+  def test_text_search
     return unless sphinx_working?(:test_text_search)
     login_as :blue
 
@@ -47,7 +55,7 @@ class Me::TrashControllerTest < ActionController::TestCase
     assert assigns(:pages).any?, "should find a deleted page by contained text"
   end
 
-  def test_03_text_search_and_sort
+  def test_text_search_and_sort
     return unless sphinx_working?(:test_text_search_and_sort)
     login_as :blue
 
