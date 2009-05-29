@@ -12,7 +12,8 @@ module Mailers::Request
     # NOTE due to spam probs we changed the following line:
     # @current_user.display_name
     # to "Crabgrass System (THEUSERNAME)"
-    from "%s <%s>" % ["Crabgrass System (#{@current_user.display_name})", @from_address]
+    from_string = "Crabgrass System (#{@current_user.display_name})"
+    from "%s <%s>" % [from_string, @from_address]
     subject 'Invitation to join group "{group}"'[:group_invite_subject, {:group => request.group.display_name}]
     body({ :from => @current_user, :group => request.group, :link => accept_link,
        :group_home => group_home })

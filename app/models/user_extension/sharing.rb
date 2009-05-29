@@ -29,12 +29,12 @@ module UserExtension::Sharing
 #
 # the following is unclear:
 #  should the list never contain any admin, because she is admin, or should it not contain people, who are only admin?
-#  consider: Michele is in Site.superadmin_group and also in 3 public groups. So she should be visible?
+#  consider: Michele is in Site.super_admin_group and also in 3 public groups. So she should be visible?
 #
 # possible solution:          
 #          :conditions => ["user_participations.changed_at >= ? AND memberships.group_id = ? AND memberships.group_id != ?", time, site.network.id, site.superadmin_group.id]
           
-          :conditions => ["user_participations.changed_at >= ? AND memberships.group_id = ? AND memberships.group_id != ?", time, site.network.id, site.superadmin_group.id],               
+          :conditions => ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id],               
           :select => "users.*, memberships.group_id, user_participations.changed_at"
         }
       }
