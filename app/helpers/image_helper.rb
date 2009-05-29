@@ -20,42 +20,10 @@ module ImageHelper
     content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
   end
 
-  def pushable_icon_tag(icon, size = 16)
-    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer'
-  end
-  
-  ##
-  ## DEPRECATED ::: WE ARE NOW USING CLASS BASED ICONS
-  ##
-  
-  ## allows you to change the icon style of an element.
-  ## for example, can be used to change the icon of a link
-  ## to be a spinner.
-  ## TODO: get rid of this, use class based icons instead
-  def set_icon_style(element_id, icon, position="0% 50%")
-    unless element_id.is_a? String
-      element_id = dom_id(element_id)
-    end
-    if icon == 'spinner'
-      icon_path = '/images/spinner.gif'
-    else
-      icon_path = "/images/#{icon}"
-    end
-    "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat #{position}"]
-  end
-
-  ## creates an <a> tag with an icon via a background image.
-  def link_to_icon(text, icon, path={}, options={})
-    link_to text, path, options.merge(:style => icon_style(icon))
-  end
-
-  ## return the style css text need to put the icon on the background
-  def icon_style(icon)
-    size = 16
-    url = "/images/#{icon}"
-    "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
-  end
-  
+#  def pushable_icon_tag(icon, size = 16, id = nil)
+#    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
+#  end
+    
   ##
   ## AVATARS
   ##
@@ -114,36 +82,86 @@ module ImageHelper
       "#{id.to_s}_spinner"
     end
   end
+
+  def spinner_icon_on(icon, id)
+    target = id ? "$('#{id}')" : 'event_target(event)'
+    "replace_class_name(#{target}, '#{icon}_16', 'spinner_icon')"
+  end
   
+  def spinner_icon_off(icon, id)
+    target = id ? "$('#{id}')" : 'event_target(event)'
+    "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
+  end
+
+  # we can almost do this to trick ie into working with event.target,
+  # which would eliminate the need for random ids.
+  #
+  # but it doesn't quite work, because for :complete of ajax, window.event
+  # is not right
+  #
+  #  function event_target(event) {
+  #    event = event || window.event; // IE doesn't pass event as argument.
+  #    return(event.target || event.srcElement); // IE doesn't use .target
+  #  }
+
+
   ##
   ## LINKS WITH ICONS
   ## 
 
-  # eg:
-  # 
-  def link_to_remote_with_icon(label, options)
-    #id = "link_id_#{rand(10000000)}"
+  # makes a cool link with an icon. if you click the link, some ajax
+  # thing happens, and the icon is set to a spinner. The icon is
+  # restored when the ajax request completes.
+  def link_to_remote_with_icon(label, options, html_options={})
+    icon = options.delete(:icon) || html_options.delete(:icon)
+    id = html_options[:id] || 'link%s'%rand(1000000)
+    icon_options = {
+      :loading => spinner_icon_on(icon, id),
+      :complete => spinner_icon_off(icon, id)
+    }
+    class_options = {:class => "small_icon #{icon}_16", :id => id}
     link_to_remote(
-      label, 
-      { :url => options[:url],
-        :loading => "replace_class_name(event.target, '#{options[:icon]}_16', 'spinner_icon')",
-        :complete => "replace_class_name(event.target, 'spinner_icon', '#{options[:icon]}_16')",
-        :with => options[:with]},
-      { :class => "small_icon #{options[:icon]}_16" }
+      label,
+      options.merge(icon_options),
+      class_options.merge(html_options)
     )
   end
 
-  def link_to_remote_icon(icon, options, html_options={})
-    link_to_remote(
-      pushable_icon_tag(icon), {
-        :url => options[:url],
-        :loading => "event.target.blur(); replace_class_name(event.target, '#{icon}_16', 'spinner_icon')",
-        :complete => "event.target.blur(); replace_class_name(event.target, 'spinner_icon', '#{icon}_16')",
-        :confirm => options[:confirm]
-      }, 
-      html_options
-    )
+  def link_to_function_with_icon(label, function, options={})
+    icon = options.delete(:icon)
+    class_options = {:class => "small_icon #{icon}_16"}
+    link_to_function(label, function, class_options.merge(options))
   end
+
+  def link_to_remote_icon(icon, options={}, html_options={})
+    link_to_remote_with_icon('', options, html_options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16"))
+  end
+
+  def link_to_function_icon(icon, function, options={})
+    link_to_function_with_icon(' ', function, options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16"))
+  end
+
+#  # makes an icon button to a remote action. when you click on the icon, it turns
+#  # into a spinner. when done, the icon returns. any id passed to html_options
+#  # is passed on the icon, and not the <a> tag.
+#  def link_to_remote_icon(icon, options={}, html_options={})
+#    icon_options = {
+#      :loading => "event.target.blur();" + spinner_icon_on(icon),
+#      :complete => "event.target.blur();" + spinner_icon_off(icon)
+#    }
+#    link_to_remote(
+#      pushable_icon_tag(icon,16,html_options.delete(:id)),
+#      options.merge(icon_options),
+#      html_options
+#    )
+#  end
+#  def link_to_function_icon(icon, function, html_options={})
+#    link_to_function(
+#      pushable_icon_tag(icon),
+#      function,
+#      html_options
+#    )
+#  end
 
   ##
   ## ASSET THUMBNAILS
@@ -240,4 +258,38 @@ module ImageHelper
       image_tag "/images/png/16/#{asset.small_icon}.png", :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
     end
   end
+
+  ##
+  ## DEPRECATED 
+  ## use class based image helpers instead
+  ##
+
+  ## allows you to change the icon style of an element.
+  ## for example, can be used to change the icon of a link
+  ## to be a spinner.
+  ## TODO: get rid of this, use class based icons instead
+  def set_icon_style(element_id, icon, position="0% 50%")
+    unless element_id.is_a? String
+      element_id = dom_id(element_id)
+    end
+    if icon == 'spinner'
+      icon_path = '/images/spinner.gif'
+    else
+      icon_path = "/images/#{icon}"
+    end
+    "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat #{position}"]
+  end
+
+  ## creates an <a> tag with an icon via a background image.
+  def link_to_icon(text, icon, path={}, options={})
+    link_to text, path, options.merge(:style => icon_style(icon))
+  end
+
+  ## return the style css text need to put the icon on the background
+  def icon_style(icon)
+    size = 16
+    url = "/images/#{icon}"
+    "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
+  end
+
 end
