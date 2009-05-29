@@ -217,6 +217,7 @@ Autocomplete.prototype = {
 ' onclick="Autocomplete.instances[', this.instanceId, '].select(', i, ');" onmouseover="Autocomplete.instances[', this.instanceId, '].activate(', i, ');">', this.renderRow(value, re, this.data[i]), '</div>');
     } .bind(this));
     this.enabled = true;
+    this.fixPosition();
     this.container.update(content.join('')).show();
   },
 

@@ -9,19 +9,28 @@
 
 blank = false if blank.nil?
 access = 'admin' if access.nil?
-unsaved = false if unsaved.nil?
+if unsaved.nil?
+  newitem = false
+else
+  newitem = unsaved
+end
+newitem = true if @page and @page.new_record?
+
+id = "share_recipient_%s" % rand(100000000)
+remove_function = "$('%s').remove()" % id
 %>
 
-<li class="<%= 'unsaved' unless !unsaved %>">
-    <div style="float:left;">
-      <%= avatar_for(recipient,'xsmall') %>
-      <%= recipient.display_name %>
-    </div>
-    <div style="float:right;">
-      <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+<tr class="<%= 'unsaved' if newitem %>" id="<%= id %>">
+  <td style="width:100%">
+    <%= display_entity(recipient, :avatar => 'xsmall', :format => :both) %>
+  </td>
+  <td>
+    <%- if @page.nil? or current_user.may?(:admin,@page) -%>
       <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
-      <%- end -%>
-    </div>
-    <div style="clear:left;"></div>
-</li>
+    <%- end -%>
+  </td>
+  <td>
+    <%= link_to_function_icon('minus', remove_function) if newitem %>
+  </td>
+</tr>
 

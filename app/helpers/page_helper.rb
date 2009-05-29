@@ -486,6 +486,8 @@ module PageHelper
       selected_group = owner.name
     elsif params[:group]
       selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+    elsif params[:page] and params[:page][:owner]
+      selected_group = params[:page][:owner]
     else
       selected_group = nil
     end

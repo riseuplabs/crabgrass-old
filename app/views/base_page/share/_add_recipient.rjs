@@ -1,6 +1,3 @@
-# hide the spinner
-page.hide('add_recipient_spinner')     
-
 # ensure the autocomplete popup is hidden
 page << "$$('.autocomplete').each(function(elem){elem.hide()})"
 
@@ -16,9 +13,10 @@ else
 
   # update the ui by adding the recipients
   @recipients.each do |recipient|
-    page.insert_html(:top, 'share_page_recipients',:partial => 'recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
+    page.insert_html(:top, 'share_page_recipient_table',:partial => 'recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
   end
   page << "$('recipient_name').value = ''"
-  page.show('share_recipient_list')
+  page.show('share_page_recipient_area') if @recipients.any?
 end
+
 

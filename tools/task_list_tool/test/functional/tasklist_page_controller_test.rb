@@ -1,17 +1,7 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'task_list_page_controller'
+require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-# Re-raise errors caught by the controller.
-class TaskListPageController; def rescue_action(e) raise e end; end
-
-class Tool::TasklistPageControllerTest < Test::Unit::TestCase
+class TaskListPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :task_lists, :tasks
-
-  def setup
-    @controller = TaskListPageController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def text_show
     login_as :quentin

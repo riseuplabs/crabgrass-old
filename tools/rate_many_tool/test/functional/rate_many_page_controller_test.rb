@@ -1,17 +1,10 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'rate_many_page_controller'
+require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-# Re-raise errors caught by the controller.
-class RateManyPageController; def rescue_action(e) raise e end; end
-
-class Tool::RateManyPageControllerTest < Test::Unit::TestCase
+class RateManyPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :polls, :possibles
 
   def setup
-    @controller = RateManyPageController.new
-    @request    = ActionController::TestRequest.new
     @request.host = "localhost"
-    @response   = ActionController::TestResponse.new
   end
 
   def test_all
@@ -49,6 +42,32 @@ class Tool::RateManyPageControllerTest < Test::Unit::TestCase
     post :vote_one, :page_id => p.id, :id => id, :value => "2"
     assert_equal 2, PollPossible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
   end
-  
+
+  def test_create_same_name
+    login_as :gerrard
+
+    data_ids, page_ids, page_urls = [],[],[]
+    3.times do
+      post 'create', :page => {:title => "dupe", :summary => ""}, :id => RateManyPage.param_id
+      page = assigns(:page)
+
+      assert_equal "dupe", page.title
+      assert_not_nil page.id
+
+      # check that we have:
+      # a new poll
+      assert !data_ids.include?(page.data.id)
+      # a new page
+      assert !page_ids.include?(page.id)
+      # a new url
+      assert !page_urls.include?(page.name_url)
+
+      # remember the values we saw
+      data_ids << page.data.id
+      page_ids << page.id
+      page_urls << page.name_url
+    end
+  end
+
   # TODO: tests for vote, clear votes, sort
 end

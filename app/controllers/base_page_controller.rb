@@ -49,7 +49,7 @@ class BasePageController < ApplicationController
     @page_class = get_page_type
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
+    elsif request.post?;
       begin
         @page = create_new_page!(@page_class)
         return redirect_to(page_url(@page))
