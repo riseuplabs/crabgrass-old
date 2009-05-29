@@ -4,15 +4,35 @@
   <%- if logged_in? -%>
     <%- if current_site.network -%>
       <li id='menu_home' class='<%= @active_tab == :home ? 'active' : '' %>'>
-        <span><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
+        <span class="topnav"><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
       </li>
     <%- end -%>
     <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
-      <span><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
+      <span class="topnav"><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
+      <ul class="menu_dashboard selfclear">
+        <li class="leftcol">
+          <ul class="side_list">
+            <li class="small_icon home_16"><a href="/me/dashboard">Dashboard</a></li>
+            <li class="small_icon archive_16" id="inbox_line"><a class="" href="/me/inbox">Inbox</a></li>
+            <li class="small_icon magnifier_16"><a class="" href="/me/search">Search</a></li>
+            <li class="small_icon page_tasks_16"><a class="" href="/me/tasks/pending">Tasks</a></li>
+            <li class="small_icon info_16" id="requests_line"><a class="" href="/me/requests/to_me">Requests</a></li>
+            <li class="small_icon trash_16" id="trash_line"><a class="" href="/me/trash">Trash</a></li>
+          </ul>
+          <a class="contribute round" href=""><span class="small_icon plus_16">Contribute</span></a>
+        </li>
+        <li class="rightcol">
+          <h3 class="dim">Recent Pages</h3>
+          <ul class="recent_pages">
+            <li class="small_icon page_text_16"><a class="" href="#">A page name</a></li>
+            <li class="small_icon page_text_16"><a class="" href="#">Some other page</a></li>
+          </ul>
+        </li>
+      </ul>
     </li>
   <%- else -%>
     <li class='<%= @active_tab == :home ? 'active' : '' %>'>
-      <span><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
+      <span class="topnav"><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
     </li>    
   <%- end -%>
 
@@ -20,25 +40,60 @@
       the controllers currently bomb out in bad ways if you are not logged in. %>
   <%- if logged_in? -%>
   <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
-    <span><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
+    <span class="topnav"><%= link_to_active "People"[:menu_people], people_url, @active_tab == :people %></span>
+    <ul class="people_dashboard selfclear">
+      <li>
+         <h3 class="dim">Friends <span>• <a href="#">More »</a></span></h3>
+         <div class="people_list selfclear">
+           <a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a>
+         </div>
+      </li>
+    </ul>
   </li>
 
   <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
     <% url = logged_in? ? groups_url(:action => :my) : groups_url %>
-    <span><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %></span>
+    <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %></span>
+    <ul class="groups_dashboard selfclear">
+      <li class="leftcol">
+        <ul>
+          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
+          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
+          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass</a></li>
+        </ul>
+      </li>
+      <li class="rightcol">
+        <ul>
+          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
+          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
+          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass</a></li>
+        </ul>
+        <a style="float: right;" href="#">See all »</a>
+      </li>
+    </ul>
   </li>
 
   <%- if current_site.has_networks? -%>
     <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
       <% url = logged_in? ? networks_url(:action => :my) : networks_url %>
-      <span><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
+      <span class="topnav"><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
+      <ul class="networks_dashboard selfclear">
+         <li>
+           <ul>
+             <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
+             <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
+             <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass</a></li>
+           </ul>
+           <a style="float: right;" href="#">See all »</a>
+         </li>
+       </ul>
     </li>
   <%- end -%>
   <%- end -%>
 
   <%- if logged_in? and current_site.chat? -%>
   <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
-    <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
+    <span class="topnav"><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
   <%- end -%>
 
