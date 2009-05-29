@@ -63,9 +63,9 @@ module ActsAsSiteLimited
             elsif options[:conditions].is_a? Hash
               options[:conditions].merge!({:site_id => Site.current.id})
             elsif options[:conditions].is_a? String
-              options[:conditions] += " AND #{sql}"
+              options[:conditions] = "(#{options[:conditions]}) AND #{sql}"
             elsif options[:conditions].is_a? Array and options[:conditions][0].is_a? String
-              options[:conditions][0] += " AND #{sql}"
+              options[:conditions][0] = "(#{options[:conditions][0]}) AND #{sql}"
             end
             args << options
           end
