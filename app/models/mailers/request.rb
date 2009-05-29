@@ -1,19 +1,14 @@
 module Mailers::Request
   
   # Send an email letting the user know that a page has been 'sent' to them.
-  def request_to_join_us(request, options)  
+  def request_to_join_us(request, options)
     setup(options)
     accept_link = url_for(:controller => 'requests', :action => 'accept',
        :path => [request.code, request.email.gsub('@','_at_')])
     group_home = url_for(:controller => request.group.name) # tricky way to get url /groupname
 
     recipients request.email
-    
-    # NOTE due to spam probs we changed the following line:
-    # @current_user.display_name
-    # to "Crabgrass System (THEUSERNAME)"
-    from_string = "#{@site.name && @site.name != 'default' ? @site.name : 'Crabgrass System';} (#{@current_user.display_name})"
-    from "%s <%s>" % [from_string, @from_address]
+    from "%s <%s>" % [@current_user.display_name, @from_address]
     subject 'Invitation to join group "{group}"'[:group_invite_subject, {:group => request.group.display_name}]
     body({ :from => @current_user, :group => request.group, :link => accept_link,
        :group_home => group_home })

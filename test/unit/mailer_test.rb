@@ -34,8 +34,6 @@ class MailerTest < Test::Unit::TestCase
     req = RequestToJoinUsViaEmail.create(
       :created_by => insider, :email => 'root@localhost', :requestable => group)
     response = Mailer.create_request_to_join_us(req, mailer_options)
-    # why is from nil?
-    #    assert_match /#{Regexp.escape("Crabgrass System(#{insider.display_name}) ")}/, response.from
     assert_match /#{Regexp.escape(req.group.display_name)}/, response.subject
     assert_match /#{Regexp.escape(req.group.display_name)}/, response.body
     assert_match /#{Regexp.escape(req.code)}/, response.body
