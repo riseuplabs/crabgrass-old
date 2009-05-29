@@ -425,6 +425,18 @@ class Page < ActiveRecord::Base
     return groups + users
   end
 
+  # returns an array of each users or group and their access to this page.
+  # self.owner is removed from the list. 
+  # eg: [[<user1>,:edit],[<user2>,:admin]]
+  def recipients
+    ary = self.user_participations.collect{|part|
+      [part.user,part.access_sym] if part.user != owner
+    } + self.group_participations.collect{|part|
+      [part.group,part.access_sym] if part.group != owner
+    }
+    return ary.compact.sort_by{|item| item[0].name}
+  end
+
   ##
   ## DENORMALIZATION
   ##
