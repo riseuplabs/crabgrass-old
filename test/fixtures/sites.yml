@@ -2,6 +2,9 @@
 # if you change the ideas of these sites, change the method 'enable_site_testing'
 # in conf.rb. 
 #
+# also, you can only set the super_admin_group_id to a group that actually has
+# has site_id set to the same site.
+#
 
 --- 
 local:
