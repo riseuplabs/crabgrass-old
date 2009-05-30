@@ -29,6 +29,8 @@ module UserExtension::Sharing
           :select => "users.*, memberships.group_id, user_participations.changed_at"
         }
       }
+      
+      
 
       named_scope :most_active_since, lambda { |time|
         { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
@@ -37,12 +39,24 @@ module UserExtension::Sharing
           :conditions => ["user_participations.changed_at >= ?", time],
           :select => "users.*" }
       }
+     
+      named_scope :not_inactive, lambda { 
+        { :conditions => ["users.id NOT IN (?)", inactive_user_ids],
+           }
+      }
 
       #has_many :pages_created,
       #  :class_name => "Page", :foreign_key => :created_by_id 
 
       #has_many :pages_updated, 
       #  :class_name => "Page", :foreign_key => :updated_by_id   
+   
+    
+      # overriden by mods to inactivate specific user-groups
+      def self.inactive_user_ids
+        false
+      end
+    
     end
   end
 

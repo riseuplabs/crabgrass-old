@@ -9,6 +9,17 @@ module UserExtension
         alias_method_chain :may!, :superadmin
       end
     end
+
+    
+   
+   # Removes the superadmins from some user-lists
+    def self.inactive_user_ids
+      ids = Site.current.super_admin_group.user_ids
+    end
+    
+    
+    
+    
     
     # Returns true if self is a super admin. If self is the current_user
     # then no arguments are required. However, to test superadmin? on any
@@ -22,6 +33,8 @@ module UserExtension
       end
     end
 
+    
+    
     def member_of_with_superadmin?(group)
       return true if superadmin?
       return member_of_without_superadmin?(group)
