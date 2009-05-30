@@ -56,7 +56,7 @@ module GroupExtension::Pages
       part_with_best_access = gparts.min {|a,b|
         (a.access||100) <=> (b.access||100)
       }
-      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
+      return ( part_with_best_access.access || ACCESS[:view] ) <= (ACCESS[perm] || -100)
     else
       raise PermissionDenied.new
     end
