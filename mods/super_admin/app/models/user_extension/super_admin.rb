@@ -1,26 +1,29 @@
-module UserExtension
-  module SuperAdmin
-    def self.included(base)
-      base.instance_eval do
-        alias_method_chain :member_of?, :superadmin
-        alias_method_chain :direct_member_of?, :superadmin
-        alias_method_chain :friend_of?, :superadmin
-        alias_method_chain :peer_of?, :superadmin
-        alias_method_chain :may!, :superadmin
+module UserExtension::SuperAdmin
+
+  def self.included(base)
+    base.extend(ClassMethods)
+    base.instance_eval do
+      include InstanceMethods
+      alias_method_chain :member_of?, :superadmin
+      alias_method_chain :direct_member_of?, :superadmin
+      alias_method_chain :friend_of?, :superadmin
+      alias_method_chain :peer_of?, :superadmin
+      alias_method_chain :may!, :superadmin
+    end
+  end
+
+  module ClassMethods
+    # Removes the superadmins from some user-lists
+    def inactive_user_ids
+      if Site.current.super_admin_group
+        Site.current.super_admin_group.user_ids
+      else
+        false
       end
     end
-
-    
-   
-   # Removes the superadmins from some user-lists
-    def self.inactive_user_ids
-      ids = Site.current.super_admin_group.user_ids
-    end
-    
-    
-    
-    
-    
+  end
+  
+  module InstanceMethods
     # Returns true if self is a super admin. If self is the current_user
     # then no arguments are required. However, to test superadmin? on any
     # other user requires a site argument.
@@ -33,8 +36,6 @@ module UserExtension
       end
     end
 
-    
-    
     def member_of_with_superadmin?(group)
       return true if superadmin?
       return member_of_without_superadmin?(group)
@@ -60,6 +61,7 @@ module UserExtension
       return true if superadmin?
       return may_without_superadmin!(perm, object)
     end
-  end 
+  end
+
 end
 
