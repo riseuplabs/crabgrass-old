@@ -44,6 +44,7 @@ class RootControllerTest < Test::Unit::TestCase
       assert_not_equal assigns["users"], [], "Expecting a list of most active users."
       assert_nil assigns["users"].detect{|u| !u.site_ids.include?(current_site.id)}, 
         "All users should be on current_site."
+      assert_nil assigns["users"].detect{|u| (User.inactive_user_ids ? User.inactive_user_ids.includes?(u.id) : nil  ;)}, "There should be no inactive users in the list"
       assert_not_equal assigns["groups"], [], "Expecting a list of most recent groups."
       assert_nil assigns["groups"].detect{|u|u.site_id != current_site.id}, 
         "All groups should be on current_site."
