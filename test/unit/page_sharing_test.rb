@@ -143,6 +143,61 @@ class PageSharingTest < Test::Unit::TestCase
     assert !user2.may?(:admin, page)
   end
 
+  def test_notify_groups
+    creator = users(:kangaroo)
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    page = Page.create!(:title => 'title', :user => creator, :share_with => ['red', 'rainbow', 'animals'], :access => :admin)
+
+    creator.share_page_with!(page, ['red', 'rainbow', 'animals'], :send_notice => true, :send_message => 'hi')
+    page.save!
+    page.reload
+
+    all_users = (groups(:animals).users + groups(:rainbow).users).uniq.select do |user|
+      creator.may_pester?(user)
+    end
+
+    assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
+  end
+
+  def test_notify_with_hash
+    creator = users(:kangaroo)
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    page = Page.create!(:title => 'title', :user => creator,
+     :share_with => {"rainbow"=>{"access"=>"admin"}, "red"=>{"access"=>"admin"}},
+     :access => :view)
+    assert rainbow.may?(:admin, page)
+    
+    creator.share_page_with!(
+      page,
+      {"rainbow"=>{"send_notice"=>"1"}, "red"=>{"send_notice"=>"1"}},
+      {"send_notice"=>true, "send_message"=>"", "send_email"=>false}
+    )
+    page.save!
+    page.reload
+
+    all_users = (groups(:rainbow).users).uniq.select do |user|
+      creator.may_pester?(user)
+    end
+    all_users << creator
+    assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
+  end
+
+  def test_notify_group
+    creator = users(:kangaroo)
+    page = Page.create!(:title => 'title', :user => creator, :share_with => 'animals', :access => 'admin')
+    creator.share_page_with!(page, 'animals', :send_notice => true, :send_message => 'hi')
+    page.save!
+    page.reload
+    assert_equal groups(:animals).users.count, page.user_participations.count
+    page.user_participations.each do |upart|
+      assert upart.inbox
+    end
+  end
+
   protected
   
   def create_page(options = {})

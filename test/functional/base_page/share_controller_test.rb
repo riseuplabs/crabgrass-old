@@ -6,10 +6,8 @@ class BasePage::ShareController; def rescue_action(e) raise e end; end
 
 class BasePage::ShareControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
-           :memberships, :user_participations, :group_participations,
-           :pages, :profiles
-          # :taggings, :tags
-
+          :memberships, :user_participations, :group_participations,
+          :pages, :profiles
 
   #@@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   #@@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -49,8 +47,8 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     # a request that should be successful
     xhr :post, :update, {:page_id =>  1, :recipient => {:name => 'penguin', :access => 'edit'}, :add => true } 
     assert_response :success
-    assert_select_rjs :insert, :top, 'share_page_recipients' do
-      assert_select 'li.unsaved'
+    assert_select_rjs :insert, :top, 'share_page_recipient_table' do
+      assert_select 'tr.unsaved'
       assert_select 'option[selected=selected][value=edit]', 'Participant', 'new user should have edit access'
     end
 
@@ -204,7 +202,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert_response :success
     if update == 'add'
       assert_not_nil assigns(:recipients)
-      assert_select 'li.unsaved'
+      assert_select 'tr.unsaved'
     else
       assert_select 'div.notice'
     end
@@ -235,4 +233,17 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert !upart.inbox, 'participation.inbox should be set to false now'
   end
   
+  def test_notify_group
+    login_as :blue
+
+    page = DiscussionPage.create! :title => 'dup', :user => users(:blue), :owner => users(:blue), :share_with => 'rainbow', :access => :admin
+
+    xhr :post, :notify, {:page_id => page.id, "notify"=>true, "notification"=>{"send_notice"=>"1", "send_message"=>"", "send_email"=>"0"}, "action"=>"notify", "recipients"=>{"rainbow"=>{"send_notice"=>"1"}}, "controller"=>"base_page/share"}
+    
+    page.reload
+    group_users = groups(:rainbow).users.collect{|u|u.name}.sort
+    page_users = page.user_participations.collect{|up|up.user.name}.sort
+    assert_equal group_users, page_users
+  end
+
 end
