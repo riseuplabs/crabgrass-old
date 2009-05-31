@@ -33,9 +33,8 @@
     <% form_remote_tag(
     :url => {:controller => 'participation', :action => 'close_details', :page_id => @page.id},
     :loading => show_spinner('popup')) do -%>
-
-     <%= submit_tag :close_button.t, :name => 'cancel' %>
      <%= spinner 'popup' %>
+     <%= submit_tag :close_button.t, :name => 'cancel' %>
     <% end -%>
   </div>
 
