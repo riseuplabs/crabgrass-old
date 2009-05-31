@@ -91,19 +91,6 @@ module LayoutHelper
   <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
-  # support for holygrail layout:
-  
-  # returns the style elements need in the <head> for the holygrail layouts. 
-  def holygrail_stylesheets
-    lines = []
-    lines << stylesheet_link_tag('holygrail/common')
-    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
-    lines << '<!--[if lt IE 7]>
-<style media="screen" type="text/css">.col1 {width:100%;}</style>
-<![endif]-->' # this line is important!
-    lines.join("\n")
-  end
-
   def type_of_column_layout
     @layout_type ||= if @left_column.any? and @right_column.any?
       'three'

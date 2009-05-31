@@ -1,46 +1,14 @@
-/* allows for checkbox and link to the on the same line */
-
-/*ul.side_list a.check {
-  display: inline;
-  line-height: 1.9em;
-}
-input.check {
-  margin-top: 0px;
-}
-ul.side_list a {
-  padding: 1px 0 1px 26px;
-}
-*/
-
-#page_sidebar input.check {
-  margin-top: 2px;
-}
+/* page sidebar */
+#page_sidebar input.check {margin-top: 3px; margin-left: -25px} /* move check up slightly */
+ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icons appear */
 
 /* simulate :last-child */
 .post-body p {
   margin: expression( this == this.parentNode.firstChild || this == this.parentNode.lastChild ? "0em" : "1em 0" );
 }
 
-
-/* pages */
-
-/*
-td.post-body div.negativespace {
-  margin: -4px 0 -16px 0;
-}
-*/
-.popup h1, .popup h4, .popup td, .popup blockquote {
-  white-space: nowrap;
-}
-
-/* width:100% doesn't seem to work in ie7 in an absolutely positioned div */
-.popup .fieldset textarea {width: 30em;} */
-
-/*
-div.popup blockquote {
-  padding: 1em 1em 0 1em;
-}
-*/
+/* status hack to make set_status form not get too big */
+table.set_status {width:80%;}
 
 /* ie7 puts the scroll bar over top the enclosed content */
 div.page_scroll {
@@ -48,29 +16,14 @@ div.page_scroll {
   overflow-y: scroll;
   padding-right: 16px;
 }
-div.page_list {width: 100%;} /* this is required to get ie7 to actually show scrollbars */
+/* this is required to get ie7 to actually show scrollbars */
+div.page_list {width: 100%;}
 
-
-/* layout */
-
-/* needed for ie7 bug */
-#wrapper {position: relative; overflow: hidden;} 
+/* autocomplete */
+.autocomplete_holder {z-index: 10000}
+.autocomplete-w1 {background: none; top: 1px;}
+.autocomplete {height: 350px; margin: 0px 6px 6px 0;}
 
 /* hide the message area */
 #message {line-height: 1px;}
 
-/* This is a true mystery to me. For some reason, a padding of 0.55em is needed
- * on the top to approximate the 1em padding for the sides and bottom. */
-#banner {padding-top: 0.55em;}
-
-/* ui */
-/*
-.tab-area fieldset textarea {
-  width: 100%;
-  margin-left: -18px;
-}
-*/
-
-/* autocomplete */
-.autocomplete-w1 {background: none; top: 1px;}
-.autocomplete {height: 350px; margin: 0px 6px 6px 0;}

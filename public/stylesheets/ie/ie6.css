@@ -1,88 +1,25 @@
 /* get hover to work in ie */
 body {behavior:url("/javascripts/ie/csshover.htc");}
 
-/**
- ** LAYOUT
- **/
+/* hide the message area */
+#message {line-height: 1px;}
 
-/* this keeps col1 from spanning the full window width */
-.rightmenu .col1 {width: auto;}
-
-/* this keeps the wrapper from rolling up and exposing the bg color */
-#wrapper {
-  position: relative;
-  overflow: hidden;
-  float: left;
-}
-
-#message {
-  height: 1%; /* needed because of #wrapper float */
-  margin: 0;
-  line-height: 1px;
-}
-
-.leftmenu .col1wrap {
-  right: 18.95em;
-}
-
-/* ie hack so that tables don't spill the margins */
-div.content_box {
-  height: 1%; 
-}
-
-
-/**
- ** UI ELEMENTS
- **/
-
-/*
-fieldset textarea {
-  position: relative;
-}
-div.edit-tab {
-  position: relative;
-  left: 0px;
-}
-div.edit-tab span {
-}
-*/
-
-/**
- ** HEADER
- **/
-
-/* center align the login box (margin: 0 auto doesn't
- * work when not in ie6 standards mode (we're not) */
-/* #loginwrap { text-align: center; }
-#loginwrap #loginformbox { text-align: left; } */
-
-
-/**
- ** PAGES
- **/
-
-/* this hack makes the access icons appear */
-ul.names li span {border: 1px solid #d6d6d6;}
+/* status hack to make set_status form not get too big */
+table.set_status {width:80%;}
 
 /* autocomplete */
+.autocomplete_holder {z-index: 10000}
 .autocomplete-w1 {background: none; top: 1px;}
 .autocomplete {height: 350px; margin: 0px 6px 6px 0;}
 
-ul.side_list li {height: 1%;}
+/* sidebar */
+ul.side_list li {height: 1%;} /* force has layout */
+#page_sidebar input.check {margin-top: 3px; margin-left: -25px} /* move check up slightly */
+ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icons appear */
+div.popup_arrow {right: -24px} /* move popup nub slightly */
 
-/* the checkboxes are too low. how to fix? */
-input.check {}
-
-.create_page table{} 
-.create_page .right {padding-left:5px;}
-.create_page .right .share_page{padding:0.5em;}
-
-.popup table {width: 10%}
-
-/**
- ** MISC
- **/
-
+/* page list */
+/* .page_icon {line-height: 1px; vertical-align: top;} */
 
 /**
  ** FIRST-CHILD EMULATION
