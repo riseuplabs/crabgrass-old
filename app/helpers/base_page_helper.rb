@@ -77,7 +77,8 @@ module BasePageHelper
   end  
 
   def popup(title, options = {}, &block)
-    block_to_partial('base_page/popup_template', {:style=>'', :id=>'', :width=>''}.merge(options).merge(:title => title), &block)
+    style = [options.delete(:style), "width:%s" % options.delete(:width)].compact.join("; ")
+    block_to_partial('base_page/popup_template', {:style=>style, :id=>''}.merge(options).merge(:title => title), &block)
   end
 
   ##
@@ -137,6 +138,15 @@ module BasePageHelper
                      :method => 'post',
                      :confirm => 'Are you sure you want to destroy this page? It cannot be undeleted.'[:confirm_destroy_page])
       content_tag :li, link, :class => 'small_icon minus_16'
+    end
+  end
+
+  def view_line
+    if @show_print
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
+      #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
+      #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
+      content_tag :li, printable, :class => 'small_icon printer_16'
     end
   end
 

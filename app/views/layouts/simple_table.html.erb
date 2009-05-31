@@ -1,14 +1,3 @@
-<%
-  def holygrail_stylesheets
-    lines = []
-    lines << stylesheet_link_tag('holygrail/common')
-    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
-    lines << '<!--[if lt IE 7]>
-<style media="screen" type="text/css">.col1 {width:100%;}</style>
-<![endif]-->' # this line is important!
-    lines.join("\n")
-  end
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" >
 <head>
@@ -18,7 +7,6 @@
   <%= favicon_link %>
   <title><%=h title_from_context %></title>
   <!-- begin styling -->
-  <%= holygrail_stylesheets %>
   <%= crabgrass_stylesheets %>
   <!-- end styling -->
   <!-- begin scripts -->
@@ -40,8 +28,7 @@
 
 <div id='wrapper'>
 <%= render :partial => 'layouts/messages' %>
-<%= render :file => 'layouts/holygrail_'+type_of_column_layout %>
-<!-- <div class='bottom_shim hg-<%= type_of_column_layout %>'></div> -->
+<%= render :file => 'layouts/simple_table/'+type_of_column_layout %>
 </div>
 
 <div id='footer'><div class='content'>

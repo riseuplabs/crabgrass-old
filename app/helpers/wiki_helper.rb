@@ -121,4 +121,11 @@ module WikiHelper
       wiki_action('image_popup_show', :wiki_id => wiki.id)
     end
   end
+
+  def wiki_locked_notice(wiki)
+    return if wiki.editable_by? current_user
+
+    error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locked_by}
+    %Q[<blockquote class="error">#{h error_text}</blockquote>]
+  end
 end

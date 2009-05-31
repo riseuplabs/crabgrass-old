@@ -1,7 +1,9 @@
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
-<% # DEPRECATED HACK...
-  users = @page.users
+<%
+  # DEPRECATED HACK...
+  users = []
+  users.concat @page.users
   @page.groups.collect{|group| users.concat group.users}
   users.uniq!
   users.sort_by{|u|u.login}
@@ -9,7 +11,7 @@
 
 <table class='notify'>
   <tr>
-    <td colspan="2"><h2><%= 'Recipients'[:notify_recipients] %></h2></td>
+    <td colspan="2"><h2 class="first"><%= 'Recipients'[:notify_recipients] %></h2></td>
   </tr>
 
   <tr>

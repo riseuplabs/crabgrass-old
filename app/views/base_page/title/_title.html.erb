@@ -1,3 +1,8 @@
+<% if current_user.may? :edit, @page -%>
+<div class='title_edit_link'>
+  <%= link_to_remote_with_icon(:edit_title.t, {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}) %>
+</div>
+<% end -%>
 <h1>
   <%= icon_for @asset if @asset %>
   <%=h @page.title %>
@@ -6,9 +11,4 @@
 <div class='summary'>
   <%=h @page.summary %>
 </div>
-<% if current_user.may? :edit, @page -%>
-<div id='title_edit_link'>
-  <%= link_to_remote_with_icon(:edit_title.t, {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}) %>
-</div>
-<% end -%>
 

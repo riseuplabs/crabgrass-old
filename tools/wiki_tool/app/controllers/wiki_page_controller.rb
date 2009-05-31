@@ -122,8 +122,10 @@ class WikiPageController < BasePageController
       greencloth.set_text_for_heading(heading, body)
       @wiki.smart_save!(:body => greencloth.to_s, :user => current_user, :heading => heading)
       current_user.updated(@page)
+    else
+      @wiki.unlock(heading) if @wiki.editable_by?(current_user, heading)
     end
-    update_inline_html(nil)
+    update_inline_html(@wiki.currently_editing_section(current_user))
   end
 
   ##

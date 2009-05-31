@@ -95,12 +95,17 @@ module ErrorHelper
 
   # display flash messages with appropriate styling
   def display_messages()
-    return "" unless flash[:type]
-    unless flash[:title]
-      flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
-      flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
+    @display_message ||= begin
+      if flash[:type].empty?
+        ""
+      else
+        if flash[:title].empty?
+          flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
+          flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
+        end
+        build_notice_area(flash[:type], flash[:title], flash[:text])
+      end
     end
-    build_notice_area(flash[:type], flash[:title], flash[:text])
   end
 
   # use by ajax

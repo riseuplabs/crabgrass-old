@@ -57,18 +57,17 @@ class Wiki < ActiveRecord::Base
   # this method overwrites existing locks.
   def lock(time, user, section = :all)
     time = time.utc
-
-    Wiki.transaction do
-      fresh_wiki = Wiki.find(self.id)
-      locked_id = fresh_wiki.locked_by_id(section)
-      if locked_id.nil? or locked_id == user.id
-        fresh_wiki.unlock_everything_by(user) # can only edit 1 section at a time
-        fresh_wiki.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
-        fresh_wiki.update_edit_locks_attribute(fresh_wiki.edit_locks)
-        self.edit_locks = fresh_wiki.edit_locks
-      else
-        raise WikiLockException.new('section is already locked')
-      end
+    fresh_wiki = Wiki.find(self.id)
+    # locked_id = fresh_wiki.locked_by_id(section)
+    available_sections = sections_not_locked_for(user)
+    # the second clause (locked_by_id == ...) will include :all section
+    if available_sections.include?(section) or self.locked_by_id(section) == user.id
+      fresh_wiki.unlock_everything_by(user) # can only edit 1 section at a time
+      fresh_wiki.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
+      fresh_wiki.update_edit_locks_attribute(fresh_wiki.edit_locks)
+      self.edit_locks = fresh_wiki.edit_locks
+    else
+      raise WikiLockException.new('section is already locked')
     end
   end
 
@@ -121,6 +120,10 @@ class Wiki < ActiveRecord::Base
     else
       return nil
     end
+  end
+
+  def locked_by(section = :all)
+    User.find_by_id locked_by_id(section)
   end
 
   # returns true if +section+ is locked by user
@@ -459,12 +462,11 @@ class Wiki < ActiveRecord::Base
   end
 
   def update_edit_locks_attribute(updated_locks)
-    Wiki.connection.execute("UPDATE wikis SET edit_locks = #{Wiki.connection.quote(updated_locks)} WHERE id = #{self.id}")
-    #without_revision do
-    #  without_timestamps do
-    #    update_attribute(:edit_locks, updated_locks)
-    #  end
-    #end
+    without_revision do
+     without_timestamps do
+       update_attribute(:edit_locks, updated_locks)
+     end
+    end
   end
 
   def destroy_versions_after(version_number)

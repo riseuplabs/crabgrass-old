@@ -67,7 +67,7 @@ Autocomplete.prototype = {
 
     if (!this.options.width) { this.options.width = this.el.getWidth(); }
 
-    var div = new Element('div', { style: 'position:absolute;' });
+    var div = new Element('div', { style: 'position:absolute;', "class":"autocomplete_holder" });
     div.update('<div class="autocomplete-w1"><div class="autocomplete-w2"><div class="autocomplete" id="Autocomplete_' + this.id + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>');
 
     this.options.container = $(this.options.container);

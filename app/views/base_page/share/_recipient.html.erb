@@ -22,7 +22,7 @@ remove_function = "$('%s').remove()" % id
 
 <tr class="<%= 'unsaved' if newitem %>" id="<%= id %>">
   <td style="width:100%">
-    <%= display_entity(recipient, :avatar => 'xsmall', :format => :both) %>
+    <%= display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true) %>
   </td>
   <td>
     <%- if @page.nil? or current_user.may?(:admin,@page) -%>
