@@ -103,7 +103,7 @@ class WikiPageControllerTest < ActionController::TestCase
 
     # nothing should appear locked to blue
     assert_equal wiki.section_heading_names, wiki.sections_not_locked_for(users(:blue)), "no sections should look locked to blue"
-    assert_equal [], wiki.sections_not_locked_for(users(:gerrard)), "all sections should look locked to gerrard"
+    assert_equal ["section-one", "section-two"], wiki.sections_not_locked_for(users(:gerrard)), "sections one and two should not look locked to gerrard"
   end
 
   def test_save_inline
@@ -117,8 +117,8 @@ class WikiPageControllerTest < ActionController::TestCase
     wiki = assigns(:wiki)
     wiki.reload
 
-    assert_equal ["section-two"], wiki.section_heading_names, "section three should have been deleted"
-    assert_equal "h2. section one\n\ns1 text 1\ns1 text 2\n\nsection two\n===========\n\ns2 text #1\ns2 more text\n\na line\n\n", wiki.body, "wiki body should be updated"
+    assert_equal ["section-one", "section-two"], wiki.section_heading_names, "section three should have been deleted"
+    assert_equal "h2. section one\n\ns1 text 1\ns1 text 2\n\nh2. section two\n\ns2 text #1\ns2 more text\n\na line\n\n", wiki.body, "wiki body should be updated"
   end
 
   def test_break_lock
