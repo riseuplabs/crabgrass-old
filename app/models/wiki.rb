@@ -27,6 +27,12 @@
 #     add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
 #
 
+##
+## SERIOUS KNOWN PROBLEMS:
+## (1) editing sections that come out of order (ie h2 then h3)
+## (2) editing sections with html markup in them.
+##
+
 class Wiki < ActiveRecord::Base
 
   #   wiki.edit_locks => {:all => {:locked_by_id => user_id, :locked_at => Time},
@@ -57,15 +63,10 @@ class Wiki < ActiveRecord::Base
   # this method overwrites existing locks.
   def lock(time, user, section = :all)
     time = time.utc
-    fresh_wiki = Wiki.find(self.id)
-    # locked_id = fresh_wiki.locked_by_id(section)
-    available_sections = sections_not_locked_for(user)
-    # the second clause (locked_by_id == ...) will include :all section
-    if available_sections.include?(section) or self.locked_by_id(section) == user.id
-      fresh_wiki.unlock_everything_by(user) # can only edit 1 section at a time
-      fresh_wiki.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
-      fresh_wiki.update_edit_locks_attribute(fresh_wiki.edit_locks)
-      self.edit_locks = fresh_wiki.edit_locks
+    if section_is_available_to_user(user, section)
+      unlock_everything_by(user) # can only edit 1 section at a time
+      self.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
+      update_edit_locks_attribute(self.edit_locks)
     else
       raise WikiLockException.new('section is already locked')
     end
@@ -473,6 +474,29 @@ class Wiki < ActiveRecord::Base
     versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
       version.destroy
     end
+  end
+
+  private
+
+  ## this is really confusing and needs to be cleaned up. 
+  ##
+  ## a section which we don't think exists, then the wiki appears to be
+  ## locked. This is a problem, because then you cannot ever unlock the wiki.
+  ##
+  ## the hacky solution for now is to add this missing section to available
+  ## sections.
+  ## 
+  ## also, without the hacky line, trying to edit a newly created wiki
+  ## throws an error that it is locked!
+  ##
+  def section_is_available_to_user(user, section)
+    available_sections = sections_not_locked_for(user)
+
+    ## here is the hacky line:
+    available_sections << section unless section_heading_names.include?(section)
+
+    # the second clause (locked_by_id == ...) will include :all section
+    available_sections.include?(section) || self.locked_by_id(section) == user.id
   end
 
 end

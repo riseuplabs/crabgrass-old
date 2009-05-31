@@ -85,6 +85,8 @@ class WikiPageController < BasePageController
     elsif request.get?
       lock
     end
+  rescue WikiLockException => exc
+    # do nothing
   end
 
   def cancel
@@ -230,7 +232,7 @@ class WikiPageController < BasePageController
     else
       index_end = -1
     end
-    html[index_start..index_end] = form
+    html[index_start..index_end] = form if index_start
     return html
   end
 

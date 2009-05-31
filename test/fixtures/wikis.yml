@@ -17,8 +17,7 @@ multi_section:
     s1 text 1
     s1 text 2
     
-    section two
-    ===========
+    h2. section two
     
     s2 text #1
     s2 more text

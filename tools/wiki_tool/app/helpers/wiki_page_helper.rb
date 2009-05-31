@@ -25,12 +25,7 @@ module WikiPageHelper
    javascript_tag(
      remote_function(
        :update => 'wiki_html',
-       :url => {
-         :controller => :wiki_page,
-         :action => 'version-diff',
-         :page_id => @page.id,
-         :id => "%d-%d" % [@last_seen.version, @wiki.version]
-       }
+       :url => page_xurl(@page, :action => 'diff', :controller => 'version', :id => ("%d-%d" % [@last_seen.version, @wiki.version]))
      )
    )
   end
@@ -51,7 +46,7 @@ module WikiPageHelper
       opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
     end
 
-    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
+    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit], :id => '_change_me__edit_link')
     link.gsub!('"','\"')
 
     javascript_tag %Q[decorate_wiki_edit_links("#{link}")]
