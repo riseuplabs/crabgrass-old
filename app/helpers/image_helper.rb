@@ -134,7 +134,7 @@ module ImageHelper
   end
 
   def link_to_remote_icon(icon, options={}, html_options={})
-    link_to_remote_with_icon('', options, html_options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16"))
+    link_to_remote_with_icon('', options, html_options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16 #{html_options[:class]}"))
   end
 
   def link_to_function_icon(icon, function, options={})

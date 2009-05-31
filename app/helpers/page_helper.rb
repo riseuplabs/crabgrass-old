@@ -52,7 +52,8 @@ module PageHelper
   # like page_url, but it returns a direct URL that bypasses the dispatch
   # controller. intended for use with ajax calls. 
   def page_xurl(page,options={})
-    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => '/' + page.controller}
+    options[:controller] = '/' + [page.controller, options.delete(:controller)].compact.join('_')
+    hash = {:page_id => page.id, :id => 0, :action => 'show'}
     url_for(hash.merge(options))
   end
   
