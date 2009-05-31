@@ -63,13 +63,10 @@ class Wiki < ActiveRecord::Base
   # this method overwrites existing locks.
   def lock(time, user, section = :all)
     time = time.utc
-    fresh_wiki = Wiki.find(self.id)
-
     if section_is_available_to_user(user, section)
-      fresh_wiki.unlock_everything_by(user) # can only edit 1 section at a time
-      fresh_wiki.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
-      fresh_wiki.update_edit_locks_attribute(fresh_wiki.edit_locks)
-      self.edit_locks = fresh_wiki.edit_locks
+      unlock_everything_by(user) # can only edit 1 section at a time
+      self.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
+      update_edit_locks_attribute(self.edit_locks)
     else
       raise WikiLockException.new('section is already locked')
     end
@@ -489,9 +486,14 @@ class Wiki < ActiveRecord::Base
   ## the hacky solution for now is to add this missing section to available
   ## sections.
   ## 
+  ## also, without the hacky line, trying to edit a newly created wiki
+  ## throws an error that it is locked!
+  ##
   def section_is_available_to_user(user, section)
     available_sections = sections_not_locked_for(user)
-    available_sections << section unless (section==:all || section_heading_names.include?(section))
+
+    ## here is the hacky line:
+    available_sections << section unless section_heading_names.include?(section)
 
     # the second clause (locked_by_id == ...) will include :all section
     available_sections.include?(section) || self.locked_by_id(section) == user.id
