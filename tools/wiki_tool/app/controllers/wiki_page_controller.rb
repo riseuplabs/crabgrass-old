@@ -18,17 +18,8 @@ class WikiPageController < BasePageController
     elsif request.post?
       begin
         @page = create_new_page!(@page_class)
-        if params[:asset] and params[:asset][:uploaded_data].any?
-          @asset = Asset.make!(params[:asset].merge(:parent_page => @page))
-          image_tag = "!<%s!:%s" % [@asset.thumbnail(:medium).url,@asset.url]
-        end
-        body = "%s\n\n%s" % [image_tag, params[:body]]
-        @page.update_attribute(:data, Wiki.create(:user => current_user, :body => body))
-        if body.strip.empty?
-          return redirect_to(page_url(@page, :action => 'edit'))
-        else
-          return redirect_to(page_url(@page, :action => 'show'))
-        end
+        @page.update_attribute(:data, Wiki.create(:user => current_user))
+        return redirect_to(page_url(@page, :action => 'edit'))
       rescue Exception => exc
         @page = exc.record
         flash_message_now :exception => exc
@@ -36,6 +27,7 @@ class WikiPageController < BasePageController
     else
       @page = build_new_page(@page_class)
     end
+    render :template => 'base_page/create'
   end
 
   ##
