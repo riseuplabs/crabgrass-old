@@ -175,7 +175,7 @@ invalid_token: "Se\xC3\xB1al invalida"
 month_short_july: julio
 search: Buscar
 my_world_heading: Mi Mundo
-create_a_new_thing: Crear un nuevo :thing
+create_a_new_thing: Crear un nuevo {thing}
 email: "Correo electr\xC3\xB3nico "
 my_dashboard: Mi Tablero
 slideshow_delay_input: Actualizar cada :input_field seconds

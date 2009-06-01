@@ -131,7 +131,7 @@ invalid_token: Token Non Valido
 month_short_july: Lug
 search: Cerca
 my_world_heading: Il Mio Mondo
-create_a_new_thing: Crea un nuovo :thing
+create_a_new_thing: Crea un nuovo {thing}
 email: Email
 my_dashboard: La mia bacheca
 slideshow_delay_input: Aggiorna ogni :input_field secondi

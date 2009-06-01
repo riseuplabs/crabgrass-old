@@ -135,7 +135,6 @@ class Wiki < ActiveRecord::Base
     return !edit_locks[section].nil? && edit_locks[section][:locked_by_id] == user.id
   end
 
-
   # returns true if the page is free to be edited by +user+ (ie, not locked by someone else)
   def editable_by?(user, section = :all)
     update_expired_locks
@@ -480,8 +479,9 @@ class Wiki < ActiveRecord::Base
 
   ## this is really confusing and needs to be cleaned up. 
   ##
-  ## a section which we don't think exists, then the wiki appears to be
-  ## locked. This is a problem, because then you cannot ever unlock the wiki.
+  ## if this is passed a section which we don't think exists, then the wiki
+  ## appears to be locked. This is a problem, because then you cannot ever
+  ## unlock the wiki.
   ##
   ## the hacky solution for now is to add this missing section to available
   ## sections.
@@ -489,7 +489,14 @@ class Wiki < ActiveRecord::Base
   ## also, without the hacky line, trying to edit a newly created wiki
   ## throws an error that it is locked!
   ##
+  ## also, if self.body == nil, then don't check the sections, because it will
+  ## bomb out.
+  ##
   def section_is_available_to_user(user, section)
+    if self.body.nil?
+      return editable_by?(user)
+    end
+
     available_sections = sections_not_locked_for(user)
 
     ## here is the hacky line:

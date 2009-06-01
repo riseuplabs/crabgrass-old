@@ -195,7 +195,7 @@ month_short_july: Lipiec
 delete_post: "Usu\xC5\x84 post"
 my_world_heading: "M\xC3\xB3j \xC5\x9Awiat"
 email: Mejl
-create_a_new_thing: "Stw\xC3\xB3rz :thing"
+create_a_new_thing: "Stw\xC3\xB3rz {thing}"
 your_login: "Tw\xC3\xB3j login"
 view_requests: "przejrzyj pro\xC5\x9Bby"
 slideshow_delay_input: "Uaktualnij ka\xC5\xBCdy :input_field seconds"

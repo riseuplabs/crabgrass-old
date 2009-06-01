@@ -168,7 +168,7 @@ invalid_token: "Token inv\xC3\xA1lido"
 month_short_july: Jul
 search: Pesquisar
 my_world_heading: Meu Mundo
-create_a_new_thing: criar um(a) novo(a) :thing
+create_a_new_thing: criar um(a) novo(a) {thing}
 email: E-mail
 my_dashboard: Meu Painel
 slideshow_delay_input: Atualize cada :input_field segundos

@@ -11,7 +11,7 @@
   <% if owner %>
     <dl>
     <dt><%= "Page Owner"[:page_create_owner] %></dt>
-    <dd><%= select_tag 'page[owner]', options_for_page_owner %></dd>
+    <dd><%= select_tag 'page[owner]', options_for_page_owner(:include_me => true) %></dd>
     <dt><%= "Additional Access"[:page_create_access] %></dt>
     <dd>
   <% end %>

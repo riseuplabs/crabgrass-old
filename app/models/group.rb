@@ -134,7 +134,8 @@ class Group < ActiveRecord::Base
    
   def committee?; instance_of? Committee; end
   def network?; instance_of? Network; end
-  def normal?; instance_of? Group; end  
+  def normal?; instance_of? Group; end
+  def council?; instance_of?(Council) or self.is_council?; end
   def display_type() self.class.to_s.downcase; end
  
   ##

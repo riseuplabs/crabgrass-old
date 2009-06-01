@@ -185,6 +185,15 @@ class WikiTest < Test::Unit::TestCase
     assert_equal 4, wiki.versions(true).size
   end
 
+  def test_nil_body
+    wiki = Wiki.new
+    assert_nothing_raised do
+      wiki.lock( Time.now, users(:blue) )
+    end
+    assert wiki.locked?
+    assert wiki.editable_by?(users(:blue))
+  end
+
   def test_associations
     assert check_associations(Wiki)
   end

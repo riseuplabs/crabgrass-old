@@ -4,10 +4,7 @@ module GroupsHelper
     return unless logged_in?
     links = []
     if logged_in?
-      :create_a_new_thing.t % {:thing => 'network'.t}
-      links << link_to_icon( :create_a_new_thing.t % {:thing => 'group'.t}, 'actions/plus.png', :controller => 'groups', :action => 'create' )
-
-      # links << link_to_icon( 'create a new group'[:create_group_link], 'actions/plus.png', :controller => 'groups', :action => 'create' )
+      links << link_to_with_icon('plus', "Create a new {thing}"[:create_a_new_thing, :group.t.downcase], :controller => 'groups', :action => 'create')
     end
     links << link_to_active( 'new groups'[:new_groups_link], :controller => 'groups', :action => 'index' )
     if logged_in?

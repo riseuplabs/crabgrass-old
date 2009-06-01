@@ -202,7 +202,7 @@ month_short_july: Jul
 delete_post: "Eintrag l\xC3\xB6schen"
 my_world_heading: Meine Welt
 email: Email
-create_a_new_thing: Neue :thing erstellen
+create_a_new_thing: Neue {thing} erstellen
 welcome_create_group_link: Erstelle Eine Neue Gruppe
 minimum_stars_for_important_pages_description: Mindestanzahl Sterne, die eine Seite braucht, um auf der "wichtig" - Liste der Gruppenstartseite zu erscheinen.
 your_login: Dein Login
