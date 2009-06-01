@@ -42,7 +42,7 @@
     <b><%= "Full name"[:fullname]%></b><br/>
     <%= "A descriptive name used for display."[:descriptive_name_for_display]%>
   </label><br/>
-  <%= text_field 'group', 'full_name', :size => 30  %>
+  <%= text_field 'group', 'full_name', :size => 40, :maxlength => 100  %>
 </p>
 
 <p>
@@ -51,7 +51,7 @@
   <% if @parent -%>
     <%= @parent.name + "+" %><%= text_field 'group', 'short_name' %>
   <% else -%>
-    <%= text_field 'group', 'name' %>
+    <%= text_field 'group', 'name', :size => 40, :maxlength => 50 %>
   <% end -%>
 </p>
 

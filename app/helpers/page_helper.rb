@@ -476,15 +476,21 @@ module PageHelper
     end
   end
 
-  def options_for_page_owner(owner=nil)
+  # returns option tags usable in a select menu to choose a group from the
+  # groups current_user is a member of or has access to.
+  # accepted options:
+  #  :group -- a group object to make selected
+  #  :include_me -- if true, include option for 'me'
+  def options_for_page_owner(options={})
     groups = current_user.groups.select { |group|
       !group.committee?
     }.sort { |a, b|
        a.display_name.downcase <=> b.display_name.downcase
     }
-    opts = [] 
-    if owner
-      selected_group = owner.name
+    html = [] 
+
+    if options[:group]
+      selected_group = options[:group].name
     elsif params[:group]
       selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
     elsif params[:page] and params[:page][:owner]
@@ -492,17 +498,22 @@ module PageHelper
     else
       selected_group = nil
     end
-    me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
-    opts << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+
+    if options[:include_me]
+      me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
+      html << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+    end
+
     groups.collect do |group|
       selected = selected_group == group.name ? 'selected' : nil
-      opts << content_tag( :option, group.display_name, :value => group.name, :class => 'spaced', :selected => selected )
+      html << content_tag( :option, truncate(group.display_name,40), :value => group.name, :class => 'spaced', :selected => selected )
       group.committees.each do |committee|
         selected = selected_group == committee.name ? 'selected' : nil
-        opts << content_tag( :option, committee.display_name, :value => committee.name, :class => 'indented', :selected => selected)
+        html << content_tag( :option, truncate(committee.display_name,40), :value => committee.name, :class => 'indented', :selected => selected)
       end
-    end  
-    opts.join("\n")
+    end
+
+    html.join("\n")
   end
 
 #  def create_page_link(text,options={})
