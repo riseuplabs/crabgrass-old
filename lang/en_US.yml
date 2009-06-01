@@ -534,6 +534,8 @@ view_all: "view all"
 send_invites: "send invites"
 view_requests: "view requests"
 leave_group: "leave %s"
+join_group_link: "join {group_type}"
+request_join_group_link: "request to join {group_type}"
 
 # results
 
