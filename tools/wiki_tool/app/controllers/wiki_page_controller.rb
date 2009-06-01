@@ -18,7 +18,7 @@ class WikiPageController < BasePageController
     elsif request.post?
       begin
         @page = create_new_page!(@page_class)
-        @page.update_attribute(:data, Wiki.create(:user => current_user))
+        @page.update_attribute(:data, Wiki.create(:user => current_user, :body => ""))
         return redirect_to(page_url(@page, :action => 'edit'))
       rescue Exception => exc
         @page = exc.record
