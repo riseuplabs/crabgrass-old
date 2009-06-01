@@ -53,26 +53,29 @@ class AccountController < ApplicationController
   end
 
   def signup
-    redirect_to current_site.signup_redirect_url unless current_site.signup_redirect_url.nil?
-
-    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
-    return unless request.post?
-
-    if params[:usage_agreement_accepted] != "1"
-      flash_message_now :error => "Acceptance of the usage agreement is required"[:usage_agreement_required]
-      return
+    if current_site.signup_redirect_url.any?
+      redirect_to current_site.signup_redirect_url
+    elsif !may_signup?
+      raise PermissionDenied.new('new user registration is closed at this time')
     end
 
-    @user.avatar = Avatar.new
-    @user.save!
-    session[:signup_email_address] = nil
-    self.current_user = @user
-    current_site.add_user!(current_user)
-    #send_welcome_message(current_user)
-    
-    redirect_to params[:redirect] || current_site.login_redirect(current_user)
-    flash_message :title => 'Registration successful'[:signup_success],
-      :success => "Thanks for signing up!"[:signup_success_message]
+    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
+
+    if request.post?
+      if params[:usage_agreement_accepted] != "1"
+        raise ErrorMessage.new("Acceptance of the usage agreement is required"[:usage_agreement_required])
+      end
+
+      @user.avatar = Avatar.new
+      @user.save!
+      session[:signup_email_address] = nil
+      self.current_user = @user
+      current_site.add_user!(current_user)
+      
+      redirect_to params[:redirect] || current_site.login_redirect(current_user)
+      flash_message :title => 'Registration successful'[:signup_success],
+        :success => "Thanks for signing up!"[:signup_success_message]
+    end
   rescue Exception => exc
     @user = exc.record
     flash_message_now :exception => exc

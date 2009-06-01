@@ -616,8 +616,8 @@ invite_info: "Enter a list of user logins or email addresses of the people you w
 remove_contact_confirmation: "Are you sure you wish to no longer be friends with %s?"
 already_contacts_info: "You are already the friend of this person."
 try_again: "Try Again"
-invite_accept_info: "You would like to accept the request to join. Do you already have an account on this server?"
-invite_accept_headline: "Accept invitation to join group'"
+invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
+invite_accept_headline: 'Accept invitation to join group "{group_name}"'
 invite_not_found: "Invite not found"
 invite_accept_via_existing_account: "I already have an account"
 invite_accept_via_register: "I need to register a new account"

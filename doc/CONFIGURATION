@@ -168,6 +168,12 @@ limited:
   current site. stuff from other sites will appear invisible. (note, currently, 
   this is not actually stored in the database but must be globally configured).
 
+signup_mode:
+  determines how signup works. there are three options:
+  (1) default --> anyone can sign up
+  (2) closed  --> no one can sign up
+  (3) invite_only --> you can sign up only if you were invited to join a group.
+
 Unfrequently modified options:
 
   :pagination_size -- how many items to show before paginating

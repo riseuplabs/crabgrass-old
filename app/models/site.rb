@@ -96,10 +96,10 @@ class Site < ActiveRecord::Base
     end
   end
 
-  proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
-    :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields, :chat?, 
-    :translation_group, :limited?
+  proxy_to_conf :name, :title, :pagination_size, :default_language,
+    :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
+    :enforce_ssl, :show_exceptions, :require_user_email, :domain, :profiles,
+    :profile_fields, :chat?, :translation_group, :limited?, :signup_mode
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
