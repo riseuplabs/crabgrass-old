@@ -4,9 +4,7 @@
 
 <br/>
 
-<h2 class='section'><div style='padding: 8px;'>
-    <%= "Picture".t %>
-</div></h2>
+<h2 class='alert'><%= "Picture".t %></h2>
 
 <%= avatar_for @group, 'xlarge' %>
 
@@ -47,8 +45,14 @@
 <%# = tool_print.join(", ") %>
 <p/>
 
-<p/>
+<p>
 <%= link_to 'Choose Layout', url_for(:action=>'edit_layout', :id=>@group) %>
-<p/>
+</p>
+
+<% if current_user.may?(:admin, @group) && @group.council_id.nil? %>
+<p>
+  <%= link_to "Create a new {thing}"[:create_a_new_thing, 'council'.t.downcase], :controller => 'groups', :action => 'create', :id => 'council', :parent_id => @group.id %>
+</p>
+<% end %>
 
 <%= call_hook :group_edit %>

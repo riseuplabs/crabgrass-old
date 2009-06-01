@@ -74,19 +74,16 @@ class Committee < Group
     ok or raise PermissionDenied.new
   end
 
-#
-# SITES
-#
-#############################  
-
+  # DEPRECATED
   # returns true if self is part of given network
   def belongs_to_network?(network)
     self.parent.networks.include?(network)
   end
   
-  
-  ####################################################################
+  ##
   ## relationships to users
+  ##
+
   def may_be_pestered_by?(user)
     return true if user.member_of?(self)
     return true if parent and parent.publicly_visible_committees

@@ -27,9 +27,11 @@ thing_not_found: "{thing} not found"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
+councils: "Councils"
 group: "Group"
 network: "Network"
 committee: "Committee"
+council: "Council"
 contact: "Contact"
 member_groups_of_network: "Member Groups"
 peers: "Peers"
@@ -470,18 +472,17 @@ only_last_menber_can_delete_group: "You can only delete a group if you are the l
 group_successfully_created: "Group was successfully created."
 dont_understand_group_type: "Could not understand group type :type"
 dont_have_permission_to_create_committees: "You do not have permission to create committees under %s"
-fullname: "Full Name"
-descriptive_name_for_display: "A descriptive name used for display"
-link_name: "Link Name"
-language: "Language"
-minimum_stars_for_important_pages: "Minimum stars for important pages"
-minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
 group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %s/yourgroupname.
 committee_publicly_visible_description: Committees are viewable by non-members at %s/yourgroupname
 group_members_publicly_visible: Make Members Publicly Visible
 group_members_publicly_visible_description:   Members are viewable by non-members at %s/yourgroupname. Also, the name of the group will be listed on each members profile page (%s/username)
 page_list: Page list
-
+recent_network_pages: "Recent Network Pages"
+recent_member_group_pages: "Recent Activity from Your Groups in :network"
+directory_of_networks: "Directory of networks"
+featured_content_header: "Featured"
+group_directory_link: "group directory"
+create_group_link: "create group"
 typing: typing
 away: away
 you_are_not_member_of_any_group: You are not a member of any group.
@@ -513,7 +514,7 @@ no_members: (no members)
 directory_of_groups: Directory of groups
 directory_of_networks: Directory of networks
 create_button: Create
-new_group: New group
+new_group: "New group"
 create_group_link: "create a new group"
 create_committee: "create committee"
 group_language: "The main language of this %s."
@@ -524,35 +525,55 @@ group_directory_link: "group directory"
 my_groups: "My Groups"
 my_groups_link: "my groups"
 # gah! too much duplication ^^^
-you_have_no_groups: "You have no groups"
+
+# commands
+
 edit_settings: "edit settings"
 destroy_group: "destroy %s"
 view_all: "view all"
 send_invites: "send invites"
 view_requests: "view requests"
-page_is_not_static: Page is not static
-coordinating_council: "coordinating council"
-working_group: "working group"
-coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
-working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
-recent_network_pages: "Recent Network Pages"
-recent_member_group_pages: "Recent Activity from Your Groups in :network"
-directory_of_networks: "Directory of networks"
-featured_content_header: "Featured"
-group_directory_link: "group directory"
-create_group_link: "create group"
-edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-this_is_coordinating: "This committee is the <strong>coordinating council</strong> for {parent_group}."
-this_is_committee: "This committee is part of {parent_group}."
 leave_group: "leave %s"
-commitee_type: "Committee type"
-committee_type_description: "What type of committee will this be?"
-link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
-group_language: "The main language of this %s."
-group_summary: "Brief information regarding this %s."
+
+# results
+
+you_have_no_groups: "You have no groups"
+page_is_not_static: "Page is not static"
+
 archive_headline: "Archive"
 archive_filter_created_link: "Date Created"
 archive_filter_updated_link: "Last Date Updated"
+
+# create/edit forms
+
+group_language: "The main language of this %s."
+group_summary: "Brief information regarding this %s."
+link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
+fullname: "Full Name"
+descriptive_name_for_display: "A descriptive name used for display"
+link_name: "Link Name"
+language: "Language"
+
+# council
+
+coordinating_council: "Coordinating Council"
+this_is_coordinating: "This is the <strong>coordinating council</strong> for {parent_group}."
+new_council: "New council for group {group_name}"
+edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+
+# committee
+
+this_is_committee: "This committee is part of {parent_group}."
+
+# disabled
+
+# working_group: "working group"
+# coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
+# working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
+# committee_type: "Committee type"
+# committee_type_description: "What type of committee will this be?"
+# minimum_stars_for_important_pages: "Minimum stars for important pages"
+# minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
 
 ##
 ## REQUESTS

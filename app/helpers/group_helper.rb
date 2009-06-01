@@ -155,7 +155,7 @@ module GroupHelper
   end
 
   def may_see_committees?
-    return if @group.committee?
+    return if @group.parent_id
     if logged_in?
       current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_committees?
     else

@@ -81,6 +81,10 @@ module GroupExtension::Groups
 
   module InstanceMethods
 
+    def real_committees
+      committees.select {|c|c.committee?}
+    end
+
     # Adds a new committee or makes an existing committee be the council (if
     # the make_council argument is set). No other method of adding committees
     # should be used.

@@ -1,10 +1,12 @@
 <% @title_box = capture do -%>
   <h1>
-    <%- if group_type == 'committee' -%>
+    <%- if @group.committee? -%>
       <%= 'New committee for group %s'[:new_committee] % @parent.name %>
-    <%- elsif group_type == 'network' -%>
+    <%- elsif @group.council? -%>
+      <%= 'New council for group {group_name}'[:new_council, @parent.name] %>
+    <%- elsif @group.network? -%>
       <%= 'New network'[:new_network] %>
-    <%- elsif group_type == 'group' -%>
+    <%- elsif @group.normal? -%>
       <%= 'New group'[:new_group] %>
     <%- end -%>
   </h1>

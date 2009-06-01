@@ -1,23 +1,22 @@
 <% submit = true if submit.nil? %>
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 
-<h2 class='section'>
-<div style='padding: 8px; background: url(/images/actions/beehive.png) no-repeat 100% 50%'>
+<h2 class='alert'>
   <%= '{group_type} Information'[:group_infomation, {:group_type => group_type.t}] %>
-</div>
 </h2>
 
 <%-
+# DISABLED FOR NOW. this all needs refactoring -elijah
 # only show the committee type form if:
 #  * we are creatting a new committee,
 #  * the parent group of said committe doesn't already have a council,
 #  * and we have admin privileges on the group.
 # Yes, this is confusing.
 -%>
-<% if @parent and may_admin_group? and @group and @group.new_record? and @parent.real_council.nil? %>
+<% if @parent and may_admin_group? and @group and @group.new_record? and @parent.real_council.nil? and false%>
 <p>
   <label for="group_type">
-    <b><%= "Committee type"[:commitee_type]%></b><br/>
+    <b><%= "Committee type"[:committee_type]%></b><br/>
     <%= "What type of committee will this be?"[:committee_type_description]%>
   </label><br/>
   <ul class='plain'>
@@ -27,8 +26,9 @@
 </p>
 <%- elsif @group && @group.is_council? && !@parent.nil? -%>
 <p>
-  <%= "This committee is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
+  <%= "This is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
     {:parent_group => link_to_group(@parent)}] %>
+  <%= hidden_field(:group, 'is_council') %>
 </p>
 <%- elsif !@parent.nil? -%>
 <p>
@@ -63,22 +63,12 @@
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
 </p>
 
-<!--
-<p>
-  <label for="group_min_stars">
-    <b><%= "Minimum stars for important pages"[:minimum_stars_for_important_pages] %></b><br/>
-   <%= "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"[:minimum_stars_for_important_pages_description] %>
-  </label><br/>
-  <%= text_field :group, :min_stars %>
-</p>
--->
-
 <p>
   <label for="group_summary">
     <b><%= :summary.t %></b><br/>
     <%= 'Brief information regarding this %s.'[:group_summary] % group_type %>  
   </label><br/>
-  <%= text_field 'group', 'summary', :size => 60, :maxlength => 256  %>
+  <%= text_area 'group', 'summary', :cols => 60, :rows => 3, :maxlength => 256  %>
 </p>
 
 <% if !@parent and @group.new_record? and false%>
@@ -105,12 +95,11 @@
 <%- end -%>
   <%= submit_tag 'Save changes'[:save_changes] if submit %>
 
-<br/><br/>
+<br/>
+<br/>
 
-<h2 class='section'>
-<div style='padding: 8px; background: url(/images/actions/lock.png) no-repeat 100% 50%'>
+<h2 class='alert'>
 <%= '%s Privacy Settings'[:group_privacy_settings] % group_type.capitalize %>
-</div>
 </h2>
 
 <p><%= check_box :group, :publicly_visible_group, :onclick => "show_or_hide_vis_opts();" %>
