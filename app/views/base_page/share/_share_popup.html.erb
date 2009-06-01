@@ -1,6 +1,4 @@
 <%- form_url = {:controller => 'base_page/share', :action => 'update', :page_id => @page.id} -%>
-<%# for some unknown reason, the autocomplete popup has a hard time guessing the right position when used with the share popup. so, we hardcode some different values here: %>
-<style>.autocomplete-w1 {top: 15px; left: 15px}</style>
 
 <% popup('Share Page'[:share_page_link] % {:page_class => page_class.titlecase}, :id => 'share_popup', :width => '40em') do -%>
   <% form_remote_tag(
