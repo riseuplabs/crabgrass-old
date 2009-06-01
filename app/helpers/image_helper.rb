@@ -141,6 +141,10 @@ module ImageHelper
     link_to_function_with_icon(' ', function, options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16"))
   end
 
+  def link_to_with_icon(icon, label, url, options={})
+    link_to label, url, options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+  end
+
 #  # makes an icon button to a remote action. when you click on the icon, it turns
 #  # into a spinner. when done, the icon returns. any id passed to html_options
 #  # is passed on the icon, and not the <a> tag.
@@ -257,39 +261,6 @@ module ImageHelper
     else
       image_tag "/images/png/16/#{asset.small_icon}.png", :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
     end
-  end
-
-  ##
-  ## DEPRECATED 
-  ## use class based image helpers instead
-  ##
-
-  ## allows you to change the icon style of an element.
-  ## for example, can be used to change the icon of a link
-  ## to be a spinner.
-  ## TODO: get rid of this, use class based icons instead
-  def set_icon_style(element_id, icon, position="0% 50%")
-    unless element_id.is_a? String
-      element_id = dom_id(element_id)
-    end
-    if icon == 'spinner'
-      icon_path = '/images/spinner.gif'
-    else
-      icon_path = "/images/#{icon}"
-    end
-    "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat #{position}"]
-  end
-
-  ## creates an <a> tag with an icon via a background image.
-  def link_to_icon(text, icon, path={}, options={})
-    link_to text, path, options.merge(:style => icon_style(icon))
-  end
-
-  ## return the style css text need to put the icon on the background
-  def icon_style(icon)
-    size = 16
-    url = "/images/#{icon}"
-    "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
   end
 
 end
