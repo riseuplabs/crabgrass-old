@@ -138,4 +138,23 @@ class GroupTest < Test::Unit::TestCase
     assert Group.alphabetized('z').empty?
   end
 
+  def test_destroy
+    g = Group.create :name => 'fruits'
+    g.add_user! users(:blue)
+    g.add_user! users(:red)
+
+    g.reload
+    g.destroy
+    # memberships should be destroyed
+    assert_nil Membership.find_by_id(g.memberships[0].id), "first membership should be destroyed"
+    assert_nil Membership.find_by_id(g.memberships[1].id), "second membership should be destroyed"
+
+    red = users(:red)
+    assert_nil GroupLostUserActivity.for_dashboard(red).find(:first), "there should be no user left group message"
+
+    destroyed_act = GroupDestroyedActivity.for_dashboard(red).unique.find(:first)
+    assert destroyed_act, "there should exist a group destroyed activity message"
+
+    assert_equal g.name, destroyed_act.groupname, "the activity should have the correct group name"
+  end
 end
