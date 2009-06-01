@@ -180,11 +180,17 @@ module BasePageHelper
   ## 
 
   # used by ajax show_popup.rjs templates
+  # 
+  # for the popup to display in the right spot, we actually offset it by
+  # top: -32px, right: 43px from the natural position of the clicked element.
+  #
   def popup_holder_style
     page_width, page_height = params[:page].split('x')
     object_x, object_y      = params[:position].split('x')
     right = page_width.to_i - object_x.to_i
     top   = object_y.to_i
+    right += 43
+    top -= 32
     "display: block; right: #{right}px; top: #{top}px;"
   end
 
@@ -203,6 +209,9 @@ module BasePageHelper
   # get bigger to show the whole popup, but it will just get clipped. 
   # overflow:hidden is required for holygrail layout to work in ie.
   # hence, absolutePositionParams()...  :(
+  #
+  # NOTE #2: this is no longer how the right column works. so we should not
+  # have to use absolutely positioned popups anymore.
   #
   def show_popup_link(options)
     li_id = options[:name] + '_li'
