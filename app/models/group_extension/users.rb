@@ -7,8 +7,9 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
-      has_many :memberships, :dependent => :destroy,
-        :before_add => :check_duplicate_memberships
+      after_destroy :destroy_memberships
+
+      has_many :memberships, :before_add => :check_duplicate_memberships
 
       has_many :users, :through => :memberships do
         def <<(*dummy)
@@ -18,7 +19,7 @@ module GroupExtension::Users
           raise Exception.new("don't call delete on group.users");
         end
       end
-    end     
+    end
   end
 
   def user_ids
@@ -75,7 +76,18 @@ module GroupExtension::Users
     @user_ids = nil
     self.increment!(:version)
   end
-  
+
+  protected
+
+  def destroy_memberships
+    user_names = []
+    self.memberships.each do |membership|
+      user_names << membership.user.name
+      membership.skip_destroy_notification = true
+      membership.destroy
+    end
+  end
+
 # maps a user <-> group relationship to user <-> language
 #  def in_user_terms(relationship)
 #    case relationship

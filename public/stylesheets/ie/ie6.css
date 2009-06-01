@@ -16,7 +16,7 @@ table.set_status {width:80%;}
 ul.side_list li {height: 1%;} /* force has layout */
 #page_sidebar input.check {margin-top: 3px; margin-left: -25px} /* move check up slightly */
 ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icons appear */
-div.popup_arrow {right: -24px} /* move popup nub slightly */
+div.popup_arrow {right: -16px} /* move popup nub slightly */
 
 /* page list */
 /* .page_icon {line-height: 1px; vertical-align: top;} */

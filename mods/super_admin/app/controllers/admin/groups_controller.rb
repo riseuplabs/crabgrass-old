@@ -75,6 +75,7 @@ class Admin::GroupsController < Admin::BaseController
   # DELETE /groups/1.xml
   def destroy
     @group = Group.find_by_name(params[:id])
+    @group.destroyed_by = current_user
     @group.destroy
 
     respond_to do |format|
