@@ -1,5 +1,5 @@
 args = {
-  :url => (hostport + instance.url),
+  :url => url_for(:controller => instance.url, :only_path => false),
   :type => instance.content_type
 }
 args[:fileSize] = instance.size if instance.size

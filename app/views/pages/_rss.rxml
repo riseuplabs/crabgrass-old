@@ -9,8 +9,8 @@ base_url = request.protocol + request.host_with_port
 link = base_url + link unless link.include? ':'
 
 xml.instruct! :xml, :version=>"1.0" 
-xml.rss(:version=>"2.0"){
-  xml.channel{
+xml.rss(:version=>"2.0", "xmlns:content" => "http://purl.org/rss/1.0/modules/content/", "xmlns:media" => "http://search.yahoo.com/mrss/") do
+  xml.channel do
     xml.title title
     xml.link link
     xml.description description
@@ -34,11 +34,7 @@ xml.rss(:version=>"2.0"){
         
       xml.item do
         xml.title(item.title)
-        if item.is_a?(WikiPage) and item.data
-          xml.description(item.data.body_html)
-        else
-          xml.description(item.summary)
-        end
+        xml.description(item.summary)
         xml.author("nobody@example.com (#{item.updated_by.display_name})") if item.updated_by
         xml.pubDate(item.created_at.strftime("%a, %d %b %Y %H:%M:%S %z")) if item.created_at
         page_url = base_url + page_url(item)
@@ -48,7 +44,10 @@ xml.rss(:version=>"2.0"){
           xml.category tag.name
         end
         xml.category item.class
+        if item.respond_to?(:rss_data_partial)
+          xml << render(:partial => item.rss_data_partial, :locals => {:item => item, :page_url => page_url})
+        end
       end
     end
-  }
-}
+  end
+end
