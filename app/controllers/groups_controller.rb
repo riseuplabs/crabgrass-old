@@ -23,7 +23,11 @@ class GroupsController < ApplicationController
   end
 
   def my
-    @groups = current_user.groups.alphabetized('').paginate(:all, :page => params[:page])
+    if !current_site.has_networks?
+      @groups = current_user.groups.without_networks.alphabetized('').paginate(:all, :page => params[:page])
+    else
+      @groups = current_user.groups.alphabetized('').paginate(:all, :page => params[:page])
+    end
   end
 
   # login required
