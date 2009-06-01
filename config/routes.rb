@@ -54,10 +54,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
   map.connection '/code/:id', :controller => 'codes', :action => 'jump'
 
-  map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
-  map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil
-  map.connect 'feeds/:type/:group', :controller => 'feeds', :action => 'index', :group => nil
-
   map.resources :custom_appearances, :only => [:edit, :update]
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
