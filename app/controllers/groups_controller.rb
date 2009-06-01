@@ -31,7 +31,6 @@ class GroupsController < ApplicationController
     @group_class = get_group_class
     @group_type = @group_class.to_s.downcase
     @parent = get_parent
-
     if request.get?
       @group = @group_class.new(params[:group])
     elsif request.post?
@@ -49,9 +48,12 @@ class GroupsController < ApplicationController
 
       flash_message :success => 'Group was successfully created.'[:group_successfully_created]
       @group.add_user!(current_user)
-      @parent.add_committee!(@group, params[:group][:is_council] == "true" ) if @parent
+      if @parent and current_user.may?(:admin, @parent)
+        @parent.add_committee!(@group, params[:group][:is_council] == "true" )
+      end
 
-      add_council if params[:add_council] == "true"
+      ## DEPRECATED
+      ## add_council if params[:add_council] == "true"
 
       redirect_to url_for_group(@group)
     end
@@ -74,9 +76,14 @@ class GroupsController < ApplicationController
   
   def get_group_class
     type = params[:id].any? ? params[:id] : 'group'
-    type = 'committee' if params[:parent_id]
-    unless ['committee','group','network'].include? type
-      raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
+    if params[:parent_id]
+      unless ['council','committee'].include? type
+        raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] % {:type => type})
+      end
+    else
+      unless ['group','network'].include? type
+        raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
+      end
     end
     Kernel.const_get(type.capitalize)
   end
@@ -84,29 +91,29 @@ class GroupsController < ApplicationController
   def get_parent
     parent = Group.find(params[:parent_id]) if params[:parent_id]
     if parent and not current_user.may?(:admin, parent)
-      raise ErrorMessage.new('You do not have permission to create committees under %s'[:dont_have_permission_to_create_committees] % parent.name)
+      raise PermissionDenied.new('You do not have permission to create committees under %s'[:dont_have_permission_to_create_committees] % parent.name)
     end
     parent
   end
 
-  def add_council
-    # publicly_visible_X is deprecated in favor of the profile.
-    council_params = {
-      :short_name => @group.short_name + '_admin',
-      :full_name => @group.full_name + ' Admin',
-      :publicly_visible_group => @group.publicly_visible_group,
-      :publicly_visible_members => @group.publicly_visible_members,
-      :is_council => "true",
-      :accept_new_membership_requests => "0",
-    }
-      
-    @council = Committee.create!(council_params) do |c|
-      c.avatar = Avatar.new
-      c.created_by = current_user
-    end
-    @council.add_user!(current_user)    
-    @group.add_committee!(@council, true)
-  end
+#  def add_council
+#    # publicly_visible_X is deprecated in favor of the profile.
+#    council_params = {
+#      :short_name => @group.short_name + '_admin',
+#      :full_name => @group.full_name + ' Admin',
+#      :publicly_visible_group => @group.publicly_visible_group,
+#      :publicly_visible_members => @group.publicly_visible_members,
+#      :is_council => "true",
+#      :accept_new_membership_requests => "0",
+#    }
+#      
+#    @council = Committee.create!(council_params) do |c|
+#      c.avatar = Avatar.new
+#      c.created_by = current_user
+#    end
+#    @council.add_user!(current_user)    
+#    @group.add_committee!(@council, true)
+#  end
 
 end
 

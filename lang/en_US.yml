@@ -27,14 +27,16 @@ thing_not_found: "{thing} not found"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
+councils: "Councils"
 group: "Group"
 network: "Network"
 committee: "Committee"
-contact: "Contact"
+council: "Council"
+contact: "Friend"
 member_groups_of_network: "Member Groups"
 peers: "Peers"
 none: "none"
-contacts: "Contacts"
+contacts: "Friends"
 friends: "Friends"
 people: "People"
 members: "Members"
@@ -235,7 +237,7 @@ password_error_confirmation: "does not match password confirmation."
 ## ACTIVITIES
 ## 
 
-activity_contact_created: "{user} added {other_user} as a contact"
+activity_contact_created: "{user} added {other_user} as a friend"
 activity_user_status: "{user} is now {status}"
 activity_user_left_group: "{user} has left {group_type} {group}"
 activity_user_joined_group: "{user} has joined {group_type} {group}"
@@ -369,7 +371,7 @@ profile_public_description: |
   The information you put here is also searchable by other people. 
   Use caution when adding personal information to your public profile.
 
-profile_private_description: This profile is private and is only visible to your contacts.
+profile_private_description: This profile is private and is only visible to your friends.
 profile_last_login: "Last Login"
 profile_member_since: "Member Since"
 remove: remove
@@ -420,8 +422,8 @@ top_rated: Top Rated
 most_viewed: Most Viewed
 highest_contributors: Highest Contributors
 users_world: ":user's World"
-request_friend_link: "Add To My Contacts"
-remove_friend_link: "Remove From My Contacts"
+request_friend_link: "Add To My Friends"
+remove_friend_link: "Remove From My Friends"
 edit_profile_link: "Edit Profile"
 send_message_link: "Send Message"
 profile_saved: "Your profile has been saved."
@@ -431,15 +433,15 @@ profile_option_may_see_networks: "Show networks"
 profile_option_may_see_members: "Show group members"
 profile_option_may_request_membership: "Allow membership requests"
 profile_option_may_see_groups: "Show group memberships"
-profile_option_may_see_contacts: "Show personal contacts"
-profile_option_may_request_contact: "May request a personal contact"
+profile_option_may_see_contacts: "Show your friends"
+profile_option_may_request_contact: "May request to be friends"
 profile_option_may_pester: "May pester me"
 profile_option_allow_peers: "Visible to peers"
 profile_option_may_see: "Profile is visible"
 
 user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
-user_profile_description_may_see_contacts: "Allow people to see your list of personal contacts."
-user_profile_description_may_request_contact: "Allow people to request to be your personal contact."
+user_profile_description_may_see_contacts: "Allow people to see your list of friends."
+user_profile_description_may_request_contact: "Allow people to request to be your friend."
 user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
 user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
 user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
@@ -470,18 +472,17 @@ only_last_menber_can_delete_group: "You can only delete a group if you are the l
 group_successfully_created: "Group was successfully created."
 dont_understand_group_type: "Could not understand group type :type"
 dont_have_permission_to_create_committees: "You do not have permission to create committees under %s"
-fullname: "Full Name"
-descriptive_name_for_display: "A descriptive name used for display"
-link_name: "Link Name"
-language: "Language"
-minimum_stars_for_important_pages: "Minimum stars for important pages"
-minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
 group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %s/yourgroupname.
 committee_publicly_visible_description: Committees are viewable by non-members at %s/yourgroupname
 group_members_publicly_visible: Make Members Publicly Visible
 group_members_publicly_visible_description:   Members are viewable by non-members at %s/yourgroupname. Also, the name of the group will be listed on each members profile page (%s/username)
 page_list: Page list
-
+recent_network_pages: "Recent Network Pages"
+recent_member_group_pages: "Recent Activity from Your Groups in :network"
+directory_of_networks: "Directory of networks"
+featured_content_header: "Featured"
+group_directory_link: "group directory"
+create_group_link: "create group"
 typing: typing
 away: away
 you_are_not_member_of_any_group: You are not a member of any group.
@@ -513,7 +514,7 @@ no_members: (no members)
 directory_of_groups: Directory of groups
 directory_of_networks: Directory of networks
 create_button: Create
-new_group: New group
+new_group: "New group"
 create_group_link: "create a new group"
 create_committee: "create committee"
 group_language: "The main language of this %s."
@@ -524,46 +525,68 @@ group_directory_link: "group directory"
 my_groups: "My Groups"
 my_groups_link: "my groups"
 # gah! too much duplication ^^^
-you_have_no_groups: "You have no groups"
+
+# commands
+
 edit_settings: "edit settings"
 destroy_group: "destroy %s"
 view_all: "view all"
 send_invites: "send invites"
 view_requests: "view requests"
-page_is_not_static: Page is not static
-coordinating_council: "coordinating council"
-working_group: "working group"
-coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
-working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
-recent_network_pages: "Recent Network Pages"
-recent_member_group_pages: "Recent Activity from Your Groups in :network"
-directory_of_networks: "Directory of networks"
-featured_content_header: "Featured"
-group_directory_link: "group directory"
-create_group_link: "create group"
-edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-this_is_coordinating: "This committee is the <strong>coordinating council</strong> for {parent_group}."
-this_is_committee: "This committee is part of {parent_group}."
 leave_group: "leave %s"
-commitee_type: "Committee type"
-committee_type_description: "What type of committee will this be?"
-link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
-group_language: "The main language of this %s."
-group_summary: "Brief information regarding this %s."
+join_group_link: "join {group_type}"
+request_join_group_link: "request to join {group_type}"
+
+# results
+
+you_have_no_groups: "You have no groups"
+page_is_not_static: "Page is not static"
+
 archive_headline: "Archive"
 archive_filter_created_link: "Date Created"
 archive_filter_updated_link: "Last Date Updated"
+
+# create/edit forms
+
+group_language: "The main language of this %s."
+group_summary: "Brief information regarding this %s."
+link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
+fullname: "Full Name"
+descriptive_name_for_display: "A descriptive name used for display"
+link_name: "Link Name"
+language: "Language"
+
+# council
+
+coordinating_council: "Coordinating Council"
+this_is_coordinating: "This is the <strong>coordinating council</strong> for {parent_group}."
+new_council: "New council for group {group_name}"
+edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+
+# committee
+
+this_is_committee: "This committee is part of {parent_group}."
+
+# disabled
+
+# working_group: "working group"
+# coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
+# working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
+# committee_type: "Committee type"
+# committee_type_description: "What type of committee will this be?"
+# minimum_stars_for_important_pages: "Minimum stars for important pages"
+# minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
 
 ##
 ## REQUESTS
 ##
 
-contact_request_message_label: "Tell %s why you want to be their contact."
-add_contact_info: "When another user is your contact, they are able to see when you are logged in and they have access to see your full profile. Once you become a contact of another person, they also become your contact."
+contact_request_message_label: "Tell %s why you want to be their friend."
+add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
 join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
 network_invite_info: "Enter the names of the groups you would like to invite to join this network."
-remove_contact_info: "If you remove someone from your contact list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a contact will mean that you are also removed from their contact list."
-approve_contact_info: "A contact request already exists from this user. Do you wish to approve it?"
+remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
+approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
 recipient_tip: "Seperate recipients with commas, spaces, or new lines."
 
 destroy: "destroy"
@@ -580,7 +603,7 @@ incoming: "Incoming"
 outgoing: "Outgoing"
 state: "state"
 action: "action"
-request_to_friend_description: ":user would like to be the contact of :other_user"
+request_to_friend_description: ":user would like to be the friend of :other_user"
 request_to_join_our_network_description: "group :group was invited to join network :network"
 request_to_join_us_description: ":user was invited to join :group"
 request_to_join_us_via_email_description: ":email was invited to join :group"
@@ -590,8 +613,8 @@ request_to_join_your_network_description: ":group requested to join network :net
 send_invites_button: "Send Invites"
 send_invites_headline: "Send invitations to join {group}"
 invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %s."
-remove_contact_confirmation: "Are you sure you wish to break contact with %s?"
-already_contacts_info: "You are already the contact of this person."
+remove_contact_confirmation: "Are you sure you wish to no longer be friends with %s?"
+already_contacts_info: "You are already the friend of this person."
 try_again: "Try Again"
 invite_accept_info: "You would like to accept the request to join. Do you already have an account on this server?"
 invite_accept_headline: "Accept invitation to join group'"
@@ -881,7 +904,7 @@ edit_underlined_e: "<u>e</u>dit"
 comparing_changes_header: "Comparing changes by {user} at {when} from {old_version} to {new_version}"
 prev_change: "Previous Change"
 next_change: "Next Change"
-formatting_reference_link: "formatting reference"
+formatting_reference_link: "Editing Help"
 version_doesnt_exist: "There is no version :version"
 you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: "view changes"
@@ -936,11 +959,11 @@ email_link_expires: "This link will expire in {days} days."
 ##
 
 directory_of_people: Directory of People
-no_contacts_msg: You have no contacts.
+no_contacts_msg: You have no friends.
 my_peers_explain: users I share a common group with
 no_peers_msg: You have no peers.
-my_contacts_link: my contacts
-my_contacts: My Contacts
+my_contacts_link: my friends
+my_contacts: My friends
 new_people: New People
 new_people_link: new people
 no_public_profiles: No public profiles yet...
@@ -949,7 +972,7 @@ all_people: All People
 my_peers_link: my peers
 my_peers: My Peers
 my_peers_description: users I share a common group with
-you_have_no_contacts: 'You have no contacts'
+you_have_no_contacts: 'You have no friends'
 you_have_no_peers: 'You have no peers'
 
 ##
