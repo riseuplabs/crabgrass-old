@@ -32,12 +32,15 @@ rainbow:
   id: 3
   name: rainbow
   summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  site_id: 1
+
 warm:
   id: 31
   parent_id: 3
   name: rainbow+the-warm-colors
   summary: colors that are warm.
   type: Committee
+
 cold:
   id: 32
   parent_id: 3
@@ -98,5 +101,6 @@ super_admin_group:
   name: superadmins
   full_name: group of superadmins
   type: Group
+  site_id: 2
 
 

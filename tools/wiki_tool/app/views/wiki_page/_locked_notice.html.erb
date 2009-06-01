@@ -1,1 +1,5 @@
+<% if @wiki.locked?(:all) -%>
 <%= "locked by :user"[:locked_by_user] % { :user => link_to_user(@wiki.locked_by_id) } %>
+<% else %>
+<%= "Wiki locked - a section is being edited. You can edit other sections."[:locked_wiki_because_locked_section] %>
+<%- end -%>

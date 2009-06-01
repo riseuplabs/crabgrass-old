@@ -6,6 +6,7 @@ function quickRedReference() {
     "directories=0,fullscreen=0,location=0,menubar=0," +
     "resizable=0,scrollbars=1,status=1,toolbar=0"
   );
+  return false;
 }
 
 // toggle the visibility of another element based on if
@@ -84,6 +85,22 @@ function insertAtCursor(element_id, value) {
   } else {
     element.value += value;
   }
+}
+
+function decorate_wiki_edit_links(ajax_link) {
+  $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
+    function(elem) {
+      var heading_name = elem.href.replace(/^.*#/, '');
+      var link = ajax_link.replace(/_change_me_/g, heading_name);
+      elem.insert({after:link});
+    }
+  );
+}
+
+// returns true if the enter key was pressed
+function enterPressed(event) {
+  if(event.which) { return(event.which == 13); }
+  else { return(event.keyCode == 13); }
 }
 
 

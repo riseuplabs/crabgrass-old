@@ -5,7 +5,7 @@ PageClassRegistrar.add(
   :controller => 'event_page',
   :model => 'Event',
   :icon => 'date',
-  :class_group => 'event',
+  :class_group => 'planning',
   :order => 120
 )
 

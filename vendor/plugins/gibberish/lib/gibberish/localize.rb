@@ -22,7 +22,7 @@ module Gibberish
     end
 
     def current_language=(language)
-      load_languages! if defined?(RAILS_ENV) && RAILS_ENV == 'development'
+      #load_languages! if defined?(RAILS_ENV) && RAILS_ENV == 'development'
 
       language = language.to_sym if language.respond_to? :to_sym
       @@current_language = @@languages[language] ? language : nil
@@ -55,6 +55,12 @@ module Gibberish
         @@languages[key] ||= HashWithIndifferentAccess.new
         # crabgrass hack     ^^^^^^ made the translations hash be indifferent.
         @@languages[key].merge! YAML.load_file(file).symbolize_keys
+
+        # crabgrass hack: alias en_US to en, fr_FR to fr, etc.
+        if key.to_s =~ /_/
+          key_without_local = key.to_s.sub(/_\w\w$/,'').to_sym
+          @@languages[key_without_local] = @@languages[key]
+        end
       end
       languages
     end

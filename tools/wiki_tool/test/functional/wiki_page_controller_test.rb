@@ -1,17 +1,10 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'wiki_page_controller'
+require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-# Re-raise errors caught by the controller.
-class WikiPageController; def rescue_action(e) raise e end; end
-
-class WikiPageControllerTest < Test::Unit::TestCase
+class WikiPageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :wikis, :groups, :sites
 
   def setup
-    @controller = WikiPageController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    HTMLDiff.log_to_stdout = false # set to true for debugging
+    #HTMLDiff.log_to_stdout = false # set to true for debugging
   end
 
   def test_show
@@ -84,53 +77,6 @@ class WikiPageControllerTest < Test::Unit::TestCase
     end
   end
 
-  def test_version
-    login_as :orange
-    pages(:wiki).add groups(:rainbow), :access => :edit
-
-    # create versions
-    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      login_as user
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
-    end
-
-    # create another modification by the last user
-    # should not create a new version
-    pages(:wiki).data.smart_save!(:user => users(:purple), :body => "text 6 for the wiki")
-
-    login_as :orange
-    pages(:wiki).data.versions.reload
-
-    # find versions
-    (1..5).each do |i|
-      get :version, :page_id => pages(:wiki).id, :id => i
-      assert_response :success
-      assert_equal i, assigns(:version).version
-    end
-
-    # should fail gracefully for non-existant version
-    get :version, :page_id => pages(:wiki).id, :id => 6
-    assert_response :success
-    assert_nil assigns(:version)
-  end
-  
-  def test_diff
-    login_as :orange
-
-    (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      #login_as user
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
-    end
-    #pages(:wiki).data.versions.reload
-
-    post :diff, :page_id => pages(:wiki).id, :id => "4-5"
-    assert_response :success
-#    assert_template 'diff'
-    assert_equal assigns(:wiki).versions.reload.find_by_version(4).body_html, assigns(:old_markup)
-    assert_equal assigns(:wiki).versions.reload.find_by_version(5).body_html, assigns(:new_markup)
-    assert assigns(:difftext).length > 10, "difftext should contain something substantial"
-  end
-
   def test_print
     login_as :orange
 
@@ -157,7 +103,7 @@ class WikiPageControllerTest < Test::Unit::TestCase
 
     # nothing should appear locked to blue
     assert_equal wiki.section_heading_names, wiki.sections_not_locked_for(users(:blue)), "no sections should look locked to blue"
-    assert_equal [], wiki.sections_not_locked_for(users(:gerrard)), "all sections should look locked to gerrard"
+    assert_equal ["section-one", "section-two"], wiki.sections_not_locked_for(users(:gerrard)), "sections one and two should not look locked to gerrard"
   end
 
   def test_save_inline
@@ -171,8 +117,8 @@ class WikiPageControllerTest < Test::Unit::TestCase
     wiki = assigns(:wiki)
     wiki.reload
 
-    assert_equal ["section-two"], wiki.section_heading_names, "section three should have been deleted"
-    assert_equal "h2. section one\n\ns1 text 1\ns1 text 2\n\nh1. section two\n\n\n\ns2 text #1\ns2 more text\n\na line\n\n", wiki.body, "wiki body should be updated"
+    assert_equal ["section-one", "section-two"], wiki.section_heading_names, "section three should have been deleted"
+    assert_equal "h2. section one\n\ns1 text 1\ns1 text 2\n\nh2. section two\n\ns2 text #1\ns2 more text\n\na line\n\n", wiki.body, "wiki body should be updated"
   end
 
   def test_break_lock

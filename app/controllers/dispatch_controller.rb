@@ -40,6 +40,7 @@ class DispatchController < ApplicationController
   def dispatch
     begin
       flash.keep
+      load_current_site
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       @user = current_user
@@ -51,6 +52,8 @@ class DispatchController < ApplicationController
 
   private
   
+  def load_current_site; current_site; end
+
   #
   # attempt to find a page by its name, and return a new instance of the
   # page's controller.

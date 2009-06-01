@@ -23,6 +23,8 @@ MEDIA_TYPE = {
 
 ARROW = " &raquo; "
 BULLET = " &bull; "
+RARROW = " &raquo; "
+LARROW = " &laquo; "
 
 # group and user names which cannot be used
 FORBIDDEN_NAMES = %w(account admin assets avatars chat calendar calendars contact custom_appearances embed event events feeds files gibberize group groups images invites issues javascripts latex me membership messages network networks page pages people person posts profile places plugin_assets requests static stats stylesheets visualize wiki code codes).freeze
@@ -43,6 +45,7 @@ begin
     lang_codes = possible
   end
   LANGUAGES = Language.find(:all, :conditions => ['code IN (?)',lang_codes]).freeze
+  AVAILABLE_LANGUAGE_CODES = lang_codes.collect{|code| code.sub('_','-')}.freeze
 rescue Exception
   # something went wrong.
   LANGUAGES = []

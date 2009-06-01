@@ -5,7 +5,7 @@ PageClassRegistrar.add(
   :class_display_name => 'wiki',
   :class_description => :wiki_class_description,
   :class_group => 'text',
-  :order => 4
+  :order => 1
 )
 
 PageClassRegistrar.add(

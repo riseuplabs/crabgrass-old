@@ -6,10 +6,8 @@ class BasePage::ShareController; def rescue_action(e) raise e end; end
 
 class BasePage::ShareControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
-           :memberships, :user_participations, :group_participations,
-           :pages, :profiles
-          # :taggings, :tags
-
+          :memberships, :user_participations, :group_participations,
+          :pages, :profiles
 
   #@@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   #@@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -47,14 +45,17 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     login_as :blue
     
     # a request that should be successful
-    xhr :post, :update, { :page_id =>  1, :recipient => {:name => 'penguin' } } 
+    xhr :post, :update, {:page_id =>  1, :recipient => {:name => 'penguin', :access => 'edit'}, :add => true } 
     assert_response :success
-    assert_select 'li.unsaved'
-    
+    assert_select_rjs :insert, :top, 'share_page_recipient_table' do
+      assert_select 'tr.unsaved'
+      assert_select 'option[selected=selected][value=edit]', 'Participant', 'new user should have edit access'
+    end
+
     # this request should not end in adding the user a second time
     
     # a request that will not be successful, as the username doesn't exist.
-    xhr :post, :update, { :page_id =>  1, :recipient => {:name => 'a_username_that_will_never_exist' } } 
+    xhr :post, :update, {:page_id =>  1, :recipient => {:name => 'a_username_that_will_never_exist' }, :add => true } 
     assert_failing_post
     
     # a request that should lead in an error because i may not pester that user
@@ -62,7 +63,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     user2 = User.find_by_login 'yellow'
     login_as :penguin
     assert !user1.may_pester?(user2), 'user1 should not be allowed to pester user2'
-    xhr :post, :update, { :page_id =>  1, :recipient => {:name => 'yellow' } } 
+    xhr :post, :update, { :page_id =>  1, :recipient => {:name => 'yellow' }, :add => true } 
     assert_failing_post
   end
   
@@ -94,19 +95,19 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert @group_private, 'private group should exist' 
     assert !@group_private.may?(:admin, @page), 'private group should not have access to page originally'
  
-    xhr :post, :update , { :page_id => @page.id, :recipients => { @group.name.to_sym => { :access => :admin } } }
+    xhr :post, :update, {:page_id => @page.id, :share => true, :recipients => { @group.name.to_sym => { :access => :admin } } }
     @page.reload
     assert !@group_private.may?(:admin, @page), 'private group should still not have access to page'
 
     # try to share with a user
     @recipient_user = users(:penguin)
-    xhr :post, :update , { :page_id => @page.id, :recipients => { @recipient_user.login.to_sym => { :access => :admin } } }
+    xhr :post, :update, {:page_id => @page.id, :share => true, :recipients => { @recipient_user.login.to_sym => { :access => :admin } } }
     @page.reload
     @recipient_user.reload
     assert @recipient_user.may?(:admin, @page), 'user penguin should have access to page'
     
     # when the page is already shared with a user, it should not be possible to add her again as a recipient
-    xhr :post, :update, { :page_id =>  @page.id, :recipient => {:name => @recipient_user.login } }
+    xhr :post, :update, {:page_id => @page.id, :add => true, :recipient => {:name => @recipient_user.login } }
     assert_failing_post
     
     # try to share with a committe (#bugfixing a problem caused by the "+" in the committee name
@@ -156,7 +157,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     
     assert_share_with(@group_page,@user,:admin)
     
-    xhr :post, :update , { :page_id => @group_page.id, :recipients => { @group.name.to_sym => { :access => :edit } }, :share => true }
+    xhr :post, :update , {:page_id => @group_page.id, :recipients => { @group.name.to_sym => { :access => :edit } }, :share => true }
 
 
     @group.reload
@@ -185,7 +186,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     # get the right name for the recipient (either name or login)
     recipient_name = recipient.kind_of?(Group) ? recipient.name : recipient.login
     # first add the recipient to the recipients list...
-    xhr :post, :update, { :page_id =>  page.id, :recipient => {:name => recipient_name.gsub(/\+/,'%2B') } }
+    xhr :post, :update, {:page_id =>  page.id, :add => true, :recipient => {:name => recipient_name.gsub(/\+/,'%2B') } }
     # success ? assert_not_nil(assigns(:recipient)) : assert(!assigns(:recipient))
 
     success ? assert_successful_post('add') : assert_failing_post
@@ -201,7 +202,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert_response :success
     if update == 'add'
       assert_not_nil assigns(:recipients)
-      assert_select 'li.unsaved'
+      assert_select 'tr.unsaved'
     else
       assert_select 'div.notice'
     end
@@ -226,10 +227,23 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert upart, 'the userparticipation should already exist to notify the user'
     
     # try to push the participation to inbox
-    xhr :post, :update, { :page_id =>  1, :recipients => [user2.login.to_sym], :send_notice => "1", :send_message => 'additional_message'}
+    xhr :post, :update, {:page_id => 1, :share => true, :recipients => [user2.login.to_sym], :send_notice => "1", :send_message => 'additional_message'}
     assert_response :success
     upart.reload
-    assert upart.inbox, 'participation.inbox should be set to true now'
+    assert !upart.inbox, 'participation.inbox should be set to false now'
   end
   
+  def test_notify_group
+    login_as :blue
+
+    page = DiscussionPage.create! :title => 'dup', :user => users(:blue), :owner => users(:blue), :share_with => 'rainbow', :access => :admin
+
+    xhr :post, :notify, {:page_id => page.id, "notify"=>true, "notification"=>{"send_notice"=>"1", "send_message"=>"", "send_email"=>"0"}, "action"=>"notify", "recipients"=>{"rainbow"=>{"send_notice"=>"1"}}, "controller"=>"base_page/share"}
+    
+    page.reload
+    group_users = groups(:rainbow).users.collect{|u|u.name}.sort
+    page_users = page.user_participations.collect{|up|up.user.name}.sort
+    assert_equal group_users, page_users
+  end
+
 end

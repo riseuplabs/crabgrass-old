@@ -1,14 +1,17 @@
-require 'iconv'
-
 class String
-
+   
+  ##
+  ## NOTE: you will want to translit non-ascii slugs to ascii.
+  ## resist this impulse. nameized strings must remain utf8.
+  ##
+ 
   def nameize
     str = self.dup
+    str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
     str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
     str.strip!            # ohh la la
     str.downcase!         # upper case characters in urls are confusing
     str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-    #str = "-#{s}" if str =~ /^(\d+)$/ # don't allow all numbers
     return str[0..49]
   end
   

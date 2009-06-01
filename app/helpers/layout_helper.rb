@@ -81,21 +81,14 @@ module LayoutHelper
   end
 
   def favicon_link
-    %q[<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="/favicon.png" type="image/x-icon" />]
-  end
-
-  # support for holygrail layout:
-  
-  # returns the style elements need in the <head> for the holygrail layouts. 
-  def holygrail_stylesheets
-    lines = []
-    lines << stylesheet_link_tag('holygrail/common')
-    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
-    lines << '<!--[if lt IE 7]>
-<style media="screen" type="text/css">.col1 {width:100%;}</style>
-<![endif]-->' # this line is important!
-    lines.join("\n")
+    icon_urls = if current_appearance and current_appearance.favicon
+      [current_appearance.favicon.url] * 2
+    else
+      ['/favicon.ico', '/favicon.png']
+    end
+      
+    %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
+  <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
   def type_of_column_layout
@@ -113,12 +106,21 @@ module LayoutHelper
   ############################################
   # JAVASCRIPT
 
+  # includes the correct javascript tags for the current request.
+  # if the special symbol :extra has been specified as a required js file,
+  # then this expands to all the scriptalicous files.
   def optional_javascript_tag
     scripts = controller.class.javascript || {}
     js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
     return unless js_files.any?
     extra = js_files.delete(:extra)
-    js_files = js_files.collect{|i| "as_needed/#{i}" }
+    js_files = js_files.collect do |jsfile|
+      if ['effects', 'dragdrop', 'controls', 'builder', 'slider'].include? jsfile
+        jsfile
+      else
+        "as_needed/#{jsfile}"
+      end
+    end
     if extra
       js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
     end
@@ -190,7 +192,7 @@ module LayoutHelper
     if options[:balanced]
       width= (100.to_f/cols.to_f).to_i
     end
-    lines << '<table>' unless options[:skip_table_tag]
+    lines << "<table class='#{options[:class]}'>" unless options[:skip_table_tag]
     if options[:header]
       lines << options[:header]
     end

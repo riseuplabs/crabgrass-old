@@ -206,6 +206,10 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_doc
+    if !Media::Process::OpenOffice.new.available?
+      puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
+      return
+    end
     @asset = Asset.make :uploaded_data => upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
@@ -268,6 +272,10 @@ class AssetTest < Test::Unit::TestCase
     assert "1", page.data.page_terms.media 
   end
   
+  def test_content_type
+    assert_equal 'application/octet-stream', Asset.new.content_type
+  end
+
   protected
 
   def debug

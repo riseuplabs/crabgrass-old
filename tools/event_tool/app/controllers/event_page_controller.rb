@@ -1,5 +1,3 @@
-require 'calendar_date_select'
-
 class EventPageController < BasePageController
   append_before_filter :fetch_event
   
@@ -34,8 +32,7 @@ class EventPageController < BasePageController
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
     elsif request.post?
-      begin    
-
+      begin
         if params[:event][:is_all_day]
           params[:hour_start] = "09:00"
           params[:hour_end] = "17:00"
@@ -66,6 +63,8 @@ class EventPageController < BasePageController
         @page = exc.record
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
   end
 

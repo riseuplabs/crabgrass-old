@@ -10,19 +10,52 @@ module ActsAsSiteLimited
       belongs_to :site
       before_save :update_site_id
       class_eval do
+
+        ##
+        ## CALLBACK
+        ##
+
         def update_site_id
           if self.site_id.nil? and Site.current and Site.current.id
             self.site_id = Site.current.id
           end
         end
+
+        ##
+        ## OVERRIDE FINDERS
+        ##
+
         def self.find_every(*args)
           super(*prepare_site_limited_options(*args))
         end
         def self.count(*args)
           super(*prepare_site_limited_options(*args))
         end
+
+        def self.find_by_sql(sql)
+          super(prepare_site_limited_sql(sql))
+        end
+        def self.count_by_sql(sql)
+          super(prepare_site_limited_sql(sql))
+        end
+
+        private
+
+        ##
+        ## LIMIT THE QUERIES
+        ##
+
+        # allows the use of special macro /*SITE_LIMITED*/ for :finder_sql
+        def self.prepare_site_limited_sql(sql)
+          if Site.current and Site.current.limited?
+            sql.sub('/*SITE_LIMITED*/', "site_id = #{Site.current.id}")
+          else
+            sql.sub('/*SITE_LIMITED*/', "1")
+          end
+        end
+
         def self.prepare_site_limited_options(*args)
-          if Site.current and Site.current.limited?      
+          if Site.current and Site.current.limited?
             options = args.last.is_a?(Hash) ? args.pop : {}
             sql = "site_id = #{Site.current.id}"
             if options[:conditions].nil?
@@ -30,14 +63,15 @@ module ActsAsSiteLimited
             elsif options[:conditions].is_a? Hash
               options[:conditions].merge!({:site_id => Site.current.id})
             elsif options[:conditions].is_a? String
-              options[:conditions] += " AND #{sql}"
+              options[:conditions] = "(#{options[:conditions]}) AND #{sql}"
             elsif options[:conditions].is_a? Array and options[:conditions][0].is_a? String
-              options[:conditions][0] += " AND #{sql}"
+              options[:conditions][0] = "(#{options[:conditions][0]}) AND #{sql}"
             end
             args << options
           end
           args
         end
+
       end
     end # end acts_as_site_limited
 

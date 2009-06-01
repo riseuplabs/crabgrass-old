@@ -3,11 +3,11 @@ div
     text-align: center
     line-height: 2.5em
     margin-bottom: 1em
-  &.buttons
-    margin-top: 1em
-    padding-top: 1em
-    border-top: 1px solid #ccc
-    text-align: center
+  //&.buttons
+  //  margin-top: 1em
+  //  padding-top: 1em
+  //  border-top: 1px solid #ccc
+  //  text-align: center
 
 //
 // PAGE LIST
@@ -76,7 +76,7 @@ div
 // SHARE PAGE WIDGET
 //
 
-table.share_page_recipients
+table.share_page_recipient_add
   width: 100%
   div.scroll
     overflow: auto
@@ -84,51 +84,72 @@ table.share_page_recipients
     width: 13em
     padding: 0.5em
     font-size: 0.8em
-//  ul
-//    margin: 0
-//    padding: 0
-//    li
-//      padding: 0.25em 0
 
-ul.participators_list
-  li.unsaved
+#share_page_recipient_area
+  margin: 4px
+  margin-right: 10px
+  border: 1px solid #ccc
+  max-height: 15em
+  overflow: auto
+  // ie hack:
+  _height: 10em
+  table
+    width: 100%
+
+#share_page_recipient_table
+  td
+    padding: 4px
+    border-bottom: 1px solid #ccc
+    background-color: #f6f6f6
+    font-size: 0.9em
+  td.unsaved
     background-color: #BBFF99
-  li
-    padding: 5px
-    border-bottom: 1px solid darkgrey
-    clear: left
+  select
+    font-size: 0.9em
+  span.entity
+    width: 15em
+    overflow: hidden
 
-//div.share_page_recipients_list
-//  height: 15em
-//  overflow-y: scroll
-//  border: 1px solid #999
-//  background: white
+// make it a different color in a popup
+.popup #share_page_recipient_table td
+  background-color: #fff
 
 div.notify_details,
 div.share_details
   background: white
   border: 1px solid #999
+  border-bottom: 0
   max-height: 15em
-  min-height: 5em
+  //min-height: 5em
   overflow-y: auto
+  margin: 3px
   table
     width: 100%
     td
       padding: 0.5em 0.25em
       //overflow: hidden
+  ul
+    margin: 0
 
 div.notify_details
   padding: 0.5em
 
 table.notify
   width: 100%
-  td
+  td.check
     vertical-align: top
   tr.gap
     td
       padding-top: 1em
 
-
+.share_page
+  div.error
+    background: #fcc
+    border: 1px solid red
+    h2
+      border: 0
+      font-size: 1em
+      color: black
 
 //
 // PAGE SIDEBAR
@@ -163,10 +184,14 @@ table.notify
       padding-right: 20px
       margin-right: -20px
   input.check
-    position: absolute
-    left: 0
-    margin-top: 6px
+    float: left
+    margin-left: -23px
+    margin-top: 7px
+  .tags
+    overflow: hidden
   .tags a
+    width: 100%
+    overflow: hidden
     background-color: #dde
     padding: 0px 2px
     line-height: 175%
@@ -195,6 +220,8 @@ table.notify
     div.username,
     div.date
       margin-right: 40px
+    div.fields
+      font-size: 10px
     
 table.posts
   width: 100%
@@ -259,12 +286,10 @@ div.title_box
     font-size: 1.5em
     font-weight: normal
     line-height: 1.2em
-  #title_edit_link
+  .title_edit_link
     display: none
-    position: absolute
-    top: 10px
-    right: 10px
-  &:hover #title_edit_link
+    float: right
+  &:hover .title_edit_link
     display: block
 
 //
@@ -293,12 +318,11 @@ div.popup
     color: #cc0000
     font-size: 1.1em
     line-height: 1em
+    &.first
+      margin-top: 0
   blockquote
     margin: 0
     padding: 1em
-  div.error
-    background: #fcc
-    border: 1px solid red
 
 div.popup_arrow
   height: 29px

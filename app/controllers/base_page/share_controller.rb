@@ -24,20 +24,28 @@
 #
 class BasePage::ShareController < ApplicationController
 
-  before_filter :login_required, :except => [:auto_complete_for_recipient_name]
-  protect_from_forgery :except => [:auto_complete_for_recipient_name]
+  before_filter :login_required, :except => [:auto_complete]
+  protect_from_forgery :except => [:auto_complete]
   verify :xhr => true
 
   helper 'base_page', 'base_page/share'
 
-  def auto_complete_for_recipient_name 
-   name_filter = params[:recipient][:name]
-    if name_filter
-      @recipients = Group.find :all, :conditions => ["groups.name LIKE ?", "#{name_filter}%"], :limit => 20
-      @recipients += User.find :all, :conditions => ["users.login LIKE ?", "#{name_filter}%"], :limit => 20
-      @recipients = @recipients[0..19]
-      render :partial => 'base_page/auto_complete/recipient'
-    end
+  def auto_complete
+    # i am searching by display_name only under protest. this is going to
+    # make it s.l.o.w.
+    filter = "#{params[:query]}%"
+    recipients = Group.find(:all,
+      :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
+      :limit => 20)
+    recipients += User.find(:all,
+      :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
+      :limit => 20)
+    recipients = recipients.sort_by{|r|r.name}[0..19]
+    render :json => {
+      :query => params[:query],
+      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
+      :data => recipients.collect{|r|r.avatar_id||0}
+    }
   end
   
   # display the share popup via ajax
@@ -49,43 +57,50 @@ class BasePage::ShareController < ApplicationController
     end
   end  
   
-  # params examples:
-  # 
-  # when updating the form: {"recipient"=>{"name"=>"", "access"=>"admin"}}
-  # 
-  # when submitting the form: {"recipients"=>{"aaron"=>{"access"=>"admin"},
-  #                              "the-true-levellers"=>{"access"=>"admin"}}
+  # there are three ways to submit the form:
+  # (1) cancel button (params[:cancel]==true)
+  # (2) add button or return in add field (params[:add]==true)
+  # (3) share button (params[:share]==true)
+  #
+  # recipient(s) examples:
+  # * when updating the form:
+  #   {"recipient"=>{"name"=>"", "access"=>"admin"}}
+  # * when submitting the form:
+  #   {"recipients"=>{"aaron"=>{"access"=>"admin"},
+  #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
     @success_msg ||= "You successfully shared this page."[:shared_page_success]
     if params[:cancel]
       close_popup
-    elsif params[:recipient] and params[:recipient][:name].any? and !params[:share]
-      # simply update the ui, don't actually do anything.
+    elsif params[:add]
       @recipients = []
-      recipients_names = params[:recipient][:name].strip.split(/[, ]/)
-      recipients_names.each do |recipient_name|
-        @recipients << find_recipient(recipient_name)
+      if params[:recipient] and params[:recipient][:name].any?
+        recipients_names = params[:recipient][:name].strip.split(/[, ]/)
+        recipients_names.each do |recipient_name|
+          @recipients << find_recipient(recipient_name)
+        end
+        @recipients.compact!
       end
-      @recipients.compact!
       render :partial => 'base_page/share/add_recipient'
-    elsif params[:recipients]
+    elsif params[:share] and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
 
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
-      flash_message :success => @success_msg
+      flash_message_now :success => @success_msg
       close_popup
     else
-      close_popup
+      render :text => 'no button was pressed', :status => :error
     end
   end
 
   # handles the notification with or without sharing
   def notify
     @success_msg = "You successfully sent notifications."[:notify_success]
+    params[:share] = params[:notify] # act as if share button was pressed if notify pressed.
     update
   end
   
@@ -104,12 +119,16 @@ class BasePage::ShareController < ApplicationController
   end
 
   def authorized?
-    current_user.may? :admin, @page
+    if @page
+      current_user.may? :admin, @page
+    else
+      true
+    end
   end
 
   prepend_before_filter :fetch_page
   def fetch_page
-    if params[:page_id]
+    if params[:page_id].any?
       @page = Page.find_by_id(params[:page_id])
       @upart = @page.participation_for_user(current_user)
     end
@@ -121,11 +140,11 @@ class BasePage::ShareController < ApplicationController
     return nil unless recipient_name.any?
     recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
     if recipient.nil?
-      flash_message(:error => 'no such name'[:no_such_name])
+      flash_message_now(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)
-      flash_message(:error => 'you may not pester'[:you_may_not_pester])
-    elsif (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
-      flash_message(:error => 'a participation for this user / group already exists'[:participation_already_exists])
+      flash_message_now(:error => 'you may not pester'[:you_may_not_pester])
+    elsif @page && (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
+      flash_message_now(:error => 'a participation for this user / group already exists'[:participation_already_exists])
     else
       return recipient
     end
@@ -145,5 +164,11 @@ class BasePage::ShareController < ApplicationController
        end
      end
    end
+
+  # this should be in a helper somewhere, but i don't know how to generate 
+  # json response in the view. 
+  def display_on_two_lines(entity)
+   "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+  end
 
 end

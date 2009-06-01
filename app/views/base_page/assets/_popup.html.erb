@@ -1,7 +1,7 @@
-<% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :style => '') do -%>
+<% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :width => '25em') do -%>
   <blockquote>
-  <h2><%= "Current Attachments"[:current_attachments] %></h2>
-  <table width='100%' cellpadding='4'>
+  <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>
+  <table width='' cellpadding='4'>
     <% if @page.assets.any? -%>
       <%= asset_rows -%>
     <% else -%>

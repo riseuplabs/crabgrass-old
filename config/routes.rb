@@ -20,13 +20,11 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
   map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
 
-  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
+  map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
-  map.favicon '/favicon.:format', :controller => 'custom_appearances', :action => 'favicon'
-
   ##### REGULAR ROUTES ####################################
-  
+
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
   map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
   map.connect 'me/search/*path',    :controller => 'me/search', :action => 'index'

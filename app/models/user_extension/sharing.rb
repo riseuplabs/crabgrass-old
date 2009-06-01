@@ -20,19 +20,32 @@ module UserExtension::Sharing
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
       end
-
-      named_scope :most_active_since, lambda { |time|
+      
+      named_scope(:most_active_on, lambda do |site, time|
+        { :joins => [:participations, :memberships],
+          :group => "users.id",
+          :order => 'count(user_participations.id) DESC',
+          :conditions => ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id],
+          :select => "users.*, memberships.group_id, user_participations.changed_at"
+        }
+      end)
+      
+      named_scope(:most_active_since, lambda do |time|
         { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :conditions => ["user_participations.changed_at >= ?", time] }
-      }
+          :conditions => ["user_participations.changed_at >= ?", time],
+          :select => "users.*" }
+      end)
+     
+      named_scope(:not_inactive, lambda do 
+        if self.respond_to? :inactive_user_ids
+          {:conditions => ["users.id NOT IN (?)", inactive_user_ids]}
+        else
+          {}
+        end
+      end)
 
-      #has_many :pages_created,
-      #  :class_name => "Page", :foreign_key => :created_by_id 
-
-      #has_many :pages_updated, 
-      #  :class_name => "Page", :foreign_key => :updated_by_id   
     end
   end
 
@@ -158,6 +171,12 @@ module UserExtension::Sharing
   ## PAGE SHARING
   ##
 
+  # valid recipients:
+  # 
+  #  array form: ['green','blue','animals']
+  #  hash form: {'green' => {:access => :admin}} 
+  #  object form: [#<User id: 4, login: "blue">]
+  # 
   # valid options:
   #        :access -- sets access level directly. one of nil, :admin, :edit, or
   #                   :view. (nil will remove access)
@@ -180,6 +199,7 @@ module UserExtension::Sharing
   # auto saves the @page if has been changed.)
   #
   def share_page_with!(page, recipients, options)
+    options = HashWithIndifferentAccess.new(options)
     return true unless recipients
     return share_page_with_hash!(page, recipients, options) if recipients.is_a?(Hash)
 

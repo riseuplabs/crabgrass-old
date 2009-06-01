@@ -44,6 +44,7 @@ class PluginMigrationGenerator < Rails::Generator::Base
           Engines.plugins[name] ? Engines.plugins[name] : raise("Cannot find the plugin '#{name}'")
         end
       end
+      # require 'ruby-debug';debugger
       
       @plugins_to_migrate.reject! { |p| p.latest_migration.nil? }
       
@@ -58,12 +59,20 @@ class PluginMigrationGenerator < Rails::Generator::Base
       @plugins_to_migrate.each do |plugin|
         @new_versions[plugin.name] = plugin.latest_migration
       end
-      
+
       # Remove any plugins that don't need migration
       @plugins_to_migrate.map { |p| p.name }.each do |name|
         @plugins_to_migrate.delete(Engines.plugins[name]) if @current_versions[name] == @new_versions[name]
       end
-      
+
+      # begin crabgrass hack
+      # reject plugins which already have migration files
+      @plugins_to_migrate.reject! do |plugin|
+        migration_file_name = "#{plugin.name}_to_version_#{@new_versions[plugin.name]}"
+        migration_file_exists?(migration_file_name)
+      end
+      # end crabgrass hack
+
       @options[:assigns][:plugins] = @plugins_to_migrate
       @options[:assigns][:new_versions] = @new_versions
       @options[:assigns][:current_versions] = @current_versions
@@ -75,5 +84,11 @@ class PluginMigrationGenerator < Rails::Generator::Base
       @plugins_to_migrate.map do |plugin| 
         "#{plugin.name}_to_version_#{@new_versions[plugin.name]}" 
       end.join("_and_")
-    end  
+    end
+    
+    # a crabgrass hack
+    # checks to see if a file exists for this migration
+    def migration_file_exists?(migration_name)
+      !Dir.glob("#{RAILS_ROOT}/db/migrate/[0-9]*_*.rb").grep(/#{migration_name}/).empty?
+    end
 end

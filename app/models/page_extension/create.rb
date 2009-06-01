@@ -26,18 +26,35 @@ module PageExtension::Create
   # 
   module ClassMethods
     def create!(attributes = {}, &block)
+      page = build!(attributes, &block)
+      page.save!
+      page
+    end
+    
+    def create(attributes={}, &block)
+      begin
+        create!(attributes, &block)
+      rescue ActiveRecord::RecordInvalid => exc
+        exc.record
+      end
+    end
+
+    def build!(attributes={}, &block)
       if attributes.is_a?(Array)
         # act like normal create
         super(attributes, &block)
       else
         # extract extra attributes
         user       = attributes.delete(:user)
+        owner      = attributes.delete(:owner)
         recipients = attributes.delete(:share_with)
         access     = (attributes.delete(:access) || :admin).to_sym
         attributes[:created_by] ||= user
         attributes[:updated_by] ||= user
+
         Page.transaction do
           page = new(attributes)
+          page.owner = owner if owner
           yield(page) if block_given?
           if user
             if recipients
@@ -47,18 +64,9 @@ module PageExtension::Create
               page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
             end
           end
-          page.save!
           page
-        end # transaction
-      end
-    end # create
-    
-    def create(attributes={}, &block)
-      begin
-        create!(attributes, &block)
-      rescue ActiveRecord::RecordInvalid => exc
-        exc.record
-      end
+        end
+      end      
     end
 
     # parses a list of recipients, turning them into email, user, or group

@@ -15,7 +15,6 @@ middle_name: mellannamn
 group_successfully_created: Gruppen skapades utan problem.
 date_hours: timmar
 add_phone_number: "L\xC3\xA4gg till telefonnummer"
-create_a_new_something: skapa en ny {something}
 message_page_display: Meddelande
 group_invite_email: "{from_user} har bjudit in dig till \"{group}\".\r\n\
   \r\n\
@@ -75,10 +74,10 @@ friends: "V\xC3\xA4nner"
 cancel_link: avbryt
 add_encryption_key: "L\xC3\xA4gg till krypteringsnyckel"
 date_days: dagar
-media_for_group: "%s i %s"
 folder_page_display: Mapp
 create_task_list: skapa en ny uppgiftslista
 edit_underlined_e: "\xC3\xA4ndra (<u>e</u>)"
+media_for_group: "%s i %s"
 my_tasks: Uppgifter
 download: Ladda ner
 error_saving_new_order: Det gick inte att spara den nya ordern!
@@ -131,7 +130,7 @@ break_lock: "bryt l\xC3\xA5s"
 group_directory: Gruppkatalog
 create_committee: "skapa kommitt\xC3\xA9"
 locked_by_user: "l\xC3\xA5st av :user"
-comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av :user :when fr\xC3\xA5n :old_version till :new_version"
+comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av {user} {when} fr\xC3\xA5n {old_version} till {new_version}"
 contribute_content_link: Bidra
 alert_saved: "\xC3\x84ndringarna sparades"
 email_addresses: E-postadresser
@@ -146,16 +145,15 @@ cancel_button: Avbryt
 link_name: "L\xC3\xA4nknamn"
 activate_js_to_rearrange_photos: "Aktivera Javascript om du vill anv\xC3\xA4nda drag-och-sl\xC3\xA4pp-metoden f\xC3\xB6r att flytta runt bilder!"
 Fax: Fax
-create_page_headline: Skapa en ny {page_class}
 my_settings: "Inst\xC3\xA4llningar f\xC3\xB6r {user}"
 group_information: "Information f\xC3\xB6r :group_type"
 all_people: alla personer
 committee_publicly_visible_description: "Kommitt\xC3\xA9er kan ses av ickemedlemmar p\xC3\xA5 we.riseup.net/gruppnamn"
 move_image_right: "Flytta bilden \xC3\xA5t h\xC3\xB6ger"
 month_short_april: apr
-media_image: Bild
 Admin: Admin
 insert_image_instructions: "Klicka p\xC3\xA5 en miniatyr f\xC3\xB6r att l\xC3\xA4gga in bilden i wikitexten."
+media_image: Bild
 my_groups: Mina grupper
 delete_this_version: radera denna version
 minimum_stars_for_important_pages_description: "Best\xC3\xA4m hur m\xC3\xA5nga stj\xC3\xA4rnor en sida beh\xC3\xB6ver f\xC3\xB6r att synas i \"viktigt\"-listan p\xC3\xA5 gruppens f\xC3\xB6rstasida"
@@ -192,7 +190,6 @@ created_when_by: skapad :when av :user
 forgot_password_link: "Jag har gl\xC3\xB6mt mitt l\xC3\xB6senord"
 invite_info: "Ange en lista med anv\xC3\xA4ndarnamn eller e-postadresser till folk som du vill bjuda in till denna %s."
 discussions: Diskussioner
-create_a_new_page: Skapa en ny sida
 group_discussion: gruppdiskussion
 contact: Kontakt
 menu_people: Folk
@@ -205,8 +202,8 @@ invalid_email_text: "E-postadressen du angivit \xC3\xA4r ogiltig."
 format: Formatera
 diff_link: diff
 media_audio: Ljudinspelning
-media_images: Bilder
 break_lock_button: "Bryt l\xC3\xA5s"
+media_images: Bilder
 date_centuries: "\xC3\xA5rhundraden"
 approve_button: bifall
 add_email_address: "L\xC3\xA4gg till e-postadress"

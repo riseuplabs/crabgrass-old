@@ -77,6 +77,9 @@ end
 require 'redcloth/formatters/html'
 require 'cgi'
 
+$KCODE = 'u'    # \ set utf8 as the default
+require 'jcode' # / encoding
+
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_outline'
 
@@ -241,6 +244,41 @@ module GreenClothFormatterHTML
     clean_html(text, ALLOWED_TAGS) if sanitize_html # (sanitize_html should always be true)
   end
 
+  # this is an exact copy of the method by the same name defined in 
+  # lib/redcloth/formatters/html.rb (the mixin applied to this class),
+  # but for some reason everything blows up horribly if we try to call clean_html.
+  # This only happens with RedCloth 4.1.9. Debugging doesn't help, probably
+  # because it is calling some C code instead of this method. This method
+  # is copied here so that greencloth will work with redcloth 4.1.9.
+  def clean_html( text, allowed_tags = BASIC_TAGS )
+    text.gsub!( /<!\[CDATA\[/, '' )
+    text.gsub!( /<(\/*)([A-Za-z]\w*)([^>]*?)(\s?\/?)>/ ) do |m|
+      raw = $~
+      tag = raw[2].downcase
+      if allowed_tags.has_key? tag
+        pcs = [tag]
+        allowed_tags[tag].each do |prop|
+          ['"', "'", ''].each do |q|
+            q2 = ( q != '' ? q : '\s' )
+            if raw[3] =~ /#{prop}\s*=\s*#{q}([^#{q2}]+)#{q}/i
+              attrv = $1
+              next if (prop == 'src' or prop == 'href') and not attrv =~ %r{^(http|https|ftp):}
+              pcs << "#{prop}=\"#{attrv.gsub('"', '\\"')}\""
+              break
+            end
+          end
+        end if allowed_tags[tag]
+        "<#{raw[1]}#{pcs.join " "}#{raw[4]}>"
+      else # Unauthorized tag
+        if block_given?
+          yield m
+        else
+          ''
+        end
+      end
+    end
+  end
+
 end
 
 
@@ -302,8 +340,8 @@ class GreenCloth < RedCloth::TextileDoc
   # populates @headings, and then restores the string to its original form.
   def extract_headings()
     self.extend(GreenClothFormatterHTML)
-    apply_rules([:normalize_heading_blocks])
     original = self.dup
+    apply_rules([:normalize_heading_blocks])
     to(GreenClothFormatterHTML)
     self.replace(original)
   end
@@ -327,7 +365,7 @@ class GreenCloth < RedCloth::TextileDoc
   TEXTILE_HEADING_RE = /^h[123]\./
 
   # allow setext style headings
-  HEADINGS_RE = /^(.+?)\r?\n([=-])[=-]+ */
+  HEADINGS_RE = /^(.+?)\s*\r?\n([=-])[=-]+\s*?(\r?\n\r?\n?|$)/
   def normalize_heading_blocks(text)
     text.gsub!(HEADINGS_RE) do
       tag = $2=="=" ? "h1" : "h2"
@@ -679,15 +717,19 @@ end
 
 unless "".respond_to? 'nameize'
 
-  require 'iconv'
+  ##
+  ## NOTE: you will want to translit non-ascii slugs to ascii.
+  ## resist this impulse. nameized strings must remain utf8.
+  ##
+ 
   class String
     def nameize
       str = self.dup
+      str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities
       str.gsub!(/[^\w\+]+/, ' ') # all non-word chars to spaces
       str.strip!            # ohh la la
       str.downcase!         # upper case characters in urls are confusing
       str.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
-      #str = "#{str}" if str =~ /^(\d+)$/ # don't allow all numbers
       return str[0..49]
     end
     def denameize
@@ -701,3 +743,4 @@ unless "".respond_to? 'nameize'
   end
 
 end
+

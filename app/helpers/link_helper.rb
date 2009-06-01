@@ -61,13 +61,20 @@
 #
 # link_to_remote (built in)
 # 
-# remote_form_for + submit_tag (built in)
+# button_to_remote (built in)
 #
-# button_to_remote (not yet written)
-# would work like link_to_remote, but would create a button 
-# (by using remote_form_for and submit_tag)
 #
 module LinkHelper
+  
+  # link to if and only if...
+  # like link_to_if, but return nil if the condition is false
+  def link_to_iff(condition, name, options = {}, html_options = {}, &block)
+    if condition
+      link_to(name, options, html_options, &block)
+    else
+      nil
+    end
+  end
   
   ### SUBMITS ###
 

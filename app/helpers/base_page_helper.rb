@@ -62,7 +62,7 @@ module BasePageHelper
   ## SIDEBAR HELPERS
   ##
 
-  def sidebar_checkbox(text, checked, url, li_id, checkbox_id)
+  def sidebar_checkbox(text, checked, url, li_id, checkbox_id, options = {})
     click = remote_function(
       :url => url,
       :loading  => hide(checkbox_id) + add_class_name(li_id, 'spinner_icon')
@@ -71,13 +71,14 @@ module BasePageHelper
     out = []
     #out << "<label id='#{checkbox_id}_label'>" # checkbox labels don't work in IE
     out << check_box_tag(checkbox_id, '1', checked, :class => 'check', :onclick => click)
-    out << link_to_function(text, click, :class => 'check')
+    out << link_to_function(text, click, :class => 'check', :title => options[:title])
     #out << '</label>'
     out.join
   end  
 
   def popup(title, options = {}, &block)
-    block_to_partial('base_page/popup_template', {:style=>'', :id=>'', :width=>''}.merge(options).merge(:title => title), &block)
+    style = [options.delete(:style), "width:%s" % options.delete(:width)].compact.join("; ")
+    block_to_partial('base_page/popup_template', {:style=>style, :id=>''}.merge(options).merge(:title => title), &block)
   end
 
   ##
@@ -99,7 +100,7 @@ module BasePageHelper
       li_id = 'public_li' 
       checkbox_id = 'public_checkbox'
       url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :public => (!@page.public?).to_s}
-      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id)
+      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id, :title => "If checked, anyone may view this page."[:public_checkbox_help])
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     end
   end
@@ -137,6 +138,15 @@ module BasePageHelper
                      :method => 'post',
                      :confirm => 'Are you sure you want to destroy this page? It cannot be undeleted.'[:confirm_destroy_page])
       content_tag :li, link, :class => 'small_icon minus_16'
+    end
+  end
+
+  def view_line
+    if @show_print
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
+      #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
+      #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
+      content_tag :li, printable, :class => 'small_icon printer_16'
     end
   end
 
@@ -280,7 +290,7 @@ module BasePageHelper
   end
 
   def page_class
-    @page.class_display_name.capitalize
+    @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize
   end
   
   def select_page_owner(_erbout)

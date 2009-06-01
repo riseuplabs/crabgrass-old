@@ -8,8 +8,8 @@ class BasePageController < ApplicationController
 
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
-  javascript 'page', :extra
-  # ^^ extra is used for autocomplete. can we get just this without all extra?
+  javascript 'page'
+  javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -49,7 +49,7 @@ class BasePageController < ApplicationController
     @page_class = get_page_type
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
+    elsif request.post?;
       begin
         @page = create_new_page!(@page_class)
         return redirect_to(page_url(@page))
@@ -57,6 +57,8 @@ class BasePageController < ApplicationController
         @page = exc.record
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
     render :template => 'base_page/create'
   end
@@ -207,5 +209,16 @@ class BasePageController < ApplicationController
        :access => (params[:access]||'view').to_sym
      ))  
   end
+
+  def build_new_page(page_class)
+     params[:page] ||= HashWithIndifferentAccess.new
+     page_class.build!(params[:page])
+     #.merge(
+     #  :user => current_user,
+     #  :share_with => params[:recipients],
+     #  :access => (params[:access]||'view').to_sym
+     #))  
+  end
+
 end
 

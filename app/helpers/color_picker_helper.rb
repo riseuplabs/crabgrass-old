@@ -10,10 +10,16 @@ module ColorPickerHelper
       output * "\n"
     end
   end
-  
-  def color_picker_tag(input_id)
+
+  def color_picker_tag(input_id, wait_for_dom = true)
     # TODO: add {swatch: button} option
     include_color_picker
-    javascript_tag(%Q[new Control.ColorPicker("#{input_id}", { IMAGE_BASE : "/images/colorpicker/" })])
+    colorpicker_code = %Q[new Control.ColorPicker("#{input_id}", { IMAGE_BASE : "/images/colorpicker/" })]
+    if wait_for_dom
+      javascript_tag(%Q[document.observe('dom:loaded', function() {
+        #{colorpicker_code}});])
+    else
+      javascript_tag(colorpicker_code)
+    end
   end
 end

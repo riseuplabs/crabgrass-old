@@ -39,7 +39,7 @@
   <%- active = params[:controller] == 'me/trash' -%>
   <li id='trash_line' class='small_icon trash_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Trash'[:me_trash_link],
-    '/me/trash',
+    {:controller => '/me/trash'},
     active
   ) %></li>
 
@@ -49,8 +49,9 @@
 
 <%- cache(me_cache_key) do -%>
   <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
-
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.select{|g| g.network?}} %>
+  <%- if current_site.has_networks? -%>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.select{|g| g.network?}} %>
+  <%- end -%>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.normals } %>
 

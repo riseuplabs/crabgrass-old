@@ -1,19 +1,14 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'asset_page_controller'
+require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-# Re-raise errors caught by the controller.
-class AssetPageController; def rescue_action(e) raise e end; end
-
-class Tool::AssetControllerTest < Test::Unit::TestCase
+class AssetPageControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites
+
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
-    @controller = AssetPageController.new
-    @request    = ActionController::TestRequest.new
     @request.host = "localhost"
-    @response   = ActionController::TestResponse.new
+
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
     Media::Process::Base.log_to_stdout_when = :on_error
@@ -50,6 +45,32 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
       assert_response :redirect
     end
     
+  end
+  
+  def test_create_same_name
+    login_as :gerrard
+    
+    data_ids, page_ids, page_urls = [],[],[]
+    3.times do
+      post 'create', :page => {:title => "dupe", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+      page = assigns(:page)
+
+      assert_equal "dupe", page.title
+      assert_not_nil page.id
+
+      # check that we have:
+      # a new asset
+      assert !data_ids.include?(page.data.id)
+      # a new page
+      assert !page_ids.include?(page.id)
+      # a new url
+      assert !page_urls.include?(page.name_url)
+
+      # remember the values we saw
+      data_ids << page.data.id
+      page_ids << page.id
+      page_urls << page.name_url
+    end
   end
 
   def test_create_in_group
@@ -92,7 +113,7 @@ class Tool::AssetControllerTest < Test::Unit::TestCase
     post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
     @page = assigns(:page)
     @asset = assigns(:asset)
-    
+
     @controller.stubs(:login_or_public_page_required).returns(true)
     post :destroy_version, :controller => "asset_page", :page_id => @page.id, :id => 1
     assert_redirected_to @controller.page_url(@page)

@@ -1,9 +1,20 @@
 module WikiPageHelper
 
+  def may_destroy_wiki_version?
+    current_user.may?(:admin, @page)
+  end
+
+  def may_revert_wiki_version?
+    current_user.may?(:edit, @page)
+  end
+
   def locked_error_message
-    if @locked_for_me
+    if locked_for_me?
+      user_id = @wiki.locked_by_id
+      user = User.find_by_id user_id
+      display_name = user ? user.display_name : 'unknown'
       msgs = [
-        'This wiki is currently locked by :user'[:wiki_locked] % {:user => @wiki.locked_by.display_name},
+        'This wiki is currently locked by :user'[:wiki_locked] % {:user => display_name},
         'You will not be able to save this page'[:wont_be_able_to_save]
       ]
       flash_message_now :title => 'Page Locked'[:page_locked_header], :error => msgs
@@ -14,12 +25,7 @@ module WikiPageHelper
    javascript_tag(
      remote_function(
        :update => 'wiki_html',
-       :url => {
-         :controller => :wiki_page,
-         :action => :diff,
-         :page_id => @page.id,
-         :id => "%d-%d" % [@last_seen.version, @wiki.version]
-       }
+       :url => page_xurl(@page, :action => 'diff', :controller => 'version', :id => ("%d-%d" % [@last_seen.version, @wiki.version]))
      )
    )
   end
@@ -37,16 +43,13 @@ module WikiPageHelper
     opts = {:url => url}
 
     if @heading_with_form
-      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:confirm_unsaved_text_lost_label]
+      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
     end
 
-    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit])
+    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit], :id => '_change_me__edit_link')
     link.gsub!('"','\"')
 
-    unlocked_sections = @wiki.sections_not_locked_for(current_user).inspect
-    all_sections = @wiki.section_heading_names.inspect
-
-    javascript_tag %Q[wiki_edit_decorate_with_edit_links("#{link}", #{all_sections}, #{unlocked_sections});]
+    javascript_tag %Q[decorate_wiki_edit_links("#{link}")]
   end
 
 end

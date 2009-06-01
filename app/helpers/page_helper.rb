@@ -52,7 +52,8 @@ module PageHelper
   # like page_url, but it returns a direct URL that bypasses the dispatch
   # controller. intended for use with ajax calls. 
   def page_xurl(page,options={})
-    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => '/' + page.controller}
+    options[:controller] = '/' + [page.controller, options.delete(:controller)].compact.join('_')
+    hash = {:page_id => page.id, :id => 0, :action => 'show'}
     url_for(hash.merge(options))
   end
   
@@ -413,23 +414,29 @@ module PageHelper
     "page_group_#{group.gsub(':','_')}".t 
   end
   
-  def tree_of_page_types(available_page_types=nil)
+  def tree_of_page_types(available_page_types=nil, options={})
     available_page_types ||= current_site.available_page_types
     page_groupings = []
     available_page_types.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      page_groupings.concat page_class.class_group
+      next if page_class.internal
+      if options[:simple]
+        page_groupings << page_class.class_group.to_a.first
+      else
+        page_groupings.concat page_class.class_group
+      end
     end
     page_groupings.uniq!
     tree = [] 
     page_groupings.each do |grouping|
       entry = {:name => grouping, :display => display_page_class_grouping(grouping),
          :url => grouping.gsub(':','-')}
-      entry[:pages] = Page.class_group_to_class(grouping).collect
+      entry[:pages] = Page.class_group_to_class(grouping).select{ |page_klass|
+       !page_klass.internal && available_page_types.include?(page_klass.full_class_name)
+      }.sort_by{|page_klass| page_klass.order }
       tree << entry
     end
-    tree.sort!{|a,b| a[:display] <=> b[:display] }
-    return tree
+    return tree.sort_by{|entry| PageClassProxy::ORDER.index(entry[:name])||100 }
   end
   
   ## options for a page type dropdown menu for searching
@@ -469,19 +476,24 @@ module PageHelper
     end
   end
 
-  def options_for_page_owner()
+  def options_for_page_owner(owner=nil)
     groups = current_user.groups.select { |group|
       !group.committee?
     }.sort { |a, b|
        a.display_name.downcase <=> b.display_name.downcase
     }
     opts = [] 
-    if params[:group]
+    if owner
+      selected_group = owner.name
+    elsif params[:group]
       selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+    elsif params[:page] and params[:page][:owner]
+      selected_group = params[:page][:owner]
     else
       selected_group = nil
     end
-    opts << content_tag(:option, 'Only me'[:only_me], :value => '', :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+    me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
+    opts << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
     groups.collect do |group|
       selected = selected_group == group.name ? 'selected' : nil
       opts << content_tag( :option, group.display_name, :value => group.name, :class => 'spaced', :selected => selected )

@@ -1,7 +1,7 @@
 <% form_remote_tag(*options_for_edit_tag_form) do -%>
 
   <blockquote>
-    <h2><%= 'Current Tags'[:current_tags] %></h2>
+    <h2 class="first"><%= 'Current Tags'[:current_tags] %></h2>
 
     <% if( @page.tags.any? ) %>
       <% @page.tags.sort_by{|t|t.name}.each do |tag| %>

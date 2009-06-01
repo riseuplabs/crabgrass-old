@@ -131,7 +131,7 @@ class GalleryController < BasePageController
     # see my comment in app/models/asset.rb for details.
     #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
     results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-      current_user.may?(:view, a.page) ? a : nil
+      (a.page && current_user.may?(:view, a.page)) ? a : nil
     }
     current_page = (params[:page] or 1)
     per_page = 30
@@ -240,12 +240,14 @@ class GalleryController < BasePageController
           asset = Asset.make(:uploaded_data => file)
           @page.add_image!(asset, current_user)
         end
-        return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
+        return redirect_to(create_page_url(AssetPage, :gallery => @page.id)) if params[:add_more_files]
         return redirect_to(page_url(@page))
       rescue Exception => exc
         @page = exc.record
         flash_message_now :exception => exc
       end
+    else
+      @page = build_new_page(@page_class)
     end
   end
   

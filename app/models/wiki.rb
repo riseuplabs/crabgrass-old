@@ -27,6 +27,12 @@
 #     add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
 #
 
+##
+## SERIOUS KNOWN PROBLEMS:
+## (1) editing sections that come out of order (ie h2 then h3)
+## (2) editing sections with html markup in them.
+##
+
 class Wiki < ActiveRecord::Base
 
   #   wiki.edit_locks => {:all => {:locked_by_id => user_id, :locked_at => Time},
@@ -36,8 +42,6 @@ class Wiki < ActiveRecord::Base
   # accessor for +edit_locks+ attribute. The default value is +{}+
   serialize :edit_locks, Hash
   serialize_default :edit_locks, Hash.new
-
-  belongs_to :user
 
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
@@ -59,15 +63,13 @@ class Wiki < ActiveRecord::Base
   # this method overwrites existing locks.
   def lock(time, user, section = :all)
     time = time.utc
-
-    # no one should be able to lock more than one section at a time
-    unlock_everything_by(user)
-    # over write the existing lock if there's one. the caller is responsible
-    # for not deleting important locks
-    edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
-
-    # save without versions or timestamps
-    update_edit_locks_attribute(edit_locks)
+    if section_is_available_to_user(user, section)
+      unlock_everything_by(user) # can only edit 1 section at a time
+      self.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
+      update_edit_locks_attribute(self.edit_locks)
+    else
+      raise WikiLockException.new('section is already locked')
+    end
   end
 
   # unlocks a previously locked wiki (or a section) so that it can be edited by anyone.
@@ -119,6 +121,10 @@ class Wiki < ActiveRecord::Base
     else
       return nil
     end
+  end
+
+  def locked_by(section = :all)
+    User.find_by_id locked_by_id(section)
   end
 
   # returns true if +section+ is locked by user
@@ -224,6 +230,10 @@ class Wiki < ActiveRecord::Base
   acts_as_versioned :if => :save_new_version? do 
     # these methods are added to both Wiki and Wiki::Version
 
+    def self.included(base)
+      base.belongs_to :user
+    end
+
     def body=(value) # :nodoc: 
       write_attribute(:body, value)
       write_attribute(:body_html, "")
@@ -290,6 +300,18 @@ class Wiki < ActiveRecord::Base
       :order => "updated_at DESC"
   end
 
+  # reverts and keeps all the old versions
+  def revert_to_version(version_number, user)
+    version = versions.find_by_version(version_number)
+    smart_save!(:body => version.body, :user => user)
+  end
+
+  # reverts and deletes all versions after the reverted version.
+  def revert_to_version!(version_number, user=nil)
+    revert_to(version_number)
+    destroy_versions_after(version_number)
+  end
+
   ##
   ## SAVING
   ##
@@ -307,6 +329,8 @@ class Wiki < ActiveRecord::Base
   #       not work, because the version number is not incremented.
   #       so, smart_save! must be the only way that the wiki gets saved.
   def smart_save!(params)
+    params[:heading] ||= :all
+
     if params[:version] and version > params[:version].to_i
       raise ErrorMessage.new("can't save your data, someone else has saved new changes first.")
     end
@@ -315,11 +339,10 @@ class Wiki < ActiveRecord::Base
       raise ErrorMessage.new("User is required.")
     end
 
-    unless editable_by?(params[:user])
+    unless editable_by?(params[:user], params[:heading])
       raise ErrorMessage.new("Cannot save your data, someone else has locked the page.")
     end
 
-    # reinsert the section into the body
     self.body = params[:body]
 
     if recent_edit_by?(params[:user])
@@ -333,7 +356,7 @@ class Wiki < ActiveRecord::Base
       without_locking {save!}
     end
 
-    unlock
+    unlock(params[:heading])
   end
 
   ##### RENDERING #################################
@@ -417,7 +440,10 @@ class Wiki < ActiveRecord::Base
     @page = p
   end
 
-  #### PROTECTED METHODS #######
+  ##
+  ## PROTECTED METHODS
+  ##
+
   protected
 
   def update_expired_locks
@@ -438,10 +464,39 @@ class Wiki < ActiveRecord::Base
 
   def update_edit_locks_attribute(updated_locks)
     without_revision do
-      without_timestamps do
-        update_attribute(:edit_locks, updated_locks)
-      end
+     without_timestamps do
+       update_attribute(:edit_locks, updated_locks)
+     end
     end
+  end
+
+  def destroy_versions_after(version_number)
+    versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
+      version.destroy
+    end
+  end
+
+  private
+
+  ## this is really confusing and needs to be cleaned up. 
+  ##
+  ## a section which we don't think exists, then the wiki appears to be
+  ## locked. This is a problem, because then you cannot ever unlock the wiki.
+  ##
+  ## the hacky solution for now is to add this missing section to available
+  ## sections.
+  ## 
+  ## also, without the hacky line, trying to edit a newly created wiki
+  ## throws an error that it is locked!
+  ##
+  def section_is_available_to_user(user, section)
+    available_sections = sections_not_locked_for(user)
+
+    ## here is the hacky line:
+    available_sections << section unless section_heading_names.include?(section)
+
+    # the second clause (locked_by_id == ...) will include :all section
+    available_sections.include?(section) || self.locked_by_id(section) == user.id
   end
 
 end

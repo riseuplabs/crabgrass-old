@@ -4,7 +4,6 @@ document.observe('dom:loaded', function() {
   <%= create_wiki_toolbar(@wiki) %>
 });
 <% end -%>
-
 <% @show_posts = false -%>
 <% locked_error_message -%>
 <div id='<%= image_popup_id(@wiki) %>' class='image_popup' style='display:none'></div>
@@ -12,7 +11,7 @@ document.observe('dom:loaded', function() {
   <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>
    <div class='fieldset'><%= text_area 'wiki', 'body', :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
-   <div class='formatting_reference'><a  href="javascript:quickRedReference();"><%= :formatting_reference_link.t %></a></div>
+   <%= formatting_reference_link %>
    <div>
      <% if locked_for_me? -%>
        <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
