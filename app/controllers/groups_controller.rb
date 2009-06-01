@@ -59,6 +59,7 @@ class GroupsController < ApplicationController
     end
   rescue Exception => exc
     @group = exc.record if exc.record.is_a? Group
+    @group ||= Group.new
     flash_message :exception => exc
   end
        
@@ -75,7 +76,13 @@ class GroupsController < ApplicationController
   end
   
   def get_group_class
-    type = params[:id].any? ? params[:id] : 'group'
+    type = if params[:id]
+      params[:id]
+    elsif params[:parent_id]
+      'committee'
+    else
+      'group'
+    end
     if params[:parent_id]
       unless ['council','committee'].include? type
         raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] % {:type => type})
