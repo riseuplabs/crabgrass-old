@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   end
 
   def my
-    @groups = current_user.groups.alphabetized('').paginate(:all, :page => params[:page])
+      @groups = current_user.groups.only_groups.alphabetized('').paginate(:all, :page => params[:page])
   end
 
   # login required

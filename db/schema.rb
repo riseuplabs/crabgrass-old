@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090523034728) do
+ActiveRecord::Schema.define(:version => 20090601212548) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -548,6 +548,8 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.string  "login_redirect_url"
     t.boolean "chat"
     t.boolean "limited"
+    t.integer "signup_mode",          :limit => 1
+    t.string  "email_sender_name",    :limit => 40
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
