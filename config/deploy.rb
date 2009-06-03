@@ -1,49 +1,65 @@
-#
-# REMEMBER: you can see available tasks with "cap -T"
-#
+##
+## REMEMBER: you can see available tasks with "cap -T"
+##
+
+##
+## Items to configure
+##
 
 set :application, "crabgrass"
+set :user, "crabgrass"
 
-# deploy with git
-set :repository,  "gitosis@labs.riseup.net:unicef.git"
-set :scm, "git"
+set :repository, "gitosis@labs.riseup.net:unicef.git"
 set :branch, "youthportal"
 
-set :local_repository, "#{File.dirname(__FILE__)}/../"
+deploy_host = "bunting.riseup.net"
+staging_host = "209.234.253.12"
 
-set :deploy_via, :remote_cache  # if your server has direct access to the repository  
-#set :deploy_via, :copy  # if you server does NOT have direct access to the repository
-set :copy_strategy, :checkout
-set :copy_exclude, [".git"]
-
-set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)  
-
-set :keep_releases, 3
-
-ssh_options[:paranoid] = false  
-set :use_sudo, false   
-
-role :web, "209.234.253.12"
-role :app, "209.234.253.12"
-role :db, "209.234.253.12", :primary=>true
-
-set :deploy_to, "/usr/apps/#{application}"
-set :user,      'crabgrass'
+staging = true
 
 set :app_db_host, 'localhost'
 set :app_db_user, 'crabgrass'
 set :app_db_pass, 'ien1Zei2'
 set :secret, "8e716bee25786fdee9d0a1fda3b9bb4169c5a0ff1014725802f568a459410b0e75"
 
-# =============================================================================
-# SSH OPTIONS
-# =============================================================================
+##
+## Items you should probably leave alone
+##
+
+set :scm, "git"
+set :local_repository, "#{File.dirname(__FILE__)}/../"
+
+set :deploy_via, :remote_cache
+
+# as an alternative, if you server does NOT have direct git access to the,
+# you can deploy_via :copy, which will build a tarball locally and upload
+# it to the deploy server.
+#set :deploy_via, :copy
+set :copy_strategy, :checkout
+set :copy_exclude, [".git"]
+
+set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)  
+set :keep_releases, 3
+
+ssh_options[:paranoid] = false  
+set :use_sudo, false   
+
+role :web, (staging ? staging_host : deploy_host)
+role :app, (staging ? staging_host : deploy_host)
+role :db, (staging ? staging_host : deploy_host), :primary=>true
+
+set :deploy_to, "/usr/apps/#{application}"
+
+##
+## SSH OPTIONS
+##
+
 # ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
 # ssh_options[:port] = 25
 
-# =============================================================================
-# TASKS
-# =============================================================================
+## 
+## CUSTOM TASKS
+## 
 
 namespace :passenger do
   desc "Restart rails application"
