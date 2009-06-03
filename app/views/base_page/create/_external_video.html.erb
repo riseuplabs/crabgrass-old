@@ -1,6 +1,10 @@
-<dt><%= 'Embed'.t %></dt>
-<dd>
-  <%= 'Embed code from external video source'[:video_embed_code_prompt] %><br/>
-  <%= text_area 'external_video', 'media_embed', :size => '38x3' %><br />
-  <i>(<%= 'currently supported: youtube, blip.tv, google video, vimeo'[:current_video_sources] %>)</i>
-</dd>
+<tr>
+  <td colspan="2" class="label first"><%= 'Embed'.t %></td>
+</tr><tr>
+  <td><%= text_area 'external_video', 'media_embed', :size => '40x3' %></td>
+  <td class="help">
+    <%= 'Embed code from external video source'[:video_embed_code_prompt] %>
+    (<%= 'currently supported: youtube, blip.tv, google video, vimeo'[:current_video_sources] %>).
+  </td>
+</tr>
+

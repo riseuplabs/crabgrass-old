@@ -1,4 +1,20 @@
 <%= spinner 'popup' %><%# unused, but _add_recipient.rjs tries to hide it %>
-<%= render :partial => 'base_page/share/share_form', :locals => {:notify => false, :owner => true} %>
+
+<tr><td colspan="2" class="heading">
+  <h2 class="first"><%= 'Share this page with:'[:share_page_recipients, "Page"[:page]] %></h2>
+</td></tr>
+
+<tr>
+<td>
+  <div class='share_page'>
+  <div id='share_error_message'></div>
+  <%= render :partial => 'base_page/share/add_recipient_widget' %>
+  </div>
+</td>
+<td class="help">
+  <%= help(:sharing) %>
+</td>
+</tr>
+
 
 

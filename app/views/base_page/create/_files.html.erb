@@ -1,10 +1,14 @@
-<dt><%= 'File'[:file] %></dt>
-<dd><input name="assets[]" size="22" type="file" /></dd>
-
-<dt><%= 'File'[:file] %></dt>
-<dd><input name="assets[]" size="22" type="file" /></dd>
-
-<dt id='add_file_field'></dt>
-<dd><%= link_to_function('Add another file'[:add_another_file], %[$('add_file_field').insert({before: '<dt>#{'File'[:file]}</dt><dd><input name=\\'assets[]\\' size=\\'22\\' type=\\'file\\' /></dd>'})]) %>
+<tr>
+  <td colspan="2" class="label first"><%= 'Files'[:files] %></td>
+</tr><tr>
+  <td>
+    <p><input name="assets[]" size="29" type="file" /></p>
+    <p><input name="assets[]" size="29" type="file" /></p>
+    <p id='add_file_field'>
+      <%= link_to_function('Add another file'[:add_another_file], %[$('add_file_field').insert({before: '<p><input name=\\'assets[]\\' size=\\'29\\' type=\\'file\\' /></p>'})]) %>
+    </p>
+  </td>
+  <td class="help"><%= help(:upload_file) %></td>
+</tr>
 
 

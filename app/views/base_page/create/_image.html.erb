@@ -1,3 +1,7 @@
-<dt><%= 'Image'[:media_image] %></dt>
-<dd><%= file_field 'asset', 'uploaded_data', :size => 22 %></dd>
+<tr>
+  <td colspan="2" class="label first"><%= 'Image'[:media_image] %></td>
+</tr><tr>
+  <td><%= file_field 'asset', 'uploaded_data', :size => 29 %></td>
+  <td class="help"><%= help(:upload_image) %></td>
+</tr>
 

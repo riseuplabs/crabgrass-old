@@ -40,7 +40,7 @@ module GroupHelper
   end
 
   def group_type
-    @group_type || (@group.class.to_s.downcase if @group)
+    @group_type || (@group.group_type if @group)
   end
 
   def leave_group_link

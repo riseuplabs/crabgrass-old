@@ -42,6 +42,7 @@ people: "People"
 members: "Members"
 all_content: "All Content"
 more_information: "More Information"
+required: "(required)"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
@@ -321,7 +322,6 @@ image_title: "Image title: %s"
 ## ME
 ## 
 
-contribute_content_link: "Create Page"
 me_dashboard_link: "Dashboard"
 me_inbox_link: "Inbox"
 me_search_link: "Search"
@@ -701,7 +701,7 @@ share_page_email: "Send an email notification"
 share_page_message: "Send a message (optional)"
 share_page_link: "Share :page_class"
 share_page_options: "Choose options"
-share_page_recipients: "Share this {page_class} with"
+share_page_recipients: "Share This {page_class}"
 share_page_recipients_sections: "Choose from your groups or friends"
 share_page_recipients_selection: "Make your selection"
 share_page_recipients_results: "This {page_class} will be shared with"
@@ -713,10 +713,12 @@ notify_recipients: "Recipients"
 
 # creating
 
-page_create_owner: "Page Owner"
-page_create_access: "Additional Access"
-create_page_information: "{page_class} information"
-create_page_data: "{page_class} data"
+contribute_content_link: "Create Page"
+contribute_group_content_link: "Add Page To {group}"
+page_create_owner: "Page Owner (optional)"
+#page_create_access: "Additional Access"
+create_page_information: "{page_class} Information"
+create_page_data: "{page_class} Data"
 create_page_share: "Who has access to this {page_class}?"
 create_page: "Create Page"
 only_me: "Me"
@@ -724,6 +726,17 @@ back_button: "Back"
 create_page_button: "Create {page_class}"
 title: "Title"
 summary: "Summary"
+file: "File"
+files: "Files"
+
+title_help: "This is help for the title."
+summary_help: "A brief summary of the page."
+page_owner_help: ""
+sharing_help: "Optional. You can share this page with multiple recipients (either users or groups). <b>Coordinator</b> access will grant unrestricted access to the page, including the ability to delete the page and share it with others. <b>Participant</b> access will grant the ability to edit and contribute to the page. <b>Viewer</b> access allows for the viewing of the page, and nothing more."
+wiki_body_help: ""
+upload_image_help: ""
+upload_file_help: ""
+
 
 ##
 ## PAGE TYPES

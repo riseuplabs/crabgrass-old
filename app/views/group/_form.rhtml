@@ -2,7 +2,7 @@
 <%= hidden_field_tag('parent_id', @parent.id) if @parent %>
 
 <h2 class='alert'>
-  <%= '{group_type} Information'[:group_infomation, {:group_type => group_type.t}] %>
+  <%= '{group_type} Information'[:group_infomation, {:group_type => group_type}] %>
 </h2>
 
 <%-
@@ -20,8 +20,8 @@
     <%= "What type of committee will this be?"[:committee_type_description]%>
   </label><br/>
   <ul class='plain'>
-   <li><label><%= radio_button(:group, 'is_council', "true") %> <b><%= "coordinating council".t %>:</b> <%= :coordinating_council_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
-   <li><label><%= radio_button(:group, 'is_council', "false") %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.display_type, :group_name => @parent.name} %><label></li>
+   <li><label><%= radio_button(:group, 'is_council', "true") %> <b><%= "coordinating council".t %>:</b> <%= :coordinating_council_description.t % {:group_type => @parent.group_type, :group_name => @parent.name} %><label></li>
+   <li><label><%= radio_button(:group, 'is_council', "false") %> <b><%= "working group".t %>:</b> <%= :working_group_description.t % {:group_type => @parent.group_type, :group_name => @parent.name} %><label></li>
   </ul>
 </p>
 <%- elsif @group && @group.is_council? && !@parent.nil? -%>
@@ -58,7 +58,7 @@
 <p>
   <label for="group_language">
     <b><%= "Language"[:language] %></b><br/>
-    <%= 'The main language of this %s.'[:group_language] % group_type.t %>
+    <%= 'The main language of this %s.'[:group_language] % group_type %>
   </label>
   <%= select 'group', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
 </p>
@@ -99,11 +99,11 @@
 <br/>
 
 <h2 class='alert'>
-<%= '%s Privacy Settings'[:group_privacy_settings] % group_type.capitalize %>
+<%= '%s Privacy Settings'[:group_privacy_settings] % group_type %>
 </h2>
 
 <p><%= check_box :group, :publicly_visible_group, :onclick => "show_or_hide_vis_opts();" %>
-<label for="group_visible"><b><%= 'Make %s Publicly Visible'[:group_publicly_visible] % group_type.capitalize %></b></label>
+<label for="group_visible"><b><%= 'Make %s Publicly Visible'[:group_publicly_visible] % group_type %></b></label>
 <br>
 <%= "Group appears in public directory and group <i>profile</i> is viewable by non-members at %s/yourgroupname."[:group_publicly_visible_description] % current_site.domain %>
 </p>
