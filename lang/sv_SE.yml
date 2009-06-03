@@ -223,7 +223,7 @@ data_for_page_missing: "Datan f\xC3\xB6r den h\xC3\xA4r sidan saknas."
 media_documents: Dokument
 me_dashboard_link: Panelen
 menu_groups: Grupper
-create_a_new_thing: skapa en ny :thing
+create_a_new_thing: skapa en ny {thing}
 large: stor
 information: Information
 add_description: "L\xC3\xA4gg till beskrivning"

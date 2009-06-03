@@ -258,8 +258,7 @@ module Formy
       
       def close
         selected = 'active' if "#{@selected}" == "true"
-        @class = [@class, selected].join(' ')
-        @style ||= @icon ? "background: url(/images/#{@icon}) no-repeat center left" : nil
+        @class = [@class, selected, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
         if @link
           a_tag = @link
         elsif @url

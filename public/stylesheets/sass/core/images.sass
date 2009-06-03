@@ -2,11 +2,18 @@
 // ICONS
 // 
 
+// for use with icon + text
 .small_icon
   background-repeat: no-repeat
   background-position: 0 50%
   padding-left: 20px
   min-height: 16px
+
+// for use with icon stand alone
+.small_icon_button
+  height: 16px
+  width: 16px
+  display: block
 
 .spinner_icon
   background-image: url(/images/spinner.gif)
@@ -20,14 +27,16 @@
 .page_icon
   height: 16px
   width: 16px
+  background-repeat: no-repeat
+  background-position: 0 50%
 
 .name_icon
   background-repeat: no-repeat
   background-position: 1px 50%
   &.tiny
-    padding: 0px 0 0px 12px
+    padding: 0px 0 0px 17px
   &.xsmall
-    padding: 5px 0 5px 26px
+    padding: 2px 0 4px 26px
   &.small
     padding: 8px 0 8px 36px
     display: block
@@ -50,9 +59,12 @@
     &:hover
       display: none
 
+.page_list a.name_icon.xsmall
+  display: block
+
 button
   &.icon_16
-    vertical-align: top
+    vertical-align: text-top
     background-repeat: no-repeat
     border: none
     margin: 0

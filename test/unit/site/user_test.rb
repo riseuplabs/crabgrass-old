@@ -15,12 +15,12 @@ class UserTest < Test::Unit::TestCase
     user = users(:blue)
     
     assert_equal true, user.all_groups.any?
-    assert_equal [1,2,2], user.all_groups.collect{|g|g.site_id}.compact.sort
+    assert_equal [1,1,2,2,2], user.all_groups.collect{|g|g.site_id}.compact.sort
     
     site = sites(:limited)
-    groups(:rainbow).update_attribute(:site_id, site.id)
+    groups(:true_levellers).update_attribute(:site_id, site.id)
 
-    assert_equal [1,2,2, site.id], user.all_groups(true).collect{|g|g.site_id}.compact.sort
+    assert_equal [1,1,2,2,2, site.id], user.all_groups(true).collect{|g|g.site_id}.compact.sort
 
     enable_site_testing(:limited)
     assert_equal [site.id], user.all_groups(true).collect{|g|g.site_id}.compact.sort

@@ -167,6 +167,11 @@ module PathFinder::Mysql::BuilderFilters
     elsif page_group
       @conditions << 'pages.type IN (?)'
       @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+    else
+      # we didn't find either a type or a group for arg
+      # just search for arg. this should return an empty set
+      @conditions << 'pages.type = ?'
+      @values <<  arg # example 'bad_page_type'
     end
   end
 

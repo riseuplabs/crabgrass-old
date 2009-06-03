@@ -198,7 +198,7 @@ month_short_july: Juil
 delete_post: Supprimer le message
 search: Rechercher
 email: Mail
-create_a_new_thing: "Cr\xC3\xA9er un-e nouvel-le :thing"
+create_a_new_thing: "Cr\xC3\xA9er un-e nouvel-le {thing}"
 my_world_heading: Mon Univers
 welcome_create_group_link: "Cr\xC3\xA9er un nouveau groupe"
 view_requests: voir les demandes

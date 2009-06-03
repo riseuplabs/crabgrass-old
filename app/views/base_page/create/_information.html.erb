@@ -1,46 +1,45 @@
-<!--
-<table>
-  <tr>
-    <td class='label'><%= 'Title'.t %></td>
-    <td><%= text_field 'page', 'title', :size => 38 %></td>
-    <%= javascript_tag %( $("page_title").focus() ) %>
-  </tr>
-  <tr>
-    <td class='label'><%= 'Summary'.t %></td>
-    <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
-  </tr>
-  <tr>
-    <td class='label'><%= 'Tags'.t %></td>
-    <td>
-      <%= text_field 'page', 'tag_list', :size => 38 %><br/>
-      <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
-    </td>
-  </tr>
-</table>
--->
+<tr><td colspan="2" class="heading first">
+  <h2><%= '{page_class} Information'[:create_page_information, "Page"[:page]] %></h2>
+</td></tr>
 
-<h2><%= '{page_class} information'[:create_page_information, {:page_class => page_class}].capitalize %></h2>
+<tr>
+  <td colspan="2" class="label first"><%= 'Title'.t %></td>
+</tr>
+<tr>
+  <td><%= text_field 'page', 'title', :size => 40 %></td>
+  <%= javascript_tag %( $("page_title").focus() ) %>
+  <td class="help"><%= help(:title) %></td>
+</tr>
 
-<dl>
+<tr>
+  <td colspan="2" class='label'><%= 'Summary'.t %></td>
+</tr>
+<tr>
+  <td><%= text_area 'page', 'summary', :size => '40x3' %></td>
+  <td class="help"><%= help(:summary) %></td>
+</tr>
 
-  <dt><%= 'Title'.t %></dt>
-  <dd><%= text_field 'page', 'title', :size => 38 %><%= javascript_tag %( $("page_title").focus() ) %></dd>
+<tr>
+  <td colspan="2" class='label'><%= 'Tags'.t %></td>
+</tr>
+<tr>
+  <td>
+    <%= text_field 'page', 'tag_list', :size => 40 %>
+  </td>
+  <td class="help"><%= 'Separate tags using commas'[:separate_tags]%></td>
+</tr>
 
-  <dt><%= 'Summary'.t %></dt>
-  <dd><%= text_area 'page', 'summary', :size => '38x3' %></dd>
-
-  <dt><%= 'Tags'.t %></dt>
-  <dd><%= text_field 'page', 'tag_list', :size => 38 %><br/>
-<i>(<%= 'separate tags using commas'[:separate_tags]%>)</i></dd>
-
-</dl>
-
-<% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
-  <h2><%= '{page_class} data'[:create_page_data, {:page_class => page_class}].capitalize %></h2>
-  <dl>
-  <% sections.each do |section| %>
-    <%= render :partial => "base_page/create/#{section}" %>
-  <% end %>
-  </dl>
+<% if params[:group].any? %>
+  <%= hidden_field_tag 'page[owner]', params[:group] %>
+<% else %>
+<tr>
+  <td colspan="2" class='label'><%= "Page Owner (optional)"[:page_create_owner] %></td>
+</tr>
+<tr>
+  <td>
+    <%= select_tag 'page[owner]', options_for_page_owner(:include_me => true) %>
+  </td>
+  <td class="help"><%= help(:page_owner) %></td>
+</tr>
 <% end %>
 

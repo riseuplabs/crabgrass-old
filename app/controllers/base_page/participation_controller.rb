@@ -57,7 +57,7 @@ class BasePage::ParticipationController < ApplicationController
   # requires :admin access.
   def move
     if params[:cancel]
-      redirect_to page_url(@page)
+      close_popup
     elsif params[:group_id].any?
       group = Group.find params[:group_id]
       raise PermissionDenied.new unless current_user.member_of?(group)

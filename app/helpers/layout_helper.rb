@@ -1,8 +1,9 @@
 module LayoutHelper
 
-  ##########################################
-  # DISPLAYING BREADCRUMBS and CONTEXT
-  
+  ##
+  ## DISPLAYING BREADCRUMBS and CONTEXT
+  ##
+
   def link_to_breadcrumbs(min_length = 3)
     if @breadcrumbs and @breadcrumbs.length >= min_length
       content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
@@ -15,9 +16,10 @@ module LayoutHelper
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
 
-  #########################################
-  # TITLE
-  
+  ##
+  ## TITLE
+  ##
+
   def title_from_context
     (
       [@html_title] +
@@ -26,9 +28,10 @@ module LayoutHelper
     ).compact.join(' - ')
   end
       
-  ###########################################
-  # STYLESHEET
-  
+  ##
+  ## STYLESHEET
+  ##
+
   # CustomAppearances model allows administrators to override the default css values
   # this method will link to the appropriate overriden css
   def themed_stylesheet_link_tag(path)
@@ -91,19 +94,6 @@ module LayoutHelper
   <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
-  # support for holygrail layout:
-  
-  # returns the style elements need in the <head> for the holygrail layouts. 
-  def holygrail_stylesheets
-    lines = []
-    lines << stylesheet_link_tag('holygrail/common')
-    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
-    lines << '<!--[if lt IE 7]>
-<style media="screen" type="text/css">.col1 {width:100%;}</style>
-<![endif]-->' # this line is important!
-    lines.join("\n")
-  end
-
   def type_of_column_layout
     @layout_type ||= if @left_column.any? and @right_column.any?
       'three'
@@ -116,15 +106,25 @@ module LayoutHelper
     end
   end
   
-  ############################################
-  # JAVASCRIPT
+  ##
+  ## JAVASCRIPT
+  ##
 
+  # includes the correct javascript tags for the current request.
+  # if the special symbol :extra has been specified as a required js file,
+  # then this expands to all the scriptalicous files.
   def optional_javascript_tag
     scripts = controller.class.javascript || {}
     js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
     return unless js_files.any?
     extra = js_files.delete(:extra)
-    js_files = js_files.collect{|i| "as_needed/#{i}" }
+    js_files = js_files.collect do |jsfile|
+      if ['effects', 'dragdrop', 'controls', 'builder', 'slider'].include? jsfile
+        jsfile
+      else
+        "as_needed/#{jsfile}"
+      end
+    end
     if extra
       js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
     end
@@ -147,8 +147,9 @@ module LayoutHelper
     lines.join("\n")
   end
   
-  ############################################
-  # BANNER
+  ##
+  ## BANNER
+  ##
 
   # banner stuff
   def banner_style
@@ -161,9 +162,10 @@ module LayoutHelper
     @banner_style.color if @banner_style
   end
 
-  ############################################
-  # CONTEXT STYLES
-  
+  ##
+  ## CONTEXT STYLES
+  ##
+
   def background_color
     "#ccc"
   end
@@ -185,8 +187,9 @@ module LayoutHelper
     style.join("\n")
   end
 
-  ###########################################
-  # LAYOUT STRUCTURE
+  ##
+  ## LAYOUT STRUCTURE
+  ##
 
   # builds and populates a table with the specified number of columns
   def column_layout(cols, items, options = {}, &block)
@@ -220,9 +223,18 @@ module LayoutHelper
     lines.join("\n")
   end
 
+  ##
+  ## PARTIALS
+  ##
 
-  ############################################
-  # CUSTOMIZED STUFF
+  def dialog_page(options = {}, &block)
+    block_to_partial('common/dialog_page', options, &block)
+  end
+  
+
+  ##
+  ## CUSTOMIZED STUFF
+  ##
 
   # build a masthead, using a custom image if available
   def custom_masthead_site_title

@@ -240,7 +240,7 @@ class GalleryController < BasePageController
           asset = Asset.make(:uploaded_data => file)
           @page.add_image!(asset, current_user)
         end
-        return redirect_to create_page_url(AssetPage, :gallery => @page.id) if params[:add_more_files]
+        return redirect_to(create_page_url(AssetPage, :gallery => @page.id)) if params[:add_more_files]
         return redirect_to(page_url(@page))
       rescue Exception => exc
         @page = exc.record

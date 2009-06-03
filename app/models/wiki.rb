@@ -27,6 +27,12 @@
 #     add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
 #
 
+##
+## SERIOUS KNOWN PROBLEMS:
+## (1) editing sections that come out of order (ie h2 then h3)
+## (2) editing sections with html markup in them.
+##
+
 class Wiki < ActiveRecord::Base
 
   #   wiki.edit_locks => {:all => {:locked_by_id => user_id, :locked_at => Time},
@@ -57,18 +63,12 @@ class Wiki < ActiveRecord::Base
   # this method overwrites existing locks.
   def lock(time, user, section = :all)
     time = time.utc
-
-    Wiki.transaction do
-      fresh_wiki = Wiki.find(self.id)
-      locked_id = fresh_wiki.locked_by_id(section)
-      if locked_id.nil? or locked_id == user.id
-        fresh_wiki.unlock_everything_by(user) # can only edit 1 section at a time
-        fresh_wiki.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
-        fresh_wiki.update_edit_locks_attribute(fresh_wiki.edit_locks)
-        self.edit_locks = fresh_wiki.edit_locks
-      else
-        raise WikiLockException.new('section is already locked')
-      end
+    if section_is_available_to_user(user, section)
+      unlock_everything_by(user) # can only edit 1 section at a time
+      self.edit_locks[section] = {:locked_at => time, :locked_by_id => user.id}
+      update_edit_locks_attribute(self.edit_locks)
+    else
+      raise WikiLockException.new('section is already locked')
     end
   end
 
@@ -123,6 +123,10 @@ class Wiki < ActiveRecord::Base
     end
   end
 
+  def locked_by(section = :all)
+    User.find_by_id locked_by_id(section)
+  end
+
   # returns true if +section+ is locked by user
   # unlike +locked_by_id+ method this method will not
   # count a single section to be locked by +user+ when
@@ -130,7 +134,6 @@ class Wiki < ActiveRecord::Base
   def locked_by?(user, section = :all)
     return !edit_locks[section].nil? && edit_locks[section][:locked_by_id] == user.id
   end
-
 
   # returns true if the page is free to be edited by +user+ (ie, not locked by someone else)
   def editable_by?(user, section = :all)
@@ -459,18 +462,48 @@ class Wiki < ActiveRecord::Base
   end
 
   def update_edit_locks_attribute(updated_locks)
-    Wiki.connection.execute("UPDATE wikis SET edit_locks = #{Wiki.connection.quote(updated_locks)} WHERE id = #{self.id}")
-    #without_revision do
-    #  without_timestamps do
-    #    update_attribute(:edit_locks, updated_locks)
-    #  end
-    #end
+    without_revision do
+     without_timestamps do
+       update_attribute(:edit_locks, updated_locks)
+     end
+    end
   end
 
   def destroy_versions_after(version_number)
     versions.find(:all, :conditions => ["version > ?", version_number]).each do |version|
       version.destroy
     end
+  end
+
+  private
+
+  ## this is really confusing and needs to be cleaned up. 
+  ##
+  ## if this is passed a section which we don't think exists, then the wiki
+  ## appears to be locked. This is a problem, because then you cannot ever
+  ## unlock the wiki.
+  ##
+  ## the hacky solution for now is to add this missing section to available
+  ## sections.
+  ## 
+  ## also, without the hacky line, trying to edit a newly created wiki
+  ## throws an error that it is locked!
+  ##
+  ## also, if self.body == nil, then don't check the sections, because it will
+  ## bomb out.
+  ##
+  def section_is_available_to_user(user, section)
+    if self.body.nil?
+      return editable_by?(user)
+    end
+
+    available_sections = sections_not_locked_for(user)
+
+    ## here is the hacky line:
+    available_sections << section unless section_heading_names.include?(section)
+
+    # the second clause (locked_by_id == ...) will include :all section
+    available_sections.include?(section) || self.locked_by_id(section) == user.id
   end
 
 end

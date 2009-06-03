@@ -77,7 +77,8 @@ module BasePageHelper
   end  
 
   def popup(title, options = {}, &block)
-    block_to_partial('base_page/popup_template', {:style=>'', :id=>'', :width=>''}.merge(options).merge(:title => title), &block)
+    style = [options.delete(:style), "width:%s" % options.delete(:width)].compact.join("; ")
+    block_to_partial('base_page/popup_template', {:style=>style, :id=>''}.merge(options).merge(:title => title), &block)
   end
 
   ##
@@ -140,6 +141,15 @@ module BasePageHelper
     end
   end
 
+  def view_line
+    if @show_print
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
+      #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
+      #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
+      content_tag :li, printable, :class => 'small_icon printer_16'
+    end
+  end
+
   ##
   ## SIDEBAR COLLECTIONS
   ##
@@ -170,11 +180,17 @@ module BasePageHelper
   ## 
 
   # used by ajax show_popup.rjs templates
+  # 
+  # for the popup to display in the right spot, we actually offset it by
+  # top: -32px, right: 43px from the natural position of the clicked element.
+  #
   def popup_holder_style
     page_width, page_height = params[:page].split('x')
     object_x, object_y      = params[:position].split('x')
     right = page_width.to_i - object_x.to_i
     top   = object_y.to_i
+    right += 43
+    top -= 32
     "display: block; right: #{right}px; top: #{top}px;"
   end
 
@@ -193,6 +209,9 @@ module BasePageHelper
   # get bigger to show the whole popup, but it will just get clipped. 
   # overflow:hidden is required for holygrail layout to work in ie.
   # hence, absolutePositionParams()...  :(
+  #
+  # NOTE #2: this is no longer how the right column works. so we should not
+  # have to use absolutely positioned popups anymore.
   #
   def show_popup_link(options)
     li_id = options[:name] + '_li'

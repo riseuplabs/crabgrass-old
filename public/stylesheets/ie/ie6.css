@@ -1,111 +1,25 @@
 /* get hover to work in ie */
 body {behavior:url("/javascripts/ie/csshover.htc");}
 
-/* get first-child to work in ie */
+/* hide the message area */
+#message {line-height: 1px;}
 
+/* status hack to make set_status form not get too big */
+table.set_status {width:80%;}
 
-div.content_box {
-  height: 1%; /* ie hack so that tables don't spill the margins */
-}
+/* autocomplete */
+.autocomplete_holder {z-index: 10000}
+.autocomplete-w1 {background: none; top: 1px;}
+.autocomplete {height: 350px; margin: 0px 6px 6px 0;}
 
-ul.side_list li {
-  height: 1%;
-}
-input.check {
-  margin-top: 2px;
-}
+/* sidebar */
+ul.side_list li {height: 1%;} /* force has layout */
+#page_sidebar input.check {margin-top: 3px; margin-left: -25px} /* move check up slightly */
+ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icons appear */
+div.popup_arrow {right: -16px} /* move popup nub slightly */
 
-/* is this really the best we can do? */
-/* hr.thin {
-  border: 0; size: 0; padding: 0; margin: 0;
-} */
-
-/* pages */
-
-/* td.post-body div.negativespace {
-  margin: -4px 0 -16px 0;
-} */
-
-div.popup_arrow {
-  right: -24px;
-}
-/*div.popup fieldset {
-  border: 0;
-}*/
-/*div.popup blockquote {
-  padding: 1em 1em 0 1em;
-}*/
-
-/* layout */
-
-#wrapper {
-  position: relative; overflow:hidden; /* needed for ie6 bug */
-  float: left;
-}
-#message {
-  height: 1%; /* needed because of #wrapper float */
-  margin: 0;
-  line-height: 1px;
-}
-
-.leftmenu .col1wrap {
-  right: 18.95em; /* fixes a rendering bug in ie */
-}
-
-/* ui */
-
-fieldset textarea {
-  position: relative;
-}
-div.edit-tab {
-  position: relative;
-  left: 0px;
-}
-div.edit-tab span {
-}
-
-/* search form in banner */
-/* div#banner .content form {
-	width:223px;
-	height:23px;
-} */
-
-/*Announcement*/
-/* .announcement2box1{
-	position:relative;
-	float:left;
-}
-.announcement2box2{
-	display:inline;
-	margin-top:-5em;
-} */
-
-/*CREATE PAGE*/
-.create_page table{} 
-.create_page .right {padding-left:5px;}
-.create_page .right .share_page{padding:0.5em;}
-
-/* This is a true mystery to me. For some reason, a padding of 0.55em is needed
- * on the top to approximate the 1em padding for the sides and bottom. */
-#banner {padding-top: 0.55em;}
-
-/* center align the login box (margin: 0 auto doesn't
- * work when not in ie6 standards mode (we're not) */
-#loginwrap { text-align: center; }
-#loginwrap #loginformbox { text-align: left; }
-
-/* GIGANTIC HACKS AHOY:
- * ie6 refuses to collapse div#message, which is always rendered,
- * even when it's empty (for ajax to pop things into), resulting
- * in a huge (height + margin-bottom (1.5em)) gap at the top of
- * the #wrapper - so we remove the margin and fix the height
- * when div#message is empty, with the same pixel results */ 
-/*
-#wrapper div#message {
-  xheight: expression((this.innerHTML == "") ? "1.5em" : "auto");
-  xmargin-bottom: expression((this.innerHTML == "") ? "0" : "1.5em");
-}
-*/
+/* page list */
+/* .page_icon {line-height: 1px; vertical-align: top;} */
 
 /**
  ** FIRST-CHILD EMULATION
@@ -126,13 +40,3 @@ div.edit-tab span {
   border-top: expression( this == this.parentNode.firstChild ? "0" : "1px dotted white" )
 }
 
-/* the top menu collapses, because it only contains
- * floating elements, so keep its height synchronized
- * with the first child element (usually div#account) */
-
-/* #top_menu {
-  height: expression(this.childNodes[0].style.pixelHeight + "px");
-} */
-
-/* this hack makes the access icons appear */
-ul.names li span {border: 1px solid #d6d6d6;}

@@ -26,17 +26,15 @@ class WikiController < ApplicationController
   # show the entire edit form
   def edit
     if @public and @private
-      @private.lock(Time.now, current_user)
-      @public.lock(Time.now, current_user)
+      @private.lock(Time.now, current_user) if @private.editable_by?(current_user)
+      @public.lock(Time.now, current_user) if @public.editable_by?(current_user)
     else
-      @wiki.lock(Time.now, current_user)
+      @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
     end
   end
 
   def old_version
     # XHR
-
-    @wiki.lock(Time.now, current_user)
     @showing_old_version = @wiki.versions[params[:old_version].to_i - 1]
 
     @wiki.body = @showing_old_version.body
@@ -48,15 +46,18 @@ class WikiController < ApplicationController
   # a re-edit called from preview, just one area.
   def edit_area
     return render(:action => 'done') if params[:close]
+    @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
   end
   
   # save the wiki show the preview
   def save
-    return render(:action => 'done') if params[:cancel]
+    return cancel if params[:cancel]
+    return break_lock if params[:break_lock]
+
     begin
-      @wiki.smart_save!(:body => params[:body], 
+      @wiki.smart_save!(:body => params[:body],
         :user => current_user, :version => params[:version])
-      @wiki.unlock if @wiki.locked_by?(current_user)
+        unlock_for_current_user
       @wiki.render_html{|body| render_wiki_html(body, @group.name)}
     rescue Exception => exc
       @message = exc.to_s
@@ -66,21 +67,47 @@ class WikiController < ApplicationController
   
   # unlock everything and show the rendered wiki
   def done
+    unlock_for_current_user
     if @public and @private
-      @private.unlock if @private.locked_by?(current_user)
-      @public.unlock if @public.locked_by?(current_user)
       if @private.body.nil? or @private.body == ''
         @wiki = @public
       else
         @wiki = @private
       end
-    else
-      @wiki.unlock if @wiki.locked_by?(current_user)
     end
   end
 
   protected
-  
+
+  def break_lock
+    if @public and @private
+      @private.unlock
+      @public.unlock
+
+      @private.lock(Time.now, current_user)
+      @public.lock(Time.now, current_user)
+    else
+      @wiki.unlock
+      @wiki.lock(Time.now, current_user)
+    end
+
+    render(:action => 'edit')
+  end
+
+  def cancel
+    unlock_for_current_user
+    render :action => 'done'
+  end
+
+  def unlock_for_current_user
+    if @public and @private
+      @private.unlock if @private.editable_by?(current_user)
+      @public.unlock if @public.editable_by?(current_user)
+    else
+      @wiki.unlock if @wiki.editable_by?(current_user)
+    end
+  end
+
   def fetch_wiki
     if params[:wiki_id] and !params[:profile_id]
       profile = @group.profiles.find_by_wiki_id(params[:wiki_id])

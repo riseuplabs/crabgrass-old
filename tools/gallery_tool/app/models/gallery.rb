@@ -1,4 +1,6 @@
 class Gallery < Page
+  include PageExtension::RssData
+
   # A gallery is a collection of images, being presented to the user by a cover
   # page, an overview or a slideshow.
   # The GalleryController also supports downloading a specific Gallery as a ZIP

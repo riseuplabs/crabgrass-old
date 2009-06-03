@@ -1,6 +1,6 @@
-
 class WikiPage < Page
-     
+  include PageExtension::RssData
+
   def title=(value)
     write_attribute(:title, value)
     write_attribute(:name, value.nameize)
@@ -20,5 +20,4 @@ class WikiPage < Page
       self.wiki.clear_html if self.wiki
     end
   end
-
 end

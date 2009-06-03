@@ -131,6 +131,10 @@ module PathFinder::Sphinx::BuilderFilters
       @conditions[:page_type] = Page.param_id_to_class_name(page_type)
     elsif page_group
       @conditions[:page_type] = Page.class_group_to_class_names(page_group).join('|')
+    else
+      # we didn't find either a type or a group for arg
+      # just search for arg. this should return an empty set
+      @conditions[:page_type] = arg.dup
     end
   end
   

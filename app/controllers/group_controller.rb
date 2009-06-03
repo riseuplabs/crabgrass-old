@@ -194,6 +194,7 @@ class GroupController < ApplicationController
       flash_message :success => 'Group was successfully updated.'[:group_successfully_updated]
     else
       flash_message_now :object => @group
+      render :template => 'group/edit'
     end
   end
 

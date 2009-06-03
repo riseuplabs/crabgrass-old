@@ -1,8 +1,9 @@
 class GroupObserver < ActiveRecord::Observer
 
   def before_destroy(group)
+    key = rand(Time.now)
     group.users.each do |recipient|
-      GroupDestroyedActivity.create!(:groupname => group.name, :recipient => recipient, :destroyed_by => group.destroyed_by)
+      GroupDestroyedActivity.create!(:groupname => group.name, :recipient => recipient, :destroyed_by => group.destroyed_by, :key => key)
     end
   end
 

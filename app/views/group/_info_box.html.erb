@@ -2,8 +2,8 @@
 <tr>
   <td class="left">
     <h2 class='dim'><%= "Welcome"[:group_home_welcome] %></h2>
-    <% if @group.is_council? -%>
-      <p><%= 'coordinating committee'.t %></p>
+    <% if @group.council? -%>
+      <p><%= 'Coordinating Council'[:coordinating_council] %></p>
     <% end -%>
     <p class="description"><%=h @group.summary %></p>
     <%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link, destroy_group_link, edit_featured_link, edit_group_custom_appearance_link(@editable_custom_appearance)) %>

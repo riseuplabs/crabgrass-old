@@ -120,9 +120,12 @@ a.edit
   display: none
   margin-left: 6px
   opacity: 0.5
-  position: absolute
-  .icon_16
-    vertical-align: middle
+  //position: absolute
+  // a hack to make .small_icon_button work as inline
+  background-repeat: no-repeat
+  background-position: 0 70%
+  padding-left: 16px
+  // end hack
 a.edit:hover
   opacity: 1
 

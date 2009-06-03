@@ -147,7 +147,13 @@ module ApplicationHelper
   end
 
   def formatting_reference_link
-   %Q{<div class='formatting_reference'><a href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+  end
+
+  def help(symbol)
+    symbol = "#{symbol}_help".to_sym
+    text = ""[symbol]
+    text.any? ? text : nil
   end
 
 end

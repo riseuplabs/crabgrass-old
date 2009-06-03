@@ -1,0 +1,5 @@
+if item.data
+  xml.content :encoded do
+    xml.cdata! item.data.body_html
+  end
+end

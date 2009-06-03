@@ -1,16 +1,13 @@
 require 'cgi'
 
-=begin
-
-These are page related helpers that might be needed anywhere in the code.
-For helpers just for page controllers, see base_page_helper.rb
-
-=end
+# These are page related helpers that might be needed anywhere in the code.
+# For helpers just for page controllers, see base_page_helper.rb
 
 module PageHelper
   
-  ######################################################
+  ##
   ## PAGE URLS
+  ##
 
   #
   # build a url of the form:
@@ -52,7 +49,8 @@ module PageHelper
   # like page_url, but it returns a direct URL that bypasses the dispatch
   # controller. intended for use with ajax calls. 
   def page_xurl(page,options={})
-    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => '/' + page.controller}
+    options[:controller] = '/' + [page.controller, options.delete(:controller)].compact.join('_')
+    hash = {:page_id => page.id, :id => 0, :action => 'show'}
     url_for(hash.merge(options))
   end
   
@@ -128,8 +126,9 @@ module PageHelper
   end
 
 
-  ######################################################
+  ##
   ## PAGE LISTINGS AND TABLES
+  ##
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
@@ -355,8 +354,9 @@ module PageHelper
     content_tag(:tr, html, :class => "page_info")
   end
 
-  ######################################################
+  ##
   ## PAGE MANIPULATION
+  ##
 
   #
   # Often when you run a page search, you will get an array of UserParticipation
@@ -406,8 +406,9 @@ module PageHelper
     return today, yesterday, week, later
   end
 
-  ######################################################
+  ##
   ## FORM HELPERS
+  ##
 
   def display_page_class_grouping(group)
     "page_group_#{group.gsub(':','_')}".t 
@@ -464,6 +465,50 @@ module PageHelper
     options_for_select(['unread','pending','starred'].to_localized_select, selected)
   end
 
+  # returns option tags usable in a select menu to choose a group from the
+  # groups current_user is a member of or has access to.
+  # accepted options:
+  #  :group -- a group object to make selected
+  #  :include_me -- if true, include option for 'me'
+  def options_for_page_owner(options={})
+    groups = current_user.groups.select { |group|
+      !group.committee?
+    }.sort { |a, b|
+       a.display_name.downcase <=> b.display_name.downcase
+    }
+    html = [] 
+
+    if options[:group]
+      selected_group = options[:group].name
+    elsif params[:group]
+      selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+    elsif params[:page] and params[:page][:owner]
+      selected_group = params[:page][:owner]
+    else
+      selected_group = nil
+    end
+
+    if options[:include_me]
+      me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
+      html << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+    end
+
+    groups.collect do |group|
+      selected = selected_group == group.name ? 'selected' : nil
+      html << content_tag( :option, truncate(group.display_name,40), :value => group.name, :class => 'spaced', :selected => selected )
+      group.committees.each do |committee|
+        selected = selected_group == committee.name ? 'selected' : nil
+        html << content_tag( :option, truncate(committee.display_name,40), :value => committee.name, :class => 'indented', :selected => selected)
+      end
+    end
+
+    html.join("\n")
+  end
+
+  ##
+  ## PAGE CREATION
+  ##
+
   ## Link to the action for the form to create a page of a particular type.
   def create_page_url(page_class=nil, options={})
     if page_class
@@ -475,31 +520,22 @@ module PageHelper
     end
   end
 
-  def options_for_page_owner(owner=nil)
-    groups = current_user.groups.select { |group|
-      !group.committee?
-    }.sort { |a, b|
-       a.display_name.downcase <=> b.display_name.downcase
-    }
-    opts = [] 
-    if owner
-      selected_group = owner.name
-    elsif params[:group]
-      selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+  def create_page_link(group=nil)
+    url = {:controller => '/pages', :action => 'create'}
+    if group
+      url[:group] = group.name
+      icon = 'page_add'
+      text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
+      klass = 'contribute group_contribute'
     else
-      selected_group = nil
+      icon = 'plus'
+      text = "Create Page"[:contribute_content_link]
+      klass = 'contribute'
     end
-    me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
-    opts << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
-    groups.collect do |group|
-      selected = selected_group == group.name ? 'selected' : nil
-      opts << content_tag( :option, group.display_name, :value => group.name, :class => 'spaced', :selected => selected )
-      group.committees.each do |committee|
-        selected = selected_group == committee.name ? 'selected' : nil
-        opts << content_tag( :option, committee.display_name, :value => committee.name, :class => 'indented', :selected => selected)
-      end
-    end  
-    opts.join("\n")
+    content_tag(:div,
+      link_to(text, url, :class => "small_icon #{icon}_16"),
+      :class => klass
+    )
   end
 
 #  def create_page_link(text,options={})

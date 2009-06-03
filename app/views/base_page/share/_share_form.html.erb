@@ -1,24 +1,12 @@
 <% type = 'send' if type.nil? -%>
 <% notify = true if notify.nil? -%>
-<% add_action = false if add_action.nil? %>
-<% owner = false if owner.nil? %>
 
 <div class='share_page'>
-  <h2><%= 'Share this page with:'[:share_page_recipients, page_class.downcase] %></h2>
+  <h2 class="first"><%= 'Share this page with:'[:share_page_recipients, "Page"[:page]] %></h2>
 
-  <% if owner %>
-    <dl>
-    <dt><%= "Page Owner"[:page_create_owner] %></dt>
-    <dd><%= select_tag 'page[owner]', options_for_page_owner %></dd>
-    <dt><%= "Additional Access"[:page_create_access] %></dt>
-    <dd>
-  <% end %>
+  <div id='share_error_message'></div>
 
-  <%= render :partial => 'base_page/share/add_recipient_widget', :locals => {:add_action => add_action} %>
-
-  <% if owner %>
-    </dl>
-  <% end %>
+  <%= render :partial => 'base_page/share/add_recipient_widget' %>
 
   <% if notify %>
     <h2><%= 'Send Notification'[:notify_page_link] %></h2>

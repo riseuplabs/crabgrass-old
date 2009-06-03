@@ -175,6 +175,7 @@ class RequestsController < ApplicationController
         redirect_to redeem_url
       else
         session[:signup_email_address] = @email
+        session[:user_has_accepted_invite] = true
         @login_url = url_for({
           :controller => 'account', :action => 'login',
           :redirect => redeem_url
@@ -198,8 +199,8 @@ class RequestsController < ApplicationController
     request.approve_by!(current_user)
     flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
     redirect_to current_site.login_redirect(current_user)
-    rescue Exception => exc
-      flash_message_now :exception => exc    
+  rescue Exception => exc
+    flash_message_now :exception => exc    
   end
 
   protected

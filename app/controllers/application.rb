@@ -267,4 +267,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # TODO: move to new permission system as soon as it is ready
+  helper_method :may_signup?
+  def may_signup?
+    if current_site.signup_mode == Conf::SIGNUP_MODE[:invite_only]
+      session[:user_has_accepted_invite] == true
+    elsif current_site.signup_mode == Conf::SIGNUP_MODE[:closed]
+      false
+    else
+      true
+    end
+  end
+
 end

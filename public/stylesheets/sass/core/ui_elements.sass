@@ -78,6 +78,14 @@ a[name]
   color: #ccc
 
 //
+// ENTITIES
+//
+
+.entity .name
+  font-weight: bold
+  overflow: hidden
+
+//
 // SIDE LIST
 // 
 
@@ -139,8 +147,12 @@ ul.tabset
       padding: 0.5em 1em
       // i don't understand why this is needed:
       cursor: pointer
+      &.small_icon
+        padding-left: 28px
+        margin-left: 0.5em
+        background-position: 8px 50%
       &.active
-        background: white
+        background-color: white
         border: 1px solid #999
         border-bottom: 0
 
@@ -151,16 +163,16 @@ ul.tabset
 input[type="hidden"]
   display: none
 
-input[type="checkbox"]
-  vertical-align: sub
+//input[type="checkbox"]
+//  vertical-align: sub
 
 option
   &.indented
     margin-left: 1.5em
   &.section
     font-weight: bold
-  &.spaced
-    margin-top: 0.5em
+  //&.spaced
+  //  margin-top: 0.5em
 
 label.date span
   font-size: 0.8em
@@ -420,23 +432,55 @@ table.plain
 // AUTO COMPLETE
 //
 
-div.auto_complete
-  background: #fff
-  ul
-    border: 1px solid #888
+.autocomplete-w1
+  background: url(/images/ui/shadow.png) no-repeat bottom right
+  position: absolute
+  top: 7px
+  left: 6px
+  z-index: 200
+
+.autocomplete
+  width: 300px
+  border: 1px solid #999
+  background-color: white
+  cursor: pointer
+  text-align: left
+  max-height: 350px
+  overflow: auto
+  margin: -6px 6px 6px -6px
+  overflow-x: hidden
+  .selected
+    background: #eee
+  div
+    padding: 1px 0 1px 5px
+    white-space: nowrap
+  p
     margin: 0
-    padding: 0
-    width: 100%
-    list-style-type: none
-    li
-      margin: 0
-      padding: 8px
-    li.selected
-      background-color: #ffb
-    strong.highlight
-      color: #800
-      margin: 0
-      padding: 0
+  strong
+    font-weight: normal
+    color: #3399FF
+  em
+    font-weight: bold
+    font-style: normal
+
+// div.auto_complete
+//  background: #fff
+//  ul
+//    border: 1px solid #888
+//    margin: 0
+//    padding: 0
+//    width: 100%
+//    list-style-type: none
+//    li
+//      margin: 0
+//      padding: 8px
+//      cursor: pointer
+//    li.selected
+//      background-color: #ffb
+//    strong.highlight
+//      color: #800
+//      margin: 0
+//      padding: 0
 
 //
 // ERRORS
@@ -447,3 +491,16 @@ blockquote.error
   background: #fcc
   border: 1px solid red
 
+//
+// DIALOG PAGES
+// (they are like dialog boxes, but they are their own stand alone page)
+//
+
+div.dialog
+  width: 50%
+  margin: 5em auto
+  ul
+    list-style: none
+    padding: 0
+    li
+      margin: 1em 0

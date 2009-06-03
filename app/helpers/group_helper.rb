@@ -2,10 +2,6 @@ module GroupHelper
 
   include WikiHelper
 
-  def may_admin
-    false
-  end
-
   def group_cache_key(group, options={})
     params.merge(:version => group.version, :updated_at => group.updated_at.to_i, :lang => session[:language_code]).merge(options)
   end
@@ -21,18 +17,20 @@ module GroupHelper
   end
   
   def edit_settings_link
-    link_to_iff(may_edit?, 'edit settings'[:edit_settings], group_url(:action => 'edit', :id => @group))
+    if may_admin_group?
+      link_to 'edit settings'[:edit_settings], group_url(:action => 'edit', :id => @group)
+    end
   end
   
   def join_group_link
     return nil unless logged_in?
     return nil if current_user.direct_member_of? @group
     if group_member?
-        # if you are an indirect member of this group then (1) it is a committee and (2) you are a member of the group containing it, so you may add yourself to the committee from the edit page.  This may not be true when networks are implemented.
-        link_to "join %s"[:join_group] % @group_type, 
+        # if you are an indirect member of this group then (1) it is a committee and (2) you are a member of the group containing it, so you may add yourself to the committee from the edit page.
+        link_to "join {group_type}"[:join_group, @group_type], 
           url_for(:controller => '/membership', :action => 'join', :id => @group)
     elsif may_request_membership?
-        link_to "join %s"[:join_group] % @group_type, 
+        link_to "request to join {group_type}"[:request_join_group_link, @group_type], 
          url_for(:controller => '/requests', :action => 'create_join', :group_id => @group.id)
     end
   end
@@ -42,7 +40,7 @@ module GroupHelper
   end
   
   def group_type
-    @group_type || (@group.class.to_s.downcase if @group)
+    @group_type || (@group.group_type if @group)
   end
 
   def leave_group_link
@@ -52,8 +50,10 @@ module GroupHelper
   end
   
   def destroy_group_link
+    if may_destroy_group?
       # eventually, this should fire a request to destroy.
-#    link_if_may("destroy %s"[:destroy_group] % group_type, :group, :destroy, @group, :confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post)
+      link_to("destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post)
+    end
   end
     
   def more_committees_link
@@ -61,7 +61,9 @@ module GroupHelper
   end
   
   def create_committee_link
-    link_to_iff may_create_committee?, 'create committee'[:create_committee], groups_url(:action => 'create', :parent_id => @group.id)
+    if may_admin_group?
+      link_to 'create committee'[:create_committee], groups_url(:action => 'create', :parent_id => @group.id)
+    end
   end
   
   def list_membership_url() {:controller => 'membership', :action => 'list', :id => @group.name} end
@@ -70,7 +72,7 @@ module GroupHelper
 
   def list_membership_link(link_suffix='')
     text = ''
-    if may_admin and committee?
+    if may_admin_group? and committee?
       text = 'edit'.t
       url = edit_membership_url
     elsif may_see_members?
@@ -91,25 +93,25 @@ module GroupHelper
   end
 
   def invite_link(suffix='')
-    if may_admin
+    if may_admin_group?
       link_to_active('send invites'[:send_invites] + suffix, {:controller => 'requests', :action => 'create_invite', :group_id => @group.id})
     end
   end
 
   def edit_featured_link
-    if may_admin
+    if may_admin_group?
       link_to "edit featured content"[:edit_featured_content], group_url(:action => 'edit_featured_content', :id => @group)
     end
   end
 
   def edit_group_custom_appearance_link(appearance)
-    if appearance and may_admin
+    if appearance and may_admin_group?
       link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(appearance)
     end
   end
 
   def requests_link(suffix='')
-    if may_admin
+    if may_admin_group?
       link_to_active('view requests'[:view_requests]+suffix, {:controller => 'requests', :action => 'list', :group_id => @group.id})
     end
   end
@@ -136,6 +138,40 @@ module GroupHelper
     options[:title] = tag.name
     link_to tag.name, group_url(:id => @group, :action => 'tags') + '/' + path.join('/'), options
   end
+<<<<<<< HEAD:app/helpers/group_helper.rb
+=======
+  
+  def may_see_members?
+    may_see_members_of?(@group)
+  end
+
+  def may_see_members_of? group
+    if logged_in?
+      current_user.may?(:admin,group) || current_user.member_of?(group) || group.profiles.visible_by(current_user).may_see_members?
+    else
+      group.profiles.public.may_see_members?
+    end
+  end
+
+  def may_see_committees?
+    return if @group.parent_id
+    if logged_in?
+      current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_committees?
+    else
+      @group.profiles.public.may_see_committees?
+    end
+  end
+
+  def may_see_networks?
+    if !current_site.has_networks?
+      return false
+    elsif logged_in?
+      current_user.member_of?(@group) || @group.profiles.visible_by(current_user).may_see_members?
+    else
+      @group.profiles.public.may_see_members?
+    end
+  end
+>>>>>>> riseup/master:app/helpers/group_helper.rb
 
   #Defaults!
   def show_section(name)

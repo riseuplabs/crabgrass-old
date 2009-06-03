@@ -1,4 +1,6 @@
 class AssetPage < Page
+  include PageExtension::RssData
+  
   def supports_attachments
     false
   end
@@ -51,6 +53,5 @@ class AssetPage < Page
       end
     end
   end
-
 end
 

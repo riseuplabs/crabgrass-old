@@ -91,7 +91,7 @@ function decorate_wiki_edit_links(ajax_link) {
   $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
     function(elem) {
       var heading_name = elem.href.replace(/^.*#/, '');
-      var link = ajax_link.replace('_change_me_', heading_name);
+      var link = ajax_link.replace(/_change_me_/g, heading_name);
       elem.insert({after:link});
     }
   );

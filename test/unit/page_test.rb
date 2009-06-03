@@ -10,7 +10,7 @@ class PageTest < Test::Unit::TestCase
   def test_unique_names
     user = users(:red)
     group = groups(:rainbow)
-    
+
     assert_nothing_raised do
       p1 = WikiPage.create!(:title => 'title', :name => 'unique', :share_with => group, :user => user)
     end
