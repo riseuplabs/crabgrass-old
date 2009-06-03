@@ -1,18 +1,15 @@
 div.create_page
-  table.create_table
+  margin: 0 auto
+
+  //
+  // SELECT A PAGE TYPE
+  // 
+
+  table.page_types
     td
       width: 50%
       padding: 0 1em
-  h2
-    font-size: 1.5em
-    color: #aaa
-    border-bottom: 2px dotted #ccc
-  h3
-    margin-bottom: 0
-  dd
-    margin: 0 0 0.5em 0
-  dt
-    font-weight: bold
+
   div.hover
     margin: 0.5em
     &:hover
@@ -23,23 +20,56 @@ div.create_page
       display: block
       padding: 0.5em
 
-  .left
-    display: inline
-    float: left
-    padding-right: 2em
-    min-width: 25em
-    width: 40%
-  .right
-    display: inline
-    float: left
-    min-width: 25em
-    width: 40%
+
+  //
+  // PAGE CREATION FORM
+  // 
+
+  table.create_page
+    & > tbody > tr > td
+      vertical-align: top
+      padding-left: 1em
+    td.heading
+      padding-left: 0
+      padding-top: 0.5em
+      h2
+        font-size: 1.1em
+        color: white
+        background: #666
+        padding: 0.5em
+    td.label
+      padding-top: 0.5em
+      font-weight: bold
+    td.first
+      padding-top: 0
+    td.help
+      font-size: 0.9em
+      padding-left: 1em
+      font-style: italic
+
   input[type=text], textarea
-    width: 23em
-    font-family: serif
+    // font-family: serif
     font-size: 1em
   .buttons
-    padding-top: 1em
+    padding-top: 2em
     text-align: center
-    border-top: 1px solid #ccc
+    //border-top: 1px solid #ccc
+
+//  .left
+//    display: inline
+//    float: left
+//    padding-right: 2em
+//    min-width: 25em
+//    width: 40%
+//  .right
+//    display: inline
+//    float: left
+//    min-width: 25em
+//    width: 40%
+//h3
+//  margin-bottom: 0
+//dd
+//  margin: 0 0 0.5em 0
+//dt
+//  font-weight: bold
 

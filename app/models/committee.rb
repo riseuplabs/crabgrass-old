@@ -24,13 +24,13 @@ class Committee < Group
   
   # what we show to the user
   def display_name
-    read_attribute(:full_name) || short_name
+    if read_attribute(:full_name).any?
+      read_attribute(:full_name)
+    else
+      short_name
+    end
   end
 
-  ## TODO: i do not like this. there is no attribute display_name.
-  def display_name=(name)
-    write_attribute(:display_name, name)
-  end
   #has_many :delegations, :dependent => :destroy
   #has_many :groups, :through => :delegations
   #def group()

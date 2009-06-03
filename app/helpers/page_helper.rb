@@ -1,16 +1,13 @@
 require 'cgi'
 
-=begin
-
-These are page related helpers that might be needed anywhere in the code.
-For helpers just for page controllers, see base_page_helper.rb
-
-=end
+# These are page related helpers that might be needed anywhere in the code.
+# For helpers just for page controllers, see base_page_helper.rb
 
 module PageHelper
   
-  ######################################################
+  ##
   ## PAGE URLS
+  ##
 
   #
   # build a url of the form:
@@ -129,8 +126,9 @@ module PageHelper
   end
 
 
-  ######################################################
+  ##
   ## PAGE LISTINGS AND TABLES
+  ##
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
@@ -356,8 +354,9 @@ module PageHelper
     content_tag(:tr, html, :class => "page_info")
   end
 
-  ######################################################
+  ##
   ## PAGE MANIPULATION
+  ##
 
   #
   # Often when you run a page search, you will get an array of UserParticipation
@@ -407,8 +406,9 @@ module PageHelper
     return today, yesterday, week, later
   end
 
-  ######################################################
+  ##
   ## FORM HELPERS
+  ##
 
   def display_page_class_grouping(group)
     "page_group_#{group.gsub(':','_')}".t 
@@ -465,17 +465,6 @@ module PageHelper
     options_for_select(['unread','pending','starred'].to_localized_select, selected)
   end
 
-  ## Link to the action for the form to create a page of a particular type.
-  def create_page_url(page_class=nil, options={})
-    if page_class
-      controller = page_class.controller 
-      id = page_class.class_display_name.nameize
-      "/#{controller}/create/#{id}" + build_query_string(options)
-    else
-      url_for(options.merge(:controller => '/pages', :action => 'create'))
-    end
-  end
-
   # returns option tags usable in a select menu to choose a group from the
   # groups current_user is a member of or has access to.
   # accepted options:
@@ -514,6 +503,39 @@ module PageHelper
     end
 
     html.join("\n")
+  end
+
+  ##
+  ## PAGE CREATION
+  ##
+
+  ## Link to the action for the form to create a page of a particular type.
+  def create_page_url(page_class=nil, options={})
+    if page_class
+      controller = page_class.controller 
+      id = page_class.class_display_name.nameize
+      "/#{controller}/create/#{id}" + build_query_string(options)
+    else
+      url_for(options.merge(:controller => '/pages', :action => 'create'))
+    end
+  end
+
+  def create_page_link(group=nil)
+    url = {:controller => '/pages', :action => 'create'}
+    if group
+      url[:group] = group.name
+      icon = 'page_add'
+      text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
+      klass = 'contribute group_contribute'
+    else
+      icon = 'plus'
+      text = "Create Page"[:contribute_content_link]
+      klass = 'contribute'
+    end
+    content_tag(:div,
+      link_to(text, url, :class => "small_icon #{icon}_16"),
+      :class => klass
+    )
   end
 
 #  def create_page_link(text,options={})

@@ -1,3 +1,7 @@
-<dt><%= 'Body'.t %></dt>
-<dd><%= text_area_tag 'body', params[:body], :size => '40x10' %></dd>
+<tr>
+  <td colspan="2" class="label first"><%= 'Body'.t %></td>
+</tr><tr>
+  <td><%= text_area_tag 'body', params[:body], :size => '40x10' %></td>
+  <td class="help"><%= help(:wiki_body) %></td>
+</tr>
 
