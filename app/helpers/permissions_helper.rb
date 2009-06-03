@@ -3,6 +3,8 @@ module PermissionsHelper
   # returns +true+ if the +current_user+ is allowed to perform +action+ in
   # +controller+, optionally with some arguments.
   #
+  # Make sure to include the corresponding permission in the controller.
+  #
   # Examples:
   #   <%= "YOU ARE MY CREATOR" if may?(:group, :create) %>
   #   <%= "don't be editing that" unless may?(:group, :edit, @some_group) %>
@@ -13,10 +15,15 @@ module PermissionsHelper
   #   <%- end -%>
   def may?(controller, action, *args)
     if controller.is_a?(Symbol)
-      controller = "#{controller}_controller".camelize.constantize
+      permission = send("may_#{action}_#{controller.to_s}?", *args)
+    else
+      permission = controller.send("may_#{action}_#{controller.controller_name}?", *args)
     end
-    permission = controller.send("may_#{action}?", *args)
-    yield if permission and block_given?
+    if permission and block_given?
+      yield
+    else
+      permission
+    end
   end
 
   # shortcut for +may?+ but automatically selecting the current controller.
@@ -39,9 +46,13 @@ module PermissionsHelper
   end
 
   def method_missing(method_id, *args)
-    return unless match = /may_([_a-zA-Z]\w*)\?/.match(method_id.to_s)
-    return if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
+    super unless match = /may_([_a-zA-Z]\w*)\?/.match(method_id.to_s)
+    super if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
     permission = controller.send("may_#{match[1]}_#{controller.controller_name}?", *args)
-    yield if permission and block_given?
+    if permission and block_given?
+      yield
+    else
+      permission
+    end
   end
 end

@@ -8,7 +8,7 @@ module GroupPermission
     may_see_private?(group) or may_see_public?(group)
   end
 
-  %w(show members search discussions archive tags tasks search).each{ |action|
+  %w(show members search discussions archive tags tasks trash search).each{ |action|
     alias_method "may_#{action}_group?".to_sym, :may_read_group?
   }
 
@@ -16,8 +16,8 @@ module GroupPermission
     logged_in? and current_user.may?(:admin, group)
   end
 
-  %w(admin edit_tools edit_layout edit edit_featured_content feature_content edit).each{ |action|
-    alias_method "may_#{action}_group?".to_sym, :may_admin_group?
+  %w(admin edit_tools edit_layout edit edit_featured_content feature_content edit update_trash).each{ |action|
+    alias_method "may_#{action}_group?".to_sym, :may_update_group?
   }
 
   def may_destroy_group?(group = @group)

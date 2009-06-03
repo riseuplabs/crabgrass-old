@@ -220,6 +220,7 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_equal id, 207, "expecting page 207 as deleted page for rainbow"
     post :update_trash, :page_checked=>{"207"=>"checked"}, :path=>[], :undelete=>"Undelete", :id => groups(:rainbow).name
     assert_response :redirect
+    assert_redirected_to 'group/trash/rainbow'
     get :trash
     assert_response :success
     assert assigns(:pages).empty?, "should not find a deleted page after undeleting"

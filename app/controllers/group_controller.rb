@@ -3,7 +3,7 @@ class GroupController < ApplicationController
   include GroupHelper
   helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
-  permissions 'group'
+  permissions 'group','base_page' # base_page for undelting and removing from trash.
 
   stylesheet 'wiki_edit'
   stylesheet 'groups'
@@ -376,7 +376,6 @@ class GroupController < ApplicationController
   end
 
   def authorized?
-    debugger
     may_action?(params[:action], @group)
   end
 
