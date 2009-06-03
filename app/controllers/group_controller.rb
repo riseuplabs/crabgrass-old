@@ -3,7 +3,7 @@ class GroupController < ApplicationController
   include GroupHelper
   helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
-  permissions 'group', 'base_page', 'membership', 'committee'
+  permissions 'group', 'base_page', 'membership', 'committee', 'requests'
 
   stylesheet 'wiki_edit'
   stylesheet 'groups'

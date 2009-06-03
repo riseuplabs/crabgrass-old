@@ -47,7 +47,7 @@ module PermissionsHelper
 
   def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
     may?(controller, action, object) do
-      link_to_active(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.id}.merge(link_opts), active)
+      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object.nil? ? nil : object.id}.merge(link_opts), active)
     end
   end
 

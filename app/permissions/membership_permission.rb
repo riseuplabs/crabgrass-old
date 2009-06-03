@@ -14,9 +14,11 @@ module MembershipPermission
     alias_method "may_#{action}_membership?".to_sym, :may_read_membership?
   }
 
-  def may_update_membership(group=@group)
-    may_admin_group? and committee?
+  def may_update_membership?(group=@group)
+    may_admin_group?(group) and group.committee?
   end
+
+  alias_method :may_edit_membership?, :may_update_membership?
 
   def may_destroy_membership?(group = @group)
     logged_in? and

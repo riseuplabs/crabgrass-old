@@ -1,7 +1,7 @@
 module GroupPermission
 
-  def may_create_group?
-    logged_in?
+  def may_create_group?(parent = nil)
+    logged_in? and parent.nil? || may_admin_group?(parent)
   end
 
   def may_read_group?(group = @group)
@@ -23,16 +23,6 @@ module GroupPermission
   def may_destroy_group?(group = @group)
     may_admin_group? and
     ( (group.network? and group.groups.size == 1) or group.users.uniq.size == 1)
-  end
-
-  def may_leave_group?(group = @group)
-    logged_in? and
-    current_user.direct_member_of?(group) and
-    (group.network? or group.users.uniq.size > 1)
-  end
-
-  def may_request_membership?(group = @group)
-   group.profiles.visible_by(current_user).may_request_membership?
   end
 
   def may_see_private?(group = @group)

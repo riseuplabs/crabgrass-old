@@ -10,80 +10,73 @@ module GroupHelper
   def committee?
     @group.instance_of? Committee
   end
-  
+
   ## DEPRECATED. use @group.network?
   def network?
     @group.instance_of? Network
   end
-  
+
   def edit_settings_link
-    if may_admin_group?
-      link_to 'edit settings'[:edit_settings], group_url(:action => 'edit', :id => @group)
-    end
+    link_if_may 'edit settings'[:edit_settings], :group, 'edit', @group
   end
-  
+
   def join_group_link
     return nil unless logged_in?
     return nil if current_user.direct_member_of? @group
-    if group_member?
-        # if you are an indirect member of this group then (1) it is a committee and (2) you are a member of the group containing it, so you may add yourself to the committee from the edit page.
-        link_to "join {group_type}"[:join_group, @group_type], 
-          url_for(:controller => '/membership', :action => 'join', :id => @group)
-    elsif may_request_membership?
-        link_to "request to join {group_type}"[:request_join_group_link, @group_type], 
-         url_for(:controller => '/requests', :action => 'create_join', :group_id => @group.id)
-    end
+    link_if_may("join {group_type}"[:join_group, @group_type],
+                :membership, 'join', @group) or
+    link_if_may("request to join {group_type}"[:request_join_group_link, @group_type],
+                :requests, 'create_join', @group)
   end
 
   def group_member?(group = @group)
     logged_in? and current_user.member_of?(group)
   end
-  
+
   def group_type
     @group_type || (@group.group_type if @group)
   end
 
   def leave_group_link
-    if may_leave_group?
-      link_to_active("leave %s"[:leave_group] % group_type, {:controller => 'membership', :action => 'leave', :id => @group.name})
-    end
+    link_to_active_if_may "leave {group_type}"[:leave_group, group_type],
+      :membership, 'leave', @group.name
   end
-  
+
   def destroy_group_link
     # eventually, this should fire a request to destroy.
-    link_if_may("destroy {group_type}"[:destroy_group,group_type], :group, 'destroy', @group, {:confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post})
+    link_if_may "destroy {group_type}"[:destroy_group,group_type],
+      :group, 'destroy', @group,
+      {:confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post}
   end
-    
+
   def more_committees_link
     ## link_to_iff may_view_committee?, 'view all'[:view_all], ''
   end
-  
+
   def create_committee_link
-    if may_admin_group?
-      link_to 'create committee'[:create_committee], groups_url(:action => 'create', :parent_id => @group.id)
-    end
+    link_if_may 'create committee'[:create_committee],
+      :group, 'create', @group,
+      :parent_id => @group.id
   end
-  
-  def list_membership_url() {:controller => 'membership', :action => 'list', :id => @group.name} end
-  def groups_membership_url() {:controller => 'membership', :action => 'groups', :id => @group.name} end
-  def edit_membership_url() {:controller => 'membership', :action => 'edit', :id => @group.name} end
+
 
   def list_membership_link(link_suffix='')
-    text = ''
-    if may_update_membership?
-      text = 'edit'.t
-      url = edit_membership_url
-    elsif may_list_membership?
-      text = 'see all'.t
-      url = list_membership_url
-    end
-    if text.any?
-      link_to_active text+link_suffix, url
-    end
+    link_to_active_if_may('edit'.t + link_suffix,
+                          :membership, 'edit', @group) or
+    link_to_active_if_may('see all'.t + link_suffix,
+                          :membership, 'list', @group)
   end
 
+  def membership_count_link
+    link_if_may("{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}] + ARROW,
+                   :membership, 'list', @group) or
+    "{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}]
+  end
+
+
   def group_membership_link(link_suffix='')
-    link_to_active_if_may 'see all'.t + link_suffix, groups_membership_url
+    link_to_active_if_may 'see all'.t + link_suffix,
+      :membership, 'groups', @group
   end
 
   def invite_link(suffix='')
@@ -93,9 +86,8 @@ module GroupHelper
   end
 
   def edit_featured_link
-    if may_admin_group?
-      link_to "edit featured content"[:edit_featured_content], group_url(:action => 'edit_featured_content', :id => @group)
-    end
+    link_if_may "edit featured content"[:edit_featured_content],
+      :group, 'edit_featured_content', @group
   end
 
   def edit_group_custom_appearance_link(appearance)
@@ -109,7 +101,7 @@ module GroupHelper
       link_to_active('view requests'[:view_requests]+suffix, {:controller => 'requests', :action => 'list', :group_id => @group.id})
     end
   end
-  
+
   def request_state_links
     hash = {:controller => params[:controller], :action => params[:action], :group_id => params[:group_id]}
 
@@ -140,7 +132,7 @@ module GroupHelper
     end
     default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}
     default_template_data.merge!({"section3" => "recent_group_pages"}) if @group.network?
-    
+
     @group.group_setting.template_data ||= default_template_data
     widgets = @group.group_setting.template_data
     widget = widgets[name]
