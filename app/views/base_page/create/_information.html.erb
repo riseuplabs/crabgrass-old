@@ -26,7 +26,7 @@
   <td>
     <%= text_field 'page', 'tag_list', :size => 40 %>
   </td>
-  <td class="help"><%= 'Separate tags using commas'[:separate_tags]%></td>
+  <td class="help"><%= help(:tags) %> <%= 'Separate tags using commas'[:separate_tags]%></td>
 </tr>
 
 <% if params[:group].any? %>
