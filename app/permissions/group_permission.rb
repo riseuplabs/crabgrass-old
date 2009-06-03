@@ -1,27 +1,31 @@
 module GroupPermission
 
-  def may_read?(group = @group)
+  def may_create_group?
+    logged_in?
+  end
+
+  def may_read_group?(group = @group)
     may_see_private?(group) or may_see_public?(group)
   end
 
   %w(show members search discussions archive tags tasks search).each{ |action|
-    alias_method "may_#{action}?".to_sym, :may_read?
+    alias_method "may_#{action}_group?".to_sym, :may_read_group?
   }
 
-  def may_admin?(group = @group)
+  def may_update_group?(group = @group)
     logged_in? and current_user.may?(:admin, group)
   end
 
-  %w(update edit_tools edit_layout edit edit_featured_content feature_content edit).each{ |action|
-    alias_method "may_#{action}?".to_sym, :may_admin?
+  %w(admin edit_tools edit_layout edit edit_featured_content feature_content edit).each{ |action|
+    alias_method "may_#{action}_group?".to_sym, :may_admin_group?
   }
 
-  def may_destroy?(group = @group)
+  def may_destroy_group?(group = @group)
     may_admin? and
     ( (group.network? and group.groups.size == 1) or group.users.uniq.size == 1)
   end
 
-  def may_leave?(group = @group)
+  def may_leave_group?(group = @group)
     logged_in? and
     current_user.direct_member_of?(group) and
     (group.network? or group.users.uniq.size > 1)

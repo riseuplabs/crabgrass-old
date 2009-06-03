@@ -376,6 +376,7 @@ class GroupController < ApplicationController
   end
 
   def authorized?
+    debugger
     may_action?(params[:action], @group)
   end
 

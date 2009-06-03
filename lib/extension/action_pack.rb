@@ -123,6 +123,7 @@ ActionController::Base.class_eval do
       #@@permissioner.extend(permission_class)
     end
   end
+end
 
   # returns the permissioner in charge of instances of this controller class
   #def self.permissioner

@@ -16,11 +16,7 @@ module PermissionsHelper
       controller = "#{controller}_controller".camelize.constantize
     end
     permission = controller.send("may_#{action}?", *args)
-    if permission && block_given?
-      yield
-    else
-      permission
-    end
+    yield if permission and block_given?
   end
 
   # shortcut for +may?+ but automatically selecting the current controller.
@@ -40,5 +36,12 @@ module PermissionsHelper
     may?(controller, action, object) do
       link_to(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.id}.merge(link_opts), html_opts)
     end
+  end
+
+  def method_missing(method_id, *args)
+    return unless match = /may_([_a-zA-Z]\w*)\?/.match(method_id.to_s)
+    return if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
+    permission = controller.send("may_#{match[1]}_#{controller.controller_name}?", *args)
+    yield if permission and block_given?
   end
 end
