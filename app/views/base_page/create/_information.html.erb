@@ -29,6 +29,9 @@
   <td class="help"><%= 'Separate tags using commas'[:separate_tags]%></td>
 </tr>
 
+<% if params[:group].any? %>
+  <%= hidden_field_tag 'page[owner]', params[:group] %>
+<% else %>
 <tr>
   <td colspan="2" class='label'><%= "Page Owner (optional)"[:page_create_owner] %></td>
 </tr>
@@ -38,4 +41,5 @@
   </td>
   <td class="help"><%= help(:page_owner) %></td>
 </tr>
+<% end %>
 
