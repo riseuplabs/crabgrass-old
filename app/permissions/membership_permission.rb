@@ -1,5 +1,22 @@
 module MembershipPermission
 
+  def may_create_membership?(group=@group)
+    return current_user.may?(:admin, @group)
+  end
+
+  alias_method :may_join_membership?, :may_create_membership?
+
+  def may_read_membership?(group=@group)
+    return current_user.may?(:view_membership, @group)
+  end
+
+  %w(list groups).each{ |action|
+    alias_method "may_#{action}_membership?".to_sym, :may_read_membership?
+  }
+
+  def may_update_membership(group=@group)
+    may_admin_group? and committee?
+  end
 
   def may_destroy_membership?(group = @group)
     logged_in? and

@@ -44,16 +44,14 @@ module GroupHelper
   end
 
   def leave_group_link
-    if may_leave?
+    if may_leave_group?
       link_to_active("leave %s"[:leave_group] % group_type, {:controller => 'membership', :action => 'leave', :id => @group.name})
     end
   end
   
   def destroy_group_link
-    if may_destroy_group?
-      # eventually, this should fire a request to destroy.
-      link_to("destroy %s"[:destroy_group] % group_type, group_url(:action => 'destroy', :id => @group), :confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post)
-    end
+    # eventually, this should fire a request to destroy.
+    link_if_may("destroy {group_type}"[:destroy_group,group_type], :group, 'destroy', @group, {:confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post})
   end
     
   def more_committees_link
@@ -72,10 +70,10 @@ module GroupHelper
 
   def list_membership_link(link_suffix='')
     text = ''
-    if may_admin_group? and committee?
+    if may_update_membership?
       text = 'edit'.t
       url = edit_membership_url
-    elsif may_see_members?
+    elsif may_list_membership?
       text = 'see all'.t
       url = list_membership_url
     end
@@ -85,11 +83,7 @@ module GroupHelper
   end
 
   def group_membership_link(link_suffix='')
-    if may_see_members?
-      link_to_active 'see all'.t + link_suffix, groups_membership_url
-    else
-      ''
-    end
+    link_to_active_if_may 'see all'.t + link_suffix, groups_membership_url
   end
 
   def invite_link(suffix='')

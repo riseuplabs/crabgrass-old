@@ -8,7 +8,7 @@ module GroupPermission
     may_see_private?(group) or may_see_public?(group)
   end
 
-  %w(show members search discussions archive tags tasks trash search).each{ |action|
+  %w(show members search discussions archive tags tasks trash search view).each{ |action|
     alias_method "may_#{action}_group?".to_sym, :may_read_group?
   }
 
@@ -21,7 +21,7 @@ module GroupPermission
   }
 
   def may_destroy_group?(group = @group)
-    may_admin? and
+    may_admin_group? and
     ( (group.network? and group.groups.size == 1) or group.users.uniq.size == 1)
   end
 
@@ -45,7 +45,7 @@ module GroupPermission
 
   def may_see_members?(group = @group)
     if logged_in?
-      may_admin? || group_member?(group) || group.profiles.visible_by(current_user).may_see_members?
+      may_admin_group? || group_member?(group) || group.profiles.visible_by(current_user).may_see_members?
     else
       group.profiles.public.may_see_members?
     end

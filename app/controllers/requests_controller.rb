@@ -7,6 +7,8 @@ class RequestsController < ApplicationController
   helper 'group', 'application'
   stylesheet 'groups'
 
+  permissions 'group'
+
   prepend_before_filter :set_language_from_invite, :only => [:accept]
   before_filter :login_required, :except => [:accept]
  

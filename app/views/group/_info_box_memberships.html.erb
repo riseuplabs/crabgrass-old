@@ -19,7 +19,7 @@
   <%- end -%>
 <%- end %>
 
-<% if may_see_committees? -%>
+<% if may_view_committee? -%>
   <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
     <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "committees"[:committees], :entities => @group.real_committees, :after => link_line(create_committee_link), :show_empty => true} %>
 

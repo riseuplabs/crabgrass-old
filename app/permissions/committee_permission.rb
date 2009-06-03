@@ -11,8 +11,6 @@ module CommitteePermission
     end
   end
 
-  end
-
   [:show, :list].each do |action|
     alias_method "may_#{action}_committee?".to_sym, :may_view_committee?
   end

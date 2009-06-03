@@ -3,7 +3,7 @@ class GroupController < ApplicationController
   include GroupHelper
   helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
-  permissions 'group','base_page' # base_page for undelting and removing from trash.
+  permissions 'group', 'base_page', 'membership', 'committee'
 
   stylesheet 'wiki_edit'
   stylesheet 'groups'
@@ -179,7 +179,7 @@ class GroupController < ApplicationController
       @group.profiles.public.update_attribute :may_see_members , params[:group][:publicly_visible_members]
       @group.profiles.public.update_attribute :may_request_membership , params[:group][:accept_new_membership_requests]
       @group.min_stars = params[:group][:min_stars]
-      if @group.valid? && may_admin && (params[:group][:council_id] != @group.council_id)
+      if @group.valid? && may_admin? && (params[:group][:council_id] != @group.council_id)
         # unset the current council if there is one
         @group.add_committee!(Group.find(@group.council_id), false) unless @group.council_id.nil?
 

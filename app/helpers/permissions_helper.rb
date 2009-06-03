@@ -45,6 +45,12 @@ module PermissionsHelper
     end
   end
 
+  def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
+    may?(controller, action, object) do
+      link_to_active(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.id}.merge(link_opts), active)
+    end
+  end
+
   def method_missing(method_id, *args)
     super unless match = /may_([_a-zA-Z]\w*)\?/.match(method_id.to_s)
     super if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
