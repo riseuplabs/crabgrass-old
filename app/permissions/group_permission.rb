@@ -33,14 +33,6 @@ module GroupPermission
     group.profiles.public.may_see?
   end
 
-  def may_see_members?(group = @group)
-    if logged_in?
-      may_admin_group? || group_member?(group) || group.profiles.visible_by(current_user).may_see_members?
-    else
-      group.profiles.public.may_see_members?
-    end
-  end
-
 #  def may_see_committees?(group = @group)
 #    return if group.committee?
 #    if logged_in?

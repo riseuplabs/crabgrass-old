@@ -1,4 +1,4 @@
-<% if may_see_members? -%>
+<% if may_list_membership? -%>
   <%- cache(group_cache_key(@group, :what => 'members', :expires_in => hours(3))) do -%>
   <%= render :partial => 'avatars/entity_boxes',
       :locals => {:header => 'members'[:members], :entities => @group.users,

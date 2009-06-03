@@ -268,7 +268,7 @@ class GroupController < ApplicationController
         @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
       end
       # don't show group members to everyone
-      @visible_users = may_see_members? ? @group.users : []
+      @visible_users = may_list_membership? ? @group.users : []
     end
     handle_rss :title => @group.name, :description => @group.summary,
                :link => url_for_group(@group),
@@ -285,7 +285,7 @@ class GroupController < ApplicationController
       @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page], :flow => :deleted))
       @columns = [:admin_checkbox, :icon, :title, :deleted_by, :deleted_at, :contributors_count]
       # don't show group members to everyone
-      @visible_users = may_see_members? ? @group.users : []
+      @visible_users = may_list_membership? ? @group.users : []
     end
     handle_rss :title => @group.name, :description => @group.summary,
                :link => url_for_group(@group),

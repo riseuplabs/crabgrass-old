@@ -5,7 +5,7 @@ class MembershipController < ApplicationController
 
   stylesheet 'groups'
   helper 'group', 'application'
-  permissions 'membership', 'group'
+  permissions 'membership', 'group', 'requests'
     
   before_filter :login_required
 

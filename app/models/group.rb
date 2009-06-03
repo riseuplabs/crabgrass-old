@@ -184,8 +184,6 @@ class Group < ActiveRecord::Base
       ok = user.member_of?(self) || user.member_of?(self.council)
     elsif access == :view
       ok = user.member_of?(self) || profiles.public.may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || self.has_access!(:admin,user) || profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end

@@ -7,7 +7,14 @@ module MembershipPermission
   alias_method :may_join_membership?, :may_create_membership?
 
   def may_read_membership?(group=@group)
-    return current_user.may?(:view_membership, @group)
+    if logged_in?
+      may_admin_group?(group) or
+      current_user.member_of?(group) or
+      group.profiles.visible_by(current_user).may_see_members? or
+      group.committee? && may_read_membership?(group.parent)
+    else
+      group.profiles.public.may_see_members?
+    end
   end
 
   %w(list groups).each{ |action|
