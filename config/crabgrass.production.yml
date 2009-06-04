@@ -45,6 +45,8 @@ profile_fields:
   - notes
   - websites
 
+ensure_page_owner: false
+
 ##
 ## SITES
 ##

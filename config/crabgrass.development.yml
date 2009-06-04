@@ -21,6 +21,8 @@ enabled_mods:
 email:
   delivery_method: :sendmail
 
+ensure_page_owner: false
+
 ##
 ## SITES
 ##
