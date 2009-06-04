@@ -3,6 +3,7 @@ class BasePage::AssetsController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/assets'
+  permissions 'base_page/assets'
 
   def show_popup
   end
@@ -34,9 +35,6 @@ class BasePage::AssetsController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may? :edit, @page
-  end
 
   prepend_before_filter :fetch_data
   def fetch_data
@@ -47,5 +45,8 @@ class BasePage::AssetsController < ApplicationController
     end
   end
 
-end
 
+  def authorized?
+    may_action?(params[:action], @page)
+  end
+end

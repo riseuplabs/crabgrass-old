@@ -2,6 +2,7 @@ class BasePage::TagsController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/tags'
+  permissions 'base_page/tags'
 
   def show_popup
   end
@@ -25,9 +26,6 @@ class BasePage::TagsController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may?(:edit, @page)
-  end
 
   prepend_before_filter :fetch_data
   def fetch_data
@@ -35,5 +33,8 @@ class BasePage::TagsController < ApplicationController
     @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
   end
 
-end
 
+  def authorized?
+    may_action?(params[:action], @page)
+  end
+end

@@ -2,6 +2,7 @@ class BasePage::TitleController < ApplicationController
 
   before_filter :login_required
   helper 'base_page'
+  permissions 'base_page/title'
 
   # return the edit title form via rjs
   def edit
@@ -26,9 +27,6 @@ class BasePage::TitleController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may?(:edit, @page)
-  end
 
   prepend_before_filter :fetch_data
   def fetch_data
@@ -36,5 +34,8 @@ class BasePage::TitleController < ApplicationController
     @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
   end
 
-end
 
+  def authorized?
+    may_action?(params[:action], @page)
+  end
+end

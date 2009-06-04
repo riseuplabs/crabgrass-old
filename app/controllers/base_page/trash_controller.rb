@@ -2,6 +2,7 @@ class BasePage::TrashController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/trash'
+  permissions 'base_page'
 
   def show_popup
   end
@@ -30,13 +31,13 @@ class BasePage::TrashController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may?(:admin, @page)
-  end
 
   prepend_before_filter :fetch_data
   def fetch_data
     @page = Page.find params[:page_id] if params[:page_id]
     @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
+  end
+  def authorized?
+    may_action?(params[:action], @page)
   end
 end

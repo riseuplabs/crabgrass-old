@@ -4,12 +4,12 @@ module GroupPermission
     logged_in? and parent.nil? || may_admin_group?(parent)
   end
 
-  def may_read_group?(group = @group)
+  def may_show_group?(group = @group)
     may_see_private?(group) or may_see_public?(group)
   end
 
-  %w(show members search discussions archive tags tasks trash search view).each{ |action|
-    alias_method "may_#{action}_group?".to_sym, :may_read_group?
+  %w(members search discussions archive tags tasks trash search view).each{ |action|
+    alias_method "may_#{action}_group?".to_sym, :may_show_group?
   }
 
   def may_update_group?(group = @group)

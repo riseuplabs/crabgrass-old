@@ -26,6 +26,8 @@ class PagesController < ApplicationController
 
   stylesheet 'page_creation', :action => :create
 
+  permissions 'pages'
+
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
   def initialize(options={})
@@ -62,14 +64,6 @@ class PagesController < ApplicationController
         
   protected
   
-  def authorized?
-    # see BaseController::authorized?
-    if @page
-      return current_user.may?(:admin, @page)
-    else
-      return true
-    end
-  end
 
   def context
     return true unless request.get? # skip the context on posts, it won't be shown anyway
@@ -88,4 +82,7 @@ class PagesController < ApplicationController
     true
   end
   
+  def authorized?
+    may_action?(params[:action], @page)
+  end
 end
