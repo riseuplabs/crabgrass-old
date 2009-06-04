@@ -11,7 +11,7 @@ module MessagesPermission
   #  end
   def may_show_messages?(user=@user)
     logged_in? and user and
-    may_show_profile?(user)
+    user.profiles.visible_by(current_user).may_see?
   end
 
   %w(index create).each{ |action|
