@@ -11,5 +11,5 @@ module PagesPermission
     !page or current_user.may?(:admin, @page)
   end
 
-  alias_method :may_create_wiki_pages, :may_create_pages
+  alias_method :may_create_wiki_pages?, :may_create_pages?
 end

@@ -1,9 +1,9 @@
-module Me_Permission 
+module MePermission
   # always have access to self
   #  def authorized?
   #    return true
   #  end
-  def may_edit_me()
+  def may_edit_me?
     logged_in?
   end
 
