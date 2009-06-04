@@ -378,38 +378,53 @@ class Page < ActiveRecord::Base
   # this attr is protected from mass assignment.
   def owner=(entity)
     if entity.is_a? String
-      entity = User.find_by_login(entity) || Group.find_by_name(entity)
+      if entity.empty?
+        entity = nil
+      else
+        entity = User.find_by_login(entity) || Group.find_by_name(entity)
+      end
     end
-    raise ArgumentError.new("cannot set page.owner to nil") if entity.nil?
-
-    self.owner_id = entity.id
-    self.owner_name = entity.name
-    if entity.is_a? Group
-      self.owner_type = "Group"
-      self.group_name = self.owner_name
-      self.group_id = self.owner_id
-    elsif entity.is_a? User
-      self.owner_type = "User"
+    if entity.nil?
+      if Conf.ensure_page_owner?
+        raise ArgumentError.new("cannot set page.owner to nil")
+      else
+        self.owner_id = nil
+        self.owner_name = nil
+        self.owner_type = nil
+      end
     else
-      raise Exception.new('must be user or group')
+      self.owner_id = entity.id
+      self.owner_name = entity.name
+      if entity.is_a? Group
+        self.owner_type = "Group"
+        self.group_name = self.owner_name
+        self.group_id = self.owner_id
+      elsif entity.is_a? User
+        self.owner_type = "User"
+      else
+        raise Exception.new('must be user or group')
+      end
+      part = most_privileged_participation_for(entity)
+      self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+      return self.owner(true)
     end
-    part = most_privileged_participation_for(entity)
-    self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
-    return self.owner(true)
   end
 
   before_create :ensure_owner
   def ensure_owner
-    if owner
-      ## do nothing!
-    elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
-      self.owner = gp.group
-    elsif self.created_by
-      self.owner = self.created_by
-    else
-      # in real life, we should not get here. but in tests, we make pages a lot
-      # that don't have a group or user.
+    if Conf.ensure_page_owner?
+      if owner
+        ## do nothing!
+      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+        self.owner = gp.group
+      elsif self.created_by
+        self.owner = self.created_by
+      else
+        # in real life, we should not get here. but in tests, we make pages a lot
+        # that don't have a group or user.
+      end
     end
+    return true
   end
 
   # a list of people and groups that have admin access to this page

@@ -57,6 +57,7 @@ class Conf
   cattr_accessor :sites
   cattr_accessor :secret
   cattr_accessor :paranoid_emails
+  cattr_accessor :ensure_page_owner
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -75,6 +76,7 @@ class Conf
   def self.limited?; self.limited; end
   def self.paranoid_emails?; self.paranoid_emails; end
   def self.tracking?; self.tracking; end
+  def self.ensure_page_owner?; self.ensure_page_owner; end
 
   ##
   ## LOADING
@@ -105,6 +107,7 @@ class Conf
     self.email         = nil
     self.sites         = []
     self.secret        = nil
+    self.ensure_page_owner = true
   end
 
   def self.load(filename)
