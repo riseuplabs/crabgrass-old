@@ -306,7 +306,7 @@ module BasePageHelper
     owner_name = @page.owner ? @page.owner.name : ''
     if current_user.may?(:admin, @page)
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
-        possibles = @page.admins.to_select('both_names', 'name') + [["(#{:none.t})",'']]
+        possibles = @page.admins.to_select('both_names', 'name') + [["(#{"None"[:none]})",""]]
         concat(
           select_tag(
             'owner',
@@ -320,7 +320,7 @@ module BasePageHelper
     elsif @page.owner
       h(@page.owner.both_names)
     else
-      "none"[:none]
+      "None"[:none]
     end
   end
   

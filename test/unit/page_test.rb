@@ -167,6 +167,13 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_page_default_owner
+    Conf.ensure_page_owner = false
+    page = Page.create! :title => 'x', :user => users(:blue),
+      :share_with => groups(:animals), :access => :admin
+    assert_nil page.owner_name
+    assert_nil page.owner_id
+
+    Conf.ensure_page_owner = true
     page = Page.create! :title => 'x', :user => users(:blue),
       :share_with => groups(:animals), :access => :admin
     assert_equal groups(:animals).name, page.owner_name

@@ -72,7 +72,11 @@ For SMTP, to enable ssl connection the port must be 587 or 465. Some SMTP auth r
 === Miscellanous Global Options
 
 paranoid_emails
-if true, then urls sent in emails will be obscured.
+  If true, then urls sent in emails will be obscured and will expire after 30 days.
+
+ensure_page_owner
+  If true, then every page must have an owner. If false, you are allowed to create
+  pages without owners. The default is true.
 
 === Sites
 

@@ -107,16 +107,22 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     @page.save!
     @page.reload
     assert @page.group_ids.include?(friend_group.id)
-    assert_equal @owner.id, @page.owner_id
+    if Conf.ensure_page_owner?
+      assert_equal @owner.id, @page.owner_id
+    end
     @page.reload
-    
+
     login_as :blue
     post :destroy, :page_id => @page.id, :upart_id => @page.user_participations.detect{|up|up.user==friend_user}.id
     
     post :destroy, :page_id => @page.id, :gpart_id => @page.group_participations.detect{|gp|gp.group==friend_group}.id
     
     @page = Page.find(@page.id)
-    assert_equal @owner.id, @page.owner_id
+    if Conf.ensure_page_owner?
+      assert_equal @owner.id, @page.owner_id
+    else
+      assert_nil @page.owner_id
+    end
     assert_equal [@owner.id], @page.user_ids
   end
 
@@ -135,7 +141,8 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     page = Page.create! :title => 'snowy snow', :user => user, :share_with => group2, :access => :admin
     login_as :blue
     post :move, :page_id => page.id, :group_id => group2.id
-    assert_equal group2, page.owner.reload
+    assert assigns(:page).owner
+    assert_equal group2, assigns(:page).owner
   end
   
   def test_share
