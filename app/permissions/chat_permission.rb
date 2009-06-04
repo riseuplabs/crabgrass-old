@@ -4,7 +4,7 @@ module ChatPermission
   #    return true if params[:action] == 'index'
   #    return( @user and @channel and @user.member_of?(@channel.group_id) )
   #  end
-  def may_index_chat?()
+  def may_index_chat?
     current_site.chat?
   end
   

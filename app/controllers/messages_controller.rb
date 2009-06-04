@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
 
   verify :method => :post, :only => [:destroy, :create, :set_status]
   helper 'messages', 'context'
-  permissions 'messages'
+  permissions 'messages', 'profile'
   stylesheet 'messages'
 
   before_filter :login_required
@@ -95,6 +95,6 @@ class MessagesController < ApplicationController
   end
 
   def authorized?
-    may_action?(params[:action], @group)
+    may_action?(params[:action], @user)
   end
 end

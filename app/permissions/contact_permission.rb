@@ -18,6 +18,8 @@ module ContactPermission
     user.profiles.visible_by(current_user).may_request_contact?
   end
 
+  alias_method :may_add_contact?, :may_create_contact?
+
   def may_remove_contact?(user=@user)
     return false unless logged_in? and user
     return true if current_user.friend_of?(user)

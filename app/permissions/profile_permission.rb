@@ -15,13 +15,15 @@ module ProfilePermission
   #  sense to me...
   def may_update_profile?(entity=@entity)
     return false unless logged_in?
-    entity.is_a(User) && current_user == entity or
-    entity.is_a(Group) && current_user.member_of?(entity)
+    entity.is_a?(User) && current_user == entity or
+    entity.is_a?(Group) && current_user.member_of?(entity)
   end
+
+  alias_method :may_edit_profile?, :may_update_profile?
 
   def may_show_profile?(entity=@entity)
     entity.is_a?(Group) or
-    entity.is_a?(User) && entity.profiles.visible_by(current_user).may_see?
+    entity.is_a?(User) && current_user == entity
   end
 
 end

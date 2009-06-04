@@ -4,6 +4,8 @@ module GroupPermission
     logged_in? and parent.nil? || may_admin_group?(parent)
   end
 
+  alias_method :may_create_groups?, :may_create_group?  # to be used from the groups controller.
+
   def may_show_group?(group = @group)
     may_see_private?(group) or may_see_public?(group)
   end

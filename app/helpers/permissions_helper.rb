@@ -17,7 +17,7 @@ module PermissionsHelper
     if controller.is_a?(Symbol)
       permission = send("may_#{action}_#{controller.to_s}?", *args)
     else
-      permission = controller.send("may_#{action}_#{controller.controller_name}?", *args)
+      permission = permission_for(controller, action, *args)
     end
     if permission and block_given?
       yield
@@ -64,11 +64,20 @@ module PermissionsHelper
   def method_missing(method_id, *args)
     super unless match = /may_([_a-zA-Z]\w*)\?/.match(method_id.to_s)
     super if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
-    permission = controller.send("may_#{match[1]}_#{controller.controller_name}?", *args)
-    if permission and block_given?
-      yield
+    may?(controller, match[1], *args)
+  end
+  
+  # this will try and use the may_action...? methods with the 
+  # controller name and the name of the controllers parent namespace.
+  def permission_for(controller, action, *args)
+    if controller.respond_to?("may_#{action}_#{controller.controller_name}?")
+      controller.send("may_#{action}_#{controller.controller_name}?", *args)
     else
-      permission
+      parent=controller.controller_path.split("/")[-2]
+      if controller.respond_to?("may_#{action}_#{parent}?")
+        controller.send("may_#{action}_#{parent}?", *args)
+      end
     end
   end
 end
+

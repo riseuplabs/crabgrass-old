@@ -17,6 +17,11 @@ module BasePagePermission
     alias_method "may_#{action}_base_page?".to_sym, :may_create_base_page?
   end
 
+  # Trash
+  %w[close show_popup].each do |action|
+    alias_method "may_#{action}_trash?".to_sym, :may_delete_base_page?
+  end
+  
   def may_show_base_page?(page = @page)
     !page or current_user.may?(:view, page)
   end
@@ -27,10 +32,10 @@ module BasePagePermission
   # way and is a total violation of the permission logic. there is a better way,
   # and it should be replaced for this.
   def may_destroy_base_page?(page = @page)
-    return true if page.nil
+    return true if page.nil?
     parts = []
-    parts << page.participation_for_user(user)
-    parts.concat page.participation_for_groups(user.admin_for_group_ids)
+    parts << page.participation_for_user(current_user)
+    parts.concat page.participation_for_groups(current_user.admin_for_group_ids)
     return parts.compact.detect{|part| part.access == ACCESS[:admin]}
   end
 

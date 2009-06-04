@@ -6,6 +6,7 @@ class ProfileController < ApplicationController
   #layout :choose_layout
   stylesheet 'profile'
   helper 'me/base'
+  permissions 'profile'
   
   def show
   end
