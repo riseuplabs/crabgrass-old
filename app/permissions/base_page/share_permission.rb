@@ -1,4 +1,4 @@
-module BasePage::SharePermission 
+module BasePage::SharePermission
 #  def authorized?
 #    if @page
 #      current_user.may? :admin, @page
@@ -13,5 +13,5 @@ module BasePage::SharePermission
   %w(notify show_popup).each{ |action|
     alias_method "may_#{action}_share?".to_sym, :may_update_share?
   }
-  
+
 end

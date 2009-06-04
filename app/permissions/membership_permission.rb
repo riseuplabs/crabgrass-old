@@ -1,12 +1,13 @@
 module MembershipPermission
 
   def may_create_membership?(group=@group)
-    return current_user.may?(:admin, @group)
+    logged_in? and
+    current_user.may?(:admin, @group)
   end
 
   alias_method :may_join_membership?, :may_create_membership?
 
-  def may_read_membership?(group=@group)
+  def may_list_membership?(group=@group)
     if logged_in?
       may_admin_group?(group) or
       current_user.member_of?(group) or
@@ -17,8 +18,8 @@ module MembershipPermission
     end
   end
 
-  %w(list groups).each{ |action|
-    alias_method "may_#{action}_membership?".to_sym, :may_read_membership?
+  %w(groups).each{ |action|
+    alias_method "may_#{action}_membership?".to_sym, :may_list_membership?
   }
 
   def may_update_membership?(group=@group)

@@ -1,4 +1,4 @@
-module BasePage::TagsPermission 
+module BasePage::TagsPermission
 #  def authorized?
 #    current_user.may?(:edit, @page)
 #  end

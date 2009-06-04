@@ -1,4 +1,4 @@
-module BasePage::AssetsPermission 
+module BasePage::AssetsPermission
 #  def authorized?
 #    current_user.may? :edit, @page
 #  end

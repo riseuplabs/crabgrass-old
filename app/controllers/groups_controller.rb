@@ -2,7 +2,6 @@ class GroupsController < ApplicationController
 
   stylesheet 'groups'
   helper 'group'
-   
   permissions 'group'
 
   before_filter :login_required, :only => [:create]
@@ -72,11 +71,6 @@ class GroupsController < ApplicationController
      group_context
      set_banner "groups/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
-
-  # this is currently only used for create.
-  def authorized?
-    may?(:group, params[:action])
-  end
   
   def get_group_class
     type = if params[:id]
@@ -125,5 +119,8 @@ class GroupsController < ApplicationController
 #    @group.add_committee!(@council, true)
 #  end
 
+  # this is currently only used for create.
+  def authorized?
+    may_action?(params[:action], @group)
+  end
 end
-

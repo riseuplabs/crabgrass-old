@@ -27,8 +27,18 @@ module PermissionsHelper
   end
 
   # shortcut for +may?+ but automatically selecting the current controller.
+  # only use this in authorized? and similar situations where the user is
+  # actually trying to do the action. It may display error messages if the
+  # user may not take that action.
+  # Use may? or link_if_may or the permission method itself to determine if
+  # a user may theoretically do something (in order to display the link for
+  # example)
   def may_action?(action, *args, &block)
-    may?(controller, action, *args, &block)
+    permission = may?(controller, action, *args, &block)
+    if !permission and @error_message
+      flash_message_now :error => @error_message
+    end
+    permission
   end
 
   # Generate a link to the specific action if the user is allowed to do

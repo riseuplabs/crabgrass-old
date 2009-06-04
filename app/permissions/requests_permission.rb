@@ -1,22 +1,22 @@
 module RequestsPermission
 
   def may_create_join_requests?(group=@group)
-   group.profiles.visible_by(current_user).may_request_membership?
+    logged_in? and
+    group.profiles.visible_by(current_user).may_request_membership?
   end
 
   def may_create_invite_requests?(group=@group)
+    logged_in? and
     current_user.may?(:admin, @group)
   end
 
-  def may_read_requests?(group=@group)
+  def may_list_requests?(group=@group)
+    logged_in? and
     current_user.may?(:admin, @group);
   end
 
-  %w(list).each{ |action|
-    alias_method "may_#{action}_requests?".to_sym, :may_read_requests?
-  }
-
   def may_update_requests?(req=@request)
+    logged_in? and
     req.may_approve?(current_user)
   end
 
@@ -25,10 +25,11 @@ module RequestsPermission
   }
 
   def may_redeem_requests?(req=@request)
-    true
+    logged_in?
   end
 
   def may_destroy_requests?(req=@request)
+    logged_in? and
     req.may_destroy?(current_user)
   end
 

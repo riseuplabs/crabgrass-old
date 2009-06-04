@@ -1,4 +1,4 @@
-module AssetsPermission 
+module AssetsPermission
 #  def authorized?
 #    if @asset
 #      if action_name == 'show' || action_name == 'version'

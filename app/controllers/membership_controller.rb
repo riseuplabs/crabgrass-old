@@ -90,10 +90,6 @@ class MembershipController < ApplicationController
     @letter_page = params[:letter] || ''
   end
 
-  def authorized?
-    return false unless logged_in?
-    may_action?(params[:action], @group)
-  end
 
   def access_denied
     respond_to do |accepts|
@@ -114,4 +110,7 @@ class MembershipController < ApplicationController
     false
   end  
 
+  def authorized?
+    may_action?(params[:action], @group)
+  end
 end

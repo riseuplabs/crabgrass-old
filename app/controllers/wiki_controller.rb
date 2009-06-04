@@ -11,6 +11,7 @@
 
 class WikiController < ApplicationController
   helper :wiki
+  permissions 'wiki'
 
   include ControllerExtension::WikiRenderer
   include ControllerExtension::WikiImagePopup
@@ -122,13 +123,13 @@ class WikiController < ApplicationController
     end 
   end
 
-  def authorized?
-    @group = Group.find(params[:group_id])
-    logged_in? and current_user.member_of?(@group)
-  end
-
   # which images should be displayed in the image upload popup
   def image_popup_visible_images
     Asset.visible_to(current_user, @group).media_type(:image).most_recent.find(:all, :limit=>20)
+  end
+
+  def authorized?
+    @group = Group.find(params[:group_id])
+    may_action?(params[:action], @group)
   end
 end

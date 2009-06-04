@@ -240,8 +240,6 @@ class RequestsController < ApplicationController
   end
   
   def authorized?
-    return false unless logged_in?
-    may_action?(params[:action], params[:request] || @group)
+    may_action?(params[:action], @group)
   end
-  
 end

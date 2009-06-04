@@ -1,4 +1,4 @@
-module BasePage::TitlePermission 
+module BasePage::TitlePermission
 #  def authorized?
 #    current_user.may?(:edit, @page)
 #  end
