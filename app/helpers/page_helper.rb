@@ -488,6 +488,11 @@ module PageHelper
       selected_group = nil
     end
 
+    if !Conf.ensure_page_owner? and options[:include_me]
+      html << content_tag(:option, "None"[:none], :value => "", :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic')
+      selected_group = 'none'
+    end
+
     if options[:include_me]
       me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
       html << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )

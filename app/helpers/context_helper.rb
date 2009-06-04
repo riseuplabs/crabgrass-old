@@ -137,7 +137,9 @@ module ContextHelper
           me_context('small', false)
         end
       else
-        # unknown context. will we ever get here?
+        # not sure what tab should be active when there is no page owner...
+        @banner = nil
+        @banner_style = nil
       end
       if logged_in? and referer_has_crumbs?(@page)
         breadcrumbs_from_referer(@page)
@@ -226,4 +228,3 @@ module ContextHelper
   end
   
 end
-
