@@ -16,10 +16,15 @@
 #
 
 title: "Crabgrass Development"
+
 enabled_mods:
   - design_tester
+#  - gibberize
+
 email:
   delivery_method: :sendmail
+
+translation_group: rainbow
 
 ##
 ## SITES
