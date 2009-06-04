@@ -346,7 +346,7 @@ public_profile: "Public Profile"
 create_task_list: create new task list
 me_search_description: Search through all pages you have access to
 inbox_description: Inbox of pages I am actively participating in or watching for changes
-toggle_selection: Toggle selection
+toggle_selection: Toggle Selection
 remove_from_inbox: Remove from inbox
 my_settings: Settings for {user}
 upload_image: upload_image
@@ -660,18 +660,26 @@ pagination_previous: "Previous"
 
 move_this_page: "Move This Page"
 move_page_to_different_group: "Move this page to a different group"
-destroy_page_link: "Shred {page_class}"
-confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
-trash_page_link: "Move {page_class} to trash"
+
 Announcements: "Announcements"
 watch_checkbox: "Watch For Updates"
 add_star_link: "Add Star (:star_count)"
 remove_star_link: "Remove Star (:star_count)"
 public_checkbox: "Public"
 public_checkbox_help: "If checked, anyone may view this page."
-delete_page_link: "Delete {page_class}"
 move_page_link: "Move {page_class}"
 page_details_link: "{page_class} Details"
+
+# trash
+
+trash_headline: "Trash"
+trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking {undelete} or permanently destroy a page by clicking {destroy}."
+
+delete_page_link: "Delete {page_class}"
+delete_page_via_trash: "Move To Trash"
+delete_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
+delete_page_via_shred: "Destroy Immediately"
+delete_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
 
 # details
 
