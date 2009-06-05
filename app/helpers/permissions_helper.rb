@@ -67,16 +67,22 @@ module PermissionsHelper
     may?(controller, match[1], *args)
   end
   
-  # this will try and use the may_action...? methods with the 
-  # controller name and the name of the controllers parent namespace.
+  # this will try and use the may_action_controller? methods in the following
+  # order:
+  # 1) the controller name:
+  #    asset_controller -> asset
+  # 2) the name of the controllers parent namespace:
+  #    me/trash_controller -> me
+  # 3) the name of the controllers super class:
+  #    event_page_controller -> base_page
   def permission_for(controller, action, *args)
-    if controller.respond_to?("may_#{action}_#{controller.controller_name}?")
-      controller.send("may_#{action}_#{controller.controller_name}?", *args)
-    else
-      parent=controller.controller_path.split("/")[-2]
-      if controller.respond_to?("may_#{action}_#{parent}?")
-        controller.send("may_#{action}_#{parent}?", *args)
-      end
+    names=[]
+    names << controller.controller_name
+    names << controller.controller_path.split("/")[-2]
+    names << controller.class.superclass.controller_name
+    names.compact.each do |name|
+      method="may_#{action}_#{name}?"
+      return controller.send(method, *args) if controller.respond_to?(method)
     end
   end
 end
