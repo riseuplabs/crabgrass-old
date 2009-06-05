@@ -183,6 +183,10 @@ class RankedVotePageController < BasePageController
 
   def setup_view
     @show_print = true
-  end  
+  end
+
+  def build_page_data
+    Poll.new
+  end
 end
 

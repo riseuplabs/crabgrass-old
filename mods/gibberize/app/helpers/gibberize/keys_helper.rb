@@ -33,7 +33,8 @@ module Gibberize::KeysHelper
       )
     else
       link_line(
-        link_to_active('all keys', :controller => 'keys', :action => 'index'),
+        link_to_active('all keys', {:controller => 'keys', :action => nil, :filter => nil}),
+        link_to_active("search", {:controller => 'keys', :action => nil, :filter => 'search'}),
         link_to_active('new keys', new_key_path)
       )
     end

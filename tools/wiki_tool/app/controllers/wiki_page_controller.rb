@@ -8,29 +8,6 @@ class WikiPageController < BasePageController
   #verify :method => :post, :only => [:revert]
 
   ##
-  ## ACCESS: no restriction
-  ##
-
-  def create
-    @page_class = WikiPage
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        @page = create_new_page!(@page_class)
-        @page.update_attribute(:data, Wiki.create(:user => current_user, :body => ""))
-        return redirect_to(page_url(@page, :action => 'edit'))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
-    end
-    render :template => 'base_page/create'
-  end
-
-  ##
   ## ACCESS: public or :view
   ##
 
@@ -233,4 +210,8 @@ class WikiPageController < BasePageController
     Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
   end
 
+  # called during BasePage::create
+  def build_page_data
+    Wiki.new(:user => current_user, :body => "")
+  end
 end

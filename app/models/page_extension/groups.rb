@@ -94,7 +94,6 @@ module PageExtension::Groups
       field = case options[:field]
         when 'created': 'created_at'
         when 'updated': 'updated_at'
-        when 'starts': 'starts_at'
         else 'error'
       end
 

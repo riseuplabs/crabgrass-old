@@ -103,4 +103,8 @@ class RateManyPageController < BasePageController
   def setup_view
     @show_print = true
   end
+
+  def build_page_data
+    Poll.new
+  end
 end

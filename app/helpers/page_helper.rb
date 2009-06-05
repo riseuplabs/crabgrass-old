@@ -132,7 +132,7 @@ module PageHelper
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
-    group_name owner_name title starts_at posts_count contributors_count stars
+    group_name owner_name title posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand

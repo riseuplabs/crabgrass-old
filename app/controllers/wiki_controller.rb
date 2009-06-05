@@ -34,6 +34,7 @@ class WikiController < ApplicationController
     end
   end
 
+  # show a wiki body from an old version
   def old_version
     # XHR
     @showing_old_version = @wiki.versions[params[:old_version].to_i - 1]
