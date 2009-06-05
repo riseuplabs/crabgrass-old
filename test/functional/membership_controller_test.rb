@@ -43,7 +43,6 @@ class MembershipControllerTest < Test::Unit::TestCase
     
     get :leave, :id => groups(:public_group).name
     assert_response :success
-    
     post :leave, :id => groups(:public_group).name
     assert_response :redirect
     assert_redirected_to @controller.url_for_group(groups(:public_group))

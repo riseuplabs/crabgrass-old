@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper, CacheHelper
+  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper, CacheHelper, PermissionsHelper
 
   # TODO: remove these, access via self.view() instead.
   include AuthenticatedSystem	
@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
   include ImageHelper
+  include PermissionsHelper
 
   include ControllerExtension::CurrentSite
   
@@ -89,6 +90,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # if we have login_required this will be called and check the
+  # permissions accordingly
+  def authorized?
+    may_action?(params[:action])
+  end
+
   # set the current timezone, if the user has it configured.
   def set_timezone
     Time.zone = current_user.time_zone if logged_in?
@@ -128,7 +135,6 @@ class ApplicationController < ActionController::Base
   end
   
   # returns true if params[:action] matches one of the args.
-  # useful in authorized?() methods.
   def action?(*actions)
     actions.include?(params[:action].to_sym)
   end

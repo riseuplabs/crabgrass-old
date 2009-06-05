@@ -11,7 +11,7 @@ class MessagesControllerTest < ActionController::TestCase
 
   def test_create
     login_as :red
-    assert_difference 'Post.count', 1 do
+    assert_difference 'Post.count' do
       post :create,
         :post => {:body => 'test red to blue'},
         :user => 'blue', 

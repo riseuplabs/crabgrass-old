@@ -10,6 +10,7 @@ class BasePageController < ApplicationController
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
+  permissions 'base_page'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -75,19 +76,6 @@ class BasePageController < ApplicationController
 
   protected
 
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:show_popup)
-      true
-    elsif action?(:show)
-      current_user.may?(:view, @page)
-    elsif action?(:destroy)
-      current_user.may?(:delete, @page)
-    else
-      current_user.may?(:admin, @page)
-    end
-  end
 
   def choose_layout
     return 'default' if params[:action] == 'create'
@@ -225,6 +213,7 @@ class BasePageController < ApplicationController
     params[:page][:share_with] = params[:recipients]
     params[:page][:access] = (params[:access]||'view').to_sym
   end
+
 
   # returns a new data object for page initialization
   # tools override this to build their own data objects

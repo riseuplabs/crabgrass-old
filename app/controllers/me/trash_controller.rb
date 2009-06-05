@@ -62,9 +62,6 @@ class Me::TrashController < Me::BaseController
 
   # it is impossible to see anyone else's me page,
   # so no authorization is needed.
-  def authorized?
-    return true
-  end
 
   def may_undelete_page?(page)
     current_user.may?(:admin, page)
@@ -80,4 +77,3 @@ class Me::TrashController < Me::BaseController
   end
 
 end
-

@@ -251,7 +251,6 @@ class Page < ActiveRecord::Base
     groups = self.groups_with_access(:view)
     groups | self.groups_with_access(:edit)
     groups | self.groups_with_access(:admin)
-    groups | self.groups_with_access(:comment)
 
     groups.include?(network) ? true : false
     true
@@ -269,12 +268,8 @@ class Page < ActiveRecord::Base
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
-  # DEPRECATED permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   :delete  -- can user destroy page?
-  #  
   # DEPRECATED BEHAVIOR:
-  # :edit and :comment should return false for deleted pages.
+  # :edit should return false for deleted pages.
   #
   def has_access!(perm, user)
 
@@ -283,8 +278,6 @@ class Page < ActiveRecord::Base
     ## until the new permission system is working.
     ## then, this logic should all be moved there. 
     return false if tmp_hack_for_deleted_pages?(perm)
-    return tmp_hack_when_access_is_delete(user) if perm == :delete
-    perm = tmp_hack_for_comment() if perm == :comment
     ## END TEMP HACKS
     #########################################################
 
@@ -315,27 +308,9 @@ class Page < ActiveRecord::Base
     parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
   end
 
-  # this is some really horrible stuff that i want to go away very quickly.
-  # some sites want to restrict page deletion to only people who are admins
-  # of groups that have admin access to the page. crabgrass does not work this
-  # way and is a total violation of the permission logic. there is a better way,
-  # and it should be replaced for this.
-  def tmp_hack_when_access_is_delete(user)
-    parts = []
-    parts << participation_for_user(user)
-    parts.concat participation_for_groups(user.admin_for_group_ids)
-    return parts.compact.detect{|part| part.access == ACCESS[:admin]}
-  end
-
   # do not allow comments or editing of deleted pages:
   def tmp_hack_for_deleted_pages?(perm)
-    self.deleted? and (perm == :edit or perm == :comment)
-  end
-
-  # by default, if a user can edit the page, they can comment.
-  # this can be overridden by subclasses.
-  def tmp_hack_for_comment
-    :view
+    self.deleted? and (perm == :edit)
   end
 
   public

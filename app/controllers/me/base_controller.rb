@@ -2,6 +2,7 @@ class Me::BaseController < ApplicationController
  
   before_filter :login_required
   stylesheet 'me'
+  permissions 'me'
 
   def index
     redirect_to :controller => '/me/dashboard'
@@ -43,11 +44,6 @@ class Me::BaseController < ApplicationController
    @left_column = render_to_string :partial => 'me/sidebar'
   end
 
-  # always have access to self
-  def authorized?
-    return true
-  end
-  
   def context
     me_context('large')
     unless ['show','index'].include?(params[:action])

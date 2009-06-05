@@ -2,7 +2,8 @@ class GroupsController < ApplicationController
 
   stylesheet 'groups'
   helper 'group'
-   
+  permissions 'group'
+
   before_filter :login_required, :only => [:create]
 
   def index
@@ -70,10 +71,6 @@ class GroupsController < ApplicationController
      group_context
      set_banner "groups/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
   end
-
-  def authorized?
-    true
-  end
   
   def get_group_class
     type = if params[:id]
@@ -123,4 +120,3 @@ class GroupsController < ApplicationController
 #  end
 
 end
-
