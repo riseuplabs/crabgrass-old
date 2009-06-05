@@ -86,14 +86,14 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    page = RateManyPage.create :title => 'short lived'
+    page = RateManyPage.create! :title => 'short lived', :data => Poll.new
     poll_id = page.data.id
     page.destroy
     assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
   def test_delete_and_undelete
-    page = RateManyPage.create :title => 'longer lived'
+    page = RateManyPage.create! :title => 'longer lived', :data => Poll.new
     poll_id = page.data.id
     assert_equal page.flow, nil, 'a new page should have flow nil'
     page.delete

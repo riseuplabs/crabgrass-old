@@ -5,6 +5,7 @@ class CollectionController < BasePageController
   ##
 
   def create
+    raise "CollectionController#create deprecated. Use BasePageController#create and CollectionController#build_page_data methods"
     @page_class = Collection
     if request.post?
       return redirect_to(create_page_url) if params[:cancel]

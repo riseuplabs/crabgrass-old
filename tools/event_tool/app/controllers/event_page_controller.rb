@@ -26,46 +26,25 @@ class EventPageController < BasePageController
 #      flash_message_now :object => @page
 #    end
 #  end
- 
- def create
-    @page_class = EventPage
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        if params[:event][:is_all_day]
-          params[:hour_start] = "09:00"
-          params[:hour_end] = "17:00"
-          params[:date_end] = params[:date_start]
-        end  
-        d = params[:date_start].split("/")
-        params[:date_start] = [d[1], d[0], d[2]].join("/")
-        params[:time_start] =  params[:date_start] + " "+ params[:hour_start]
-        d = params[:date_end].split("/")
-        params[:date_end] = [d[1], d[0], d[2]].join("/")
-        params[:time_end] =  params[:date_end] + " " + params[:hour_end]
-      
-        @event = Event.new(params[:event])
-        unless @event.valid?
-          flash_message_now :object => @event
-          return
-        end
-        @page = @page_class.create!(params[:page].merge(
-          :user => current_user,
-          :share_with => params[:recipients],
-          :access => params[:access],
-          :data => @event,
-          :starts_at  => Time.zone.local_to_utc(params[:time_start].to_time),
-          :ends_at => Time.zone.local_to_utc(params[:time_end].to_time)
-          ))
-        redirect_to(page_url(@page))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
+
+  def build_page_data
+    if params[:event][:is_all_day]
+      params[:hour_start] = "09:00"
+      params[:hour_end] = "17:00"
+      params[:date_end] = params[:date_start]
     end
+
+    d = params[:date_start].split("/")
+    params[:date_start] = [d[1], d[0], d[2]].join("/")
+    params[:time_start] =  params[:date_start] + " "+ params[:hour_start]
+    d = params[:date_end].split("/")
+    params[:date_end] = [d[1], d[0], d[2]].join("/")
+    params[:time_end] =  params[:date_end] + " " + params[:hour_end]
+
+    params[:event][:starts_at] = params[:time_start]
+    params[:event][:ends_at] = params[:time_end]
+
+    Event.new(params[:event])
   end
 
  def participate

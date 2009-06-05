@@ -228,29 +228,6 @@ class GalleryController < BasePageController
   #  flash_message_now :exception => exc
   end
 
-  def create
-    @page_class = get_page_type
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        @page = create_new_page!(@page_class)
-        params[:assets].each do |file|
-          next if file.size == 0 # happens if no file was selected
-          asset = Asset.make(:uploaded_data => file)
-          @page.add_image!(asset, current_user)
-        end
-        return redirect_to(create_page_url(AssetPage, :gallery => @page.id)) if params[:add_more_files]
-        return redirect_to(page_url(@page))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
-    end
-  end
-  
   def upload
     logger.fatal 'go ahead'
     if request.xhr?
@@ -308,6 +285,24 @@ class GalleryController < BasePageController
    end
   end
 
-  
+  def build_page_data
+    @assets ||= []
+    params[:assets].each do |file|
+      next if file.size == 0 # happens if no file was selected
+      asset = Asset.make(:uploaded_data => file)
+      @assets << asset
+      @page.add_image!(asset, current_user)
+    end
+    # gallery page has no 'data' field
+    return nil
+  end
+
+  def destroy_page_data
+    @assets.each do |asset|
+      asset.destroy unless asset.new_record?
+      asset.page.destroy if asset.page and !asset.page.new_record?
+    end
+  end
+
 end
 
