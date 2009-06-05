@@ -1,6 +1,6 @@
 module PostsPermission 
   def may_create_posts?(page=@page)
-    current_user.may!(:view, @page)
+    logged_in? and current_user.may!(:view, @page)
   end
 
   def may_edit_posts?(post=@post)
