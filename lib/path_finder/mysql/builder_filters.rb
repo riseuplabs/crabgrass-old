@@ -22,13 +22,13 @@ module PathFinder::Mysql::BuilderFilters
     Time.zone.local_to_utc(time)
   end
 
-  def filter_starts
-    @date_field = "starts_at"
-  end
-
-  def filter_created
-    @date_field = "created_at"
-  end
+  # def filter_starts
+  #   @date_field = "starts_at"
+  # end
+  # 
+  # def filter_created
+  #   @date_field = "created_at"
+  # end
 
   def filter_updated
     @date_field = "updated_at"
@@ -64,11 +64,11 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'pages.updated_at > pages.created_at'
   end
  
-  def filter_upcoming
-    @conditions << 'pages.starts_at > ?'
-    @values << Time.now
-    @order << 'pages.starts_at DESC' if @order
-  end
+  # def filter_upcoming
+  #   @conditions << 'pages.starts_at > ?'
+  #   @values << Time.now
+  #   @order << 'pages.starts_at DESC' if @order
+  # end
   
   def filter_ago(near,far)
     near = near.to_i.days.ago

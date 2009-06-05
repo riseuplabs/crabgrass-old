@@ -28,8 +28,6 @@ all the relationship between a page and its groups is stored in the group_partic
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.boolean  "static"
     t.datetime "static_expires"
     t.boolean  "static_expired"
@@ -43,6 +41,7 @@ all the relationship between a page and its groups is stored in the group_partic
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
+    t.datetime "happens_at"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -55,8 +54,6 @@ all the relationship between a page and its groups is stored in the group_partic
   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
-  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
 
   Yeah, so, there are way too many indices on the pages table.
