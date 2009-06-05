@@ -82,7 +82,4 @@ class PagesController < ApplicationController
     true
   end
   
-  def authorized?
-    may_action?(params[:action], @page)
-  end
 end

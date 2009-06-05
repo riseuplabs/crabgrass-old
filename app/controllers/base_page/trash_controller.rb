@@ -40,10 +40,6 @@ class BasePage::TrashController < ApplicationController
 
   protected
 
-  def authorized?
-    may_action?(params[:action], @page)
-  end
-
   prepend_before_filter :fetch_data
   def fetch_data
     @page = Page.find params[:page_id] if params[:page_id]

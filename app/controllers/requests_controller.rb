@@ -239,7 +239,4 @@ class RequestsController < ApplicationController
     session[:language_code] ||= @request.language unless @request.nil?
   end
   
-  def authorized?
-    may_action?(params[:action])
-  end
 end

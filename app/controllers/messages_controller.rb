@@ -94,7 +94,4 @@ class MessagesController < ApplicationController
     add_context "Public Message Wall"[:wall_heading], url_for(:controller => '/messages', :user => @user.login, :action => nil)
   end
 
-  def authorized?
-    may_action?(params[:action])
-  end
 end

@@ -119,8 +119,4 @@ class GroupsController < ApplicationController
 #    @group.add_committee!(@council, true)
 #  end
 
-  # this is currently only used for create.
-  def authorized?
-    may_action?(params[:action], @group)
-  end
 end

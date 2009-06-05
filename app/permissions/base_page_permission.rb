@@ -18,7 +18,7 @@ module BasePagePermission
   end
 
   # Trash
-  %w[close show_popup].each do |action|
+  %w[show_popup].each do |action|
     alias_method "may_#{action}_trash?".to_sym, :may_delete_base_page?
   end
   
@@ -41,4 +41,21 @@ module BasePagePermission
 
   # we are using may_remove_page from trash controllers.
   alias_method :may_remove_base_page?, :may_destroy_base_page?
+
+  # this can only be used from authorized? because of 
+  # checking the params. Use one of
+  #  - may_delete_base_page?
+  #  - may_destroy_base_page?
+  # from the views and helpers.
+  def may_update_trash?(page=@page)
+    if params[:cancel]
+      may_delete_base_page?
+    elsif params[:delete] && params[:type]=='move_to_trash'
+      may_delete_base_page?
+    elsif params[:delete] && params[:type]=='shred_now'
+      may_destroy_base_page?
+    else
+      false
+    end
+  end
 end

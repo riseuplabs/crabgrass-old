@@ -60,8 +60,4 @@ class ContactController < ApplicationController
     add_context 'contact', url_for(:controller => 'contact', :action => 'add', :id => @user)
   end
   
-
-  def authorized?
-    may_action?(params[:action], @user)
-  end
 end

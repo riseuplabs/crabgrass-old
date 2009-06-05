@@ -165,7 +165,4 @@ class BasePage::ShareController < ApplicationController
    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
-  def authorized?
-    may_action?(params[:action], @page)
-  end
 end

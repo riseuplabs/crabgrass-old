@@ -54,7 +54,4 @@ class Me::BaseController < ApplicationController
     end
   end
   
-  def authorized?
-    may_action?(params[:action])
-  end
 end

@@ -232,7 +232,3 @@ class BasePageController < ApplicationController
   end
 end
 
-  def authorized?
-    may_action?(params[:action], @group)
-  end
-end

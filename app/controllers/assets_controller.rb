@@ -103,7 +103,4 @@ class AssetsController < ApplicationController
     false
   end
 
-  def authorized?
-    may_action?(params[:action], @asset)
-  end
 end

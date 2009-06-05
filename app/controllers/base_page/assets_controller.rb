@@ -35,7 +35,6 @@ class BasePage::AssetsController < ApplicationController
 
   protected
 
-
   prepend_before_filter :fetch_data
   def fetch_data
     @page = Page.find params[:page_id] if params[:page_id]
@@ -45,8 +44,4 @@ class BasePage::AssetsController < ApplicationController
     end
   end
 
-
-  def authorized?
-    may_action?(params[:action], @page)
-  end
 end

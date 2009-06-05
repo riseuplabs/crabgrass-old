@@ -140,7 +140,4 @@ class ChatController < ApplicationController
     add_context @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
   end
   
-  def authorized?
-    may_action?(params[:action])
-  end
 end

@@ -375,10 +375,6 @@ class GroupController < ApplicationController
     @left_column = render_to_string(:partial => 'sidebar') if @group
   end
 
-  def authorized?
-    may_action?(params[:action], @group)
-  end
-
   after_filter :update_view_count
   def update_view_count
     Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking

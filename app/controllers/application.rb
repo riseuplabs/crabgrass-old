@@ -90,6 +90,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # if we have login_required this will be called and check the
+  # permissions accordingly
+  def authorized?
+    may_action?(params[:action])
+  end
+
   # set the current timezone, if the user has it configured.
   def set_timezone
     Time.zone = current_user.time_zone if logged_in?
@@ -129,7 +135,6 @@ class ApplicationController < ActionController::Base
   end
   
   # returns true if params[:action] matches one of the args.
-  # useful in authorized?() methods.
   def action?(*actions)
     actions.include?(params[:action].to_sym)
   end

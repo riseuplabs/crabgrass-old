@@ -15,7 +15,4 @@ class VisualizeController < ApplicationController
     @group = Group.find_by_name params[:id] if params[:id]
   end
 
-  def authorized?
-    may_action?(params[:action], @group)
-  end
 end

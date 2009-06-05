@@ -38,7 +38,4 @@ protected
     @selected_tab = params['tab'] || 'masthead'
   end
 
-  def authorized?
-    may_action?(params[:action], @group)
-  end
 end
