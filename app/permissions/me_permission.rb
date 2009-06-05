@@ -22,7 +22,7 @@ module MePermission
   }
 
   # Infoviz
-  alias_method :may_visualize_infobiz?, :may_edit_me?
+  alias_method :may_visualize_infoviz?, :may_edit_me?
 
   # Requests 
   %w(from_me to_me).each{ |action|

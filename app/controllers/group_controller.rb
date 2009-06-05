@@ -300,9 +300,9 @@ class GroupController < ApplicationController
         if do_it == 'checked' and page_id
           page = Page.find_by_id(page_id)
           if page
-            if params[:undelete] and may_undelete_page?(page)
+            if params[:undelete] and may_undelete_base_page?(page)
               page.undelete
-            elsif params[:remove] and may_remove_page?(page)
+            elsif params[:remove] and may_remove_base_page?(page)
               page.destroy
               ## add more actions here later
             end
