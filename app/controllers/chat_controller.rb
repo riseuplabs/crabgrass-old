@@ -9,6 +9,7 @@
 class ChatController < ApplicationController
   include ChatHelper
   stylesheet 'chat' 
+  permissions 'chat'
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user
   
@@ -101,11 +102,6 @@ class ChatController < ApplicationController
     true
   end
 
-  def authorized?
-    return false unless current_site.chat?
-    return true if params[:action] == 'index'
-    return( @user and @channel and @user.member_of?(@channel.group_id) )
-  end
   
   def user_say_in_channel(user, channel, say)
     say = sanitize(say)

@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
 
   verify :method => :post, :only => [:destroy, :create, :set_status]
   helper 'messages', 'context'
+  permissions 'messages'
   stylesheet 'messages'
 
   before_filter :login_required
@@ -83,16 +84,6 @@ class MessagesController < ApplicationController
     @discussion = @user.ensure_discussion
   end
 
-  def authorized?
-    if !logged_in? or @user.nil?
-      false
-    elsif action?(:destroy, :set_status)
-      current_user == @user
-    else
-      @profile = @user.profiles.visible_by(current_user)
-      @profile.may_see?
-    end
-  end
 
   def context
     if logged_in? and current_user == @user

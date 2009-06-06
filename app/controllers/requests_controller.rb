@@ -7,6 +7,8 @@ class RequestsController < ApplicationController
   helper 'group', 'application'
   stylesheet 'groups'
 
+  permissions 'requests', 'group', 'membership'
+
   prepend_before_filter :set_language_from_invite, :only => [:accept]
   before_filter :login_required, :except => [:accept]
  
@@ -235,26 +237,6 @@ class RequestsController < ApplicationController
     @email = params[:path][1].gsub('_at_','@')
     @request = RequestToJoinUsViaEmail.find_by_code_and_email(@code,@email)
     session[:language_code] ||= @request.language unless @request.nil?
-  end
-  
-  def authorized?
-    return false unless logged_in?
-
-    if action?(:create_join) and @group
-      @group.profiles.visible_by(current_user).may_request_membership?
-    elsif action?(:create_invite) and @group
-      current_user.may?(:admin, @group);
-    elsif action?(:list) and @group
-      current_user.may?(:admin, @group);
-    elsif action?(:approve, :reject) and @request
-      @request.may_approve?(current_user)
-    elsif action?(:destroy) and @request
-      @request.may_destroy?(current_user)
-    elsif action?(:redeem)
-      true
-    else #this should be true, otherwise prevents mods from adding actions
-      true
-    end
   end
   
 end

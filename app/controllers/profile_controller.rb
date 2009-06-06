@@ -6,6 +6,7 @@ class ProfileController < ApplicationController
   #layout :choose_layout
   stylesheet 'profile'
   helper 'me/base'
+  permissions 'profile'
   
   def show
   end
@@ -142,19 +143,6 @@ class ProfileController < ApplicationController
     end
   end
   
-  # always have access to self
-  def authorized?
-    if @entity.is_a?(User) and current_user == @entity
-      return true
-    elsif @entity.is_a?(Group)
-      return true if action_name == 'show'
-      return true if logged_in? and current_user.member_of?(@entity)
-      return false
-    elsif action_name =~ /add_/
-     return true # TODO: this is the right way to do this
-    end
-  end
-  
   before_filter :setup_layout
   def setup_layout
     if @user
@@ -170,5 +158,9 @@ class ProfileController < ApplicationController
     @banner = render_to_string :partial => 'me/banner'
   end
 
-
+  def authorized?
+    params[:action] =~ /add_/ ?
+      may_action?('update', @entity) :
+      may_action?(params[:action], @entity)
+  end
 end

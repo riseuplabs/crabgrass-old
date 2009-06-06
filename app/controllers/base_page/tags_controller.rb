@@ -2,6 +2,7 @@ class BasePage::TagsController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/tags'
+  permissions 'base_page/tags'
 
   def show_popup
   end
@@ -25,10 +26,6 @@ class BasePage::TagsController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may?(:edit, @page)
-  end
-
   prepend_before_filter :fetch_data
   def fetch_data
     @page = Page.find params[:page_id] if params[:page_id]
@@ -36,4 +33,3 @@ class BasePage::TagsController < ApplicationController
   end
 
 end
-

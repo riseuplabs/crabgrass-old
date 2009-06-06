@@ -5,6 +5,7 @@ class MembershipController < ApplicationController
 
   stylesheet 'groups'
   helper 'group', 'application'
+  permissions 'membership', 'group', 'requests'
     
   before_filter :login_required
 
@@ -89,16 +90,6 @@ class MembershipController < ApplicationController
     @letter_page = params[:letter] || ''
   end
 
-  def authorized?
-    return false unless logged_in?
-    if action?(:list)
-      return current_user.may?(:view_membership, @group)
-    elsif action?(:join)
-      return current_user.may?(:admin, @group)
-    else
-      return current_user.member_of?(@group)
-    end
-  end
 
   def access_denied
     respond_to do |accepts|
