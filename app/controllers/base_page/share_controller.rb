@@ -29,6 +29,7 @@ class BasePage::ShareController < ApplicationController
   verify :xhr => true
 
   helper 'base_page', 'base_page/share'
+  permissions 'base_page/share'
 
   def auto_complete
     # i am searching by display_name only under protest. this is going to
@@ -114,12 +115,8 @@ class BasePage::ShareController < ApplicationController
     render :template => 'base_page/reset_sidebar'
   end
 
-  def authorized?
-    if @page
-      current_user.may? :admin, @page
-    else
-      true
-    end
+  def show_error_message
+    render :template => 'base_page/show_errors'
   end
 
   prepend_before_filter :fetch_page

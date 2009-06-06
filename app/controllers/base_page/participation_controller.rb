@@ -13,7 +13,8 @@ class BasePage::ParticipationController < ApplicationController
   verify :method => :post, :only => [:move]
 
   helper 'base_page', 'base_page/participation'
-  
+  permissions 'base_page/participation'
+
   include BasePageHelper
   
   # TODO: add non-ajax version
@@ -177,13 +178,6 @@ class BasePage::ParticipationController < ApplicationController
     render :template => 'base_page/show_errors'
   end
 
-  def authorized?
-    if action?('update_public','create','destroy', 'move','set_owner')
-      current_user.may? :admin, @page
-    else
-      current_user.may? :view, @page
-    end
-  end
 
   prepend_before_filter :fetch_page
   def fetch_page

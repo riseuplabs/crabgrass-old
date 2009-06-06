@@ -59,6 +59,7 @@ Rails::Initializer.run do |config|
   ###
 
   config.load_paths += %w(activity assets associations discussion chat observers profile poll task requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths << "#{RAILS_ROOT}/app/permissions"
 
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql

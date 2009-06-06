@@ -2,6 +2,7 @@ class BasePage::TrashController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/trash'
+  permissions 'base_page'
 
   def show_popup
   end
@@ -38,10 +39,6 @@ class BasePage::TrashController < ApplicationController
 #  end
 
   protected
-
-  def authorized?
-    current_user.may?(:admin, @page)
-  end
 
   prepend_before_filter :fetch_data
   def fetch_data

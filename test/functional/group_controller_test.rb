@@ -220,6 +220,7 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_equal id, 207, "expecting page 207 as deleted page for rainbow"
     post :update_trash, :page_checked=>{"207"=>"checked"}, :path=>[], :undelete=>"Undelete", :id => groups(:rainbow).name
     assert_response :redirect
+    assert_redirected_to 'group/trash/rainbow'
     get :trash
     assert_response :success
     assert assigns(:pages).empty?, "should not find a deleted page after undeleting"
@@ -421,7 +422,7 @@ class GroupControllerTest < Test::Unit::TestCase
     @controller.stubs(:logged_in?).returns(true)
     @controller.instance_variable_set(:@group, c)
     assert u.may_admin?(c)
-    assert @controller.may_admin_group?
+    assert @controller.may?(:group,:admin)
 
     get :show
     assert_response :success

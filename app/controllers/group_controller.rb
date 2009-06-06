@@ -3,6 +3,8 @@ class GroupController < ApplicationController
   include GroupHelper
   helper 'task_list_page', 'tags', 'wiki' # remove task_list_page when tasks are in a separate controller
 
+  permissions 'group', 'base_page', 'membership', 'committee', 'requests'
+
   stylesheet 'wiki_edit'
   stylesheet 'groups'
   stylesheet 'tasks', :action => :tasks
@@ -11,7 +13,6 @@ class GroupController < ApplicationController
   javascript :extra, :action => :tasks
 
   prepend_before_filter :find_group
-  before_filter :check_group_visibility
   before_filter :login_required, :except => [:show, :archive, :tags, :search]
   before_filter :render_sidebar
 
@@ -36,7 +37,7 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
-    if logged_in? and current_site.council == @group and current_user.may?(:admin, current_site)
+    if may_edit_site_appearance?  
       @editable_custom_appearance = current_site.custom_appearance
     end
   end
@@ -178,7 +179,7 @@ class GroupController < ApplicationController
       @group.profiles.public.update_attribute :may_see_members , params[:group][:publicly_visible_members]
       @group.profiles.public.update_attribute :may_request_membership , params[:group][:accept_new_membership_requests]
       @group.min_stars = params[:group][:min_stars]
-      if @group.valid? && may_admin_group? && (params[:group][:council_id] != @group.council_id)
+      if @group.valid? && may_admin? && (params[:group][:council_id] != @group.council_id)
         # unset the current council if there is one
         @group.add_committee!(Group.find(@group.council_id), false) unless @group.council_id.nil?
 
@@ -267,7 +268,7 @@ class GroupController < ApplicationController
         @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
       end
       # don't show group members to everyone
-      @visible_users = may_see_members? ? @group.users : []
+      @visible_users = may_list_membership? ? @group.users : []
     end
     handle_rss :title => @group.name, :description => @group.summary,
                :link => url_for_group(@group),
@@ -284,7 +285,7 @@ class GroupController < ApplicationController
       @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page], :flow => :deleted))
       @columns = [:admin_checkbox, :icon, :title, :deleted_by, :deleted_at, :contributors_count]
       # don't show group members to everyone
-      @visible_users = may_see_members? ? @group.users : []
+      @visible_users = may_list_membership? ? @group.users : []
     end
     handle_rss :title => @group.name, :description => @group.summary,
                :link => url_for_group(@group),
@@ -299,9 +300,9 @@ class GroupController < ApplicationController
         if do_it == 'checked' and page_id
           page = Page.find_by_id(page_id)
           if page
-            if params[:undelete] and may_undelete_page?(page)
+            if params[:undelete] and may_undelete_base_page?(page)
               page.undelete
-            elsif params[:remove] and may_remove_page?(page)
+            elsif params[:remove] and may_remove_base_page?(page)
               page.destroy
               ## add more actions here later
             end
@@ -351,9 +352,9 @@ class GroupController < ApplicationController
     @group = Group.find_by_name params[:id] if params[:id]
 
     if @group
-      if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
+      if may_see_private?
         @access = :private
-      elsif @group.profiles.public.may_see?
+      elsif may_see_public?
         @access = :public
       else
         @group = nil
@@ -374,42 +375,6 @@ class GroupController < ApplicationController
     @left_column = render_to_string(:partial => 'sidebar') if @group
   end
 
-  @@non_members_post_allowed = %w(archive tags tasks search)
-  @@non_members_get_allowed = %w(show members search discussions) + @@non_members_post_allowed
-  @@admin_only = %w(update, edit_tools, edit_layout)
-
-  def authorized?
-    if request.get? and @@non_members_get_allowed.include? params[:action]
-      return true
-    elsif request.post? and @@non_members_post_allowed.include? params[:action]
-      return true
-    elsif @@admin_only.include? params[:action]
-      return logged_in? && current_user.may?(:admin,@group)
-    else
-      return (logged_in? && @group && (current_user.member_of?(@group) || current_user.may?(:admin,@group)))
-    end
-  end
-
-  def may_undelete_page?(page)
-    current_user.may?(:admin, page)
-  end
-
-  def may_remove_page?(page)
-    current_user.may?(:delete, page)
-  end
-
-  def check_group_visibility
-    if logged_in? and (current_user.member_of?(@group) or current_user.member_of?(@group.parent_id))
-      @access = :private
-    elsif @group.profiles.public.may_see?
-      @access = :public
-    else
-      clear_context
-      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
-      return false
-    end
-  end
-
   after_filter :update_view_count
   def update_view_count
     Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking
@@ -421,6 +386,5 @@ class GroupController < ApplicationController
     @group = nil
     no_context
   end
-
 
 end
