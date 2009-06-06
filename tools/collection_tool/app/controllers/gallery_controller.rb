@@ -1,4 +1,5 @@
 class GalleryController < BasePageController
+  permissions 'collection'
 
   def show
     params[:page] ||= 1
@@ -32,18 +33,6 @@ class GalleryController < BasePageController
   end
 
   protected
- 
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:add, :remove)
-      current_user.may?(:edit,@page)
-    elsif action?(:show)
-      @page.public? or current_user.may?(:view,@page)
-    else
-      current_user.may?(:admin, @page)
-    end  
-  end
  
   def existing_asset_ids(page)
     page.children.collect do |child|

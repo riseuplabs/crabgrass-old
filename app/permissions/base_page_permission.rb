@@ -13,7 +13,7 @@ module BasePagePermission
     !page or current_user.may?(:admin, page)
   end
 
-  [:delete, :undelete].each do |action|
+  %w[delete undelete].each do |action|
     alias_method "may_#{action}_base_page?".to_sym, :may_create_base_page?
   end
 

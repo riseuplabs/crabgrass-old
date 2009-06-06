@@ -3,6 +3,7 @@ class TaskListPageController < BasePageController
   after_filter :update_participations,
     :only => [:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task]
   stylesheet 'tasks'
+  permissions 'task_list_page'
   javascript :extra, 'page'
   
   def show 
@@ -125,17 +126,6 @@ class TaskListPageController < BasePageController
     @upart = @page.participation_for_user(current_user) if @page and current_user
   end
 
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:show)
-      current_user.may?(:view, @page)
-    elsif action?(:create_task, :mark_task_complete, :mark_task_pending, :destroy_task, :update_task, :edit_task, :sort)
-      current_user.may?(:edit, @page)
-    else
-      current_user.may?(:admin, @page)
-    end
-  end
 
 
 end

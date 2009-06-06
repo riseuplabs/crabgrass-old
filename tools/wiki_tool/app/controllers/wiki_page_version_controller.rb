@@ -84,15 +84,6 @@ class WikiPageVersionController < BasePageController
     end
   end
 
-  def authorized?
-   if action?(:show, :diff, :list)
-     @page.public? or current_user.may?(:view, @page)
-   elsif action?(:revert)
-     current_user.may?(:edit, @page)
-   else
-     current_user.may?(:admin, @page)
-   end
-  end
 
   # gets the next or previous version number
   def get_jump(direction)

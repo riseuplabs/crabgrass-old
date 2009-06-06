@@ -1,4 +1,5 @@
 class ArticlePageController < WikiPageController
+  permissions 'wiki_page'
   protected
   # called during BasePage::create
   def build_page_data

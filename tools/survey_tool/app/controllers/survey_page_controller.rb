@@ -4,8 +4,7 @@ class SurveyPageController < BasePageController
   javascript :extra
   javascript 'survey'
  
-  include SurveyPagePermissionsHelper
-  helper 'survey_page_permissions'
+  permissions 'survey_page'
 
 #  def new
 #    @survey = Survey.new
@@ -21,10 +20,8 @@ class SurveyPageController < BasePageController
 
   def show
     if @page.data.nil?
-      @survey = Survey.new
       redirect_to page_url(@page, :action => 'edit')
     else
-      @survey = @page.data
       @survey.responses(true)
       # ^^ there is no good reason why this is necessary, but it seems to be the case.
     end
@@ -49,18 +46,8 @@ class SurveyPageController < BasePageController
 
   protected
 
-  # not called for 'show'
-  def authorized?
-    return true if @page.nil?
-    @survey = @page.data || Survey.new
-
-    if action?(:edit, :update)
-      may_modify_survey?
-    elsif action?(:show)
-      current_user.may?(:view,@page)
-    else
-      current_user.may?(:admin,@page)
-    end
+  def fetch_data
+    @survey=@page.data || Survey.new
   end
 
   def setup_view
