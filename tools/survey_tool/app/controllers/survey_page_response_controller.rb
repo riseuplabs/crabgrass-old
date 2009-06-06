@@ -119,6 +119,7 @@ class SurveyPageResponseController < BasePageController
   def fetch_data
     return true unless @page
     @survey = @page.data || Survey.new
+    @response = @survey.responses.find_by_id(params[:id]) if params[:id]
   end
 
   def setup_view

@@ -1,4 +1,4 @@
-module GalleryPagePermission
+module GalleryPermission
   def authorized?
     if @page.nil?
       true

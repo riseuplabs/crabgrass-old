@@ -34,7 +34,7 @@ module SurveyPagePermission
 
   alias_method :may_edit_survey?, :may_update_survey?
 
-  # SurveyResponse
+  # SurveyPageResponse
   #  def authorized?
   #    return true if @page.nil?
   #    @response = @survey.responses.find_by_id(params[:id]) if params[:id]
@@ -70,7 +70,7 @@ module SurveyPagePermission
   end
 
   %w[new make].each {|action|
-    alias_method "may_#{action}_survey_response?".to_sym, :may_create_survey_response?
+    alias_method "may_#{action}_survey_page_response?".to_sym, :may_create_survey_response?
   }
 
   def may_modify_survey_response?(response=nil)
@@ -84,10 +84,10 @@ module SurveyPagePermission
   end
 
   %w[update edit].each {|action|
-    alias_method "may_#{action}_survey_response?".to_sym, :may_modify_survey_response?
+    alias_method "may_#{action}_survey_page_response?".to_sym, :may_modify_survey_response?
   }
 
-  def may_destroy_survey_response?(response=nil)
+  def may_destroy_survey_response?(response=@response)
     return false unless logged_in?
 
     if response and response.user_id == current_user.id
@@ -97,8 +97,10 @@ module SurveyPagePermission
     end
   end
 
+  alias_method :may_destroy_survey_page_response?, :may_destroy_survey_response?
+
   # you should be able to view responses even if responses are disabled.
-  def may_view_survey_response?(response=nil)
+  def may_view_survey_response?(response=@response)
     return false unless logged_in?
 
     if response and response.user_id == current_user.id
@@ -115,7 +117,7 @@ module SurveyPagePermission
   end
 
   %w[show list].each {|action|
-    alias_method "may_#{action}_survey_response?".to_sym, :may_view_survey_response?
+    alias_method "may_#{action}_survey_page_response?".to_sym, :may_view_survey_response?
   }
 
   def may_rate_survey_response?(response=nil)
