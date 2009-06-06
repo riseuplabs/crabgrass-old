@@ -126,6 +126,34 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     assert_equal [@owner.id], @page.user_ids
   end
 
+  def test_destroy_error
+    login_as :blue
+
+    owner = users(:green)
+    user = users(:blue)
+    group = groups(:rainbow)
+    page = Page.create! :title => 'robot tea party', :user => owner, :share_with => user
+    assert user.may?(:admin, page)
+
+    assert_no_difference 'UserParticipation.count', 'should not be able to delete ourselves' do
+      post :destroy, :page_id => page.id, :upart_id => page.participation_for_user(user).id
+    end
+
+    owner.share_page_with!(page, group, :access => :admin)
+    page.save!
+    assert page.participation_for_group(group)
+    assert group.may?(:admin, page)
+
+    assert_difference 'UserParticipation.count', -1, 'should be able to delete now' do
+      post :destroy, :page_id => page.id, :upart_id => page.participation_for_user(user).id
+    end
+
+    assert_no_difference 'GroupParticipation.count', 'should not be able to delete' do
+      post :destroy, :page_id => page.id, :gpart_id => page.participation_for_group(group).id
+    end
+
+  end
+
   def test_details
   # TODO: Write this test
   end

@@ -687,6 +687,7 @@ page_details: "Page Details"
 participation: "Participation"
 user_or_group_name: "User or group name"
 information: "Information"
+remove_last_access_error: "You cannot remove your last remaining access to this page."
 
 # tags
 

@@ -115,21 +115,26 @@ class BasePage::ParticipationController < ApplicationController
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access. 
   def destroy
+    error = "You cannot remove your last remaining access to this page."[:remove_last_access_error]
+
     upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
     if upart and (@page.owner.nil? or (upart.user != @page.owner))
-      @page.remove(upart.user) # this is the only way users should be removed.
-      @page.save!
+      current_user.may_admin_page_without?(@page, upart) or raise ErrorMessage.new(error)
+      @page.remove(upart.user)
     end
 
     gpart = (GroupParticipation.find(params[:gpart_id]) if params[:gpart_id])
     if gpart and (@page.owner.nil? or (gpart.group != @page.owner))
-      @page.remove(gpart.group) # this is the only way groups should be removed.
-      @page.save!
+      current_user.may_admin_page_without?(@page, gpart) or raise ErrorMessage.new(error)
+      @page.remove(gpart.group)
     end
 
     render :update do |page|
       page.hide dom_id(upart || gpart)
     end
+  rescue Exception => exc
+    flash_message_now :exception => exc
+    show_error_message
   end
 
   protected
