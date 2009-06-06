@@ -70,5 +70,31 @@ class UserParticipationTest < Test::Unit::TestCase
     assert_equal [], page.user_ids
   end
 
+  def test_admin_page_without_a_particular_participation
+    user = users(:blue)
+    group = groups(:rainbow)
+
+    page = Page.create! :title => 'robot tea party', :user => user
+    assert user.may?(:admin, page)
+
+    upart = nil 
+    gpart = nil
+    assert_no_difference 'UserParticipation.count' do
+      upart = page.participation_for_user(user)
+      assert !user.may_admin_page_without?(page, upart), 'cannot remove upart and still have access'
+
+      user.share_page_with! page, group, :access => :admin
+
+      gpart = page.participation_for_group(group)
+      assert user.may_admin_page_without?(page, gpart), 'can remove gpart'
+      assert user.may_admin_page_without?(page, upart), 'can remove upart'
+    end
+
+    page.remove(user)
+    page.reload
+
+    assert !user.may_admin_page_without?(page, gpart), 'cannot remove gpart'
+  end
+
 end
 

@@ -6,15 +6,8 @@ module ErrorHelper
   ## GENERATING NOTICES
   ##
 
-  #
-  # a one stop shopping function for flash messages
-  # usage:
-  # message :object => @user
-  # message :error => 'you messed up good'
-  # message :success => 'yeah, you rock'
-  #
-  ## TODO: destroy with helper, replace with flash_message
-  ## and flash_message_now
+  # DEPRECATED
+  # DEPRECATED
   def message(opts)    
     if opts[:success]
       flash[:notice] = opts[:success]
@@ -94,7 +87,7 @@ module ErrorHelper
   end
 
   # display flash messages with appropriate styling
-  def display_messages()
+  def display_messages(size=:big)
     @display_message ||= begin
       if flash[:type].empty?
         ""
@@ -103,23 +96,10 @@ module ErrorHelper
           flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
           flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
         end
-        build_notice_area(flash[:type], flash[:title], flash[:text])
+        notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
+        content_tag(:div, notice_contents, :class => size.to_s + '_notice')
       end
     end
-  end
-
-  # use by ajax
-  ## TODO: remove, replace with message_text()
-  def notify_errors(title, errors)
-     text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     build_notice_area('error', title, text)
-  end
- 
-   # use by ajax
-  ## TODO: remove, replace with message_text()
-  def notify_infos(title, infos)
-     text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     build_notice_area('info', title, text)
   end
 
   private
@@ -132,8 +112,7 @@ module ErrorHelper
     else
       text = ""
     end
-    heading_and_text = content_tag(:div, heading+text, :class => type)
-    content_tag(:div, heading_and_text, :class => 'notice')
+    content_tag(:div, heading+text, :class => type)
   end
 
   #
