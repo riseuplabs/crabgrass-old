@@ -209,7 +209,6 @@ class User < ActiveRecord::Base
   def may!(perm, protected_thing)
     return true if protected_thing.new_record?
     key = "#{protected_thing.to_s}"
-    clear_access_cache if refresh
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
