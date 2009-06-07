@@ -2,6 +2,7 @@ class GalleryController < BasePageController
   
   stylesheet 'gallery'
   javascript :extra, 'page'
+  permissions 'gallery'
   
   include GalleryHelper
   include BasePageHelper
@@ -260,19 +261,6 @@ class GalleryController < BasePageController
 
   protected
  
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:add, :remove, :find, :upload, :add_star, :remove_star,
-                  :change_image_title, :make_cover)
-      current_user.may?(:edit, @page)
-    elsif action?(:show, :comment_image, :detail_view, :slideshow, :download)
-      @page.public? or current_user.may?(:view,@page)
-    else
-      current_user.may?(:admin, @page)
-    end  
-  end
-  
   def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true

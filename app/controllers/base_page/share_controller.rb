@@ -119,7 +119,6 @@ class BasePage::ShareController < ApplicationController
     render :template => 'base_page/show_errors'
   end
 
-
   prepend_before_filter :fetch_page
   def fetch_page
     if params[:page_id].any?

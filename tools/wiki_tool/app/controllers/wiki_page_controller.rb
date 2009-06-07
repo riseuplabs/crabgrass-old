@@ -5,6 +5,7 @@ class WikiPageController < BasePageController
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
   helper :wiki # for wiki toolbar stuff
+  permissions 'wiki_page'
   #verify :method => :post, :only => [:revert]
 
   ##
@@ -144,20 +145,6 @@ class WikiPageController < BasePageController
     @show_attach = true
     unless @wiki.nil? or @wiki.editable_by?(current_user)
       @title_addendum = render_to_string(:partial => 'locked_notice')
-    end
-  end
-
-  def authorized?
-    if @page
-      if %w(show print).include? params[:action]
-        @page.public? or current_user.may?(:view, @page)
-      elsif %w(edit break_lock upload).include? params[:action]
-        current_user.may?(:edit, @page)
-      else
-        current_user.may?(:admin, @page)
-      end
-    else
-      true
     end
   end
 

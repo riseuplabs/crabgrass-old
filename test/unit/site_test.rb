@@ -22,6 +22,7 @@ class SiteTest < Test::Unit::TestCase
     # if no council is set no one may :admin
     site.council=nil
     site.save
+    blue.clear_access_cache
     assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
       blue.may!(:admin, site)
     end

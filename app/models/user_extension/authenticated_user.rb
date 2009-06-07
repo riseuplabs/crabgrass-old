@@ -96,6 +96,11 @@ module AuthenticatedUser
     save(false)
   end
 
+  # authenticated users are real, unathenticated are not
+  def real?
+    true
+  end
+
   protected
 
   # before filter 

@@ -21,8 +21,7 @@ module GroupHelper
   end
 
   def join_group_link
-    return nil unless logged_in?
-    return nil if current_user.direct_member_of? @group
+    return unless logged_in? and !current_user.direct_member_of? @group
     link_if_may("join {group_type}"[:join_group, @group_type],
                 :membership, 'join', @group) or
     link_if_may("request to join {group_type}"[:request_join_group_link, @group_type],
@@ -38,8 +37,8 @@ module GroupHelper
   end
 
   def leave_group_link
-    link_to_active_if_may "leave {group_type}"[:leave_group, group_type],
-      :membership, 'leave', @group.name
+    link_to_active_if_may("leave {group_type}"[:leave_group, group_type],
+      :membership, 'leave', @group.name)
   end
 
   def destroy_group_link
@@ -55,7 +54,7 @@ module GroupHelper
 
   def create_committee_link
     link_if_may 'create committee'[:create_committee],
-      :group, 'create', @group,
+      :groups, 'create', nil,
       :parent_id => @group.id
   end
 

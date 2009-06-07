@@ -1,4 +1,4 @@
-module PagesPermission 
+# These permissions are a replacement for the following authorized? method:
 #  def authorized?
 #    # see BaseController::authorized?
 #    if @page
@@ -7,6 +7,7 @@ module PagesPermission
 #      return true
 #    end
 #  end
+module PagesPermission
   def may_create_pages?(page=@page)
     !page or current_user.may?(:admin, @page)
   end

@@ -1,6 +1,7 @@
 class EventPageController < BasePageController
   append_before_filter :fetch_event
-  
+  permissions 'event_page'
+
   def show
     @user_participation= UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})  
     if @user_participation.nil?
@@ -86,11 +87,4 @@ class EventPageController < BasePageController
     time
   end
 
-  def authorized?
-    if params[:action] == 'set_event_description' or params[:action] == 'edit'
-      return current_user.may?(:admin, @page)
-    else
-      return true
-    end
-  end
 end

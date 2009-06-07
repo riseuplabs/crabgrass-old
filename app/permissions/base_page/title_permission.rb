@@ -1,12 +1,11 @@
-module BasePage::TitlePermission
+# These permissions are a replacement for the following authorized? method:
 #  def authorized?
 #    current_user.may?(:edit, @page)
 #  end
+module BasePage::TitlePermission
   def may_update_title?(page=@page)
     page and current_user.may? :edit, page
   end
 
-  %w(edit).each{ |action|
-    alias_method "may_#{action}_title?".to_sym, :may_update_title?
-  }
+  alias_method :may_edit_title?, :may_update_title?
 end
