@@ -20,9 +20,10 @@ module PermissionsHelper
       permission = permission_for(controller, action, *args)
     end
     if permission and block_given?
+      # return nil, if yield returns false
       yield
     else
-      permission
+      permission or nil
     end
   end
 
