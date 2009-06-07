@@ -50,14 +50,14 @@ module PermissionsHelper
   #   <%= link_if_may("Delete this Group", :group, :delete, @group, :confirm => "Are you sure?") %>
   #   <%= link_if_may("Boldly go", :warp_drive, :enable, nil, {}, {:style => "font-weight: bold;"} %>
   def link_if_may(link_text, controller, action, object = nil, link_opts = {}, html_opts = nil)
-    may?(controller, action, object) do
-      link_to(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.id}.merge(link_opts), html_opts)
+    if may?(controller, action, object)
+      link_to(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.name}.merge(link_opts), html_opts)
     end
   end
 
   def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
-    may?(controller, action, object) do
-      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object.nil? ? nil : object.id}.merge(link_opts), active)
+    if may?(controller, action, object)
+      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object.nil? ? nil : object.name}.merge(link_opts), active)
     end
   end
 
