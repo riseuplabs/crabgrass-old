@@ -1,4 +1,17 @@
-#
+=begin
+
+create_table "external_videos", :force => true do |t|
+  t.string   "media_key"
+  t.string   "media_url"
+  t.string   "media_thumbnail_url"
+  t.text     "media_embed"
+  t.integer  "page_terms_id",       :limit => 11
+  t.datetime "created_at",                        :null => false
+  t.datetime "updated_at",                        :null => false
+end
+
+=end
+
 # this is largely taken from the network.greenchange codebase
 # http://github.com/sethwalker/greenchange/tree/master/app/models/external_video.rb
 #
