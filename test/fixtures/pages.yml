@@ -263,6 +263,24 @@ multi_section_wiki:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
+video1:
+  id: 250
+  title: Beauty is in the Street
+  type: ExternalVideoPage
+  data_id: 1
+  data_type: ExternalVideo
+  owner_id: 1
+  owner_type: Group
+  is_video: "1"
+  public: "1"
+  created_by_id: 4
+  created_by_login: blue
+  updated_by_id: 3
+  updated_by_login: gerrard
+<% updated = rand(4608); created = updated + rand(4608) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 ##
 ## ASSETS
 ##
@@ -272,7 +290,7 @@ asset1:
   name: 
   created_by_login: blue
   updated_by_id: "4"
-  public: 
+  public: "1"
   resolved: "1"
   title: bee
   data_type: Asset
