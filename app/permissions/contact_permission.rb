@@ -1,18 +1,19 @@
-module ContactPermission 
-  #  def authorized?
-  #    return false unless logged_in?
-  #    return false unless @user
-  #
-  #    if action?(:add)
-  #      @user.profiles.visible_by(current_user).may_request_contact?
-  #    elsif action?(:remove)
-  #      true # current_user.friend_of?(@user) <- we let the action handle the permissions
-  #    elsif action?(:approve)
-  #      @past_request.any?
-  #    elsif action?(:already_friends)
-  #      true
-  #    end
-  #  end
+# These permissions are a replacement for the following authorized? method:
+#  def authorized?
+#    return false unless logged_in?
+#    return false unless @user
+#
+#    if action?(:add)
+#      @user.profiles.visible_by(current_user).may_request_contact?
+#    elsif action?(:remove)
+#      true # current_user.friend_of?(@user) <- we let the action handle the permissions
+#    elsif action?(:approve)
+#      @past_request.any?
+#    elsif action?(:already_friends)
+#      true
+#    end
+#  end
+module ContactPermission
   def may_create_contact?(user=@user)
     logged_in? and
     user.profiles.visible_by(current_user).may_request_contact?

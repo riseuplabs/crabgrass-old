@@ -1,45 +1,47 @@
+# These permissions are a replacement for the following authorized? method:
+#  def authorized?
+#    return true
+#  end
 module MePermission
   # always have access to self
-  #  def authorized?
-  #    return true
-  #  end
   def may_edit_me?
     logged_in?
   end
 
-  %w(index counts delete_avatar).each{ |action|
-    alias_method "may_#{action}_me?".to_sym, :may_edit_me?
-  }
+  alias_method :may_index_me?, :may_edit_me?
+  alias_method :may_counts_me?, :may_edit_me?
+  alias_method :may_delete_avatar_me?, :may_edit_me?
 
   # Dashboard
-  %w(index show_welcome_box close_welcome_box).each{ |action|
-    alias_method "may_#{action}_dashboard?".to_sym, :may_edit_me?
-  }
+  alias_method :may_index_dashboard?, :may_edit_me?
+  alias_method :may_show_welcome_box_dashboard?, :may_edit_me?
+  alias_method :may_close_welcome_box_dashboard?, :may_edit_me?
 
-  # Inbox 
-  %w(search index list update remove).each{ |action|
-    alias_method "may_#{action}_inbox?".to_sym, :may_edit_me?
-  }
+  # Inbox
+  alias_method :may_search_inbox?, :may_edit_me?
+  alias_method :may_index_inbox?, :may_edit_me?
+  alias_method :may_list_inbox?, :may_edit_me?
+  alias_method :may_update_inbox?, :may_edit_me?
+  alias_method :may_remove_inbox?, :may_edit_me?
 
   # Infoviz
   alias_method :may_visualize_infoviz?, :may_edit_me?
 
-  # Requests 
-  %w(from_me to_me).each{ |action|
-    alias_method "may_#{action}_requests?".to_sym, :may_edit_me?
-  }
+  # Requests
+  alias_method :may_from_me_requests?, :may_edit_me?
+  alias_method :may_to_me_requests?, :may_edit_me?
 
   # Search
   alias_method :may_index_search?, :may_edit_me?
 
-  # Tasks 
-  %w(pending completed).each{ |action|
-    alias_method "may_#{action}_tasks?".to_sym, :may_edit_me?
-  }
+  # Tasks
+  alias_method :may_pending_tasks?, :may_edit_me?
+  alias_method :may_completed_tasks?, :may_edit_me?
 
-  # Trash 
-  %w(search index list update).each{ |action|
-    alias_method "may_#{action}_trash?".to_sym, :may_edit_me?
-  }
+  # Trash
+  alias_method :may_search_trash?, :may_edit_me?
+  alias_method :may_index_trash?, :may_edit_me?
+  alias_method :may_list_trash?, :may_edit_me?
+  alias_method :may_update_trash?, :may_edit_me?
 
 end

@@ -1,27 +1,25 @@
+# These permissions are a replacement for the following authorized? method:
+#  def authorized?
+#    if @page.nil?
+#      true
+#    elsif action?(:show_popup)
+#      true
+#    elsif action?(:show)
+#      current_user.may?(:view, @page)
+#    end
+#  end
 module BasePagePermission
-  #  def authorized?
-  #    if @page.nil?
-  #      true
-  #    elsif action?(:show_popup)
-  #      true
-  #    elsif action?(:show)
-  #      current_user.may?(:view, @page)
-  #    end
-  #  end
 
   def may_create_base_page?(page = @page)
     !page or current_user.may?(:admin, page)
   end
 
-  %w[delete undelete].each do |action|
-    alias_method "may_#{action}_base_page?".to_sym, :may_create_base_page?
-  end
+  alias_method :may_delete_base_page?, :may_create_base_page?
+  alias_method :may_undelete_base_page?, :may_create_base_page?
 
   # Trash
-  %w[show_popup].each do |action|
-    alias_method "may_#{action}_trash?".to_sym, :may_delete_base_page?
-  end
-  
+  alias_method :may_show_popup_trash?, :may_delete_base_page?
+
   def may_show_base_page?(page = @page)
     !page or current_user.may?(:view, page)
   end
@@ -42,7 +40,7 @@ module BasePagePermission
   # we are using may_remove_page from trash controllers.
   alias_method :may_remove_base_page?, :may_destroy_base_page?
 
-  # this can only be used from authorized? because of 
+  # this can only be used from authorized? because of
   # checking the params. Use one of
   #  - may_delete_base_page?
   #  - may_destroy_base_page?
