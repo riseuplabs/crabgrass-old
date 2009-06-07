@@ -3,27 +3,31 @@ module PermissionsHelper
   # returns +true+ if the +current_user+ is allowed to perform +action+ in
   # +controller+, optionally with some arguments.
   #
-  # Make sure to include the corresponding permission in the controller.
+  # permissions are resolved in this order:
   #
-  # Examples:
-  #   <%= "YOU ARE MY CREATOR" if may?(:group, :create) %>
-  #   <%= "don't be editing that" unless may?(:group, :edit, @some_group) %>
+  # (1) check to see if a method is defined that matches may_action_controller?()
+  # (2) check the class hierarchy for such a method (replacing controller name
+  #     with the appropriate controller).
+  # (3) fall back to default_permission
+  # (4) return false if we had no success so far.
   #
-  #   <%- may?(:group, :frobnotz, @group) do -%>
-  #     <h1>Frobnotzing Control</h1>
-  #     <p>More stuff here…</p>
-  #   <%- end -%>
   def may?(controller, action, *args)
     if controller.is_a?(Symbol)
       permission = send("may_#{action}_#{controller.to_s}?", *args)
     else
-      permission = permission_for(controller, action, *args)
+      method = permission_method_for_controller(controller, action)
+      permission = controller.send(method, *args)
     end
+
     if permission and block_given?
       yield
     else
       permission
     end
+  end
+
+  def default_permission(*args)
+    false
   end
 
   # shortcut for +may?+ but automatically selecting the current controller.
@@ -67,23 +71,29 @@ module PermissionsHelper
     may?(controller, match[1], *args)
   end
   
+  private
+
   # this will try and use the may_action_controller? methods in the following
   # order:
   # 1) the controller name:
   #    asset_controller -> asset
   # 2) the name of the controllers parent namespace:
   #    me/trash_controller -> me
-  # 3) the name of the controllers super class:
+  # 3) the name of the controller's super class:
   #    event_page_controller -> base_page
-  def permission_for(controller, action, *args)
+  # 4) ensure "base_page" is in there somewhere if controller descends from it
+  #    (the controller might be a subclass of a subclass of base page)
+  def permission_method_for_controller(controller, action)
     names=[]
     names << controller.controller_name
     names << controller.controller_path.split("/")[-2]
     names << controller.class.superclass.controller_name
+    names << 'base_page' if controller.is_a? BasePageController
     names.compact.each do |name|
       method="may_#{action}_#{name}?"
-      return controller.send(method, *args) if controller.respond_to?(method)
+      return method if controller.respond_to?(method)
     end
+    return 'default_permission'
   end
 end
 

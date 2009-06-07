@@ -10,6 +10,11 @@
 #  end
 module BasePagePermission
 
+  # if no other appropriate methods are defined, fallback to this one:
+  def default_permission
+    current_user.may?(:admin, @page)
+  end
+
   def may_create_base_page?(page = @page)
     !page or current_user.may?(:admin, page)
   end

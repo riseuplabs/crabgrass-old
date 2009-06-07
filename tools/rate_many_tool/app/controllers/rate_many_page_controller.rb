@@ -86,8 +86,10 @@ class RateManyPageController < BasePageController
 
   protected
   
-  # eventually, add more fine grained permissions.
-  # this is the default:
+  def fetch_poll
+    return true unless @page
+    @poll = @page.data
+  end
 
   def setup_view
     @show_print = true
