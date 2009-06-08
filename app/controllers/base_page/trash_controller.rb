@@ -29,13 +29,12 @@ class BasePage::TrashController < ApplicationController
 #    @page.delete
 #    redirect_to url
 #  end
-#
-#
-#  def destroy
-#    url = from_url(@page)
-#    @page.destroy
-#    redirect_to url
-#  end
+
+  def destroy
+    url = from_url(@page)
+    @page.destroy
+    redirect_to url
+  end
 
   protected
 
