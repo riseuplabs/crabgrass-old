@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   permissions 'posts'
-  before_filter :login_required
+  before_filter :fetch_data, :login_required
   
   def create    
     begin
@@ -74,11 +74,9 @@ class PostsController < ApplicationController
 
   protected
     
-
-
-  def authorized?
+  def fetch_data
     @post = Post.find(params[:id]) if params[:id]
     @page = Page.find params[:page_id] if params[:page_id]
-    may_action?(params[:action])
   end
+
 end

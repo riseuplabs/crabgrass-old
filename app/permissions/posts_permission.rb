@@ -16,4 +16,9 @@ module PostsPermission
   end
 
   alias_method :may_untwinkle_posts?, :may_twinkle_posts?
+
+  def may_jump_posts?
+    true
+  end
+
 end
