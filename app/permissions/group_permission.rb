@@ -19,7 +19,7 @@ module GroupPermission
     logged_in? and current_user.may?(:admin, group)
   end
 
-  %w(admin edit_tools edit_layout edit edit_featured_content feature_content edit update_trash).each{ |action|
+  %w(admin edit_tools edit_layout edit_cover_media edit edit_featured_content feature_content edit update_trash).each{ |action|
     alias_method "may_#{action}_group?".to_sym, :may_update_group?
   }
 

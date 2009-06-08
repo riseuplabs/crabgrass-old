@@ -8,6 +8,7 @@ class GroupController < ApplicationController
   stylesheet 'wiki_edit'
   stylesheet 'groups'
   stylesheet 'tasks', :action => :tasks
+  stylesheet 'gallery', :action => :edit_cover_media
 
   javascript 'wiki_edit'
   javascript :extra, :action => :tasks
@@ -37,6 +38,8 @@ class GroupController < ApplicationController
     @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
 
     @wiki = private_or_public_wiki()
+    @cover_media = choose_cover_media
+
     if may_edit_site_appearance?  
       @editable_custom_appearance = current_site.custom_appearance
     end
@@ -234,6 +237,23 @@ class GroupController < ApplicationController
     end
   end
 
+  def edit_cover_media
+    if request.post?
+      @profile = @group.profiles.find(params[:profile_id])
+      @profile.update_attributes!({:photo_id => params[:photo_id], :video_id => params[:video_id]})
+      redirect_to :action => 'show', :id => @group
+    else
+      @public_profile = @group.profiles.public
+      @private_profile = @group.profiles.private
+
+      @public_image_pages = @group.pages.only_public.only_images
+      @public_video_pages = @group.pages.only_public.only_videos
+
+      @private_image_pages = @group.pages.only_images
+      @private_video_pages = @group.pages.only_videos
+    end
+  end
+
   # login required
   # post required
   def destroy
@@ -337,6 +357,17 @@ class GroupController < ApplicationController
       @profile.create_wiki unless @profile.wiki
       @profile.wiki
     end
+  end
+
+  # returns either an external video or an asset page to be displayed in the info box
+  def choose_cover_media
+    media = nil
+    media ||= @profile.photo.data if @profile.photo
+    media ||= @profile.video.data if @profile.video
+    media ||= @group.profiles.public.photo.data if @group.profiles.public.photo
+    media ||= @group.profiles.public.video.data if @group.profiles.public.video
+
+    media
   end
 
   def context

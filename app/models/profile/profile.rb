@@ -107,8 +107,10 @@ class Profile < ActiveRecord::Base
              :class_name => 'Discussion',
              :foreign_key => 'discussion_id',
              :dependent => :destroy)
-  
-  #belongs_to :photo
+
+  belongs_to :photo, :class_name => "AssetPage"
+  belongs_to :video, :class_name => "ExternalVideoPage"
+
   #belongs_to :layout
   
   has_many   :locations,       :class_name => '::ProfileLocation', :dependent => :destroy, :order=>"preferred desc"

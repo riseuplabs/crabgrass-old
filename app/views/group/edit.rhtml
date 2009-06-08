@@ -4,7 +4,7 @@
 
 <br/>
 
-<h2 class='alert'><%= "Picture".t %></h2>
+<h2 class='alert'><%= "Group Icon"[:group_icon] %></h2>
 
 <%= avatar_for @group, 'xlarge' %>
 
@@ -27,27 +27,19 @@
     <%= "Available Tools and Layout".t %>
 </div></h2>
 
-<p/>
+<p>
 <%= link_to 'Choose Tools', url_for(:action=>'edit_tools', :id=>@group) %>:
 <%= (@group.group_setting.allowed_tools.nil? ? current_site.available_page_types : @group.group_setting.allowed_tools).join(", ") %>
-
-<%# DOES THIS DO ANYTHING MORE THAN THE CODE ABOVE? %>
-<%# tools = @group.group_setting.allowed_tools || @site.available_page_types %> 
-<%# tool_print = [] %>
-<%# tools.each do |tool| %>
-  <%# page_class = Page.class_name_to_class(tool) -%>
-  <%# if page_class.nil? %>
-    <%# tool_print << tool.strip %>
-  <%# else %>
-    <%# tool_print << page_class.class_display_name.strip %>
-  <%# end %>
-<%# end %>
-<%# = tool_print.join(", ") %>
-<p/>
+</p>
 
 <p>
 <%= link_to 'Choose Layout', url_for(:action=>'edit_layout', :id=>@group) %>
 </p>
+
+<p>
+<%= link_to 'Choose Front Page Image or Video', url_for(:action => 'edit_cover_media', :id => @group) %>
+</p>
+
 
 <% if current_user.may?(:admin, @group) && @group.council_id.nil? %>
 <p>

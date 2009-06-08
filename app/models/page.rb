@@ -73,6 +73,15 @@ class Page < ActiveRecord::Base
   acts_as_site_limited
   attr_protected :owner
 
+
+  ##
+  ## NAMES SCOPES
+  ##
+
+  named_scope :only_public, :conditions => {:public => true}
+  named_scope :only_images, :conditions => {:is_image => true}
+  named_scope :only_videos, :conditions => {:is_video => true}
+
   ##
   ## PAGE NAMING
   ##
@@ -462,6 +471,7 @@ class Page < ActiveRecord::Base
     @flags ||= {}
   end
 
+  # DEPRECATED
   def self.make(function,options={})
     PageStork.send(function, options)
   end

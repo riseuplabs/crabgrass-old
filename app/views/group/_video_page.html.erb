@@ -1,0 +1,5 @@
+<% video = video_page.data %>
+<div id="swatch_<%= video.id -%>" class="swatch">
+  <%= video.build_embed(200, 200) %>
+  <%= button_to("Select"[:select], {:action => 'edit_cover_media', :profile_id => profile.id, :video_id => video_page.id}, :method => 'post') %>
+</div>

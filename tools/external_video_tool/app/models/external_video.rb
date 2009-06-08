@@ -100,8 +100,8 @@ class ExternalVideo < ActiveRecord::Base
     service[:default_height] if service
   end
 
-  def build_embed
-    service[:template ] % [media_key, width, height] if service
+  def build_embed(crop_width = width, crop_height = height)
+    service[:template ] % [media_key, crop_width, crop_height] if service
   end
   
   def media_embed=(str)
