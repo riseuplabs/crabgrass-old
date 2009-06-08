@@ -82,13 +82,6 @@ module PermissionsHelper
     match = PERMISSION_METHOD_RE.match(method_id.to_s)
     if match
       may?(controller, match[1], *args)
-      
-      # i am removing this because i can't imagine what it is supposed to do -e
-      #if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
-      #  super
-      #else
-      #  may?(controller, match[1], *args)
-      #end
     elsif self.is_a? ActionController::Base
       nil
     else
