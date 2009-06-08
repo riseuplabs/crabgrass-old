@@ -66,10 +66,24 @@ module PermissionsHelper
     end
   end
 
+  # matches may_x?
+  PERMISSION_METHOD_RE = /^may_([_a-zA-Z]\w*)\?$/
+
+  # call may?() if the missing method is in the form of a permission test (may_x?)
   def method_missing(method_id, *args)
-    super unless match = /may_([_a-zA-Z]\w*)\?/.match(method_id.to_s)
-    super if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
-    may?(controller, match[1], *args)
+    match = PERMISSION_METHOD_RE.match(method_id.to_s)
+    if match
+      may?(controller, match[1], *args)
+      
+      # i am removing this because i can't imagine what it is supposed to do -e
+      #if /([_a-zA-Z]\w*)_#{controller.controller_name}/.match(match[1])
+      #  super
+      #else
+      #  may?(controller, match[1], *args)
+      #end
+    else
+      super
+    end
   end
   
   private
