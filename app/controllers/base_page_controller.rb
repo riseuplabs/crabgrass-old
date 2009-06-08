@@ -96,8 +96,8 @@ class BasePageController < ApplicationController
   
   after_filter :save_if_needed
   def save_if_needed
-    @upart.save if @upart and @upart.changed?
-    @page.save if @page and @page.changed?
+    @upart.save if @upart and !@upart.new_record? and @upart.changed?
+    @page.save if @page and !@page.new_record? and @page.changed?
     true
   end
   
@@ -185,7 +185,8 @@ class BasePageController < ApplicationController
     if action?(:create)
       (@group = Group.find_by_name(params[:group])) or (@user = current_user)
       page_context
-      add_context "Create Page"[:create_page], :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
+      context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
+      add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
     end

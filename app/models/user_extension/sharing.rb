@@ -355,5 +355,19 @@ module UserExtension::Sharing
     end
   end
 
+  # return true if the user may still admin a page even if we 
+  # destroy the particular participation object
+  def may_admin_page_without?(page, participation)
+    method = participation.class.name.underscore.pluralize # user_participations or group_participations
+    original = page.send(method).clone
+    page.send(method).delete_if {|part| part.id == participation.id} 
+    begin
+      result = page.has_access!(:admin, self)
+    rescue PermissionDenied
+      result = false
+    end
+    page.send(method).replace(original)
+    result
+  end
 
 end

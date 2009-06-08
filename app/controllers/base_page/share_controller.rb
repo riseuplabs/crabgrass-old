@@ -114,10 +114,6 @@ class BasePage::ShareController < ApplicationController
     render :template => 'base_page/reset_sidebar'
   end
 
-  def show_error_message
-    render :template => 'base_page/show_errors'
-  end
-
   def authorized?
     if @page
       current_user.may? :admin, @page

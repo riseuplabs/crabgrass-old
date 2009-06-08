@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
 
-  # core user extentions
+  ##
+  ## CORE EXTENSIONS
+  ##
+
   include UserExtension::Cache      # should come first
   include UserExtension::Socialize  # user <--> user
   include UserExtension::Organize   # user <--> groups
@@ -205,8 +208,18 @@ class User < ActiveRecord::Base
   
   def may!(perm, protected_thing)
     return true if protected_thing.new_record?
-    @access ||= {}
-    (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+    key = "#{protected_thing.to_s}"
+    if @access and @access[key] and !@access[key][perm].nil?
+      result = @access[key][perm]
+    else
+      result = protected_thing.has_access!(perm,self) rescue PermissionDenied
+      # has_access! might call clear_access_cache, so we need to rebuild it
+      # after it has been called.
+      @access ||= {}
+      @access[key] ||= {}
+      @access[key][perm] = result
+    end
+    result or raise PermissionDenied.new
   end
 
   # zeros out the in-memory page access cache. generally, this is called for
