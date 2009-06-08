@@ -1,9 +1,6 @@
 class ProfileController < ApplicationController
 
-  before_filter :login_required
-  prepend_before_filter :fetch_profile
-  #append_before_filter :fetch_profile_settings
-  #layout :choose_layout
+  before_filter :fetch_profile, :login_required
   stylesheet 'profile'
   helper 'me/base'
   permissions 'profile'
@@ -159,8 +156,11 @@ class ProfileController < ApplicationController
   end
 
   def authorized?
-    params[:action] =~ /add_/ ?
-      may_action?('update', @entity) :
+    if params[:action] =~ /^add_/
+      true
+    else
       may_action?(params[:action], @entity)
+    end
   end
+
 end
