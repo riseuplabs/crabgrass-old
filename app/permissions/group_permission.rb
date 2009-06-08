@@ -56,4 +56,9 @@ module GroupPermission
   def may_edit_site_appearance?(group = @group)
     logged_in? and current_site.council == group and current_user.may?(:admin, current_site)
   end
+
+  def may_create_group_page?
+    logged_in? and @group and current_user.member_of?(@group)
+  end
+
 end
