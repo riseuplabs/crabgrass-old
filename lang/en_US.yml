@@ -680,6 +680,7 @@ delete_page_via_trash: "Move To Trash"
 delete_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
 delete_page_via_shred: "Destroy Immediately"
 delete_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
+undelete_from_trash: "Undelete"
 
 # details
 

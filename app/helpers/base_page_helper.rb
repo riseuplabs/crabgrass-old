@@ -122,24 +122,28 @@ module BasePageHelper
     content_tag :li, link, :class => "small_icon #{icon}"
   end
 
+  # used in the sidebar of deleted pages
   def undelete_line
     if current_user.may?(:admin, @page)
-      link = link_to("Undelete :page_class"[:undelete_page_link] % { :page_class => page_class },
-                     page_xurl(@page, :controller => 'base_page/trash', :action => 'undelete'),
-                     :method => 'post')
+      link = link_to("Undelete"[:undelete_from_trash],
+        {:controller => '/base_page/trash', :page_id => @page.id, :action => 'undelete'},
+        :method => 'post'
+      )
       content_tag :li, link, :class => 'small_icon refresh_16'
     end
   end
 
-#  def destroy_line
-#    if current_user.may?(:delete, @page)
-#      link = link_to("Shred :page_class"[:destroy_page_link] % { :page_class => page_class },
-#                     page_xurl(@page, :controller => 'base_page/trash', :action => 'destroy'),
-#                     :method => 'post',
-#                     :confirm => 'Are you sure you want to destroy this page? It cannot be undeleted.'[:confirm_destroy_page])
-#      content_tag :li, link, :class => 'small_icon minus_16'
-#    end
-#  end
+  # used in the sidebar of deleted pages
+  def destroy_line
+    if current_user.may?(:delete, @page)
+      link = link_to("Destroy Immediately"[:delete_page_via_shred],
+        {:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy'},
+        :method => 'post',
+        :confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]]
+      )
+      content_tag :li, link, :class => 'small_icon minus_16'
+    end
+  end
 
   def view_line
     if @show_print
