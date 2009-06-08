@@ -7,6 +7,12 @@
   </div>
 <% end -%>
 
+<% if @group %>
+  <% @info_box = capture do -%>
+    <%= "This page will be added to {group_type} {group_name}."[:page_added_to_group, {:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name)}] %>
+  <% end -%>
+<% end %>
+
 <div class="create_page">
 <% form_tag({:action => 'create'}, :multipart => multipart) do %>
   <table class="create_page">
@@ -19,7 +25,7 @@
 
     <% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
       <tr><td colspan="2" class="heading">
-        <h2><%= '{page_class} Data'[:create_page_data, "Page"[:page]].titlecase %></h2>
+        <h2 class="dark"><%= '{page_class} Data'[:create_page_data, "Page"[:page]].titlecase %></h2>
       </td></tr>
       <% sections.each do |section| %>
         <%= render :partial => "base_page/create/#{section}" %>

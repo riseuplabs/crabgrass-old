@@ -72,7 +72,8 @@ class PagesController < ApplicationController
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
     page_context
-    add_context("Create Page"[:create_page], :controller => 'pages', :action => 'create', :group => params[:group])
+    context_name = "Create a new {thing}"[:create_a_new_thing, "Page"[:page]].titleize
+    add_context(context_name, :controller => 'pages', :action => 'create', :group => params[:group])
     true
   end
   

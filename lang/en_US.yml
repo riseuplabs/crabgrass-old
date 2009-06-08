@@ -725,10 +725,8 @@ notify_recipients: "Recipients"
 contribute_content_link: "Create Page"
 contribute_group_content_link: "Add Page To {group}"
 page_create_owner: "Page Owner"
-#page_create_access: "Additional Access"
 create_page_information: "{page_class} Information"
 create_page_data: "{page_class} Data"
-create_page_share: "Who has access to this {page_class}?"
 create_page: "Create Page"
 only_me: "Me"
 back_button: "Back"
@@ -737,6 +735,9 @@ title: "Title"
 summary: "Summary"
 file: "File"
 files: "Files"
+page_added_to_group: "This page will be added to {group_type} {group_name}."
+
+# help
 
 title_help: "Required. The title is used to identify this page."
 summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
@@ -745,7 +746,7 @@ page_owner_help: "Optional. The page owner is the person or group with primary r
 sharing_help: "Optional. You can share this page with multiple recipients (either users or groups). <b>Coordinator</b> access will grant unrestricted access to this page (including deleting and sharing). <b>Participant</b> access will grant the ability to edit and contribute to this page. <b>Viewer</b> access makes this page visible, and nothing more."
 wiki_body_help: "Optional. Enter here the initial body text for the page."
 upload_image_help: "Optional. Select an initial image file to upload to this page."
-upload_file_help: "Optional. Select a file to upload to this page."
+upload_file_help: "Required. Select a file to upload to this page."
 
 
 ##
