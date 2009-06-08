@@ -1,10 +1,10 @@
 class WikiPageVersionController < BasePageController
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
 
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
   helper :wiki, :wiki_page
+  permissions :wiki_page_version
 
   ##
   ## ACCESS: public or :view

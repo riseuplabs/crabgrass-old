@@ -48,14 +48,12 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     login_as :orange
 
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      #login_as user
       pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
     end
-    #pages(:wiki).data.versions.reload
 
     post :diff, :page_id => pages(:wiki).id, :id => "4-5"
     assert_response :success
-#    assert_template 'diff'
+
     assert_equal assigns(:wiki).versions.reload.find_by_version(4).body_html, assigns(:old_markup)
     assert_equal assigns(:wiki).versions.reload.find_by_version(5).body_html, assigns(:new_markup)
     assert assigns(:difftext).length > 10, "difftext should contain something substantial"
