@@ -263,6 +263,12 @@ module PathFinder::Mysql::BuilderFilters
     @order << "user_participations.changed_at DESC" if @order
   end
 
+  def filter_admin(user_id)
+    @conditions << 'user_participations.user_id = ? AND user_participations.access = ?'
+    @values << user_id.to_i
+    @values << ACCESS[:admin]
+  end
+
 #turning RDoc comments back on. 
 #++ 
 end

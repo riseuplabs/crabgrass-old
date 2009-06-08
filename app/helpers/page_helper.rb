@@ -291,13 +291,13 @@ module PageHelper
     elsif column == :created_by or column == :created_by_login
       list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
     elsif column == :deleted_by or column == :deleted_by_login
-      list_heading 'deleted by'[:page_list_heading_deleted_by], 'deleted_by_login', options
+      list_heading 'deleted by'[:page_list_heading_deleted_by], 'updated_by_login', options
     elsif column == :updated_at
       list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
       list_heading 'created'[:page_list_heading_created], 'created_at', options
     elsif column == :deleted_at
-      list_heading 'deleted'[:page_list_heading_deleted], 'deleted_at', options
+      list_heading 'deleted'[:page_list_heading_deleted], 'updated_at', options
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
