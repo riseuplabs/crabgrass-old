@@ -69,7 +69,15 @@ module PermissionsHelper
   # matches may_x?
   PERMISSION_METHOD_RE = /^may_([_a-zA-Z]\w*)\?$/
 
-  # call may?() if the missing method is in the form of a permission test (may_x?)
+  # Call may?() if the missing method is in the form of a permission test (may_x?)
+  # and call super() otherwise. 
+  # 
+  # There is one exception to this rule:
+  #
+  # We do not call super() if we are a controller. This is because method_missing
+  # is called from ActionController::Base#perform_action(). Calling super in this
+  # case causes all kinds of problems, but if we do nothing then the correct
+  # template will get rendered.
   def method_missing(method_id, *args)
     match = PERMISSION_METHOD_RE.match(method_id.to_s)
     if match
@@ -81,6 +89,8 @@ module PermissionsHelper
       #else
       #  may?(controller, match[1], *args)
       #end
+    elsif self.is_a? ActionController::Base
+      nil
     else
       super
     end
