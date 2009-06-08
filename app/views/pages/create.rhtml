@@ -2,11 +2,18 @@
 <h1><%= "Create a new page"[:create_a_new_thing, "page"[:page].downcase] %></h1>
 <% end -%>
 
+<% if @group %>
+  <% @info_box = capture do -%>
+    <%= "This page will be added to {group_type} {group_name}."[:page_added_to_group, {:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name)}] %>
+  <% end -%>
+<% end %>
+
+
 <% items = [] %>
 <div class='create_page'>
   <% tree_of_page_types(@available_tools, {:simple => true}).collect do |grouping| %>
     <% items << capture do %>
-      <h2><%= grouping[:display] %></h2>
+      <h2 class="dark"><%= grouping[:display] %></h2>
       <% grouping[:pages].collect do |page_class| %>
         <% link_text = [content_tag(:b, page_class.class_display_name, :class =>  "small_icon #{page_class.icon}_16"), '<br/>', page_class.class_description].join %>
         <div class="hover">
