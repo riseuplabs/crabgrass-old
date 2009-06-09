@@ -4,6 +4,9 @@
   <li class="<%= 'active' if @active == 'edit_users'%>"><%= link_to 'edit users', users_path %></li>
   <li class="<%= 'active' if @active == 'create_groups'%>"><%= link_to 'create groups', new_group_path %></li>
   <li class="<%= 'active' if @active == 'edit_groups'%>"><%= link_to 'edit groups', groups_path %></li>
+  <li class="<%= 'active' if @active == 'email_blasts'%>"><%= link_to 'email blasts', email_blasts_path %></li>
+  <li class="<%= 'active' if @active == 'create_announcements'%>"><%= link_to 'create announcements', '/announcement_page/create' %></li>
+  <li class="<%= 'active' if @active == 'edit_announcements'%>"><%= link_to 'edit announcements', announcements_path %></li>
 </ul>
 
 <h4>Moderation</h4>

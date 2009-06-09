@@ -1,23 +1,24 @@
-<h1>New group</h1>
+<h1>Create Groups</h1>
 
 <% form_for(@group) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %> (used for url)<br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :full_name %> (used for display)<br />
-    <%= f.text_field :full_name %>
-  </p>
-  <p>
-    <%= f.label :summary %><br />
-    <%= f.text_field :summary %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+<table class="create_form">
+  <tr>
+    <td><%= f.label :name %></td><td><%= f.text_field :full_name %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :url %></td><td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p></td>
+  </tr>
+  <tr>
+    <td><%= f.label :summary %></td><td><%= f.text_area :summary, :size=>"50x5" %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :picture %></td><td><%= f.file_field :image_file %></td>
+  </tr>
+  <tr>
+    <td colspan="2"><%= f.submit "Create" %></td>
+  </tr>
 <% end %>
-
-<%= link_to 'Back', groups_path %>
