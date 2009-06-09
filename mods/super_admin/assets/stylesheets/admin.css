@@ -61,16 +61,19 @@ a.active {
 body {
   padding: 5px;
 }
+
 table#container {
   min-width:960px;
-  border:2px solid grey;
+  border-spacing:0px;
+  border-collapse:collapse;
+  border:0.2em solid grey;
   padding:0px;
 }
 
 #header {
  color: #999;
  background-color:lightgrey;
- border-bottom:2px solid grey;
+ border:0.2em solid grey;
  padding:2px;
  padding-left:7px;
 }
@@ -92,15 +95,17 @@ table#container {
  padding:0;
 }
 
+
+
 .toplink {float: right; padding:4px;}
 
 #navigation {
   background-color:lightgrey;
-  border-right:2px solid grey;
+  border:0.2em solid grey;
   height:100%;
+  width:14.1em;
   vertical-align:top;
 }
-
 
 #navigation ul {
   list-style:none;
@@ -113,22 +118,25 @@ table#container {
   list-style:none;
   margin:0px;;
   padding:0px;
-  width:102%;	       
+  width:101.4%;	       
+}
+
+#navigation ul a {
+  color:black;
+  text-decoration:none;
 }
 
 #navigation ul li.active {
   background:white;
-  border-top: 2px solid grey;
-  border-bottom: 2px solid grey;
+  border-top:0.2em solid grey;
+  border-bottom:0.2em solid grey;
 }
 
 #content {
   height:100%;
   padding-top:1em;
   padding-left:3em;
-  float:left;
 }
-
 
 table tr th {
   text-decoration:underline;
@@ -138,7 +146,6 @@ table tr th {
 }
 
 table tr.row_0 { background:#eee; }
-
 
 span.alphabeitcal_filter {
   text-align:center;
