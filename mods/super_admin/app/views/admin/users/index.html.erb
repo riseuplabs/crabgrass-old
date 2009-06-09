@@ -1,4 +1,6 @@
-<h1>Listing users</h1>
+<h1>Edit Users</h1>
+
+<%= alphabetical_filter(:controller => 'admin/users') %>
 
 <table>
   <tr>
@@ -6,18 +8,21 @@
     <th>Display name</th>
     <th>Email</th>
   </tr>
-
-<% for user in @users %>
-  <tr>
-    <td><%= link_to_user user, {:login => true} %></td>
-    <td><%=h user.display_name %></td>
-    <td><%=h user.email %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id %></td>
-    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% if @users.any? -%>
+    <% @users.each_with_index do |user, i| %>
+      <tr class="row_<%=i%2%>">
+        <td><%= user.login %></td>
+        <td><%=h user.display_name %></td>
+        <td><%=h user.email %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id %></td>
+        <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  <% else -%>
+    <tr><td colspan="4"><i>No Match</i></td></tr>
+  <% end -%>
 </table>
 
 <%= pagination_links @pages %>

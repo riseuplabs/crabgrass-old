@@ -1,20 +1,26 @@
 <h1>Listing groups</h1>
 
+<%= alphabetical_filter(:controller => 'admin/groups') %>
+
 <table>
   <tr>
     <th>Name</th>
     <th>Created at</th>
   </tr>
 
-<% for group in @groups %>
-  <tr>
-    <td><%= link_to_group group %></td>
-    <td><%= friendly_date group.created_at %></td>
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% if @groups.any? -%>
+    <% @groups.each_with_index do |group, i| %>
+      <tr class="row_<%=i%2%>">
+        <td><%= link_to_group group %></td>
+        <td><%= friendly_date group.created_at %></td>
+        <td><%= link_to 'Show', group %></td>
+        <td><%= link_to 'Edit', edit_group_path(group) %></td>
+        <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  <% else -%>
+    <tr><td colspan="4"><i>No Match</i></td></tr>
+  <% end -%>
 </table>
 
 <br />

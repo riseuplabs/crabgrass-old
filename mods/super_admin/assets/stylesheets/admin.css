@@ -111,7 +111,7 @@ table#container {
 
 #navigation ul li {
   list-style:none;
-  margin:0px;;
+  margin:0px;
   padding:0px;	       
 }
 
@@ -120,4 +120,25 @@ table#container {
   padding-top:1em;
   padding-left:3em;
   float:left;
+}
+
+
+table tr th {
+  text-decoration:underline;
+  font-weight:normal;
+  text-align:left;
+  font-size:1.1em;
+}
+
+table tr.row_0 { background:#eee; }
+
+
+span.alphabeitcal_filter {
+  text-align:center;
+}
+span.alphabetical_filter a {
+  font-size:1.1em;
+  font-weight:bold;
+  color:#bbb;
+  text-decoration:none;
 }

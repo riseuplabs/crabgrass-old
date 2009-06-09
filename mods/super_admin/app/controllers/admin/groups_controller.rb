@@ -2,7 +2,10 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups
   # GET /groups.xml
   def index
-    @groups = Group.find(:all)
+    filter = '^'+(params[:filter] || '')
+    # special case: numbers
+    filter = '^[0-9]' if filter == '^#'
+    @groups = Group.find(:all, :conditions => ['groups.name REGEXP(?)', filter])
 
     respond_to do |format|
       format.html # index.html.erb
