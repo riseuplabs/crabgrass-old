@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090605190832) do
+ActiveRecord::Schema.define(:version => 20090609065603) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -65,6 +65,9 @@ ActiveRecord::Schema.define(:version => 20090605190832) do
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -679,6 +682,7 @@ ActiveRecord::Schema.define(:version => 20090605190832) do
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"
+
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id",       :limit => 11
     t.integer  "user_id",       :limit => 11
