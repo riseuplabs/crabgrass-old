@@ -59,23 +59,65 @@ a.active {
 /**** super admin styles ****/
 
 body {
-  background:#ccc;
-  padding: 20px;
+  padding: 5px;
 }
-#container {
-  background: #fafafa;
-  border-right: 4px solid #aaa;
-  border-bottom: 4px solid #aaa;
+table#container {
+  min-width:960px;
+  border:2px solid grey;
+  padding:0px;
 }
+
 #header {
  color: #999;
- background: #dfd;
- padding: 10px;
+ background-color:lightgrey;
+ border-bottom:2px solid grey;
+ padding:2px;
+ padding-left:7px;
 }
+
+#header a {
+  text-decoration:none;
+  color:black;
+  font-weight:normal;
+}
+
+#header a:hover {
+  text-decoration:underline;
+  background:none;
+}
+
 #header h1 {
  font-size: 1.5em;
+ margin:0;
+ padding:0;
 }
-#content {
-  padding: 20px;
-}
+
 .toplink {float: right; padding:4px;}
+
+#navigation {
+  background-color:lightgrey;
+  border-right:2px solid grey;
+  padding:7px;
+  height:100%;
+  vertical-align:top;
+}
+
+
+#navigation ul {
+  list-style:none;
+  margin:0px;
+  padding:0px;
+}
+
+#navigation ul li {
+  list-style:none;
+  margin:0px;;
+  padding:0px;	       
+}
+
+#content {
+  height:100%;
+  padding-top:1em;
+  padding-left:3em;
+  float:left;
+}
