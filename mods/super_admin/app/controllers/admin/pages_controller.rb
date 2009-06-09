@@ -1,6 +1,8 @@
 class Admin::PagesController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
+  before_filter :set_active_tab
+  
   def index
     view = params[:view] || 'pending'
     @current_view = view
@@ -73,7 +75,11 @@ class Admin::PagesController < Admin::BaseController
 	page = Page.find params[:id]
     page.update_attributes({:public => false, :public_requested => true})
 	redirect_to :action => 'index', :view => params[:view]
-end
+  end
 
+  
+  def set_active_tab
+    @active = 'page_moderation'
+  end
 end
 
