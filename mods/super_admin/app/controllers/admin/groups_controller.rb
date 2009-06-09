@@ -3,7 +3,7 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups.xml
   def index
     @groups = Group.find(:all)
-
+    @active = 'edit_groups'
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @groups }
@@ -14,7 +14,7 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups/1.xml
   def show
     @group = Group.find_by_name(params[:id])
-
+    @active = 'edit_groups'
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @group }
@@ -25,7 +25,7 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups/new.xml
   def new
     @group = Group.new
-
+    @active = 'create_groups'
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @group }
@@ -34,12 +34,14 @@ class Admin::GroupsController < Admin::BaseController
 
   # GET /groups/1/edit
   def edit
+    @active = 'edit_groups'
     @group = Group.find_by_name(params[:id])
   end
 
   # POST /groups
   # POST /groups.xml
   def create
+    @active = 'create_groups'
     @group = Group.new(params[:group])
 
     respond_to do |format|
@@ -58,7 +60,7 @@ class Admin::GroupsController < Admin::BaseController
   # PUT /groups/1.xml
   def update
     @group = Group.find_by_name(params[:id])
-
+    @active = 'edit_groups'
     respond_to do |format|
       if @group.update_attributes(params[:group])
         flash[:notice] = 'Group was successfully updated.'
@@ -74,6 +76,7 @@ class Admin::GroupsController < Admin::BaseController
   # DELETE /groups/1
   # DELETE /groups/1.xml
   def destroy
+    @active = 'edit_groups'
     @group = Group.find_by_name(params[:id])
     @group.destroyed_by = current_user
     @group.destroy

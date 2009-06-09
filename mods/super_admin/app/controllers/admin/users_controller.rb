@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::BaseController
   # GET /users.xml
   def index
     @users = User.paginate(:page => params[:page])
-
+    @active = 'edit_users'
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
@@ -14,6 +14,7 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/1.xml
   def show
     @user = User.find_by_login(params[:id])
+    @active = 'edit_users'
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,7 +26,7 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/new.xml
   def new
     @user = User.new
-
+    @active = 'create_users'
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @user }
@@ -34,6 +35,7 @@ class Admin::UsersController < Admin::BaseController
 
   # GET /users/1/edit
   def edit
+    @active = 'edit_users'
     @user = User.find_by_login(params[:id])
   end
 
@@ -41,7 +43,7 @@ class Admin::UsersController < Admin::BaseController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
-
+    @active = 'create_users'
     respond_to do |format|
       if @user.save
         flash[:notice] = 'User was successfully created.'
@@ -58,7 +60,7 @@ class Admin::UsersController < Admin::BaseController
   # PUT /users/1.xml
   def update
     @user = User.find_by_login(params[:id])
-
+    @active = 'edit_users'
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'
@@ -74,6 +76,7 @@ class Admin::UsersController < Admin::BaseController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
+    @active = 'edit_users'
     @user = User.find_by_login(params[:id])
     @user.destroy
 
