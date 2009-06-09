@@ -14,6 +14,12 @@ class Admin::EmailBlastsController < Admin::BaseController
   
   protected
   
+  before_filter :set_active
+  
+  def set_active
+    @active = 'email_blasts'
+  end
+  
   def build_recipient_list(receipients)
     recipient_list = [ ]
     tokens = receipients.split(/[,;\s]+/)
