@@ -97,7 +97,6 @@ table#container {
 #navigation {
   background-color:lightgrey;
   border-right:2px solid grey;
-  padding:7px;
   height:100%;
   vertical-align:top;
 }
@@ -107,12 +106,20 @@ table#container {
   list-style:none;
   margin:0px;
   padding:0px;
+  width:100%;
 }
 
 #navigation ul li {
   list-style:none;
-  margin:0px;
-  padding:0px;	       
+  margin:0px;;
+  padding:0px;
+  width:102%;	       
+}
+
+#navigation ul li.active {
+  background:white;
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
 }
 
 #content {
