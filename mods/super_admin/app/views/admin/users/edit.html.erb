@@ -1,6 +1,4 @@
-<%= link_to '&laquo;&nbsp;'+'Back'[:back], users_path %>
-
-<h2>Editing user</h2>
+<h1>Editing user</h1>
 
 <% form_for(@user, :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
@@ -13,3 +11,6 @@
   </tr>
 </table>
 <% end %>
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

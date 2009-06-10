@@ -1,22 +1,19 @@
-<%- @info_box_class = "tabs" -%>
-<%- @info_box = capture do -%>
 <%=
 if logged_in? and current_user.may?(:admin, @page)
   Formy.tabs do |f|
     f.tab do |t|
       t.label 'show'.t
-      t.url page_url(@page)
+      t.link page_url(@page)
       t.selected action?(:show)
     end
     f.tab do |t|
       t.label 'edit'.t
-      t.url page_url(@page, :action => 'edit')
+      t.link page_url(@page, :action => 'edit')
       t.selected action?(:edit)
     end
-  end
+  end + '<br/>'
 end
 %>
-<% end -%>
 <div class='wiki'>
   <div id='wiki_html'>
     <%= @wiki.body_html %>

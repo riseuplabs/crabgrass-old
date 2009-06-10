@@ -1,9 +1,6 @@
 class AnnouncementPageController < WikiPageController
   # needed to pick up view/announcement_page/show
   def show
-    @wiki.render_html do |text|
-      GreenCloth.new(text).to_html
-    end
   end
 
   private

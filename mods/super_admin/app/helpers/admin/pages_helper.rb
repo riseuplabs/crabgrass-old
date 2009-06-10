@@ -22,21 +22,13 @@ module Admin::PagesHelper
 
   def page_moderation_navigation_links
     links = []
-#    links << link_to_active( 'pending', :controller => 'admin/pages', :action => 'index', :view => 'pending')
-    
-    links << link_to_active( 'all', :controller => 'admin/pages', :action => 'index', :view => 'all' )
-    
-    links << "Flagged Pages:"
-    links << link_to_active( 'new', :controller => 'admin/pages', :action => 'index', :view => 'new')
+    links << link_to_active( 'pending', :controller => 'admin/pages', :action => 'index', :view => 'pending')
     links << link_to_active( 'vetted',  :controller => 'admin/pages', :action => 'index', :view => 'vetted')
     links << link_to_active( 'deleted', :controller => 'admin/pages', :action => 'index', :view => 'deleted')
-
-    links << "Request to Make Public:"
-    links << link_to_active( 'requested', :controller => 'admin/pages', :action => 'index', :view => 'public requested')
-    links << link_to_active( 'approved', :controller => 'admin/pages', :action => 'index', :view => 'public')
-    content_tag(:div,
-                links.join('&nbsp;'),
-                :style => 'padding-bottom: 1em')
+	links << link_to_active( 'new', :controller => 'admin/pages', :action => 'index', :view => 'new')
+	links << link_to_active( 'public requested', :controller => 'admin/pages', :action => 'index', :view => 'public requested')
+	links << link_to_active( 'public', :controller => 'admin/pages', :action => 'index', :view => 'public')
+    content_tag(:div, link_line(*links), :style => 'padding-bottom: 1em')
   end
 
 end

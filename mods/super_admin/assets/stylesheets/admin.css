@@ -122,10 +122,10 @@ table#container {
 }
 #navigation ul li {
   list-style:none;
-  margin:0px;
+  margin:0px;;
   padding:0px;
   padding-left:1em;
-  width:94.2%;
+  width:94.2%;	       
 }
 
 #navigation ul a {
@@ -143,7 +143,6 @@ table#container {
   height:100%;
   padding-top:1em;
   padding-left:3em;
-  vertical-align:top;
 }
 
 table tr th {
@@ -153,16 +152,9 @@ table tr th {
   font-size:1.1em;
 }
 
-table tr td { line-height:1.7em; padding:0.3em; }
+table tr.row_0 { background:#eee; }
 
-table tr.row_0 { background:#ddd; }
-table tr.row_1 { background:#fff; }
-
-/* show/edit/become/destroy links */
-table tr td span.actions { border:solid 0.15em #333; font-size: 0.8em; padding:0.3em; margin:0.4em; }
-table tr td span.actions a { text-decoration:none; margin-right:1.5em; }
-
-span.alphabetical_filter {
+span.alphabeitcal_filter {
   text-align:center;
 }
 span.alphabetical_filter a {
