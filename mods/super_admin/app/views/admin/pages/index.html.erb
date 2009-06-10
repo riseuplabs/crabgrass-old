@@ -1,9 +1,30 @@
 <h2>Page Moderation</h2>
 
-<%= page_moderation_navigation_links %>
+<%# page_moderation_navigation_links %>
+   
+<div style="border:1px solid grey; padding:0.1em; padding-left:1em; padding-right:1em; margin-bottom:1em;">
+  <div style="display:inline;'">
+    <%= "All Pages:"%>&nbsp;
+    <%# link_to_active( 'pending', :controller => 'admin/pages', :action => 'index', :view => 'pending')%>
+    <%= link_to_active( 'all', :controller => 'admin/pages', :action => 'index', :view => 'all' )%>&nbsp;
+    <%= link_to_active( 'deleted', :controller => 'admin/pages', :action => 'index', :view => 'deleted') %>
+  </div>
+  <div style="display:inline; margin-left:2em;'">
+    <%= "Flagged Pages:"%>&nbsp;&nbsp;
+    <%= link_to_active( 'new', :controller => 'admin/pages', :action => 'index', :view => 'new')%>&nbsp;
+    <%= link_to_active( 'vetted',  :controller => 'admin/pages', :action => 'index', :view => 'vetted')%>&nbsp;
+    <%= link_to_active( 'deleted', :controller => 'admin/pages', :action => 'index', :view => 'deleted')%>
+  </div>
+  <div style="display:inline; margin-left:2em;'">
+    <%= "Request to Make Public:"%>&nbsp;
+    <%= link_to_active( 'requested', :controller => 'admin/pages', :action => 'index', :view => 'public requested')%>&nbsp;
+    <%= link_to_active( 'approved', :controller => 'admin/pages', :action => 'index', :view => 'public')%>
+  </div>
+</div>
 
 <div id="pages-listing">
-  <%= render :partial => 'listing' %> 
+  <%= render :partial => 'listing' if @pages.any? %>
+  <%= '<em>There are no pages in this view</em>' unless @pages.any?%>
 </div>
 
 
