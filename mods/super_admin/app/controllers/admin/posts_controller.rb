@@ -1,6 +1,8 @@
 class Admin::PostsController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
+  before_filter :set_active_tab
+  
   def index
     view = params[:view] || 'pending'
     @current_view = view
@@ -51,5 +53,10 @@ class Admin::PostsController < Admin::BaseController
     post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
+  
+  def set_active_tab
+    @active = 'post_moderation'
+  end
+
 end
 

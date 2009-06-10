@@ -5,50 +5,50 @@
 
 <table>
   <tr>
-    <td>
-  <b>Name:</b>
-    </td>
+    <th>
+  Name:
+    </th>
    <td>
   <%=h @group.name %>
   </td>
 </tr>
 
 <tr>
-<td>
- <b> Full name:</b>
-</td>
+<th>
+  Full name:
+</th>
 <td>
   <%=h @group.full_name %>
 </td>
 </tr>
   <tr>
-    <td>
-      <b>Summary:</b>
-    </td>
+    <th>
+      Summary:
+    </th>
     <td>
       <%=h @group.summary %>
     </td>
   </tr>
   <tr>
-    <td>
-      <b>Created at:</b>
-    </td>
+    <th>
+      Created at:
+    </th>
     <td>
       <%=h @group.created_at %>
     </td>
   </tr>
   <tr>
-    <td>
-      <b>Updated at:</b>
-    </td>
+    <th>
+      Updated at:
+    </th>
     <td>
       <%=h @group.updated_at %>
     </td>
   </tr>
   <tr>
-    <td>
-      <b>Memberships:</b>
-    </td>
+    <th>
+      Memberships:
+    </th>
     <td>
       <%= @group.users.collect{|u| link_to u.login, user_path(u) }.join(' ') %>
     </td>

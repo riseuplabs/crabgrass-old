@@ -1,0 +1,8 @@
+<p><%= link_to '&laquo;&nbsp;'+"Back"[:back], announcements_path %>
+
+<h2>Edit Announcement <i>"<%= @page.title %>"</i></h2>
+
+<% form_tag({:controller => '/announcement_page', :action => 'update', :id => @page.id}) do -%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Update' %>
+<% end -%>

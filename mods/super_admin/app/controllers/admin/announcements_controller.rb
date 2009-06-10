@@ -2,6 +2,7 @@ class Admin::AnnouncementsController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
   def index
+    @active = 'edit_announcements'
     @pages = Page.paginate_by_path('descending/created_at', :page => params[:page], :flow => :announcement)
   end
   
@@ -11,12 +12,11 @@ class Admin::AnnouncementsController < Admin::BaseController
     @groups = Group.all
   end
   
-  def create
-    @page = AnnouncementPage.new(params[:page])
-    @page.save!
-    render :text => @page.inspect
+  def edit
+    @active = 'edit_announcements'
+    @page = AnnouncementPage.find(params[:id])
   end
-
+  
   def destroy
     @page = Page.find_by_id(params[:id])
     @page.destroy
