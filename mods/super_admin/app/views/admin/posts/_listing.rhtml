@@ -17,16 +17,26 @@
       <td><%= post_link_tag %></td>
       <td><%=h post.created_at.strftime("%d %b, %Y ") %></td>
       <% if @current_view == 'pending' %>
-        <td><%= button_to "This Post Is OK", :action => "approve", :params => {:id => post.id, :view => @current_view} %></td>
-        <td><%= button_to "Trash This Post", :action => "trash", :params => {:id => post.id, :view => @current_view} %></td>
-      <% else %>
         <td>
+          <span class="actions">
+          <%= link_to "This Post Is OK", { :action => 'approve', :id => post.id, :view => @current_view }, :method => :post %>
+          <%#= button_to "This Post Is OK", :action => "approve", :params => {:id => post.id, :view => @current_view} %>
+          <%= link_to "Trash This Post", { :action => 'trash', :id => post.id, :view => @current_view }, :method => :post %>
+          <%#= button_to "Trash This Post", :action => "trash", :params => {:id => post.id, :view => @current_view} %>
+          </span>
+        </td>
+      <% else %>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
           <%- if post.deleted_at.nil? -%>
-            <%= button_to "Trash This Post", :action => "trash", :params => {:id => post.id, :view => @current_view} %>
+            <%= link_to "Trash This Post", { :action => "trash", :id => post.id, :view => @current_view }, :method => :post %>
+            <%#= button_to "Trash This Post", :action => "trash", :params => {:id => post.id, :view => @current_view} %>
           <%- else -%>
-            <%= button_to "Undelete", :action => "undelete", :params => {:id => post.id, :view => @current_view} %>
+            <%= link_to "Undelete", { :action => 'undelete', :id => post.id, :view => @current_view }, :method => :post %>
+            <%#= button_to "Undelete", :action => "undelete", :params => {:id => post.id, :view => @current_view} %>
           <%- end -%>
-        </td>    
+          </span>
+        </td>
      <% end %>
     </tr>
   <% end %>
