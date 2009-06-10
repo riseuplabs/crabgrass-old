@@ -2,7 +2,7 @@
 
 <%= alphabetical_filter(:controller => 'admin/groups') %>
 
-<table>
+<table cellspacing="0">
   <tr>
     <th>Name</th>
     <th>Created at</th>
@@ -13,9 +13,13 @@
       <tr class="row_<%=i%2%>">
         <td><%= link_to_group group %></td>
         <td><%= friendly_date group.created_at %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+        <td>
+          <span class="actions">
+            <%= link_to 'Show', group %>
+            <%= link_to 'Edit', edit_group_path(group) %>
+            <%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %>
+          </span>
+        </td>
       </tr>
     <% end %>
   <% else -%>
