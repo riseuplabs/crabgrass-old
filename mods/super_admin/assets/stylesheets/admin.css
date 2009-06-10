@@ -66,17 +66,17 @@ table#container {
   min-width:960px;
   border-spacing:0px;
   border-collapse:collapse;
-  border:0.2em solid grey;
+  border:solid 0.2em grey;
   padding:0px;
 }
 
 #header {
  color: #999;
  background-color:lightgrey;
- border:0.2em solid grey;
+ border:solid 0.2em grey;
  padding:0.2em;
- padding-top:0.5em;
- padding-left:0.5em;
+ padding-top:0.5em !important;
+ padding-left:0.5em !important;
 }
 
 #header a {
@@ -151,9 +151,11 @@ table tr th {
   font-weight:normal;
   text-align:left;
   font-size:1.1em;
+  padding-left:1em;
+  padding-right:3em;
 }
 
-table tr td { line-height:1.7em; padding:0.3em; }
+table tr td { line-height:1.7em; padding-left:0.5em; padding-right:3em; }
 
 table tr.row_0 { background:#ddd; }
 table tr.row_1 { background:#fff; }
