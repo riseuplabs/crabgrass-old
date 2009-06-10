@@ -16,7 +16,7 @@
     <%= link_to 'email blasts', email_blasts_path %>
   </li>
   <li class="<%= 'active' if @active == 'create_announcements'%>">
-    <%= link_to 'create announcements', :controller => 'admin/announcements', :action => 'new' %>
+    <%= link_to 'create announcements', :controller => '/announcement_page', :action => 'create', :id => 'announcement' %>
   </li>
   <li class="<%= 'active' if @active == 'edit_announcements'%>">
     <%= link_to 'edit announcements', announcements_path %>
