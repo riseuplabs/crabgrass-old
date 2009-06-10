@@ -1,0 +1,29 @@
+<tr>
+  <td><%= f.label :login %></td>
+  <td><%= f.text_field :login %></td>
+</tr>
+<tr>
+  <td><%= f.label :display_name %></td>
+  <td><%= f.text_field :display_name %></td>
+</tr>
+<tr>
+  <td><%= f.label :email %></td>
+  <td><%= f.text_field :email %></td>
+</tr>
+<tr>
+  <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p></td>
+</tr>
+<tr>
+  <td><%= f.label :password %></td>
+  <td><%= f.text_field :password %></td>
+<tr>
+  <td><%= f.label :password_confirmation %></td>
+  <td><%= f.text_field :password_confirmation %></td>
+</tr>
+<tr>
+  <td><%= f.label :time_zone %></td>
+  <td><%= time_zone_select 'user', 'time_zone', nil, :include_blank => true %></td>
+</tr>
+<tr>
+  <td><%= label :image, :picture %></td><td><%= file_field :image, :image_file %></td>
+</tr>

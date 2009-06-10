@@ -14,7 +14,7 @@ pre {
 
 a { color: #000; }
 a:visited { color: #666; }
-a:hover { color: #000; text-decoration: underline; }
+a:hover { text-decoration: underline; }
 a.active {
   background: #666;
   color: white;
