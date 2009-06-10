@@ -46,7 +46,11 @@ class Admin::GroupsController < Admin::BaseController
   def create
     @active = 'create_groups'
     @group = Group.new(params[:group])
-
+    
+    # save avatar
+    avatar = Avatar.create(params[:image])
+    @group.avatar = avatar
+    
     respond_to do |format|
       if @group.save
         flash[:notice] = 'Group was successfully created.'
@@ -62,8 +66,21 @@ class Admin::GroupsController < Admin::BaseController
   # PUT /groups/1
   # PUT /groups/1.xml
   def update
-    @group = Group.find_by_name(params[:id])
     @active = 'edit_groups'
+    @group = Group.find_by_name(params[:id])
+    
+    # save or update avatar
+    if @group.avatar
+      for size in %w(xsmall small medium large xlarge)
+        expire_page :controller => 'static', :action => 'avatar', :id => @group.avatar.id, :size => size
+      end
+      @group.avatar.image_file = params[:image][:image_file]
+      @group.avatar.save!
+    else
+      avatar = Avatar.create(params[:image])
+      @group.avatar = avatar
+    end  
+    
     respond_to do |format|
       if @group.update_attributes(params[:group])
         flash[:notice] = 'Group was successfully updated.'

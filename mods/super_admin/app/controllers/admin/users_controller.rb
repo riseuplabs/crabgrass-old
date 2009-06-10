@@ -2,13 +2,13 @@ class Admin::UsersController < Admin::BaseController
   # GET /users
   # GET /users.xml
   def index
+    @active = 'edit_users'
     filter = '^'+(params[:filter] || '')
     # special case: numbers
     filter = '^[0-9]' if filter == '^#'
     @users = User.paginate(:page => params[:page],
                            :conditions => ['users.login REGEXP(?)', filter])
 
-    @active = 'edit_users'
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
@@ -20,7 +20,6 @@ class Admin::UsersController < Admin::BaseController
   def show
     @user = User.find_by_login(params[:id])
     @active = 'edit_users'
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
@@ -47,8 +46,14 @@ class Admin::UsersController < Admin::BaseController
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(params[:user])
     @active = 'create_users'
+    @user = User.new(params[:user])
+    @user.save!
+    
+    # save avatar
+    avatar = Avatar.create(params[:image])
+    @user.avatar = avatar
+    
     respond_to do |format|
       if @user.save
         flash[:notice] = 'User was successfully created.'
@@ -64,8 +69,21 @@ class Admin::UsersController < Admin::BaseController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find_by_login(params[:id])
     @active = 'edit_users'
+    @user = User.find_by_login(params[:id])
+    
+    # save or update avatar
+    if @user.avatar
+      for size in %w(xsmall small medium large xlarge)
+        expire_page :controller => 'static', :action => 'avatar', :id => @user.avatar.id, :size => size
+      end
+      @user.avatar.image_file = params[:image][:image_file]
+      @user.avatar.save!
+    else
+      avatar = Avatar.create(params[:image])
+      @user.avatar = avatar
+    end    
+    
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'
