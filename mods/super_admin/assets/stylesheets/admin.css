@@ -172,3 +172,8 @@ label {
   font-weight:bold;
   text-align:right;
 }
+
+table.form tr td input, table.form tr td select, table.form tr td textarea {
+    width:15em;
+    font-size:1em;
+}

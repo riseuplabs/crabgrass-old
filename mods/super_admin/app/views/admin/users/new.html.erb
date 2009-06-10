@@ -2,34 +2,39 @@
 
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :login %><br />
-    <%= f.text_field :login %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br />
-    <%= f.text_field :password_confirmation %>
-  </p>
-  <p>
-    <%= f.label :display_name %><br />
-    <%= f.text_field :display_name %>
-  </p>
-  <p>
-    <%= f.label :time_zone %><br />
-    <%= f.text_field :time_zone %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+<table>
+  <tr>
+    <td><%= f.label :login %></td>
+    <td><%= f.text_field :login %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :display_name %></td>
+    <td><%= f.text_field :display_name %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :email %></td>
+    <td><%= f.text_field :email %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p></td>
+  </tr>
+  <tr>
+    <td><%= f.label :password %></td>
+    <td><%= f.text_field :password %></td>
+  <tr>
+    <td><%= f.label :password_confirmation %></td>
+    <td><%= f.text_field :password_confirmation %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :time_zone %></td>
+    <td><%= time_zone_select 'user', 'time_zone', nil, :include_blank => true %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :picture %></td><td><%= f.file_field :image_file %></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <%= f.submit "Create" %>
+    </td>
+  </tr>
 <% end %>
-
-<%= link_to 'Back', users_path %>
