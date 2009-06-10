@@ -8,9 +8,9 @@
   <tr>
     <td><%=will_paginate @posts %></td>
   </tr>
-  <% for post in @posts %>
+  <% @posts.each_with_index do |post, i| %>
     <% page_link_tag = page_link(post); post_link_tag = post_link(post) %>
-    <tr>
+    <tr class="row_<%=i%2%>">
       <td>
         <%= page_link_tag %>
       </td>

@@ -24,6 +24,8 @@ module Admin::PagesHelper
     links = []
 #    links << link_to_active( 'pending', :controller => 'admin/pages', :action => 'index', :view => 'pending')
     
+    links << link_to_active( 'all', :controller => 'admin/pages', :action => 'index', :view => 'all' )
+    
     links << "Flagged Pages:"
     links << link_to_active( 'new', :controller => 'admin/pages', :action => 'index', :view => 'new')
     links << link_to_active( 'vetted',  :controller => 'admin/pages', :action => 'index', :view => 'vetted')

@@ -4,7 +4,7 @@ class Admin::PagesController < Admin::BaseController
   before_filter :set_active_tab
   
   def index
-    view = params[:view] || 'pending'
+    view = params[:view] || 'all'
     @current_view = view
     if view == 'pending'
       # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
@@ -22,6 +22,8 @@ class Admin::PagesController < Admin::BaseController
 	  @pages = Page.paginate :page => params[:page], :conditions => ['public_requested = ?',true], :order => 'created_at DESC'
 	elsif view == 'public'
 	  @pages = Page.paginate :page => params[:page], :conditions => ['public = ?',true], :order => 'created_at DESC'
+    elsif view == 'all'
+      @pages = Page.paginate :page => params[:page], :order => 'updated_at DESC'
     end
   end
 
