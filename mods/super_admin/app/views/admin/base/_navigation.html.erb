@@ -1,50 +1,10 @@
-<h4>Superadmin</h4>
+<h4> Superadmin </h4>
 <ul>
-  <li class="<%= 'active' if @active == 'create_users'%>">
-    <%= link_to 'create users', new_user_path %>
-  </li>
-  <li class="<%= 'active' if @active == 'edit_users'%>">
-    <%= link_to 'edit users', users_path %>
-  </li>
-  <li class="<%= 'active' if @active == 'create_groups'%>">
-    <%= link_to 'create groups', new_group_path %>
-  </li>
-  <li class="<%= 'active' if @active == 'edit_groups'%>">
-    <%= link_to 'edit groups', groups_path %>
-  </li>
-  <li class="<%= 'active' if @active == 'email_blasts'%>">
-    <%= link_to 'email blasts', email_blasts_path %>
-  </li>
-  <li class="<%= 'active' if @active == 'create_announcements'%>">
-    <%= link_to 'create announcements', :controller => 'admin/announcements', :action => 'new' %>
-  </li>
-  <li class="<%= 'active' if @active == 'edit_announcements'%>">
-    <%= link_to 'edit announcements', announcements_path %>
-  </li>
-</ul>
-
-<h4>SiteAdmin (dummy)</h4>
-<ul>
-  <li class="<%= 'active' if @active == '' %>">
-    <%= link_to 'basic', ''  %>
-  </li>
-  <li class="<%= 'active' if @active == '' %>">
-    <%= link_to 'custom appearence', '' %>
-  </li>
-  <li class="<%= 'active' if @active == '' %>">
-    <%= link_to 'profile', '' %>
-  </li>
-  <li class="<%= 'active' if @active == '' %>">
-    <%= link_to 'sign up', '' %>
-  </li>
-</ul>
-
-<h4>Moderation</h4>
-<ul>
-  <li class="<%= 'active' if @active == 'page_moderation'%>">
-    <%= link_to 'page moderation', :controller => 'pages' %>
-  </li>
-  <li class="<%= 'active' if @active == 'post_moderation'%>">
-    <%= link_to 'post moderation', :controller => 'posts' %>
-  </li>
+  <li class="<%= 'active' if @active == 'create_users'%>"><%= link_to 'create users', new_user_path %></li>
+  <li class="<%= 'active' if @active == 'edit_users'%>"><%= link_to 'edit users', users_path %></li>
+  <li class="<%= 'active' if @active == 'create_groups'%>"><%= link_to 'create groups', new_group_path %></li>
+  <li class="<%= 'active' if @active == 'edit_groups'%>"><%= link_to 'edit groups', groups_path %></li>
+  <li class="<%= 'active' if @active == 'email_blasts'%>"><%= link_to 'email blasts', email_blasts_path %></li>
+  <li class="<%= 'active' if @active == 'create_announcements'%>"><%= link_to 'create announcements', :controller => 'admin/announcements', :action => 'new' %></li>
+  <li class="<%= 'active' if @active == 'edit_announcements'%>"><%= link_to 'edit announcements', announcements_path %></li>
 </ul>

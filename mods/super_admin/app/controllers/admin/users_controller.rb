@@ -2,9 +2,13 @@ class Admin::UsersController < Admin::BaseController
   # GET /users
   # GET /users.xml
   def index
-    letter = (params[:letter] || '')
-    @users = User.alphabetized(letter).paginate(:page => params[:page])
     @active = 'edit_users'
+    filter = '^'+(params[:filter] || '')
+    # special case: numbers
+    filter = '^[0-9]' if filter == '^#'
+    @users = User.paginate(:page => params[:page],
+                           :conditions => ['users.login REGEXP(?)', filter])
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }

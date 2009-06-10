@@ -547,9 +547,7 @@ view_all: "View All"
 send_invites: "Send Invites"
 view_requests: "View Requests"
 leave_group: "Leave %s"
-destroy_group_link: "Destroy {group_type}"
 join_group_link: "Join {group_type}"
-leave_group_link: "Leave {group_type}"
 request_join_group_link: "Request to Join {group_type}"
 
 # results

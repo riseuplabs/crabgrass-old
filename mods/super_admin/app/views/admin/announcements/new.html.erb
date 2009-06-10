@@ -1,6 +1,19 @@
 <h2>Create Announcement</h2>
-<% form_tag({:controller => '/announcement_page', :action => 'create', :id => 'announcement'}) do -%>
-  <%= render :partial => 'form' %>
-  <%= submit_tag "Create" %>
+<% form_tag({:action => 'create'}) do -%>
+<table class="form">
+  <tr>
+    <td><%= label_tag 'page[owner]', "Owner" %></td>
+    <td><%= select_tag 'page[owner]', options_for_page_owner(:include_me => false) %></td>
+  </tr>
+  <tr>
+    <td><%= label_tag 'page[title]', "Title" %></td>
+    <td><%= text_field_tag 'page[title]' %></td>
+  </tr>
+  <tr>
+    <td><%= label_tag 'body', "Body" %></td>
+    <td><%= text_area_tag 'body' %></td>
+  </tr>
 <% end -%>
+</table>
 
+<%= submit_tag "Create" %>

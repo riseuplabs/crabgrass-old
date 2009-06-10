@@ -1,8 +1,8 @@
-<h2>Edit Users</h2>
+<h1>Edit Users</h1>
 
 <%= alphabetical_filter(:controller => 'admin/users') %>
 
-<table cellspacing="0">
+<table>
   <tr>
     <th>Login</th>
     <th>Display name</th>
@@ -11,17 +11,13 @@
   <% if @users.any? -%>
     <% @users.each_with_index do |user, i| %>
       <tr class="row_<%=i%2%>">
-        <td><%= user.login %></td>
+        <td><%= link_to user.login, url_for_user(user) %></td>
         <td><%=h user.display_name %></td>
         <td><%=h user.email %></td>
-        <td>
-          <span class="actions">
-            <%= link_to 'Show', user %>
-            <%= link_to 'Edit', edit_user_path(user) %>
-            <%= link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id %>
-            <%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
-          </span>
-        </td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id %></td>
+        <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
       </tr>
     <% end %>
   <% else -%>
