@@ -45,7 +45,7 @@ module GroupHelper
   def destroy_group_link
     # eventually, this should fire a request to destroy.
     link_if_may "destroy {group_type}"[:destroy_group_link,group_type],
-      :group, 'destroy', @group,
+      :group, 'destroy', @group, {},
       {:confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post}
   end
 
