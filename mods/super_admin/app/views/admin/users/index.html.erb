@@ -11,7 +11,7 @@
   <% if @users.any? -%>
     <% @users.each_with_index do |user, i| %>
       <tr class="row_<%=i%2%>">
-        <td><%= user.login %></td>
+        <td><%= link_to user.login, url_for_user(user) %></td>
         <td><%=h user.display_name %></td>
         <td><%=h user.email %></td>
         <td><%= link_to 'Show', user %></td>
