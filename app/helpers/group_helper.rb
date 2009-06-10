@@ -23,7 +23,7 @@ module GroupHelper
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
     if may_join_membership?
-      link_to("join {group_type}"[:join_group, @group.group_type], {:controller => :membership, :action => 'join', :group_id => @group.id})
+      link_to("join {group_type}"[:join_group_link, @group.group_type], {:controller => :membership, :action => 'join', :group_id => @group.id})
     elsif may_create_join_requests?
       link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => :requests, :action => 'create_join', :group_id => @group.id})
     end
@@ -38,13 +38,13 @@ module GroupHelper
   end
 
   def leave_group_link
-    link_to_active_if_may("leave {group_type}"[:leave_group, group_type],
-      :membership, 'leave', @group.name)
+    link_to_active_if_may("leave {group_type}"[:leave_group_link, group_type],
+      :membership, 'leave', @group)
   end
 
   def destroy_group_link
     # eventually, this should fire a request to destroy.
-    link_if_may "destroy {group_type}"[:destroy_group,group_type],
+    link_if_may "destroy {group_type}"[:destroy_group_link,group_type],
       :group, 'destroy', @group,
       {:confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post}
   end
