@@ -1,6 +1,4 @@
-<p><%= link_to 'create announcement', '/announcement_page/create' %></p>
-
-<h2>Listing Announcements</h2>
+<h2>Edit Announcements</h2>
 
 <div id="pages-listing">
 <table>
@@ -13,10 +11,13 @@
 
 	<% for page in @pages %>
   <tr>
-		<td><%= link_to page.title, page_url(page) %></td>
-		<td ><%= friendly_date page.created_at %></td>
-		<td><%= link_to_user page.created_by_login %></td>
-		<td><%= link_to 'Destroy', announcement_url(page), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to page.title, page_url(page) %></td>
+    <td ><%= friendly_date page.created_at %></td>
+    <td><%= link_to_user page.created_by_login %></td>
+    <td>
+      <%= link_to 'Edit', edit_announcement_path(page) %>
+      <%= link_to 'Destroy', announcement_url(page), :confirm => 'Are you sure?', :method => :delete %>
+    </td>
   </tr>
 	<% end %>
 </table>
