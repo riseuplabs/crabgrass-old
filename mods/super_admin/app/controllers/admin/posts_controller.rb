@@ -6,7 +6,9 @@ class Admin::PostsController < Admin::BaseController
   def index
     view = params[:view] || 'pending'
     @current_view = view
-    if view == 'pending'
+    if view == 'all'
+      @posts = Post.paginate :page => params[:page], :order => 'updated_at DESC'
+    elsif view == 'pending'
       # all posts that have been flagged as inappropriate have not had any admin action yet.
       @posts = Post.paginate :page => params[:page], :conditions => ['(vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC'
     elsif view == 'vetted'

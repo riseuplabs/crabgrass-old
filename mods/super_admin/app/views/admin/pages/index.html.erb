@@ -2,12 +2,11 @@
 
 <%# page_moderation_navigation_links %>
    
-<div style="border:1px solid grey; padding:0.1em; padding-left:1em; padding-right:1em; margin-bottom:1em;">
+<div id="moderation_navigation">
   <div style="display:inline;'">
     <%= "All Pages:"%>&nbsp;
     <%# link_to_active( 'pending', :controller => 'admin/pages', :action => 'index', :view => 'pending')%>
     <%= link_to_active( 'all', :controller => 'admin/pages', :action => 'index', :view => 'all' )%>&nbsp;
-    <%= link_to_active( 'deleted', :controller => 'admin/pages', :action => 'index', :view => 'deleted') %>
   </div>
   <div style="display:inline; margin-left:2em;'">
     <%= "Flagged Pages:"%>&nbsp;&nbsp;
@@ -24,7 +23,7 @@
 
 <div id="pages-listing">
   <%= render :partial => 'listing' if @pages.any? %>
-  <%= '<em>There are no pages in this view</em>' unless @pages.any?%>
+  <%= '<em>There are no pages for this view</em>' unless @pages.any?%>
 </div>
 
 
