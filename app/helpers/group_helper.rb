@@ -22,10 +22,11 @@ module GroupHelper
 
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
-    link_if_may("join {group_type}"[:join_group, @group_type],
-                :membership, 'join', @group) or
-    link_if_may("request to join {group_type}"[:request_join_group_link, @group_type],
-                :requests, 'create_join', @group)
+    if may_join_membership?
+      link_to("join {group_type}"[:join_group, @group.group_type], {:controller => :membership, :action => 'join', :group_id => @group.id})
+    elsif may_create_join_requests?
+      link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => :requests, :action => 'create_join', :group_id => @group.id})
+    end
   end
 
   def group_member?(group = @group)
@@ -53,7 +54,7 @@ module GroupHelper
   end
 
   def create_committee_link
-    link_if_may 'create committee'[:create_committee],
+    link_if_may 'Create'[:create_button],
       :groups, 'create', nil,
       :parent_id => @group.id
   end
@@ -62,7 +63,7 @@ module GroupHelper
   def list_membership_link(link_suffix='')
     link_to_active_if_may('edit'.t + link_suffix,
                           :membership, 'edit', @group) or
-    link_to_active_if_may('see all'.t + link_suffix,
+    link_to_active_if_may("See All"[:see_all_link] + link_suffix,
                           :membership, 'list', @group)
   end
 
@@ -74,7 +75,7 @@ module GroupHelper
 
 
   def group_membership_link(link_suffix='')
-    link_to_active_if_may 'see all'.t + link_suffix,
+    link_to_active_if_may "See All"[:see_all_link] + link_suffix,
       :membership, 'groups', @group
   end
 
@@ -85,7 +86,7 @@ module GroupHelper
   end
 
   def edit_featured_link
-    link_if_may "edit featured content"[:edit_featured_content],
+    link_if_may "edit featured content"[:edit_featured_content].titlecase,
       :group, 'edit_featured_content', @group
   end
 

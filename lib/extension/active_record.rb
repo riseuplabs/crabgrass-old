@@ -112,6 +112,7 @@ module ActiveRecord
     def indexes(table, stream)
       if table == 'page_views' or table == 'trackings'
         stream.puts %(  execute "ALTER TABLE #{table} ENGINE = MyISAM")
+        stream.puts
       end
       indexes = @connection.indexes(table)
       indexes.each do |index|

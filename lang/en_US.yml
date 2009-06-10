@@ -7,6 +7,15 @@
 settings: settings
 page_info: Page Info
 logout: Logout
+edit_featured_content: edit featured content
+
+##
+## GENERIC MACROS
+##
+
+create_a_new_thing: "Create a new {thing}"
+thing_not_found: "{thing} not found"
+thing_settings: "{thing} Settings"
 
 ##
 ## GENERIC TERMS
@@ -22,8 +31,6 @@ delete: "Delete"
 share: "Share"
 contributed: "Contributed"
 summary: Summary
-create_a_new_thing: "Create a new {thing}"
-thing_not_found: "{thing} not found"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
@@ -46,17 +53,12 @@ required: "(required)"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
-close_button: "Close"
-share_button: "Share"
-save_button: "Save"
-move_button: "Move"
-add_button: "Add"
-cancel_button: "Cancel"
 no_search_results: "No Results"
 empty_results: "None"
 unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
+see_all_link: "See All"
 details_link: "Details"
 check_all: "Check All"
 return_link: "Return"
@@ -86,6 +88,22 @@ destroy_confirmation: "Are you sure you want to delete this {thing}? This action
 confirmation: "Are you sure?"
 
 ##
+## COMMON BUTTONS AND LINKS
+##
+
+back_button: "Back"
+send_button: "Send"
+approve_button: "Approve"
+reject_button: "Reject"
+close_button: "Close"
+share_button: "Share"
+save_button: "Save"
+move_button: "Move"
+add_button: "Add"
+cancel_button: "Cancel"
+create_button: "Create"
+
+##
 ## NAVIGATION
 ##
 
@@ -111,7 +129,6 @@ message_must_not_be_empty: message must not be empty
 subject: subject
 recipients: recipients
 message: message
-send_button: Send
 from: from
 To: To
 date: date
@@ -120,8 +137,6 @@ status_resolved: resolved
 status_pending: pending
 approve_or_reject_link: approve or reject this request
 request_status: This request was :status by :user on :time
-approve_button: approve
-reject_button: reject
 discuss_request_link: discuss this request with :person_or_group
 small: small
 medium: medium
@@ -509,11 +524,9 @@ Admin: Admin
 Founded: Founded
 Language: Language
 not_set: not set
-edit_featured_content: edit featured content
 no_members: (no members)
 directory_of_groups: Directory of groups
 directory_of_networks: Directory of networks
-create_button: Create
 new_group: "New group"
 create_group_link: "create a new group"
 create_committee: "create committee"
@@ -528,14 +541,14 @@ my_groups_link: "my groups"
 
 # commands
 
-edit_settings: "edit settings"
-destroy_group: "destroy %s"
-view_all: "view all"
-send_invites: "send invites"
-view_requests: "view requests"
-leave_group: "leave %s"
-join_group_link: "join {group_type}"
-request_join_group_link: "request to join {group_type}"
+edit_settings: "Edit Settings"
+destroy_group: "Destroy %s"
+view_all: "View All"
+send_invites: "Send Invites"
+view_requests: "View Requests"
+leave_group: "Leave %s"
+join_group_link: "Join {group_type}"
+request_join_group_link: "Request to Join {group_type}"
 
 # results
 
@@ -730,7 +743,6 @@ create_page_information: "{page_class} Information"
 create_page_data: "{page_class} Data"
 create_page: "Create Page"
 only_me: "Me"
-back_button: "Back"
 create_page_button: "Create {page_class}"
 title: "Title"
 summary: "Summary"
