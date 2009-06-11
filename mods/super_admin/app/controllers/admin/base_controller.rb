@@ -10,6 +10,17 @@ class Admin::BaseController < ActionController::Base
 
   before_filter :login_required
   
+  before_filter :set_active_tab
+  
+  def set_active_tab
+    controller = params[:controller].sub(/admin\//, '')
+    @active = if %w(new create).include?(params[:action])
+                "create_#{controller}"
+              else
+                "edit_#{controller}"
+              end
+  end
+  
   include Admin::GroupsHelper
   include Admin::UsersHelper
   include Admin::MembershipsHelper
@@ -21,7 +32,7 @@ class Admin::BaseController < ActionController::Base
   include ControllerExtension::CurrentSite
 
   protect_from_forgery :secret => Conf.secret
-
+  
   def index
   end
   

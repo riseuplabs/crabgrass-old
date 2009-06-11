@@ -1,10 +1,12 @@
 class Admin::GroupsController < Admin::BaseController
+  
+  before_filter :fetch_group_by_name, :only => [ :show, :edit, :update, :destroy ]
+
   # GET /groups
   # GET /groups.xml
   def index
     letter = (params[:letter] || '')
     @groups = Group.alphabetized(letter).find(:all)
-    @active = 'edit_groups'
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @groups }
@@ -14,8 +16,6 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups/1
   # GET /groups/1.xml
   def show
-    @group = Group.find_by_name(params[:id])
-    @active = 'edit_groups'
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @group }
@@ -26,7 +26,6 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups/new.xml
   def new
     @group = Group.new
-    @active = 'create_groups'
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @group }
@@ -35,14 +34,11 @@ class Admin::GroupsController < Admin::BaseController
 
   # GET /groups/1/edit
   def edit
-    @active = 'edit_groups'
-    @group = Group.find_by_name(params[:id])
   end
 
   # POST /groups
   # POST /groups.xml
   def create
-    @active = 'create_groups'
     @group = Group.new(params[:group])
     
     # save avatar
@@ -64,8 +60,6 @@ class Admin::GroupsController < Admin::BaseController
   # PUT /groups/1
   # PUT /groups/1.xml
   def update
-    @active = 'edit_groups'
-    @group = Group.find_by_name(params[:id])
     
     # save or update avatar
     if @group.avatar
@@ -94,8 +88,6 @@ class Admin::GroupsController < Admin::BaseController
   # DELETE /groups/1
   # DELETE /groups/1.xml
   def destroy
-    @active = 'edit_groups'
-    @group = Group.find_by_name(params[:id])
     @group.destroyed_by = current_user
     @group.destroy
 
@@ -104,4 +96,10 @@ class Admin::GroupsController < Admin::BaseController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  def fetch_group_by_name
+    @group = Group.find_by_name(params[:id])
+  end
+  
 end

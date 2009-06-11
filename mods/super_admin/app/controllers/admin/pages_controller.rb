@@ -1,8 +1,6 @@
 class Admin::PagesController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
-  before_filter :set_active_tab
-  
   def index
     view = params[:view] || 'all'
     @current_view = view

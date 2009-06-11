@@ -1,10 +1,12 @@
 class Admin::UsersController < Admin::BaseController
+  
+  before_filter :fetch_user_by_login, :only => [ :show, :edit, :update, :destroy ]
+  
   # GET /users
   # GET /users.xml
   def index
     letter = (params[:letter] || '')
     @users = User.alphabetized(letter).paginate(:page => params[:page])
-    @active = 'edit_users'
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
@@ -14,8 +16,6 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find_by_login(params[:id])
-    @active = 'edit_users'
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
@@ -26,7 +26,6 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/new.xml
   def new
     @user = User.new
-    @active = 'create_users'
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @user }
@@ -35,14 +34,11 @@ class Admin::UsersController < Admin::BaseController
 
   # GET /users/1/edit
   def edit
-    @active = 'edit_users'
-    @user = User.find_by_login(params[:id])
   end
 
   # POST /users
   # POST /users.xml
   def create
-    @active = 'create_users'
     @user = User.new(params[:user])
     @user.save!
     
@@ -65,8 +61,6 @@ class Admin::UsersController < Admin::BaseController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @active = 'edit_users'
-    @user = User.find_by_login(params[:id])
     
     # save or update avatar
     if @user.avatar
@@ -95,8 +89,6 @@ class Admin::UsersController < Admin::BaseController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-    @active = 'edit_users'
-    @user = User.find_by_login(params[:id])
     @user.destroy
 
     respond_to do |format|
@@ -105,4 +97,8 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  private
+  def fetch_user_by_login
+    @user = User.find_by_login(params[:id])
+  end
 end

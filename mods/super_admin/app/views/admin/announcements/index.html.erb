@@ -9,12 +9,12 @@
     <th></th>
   </tr>
   <% if @pages.any? %>
-    <% @pages.each_with_index do |page, i|  %>
-      <tr class="row_<%=i%2%>">
+    <% @pages.each do |page| %>
+      <tr class="<%=cycle('row_0', 'row_1')%>">
 	<td><%= link_to page.title, page_url(page) %></td>
 	<td><%= friendly_date page.created_at %></td>
 	<td><%= link_to_user page.created_by_login %></td>
-	<td>
+	<td colspan="2" style="padding-left:0em; padding-right:0em;">
 	  <span class="actions">
 	    <%= link_to 'Edit', page_url(page, :action => 'edit') %>
 	    <%= link_to 'Destroy', announcement_url(page), :confirm => 'Are you sure?', :method => :delete %>

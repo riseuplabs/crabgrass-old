@@ -9,12 +9,12 @@
     <th>Email</th>
   </tr>
   <% if @users.any? -%>
-    <% @users.each_with_index do |user, i| %>
-      <tr class="row_<%=i%2%>">
+    <% @users.each do |user| %>
+      <tr class="<%=cycle('row_0', 'row_1')%>">
         <td><%= link_to user.login, url_for_user(user) %></td>
         <td><%=h user.display_name %></td>
         <td><%=h user.email %></td>
-        <td>
+        <td style="padding-right:0em;">
           <span class="actions">
             <%= link_to 'Show', user %>
             <%= link_to 'Edit', edit_user_path(user) %>

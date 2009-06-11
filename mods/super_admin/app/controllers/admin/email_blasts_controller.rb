@@ -14,9 +14,7 @@ class Admin::EmailBlastsController < Admin::BaseController
   
   protected
   
-  before_filter :set_active
-  
-  def set_active
+  def set_active_tab
     @active = 'email_blasts'
   end
   
@@ -29,17 +27,13 @@ class Admin::EmailBlastsController < Admin::BaseController
       # Check if we have a special word e.g. Everyone    
       if (check_token_category(token,"<") == 0)                
         if (token.downcase == '<everyone>') then
-          User.find(:all) .each do |user|
-              recipient_list << user
-          end    
+          recipient_list += User.find(:all)
         end    
       else         
         # Check if we have a group token            
         group = Group.find_by_name(token.sub(/@/,''))
         if(!group.nil?) then
-          group.users.each do |user|
-            recipient_list << user
-          end                
+          recipient_list += group.users
         else
           user = User.find_by_login(token)
           if(!user.nil?) then
@@ -48,7 +42,7 @@ class Admin::EmailBlastsController < Admin::BaseController
         end        
       end
     end
-    return recipient_list;
+    return recipient_list.uniq
   end    
 
   def check_token_category(token_string, special)

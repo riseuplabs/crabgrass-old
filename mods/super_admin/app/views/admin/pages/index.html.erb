@@ -20,10 +20,10 @@
     <%= link_to_active( 'approved', :controller => 'admin/pages', :action => 'index', :view => 'public')%>
   </div>
 </div>
-<% form_for :filter, :url => { :action => 'index' } do |f| %>
-Filter by group: <%= select_tag 'filter[group]', "<option value=''>#{'all groups'.t}</option>"+
+<% form_tag({ :action => 'index' }, :method => :get) do %>
+Filter by group: <%= select_tag 'group', "<option value=''>#{'all groups'.t}</option>"+
 options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
-<%= f.submit 'Filter' %>
+<%= submit_tag 'Filter', :name => '' %>
 <% end %>
 <div id="pages-listing">
   <%= render :partial => 'listing' if @pages.any? %>

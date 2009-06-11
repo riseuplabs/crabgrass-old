@@ -8,8 +8,8 @@
     <th></th>
   </tr>
   <tr><td><%= will_paginate @pages %></td></tr>
-  <% @pages.each_with_index do |page, i| %>
-    <tr class="row_<%=i%2%>">
+  <% @pages.each do |page| %>
+    <tr class="<%=cycle('row_0', 'row_1')%>">
       <td style=" width:300px"><%= link_to page.title, page_url(page) %></td>
       <td style=" width:120px"><%=h page.type %></td>
       <td style=" width:120px"><%=h page.created_at.strftime("%d %b, %Y ") %></td>
