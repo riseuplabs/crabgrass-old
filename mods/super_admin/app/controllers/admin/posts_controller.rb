@@ -4,7 +4,7 @@ class Admin::PostsController < Admin::BaseController
   before_filter :set_active_tab
   
   def index
-    view = params[:view] || 'pending'
+    view = params[:view] || 'all'
     @current_view = view
     if view == 'all'
       @posts = Post.paginate :page => params[:page], :order => 'updated_at DESC'

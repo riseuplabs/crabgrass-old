@@ -25,14 +25,22 @@
         <td style=" width:120px">
 	  <%= button_to "Undelete", :action => "undelete", :params => {:id => page.id, :view => @current_view} %></td>
       <% elsif @current_view == 'public requested' %>
-        <td style=" width:80px">
-	  <%= button_to "Public", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => true } %></td>
-        <td style=" width:80px">
-	  <%= button_to "Deny", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => false} %></td>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to "Public", { :action => 'update_public', :id => page.id, :view => @current_view, :public => true }, :method => :post %>
+            <%= link_to "Deny", { :action => 'update_public', :id => page.id, :view => @current_view, :public => false }, :method => :post  %>
+          </span>
+	  <%#= button_to "Public", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => true } %>
+	  <%#= button_to "Deny", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => false} %>
+        </td>
       <% elsif @current_view == 'public' %>
-        <td style=" width:120px">
-	  <%= button_to "Remove Public", :action => "remove_public", :params => {:id => page.id, :view => @current_view} %></td>
-        <%end%>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to "Remove Public", { :action => 'remove_public', :id => page.id, :view => @current_view }, :method => :post %>
+          </span>
+        </td>
+	  <%#= button_to "Remove Public", :action => "remove_public", :params => {:id => page.id, :view => @current_view} %>
+      <%end%>
     </tr>
   <% end %>
   <tr><td><%= will_paginate @pages %></td></tr>

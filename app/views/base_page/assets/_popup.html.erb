@@ -1,9 +1,14 @@
 <% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :width => '25em') do -%>
   <blockquote>
   <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>
+  <p><%= "Use radio buttons to select the page cover"[:use_radio_buttons_to_select_page_cover] %>
   <table width='' cellpadding='4'>
     <% if @page.assets.any? -%>
       <%= asset_rows -%>
+      <tr>
+        <td> <%= remove_cover_asset_checkbox %></td>
+        <td> <%= "None"[:none] %>
+      </tr>
     <% else -%>
      <tr><td>(<%='none'.t%>)</td></tr>
     <% end -%>
@@ -15,7 +20,8 @@
       <tr>
         <td align='right'><%="File".t %>: </td><td><%= f.file_field 'uploaded_data', :size => '20' %></td>
       </tr>
-        <!-- <td align='right'><%="Title".t%>: </td><td><%= text_field_tag 'asset_title', '',:style => 'width:98%'  %></td> -->
+      <tr>
+        <td align='right'><%= check_box_tag('use_as_cover', "1") %></td><td><%= "Use as cover"[:use_as_cover] %></td>
       </tr>
       <tr>
         <td colspan='2' align='right'><%= submit_tag 'Upload Attachment'[:upload_attachment] %></td>

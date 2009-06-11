@@ -10,4 +10,5 @@ module BasePage::AssetsPermission
   alias_method :may_destroy_assets?, :may_create_assets?
   alias_method :may_close_assets?, :may_create_assets?
   alias_method :may_show_popup_assets?, :may_create_assets?
+  alias_method :may_update_cover_assets?, :may_create_assets?
 end

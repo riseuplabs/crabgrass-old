@@ -11,23 +11,24 @@ class Admin::PagesController < Admin::BaseController
     
     if view == 'pending'
       # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
-      @pages = Page.paginate :page => params[:page],  :conditions => ['flow IS NULL AND ((vetted = ? AND rating = ?) OR (public_requested = ? AND public = ?))', false, YUCKY_RATING, true, false], :joins => :ratings, :order => 'updated_at DESC'
+      options = { :conditions => ['flow IS NULL AND ((vetted = ? AND rating = ?) OR (public_requested = ? AND public = ?))', false, YUCKY_RATING, true, false], :joins => :ratings, :order => 'updated_at DESC' }
     elsif view == 'vetted'
       # all pages that have been marked as vetted by an admin (and are not deleted)
-      @pages = Page.paginate :page => params[:page], :conditions => ['flow IS NULL AND vetted = ?', true], :order => 'updated_at DESC'
+      options = { :conditions => ['flow IS NULL AND vetted = ?', true], :order => 'updated_at DESC' }
     elsif view == 'deleted'
       # list the pages that are 'deleted' by being hidden from view.
-      @pages = Page.paginate :page => params[:page], :conditions => ['flow = ?',FLOW[:deleted]], :order => 'updated_at DESC'
+      options = { :conditions => ['flow = ?',FLOW[:deleted]], :order => 'updated_at DESC' }
 	elsif view == 'new'
-          @pages = Page.paginate :page => params[:page], :order => 'updated_at DESC'
+          options  = { :order => 'updated_at DESC' }
 	  # @pages = Page.find :all, :order => 'created_at DESC', :limit => 30	
 	elsif view == 'public requested'
-	  @pages = Page.paginate :page => params[:page], :conditions => ['public_requested = ?',true], :order => 'created_at DESC'
+	  options = { :conditions => ['public_requested = ?',true], :order => 'created_at DESC' }
 	elsif view == 'public'
-	  @pages = Page.paginate :page => params[:page], :conditions => ['public = ?',true], :order => 'created_at DESC'
+	  options = { :conditions => ['public = ?',true], :order => 'created_at DESC' }
     elsif view == 'all'
-      @pages = Page.paginate :page => params[:page], :order => 'updated_at DESC'
+      options = { :order => 'updated_at DESC' }
     end
+    @pages = (@group ? @group.pages : Page).paginate(options.merge(:page => params[:page]))
   end
 
   # for vetting:       params[:page][:vetted] == true
