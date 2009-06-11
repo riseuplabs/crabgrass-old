@@ -5,17 +5,17 @@
   <tr>
     <td><%=  label_tag 'to', 'To' %></td>
     <td>
-      <%= text_area_tag 'to', nil, :rows => 3, :cols => 105 %><br />
+      <%= text_area_tag 'to', nil, :size => "60x3" %><br />
       <i>(Type the user login or group name e.g. "blue" or "devgroup" or everyone &lt;everyone&gt;. Separate multiple recipients with ";" or "," or space)</i>
     </td>
   </tr>
   <tr>
     <td><%=  label_tag 'subject', 'Subject' %></td>
-    <td><%= text_field_tag 'subject', '', :size => 90 %></td>
+    <td><%= text_field_tag 'subject', '', :size => "60" %></td>
   </tr>
   <tr>
     <td><%=  label_tag 'body', 'Body' %></td>
-    <td><%= text_area_tag 'body', nil, :rows => 10, :cols => 105 %></td>
+    <td><%= text_area_tag 'body', nil, :size => "60x6" %></td>
   </tr>
 </table>
 <div><input type="submit" name="submit" value="Send" /></div>
