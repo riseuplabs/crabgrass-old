@@ -6,6 +6,9 @@ class Admin::PagesController < Admin::BaseController
   def index
     view = params[:view] || 'all'
     @current_view = view
+    
+    @group = Group.find(params[:group]) if params[:group]
+    
     if view == 'pending'
       # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
       @pages = Page.paginate :page => params[:page],  :conditions => ['flow IS NULL AND ((vetted = ? AND rating = ?) OR (public_requested = ? AND public = ?))', false, YUCKY_RATING, true, false], :joins => :ratings, :order => 'updated_at DESC'

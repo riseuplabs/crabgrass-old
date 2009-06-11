@@ -1,25 +1,30 @@
 <h2>Edit Announcements</h2>
 
 <div id="pages-listing">
-<table>
+<table cellspacing="0">
   <tr>
     <th>Title</th>
     <th>Created At</th>
     <th>Created By</th>
     <th></th>
   </tr>
-
-	<% for page in @pages %>
-  <tr>
-    <td><%= link_to page.title, page_url(page) %></td>
-    <td ><%= friendly_date page.created_at %></td>
-    <td><%= link_to_user page.created_by_login %></td>
-    <td>
-      <%= link_to 'Edit', edit_announcement_path(page) %>
-      <%= link_to 'Destroy', announcement_url(page), :confirm => 'Are you sure?', :method => :delete %>
-    </td>
-  </tr>
-	<% end %>
+  <% if @pages.any? %>
+    <% @pages.each_with_index do |page, i|  %>
+      <tr class="row_<%=i%2%>">
+	<td><%= link_to page.title, page_url(page) %></td>
+	<td><%= friendly_date page.created_at %></td>
+	<td><%= link_to_user page.created_by_login %></td>
+	<td>
+	  <span class="actions">
+	    <%= link_to 'Edit', page_url(page, :action => 'edit') %>
+	    <%= link_to 'Destroy', announcement_url(page), :confirm => 'Are you sure?', :method => :delete %>
+	  </span>
+	</td>
+      </tr>
+    <% end %>
+  <% else -%>
+    <tr><td colspan="4"><i>No Match</i></td></tr>
+  <% end -%>
 </table>
 </div>
 

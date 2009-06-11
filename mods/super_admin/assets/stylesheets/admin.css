@@ -157,7 +157,7 @@ table tr th {
   padding-right:3em;
 }
 
-table tr td { line-height:1.7em; padding-left:0.5em; padding-right:3em; }
+table tr td { line-height:1.7em; padding-left:0.5em; padding-right:3em; vertical-align:top;}
 
 table tr.row_0 { background:#ddd; }
 table tr.row_1 { background:#fff; }
@@ -174,10 +174,6 @@ span.alphabetical_filter a {
   font-weight:bold;
   color:#bbb;
   text-decoration:none;
-}
-
-.create_form td {
-  vertical-align:top;
 }
 
 label {

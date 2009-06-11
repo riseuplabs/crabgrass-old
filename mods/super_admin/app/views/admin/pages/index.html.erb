@@ -20,7 +20,11 @@
     <%= link_to_active( 'approved', :controller => 'admin/pages', :action => 'index', :view => 'public')%>
   </div>
 </div>
-
+<% form_for :filter, :url => { :action => 'index' } do |f| %>
+Filter by group: <%= select_tag 'filter[group]', "<option value=''>#{'all groups'.t}</option>"+
+options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
+<%= f.submit 'Filter' %>
+<% end %>
 <div id="pages-listing">
   <%= render :partial => 'listing' if @pages.any? %>
   <%= '<em>There are no pages for this view</em>' unless @pages.any?%>
