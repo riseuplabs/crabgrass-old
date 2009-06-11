@@ -114,8 +114,12 @@ class GalleryController < BasePageController
         raise PermissionDenied
       end
     end
-    @page.cover = params[:id]
+    asset = Asset.find_by_id(params[:id])
+
+    @page.cover = asset
     current_user.updated(@page)
+    @page.save!
+
     if request.xhr?
       render :text => :album_cover_changed.t, :layout => false
     else

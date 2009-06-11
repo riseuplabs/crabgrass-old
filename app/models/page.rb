@@ -159,6 +159,7 @@ class Page < ActiveRecord::Base
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
   has_many :assets, :dependent => :destroy
+  belongs_to :cover, :class_name => "Asset"
 
   validates_presence_of :title
   validates_associated :data
