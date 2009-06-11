@@ -246,11 +246,12 @@ class GroupController < ApplicationController
       @public_profile = @group.profiles.public
       @private_profile = @group.profiles.private
 
-      @public_image_pages = @group.pages.only_public.only_images
-      @public_video_pages = @group.pages.only_public.only_videos
+      # remove null pages and pages with nill data
+      @public_image_pages = @group.pages.only_public.only_images.compact.select(&:data)
+      @public_video_pages = @group.pages.only_public.only_videos.compact.select(&:data)
 
-      @private_image_pages = @group.pages.only_images
-      @private_video_pages = @group.pages.only_videos
+      @private_image_pages = @group.pages.only_images.compact.select(&:data)
+      @private_video_pages = @group.pages.only_videos.compact.select(&:data)
     end
   end
 

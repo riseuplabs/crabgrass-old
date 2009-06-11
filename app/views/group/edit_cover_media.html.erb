@@ -14,7 +14,7 @@
 <p><strong><%= "Videos"[:videos] %></strong></p>
 <% if @private_video_pages.empty? %>
 <p><em><%= "None available"[:none_available] %></em>
-<%= link_to("create a new video"[:create_a_new_video], {:controller => 'external_video_page', :action => 'create', :id => 'external_video', :group => @group}) %></p>
+<%= link_to("create a new video"[:create_a_new_video], {:controller => 'external_video_page', :action => 'create', :id => 'external-video', :group => @group}) %></p>
 <% else %>
 <%= select_front_page_video(@private_video_pages, @private_profile)%>
 <% end %>
@@ -37,7 +37,7 @@
 <p><strong><%= "Videos"[:videos] %></strong></p>
 <% if @public_video_pages.empty? %>
 <p><em><%= "None available"[:none_available] %></em>
-<%= link_to("create a new video"[:create_a_new_video], {:controller => 'external_video_page', :action => 'create', :id => 'external_video', :group => @group}) %>
+<%= link_to("create a new video"[:create_a_new_video], {:controller => 'external_video_page', :action => 'create', :id => 'external-video', :group => @group}) %>
 <em><%= "or set an existing page public"[:or_set_an_existing_page_public] %></em></p>
 <% else %>
 <%= select_front_page_video(@public_video_pages, @public_profile)%>
