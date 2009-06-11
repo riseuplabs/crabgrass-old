@@ -2,9 +2,10 @@
 
 <% form_for(@group) do |f| %>
   <%= f.error_messages %>
-<table class="create_form">
-  <%= render :partial => 'form', :locals => {:f => f} %>
-  <tr>
-    <td colspan="2"><%= f.submit "Create" %></td>
-  </tr>
+  <table class="create_form">
+    <%= render :partial => 'form', :locals => {:f => f} %>
+  </table>
+  <br /><br />
+  <%= submit_tag 'Create', :style => 'width:7em;' %>
+  <br /><br />
 <% end %>

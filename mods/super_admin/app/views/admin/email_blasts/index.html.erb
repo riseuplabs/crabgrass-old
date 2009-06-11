@@ -4,21 +4,21 @@
 <table>
   <tr>
     <td><%=  label_tag 'to', 'To' %></td>
-    <td>
-      <%= text_area_tag 'to', nil, :rows => 3, :cols => 105 %><br />
-      <i>(Type the user login or group name e.g. "blue" or "devgroup" or everyone &lt;everyone&gt;. Separate multiple recipients with ";" or "," or space)</i>
-    </td>
+    <td><%= text_area_tag 'to', nil, :rows => 3, :cols => 40 %></td>
+    <td><i>(Type the user login or group name e.g. "blue" or "devgroup" or everyone &lt;everyone&gt;. Separate multiple recipients with ";" or "," or space)</i></td>
   </tr>
   <tr>
     <td><%=  label_tag 'subject', 'Subject' %></td>
-    <td><%= text_field_tag 'subject', '', :size => 90 %></td>
+    <td colspan="2"><%= text_field_tag 'subject', '', :size => 70, :style => 'font-size:1em;' %></td>
   </tr>
   <tr>
     <td><%=  label_tag 'body', 'Body' %></td>
-    <td><%= text_area_tag 'body', nil, :rows => 10, :cols => 105 %></td>
+    <td colspan="2"><%= text_area_tag 'body', nil, :rows => 10, :cols => 70, :style => 'font-size:1em;' %></td>
   </tr>
 </table>
-<div><input type="submit" name="submit" value="Send" /></div>
+<br /><br />
+<input type="submit" name="submit" value="Send" style="width:7em;" />
+<br /><br />
 <% end -%>
 
 
