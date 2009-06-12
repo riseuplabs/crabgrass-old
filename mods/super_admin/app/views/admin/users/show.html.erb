@@ -1,41 +1,44 @@
-<p>
-  <b>Login:</b>
-  <%=h @user.login %>
-</p>
+<h2>Show User</h2>
 
-<p>
-  <b>Email:</b>
-  <%=h @user.email %>
-</p>
-
-<p>
-  <b>Created at:</b>
-  <%=h @user.created_at %>
-</p>
-
-<p>
-  <b>Updated at:</b>
-  <%=h @user.updated_at %>
-</p>
-
-<p>
-  <b>Display name:</b>
-  <%=h @user.display_name %>
-</p>
-
-<p>
-  <b>Time zone:</b>
-  <%=h @user.time_zone %>
-</p>
-
-<p>
-  <b>Last seen at:</b>
-  <%=h @user.last_seen_at %>
-</p>
-<p>
-  <b>Group memberships:</b>
-  <%= @user.groups.collect{|g| link_to g.name, group_path(g) }.join(' ') %>
-</p>
+<table>
+<tr>
+  <td><b>Login:</b></td>
+  <td><%=h @user.login %></td>
+</tr>
+<tr>
+  <td><b>Display name:</b></td>
+  <td><%=h @user.display_name %></td>
+</tr>
+<tr>
+  <td><b>Email:</b></td>
+  <td><%=h @user.email %></td>
+</tr>
+<tr>
+  <td><b>Created at:</b></td>
+  <td><%=h @user.created_at %></td>
+</tr>
+<tr>
+  <td><b>Updated at:</b></td>
+  <td><%=h @user.updated_at %></td>
+</tr>
+<tr>
+  <td><b>Language:</b></td>
+  <td><%=h @user.language %></td>
+</tr>
+<tr>
+  <td><b>Time zone:</b></td>
+  <td><%=h @user.time_zone %></td>
+</tr>
+<tr>
+  <td><b>Last seen at:</b></td>
+  <td><%=h @user.last_seen_at %></td>
+</tr>
+<tr>
+  <td><b>Group memberships:</b></td>
+  <td><%= @user.groups.collect{|g| link_to g.name, group_path(g) }.join(' ') %></td>
+</tr>
+</table>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', users_path %> |
+<%= link_to 'Show Profile', '/'+@user.login %>

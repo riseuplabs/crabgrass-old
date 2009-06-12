@@ -9,7 +9,18 @@ class Admin::BaseController < ActionController::Base
   helper 'admin/users', 'admin/groups', 'admin/memberships', 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', PageHelper, UrlHelper, ErrorHelper, LinkHelper, ApplicationHelper, TimeHelper
 
   before_filter :login_required
-
+  
+  before_filter :set_active_tab
+  
+  def set_active_tab
+    controller = params[:controller].sub(/admin\//, '')
+    @active = if %w(new create).include?(params[:action])
+                "create_#{controller}"
+              else
+                "edit_#{controller}"
+              end
+  end
+  
   include Admin::GroupsHelper
   include Admin::UsersHelper
   include Admin::MembershipsHelper
@@ -21,7 +32,7 @@ class Admin::BaseController < ActionController::Base
   include ControllerExtension::CurrentSite
 
   protect_from_forgery :secret => Conf.secret
-
+  
   def index
   end
   
@@ -36,23 +47,7 @@ class Admin::BaseController < ActionController::Base
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
- 
-  # using expire_frament et al. doesn't work here because generating the keys
-  # requires knowledge of the context where the fragment is shown. however,
-  # some fragments need expire after certain superadmin actions (e.g. removing
-  # a committee outdates the cached committee avatars for group landing, see
-  # #700, #332 and many more)
-  def clear_cache
-    begin
-      system("cd #{RAILS_ROOT} && rake tmp:cache:clear")
-      flash[:notice] = "Cache cleared!"
-    rescue => exc
-      logger.fatal("Clearing cache failed!!! (#{exc.class}: #{exc.message})")
-      flash[:errors] = "Clearing cache failed. Please check the server logs for details."
-    end
-    redirect_to :action => 'index'
-  end
- 
+  
   protected
 
   def authorized?
@@ -68,5 +63,6 @@ class Admin::BaseController < ActionController::Base
       current_user.superadmin?
     end
   end
+
 end
 

@@ -1,17 +1,24 @@
+<h2>Create Email Blast</h2>
+
 <% form_tag  'email_blasts/blast' do -%>
-
-	<%=  label_tag 'to', 'To (Type the user login or group name e.g. "blue" or "devgroup" or everyone <everyone>. Separate multiple recipients with ";" or "," or space)' %> <br/> 
-	<%= text_area_tag 'to', nil, :rows => 3, :cols => 105 %>	
-	<p>
-
-	<%=  label_tag 'subject', 'Subject' %> <br/>
-	<%= text_field_tag 'subject', '', :size => 90 %>
-	<p>
-
-	<%=  label_tag 'body', 'Body' %> <br/>
-	<%= text_area_tag 'body', nil, :rows => 10, :cols => 105 %>
-	<div><input type="submit" name="submit" value="Send" /></div>
-
+<table>
+  <tr>
+    <td><%=  label_tag 'to', 'To' %></td>
+    <td><%= text_area_tag 'to', nil, :rows => 3, :cols => 40 %></td>
+    <td><i>(Type the user login or group name e.g. "blue" or "devgroup" or everyone &lt;everyone&gt;. Separate multiple recipients with ";" or "," or space)</i></td>
+  </tr>
+  <tr>
+    <td><%=  label_tag 'subject', 'Subject' %></td>
+    <td colspan="2"><%= text_field_tag 'subject', '', :size => 70, :style => 'font-size:1em;' %></td>
+  </tr>
+  <tr>
+    <td><%=  label_tag 'body', 'Body' %></td>
+    <td colspan="2"><%= text_area_tag 'body', nil, :rows => 10, :cols => 70, :style => 'font-size:1em;' %></td>
+  </tr>
+</table>
+<br /><br />
+<input type="submit" name="submit" value="Send" style="width:7em;" />
+<br /><br />
 <% end -%>
 
 
