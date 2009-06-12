@@ -11,7 +11,7 @@ class ChatController < ApplicationController
   stylesheet 'chat' 
   permissions 'chat'
   before_filter :login_required 
-  prepend_before_filter :get_channel_and_user
+  prepend_before_filter :get_channel_and_user, :except => :index
   
   # show a list of available channels
   def index
@@ -19,8 +19,11 @@ class ChatController < ApplicationController
       @groups = current_user.all_groups
     end
   end
-  
-  
+
+  def user_list
+    render :partial => 'chat/userlist', :layout => false
+  end
+
   # http request front door
   # everything else is xhr request.
   def channel
@@ -72,6 +75,13 @@ class ChatController < ApplicationController
   def poll_channel_for_updates
     return false unless request.xhr?
 
+    # update last_seen for this user
+    @channel_user = ChatChannelsUser.find(:first,
+                                          :conditions => {:channel_id => @channel,
+                                                          :user_id => @user})
+    @channel_user.last_seen = Time.now
+    @channel_user.save
+
     # get latest messages, update id of last seen message
     session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
@@ -97,7 +107,7 @@ class ChatController < ApplicationController
         end
       end
     end
-
+    @channel_users = @channel.active_channel_users
     true
   end
 

@@ -18,4 +18,5 @@ module ChatPermission
   alias_method :may_channel_chat?, :may_say_chat?
   alias_method :may_user_is_typing_chat?, :may_say_chat?
   alias_method :may_poll_channel_for_updates_chat?, :may_say_chat?
+  alias_method :may_user_list_chat?, :may_say_chat?
 end
