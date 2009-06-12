@@ -563,8 +563,7 @@ class GreenCloth < RedCloth::TextileDoc
   BRACKET_LINK_RE = /
     (^|.)         # start of line or any character $1
     \[(.)         # begin [ ($2 => first char)
-    [ \t]*        # optional white space
-    ([^\[\]]+)    # $text : one or more characters that are not [ or ] ($3)
+    ([ \t]*[^\[\]]+)    # $text : one or more characters that are not [ or ] ($3)
     [ \t]*        # optional white space
     (.)\]         # end ] ($4 => last char)
   /x 
