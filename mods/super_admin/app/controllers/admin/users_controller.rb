@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::BaseController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.paginate(:page => params[:page])
+    @users = User.on(current_site).paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

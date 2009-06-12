@@ -24,9 +24,9 @@ class StatsController < ApplicationController
     @page_updaters = Page.count_by_sql ["SELECT count(DISTINCT updated_by_id) FROM pages WHERE updated_at > ? AND FLOW IS NULL", time]
     @wikis_updated = Wiki.count 'id', :conditions => ['updated_at > ?', time]
 
-    @users_created = User.count 'id', :conditions => ['created_at > ?', time]
-    @total_users   = User.count
-    @users_logged_in = User.count 'id', :conditions => ['last_seen_at > ?', time]
+    @users_created = User.on(current_site).count 'id', :conditions => ['created_at > ?', time]
+    @total_users   = User.on(current_site).count
+    @users_logged_in = User.on(current_site).count 'id', :conditions => ['last_seen_at > ?', time]
     
     @total_groups = Group.count
     @groups_created = Group.count 'id', :conditions => ['created_at > ?', time]
@@ -38,7 +38,7 @@ class StatsController < ApplicationController
   end
   
   def current_stats
-    @cur_users_logged_in = User.count 'id', :conditions => ['last_seen_at > ?', 15.minutes.ago]
+    @cur_users_logged_in = User.on(current_site).count 'id', :conditions => ['last_seen_at > ?', 15.minutes.ago]
     @cur_wiki_locks = Wiki.count 'id', :conditions => ["locked_at > ?", 60.minutes.ago]
   end
 end
