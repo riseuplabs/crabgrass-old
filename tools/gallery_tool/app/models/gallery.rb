@@ -46,41 +46,6 @@ class Gallery < Page
     end
     true
   end
-
-  # returns the result of `cover_showing.asset' or nil if `cover_showing' fails.
-  def cover
-    self.cover_showing ? self.cover_showing.asset : nil
-  end
-  
-  # returns the Showing representing the current Gallery's cover.
-  # This is either the one selected by a user (is_cover == true), the one with
-  # acts_as_list position 0, or the first one in the list in case both of the
-  # former ones fail.
-  # If this Gallery does not have any `showings', this method will return nil.
-  def cover_showing
-    self.showings.find_by_is_cover(true) ||
-      self.showings.find_by_position(0) ||
-      self.showings.first
-  end
-  
-  # Sets the cover of a Gallery to the given `image_id'. The `image_id' needs to
-  # be either the `id' of a valid (i.e. saved to db) Asset or the Asset itself.
-  # The appropriate Showing for the given Asset is fetched by the method itself.
-  #
-  # This method also steals the `is_cover' flag from the current holder.
-  #
-  # The return value is the one returned by Showing#save
-  def cover=(image_id)
-    showing = self.showings.find_by_asset_id(image_id.kind_of?(Asset) ? 
-                                             image_id.id : image_id)
-    raise ArgumentError unless showing
-    old = self.cover_showing
-    old.is_cover = false
-    old.save
-    showing.is_cover = true
-    showing.save
-  end
-
   
   # like add_image!, but does not save the page. Used to build
   # the associations in memory when creating a new page.

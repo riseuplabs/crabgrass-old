@@ -60,7 +60,11 @@ class BasePage::ParticipationController < ApplicationController
     if params[:cancel]
       close_popup
     elsif params[:group_id].any?
-      group = Group.find params[:group_id]
+      group = if params[:group_id].match(/^\d+$/)
+                Group.find params[:group_id]
+              else
+                Group.find_by_name params[:group_id]
+              end
       raise PermissionDenied.new unless current_user.member_of?(group)
       @page.remove(@page.group) if @page.group
       @page.owner = group
@@ -75,7 +79,7 @@ class BasePage::ParticipationController < ApplicationController
   # only allow changing the owner to someone who is already an admin
   def set_owner
     if params[:owner].any?
-      owner = (User.find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
+      owner = (User.on(current_site).find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
       raise PermissionDenied.new unless owner.may?(:admin,@page)
       @page.owner = owner
     else

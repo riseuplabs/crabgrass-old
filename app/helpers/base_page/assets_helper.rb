@@ -2,7 +2,10 @@ module BasePage::AssetsHelper
 
   # TODO: fix styles so that we don't have to force no padding here
   def asset_row(asset)
-    content_tag(:td, 
+    content_tag(:td,
+      update_cover_asset_checkbox(asset)
+    ) +
+    content_tag(:td,
       link_to_asset(asset, :small), :style => 'width: 1%'
     ) +
     content_tag(:td,
@@ -24,6 +27,28 @@ module BasePage::AssetsHelper
       :loading  => show_spinner('popup'),
       :complete => hide(dom_id(asset)) + hide_spinner('popup')
     )
+  end
+
+  def update_cover_asset_checkbox(asset)
+    checked = asset ? @page.cover == asset : false
+    opts = {}
+    unless checked
+      opts[:onclick] = remote_function(
+        :url => {:controller => 'base_page/assets', :action => 'update_cover', :id => asset.id, :page_id => @page.id},
+        :loading  => show_spinner('popup'),
+        :complete => hide_spinner('popup'))
+    end
+
+    radio_button_tag "cover_id", asset.id, checked, opts
+  end
+
+  def remove_cover_asset_checkbox
+    opts = {:onclick => remote_function(
+      :url => {:controller => 'base_page/assets', :action => 'update_cover', :page_id => @page.id},
+      :loading  => show_spinner('popup'),
+      :complete => hide_spinner('popup'))}
+
+    radio_button_tag "cover_id", 'none', @page.cover.blank?, opts
   end
 end
 
