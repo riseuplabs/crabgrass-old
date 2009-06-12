@@ -264,4 +264,16 @@ module ImageHelper
     end
   end
 
+  ##
+  ## AGNOSTIC MEDIA
+  ##
+
+  def display_media(media, size=:medium)
+    if media.respond_to?(:is_image?) and media.is_image?
+      image_tag(media.thumbnail(size).url)
+    elsif media.respond_to?(:is_video?) and media.is_video?
+      media.build_embed(200, 200)
+    end
+  end
+
 end

@@ -17,7 +17,9 @@ module GroupHelper
   end
 
   def edit_settings_link
-    link_if_may 'edit settings'[:edit_settings], :group, 'edit', @group
+    if may_edit_group?
+      link_to 'Edit Settings'[:edit_settings], {:controller => 'groups/basic', :action => 'edit', :id => @group}
+    end
   end
 
   def join_group_link
@@ -140,11 +142,12 @@ module GroupHelper
     render :partial => widget_folder + '/widgets/' + widget if widget.length > 0
   end
 
-  def select_front_page_image(image_pages, profile)
-    render :partial => 'image_page_swatch', :locals => {:image_pages => image_pages, :profile => profile}
-  end
+#  def select_front_page_image(image_pages, profile)
+#    render :partial => 'image_page_swatch', :locals => {:image_pages => image_pages, :profile => profile}
+#  end
 
-  def select_front_page_video(video_pages, profile)
-    render :partial => 'video_page_swatch', :locals => {:video_pages => video_pages, :profile => profile}
-  end
+#  def select_front_page_video(video_pages, profile)
+#    render :partial => 'video_page_swatch', :locals => {:video_pages => video_pages, :profile => profile}
+#  end
+
 end
