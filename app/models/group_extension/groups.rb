@@ -10,9 +10,10 @@ module GroupExtension::Groups
     base.send :include, InstanceMethods
 
     base.instance_eval do
-      has_many :federatings #, :dependent => :destroy
+      has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
-      belongs_to :council, :class_name => 'Group' #, :dependent => :destroy
+      belongs_to :council, :class_name => 'Group'
+      before_destroy :destroy_council
 
       # Committees are children! They must respect their parent group. 
       # This uses better_acts_as_tree, which allows callbacks.
@@ -156,6 +157,11 @@ module GroupExtension::Groups
       network_ids.include?(network.id)
     end
 
+    def destroy_council
+      if self.normal? and self.council_id and self.council_id != self.id
+        self.council.destroy
+      end
+    end
   end
 
 end
