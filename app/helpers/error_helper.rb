@@ -51,6 +51,9 @@ module ErrorHelper
   #   flash_message :error => 'no'
   #      (same as :type => 'error', :title => 'Changes could not be saved', :text => 'no')
   #
+  #   flash_message :success
+  #      (same as :success => true)
+  #
   # Special objects:
   #
   #   flash_message :exception => exc
@@ -127,6 +130,10 @@ module ErrorHelper
   # :object | :success | :error | :exception
   #
   def add_flash_message(flsh, options)
+    if options.is_a? Symbol
+      options = {options => true}
+    end
+
     flsh[:text] ||= ""
     flsh[:text] += content_tag(:p, options[:text]) if options[:text]
     flsh[:title] = options[:title] || flsh[:title]
@@ -156,9 +163,13 @@ module ErrorHelper
         # use defaults
       elsif options[:error].any?
         flsh[:text] += content_tag :p, options[:text] if options[:text]
-        flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg|
-          content_tag :li, h(msg)
-        }
+        if options[:error].is_a? Array
+          flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg|
+            content_tag :li, h(msg)
+          }
+        else
+          flsh[:text] += content_tag :p, options[:error] if options[:error]
+        end
       end
     elsif options[:success]
       flsh[:type] = 'info'
@@ -166,10 +177,17 @@ module ErrorHelper
         # use defaults
       elsif options[:success].any?
         flsh[:text] += content_tag :p, options[:text] if options[:text]
-        flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg|
-          content_tag :li, h(msg)
-        }
+        if options[:success].is_a? Array
+          flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg|
+            content_tag :li, h(msg)
+          }
+        else
+          flsh[:text] += content_tag :p, options[:success] if options[:success]
+        end
       end
+    else
+      flsh[:type] = options[:type]
+      flsh[:text] += options[:text]
     end
   end
 
