@@ -38,7 +38,7 @@ class BasePage::ShareController < ApplicationController
     recipients = Group.find(:all,
       :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
       :limit => 20)
-    recipients += User.find(:all,
+    recipients += User.on(current_site).find(:all,
       :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
       :limit => 20)
     recipients = recipients.sort_by{|r|r.name}[0..19]
@@ -131,7 +131,7 @@ class BasePage::ShareController < ApplicationController
   def find_recipient(recipient_name)
     recipient_name.strip!
     return nil unless recipient_name.any?
-    recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
+    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
     if recipient.nil?
       flash_message_now(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)

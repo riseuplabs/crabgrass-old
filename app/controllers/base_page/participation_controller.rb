@@ -79,7 +79,7 @@ class BasePage::ParticipationController < ApplicationController
   # only allow changing the owner to someone who is already an admin
   def set_owner
     if params[:owner].any?
-      owner = (User.find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
+      owner = (User.on(current_site).find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
       raise PermissionDenied.new unless owner.may?(:admin,@page)
       @page.owner = owner
     else
