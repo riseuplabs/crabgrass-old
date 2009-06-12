@@ -97,6 +97,9 @@ ul.side_list
   list-style: none
   margin-bottom: 0.5em
   clear: left
+  ul
+    list-style: none
+    padding-left: 2em
   a
     //text-decoration: none
     display: block
@@ -225,6 +228,13 @@ input.checkbox, input.radio
 //
 // UTILITY
 //
+
+.selfclear:after
+  content: "."
+  display: block
+  height: 0
+  clear: both
+  visibility: hidden
 
 .clear
   clear: both 
@@ -558,3 +568,36 @@ div.dialog
     padding: 0
     li
       margin: 1em 0
+
+//
+// FORMS
+//
+
+table.form
+  & > tbody > tr > td
+    vertical-align: top
+  td.heading
+    padding-left: 0
+    padding-top: 0.5em
+  td.label
+    padding-top: 0.5em
+    font-weight: bold
+  td.input
+    white-space: nowrap
+  td.first
+    padding-top: 0
+  td.info, td.help
+    font-size: 0.9em
+    font-style: italic
+    padding-left: 2em
+  input[type=text], textarea
+    font-size: 1em
+
+.form_buttons
+  padding-top: 1em
+  margin-top: 2em
+  margin-bottom: 0
+  text-align: center
+  border-top: 1px solid #ccc
+  input
+    font-size: 1.5em

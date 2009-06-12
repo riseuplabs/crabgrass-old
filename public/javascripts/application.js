@@ -16,6 +16,12 @@ function checkbox_toggle_visibility(checkbox, element_id) {
   else {$(element_id).hide();}
 }
 
+function setClassVisibility(selector, visibility) {
+  $$(selector).each(function(element){
+    visibility ? element.show() : element.hide();
+  })
+}
+
 // toggle all checkboxes of a particular css selected, based on the
 // checked status of the checkbox passed in.
 function toggle_all_checkboxes(checkbox, selector) {
