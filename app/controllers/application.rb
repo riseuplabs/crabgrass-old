@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   include PermissionsHelper
 
   include ControllerExtension::CurrentSite
+  include ControllerExtension::UrlIdentifiers
   
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -23,9 +24,10 @@ class ApplicationController < ActionController::Base
   # the order of these filters matters. change with caution.
   before_filter :essential_initialization
   around_filter :set_language
-  before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
+  before_filter :set_timezone, :pre_clean
   around_filter :rescue_authentication_errors
   before_filter :header_hack_for_ie6
+  before_render :context_if_appropriate
 
   session :session_secure => Conf.enforce_ssl
   # ^^ TODO: figure out how to use current_site.enforce_ssl instead
@@ -106,6 +108,18 @@ class ApplicationController < ActionController::Base
     User.current = nil
   end
 
+  # A special 'before_render' filter that calls 'context()' if this is a normal
+  # request for html and there has not been a redirection. This allows
+  # subclasses to put their navigation setup calls in context() because
+  # it will only get called when appropriate.
+  def context_if_appropriate
+    if response.redirected_to.nil? and request.format.to_sym == :html  
+      context()
+    end
+    true
+  end
+  def context; end
+
   ##
   ## HELPERS
   ##
@@ -113,7 +127,6 @@ class ApplicationController < ActionController::Base
   # In a view, we get access to the controller via controller(). The 'view' method
   # lets controllers have access to the view helpers.
   def view
-    #ActionController::Base.helpers
     self.class.helpers
   end
 
@@ -133,33 +146,6 @@ class ApplicationController < ActionController::Base
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
-  
-  # returns true if params[:action] matches one of the args.
-  def action?(*actions)
-    actions.include?(params[:action].to_sym)
-  end
-  helper_method :action?
-
-  # returns true if params[:controller] matches one of the args.
-  def controller?(*controllers)
-    controllers.include?(params[:controller].to_sym)
-  end
-  helper_method :controller?
-
-  # returns true if params[:id] matches the id passed in
-  # the arguments may include the id in the form of an integer,
-  # string, or active record object.
-  def id?(*ids)
-    for obj in ids
-      if obj.is_a?(ActiveRecord::Base)
-        return true if obj.id == params[:id].to_i
-      elsif obj.is_a?(Integer) or obj.is_a?(String)
-        return true if obj.to_i == params[:id].to_i
-      end
-    end
-    return false
-  end
-  helper_method :id?
 
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included "as needed". A controller can set a custom stylesheet
@@ -202,19 +188,7 @@ class ApplicationController < ActionController::Base
       read_inheritable_attribute "javascript"
     end
   end
-    
-  def handle_rss(locals)
-    # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
-    if params[:path].any? and 
-        (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
-      response.headers['Content-Type'] = 'application/rss+xml'   
-      render :partial => '/pages/rss', :locals => locals
-      return true
-    else
-      return false
-    end
-  end
-     
+  
   # some helpers we include in controllers. this allows us to 
   # grab the controller that will work in a view context and a
   # controller context.
