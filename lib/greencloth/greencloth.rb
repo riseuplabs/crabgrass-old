@@ -620,7 +620,7 @@ class GreenCloth < RedCloth::TextileDoc
                 # relative anchor on this page
                 page_name = page_name[1..-1] # chomp first char
                 from ||= page_name.denameize
-                a_tag = '<a href="#%s">%s</a>' % [page_name.nameize, htmlesc(from)]
+                a_tag = '<a href="#%s">%s</a>' % [page_name.nameize, htmlesc(from.strip)]
               else
                 page_name = page_name.sub(/#(.*)$/, '')
                 anchor = '#' + $1.nameize if $1  # everything after the # in the link.

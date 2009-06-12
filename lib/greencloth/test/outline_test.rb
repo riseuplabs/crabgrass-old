@@ -85,6 +85,12 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "<p><a href=\"http://example.com\">a link</a></p>",
       greencloth.to_html
   end
+  
+  def test_anchor_link_with_whitespace_after_first_char
+    greencloth = GreenCloth.new("[# link]")
+    assert_equal "<p><a href=\"#link\">link</a></p>", greencloth.to_html
+  end
+  
   protected
   
   def in_texts(name)
