@@ -3,7 +3,7 @@
 
 class Groups::MembershipsController < Groups::BaseController
 
-  permissions 'memberships', 'requests' 
+  permissions 'groups/memberships', 'requests' 
   before_filter :fetch_group, :login_required
 
   ###### PUBLIC ACTIONS #########################################################
