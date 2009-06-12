@@ -5,7 +5,9 @@ class Admin::PagesController < Admin::BaseController
     view = params[:view] || 'all'
     @current_view = view
     
-    @group = Group.find(params[:group]) if params[:group]
+    if params[:group] && params[:group].any?
+      @group = Group.find(params[:group])
+    end
     
     if view == 'pending'
       # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
