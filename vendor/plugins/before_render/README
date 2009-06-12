@@ -1,0 +1,36 @@
+BeforeRender
+============
+
+Add a hook like before_filter to your controllers that gets executed between
+when your action is completed and the template is rendered.  It can really
+DRY up loading some data that is used for views (headers / layouts / etc).
+
+Provided methods:
+  before_render / before_render_filter / append_before_render_filter (aliases)
+  prepend_before_render_filter
+
+TODO
+====
+
+It doesn't have the skip_before_render_filter logic.
+
+ActionController::Filters::FilterChain encodes logic about the types of filters
+that exist all over the place where it could be more generic, maybe try to
+merge some of this back into rails core.
+
+Example
+=======
+
+class MyController < ApplicationController
+  before_render :load_header_image_based_on_hostname
+
+  private
+  def load_header_image_based_on_hostname
+    @header_image = HeaderImage.src_for_request(request)
+  end
+end
+
+# in the layout or view
+<img src="<%= @header_image %>" alt="header image" />
+
+Copyright (c) 2009 [name of plugin creator], released under the MIT license
