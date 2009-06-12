@@ -3,9 +3,16 @@
 <% end -%>
 
 <blockquote>
-  <p><%= group_type == 'network' ? :network_invite_info.t : :invite_info.t % group_type.t %>
-  <br/> <i>(<%= :recipient_tip.t %>)</i></p>
-  <%- form_tag(:controller => '/requests', :action => 'create_invite', :group_id => @group.id) do -%>
+  <p>
+    <% if @group.network? %>
+      <%= "Enter the names of the groups you would like to invite to join this network."[:network_invite_info] %>
+    <% else %>
+      <%= "Enter a list of user logins or email addresses of the people you would like to invite to join this {group_type}."[:invite_info, @group.group_type.downcase] %>
+    <% end %>
+    <br/>
+    <i>(<%= "Separate recipients with commas, spaces, or new lines."[:recipient_tip] %>)</i>
+  </p>
+  <%- form_tag(:controller => 'groups/requests', :action => 'create_invite', :id => @group) do -%>
     <p>
       <%= text_area_tag 'recipients', params[:recipients], :rows => 2, :cols => 50 %>
     </p>
@@ -16,5 +23,4 @@
     <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
   <% end -%>
 </blockquote>
-
 

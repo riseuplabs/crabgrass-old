@@ -4,7 +4,7 @@
 		
 <blockquote>
   <p><%= :join_request_info.t % link_to('my requests'.t, :controller => '/me/requests', :action => 'from_me') %></p>
-  <%- form_tag(:controller => '/requests', :action => 'create_join', :group_id => @group.id) do -%>
+  <%- form_tag(:controller => 'groups/requests', :action => 'create_join', :id => @group) do -%>
     <!-- <p>Optional message included with the join request:<br/>
       <%# text_area_tag 'message', params[:message], :rows => 2, :cols => 50 %>
     </p> -->

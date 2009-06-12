@@ -1,0 +1,28 @@
+<%= settings_tabs %>
+
+<% form_tag(groups_profiles_params(:action => :edit), :multipart => false) do %>
+  <h1>Overview</h1>
+  <blockquote>
+
+  <%= Formy.form do |f|
+    f.row do |r|
+      r.label "Summary"
+      r.input text_area('profile', 'summary', :rows => 3, :cols => 40)
+    end
+    if @profile.summary_html.any?
+		  f.row do |r|
+		    r.label "Summary (preview)"
+		    r.input @profile.summary_html
+		  end
+    end
+    f.row do |r|
+      r.label "Location"
+      r.input text_field('profile', 'place')
+    end
+
+  end %>
+  <p><%= submit_tag "Save", :name => 'save' %></p>
+
+  </blockquote>
+<% end %>
+

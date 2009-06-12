@@ -161,9 +161,22 @@ See also doc/SPHINX_README"
     end
   end
 
+  ##
+  ## DEBUGGING HELPERS
+  ##
+
   # prints out a readable version of the response. Useful when using the debugger
   def response_body
     puts @response.body.gsub(/<\/?[^>]*>/, "").split("\n").select{|str|str.strip.any?}.join("\n")
+  end
+
+  ##
+  ## ROUTE HELPERS
+  ##
+
+  def url_for(options)
+    url = ActionController::UrlRewriter.new(@request, nil)
+    url.rewrite(options)
   end
 
 end

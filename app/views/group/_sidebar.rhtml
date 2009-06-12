@@ -1,7 +1,0 @@
-<%= create_page_link(@group) if may_create_group_page? %>
-
-<%= render :partial => 'group/side_navigation' %>
-
-<% if action?(:show) %>
-  <%= render :partial => 'starring' %>
-<% end %>

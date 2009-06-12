@@ -1,4 +1,0 @@
-<% @title_box = content_tag :h1, 'Group Directory'[:group_directory] -%>
-<%= letter_pagination_links({:controller => 'groups', :action => 'directory'}, :available_letters => @pagination_letters) %>
-<%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => true } %>
-<%= pagination_links(@groups) %>

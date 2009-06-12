@@ -1,0 +1,38 @@
+<% content_for :style do -%>
+table.members td {padding: 12px;}
+<% end -%>
+
+<%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
+
+<% if current_site.tracking %>
+<b>Visits:</b>
+<%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month, 
+<%= @group.memberships.count(:all, :conditions => "visited_at  is not null") %> all time
+<% end %>
+
+<p/>
+
+<%= letter_pagination_links(groups_memberships_params(:action => 'list'), :available_letters => @pagination_letters) %>
+
+<div>
+<% if @memberships.any? %>
+  <table class='members pretty'>
+  <tr>
+    <th>User</th>
+    <th>Joined</th>
+    <% if current_site.tracking %>
+    <th>Last Visit</th>
+    <th>Total Visits</th>
+<!--    <th>Joined by</th> -->
+    <% end %>
+    <th></th>
+  </tr>
+  <%= render :partial => 'membership', :collection => @memberships %>
+  </table>
+  <br/>
+<% end -%>
+
+</div>
+
+<%= pagination_links(@memberships) -%>
+

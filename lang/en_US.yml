@@ -8,6 +8,8 @@ settings: settings
 page_info: Page Info
 logout: Logout
 edit_featured_content: edit featured content
+requests_for_group: Requests for %s
+you_have_no_groups: "You have no groups"
 
 ##
 ## GENERIC MACROS
@@ -30,7 +32,7 @@ people: "People"
 delete: "Delete"
 share: "Share"
 contributed: "Contributed"
-summary: Summary
+summary: "Summary"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
@@ -53,6 +55,8 @@ required: "(required)"
 
 recent_activity: "Recent Activity"
 recent_pages: "Recent Pages"
+recently_created: "Recently Created"
+most_active: "Most Active"
 no_search_results: "No Results"
 empty_results: "None"
 unknown: "Unknown"
@@ -69,6 +73,7 @@ private: "Private"
 options: "Options"
 permissions: "Permissions"
 description: "Description"
+requests: "Requests"
 
 page: "Page"
 discussions: "Discussions"
@@ -342,6 +347,7 @@ me_inbox_link: "Inbox"
 me_search_link: "Search"
 me_tasks_link: "Tasks"
 me_requests_link: "Requests"
+# TODO ^^ replace with :requests
 my_world_heading: "My World"
 
 my_pages: "My Pages"
@@ -494,9 +500,7 @@ group_members_publicly_visible_description:   Members are viewable by non-member
 page_list: Page list
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Activity from Your Groups in :network"
-directory_of_networks: "Directory of networks"
 featured_content_header: "Featured"
-group_directory_link: "group directory"
 create_group_link: "create group"
 typing: typing
 away: away
@@ -525,19 +529,23 @@ Founded: Founded
 Language: Language
 not_set: not set
 no_members: (no members)
-directory_of_groups: Directory of groups
-directory_of_networks: Directory of networks
 new_group: "New group"
 create_group_link: "create a new group"
 create_committee: "create committee"
 group_language: "The main language of this %s."
 group_summary: "Brief information regarding this %s."
 new_network: "New network"
-group_directory: "Group Directory"
-group_directory_link: "group directory"
+
+# directory
+
 my_groups: "My Groups"
-my_groups_link: "my groups"
-# gah! too much duplication ^^^
+group_directory: "Group Directory"
+directory_of_networks: "Directory of Networks"
+directory_of_groups: "Directory of Groups"
+
+my_groups_link: "My Groups"
+group_directory_link: "Group Directory"
+
 
 # commands
 
@@ -546,13 +554,12 @@ destroy_group: "Destroy %s"
 view_all: "View All"
 send_invites: "Send Invites"
 view_requests: "View Requests"
-leave_group: "Leave %s"
+leave_group: "Leave {group_type}"
 join_group_link: "Join {group_type}"
 request_join_group_link: "Request to Join {group_type}"
 
 # results
 
-you_have_no_groups: "You have no groups"
 page_is_not_static: "Page is not static"
 
 archive_headline: "Archive"
@@ -600,7 +607,7 @@ join_request_info: You will not become a member of this group until your request
 network_invite_info: "Enter the names of the groups you would like to invite to join this network."
 remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
 approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
-recipient_tip: "Seperate recipients with commas, spaces, or new lines."
+recipient_tip: "Separate recipients with commas, spaces, or new lines."
 
 destroy: "destroy"
 approve: "approve"
@@ -611,7 +618,6 @@ approved: "approved"
 
 requests_to_me: "to me"
 requests_from_me: "from me"
-requests_for_group: Requests for %s
 incoming: "Incoming"
 outgoing: "Outgoing"
 state: "state"
@@ -625,7 +631,7 @@ request_to_join_your_network_description: ":group requested to join network :net
 
 send_invites_button: "Send Invites"
 send_invites_headline: "Send invitations to join {group}"
-invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this %s."
+invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {group_type}."
 remove_contact_confirmation: "Are you sure you wish to no longer be friends with %s?"
 already_contacts_info: "You are already the friend of this person."
 try_again: "Try Again"

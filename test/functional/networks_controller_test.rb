@@ -12,6 +12,7 @@ class NetworksControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
+=begin
   def test_index
     login_as :blue
     get :index
@@ -52,4 +53,6 @@ class NetworksControllerTest < Test::Unit::TestCase
       assert_redirected_to :controller => :account, :action => :login
     end
   end
+=end
+
 end

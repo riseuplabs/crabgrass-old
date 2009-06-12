@@ -117,7 +117,7 @@ class CommitteeTest < Test::Unit::TestCase
   end
 
   def test_cant_pester_private_committee
-    g = Group.create :name => 'riseup', :publicly_visible_committees => false
+    g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 
@@ -129,8 +129,8 @@ class CommitteeTest < Test::Unit::TestCase
 
   def test_can_pester_public_committee
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = true
-    g.publicly_visible_committees = true
+    g.profiles.public.update_attribute(:may_see, true)
+    g.profiles.public.update_attribute(:may_see_committees, true)
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 

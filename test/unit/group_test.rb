@@ -46,7 +46,7 @@ class GroupTest < Test::Unit::TestCase
 
   def test_cant_pester_private_group
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = false
+    g.profiles.public.update_attribute(:may_see, false)
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -55,7 +55,7 @@ class GroupTest < Test::Unit::TestCase
 
   def test_can_pester_public_group
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = true
+    g.profiles.public.update_attribute(:may_see, true)
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
