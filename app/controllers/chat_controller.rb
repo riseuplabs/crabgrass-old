@@ -24,7 +24,6 @@ class ChatController < ApplicationController
   # http request front door
   # everything else is xhr request.
   def channel
-    @channel.destroy_old_messages
     unless @channel.users.include?(@user)
       user_joins_channel(@user, @channel)
       record_user_action :not_typing

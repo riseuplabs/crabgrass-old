@@ -20,17 +20,9 @@ class ChatChannel < ActiveRecord::Base
     end
   end
   
-  def destroy_old_messages
-    count = messages.count
-    if count > keep
-      delete_this_many = count - keep
-      connection.execute "DELETE FROM messages WHERE channel_id = %s ORDER BY id ASC LIMIT %s" % [self.id, delete_this_many]
-    end
-  end
-    
-  def latest_messages(qty = nil)
-    qty ||= keep
-    messages.find(:all, :limit => qty, :order => 'created_at DESC').reverse
+  def latest_messages(time = nil)
+    time ||= 1.day.ago.to_s(:db)
+    messages.find(:all, :conditions => ["created_at < ?", time], :order => 'created_at DESC').reverse
   end
   
   def users_just_left
