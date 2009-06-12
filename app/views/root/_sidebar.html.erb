@@ -1,0 +1,30 @@
+<div class="sidebox dark">
+  <h2 class="small_icon plus_16 first">Have Your Say!</h2>
+Start a New Group
+Write an Article
+Join a Discussion
+
+See tips to get started
+
+</div>
+
+
+<div class="sidebox">
+
+<h2 class=alert>Members</h2>
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Members"[:most_active_members], :entities => most_active_users() } %>   
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Members"[:recently_active_members], :entities => recently_active_users() } %>
+
+<br class='clear'/>
+
+<h2 class=alert>Groups</h2>
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Groups"[:most_active_groups], :entities => most_active_groups() } %>
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Groups"[:recently_active_groups], :entities => recently_active_groups() } %>
+
+<br class='clear'/>
+
+</div>

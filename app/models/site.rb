@@ -112,13 +112,6 @@ class Site < ActiveRecord::Base
   ##
   ## RELATIONS
   ##
-
-  # a user can be autoregistered in site.network
-  def add_user!(user)
-    unless self.network.nil? or user.member_of?(self.network) or self.new_record?
-      self.network.add_user!(user)
-    end
-  end
   
   # gets all the pages for all the groups in the site
   # this does not work. network.pages only contains
@@ -211,7 +204,19 @@ class Site < ActiveRecord::Base
   ##
   
   def add_user!(user)
-    network.add_user!(user) if network and !user.member_of?(network)
+    if network and !user.member_of?(network)
+      network.add_user!(user)
+    end
+  end
+
+  ##
+  ## RELATIONSHIP TO GROUPS
+  ##
+
+  def add_group!(group)
+    if network and !group.member_of?(network) and group.normal?
+      network.groups << group
+    end
   end
 
 end

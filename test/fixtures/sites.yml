@@ -17,7 +17,7 @@ local:
   network_id: 3001
   council_id: 1 # true levellers
   login_redirect_url: /me/dashboard
-  limited: true
+  limited: false
 test:
   id: 2
   name: "site2"

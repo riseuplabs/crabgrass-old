@@ -21,6 +21,12 @@ div.popup_arrow {right: -16px} /* move popup nub slightly */
 /* page list */
 /* .page_icon {line-height: 1px; vertical-align: top;} */
 
+/* clearing */
+.selfclear {
+  zoom: 1; /* triggers hasLayout */
+  display: block; /* resets display */
+}
+
 /**
  ** FIRST-CHILD EMULATION
  **/

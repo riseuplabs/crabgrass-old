@@ -82,10 +82,8 @@ class Committee < Group
   ## relationships to users
   ##
 
-  def may_be_pestered_by?(user)
-    return true if user.member_of?(self)
-    return true if parent and parent.publicly_visible_committees
-    return false
+  def may_be_pestered_by!(user)
+    super and parent.profiles.visible_by(user).may_see_committees?
   end
   
 end

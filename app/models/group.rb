@@ -64,6 +64,15 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
   
+  named_scope(:only_type, lambda do |group_type|
+    group_type = group_type.to_s.capitalize
+    if group_type == 'Group'
+      {:conditions => 'groups.type IS NULL'}
+    else
+      {:conditions => ['groups.type = ?', group_type]}
+    end
+  end)
+
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
   }
@@ -167,8 +176,9 @@ class Group < ActiveRecord::Base
     end
   end
   
+  ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
-    if user.member_of?(self) or publicly_visible_group or (parent and parent.publicly_visible_committees and parent.may_be_pestered_by?(user))
+    if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
       raise PermissionDenied.new('You are not allowed to share with %s'[:pester_denied] % self.name)
@@ -194,39 +204,6 @@ class Group < ActiveRecord::Base
     return false
   end
   
-  ##
-  ## temp stuff for profile transition
-  ## should be removed eventually
-  ##
-
-  def publicly_visible_group
-    profiles.public.may_see?
-  end
-  def publicly_visible_group=(val)
-    profiles.public.update_attribute :may_see, val
-  end
-
-  def publicly_visible_committees
-    profiles.public.may_see_committees?
-  end
-  def publicly_visible_committees=(val)
-    profiles.public.update_attribute :may_see_committees, val
-  end
-
-  def publicly_visible_members
-    profiles.public.may_see_members?
-  end
-  def publicly_visible_members=(val)
-    profiles.public.update_attribute :may_see_members, val
-  end
-
-  def accept_new_membership_requests
-    profiles.public.may_request_membership?
-  end
-  def accept_new_membership_requests=(val)
-    profiles.public.update_attribute :may_request_membership, val
-  end
-
   ##
   ## GROUP SETTINGS
   ##

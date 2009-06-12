@@ -9,42 +9,53 @@
   padding: 0 1em 1em 0;
   vertical-align: top;
 }
+/*
 table.entities {
   width: 100%;
 }
 table.entities td {
   width: 50%;
   vertical-align: top;
+}*/
+
+.sidebox {
+  background: white;
+  border: 1px solid #999;
+  padding: 1em;
+}
+
+.sidebox.dark {
+  background: #666;
+  color: white;
+  border: 1px solid black;
+  margin-bottom: 1em;
+}
+
+.dash_box {
+  margin-right: 0;
+}
+.right_column {
+  width: 18em;
 }
 <% end %>
 
 <% @title_box = capture do %>
-  <%= mini_search_form %>
-  <h1><%= h "Welcome to {site_title}, {user_name}!"[:welcome_heading, current_site.title, current_user.display_name] %></h1>
+  <div class="right"><%= display_media(current_site.network.profiles.public.cover) %></div>
+  <h2><%= h "Welcome to {site_title}"[:welcome_title, current_site.title ]%></h2>
+  <p class="description"><%=h current_site.network.summary %></p>
 <% end %>
 
-<% @info_box = capture do %>
-  <%= render :partial => 'me/dashboard/welcome_box_content', :locals => {:hide_heading => true, :hide_profile => true} %>
+<% @right_column = capture do %>
+  <%= render :partial => 'sidebar' %>
 <% end %>
 
+<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
 
-<table class='entities'>
-<tr>
-  <td>
-    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "New Groups"[:new_groups], :entities => @groups} %>
-  </td>
-  <td>
-    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active People"[:most_active_people], :entities => @users} %>   
-  </td>
+<%# edit_site_custom_appearance_link(current_site) %>
 
-</tr>
-</table>
-
-<%= render :partial => 'group/widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
-<%= edit_site_custom_appearance_link(current_site) %>
 <br/>
 <br/>
-<%= render :partial => 'group/widgets/page_list', :locals => {:pages => @recent_pages, :heading => 'Recent Pages'[:recent_pages]} %>
+<%= render :partial => 'widgets/page_list', :locals => {:pages => @recent_pages, :heading => 'Recent Pages'[:recent_pages]} %>
 <br/>
-<%= render :partial => 'group/widgets/page_list', :locals => {:pages => @most_viewed_pages, :heading => 'Most Viewed'[:most_viewed_pages]} %>
+<%= render :partial => 'widgets/page_list', :locals => {:pages => @most_viewed_pages, :heading => 'Most Viewed'[:most_viewed_pages]} %>
 

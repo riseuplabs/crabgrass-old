@@ -1,0 +1,20 @@
+<% content_for :style do -%>
+table.members td {padding: 12px;}
+<% end -%>
+
+<%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
+
+<div>
+
+<% if @federatings.any? %>
+  <table class='members pretty'>
+  <tr>
+    <th>Group</th>
+    <th>Joined</th>
+  </tr>
+  <%= render :partial => 'federating', :collection => @federatings %>
+  </table>
+<% end -%>
+
+</div>
+

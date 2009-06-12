@@ -33,7 +33,8 @@ Order of profile presidence (user sees the first one that matches):
     t.datetime "updated_at"
     t.string   "birthday",               :limit => 8
     t.boolean  "fof"
-    t.string   "summary"
+    t.text     "summary"
+    t.text     "summary_html"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
@@ -54,7 +55,7 @@ Order of profile presidence (user sees the first one that matches):
 
 Applies to both groups and users: may_see, may_see_groups
 
-Applies to sers only: may_see_contacts, may_request_contact, may_pester
+Applies to users only: may_see_contacts, may_request_contact, may_pester
 
 Applies to groups only: may_see_committees, may_see_networks, may_see_members,
   may_request_membership, membership_policy
@@ -67,7 +68,9 @@ class Profile < ActiveRecord::Base
 
   belongs_to :language
 
-  ### relationship to user or group #########################################
+  ##
+  ## RELATIONSHIPS TO USERS AND GROUPS
+  ## 
   
   belongs_to :entity, :polymorphic => true
   def user; entity; end
@@ -79,7 +82,11 @@ class Profile < ActiveRecord::Base
     self.entity_type = 'Group' if self.entity_type =~ /Group/
   end
   
-  ### basic info ###########################################################
+  ##
+  ## BASIC ATTRIBUTES
+  ##
+
+  format_attribute :summary
 
   def full_name
     [name_prefix, first_name, middle_name, last_name, name_suffix].reject(&:blank?) * ' '
@@ -100,26 +107,46 @@ class Profile < ActiveRecord::Base
     return 'unknown'
   end
 
-  ### collections ########################################################## 
+  ##
+  ## ASSOCIATED ATTRIBUTES
+  ##
 
   belongs_to :wiki, :dependent => :destroy
-  belongs_to(:wall,
-             :class_name => 'Discussion',
-             :foreign_key => 'discussion_id',
-             :dependent => :destroy)
+  belongs_to :wall,
+   :class_name => 'Discussion',
+   :foreign_key => 'discussion_id',
+   :dependent => :destroy
 
-  belongs_to :photo, :class_name => "AssetPage"
-  belongs_to :video, :class_name => "ExternalVideoPage"
+  belongs_to :photo, :class_name => "Asset", :dependent => :destroy
+  belongs_to :video, :class_name => "ExternalVideo", :dependent => :destroy
+ 
+  has_many :locations,
+    :class_name => '::ProfileLocation',
+    :dependent => :destroy, :order => "preferred desc"
 
-  #belongs_to :layout
-  
-  has_many   :locations,       :class_name => '::ProfileLocation', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :email_addresses, :class_name => '::ProfileEmailAddress', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :im_addresses,    :class_name => '::ProfileImAddress', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :phone_numbers,   :class_name => '::ProfilePhoneNumber', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :websites,        :class_name => '::ProfileWebsite', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :notes,           :class_name => '::ProfileNote', :dependent => :destroy, :order=>"preferred desc"
-  has_many   :crypt_keys,      :class_name => '::ProfileCryptKey', :dependent => :destroy, :order=>"preferred desc"
+  has_many :email_addresses,
+    :class_name => '::ProfileEmailAddress',
+    :dependent => :destroy, :order => "preferred desc"
+
+  has_many :im_addresses,
+    :class_name => '::ProfileImAddress',
+    :dependent => :destroy, :order => "preferred desc"
+
+  has_many :phone_numbers,
+    :class_name => '::ProfilePhoneNumber',
+    :dependent => :destroy, :order => "preferred desc"
+
+  has_many :websites,
+    :class_name => '::ProfileWebsite',
+    :dependent => :destroy, :order => "preferred desc"
+
+  has_many :notes,
+    :class_name => '::ProfileNote',
+    :dependent => :destroy, :order => "preferred desc"
+
+  has_many :crypt_keys,
+    :class_name => '::ProfileCryptKey',
+    :dependent => :destroy, :order => "preferred desc"
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -129,7 +156,7 @@ class Profile < ActiveRecord::Base
       "organization", "place", "may_see", "may_see_committees", "may_see_networks",
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
-      "may_burden", "may_spy", "peer"]
+      "may_burden", "may_spy", "peer", "photo", "video", "summary"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
@@ -140,6 +167,8 @@ class Profile < ActiveRecord::Base
     
     profile_params.stringify_keys!
     params = profile_params.allow(valid_params)
+    params['summary_html'] = nil if params['summary'] == ""
+
     # save nil if value is an empty string:
     params.each do |key,value|
       params[key] = nil unless value.any?
@@ -152,12 +181,20 @@ class Profile < ActiveRecord::Base
         collection_class.create( value.merge('profile_id' => self.id.to_i) )
       end || [] rescue []
     end
+    
+    params['photo'] = Asset.build(params.delete('photo')) if params['photo']
+    params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
     self.update_attributes( params )
     self.reload
     self
   end
+  
+  def cover
+    self.photo || self.video
+  end
 
+  # DEPRECATED
   def create_wiki(opts = {})
     return wiki unless wiki.nil?
     opts[:profile] = self
@@ -165,13 +202,14 @@ class Profile < ActiveRecord::Base
     save
     wiki
   end
-  
 
-   def ensure_wall
-     unless self.wall
-       self.wall = Discussion.create
-       self.save!
-     end
-     self.wall
-   end
+  # DEPRECATED
+	def ensure_wall
+		unless self.wall
+			self.wall = Discussion.create
+			self.save!
+		end
+		self.wall
+	end
+
 end # class
