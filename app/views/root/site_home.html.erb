@@ -45,20 +45,17 @@ table.entities td {
   <p class="description"><%=h current_site.network.summary %></p>
 <% end %>
 
-<% @info_box = capture do %>
-  <%= render :partial => 'me/dashboard/welcome_box_content', :locals => {:hide_heading => true, :hide_profile => true} %>
-<% end %>
-
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
 <% end %>
 
+<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
 
-<%= render :partial => 'group/widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
-<%= edit_site_custom_appearance_link(current_site) %>
+<%# edit_site_custom_appearance_link(current_site) %>
+
 <br/>
 <br/>
-<%= render :partial => 'group/widgets/page_list', :locals => {:pages => @recent_pages, :heading => 'Recent Pages'[:recent_pages]} %>
+<%= render :partial => 'widgets/page_list', :locals => {:pages => @recent_pages, :heading => 'Recent Pages'[:recent_pages]} %>
 <br/>
-<%= render :partial => 'group/widgets/page_list', :locals => {:pages => @most_viewed_pages, :heading => 'Most Viewed'[:most_viewed_pages]} %>
+<%= render :partial => 'widgets/page_list', :locals => {:pages => @most_viewed_pages, :heading => 'Most Viewed'[:most_viewed_pages]} %>
 
