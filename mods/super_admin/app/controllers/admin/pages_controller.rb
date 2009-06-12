@@ -10,19 +10,18 @@ class Admin::PagesController < Admin::BaseController
     if view == 'pending'
       # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
       options = { :conditions => ['flow IS NULL AND ((vetted = ? AND rating = ?) OR (public_requested = ? AND public = ?))', false, YUCKY_RATING, true, false], :joins => :ratings, :order => 'updated_at DESC' }
+    elsif view == 'new'
+      options = { :conditions => ['flow IS NULL AND (vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC' }
     elsif view == 'vetted'
       # all pages that have been marked as vetted by an admin (and are not deleted)
       options = { :conditions => ['flow IS NULL AND vetted = ?', true], :order => 'updated_at DESC' }
     elsif view == 'deleted'
       # list the pages that are 'deleted' by being hidden from view.
       options = { :conditions => ['flow = ?',FLOW[:deleted]], :order => 'updated_at DESC' }
-	elsif view == 'new'
-          options  = { :order => 'updated_at DESC' }
-	  # @pages = Page.find :all, :order => 'created_at DESC', :limit => 30	
-	elsif view == 'public requested'
-	  options = { :conditions => ['public_requested = ?',true], :order => 'created_at DESC' }
-	elsif view == 'public'
-	  options = { :conditions => ['public = ?',true], :order => 'created_at DESC' }
+    elsif view == 'public requested'
+      options = { :conditions => ['public_requested = ?',true], :order => 'created_at DESC' }
+    elsif view == 'public'
+      options = { :conditions => ['public = ?',true], :order => 'created_at DESC' }
     elsif view == 'all'
       options = { :order => 'updated_at DESC' }
     end
