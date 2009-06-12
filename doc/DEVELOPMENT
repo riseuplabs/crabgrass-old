@@ -59,6 +59,8 @@ main relationships in crabgrass:
 
 = Permissions
 
+== Basic Permissions
+
 the historical focus of crabgrass has not been social networking. it has been to allow small groups to work together on projects. 
 
 for this reason, there is a very complicated system for access to pages. any page can have :admin, :edit, :view access to a page by any group and user. what :admin, :edit, :view actually means depends on the particular page controller. things are further complicated by inherited access: if a committee has access to a page, then the committee's parent group also has the same access.
@@ -68,6 +70,10 @@ the advantage of this system is total freedom in designating permissions and in 
 the ui also shows total transparency in displaying the permissions, so you are never left wondering what the access rights are.
 
 this makes the queries very complex and slow. 
+
+== Authorization and Permissions Based Links
+
+In order to make this complex permission system more structured and ease changes on different installs the authorization has been seperated into a set of permissions files. They can be found in app/permissions and normally there is one permission per controller. They are also used from the helpers and views to determine whether a link should be displayed. {read more...}[link:files/doc/PERMISSIONS.html]
 
 = Finding Pages
 

@@ -132,7 +132,7 @@ module PageHelper
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
-    group_name owner_name title starts_at posts_count contributors_count stars
+    group_name owner_name title posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -173,7 +173,6 @@ module PageHelper
   ## used to create the page list headings
 
   def page_path_link(text,path='',image=nil)
-
     hash         = params.dup
     new_path     = parsed_path(path)
     current_path = parsed_path(hash[:path])
@@ -183,7 +182,6 @@ module PageHelper
       # special hack for landing pages using the weird dispatcher route.
       hash = "/%s?path=%s" % [params[:_context], hash[:path].join('/')]
     end
-
     link_to text, hash
   end
 
@@ -291,13 +289,13 @@ module PageHelper
     elsif column == :created_by or column == :created_by_login
       list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
     elsif column == :deleted_by or column == :deleted_by_login
-      list_heading 'deleted by'[:page_list_heading_deleted_by], 'deleted_by_login', options
+      list_heading 'deleted by'[:page_list_heading_deleted_by], 'updated_by_login', options
     elsif column == :updated_at
       list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
       list_heading 'created'[:page_list_heading_created], 'created_at', options
     elsif column == :deleted_at
-      list_heading 'deleted'[:page_list_heading_deleted], 'deleted_at', options
+      list_heading 'deleted'[:page_list_heading_deleted], 'updated_at', options
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
@@ -527,16 +525,16 @@ module PageHelper
 
   def create_page_link(group=nil)
     url = {:controller => '/pages', :action => 'create'}
-    if group
-      url[:group] = group.name
-      icon = 'page_add'
-      text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
-      klass = 'contribute group_contribute'
-    else
+    #if group
+    #  url[:group] = group.name
+    #  icon = 'page_add'
+    #  text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
+    #  klass = 'contribute group_contribute'
+    #else
       icon = 'plus'
       text = "Create Page"[:contribute_content_link]
       klass = 'contribute'
-    end
+    #end
     content_tag(:div,
       link_to(text, url, :class => "small_icon #{icon}_16"),
       :class => klass

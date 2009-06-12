@@ -68,8 +68,6 @@ class Committee < Group
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
     elsif access == :view
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
@@ -84,10 +82,8 @@ class Committee < Group
   ## relationships to users
   ##
 
-  def may_be_pestered_by?(user)
-    return true if user.member_of?(self)
-    return true if parent and parent.publicly_visible_committees
-    return false
+  def may_be_pestered_by!(user)
+    super and parent.profiles.visible_by(user).may_see_committees?
   end
   
 end

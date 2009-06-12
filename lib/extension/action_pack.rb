@@ -102,6 +102,40 @@ class ActionView::Base
 end
 
 ###
+### PERMISSIONS DEFINITION
+###
+ActionController::Base.class_eval do
+  # defines the permission mixin to be in charge of instances of this controller
+  # and related views.
+  #
+  # for example:
+  #   permissions 'foo_bar', :bar_foo
+  # 
+  # will attempt to load the +FooBarPermission+ and +BarFooPermission+ classes
+  # and apply them considering permissions for the current controller and views.
+  def self.permissions(*class_names)
+    for class_name in class_names
+      permission_class = "#{class_name}_permission".camelize.constantize
+      include(permission_class)
+      add_template_helper(permission_class)
+
+      #@@permissioner = Object.new
+      #@@permissioner.extend(permission_class)
+    end
+  end
+end
+
+  # returns the permissioner in charge of instances of this controller class
+  #def self.permissioner
+  #  @@permissioner
+  #end
+
+  # returns the permissioner in charge of this controller class
+  #def permissioner
+  #  @@permissioner
+  #end
+
+###
 ### HACK TO BE REMOVED WHEN UPGRADING TO RAILS 2.3
 ###
 

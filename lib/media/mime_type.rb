@@ -44,7 +44,9 @@ module Media
       ext = File.extname(ext).gsub('.','') if ext =~ /\./
       mimetype = EXTENSIONS[ext]
       if defined?(MIME::Types)
-        mimetype ||= MIME::Types.type_for('.'+ext).first.content_type
+        unless MIME::Types.type_for('.'+ext).empty?
+          mimetype ||= MIME::Types.type_for('.'+ext).first.content_type
+        end
       end
       mimetype ||= 'application/octet-stream'
       return mimetype

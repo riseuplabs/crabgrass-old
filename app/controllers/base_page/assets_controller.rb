@@ -3,11 +3,18 @@ class BasePage::AssetsController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/assets'
+  permissions 'base_page/assets'
 
   def show_popup
   end
 
   def close
+    render :template => 'base_page/reset_sidebar'
+  end
+
+  def update_cover
+    @page.cover = @asset
+    @page.save!
     render :template => 'base_page/reset_sidebar'
   end
 
@@ -17,6 +24,10 @@ class BasePage::AssetsController < ApplicationController
     @asset.parent_page = @page
     @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
     @asset.save
+    if params[:use_as_cover]
+      @page.cover = @asset
+      @page.save!
+    end
     flash_message :object => @asset
     redirect_to page_url(@page)
   end
@@ -34,10 +45,6 @@ class BasePage::AssetsController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may? :edit, @page
-  end
-
   prepend_before_filter :fetch_data
   def fetch_data
     @page = Page.find params[:page_id] if params[:page_id]
@@ -48,4 +55,3 @@ class BasePage::AssetsController < ApplicationController
   end
 
 end
-

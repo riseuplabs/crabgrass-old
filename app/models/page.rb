@@ -28,8 +28,6 @@ all the relationship between a page and its groups is stored in the group_partic
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.boolean  "static"
     t.datetime "static_expires"
     t.boolean  "static_expired"
@@ -43,6 +41,7 @@ all the relationship between a page and its groups is stored in the group_partic
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
+    t.datetime "happens_at"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -55,8 +54,6 @@ all the relationship between a page and its groups is stored in the group_partic
   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
-  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
 
   Yeah, so, there are way too many indices on the pages table.
@@ -75,6 +72,15 @@ class Page < ActiveRecord::Base
   acts_as_taggable_on :tags
   acts_as_site_limited
   attr_protected :owner
+
+
+  ##
+  ## NAMES SCOPES
+  ##
+
+  named_scope :only_public, :conditions => {:public => true}
+  named_scope :only_images, :conditions => {:is_image => true}
+  named_scope :only_videos, :conditions => {:is_video => true}
 
   ##
   ## PAGE NAMING
@@ -153,6 +159,7 @@ class Page < ActiveRecord::Base
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
   has_many :assets, :dependent => :destroy
+  belongs_to :cover, :class_name => "Asset"
 
   validates_presence_of :title
   validates_associated :data
@@ -254,7 +261,6 @@ class Page < ActiveRecord::Base
     groups = self.groups_with_access(:view)
     groups | self.groups_with_access(:edit)
     groups | self.groups_with_access(:admin)
-    groups | self.groups_with_access(:comment)
 
     groups.include?(network) ? true : false
     true
@@ -272,12 +278,8 @@ class Page < ActiveRecord::Base
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
-  # DEPRECATED permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   :delete  -- can user destroy page?
-  #  
   # DEPRECATED BEHAVIOR:
-  # :edit and :comment should return false for deleted pages.
+  # :edit should return false for deleted pages.
   #
   def has_access!(perm, user)
 
@@ -286,8 +288,6 @@ class Page < ActiveRecord::Base
     ## until the new permission system is working.
     ## then, this logic should all be moved there. 
     return false if tmp_hack_for_deleted_pages?(perm)
-    return tmp_hack_when_access_is_delete(user) if perm == :delete
-    perm = tmp_hack_for_comment() if perm == :comment
     ## END TEMP HACKS
     #########################################################
 
@@ -318,32 +318,9 @@ class Page < ActiveRecord::Base
     parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
   end
 
-  # this is some really horrible stuff that i want to go away very quickly.
-  # some sites want to restrict page deletion to only people who are admins
-  # of groups that have admin access to the page. crabgrass does not work this
-  # way and is a total violation of the permission logic. there is a better way,
-  # and it should be replaced for this.
-  #
-  # this is a unicef specific hack. Group coordinators should be able
-  # to delete and move pages in their group independently of the groups
-  # access rights.
-  def tmp_hack_when_access_is_delete(user)
-    parts = []
-    parts << participation_for_user(user)
-    parts.concat participation_for_groups(user.admin_for_group_ids)
-    hacky_delete = parts.compact.detect{|part| part.access == ACCESS[:admin]}
-    hacky_delete || has_access!(:admin, user)
-  end
-
   # do not allow comments or editing of deleted pages:
   def tmp_hack_for_deleted_pages?(perm)
-    self.deleted? and (perm == :edit or perm == :comment)
-  end
-
-  # by default, if a user can edit the page, they can comment.
-  # this can be overridden by subclasses.
-  def tmp_hack_for_comment
-    :view
+    self.deleted? and (perm == :edit)
   end
 
   public
@@ -495,6 +472,7 @@ class Page < ActiveRecord::Base
     @flags ||= {}
   end
 
+  # DEPRECATED
   def self.make(function,options={})
     PageStork.send(function, options)
   end

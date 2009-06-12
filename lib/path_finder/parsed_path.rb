@@ -44,7 +44,8 @@ class PathFinder::ParsedPath < Array
     'not_created_by' => 1,
     'contributed' => 1,
     'featured_by' => 1,
-    
+    'admin' => 1,
+
     # date
     'date' => 1,
     'ago' => 2,
@@ -90,6 +91,10 @@ class PathFinder::ParsedPath < Array
     'text' => 100
   }.freeze
 
+  def unparsable
+    @unparsable ||= []
+  end
+
   # constructs a ParsedPath from a path string, array, or hash
   #
   # Examples:
@@ -105,27 +110,33 @@ class PathFinder::ParsedPath < Array
       path = path.split('/') if path.instance_of? String
       path = path.reverse
       while keyword = path.pop
-        next unless PATH_KEYWORDS[keyword]
-        element = [keyword]
-        args = PATH_KEYWORDS[keyword]
-        args.times do |i|
-          element << path.pop if path.any?
+        if PATH_KEYWORDS[keyword]
+          element = [keyword]
+          args = PATH_KEYWORDS[keyword]
+          args.times do |i|
+            element << path.pop if path.any?
+          end
+          self << element
+        else
+          self.unparsable << keyword
         end
-        self << element
       end
     elsif path.is_a? Hash
       path = path.sort{|a,b| (PATH_ORDER[a[0]]||PATH_ORDER['default']) <=> (PATH_ORDER[b[0]]||PATH_ORDER['default']) }
       path.each do |pair|
         key, value = pair
-        next unless PATH_KEYWORDS[key]
-        if key == 'page_state' and value.any? # handle special pseudo keyword... 
-          self << [value]
-        elsif PATH_KEYWORDS[key] == 0
-          self << [key] if value == 'true'
-        elsif PATH_KEYWORDS[key] == 1 and value.any?
-          self << [key, value]
-        elsif PATH_KEYWORDS[key] == 2 and value.size = 2
-          self << [key, value[0], value[1]]
+        if PATH_KEYWORDS[key]
+          if key == 'page_state' and value.any? # handle special pseudo keyword... 
+            self << [value]
+          elsif PATH_KEYWORDS[key] == 0
+            self << [key] if value == 'true'
+          elsif PATH_KEYWORDS[key] == 1 and value.any?
+            self << [key, value]
+          elsif PATH_KEYWORDS[key] == 2 and value.size = 2
+            self << [key, value[0], value[1]]
+          end
+        else
+          self.unparsable << key
         end
       end
     end

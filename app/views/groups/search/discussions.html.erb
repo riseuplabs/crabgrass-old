@@ -1,0 +1,8 @@
+<% content_for(:html_head) do %>
+  <%= group_search_rss %>
+<% end %>
+
+<% @title_box = content_tag :h1, 'Discussions'[:discussions] %>
+
+<%= render :partial => 'pages/list', :locals => {:heading => true} %>
+

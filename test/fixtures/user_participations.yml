@@ -138,6 +138,11 @@ multi_section_wiki_gerrard:
   page_id: 240
   user_id: 3
   access: 1
+video1_gerrard:
+  id: <%= id+=1 %>
+  page_id: 250
+  user_id: 3
+  access: 1
 survey_blank_blue:
   id: <%= id+=1 %>
   page_id: 215

@@ -24,11 +24,11 @@ class Me::TrashController < Me::BaseController
     else
       full_url = url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
     end
-    @pages = Page.paginate_by_path(params[:path], options_for_me(:page => params[:page], :flow => :deleted))
+    @pages = Page.paginate_by_path(params[:path] + ['admin', current_user.id], options_for_me(:page => params[:page], :flow => :deleted))
     @columns = [:admin_checkbox, :icon, :title, :group, :deleted_by, :deleted_at, :contributors_count]
     handle_rss(
-      :title => 'Crabgrass Trash',
       :link => full_url,
+      :title => 'Crabgrass Trash',
       :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
     ) or render(:action => 'list')
   end
@@ -62,9 +62,6 @@ class Me::TrashController < Me::BaseController
 
   # it is impossible to see anyone else's me page,
   # so no authorization is needed.
-  def authorized?
-    return true
-  end
 
   def may_undelete_page?(page)
     current_user.may?(:admin, page)
@@ -80,4 +77,3 @@ class Me::TrashController < Me::BaseController
   end
 
 end
-

@@ -47,9 +47,9 @@ module PathFinder::Sql::BuilderFilters
     @values << true
   end
   
-  def filter_starts
-    @date_field = "starts_at"
-  end
+  # def filter_starts
+  #   @date_field = "starts_at"
+  # end
 
   def filter_after(date)
     if date == 'now'
@@ -87,11 +87,11 @@ module PathFinder::Sql::BuilderFilters
   # we assume the values pass to the finder are local
   #++
   
-  def filter_upcoming
-    @conditions << 'pages.starts_at > ?'
-    @values << Time.now
-    @order << 'pages.starts_at DESC' if @order
-  end
+  # def filter_upcoming
+  #   @conditions << 'pages.starts_at > ?'
+  #   @values << Time.now
+  #   @order << 'pages.starts_at DESC' if @order
+  # end
   
   def filter_ago(near,far)
     near = near.to_i.days.ago

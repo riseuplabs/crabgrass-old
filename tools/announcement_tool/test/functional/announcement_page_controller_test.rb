@@ -19,10 +19,10 @@ class AnnouncementPageControllerTest < ActionController::TestCase
   def test_create
     login_as :gerrard
 
-    get 'create'
+    get 'create', :id => AnnouncementPage.param_id
     assert_response :success
 
-    post 'create', :page => {:title => "announcement page", :summary => ""}, :body => "the text"
+    post 'create', :id => AnnouncementPage.param_id, :page => {:title => "announcement page", :summary => ""}, :body => "the text"
     page = assigns(:page)
 
     assert_redirected_to "_page_action" => "show", "_page" => page.name_url
@@ -36,7 +36,7 @@ class AnnouncementPageControllerTest < ActionController::TestCase
 
     data_ids, page_ids, page_urls = [],[],[]
     3.times do
-      post 'create', :page => {:title => "dupe", :summary => ""}
+      post 'create', :id => AnnouncementPage.param_id, :page => {:title => "dupe", :summary => ""}
       page = assigns(:page)
 
       assert_equal "dupe", page.title
@@ -48,6 +48,7 @@ class AnnouncementPageControllerTest < ActionController::TestCase
       # a new page
       assert !page_ids.include?(page.id)
       # a new url
+
       assert !page_urls.include?(page.name_url)
 
       # remember the values we saw

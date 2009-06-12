@@ -195,11 +195,11 @@ class DispatchController < ApplicationController
         new_controller('SiteNetworkController')
       else
         params[:controller] = 'network'
-        new_controller('NetworkController')
+        new_controller('NetworksController')
       end
     else
       params[:controller] = 'group'
-      new_controller('GroupController')
+      new_controller('GroupsController')
     end
   end
   

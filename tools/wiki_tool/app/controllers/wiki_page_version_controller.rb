@@ -1,10 +1,10 @@
 class WikiPageVersionController < BasePageController
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
 
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
   helper :wiki, :wiki_page
+  permissions :wiki_page_version
 
   ##
   ## ACCESS: public or :view
@@ -84,15 +84,6 @@ class WikiPageVersionController < BasePageController
     end
   end
 
-  def authorized?
-   if action?(:show, :diff, :list)
-     @page.public? or current_user.may?(:view, @page)
-   elsif action?(:revert)
-     current_user.may?(:edit, @page)
-   else
-     current_user.may?(:admin, @page)
-   end
-  end
 
   # gets the next or previous version number
   def get_jump(direction)

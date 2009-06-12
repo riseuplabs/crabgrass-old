@@ -356,8 +356,6 @@ module Formy
   #### FORM CLASSES ###################################################
     
   class Form < Root
-    sub_element :row, :section
-    
     def title(value)
       puts "<tr class='title'><td colspan='3'>#{value}</td></tr>"
     end
@@ -380,68 +378,83 @@ module Formy
       @elements.each {|e| raw_puts e}
       puts "</table>"
       super
-    end  
-  end
-    
-  class Section < Element
-    sub_element :row
-    
-    def label(value)
-      puts "label(#{value})<br>"
     end
 
-  end
+#    class Section < Element
+#      sub_element :row
+#      def label(value)
+#        puts "label(#{value})<br>"
+#      end
+#    end
+
+    class Row < Element
+      element_attr :info, :label, :input, :heading
   
-  class Row < Element
-    element_attr :info, :label, :input, :heading
-    sub_element :checkbox
-	
-    def open
-      super
-      puts "<tr class='row'>"
-    end
-    
-    def close
-      @input ||= @elements.first.to_s
-      labelspan = inputspan = infospan = 1
-      labelspan = 2 if @label and not @input
-      inputspan = 2 if @input and not @label and     @info
-      inputspan = 2 if @input and     @label and not @info
-      infospan  = 2 if @info  and     @label and not @input
-      labelspan = 3 if @label and not @input and not @info
-      inputspan = 3 if @input and not @label and not @info
-      infospan  = 3 if @info  and not @label and not @input
-      puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>" if @label
-      if @input =~ /\n/
-        puts "<td colspan='#{inputspan}' class='input'>"
-        raw_puts @input
-        puts "</td>"
-      else
-        puts "<td colspan='#{inputspan}' class='input'>#{@input}</td>"
+      def open
+        super
       end
-      puts "<td colspan='#{infospan}' class='info'>#{@info}</td>"   if @info
-      puts "</tr>"      
-      super
-    end
-  end  
+      
+      def close
+        @input ||= @elements.first.to_s
+        if @options[:style] == :wide
+          labelspan = inputspan = infospan = 1
+          labelspan = 2 if @label and not @input
+          inputspan = 2 if @input and not @label and     @info
+          inputspan = 2 if @input and     @label and not @info
+          infospan  = 2 if @info  and     @label and not @input
+          labelspan = 3 if @label and not @input and not @info
+          inputspan = 3 if @input and not @label and not @info
+          infospan  = 3 if @info  and not @label and not @input
+          puts "<tr class='row'>"
+          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>" if @label
+          if @input =~ /\n/
+            puts "<td colspan='#{inputspan}' class='input'>"
+            raw_puts @input
+            puts "</td>"
+          else
+            puts "<td colspan='#{inputspan}' class='input'>#{@input}</td>"
+          end
+          puts "<td colspan='#{infospan}' class='info'>#{@info}</td>"   if @info
+          puts "</tr>"
+        else
+          if @label
+            puts '<tr><td class="label">%s</td></tr>' % @label
+          end
+          puts '<tr class="%s">' % @options[:class]
+          puts '<td class="input">%s</td>' % @input
+          puts '<td class="info">%s</td>' % @info
+          puts '</tr>'
+        end
+        super
+      end
+
+      class Checkbox < Element
+        element_attr :label, :input
+
+        def open
+          super
+        end
   
-  class Checkbox < Element
-    element_attr :label, :input
+        def close
+          id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
+          label = "<label for='#{id}'>#{@label}</label>"
+          puts "<table cellpadding='0' cellspacing='0'><tr><td>#{@input}</td><td>#{label}</td></tr></table>"
+          super
+        end
+      end
+      sub_element Form::Row::Checkbox
+
+    end  
+
+    sub_element Form::Row
     
-    def close
-      id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
-      label = "<label for='#{id}'>#{@label}</label>"
-      puts "<table cellpadding='0' cellspacing='0'><tr><td>#{@input}</td><td>#{label}</td></tr></table>"
-      super
-    end
-  end
-  
-  
-  class Item < Element
-    element_attr :object, :field, :label
-    def to_s
-      "<label>#{@field} #{@label}</label>"
-    end
+#    class Item < Element
+#      element_attr :object, :field, :label
+#      def to_s
+#        "<label>#{@field} #{@label}</label>"
+#      end
+#    end
+
   end
 
 end

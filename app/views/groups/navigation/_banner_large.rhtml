@@ -1,0 +1,40 @@
+<% if @group.parent_id -%>
+  <%- @parent ||= @group.parent -%>
+  <table>
+  <tr>
+    <td align='left'>
+      <div class='parent'>
+        <%= avatar_for @parent, 'xsmall', :class => '' %>
+        <b><%= link_to_group @parent %></b>
+      </div>
+    </td>
+    <td align='right' rowspan='2' class='nowrap'>
+      <%= mini_search_form %>
+    </td>
+  </tr>
+  <tr>
+    <td align='left' valign='top' style='width:99%'>
+      <div class='child'>
+        <div id='l-shape'></div>
+        <%= avatar_for @group, 'small', :class => 'child' %>
+        <b><%= link_to_group @group %></b> <%=h @group.summary %>
+      </div>
+    </td>
+  </tr>
+  </table>
+<% else -%>
+  <% if @group.new_record? and @parent %>
+    <% group = @parent; search = false %>
+  <% else %>
+    <% group = @group; search = true %>
+  <% end %>
+  <table>
+  <tr>
+    <td rowspan='2'><%= avatar_for group, 'medium' %></td>
+    <td style='width:99%'><h1><%= link_to_group group, :display_name => true %></h1></td>
+    <td align='right' class='nowrap'>
+      <%= mini_search_form if search %>
+    </td>
+  </tr>
+  </table>
+<% end -%>

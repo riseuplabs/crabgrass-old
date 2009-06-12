@@ -1,0 +1,15 @@
+<% render :partial => 'tabs' %>
+
+<% if @groups.any? %>
+
+  <%= letter_pagination_links(group_directory_params(:action => 'search'), :available_letters => @pagination_letters) if @pagination_letters %>
+
+  <%= pagination_links(@groups) %>
+  <%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => @show_committees }%>
+  <%= pagination_links(@groups) %>
+<% else %>
+  <p><%= "No Results"[:no_search_results] %></p>
+<% end %>
+
+
+

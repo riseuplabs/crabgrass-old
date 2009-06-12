@@ -1,7 +1,0 @@
-<% @title_box = content_tag :h1, 'New Groups'[:new_groups] -%>
-
-<%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => false }%>
-<h3 class='dim pagination_label'>
-  <%= "new groups in last 2 weeks"[:new_groups_in_weeks]%>
-</h3>
-<%= pagination_links(@groups) %>

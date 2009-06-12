@@ -63,6 +63,9 @@ TODO:
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -77,6 +80,9 @@ class Asset < ActiveRecord::Base
   # Polymorph does not seem to be working with subclasses of Asset. For parent_type,
   # it always picks "Asset". So, we hardcode what the query should be:
   POLYMORPH_AS_PARENT = 'SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = "#{self.type_as_parent}"'
+
+  # fields in assets table not in asset_versions
+  NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
 
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
@@ -189,8 +195,7 @@ class Asset < ActiveRecord::Base
       read_attribute('content_type') || 'application/octet-stream'
     end
   end
-  self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
-     'is_image' << 'is_audio' << 'is_video' << 'is_document'
+  self.non_versioned_columns.concat NON_VERSIONED
 
   ##
   ## DEFINE THE CLASS Asset::Version

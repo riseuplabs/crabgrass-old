@@ -235,12 +235,13 @@ module ImageHelper
       target_height = thumbnail.height
     else
       target_width = 32;
-      target_height = 32;     
-    end  
-    style = "height:#{target_height}px;width:#{target_width}px"
-    klass = options[:class] || 'thumbnail'
-    url   = options[:url] || asset.url
-    link_to img, url, :class => klass, :title => asset.filename, :style => style
+      target_height = 32;
+    end
+    style   = "height:#{target_height}px;width:#{target_width}px"
+    klass   = options[:class] || 'thumbnail'
+    url     = options[:url] || asset.url
+    method  = options[:method] || 'get'
+    link_to img, url, :class => klass, :title => asset.filename, :style => style, :method => method
   end
 
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})
@@ -260,6 +261,18 @@ module ImageHelper
       image_tag "/images/png/16/#{asset.small_icon}.png", :style => 'vertical-align: middle;'
     else
       image_tag "/images/png/16/#{asset.small_icon}.png", :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
+    end
+  end
+
+  ##
+  ## AGNOSTIC MEDIA
+  ##
+
+  def display_media(media, size=:medium)
+    if media.respond_to?(:is_image?) and media.is_image?
+      image_tag(media.thumbnail(size).url)
+    elsif media.respond_to?(:is_video?) and media.is_video?
+      media.build_embed(200, 200)
     end
   end
 

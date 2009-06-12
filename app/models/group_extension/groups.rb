@@ -10,13 +10,15 @@ module GroupExtension::Groups
     base.send :include, InstanceMethods
 
     base.instance_eval do
-      has_many :federatings
+      has_many :federatings, :dependent => :destroy
       has_many :networks, :through => :federatings
       belongs_to :council, :class_name => 'Group'
+      before_destroy :destroy_council
 
       # Committees are children! They must respect their parent group. 
       # This uses better_acts_as_tree, which allows callbacks.
       acts_as_tree(
+#        :dependent => :destroy,
         :order => 'name',
         :after_add => :org_structure_changed,
         :after_remove => :org_structure_changed
@@ -89,6 +91,7 @@ module GroupExtension::Groups
     # the make_council argument is set). No other method of adding committees
     # should be used.
     def add_committee!(committee, make_council=false)
+      make_council = true if committee.council?
       committee.parent_id = self.id
       committee.parent_name_changed
       if make_council
@@ -129,10 +132,10 @@ module GroupExtension::Groups
     # returns an array of committees visible to appropriate access level
     def committees_for(access)
       if access == :private
-        return self.committees
+        return self.real_committees
       elsif access == :public
         if profiles.public.may_see_committees?
-          return @comittees_for_public ||= self.committees.select {|c| c.profiles.public.may_see?}
+          return @comittees_for_public ||= self.real_committees.select {|c| c.profiles.public.may_see?}
         else
           return []
         end
@@ -150,6 +153,15 @@ module GroupExtension::Groups
     # overridden for Networks
     def groups() [] end
 
+    def member_of?(network)
+      network_ids.include?(network.id)
+    end
+
+    def destroy_council
+      if self.normal? and self.council_id and self.council_id != self.id
+        self.council.destroy
+      end
+    end
   end
 
 end

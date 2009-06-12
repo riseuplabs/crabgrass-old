@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090601212548) do
+ActiveRecord::Schema.define(:version => 20090611160556) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -65,6 +65,9 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -158,13 +161,18 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
   add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
 
   create_table "events", :force => true do |t|
-    t.text    "description"
-    t.text    "description_html"
-    t.boolean "is_all_day",       :default => false
-    t.boolean "is_cancelled",     :default => false
-    t.boolean "is_tentative",     :default => true
-    t.string  "location"
+    t.text     "description"
+    t.text     "description_html"
+    t.boolean  "is_all_day",       :default => false
+    t.boolean  "is_cancelled",     :default => false
+    t.boolean  "is_tentative",     :default => true
+    t.string   "location"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
   end
+
+  add_index "events", ["starts_at"], :name => "index_events_on_starts_at"
+  add_index "events", ["ends_at"], :name => "index_events_on_ends_at"
 
   create_table "external_videos", :force => true do |t|
     t.string   "media_key"
@@ -307,8 +315,6 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
     t.integer  "group_id",           :limit => 11
     t.integer  "created_by_id",      :limit => 11
     t.integer  "updated_by_id",      :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "page_updated_at"
     t.datetime "page_created_at"
     t.boolean  "delta"
@@ -351,8 +357,6 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.boolean  "static"
     t.datetime "static_expires"
     t.boolean  "static_expired"
@@ -366,6 +370,7 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
+    t.datetime "happens_at"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -378,8 +383,6 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
-  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
 
   create_table "phone_numbers", :force => true do |t|
@@ -468,6 +471,7 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
     t.string   "language",               :limit => 5
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
+    t.integer  "video_id",               :limit => 11
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -678,6 +682,7 @@ ActiveRecord::Schema.define(:version => 20090601212548) do
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"
+
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id",       :limit => 11
     t.integer  "user_id",       :limit => 11

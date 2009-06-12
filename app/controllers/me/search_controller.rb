@@ -33,9 +33,6 @@ class Me::SearchController < Me::BaseController
 
   # it is impossible to see anyone else's me page,
   # so no authorization is needed.
-  def authorized?
-    return true
-  end
   
   def fetch_user
     @user = current_user
@@ -66,4 +63,3 @@ class Me::SearchController < Me::BaseController
   end
     
 end
-

@@ -33,7 +33,7 @@ class AssetPageControllerTest < ActionController::TestCase
   def test_create
     login_as :gerrard
 
-    get 'create'
+    get 'create', :id => AssetPage.param_id
 
     assert_no_difference 'Asset.count' do
       post 'create', :id => AssetPage.param_id, :page => {:title => 'test'}, :asset => {:uploaded_data => ""}
@@ -46,7 +46,7 @@ class AssetPageControllerTest < ActionController::TestCase
     end
     
     assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do
-      post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+      post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
       assert_response :redirect
     end
     
@@ -57,7 +57,7 @@ class AssetPageControllerTest < ActionController::TestCase
     
     data_ids, page_ids, page_urls = [],[],[]
     3.times do
-      post 'create', :page => {:title => "dupe", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+      post 'create', :id => AssetPage.param_id, :page => {:title => "dupe", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
       page = assigns(:page)
 
       assert_equal "dupe", page.title
@@ -81,20 +81,19 @@ class AssetPageControllerTest < ActionController::TestCase
   def test_create_in_group
     login_as :blue
 
-    get 'create'
+    get 'create', :id => AssetPage.param_id
 
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :recipients => {'rainbow' => {:access => 'admin'}}
+    post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}, :recipients => {'rainbow' => {:access => 'admin'}}
     assert_equal 1, assigns(:page).groups.length, "asset page should belong to one group"
     assert_equal groups(:rainbow), assigns(:page).groups.first, "asset page should belong to rainbow group"
-    
   end
 
 
   def test_update
     login_as :gerrard
     
-    get 'create'
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    get 'create', :id => AssetPage.param_id
+    post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
     
     assert_difference 'Asset::Version.count', 1, "jpg should version" do
       post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
@@ -112,12 +111,13 @@ class AssetPageControllerTest < ActionController::TestCase
 
   def test_destroy_version
     login_as :gerrard
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
-    @asset = assigns(:asset)
+    post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+
+    @asset = assigns(:page).data
     @version_filename = @asset.versions.find_by_version(1).private_filename
     post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
     @page = assigns(:page)
-    @asset = assigns(:asset)
+    @asset = @page.data
 
     @controller.stubs(:login_or_public_page_required).returns(true)
     post :destroy_version, :controller => "asset_page", :page_id => @page.id, :id => 1
@@ -132,7 +132,7 @@ class AssetPageControllerTest < ActionController::TestCase
 
   def test_destroy_version_2
     login_as :gerrard
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
     post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
     assert_difference 'Asset::Version.count', -1, "destroy should remove a version" do
       post :destroy_version,  :page_id => assigns(:page).id, :id => 1
@@ -142,7 +142,7 @@ class AssetPageControllerTest < ActionController::TestCase
   def test_generate_preview
     login_as :gerrard
 
-    post 'create', :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
+    post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
 
     assert_difference 'Thumbnail.count', 0, "the first time an asset is shown, it should call generate preview" do
       xhr :post, 'generate_preview', :page_id => assigns(:page).id

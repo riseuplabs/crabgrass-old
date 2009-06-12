@@ -263,8 +263,6 @@ page stuff
   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
-  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
 
 profiles
 ---------------------------

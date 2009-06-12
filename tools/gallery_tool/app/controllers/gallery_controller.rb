@@ -2,6 +2,7 @@ class GalleryController < BasePageController
   
   stylesheet 'gallery'
   javascript :extra, 'page'
+  permissions 'gallery'
   
   include GalleryHelper
   include BasePageHelper
@@ -113,8 +114,12 @@ class GalleryController < BasePageController
         raise PermissionDenied
       end
     end
-    @page.cover = params[:id]
+    asset = Asset.find_by_id(params[:id])
+
+    @page.cover = asset
     current_user.updated(@page)
+    @page.save!
+
     if request.xhr?
       render :text => :album_cover_changed.t, :layout => false
     else
@@ -228,29 +233,6 @@ class GalleryController < BasePageController
   #  flash_message_now :exception => exc
   end
 
-  def create
-    @page_class = get_page_type
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        @page = create_new_page!(@page_class)
-        params[:assets].each do |file|
-          next if file.size == 0 # happens if no file was selected
-          asset = Asset.make(:uploaded_data => file)
-          @page.add_image!(asset, current_user)
-        end
-        return redirect_to(create_page_url(AssetPage, :gallery => @page.id)) if params[:add_more_files]
-        return redirect_to(page_url(@page))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
-    end
-  end
-  
   def upload
     if request.xhr?
       render :layout => false
@@ -298,19 +280,6 @@ class GalleryController < BasePageController
 
   protected
  
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:add, :remove, :find, :upload, :add_star, :remove_star,
-                  :change_image_title, :make_cover)
-      current_user.may?(:edit, @page)
-    elsif action?(:show, :comment_image, :detail_view, :slideshow, :download)
-      @page.public? or current_user.may?(:view,@page)
-    else
-      current_user.may?(:admin, @page)
-    end  
-  end
-  
   def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true
@@ -323,6 +292,24 @@ class GalleryController < BasePageController
    end
   end
 
-  
+  def build_page_data
+    @assets ||= []
+    params[:assets].each do |file|
+      next if file.size == 0 # happens if no file was selected
+      asset = Asset.make(:uploaded_data => file)
+      @assets << asset
+      @page.add_image!(asset, current_user)
+    end
+    # gallery page has no 'data' field
+    return nil
+  end
+
+  def destroy_page_data
+    @assets.each do |asset|
+      asset.destroy unless asset.new_record?
+      asset.page.destroy if asset.page and !asset.page.new_record?
+    end
+  end
+
 end
 

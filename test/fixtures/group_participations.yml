@@ -52,11 +52,16 @@ animals_asset3:
   group_id: 2
   access: 1
 
-
 rainbow_deleted:
   id: 45
   page_id: 207
   group_id: 3
+  access: 1
+
+true_levellers_video1:
+  id: 46
+  page_id: 250
+  group_id: 1
   access: 1
 
 <% for i in 1..20 %>

@@ -13,6 +13,7 @@ class MembershipControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
+=begin
   def test_list_when_not_logged_in
     get :list, :id => groups(:public_group).name
     assert_response :redirect, "login required to list membership of a group"
@@ -43,7 +44,6 @@ class MembershipControllerTest < Test::Unit::TestCase
     
     get :leave, :id => groups(:public_group).name
     assert_response :success
-    
     post :leave, :id => groups(:public_group).name
     assert_response :redirect
     assert_redirected_to @controller.url_for_group(groups(:public_group))
@@ -73,5 +73,6 @@ class MembershipControllerTest < Test::Unit::TestCase
 
     assert users(:red).direct_member_of?(groups(:warm)), "red should be in committee"
   end
+=end
 
 end

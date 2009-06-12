@@ -1,126 +1,142 @@
-class GroupsController < ApplicationController
+class GroupsController < Groups::BaseController
 
   stylesheet 'groups'
-  helper 'group'
-   
-  before_filter :login_required, :only => [:create]
+  permissions 'groups/memberships', 'groups/requests'
+
+  helper 'groups', 'wiki'
+
+  before_filter :fetch_group, :except => [:create, :new, :index]
+  before_filter :login_required, :except => [:index, :show]
+  verify :method => :post, :only => [:create, :update, :destroy]
+
+  include Groups::Search
+
+  # called by dispatcher
+  def initialize(options={})
+    super()
+    @group = options[:group]
+  end
 
   def index
-    user = logged_in? ? current_user : nil
-
-     @groups = Group.visible_by(user).only_groups.recent.paginate(:all, :page => params[:page])
+    redirect_to group_directory_url
   end
 
-  def directory
-    user = logged_in? ? current_user : nil
-    letter_page = params[:letter] || ''
-
-    @groups = Group.visible_by(user).only_groups.alphabetized(letter_page).paginate(:all, :page => params[:page])
-
-    # get the starting letters of all groups
-    groups_with_names = Group.visible_by(user).only_groups.names_only
-    @pagination_letters = Group.pagination_letters_for(groups_with_names)
+  def show
+    @pages = Page.find_by_path(search_path, options_for_group(@group))
+    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
+    @profile = @group.profiles.send(@access)
+    @wiki = private_or_public_wiki()
+    #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
-  def my
-      @groups = current_user.groups.only_groups.alphabetized('').paginate(:all, :page => params[:page])
+  def new
+    @group = Group.new
   end
 
-  # login required
   def create
-    @group_class = get_group_class
-    @group_type = @group_class.to_s.downcase
-    @parent = get_parent
-    if request.get?
-      @group = @group_class.new(params[:group])
-    elsif request.post?
-      @group = @group_class.create!(params[:group]) do |group|
-        group.avatar = Avatar.new
-        group.created_by = current_user
-      end
-      @group.profiles.public.update_attribute :may_see, params[:group][:publicly_visible_group]
-      @group.profiles.public.update_attribute :may_see_committees , params[:group][:publicly_visible_committees]
-      @group.profiles.public.update_attribute :may_see_members , params[:group][:publicly_visible_members]
-      @group.profiles.public.update_attribute :may_request_membership , params[:group][:accept_new_membership_requests]
-
-      # network - binding
-      current_site.network.groups << @group unless current_site.network.nil?
-
-      flash_message :success => 'Group was successfully created.'[:group_successfully_created]
-      @group.add_user!(current_user)
-      if @parent and current_user.may?(:admin, @parent)
-        @parent.add_committee!(@group, params[:group][:is_council] == "true" )
-      end
-
-      ## DEPRECATED
-      ## add_council if params[:add_council] == "true"
-
-      redirect_to url_for_group(@group)
-    end
+    @group = Group.new params[:group]
+    @group.save!
+    group_created_success
   rescue Exception => exc
-    @group = exc.record if exc.record.is_a? Group
-    @group ||= Group.new
-    flash_message :exception => exc
+    flash_message_now :exception => exc
+    render :template => 'groups/new'
   end
-       
+
+  def edit
+    update if request.post?
+  end
+
+  def update
+    @group.update_attributes(params[:group])
+    if @group.valid?
+      flash_message_now :success
+    else
+      @group.reload if @group.name.empty?
+      flash_message_now :object => @group
+    end
+  end
+
+  def destroy
+  end
+  
   protected
   
-  before_filter :setup_view
-  def setup_view
-     group_context
-     set_banner "groups/banner", Style.new(:background_color => "#1B5790", :color => "#eef")
+  def fetch_group
+    @group = Group.find_by_name params[:id] if params[:id]
+    if @group
+      if may_show_private_profile?
+        @access = :private
+      elsif may_show_public_profile?
+        @access = :public
+      else
+        @group = nil
+      end
+    end
+    if @group
+      return true
+    else
+      clear_context
+      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
+      return false
+    end
   end
 
-  def authorized?
-    true
+  def context
+    if action?(:edit)
+      group_settings_context
+    elsif action?(:create, :new)
+      group_context
+    else
+      super
+      if !action?(:show)
+        add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
+      end
+    end
   end
   
-  def get_group_class
-    type = if params[:id]
-      params[:id]
-    elsif params[:parent_id]
-      'committee'
+  # returns a private wiki if it exists, a public one otherwise
+  # TODO: make this less ugly, move to models
+  def private_or_public_wiki
+    if @access == :private and (@profile.wiki.nil? or @profile.wiki.body == '' or @profile.wiki.body.nil?)
+      public_profile = @group.profiles.public
+      public_profile.create_wiki unless public_profile.wiki
+      public_profile.wiki
     else
-      'group'
+      @profile.create_wiki unless @profile.wiki
+      @profile.wiki
     end
-    if params[:parent_id]
-      unless ['council','committee'].include? type
-        raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] % {:type => type})
-      end
-    else
-      unless ['group','network'].include? type
-        raise ErrorMessage.new('Could not understand group type :type'[:dont_understand_group_type] %{:type => type})
-      end
-    end
-    Kernel.const_get(type.capitalize)
   end
 
-  def get_parent
-    parent = Group.find(params[:parent_id]) if params[:parent_id]
-    if parent and not current_user.may?(:admin, parent)
-      raise PermissionDenied.new('You do not have permission to create committees under %s'[:dont_have_permission_to_create_committees] % parent.name)
-    end
-    parent
+  def search_path
+    params[:path] ||= ""
+    params[:path] = params[:path].split('/')
+    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
+    params[:path] += ['limit','20']
+    params[:path]
   end
 
-#  def add_council
-#    # publicly_visible_X is deprecated in favor of the profile.
-#    council_params = {
-#      :short_name => @group.short_name + '_admin',
-#      :full_name => @group.full_name + ' Admin',
-#      :publicly_visible_group => @group.publicly_visible_group,
-#      :publicly_visible_members => @group.publicly_visible_members,
-#      :is_council => "true",
-#      :accept_new_membership_requests => "0",
-#    }
-#      
-#    @council = Committee.create!(council_params) do |c|
-#      c.avatar = Avatar.new
-#      c.created_by = current_user
-#    end
-#    @council.add_user!(current_user)    
-#    @group.add_committee!(@council, true)
-#  end
+  def group_created_success
+    flash_message :title => 'Group Created', :success => 'now make sure to configure your group'
+    redirect_to groups_url(:action => 'edit')
+  end
+
+  def search_template(template)
+    if rss_request?
+      handle_rss(
+        :title => @group.name,
+        :description => @group.summary,
+        :link => url_for_group(@group),
+        :image => avatar_url_for(@group, 'xlarge')
+      )
+    else
+      render(:template => 'groups/search/%s' % template)
+    end
+  end
+
+  #def provide_rss
+  #  handle_rss :title => @group.name, :description => @group.summary,
+  #    :link => url_for_group(@group),
+  #    :image => avatar_url_for(@group, 'xlarge')
+  #end
 
 end
-

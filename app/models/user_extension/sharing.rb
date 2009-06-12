@@ -21,13 +21,18 @@ module UserExtension::Sharing
         end
       end
       
-      named_scope(:most_active_on, lambda do |site, time|
-        { :joins => [:participations, :memberships],
+      named_scope(:most_active_on, lambda do |site, time|       
+        ret = { :joins => [:participations, :memberships],
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :conditions => ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id],
           :select => "users.*, memberships.group_id, user_participations.changed_at"
         }
+        if time.nil?
+          ret[:conditions] = ["memberships.group_id = ?", site.network.id]
+        else
+          ret[:conditions] = ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id]
+        end
+        ret
       end)
       
       named_scope(:most_active_since, lambda do |time|

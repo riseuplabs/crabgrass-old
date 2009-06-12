@@ -1,4 +1,7 @@
 class AssetsController < ApplicationController
+
+  permissions 'assets'  
+  
   before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
@@ -76,17 +79,6 @@ class AssetsController < ApplicationController
     @asset.public? or login_required
   end
 
-  def authorized?
-    if @asset
-      if action_name == 'show' || action_name == 'version'
-        current_user.may?(:view, @asset)
-      elsif action_name == 'create' || action_name == 'destroy'
-        current_user.may?(:edit, @asset.page)
-      end
-    else
-      false
-    end
-  end
 
   def access_denied
     flash_message :error => 'You do not have sufficient permission to access that file' if logged_in?
@@ -111,5 +103,5 @@ class AssetsController < ApplicationController
     render :action => 'not_found', :layout => false, :status => :not_found
     false
   end
-end
 
+end

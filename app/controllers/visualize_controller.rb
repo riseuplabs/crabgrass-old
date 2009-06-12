@@ -1,4 +1,4 @@
-require 'svg/svg' 
+require 'svg/svg'
 
 class VisualizeController < ApplicationController
   before_filter :login_required
@@ -14,10 +14,5 @@ class VisualizeController < ApplicationController
   def find_group
     @group = Group.find_by_name params[:id] if params[:id]
   end
-  
-  def authorized?
-    current_user.member_of?(@group)
-  end    
-  
-end
 
+end

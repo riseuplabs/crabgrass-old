@@ -1,0 +1,9 @@
+<% @title_box = content_tag :h1, 'Search'[:search_headline] %>
+<% content_for(:html_head) do %>
+  <%= group_search_rss %>
+<% end %>
+
+<%= render :partial => 'pages/search', :locals => {:users => @visible_users} %>
+
+<%= render :partial => 'pages/list', :locals => {:heading => true} %>
+

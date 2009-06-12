@@ -25,17 +25,9 @@ class Me::DashboardController < Me::BaseController
 
   # it is impossible to see anyone else's me page,
   # so no authorization is needed.
-  def authorized?
-    return true
-  end
   
   def fetch_user
     @user = current_user
   end
-  
-  def context
-    me_context('large')
-    add_context 'Dashboard'[:me_dashboard_link], url_for(:controller => 'me/dashboard', :action => nil)
-  end
-end
 
+end

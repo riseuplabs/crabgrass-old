@@ -21,6 +21,20 @@ gibberish:
 PLUGINS
 ==========================================================
 
+Core Plugins
+------------
+
+thinking_sphinx
+  full text searching.
+
+engines
+  updated plugin migration generator to check the existing migration files
+
+routing_filter
+  http://github.com/svenfuchs/routing-filter/tree/master
+  allows you to wrap a black box around the rails routing code to modify the
+  behavior as you see fit. fun and powerful!  
+
 ActiveRecord Plugins
 --------------------
 
@@ -43,8 +57,15 @@ acts_as_versioned
 
 will_paginate
   Adds paginate() to activerecord. 
-  
-  
+
+ActionController Plugins
+-------------------------
+
+before_render
+  Adds a new callback filter that can be called after the controller action is
+  run and before the view starts to get generated. Very useful!
+  http://github.com/xtoddx/before_render/tree/master
+
 Media Plugins
 -------------
 
@@ -87,15 +108,6 @@ spider_test
 
 webrat
   write acceptance tests for rails ui
-
-Core Plugins
-------------
-
-thinking_sphinx
-  full text searching.
-
-engines
-  updated plugin migration generator to check the existing migration files
 
 PLUGIN NOTES
 ===========================================================

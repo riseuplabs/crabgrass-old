@@ -74,7 +74,6 @@ page<%=i%>:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 <% if rand(3) == 0 %>
-  starts_at: "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
 <% end %>
 <% if rand(3) == 0 %>
   resolved: false
@@ -145,8 +144,6 @@ tasklist2:
 event1:
   id: 202
   title : an event
-  starts_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   type: EventPage
   data_type: Event
   data_id: 1
@@ -161,8 +158,6 @@ event1:
 event2:
   id: 203
   title : other event
-  starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   type: EventPage
   data_type: Event
   data_id: 2
@@ -177,8 +172,6 @@ event2:
 event3:
   id: 204
   title : one other event
-  starts_at : "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
-  ends_at :  "<%= (rand(100)+7).days.from_now.to_s(:db) %>"
   type: EventPage
   data_type: Event
   data_id: 3
@@ -270,6 +263,24 @@ multi_section_wiki:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
+video1:
+  id: 250
+  title: Beauty is in the Street
+  type: ExternalVideoPage
+  data_id: 1
+  data_type: ExternalVideo
+  owner_id: 1
+  owner_type: Group
+  is_video: "1"
+  public: "1"
+  created_by_id: 4
+  created_by_login: blue
+  updated_by_id: 3
+  updated_by_login: gerrard
+<% updated = rand(4608); created = updated + rand(4608) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 ##
 ## ASSETS
 ##
@@ -279,12 +290,11 @@ asset1:
   name: 
   created_by_login: blue
   updated_by_id: "4"
-  public: 
+  public: "1"
   resolved: "1"
   title: bee
   data_type: Asset
   type: AssetPage
-  starts_at: 
   updated_by_login: blue
   group_id: "2"
   message_count: "0"
@@ -293,7 +303,6 @@ asset1:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "1"
   is_image: "1"
@@ -311,7 +320,6 @@ asset2:
   title: sunset
   data_type: Asset
   type: AssetPage
-  starts_at: 
   updated_by_login: blue
   group_id: "2"
   message_count: "0"
@@ -320,7 +328,6 @@ asset2:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "2"
   is_image: "1"
@@ -338,7 +345,6 @@ asset3:
   title: crabgrass
   data_type: Asset
   type: AssetPage
-  starts_at: 
   updated_by_login: blue
   group_id: "2"
   message_count: "0"
@@ -347,7 +353,6 @@ asset3:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "3"
   is_image: "1"
@@ -368,13 +373,11 @@ survey1:
   title: survey ipsum
   data_type: Survey
   type: SurveyPage
-  starts_at: 
   message_count: "0"
   id: "214"
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "1"
 <% updated = rand(4320); created = updated + rand(4320) %>
@@ -390,7 +393,6 @@ survey_blank:
   title: a blank survey
   data_type: Survey
   type: SurveyPage
-  starts_at: 
   updated_by_login: blue
   message_count: "0"
   created_by_id: "4"
@@ -398,7 +400,6 @@ survey_blank:
   summary: ""
   flow: 
   posts_count: "0"
-  ends_at: 
   contributors_count: "0"
   data_id: "3"
 <% updated = rand(4320); created = updated + rand(4320) %>
