@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper CommonHelper
   helper PathFinder::Options
   helper Formy
+  permissions 'application'
 
   # TODO: remove these, access via self.view() instead.
   include AuthenticatedSystem	
