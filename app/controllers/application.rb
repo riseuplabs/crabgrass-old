@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
 
-  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper, CacheHelper, PermissionsHelper
+  helper CommonHelper
+  helper PathFinder::Options
+  helper Formy
+  permissions 'application'
 
   # TODO: remove these, access via self.view() instead.
   include AuthenticatedSystem	
@@ -8,13 +11,13 @@ class ApplicationController < ActionController::Base
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
   include ErrorHelper     # for displaying errors and messages to the user
-  include PathFinder::Options       # for Page.find_by_path options
   include ContextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
   include ImageHelper
   include PermissionsHelper
 
+  include PathFinder::Options                   # for Page.find_by_path options
   include ControllerExtension::CurrentSite
   include ControllerExtension::UrlIdentifiers
   

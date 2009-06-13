@@ -24,7 +24,7 @@ module GroupExtension::Users
       # tmp hack until we have a better viewing system in place.
       named_scope :most_visits, {:order => 'count(memberships.total_visits)', :group => 'groups.id', :joins => :memberships}
 
-      named_scope :recent_visits, {:order => 'memberships.visited_at DESC', :joins => :memberships}
+      named_scope :recent_visits, {:order => 'memberships.visited_at DESC', :group => 'groups.id', :joins => :memberships}
     end
   end
 

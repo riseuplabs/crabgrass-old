@@ -15,6 +15,10 @@ module UrlHelper
     {:controller => '/groups', :action => nil, :id => @group}.merge(options)
   end
 
+  def networks_params(options={})
+    {:controller => '/networks', :action => nil, :id => @group}.merge(options)
+  end
+
   def group_directory_params(options={})
     {:controller => '/groups/directory', :action => nil}.merge(options)
   end

@@ -1,11 +1,10 @@
 <div class="sidebox dark">
-  <h2 class="small_icon plus_16 first">Have Your Say!</h2>
-Start a New Group
-Write an Article
-Join a Discussion
-
-See tips to get started
-
+  <h2 class="first">Have Your Say!</h2>
+  <ul class="side_list">
+    <li><%= link_to_with_icon 'membership_add', "Start a New Group", '/groups/new' %></li>
+    <li><%= link_to_with_icon 'page_article', "Write an Article", '/pages/create' %></li>
+    <li><%= link_to_with_icon 'page_discussion', "Join a Discussion", networks_url(:action => 'discussions') %></li>
+  </ul>
 </div>
 
 
@@ -28,3 +27,7 @@ See tips to get started
 <br class='clear'/>
 
 </div>
+
+<p>
+  <%= [configure_site_network_link, configure_site_link, configure_site_appearance_link].compact.join('</p><p>') %>
+</p>

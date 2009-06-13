@@ -63,7 +63,7 @@ module ContextHelper
   # group, person, or page context. 
 
   def group_context(size='large', update_breadcrumbs=true)
-    return network_context(size, update_breadcrumbs) if @group and @group.is_a? Network
+    return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
     add_context 'Groups'[:groups], groups_url(:action => nil)

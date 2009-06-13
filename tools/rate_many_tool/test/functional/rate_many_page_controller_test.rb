@@ -8,38 +8,36 @@ class RateManyPageControllerTest < ActionController::TestCase
   end
 
   def test_all
-
     login_as :orange
 
     assert_no_difference 'Page.count' do
       get :create, :id => RateManyPage.param_id
       assert_response :success
-#      assert_template 'base_page/create'
     end
-  
+
+    page_id = nil  
     assert_difference 'RateManyPage.count' do
       post :create, :id => RateManyPage.param_id, :page => {:title => 'test title'}
+      page_id = assigns(:page).id
       assert_response :redirect
     end
-    
-    p = Page.find(:all)[-1] # most recently created page (?)
-    get :show, :page_id => p.id
+    page = Page.find(page_id)
+
+    get :show, :page_id => page_id
     assert_response :success
-#    assert_template 'rate_many_page/show'
     
-    assert_difference 'p.data.possibles.count' do
-      post :add_possible, :page_id => p.id, :possible => {:name => "new option", :description => ""}
+    assert_difference 'page.data.possibles.count' do
+      post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
     end
     assert_not_nil assigns(:possible)
 
-    assert_difference 'p.data.possibles.count', -1 do
-      post :destroy_possible, :page_id => p.id, :possible => assigns(:possible).id
-
+    assert_difference 'page.data.possibles.count', -1 do
+      post :destroy_possible, :page_id => page_id, :possible => assigns(:possible).id
     end
     
-    post :add_possible, :page_id => p.id, :possible => {:name => "new option", :description => ""}
+    post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
     id = assigns(:possible).id
-    post :vote_one, :page_id => p.id, :id => id, :value => "2"
+    post :vote_one, :page_id => page_id, :id => id, :value => "2"
     assert_equal 2, PollPossible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
   end
 

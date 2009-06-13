@@ -25,33 +25,46 @@ table.entities td {
 }
 
 .sidebox.dark {
-  background: #666;
+  background: #ccc;
   color: white;
-  border: 1px solid black;
+  border: 1px solid #999;
   margin-bottom: 1em;
 }
-
+.sidebox.dark a {
+  color: #333;
+}
+.sidebox.dark h2 {
+  font-size: 1.7em
+}
 .dash_box {
   margin-right: 0;
 }
 .right_column {
   width: 18em;
 }
-<% end %>
+.title_box table td {vertical-align: top}
 
-<% @title_box = capture do %>
-  <div class="right"><%= display_media(current_site.network.profiles.public.cover) %></div>
-  <h2><%= h "Welcome to {site_title}"[:welcome_title, current_site.title ]%></h2>
-  <p class="description"><%=h current_site.network.summary %></p>
 <% end %>
 
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
 <% end %>
 
-<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
+<% @title_box = capture do %>
+<table>
+<tr>
+  <td>
+    <h1 class="dim"><%=h "Welcome to {site_title}"[:welcome_title, current_site.title ]%></h1>
+    <p class="description"><%= @group.profiles.public.summary_html %></p>
+    <%= link_span(:bullet, 'linky link 1', 'linky link 2', 'linky link 3' ) %>
+  </td>
+  <td>
+    <%= display_media(@group.profiles.public.cover) %>
+</tr>
+</table>
+<% end %>
 
-<%# edit_site_custom_appearance_link(current_site) %>
+<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
 
 <br/>
 <br/>

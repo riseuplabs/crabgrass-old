@@ -152,12 +152,6 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
-  def edit_site_custom_appearance_link(site)
-    if site.custom_appearance and logged_in? and current_user.may?(:admin, site)
-      link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(site.custom_appearance)
-    end
-  end
-
   def formatting_reference_link
    %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
   end

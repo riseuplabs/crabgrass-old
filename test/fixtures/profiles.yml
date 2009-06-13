@@ -58,6 +58,9 @@ profile_for_cnt:
   may_see_members: false
   may_request_membership: true
   stranger: true
+  summary: Nullam tortor justo, cursus vestibulum, volutpat sed, interdum vel, orci. Donec euismod ultrices odio. Suspendisse eu odio sit amet odio vulputate tristique. Vestibulum massa. Vestibulum nec orci. Cras tellus pede, tincidunt vitae, adipiscing ut, rutrum ut, urna.
+  summary_html: Nullam tortor justo, cursus vestibulum, volutpat sed, interdum vel, orci. Donec euismod ultrices odio. Suspendisse eu odio sit amet odio vulputate tristique. Vestibulum massa. Vestibulum nec orci. Cras tellus pede, tincidunt vitae, adipiscing ut, rutrum ut, urna.
+  video_id: 1
   
 profile_for_fai:
   id: 6
