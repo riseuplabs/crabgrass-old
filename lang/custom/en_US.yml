@@ -1,4 +1,11 @@
 ##
+## GLOBAL PULSE
+##
+
+welcome_message_for_globalpulse: "Global Pulse is a space for you to join other youth media makers and share, create, and collaborate around subjects relevant to your community and your life."
+welcome_login_message_for_globalpulse: "Global Pulse is a community of youth media makers who share, create, and collaborate around subjects relevant to their communities and their lives."
+
+##
 ## J8 SUMMIT
 ## 
 
@@ -19,6 +26,9 @@ my_dashboard_for_site_climatechange: "My Unite4Climate"
 ##
 
 welcome_message_for_site_speakafrica: "Speak Africa is an online community of young people who share, create, and collaborate around topics of interest on the continent."
+welcome_login_message_for_site_speakafrica: "Speak Africa is an online community of young people who share, create, and collaborate around topics of interest on the continent."
+me_dashboard_link_for_site_speakafrica: "My Speak Africa"
+my_dashboard_for_site_speakafrica: "My Speak Africa"
 
 ##
 ## GENERAL
@@ -48,8 +58,4 @@ usage_agreement_text: |
   By agreeing to these rules, you promise that you will not post any messages that are obscene, vulgar, sexually-orientated, hateful, threatening, or otherwise violate any laws.
 
   The administrator reserves the right to remove or edit any content or member who is in violation of this agreement.
-
-welcome_login_message_for_site_speakafrica: "Speak Africa is an online community of young people who share, create, and collaborate around topics of interest on the continent."
-me_dashboard_link_for_site_speakafrica: "My Speak Africa"
-my_dashboard_for_site_speakafrica: "My Speak Africa"
 
