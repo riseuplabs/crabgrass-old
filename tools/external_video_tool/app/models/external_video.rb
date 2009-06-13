@@ -20,6 +20,9 @@ class ExternalVideo < ActiveRecord::Base
   include PageData
   before_save :update_page_terms
   
+  HEIGHT_RE = /height(="|:)(\d+)/
+  WIDTH_RE = /width(="|:)(\d+)/
+
   SERVICES = [
 
     { :name => :youtube,
@@ -85,11 +88,11 @@ class ExternalVideo < ActiveRecord::Base
   end
 
   def height
-    media_embed[/height(="|:)(\d+)/, 2] || default_height
+    read_attribute(:height) || (media_embed && media_embed[HEIGHT_RE, 2]) || default_height
   end
 
   def width
-    media_embed[/width(="|:)(\d+)/, 2] || default_width
+    read_attribute(:width) || (media_embed && media_embed[WIDTH_RE, 2]) || default_width
   end
 
   def default_width

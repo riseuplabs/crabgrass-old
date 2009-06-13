@@ -1,4 +1,5 @@
 <%= settings_tabs %>
+<% video = @profile.video || ExternalVideo.new %>
 
 <% form_tag(groups_profiles_params(:action => :media), :multipart => true) do %>
   <h1>Photo</h1>
@@ -38,21 +39,24 @@
   <blockquote>
 
   <% if @profile.video %>
-
     <%= display_media(@profile.video) %>
-    <p><%= submit_tag "Clear", :name => 'clear_video' %></p>
-
-  <% else %>
-
-    <%= Formy.form do |f|
-      f.row do |r|
-        r.label "Embed"
-        r.input text_area_tag('profile[video][media_embed]', '', :rows => 3, :cols => 40)
-      end
-    end %>
-    <p><%= submit_tag "Save", :name => 'save' %></p>
-
   <% end %>
+
+  <%= Formy.form do |f|
+    f.row do |r|
+      r.label "Embed"
+      r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40)
+    end
+    f.row do |r|
+      r.label "Height"
+      r.input text_field_tag('profile[video][height]', video.height)
+    end
+    f.row do |r|
+      r.label "Width"
+      r.input text_field_tag('profile[video][width]', video.width)
+    end
+  end %>
+  <p><%= submit_tag "Clear", :name => 'clear_video' if video.media_embed %> <%= submit_tag "Save", :name => 'save' %></p>
 
   </blockquote>
 <% end %>
