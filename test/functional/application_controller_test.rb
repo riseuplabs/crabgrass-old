@@ -47,6 +47,11 @@ class ApplicationControllerTest < ActionController::TestCase
       {:controller => 'groups/directory', :action => 'my'}
   end
 
+  def test_me_routes
+    assert_route 'me/counts', 
+      {:controller => 'me/base', :action => 'counts' }
+  end
+
   protected
 
   def assert_route(url, hash)

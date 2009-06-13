@@ -34,6 +34,10 @@ class Me::BaseController < ApplicationController
 
   protected
   
+  def authorized?
+    true
+  end
+
   append_before_filter :fetch_user
   def fetch_user
     @user = current_user

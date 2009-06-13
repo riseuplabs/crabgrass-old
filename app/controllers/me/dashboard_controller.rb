@@ -21,13 +21,4 @@ class Me::DashboardController < Me::BaseController
     render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
   end
   
-  protected
-
-  # it is impossible to see anyone else's me page,
-  # so no authorization is needed.
-  
-  def fetch_user
-    @user = current_user
-  end
-
 end
