@@ -2,10 +2,11 @@
 # This controller is in charge of rendering the root url.
 #
 class RootController < ApplicationController
-  helper :group, :account
 
+  helper :groups, :account, :wiki
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
+  permissions 'groups/base'
 
   def index
     if !logged_in?

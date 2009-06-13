@@ -37,9 +37,12 @@ class NetworksController < GroupsController
     if action?(:edit)
       group_settings_context
     elsif action?(:create, :new)
-      group_context
+      network_context
     else
-      @left_column = render_to_string(:partial => '/groups/navigation/sidebar')
+      network_context
+      unless @active_tab == :home
+        @left_column = render_to_string(:partial => '/groups/navigation/sidebar')
+      end
       if !action?(:show)
         add_context params[:action], networks_url(:action => params[:action], :id => @group, :path => params[:path])
       end

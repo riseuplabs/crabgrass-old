@@ -1,15 +1,12 @@
 <ul class='side_list commands'>
-  <% unless @active_tab == :home %>
-
   <%= side_list_li :text => 'Home'[:menu_home], :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
 
-    <% if @group_navigation %>
-      <ul>
-        <%= side_list_li :text => "Membership"[:membership], :url => {:controller => 'groups/memberships', :action => 'list', :id => @group}, :active => (@group_navigation == :membership), :icon => 'membership_add' %>
-        <%= side_list_li :text => "Settings"[:settings], :url => groups_url(:action => 'edit', :id => @group), :active => (@group_navigation == :settings), :icon => 'settings' %>
-        <%= side_list_li :text => "Requests"[:requests], :url => {:controller => 'groups/requests', :action => :list, :id => @group}, :active => (@group_navigation == :requests), :icon => 'info' %>
-      </ul>
-    <% end %>
+  <% if @group_navigation %>
+    <ul>
+      <%= side_list_li :text => "Membership"[:membership], :url => {:controller => 'groups/memberships', :action => 'list', :id => @group}, :active => (@group_navigation == :membership), :icon => 'membership_add' %>
+      <%= side_list_li :text => "Settings"[:settings], :url => groups_url(:action => 'edit', :id => @group), :active => (@group_navigation == :settings), :icon => 'settings' %>
+      <%= side_list_li :text => "Requests"[:requests], :url => {:controller => 'groups/requests', :action => :list, :id => @group}, :active => (@group_navigation == :requests), :icon => 'info' %>
+    </ul>
   <% end %>
 
   <%# side_list_li :text => 'about'.t, :url => url_for_group(@group,:action => 'about'), :active => ..., :icon => 'info' %>
