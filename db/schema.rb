@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090611160556) do
+ActiveRecord::Schema.define(:version => 20090613085915) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -182,6 +182,9 @@ ActiveRecord::Schema.define(:version => 20090611160556) do
     t.integer  "page_terms_id",       :limit => 11
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.integer  "height",              :limit => 3
+    t.integer  "width",               :limit => 3
+    t.integer  "player",              :limit => 1
   end
 
   create_table "federatings", :force => true do |t|
@@ -371,6 +374,7 @@ ActiveRecord::Schema.define(:version => 20090611160556) do
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
+    t.integer  "cover_id",           :limit => 11
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -452,7 +456,7 @@ ActiveRecord::Schema.define(:version => 20090611160556) do
     t.datetime "updated_at"
     t.string   "birthday",               :limit => 8
     t.boolean  "fof"
-    t.string   "summary"
+    t.text     "summary"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
@@ -472,6 +476,7 @@ ActiveRecord::Schema.define(:version => 20090611160556) do
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
     t.integer  "video_id",               :limit => 11
+    t.text     "summary_html"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
