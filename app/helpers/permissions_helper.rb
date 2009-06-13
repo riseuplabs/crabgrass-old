@@ -150,6 +150,9 @@ module PermissionsHelper
         return target.send(method, *args) if target.respond_to?(method)
       end
     end
+    if target.respond_to?('default_permission')
+      return target.send('default_permission', *args)
+    end
     return nil
   end
 end
