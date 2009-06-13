@@ -1,19 +1,19 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'membership_controller'
+require File.dirname(__FILE__) + '/../../test_helper'
+require 'groups/memberships_controller'
 
 # Re-raise errors caught by the controller.
-class MembershipController; def rescue_action(e) raise e end; end
+class Groups::MembershipsController; def rescue_action(e) raise e end; end
 
-class MembershipControllerTest < Test::Unit::TestCase
+class Groups::MembershipsControllerTest < Test::Unit::TestCase
   fixtures :users, :memberships, :groups, :profiles, :sites
 
   def setup
-    @controller = MembershipController.new
+    @controller = Groups::MembershipsController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
 
-=begin
+
   def test_list_when_not_logged_in
     get :list, :id => groups(:public_group).name
     assert_response :redirect, "login required to list membership of a group"
@@ -24,7 +24,7 @@ class MembershipControllerTest < Test::Unit::TestCase
     get :list, :id => groups(:rainbow).name
     assert_response :success, "list rainbow should succeed, because user red in group rainbow"
 
-    groups(:public_group).publicly_visible_members = true
+    groups(:public_group).profiles.public.may_see_members = true
     groups(:public_group).save!
     get :list, :id => groups(:public_group).name
     assert_response :success, "list public_group should succeed, because membership is public"
@@ -32,7 +32,7 @@ class MembershipControllerTest < Test::Unit::TestCase
     get :list, :id => groups(:private_group).name
     assert_response :success, "list private_group should succeed"
 
-    groups(:public_group).publicly_visible_members = false
+    groups(:public_group).profiles.public.may_see_members = false
     groups(:public_group).save!
 
     get :list, :id => groups(:public_group).name
@@ -73,6 +73,5 @@ class MembershipControllerTest < Test::Unit::TestCase
 
     assert users(:red).direct_member_of?(groups(:warm)), "red should be in committee"
   end
-=end
 
 end
