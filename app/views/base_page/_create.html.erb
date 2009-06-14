@@ -15,30 +15,28 @@
 
 <div class="create_page">
 <% form_tag({:action => 'create'}, :multipart => multipart) do %>
-  <table class="create_page">
-    <%= hidden_field_tag 'page_class', @page_class %>
-    <%= hidden_field_tag('group', params[:group]) if params[:group] %>
+  <%= hidden_field_tag 'page_class', @page_class %>
+  <%= hidden_field_tag('group', params[:group]) if params[:group] %>
+  <%= Formy.form do |form|
+    render :partial => 'base_page/create/information', :locals => {:form => form}
+    
+    if sections.any_in? ['file','files','external_video','body', 'image', 'event']
+      #form.header '{page_class} Data'[:create_page_data, "Page"[:page]].titlecase
+      sections.each do |section|
+        render :partial => "base_page/create/#{section}", :locals => {:form => form}
+      end
+    end
 
-    <%= render :partial => 'base_page/create/information', :locals => {:sections => sections} %>
-
-    <%= render :partial => 'base_page/create/sharing' %>
-
-    <% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
-      <tr><td colspan="2" class="heading">
-        <h2 class="dark"><%= '{page_class} Data'[:create_page_data, "Page"[:page]].titlecase %></h2>
-      </td></tr>
-      <% sections.each do |section| %>
-        <%= render :partial => "base_page/create/#{section}" %>
-      <% end %>
-    <% end %>
-
-    <tr><td colspan="2" class="buttons">
-      <%# the extra submit button is needed, so that 'create' remains the default (on enter) -%>
-      <%= submit_tag "hidden", :name => 'create', :style => 'display:none' %>
-      <%= submit_tag '&laquo; ' + "Back"[:back_button], :name => 'cancel' %>
-      <%= submit_tag "Create {page_class}"[:create_page_button, "Page"[:page]] + ' &raquo;', :name => 'create' %>
-    </td></tr>
-  </table>
+    render :partial => 'base_page/create/sharing', :locals => {:form => form}
+  end %>
+  <div class="form_buttons">
+    <%# the extra submit button is needed, so that 'create' remains the default (on enter) -%>
+    <%= submit_tag "hidden", :name => 'create', :style => 'display:none' %>
+    <%= submit_tag '&laquo; ' + "Back"[:back_button], :name => 'cancel' %>
+    <%= submit_tag "Create {page_class}"[:create_page_button, "Page"[:page]] + ' &raquo;', :name => 'create' %>
+  </div>
 <% end %>
 </div>
+
+<%= javascript_tag %( $("page_title").focus() ) %>
 

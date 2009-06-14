@@ -1,14 +1,14 @@
-<tr>
-  <td colspan="2" class="label first"><%= 'Files'[:files] %></td>
-</tr><tr>
-  <td>
-    <p><input name="assets[]" size="29" type="file" /></p>
-    <p><input name="assets[]" size="29" type="file" /></p>
-    <p id='add_file_field'>
-      <%= link_to_function('Add another file'[:add_another_file], %[$('add_file_field').insert({before: '<p><input name=\\'assets[]\\' size=\\'29\\' type=\\'file\\' /></p>'})]) %>
-    </p>
-  </td>
-  <td class="help"><%= help(:upload_image) %></td>
-</tr>
-
+<%
+  form.row do |r|
+    r.label 'Files'[:files]
+    r.input %Q{
+      <p style='margin-top: 0'><input name="assets[]" size="29" type="file" /></p>
+      <p><input name="assets[]" size="29" type="file" /></p>
+      <p id='add_file_field'>
+        #{link_to_function('Add another file'[:add_another_file], %[$('add_file_field').insert({before: '<p><input name=\\'assets[]\\' size=\\'29\\' type=\\'file\\' /></p>'})])}
+      </p>
+    }
+    r.info help(:upload_image)
+  end
+%>
 
