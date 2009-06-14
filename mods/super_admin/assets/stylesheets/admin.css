@@ -176,6 +176,8 @@ span.alphabetical_filter a {
   text-decoration:none;
 }
 
+a.alphabetical_filter_letter.inverted { background:#333; color:#ddd; }
+
 label {
   font-weight:bold;
   text-align:right;
