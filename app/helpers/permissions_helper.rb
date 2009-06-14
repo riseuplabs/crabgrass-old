@@ -68,12 +68,12 @@ module PermissionsHelper
   # 
   # There is one exception to this rule:
   #
-  # We do not call super() if we are a controller. This is because method_missing
-  # is called from ActionController::Base#perform_action(). Calling super in this
-  # case causes all kinds of problems, but if we do nothing then the correct
-  # template will get rendered.
+  # We do not call super() if we are a controller. Instead, we mimic the behavior
+  # of ActionController:Base#perform_action. I don't know why, but calling super()
+  # in the case causes problems. 
   def method_missing(method_id, *args)
-    match = PERMISSION_METHOD_RE.match(method_id.to_s)
+    method_id = method_id.to_s
+    match = PERMISSION_METHOD_RE.match(method_id)
     if match
       result = may?(controller, match[1], *args)
       if result.nil?
@@ -82,7 +82,11 @@ module PermissionsHelper
         result
       end
     elsif self.is_a? ActionController::Base
-      nil
+      if template_exists?(method_id) && template_public?(method_id)
+        nil # ActionController::Base will render the template
+      else
+        raise NameError, "No method #{method_id}", caller
+      end
     else
       super
     end

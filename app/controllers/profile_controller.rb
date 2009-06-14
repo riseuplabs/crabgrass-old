@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
   helper 'me/base'
-  permissions 'profile'
+  #permissions 'profiles'
   verify :method => :post, :only => :update  
   
   def show
@@ -85,8 +85,8 @@ class ProfileController < ApplicationController
       @profile = current_user.profiles.public
     elsif params[:id] == 'private' #&& @site.profiles.private?
       @profile = current_user.profiles.private
-    else
-      @profile = Profile.find params[:id]
+    #else
+    #  @profile = Profile.find params[:id]
     end
     @entity = @profile.entity
     if @entity.is_a?(User)
