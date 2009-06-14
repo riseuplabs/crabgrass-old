@@ -1,5 +1,9 @@
 module Admin::GroupsHelper
 
+  def network_path(arg, options={})
+    group_path(arg, options)
+  end
+
   def group_path(arg, options={})
     admin_group_path(arg,options)
   end
