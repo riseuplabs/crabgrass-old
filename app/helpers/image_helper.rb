@@ -84,12 +84,12 @@ module ImageHelper
   end
 
   def spinner_icon_on(icon, id)
-    target = id ? "$('#{id}')" : 'event_target(event)'
+    target = id ? "$('#{id}')" : 'eventTarget(event)'
     "replace_class_name(#{target}, '#{icon}_16', 'spinner_icon')"
   end
   
   def spinner_icon_off(icon, id)
-    target = id ? "$('#{id}')" : 'event_target(event)'
+    target = id ? "$('#{id}')" : 'eventTarget(event)'
     "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
   end
 
@@ -99,11 +99,12 @@ module ImageHelper
   # but it doesn't quite work, because for :complete of ajax, window.event
   # is not right
   #
-  #  function event_target(event) {
+  #  function eventTarget(event) {
   #    event = event || window.event; // IE doesn't pass event as argument.
   #    return(event.target || event.srcElement); // IE doesn't use .target
   #  }
-
+  #
+  # however, this can be used for non-ajax js.  
 
   ##
   ## LINKS WITH ICONS
@@ -143,6 +144,11 @@ module ImageHelper
 
   def link_to_with_icon(icon, label, url, options={})
     link_to label, url, options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+  end
+
+  def link_to_toggle(label, id)
+    function = "$('#{id}').toggle(); eventTarget(event).toggleClassName('right_16').toggleClassName('sort_down_16')"
+    link_to_function_with_icon label, function, :icon => 'right'
   end
 
 #  # makes an icon button to a remote action. when you click on the icon, it turns

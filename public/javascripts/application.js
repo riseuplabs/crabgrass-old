@@ -67,10 +67,7 @@ function submit_form(form_element, name, value) {
   }
 }
 
-function replace_class_name(element, old_class, new_class) {
-  element.removeClassName(old_class);
-  element.addClassName(new_class);
-}
+function replace_class_name(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
 
 /** editing textareas **/
 
@@ -109,6 +106,10 @@ function enterPressed(event) {
   else { return(event.keyCode == 13); }
 }
 
+function eventTarget(event) {
+  event = event || window.event; // IE doesn't pass event as argument.
+  return(event.target || event.srcElement); // IE doesn't use .target
+}
 
 /** menu navigation **/
 /*
