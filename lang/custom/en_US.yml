@@ -1,4 +1,11 @@
 ##
+## GLOBAL PULSE
+##
+
+welcome_message_for_globalpulse: "Global Pulse is a space for you to join other youth media makers and share, create, and collaborate around subjects relevant to your community and your life."
+welcome_login_message_for_globalpulse: "Global Pulse is a community of youth media makers who share, create, and collaborate around subjects relevant to their communities and their lives."
+
+##
 ## J8 SUMMIT
 ## 
 
@@ -11,6 +18,11 @@ welcome_heading_for_site_j8summit: "Welcome to the J8 community"
 ##
 
 welcome_message_for_site_climatechange: "Unite for Climate enables youth organisations to get things done, get the word out, collaborate, and network."
+welcome_login_message_for_site_climatechange: |
+  Unite for Climate is an online community of young people and organisations from all around the world working together on Climate Change. Its aim is to support existing youth actions by facilitating the sharing of resources and knowledge and the coordination of youth action globally. This community brings together diverse actors from the NGO world, the Academica, International organisations… The works and opinions of this community can be seen (coming soon) at www.uniteforclimate.org.
+
+  For more information or to sign-up for future updates, contact us at info at uniteforclimate dot org
+
 me_dashboard_link_for_site_climatechange: "My Unite4Climate"
 my_dashboard_for_site_climatechange: "My Unite4Climate"
 
@@ -19,6 +31,9 @@ my_dashboard_for_site_climatechange: "My Unite4Climate"
 ##
 
 welcome_message_for_site_speakafrica: "Speak Africa is an online community of young people who share, create, and collaborate around topics of interest on the continent."
+welcome_login_message_for_site_speakafrica: "Speak Africa is an online community of young people who share, create, and collaborate around topics of interest on the continent."
+me_dashboard_link_for_site_speakafrica: "My Speak Africa"
+my_dashboard_for_site_speakafrica: "My Speak Africa"
 
 ##
 ## GENERAL
@@ -48,8 +63,4 @@ usage_agreement_text: |
   By agreeing to these rules, you promise that you will not post any messages that are obscene, vulgar, sexually-orientated, hateful, threatening, or otherwise violate any laws.
 
   The administrator reserves the right to remove or edit any content or member who is in violation of this agreement.
-
-welcome_login_message_for_site_speakafrica: "Speak Africa is an online community of young people who share, create, and collaborate around topics of interest on the continent."
-me_dashboard_link_for_site_speakafrica: "My Speak Africa"
-my_dashboard_for_site_speakafrica: "My Speak Africa"
 
