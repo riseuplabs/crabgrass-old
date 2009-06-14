@@ -374,6 +374,7 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
+    t.integer  "cover_id",           :limit => 11
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -455,7 +456,7 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.datetime "updated_at"
     t.string   "birthday",               :limit => 8
     t.boolean  "fof"
-    t.string   "summary"
+    t.text     "summary"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
@@ -475,6 +476,7 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
     t.integer  "video_id",               :limit => 11
+    t.text     "summary_html"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
