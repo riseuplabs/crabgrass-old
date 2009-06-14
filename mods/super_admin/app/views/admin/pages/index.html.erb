@@ -21,9 +21,9 @@
   </div>
 </div>
 <% form_tag({ :action => 'index' }, :method => :get) do %>
-Filter by group: <%= select_tag 'group', "<option value=''>#{'all groups'.t}</option>"+
+<%# Filter by group: <%#= select_tag 'group', "<option value=''>#{'all groups'.t}</option>"+
 options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
-<%= submit_tag 'Filter', :name => '' %>
+<%#= submit_tag 'Filter', :name => '' %>
 <% end %>
 <div id="pages-listing">
   <%= render :partial => 'listing' if @pages.any? %>
