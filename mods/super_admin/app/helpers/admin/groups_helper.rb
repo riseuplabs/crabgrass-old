@@ -1,4 +1,8 @@
 module Admin::GroupsHelper
+  
+  def network_path(arg, options={})
+    group_path(arg, options)
+  end
 
   def group_path(arg, options={})
     admin_group_path(arg,options)
@@ -9,13 +13,15 @@ module Admin::GroupsHelper
   end
  
   def new_group_path
-    new_admin_group_path
+    #new_admin_group_path
+    { :controller => 'admin/groups', :action => 'new' }
   end
 
   def groups_path
-    admin_groups_path
+    #admin_groups_path
+    { :controller => 'admin/groups' }
   end
-
+  
   def committee_path(arg, options={})
     admin_group_path(arg,options)
   end

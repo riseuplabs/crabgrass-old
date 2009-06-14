@@ -11,9 +11,10 @@ module Admin::EmailBlastsHelper
   def new_email_blasts_path
     new_admin_email_blasts_path
   end
-
+  
   def email_blasts_path
-    admin_email_blasts_path
+    #admin_email_blasts_path
+    { :controller => 'admin/email_blasts' }
   end
 
   def email_blasts_url(arg, options={})
