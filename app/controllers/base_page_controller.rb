@@ -6,6 +6,7 @@ This is the controller that all page controllers are based on.
 
 class BasePageController < ApplicationController
 
+  include BasePageHelper
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
@@ -214,7 +215,7 @@ class BasePageController < ApplicationController
     params[:page] ||= HashWithIndifferentAccess.new
     params[:page][:user] = current_user
     params[:page][:share_with] = params[:recipients]
-    params[:page][:access] = (params[:access]||'view').to_sym
+    params[:page][:access] = access_from_params(params[:access])
   end
 
 
