@@ -1,7 +1,7 @@
-<tr>
-  <td colspan="2" class="label first"><%= 'Body'.t %></td>
-</tr><tr>
-  <td><%= text_area_tag 'body', params[:body], :size => '40x10' %></td>
-  <td class="help"><%= help(:wiki_body) %></td>
-</tr>
-
+<%
+  form.row do |r|
+    r.label 'Body'[:body]
+    r.input text_area_tag('body', params[:body], :size => '40x6')
+    r.info help(:wiki_body)
+  end
+%>

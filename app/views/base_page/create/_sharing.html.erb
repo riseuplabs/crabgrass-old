@@ -1,21 +1,39 @@
-<%= spinner 'popup' %><%# unused, but _add_recipient.rjs tries to hide it %>
+<%
+  ## PAGE OWNER
+  if params[:group].any?
+    form.hidden hidden_field_tag('page[owner]', params[:group])
+  else
+    form.row do |r|
+      r.label "Page Owner (optional)"[:page_create_owner]
+      r.input select_tag('page[owner]', options_for_page_owner(:include_me => true))
+      r.info help(:page_owner)
+    end
+  end
 
-<tr><td colspan="2" class="heading">
-  <h2 class="dark"><%= 'Share this page with:'[:share_page_recipients, "Page"[:page]] %></h2>
-</td></tr>
-
-<tr>
-<td>
-  <div class='share_page'>
-  <div id='share_error_message'></div>
-  <%= render :partial => 'base_page/share/add_recipient_widget' %>
-  </div>
-</td>
-<td class="help">
-  <br/>
-  <%= help(:sharing) %>
-</td>
-</tr>
+  ## ADDITIONAL ACCESS
+  form.hidden spinner('popup') # unused, but _add_recipient.rjs tries to hide it
+  form.row do |r|
+    r.input link_to_toggle 'Additional Access'[:additional_page_access], 'recipient_row'
+  end
+  form.row do |r|
+    r.style 'display:none'
+    r.id 'recipient_row'
+    r.classes 'first'
+    r.label "Recipient"
+    r.input %Q{
+      <div class='share_page'>
+        <div id='share_error_message'></div>
+        #{render(:partial => 'base_page/share/add_recipient_widget')}
+      </div>
+    }
+    r.info [
+      help(:sharing),
+      content_tag(:div, help(:coordinator), :class => 'small_icon wrench_16 bullet'),
+      content_tag(:div, help(:participant), :class => 'small_icon pencil_16 bullet'),
+      content_tag(:div, help(:viewer), :class => 'small_icon magnifier_16 bullet'),
+    ].join
+  end
+%>
 
 
 

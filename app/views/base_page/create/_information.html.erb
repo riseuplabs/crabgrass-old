@@ -1,45 +1,19 @@
-<tr><td colspan="2" class="heading first">
-  <h2 class="dark first"><%= '{page_class} Information'[:create_page_information, "Page"[:page]] %></h2>
-</td></tr>
-
-<tr>
-  <td colspan="2" class="label first"><%= 'Title'.t %></td>
-</tr>
-<tr>
-  <td><%= text_field 'page', 'title', :size => 40 %></td>
-  <%= javascript_tag %( $("page_title").focus() ) %>
-  <td class="help"><%= help(:title) %></td>
-</tr>
-
-<tr>
-  <td colspan="2" class='label'><%= 'Summary'.t %></td>
-</tr>
-<tr>
-  <td><%= text_area 'page', 'summary', :size => '40x3' %></td>
-  <td class="help"><%= help(:summary) %></td>
-</tr>
-
-<tr>
-  <td colspan="2" class='label'><%= 'Tags'.t %></td>
-</tr>
-<tr>
-  <td>
-    <%= text_field 'page', 'tag_list', :size => 40 %>
-  </td>
-  <td class="help"><%= help(:tags) %> <%= 'Separate tags using commas'[:separate_tags]%></td>
-</tr>
-
-<% if params[:group].any? %>
-  <%= hidden_field_tag 'page[owner]', params[:group] %>
-<% else %>
-<tr>
-  <td colspan="2" class='label'><%= "Page Owner (optional)"[:page_create_owner] %></td>
-</tr>
-<tr>
-  <td>
-    <%= select_tag 'page[owner]', options_for_page_owner(:include_me => true) %>
-  </td>
-  <td class="help"><%= help(:page_owner) %></td>
-</tr>
-<% end %>
+<%
+  #form.heading '{page_class} Information'[:create_page_information, "Page"[:page]]
+  form.row do |r|
+    r.label 'Title'[:title]
+    r.input text_field('page', 'title', :size => 40)
+    r.info help(:title)
+  end
+  form.row do |r|
+    r.label 'Summary'[:summary]
+    r.input text_area('page', 'summary', :size => '40x3')
+    r.info help(:summary)
+  end
+  form.row do |r|
+    r.label 'Tags'[:tags]
+    r.input text_field('page', 'tag_list', :size => 40)
+    r.info(help(:tags) + " " + 'Separate tags using commas'[:separate_tags])
+  end
+%>
 

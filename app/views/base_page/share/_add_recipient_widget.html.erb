@@ -49,12 +49,14 @@
   recipients_exist = @page && @page.recipients.any?
 %>
 <table class='share_page_recipient_add'>
+<!--
   <tr>
     <td><%= 'User or group name'[:user_or_group_name]%>:</td>
     <td>&nbsp;</td>
     <td><%= 'Grant Access'[:grant_access]%>:</td>
     <td>&nbsp;</td>
   </tr>
+-->
   <tr>
     <td style='width:100%'>
       <%= text_field_tag 'recipient_name', '', :style => 'width:100%',

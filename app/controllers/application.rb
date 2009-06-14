@@ -116,7 +116,8 @@ class ApplicationController < ActionController::Base
   # subclasses to put their navigation setup calls in context() because
   # it will only get called when appropriate.
   def context_if_appropriate
-    if response.redirected_to.nil? and request.format.to_sym == :html  
+    if !@skip_context and response.redirected_to.nil? and request.format.to_sym == :html
+      @skip_context = true
       context()
     end
     true
