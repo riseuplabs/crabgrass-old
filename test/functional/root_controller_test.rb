@@ -46,12 +46,12 @@ class RootControllerTest < Test::Unit::TestCase
       assert_not_nil assigns["current_site"].id, "Response did not come from the site we expected."
       current_site=assigns["current_site"]
 
-      assert_not_equal @controller.most_active_users, [], "Expecting a list of most active users."
-      assert_nil @controller.most_active_users.detect{|u| !u.site_ids.include?(current_site.id)}, 
+      assert_not_equal @controller.send(:most_active_users), [], "Expecting a list of most active users."
+      assert_nil @controller.send(:most_active_users).detect{|u| !u.site_ids.include?(current_site.id)}, 
         "All users should be on current_site."
-
-      assert_not_equal @controller.most_active_groups, [], "Expecting a list of most recent groups."
-      assert_nil @controller.most_active_groups.detect{|u| u.site_id != current_site.id}, 
+  
+      assert_not_equal @controller.send(:most_active_groups), [], "Expecting a list of most recent groups."
+      assert_nil @controller.send(:most_active_groups).detect{|u| u.site_id != current_site.id}, 
         "All groups should be on current_site."
     end
   end
