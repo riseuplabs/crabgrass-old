@@ -22,7 +22,7 @@ class NetworksController < GroupsController
       if current_user.may?(:admin, member_group)
         @group.add_group!(member_group)
       else
-        @gruop.add_user!(current_user)
+        @group.add_user!(current_user)
       end
     end
     group_created_success

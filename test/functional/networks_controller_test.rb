@@ -25,34 +25,37 @@ class NetworksControllerTest < Test::Unit::TestCase
     get :list
     assert_response :success
   end
-
+=end
   def test_create
     login_as :blue
-    get :create
-    assert_response :success
+    get :new
+    assert_response :success, "should be able to create new network"
+    assert_select "form#createform[method=post][action=?]", networks_url(:action=>:create, :only_path => true)
 
-    assert_difference 'Network.count', 1 do
-      post :create,
-        :group => {:name => 'testnet'},
-        :group_id => groups(:animals).id
-      assert_response :redirect
-      assert_redirected_to :controller => :dispatch, "_context"=>"testnet"
+    assert_difference 'groups(:animals).networks.count',1,"animals group should be part of network" do
+      create_network_for_animals
     end
   end
 
   def test_failed_create
     login_as :red
-    get :create
+    get :new
     assert_response :success
-
-    assert_no_difference 'Network.count' do
-      post :create,
-        :group => {:name => 'testnet2'},
-        :group_id => groups(:animals).id
-      assert_response :redirect
-      assert_redirected_to :controller => :account, :action => :login
+    assert_no_difference 'groups(:animals).networks.count',"should not be allowed to add animals group to new network" do
+      create_network_for_animals
     end
   end
-=end
 
+  protected
+
+  def create_network_for_animals
+    assert_difference 'Network.count', 1, "new network should be created" do
+      post :create,
+        :group => {:name => 'testnet'},
+        :group_id => groups(:animals).id
+      assert_response :redirect, "redirect to edit on creation of new network"
+      assert_redirected_to :controller => :networks, :action=>'edit', :id=>'testnet'
+    end
+  end
 end
+
