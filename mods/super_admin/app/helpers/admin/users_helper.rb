@@ -9,13 +9,11 @@ module Admin::UsersHelper
   end
  
   def new_user_path
-    #new_admin_user_path
-    { :controller => 'admin/users', :action => 'new' }
+    new_admin_user_path
   end
 
   def users_path
-    #admin_users_path
-    { :controller => 'admin/users' }
+    admin_users_path
   end
 
   def user_url(arg, options={})

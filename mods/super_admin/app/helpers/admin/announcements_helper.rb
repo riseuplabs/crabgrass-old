@@ -13,8 +13,7 @@ module Admin::AnnouncementsHelper
   end
 
   def announcements_path
-    #admin_announcements_path
-    { :controller => 'admin/announcements' }
+    admin_announcements_path
   end
 
   def announcement_url(arg, options={})
