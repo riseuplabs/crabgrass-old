@@ -31,7 +31,7 @@ module ContactPermission
 
   def may_message_contact?(user=@user)
     logged_in? and
-    user != current_user and
+    user != current_user
   end
 
   def may_approve_contact?(user=@user)
