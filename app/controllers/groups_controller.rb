@@ -57,6 +57,12 @@ class GroupsController < Groups::BaseController
   end
 
   def destroy
+    @group.destroy
+    if @group.parent
+      redirect_to url_for_group(@group.parent)
+    else
+      redirect_to me_url
+    end
   end
   
   protected
@@ -117,9 +123,7 @@ class GroupsController < Groups::BaseController
 
   def group_created_success
     flash_message :title => 'Group Created', :success => 'now make sure to configure your group'
-    # no idea if there is a more elegant way.
-    # note that this has to work for networks too.
-    redirect_to url_for(:action => 'edit', :id => @group.name)
+    redirect_to groups_url(:action => 'edit')
   end
 
   def search_template(template)

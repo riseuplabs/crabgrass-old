@@ -1,28 +1,61 @@
 <%= settings_tabs %>
+<% video = @profile.video || ExternalVideo.new %>
 
-<% form_tag(groups_profiles_params(:action => :edit), :multipart => false) do %>
-  <h1>Overview</h1>
-  <blockquote>
-
+<% form_tag(groups_profiles_params(:action => :edit), :multipart => true) do %>
   <%= Formy.form do |f|
+    f.heading "Information"[:information]
     f.row do |r|
       r.label "Summary"
-      r.input text_area('profile', 'summary', :rows => 3, :cols => 40)
+      r.input text_area('profile', 'summary', :rows => 5, :cols => 40)
     end
     if @profile.summary_html.any?
-		  f.row do |r|
-		    r.label "Summary (preview)"
-		    r.input @profile.summary_html
-		  end
+      f.row do |r|
+        r.label "Summary (preview)"
+        r.input @profile.summary_html
+      end
     end
     f.row do |r|
       r.label "Location"
       r.input text_field('profile', 'place')
     end
-
+    f.heading "Photo"
+    if @profile.photo
+      f.row do |r|
+        r.input [thumbnail_img_tag(@profile.photo, :medium), submit_tag("Clear", :name => 'clear_photo')].join('<br/>')
+      end
+    else
+      f.row do |r|
+        r.label "Image File"
+        r.input file_field_tag('profile[photo][uploaded_data]')
+      end
+      f.row do |r|
+        r.label "Caption"
+        r.input text_field_tag('profile[photo][caption]', '')
+      end
+      f.row do |r|
+        r.label "Photo Credit"
+        r.input text_field_tag('profile[photo][credit]', '')
+      end      
+    end
+    f.heading "Video"
+    if video.media_embed.any?
+      f.row do |r|
+        r.input [display_media(@profile.video), submit_tag("Clear", :name => 'clear_video')].join('<br/>')
+      end
+    end
+    f.row do |r|
+      r.label "Embed"
+      r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40)
+    end
+    f.row do |r|
+      r.label "Height"
+      r.input text_field_tag('profile[video][height]', video.height)
+    end
+    f.row do |r|
+      r.label "Width"
+      r.input text_field_tag('profile[video][width]', video.width)
+    end      
   end %>
-  <p><%= submit_tag "Save", :name => 'save' %></p>
-
-  </blockquote>
+  <p class="form_buttons"><%= submit_tag "Save", :name => 'save' %></p>
 <% end %>
 

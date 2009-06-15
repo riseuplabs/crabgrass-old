@@ -26,6 +26,7 @@ class RootController < ApplicationController
 
     @recent_pages = Page.find_by_path(['descending', 'updated_at', 'limit','20'], options_for_group(@group))
     @most_viewed_pages = Page.find_by_path(['descending', 'views_count', 'limit','10'], options_for_group(@group))
+    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
     @group.profiles.public.create_wiki unless @group.profiles.public.wiki
 
     render :template => 'root/site_home'    

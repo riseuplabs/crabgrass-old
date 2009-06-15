@@ -46,6 +46,7 @@ member_groups_of_network: "Member Groups"
 peers: "Peers"
 none: "None"
 contacts: "Friends"
+my_contacts: "My Friends"
 friends: "Friends"
 people: "People"
 members: "Members"
@@ -550,7 +551,6 @@ group_directory_link: "Group Directory"
 # commands
 
 edit_settings: "Edit Settings"
-destroy_group: "Destroy %s"
 view_all: "View All"
 send_invites: "Send Invites"
 view_requests: "View Requests"
@@ -582,7 +582,7 @@ language: "Language"
 coordinating_council: "Coordinating Council"
 this_is_coordinating: "This is the <strong>coordinating council</strong> for {parent_group}."
 new_council: "New council for group {group_name}"
-edit_council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+council_help: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
 
 # committee
 

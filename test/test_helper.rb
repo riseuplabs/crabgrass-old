@@ -29,6 +29,18 @@ def showlog
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
+# This is a testable class that emulates an uploaded file
+# Even though this is exactly like a ActionController::TestUploadedFile
+# i can't get the tests to work unless we use this.
+class MockFile
+  attr_reader :path
+	def initialize(path); @path = path; end
+	def size; 1; end
+  def original_filename; @path.split('/').last; end
+  def read; File.open(@path) { |f| f.read }; end
+  def rewind; end
+end
+
 class Test::Unit::TestCase
 
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -76,9 +88,14 @@ class Test::Unit::TestCase
     fixture_file_upload('files/'+file, type)
   end
 
+  def upload_avatar(file)
+    MockFile.new(RAILS_ROOT + '/test/fixtures/files/' + file)
+  end
+
   def read_file(file)
     File.read( RAILS_ROOT + '/test/fixtures/files/' + file )
   end
+
 
 =begin
   def assert_login_required(method, url)

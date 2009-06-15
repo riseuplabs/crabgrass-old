@@ -45,6 +45,16 @@ module BasePageHelper
     link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
+  # setting to be overridden by install mods
+  # this is the default access for creating a new page participation.
+  def default_access
+    'admin'
+  end
+
+  def access_from_params(para=params[:access])
+    (para||:view).to_sym
+  end
+
   ## POSTS HELPERS
   ## (posts are handled by a seperate controller, but all the views for
   ##  posts use this helper)
@@ -291,8 +301,10 @@ module BasePageHelper
     select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
     if options[:blank]
       select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
+      selected ||= ''
+    else
+      selected ||= default_access
     end
-    selected ||= 'admin'
     if options[:expand]
       select_tag name, options_for_select(select_options, selected), :size => select_options.size
     else

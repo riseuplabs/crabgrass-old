@@ -29,7 +29,7 @@ class BasePage::ShareController < ApplicationController
   verify :xhr => true
 
   helper 'base_page', 'base_page/share'
-  permissions 'base_page/share'
+  permissions 'base_page/share', 'base_page/participation'
 
   def auto_complete
     # i am searching by display_name only under protest. this is going to

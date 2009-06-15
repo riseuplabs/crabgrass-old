@@ -12,7 +12,9 @@ module UrlHelper
   #
 
   def groups_params(options={})
-    {:controller => '/groups', :action => nil, :id => @group}.merge(options)
+    options[:id] ||= @group
+    return networks_params(options) if options[:id] and options[:id].network?
+    {:controller => '/groups', :action => nil}.merge(options)
   end
 
   def networks_params(options={})
@@ -25,6 +27,10 @@ module UrlHelper
 
   def committees_params(options={})
     {:controller => '/groups/committees', :action => nil, :id => @group}.merge(options)
+  end
+
+  def councils_params(options={})
+    {:controller => '/groups/councils', :action => nil, :id => @group}.merge(options)
   end
 
   def groups_profiles_params(options={})

@@ -44,7 +44,9 @@
   ) do -%>
     <%= "User or group name"[:user_or_group_name] %>:<br/>
     <%= text_field_tag 'add_names','',:size=>17 %>
-    <%= select_page_access 'access', :blank => false %>
+    <%- if may_select_access_participation? -%>
+      <%= select_page_access 'access', :blank => false %>
+    <%- end -%>
     <%= submit_tag 'Grant Access'[:grant_access], :name => 'add' %>
     <%= spinner 'permissions' %>
   <%- end -%>

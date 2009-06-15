@@ -26,4 +26,10 @@ module BasePage::ParticipationPermission
   alias_method :may_remove_watch_participation?, :may_read_participation?
   alias_method :may_show_popup_participation?, :may_read_participation?
   alias_method :may_close_details_participation?, :may_read_participation?
+
+  # everyone may set the permissions of a new page and change them
+  # if they may create participations.
+  def may_select_access_participation?(page=@page)
+    @page.nil? or current_user.may?(:admin,@page)
+  end
 end

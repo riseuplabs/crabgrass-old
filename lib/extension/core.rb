@@ -8,6 +8,10 @@ class NilClass
   def any?
     false
   end
+
+  def any
+    false
+  end
   
   # nil.to_s => ""
   def empty?
@@ -74,6 +78,11 @@ class Array
 
   def path
     join('/')
+  end
+
+  # an alias for self.compact.join(' ')
+  def combine(delimiter = ' ')
+    compact.join(delimiter)
   end
 
 =begin

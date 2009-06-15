@@ -1,6 +1,9 @@
+<% size ||= 15 -%>
+<% text_field_style ||= '' -%>
 <% form_tag('/me/search/', :class => 'minisearch round') do %>
 <fieldset class='round'>
-  <%= text_field_tag('search[text]', '', :size => 15, :class => 'minisearch_text', :id => 'search_text') %>
+
+  <%= text_field_tag('search[text]', '', :size => size, :class => 'minisearch_text', :id => 'search_text', :style => text_field_style) %>
   <%= hidden_field_tag('search[group]', @group.id, :id => 'search_group') if @group %>
   <%= hidden_field_tag('search[person]', @user.id, :id => 'search_person') if @user and (!logged_in? or @user.id != current_user.id)%>
   <%= submit_tag 'search'.t, :class => 'minisearch_submit' %>

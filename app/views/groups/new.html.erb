@@ -4,7 +4,7 @@
     url = committees_url(:action => :create, :id => @parent)
   elsif @group.council?
     headline = 'New council for group {group_name}'[:new_council, @parent.name]
-    url = committees_url(:action => :create, :id => @parent)
+    url = councils_url(:action => :create, :id => @parent)
   elsif @group.network?
     headline = 'New network'[:new_network]
     url = networks_url(:action => "create")
@@ -16,7 +16,7 @@
 
 <% @title_box = content_tag(:h1, headline)-%>
 
-<% form_tag(url,:id => "createform") do %>
+<% form_tag(url,:id => "createform", :multipart => true) do %>
   <%= render(:partial => 'groups/basic/form', :locals => {:submit => false}) %>
   <%= render(:partial => 'networks/initial_membership_form') if @group.network? %>
   <div class='form_buttons'>
