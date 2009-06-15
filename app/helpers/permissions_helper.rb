@@ -21,9 +21,12 @@ module PermissionsHelper
     end
   end
 
-  def default_permission(*args)
-    false
-  end
+  # i don't think there should be a default permission globally, because
+  # then you will never get an error when you call a permission that doesn't
+  # exist. 
+  #def default_permission(*args)
+  #  false
+  #end
 
   # shortcut for +may?+ but automatically selecting the current controller.
   # only use this in authorized? and similar situations where the user is
@@ -131,7 +134,6 @@ module PermissionsHelper
     names=[]
     if controller.is_a? ApplicationController
       names << controller.controller_name
-      names << controller.controller_name.singularize
       names << controller.controller_path.split("/")[-2]
       names << controller.class.superclass.controller_name
       names << 'base_page' if controller.is_a? BasePageController
@@ -150,6 +152,7 @@ module PermissionsHelper
     names.compact.each do |name|
       methods = ["may_#{action}_#{name}?"]
       methods << "may_#{action}_#{name.singularize}?" if name != name.singularize
+      methods << "may_#{action}?" if action =~ /_/
       methods.each do |method|
         return target.send(method, *args) if target.respond_to?(method)
       end
