@@ -17,8 +17,9 @@ module CustomAppearancesPermission
   #
   def may_update_custom_appearances?(appearance=@appearance)
     return false unless logged_in? and
-    current_site and
-    appearance == current_site.custom_appearance
+      current_site and
+      ( ! appearance || 
+        appearance == current_site.custom_appearance )
 
     current_user.may?(:admin, current_site) or
     current_site.super_admin_group && current_user.may?(:admin, current_site.super_admin_group)
@@ -26,4 +27,5 @@ module CustomAppearancesPermission
 
   alias_method :may_edit_custom_appearances?, :may_update_custom_appearances?
   alias_method :may_available_custom_appearances?, :may_update_custom_appearances?
+  alias_method :may_new_custom_appearances?, :may_update_custom_appearances?
 end

@@ -23,19 +23,19 @@
   </li>
 </ul>
 
-<h4>SiteAdmin (dummy)</h4>
+<h4>SiteAdmin</h4>
 <ul>
   <li class="<%= 'active' if @active == 'siteadmin_basic' %>">
-    <%= link_to 'basic', ''  %>
+    <%= link_to 'basic', ''  %>&nbsp;(dummy)
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_custom_appearances' %>">
-    <%= link_to 'custom appearence', edit_custom_appearance_url(current_site.custom_appearance) %>
+    <%= link_to 'custom appearence', current_site.custom_appearance ? edit_custom_appearance_url(current_site.custom_appearance) : new_custom_appearance_url %>
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_profile' %>">
-    <%= link_to 'profile', '' %>
+    <%= link_to 'profile', '' %>&nbsp;(dummy)
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_signup' %>">
-    <%= link_to 'sign up', '' %>
+    <%= link_to 'sign up', '' %>&nbsp;(dummy)
   </li>
 </ul>
 

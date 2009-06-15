@@ -7,11 +7,21 @@ class CustomAppearancesController < ApplicationController
 
   before_filter :view_setup, :except => [:favicon, :available]
   before_filter :login_required, :except => [:favicon]
-  prepend_before_filter :fetch_data, :except => [:favicon]
+  prepend_before_filter :fetch_data, :except => [:favicon, :new]
+  
+  def new
+    unless current_site.custom_appearance
+      current_site.create_custom_appearance
+      current_site.save
+    end
+    redirect_to edit_custom_appearance_url(current_site.custom_appearance)
+  end
 
   # GET edit_custom_appearance_url
   def edit
     #render :layout => 'admin'
+    @active = 'siteadmin_custom_appearances'
+    render :layout => 'admin'
   end
 
   # PUT custom_appearance_url
