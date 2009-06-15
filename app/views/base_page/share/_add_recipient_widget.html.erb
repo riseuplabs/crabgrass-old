@@ -3,11 +3,16 @@
   add_button_id = 'add_recipient_button'
   autocomplete_id_number = rand(1000000)
 
+  access = may_select_access_participation? ?
+    "$('recipient[access]').value" :
+    %{'#{default_access}'}
+
+
   # the remote action that is triggered when the 'add' button is pressed (or 
   # the popup item is selected).
   add_action = {
     :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
-    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value},
+    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access}},
     :loading => spinner_icon_on('plus', add_button_id),
     :complete => spinner_icon_off('plus', add_button_id)
   }
@@ -53,7 +58,9 @@
   <tr>
     <td><%= 'User or group name'[:user_or_group_name]%>:</td>
     <td>&nbsp;</td>
-    <td><%= 'Grant Access'[:grant_access]%>:</td>
+    <%- if may_select_access_participation?-%>
+      <td><%= 'Grant Access'[:grant_access]%>:</td>
+    <%- end -%>
     <td>&nbsp;</td>
   </tr>
 -->
@@ -65,7 +72,7 @@
     </td>
     <td>&nbsp;</td>
     <td>
-      <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+      <%- if may_select_access_participation?-%>
         <%= select_page_access 'recipient[access]', :blank => false %>
       <%- end -%>
     </td>

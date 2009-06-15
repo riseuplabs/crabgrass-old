@@ -104,7 +104,7 @@ class BasePage::ParticipationController < ApplicationController
     begin
       users, groups, emails = Page.parse_recipients!(params[:add_names])
       (users+groups).each do |thing|
-        @page.add(thing, :access => params[:access].to_sym).save!
+        @page.add(thing, :access => access_from_params).save!
       end
       @page.save!
       render :update do |page|
