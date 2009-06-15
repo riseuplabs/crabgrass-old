@@ -21,7 +21,7 @@ class PageStork
   def self.private_message(options) 
     from = options.delete(:from).cast! User 
     to = options.delete(:to) 
-    page = MessagePage.create!(:user => from, :share_with => to) do |p| 
+    page = MessagePage.create!(:user => from, :share_with => to, :inbox => true) do |p| 
       p.title = options[:title]
       p.build_post(options[:body], from)
     end
