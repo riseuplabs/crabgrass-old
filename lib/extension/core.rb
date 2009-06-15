@@ -76,6 +76,11 @@ class Array
     join('/')
   end
 
+  # an alias for self.compact.join(' ')
+  def combine(delimiter = ' ')
+    compact.join(delimiter)
+  end
+
 =begin
   # returns a copy of the hash with symbols
   def symbolize
