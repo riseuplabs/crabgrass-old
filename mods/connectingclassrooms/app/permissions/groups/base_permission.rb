@@ -15,7 +15,7 @@ module Groups::BasePermission
   def may_create_group?(parent = nil)
     return false unless logged_in?
     parent.nil? ?
-      may_admin_site :
+      may_admin_site? :
       may_admin_group?(parent)
   end
   alias_method :may_new_group?, :may_create_group?
@@ -31,5 +31,12 @@ module Groups::BasePermission
     current_user.may?(:admin, group) and group.parent_id.nil?
   end
 
+  ##
+  ## DISPLAY PERMISSIONS
+  ##
+
+  def may_contributions_group?(group = @group)
+    true
+  end
 end
 
