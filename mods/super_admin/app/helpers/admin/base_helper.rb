@@ -9,7 +9,7 @@ module Admin::BaseHelper
       links << link_to(letter, url_options.merge(:letter => letter), 
                        :class => "alphabetical_filter_letter #{'inverted' if @letter == letter}")
     end
-    links << link_to("ALL", url_options)
+    links << link_to("ALL", url_options, :class => "alphabetical_filter_letter #{'inverted' unless @letter.any?}")
     content_tag(:span, links.join('&nbsp;'), :class => 'alphabetical_filter')
   end
 end
