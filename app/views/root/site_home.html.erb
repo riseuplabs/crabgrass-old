@@ -54,11 +54,11 @@ table.entities td {
 <table>
 <tr>
   <td>
-    <p class="description"><%= @group.profiles.public.summary_html %></p>
-    <%= link_span(:bullet, 'linky link 1', 'linky link 2', 'linky link 3' ) %>
+    <p class="description" style="margin: 0"><%= @group.profiles.public.summary_html %></p>
   </td>
-  <td>
+  <td style="padding-left: 1em">
     <%= display_media(@group.profiles.public.cover) %>
+  </td>
 </tr>
 </table>
 <% end %>
@@ -69,6 +69,12 @@ table.entities td {
     </div>
   </div>
 <% end -%>
+
+<%- if @announcements.any? %>
+  <div class='section'>
+    <%= render :partial => 'announcement_page/list'  %>
+  </div>
+<%- end -%>
 
 <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
 

@@ -5,22 +5,22 @@
   f.tab do |t|
     t.label 'Basic'
     t.url groups_url(:action => 'edit')
-    t.selected controller?(:groups) && action?(:edit)
+    t.selected controller?(:groups, :committees, :networks) && action?(:edit)
   end
   f.tab do |t|
-    t.label 'Privacy'
-    t.url groups_profiles_url(:action => :privacy)
-    t.selected controller?('groups/profiles') && action?(:privacy)
+    t.label 'Permissions'
+    t.url groups_profiles_url(:action => :permissions)
+    t.selected controller?('groups/profiles') && action?(:permissions)
   end
   f.tab do |t|
     t.label 'Profile'[:profile]
     t.url groups_profiles_url(:action => :edit)
     t.selected controller?('groups/profiles') && action?(:edit)
   end
-  f.tab do |t|
-    t.label 'Multimedia'[:page_group_media]
-    t.url groups_profiles_url(:action => :media)
-    t.selected controller?('groups/profiles') && action?(:media)
-  end
+#  f.tab do |t|
+#    t.label 'Multimedia'[:page_group_media]
+#    t.url groups_profiles_url(:action => :media)
+#    t.selected controller?('groups/profiles') && action?(:media)
+#  end
 end %>
 <%- end -%>

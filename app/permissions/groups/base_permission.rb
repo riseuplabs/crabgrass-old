@@ -18,11 +18,19 @@ module Groups::BasePermission
   end
   alias_method :may_edit_group?, :may_update_group?
   
-  def may_create_group?(parent = nil)
-    logged_in? and parent.nil? || may_admin_group?(parent)
+  def may_destroy_group?(parent = @group)
+    current_user.may?(:admin, parent)
+  end
+
+  def may_create_group?(parent = @group)
+    logged_in? and (parent.nil? || current_user.may?(:admin, parent))
   end
   alias_method :may_new_group?, :may_create_group?
   alias_method :may_create_network?, :may_create_group?
+
+  def may_create_council?(group = @group)
+    group.parent_id.nil? and current_user.may?(:admin, group)
+  end
 
   ##
   ## GROUP PROFILE
@@ -77,6 +85,10 @@ module Groups::BasePermission
 
   def may_create_group_page?(group=@group)
     logged_in? and group and current_user.member_of?(group)
+  end
+
+  def may_edit_appearance?(group=@group)
+    current_user.may?(:admin,group)
   end
 
   ##

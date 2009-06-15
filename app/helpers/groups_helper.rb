@@ -37,9 +37,9 @@ module GroupsHelper
 
   def destroy_group_link
     # eventually, this should fire a request to destroy.
-    link_if_may "destroy {group_type}"[:destroy_group,group_type],
-      :group, 'destroy', @group,
-      {:confirm => "Are you sure you want to destroy this %s?".t % group_type, :method => :post}
+    if may_destroy_group?
+      link_to("Destroy {group_type}"[:destroy_group_link, @group.group_type], groups_url(:action => :destroy), {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase], :method => :post})
+    end
   end
 
   def more_committees_link
@@ -59,7 +59,7 @@ module GroupsHelper
   end
 
   def edit_group_custom_appearance_link(appearance)
-    if appearance and may_admin_group?
+    if appearance and may_edit_appearance?
       link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(appearance)
     end
   end

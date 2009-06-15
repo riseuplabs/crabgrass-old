@@ -29,6 +29,10 @@ module UrlHelper
     {:controller => '/groups/committees', :action => nil, :id => @group}.merge(options)
   end
 
+  def councils_params(options={})
+    {:controller => '/groups/councils', :action => nil, :id => @group}.merge(options)
+  end
+
   def groups_profiles_params(options={})
     {:controller => '/groups/profiles', :action => nil, :id => @group}.merge(options)
   end
