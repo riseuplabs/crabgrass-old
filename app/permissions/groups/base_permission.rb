@@ -102,5 +102,10 @@ module Groups::BasePermission
   alias_method :may_tasks_group?, :may_show_group?
   alias_method :may_trash_group?, :may_create_group_page?
 
+  # no listing of contributions of group members
+  def :may_contributions_group?(group=@group)
+    false
+  end
+
 end
 
