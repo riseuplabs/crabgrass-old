@@ -10,7 +10,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "gitosis@labs.riseup.net:unicef.git"
-set :branch, "cc"
+set :branch, "cc-rewrite"
 
 deploy_host = "yellowhammer.riseup.net"
 staging_host = "209.234.253.11"
