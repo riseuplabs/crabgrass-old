@@ -1,0 +1,28 @@
+<div class="section">
+  <table class="pretty">
+    <tr>
+      <th>
+        <h2 class="alert"><%= 'General Information'[:general_info] -%></h2>
+      </th>
+    </tr>
+    <tr class='even'>
+      <td>
+        <table cellpadding='8'>
+          <tr>
+            <td colspan="3">
+              <%= text_field 'profile', 'organization', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
+              <div class="input_label"><%= _('organization') -%></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+            <%= text_field 'profile', 'place', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
+              <div class="input_label"><%= _('location') -%></div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
