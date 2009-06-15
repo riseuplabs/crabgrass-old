@@ -5,14 +5,14 @@
 
   access = may_select_access_participation? ?
     "$('recipient[access]').value" :
-    default_access
+    %{'#{default_access}'}
 
 
   # the remote action that is triggered when the 'add' button is pressed (or 
   # the popup item is selected).
   add_action = {
     :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
-    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + '#{access}'},
+    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access}},
     :loading => spinner_icon_on('plus', add_button_id),
     :complete => spinner_icon_off('plus', add_button_id)
   }

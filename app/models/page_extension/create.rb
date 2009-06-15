@@ -16,6 +16,7 @@ module PageExtension::Create
   #           of the page.
   #  :share_with -- other people, groups, or emails to share this page with.
   #  :access -- what access to grant them (defaults to :admin)
+  #  :inbox -- send page to inbox?
   #
   # if anything goes wrong, an exception is raised, so watch out.
   # see UserExtension::Sharing#may_share_page_with!
@@ -48,6 +49,7 @@ module PageExtension::Create
         user       = attributes.delete(:user)
         owner      = attributes.delete(:owner)
         recipients = attributes.delete(:share_with)
+        inbox      = attributes.delete(:inbox)
         access     = (attributes.delete(:access) || :admin).to_sym
         attributes[:created_by] ||= user
         attributes[:updated_by] ||= user
@@ -58,10 +60,11 @@ module PageExtension::Create
           yield(page) if block_given?
           if user
             if recipients
-              user.share_page_with!(page, recipients, :access => access)
+              user.share_page_with!(page, recipients, :access => access,
+                                    :send_notice => inbox)
             end
             unless user.may_admin?(page)
-              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin])
+              page.user_participations.build(:user_id => user.id, :access => ACCESS[:admin], :inbox => inbox)
             end
           end
           page

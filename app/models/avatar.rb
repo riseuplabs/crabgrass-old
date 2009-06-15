@@ -6,6 +6,13 @@
 #    t.boolean "public",          :default => false
 #  end
 #
+# also defined:
+# 
+#   avatar.image_file
+#
+# Which one do you use? Always use image_file to set the data, and
+# always use image_file_data to retreive the image data.
+#
 
 class Avatar < ActiveRecord::Base
 
