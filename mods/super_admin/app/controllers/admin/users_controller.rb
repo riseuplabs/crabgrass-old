@@ -5,8 +5,8 @@ class Admin::UsersController < Admin::BaseController
   # GET /users
   # GET /users.xml
   def index
-    letter = (params[:letter] || '')
-    @users = User.on(current_site).alphabetized(letter).paginate(:page => params[:page])
+    @letter = (params[:letter] || '')
+    @users = User.on(current_site).alphabetized(@letter).paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }

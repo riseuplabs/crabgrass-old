@@ -27,8 +27,7 @@
       <% elsif @current_view == 'public requested' %>
         <td colspan="2" style="padding-right:0em;">
           <span class="actions">
-            <%= link_to "Public", { :action => 'update_public', :id => page.id, :view => @current_view, :public => true }, :method => :post %>
-            <%= link_to "Deny", { :action => 'update_public', :id => page.id, :view => @current_view, :public => false }, :method => :post  %>
+            <%= link_to "Make&nbsp;Public", { :action => 'update_public', :id => page.id, :view => @current_view, :public => true }, :method => :post %>&nbsp;<%= link_to "Deny", { :action => 'update_public', :id => page.id, :view => @current_view, :public => false }, :method => :post  %>
           </span>
 	  <%#= button_to "Public", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => true } %>
 	  <%#= button_to "Deny", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => false} %>

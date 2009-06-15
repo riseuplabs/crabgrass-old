@@ -5,8 +5,8 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups
   # GET /groups.xml
   def index
-    letter = (params[:letter] || '')
-    @groups = Group.alphabetized(letter).find(:all)
+    @letter = (params[:letter] || '')
+    @groups = Group.alphabetized(@letter).find(:all)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @groups }

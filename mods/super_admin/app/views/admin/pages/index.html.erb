@@ -6,7 +6,7 @@
   <div style="display:inline;'">
     <%= "All Pages:"%>&nbsp;
     <%# link_to_active( 'pending', :controller => 'admin/pages', :action => 'index', :view => 'pending')%>
-    <%= link_to_active( 'all', :controller => 'admin/pages', :action => 'index', :view => 'all' )%>&nbsp;
+    <%= link_to_active( 'all', { :controller => 'admin/pages', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
   </div>
   <div style="display:inline; margin-left:2em;'">
     <%= "Flagged Pages:"%>&nbsp;&nbsp;
@@ -21,9 +21,9 @@
   </div>
 </div>
 <% form_tag({ :action => 'index' }, :method => :get) do %>
-Filter by group: <%= select_tag 'group', "<option value=''>#{'all groups'.t}</option>"+
+<%# Filter by group: <%#= select_tag 'group', "<option value=''>#{'all groups'.t}</option>"+
 options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
-<%= submit_tag 'Filter', :name => '' %>
+<%#= submit_tag 'Filter', :name => '' %>
 <% end %>
 <div id="pages-listing">
   <%= render :partial => 'listing' if @pages.any? %>
