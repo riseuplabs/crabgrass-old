@@ -4,7 +4,7 @@
     url = committees_url(:action => :create, :id => @parent)
   elsif @group.council?
     headline = 'New council for group {group_name}'[:new_council, @parent.name]
-    url = committees_url(:action => :create, :id => @parent)
+    url = councils_url(:action => :create, :id => @parent)
   elsif @group.network?
     headline = 'New network'[:new_network]
     url = networks_url(:action => "create")
