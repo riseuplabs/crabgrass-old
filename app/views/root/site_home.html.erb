@@ -70,6 +70,12 @@ table.entities td {
   </div>
 <% end -%>
 
+<%- if @announcements.any? %>
+  <div class='section'>
+    <%= render :partial => 'announcement_page/list'  %>
+  </div>
+<%- end -%>
+
 <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
 
 <br/>
