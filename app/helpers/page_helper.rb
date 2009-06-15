@@ -525,16 +525,15 @@ module PageHelper
 
   def create_page_link(group=nil)
     url = {:controller => '/pages', :action => 'create'}
-    #if group
-    #  url[:group] = group.name
+    if group
+      url[:group] = group.name
+    end
     #  icon = 'page_add'
     #  text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
     #  klass = 'contribute group_contribute'
-    #else
-      icon = 'plus'
-      text = "Create Page"[:contribute_content_link]
-      klass = 'contribute'
-    #end
+    icon = 'plus'
+    text = "Create Page"[:contribute_content_link]
+    klass = 'contribute'
     content_tag(:div,
       link_to(text, url, :class => "small_icon #{icon}_16"),
       :class => klass
