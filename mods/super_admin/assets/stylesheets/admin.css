@@ -195,3 +195,6 @@ div#moderation_navigation {
     padding-right:1em;
     margin-bottom:1em;
 }
+
+ul.tabset { list-style-type:none; }
+ul.tabset li { display:inline; }
