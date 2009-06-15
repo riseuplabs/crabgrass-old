@@ -98,9 +98,9 @@ fau:
 
 super_admin_group:
   id: 4001
-  name: superadmins
+  name: superadmin
   full_name: group of superadmins
   type: Group
-  site_id: 2
+  site_id: 1
 
 

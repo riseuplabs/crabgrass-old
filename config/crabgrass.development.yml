@@ -9,18 +9,34 @@
 # See doc/CONFIGURATION for more details.
 #
 
-#
-# development tips:
-# 
-#  * to work with super_admin, enable super_admin mod and site 'site1'.
-#
+##
+## GLOBAL
+##
 
-title: "Connecting Classrooms Development"
+enabled_languages:
+  - en_US
+  - es_ES
+  - pt_BR
+  - ar_EG
+  - fr_FR
 enabled_mods:
   - super_admin
   - student
   - connectingclassrooms
-
+enabled_tools:
+  - asset_tool
+  - core_tools
+  - event_tool
+  - ranked_vote_tool
+  - rate_many_tool
+  - task_list_tool
+  - wiki_tool
+  - survey_tool
+  - gallery_tool
+  - external_video_tool
+  - announcement_tool
+  - feed_tool
+  - survey_tool
 email:
   delivery_method: :sendmail
 
@@ -36,12 +52,32 @@ profile_fields:
 ##
 
 sites:
+  - name: connectingclassrooms
+    admin_group: superadmin
 
-# bound to localhost:
-#  - name: site1
-#    admin_group: rainbow
+##
+## SITE DEFAULTS
+##
 
-# bound to test.host
-#  - name: site2
-#    admin_group: superadmins
+pagination_size: 30
+default_language: en_US
+enforce_ssl: false
+show_exceptions: true
+email_sender: "robot@$current_host"
+chat: false
+tracking: true
+require_user_email: true
+available_page_types:
+  - WikiPage
+  - AssetPage
+  - ExternalVideoPage
+  - TaskListPage
+  - AnnouncementPage
+  - SurveyPage
+  - DiscussionPage
+  - RateManyPage
+  - RankedVotePage
+  - ArticlePage
+  - Gallery
+  - WikiPage
 
