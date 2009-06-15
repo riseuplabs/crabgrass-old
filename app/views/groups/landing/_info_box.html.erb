@@ -7,7 +7,7 @@
     <% end -%>
     <p class="description"><%=h @group.summary %></p>
     <%= render :partial => 'info_box_cover_media' if @cover_media %>
-    <%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link) %>
+    <%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link, destroy_group_link) %>
   </td>
   <td class='right'>
     <%= render :partial => 'groups/landing/info_box_memberships' %>
