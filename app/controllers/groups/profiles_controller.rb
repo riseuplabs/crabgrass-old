@@ -14,7 +14,7 @@ class Groups::ProfilesController < Groups::BaseController
     update if request.post?
   end
 
-  def privacy
+  def permissions
     update if request.post?
   end
 

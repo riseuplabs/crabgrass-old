@@ -185,6 +185,12 @@ class Profile < ActiveRecord::Base
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
+    if params['may_see'] == "0"
+      %w(committees networks members groups contacts).each do |subject|
+        params["may_see_#{subject}"] = "0"
+      end
+    end
+
     self.update_attributes( params )
     self.reload
     self
