@@ -1,6 +1,6 @@
 class NetworksController < GroupsController
   
-  before_filter :check_site_settings
+  before_filter :check_site_settings, :only => :show
 
   def initialize(options={})
     super
