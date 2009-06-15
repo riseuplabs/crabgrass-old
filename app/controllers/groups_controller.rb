@@ -57,6 +57,12 @@ class GroupsController < Groups::BaseController
   end
 
   def destroy
+    @group.destroy
+    if @group.parent
+      redirect_to url_for_group(@group.parent)
+    else
+      redirect_to me_url
+    end
   end
   
   protected
