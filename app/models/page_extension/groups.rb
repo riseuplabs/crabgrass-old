@@ -1,9 +1,6 @@
-=begin
-
-RELATIONSHIP TO GROUPS
-    
-=end
-
+#
+# Page relationship to Groups
+#
 module PageExtension::Groups
 
   def self.included(base)
@@ -131,6 +128,13 @@ module PageExtension::Groups
         PageTerms.access_filter_for(group, :public)
       end
     end
+   
+    # updates the denormalized copies of group name
+    def change_group_name(group_id, new_name)
+      Page.connection.execute("UPDATE pages SET `group_name` = #{connection.quote(new_name)} WHERE pages.group_id = #{connection.quote(group_id)}")
+      Page.connection.execute "UPDATE pages SET `owner_name` = #{connection.quote(new_name)} WHERE pages.owner_id = #{connection.quote(group_id)} AND pages.owner_type = 'Group'"
+    end
+
   end
 
 end

@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   ## USER IDENTITY
   ##
 
-  belongs_to :avatar
+  belongs_to :avatar, :dependent => :destroy
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
 
   # this is a hack to get 'has_many :profiles' to polymorph

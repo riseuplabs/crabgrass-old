@@ -32,6 +32,7 @@ module ImageHelper
 
   ## creates an img tag based avatar
   def avatar_for(viewable, size='medium', options={})
+    return nil if viewable.new_record?
     image_tag(
       avatar_url_for(viewable, size),
       :alt => 'avatar', :size => Avatar.pixels(size),
