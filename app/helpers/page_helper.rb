@@ -273,9 +273,6 @@ module PageHelper
   end
 
   def page_list_title(page, column, participation = nil)
-     title = link_to(h(page.title), page_url(page))
-
-  def page_list_title(page, column, participation = nil)
     title = link_to(h(page.title), page_url(page))
     if participation and participation.instance_of? UserParticipation
       title += " " + icon_tag("tiny_pending") unless participation.resolved?

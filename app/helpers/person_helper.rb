@@ -24,7 +24,7 @@ module PersonHelper
   end
 
   def choose_profile_menu
-    if may_edit_profile(@user)
+    if may_edit_profile?(@user)
       arry = []
       arry << ['Public Profile'[:public_profile],'public'] if current_site.profile_enabled?(:public)
       arry << ['Private Profile'[:private_profile],'private'] if current_site.profile_enabled?(:private)
