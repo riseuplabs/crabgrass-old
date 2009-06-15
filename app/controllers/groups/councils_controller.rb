@@ -1,6 +1,9 @@
 class Groups::CouncilsController < Groups::CommitteesController
+ 
+  permissions 'groups/base'
 
   def new
+    @parent = get_parent
     @group = Council.new
   end
 
@@ -13,12 +16,6 @@ class Groups::CouncilsController < Groups::CommitteesController
   rescue Exception => exc
     flash_message_now :exception => exc
     render :template => 'groups/new'
-  end
-
-  protected
-  
-  def authorized?
-    true
   end
 
 end
