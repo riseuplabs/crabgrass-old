@@ -75,7 +75,9 @@ module Formy
 #       :checkbox, :tab, :link, :selectedx
 #  end
   
-  #### FORM CREATION ##################################################
+  ##
+  ## FORM CREATION
+  ##
   
   def self.create(options={})
     @@base = f = Form.new(options)
@@ -102,7 +104,9 @@ module Formy
     f.to_s
   end
   
-  #### HELPER METHODS #################################################
+  ##
+  ## HELPER METHODS
+  ##
   
   # sets up form keywords. when a keyword is called,
   # it tries to call this method on the current form element. 
@@ -130,7 +134,9 @@ module Formy
     ActionController::Routing::Routes.recognize_path(path)
   end
    
-  #### BASE CLASSES ###################################################
+  ##
+  ## BASE CLASSES
+  ##
     
   class Buffer
     def initialize
@@ -150,9 +156,13 @@ module Formy
     def initialize(form,options={})
       @base = form
       @options = options
+      if @options[:hide]
+        @options[:style] = ['display:none;', @options[:style]].combine
+      end
       @elements = []                     # sub elements held by this element
       @buffer = Buffer.new
     end
+
     # takes "object.attribute" or "attribute" and spits out the
     # correct object and attribute strings.
     def get_object_attr(object_dot_attr)
@@ -160,39 +170,53 @@ module Formy
       attr = object_dot_attr[/([^\.]*)$/]
       return [object,attr]
     end
+
     def push
       @base.depth += 1
       @base.current_element.push(self)
     end
+
     def pop
       @base.depth -= 1
       @base.current_element.pop
     end
+
     def open
       puts "<!-- begin #{self.classname} -->"
       push
     end
+
     def close
       pop
       puts "<!-- end #{self.classname} -->"
     end
+
     def classname
       self.class.to_s[/[^:]*$/].downcase
     end
+
     def to_s
       @buffer.to_s
     end
+
     def raw_puts(str)
       @buffer << str
     end
+
     def indent(str)
       ("  " * @base.depth) + str.to_s + "\n"
     end
+
     def puts(str)
       @buffer << indent(str)
     end
+
     def parent
       @base.current_element[-2]
+    end
+
+    def tag(element_tag, value, options={})
+      content_tag(element_tag, value, {:style => @options[:style], :class => @options[:class], :id => @options[:id]})
     end
 
     def self.sub_element(*class_names)
@@ -209,6 +233,7 @@ module Formy
         end_eval
       end
     end
+
     def self.element_attr(*attr_names)
       for a in attr_names
         a = a.id2name
@@ -420,11 +445,12 @@ module Formy
       def close
         @input ||= @elements.first.to_s
         if @options[:style] == :hang
+          @label ||= '&nbsp;'
           labelspan = inputspan = 1
-          labelspan = 2 if @label and not @input
-          inputspan = 2 if @input and not @label
+          #labelspan = 2 if @label and not @input
+          #inputspan = 2 if @input and not @label
           puts "<tr class='row #{parent.first} #{@classes}' id='#{@id}' style='#{@style}'>"
-          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>" if @label
+          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>"
           if @input
             puts "<td colspan='#{inputspan}' class='input'>"
             puts @input
@@ -446,22 +472,39 @@ module Formy
         super
       end
 
-      class Checkbox < Element
-        element_attr :label, :input
-
+      class Checkboxes < Element
         def open
           super
+          puts "<table>"
         end
   
         def close
-          id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
-          label = "<label for='#{id}'>#{@label}</label>"
-          puts "<table cellpadding='0' cellspacing='0'><tr><td>#{@input}</td><td>#{label}</td></tr></table>"
+          puts @elements.join("\n")
+          puts "</table>"
           super
         end
-      end
-      sub_element Form::Row::Checkbox
+        
+        class Checkbox < Element
+          element_attr :label, :input, :info
 
+          def open
+            super
+          end
+    
+          def close
+            id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
+            label = content_tag :label, @label, :for => id
+            puts tag(:tr, content_tag(:td, @input) + content_tag(:td, label))
+            if @info
+              puts tag(:tr, content_tag(:td, '&nbsp;') + content_tag(:td, @info, :class => 'info'))
+            end
+            super
+          end
+        end
+        sub_element Form::Row::Checkboxes::Checkbox
+      end
+      sub_element Form::Row::Checkboxes
+      
     end  
 
     sub_element Form::Row
