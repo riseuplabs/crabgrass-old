@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090613085915) do
+ActiveRecord::Schema.define(:version => 20090615201438) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -364,7 +364,7 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.datetime "static_expires"
     t.boolean  "static_expired"
     t.integer  "stars",              :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -375,6 +375,9 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
+    t.boolean  "public_requested",                 :default => false
+    t.boolean  "vetted",                           :default => false
+    t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -423,6 +426,8 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
+    t.boolean  "vetted",                      :default => false
+    t.integer  "yuck_count",    :limit => 11, :default => 0
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -766,6 +771,7 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
     t.binary   "tag_id_cache"
     t.string   "language",                  :limit => 5
     t.binary   "admin_for_group_id_cache"
+    t.binary   "student_id_cache"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
