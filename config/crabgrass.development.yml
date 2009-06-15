@@ -15,16 +15,21 @@
 #  * to work with super_admin, enable super_admin mod and site 'site1'.
 #
 
-title: "Crabgrass Development"
-
+title: "Connecting Classrooms Development"
 enabled_mods:
-  - design_tester
-#  - gibberize
+  - super_admin
+  - student
+  - connectingclassrooms
 
 email:
   delivery_method: :sendmail
 
-translation_group: rainbow
+profiles:
+  - private
+profile_fields:
+  - basic
+  - notes
+  - websites
 
 ##
 ## SITES
@@ -33,8 +38,8 @@ translation_group: rainbow
 sites:
 
 # bound to localhost:
-  - name: site1
-    admin_group: rainbow
+#  - name: site1
+#    admin_group: rainbow
 
 # bound to test.host
 #  - name: site2

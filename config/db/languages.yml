@@ -3,15 +3,15 @@
 ## http://en.wikipedia.org/wiki/Most_spoken_languages
 ##
 
-zh:
-  id: 1
-  name: 中文
-  code: zh_CN
+#zh:
+#  id: 1
+#  name: 中文
+#  code: zh_CN
 
-hi:
-  id: 2
-  name: हिंदी
-  code: hi_IN
+#hi:
+#  id: 2
+#  name: हिंदी
+#  code: hi_IN
 
 es:
   id: 3
@@ -36,17 +36,17 @@ pt:
 
 #7 = bengali
 
-ru:
-  id: 8
-  name: Pyccĸий
-  code: ru_RU
+#ru:
+#  id: 8
+#  name: Pyccĸий
+#  code: ru_RU
 
 #9 = japanese
 
-de:
-  id: 10
-  name: Deutsch
-  code: de_DE
+#de:
+#  id: 10
+#  name: Deutsch
+#  code: de_DE
 
 #11 = punjabi
 
@@ -78,30 +78,30 @@ tr:
   name: Türkçe
   code: tr_TR
 
-pl:
-  id: 28
-  name: Polski
-  code: pl_PL
+#pl:
+#  id: 28
+#  name: Polski
+#  code: pl_PL
 
-el:
-  id: 53
-  name: Ελληνικά
-  code: el_GR
+#el:
+#  id: 53
+#  name: Ελληνικά
+#  code: el_GR
 
-he:
-  id: 78
-  name: עִבְרִית
-  code: he_IL
-  rtl: true
+#he:
+#  id: 78
+#  name: עִבְרִית
+#  code: he_IL
+#  rtl: true
 
-sv:
-  id: 79
-  name: Svenska
-  code: sv_SE
+#sv:
+#  id: 79
+#  name: Svenska
+#  code: sv_SE
 
-da:
-  id: 104
-  name: Dansk
-  code: da_DK
+#da:
+#  id: 104
+#  name: Dansk
+#  code: da_DK
 
 
