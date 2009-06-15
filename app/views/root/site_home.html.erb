@@ -54,7 +54,6 @@ table.entities td {
 <table>
 <tr>
   <td>
-    <h1 class="dim"><%=h "Welcome to {site_title}"[:welcome_title, current_site.title ]%></h1>
     <p class="description"><%= @group.profiles.public.summary_html %></p>
     <%= link_span(:bullet, 'linky link 1', 'linky link 2', 'linky link 3' ) %>
   </td>
@@ -63,6 +62,13 @@ table.entities td {
 </tr>
 </table>
 <% end %>
+<% if params[:welcome_box] && logged_in? -%>
+  <div id='welcome_box'>
+    <div class="inset_box round">
+      <%= render :partial => '/me/dashboard/welcome_box_content' %>
+    </div>
+  </div>
+<% end -%>
 
 <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
 
