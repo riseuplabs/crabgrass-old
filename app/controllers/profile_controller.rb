@@ -1,4 +1,5 @@
 class ProfileController < ApplicationController
+  permissions 'profile'
 
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
