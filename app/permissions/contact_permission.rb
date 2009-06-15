@@ -16,6 +16,7 @@
 module ContactPermission
   def may_create_contact?(user=@user)
     logged_in? and
+    user != current_user and
     user.profiles.visible_by(current_user).may_request_contact?
   end
 
@@ -26,6 +27,11 @@ module ContactPermission
     return true if current_user.friend_of?(user)
     @error_message = 'You are not the contact of %s.'[:not_contact_of] % @user.name
     return false
+  end
+
+  def may_message_contact?(user=@user)
+    logged_in? and
+    user != current_user and
   end
 
   def may_approve_contact?(user=@user)
