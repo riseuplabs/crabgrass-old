@@ -134,13 +134,13 @@ module UrlHelper
   # substituted in for %s, and the display name will be "boop group_name beep"
   #
   # If options[:action] is not included it is assumed to be show, and otherwise
-  # the the link goes to "/group/action/group_name'
+  # the link goes to "/group/action/group_name'
   def name_and_url_for_group(arg,options={})
     if arg.instance_of? Integer
       arg = Group.find(arg)
     elsif arg.instance_of? String
-      group = Group.find_by_name(arg)
       name = arg
+      group = Group.find_by_name(name)
       display_name = (group ? group.display_name : name)
     elsif arg.is_a? Group
       controller = 'networks' if arg.network?
