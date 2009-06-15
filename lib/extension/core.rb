@@ -8,6 +8,10 @@ class NilClass
   def any?
     false
   end
+
+  def any
+    false
+  end
   
   # nil.to_s => ""
   def empty?
