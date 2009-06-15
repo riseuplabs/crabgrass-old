@@ -46,7 +46,7 @@ class GroupTest < Test::Unit::TestCase
 
   def test_cant_pester_private_group
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = false
+    g.profiles.public.update_attribute(:may_see, false)
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -55,7 +55,7 @@ class GroupTest < Test::Unit::TestCase
 
   def test_can_pester_public_group
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = true
+    g.profiles.public.update_attribute(:may_see, true)
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
@@ -157,4 +157,40 @@ class GroupTest < Test::Unit::TestCase
 
     assert_equal g.name, destroyed_act.groupname, "the activity should have the correct group name"
   end
+
+  def test_avatar
+    group = nil
+    assert_difference 'Avatar.count' do
+      group = Group.create(:name => 'groupwithavatar', :avatar => {
+        :image_file => upload_avatar('image.png')
+      })
+    end
+    group.reload
+    assert group.avatar.has_saved_image?
+    assert_equal 880, group.avatar.image_file_data.size
+    avatar_id = group.avatar.id
+
+    group.avatar.image_file = upload_avatar('photo.jpg')
+    group.avatar.save!
+    group.save!
+    group.reload
+    assert group.avatar.has_saved_image?
+    assert_equal avatar_id, group.avatar.id
+    assert_equal 18408, group.avatar.image_file_data.size
+
+    assert_no_difference 'Avatar.count' do 
+      group.avatar = {:image_file => upload_avatar('bee.jpg')}
+      group.save!
+    end
+    group.reload
+    assert group.avatar.has_saved_image?
+    assert_equal avatar_id, group.avatar.id
+    assert_equal 19987, group.avatar.image_file_data.size
+
+    assert_difference 'Avatar.count', -1 do
+      group.destroy
+    end
+
+  end
+
 end

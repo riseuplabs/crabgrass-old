@@ -8,6 +8,7 @@ module GroupExtension::Users
   def self.included(base)
     base.instance_eval do
       after_destroy :destroy_memberships
+#      before_create :set_created_by
 
       has_many :memberships, :before_add => :check_duplicate_memberships
 
@@ -19,6 +20,11 @@ module GroupExtension::Users
           raise Exception.new("don't call delete on group.users");
         end
       end
+
+      # tmp hack until we have a better viewing system in place.
+      named_scope :most_visits, {:order => 'count(memberships.total_visits)', :group => 'groups.id', :joins => :memberships}
+
+      named_scope :recent_visits, {:order => 'memberships.visited_at DESC', :group => 'groups.id', :joins => :memberships}
     end
   end
 
@@ -86,6 +92,10 @@ module GroupExtension::Users
       membership.skip_destroy_notification = true
       membership.destroy
     end
+  end
+
+  def set_created_by
+    self.created_by ||= User.current
   end
 
 # maps a user <-> group relationship to user <-> language

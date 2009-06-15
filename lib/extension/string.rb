@@ -3,8 +3,11 @@ class String
   ##
   ## NOTE: you will want to translit non-ascii slugs to ascii.
   ## resist this impulse. nameized strings must remain utf8.
+  ## 
+  ## NOTE2: iconv is total evil. however this seems really cool:
+  ## http://github.com/svenfuchs/stringex/tree/master
   ##
- 
+
   def nameize
     str = self.dup
     str.gsub!(/&(\w{2,6}?|#[0-9A-Fa-f]{2,6});/,'') # remove html entitities

@@ -1,0 +1,17 @@
+<%- if @group && @group.is_council? && !@parent.nil? -%>
+<p>
+  <%= "This is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
+    {:parent_group => link_to_group(@parent)}] %>
+  <%= hidden_field(:group, 'is_council') %>
+</p>
+<%- elsif !@parent.nil? -%>
+<p>
+  <%= "This committee is part of {parent_group}."[:this_is_committee,
+    {:parent_group => link_to_group(@parent)}] %>
+</p>
+<% elsif @group.network? %>
+This is a network of multiple groups.
+<% elsif @group.normal? %>
+This is an autonomous group
+<% end -%>
+

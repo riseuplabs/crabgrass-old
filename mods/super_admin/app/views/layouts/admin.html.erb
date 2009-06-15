@@ -9,18 +9,23 @@
 </head>
 <body>
 
-<div id='container'>
-<div id='header'>
-  <div class='toplink'><%= link_to "Logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %> </div>
-  <div class='toplink'><%= link_to "Exit admin", :controller => '/me' %> </div>
+<table id="container">
+ <tr>
+ <td id="header" colspan="2">
+  <div class='toplink'><%= link_to "exit admin", :controller => '/me' %>&nbsp;|&nbsp;<%= link_to "logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %></div>
   <h1><a href='/admin'>Crabgrass Administration Panel</a></h1>
-  <%= link_to 'admin home', '/admin' %> <%= link_to 'users', users_path %> <%= link_to 'groups', groups_path %>  <%= link_to 'pages', pages_path %> <%= link_to 'comments', posts_path %> <%= link_to 'announcements', announcements_path %>
-</div>
-<div id='content'>
-  <%= flash_notice %>
-  <%= yield  %>
-</div>
-
+  <%# link_to 'admin home', '/admin' %> <%# link_to 'users', users_path %> <%# link_to 'groups', groups_path %>  <%# link_to 'pages', pages_path %> <%# link_to 'comments', posts_path %> <%# link_to 'announcements', announcements_path %>
+ </td>
+ </tr>
+ <tr>
+   <td id="navigation">
+     <%= render :partial => 'navigation' %>
+   </td>
+   <td id="content">
+    <%= yield  %>
+   </td>
+ </tr>
+</table>
 </body>
 </html>
 

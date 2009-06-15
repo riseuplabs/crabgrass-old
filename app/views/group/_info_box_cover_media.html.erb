@@ -1,8 +1,0 @@
-<div id="cover_media">
-  <% if @cover_media.respond_to?(:is_image?) and @cover_media.is_image? %>
-    <%= image_tag(@cover_media.thumbnail(:medium).url) %>
-  <% elsif @cover_media.respond_to?(:is_video?) and @cover_media.is_video? %>
-    <%= @cover_media.build_embed(200, 200) %>
-  <% end %>
-</div>
-  

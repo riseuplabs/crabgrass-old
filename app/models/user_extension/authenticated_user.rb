@@ -31,10 +31,7 @@ module AuthenticatedUser
 
   def self.included(base)
     base.extend   ClassMethods
-    base.instance_eval do
-      # a class attr which is set to the currently logged in user
-      cattr_accessor :current
-      
+    base.instance_eval do      
       # Virtual attribute for the unencrypted password
       attr_accessor :password
 
@@ -67,7 +64,10 @@ module AuthenticatedUser
     def find_for_forget(email)
       find :first, :conditions => ['email = ?', email]
     end
-        
+    
+    # set to the currently logged in user. 
+    def current; Thread.current[:user]; end
+    def current=(user); Thread.current[:user] = user; end
   end
 
   # Encrypts the password with the user salt

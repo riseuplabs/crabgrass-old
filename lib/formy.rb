@@ -191,7 +191,10 @@ module Formy
     def puts(str)
       @buffer << indent(str)
     end
-  
+    def parent
+      @base.current_element[-2]
+    end
+
     def self.sub_element(*class_names)
       for class_name in class_names
         method_name = class_name.to_s.gsub(/^.*::/,'').downcase
@@ -356,20 +359,30 @@ module Formy
   #### FORM CLASSES ###################################################
     
   class Form < Root
-    sub_element :row, :section
-    
     def title(value)
-      puts "<tr class='title'><td colspan='3'>#{value}</td></tr>"
+      puts "<tr class='title #{first}'><td colspan='2'>#{value}</td></tr>"
     end
     
     def label(value="&nbsp;")
-      @elements << indent("<tr class='label'><td colspan='3'>#{value}</td></tr>")
+      @elements << indent("<tr class='label #{first}'><td colspan='2'>#{value}</td></tr>")
     end
     
     def spacer
-      @elements << indent("<tr class='spacer'><td colspan='3'><div></div></td></tr>")
+      @elements << indent("<tr class='spacer'><td colspan='2'><div></div></td></tr>")
     end
       
+    def heading(text)
+      @elements << indent("<tr class='#{first}'><td colspan='2' class='heading'><h2>#{text}</h2></td></tr>")
+    end
+
+    def hidden(text)
+      @elements << indent("<tr style='display:none'><td>#{text}</td></tr>")
+    end
+
+    def raw(text)
+      @elements << indent("<tr><td colspan='2'>#{text}</td></tr>")
+    end
+
     def open
       super
       puts "<table class='form'>"
@@ -380,68 +393,86 @@ module Formy
       @elements.each {|e| raw_puts e}
       puts "</table>"
       super
-    end  
-  end
-    
-  class Section < Element
-    sub_element :row
-    
-    def label(value)
-      puts "label(#{value})<br>"
     end
 
-  end
-  
-  class Row < Element
-    element_attr :info, :label, :input, :heading
-    sub_element :checkbox
-	
-    def open
-      super
-      puts "<tr class='row'>"
-    end
-    
-    def close
-      @input ||= @elements.first.to_s
-      labelspan = inputspan = infospan = 1
-      labelspan = 2 if @label and not @input
-      inputspan = 2 if @input and not @label and     @info
-      inputspan = 2 if @input and     @label and not @info
-      infospan  = 2 if @info  and     @label and not @input
-      labelspan = 3 if @label and not @input and not @info
-      inputspan = 3 if @input and not @label and not @info
-      infospan  = 3 if @info  and not @label and not @input
-      puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>" if @label
-      if @input =~ /\n/
-        puts "<td colspan='#{inputspan}' class='input'>"
-        raw_puts @input
-        puts "</td>"
-      else
-        puts "<td colspan='#{inputspan}' class='input'>#{@input}</td>"
+    def first
+      if @first.nil?
+        @first = false
+        return 'first' 
       end
-      puts "<td colspan='#{infospan}' class='info'>#{@info}</td>"   if @info
-      puts "</tr>"      
-      super
     end
-  end  
+
+#    class Section < Element
+#      sub_element :row
+#      def label(value)
+#        puts "label(#{value})<br>"
+#      end
+#    end
+
+    class Row < Element
+      element_attr :info, :label, :input, :id, :style, :classes
   
-  class Checkbox < Element
-    element_attr :label, :input
+      def open
+        super
+        @options[:style] ||= :hang
+      end
+      
+      def close
+        @input ||= @elements.first.to_s
+        if @options[:style] == :hang
+          labelspan = inputspan = 1
+          labelspan = 2 if @label and not @input
+          inputspan = 2 if @input and not @label
+          puts "<tr class='row #{parent.first} #{@classes}' id='#{@id}' style='#{@style}'>"
+          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>" if @label
+          if @input
+            puts "<td colspan='#{inputspan}' class='input'>"
+            puts @input
+            if @info
+              puts "<div class='info'>#{@info}</div>"
+            end
+            puts "</td>"
+          end
+          puts "</tr>"
+        elsif @options[:style] == :stack
+          if @label
+            puts '<tr><td class="label">%s</td></tr>' % @label
+          end
+          puts '<tr class="%s">' % @options[:class]
+          puts '<td class="input">%s</td>' % @input
+          puts '<td class="info">%s</td>' % @info
+          puts '</tr>'
+        end
+        super
+      end
+
+      class Checkbox < Element
+        element_attr :label, :input
+
+        def open
+          super
+        end
+  
+        def close
+          id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
+          label = "<label for='#{id}'>#{@label}</label>"
+          puts "<table cellpadding='0' cellspacing='0'><tr><td>#{@input}</td><td>#{label}</td></tr></table>"
+          super
+        end
+      end
+      sub_element Form::Row::Checkbox
+
+    end  
+
+    sub_element Form::Row
     
-    def close
-      id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
-      label = "<label for='#{id}'>#{@label}</label>"
-      puts "<table cellpadding='0' cellspacing='0'><tr><td>#{@input}</td><td>#{label}</td></tr></table>"
-      super
-    end
-  end
-  
-  
-  class Item < Element
-    element_attr :object, :field, :label
-    def to_s
-      "<label>#{@field} #{@label}</label>"
-    end
+#    class Item < Element
+#      element_attr :object, :field, :label
+#      def to_s
+#        "<label>#{@field} #{@label}</label>"
+#      end
+#    end
+
   end
 
 end

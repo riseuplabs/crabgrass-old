@@ -5,34 +5,42 @@
     <th>Created At</th>
     <th>Created By</th>
     <th></th>
+    <th></th>
   </tr>
-	<tr><td><%= will_paginate @pages %></td></tr>
-	<% for page in @pages %>
-	  <tr>
-		<td style=" width:300px"><%= link_to page.title, page_url(page) %></td>
-		<td style=" width:120px"><%=h page.type %></td>
-		<td ><%=h page.created_at.strftime("%d %b, %Y ") %></td>
-		<td style=" width:120px"><%=h page.created_by_login %></td>
-	<% if @current_view == 'pending' %>
-		<td style=" width:120px">
-		<%= button_to "Approve", :action => "approve", :params => {:id => page.id, :view => @current_view} %></td>
-		<td style=" width:120px"><%= button_to "Trash", :action => "trash", :params => {:id => page.id, :view => @current_view} %></td>
-	<% elsif @current_view == 'vetted' %>
-		<td style=" width:120px">
-		<%= button_to "Trash", :action => "trash", :params => {:id => page.id, :view => @current_view} %></td>
-	<% elsif @current_view == 'deleted' %>
-		<td style=" width:120px">
-		<%= button_to "Undelete", :action => "undelete", :params => {:id => page.id, :view => @current_view} %></td>
-	<% elsif @current_view == 'public requested' %>
-		<td style=" width:80px">
-		<%= button_to "Public", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => true } %></td>
-		<td style=" width:80px">
-		<%= button_to "Deny", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => false} %></td>
-	<% elsif @current_view == 'public' %>
-		<td style=" width:120px">
-		<%= button_to "Remove Public", :action => "remove_public", :params => {:id => page.id, :view => @current_view} %></td>
-	<%end%>
-	  </tr>
-	<% end %>
-	<tr><td><%= will_paginate @pages %></td></tr>
+  <tr><td><%= will_paginate @pages %></td></tr>
+  <% @pages.each do |page| %>
+    <tr class="<%=cycle('row_0', 'row_1')%>">
+      <td style=" width:300px"><%= link_to page.title, page_url(page) %></td>
+      <td style=" width:120px"><%=h page.type %></td>
+      <td style=" width:120px"><%=h page.created_at.strftime("%d %b, %Y ") %></td>
+      <td style=" width:120px"><%=h page.created_by_login %></td>
+      <% if @current_view == 'pending' %>
+        <td style=" width:120px">
+	  <%= button_to "Approve", :action => "approve", :params => {:id => page.id, :view => @current_view} %></td>
+        <td style=" width:120px"><%= button_to "Trash", :action => "trash", :params => {:id => page.id, :view => @current_view} %></td>
+      <% elsif @current_view == 'vetted' %>
+        <td style=" width:120px">
+	  <%= button_to "Trash", :action => "trash", :params => {:id => page.id, :view => @current_view} %></td>
+      <% elsif @current_view == 'deleted' %>
+        <td style=" width:120px">
+	  <%= button_to "Undelete", :action => "undelete", :params => {:id => page.id, :view => @current_view} %></td>
+      <% elsif @current_view == 'public requested' %>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to "Make&nbsp;Public", { :action => 'update_public', :id => page.id, :view => @current_view, :public => true }, :method => :post %>&nbsp;<%= link_to "Deny", { :action => 'update_public', :id => page.id, :view => @current_view, :public => false }, :method => :post  %>
+          </span>
+	  <%#= button_to "Public", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => true } %>
+	  <%#= button_to "Deny", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => false} %>
+        </td>
+      <% elsif @current_view == 'public' %>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to "Remove Public", { :action => 'remove_public', :id => page.id, :view => @current_view }, :method => :post %>
+          </span>
+        </td>
+	  <%#= button_to "Remove Public", :action => "remove_public", :params => {:id => page.id, :view => @current_view} %>
+      <%end%>
+    </tr>
+  <% end %>
+  <tr><td><%= will_paginate @pages %></td></tr>
 </table>

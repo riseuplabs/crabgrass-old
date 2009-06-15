@@ -1,0 +1,11 @@
+<%= settings_tabs %>
+
+<%= render :partial => 'groups/basic/information' %>
+
+<% form_tag(groups_path(:action => 'edit', :id => @group), :multipart => true) do -%>
+  <%= render :partial => 'groups/basic/form' %>
+  <p class="form_buttons"><%= submit_tag "Save", :name => 'save' %></p>
+<% end -%>
+
+<%= call_hook :group_edit %>
+

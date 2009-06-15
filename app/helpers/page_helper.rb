@@ -173,7 +173,6 @@ module PageHelper
   ## used to create the page list headings
 
   def page_path_link(text,path='',image=nil)
-
     hash         = params.dup
     new_path     = parsed_path(path)
     current_path = parsed_path(hash[:path])
@@ -183,7 +182,6 @@ module PageHelper
       # special hack for landing pages using the weird dispatcher route.
       hash = "/%s?path=%s" % [params[:_context], hash[:path].join('/')]
     end
-
     link_to text, hash
   end
 
@@ -527,16 +525,16 @@ module PageHelper
 
   def create_page_link(group=nil)
     url = {:controller => '/pages', :action => 'create'}
-    if group
-      url[:group] = group.name
-      icon = 'page_add'
-      text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
-      klass = 'contribute group_contribute'
-    else
+    #if group
+    #  url[:group] = group.name
+    #  icon = 'page_add'
+    #  text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
+    #  klass = 'contribute group_contribute'
+    #else
       icon = 'plus'
       text = "Create Page"[:contribute_content_link]
       klass = 'contribute'
-    end
+    #end
     content_tag(:div,
       link_to(text, url, :class => "small_icon #{icon}_16"),
       :class => klass

@@ -6,6 +6,7 @@ This is the controller that all page controllers are based on.
 
 class BasePageController < ApplicationController
 
+  include BasePageHelper
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
@@ -179,10 +180,13 @@ class BasePageController < ApplicationController
   end
 
   def context
-    return true if request.xhr? # skip for ajax requests
     if action?(:create)
-      (@group = Group.find_by_name(params[:group])) or (@user = current_user)
-      page_context
+      if @group = Group.find_by_name(params[:group])
+        page_context
+      else
+        @user = current_user
+        me_context
+      end
 
       context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
@@ -211,7 +215,7 @@ class BasePageController < ApplicationController
     params[:page] ||= HashWithIndifferentAccess.new
     params[:page][:user] = current_user
     params[:page][:share_with] = params[:recipients]
-    params[:page][:access] = (params[:access]||'view').to_sym
+    params[:page][:access] = access_from_params(params[:access])
   end
 
 

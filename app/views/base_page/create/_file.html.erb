@@ -1,7 +1,8 @@
-<tr>
-  <td colspan="2" class="label first"><%= 'File'[:file] %></td>
-</tr><tr>
-  <td><%= file_field 'asset', 'uploaded_data', :size => 29 %></td>
-  <td class="help"><%= help(:upload_file) %></td>
-</tr>
+<%
+  form.row do |r|
+    r.label 'File'[:file]
+    r.input file_field('asset', 'uploaded_data', :size => 29)
+    r.info help(:upload_file)
+  end
+%>
 

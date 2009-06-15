@@ -1,18 +1,16 @@
-# These permissions are a replacement for the following authorized? method:
-#  def authorized?
-#    if @page.nil?
-#      true
-#    elsif action?(:show_popup)
-#      true
-#    elsif action?(:show)
-#      current_user.may?(:view, @page)
-#    end
-#  end
+#
+# All page controllers will fall back to using these permissions if no
+# other permission is found.
+#
 module BasePagePermission
 
   # if no other appropriate methods are defined, fallback to this one:
   def default_permission
     current_user.may?(:admin, @page)
+  end
+
+  def may_edit_base_page?(page = @page)
+    current_user.may?(:edit, page)
   end
 
   def may_create_base_page?(page = @page)

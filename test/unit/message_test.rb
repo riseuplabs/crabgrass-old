@@ -7,12 +7,13 @@ class MessageTest < Test::Unit::TestCase
     to = [users(:blue), users(:green)]
     from = users(:red)
     page = Page.make :private_message, :to => to, :from => from,
-      :title => 'hi there', :body => 'whatcha doing?'
+      :title => 'hi there', :body => 'whatcha doing?', :inbox => true
 
     assert_equal 1, page.discussion.posts.size, 'there should be one post'
     assert page.discussion.posts.first.valid?, 'post should be valid (%s)' % page.discussion.posts.first.errors.full_messages.to_s
     assert page.discussion.valid?, 'discussion should be valid (%s)' % page.discussion.errors.full_messages.to_s
     assert page.valid?, 'page should be valid (%s)' % page.errors.full_messages.to_s
+    assert !page.user_participations.map(&:inbox).include?(false), "page should go to inbox"
       
     page = Page.find(page.id)
     

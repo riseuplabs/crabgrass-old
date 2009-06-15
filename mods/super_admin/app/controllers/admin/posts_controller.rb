@@ -2,9 +2,11 @@ class Admin::PostsController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
   def index
-    view = params[:view] || 'pending'
+    view = params[:view] || 'all'
     @current_view = view
-    if view == 'pending'
+    if view == 'all'
+      @posts = Post.paginate :page => params[:page], :order => 'updated_at DESC'
+    elsif %w(new pending).include?(view)
       # all posts that have been flagged as inappropriate have not had any admin action yet.
       @posts = Post.paginate :page => params[:page], :conditions => ['(vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC'
     elsif view == 'vetted'
@@ -13,8 +15,6 @@ class Admin::PostsController < Admin::BaseController
     elsif view == 'deleted'
       # list the pages that are 'deleted' by being hidden from view.
       @posts = Post.paginate :page => params[:page], :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' 
-    elsif view == 'new'
-      @posts = Post.paginate :page => params[:page], :order => 'created_at DESC', :limit => 30
     end
   end
 
@@ -51,5 +51,10 @@ class Admin::PostsController < Admin::BaseController
     post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
+  
+  def set_active_tab
+    @active = 'post_moderation'
+  end
+
 end
 

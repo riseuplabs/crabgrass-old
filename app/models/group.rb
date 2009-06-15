@@ -41,7 +41,7 @@ class Group < ActiveRecord::Base
       self == network )
   end
     
-  attr_accessible :name, :full_name, :short_name, :summary, :language
+  attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
@@ -64,6 +64,15 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
   
+  named_scope(:only_type, lambda do |group_type|
+    group_type = group_type.to_s.capitalize
+    if group_type == 'Group'
+      {:conditions => 'groups.type IS NULL'}
+    else
+      {:conditions => ['groups.type = ?', group_type]}
+    end
+  end)
+
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
   }
@@ -114,7 +123,6 @@ class Group < ActiveRecord::Base
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
 
-  belongs_to :avatar
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
   # name stuff
@@ -131,16 +139,48 @@ class Group < ActiveRecord::Base
   def banner_style
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
-   
+
+  # type of group  
   def committee?; instance_of? Committee; end
   def network?; instance_of? Network; end
   def normal?; instance_of? Group; end
   def council?; instance_of?(Council) or self.is_council?; end
   def group_type() self.class.name.t; end
+
+  ##
+  ## AVATAR
+  ##
  
+  public 
+
+  belongs_to :avatar, :dependent => :destroy
+
+  alias_method 'avatar_equals', 'avatar='
+  def avatar=(data)
+    if data.is_a? Avatar
+      avatar_equals data
+    elsif data.is_a? Hash
+      if avatar_id
+        avatar.image_file = data[:image_file]
+        avatar.image_file_data_will_change!
+      else
+        avatar_equals Avatar.new(data)
+      end
+    end
+  end
+
+  protected
+
+  before_save :save_avatar_if_needed
+  def save_avatar_if_needed
+    avatar.save if avatar and avatar.changed?
+  end
+
   ##
   ## RELATIONSHIP TO ASSOCIATED DATA
   ## 
+
+  protected
 
   after_destroy :destroy_requests
   def destroy_requests
@@ -159,6 +199,8 @@ class Group < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
+  public
+
   def may_be_pestered_by?(user)
     begin
       may_be_pestered_by!(user)
@@ -167,8 +209,9 @@ class Group < ActiveRecord::Base
     end
   end
   
+  ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
-    if user.member_of?(self) or publicly_visible_group or (parent and parent.publicly_visible_committees and parent.may_be_pestered_by?(user))
+    if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
       raise PermissionDenied.new('You are not allowed to share with %s'[:pester_denied] % self.name)
@@ -195,41 +238,10 @@ class Group < ActiveRecord::Base
   end
   
   ##
-  ## temp stuff for profile transition
-  ## should be removed eventually
-  ##
-
-  def publicly_visible_group
-    profiles.public.may_see?
-  end
-  def publicly_visible_group=(val)
-    profiles.public.update_attribute :may_see, val
-  end
-
-  def publicly_visible_committees
-    profiles.public.may_see_committees?
-  end
-  def publicly_visible_committees=(val)
-    profiles.public.update_attribute :may_see_committees, val
-  end
-
-  def publicly_visible_members
-    profiles.public.may_see_members?
-  end
-  def publicly_visible_members=(val)
-    profiles.public.update_attribute :may_see_members, val
-  end
-
-  def accept_new_membership_requests
-    profiles.public.may_request_membership?
-  end
-  def accept_new_membership_requests=(val)
-    profiles.public.update_attribute :may_request_membership, val
-  end
-
-  ##
   ## GROUP SETTINGS
   ##
+
+  public
 
   has_one :group_setting
   # can't remember the way to do this automatically
@@ -252,20 +264,18 @@ class Group < ActiveRecord::Base
   
   protected
   
-  after_save :update_name
-  def update_name
+  after_save :update_name_copies
+
+  # if our name has changed, ensure that denormalized references
+  # to it also get changed
+  def update_name_copies
     if name_changed?
-      update_group_name_of_pages  # update cached group name in pages
+      Page.change_group_name(id, name)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
       committees.each {|c| c.parent_name_changed }
       User.increment_version(self.user_ids)
     end
   end
-   
-  def update_group_name_of_pages
-    Page.connection.execute "UPDATE pages SET `group_name` = '#{self.name}' WHERE pages.group_id = #{self.id}"
-    Page.connection.execute "UPDATE pages SET `owner_name` = '#{self.name}' WHERE pages.owner_id = #{self.id} AND pages.owner_type = 'Group'"
-  end
-    
+  
 end

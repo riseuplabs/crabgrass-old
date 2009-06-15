@@ -1,15 +1,23 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def link_char(links)
-    if links.first.is_a? Symbol
-      char = links.shift
-      return ' &bull; ' if char == :bullet
-      return ' | '
-    else
-      return ' | '
+  ##
+  ## HTML CONTENT HELPERS
+  ##
+
+  def content_tag_if(tag, content, options={})
+    if content.any?
+      content_tag(tag, content, options)
     end
   end
+
+  def option_empty(label='')
+    %(<option value=''>#{label}</option>)
+  end
+
+  ##
+  ## LINK HELPERS
+  ##
 
   ## makes this: link | link | link
   def link_line(*links)
@@ -20,6 +28,10 @@ module ApplicationHelper
     char = content_tag(:em, link_char(links))
     content_tag(:span, links.compact.join(char), :class => 'link_line')
   end
+
+  ##
+  ## GENERAL UTILITY
+  ##
 
   # returns the first of the args where any? returns true
   def first_with_any(*args)
@@ -50,10 +62,6 @@ module ApplicationHelper
     session[:logged_in_since] || Time.now
   end
 
-  def option_empty(label='')
-    %(<option value=''>#{label}</option>)
-  end
-
   # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
   # Only need this helper once, it will provide an interface to convert a block into a partial.
   # 1. Capture is a Rails helper which will 'capture' the output of a block into a variable
@@ -63,6 +71,10 @@ module ApplicationHelper
     options.merge!(:body => capture(&block))
     concat(render(:partial => partial_name, :locals => options), block.binding)
   end
+
+  ##
+  ## CRABGRASS SPECIFIC
+  ##
 
   def mini_search_form(options={})
     unless params[:action] == 'search' or params[:controller] =~ /search|inbox/
@@ -140,12 +152,6 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
-  def edit_site_custom_appearance_link(site)
-    if site.custom_appearance and logged_in? and current_user.may?(:admin, site)
-      link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(site.custom_appearance)
-    end
-  end
-
   def formatting_reference_link
    %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
   end
@@ -154,6 +160,27 @@ module ApplicationHelper
     symbol = "#{symbol}_help".to_sym
     text = ""[symbol]
     text.any? ? text : nil
+  end
+
+  def debug_permissions
+    if RAILS_ENV == 'development'
+      permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+      permission_methods.collect do |section|
+        content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+      end
+    end
+  end
+
+  private
+
+  def link_char(links)
+    if links.first.is_a? Symbol
+      char = links.shift
+      return ' &bull; ' if char == :bullet
+      return ' | '
+    else
+      return ' | '
+    end
   end
 
 end

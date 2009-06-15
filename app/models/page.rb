@@ -99,7 +99,7 @@ class Page < ActiveRecord::Base
   end
 
   def flow= flow
-    if flow.kind_of? Integer
+    if flow.kind_of?(Integer) || flow.nil?
       write_attribute(:flow, flow)
     elsif flow.kind_of?(Symbol) && FLOW[flow]
       write_attribute(:flow, FLOW[flow])

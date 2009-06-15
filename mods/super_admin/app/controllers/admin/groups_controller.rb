@@ -1,9 +1,12 @@
 class Admin::GroupsController < Admin::BaseController
+  
+  before_filter :fetch_group_by_name, :only => [ :show, :edit, :update, :destroy ]
+
   # GET /groups
   # GET /groups.xml
   def index
-    @groups = Group.find(:all)
-
+    @letter = (params[:letter] || '')
+    @groups = Group.alphabetized(@letter).find(:all)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @groups }
@@ -13,8 +16,6 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups/1
   # GET /groups/1.xml
   def show
-    @group = Group.find_by_name(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @group }
@@ -25,7 +26,6 @@ class Admin::GroupsController < Admin::BaseController
   # GET /groups/new.xml
   def new
     @group = Group.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @group }
@@ -34,14 +34,17 @@ class Admin::GroupsController < Admin::BaseController
 
   # GET /groups/1/edit
   def edit
-    @group = Group.find_by_name(params[:id])
   end
 
   # POST /groups
   # POST /groups.xml
   def create
     @group = Group.new(params[:group])
-
+    
+    # save avatar
+    avatar = Avatar.create(params[:image])
+    @group.avatar = avatar
+    
     respond_to do |format|
       if @group.save
         flash[:notice] = 'Group was successfully created.'
@@ -57,8 +60,19 @@ class Admin::GroupsController < Admin::BaseController
   # PUT /groups/1
   # PUT /groups/1.xml
   def update
-    @group = Group.find_by_name(params[:id])
-
+    
+    # save or update avatar
+    if @group.avatar
+      for size in %w(xsmall small medium large xlarge)
+        expire_page :controller => 'static', :action => 'avatar', :id => @group.avatar.id, :size => size
+      end
+      @group.avatar.image_file = params[:image][:image_file]
+      @group.avatar.save!
+    else
+      avatar = Avatar.create(params[:image])
+      @group.avatar = avatar
+    end  
+    
     respond_to do |format|
       if @group.update_attributes(params[:group])
         flash[:notice] = 'Group was successfully updated.'
@@ -74,7 +88,6 @@ class Admin::GroupsController < Admin::BaseController
   # DELETE /groups/1
   # DELETE /groups/1.xml
   def destroy
-    @group = Group.find_by_name(params[:id])
     @group.destroyed_by = current_user
     @group.destroy
 
@@ -83,4 +96,10 @@ class Admin::GroupsController < Admin::BaseController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  def fetch_group_by_name
+    @group = Group.find_by_name(params[:id])
+  end
+  
 end

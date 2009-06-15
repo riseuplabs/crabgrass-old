@@ -2,10 +2,11 @@
 # This controller is in charge of rendering the root url.
 #
 class RootController < ApplicationController
-  helper :group, :account
 
+  helper :groups, :account, :wiki
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
+  permissions 'groups/base'
 
   def index
     if !logged_in?
@@ -22,10 +23,7 @@ class RootController < ApplicationController
   def site_home
     @group = current_site.network
     @active_tab = :home
-    # @banner = render_to_string(:partial => 'banner') no banner for now.
-    @left_column = render_to_string(:partial => 'group/sidebar')
-    @groups = Group.visible_by(current_user).only_groups.recent.find(:all, :limit => 10)
-    @users = User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 10)
+
     @recent_pages = Page.find_by_path(['descending', 'updated_at', 'limit','20'], options_for_group(@group))
     @most_viewed_pages = Page.find_by_path(['descending', 'views_count', 'limit','10'], options_for_group(@group))
     @group.profiles.public.create_wiki unless @group.profiles.public.wiki
@@ -38,6 +36,30 @@ class RootController < ApplicationController
     @active_tab = :home
     render :template => 'account/index'
   end
+
+  helper_method :most_active_groups
+  def most_active_groups
+    Group.only_groups.most_visits.find(:all, :limit => 5)
+  end
+  
+  helper_method :recently_active_groups
+  def recently_active_groups
+    Group.only_groups.recent_visits.find(:all, :limit => 10)
+  end
+
+  helper_method :most_active_users
+  def most_active_users
+    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 5)
+  end
+
+  helper_method :recently_active_users
+  def recently_active_users
+    User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 10)
+  end
+
+#    @groups = Group.visible_by(current_user).only_groups.recent.find(:all, :limit => 10)
+#    @users = User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 10)
+
 
 end
 

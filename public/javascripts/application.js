@@ -16,6 +16,12 @@ function checkbox_toggle_visibility(checkbox, element_id) {
   else {$(element_id).hide();}
 }
 
+function setClassVisibility(selector, visibility) {
+  $$(selector).each(function(element){
+    visibility ? element.show() : element.hide();
+  })
+}
+
 // toggle all checkboxes of a particular css selected, based on the
 // checked status of the checkbox passed in.
 function toggle_all_checkboxes(checkbox, selector) {
@@ -61,10 +67,7 @@ function submit_form(form_element, name, value) {
   }
 }
 
-function replace_class_name(element, old_class, new_class) {
-  element.removeClassName(old_class);
-  element.addClassName(new_class);
-}
+function replace_class_name(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
 
 /** editing textareas **/
 
@@ -103,6 +106,10 @@ function enterPressed(event) {
   else { return(event.keyCode == 13); }
 }
 
+function eventTarget(event) {
+  event = event || window.event; // IE doesn't pass event as argument.
+  return(event.target || event.srcElement); // IE doesn't use .target
+}
 
 /** menu navigation **/
 /*
