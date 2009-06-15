@@ -1,7 +1,7 @@
 class CustomAppearancesController < ApplicationController
   stylesheet :custom_appearance
   javascript :extra
-  helper ColorPickerHelper
+  helper ColorPickerHelper, Admin::UsersHelper, Admin::GroupsHelper, Admin::EmailBlastsHelper, Admin::AnnouncementsHelper, Admin::PagesHelper, Admin::PostsHelper
   permissions 'custom_appearances'
 
   before_filter :view_setup, :except => [:favicon, :available]
@@ -10,6 +10,7 @@ class CustomAppearancesController < ApplicationController
 
   # GET edit_custom_appearance_url
   def edit
+    render :layout => 'admin'
   end
 
   # PUT custom_appearance_url
