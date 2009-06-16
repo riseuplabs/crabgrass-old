@@ -105,6 +105,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @limit       = nil
     @offset      = nil
     @include     = options[:include]
+    @select      = options[:select]
 
     # parse the path and apply each filter
     apply_filters_from_path( @path )
@@ -154,7 +155,8 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :limit => @limit,         # \ manual offset or limit
       :offset => @offset,       # /   
       :order => order,
-      :include => @include
+      :include => @include,
+      :select => @select
     }
   end
 

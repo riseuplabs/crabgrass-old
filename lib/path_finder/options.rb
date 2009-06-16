@@ -17,6 +17,14 @@ module PathFinder::Options
     ).merge(args)
   end
 
+  # used from the student mod
+  # access options for pages current_users students have access to
+  def options_for_mentor(args={})
+    default_options.merge(
+      :callback => :options_for_mentor
+    ).merge(args)
+  end
+
   # access options for all public pages (only)
   def options_for_public(args={})
     default_options.merge(

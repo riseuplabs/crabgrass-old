@@ -33,3 +33,6 @@ div.page_list {width: 100%;}
 /* hide the message area */
 #message {line-height: 1px;}
 
+/* temp hack for temp site home */
+form.mini_search table {width: 17em;}
+
