@@ -94,6 +94,24 @@ module Groups::Search
     search_template('discussions')
   end
 
+  def contributions
+    params[:path] ||= ""
+    params[:path] = params[:path].split('/')
+    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
+    params[:path] += ['limit','20', 'contributed_group', @group.id.to_s]
+
+    @pages = Page.find_by_path(params[:path], options_for_contributions).each do |page|
+      page.updated_by_id = page.user_id # user_id is from user_participation.
+      page.updated_by_login = User.find(page.user_id).login
+      page.updated_at = page.changed_at # changed_at is from user_participation.
+    end
+    search_template('contributions')
+  end
+
+  def options_for_contributions
+    options_for_me(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
+  end
+
   private
 
   def update_trash
@@ -129,6 +147,5 @@ module Groups::Search
       @columns.delete(:created_by)
     end
   end
-
 end
 
