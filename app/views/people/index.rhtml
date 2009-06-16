@@ -1,8 +1,6 @@
 <%= render :partial => 'tabs' %>
 
 <% if logged_in? %>
-  <% @title_box = content_tag :h1, :new_people.t -%>
-
   <div class='workarea'>
   <%= render :partial => 'users' %>  
   <br class='clear' />
