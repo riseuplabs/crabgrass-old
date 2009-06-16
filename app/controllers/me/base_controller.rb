@@ -43,11 +43,6 @@ class Me::BaseController < ApplicationController
     @user = current_user
   end
   
-  before_filter :load_partials
-  def load_partials
-   @left_column = render_to_string :partial => 'me/sidebar'
-  end
-
   def context
     me_context('large')
     unless ['show','index'].include?(params[:action])
@@ -56,6 +51,7 @@ class Me::BaseController < ApplicationController
       # that it is. regardless, we want it.)
       add_context params[:action], url_for(:controller => '/me/', :action => params[:action])
     end
+    @left_column = render_to_string :partial => 'me/sidebar'
   end
   
 end

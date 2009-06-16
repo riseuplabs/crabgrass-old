@@ -21,6 +21,10 @@
 
   <%= side_list_li :text => 'Discussions'[:discussions], :url => group_search_url(:action => 'discussions'), :icon => 'page_discussion' %>
 
+  <%- if may_contributions_group? %>
+    <%= side_list_li :text => 'Contributions'[:contributions], :url => group_search_url(:action => 'contributions'), :icon => 'group_contributions' %>
+  <%- end -%>
+
   <%- if may_trash_group? %>
     <%= side_list_li :text => 'Trash'[:trash], :url => group_search_url(:action => 'trash'), :icon => 'trash' %>
   <%- end -%>

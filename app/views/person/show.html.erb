@@ -25,7 +25,9 @@
       <td class="right">
         <%= render :partial => 'activity/list', :locals => {:activities => @activities[((length+2)/2)..(length-1)]} %>
         <%= header_with_more :h3, :dim, "Public Message Wall"[:wall_heading] %>
-        <%= render :partial => 'messages/form' %>
+        <%- if may_create_messages? -%>
+          <%= render :partial => 'messages/form' %>
+        <%- end -%>
       </td>
     </tr>
   </table>

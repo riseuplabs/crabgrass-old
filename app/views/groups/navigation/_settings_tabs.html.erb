@@ -3,17 +3,17 @@
 <%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
-    t.label 'Basic'
+    t.label 'Basic Settings'[:basic_settings]
     t.url groups_url(:action => 'edit')
     t.selected controller?(:groups, :committees, :networks) && action?(:edit)
   end
   f.tab do |t|
-    t.label 'Permissions'
+    t.label 'Permissions'[:permissions]
     t.url groups_profiles_url(:action => :permissions)
     t.selected controller?('groups/profiles') && action?(:permissions)
   end
   f.tab do |t|
-    t.label 'Profile'[:profile]
+    t.label 'Public Profile'[:public_profile]
     t.url groups_profiles_url(:action => :edit)
     t.selected controller?('groups/profiles') && action?(:edit)
   end
