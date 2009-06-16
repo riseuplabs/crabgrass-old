@@ -69,11 +69,15 @@ module PermissionsHelper
   # Call may?() if the missing method is in the form of a permission test (may_x?)
   # and call super() otherwise. 
   # 
-  # There is one exception to this rule:
+  # There are two exceptions to this rule:
   #
-  # We do not call super() if we are a controller. Instead, we mimic the behavior
+  # (1) We do not call super() if we are a controller. Instead, we mimic the behavior
   # of ActionController:Base#perform_action. I don't know why, but calling super()
   # in the case causes problems. 
+  #
+  # (2) We do not call super() if the superclass does not have method_missing 
+  # defined, since this will cause an error.
+  #
   def method_missing(method_id, *args)
     method_id = method_id.to_s
     match = PERMISSION_METHOD_RE.match(method_id)
@@ -90,8 +94,10 @@ module PermissionsHelper
       else
         raise NameError, "No method #{method_id}", caller
       end
-    else
+    elsif self.class.superclass.method_defined?(:method_missing)
       super
+    else
+      raise NameError, "No method #{method_id}", caller
     end
   end
   
