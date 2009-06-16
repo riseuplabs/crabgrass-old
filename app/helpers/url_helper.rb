@@ -40,6 +40,15 @@ module UrlHelper
   def groups_memberships_params(options={})
     {:controller => '/groups/memberships', :action => nil, :id => @group}.merge(options)
   end
+ 
+  def me_params(options={})
+    if options[:action].to_sym == :search
+      options.delete(:action)
+      {:controller => '/me/search'}.merge(options)
+    else
+      {:controller => '/me'}.merge(options)
+    end
+  end
 
   # for every method xxx_params, create xxx_url
   instance_methods.grep(/_params$/).each do |method|
