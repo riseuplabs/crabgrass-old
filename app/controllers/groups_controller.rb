@@ -6,7 +6,7 @@ class GroupsController < Groups::BaseController
   helper 'groups', 'wiki'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
-  before_filter :login_required, :except => [:index, :show]
+  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]
   verify :method => :post, :only => [:create, :update, :destroy]
 
   include Groups::Search
