@@ -97,7 +97,7 @@ module GroupsHelper
   end
 
   def leave_group_link
-    link_to_active_if_may("Leave {group_type}"[:leave_group, @group.group_type],
+    link_to_active_if_may("Leave {group_type}"[:leave_group_link, @group.group_type],
       '/groups/memberships', 'leave', @group)
   end
 

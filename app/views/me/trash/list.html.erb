@@ -1,4 +1,4 @@
-<% @title_box = content_tag :h1, "Trash"[:trash_headline] %>
+<% @title_box = content_tag :h1, "Trash"[:trash] %>
 <% @info_box = "The trash is where all your deleted pages live. You can restore a page by clicking {undelete} or permanently destroy a page by clicking {destroy}."[:trash_description, {:undelete => content_tag(:b,"Undelete"[:undelete_from_trash]), :destroy => content_tag(:b,"Destroy Immediately"[:delete_page_via_shred])}] %>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :url => url_for(:action => 'search')} %><br/>
