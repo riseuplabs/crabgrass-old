@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
   # subclasses to put their navigation setup calls in context() because
   # it will only get called when appropriate.
   def context_if_appropriate
-    if !@skip_context and response.redirected_to.nil? and request.format.to_sym == :html
+    if !@skip_context and normal_request?
       @skip_context = true
       context()
     end
@@ -260,6 +260,15 @@ class ApplicationController < ActionController::Base
     else
       true
     end
+  end
+
+  # Returns true if the current request is of type html and we have not 
+  # redirected. However, IE 6 totally sucks, and sends the wrong request
+  # which sometimes appears as :gif. 
+  def normal_request?
+    format = request.format.to_sym
+    response.redirected_to.nil? and
+    (format == :html or format == :all or format == :gif)
   end
 
 end
