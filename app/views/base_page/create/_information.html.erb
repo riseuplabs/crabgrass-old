@@ -13,7 +13,7 @@
   form.row do |r|
     r.label 'Tags'[:tags]
     r.input text_field('page', 'tag_list', :size => 40)
-    r.info(help(:tags) + " " + 'Separate tags using commas'[:separate_tags])
+    r.info "%s %s" % [help(:tags), 'Separate tags using commas'[:separate_tags]]
   end
 %>
 

@@ -234,6 +234,8 @@ module PageHelper
       page_list_owner_with_icon(page)
     elsif column == :last_updated
       page_list_updated_or_created(page)
+    elsif column == :contribution
+      page_list_contribution(page)
     elsif column == :posts
       page.posts_count
     elsif column == :last_post
@@ -256,6 +258,14 @@ module PageHelper
   
   def page_list_updated_or_created(page)
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
+    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
+    username = link_to_user(page.updated_by_login)
+    date     = friendly_date(page.send(field))
+    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
+  end
+
+  def page_list_contribution(page)
+    field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
     label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
@@ -310,6 +320,8 @@ module PageHelper
       list_heading "owner"[:page_list_heading_owner], 'owner_name', options
     elsif column == :last_updated
       list_heading "last updated"[:page_list_heading_last_updated], 'updated_at', options
+    elsif column == :contribution
+      list_heading "contribution"[:page_list_heading_contribution], 'updated_at', options
     elsif column
       list_heading column.to_s.t, column.to_s, options
     end

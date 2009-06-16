@@ -269,6 +269,12 @@ module PathFinder::Mysql::BuilderFilters
     @values << ACCESS[:admin]
   end
 
+  def filter_contributed_group(group_id)
+    @conditions << 'user_participations.user_id IN (?) AND user_participations.changed_at IS NOT NULL'
+    @values << Group.find(group_id).user_ids
+    @order = ["user_participations.changed_at DESC"]
+  end
+
 #turning RDoc comments back on. 
 #++ 
 end

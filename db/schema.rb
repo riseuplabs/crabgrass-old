@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090613085915) do
+ActiveRecord::Schema.define(:version => 20090616073637) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -218,7 +218,6 @@ ActiveRecord::Schema.define(:version => 20090613085915) do
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.string   "full_name"
-    t.string   "summary"
     t.string   "url"
     t.string   "type"
     t.integer  "parent_id",  :limit => 11

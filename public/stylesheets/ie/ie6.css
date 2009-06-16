@@ -46,3 +46,6 @@ div.popup_arrow {right: -16px} /* move popup nub slightly */
   border-top: expression( this == this.parentNode.firstChild ? "0" : "1px dotted white" )
 }
 
+/* temp hack for temp site home */
+form.mini_search table {width: 17em;}
+
