@@ -1,11 +1,6 @@
-class GroupsController < ApplicationController
-
-  def authorized?
-    if action?(:create)
-      @parent=get_parent
-      current_user.may?(:admin, current_site) or @parent
-    else
-      true
-    end
+class GroupsController < Groups::BaseController
+  # we display all students pages for teachers...
+  def options_for_contributions
+    options_for_mentor(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
   end
 end

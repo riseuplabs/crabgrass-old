@@ -12,11 +12,10 @@ module Groups::BasePermission
   ## BASIC GROUP CRUD
   ##
 
-  def may_create_group?(parent = nil)
-    return false unless logged_in?
-    parent.nil? ?
-      may_admin_site? :
-      may_admin_group?(parent)
+  # Groups::CommitteesController has its own permissions system - so
+  # creating committees depends on may_create_subcommittees?
+  def may_create_group?(parent = @parent)
+    logged_in? and may_admin_site?
   end
   alias_method :may_new_group?, :may_create_group?
   alias_method :may_create_network?, :may_create_group?
