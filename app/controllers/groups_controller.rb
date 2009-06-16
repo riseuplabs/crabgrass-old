@@ -130,7 +130,7 @@ class GroupsController < Groups::BaseController
     if rss_request?
       handle_rss(
         :title => @group.name,
-        :description => @group.summary,
+        :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')
       )
