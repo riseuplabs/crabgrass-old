@@ -6,7 +6,13 @@
   <ul class="side_list">
     <li><%= link_to_with_icon 'plus', "Contribute to Site", '/pages/create' %></li>
     <li><%= link_to_with_icon 'membership_add', "Create a Group", '/groups/new' %></li>
-    <li><%= link_to_with_icon 'weather_sun', "See Tips to get started", '/?welcome_box=1' %></li>
+    <li>
+      <% if params[:welcome_box] -%>
+        <%= link_to_with_icon 'cancel', "Hide Tips", '/' %>
+      <% else -%>
+        <%= link_to_with_icon 'weather_sun', "See Tips to get started", '/?welcome_box=1' %>
+      <% end -%>
+    </li>
   </ul>
 </div>
 
