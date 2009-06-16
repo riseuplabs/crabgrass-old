@@ -3,7 +3,6 @@
   <td class="login">
     <h1><%=h "Welcome to {site_title}"[:welcome_title, current_site.title] %></h1>
     <p><%=h first_with_any(:welcome_login_message.t, :welcome_message.t) %></p>
-    <%- debugger -%>
     <%- if current_site.signup_mode == Conf::SIGNUP_MODE[:invite_only] -%>
       <p><%=h :invite_only_message.t %></p>
     <%- end -%>
