@@ -85,7 +85,7 @@ module Gibberish
     end
 
     def interpolate_with_strings(string, strings)
-      string.gsub(/\{\w+\}/) { strings.shift }
+      string.gsub(/\{\w+\}|%s/) { strings.shift }
     end
    
     ## crabgrass hack: added *.custom.yml 

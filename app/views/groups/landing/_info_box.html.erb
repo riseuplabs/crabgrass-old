@@ -6,7 +6,7 @@
     <% if @group.council? -%>
       <p><%= 'Coordinating Council'[:coordinating_council] %></p>
     <% end -%>
-    <p class="description"><%= @group.profiles.public.summary_html || h(@group.summary)  %></p>
+    <p class="description"><%= @group.profiles.public.summary_html %></p>
     <div class="clear"><%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link, destroy_group_link) %></div>
   </td>
   <td class='right'>

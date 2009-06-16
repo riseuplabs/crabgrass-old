@@ -50,6 +50,11 @@ class ApplicationControllerTest < ActionController::TestCase
   def test_me_routes
     assert_route 'me/counts', 
       {:controller => 'me/base', :action => 'counts' }
+   
+    assert_route 'me/edit',
+      {:controller => 'me/base', :action => 'edit' }
+
+    #assert_route 'me/edit', @controller.me_params(:action => 'edit')
   end
 
   protected
