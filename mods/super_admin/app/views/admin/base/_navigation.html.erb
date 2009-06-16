@@ -25,16 +25,16 @@
 
 <h4>SiteAdmin (dummy)</h4>
 <ul>
-  <li class="<%= 'active' if @active == '' %>">
+  <li class="<%= 'active' if @active == 'siteadmin_basic' %>">
     <%= link_to 'basic', ''  %>
   </li>
-  <li class="<%= 'active' if @active == '' %>">
-    <%= link_to 'custom appearence', '' %>
+  <li class="<%= 'active' if @active == 'siteadmin_custom_appearances' %>">
+    <%= link_to 'custom appearence', edit_custom_appearance_url(current_site.custom_appearance) %>
   </li>
-  <li class="<%= 'active' if @active == '' %>">
+  <li class="<%= 'active' if @active == 'siteadmin_profile' %>">
     <%= link_to 'profile', '' %>
   </li>
-  <li class="<%= 'active' if @active == '' %>">
+  <li class="<%= 'active' if @active == 'siteadmin_signup' %>">
     <%= link_to 'sign up', '' %>
   </li>
 </ul>
@@ -42,9 +42,9 @@
 <h4>Moderation</h4>
 <ul>
   <li class="<%= 'active' if @active == 'page_moderation'%>">
-    <%= link_to 'page moderation', :controller => 'pages' %>
+    <%= link_to 'page moderation', pages_path %>
   </li>
   <li class="<%= 'active' if @active == 'post_moderation'%>">
-    <%= link_to 'post moderation', :controller => 'posts' %>
+    <%= link_to 'post moderation', posts_path %>
   </li>
 </ul>

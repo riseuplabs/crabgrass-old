@@ -1,12 +1,17 @@
-<%= mini_search_form :text_field_style => 'width:10em;' %>
-<br class='clear' />
-<br />
+<%= render :partial => '/widgets/mini_search' %>
+
 <div class="sidebox dark">
   <h2 class="first">Have Your Say!</h2>
   <ul class="side_list">
     <li><%= link_to_with_icon 'plus', "Contribute to Site", '/pages/create' %></li>
     <li><%= link_to_with_icon 'membership_add', "Create a Group", '/groups/new' %></li>
-    <li><%= link_to_with_icon 'weather_sun', "See Tips to get started", '/?welcome_box=1' %></li>
+    <li>
+      <% if params[:welcome_box] -%>
+        <%= link_to_with_icon 'cancel', "Hide Tips", '/' %>
+      <% else -%>
+        <%= link_to_with_icon 'weather_sun', "See Tips to get started", '/?welcome_box=1' %>
+      <% end -%>
+    </li>
   </ul>
 </div>
 
@@ -17,7 +22,7 @@
 
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Members"[:most_active_members], :entities => most_active_users() } %>   
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Members"[:recently_active_members], :entities => recently_active_users() , :after => link_to('view all'[:view_all], '/people')}  %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Members"[:recently_active_members], :entities => recently_active_users() , :after => link_to('view all'[:view_all], '/people/contacts')}  %>
 
 <br class='clear'/>
 
