@@ -18,26 +18,33 @@
     <strong>Email sender:</strong>&nbsp;email address that outgoing emails are sent from<br />
     <%= f.text_field :email_sender %>
   </p>
+
+
   <span>
-    <%= f.check_box :tracking %><%= label :tracking, 'tracking:' %>&nbsp;if checked, we track user visits, logins and page views
+    <%= f.check_box :tracking %><%= f.label :tracking, 'Tracking:' %>&nbsp;if checked, we track user visits, logins and page views
   </span>
   <br />
   <span>
-    <%= f.check_box :chat %><%= label :chat, 'chat:' %>&nbsp;if checked, chat is enabled
+    <%= f.check_box :chat %><%= f.label :chat, 'Chat:' %>&nbsp;if checked, chat is enabled
   </span>
   <br />
   <span>
-    <%= f.check_box :show_exceptions %><%= label :show_exceptions, 'show_exceptions:' %>&nbsp;if checked, exceptions are shown to the user
+    <%= f.check_box :show_exceptions %><%= f.label :show_exceptions, 'Show Exceptions:' %>&nbsp;if checked, exceptions are shown to the user
   </span>
   <br />
   <span>
-    <%= f.check_box :enforce_ssl %><%= label :enforc_ssl, 'enforce_ssl:' %>&nbsp;if checked, cookies will only work over tls/ssl
+    <%= f.check_box :enforce_ssl %><%= f.label :enforce_ssl, 'Enforce SSL:' %>&nbsp;if checked, cookies will only work over   TLS/SSL
   </span>
   <br />
   <span>
-    <%# f.check_box :available_page_types %><%= label :available_page_types, 'available_page_types:' %>&nbsp;if checked, limits what page types can be created
+    <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created (hold CTRL down while clicking to select multiple elements)
+    <ul style="list-style-type:none;">
+      <li><%= f.select :available_page_types, Conf.available_page_types,{}, :multiple => true %></li>
+    </ul>
   </span>
-  <br /><br />
+
+
+  <br />
   <span>
     <input type="hidden" name="current_view" value="<%=@active%>">
     <%= submit_tag 'Save', :style => 'width:7em;' %>
