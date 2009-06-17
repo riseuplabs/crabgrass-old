@@ -22,6 +22,7 @@ map.namespace :admin do |admin|
   admin.resources :posts
   admin.resources :email_blasts
   admin.resources :announcements
+  admin.resources :sites
   admin.root :controller => 'base'
 end
 
