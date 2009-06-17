@@ -61,5 +61,5 @@
 
 <%- end -%>
 
-<%= javascript_tag remote_function(:url => {:controller => '/me', :action => :counts }) %>
+<%= javascript_tag remote_function(:url => me_params(:action => :counts)) %>
 
