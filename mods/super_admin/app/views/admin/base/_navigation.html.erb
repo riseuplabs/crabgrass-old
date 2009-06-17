@@ -25,7 +25,7 @@
 
 <h4>SiteAdmin</h4>
   <li class="<%= 'active' if @active == 'siteadmin_basic' %>">
-    <%= link_to 'basic', admin_sites_path(:action => 'basic')  %>
+    <%= link_to 'basic', :controller => 'admin/sites', :action => 'index', :view => 'basic'  %>
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_custom_appearances' %>">
     <%= link_to 'custom appearence', current_site.custom_appearance ? edit_custom_appearance_url(current_site.custom_appearance) : new_custom_appearance_url %>
