@@ -1,0 +1,32 @@
+<h2>Profile settings</h2>
+<span>You can choose which fields can be filled out in a profile and which profile tabs are active. Default is set to allow all.</span>
+<% form_for current_site, :url => {:action => 'update'} do |f| %>
+<%= f.error_messages %>
+<span><b>Profiles:</b></span>  
+<br />
+<span>
+  <%= f.check_box :tracking %><%= label :tracking, 'tracking:' %>&nbsp;if checked, we track user visits, logins and page views
+</span>
+<br />
+<span>
+  <%= f.check_box :chat %><%= label :chat, 'chat:' %>&nbsp;if checked, chat is enabled
+</span>
+<br />
+<br />
+<span><b>Profile Fields:</b></span>
+<br />
+<span>
+  <%= f.check_box :show_exceptions %><%= label :show_exceptions, 'show_exceptions:' %>&nbsp;if checked, exceptions are shown to the user
+</span>
+<br />
+<span>
+  <%= f.check_box :enforce_ssl %><%= label :enforc_ssl, 'enforce_ssl:' %>&nbsp;if checked, cookies will only work over tls/ssl
+</span>
+<br />
+<span>
+  <%= f.check_box :available_page_types %><%= label :available_page_types, 'available_page_types:' %>&nbsp;if checked, limits what page types can be created
+</span>
+<br /><br />
+<span><%= submit_tag 'Save', :style => 'width:7em;' %></span>
+<br /><br />
+<% end %>

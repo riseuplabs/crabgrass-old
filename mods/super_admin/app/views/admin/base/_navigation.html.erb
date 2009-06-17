@@ -26,16 +26,16 @@
 <h4>SiteAdmin (dummy)</h4>
 <ul>
   <li class="<%= 'active' if @active == 'siteadmin_basic' %>">
-    <%= link_to 'basic', ''  %>
+    <%= link_to 'basic', :controller => 'admin/sites', :action => 'index', :view => 'basic'  %>
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_custom_appearances' %>">
     <%= link_to 'custom appearence', edit_custom_appearance_url(current_site.custom_appearance) %>
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_profile' %>">
-    <%= link_to 'profile', '' %>
+    <%= link_to 'profile', :controller => 'admin/sites', :action => 'index', :view => 'profile' %>
   </li>
   <li class="<%= 'active' if @active == 'siteadmin_signup' %>">
-    <%= link_to 'sign up', '' %>
+    <%= link_to 'sign up', :controller => 'admin/sites', :action => 'index', :view => 'signup' %>
   </li>
 </ul>
 
