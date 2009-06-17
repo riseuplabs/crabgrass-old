@@ -129,7 +129,7 @@ module ApplicationHelper
   def options_for_language(selected=nil)  
     selected ||= session[:language_code].to_s
     selected = selected.sub(/_\w\w$/, '') # remove locale
-    options_array = LANGUAGES.collect {|lang| [lang.name, lang.code.sub(/_\w\w$/,'')]}
+    options_array = LANGUAGES.collect {|code, lang| [lang.name, code.to_s]}
     options_for_select(options_array, selected)
   end
 
