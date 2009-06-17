@@ -65,17 +65,17 @@
   </tr>
 -->
   <tr>
-    <td style='width:100%'>
+    <td style='width:90%'>
       <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
           :onkeypress => key_pressed_function %>
       <%= javascript_tag(auto_complete_js) %>
     </td>
     <td>&nbsp;</td>
-    <td>
-      <%- if may_select_access_participation?-%>
+    <%- if may_select_access_participation?-%>
+      <td>
         <%= select_page_access 'recipient[access]', :blank => false %>
-      <%- end -%>
-    </td>
+      </td>
+    <%- end -%>
     <td>
       <%= link_to_remote_icon('plus', add_action, :id => add_button_id) %>
     </td>

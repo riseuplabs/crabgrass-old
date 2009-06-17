@@ -23,14 +23,15 @@ remove_function = "$('%s').remove()" % id
 <tr class="<%= 'unsaved' if newitem %>" id="<%= id %>">
   <td style="width:100%">
     <%= display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true) %>
-  </td>
-  <td>
-    <%- if may_select_access_participation? -%>
-      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
-    <%- else -%>
+    <%- if !may_select_access_participation? -%>
       <%= hidden_field 'recipients['+recipient.name.gsub(/\+/,"%2b")+']', :access, :value => access %>
     <%- end -%>
   </td>
+  <%- if may_select_access_participation? -%>
+    <td>
+      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
+    </td>
+  <%- end -%>
   <td>
     <%= link_to_function_icon('minus', remove_function) if newitem %>
   </td>
