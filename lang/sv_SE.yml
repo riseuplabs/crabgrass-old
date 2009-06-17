@@ -41,7 +41,6 @@ move_page_link: Flytta :page_class
 article_page_display: artikel
 group_has_no_public_profile: "Den h\xC3\xA4r gruppen har ingen offentlig profil."
 Committee: "kommitt\xC3\xA9"
-destroy_group: "f\xC3\xB6rst\xC3\xB6r %s"
 coordinator: Koordinator
 month_short_may: maj
 from: "fr\xC3\xA5n"
@@ -75,6 +74,7 @@ cancel_link: avbryt
 add_encryption_key: "L\xC3\xA4gg till krypteringsnyckel"
 date_days: dagar
 folder_page_display: Mapp
+destroy_group_link: "f\xC3\xB6rst\xC3\xB6r {group_type}"
 create_task_list: skapa en ny uppgiftslista
 edit_underlined_e: "\xC3\xA4ndra (<u>e</u>)"
 media_for_group: "%s i %s"
@@ -130,7 +130,7 @@ break_lock: "bryt l\xC3\xA5s"
 group_directory: Gruppkatalog
 create_committee: "skapa kommitt\xC3\xA9"
 locked_by_user: "l\xC3\xA5st av :user"
-comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av {user} {when} fr\xC3\xA5n {old_version} till {new_version}"
+comparing_changes_header: "J\xC3\xA4mf\xC3\xB6r \xC3\xA4ndringar av :user :when fr\xC3\xA5n :old_version till :new_version"
 contribute_content_link: Bidra
 alert_saved: "\xC3\x84ndringarna sparades"
 email_addresses: E-postadresser
@@ -156,19 +156,17 @@ insert_image_instructions: "Klicka p\xC3\xA5 en miniatyr f\xC3\xB6r att l\xC3\xA
 media_image: Bild
 my_groups: Mina grupper
 delete_this_version: radera denna version
-minimum_stars_for_important_pages_description: "Best\xC3\xA4m hur m\xC3\xA5nga stj\xC3\xA4rnor en sida beh\xC3\xB6ver f\xC3\xB6r att synas i \"viktigt\"-listan p\xC3\xA5 gruppens f\xC3\xB6rstasida"
 me_search_link: "S\xC3\xB6k"
 group_wiki: Gruppwiki
 media_alls: Media
 group_not_allowed_to_view_image_error: "Gruppen som \xC3\xA4ger sidan har inte till\xC3\xA5telse att se den h\xC3\xA4r bilden."
 my_world_heading: "Min v\xC3\xA4rld"
-media_video: Video
 contacts: kontakter
 directory_of_groups: "Katalog \xC3\xB6ver grupper"
 add_comment: "l\xC3\xA4gg till kommentar"
 logout: Logga ut
+media_video: Video
 About_Me: Om mig
-minimum_stars_for_important_pages: "Minsta antal stj\xC3\xA4rnor f\xC3\xB6r viktiga sidor"
 dont_understand_group_type: "F\xC3\xB6rstod inte grupptypen :type"
 invalid_token: Ogiltig symbol
 all_page_types: alla sidtyper
@@ -176,7 +174,6 @@ login_name: "Anv\xC3\xA4ndarnamn"
 activity_user_joined_group: "{user} gick med i {group_type} {group}"
 members: Medlemmar
 location_country: land
-coordinating_council_description: "Medlemmar i den h\xC3\xA4r kommitt\xC3\xA9n har en speciell <em>administrativ tillg\xC3\xA5ng</em> till :group_type <strong>:group_name</strong>"
 add_existing_image: "L\xC3\xA4gg till existerande bild"
 image_count_total: ":count bilder"
 general_info: "Allm\xC3\xA4n information"
@@ -223,7 +220,7 @@ data_for_page_missing: "Datan f\xC3\xB6r den h\xC3\xA4r sidan saknas."
 media_documents: Dokument
 me_dashboard_link: Panelen
 menu_groups: Grupper
-create_a_new_thing: skapa en ny {thing}
+create_a_new_thing: skapa en ny :thing
 large: stor
 information: Information
 add_description: "L\xC3\xA4gg till beskrivning"
@@ -267,7 +264,6 @@ approval_vote_class_description: "Bifall eller inte om varje m\xC3\xB6jlighet."
 file_size: Filstorlek
 created: skapad
 create_page: Skapa sida
-me_requests_link: "F\xC3\xB6rfr\xC3\xA5gningar"
 approve_or_reject_link: "acceptera eller avsl\xC3\xA5 denna ans\xC3\xB6kan"
 me_tasks_link: Uppgifter
 activity_contact_created: "{user} lade till {other_user} som kontakt"

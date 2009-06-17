@@ -49,6 +49,9 @@ class Object
     false
   end
   
+  def safe_send(symbol, *args)
+    self.send(symbol, *args) if self.respond_to?(symbol)
+  end
 end
 
 class Array
@@ -70,9 +73,12 @@ class Array
   def any_in?(array)
     return (self & array).any?
   end
+
+  # [1,2,3].to_h {|i| [i, i*2]}
+  # => {1 => 2, 2 => 4, 3 => 6}
   def to_h(&block)
     Hash[*self.collect { |v|
-      [v, block.call(v)]
+      block.call(v)
     }.flatten]
   end
 

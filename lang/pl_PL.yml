@@ -21,6 +21,7 @@ wiki_page_display: Wiki
 wall_post_button: "Wy\xC5\x9Blij Now\xC4\x85 Wiadomo\xC5\x9B\xC4\x87"
 request_to_join_us_description: ":user otrzyma\xC5\x82/a zaproszenie do :group"
 break_lock: "Usu\xC5\x84 blokad\xC4\x99"
+archive: Archiwum
 left_the_chatroom: "opu\xC5\x9B\xC4\x87 pok\xC3\xB3j czat\xC3\xB3w"
 group_profile_description_may_see: "Je\xC5\x9Bli zaznaczone, informacja o profilu, zamieszczona poni\xC5\xBCej b\xC4\x99dzie widoczna.\r\n\
   W przeciwnym wypadku, profil tej {group_type} b\xC4\x99dzie ukryty ca\xC5\x82kowicie."
@@ -59,8 +60,8 @@ wall_heading: "Publiczny Mur z Wiadomo\xC5\x9Bciami"
 time_zone: Strefa Czasowa
 task_list_page_description: Lista wszystkich danych.
 share_page_recipients_sections: "Wybierz spo\xC5\x9Br\xC3\xB3d swoich grup lub przyjaci\xC3\xB3\xC5\x82"
-page_not_part_of_group: "Strona nie jest cz\xC4\x99\xC5\x9Bci\xC4\x85 tej grupy"
 delete: "Usu\xC5\x84"
+page_not_part_of_group: "Strona nie jest cz\xC4\x99\xC5\x9Bci\xC4\x85 tej grupy"
 you_are_not_member_of_any_group: "Nie jeste\xC5\x9B cz\xC5\x82onkiem/cz\xC5\x82onkini\xC4\x85 \xC5\xBCadnej z grup."
 try_again: "Spr\xC3\xB3buj Ponownie"
 contact: Kontakt
@@ -74,7 +75,6 @@ medium: "\xC5\x9Bredni"
 websites: Strony internetowe
 reject_button: "odrzu\xC4\x87"
 group_publicly_visible_description: "Grupa b\xC4\x99dzie widoczna w publicznym katalogu i <i>profil</i> grupy b\xC4\x99dzie widoczny dla os\xC3\xB3b niezarejestrowanych pod adresem we.riseup.net/nazwatwojejgrupy."
-achive: Archiwum
 Language: "J\xC4\x99zyk"
 coordinator: Koordynator
 delete_version_confirm: "Czy na pewno chcesz usun\xC4\x85\xC4\x87 t\xC4\x85 wersj\xC4\x99?"
@@ -165,7 +165,6 @@ media_without_group: |
 
 date_weeks: tygodnie
 no_peers_msg: "Nie masz \xC5\xBCadnych znajomych."
-working_group: grupy robocze
 reset_password_mail_greeting: "%s, Twoje has\xC5\x82o zosta\xC5\x82o ustawione na nowo, tak jak o to prosi\xC5\x82e\xC5\x9B/\xC5\x82a\xC5\x9B"
 location_country: "pa\xC5\x84stwo"
 login_name: Login
@@ -188,20 +187,19 @@ Mobile: "Kom\xC3\xB3rka"
 state: stan
 share_link: "Udost\xC4\x99pnij :page_class"
 search: Szukaj
-page_list_heading_stars: gwiazdki
 invalid_token: Niepoprawna autoryzacja
 page_list_heading_last_updated: ostatnie uaktualnienia
+page_list_heading_stars: gwiazdki
 month_short_july: Lipiec
 delete_post: "Usu\xC5\x84 post"
 my_world_heading: "M\xC3\xB3j \xC5\x9Awiat"
 email: Mejl
-create_a_new_thing: "Stw\xC3\xB3rz {thing}"
+create_a_new_thing: "Stw\xC3\xB3rz :thing"
 your_login: "Tw\xC3\xB3j login"
 view_requests: "przejrzyj pro\xC5\x9Bby"
 slideshow_delay_input: "Uaktualnij ka\xC5\xBCdy :input_field seconds"
 my_dashboard: "M\xC3\xB3j panel\r\n"
 network: "Sie\xC4\x87"
-minimum_stars_for_important_pages_description: "Ustaw minimaln\xC4\x85 liczb\xC4\x99 gwiazdek, kt\xC3\xB3r\xC4\x85 wymaga strona, aby pojawic si\xC4\x99 jako \"wa\xC5\xBCna\" - lista pomostowych stron grupy"
 date_older: Starsze
 preview: "Przegl\xC4\x85d"
 signup_email_info: "Nie jest to wymagane ale przydatne je\xC5\x9Bli zapomnisz has\xC5\x82a."
@@ -217,7 +215,6 @@ archive_headline: Archiwum
 password_error_default: "za niska si\xC5\x82a has\xC5\x82a"
 remove_from_gallery: "Usu\xC5\x84 z galerii"
 login_button: "Zaloguj si\xC4\x99"
-destroy_group: zniszcz %s
 destroy_confirmation: "Czy jete\xC5\x9B pewien/a \xC5\xBCe chcesz zlikwidowa\xC4\x87 {thing} ? To dzia\xC5\x82anie nie bedzie mog\xC5\x82o by\xC4\x87 odwr\xC3\xB3cone."
 group_has_no_public_profile: Ta grupa nie ma publicznego profilu.
 Category: Kategoria
@@ -240,6 +237,7 @@ media_images: Obrazy
 signup_login_name: "Tw\xC3\xB3j login"
 file_class_description: "Za\xC5\x82adowany plik."
 approve: "zatwierd\xC5\xBA"
+council_help: "Je\xC5\x9Bli ta grupa posiada rad\xC4\x99 koordynuj\xC4\x85c\xC4\x85, wtedy tylko cz\xC5\x82onek/ini tej rady mo\xC5\xBCe administrowa\xC4\x87 grup\xC4\x85. W innym przypadku jakikolwiek cz\xC5\x82onek/ini grupy mo\xC5\xBCe to robi\xC4\x87."
 unknown: nieznany
 summary: Podsumowanie
 only_last_menber_can_delete_group: "Mo\xC5\xBCesz wykasowac grupe tylko, jesli jeste\xC5\x9B jej ostatnim uczestnikiem/uczestniczk\xC4\x85"
@@ -247,7 +245,6 @@ gallery_class_description: Kolekcja grafik.
 allow_membership_requests: "Pozw\xC3\xB3l na pro\xC5\x9Bby o cz\xC5\x82onkostwo"
 approval_vote: "g\xC5\x82os poparcia"
 signup_info: "Wybierz sobie login oraz has\xC5\x82o i kliknij \"%s\""
-committee_type_description: "Jaki to b\xC4\x99dzie rodzaj komitetu?"
 Admin: Admin
 link_name: Nazwa linku
 my_tasks_description: "Lista zada\xC5\x84 do kt\xC3\xB3rych mam dost\xC4\x99p"
@@ -259,7 +256,6 @@ profile_option_may_see_committees: "Poka\xC5\xBC komitety"
 post_message: "Wy\xC5\x9Blij wiadomo\xC5\x9B\xC4\x87"
 login_required: Wymagany login
 reset_password_mail_sent: "Zosta\xC5\x82 wys\xC5\x82any e-mail zawieraj\xC4\x85cy instrukcje w jaki spos\xC3\xB3b ustawi\xC4\x87 has\xC5\x82o na nowo."
-commitee_type: Typ komitetu
 my_completed_tasks_link: "Uko\xC5\x84czone"
 galleries: Galerie
 user_profile_description_may_see_contacts: "Pozw\xC3\xB3l ludziom na przegl\xC4\x85danie listy Twoich prywatnych kontakt\xC3\xB3w."
@@ -267,9 +263,9 @@ reset_password_mail_warning: "Je\xC5\x9Bli nie prosi\xC5\x82e\xC5\x9B/\xC5\x82a\
 read: czytaj
 alert_permission_denied: "Odmowa dost\xC4\x99pu"
 typing: wpisywanie
-page_notice_message: "strona przes\xC5\x82ana przez {user} {date}"
 activity_user_status: "{user} jest {status}"
 location_city: miasto
+page_notice_message: "strona przes\xC5\x82ana przez {user} {date}"
 friday: "Pi\xC4\x85tek"
 my_groups_link: moje grupy
 pending_tasks: zadanie w toku.
@@ -342,6 +338,7 @@ wont_be_able_to_save: "Nie b\xC4\x99dziesz w stanie zapisa\xC4\x87 tej strony"
 personal_message: "prywatna wiadomo\xC5\x9B\xC4\x87"
 name: "Imi\xC4\x99"
 request_to_join_our_network_description: "grupa :group zosta\xC5\x82a zaproszona do sieci :network"
+destroy_group_link: zniszcz {group_type}
 page_details: "Szczeg\xC3\xB3\xC5\x82y strony"
 no_members: (no members)
 remove_from_inbox: "Usu\xC5\x84 ze skrzynki odbiorczej"
@@ -359,7 +356,6 @@ group_profile_description_may_see_groups: "Pozw\xC3\xB3l ludziom na ogl\xC4\x85d
 edit: Edytuj
 view_slideshow: "Obejrzyj Pokaz Slajd\xC3\xB3w"
 video: wideo
-requests_for_group: "Pro\xC5\x9Bby dla %s"
 phone_numbers: Numery Telefonu
 wiki_is_locked: To wiki jest obecnie zablokowane przez :user
 removing_image: "Usu\xC5\x84 Obraz..."
@@ -369,9 +365,8 @@ add_im_address: Dodaj komunikator
 my_peers_description: "u\xC5\xBCytkownicy/czki z kt\xC3\xB3rymi dziel\xC4\x99 wsp\xC3\xB3ln\xC4\x85 grup\xC4\x99"
 version_doesnt_exist: Nie ma takiej wersji :version
 send_message_link: "Wy\xC5\x9Blij wiadomo\xC5\x9B\xC4\x87"
-page_list_heading_updated_by: zaktualizowane przez
-coordinating_council_description: "Cz\xC5\x82onkostwo w tym komitecie daje specjalny <i>dost\xC4\x99p administracyjny</i> do :group_type <b>:group_name</b>."
 group_members_publicly_visible: "Udost\xC4\x99pnij publicznie list\xC4\x99 uczestnik\xC3\xB3w i uczestniczek"
+page_list_heading_updated_by: zaktualizowane przez
 image_count: "Zdj\xC4\x99cie :number z :count"
 invite_accept_headline: "Zaakceptuj zaproszenie by do\xC5\x82\xC4\x85czy\xC4\x87 do group'"
 private: Prywatne
@@ -401,7 +396,6 @@ file_version_deleted: "wersja pliku usuni\xC4\x99ta"
 add_phone_number: Dodaj telefon
 created_by: Stworzone przez
 Work_Life: Okres trwania pracy
-minimum_stars_for_important_pages: "Minimalna liczba gwiazdek dla wa\xC5\xBCnych stron"
 wiki_page_description: Niesformatowany dokument tekstowy.
 tags: Tagi
 message_must_not_be_empty: "wiadmo\xC5\x9B\xC4\x87 nie mo\xC5\xBCe by\xC4\x87 pusta"
@@ -461,7 +455,6 @@ edit_attachments: "Edytuj za\xC5\x82\xC4\x85czniki"
 announcement_page_display: "Og\xC5\x82oszenie"
 send_invites_headline: "Wy\xC5\x9Blij zaproszenia do grupy {group}"
 invalid_email_text: "Adres e-mail kt\xC3\xB3ry zsota\xC5\x82 wprowadzony jest b\xC5\x82\xC4\x99dny."
-create_page_share: "Kto ma mie\xC4\x87 dost\xC4\x99p do {page_class}"
 viewed: "Przegl\xC4\x85dane"
 accept_usage_agreement: "Akceptuje warunki u\xC5\xBCytkowania"
 group_join_chat: "Do\xC5\x82\xC4\x85cz do czatu"
@@ -509,7 +502,6 @@ attachments: "Za\xC5\x82\xC4\x85czniki"
 link_name_description: "Ta nazwa pokazywa\xC4\x87 b\xC4\x99dzie w jaki spos\xC3\xB3b b\xC4\x99dziesz si\xC4\x99 odnosi\xC4\x87/\xC5\x82a do tej grupy w linkach i URL. Mo\xC5\xBCe zawiera\xC4\x87 jedynie alfanumeryczne litery, bez jakichkolwiek spacji."
 user_profile_description_allow_peers: "Je\xC5\x9Bli zaznaczone, ludzie z kt\xC3\xB3rymi dzielisz grup\xC4\x99 b\xC4\x99d\xC4\x85 mieli mo\xC5\xBCliwo\xC5\x9B\xC4\x87 ogl\xC4\x85dania Twojego prywatnego profilu."
 this_is_committee: "Ten komitet jest cz\xC4\x99\xC5\x9Bci\xC4\x85 {parent_group}."
-me_requests_link: "Pro\xC5\x9Bby"
 password_error_too_similar: "za du\xC5\xBCo znak\xC3\xB3w w ha\xC5\x9Ble powtarza si\xC4\x99"
 upload_image: "Za\xC5\x82aduj Obraz"
 show_gallery: "Poka\xC5\xBC Galeri\xC4\x99"
@@ -552,13 +544,12 @@ video_service_is_not_supported: nie ma wsparcia (obecnie tylko youtube, google v
 user_or_group_name: "U\xC5\xBCytkownik/U\xC5\xBCytowniczka albo nazwa grupy"
 request_status: "Ta wiadomo\xC5\x9B\xC4\x87 zosta\xC5\x82a :status przez :user :time"
 all_people: wszyscy
-working_group_description: "Cz\xC5\x82onkostwo w tym komitecie przyznaje <i>no access</i> komukolwiek do :group_type <b>:group_name</b>."
 private_profile: Prywatny Profil
-page_list_heading_title: "tytu\xC5\x82"
 login_failed: "Nie uda\xC5\x82o si\xC4\x99 zalogowa\xC4\x87"
 add_photo_to_gallery: "Kliknij na zdj\xC4\x99cie \xC5\xBCeby je doda\xC4\x87"
 location_postal_code: kod pocztowy
 error_saving_new_order: "B\xC5\x82\xC4\x85d przy zapisywaniu nowego porz\xC4\x85dku!"
+page_list_heading_title: "tytu\xC5\x82"
 request_to_join_your_network_description: ":group prosi o w\xC5\x82\xC4\x85czenie do sieci :network"
 only_me: Tylko Ja
 video_embed_code_prompt: "Osadzone kody z zewn\xC4\x99trznego \xC5\xBAr\xC3\xB3d\xC5\x82a wideo"
@@ -587,10 +578,9 @@ search_headline: Szukaj
 edit_featured_content: "edytuj wyr\xC3\xB3\xC5\xBCnion\xC4\x85 zawarto\xC5\x9B\xC4\x87"
 alert_field_errors: "Przy nast\xC4\x99puj\xC4\x85cych polach wyst\xC4\x85pi\xC5\x82y problemy"
 move_this_page: "Przesu\xC5\x84 ta stron\xC4\x99"
-comparing_changes_header: "Por\xC3\xB3wnanie zmian dokonanych {when} from {old_version} przez {user} z {new_version}"
+comparing_changes_header: "Por\xC3\xB3wnanie zmian dokonanych :when from :old_version przez :user z :new_version"
 this_is_coordinating: "Ten komitet jest <strong>rad\xC4\x85 koorynuj\xC4\x85c\xC4\x85</strong> dla {parent_group}."
 share_page_recipients_selection: "Stw\xC3\xB3rz w\xC5\x82asny wyb\xC3\xB3r"
-edit_council_help_text: "Je\xC5\x9Bli ta grupa posiada rad\xC4\x99 koordynuj\xC4\x85c\xC4\x85, wtedy tylko cz\xC5\x82onek/ini tej rady mo\xC5\xBCe administrowa\xC4\x87 grup\xC4\x85. W innym przypadku jakikolwiek cz\xC5\x82onek/ini grupy mo\xC5\xBCe to robi\xC4\x87."
 csrf_error_message: "Twoja pr\xC3\xB3ba zalogowania nosi znamiona ataku na stron\xC4\x99. Nie martw si\xC4\x99: ten b\xC5\x82\xC4\x85d zdarza si\xC4\x99 cz\xC4\x99sto b\xC5\x82\xC4\x99dnie. Po prostu jeste\xC5\x9Bmy paranoikami. Wszystko co musisz zrobi\xC4\x87 to od\xC5\x9Bwie\xC5\xBCy\xC4\x87 t\xC4\x85 stron\xC4\x99 zanim ponownie spr\xC3\xB3bujesz si\xC4\x99 zalogowa\xC4\x87. Mo\xC5\xBCesz te\xC5\xBC nacisn\xC4\x85\xC4\x87 tego linka \xC5\xBCeby spr\xC3\xB3bowa\xC4\x87 jeszcze raz:\r\n"
 type_your_messages_here: "Tu wpisz swoj\xC4\x85 wiadomo\xC5\x9B\xC4\x87 i naci\xC5\x9Bnij enter..."
 send_invites_button: "Wy\xC5\x9Blij zaproszenia"
@@ -635,7 +625,6 @@ date_minutes: minuty
 upload_new_image: "za\xC5\x82aduj nowy obraz"
 upload_images: "Za\xC5\x82aduj"
 request_to_join_us_via_email_description: ":email otrzyma zaproszenie do :group"
-page_info: Dane Strony
 message_page_display: "Wiadomo\xC5\x9B\xC4\x87"
 wednesday: "\xC5\x9Aroda"
 watch_checkbox: Obserwuj uaktualnienia

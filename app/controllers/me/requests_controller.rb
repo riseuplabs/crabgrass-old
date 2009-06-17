@@ -33,6 +33,7 @@ class Me::RequestsController < Me::BaseController
   end
 
   def context
+    super
     me_context('small')
     #add_context 'requests', url_for(:controller => 'me/requests', :action => nil)
     #if action?(:to_me)

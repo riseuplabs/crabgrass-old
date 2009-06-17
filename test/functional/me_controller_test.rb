@@ -1,15 +1,15 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'me/base_controller'
+require File.dirname(__FILE__) + '/../test_helper'
+require 'me_controller'
 
 # Re-raise errors caught by the controller.
-class Me::BaseController; def rescue_action(e) raise e end; end
+class MeController; def rescue_action(e) raise e end; end
 
-class BaseControllerTest < Test::Unit::TestCase
+class MeControllerTest < Test::Unit::TestCase
 
   fixtures :users, :languages, :sites
   
   def setup
-    @controller = Me::BaseController.new
+    @controller = MeController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end

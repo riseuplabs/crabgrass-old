@@ -19,6 +19,7 @@ password_error_too_common: basiert auf einem h&auml;ufig verwendeten Wort.
 current_video_sources: "derzeit Unterst\xC3\xBCtzung f\xC3\xBCr: youtube, blip.tv, google video, vimeo"
 wall_post_button: Neue Nachricht schreiben
 group_profile_description_may_see: "Untenstehende Infos werden sichtbar sein, wenn das K\xC3\xA4stchen angekreuzt ist. Andernfalls wird das Profil f\xC3\xBCr diese {group_type} komplett versteckt."
+archive: Archiv
 request_to_join_us_description: ":user wurde eingeladen, sich :group anzuschlie\xC3\x9Fen"
 wiki_page_display: Wiki
 break_lock: Sperre aufheben
@@ -39,6 +40,7 @@ join_chat: am schwatz teilnehmen
 welcome_upload_icon_link: Lade ein Symbol hoch
 at_least_one_recipient_is_required: "Mindestens eine Empf\xC3\xA4ngerin angeben"
 media_videos: Videos
+email_link_expires: Dieser Link wird in {days} Tagen ablaufen.
 recent_wall_posts: "J\xC3\xBCngste Beitr\xC3\xA4ge auf der Mauer"
 directory_of_people: Verzeichnis von Personen
 add_location: "Ort hinzuf\xC3\xBCgen"
@@ -56,6 +58,8 @@ welcome_text: "*Willkommen*\r\n\
   Die Entwicklung wird vom BenutzerInnenfeedback vorangetrieben, also bitte [schlie\xC3\x9Fe -> /users] dich der BenutzerInnenfeedbackgruppe an und beteilige dich, indem du auf den \"Mitmachen\"-Link am unterem Ende jeder Seite klickst.\r\n"
 share_page_recipients: Teile diese {page_class} mit
 group_information: ":group_type Information"
+wiki_lost_text_confirmation: Aller ungesicherter Text wird verlohren gehen. Bist du Dir sicher?
+page_create_owner: Seiten Besitzer
 wall_heading: "\xC3\x96ffentliches Schwarzes Brett"
 time_zone: Zeitzone
 task_list_page_description: "Eine Liste an To-Do-Eintr\xC3\xA4gen."
@@ -72,7 +76,6 @@ file_size: "Dateigr\xC3\xB6\xC3\x9Fe"
 dont_have_permission_to_create_committees: Du kannst keine Arbeitsgruppen unter %s anlegen.
 activate_js_to_rearrange_photos: Aktiviere JavaScript und die Reihenfolge mit Drag&amp;Drop zu ver&auml;ndern!
 media_for_group: "%s in %s"
-achive: Archiv
 reject_button: Abweisen
 websites: Websites
 group_publicly_visible_description: "Die Gruppe erscheint im \xC3\xB6ffentlichen Verzeichnis und das  <i>Profil</i> kann von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
@@ -155,7 +158,7 @@ invite_accept_via_register: Ich will einen neuen Zugang anmelden.
 edit_featured_content_for_group: "Ausgew\xC3\xA4hlte Inhalte von :group_name bearbeiten"
 move_image_right: Bild nach rechts verschieben
 download: Herunterladen
-all_groups: Alle Gruppen
+all_groups: alle Gruppen
 welcome_login_message: willkommen login meldung
 save_button: Speichern
 pagination_previous: "zur\xC3\xBCck"
@@ -171,7 +174,6 @@ media_audio: Tonaufnahme
 date_weeks: Wochen
 save_survey: Umfrage Speichern
 reset_password_mail_greeting: "%s, dein Passwort wurde auf deine Anfrage zur\xC3\xBCckgesetzt."
-working_group: Arbeitsgruppe
 location_country: Land
 login_name: Anmeldename
 leave_group: "%s verlassen"
@@ -202,15 +204,15 @@ month_short_july: Jul
 delete_post: "Eintrag l\xC3\xB6schen"
 my_world_heading: Meine Welt
 email: Email
-create_a_new_thing: Neue {thing} erstellen
+create_a_new_thing: Neue :thing erstellen
 welcome_create_group_link: Erstelle Eine Neue Gruppe
-minimum_stars_for_important_pages_description: Mindestanzahl Sterne, die eine Seite braucht, um auf der "wichtig" - Liste der Gruppenstartseite zu erscheinen.
 your_login: Dein Login
 view_requests: Anfragen zeigen
 slideshow_delay_input: Aktualisiere alle :input_field Sekunden
 my_dashboard: "Meine \xC3\x9Cbersicht"
 network: Netzwerk
 date_older: "\xC3\x84lter"
+folder_class_description: Eine Sammlung an Dateien.
 survey_rate_this_response: Gib deine Stimme ab
 survey_my_response: Meine Antworten
 next_change: "n\xC3\xA4chste \xC3\x84nderung"
@@ -218,6 +220,7 @@ preview: Vorschau
 signup_email_info: "Optional: Wird gebraucht, wenn du dein Passwort vergisst"
 create_task_list: Neue Aufgabenliste erstellen
 my_status_heading: Dein derzeitiger Status
+public_checkbox_help: Wenn markiert, kann jeder diese Seite betrachten.
 notify_new_access: "<b>Neue Zug&auml;nge: </b>Gib neuen Leuten oder Gruppen Zugang auf diese Seite und schicke ihnen eine Benachrichtigung."
 page_group_event: Events
 check_all: Alles ausw&auml;hlen
@@ -231,7 +234,6 @@ return_link: Zur&uuml;ck
 password_error_default: ist nicht sicher genug.
 login_button: Anmelden
 remove_from_gallery: Aus Gallerie entfernen
-destroy_group: "%s aufl\xC3\xB6sen"
 destroy_confirmation: Du bist dabei ein(e) {thing} zu l&ouml;schen. Bist du sicher dass du dies tun willst? Dieser Vorgang kann nicht r&uuml;ckg&auml;ngig gemacht werden.
 group_has_no_public_profile: "Diese Gruppe hat kein \xC3\xB6ffentlich einsehbares Profil."
 Category: Kategorie
@@ -255,14 +257,14 @@ media_images: Bilder
 pending: Offen
 file_class_description: Eine hochgeladene Datei.
 approve: zustimmen
+council_help: Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun.
 unknown: unbekannt
 summary: Zusammenfassung
-signup_info: "W\xC3\xA4hle deinen Nick und dein Passwort, dann klicke \"%s\""
 only_last_menber_can_delete_group: "Du kannst eine Gruppe nur l\xC3\xB6schen, wenn du der/die letzte TeilnehmerIn bist"
 gallery_class_description: Eine Bilder-Sammlung.
 allow_membership_requests: Erlaube Mitgliedschaftsanfragen
 approval_vote: "Bef\xC3\xBCrwortungsabstimmung"
-committee_type_description: "Was f\xC3\xBCr eine Art Arbeitsgruppe soll es werden?"
+signup_info: "W\xC3\xA4hle deinen Nick und dein Passwort, dann klicke \"%s\""
 Admin: Admin
 link_name: Linkname
 my_tasks_description: Aufgabenlisten, zu denen ich Zugang habe
@@ -276,7 +278,6 @@ post_message: Poste Nachricht
 login_required: Login erforderlich
 new_people_link: Neue Leute
 reset_password_mail_sent: "Eine E-Mail wurde gesendet, welche eine Anleitung zum Zur\xC3\xBCcksetzen deines Passworts enth\xC3\xA4lt."
-commitee_type: Art der Arbeitsgruppe
 my_completed_tasks_link: Erledigt
 galleries: Galerien
 user_profile_description_may_see_contacts: "Anderen erlauben, Deine Liste pers\xC3\xB6nlicher Kontakte einzusehen."
@@ -296,8 +297,8 @@ activity_user_destroyed: "{user} hat sich gel\xC3\xB6scht"
 profile_option_may_see: Profil ist sichtbar.
 details_link: Details
 rejected: abgewiesen
-signup_confirm_password: "Passwort best\xC3\xA4tigen"
 me_dashboard_link: "\xC3\x9Cbersicht"
+signup_confirm_password: "Passwort best\xC3\xA4tigen"
 delete_this_version: "L\xC3\xB6sche diese Version"
 password_was_reset: "Dein Passwort wurde zur\xC3\xBCckgesetzt"
 Work: |
@@ -341,7 +342,6 @@ subject_must_not_be_empty: Betreff darf nicht leer sein
 share_this_page: Teile diese Seite
 page_list_heading_created: erstellt
 date_days: Tage
-notify_recipients: Empf&auml;nger
 password_ok: ist OK.
 view_all: Alles ansehen
 group_wiki: Wiki der Gruppe
@@ -362,6 +362,7 @@ request_to_join_our_network_description: "Gruppe :group wurde eingeladen, sich b
 wont_be_able_to_save: "Du wirst diese Seite nicht speichern k\xC3\xB6nnen"
 personal_message: "Pers\xC3\xB6nliche Nachricht"
 name: Name
+destroy_group_link: "{group_type} aufl\xC3\xB6sen"
 page_details: Seitendetails
 page_group_media_audio: Audio
 recipients: "Empf\xC3\xA4nger"
@@ -379,7 +380,6 @@ created: erstellt
 group_members_publicly_visible_description: "Nichtmitglieder k\xC3\xB6nnen eine Liste mit Mitgliedern unter we.riseup.net/DeinGruppenName einsehen. Ausserdem wird der Gruppenname auf der Profilseite eines jeden Mitglieds gelistet. (we.riseup.net/Nutzername)"
 edit: bearbeiten
 phone_numbers: Telefonnummern
-requests_for_group: "Anfragen f\xC3\xBCr %s"
 video: Video
 view_slideshow: Diashow ansehen
 rate_many_page_display: Abstimmung
@@ -390,7 +390,6 @@ add_im_address: "IM Adresse hinzuf\xC3\xBCgen"
 my_peers_description: BenutzerInnen, mit denen ich eine Gruppe teile
 removing_image: Entferne Bild...
 version_doesnt_exist: Es gibt keine Version :version
-coordinating_council_description: "Mitglieder dieses Gremiums k\xC3\xB6nnen <i>administrative Aufgaben</i> f\xC3\xBCr :group_type <b>:group_name</b> wahrnehmen."
 group_members_publicly_visible: "Mitglieder \xC3\xB6ffentlich sichtbar machen"
 send_message_link: Sende Nachricht
 page_list_heading_updated_by: Aktualisiert von
@@ -424,8 +423,8 @@ no_search_results: Keine Suchergebnisse
 file_version_deleted: "Dateiversion gel\xC3\xB6scht"
 add_phone_number: "Telefonnummer hinzuf\xC3\xBCgen"
 created_by: Erstellt von
+wiki_section_edit: bearbeite diesen Abschnitt
 Work_Life: Arbeitsleben
-minimum_stars_for_important_pages: "Mindestanzahl an Sternen f\xC3\xBCr wichtige Seiten"
 page_group_media_video: Videos
 wiki_page_description: Ein allgemeines Textdokument
 tags: Tags
@@ -434,6 +433,7 @@ my_tasks: Aufgaben
 month_short_november: Nov
 new_password: Neues Passwort
 my_pages: Meine Seiten
+email_notice_subject: Sieh Dir die Seite "{title}" an
 reactivate_button: Reaktivieren!
 save_changes: "Speichere \xC3\x84nderungen"
 edit_profile_link: Profil bearbeiten
@@ -454,6 +454,7 @@ add_button: "Hinzuf\xC3\xBCgen"
 group_profile_description_may_see_committees: Erlaube Personen, welche Arbeitsgruppen diese {group_type} besitzt.
 diff_link: Unterschiede
 away: abwesend
+page: Seite
 rss_feed: RSS Feed
 sucessfully_removed_image: Bild erfolgreich entfernt (:undo_link)
 locking_error: "Fehler. Kann Deine Daten nicht sichern - jemand anders hat zuerst neue \xC3\x84nderungen \xC3\xBCbermittelt. "
@@ -492,10 +493,10 @@ participation: Teilnahme
 announcement_page_display: Ank&uuml;ndigung
 invalid_email_text: "Die von Dir angegebene Emailadresse ist ung\xC3\xBCltig."
 send_invites_headline: "Sende Einladung f\xC3\xBCr Teilnahme bei {group}"
-create_page_share: Wer hat Zugriff auf diese {page_class}?
 group_join_chat: Am Plausch teilnehmen
 viewed: Gesehen
 accept_usage_agreement: Ich akzeptiere die Benutzungsbedingungen
+page_group_planning: Planungs Werkzeuge
 profile_option_may_request_contact: "Darf um pers\xC3\xB6nlichen Kontakt bitten."
 current_tags: "Gew\xC3\xA4hlte Tags"
 subject: Betreff
@@ -531,6 +532,7 @@ last_name: Familienname
 directory_of_networks: Verzeichnis der Netzwerke
 forgotten_email_address: Welche Email-Adresse hast Du bei der Anmeldung angegeben?
 edit_title: Titel bearbeiten
+message: Nachricht
 no_change: "keine \xC3\x84nderung"
 you_have_no_peers: Du hast keine Peers
 status_pending: offen
@@ -540,7 +542,6 @@ attachments: "Anh\xC3\xA4nge"
 link_name_description: "Dieser Name dient als Bezeichner der Gruppe in Links und URLs. Es d\xC3\xBCrfen nur alphanumerische Zeichen und keine Leerzeichen enthalten sein."
 user_profile_description_allow_peers: "Wenn gesetzt, k\xC3\xB6nnen Personen, mit denen du eine Gruppe teilst (Peers) dein privates Profil einsehen."
 this_is_committee: Diese Arbeitsgruppe ist Teil von {parent_group}.
-me_requests_link: Anfragen
 password_error_too_similar: enth&auml;lt zu viele &auml;hnliche Zeichen.
 group_profile_description_may_request_membership: Erlaube Personen, eine Mitgliedschaftsanfrage an diese {group_type} zu stellen.
 none: keine
@@ -549,10 +550,10 @@ signup_success_message: "Danke f\xC3\xBCr die Registrierung!"
 date_yesterday: Gestern
 show_gallery: Gallerie &Uuml;berblick
 created_when_by: Erstellt :when von :user
-signup_button: Registrieren
 approval_vote_class_description: "Zustimmung oder Ablehnung von jeder M\xC3\xB6glichkeit"
 password_confirmation: "Passwortbest\xC3\xA4tigung"
 menu_groups: Gruppen
+signup_button: Registrieren
 month_short_october: Okt
 more_information: weitere Informationen
 profile_option_allow_peers: "F\xC3\xBCr Kollegen (\"Peers\") sichtbar"
@@ -566,6 +567,7 @@ activity_group_created: "{user} hat {group_type} {group} erstellt"
 other_formats: Andere Formate
 organization: Organisation
 approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. M\xC3\xB6chtest du diese annehmen?"
+page_group_media: Multimedia
 viewers: Ankucker
 rate_many_page_description: Stimme &uuml;ber jede M&ouml;glichkeit ab.
 thursday: Donnerstag
@@ -584,7 +586,6 @@ viewer: BesucherInnen
 video_service_is_not_supported: "wird nicht unterst\xC3\xBCtzt (momentan nur YouTube, Google Video, blip.tv und vimeo)"
 user_or_group_name: BenutzerInnen- oder Gruppenname
 all_people: alle Personen
-working_group_description: "Eine Mitgliedschaft in dieser Gruppe gew\xC3\xA4hrt keinen Zugang zur :group_type <b>:group_name</b>."
 private_profile: Privates Profil
 request_to_join_your_network_description: ":group stellte eine Anfrage, sich dem Netzwerk :network anzuschlie\xC3\x9Fen"
 login_failed: Anmeldung fehlgeschlagen
@@ -616,17 +617,18 @@ month_short_january: Jan
 folder_display: Ordner
 signup_success: Registration erfolgreich
 invite_accept_info: Du willst die Einladung annehmen. Hast Du schon einen Zugang zu diesem Server?
+email_notice_hello_with_message: "Hallo, {from} hat dir eine Web Seite mit der folgenden Nachricht geschickt: {message}"
+email_notice_access: "Du kannst diese Seite hier erreichen:"
 options: Optionen
 usage_agreement_heading: Nutzungsvereinbarung
 search_headline: Suche
 edit_featured_content: Aktuelle Inhalte bearbeiten
 alert_field_errors: Es gibt Probleme mit den folgenden Feldern
 move_this_page: Verschiebe diese Seite
-comparing_changes_header: "Vergleich der \xC3\x84nderungen durch {user} am {when} zwischen {old_version} und {new_version}"
+comparing_changes_header: "Vergleich der \xC3\x84nderungen durch :user am :when zwischen :old_version und :new_version"
 welcome_find_groups_link: Finde Gruppen
 this_is_coordinating: Dieses Gremium ist der <strong>koordinierende Rat</strong> von {parent_group}.
 share_page_recipients_selection: "W\xC3\xA4hle aus"
-edit_council_help_text: Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun.
 csrf_error_message: "Dein Loginversuch erweckt den Anschein eines Einbruchsversuches. Keine Sorge, das passiert gelegentlich auch bei harmlosen Anfragen. Wir sind halt besonders paranoid. Lade die Seite neu, um es noch einmal zu versuchen. Dazu kannst Du folgenden Link verwenden:"
 welcome_create_page_text: Du kannst Diskussionen beginnen, neue Wiki-Seiten erstellen, Dateien und Bilder hochladen, Task-Listen verwalten und vieles mehr...
 type_your_messages_here: "Tippe deine Nachricht hier und dr\xC3\xBCcke Enter..."
@@ -641,6 +643,7 @@ networks: Netzwerke
 date_centuries: Jahrhunderte
 menu_link_account: Konto
 me_search_description: Suche in allen zugriffsberechtigten Seiten
+email_notice_hello: Hallo, {from} hat dir eine Web Seite gesendet.
 no_committees: Keine Arbeitsgruppen
 you_are_viewing_version: Du betrachtest Version :version von :user
 move_button: Verschieben
@@ -673,7 +676,6 @@ date_minutes: Minuten
 request_to_join_us_via_email_description: ":email wurde eingeladen, sich :group anzuschlie\xC3\x9Fen"
 upload_images: Hochladen
 upload_new_image: Neues Bild hochladen
-page_info: Seiteninformation
 message_page_display: Nachricht
 survey_may_see_ratings: Soll die Abstimmung &ouml;ffentlich einsehbar sein?
 regenerate: Aktualisiere Thumbnails
