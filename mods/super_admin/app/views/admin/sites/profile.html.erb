@@ -5,29 +5,25 @@
 <span><i><%= flash[:notice] %></i></span>
 <br />
 <span><b>Profiles:</b></span>  
-<% f.fields_for(:profiles) do |p| %>
-  <ul style="list-style-type:none;">
-    <li>
-      <%= p.check_box :public, { :checked => current_site.profile_enabled?(:public) } %>
-      <%= p.label :public, 'Public' %>
-    </li>
-    <li>
-      <%= p.check_box :private, { :checked => current_site.profile_enabled?(:private) } %>
-      <%= p.label :private, 'Private' %>
-    </li>
-  </ul>
-<% end -%>
+<ul style="list-style-type:none;">
+  <li>
+    <%= check_box :site, 'profile_enabled[]', { :checked => current_site.profile_enabled?(:public) }, 'public' %>
+    <%= f.label 'profile_enabled[public]', 'Public' %>
+  </li>
+  <li>
+    <%= check_box :site,  'profile_enabled[]', { :checked => current_site.profile_enabled?(:private) }, 'private' %>
+    <%= f.label 'profile_enabled[private]', 'Private' %>
+  </li>
+</ul>
 <span><b>Profile Fields:</b></span>
-<% f.fields_for(:profile_fields) do |pf| -%>
-  <ul style="list-style-type:none;">
-  <% %w(basic notes phone_numbers email_addresses locations im_addresses websites cryptkeys).each do |field| -%>
-    <li>
-      <%= pf.check_box field, { :checked => current_site.profile_field_enabled?(field.to_sym) } %>
-      <%= pf.label field, field.split('_').map(&:capitalize).join(' ') %>
-    </li>
-  <% end -%>
-  </ul>
+<ul style="list-style-type:none;">
+<% %w(basic notes phone_numbers email_addresses locations im_addresses websites cryptkeys).each do |field| -%>
+  <li>
+    <%= f.check_box 'profile_fields[]', { :checked => current_site.profile_field_enabled?(field.to_sym) }, field %>
+    <%= f.label 'profile_fields[%s]'%field, field.split('_').map(&:capitalize).join(' ') %>
+  </li>
 <% end -%>
+</ul>
 <br />
 <span><%= submit_tag 'Save', :style => 'width:7em;' %></span>
 <br /><br />
