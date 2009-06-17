@@ -60,9 +60,6 @@ class Me::TrashController < Me::BaseController
 
   protected
 
-  # it is impossible to see anyone else's me page,
-  # so no authorization is needed.
-
   def may_undelete_page?(page)
     current_user.may?(:admin, page)
   end
@@ -72,7 +69,7 @@ class Me::TrashController < Me::BaseController
   end
 
   def context
-    me_context('large')
+    super
     add_context 'Trash'[:me_trash_link], url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
   end
 

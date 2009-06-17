@@ -31,14 +31,14 @@
 
   <% active = controller?('me/requests') %>
   <li id='requests_line' class='small_icon info_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Requests'[:me_requests_link],
+    'Requests'[:requests],
     {:controller => '/me/requests', :action => 'to_me'},
     active
   ) %></li>
 
   <% active = controller?('me/trash') %>
   <li id='trash_line' class='small_icon trash_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Trash'[:me_trash_link],
+    'Trash'[:trash],
     {:controller => '/me/trash'},
     active
   ) %></li>
@@ -61,5 +61,5 @@
 
 <%- end -%>
 
-<%= javascript_tag remote_function(:url => {:controller => '/me', :action => :counts }) %>
+<%= javascript_tag remote_function(:url => me_params(:action => :counts)) %>
 

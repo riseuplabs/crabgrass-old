@@ -36,8 +36,10 @@ module ControllerExtension::UrlIdentifiers
     for obj in ids
       if obj.is_a?(ActiveRecord::Base)
         return true if obj.id == params[:id].to_i
-      elsif obj.is_a?(Integer) or obj.is_a?(String)
-        return true if obj.to_i == params[:id].to_i
+      elsif obj.is_a?(Integer)
+        return true if obj == params[:id].to_i
+      elsif obj.is_a?(String)
+        return true if obj == params[:id].to_s
       end
     end
     return false

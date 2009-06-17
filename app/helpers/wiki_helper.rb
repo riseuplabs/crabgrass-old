@@ -7,7 +7,7 @@ module WikiHelper
 
   def wiki_edit_link(wiki_id=nil)
     # note: firefox uses layerY, ie uses offsetY
-    link_to_remote_with_icon('edit wiki'.t, :icon => 'pencil',
+    link_to_remote_with_icon('Edit'[:edit], :icon => 'pencil',
       :url => wiki_action('edit', :wiki_id => wiki_id),
       :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
     )

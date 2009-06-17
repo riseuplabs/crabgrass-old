@@ -17,7 +17,7 @@
       <div class='child'>
         <div id='l-shape'></div>
         <%= avatar_for @group, 'small', :class => 'child' %>
-        <b><%= link_to_group @group %></b> <%=h @group.summary %>
+        <b><%= link_to_group @group %></b> <%= @group.profiles.public.summary_html %>
       </div>
     </td>
   </tr>

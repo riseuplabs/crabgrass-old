@@ -46,8 +46,7 @@ class ActivityTest < ActiveSupport::TestCase
     user = users(:green)
     notified_user = users(:kangaroo)
     group = Group.create!(:name => "plants",
-                          :fullname =>"All the plants",
-                          :summary =>"the plants can party tooo!" ) do |group|
+                          :fullname =>"All the plants") do |group|
       group.avatar = Avatar.new
       group.created_by = user
     end

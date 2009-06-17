@@ -9,7 +9,12 @@ ActiveRecord::Base.class_eval do
   #
   # Will save an html copy in description_html. This other column must exist
   #
-  def self.format_attribute(attr_name)
+  #    format_attribute :summary, :options => [:lite_mode]
+  #
+  # Will pass :lite_mode as an option to GreenCloth.
+  #
+  def self.format_attribute(attr_name, flags={})
+    flags[:options] ||= []
     #class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
     define_method(:body)       { read_attribute attr_name }
     define_method(:body_html)  { read_attribute "#{attr_name}_html" }
@@ -19,9 +24,9 @@ ActiveRecord::Base.class_eval do
       if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
         if respond_to?('group_name')
-          self.body_html = GreenCloth.new(body,group_name).to_html
+          self.body_html = GreenCloth.new(body,group_name, flags[:options]).to_html
         else
-          self.body_html = GreenCloth.new(body).to_html
+          self.body_html = GreenCloth.new(body, 'page', flags[:options]).to_html
         end
       end
     }

@@ -41,7 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
-  map.me      'me/:action/:id',             :controller => 'me/base'
+  map.connect 'me/:action/:id',             :controller => 'me'
 
   ##
   ## PEOPLE
