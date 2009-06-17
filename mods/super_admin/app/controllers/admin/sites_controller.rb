@@ -1,27 +1,21 @@
 class Admin::SitesController < Admin::BaseController
-  def index
-    view = params[:view] || 'basic'
-    if view == 'basic'
-      basic
-    elsif view == 'profile'
-      profile
-    elsif view == 'signup'
-      signup
-    end
-  end
+  
+  verify :method => [:post, :put], :only => :update, :redirect_to => { :action => 'basic' }
+
+  before_filter :set_active_tab
   
   def basic
-    @active = 'basic'
+    @active = 'siteadmin_basic'
     render :template => 'admin/sites/basic'
   end
   
   def profile
-    @active = 'profile'
+    @active = 'siteadmin_profile'
     render :template => 'admin/sites/profile'
   end
   
   def signup
-    @active = 'signup'
+    @active = 'siteadmin_signup'
     render :template => 'admin/sites/signup'
   end
   
@@ -29,11 +23,16 @@ class Admin::SitesController < Admin::BaseController
     if params[:site]
       if current_site.update_attributes(params[:site])
         flash[:notice] = 'Site Settings successfully updated.'
-        redirect_to :action => 'index', :view => params[:current_view]
       else
-        flash[:notice] = 'An error occured, trying to update page settings'
-        redirect_to :action => 'index', :view => params[:current_view]
+        flash[:notice] = 'An error occured, trying to update site settings'
       end
     end
-  end  
+    redirect_to :back
+  end
+  
+  protected
+  
+  def set_active_tab
+    @active = [ 'siteadmin', params[:action] ].join('_')
+  end
 end
