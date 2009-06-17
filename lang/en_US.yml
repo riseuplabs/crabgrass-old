@@ -5,27 +5,14 @@
 ## 
 
 
-#page_info: Page Info
-#edit_featured_content: edit featured content
-#requests_for_group: Requests for %s
-#you_have_no_groups: "You have no groups"
-# working_group: "working group"
-# coordinating_council_description: "Membership in this committee grants special <i>administrative access</i> to the :group_type <b>:group_name</b>."
-# working_group_description: "Membership in this committee grants <i>no access</i> whatsoever to the :group_type <b>:group_name</b>."
-# committee_type: "Committee type"
-# committee_type_description: "What type of committee will this be?"
-# minimum_stars_for_important_pages: "Minimum stars for important pages"
-# minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
-# me_requests_link: "Requests"
-# notify_recipients: "Recipients"
-# rename trash_headline --> trash
-# rename achive --> archive
 
 ##
 ## UNUSED, BUT KEEP ANYWAY
 ##
 
 #logout: Logout
+#edit_featured_content: edit featured content
+#you_have_no_groups: "You have no groups"
 
 ##
 ## GENERIC MACROS

@@ -36,7 +36,15 @@ def load_language_file(lang_file, options={})
   if language
     print 'loading %s' % lang_file
     keys_hash.each do |k,v|
-      key = Key.find_or_create_by_name(k)
+      if lang_code == "en_US"
+        key = Key.find_or_create_by_name(k)
+      else
+        key = Key.find_by_name(k)
+      end
+      if key.nil?
+        print "(skip:%s)" % k
+        next
+      end
       if t = Translation.find_by_key_id_and_language_id(key.id,language.id)
         if t.text == v
           putc '.'
