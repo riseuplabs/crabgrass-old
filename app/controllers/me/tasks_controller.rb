@@ -49,7 +49,7 @@ class Me::TasksController < Me::BaseController
   protected
   
   def context
-    me_context('large')
+    super
     add_context 'Tasks'[:me_tasks_link], url_for(:controller => '/me/tasks', :action => params[:action], :path => params[:path])
   end
   
