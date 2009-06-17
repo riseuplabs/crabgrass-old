@@ -80,6 +80,9 @@ module LayoutHelper
     lines << stylesheet_link_tag('ie/ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
+    if language_direction == "rtl"
+      lines << themed_stylesheet_link_tag('rtl')
+    end
     lines.join("\n")
   end
 
@@ -103,6 +106,14 @@ module LayoutHelper
       'left'
     elsif @right_column.any?
       'right'
+    end
+  end
+
+  def language_direction
+    @language_direction ||= if LANGUAGES[session[:language_code]].safe_send(:rtl)
+      "rtl"
+    else
+      "ltr"
     end
   end
   
