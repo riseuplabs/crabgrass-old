@@ -2,7 +2,7 @@ class BasePage::TitleController < ApplicationController
 
   before_filter :login_required
   helper 'base_page'
-  permissions 'base_page/title'
+  permissions 'base_page'
 
   # return the edit title form via rjs
   def edit

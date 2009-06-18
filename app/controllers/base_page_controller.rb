@@ -11,7 +11,7 @@ class BasePageController < ApplicationController
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
-  permissions 'base_page', 'posts', 'base_page/participation'
+  permissions 'base_page', 'posts'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -124,15 +124,6 @@ class BasePageController < ApplicationController
 
       # hide the right column 
       @hide_right_column = false if @hide_right_column.nil?
-
-      if !request.xhr?
-        unless action?(:create)
-          @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
-        end
-        if !@hide_right_column and !action?(:create) and (action?(:show,:edit) or @show_right_column)
-          @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
-        end
-      end
     end
     true
   end
@@ -192,6 +183,10 @@ class BasePageController < ApplicationController
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
+      @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
+      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
+        @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+      end
     end
     true
   end
