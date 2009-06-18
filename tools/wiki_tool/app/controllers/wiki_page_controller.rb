@@ -5,7 +5,7 @@ class WikiPageController < BasePageController
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
   helper :wiki # for wiki toolbar stuff
-  permissions 'wiki_page'
+  permissions 'wiki_page', 'base_page'
   #verify :method => :post, :only => [:revert]
 
   ##

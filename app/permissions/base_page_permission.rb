@@ -18,7 +18,9 @@ module BasePagePermission
   end
 
   def may_show_page?(page = @page)
-    !page or current_user.may?(:view, page)
+    !page or
+    page.public? or
+    current_user.may?(:view, page)
   end
 
   ##
