@@ -133,4 +133,21 @@ module GroupsHelper
     end
   end
 
+  ##
+  ## TAGGING
+  ##
+
+  def link_to_group_tag(tag,options)
+    options[:class] ||= ""
+    path = (params[:path]||[]).dup
+    name = tag.name.gsub(' ','+')
+    if path.delete(name)
+      options[:class] += ' invert'
+    else
+      path << name
+    end
+    options[:title] = tag.name
+    link_to tag.name, groups_url(:action => 'tags') + '/' + path.join('/'), options
+  end
+
 end
