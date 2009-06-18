@@ -7,8 +7,12 @@
     <%= f.text_field :title %>
   </p>
   <p>
-    <strong>Default Language:</strong>&nbsp;default language to use<br />
+    <strong>Default Language:</strong>&nbsp;default language to use:<br />
     <%= f.select :default_language, Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
+  </p>
+  <p>
+    <strong>Translation Group:</strong>&nbsp;the name of a group that is allowedaccess to edit translation<br />
+    <%= f.text_field :translation_group %>
   </p>
   <p>
     <strong>Email sender:</strong>&nbsp;email address that outgoing emails are sent from<br />
