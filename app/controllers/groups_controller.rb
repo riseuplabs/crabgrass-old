@@ -83,7 +83,7 @@ class GroupsController < Groups::BaseController
     if @group
       return true
     else
-      clear_context
+      no_context
       render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
       return false
     end
