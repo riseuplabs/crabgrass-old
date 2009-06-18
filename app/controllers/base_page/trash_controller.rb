@@ -4,7 +4,7 @@ class BasePage::TrashController < ApplicationController
   helper 'base_page', 'base_page/trash'
   permissions 'base_page'
 
-  def show_popup
+  def show
   end
 
   def update

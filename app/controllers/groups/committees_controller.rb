@@ -8,6 +8,7 @@ class Groups::CommitteesController < GroupsController
   def create
     @parent = get_parent
     @group = Committee.new params[:group]
+    @group.created_by = current_user  # needed for the activity
     @group.save!
     @parent.add_committee!(@group)
     group_created_success

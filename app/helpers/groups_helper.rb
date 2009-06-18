@@ -31,7 +31,7 @@ module GroupsHelper
     if may_join_memberships?
       link_to("join {group_type}"[:join_group, @group.group_type], {:controller => :membership, :action => 'join', :group_id => @group.id})
     elsif may_create_join_request?
-      link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => :requests, :action => 'create_join', :group_id => @group.id})
+      link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => 'groups/requests', :action => 'create_join', :id => @group})
     end
   end
 
@@ -131,6 +131,23 @@ module GroupsHelper
         link_to_with_icon('plus', "Create a new {thing}"[:create_a_new_thing, :network.t.downcase], networks_url(:action => 'new'))
       end
     end
+  end
+
+  ##
+  ## TAGGING
+  ##
+
+  def link_to_group_tag(tag,options)
+    options[:class] ||= ""
+    path = (params[:path]||[]).dup
+    name = tag.name.gsub(' ','+')
+    if path.delete(name)
+      options[:class] += ' invert'
+    else
+      path << name
+    end
+    options[:title] = tag.name
+    link_to tag.name, groups_url(:action => 'tags') + '/' + path.join('/'), options
   end
 
 end

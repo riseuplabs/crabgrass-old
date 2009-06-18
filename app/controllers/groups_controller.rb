@@ -35,6 +35,7 @@ class GroupsController < Groups::BaseController
 
   def create
     @group = Group.new params[:group]
+    @group.created_by = current_user  # needed for the activity
     @group.save!
     group_created_success
   rescue Exception => exc
@@ -57,6 +58,7 @@ class GroupsController < Groups::BaseController
   end
 
   def destroy
+    @group.destroyed_by = current_user  # needed for the activity
     @group.destroy
     if @group.parent
       redirect_to url_for_group(@group.parent)
@@ -81,7 +83,7 @@ class GroupsController < Groups::BaseController
     if @group
       return true
     else
-      clear_context
+      no_context
       render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
       return false
     end
