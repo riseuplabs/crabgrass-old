@@ -52,8 +52,8 @@ profile_fields:
 ##
 
 sites:
-  - name: connectingclassrooms
-    admin_group: superadmin
+  - name: site1
+    admin_group: superadmins
 
 ##
 ## SITE DEFAULTS
