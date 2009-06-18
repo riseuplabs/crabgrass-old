@@ -35,7 +35,7 @@ module PermissionsHelper
   # Use may? or link_if_may or the permission method itself to determine if
   # a user may theoretically do something (in order to display the link for
   # example)
-  def may_action?(action, *args, &block)
+  def may_action?(action=params[:action], *args, &block)
     permission = may?(controller, action, *args, &block)
     if !permission and @error_message
       flash_message_now :error => @error_message
@@ -118,10 +118,14 @@ module PermissionsHelper
   #    asset_controller -> asset
   # 2) the name of the controller's parent namespace:
   #    me/trash_controller -> me
+  #    base_page/share_controller -> page ("base_" is stripped off)
   # 3) the name of the controller's super class:
-  #    event_page_controller -> base_page
-  # 4) ensure "base_page" is in there somewhere if controller descends from it
-  #    (the controller might be a subclass of a subclass of base page)
+  #    event_page_controller -> page ("base_" is stripped off)
+  # 4) ensure "page" is in there somewhere if controller descends from
+  #    BasePageController (the controller might be a subclass of a subclass
+  #    of base page)
+  #
+  # Note: 'base_xxx' is always converted into 'xxx'
   #
   # Alternately, if controller is a string:
   # 
@@ -136,13 +140,16 @@ module PermissionsHelper
   # 
   # 1) the symbol
   #
+  # Lastly, if the action consists of two words (ie 'eat_soup'), the
+  # the permissions without a controller name is attempted (ie 'may_eat_soup?)
+  #
   def permission_for_controller(controller, action, *args)
     names=[]
     if controller.is_a? ApplicationController
       names << controller.controller_name
       names << controller.controller_path.split("/")[-2]
       names << controller.class.superclass.controller_name
-      names << 'base_page' if controller.is_a? BasePageController
+      names << 'page' if controller.is_a? BasePageController
       target = controller
     elsif controller.is_a? String
       if controller =~ /\//
@@ -156,6 +163,7 @@ module PermissionsHelper
       target = self
     end
     names.compact.each do |name|
+      name.sub!(/^base_/, '')
       methods = ["may_#{action}_#{name}?"]
       methods << "may_#{action}_#{name.singularize}?" if name != name.singularize
       methods << "may_#{action}?" if action =~ /_/
