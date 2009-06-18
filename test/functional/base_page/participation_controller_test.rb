@@ -31,10 +31,10 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     login_as(:blue)
     # blue can edit page 1
 
-    xhr :post, :update_public, :public => 'true', :page_id => 1
+    xhr :post, :update_public, :add => true, :page_id => 1
     assert_equal true, Page.find(1).public?
     
-    xhr :post, :update_public, :public => 'null', :page_id => 1
+    xhr :post, :update_public, :add => false, :page_id => 1
     assert_equal false, Page.find(1).public?
     
     
@@ -42,24 +42,24 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     @asset = Asset.create :uploaded_data => upload_data('photo.jpg'), :page_id => 1
     @asset.save
 
-    xhr :post, :update_public, :public => 'true', :page_id => 1
+    xhr :post, :update_public, :add => true, :page_id => 1
     assert_equal true, Page.find(1).public?
     
-    xhr :post, :update_public, :public => 'null', :page_id => 1
+    xhr :post, :update_public, :add => false, :page_id => 1
     assert_equal false, Page.find(1).public?
     
   end
 
   def test_add_star
     login_as(:blue)
-    post :add_star, :page_id => 1
+    post :update_star, :page_id => 1, :add => true
     assert Page.find(1).participation_for_user(users(:blue)).star?
   end
   
   def test_remove_star
     login_as(:blue)
     Page.find(1).participation_for_user(users(:blue)).update_attribute(:star, false)
-    post :remove_star, :page_id => 1
+    post :update_star, :page_id => 1, :add => false
     assert !Page.find(1).participation_for_user(users(:blue)).star?
   end
   
@@ -69,7 +69,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   
   def test_remove_watch
     login_as :blue
-    post :add_star, :page_id => 1 # need to get something to set up session variable
+    post :update_star, :page_id => 1, :add => true # need to get something to set up session variable
     user = @controller.current_user
     
     name = 'my new page'
@@ -88,7 +88,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
     assert inbox_pages.find {|p| p.id = page.id}, "new wiki should be in blue's inbox"
     
-    post :remove_watch, :page_id => page.id
+    post :update_watch, :page_id => page.id, :add => false
     page.reload
     
     assert !page.participation_for_user(user).watch?, 'should not be watched'

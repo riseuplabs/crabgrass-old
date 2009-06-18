@@ -34,7 +34,7 @@ module BasePage::AssetsHelper
     opts = {}
     unless checked
       opts[:onclick] = remote_function(
-        :url => {:controller => 'base_page/assets', :action => 'update_cover', :id => asset.id, :page_id => @page.id},
+        :url => {:controller => 'base_page/assets', :action => 'update', :id => asset.id, :page_id => @page.id},
         :loading  => show_spinner('popup'),
         :complete => hide_spinner('popup'))
     end
@@ -44,7 +44,7 @@ module BasePage::AssetsHelper
 
   def remove_cover_asset_checkbox
     opts = {:onclick => remote_function(
-      :url => {:controller => 'base_page/assets', :action => 'update_cover', :page_id => @page.id},
+      :url => {:controller => 'base_page/assets', :action => 'update', :page_id => @page.id},
       :loading  => show_spinner('popup'),
       :complete => hide_spinner('popup'))}
 
