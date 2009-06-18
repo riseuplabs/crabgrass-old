@@ -40,6 +40,7 @@
     </td>
   </tr>
 
+  <%- if may_share_page? -%>
   <tr class='gap'>
     <td class="check"><%= check_box :ignored, :share_with_new, :onClick => "$('share_page_recipients_new').toggle();" %></td>
     <td><%= label :ignored, :share_with_new, '<b>New Access:</b> share this page with new people or groups, and notify them.'[:notify_new_access] %></td>
@@ -50,7 +51,8 @@
       <%= render :partial => 'add_recipient_widget', :locals => {:empty_box => true} %>
     </div></td>
   </tr>
- 
+  <%- end -%>
+
   <tr>
    <td colspan="2"><h2><%= 'Notification Message'[:notify] %></h2></td>
   </tr>

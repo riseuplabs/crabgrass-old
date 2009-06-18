@@ -96,45 +96,52 @@ module BasePageHelper
   ## 
 
   def watch_line
-    watch = (@upart and @upart.watch?) or false
-    li_id = 'watch_li' 
-    checkbox_id = 'watch_checkbox'
-    action =  watch ? 'remove_watch' : 'add_watch'
-    url = {:controller => 'base_page/participation', :action => action, :page_id => @page.id}
-    checkbox_line = sidebar_checkbox('Watch For Updates'[:watch_checkbox], watch, url, li_id, checkbox_id)
-    content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
-  end
-
-  def public_line
-    if current_user.may?(:admin, @page)
-      li_id = 'public_li' 
-      checkbox_id = 'public_checkbox'
-      url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :public => (!@page.public?).to_s}
-      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id, :title => "If checked, anyone may view this page."[:public_checkbox_help])
+    if may_watch_page?
+      existing_watch = (@upart and @upart.watch?) or false
+      li_id = 'watch_li' 
+      checkbox_id = 'watch_checkbox'
+      url = {:controller => 'base_page/participation', :action => 'update_watch', 
+             :add => !existing_watch, :page_id => @page.id}
+      checkbox_line = sidebar_checkbox('Watch For Updates'[:watch_checkbox], existing_watch, url, li_id, checkbox_id)
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     end
   end
 
-  def star_line
-    if @upart and @upart.star?
-      icon = 'star_16'
-      link_action = 'remove_star'
-      link_text = 'Remove Star (:star_count)'[:remove_star_link]
+  def public_line
+    if may_public_page?
+      li_id = 'public_li' 
+      checkbox_id = 'public_checkbox'
+      url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :add => !@page.public?}
+      checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id, :title => "If checked, anyone may view this page."[:public_checkbox_help])
+      content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     else
-      icon = 'star_empty_dark_16'
-      link_action = 'add_star'
-      link_text = 'Add Star (:star_count)'[:add_star_link]
+      content_tag :li, check_box_tag(checkbox_id, '1', @page.public?, :class => 'check', :disabled => true) + " " + content_tag(:span, 'Public'[:public_checkbox], :class => 'a'), :class => 'small_icon'
     end
-    link = link_to(link_text % {:star_count => @page.stars},
-      {:controller => 'base_page/participation',
-        :action => link_action, :page_id => @page.id},
-      :method => 'post')
-    content_tag :li, link, :class => "small_icon #{icon}"
+  end
+
+  def star_line
+    if may_star_page?
+      li_id = 'star_li'
+      if @upart and @upart.star?
+        icon = 'star'
+        add = false
+        label = 'Remove Star (:star_count)'[:remove_star_link]
+      else
+        icon = 'star_empty_dark'
+        add = true
+        label = 'Add Star (:star_count)'[:add_star_link]
+      end
+      label = label % {:star_count => @page.stars}
+      url = {:controller => 'base_page/participation', :action => 'update_star',
+             :add => add, :page_id => @page.id}
+      link = link_to_remote_with_icon(label, :url => url, :icon => icon)
+      content_tag :li, link, :id => li_id
+    end
   end
 
   # used in the sidebar of deleted pages
   def undelete_line
-    if current_user.may?(:admin, @page)
+    if may_undelete_page?
       link = link_to("Undelete"[:undelete_from_trash],
         {:controller => '/base_page/trash', :page_id => @page.id, :action => 'undelete'},
         :method => 'post'
@@ -145,7 +152,7 @@ module BasePageHelper
 
   # used in the sidebar of deleted pages
   def destroy_line
-    if current_user.may?(:delete, @page)
+    if may_destroy_page?
       link = link_to("Destroy Immediately"[:delete_page_via_shred],
         {:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy'},
         :method => 'post',
@@ -156,11 +163,11 @@ module BasePageHelper
   end
 
   def view_line
-    if @show_print
-      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
+    if @show_print != false
+      printable = link_to_with_icon 'printer', "Printable"[:print_view_link], page_url(@page, :action => "print")
       #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
       #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
-      content_tag :li, printable, :class => 'small_icon printer_16'
+      content_tag :li, printable
     end
   end
 
@@ -174,7 +181,7 @@ module BasePageHelper
         tag_link(tag, @page.group_name, @page.created_by_login)
       end.join("\n")
       content_tag :div, links, :class => 'tags'
-    elsif current_user.may? :edit, @page
+    elsif may_update_tags?
       ''
     end
   end
@@ -185,6 +192,8 @@ module BasePageHelper
         link_to_asset(asset, :small, :crop! => '36x36')
       end
       content_tag :div, column_layout(3, items), :class => 'side_indent'
+    elsif may_create_assets?
+      ''
     end
   end
 
@@ -203,7 +212,7 @@ module BasePageHelper
     object_x, object_y      = params[:position].split('x')
     right = page_width.to_i - object_x.to_i
     top   = object_y.to_i
-    right += 43
+    right += 17
     top -= 32
     "display: block; right: #{right}px; top: #{top}px;"
   end
@@ -228,19 +237,18 @@ module BasePageHelper
   # have to use absolutely positioned popups anymore.
   #
   def show_popup_link(options)
-    li_id = options[:name] + '_li'
     options[:controller] ||= options[:name]
-    link_to_remote(
+    link_to_remote_with_icon(
       options[:label],
       :url => {
         :controller => "base_page/#{options[:controller]}",
-        :action => 'show_popup',
+        :action => 'show',
+        :popup => true,
         :page_id => @page.id,
         :name => options[:name]
        },
       :with => "absolutePositionParams(this)",
-      :loading => replace_class_name(li_id, options[:icon], 'spinner_icon'),
-      :complete => replace_class_name(li_id, 'spinner_icon', options[:icon])
+      :icon => options[:icon]
     )
   end
 
@@ -248,51 +256,55 @@ module BasePageHelper
   def popup_line(options)
     name = options[:name]
     li_id     = "#{name}_li"
-    #holder_id = "#{name}_holder"
     link = show_popup_link(options)
-    #link = %(<div id="#{holder_id}" class="popup_holder"></div>) + link
-    content_tag :li, link, :class => "small_icon #{options[:icon]}", :id => li_id
+    content_tag :li, link, :id => li_id
   end
 
   def edit_attachments_line
-    if current_user.may? :edit, @page
-      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach_16')
+    if may_show_page?
+      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach')
     end 
   end
 
   def edit_tags_line
-    if current_user.may? :edit, @page
-      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link], :icon => 'tag_16')
+    if may_update_tags?
+      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link], :icon => 'tag')
     end
   end
 
   def share_line
-    if current_user.may? :view, @page
-      popup_line(:name => 'share', :label => "Share Page"[:share_page_link] % {:page_class => page_class }, :icon => 'group_16', :controller => 'share')
+    if may_share_page?
+      popup_line(:name => 'share', :label => "Share Page"[:share_page_link] % {:page_class => page_class }, :icon => 'group', :controller => 'share')
     end
   end
 
   def notify_line
-    if current_user.may? :view, @page
-      popup_line(:name => 'notify', :label => "Send Notification"[:notify_page_link] % {:page_class => page_class }, :icon => 'whistle_16', :controller => 'share')
+    if may_notify_page?
+      popup_line(:name => 'notify', :label => "Send Notification"[:notify_page_link] % {:page_class => page_class }, :icon => 'whistle', :controller => 'share')
     end
   end
  
   def delete_line
-    if current_user.may? :admin, @page
-      popup_line(:name => 'trash', :label => "Delete :page_class"[:delete_page_link] % {:page_class => page_class }, :icon => 'trash_16')
+    if may_delete_page?
+      popup_line(:name => 'trash', :label => "Delete :page_class"[:delete_page_link] % {:page_class => page_class }, :icon => 'trash')
     end
   end
 
   def move_line
-    if current_user.may? :delete, @page
-      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry_16', :controller => 'participation')
+    if may_move_page?
+      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
     end
   end
 
   def details_line
-     popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table_16', :controller => 'participation')
+    if may_show_page?
+      popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table', :controller => 'participation')
+    end
   end
+
+  ##
+  ## MISC HELPERS
+  ##
 
   def select_page_access(name, options={})
     selected = options[:selected]
@@ -320,7 +332,10 @@ module BasePageHelper
     owner_name = @page.owner ? @page.owner.name : ''
     if current_user.may?(:admin, @page)
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
-        possibles = @page.admins.to_select('both_names', 'name') + [["(#{"None"[:none]})",""]]
+        possibles = @page.admins.to_select('both_names', 'name')
+        unless Conf.ensure_page_owner?
+          possible += + [["(#{"None"[:none]})",""]]
+        end
         concat(
           select_tag(
             'owner',
