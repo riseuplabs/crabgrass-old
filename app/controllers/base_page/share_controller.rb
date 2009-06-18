@@ -29,7 +29,7 @@ class BasePage::ShareController < ApplicationController
   verify :xhr => true
 
   helper 'base_page', 'base_page/share'
-  permissions 'base_page/share', 'base_page/participation'
+  permissions 'base_page'
 
   def auto_complete
     # i am searching by display_name only under protest. this is going to
@@ -49,13 +49,8 @@ class BasePage::ShareController < ApplicationController
     }
   end
   
-  # display the share popup via ajax
-  def show_popup
-    if params[:name] == 'share'
-      render :template => 'base_page/share/show_share_popup'
-    else
-      render :template => 'base_page/share/show_notify_popup'
-    end
+  # display the share or notify popup via ajax
+  def show
   end  
   
   # there are three ways to submit the form:
@@ -123,7 +118,6 @@ class BasePage::ShareController < ApplicationController
   def fetch_page
     if params[:page_id].any?
       @page = Page.find_by_id(params[:page_id])
-      @upart = @page.participation_for_user(current_user)
     end
     true
   end
@@ -147,21 +141,32 @@ class BasePage::ShareController < ApplicationController
 
   private
 
-   # convert {:checkbox => '1'} to {:checkbox => true}
-   def convert_checkbox_boolean(hsh)
-     hsh.each_pair do |key,val|
-       if val == '0'
-         hsh[key] = false
-       elsif val == '1'
-         hsh[key] = true
-       end
-     end
-   end
+  def authorized?
+    return true if @page.nil?
+    if action?(:update)
+      may_share_page?
+    elsif action?(:notify)
+      may_notify_page?
+    elsif action?(:show, :auto_complete)
+      true
+    end
+  end
+
+  # convert {:checkbox => '1'} to {:checkbox => true}
+  def convert_checkbox_boolean(hsh)
+    hsh.each_pair do |key,val|
+      if val == '0'
+        hsh[key] = false
+      elsif val == '1'
+        hsh[key] = true
+      end
+    end
+  end
 
   # this should be in a helper somewhere, but i don't know how to generate 
   # json response in the view. 
   def display_on_two_lines(entity)
-   "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
 end

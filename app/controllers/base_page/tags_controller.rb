@@ -2,9 +2,9 @@ class BasePage::TagsController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/tags'
-  permissions 'base_page/tags'
+  permissions 'base_page'
 
-  def show_popup
+  def show
   end
 
   def update

@@ -1,6 +1,6 @@
-<% if current_user.may? :edit, @page -%>
+<% if may_edit_title? -%>
 <div class='title_edit_link'>
-  <%= link_to_remote_with_icon(:edit_title.t, {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}) %>
+  <%= link_to_remote_with_icon("Edit Title"[:edit_title], {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}) %>
 </div>
 <% end -%>
 <h1>
