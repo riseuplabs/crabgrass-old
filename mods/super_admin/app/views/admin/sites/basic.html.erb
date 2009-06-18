@@ -7,16 +7,28 @@
     <%= f.text_field :title %>
   </p>
   <p>
-    <strong>Default Language:</strong>&nbsp;default language to use:<br />
+    <strong>Default Language:</strong>&nbsp;default language to use<br />
     <%= f.select :default_language, Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
-  </p>
-  <p>
-    <strong>Translation Group:</strong>&nbsp;the name of a group that is allowedaccess to edit translation<br />
-    <%= f.text_field :translation_group %>
   </p>
   <p>
     <strong>Email sender:</strong>&nbsp;email address that outgoing emails are sent from<br />
     <%= f.text_field :email_sender %>
+  </p>
+
+  <p>
+    <strong>Translation Group:</strong>&nbsp;the name of a group that is allowed access to edit translation<br />
+    <table>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= f.label :translation_group, "Choose an existing group:" %></td>
+        <td><%= f.select :translation_group, current_site.groups.to_select(:full_name, :name), { :include_blank => true } %></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= f.label :translation_group_name, "or enter a name:" %></td>
+        <td><%= f.text_field_tag :translation_group_name %><br /><i>Group will be created if it doesn't exist.</i></td>
+      </tr>
+    </table>
   </p>
 
 
