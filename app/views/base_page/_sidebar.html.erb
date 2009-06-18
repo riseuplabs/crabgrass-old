@@ -48,7 +48,7 @@
   <%- end -%>
 
   <% if @page.group_participations.any? -%>
-    <h3><%= :Groups.t %></h3>
+    <h3><%= "Groups"[:groups] %></h3>
     <ul class='side_list names'>
       <% @page.sorted_group_participations.each do |group_part| %>
         <li><%= link_to_group_participation(group_part) %></li>
@@ -57,7 +57,7 @@
   <% end -%>
 
   <% if @page.user_participations.any? -%>
-    <h3><%= :People.t %></h3>
+    <h3><%= "People"[:people] %></h3>
     <ul class='side_list names'>
       <% @page.sorted_user_participations.each do |user_part| %>
         <li><%= link_to_user_participation(user_part) %></li>
