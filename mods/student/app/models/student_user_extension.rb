@@ -11,7 +11,6 @@ module StudentUserExtension
       alias_method_chain :update_membership_cache, :student
       alias_method_chain :clear_peer_cache_of_my_peers, :student
       alias_method_chain :clear_cache, :student
-      alias_method_chain :may!, :student
 
       has_many :students, :class_name => 'User',
         :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{student_id_cache.to_sql})'
@@ -70,15 +69,6 @@ module StudentUserExtension
          all_group_id_cache = NULL, admin_for_group_id_cache = NULL
          WHERE id = #{self.id}
        ])
-    end
-
-    def may_with_student!(perm, object)
-      if perm == :view and object.instance_of?(Page)
-        page = object
-        user_ids = page.user_participations.collect{|p|p.user_id}
-        return true unless (user_ids & self.student_id_cache).empty
-      end
-      return may_without_student!(perm, object)
     end
 
     def coordinator_of?(user)
