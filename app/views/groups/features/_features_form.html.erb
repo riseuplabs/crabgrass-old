@@ -1,4 +1,4 @@
-<% autocomplete_id = 'autocomplete_' + rand(1000000).to_s %>
+<% autocomplete_id = 'page_name_autocompleter' %>
 
 <div class='features_form'>
   <table class='feature_page_add'>
@@ -19,4 +19,6 @@
     <%= render :partial => 'features_list' unless @features.empty? %>
   </div>
 </div>
+
+
 

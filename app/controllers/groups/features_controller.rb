@@ -2,7 +2,7 @@
 # this is a CRUD controller for Features resources
 # a Feature resource is modeled as a GroupParticipation object with 'static' property
 class Groups::FeaturesController < Groups::BaseController
-  javascript 'effects', 'controls', 'autocomplete' # require for find page autocomplete
+  javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
   helper 'groups'
   before_filter :fetch_data, :login_required
   before_render :load_features
@@ -32,6 +32,16 @@ class Groups::FeaturesController < Groups::BaseController
   end
 
   def update
+    feature_ids = params[:features_ids].collect(&:to_i)
+    # instead of trusting the featured ids
+    # we will only update the participations which belong to this group
+    current_features = @group.participations.featured
+    # iterate through the ids in the original order
+    feature_ids.each_with_index do |id, position|
+      # find the feature with this id
+      feature = current_features.detect {|f| f.id == id}
+      feature.update_attribute(:featured_position, position) if feature
+    end
   end
 
   def auto_complete
@@ -51,7 +61,7 @@ class Groups::FeaturesController < Groups::BaseController
   def load_features
     @features = @group.participations.featured.with_pages
   end
-  
+
   def fetch_data
     # must have a group
     @group = Group.find_by_name(params[:id])
