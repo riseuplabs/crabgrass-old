@@ -207,6 +207,7 @@ class User < ActiveRecord::Base
   end
   
   def may!(perm, protected_thing)
+    return false if protected_thing.nil?
     return true if protected_thing.new_record?
     key = "#{protected_thing.to_s}"
     if @access and @access[key] and !@access[key][perm].nil?

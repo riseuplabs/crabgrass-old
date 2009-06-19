@@ -103,11 +103,11 @@ module BasePagePermission
   alias_method :may_watch_page?, :may_show_page?
   
   def may_public_page?(page=@page)
-    current_user.may?(:admin, page)
+    current_user.may? :admin, page
   end
 
   def may_move_page?(page=@page)
-    current_user.may?(:admin, page)
+    current_user.may? :admin, page
   end
 
   def may_create_participation?(page=@page)
@@ -115,6 +115,12 @@ module BasePagePermission
   end
   alias_method :may_destroy_participation?, :may_create_participation?
   alias_method :may_show_participation?,    :may_show_page?
+
+  # This is needed for the views to destinct between displaying access
+  # levels or not displaying them on cc.net
+  def may_select_access_participation?(page=@page)
+    page.nil? or current_user.may? :admin, page
+  end
 
   ##
   ## TITLE
