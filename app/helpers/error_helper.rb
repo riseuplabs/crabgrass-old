@@ -105,18 +105,11 @@ module ErrorHelper
     end
   end
 
-  private
-  
-  def build_notice_area(type, title, text)
-    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
-    heading = content_tag(:div, heading, :class => 'heading')
-    if text and text.any?
-      text = content_tag(:div, text, :class => 'text')
-    else
-      text = ""
-    end
-    content_tag(:div, heading+text, :class => type)
-  end
+  ##
+  ## BUILDING THE MESSAGE
+  ## normally, this should not be called directly, but there are a few times
+  ## when it is useful.
+  ##
 
   #
   # parses options to build the appropriate objects in the particular flash
@@ -189,6 +182,19 @@ module ErrorHelper
       flsh[:type] = options[:type]
       flsh[:text] += options[:text]
     end
+  end
+
+  private
+  
+  def build_notice_area(type, title, text)
+    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
+    heading = content_tag(:div, heading, :class => 'heading')
+    if text and text.any?
+      text = content_tag(:div, text, :class => 'text')
+    else
+      text = ""
+    end
+    content_tag(:div, heading+text, :class => type)
   end
 
   def exception_detailed_message(exception)
