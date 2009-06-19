@@ -215,4 +215,11 @@ See also doc/SPHINX_README"
     url.rewrite(options)
   end
 
+  ##
+  ## MORE ASSERTS
+  ##
+
+  def assert_layout(layout)
+    assert_equal layout, @response.layout
+  end
 end
