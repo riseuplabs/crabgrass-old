@@ -8,8 +8,5 @@
   <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p></td>
 </tr>
 <tr>
-  <td><%= f.label :summary %></td><td><%= f.text_area :summary, :size=>"50x5" %></td>
-</tr>
-<tr>
   <td><%= f.label :image_file, "Picture" %></td><td><%= f.file_field :image_file %></td>
 </tr>
