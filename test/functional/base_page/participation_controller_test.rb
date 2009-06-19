@@ -208,7 +208,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     page.reload
     assert group.may?(:admin, page), 'public group should have access to page'
     
-    group_private = Group.find_by_name('private_group_not_everyone_can_see')   
+    group_private = Group.find_by_name('private_group')   
     assert group, 'private group should exist'
     assert !group_private.may?(:admin, page), 'private group should not have access to page originally'
  
