@@ -31,7 +31,6 @@ module Groups::BasePermission
     logged_in? and (parent.nil? || current_user.may?(:admin, parent))
   end
   alias_method :may_new_group?, :may_create_group?
-  alias_method :may_create_network?, :may_create_group?
 
   def may_create_council?(group = @group)
     group.parent_id.nil? and current_user.may?(:admin, group)
@@ -53,6 +52,14 @@ module Groups::BasePermission
     group and current_user.may?(:admin, group)
   end
   alias_method :may_edit_profile?, :may_update_profile?
+
+
+  ##
+  ## GROUP FEATURED PAGES
+  ##
+  def may_edit_featured_pages?(group = @group)
+    group and current_user.may?(:admin, group)
+  end
 
   ##
   ## ORGANIZATIONAL PERMISSIONS

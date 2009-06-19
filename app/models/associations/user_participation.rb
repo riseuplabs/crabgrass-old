@@ -20,7 +20,7 @@ class UserParticipation < ActiveRecord::Base
   serialize :notice
 
   #use this for counting stars :)
-  include PageExtension::Static::UserParticipationMethods
+  include UserParticipationExtension::Starring
   
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe

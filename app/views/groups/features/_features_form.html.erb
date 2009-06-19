@@ -1,0 +1,22 @@
+<% autocomplete_id = 'autocomplete_' + rand(1000000).to_s %>
+
+<div class='features_form'>
+  <table class='feature_page_add'>
+    <tr>
+      <td style='width:100%'>
+        <%= text_field_tag 'page_name', '', :style => 'width:400px',
+            # do nothing if the user presses Enter
+            :onkeypress => "return(!enterPressed(event));" %>
+        <%= javascript_tag(new_autocomplete_javascript(autocomplete_id)) %>
+      </td>
+      <td>
+        <%= spinner(autocomplete_id) %>
+      </td>
+    </tr>
+  </table>
+
+  <div id="features_list_container">
+    <%= render :partial => 'features_list' unless @features.empty? %>
+  </div>
+</div>
+
