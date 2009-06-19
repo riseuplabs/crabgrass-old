@@ -5,7 +5,9 @@ require 'requests_controller'
 class RequestsController; def rescue_action(e) raise e end; end
 
 class RequestsControllerTest < Test::Unit::TestCase
-  fixtures :users, :memberships, :groups, :profiles, :federatings, :sites, :requests
+  fixtures :users, :memberships, :groups, :profiles, :languages
+#, :federatings
+#, :sites, :requests
 
   def setup
     @controller = RequestsController.new
@@ -13,128 +15,52 @@ class RequestsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-=begin
-  def test_cant_create_invite
-    login_as :green
-    assert_no_difference 'RequestToJoinUs.count' do
-      post :create_invite, :group_id => groups(:fau).id, :recipients => ['red', 'blue']
-    end
-  end
-
-  def test_create_invite
+  def test_approve_and_reject_invites
     login_as :gerrard
 
+    # generate invites
     assert_difference 'RequestToJoinUs.count', 3 do
-      post :create_invite, :group_id => groups(:cnt).id, :recipients => ['yellow', 'purple', 'orange']
+      [:yellow, :purple, :orange].each do |user|
+        RequestToJoinUs.create(
+          :created_by => users(:gerrard),
+          :recipient => users(user),
+          :requestable => groups(:true_levellers)
+        )
+      end
     end
 
     login_as :yellow
     request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:yellow)})
-    get :reject, :id => request.id
-    assert_response :redirect
+    assert_no_difference 'RequestToJoinUs.pending.count' do
+      get :reject, :id => request.id
+    end
+
+    assert_difference 'RequestToJoinUs.pending.count', -1 do
+      post :reject, :id => request.id
+      assert_response :redirect
+    end
 
     login_as :purple
     request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:purple)})
-    get :approve, :id => request.id
-    assert_response :redirect
+    assert_no_difference 'Membership.count' do
+      get :approve, :id => request.id
+    end
+    assert_difference 'Membership.count' do
+      assert_difference 'RequestToJoinUs.pending.count', -1 do
+        post :approve, :id => request.id
+        assert_response :redirect
+      end
+    end
 
     login_as :gerrard
     request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:orange)})
-    get :destroy, :id => request.id
-    assert_response :redirect    
-  end
-
-  def test_create_join
-    login_as :green
-    get :create_join, :group_id => groups(:animals).id
-    assert_response :success
-    assert_difference 'RequestToJoinYou.count', 1 do
-      post :create_join, :group_id => groups(:animals).id, :send => "Send Request"
+    assert_no_difference 'RequestToJoinUs.count' do
+      get :destroy, :id => request.id
+    end
+    assert_difference 'RequestToJoinUs.count', -1 do
+      post :destroy, :id => request.id
+      assert_response :redirect    
     end
   end
-    
-
-  def test_list_group
-    login_as :blue
-    get :list, :group_id => 2
-    assert_response :success
-  end
-
-
-  def test_join_not_logged_in
-    get :create_join, :group_id => groups(:rainbow).id
-#    assert_response :success
-#    assert_template 'show_nothing'
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
-  end
-
-  def test_join_logged_in
-    login_as :red
-
-    get :create_join, :group_id => groups(:private_group).id
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
-#    assert_template 'show_nothing', "dolphin can't get join :private_group"
-
-    post :create_join, :group_id => groups(:private_group).id, :send => "Send Request"
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
-#    assert_template 'show_nothing', "dolphin can't post join :private_group"
-
-    # Public Group does not accept new members...
-    assert_difference 'Request.count', 0, "no new membership requests should be accepted" do
-      get :create_join, :group_id => groups(:public_group).id
-      assert_response :redirect
-      assert_redirected_to :controller => :account, :action => :login
-      post :create_join, :group_id => groups(:public_group).id, :send => "Send Request"
-      assert_response :redirect
-      assert_redirected_to :controller => :account, :action => :login
-#    assert_template 'show_nothing', "now join public_group should return show_nothing"
-    end
-
-
-    groups(:public_group).accept_new_membership_requests = true
-    groups(:public_group).save!
-    get :create_join, :group_id => groups(:public_group).id
-    assert_response :success
-#    assert_template 'join'
-    assert_difference 'Request.count', 1, "join request should create a request" do
-      post :create_join, :group_id => groups(:public_group).id, :send => "Send Request"
-      assert_response :success, "join public group with open membership."
-    end
-
-    groups(:public_group).accept_new_membership_requests = false
-    groups(:public_group).save!
-
-  end
-
-
-
-  def test_join_as_member
-    login_as :blue
-    assert_difference 'Request.count', 0, "no new membership requests should be accepted" do
-      get :create_join, :group_id => groups(:animals).id
-#      assert_response :redirect, "Join Page should not be available to members."
-#      assert_redirected_to :controller => :dispatch, :action => :dispatch
-      post :create_join, :group_id => groups(:animals).id, :message => "Please let me join your progressive organization"
-      assert_response :redirect, "No new join request should be created for members." 
-      assert_redirected_to :controller => :dispatch, :action => :dispatch
-    end
-  end
-
-  def test_redeem
-    login_as :blue
-    post :create_invite, :group_id => groups(:animals).id, :recipients => ['root@localhost']
-    req = RequestToJoinUsViaEmail.find(:first)
-    assert req
-    assert_equal req.created_by, users(:blue)
-
-    login_as :red
-    get :redeem, :code => req.code, :email => 'root@localhost'
-    assert_redirected_to :controller => '/me/dashboard'
-    assert users(:red).member_of?(groups(:animals))
-  end
-=end
 
 end
