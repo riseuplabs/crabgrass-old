@@ -122,8 +122,6 @@ class Group < ActiveRecord::Base
     return nil unless name.any?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
-
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
   # name stuff
   def to_param; name; end
@@ -146,6 +144,16 @@ class Group < ActiveRecord::Base
   def normal?; instance_of? Group; end
   def council?; instance_of?(Council) or self.is_council?; end
   def group_type() self.class.name.t; end
+
+  ##
+  ## PROFILE
+  ##
+
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  
+  def profile
+    self.profiles.visible_by(User.current)
+  end
 
   ##
   ## AVATAR

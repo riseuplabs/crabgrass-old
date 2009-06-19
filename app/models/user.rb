@@ -54,11 +54,6 @@ class User < ActiveRecord::Base
   ##
 
   belongs_to :avatar, :dependent => :destroy
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-
-  # this is a hack to get 'has_many :profiles' to polymorph
-  # on User instead of AuthenticatedUser
-  #def self.base_class; User; end
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   before_validation :clean_names
@@ -123,6 +118,16 @@ class User < ActiveRecord::Base
   
   def time_zone
     read_attribute(:time_zone) || Time.zone_default
+  end
+
+  ##
+  ## PROFILE
+  ##
+
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  
+  def profile
+    self.profiles.visible_by(User.current)
   end
 
   ##
