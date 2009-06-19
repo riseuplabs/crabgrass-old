@@ -7,7 +7,7 @@ module GroupExtension::Pages
 
   def self.included(base)
     base.instance_eval do
-      has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
+      has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all, :order => :featured_position
       has_many :pages, :through => :participations do
         def pending
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
