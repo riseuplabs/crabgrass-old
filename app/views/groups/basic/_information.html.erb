@@ -1,8 +1,7 @@
-<%- if @group && @group.is_council? && !@parent.nil? -%>
+<%- if @group && @group.council? && !@parent.nil? -%>
 <p>
   <%= "This is the <strong>coordinating council</strong> for {parent_group}."[:this_is_coordinating,
     {:parent_group => link_to_group(@parent)}] %>
-  <%= hidden_field(:group, 'is_council') %>
 </p>
 <%- elsif !@parent.nil? -%>
 <p>

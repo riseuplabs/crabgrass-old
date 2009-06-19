@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090616073637) do
+ActiveRecord::Schema.define(:version => 20090619075032) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -229,7 +229,6 @@ ActiveRecord::Schema.define(:version => 20090616073637) do
     t.string   "style"
     t.string   "language",   :limit => 5
     t.integer  "version",    :limit => 11, :default => 0
-    t.boolean  "is_council",               :default => false
     t.integer  "min_stars",  :limit => 11, :default => 1
     t.integer  "site_id",    :limit => 11
   end

@@ -13,7 +13,6 @@ create_table "groups", :force => true do |t|
   t.string   "style"
   t.string   "language",   :limit => 5
   t.integer  "version",    :limit => 11, :default => 0
-  t.boolean  "is_council",               :default => false
   t.integer  "min_stars",  :limit => 11, :default => 1
   t.integer  "site_id",    :limit => 11
 end
@@ -140,10 +139,10 @@ class Group < ActiveRecord::Base
 
   # type of group  
   def committee?; instance_of? Committee; end
-  def network?; instance_of? Network; end
-  def normal?; instance_of? Group; end
-  def council?; instance_of?(Council) or self.is_council?; end
-  def group_type() self.class.name.t; end
+  def network?;   instance_of? Network;   end
+  def normal?;    instance_of? Group;     end
+  def council?;   instance_of? Council;   end
+  def group_type; self.class.name.t;      end
 
   ##
   ## PROFILE
