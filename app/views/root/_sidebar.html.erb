@@ -3,7 +3,7 @@
 <div class="sidebox dark">
   <h2 class="first">Have Your Say!</h2>
   <ul class="side_list">
-    <li><%= link_to_with_icon 'plus', "Contribute to Site", '/pages/create' %></li>
+    <li><%= link_to_with_icon 'plus', "Contribute to Site", {:controller => '/pages', :action => 'create', :group => current_site.network} %></li>
     <li><%= link_to_with_icon 'membership_add', "Create a Group", '/groups/new' %></li>
     <li>
       <% if params[:welcome_box] -%>
