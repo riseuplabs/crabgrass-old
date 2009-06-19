@@ -36,7 +36,8 @@ class ApplicationController < ActionController::Base
   # ^^ TODO: figure out how to use current_site.enforce_ssl instead
   protect_from_forgery :secret => Conf.secret
 
-  layout 'default'
+  # no layout for HTML responses to ajax requests
+  layout proc{ |c| c.request.xhr? ? false : 'default' }
 
   # ensure that essential_initialization ALWAYS comes first
   def self.prepend_before_filter(*filters, &block)
