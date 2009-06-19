@@ -141,7 +141,13 @@ title:
   the title of the website.
  
 email_sender:
-  email address that outgoing emails are sent from.
+  email address that outgoing emails are sent from. $current_host expands
+  to be the domain of the current request. the defaul is: 'robot@$current_host'
+
+email_sender_name:
+  the name part of the "from" field. $user_name expands to the current user's
+  display name, and $site_title expands to the title of the current site.
+  the default is: '$site_title ($user_name)'
  
 enforce_ssl:
   if true, cookies will only work over tls/ssl.

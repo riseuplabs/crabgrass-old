@@ -4,7 +4,7 @@
 ## TO BE DESTROYED
 ## 
 
-
+#permission_denied: 'Permission denied'
 
 ##
 ## UNUSED, BUT KEEP ANYWAY
@@ -770,7 +770,7 @@ additional_page_access: "Additional Access"
 title_help: "Required. The title is used to identify this page."
 summary_help: "Optional. The summary is a sentence or paragraph that briefly describes the content of this page."
 tags_help: "Optional. For tags, use a few words that best describe this page."
-page_owner_help: "Optional. The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
+page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
 sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
 coordinator_help: "<b>Coordinator</b> access will grant unrestricted access to this page (including deleting and sharing)."
 participant_help: "<b>Participant</b> access will grant the ability to edit and contribute to this page."
@@ -1036,7 +1036,6 @@ you_have_no_peers: 'You have no peers'
 
 login_required: 'Login required'
 login_required_description: 'Please login to perform that action.'
-permission_denied: 'Permission denied'
 permission_denied_description: 'You do not have sufficient permission to perform that action.'
 
 ##

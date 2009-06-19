@@ -96,12 +96,12 @@ module GroupExtension::Groups
       committee.parent_name_changed
       if make_council
         if council
-          council.update_attribute(:is_council, false)
+          council.update_attribute(:type, "Committee")
         end
         self.council = committee
-        committee.is_council = true  
+        committee.type = "Council"
       elsif self.council == committee && !make_council
-        committee.is_council = false
+        committee.type = "Committee"
         self.council = nil
       end
       committee.save!
@@ -115,7 +115,7 @@ module GroupExtension::Groups
       committee.parent_id = nil
       if council_id == committee.id
         self.council_id = nil
-        committee.is_council = false
+        committee.type = "Committee"
       end
       committee.save!
       self.org_structure_changed

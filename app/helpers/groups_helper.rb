@@ -31,7 +31,7 @@ module GroupsHelper
     if may_join_memberships?
       link_to("join {group_type}"[:join_group, @group.group_type], {:controller => :membership, :action => 'join', :group_id => @group.id})
     elsif may_create_join_request?
-      link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => :requests, :action => 'create_join', :group_id => @group.id})
+      link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => 'groups/requests', :action => 'create_join', :id => @group})
     end
   end
 
@@ -54,8 +54,9 @@ module GroupsHelper
 
   def edit_featured_link(label=nil)
     label ||= "edit featured content"[:edit_featured_content].titlecase
-    #link_if_may "edit featured content"[:edit_featured_content].titlecase,
-    #  :group, 'edit_featured_content', @group
+    if may_edit_featured_pages?
+      link_to label, groups_features_url(:action => :index)
+    end
   end
 
   def edit_group_custom_appearance_link(appearance)

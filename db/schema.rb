@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090616073637) do
+ActiveRecord::Schema.define(:version => 20090619075032) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -199,12 +199,13 @@ ActiveRecord::Schema.define(:version => 20090616073637) do
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
   create_table "group_participations", :force => true do |t|
-    t.integer  "group_id",       :limit => 11
-    t.integer  "page_id",        :limit => 11
-    t.integer  "access",         :limit => 11
-    t.boolean  "static",                       :default => false
+    t.integer  "group_id",          :limit => 11
+    t.integer  "page_id",           :limit => 11
+    t.integer  "access",            :limit => 11
+    t.boolean  "static",                          :default => false
     t.datetime "static_expires"
-    t.boolean  "static_expired",               :default => false
+    t.boolean  "static_expired",                  :default => false
+    t.integer  "featured_position", :limit => 11
   end
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
@@ -228,7 +229,6 @@ ActiveRecord::Schema.define(:version => 20090616073637) do
     t.string   "style"
     t.string   "language",   :limit => 5
     t.integer  "version",    :limit => 11, :default => 0
-    t.boolean  "is_council",               :default => false
     t.integer  "min_stars",  :limit => 11, :default => 1
     t.integer  "site_id",    :limit => 11
   end
@@ -359,9 +359,6 @@ ActiveRecord::Schema.define(:version => 20090616073637) do
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.boolean  "static"
-    t.datetime "static_expires"
-    t.boolean  "static_expired"
     t.integer  "stars",              :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11

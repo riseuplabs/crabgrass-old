@@ -40,6 +40,10 @@ module UrlHelper
   def groups_memberships_params(options={})
     {:controller => '/groups/memberships', :action => nil, :id => @group}.merge(options)
   end
+
+  def groups_features_params(options={})
+    {:controller => '/groups/features', :action => nil, :id => @group}.merge(options)
+  end
  
   def me_params(options={})
     if options[:action].to_sym == :search

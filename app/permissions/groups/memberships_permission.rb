@@ -12,17 +12,19 @@ module Groups::MembershipsPermission
     may_create_memberships? and group.committee?
   end
 
+  # this seems a little overly complicated
   def may_list_memberships?(group=@group)
     if logged_in?
       current_user.may?(:admin, group) or
       current_user.member_of?(group) or
       group.profiles.visible_by(current_user).may_see_members? or
-      group.committee? && may_read_membership?(group.parent)
+      (group.committee? && may_list_memberships?(group.parent))
     else
       group.profiles.public.may_see_members?
     end
   end
 
+  # wtf is may_groups_memberships?() for?
   %w(groups).each{ |action|
     alias_method "may_#{action}_memberships?".to_sym, :may_list_memberships?
   }
