@@ -1,6 +1,6 @@
 # local vars that will be displayed if they are set:
 items ||= @pages
-title ||= 'Crabgrass RSS Feed'
+title ||= h(title_from_context)
 link ||= ''
 description ||= ''
 image ||= ''

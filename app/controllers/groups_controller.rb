@@ -131,7 +131,7 @@ class GroupsController < Groups::BaseController
   def search_template(template)
     if rss_request?
       handle_rss(
-        :title => @group.name,
+        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, parsed_path.collect{|segment| segment.join(' ')}.join(' > ')],
         :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')

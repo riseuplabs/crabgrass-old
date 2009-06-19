@@ -1,6 +1,6 @@
 basepath = url_for(:controller => '/', :only_path => false)
 
-if item.data
+if item.data and item.data.body_html
   xml.content :encoded do
     xml.cdata! item.data.body_html.gsub(/<(img src|a href)=\"\//, "<\\1=\"#{basepath}")
   end
