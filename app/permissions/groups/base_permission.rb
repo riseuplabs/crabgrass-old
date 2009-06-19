@@ -36,6 +36,10 @@ module Groups::BasePermission
     group.parent_id.nil? and current_user.may?(:admin, group)
   end
 
+  def may_create_network?
+    logged_in?
+  end
+
   ##
   ## GROUP PROFILE
   ##
