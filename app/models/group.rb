@@ -276,11 +276,14 @@ class Group < ActiveRecord::Base
   # if our name has changed, ensure that denormalized references
   # to it also get changed
   def update_name_copies
-    if name_changed?
+    if name_changed? and !name_was.nil?
       Page.change_group_name(id, name)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c| c.parent_name_changed }
+      committees.each {|c|
+        c.parent_name_changed
+        c.save if c.name_changed?
+      }
       User.increment_version(self.user_ids)
     end
   end
