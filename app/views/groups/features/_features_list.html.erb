@@ -1,0 +1,18 @@
+<div class="autocomplete_results_area" id="features_list">
+  <table>
+    <tbody class="autocomplete_results_table" id="features_list_table">
+      <% @features.each do |feature| %>
+        <tr id="<% dom_id(feature) %>">
+          <td style="width:100%">
+            <%= feature.page.title %>
+          </td>
+          <td>
+            <% button_id = dom_id(feature, :minus_button) # id used to show the spinner %>
+            <%= link_to_function_icon('minus', destroy_feature_remote_function(feature, button_id), :id => button_id)%>
+          </td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+<div>
