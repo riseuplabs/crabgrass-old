@@ -23,7 +23,7 @@ class TokenTest < Test::Unit::TestCase
   def test_create
     token = Token.new(:user => users(:blue))
     token.save
-    assert_equal 40, token.value.length
+    assert_equal 20, token.value.length
     assert !token.expired?
   end
   
