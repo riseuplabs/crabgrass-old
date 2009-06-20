@@ -8,7 +8,6 @@ module Mailers::Request
     group_home = url_for(:controller => request.group.name) # tricky way to get url /groupname
 
     recipients request.email
-    from "%s <%s>" % [@current_user.display_name, @from_address]
     subject 'Invitation to join group "{group}"'[:group_invite_subject, {:group => request.group.display_name}]
     body({ :from => @current_user, :group => request.group, :link => accept_link,
        :group_home => group_home })

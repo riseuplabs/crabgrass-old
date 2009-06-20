@@ -41,6 +41,12 @@ class MockFile
   def rewind; end
 end
 
+
+def mailer_options
+  {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
+  :protocol => 'http://', :port => '3000', :page => @page}
+end
+
 class Test::Unit::TestCase
 
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -80,6 +86,19 @@ class Test::Unit::TestCase
     true
   end
   
+  # currently, for normal requests, we just redirect to the login page
+  # when permission is denied. but this should be improved.
+  def assert_permission_denied
+    assert_equal 'error', flash[:type]
+    assert_equal 'Permission Denied', flash[:title]
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
+  ##
+  ## ASSET HELPERS
+  ##
+
   def upload_data(file)
     type = 'image/png' if file =~ /\.png$/
     type = 'image/jpeg' if file =~ /\.jpg$/
@@ -196,4 +215,11 @@ See also doc/SPHINX_README"
     url.rewrite(options)
   end
 
+  ##
+  ## MORE ASSERTS
+  ##
+
+  def assert_layout(layout)
+    assert_equal layout, @response.layout
+  end
 end

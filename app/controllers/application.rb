@@ -36,7 +36,8 @@ class ApplicationController < ActionController::Base
   # ^^ TODO: figure out how to use current_site.enforce_ssl instead
   protect_from_forgery :secret => Conf.secret
 
-  layout 'default'
+  # no layout for HTML responses to ajax requests
+  layout proc{ |c| c.request.xhr? ? false : 'default' }
 
   # ensure that essential_initialization ALWAYS comes first
   def self.prepend_before_filter(*filters, &block)
@@ -144,9 +145,11 @@ class ApplicationController < ActionController::Base
   # overridden, but these defaults are pretty good. See models/mailer.rb.
   #
   def mailer_options
-    from_address = current_site.email_sender.gsub('$current_host',request.host)
+    from_address = current_site.email_sender.sub('$current_host',request.host)
+    from_name    = current_site.email_sender_name.sub('$user_name', current_user.display_name).sub('$site_title', current_site.title)
     opts = {:site => current_site, :current_user => current_user, :host => request.host,
-     :protocol => request.protocol, :page => @page, :from_address => from_address}
+     :protocol => request.protocol, :page => @page, :from_address => from_address, 
+     :from_name => from_name}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end

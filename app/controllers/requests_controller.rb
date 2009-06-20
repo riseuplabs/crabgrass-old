@@ -2,13 +2,13 @@
 # Requests Controller.
 #  
 # For code specific to group requests, see groups/requests_controller.rb
-# 
+#
 # For code specific to me requests, see me/requests_controller.rb
 #
 class RequestsController < ApplicationController
 
   permissions 'requests'
-  verify :method => :post, :except => [:accept]
+  verify :method => :post, :except => [:accept, :redeem]
   prepend_before_filter :set_language_from_invite, :only => [:accept]
   before_filter :fetch_data
   before_filter :login_required, :except => [:accept]
@@ -89,7 +89,7 @@ class RequestsController < ApplicationController
   
   def accept
     # redeem_url must be *relative*
-    redeem_url = url_for(:only_path => true, :controller => 'groups/requests', :action => 'redeem', :email => @email, :code => @code) 
+    redeem_url = url_for(:only_path => true, :controller => 'requests', :action => 'redeem', :email => @email, :code => @code) 
 
     if @request
       if @request.state != 'pending'
@@ -112,6 +112,18 @@ class RequestsController < ApplicationController
 
   rescue Exception => exc
     flash_message_now :exception => exc
+  end
+
+  # redeem the invite after first login or register
+  def redeem
+    email = params[:email]
+    code  = params[:code]
+    request = RequestToJoinUsViaEmail.redeem_code!(current_user, code, email)
+    request.approve_by!(current_user)
+    flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
+    redirect_to current_site.login_redirect(current_user)
+  rescue Exception => exc
+    flash_message_now :exception => exc    
   end
 
   protected

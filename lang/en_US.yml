@@ -4,7 +4,7 @@
 ## TO BE DESTROYED
 ## 
 
-
+#permission_denied: 'Permission denied'
 
 ##
 ## UNUSED, BUT KEEP ANYWAY
@@ -1036,7 +1036,6 @@ you_have_no_peers: 'You have no peers'
 
 login_required: 'Login required'
 login_required_description: 'Please login to perform that action.'
-permission_denied: 'Permission denied'
 permission_denied_description: 'You do not have sufficient permission to perform that action.'
 
 ##

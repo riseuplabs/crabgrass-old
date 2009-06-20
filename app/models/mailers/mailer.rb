@@ -56,6 +56,8 @@ class Mailer < ActionMailer::Base
     @current_user = options[:current_user]
     @page = options[:page]
     @from_address = options[:from_address]
+    @from_name = options[:from_name]
+    @from = "%s <%s>" % [@from_name, @from_address]
 
     @host = default_url_options[:host] = options[:host]
     @port = default_url_options[:port] = options[:port] if options[:port]

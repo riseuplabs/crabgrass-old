@@ -30,6 +30,7 @@ profile_for_private_group:
   entity_id: 2000
   may_see: false
   may_see_members: false
+  may_request_membership: false
   stranger: true
 
 profile_for_rainbow:

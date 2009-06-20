@@ -89,24 +89,8 @@ class Groups::RequestsController < Groups::BaseController
     flash_message_now :exception => exc
   end
 
-  # redeem the invite after first login or register
-  def redeem
-    email = params[:email]
-    code  = params[:code]
-    request = RequestToJoinUsViaEmail.redeem_code!(current_user, code, email)
-    request.approve_by!(current_user)
-    flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
-    redirect_to current_site.login_redirect(current_user)
-  rescue Exception => exc
-    flash_message_now :exception => exc    
-  end
-
   protected
  
-  def authorized?
-    true
-  end
-
   def context
     @group_navigation = :requests
     super

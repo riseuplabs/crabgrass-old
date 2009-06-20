@@ -13,7 +13,6 @@ create_table "groups", :force => true do |t|
   t.string   "style"
   t.string   "language",   :limit => 5
   t.integer  "version",    :limit => 11, :default => 0
-  t.boolean  "is_council",               :default => false
   t.integer  "min_stars",  :limit => 11, :default => 1
   t.integer  "site_id",    :limit => 11
 end
@@ -122,8 +121,6 @@ class Group < ActiveRecord::Base
     return nil unless name.any?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
-
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
   # name stuff
   def to_param; name; end
@@ -142,10 +139,20 @@ class Group < ActiveRecord::Base
 
   # type of group  
   def committee?; instance_of? Committee; end
-  def network?; instance_of? Network; end
-  def normal?; instance_of? Group; end
-  def council?; instance_of?(Council) or self.is_council?; end
-  def group_type() self.class.name.t; end
+  def network?;   instance_of? Network;   end
+  def normal?;    instance_of? Group;     end
+  def council?;   instance_of? Council;   end
+  def group_type; self.class.name.t;      end
+
+  ##
+  ## PROFILE
+  ##
+
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  
+  def profile
+    self.profiles.visible_by(User.current)
+  end
 
   ##
   ## AVATAR
@@ -269,11 +276,14 @@ class Group < ActiveRecord::Base
   # if our name has changed, ensure that denormalized references
   # to it also get changed
   def update_name_copies
-    if name_changed?
+    if name_changed? and !name_was.nil?
       Page.change_group_name(id, name)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c| c.parent_name_changed }
+      committees.each {|c|
+        c.parent_name_changed
+        c.save if c.name_changed?
+      }
       User.increment_version(self.user_ids)
     end
   end

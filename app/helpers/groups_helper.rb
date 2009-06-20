@@ -54,8 +54,9 @@ module GroupsHelper
 
   def edit_featured_link(label=nil)
     label ||= "edit featured content"[:edit_featured_content].titlecase
-    #link_if_may "edit featured content"[:edit_featured_content].titlecase,
-    #  :group, 'edit_featured_content', @group
+    if may_edit_featured_pages?
+      link_to label, groups_features_url(:action => :index)
+    end
   end
 
   def edit_group_custom_appearance_link(appearance)
