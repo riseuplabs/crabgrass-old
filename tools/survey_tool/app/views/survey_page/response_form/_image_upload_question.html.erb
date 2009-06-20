@@ -1,0 +1,8 @@
+<% response_form.fields_for :answers_attributes, answer, :index => question.id do |f| %>
+  <%= f.error_message_on :value %>
+  <%= f.hidden_field :question_id %>
+  <span class="small_icon mime_image_16 response_icon_label">Image</span>
+  <%= f.file_field :value , :size => "73" %>
+  <!-- <input type="button" value="Browse..." disabled="disabled"> -->
+  <!-- <input type="button" value="Upload" disabled="disabled"> -->
+<% end %>

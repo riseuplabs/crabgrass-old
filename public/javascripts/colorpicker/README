@@ -1,0 +1,21 @@
+Copied from http://code.google.com/p/colorpickerjs/
+
+
+Modifications:
+
+moved *.js, *.css and image files to proper folders (javascript/colorpicker, stylesheets/colorpicker and images/colorpicker)
+changed IMAGE_BASE from 'img/' to 'images/colorpicker/' in colorpicker.js
+
+use the colorpicker like this:
+
+# my_thing_controller.rb
+class MyThingController
+  helper ColorPickerHelper
+  # ...
+  # ...
+end
+
+# myview.html.erb
+<input type="text" id="colorfield1" value="FF33FF">
+<%= color_picker_tag "colorfield1" %>
+

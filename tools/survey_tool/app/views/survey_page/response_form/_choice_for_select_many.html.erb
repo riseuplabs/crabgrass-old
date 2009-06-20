@@ -1,0 +1,14 @@
+<div class="answer_choice select_many_answer_choice">
+  <% response_form.fields_for :answers_attributes, 
+    response_form.object.find_or_build_answer_for_question(question, :choice_index => choice_for_select_many[:index]), 
+    :index => question.id.to_s + "_choice_%03d" % choice_for_select_many[:index].to_s do |f| %>
+
+    <% checked = ((@response && question.answers.find(:first, :conditions => { :response_id => @response.id, :value => choice_for_select_many[:text]})) ? true : false) -%>
+
+    <%= f.error_message_on :value %>
+    <%= f.hidden_field :question_id %>
+    <%= f.check_box(:value, {:checked => checked}, choice_for_select_many[:text], SurveyAnswer::CHOICE_FOR_UNCHECKED) %>
+    <%= f.label 'value', choice_for_select_many[:text] %>
+
+  <% end %>
+</div>

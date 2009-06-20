@@ -1,30 +1,9 @@
 class AnnouncementPageController < WikiPageController
-  def create
-    @page_class = AnnouncementPage
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin 
-        @page = AnnouncementPage.create!(
-          params[:page].merge(
-            :user => current_user, 
-            :share_with => params[:recipients],
-            :access => (params[:access]||'view').to_sym
-          )
-        )
-        @wiki = Wiki.create!(:user => current_user, :body => params[:body])
-        @page.update_attribute(:data, @wiki)
-        redirect_to(page_url(@page))
-      rescue Exception => exc
-        @wiki.destroy if @wiki
-        @page = exc.record if exc.record.is_a? Page
-        flash_message_now :exception => exc
-      end
-    end
-  end
-
   # needed to pick up view/announcement_page/show
   def show
+    @wiki.render_html do |text|
+      GreenCloth.new(text).to_html
+    end
   end
 
   private
@@ -46,4 +25,7 @@ class AnnouncementPageController < WikiPageController
     @locked_for_me = !@wiki.editable_by?(current_user) if logged_in?
   end
 
+  def build_page_data
+    Wiki.new(:user => current_user, :body => params[:body])
+  end
 end

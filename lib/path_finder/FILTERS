@@ -20,10 +20,11 @@
 === associations
   /person/<user id>
   /group/<group id>
-  /created_by/<user name>
-  /not_created_by/<user name>
-  /contributed/<user name>
-  /featured_by/<group name>
+  /created_by/<user id>
+  /not_created_by/<user id>
+  /contributed/<user id>
+  /featured_by/<group is>
+  /admin/<user id>
     
 === date
   /month/MM

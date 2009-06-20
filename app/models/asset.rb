@@ -28,6 +28,50 @@ TODO:
     or should only get one thumbnail if the format differs. It is a waste of space
     to keep four copies of the same image! (albeit, a very tiny image)
 
+  create_table "asset_versions", :force => true do |t|
+    t.integer  "asset_id",       :limit => 11
+    t.integer  "version",        :limit => 11
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size",           :limit => 11
+    t.integer  "width",          :limit => 11
+    t.integer  "height",         :limit => 11
+    t.integer  "page_id",        :limit => 11
+    t.datetime "created_at"
+    t.string   "versioned_type"
+    t.datetime "updated_at"
+  end
+
+  add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
+  add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
+
+  create_table "assets", :force => true do |t|
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size",          :limit => 11
+    t.integer  "width",         :limit => 11
+    t.integer  "height",        :limit => 11
+    t.integer  "page_id",       :limit => 11
+    t.datetime "created_at"
+    t.integer  "version",       :limit => 11
+    t.string   "type"
+    t.integer  "page_terms_id", :limit => 11
+    t.boolean  "is_attachment",               :default => false
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
+  end
+
+  add_index "assets", ["version"], :name => "index_assets_version"
+  add_index "assets", ["page_id"], :name => "index_assets_page_id"
+  add_index "assets", ["page_terms_id"], :name => "pterms"
+
 =end
 
 class Asset < ActiveRecord::Base
@@ -36,6 +80,9 @@ class Asset < ActiveRecord::Base
   # Polymorph does not seem to be working with subclasses of Asset. For parent_type,
   # it always picks "Asset". So, we hardcode what the query should be:
   POLYMORPH_AS_PARENT = 'SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = "#{self.type_as_parent}"'
+
+  # fields in assets table not in asset_versions
+  NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
 
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
@@ -72,6 +119,17 @@ class Asset < ActiveRecord::Base
       raise PermissionDenied
     end
     true
+  end
+ 
+#
+# SITES
+#
+#############################  
+  
+  # returns true if self is part of the given network
+  # [TODO] make this work with assets without page
+  def belongs_to_network?(network)
+    return true if self.page && self.page.groups.include?(network)
   end
   
   def participation_for_groups ids
@@ -132,9 +190,12 @@ class Asset < ActiveRecord::Base
     def format_description
       Media::MimeType.description_from_mime_type(content_type)
     end
+
+    def content_type
+      read_attribute('content_type') || 'application/octet-stream'
+    end
   end
-  self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
-     'is_image' << 'is_audio' << 'is_video' << 'is_document'
+  self.non_versioned_columns.concat NON_VERSIONED
 
   ##
   ## DEFINE THE CLASS Asset::Version
@@ -277,17 +338,6 @@ class Asset < ActiveRecord::Base
   ##
   ## MEDIA TYPES
   ##
-
-  # Converts the boolean media flags to a list of integers.
-  # This is used for sphinx indexing.
-  def media_flag_enums
-    ret = []
-    ret << MEDIA_TYPE[:audio] if is_audio?
-    ret << MEDIA_TYPE[:video] if is_video?
-    ret << MEDIA_TYPE[:image] if is_image?
-    ret << MEDIA_TYPE[:document] if is_document?
-    ret.join ' '
-  end
 
   before_save :reset_media_flags
   def reset_media_flags

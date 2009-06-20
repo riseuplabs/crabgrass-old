@@ -13,6 +13,7 @@
   if entities.size > 23
     entities = entities.sort{|a,b| rand(3)-1}[0..22]
   end
+  entities = entities.select { |e| ! ( e.kind_of?(Network) and current_site.network == e ) }
 %>
 <% if entities.any? or show_empty -%>
 <div class="dash_box">

@@ -19,6 +19,8 @@
       t.string   "type"
       t.datetime "created_at"
       t.datetime "updated_at"
+      
+      t.integer  "site_id"
     end
 =end
 
@@ -27,6 +29,8 @@
 # This includes invitations, requests to join, RSVP, etc. 
 # 
 class Request < ActiveRecord::Base
+
+  acts_as_site_limited
 
   belongs_to :created_by, :class_name => 'User'
   belongs_to :approved_by, :class_name => 'User'
@@ -58,6 +62,7 @@ class Request < ActiveRecord::Base
     {:conditions => {:created_by_id => user.id}}
   }
   named_scope :to_user, lambda { |user|
+    # you only get to approve group requests for groups that you are an admin for
     {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.admin_for_group_ids]}
   }
   named_scope :to_group, lambda { |group|

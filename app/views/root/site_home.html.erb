@@ -1,0 +1,89 @@
+<%# THIS IS JUST A TEMPORARY STOP GAP FOR NOW. NOTHING HERE IS FOR THE FUTURE %>
+<% content_for :style do %>
+.info_box h3 {
+  margin-bottom:0;
+  margin-top:1em;
+  padding-bottom:0;
+}
+.info_box td {
+  padding: 0 1em 1em 0;
+  vertical-align: top;
+}
+/*
+table.entities {
+  width: 100%;
+}
+table.entities td {
+  width: 50%;
+  vertical-align: top;
+}*/
+
+.sidebox {
+  background: white;
+  border: 1px solid #999;
+  padding: 1em;
+}
+
+.sidebox.dark {
+  background: #ccc;
+  color: white;
+  border: 1px solid #999;
+  margin: 1em 0;
+}
+.sidebox.dark a {
+  color: #333;
+}
+.sidebox.dark h2 {
+  font-size: 1.7em
+}
+.dash_box {
+  margin-right: 0;
+}
+.right_column {
+  width: 18em;
+}
+.title_box table td {vertical-align: top}
+form.mini_search table {
+  width: 18em;
+}
+
+<% end %>
+
+<% @right_column = capture do %>
+  <%= render :partial => 'sidebar' %>
+<% end %>
+
+<% @title_box = capture do %>
+<table>
+<tr>
+  <td>
+    <p class="description" style="margin: 0"><%= @group.profiles.public.summary_html %></p>
+  </td>
+  <td style="padding-left: 1em">
+    <%= display_media(@group.profiles.public.cover) %>
+  </td>
+</tr>
+</table>
+<% end %>
+<% if params[:welcome_box] && logged_in? -%>
+  <div id='welcome_box'>
+    <div class="inset_box round">
+      <%= render :partial => '/me/dashboard/welcome_box_content' %>
+    </div>
+  </div>
+<% end -%>
+
+<%- if @announcements.any? %>
+  <div class='section'>
+    <%= render :partial => 'announcement_page/list'  %>
+  </div>
+<%- end -%>
+
+<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
+
+<br/>
+<br/>
+<%= render :partial => 'widgets/page_list', :locals => {:pages => @recent_pages, :heading => 'Recent Pages'[:recent_pages]} %>
+<br/>
+<%= render :partial => 'widgets/page_list', :locals => {:pages => @most_viewed_pages, :heading => 'Most Viewed'[:most_viewed_pages]} %>
+

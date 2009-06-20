@@ -47,9 +47,9 @@ module PathFinder::Sql::BuilderFilters
     @values << true
   end
   
-  def filter_starts
-    @date_field = "starts_at"
-  end
+  # def filter_starts
+  #   @date_field = "starts_at"
+  # end
 
   def filter_after(date)
     if date == 'now'
@@ -87,11 +87,11 @@ module PathFinder::Sql::BuilderFilters
   # we assume the values pass to the finder are local
   #++
   
-  def filter_upcoming
-    @conditions << 'pages.starts_at > ?'
-    @values << Time.now
-    @order << 'pages.starts_at DESC' if @order
-  end
+  # def filter_upcoming
+  #   @conditions << 'pages.starts_at > ?'
+  #   @values << Time.now
+  #   @order << 'pages.starts_at DESC' if @order
+  # end
   
   def filter_ago(near,far)
     near = near.to_i.days.ago
@@ -132,10 +132,28 @@ module PathFinder::Sql::BuilderFilters
   
   ####
   
-  def filter_type(page_class_group)
-    page_classes = Page.class_group_to_class_names(page_class_group)
-    @conditions << 'pages.type IN (?)'
-    @values << page_classes
+  def filter_type(arg)
+    if arg =~ /[\+\ ]/
+      page_group, page_type = arg.split(/[\+\ ]/)
+    elsif Page.is_page_group?(arg)
+      page_group = arg
+    elsif Page.is_page_type?(arg)
+      page_type = arg
+    end
+
+    if page_group =~ /^media-(image|audio|video|document)$/
+      media_type = page_group.sub(/^media-/,'')
+      @conditions << "pages.is_#{media_type} = ?" # only safe because of regexp in if
+      @values << true
+    end
+
+    if page_type
+      @conditions << 'pages.type = ?'
+      @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
+    elsif page_group
+      @conditions << 'pages.type IN (?)'
+      @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+    end
   end
   
   def filter_person(id)

@@ -1,4 +1,8 @@
-<tr>
-  <td class='label'><%= 'Image'[:media_image] %></td>
-  <td><%= file_field 'asset', 'uploaded_data', :size => 38 %></td>
-</tr>
+<%
+  form.row do |r|
+    r.label 'Image'[:media_image]
+    r.input file_field('asset', 'uploaded_data', :size => 29)
+    r.info help(:upload_image)
+  end
+%>
+

@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'mailer'
 
 class MailerTest < Test::Unit::TestCase
-  fixtures :users, :pages, :groups
+  fixtures :users, :pages, :groups, :sites
   FIXTURES_PATH = File.dirname(__FILE__) + '/../fixtures'
   CHARSET = "utf-8"
 
@@ -49,11 +49,6 @@ class MailerTest < Test::Unit::TestCase
 
     def encode(subject)
       quoted_printable(subject, CHARSET)
-    end
-
-    def mailer_options
-      {:site => Site.default, :current_user => users(:blue), :host => 'localhost',
-      :protocol => 'http://', :port => '3000', :page => @page}
     end
 
 end

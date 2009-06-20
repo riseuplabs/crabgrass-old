@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<%
+  def holygrail_stylesheets
+    lines = []
+    lines << stylesheet_link_tag('holygrail/common')
+    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
+    lines << '<!--[if lt IE 7]>
+<style media="screen" type="text/css">.col1 {width:100%;}</style>
+<![endif]-->' # this line is important!
+    lines.join("\n")
+  end
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" >
 <head>
@@ -21,11 +31,11 @@
 
 <div id='header'>
   <div id='masthead'>
-  <h1 id='site_title'><%= site_name %></h1>
+  <%= custom_masthead_site_title %>
   <%= call_hook :masthead %>
 <%= render :partial => 'layouts/menu' %>
   </div>
-	<div id='banner'><div class='content'><%= @banner %></div></div>
+	<% if @banner %><div id='banner'><div class='content'><%= @banner %></div></div><% end %>
 </div>
 
 <div id='wrapper'>

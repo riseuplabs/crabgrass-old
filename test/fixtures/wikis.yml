@@ -6,3 +6,40 @@ first:
 second:
   id: 2
   body: body 2
+  
+  
+multi_section:
+  id: 3
+  version: 1
+  body: |-
+    h2. section one
+       
+    s1 text 1
+    s1 text 2
+    
+    h2. section two
+    
+    s2 text #1
+    s2 more text
+    
+    h2. section three
+    
+    s3 text first line
+    s3 last lime
+
+malformed:
+  id: 4
+  body: |-
+    h2. not malformed section one header
+    
+    s1 text 1
+    s1 text 2
+    h2. I'm section two and I'm tragically too close to the previous text
+    so I shouldn't be a real section
+    s2 text 1
+    s2 text 2
+    
+    h2. I'm section three and I won't pay for previous sections mistakes
+    
+    s3 text 1
+    s3 text 2

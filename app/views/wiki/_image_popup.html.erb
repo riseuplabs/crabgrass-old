@@ -1,0 +1,21 @@
+<div id='<%= image_popup_id(wiki) %>' class='image_popup' style='padding: 1em; background: #eee'>
+  <h1><%= "Insert Image"[:insert_image_heading] %></h1>
+  <%= "Click on an image thumbnail to insert it into the wiki text."[:insert_image_instructions] %>
+  <p>
+    <%= select_tag 'image_size', options_for_select([[:small.t, '0'],[:medium.t,'1'],[:large.t, '2'],[:full.t, '3']]), :id => 'image_size-' + wiki.id.to_s %>
+    <label><%= check_box_tag 'image_link', "true", false, :id => 'image_link-' + wiki.id.to_s %> <%= "include link to full image"[:include_full_checkbox] %></label>
+  </p>
+  
+  <%= popup_image_list(wiki) %>
+  <br style='clear:both' />
+
+  <% form_for(:asset, Asset.new(), :url => image_popup_upload_url(wiki), :html => {:multipart => true, :target => 'upload_frame'}) do |f| -%>
+     <%= f.file_field 'uploaded_data', :size => '20' %>
+     <%= submit_tag 'Upload' %>
+     <%= spinner 'upload' %>
+  <% end -%>
+  <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
+
+  <p><%= button_to_function 'Close'[:close_button], "$('#{image_popup_id(wiki)}').hide();" %></p>
+</div>
+

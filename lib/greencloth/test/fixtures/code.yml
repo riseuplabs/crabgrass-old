@@ -1,0 +1,173 @@
+in: do you like my @function@?
+out: <p>do you like my <code>function</code>?</p>
+---
+in: do you like my <code>function</code>?
+out: <p>do you like my <code>function</code>?</p>
+---
+in: 'This is an empty dictionary: @{}@'
+out: '<p>This is an empty dictionary: <code>{}</code></p>'
+---
+in: 'You can force [@code blocks@] like so.'
+out: '<p>You can force <code>code blocks</code> like so.</p>'
+# this markup is not allowed in RedCloth, so we don't allow it either:
+#---
+# 
+#in: what about <pre>__inline__</pre> this?
+#out: <p>what about <pre>__inline__</pre> this?</p>
+---
+in: |-
+  <pre>
+  _a_ < _b_
+  </pre>
+out: |-
+  <pre>_a_ &lt; _b_
+  </pre>
+---
+in: |-
+  <code>
+  _a_ < _b_
+  </code>
+out: |-
+  <pre><code>_a_ &lt; _b_
+  </code></pre>
+
+# greencloth doesn't support manual <pre><code> 
+#---
+#in: |-
+#  <pre><code>
+#  [a] < [b]
+#  </code></pre>
+#out: |-
+#  <pre><code>
+#  [a] &lt; [b]
+#  </code></pre>
+---
+in: |-
+  * @foo@
+  * @bar@
+  * and @x@ is also.
+out: |-
+  <ul>
+  	<li><code>foo</code></li>
+  	<li><code>bar</code></li>
+  	<li>and <code>x</code> is also.</li>
+  </ul>
+
+
+##
+## special greencloth code block  
+## 
+
+---
+in: |-
+  /--
+    this is some really nice code
+  \--
+out: |-
+  <pre><code>  this is some really nice code
+  </code></pre>
+#---
+#in: |-
+#  codetitle. hello there
+#out: |-
+#  <div class="codetitle">hello there</div>
+#---
+#in: |-
+#  <code with a title>
+#  yippie
+#  </code>
+#out: |-
+#  <div class="codetitle">with a title</div>
+#  <pre><code>yippie
+#  </code></pre>
+#---
+#in: |-
+#  /-- a little note
+#  this is some really nice code
+#  and it continues
+#  \--
+#out: |-
+#  <div class="codetitle">a little note</div>
+#  <pre><code>this is some really nice code
+#  and it continues
+#  </code></pre>
+#---
+#in: |-
+#  <code /etc/resolv.conf>
+#  nameserver 127.0.0.1
+#  </code>
+#out: |-
+#  <div class="codetitle">/etc/resolv.conf</div>
+#  <pre><code>nameserver 127.0.0.1
+#  </code></pre>
+---
+in: |-
+  <code>one fish</code>
+  
+  <code>two fish</code>
+  
+  <code>red fish</code>
+out: |-
+  <pre><code>one fish</code></pre>
+  <pre><code>two fish</code></pre>
+  <pre><code>red fish</code></pre>
+---
+in: |-
+  @@ a single line of code
+out: |-
+  <pre><code>a single line of code</code></pre>
+---
+in: |-
+  @@ a line of code with html <b>in it</b>
+out: |-
+  <pre><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;</code></pre>
+---
+in: |-
+  /--
+  a line of code with html <b>in it</b>
+  \--
+out: |-
+  <pre><code>a line of code with html &lt;b&gt;in it&lt;/b&gt;
+  </code></pre>
+
+
+##
+## ensure custom greencloth filters don't apply to code blocks
+## 
+
+---
+in: |-
+  <code>
+  [aaa -> bbb]
+  </code>
+out: |-
+  <pre><code>[aaa -&gt; bbb]
+  </code></pre>
+---
+in: "[@url in code http://riseup.net@]"
+out: <p><code>url in code http://riseup.net</code></p>
+---
+in: "@http://riseup.net@"
+out: <p><code>http://riseup.net</code></p>
+---
+in: inline <code>http://riseup.net</code>
+out: <p>inline <code>http://riseup.net</code></p>
+
+##
+##
+##
+
+---
+in: |-
+  hi
+  <code>
+  wandering robot
+  </code>
+out: |-
+  <p>hi<br />
+  <pre><code>wandering robot
+  </code></pre></p>
+---
+in: "<code>\r\ngrrrr. this makes me angry.\r\n</code>"
+out: "<pre><code>grrrr. this makes me angry.\r\n</code></pre>"
+

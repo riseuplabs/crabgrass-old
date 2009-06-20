@@ -1,5 +1,3 @@
-@import common.sass
-
 //
 // THIS IS A MESS AND NEEDS TO BE CLEANED UP
 //
@@ -15,80 +13,85 @@
 .left_column h2.alert
   margin: 1em 0
 
-a.contribute
-  float: left
-  display: block
-  background: url("/images/background/contribute_button_left.png") no-repeat
+div.contribute
+  //background: url("/images/background/contribute_button_left.png") no-repeat
+  background: #efe
+  border: 1px solid #ccc
+  -moz-border-radius: 30px
   font-weight: bold
-  padding-left: 15px
-  margin-left: -0.65em
-  color: #52972d
-  margin-bottom: 0.8em
-  &:hover
-    color: #52972d
-  span
+  float: left
+  padding-left: 8px
+  margin-left: -7px
+  a
     display: block
-    line-height: 32px
-    padding-right: 16px
-    background: url("/images/background/contribute_button_right.png") no-repeat 100% 0
+    padding: 6px 10px 6px 22px
+    color: #52972d
+div.group_contribute
+  background: #eef
+  a
+    color: #0000FF
 
-.col2
-  .info
-    margin-bottom: 1em
-    div
-      margin-bottom: 0.8em
-      font-size: 0.85em
-      color: #434343
-    em
-      font-style: normal
-      font-weight: 600
-      padding-left: 0.7em
-    .c_icon
-  h4
-    float: left
-    &.images_16, &.page_discussion_16
-      margin: 0
-      padding: 0
-      min-height: 17px
-      margin-right: 5px
-      margin-left: 3px
-      padding-left: 25px
-      float: left
-      color: #4784BC
-    &.discussions_16
-      height: 17px
-      margin-right: 5px
-      margin-left: 3px
-      padding-left: 25px
-      float: left
-  .left_column .tags ul
-    margin-bottom: 1em
-  p
-    color: #666
-    padding: 6px 0 0 0
-    line-height: 16px
-    clear: left
-    font-size: 0.85em
-    &.legend
-      color: #999
-      padding: 0
-      margin: 0
-      font-size: 0.750em
-      line-height: 16px
-      clear: none
-      float: left
-  img.thumb
-    margin-bottom: 1em
-  .tags ul
-    margin-left: 2px
-    list-style: none
-    padding: 0
-    width: 190px
-    li a
-      float: left
-      font-size: 11px
-      padding-right: 10px
-      line-height: 20px
+//
+// I can't figure out what any of this is for, and commenting it out doesn't
+// seem to break anything:
+//
+//.col2
+//  .info
+//    margin-bottom: 1em
+//    div
+//      margin-bottom: 0.8em
+//      font-size: 0.85em
+//      color: #434343
+//    em
+//      font-style: normal
+//      font-weight: 600
+//      padding-left: 0.7em
+//    .c_icon
+//  h4
+//    float: left
+//    &.images_16, &.page_discussion_16
+//      margin: 0
+//      padding: 0
+//      min-height: 17px
+//      margin-right: 5px
+//      margin-left: 3px
+//      padding-left: 25px
+//      float: left
+//      color: #4784BC
+//    &.discussions_16
+//      height: 17px
+//      margin-right: 5px
+//      margin-left: 3px
+//      padding-left: 25px
+//      float: left
+//  .left_column .tags ul
+//    margin-bottom: 1em
+//  p
+//    color: #666
+//    padding: 6px 0 0 0
+//    line-height: 16px
+//    clear: left
+//    font-size: 0.85em
+//    &.legend
+//      color: #999
+//      padding: 0
+//      margin: 0
+//      font-size: 0.750em
+//      line-height: 16px
+//      clear: none
+//      float: left
+//  img.thumb
+//    margin-bottom: 1em
+//  .tags ul
+//    margin-left: 2px
+//    list-style: none
+//    padding: 0
+//    width: 190px
+//    li a
+//      float: left
+//      font-size: 11px
+//      padding-right: 10px
+//      line-height: 20px
 
 div
   &.announcements table
@@ -145,6 +148,9 @@ div
 .info_box h3
   padding-bottom: 0.5em
 
+.cover_media
+  float: left
+  margin: 0 1em 1em 0em
 
 //
 // STATUS

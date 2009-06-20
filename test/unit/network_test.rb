@@ -12,7 +12,7 @@ class NetworkTest < Test::Unit::TestCase
   def test_member_of
     user = users(:blue)
     group = groups(:animals)
-    network = groups(:cnt)
+    network = groups(:fau)
     assert !user.direct_member_of?(network)
     assert user.member_of?(group)
     assert network.groups.include?(group)
@@ -61,9 +61,9 @@ class NetworkTest < Test::Unit::TestCase
   end
 
   def test_leave_network
-    network = groups(:cnt)
-    group   = groups(:true_levellers)
-    user    = users(:gerrard)
+    network = groups(:fau)
+    group   = groups(:animals)
+    user    = users(:blue)
     assert user.direct_member_of?(group)
     assert user.member_of?(network)
 

@@ -19,12 +19,14 @@ so that each tool can define their own method of creation.
 
 class PagesController < ApplicationController
 
-  helper BasePageHelper
+#  helper BasePageHelper
   
   before_filter :login_required
   prepend_before_filter :fetch_page
 
   stylesheet 'page_creation', :action => :create
+
+  permissions 'pages'
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -40,7 +42,7 @@ class PagesController < ApplicationController
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool). 
   def create
-    @available_tools = (@group && @group.group_setting.allowed_tools ? @group.group_setting.allowed_tools : @site.available_page_types)
+    @available_tools = (@group && @group.group_setting.allowed_tools ? @group.group_setting.allowed_tools : current_site.available_page_types)
   end
          
   # for quickly creating a wiki
@@ -62,22 +64,16 @@ class PagesController < ApplicationController
         
   protected
   
-  def authorized?
-    # see BaseController::authorized?
-    if @page
-      return current_user.may?(:admin, @page)
-    else
-      return true
-    end
-  end
 
   def context
-#    return true unless request.get?  #I don't know what the purpose of this is, but commenting it out makes access look better after removing access  --af
+    return true unless request.get? # skip the context on posts, it won't be shown anyway
     @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
     @group ||= Group.find_by_name(params[:group]) if params[:group]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
     page_context
+    context_name = "Create a new {thing}"[:create_a_new_thing, "Page"[:page]].titleize
+    add_context(context_name, :controller => 'pages', :action => 'create', :group => params[:group])
     true
   end
   

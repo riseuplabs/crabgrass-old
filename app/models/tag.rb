@@ -17,17 +17,6 @@ class Tag < ActiveRecord::Base
       :order => 'name' }
   }
 
-  def self.page_tags_for_group(group)
-    Tag.find_by_sql(%Q[
-      SELECT tags.*, count(name) as count
-      FROM tags
-      INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
-      INNER JOIN group_participations ON group_participations.page_id = taggings.taggable_id
-      AND group_participations.group_id = #{group.id}
-      GROUP BY name
-      ORDER BY name
-    ])
-  end
 
 end
 

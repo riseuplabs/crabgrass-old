@@ -38,9 +38,9 @@ module TimeHelper
   end
 
   # formats a time, in full detail
-  # for example: Sunday July/3/2007 2:13PM PST
+  # for example: Sunday 2007/July/3 2:13PM PST
   def full_time(time)
-    time.strftime('%a %b %d %H:%M:%S %Z %Y')
+    time.strftime('%A %Y/%b/%d %I:%M%p')
   end
 
 #  def to_local(time)

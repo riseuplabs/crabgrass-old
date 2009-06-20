@@ -1,18 +1,21 @@
 =begin
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.string   "full_name"
-    t.string   "summary"
-    t.string   "url"
-    t.string   "type"
-    t.integer  "parent_id"
-    t.integer  "council_id"
-    t.boolean  "is_council"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "avatar_id"
-    t.string   "style"
-  end
+create_table "groups", :force => true do |t|
+  t.string   "name"
+  t.string   "full_name"
+  t.string   "summary"
+  t.string   "url"
+  t.string   "type"
+  t.integer  "parent_id",  :limit => 11
+  t.integer  "council_id", :limit => 11
+  t.datetime "created_at"
+  t.datetime "updated_at"
+  t.integer  "avatar_id",  :limit => 11
+  t.string   "style"
+  t.string   "language",   :limit => 5
+  t.integer  "version",    :limit => 11, :default => 0
+  t.integer  "min_stars",  :limit => 11, :default => 1
+  t.integer  "site_id",    :limit => 11
+end
 
   associations:
   group.children   => groups
@@ -22,9 +25,24 @@
 =end
 
 class Group < ActiveRecord::Base
-  attr_accessible :name, :full_name, :short_name, :summary, :language
 
-   # not saved to database, just used by activity feed:
+  # core group extentions
+  include GroupExtension::Groups     # group <--> group behavior
+  include GroupExtension::Users      # group <--> user behavior
+  include GroupExtension::Featured   # this makes this group's pages featureable
+  include GroupExtension::Pages      # group <--> page behavior
+
+  acts_as_site_limited
+
+  # DEPRECATED
+  def belongs_to_network?(network)
+    ( self.networks.include?(network) or 
+      self == network )
+  end
+    
+  attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
+
+  # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
 
   ##
@@ -44,7 +62,20 @@ class Group < ActiveRecord::Base
 
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
+  
+  named_scope(:only_type, lambda do |group_type|
+    group_type = group_type.to_s.capitalize
+    if group_type == 'Group'
+      {:conditions => 'groups.type IS NULL'}
+    else
+      {:conditions => ['groups.type = ?', group_type]}
+    end
+  end)
 
+  named_scope :all_networks_for, lambda { |user|
+    {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
+  }
+ 
   named_scope :alphabetized, lambda { |letter|
     opts = {
       :order => 'groups.full_name ASC, groups.name ASC'
@@ -62,7 +93,6 @@ class Group < ActiveRecord::Base
   named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE_TIME]
 
   named_scope :names_only, :select => 'full_name, name'
-
 
 
   ##
@@ -91,9 +121,6 @@ class Group < ActiveRecord::Base
     return nil unless name.any?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
-
-  belongs_to :avatar
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
   # name stuff
   def to_param; name; end
@@ -109,105 +136,78 @@ class Group < ActiveRecord::Base
   def banner_style
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
-   
+
+  # type of group  
   def committee?; instance_of? Committee; end
-  def network?; instance_of? Network; end
-  def normal?; instance_of? Group; end  
-  def display_type() self.class.to_s.downcase; end
- 
+  def network?;   instance_of? Network;   end
+  def normal?;    instance_of? Group;     end
+  def council?;   instance_of? Council;   end
+  def group_type; self.class.name.t;      end
+
   ##
-  ## RELATIONSHIPS TO USERS
-  ## 
+  ## PROFILE
+  ##
 
-  has_many :memberships, :dependent => :destroy,
-    :before_add => :check_duplicate_memberships
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  
+  def profile
+    self.profiles.visible_by(User.current)
+  end
 
-  has_many :users, :through => :memberships do
-    def <<(*dummy)
-      raise Exception.new("don't call << on group.users");
+  ##
+  ## AVATAR
+  ##
+ 
+  public 
+
+  belongs_to :avatar, :dependent => :destroy
+
+  alias_method 'avatar_equals', 'avatar='
+  def avatar=(data)
+    if data.is_a? Avatar
+      avatar_equals data
+    elsif data.is_a? Hash
+      if avatar_id
+        avatar.image_file = data[:image_file]
+        avatar.image_file_data_will_change!
+      else
+        avatar_equals Avatar.new(data)
+      end
     end
-    def delete(*records)
-      raise Exception.new("don't call delete on group.users");
-    end
-  end
-  
-  def user_ids
-    @user_ids ||= memberships.collect{|m|m.user_id}
   end
 
-  def all_users
-    users
-  end
+  protected
 
-  # association callback
-  def check_duplicate_memberships(membership)
-    membership.user.check_duplicate_memberships(membership)
+  before_save :save_avatar_if_needed
+  def save_avatar_if_needed
+    avatar.save if avatar and avatar.changed?
   end
-
-  def relationship_to(user)
-    relationships_to(user).first
-  end
-  def relationships_to(user)
-    return [:stranger] unless user
-    return [:stranger] if user.is_a? UnauthenticatedUser
-    (@relationships ||= {})[user.login] ||= get_relationships_to(user)
-  end
-  def get_relationships_to(user)
-    ret = []
-#   ret << :admin    if ...
-    ret << :member   if user.member_of?(self)
-#   ret << :peer     if ...
-    ret << :stranger if ret.empty?
-    ret
-  end
-  
-  # this is the ONLY way to add users to a group.
-  # all other methods will not work.
-  def add_user!(user)
-    self.memberships.create! :user => user
-    user.update_membership_cache
-    user.clear_peer_cache_of_my_peers
-
-    @user_ids = nil
-    self.increment!(:version)
-  end
-  
-  # this is the ONLY way to remove users from a group.
-  # all other methods will not work.
-  def remove_user!(user)
-    membership = self.memberships.find_by_user_id(user.id)
-    raise ErrorMessage.new('no such membership') unless membership
-
-    user.clear_peer_cache_of_my_peers
-    membership.destroy
-    user.update_membership_cache
-
-    @user_ids = nil
-    self.increment!(:version)
-  end
-  
-# maps a user <-> group relationship to user <-> language
-#  def in_user_terms(relationship)
-#    case relationship
-#      when :member;   'friend'
-#      when :ally;     'peer'
-#      else; relationship.to_s
-#    end  
-#  end
 
   ##
   ## RELATIONSHIP TO ASSOCIATED DATA
   ## 
 
+  protected
+
   after_destroy :destroy_requests
   def destroy_requests
     Request.destroy_for_group(self)
   end
-
-
-  ####################################################################
-  ## permissions
   
+  after_destroy :update_networks
+  def update_networks
+    self.networks.each do |network|
+      Group.increment_counter(:version, network.id)
+    end
+  end
+
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  public
+
   def may_be_pestered_by?(user)
     begin
       may_be_pestered_by!(user)
@@ -216,8 +216,9 @@ class Group < ActiveRecord::Base
     end
   end
   
+  ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
-    if user.member_of?(self) or publicly_visible_group or (parent and parent.publicly_visible_committees and parent.may_be_pestered_by?(user))
+    if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
       raise PermissionDenied.new('You are not allowed to share with %s'[:pester_denied] % self.name)
@@ -233,8 +234,6 @@ class Group < ActiveRecord::Base
       ok = user.member_of?(self) || user.member_of?(self.council)
     elsif access == :view
       ok = user.member_of?(self) || profiles.public.may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || self.has_access!(:admin,user) || profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
@@ -244,223 +243,12 @@ class Group < ActiveRecord::Base
   rescue PermissionDenied
     return false
   end
-
-  ####################################################################
-  ## relationship to pages
-
-  # this makes this group's pages featureable
-  include GroupExtension::Featured
   
-  has_many :participations, :class_name => 'GroupParticipation', :dependent => :delete_all
-  has_many :pages, :through => :participations do
-    def pending
-      find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
-    end
-  end
+  ##
+  ## GROUP SETTINGS
+  ##
 
-  #
-  # build or modify a group_participation between a group and a page
-  # return the group_participation object, which must be saved for
-  # changes to take effect.
-  # 
-  def add_page(page, attributes)
-    participation = page.participation_for_group(self)
-    if participation
-      participation.attributes = attributes
-    else
-      participation = page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
-    end
-    page.group_id_will_change!
-    page.association_will_change(:groups)
-    return participation
-  end
-
-  def remove_page(page)
-    page.groups.delete(self)
-    page.group_id_will_change!
-    page.association_will_change(:groups)
-    page.group_participations.reset
-  end
-  
-  def may?(perm, page)
-    begin
-       may!(perm,page)
-    rescue PermissionDenied
-       false
-    end
-  end
-  
-  # perm one of :view, :edit, :admin
-  # this is still a basic stub. see User.may!
-  def may!(perm, page)
-    gparts = page.participation_for_groups(group_and_committee_ids)
-    if gparts.any?
-      part_with_best_access = gparts.min {|a,b|
-        (a.access||100) <=> (b.access||100)
-      }
-      return ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
-    else
-      raise PermissionDenied.new
-    end
-  end
-
-  ####################################################################
-  ## relationship to other groups
-
-  has_many :federatings
-  has_many :networks, :through => :federatings
-  belongs_to :council, :class_name => 'Group'
-
-  # Committees are children! They must respect their parent group. 
-  # This uses better_acts_as_tree, which allows callbacks.
-  acts_as_tree(
-    :order => 'name',
-    :after_add => :org_structure_changed,
-    :after_remove => :org_structure_changed
-  )
-  alias :committees :children
-
-  # Adds a new committee or makes an existing committee be the council (if
-  # the make_council argument is set). No other method of adding committees
-  # should be used.
-  def add_committee!(committee, make_council=false)
-    committee.parent_id = self.id
-    committee.parent_name_changed
-    if make_council
-      if council
-        council.update_attribute(:is_council, false)
-      end
-      self.council = committee
-      committee.is_council = true  
-    elsif self.council == committee && !make_council
-      committee.is_council = false
-      self.council = nil
-    end
-    committee.save!
-    self.org_structure_changed
-    self.save!
-    self.committees.reset
-  end
-
-  # Removes a committee. No other method should be used.
-  def remove_committee!(committee)
-    committee.parent_id = nil
-    if council_id == committee.id
-      self.council_id = nil
-      committee.is_council = false
-    end
-    committee.save!
-    self.org_structure_changed
-    self.save!
-    self.committees.reset
-  end
-
-  # returns an array of all children ids and self id (but not parents).
-  # this is used to determine if a group has access to a page.
-  def group_and_committee_ids
-    @group_ids ||= ([self.id] + Group.committee_ids(self.id))
-  end
-  
-  # returns an array of committee ids given an array of group ids.
-  def self.committee_ids(ids)
-    ids = [ids] unless ids.instance_of? Array
-    return [] unless ids.any?
-    ids = ids.join(',')
-    Group.connection.select_values(
-      "SELECT groups.id FROM groups WHERE parent_id IN (#{ids})"
-    ).collect{|id|id.to_i}
-  end
-  
-  def self.parent_ids(ids)
-    ids = [ids] unless ids.instance_of? Array
-    return [] unless ids.any?
-    ids = ids.join(',')
-    Group.connection.select_values(
-      "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
-    ).collect{|id|id.to_i}
-  end
-
-  # returns an array of committees visible to appropriate access level
-  def committees_for(access)
-    if access == :private
-      return self.committees
-    elsif access == :public
-      if profiles.public.may_see_committees?
-        return @comittees_for_public ||= self.committees.select {|c| c.profiles.public.may_see?}
-      else
-        return []
-      end
-    end
-  end
-
-  def self.pagination_letters_for(groups)
-    pagination_letters = []
-    groups.each do |g|
-      pagination_letters << g.full_name.first.upcase if g.full_name
-      pagination_letters << g.name.first.upcase if g.name
-    end
-
-    return pagination_letters.uniq!
-  end
-
-  # Returns a list of group ids for the page namespace of every group id
-  # passed in. wtf does this mean? for each group id, we get the ids
-  # of all its relatives (parents, children, siblings).
-  def self.namespace_ids(ids)
-    ids = [ids] unless ids.is_a? Array
-    return [] unless ids.any?
-    parentids = parent_ids(ids)
-    return (ids + parentids + committee_ids(ids+parentids)).flatten.uniq
-  end
-
-  # whenever the structure of this group has changed 
-  # (ie a committee or network has been added or removed)
-  # this function should be called. Afterward, a save is required.
-  def org_structure_changed(child=nil)
-    User.clear_membership_cache(user_ids)
-    self.version += 1
-  end
-
-  alias_method :real_council, :council
-  def council(reload=false)
-    real_council(reload) || self
-  end
-
-  # overridden for Networks
-  def groups() [] end
-  
-  ######################################################
-  ## temp stuff for profile transition
-  ## should be removed eventually
-    
-
-  def publicly_visible_group
-    profiles.public.may_see?
-  end
-  def publicly_visible_group=(val)
-    profiles.public.update_attribute :may_see, val
-  end
-
-  def publicly_visible_committees
-    profiles.public.may_see_committees?
-  end
-  def publicly_visible_committees=(val)
-    profiles.public.update_attribute :may_see_committees, val
-  end
-
-  def publicly_visible_members
-    profiles.public.may_see_members?
-  end
-  def publicly_visible_members=(val)
-    profiles.public.update_attribute :may_see_members, val
-  end
-
-  def accept_new_membership_requests
-    profiles.public.may_request_membership?
-  end
-  def accept_new_membership_requests=(val)
-    profiles.public.update_attribute :may_request_membership, val
-  end
+  public
 
   has_one :group_setting
   # can't remember the way to do this automatically
@@ -483,20 +271,21 @@ class Group < ActiveRecord::Base
   
   protected
   
-  after_save :update_name
-  def update_name
-    if name_changed?
-      update_group_name_of_pages  # update cached group name in pages
+  after_save :update_name_copies
+
+  # if our name has changed, ensure that denormalized references
+  # to it also get changed
+  def update_name_copies
+    if name_changed? and !name_was.nil?
+      Page.change_group_name(id, name)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c| c.parent_name_changed }
+      committees.each {|c|
+        c.parent_name_changed
+        c.save if c.name_changed?
+      }
       User.increment_version(self.user_ids)
     end
   end
-   
-  def update_group_name_of_pages
-    Page.connection.execute "UPDATE pages SET `group_name` = '#{self.name}' WHERE pages.group_id = #{self.id}"
-    Page.connection.execute "UPDATE pages SET `owner_name` = '#{self.name}' WHERE pages.owner_id = #{self.id} AND pages.owner_type = 'Group'"
-  end
-    
+  
 end

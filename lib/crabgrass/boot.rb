@@ -1,20 +1,27 @@
+
 # do this early because environments/*.rb need it
-require 'lib/crabgrass/config'
+require 'lib/crabgrass/conf'
 
-# get list of mods to enable (before plugins are loaded)
-MODS_ENABLED = File.read("#{RAILS_ROOT}/config/mods_enabled.list").split("\n").freeze
-TOOLS_ENABLED = File.read("#{RAILS_ROOT}/config/tools_enabled.list").split("\n").freeze
+# load hook support early
+require 'lib/crabgrass/hook'
+Dispatcher.to_prepare do
+  # I don't understand why this is needed for crabgrass, but not for redmine
+  ApplicationHelper.send(:include, Crabgrass::Hook::Helper)
+end
 
-require "#{RAILS_ROOT}/lib/site.rb"
-Site.load_from_file("#{RAILS_ROOT}/config/#{"development." unless RAILS_ENV=='production'}sites.yml")
+Conf.load("crabgrass.#{RAILS_ENV}.yml")
 
-# legacy configurations that should now be removed and changed to 
-# reference via @site in the code:
-Crabgrass::Config.site_name     = Site.default.name
-Crabgrass::Config.host          = Site.default.domain
-Crabgrass::Config.email_sender  = Site.default.email_sender
-Crabgrass::Config.secret        = Site.default.secret
-SECTION_SIZE = Site.default.pagination_size
+begin
+  secret_path = File.join(RAILS_ROOT, "config/secret.txt")
+  Conf.secret = File.read(secret_path).chomp
+rescue
+  unless ARGV.first == "create_a_secret"
+    raise "Can't load the secret key from file #{secret_path}. Have you run 'rake create_a_secret'?"
+  end
+end  
+
+# TODO: banish SECTION_SIZE and replace with current_site.pagination_size
+SECTION_SIZE = Conf.pagination_size
 
 
 # this is not actually used, but i think it is so cool that i want to keep

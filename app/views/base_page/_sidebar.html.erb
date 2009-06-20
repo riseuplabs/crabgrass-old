@@ -1,42 +1,54 @@
 <%# div#page_sidebar gets replaced by popups %>
 <div id='page_sidebar'>
-  <% if logged_in? -%>
-    <ul class='side_list commands'>
-      <%= watch_line %>
-      <%= star_line %>
-    </ul>
-    <ul class='side_list commands rule'>
-      <%= share_line %>
-      <%= public_line %>
-    </ul>
-    <ul class='side_list commands rule'>
-      <%= destroy_page_line %>
-      <%= move_line %>
-      <%= details_line %>
-    </ul>
+  <%- if logged_in? -%>
+   <%- if @page.deleted? -%>
+      <ul class='side_list commands'>
+        <%= undelete_line %>
+        <%= destroy_line %>
+        <%= details_line %>
+      </ul>
+    <%- else -%>
+      <ul class='side_list commands'>
+        <%= watch_line %>
+        <%= star_line %>
+      </ul>
+      <%- if (access_changing_commands = [share_line, notify_line, public_line].compact).any? -%>
+        <ul class='side_list commands rule'>
+          <%= access_changing_commands %>
+        </ul>
+      <%- end -%>
+      <ul class='side_list commands rule'>
+        <%= delete_line %>
+        <%= move_line %>
+        <%= details_line %>
+        <%= view_line %>
+      </ul>
+    <% end -%>
     <%= call_hook :page_sidebar_actions %>
   <% end -%>
 
-  <h3><%= 'tags'[:tags] %></h3>
-  <div class='tags'>
-    <%= page_tags %>
-  </div>
-  <ul class='side_list commands'>
-    <%= edit_tags_line %>
-  </ul>
+  <%- if !(tag_content = page_tags).nil? -%>
+    <h3><%= 'tags'[:tags] %></h3>
+    <div class='tags'>
+      <%= tag_content %>
+    </div>
+    <ul class='side_list commands'>
+      <%= edit_tags_line %>
+    </ul>
+  <%- end -%>
 
-  <%- if @page.supports_attachments -%>
-  <h3><%= 'attachments'[:attachments] %></h3>
-  <div class='attachments'>
-    <%= page_attachments %>
-  </div>
-  <ul class='side_list commands'>
-    <%= edit_attachments_line %>
-  </ul>
+  <%- if @page.supports_attachments and !(attachment_content = page_attachments).nil? -%>
+    <h3><%= 'attachments'[:attachments] %></h3>
+    <div class='attachments'>
+      <%= attachment_content %>
+    </div>
+    <ul class='side_list commands'>
+      <%= edit_attachments_line %>
+    </ul>
   <%- end -%>
 
   <% if @page.group_participations.any? -%>
-    <h3><%= :Groups.t %></h3>
+    <h3><%= "Groups"[:groups] %></h3>
     <ul class='side_list names'>
       <% @page.sorted_group_participations.each do |group_part| %>
         <li><%= link_to_group_participation(group_part) %></li>
@@ -45,7 +57,7 @@
   <% end -%>
 
   <% if @page.user_participations.any? -%>
-    <h3><%= :People.t %></h3>
+    <h3><%= "People"[:people] %></h3>
     <ul class='side_list names'>
       <% @page.sorted_user_participations.each do |user_part| %>
         <li><%= link_to_user_participation(user_part) %></li>

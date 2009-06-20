@@ -1,4 +1,11 @@
-*January 1st, 2009*
-
-* Initial checkin of crabgrass with rdoc documentation
+in development
+  * sites
+  * customization of css
+  * MIGRATION REQUIRED
+    rake create_a_secret
+    rake db:migrate
+  * new configuration in config/crabgrass.*.yml
+  
+0.3.9
+  first every tagged crabgrass release
 

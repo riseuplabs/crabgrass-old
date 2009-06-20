@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AssetTest < Test::Unit::TestCase
-  fixtures :groups, :users, :page_terms, :assets, :pages
+  fixtures :groups, :users, :page_terms, :assets, :pages, :group_participations
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -11,6 +11,7 @@ class AssetTest < Test::Unit::TestCase
     FileUtils.mkdir_p(@@public)
     #Media::Process::Base.log_to_stdout_when = :always
     Media::Process::Base.log_to_stdout_when = :on_error
+    Conf.disable_site_testing
   end
 
   def teardown
@@ -205,9 +206,14 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_doc
+    if !Media::Process::OpenOffice.new.available?
+      puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
+      return
+    end
     @asset = Asset.make :uploaded_data => upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
+
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal false, thumb.failure?, 'generating thumbnail "%s" should have succeeded' % thumb.name
@@ -246,10 +252,12 @@ class AssetTest < Test::Unit::TestCase
   def test_search
     user = users(:kangaroo)
     correct_ids = Asset.find(:all).collect do |asset|
+      asset.page_terms = asset.page.page_terms
+      asset.save
       asset.id if user.may?(:view, asset.page)
     end.compact.sort
     ids = Asset.visible_to(user).media_type(:image).find(:all).collect{|asset| asset.id}
-    assert_equal correct_ids, ids
+    assert_equal correct_ids, ids.sort
   end
 
   def test_asset_page
@@ -264,6 +272,10 @@ class AssetTest < Test::Unit::TestCase
     assert "1", page.data.page_terms.media 
   end
   
+  def test_content_type
+    assert_equal 'application/octet-stream', Asset.new.content_type
+  end
+
   protected
 
   def debug

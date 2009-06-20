@@ -1,7 +1,8 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+<% id = 0 %>
 
 # test a request to blue
 friend_blue:
+  id: <%= id+=1 %>
   recipient_id: 4
   recipient_type: User
   created_by_id: 10
@@ -13,6 +14,7 @@ friend_blue:
 
 # test a request from blue
 blue_asks:
+  id: <%= id+=1 %>
   recipient_id: 9
   recipient_type: User
   created_by_id: 4
@@ -24,6 +26,7 @@ blue_asks:
 
 # test a request to join animals
 join_animals:
+  id: <%= id+=1 %>
   recipient_id: 2
   recipient_type: Group
   created_by_id: 8
@@ -35,6 +38,7 @@ join_animals:
 
 # test an invite from animals
 invite_from_animals:
+  id: <%= id+=1 %>
   recipient_id: 9
   created_by_id: 4
   recipient_type: User

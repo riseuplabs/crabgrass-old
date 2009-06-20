@@ -1,9 +1,9 @@
-
 class WikiPage < Page
-     
+  include PageExtension::RssData
+
   def title=(value)
-    write_attribute(:title,value)
-    write_attribute(:name,value.nameize)
+    write_attribute(:title, value)
+    write_attribute(:name, value.nameize) if value
   end
 
   # Return string of all tasks, for the full text search index
@@ -20,5 +20,4 @@ class WikiPage < Page
       self.wiki.clear_html if self.wiki
     end
   end
-
 end

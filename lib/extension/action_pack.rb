@@ -83,4 +83,65 @@ class ActionView::Base
   alias_method_chain :link_to, :pretty_plus_signs
 end
 
+###
+### CUSTOM FORM ERROR FIELDS
+###
+
+# Rails form helpers are brutal when it comes to generating
+# error markup for fields that fail validation
+# they will surround every input with .fieldWithErrors divs
+# and will mess up your layout. but there is a way to customize them
+# http://pivotallabs.com/users/frmorio/blog/articles/267-applying-different-error-display-styles
+class ActionView::Base
+  def with_error_proc(error_proc)
+    pre = ActionView::Base.field_error_proc
+    ActionView::Base.field_error_proc = error_proc
+    yield
+    ActionView::Base.field_error_proc = pre
+  end
+end
+
+###
+### PERMISSIONS DEFINITION
+###
+ActionController::Base.class_eval do
+  # defines the permission mixin to be in charge of instances of this controller
+  # and related views.
+  #
+  # for example:
+  #   permissions 'foo_bar', :bar_foo
+  # 
+  # will attempt to load the +FooBarPermission+ and +BarFooPermission+ classes
+  # and apply them considering permissions for the current controller and views.
+  def self.permissions(*class_names)
+    for class_name in class_names
+      permission_class = "#{class_name}_permission".camelize.constantize
+      include(permission_class)
+      add_template_helper(permission_class)
+
+      #@@permissioner = Object.new
+      #@@permissioner.extend(permission_class)
+    end
+  end
+end
+
+  # returns the permissioner in charge of instances of this controller class
+  #def self.permissioner
+  #  @@permissioner
+  #end
+
+  # returns the permissioner in charge of this controller class
+  #def permissioner
+  #  @@permissioner
+  #end
+
+###
+### HACK TO BE REMOVED WHEN UPGRADING TO RAILS 2.3
+###
+
+class ActionView::Base
+  def button_to_remote(name, options = {}, html_options = {})
+    button_to_function(name, remote_function(options), html_options)
+  end
+end
 

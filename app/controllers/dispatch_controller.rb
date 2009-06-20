@@ -39,10 +39,11 @@ class DispatchController < ApplicationController
 
   def dispatch
     begin
+      flash.keep
+      load_current_site
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       @user = current_user
-      @site = Site.default
       set_language do
         render :action => "not_found", :status => :not_found
       end
@@ -51,6 +52,8 @@ class DispatchController < ApplicationController
 
   private
   
+  def load_current_site; current_site; end
+
   #
   # attempt to find a page by its name, and return a new instance of the
   # page's controller.
@@ -169,20 +172,34 @@ class DispatchController < ApplicationController
   end
   
   def controller_for_page(page)
-    params[:action] = params[:_page_action] || 'show'
-    #params[:id] = page
-    params[:controller] = page.controller
-    new_controller(page.controller_class_name)
+    if params[:_page_action] =~ /-/
+      # decontruct action into controller-action
+      controller, action = params[:_page_action].split('-')
+      params[:action] = action
+      controller = page.controller + '_' + controller
+      params[:controller] = controller
+      new_controller("#{controller.camelcase}Controller")
+    else
+      # use the main controller for this response
+      params[:action] = params[:_page_action] || 'show'
+      params[:controller] = page.controller
+      new_controller("#{page.controller.camelcase}Controller")
+    end
   end
   
   def controller_for_group(group)
     params[:action] = 'show'
     if group.instance_of? Network
-      params[:controller] = 'network'
-      new_controller('NetworkController')
+      if current_site.network and current_site.network == group
+        params[:controller] = 'site_network'
+        new_controller('SiteNetworkController')
+      else
+        params[:controller] = 'network'
+        new_controller('NetworksController')
+      end
     else
       params[:controller] = 'group'
-      new_controller('GroupController')
+      new_controller('GroupsController')
     end
   end
   

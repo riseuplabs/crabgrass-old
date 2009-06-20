@@ -1,85 +1,34 @@
-@import common.sass
+table.layout
+  border-collapse: collapse
+  width: 100%
 
+.left_column, .right_column, .main_column
+  border= !outer_border
+  border-width= !outer_border_width
+  vertical-align: top
+  padding: 0
 
-// not sure what this was for
-// .colmask
-//  margin: 0
+.main_column
+  background-color= !content_bg_color
+  //border= !content_border
+  //border-color= !content_border_color
 
-//
-// LEFT COLUMN LAYOUT
-//
+// LEFT
 
-.leftmenu
+.left_column
   background-color= !left_column_bg_color
-  border= !outer_border
-  border-width= !outer_border_width
-  .colright
-    left= !left_column_width
-    border-left= !left_column_dividing_border
-  .col1wrap
-    right= !left_column_width
-  .col1
-    margin: 0
-    margin-left= !left_column_width
-  .col2
-    // not sure why we need the extra 0.3em taken out, i think it has to do 
-    // with the 1px borders throwing off the em measurements
-    width= !left_column_width - !left_column_margin - !left_column_margin - 0.3em
-    right= !left_column_width - !left_column_margin
-    margin= !left_column_margin "0"
+  width= !left_column_width
+  border-right: 0
+  padding= !left_column_margin
 
-//
-// RIGHT COLUMN LAYOUT
-//
+.left_layout .main_column
+  border-left= !left_column_dividing_border
 
-//
-  .rightmenu
-    .col1
-      border= !outer_border
-      border-width= !outer_border_width
-      margin= "0 0 0" !right_column_width
-    .col2
-      width= !right_column_width - !right_column_margin
-      left= !right_column_width
-    .colleft
-      margin-left= -!right_column_width
-    .col1wrap
-      padding-bottom: 0em
+// RIGHT
 
-
-// an attempt to do full height columns
-.rightmenu
-  border-left= !outer_border
-  //background= !body_bg_color
-  // div.border is an extra div added just for the right_column layout.
-  // the only reason we have it is so that we can do full height on both columns
-  // and have a border around the main column. 
-  .border
-    background: white
-    border= !outer_border
-    border-left: 0
-    float: left
-    position: relative
-    right: 0
-    width: 100%
-  .col1
-    margin= "0 0 0" !right_column_width
-  .col2
-    width= !right_column_width - !right_column_margin
-    left= !right_column_width
-    /* padding-left= !right_column_margin */
-  .colleft
-    margin-left= -!right_column_width
-  .col1wrap
-    padding-bottom: 0em
-
-
-//
-// SINGLE COLUMN LAYOUT
-//
-
-.fullpage .col1
-  margin: 0
-  border= !outer_border
-  border-width= !outer_border_width
+.right_column
+  width= !right_column_width
+  padding-left= !right_column_margin
+  border: 0
+  color= #666
 

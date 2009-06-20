@@ -1,0 +1,64 @@
+---
+name: header with 1 blank line below
+in: |-
+  h3. Header
+
+  text
+out: |-
+  <h3>Header</h3>
+  <p>text</p>
+---
+name: header with 2 blank lines below
+in: |-
+  h3. Header
+  
+  
+  text
+out: |-
+  <h3>Header</h3>
+  <p>text</p>
+---
+name: header with 1 blank line above
+in: |-
+  text
+
+  h3. Header
+out: |-
+  <p>text</p>
+  <h3>Header</h3>
+---
+name: header with 2 blank lines above
+in: |-
+  text
+  
+  
+  h3. Header
+out: |-
+  <p>text</p>
+  <h3>Header</h3>
+---
+name: header with 1 blank line above and with no text
+in: |-
+
+  h3. Header
+out: <h3>Header</h3>
+---
+name: header with 2 blank lines above and with no text
+in: |-
+
+
+  h3. Header
+out: <h3>Header</h3>
+---
+name: header with 1 blank line below and with no text
+in: |+
+  h3. Header
+
+out: <h3>Header</h3>
+---
+name: header with 2 blank lines below and with no text
+in: |+
+  h3. Header
+
+
+out: <h3>Header</h3>

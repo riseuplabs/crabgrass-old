@@ -1,11 +1,10 @@
 class PostsController < ApplicationController
 
-  before_filter :login_required
+  permissions 'posts'
+  before_filter :fetch_data, :login_required
   
   def create    
     begin
-      @page = Page.find params[:page_id]
-      current_user.may!(:comment, @page)
       @post = Post.build params[:post].merge(:user => current_user, :page => @page)
       @post.save!
       current_user.updated(@page)
@@ -75,16 +74,9 @@ class PostsController < ApplicationController
 
   protected
     
-  def authorized?
+  def fetch_data
     @post = Post.find(params[:id]) if params[:id]
-    return true unless @post
-
-    if %w[twinkle untwinkle].include? params[:action]
-      return current_user.may?(:comment, @post.discussion.page)
-    else
-      return @post.editable_by?(current_user)
-    end
+    @page = Page.find params[:page_id] if params[:page_id]
   end
 
 end
-

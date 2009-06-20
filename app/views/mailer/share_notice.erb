@@ -1,10 +1,16 @@
-<%= @from.display_name %> (<%= @from.login %>) has sent you a web page<% if @notice_message.any? -%>
- with the following message:
+<%- if @notice_message.any? -%>
+<%= "Hello, {from} has sent you a web page with the following message: {message}"[:email_notice_hello_with_message, {:from => @from.display_name, :message => @notice_message}] %>
+<%- else -%>
+<%= "Hello, {from} has sent you a web page."[:email_notice_hello, {:from => @from.display_name}] %>
+<%- end -%>
 
-<%= @notice_message %>
-<% else %>.<% end -%>
+<%= "You may access this page here:"[:email_notice_access] %>
 
-You may access this page here: 
+<%- if @code -%>
+  <%= @link + '/code/' + @code.code %>
 
+<%= "This link will expire in {days} days."[:email_link_expires, @code.days_left] %>
+<%- else -%>
   <%= @link %>
+<%- end -%>
 

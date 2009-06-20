@@ -1,0 +1,42 @@
+#
+# This is the main global crabgrass configuration. 
+# 
+# Most of the time, no other configuration should be required other than the
+# options in this file. Unusual options might be configured elsewhere.
+#
+# For true/false and numeric values, you must not enclose the value in quotes.
+#
+# See doc/CONFIGURATION for more details.
+#
+
+#
+# development tips:
+# 
+#  * to work with super_admin, enable super_admin mod and site 'site1'.
+#
+
+title: "Crabgrass Development"
+
+enabled_mods:
+  - design_tester
+#  - gibberize
+
+email:
+  delivery_method: :sendmail
+
+translation_group: rainbow
+
+##
+## SITES
+##
+
+sites:
+
+# bound to localhost:
+#  - name: site1
+#    admin_group: rainbow
+
+# bound to test.host
+#  - name: site2
+#    admin_group: superadmins
+

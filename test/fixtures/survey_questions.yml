@@ -1,0 +1,64 @@
+<% ["Question #1",
+    "Another Question",
+    "YASQ (Yet Another Silly Question)"].each_with_index do |q, i| %>
+<%= "#{i + 1}" %>:
+  id: <%= i+1 %>
+  type: ShortTextQuestion
+  survey_id: 1
+  position: 1
+  label: "<%= q %>"
+  required: false
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+<% end %>
+  
+"10":
+  id: 10
+  type: ShortTextQuestion
+  position: 1
+  survey_id: 2
+  label: "q1"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+"11":
+  id: 11
+  type: ImageUploadQuestion
+  position: 2
+  survey_id: 2
+  label: "q2"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+"12":
+  id: 12
+  type: ShortTextQuestion
+  position: 3
+  survey_id: 2
+  label: "q3"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %> 
+"13":
+  id: 13
+  type: ImageUploadQuestion
+  position: 4
+  survey_id: 2
+  label: "q4"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+"14":
+  id: 14
+  type: SelectManyQuestion
+  choices: ["a", "b", "c"]
+  position: 5
+  survey_id: 2
+  label: "q5"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %> 
+"15":
+  id: 15
+  type: SelectManyQuestion
+  choices: ["aa", "bb", "cc"]
+  position: 6
+  survey_id: 2
+  label: "q6"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+"16":
+  id: 16
+  type: ShortTextQuestion
+  position: 7
+  survey_id: 2
+  label: "q7"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>

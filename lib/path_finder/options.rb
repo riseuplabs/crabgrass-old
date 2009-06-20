@@ -17,6 +17,14 @@ module PathFinder::Options
     ).merge(args)
   end
 
+  # used from the student mod
+  # access options for pages current_users students have access to
+  def options_for_mentor(args={})
+    default_options.merge(
+      :callback => :options_for_mentor
+    ).merge(args)
+  end
+
   # access options for all public pages (only)
   def options_for_public(args={})
     default_options.merge(
@@ -83,6 +91,15 @@ module PathFinder::Options
     else
       options[:public] = true
     end
+
+    # limit pages to the current site.
+    if get_controller.current_site.limited?
+      # why site_ids instead of just site_id? perhaps in the future
+      # we will enable a user to login and see a configurable subset of the 
+      # sites they have available to them.
+      options[:site_ids] = [current_site.id]
+    end
+
     options
   end
 

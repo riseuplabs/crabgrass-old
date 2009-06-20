@@ -1,0 +1,38 @@
+<%-
+
+# locals to take
+
+# recipient -> the recipient to render the partial for
+# access    -> what access level do we want to give to the new participation
+# unsaved   -> flag: does this participation contain changes that need to be saved / is new
+# blank     -> include blank as an access level option.
+
+blank = false if blank.nil?
+access = 'admin' if access.nil?
+if unsaved.nil?
+  newitem = false
+else
+  newitem = unsaved
+end
+newitem = true if @page and @page.new_record?
+
+id = "share_recipient_%s" % rand(100000000)
+remove_function = "$('%s').remove()" % id
+%>
+
+<tr class="<%= 'unsaved' if newitem %>" id="<%= id %>">
+  <td style="width:100%">
+    <%= display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true) %>
+  </td>
+  <td>
+    <%- if may_select_access_participation? -%>
+      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
+    <%- else -%>
+      <%= hidden_field 'recipients['+recipient.name.gsub(/\+/,"%2b")+']', :access, :value => access %>
+    <%- end -%>
+  </td>
+  <td>
+    <%= link_to_function_icon('minus', remove_function) if newitem %>
+  </td>
+</tr>
+

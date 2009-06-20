@@ -1,5 +1,6 @@
 class ExternalVideoPage < Page
-
+  include PageExtension::RssData
+  
   #def icon
   #  'page_video'
   #end

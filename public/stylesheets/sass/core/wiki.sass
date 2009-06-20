@@ -1,5 +1,3 @@
-@import common.sass
-
 .wiki,
 .post
   // http://longren.org/2006/09/27/wrapping-text-inside-pre-tags
@@ -24,18 +22,18 @@
   h1
     font-size: 24pt
     line-height: 1.25em
-    margin-top: 1.5em
+    //margin-top: 1.5em
     color: #666
     border-bottom: 2px dotted #999
     font-family= !body_text_font_family 
-    &:first-child
+    &:first-child, &.first
       margin-top: 0
   h2
     font-size: 14pt
-    margin-top: 1.25em
+    //margin-top: 1.25em
     line-height: 1.25em
     border-bottom: 1px dashed #ccc
-    &:first-child
+    &:first-child, &.first
       margin-top: 0
   h3
     font-size: 1.1em
@@ -69,29 +67,105 @@
       background-color: white
   code
     background-color: #fff6dd
+  .wiki_section
+    position: relative
+    .editsection
+      position: absolute
+      right: 0
+      top: 0
+      line-height= !body_text_line_height
+      text:
+        transform: none
+        decoration: none
+      font:
+        size= !body_text_font_size
+        variant: normal
+        weight: normal
+        style: normal
+
+.post
+  blockquote
+    border-left: 6px solid #ddd
+    margin-left: 0
+    padding-left: 1.5em
+    font-style: italic
 
 //
 // diff
 //
 
 div.diff
-  background: #f4f4f4
-  border: 1px solid #ddd
-  padding: 8px 20px
-  margin: 15px 0px
-
   p
     margin: 0
-
 
 del
   &.diffmod, &.diffins
     color: #999
     background-color: #ddd
 
-
 ins
   &.diffmod, &.diffins
     background-color: #cfc
     text-decoration: none
     color: #000
+
+//
+// editing
+//
+
+div.formatting_reference
+  float: right
+
+a.edit
+  display: none
+  margin-left: 6px
+  opacity: 0.5
+  //position: absolute
+  // a hack to make .small_icon_button work as inline
+  background-repeat: no-repeat
+  background-position: 0 70%
+  padding-left: 16px
+  // end hack
+a.edit:hover
+  opacity: 1
+
+h1:hover a.edit, 
+h2:hover a.edit,
+h3:hover a.edit
+  display: inline
+
+//
+// table of contents
+//
+
+a.anchor
+  display: none
+  margin-left: 6px
+  text-decoration: none
+  &:hover
+    color: #aaa !important
+    text-decoration: none
+
+h1:hover a.anchor, 
+h2:hover a.anchor,
+h3:hover a.anchor
+  display: inline
+  color: #ddd
+
+ul.toc
+  display: table
+  background-color: #f9f9f9
+  border: 1px solid #e6e6e6
+  padding: 1em
+  margin: 0
+  &,
+  ul
+    list-style-type: none
+    list-style-image: none
+    padding-left: 1.8em
+    //line-height: 1.6em
+  span
+    padding-right: 0.3em
+  li
+    font-size: 0.95em
+

@@ -45,42 +45,42 @@ module PathFinder::Sphinx::BuilderFilters
   # we assume the values pass to the finder are local
   #++
 
-  def filter_starts
-    @date_field = :starts_at
-  end
-
-  def filter_after(date)
-    if date == 'now'
-       date = Time.zone.now
-    else
-       if date == 'today'
-          date = to_utc(local_now.at_beginning_of_day)
-       else
-          year, month, day = date.split('-')
-          date = to_utc Time.in_time_zone(year, month, day)
-       end
-    end
-    @conditions[@date_field] = range(date, date+100.years)
-  end
-
-  def filter_before(date)
-    if date == 'now'
-       date = Time.now
-    else
-       if date == 'today'
-          date = Time.zone.now.to_date
-       else
-          year, month, day = date.split('-')
-          date = to_utc Time.in_time_zone(year, month, day)
-       end
-    end
-    @conditions[@date_field] = range(date-100.years, date)
-  end
-
-  def filter_upcoming
-    @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
-    @order << 'pages.starts_at DESC'
-  end
+  # def filter_starts
+  #   @date_field = :created_at
+  # end
+  # 
+  # def filter_after(date)
+  #   if date == 'now'
+  #      date = Time.zone.now
+  #   else
+  #      if date == 'today'
+  #         date = to_utc(local_now.at_beginning_of_day)
+  #      else
+  #         year, month, day = date.split('-')
+  #         date = to_utc Time.in_time_zone(year, month, day)
+  #      end
+  #   end
+  #   @conditions[@date_field] = range(date, date+100.years)
+  # end
+  # 
+  # def filter_before(date)
+  #   if date == 'now'
+  #      date = Time.now
+  #   else
+  #      if date == 'today'
+  #         date = Time.zone.now.to_date
+  #      else
+  #         year, month, day = date.split('-')
+  #         date = to_utc Time.in_time_zone(year, month, day)
+  #      end
+  #   end
+  #   @conditions[@date_field] = range(date-100.years, date)
+  # end
+  # 
+  # def filter_upcoming
+  #   @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
+  #   @order << 'pages.starts_at DESC'
+  # end
   
   def filter_ago(near,far)
     @conditions[:page_updated_at] = range(far.to_i.days.ago, near.to_i.days.ago)
@@ -98,19 +98,44 @@ module PathFinder::Sphinx::BuilderFilters
     @conditions[:page_created_at] = range(date - 100.years, date)
   end
  
-  def filter_month(month)
-    year = Time.zone.now.year
-    @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
-  end
-
-  def filter_year(year)
-    @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
-  end
+  # def filter_month(month)
+  #   year = Time.zone.now.year
+  #   @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
+  # end
+  # 
+  # def filter_year(year)
+  #   @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
+  # end
   
   ####
 
-  def filter_type(page_class_group)
-    @conditions[:page_type] = Page.class_group_to_class_names(page_class_group).join(' ')
+  # filter on page type or types, and maybe even media flag too!
+  # eg values:
+  # media-image+file, media-image+gallery, file,
+  # text+wiki, text, wiki
+  def filter_type(arg)
+    if arg =~ /[\+\ ]/
+      page_group, page_type = arg.split(/[\+\ ]/)
+    elsif Page.is_page_group?(arg)
+      page_group = arg
+    elsif Page.is_page_type?(arg)
+      page_type = arg
+    end
+
+    if page_group =~ /^media-(image|audio|video|document)$/
+      media_type = page_group.sub(/^media-/,'').to_sym
+      @conditions[:media] = MEDIA_TYPE[media_type] # indexed as multi array of ints.
+    end
+
+    if page_type
+      @conditions[:page_type] = Page.param_id_to_class_name(page_type)
+    elsif page_group
+      @conditions[:page_type] = Page.class_group_to_class_names(page_group).join('|')
+    else
+      # we didn't find either a type or a group for arg
+      # just search for arg. this should return an empty set
+      @conditions[:page_type] = arg.dup
+    end
   end
   
   def filter_person(id)

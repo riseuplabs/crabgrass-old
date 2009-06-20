@@ -1,0 +1,11 @@
+<div class='tab-content tab-area' id="advanced_tab" <%= tab_style 'advanced' %> >
+  <% form_for @appearance do |f| %>
+    <%= input_selected_tab('advanced') %>
+    <h2><%= "Style parameters for custom appearance #{@appearance.id}" %></h2>
+    <%= f.text_area :parameters, :size => "60x30", :value => f.object.parameters.to_yaml %>
+    <br/>
+    <%= submit_tag 'Update' %>
+    <%= link_to 'Available Options', {:action => 'available', :id => @appearance}, :popup => ['Available Custom Appearance Options', 'height=600,width=650,scrollbars=1']
+     %>
+  <% end %>
+</div>

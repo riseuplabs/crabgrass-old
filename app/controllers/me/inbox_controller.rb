@@ -19,6 +19,7 @@ class Me::InboxController < Me::BaseController
 
   def list
     params[:path] = ['descending', 'updated_at'] if params[:path].empty?
+  
     @pages = Page.paginate_by_path(params[:path], options_for_inbox(:page => params[:page]))
     add_user_participations(@pages)
     handle_rss(
@@ -75,7 +76,7 @@ class Me::InboxController < Me::BaseController
   end
   
   def context
-    me_context('large')
+    super
     add_context 'Inbox'[:me_inbox_link], url_for(:controller => '/me/inbox', :action => params[:action], :path => params[:path])
   end
 

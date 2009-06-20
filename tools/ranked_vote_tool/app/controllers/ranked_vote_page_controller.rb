@@ -33,6 +33,7 @@ class RankedVotePageController < BasePageController
   before_filter :fetch_poll
   before_filter :find_possibles, :only => [:show, :edit] 
   stylesheet 'vote'
+  permissions 'ranked_vote_page'
   javascript :extra, 'page'
      
   def show
@@ -108,6 +109,13 @@ class RankedVotePageController < BasePageController
     redirect_to page_url(@page)
   end
 
+  def print
+    array_of_votes, @who_voted_for = build_vote_arrays    
+    @result = BordaVote.new( array_of_votes ).result
+    @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+    
+    render :layout => "printer-friendly"
+  end
   protected
 
   # returns:
@@ -149,10 +157,6 @@ class RankedVotePageController < BasePageController
     return array_of_votes, who_voted_for
   end
   
-  def authorized?
-    return super unless @page
-    current_user.may?(:admin, @page)
-  end  
   
   def fetch_poll
     @poll = @page.data if @page
@@ -173,6 +177,13 @@ class RankedVotePageController < BasePageController
 
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.value_by_user(current_user) }
   end
-  
+
+  def setup_view
+    @show_print = true
+  end
+
+  def build_page_data
+    Poll.new
+  end
 end
 

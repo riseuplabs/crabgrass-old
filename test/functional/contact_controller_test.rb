@@ -5,7 +5,7 @@ require 'contact_controller'
 class ContactController; def rescue_action(e) raise e end; end
 
 class ContactControllerTest < Test::Unit::TestCase
-  fixtures :users, :contacts
+  fixtures :users, :contacts, :sites
   
   def setup
     @controller = ContactController.new

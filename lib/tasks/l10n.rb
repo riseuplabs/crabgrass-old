@@ -36,7 +36,15 @@ def load_language_file(lang_file, options={})
   if language
     print 'loading %s' % lang_file
     keys_hash.each do |k,v|
-      key = Key.find_or_create_by_name(k)
+      if lang_code == "en_US"
+        key = Key.find_or_create_by_name(k)
+      else
+        key = Key.find_by_name(k)
+      end
+      if key.nil?
+        print "(skip:%s)" % k
+        next
+      end
       if t = Translation.find_by_key_id_and_language_id(key.id,language.id)
         if t.text == v
           putc '.'
@@ -129,7 +137,8 @@ namespace :cg do
         if l.code != 'en_US'
           buffer = {}
           l.translations.each do |t|
-            buffer[t.key.name] = t.text
+            buffer[t.key.name] = t.text unless t.custom?
+            # ^^ (the custom check should not be needed, but it is. why?)
           end
           if buffer.any?
             File.open(LANG_DIR + '/' + l.code + '.yml', 'w') {|f| f.write(buffer.to_yaml) }
@@ -150,11 +159,15 @@ namespace :cg do
     # This tasks loads strings and its translation keys from 'lang/*.yml'.
     desc "Load translations from YAML files in the 'lang' directory"
     task (:load_translations => :environment) do
-      Dir["#{LANG_DIR}/*.yml"].sort.each do |lang_file|
-        load_language_file(lang_file, :custom => false)
-      end
-      Dir["#{CUSTOM_LANG_DIR}/*.yml"].sort.each do |lang_file|
-        load_language_file(lang_file, :custom => true)
+      if ENV["FILE"]
+        load_language_file(File.join(LANG_DIR,ENV["FILE"]), :custom => false)
+      else
+        Dir["#{LANG_DIR}/*.yml"].sort.each do |lang_file|
+          load_language_file(lang_file, :custom => false)
+        end
+        Dir["#{CUSTOM_LANG_DIR}/*.yml"].sort.each do |lang_file|
+          load_language_file(lang_file, :custom => true)
+        end
       end
     end
     

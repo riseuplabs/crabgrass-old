@@ -6,15 +6,8 @@ module ErrorHelper
   ## GENERATING NOTICES
   ##
 
-  #
-  # a one stop shopping function for flash messages
-  # usage:
-  # message :object => @user
-  # message :error => 'you messed up good'
-  # message :success => 'yeah, you rock'
-  #
-  ## TODO: destroy with helper, replace with flash_message
-  ## and flash_message_now
+  # DEPRECATED
+  # DEPRECATED
   def message(opts)    
     if opts[:success]
       flash[:notice] = opts[:success]
@@ -37,6 +30,45 @@ module ErrorHelper
     end
   end
 
+  #
+  # Direct manipulation of the message display: 
+  #
+  #   flash_message :title => 'hello', :text => 'have a nice day', :type => 'info'
+  #   flash_message :title => 'wrong', :text => 'you messed up', :type => 'error'
+  #
+  # 
+  # Shortcuts:
+  # 
+  #   flash_message :success => true
+  #      (same as :type => 'info', :title => 'Changes saved')
+  #
+  #   flash_message :success => 'yeah'
+  #      (same as :type => 'info', :text => 'yeah', :title => 'Changes Saved')
+  #
+  #   flash_message :error => true
+  #      (same as :type => 'error', :title => 'Changes could not be saved')
+  #
+  #   flash_message :error => 'no'
+  #      (same as :type => 'error', :title => 'Changes could not be saved', :text => 'no')
+  #
+  #   flash_message :success
+  #      (same as :success => true)
+  #
+  # Special objects:
+  #
+  #   flash_message :exception => exc
+  #
+  #   flash_message :object => @robot
+  #
+  # Some things you can add more than once, and they will be appended to the display:
+  #
+  #   flash_message :error => 'could not save'
+  #   flash_message :error => 'and you are doing it wrong'
+  #
+  # In this case, both errors will be displayed. Other attributes can only be set once,
+  # like title or type.
+  #
+  #
   def flash_message(options)
     add_flash_message(flash, options)
   end
@@ -58,43 +90,26 @@ module ErrorHelper
   end
 
   # display flash messages with appropriate styling
-  def display_messages()
-    return "" unless flash[:type]
-    unless flash[:title]
-      flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
-      flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
+  def display_messages(size=:big)
+    @display_message ||= begin
+      if flash[:type].empty?
+        ""
+      else
+        if flash[:title].empty?
+          flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
+          flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
+        end
+        notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
+        content_tag(:div, notice_contents, :class => size.to_s + '_notice')
+      end
     end
-    build_notice_area(flash[:type], flash[:title], flash[:text])
   end
 
-  # use by ajax
-  ## TODO: remove, replace with message_text()
-  def notify_errors(title, errors)
-     text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     build_notice_area('error', title, text)
-  end
- 
-   # use by ajax
-  ## TODO: remove, replace with message_text()
-  def notify_infos(title, infos)
-     text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     build_notice_area('info', title, text)
-  end
-
-  private
-  
-  def build_notice_area(type, title, text)
-    header = content_tag :h2, content_tag(:div, title, :class => "big_icon #{type}_48")
-    content_tag(
-     :div, 
-     content_tag(
-       :div,
-       header + text,
-       :class => type
-     ),
-     :class => 'notice'
-   )
-  end
+  ##
+  ## BUILDING THE MESSAGE
+  ## normally, this should not be called directly, but there are a few times
+  ## when it is useful.
+  ##
 
   #
   # parses options to build the appropriate objects in the particular flash
@@ -108,13 +123,17 @@ module ErrorHelper
   # :object | :success | :error | :exception
   #
   def add_flash_message(flsh, options)
+    if options.is_a? Symbol
+      options = {options => true}
+    end
+
     flsh[:text] ||= ""
     flsh[:text] += content_tag(:p, options[:text]) if options[:text]
     flsh[:title] = options[:title] || flsh[:title]
     if options[:exception]
       exc = options[:exception]
       if exc.is_a? PermissionDenied
-        add_flash_message(flsh, :text => options[:text], :title => 'Permission Denied'[:alert_permission_denied], :error => exc)
+        add_flash_message(flsh, :text => options[:text], :title => 'Permission Denied'[:alert_permission_denied], :error => exc.to_s)
       elsif exc.is_a? ErrorMessages
         add_flash_message(flsh, :text => options[:text], :title => exc.title, :error => exc.errors)
       elsif exc.is_a? ErrorMessage
@@ -131,17 +150,73 @@ module ErrorHelper
         flsh[:text] += content_tag :p, "There are problems with the following fields"[:alert_field_errors] + ":"
         flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
       end
-    elsif options[:error] and options[:error].to_s.any?
+    elsif options[:error]
       flsh[:type] = 'error'
-      errors = options[:error].is_a?(Enumerable) ? options[:error] : [options[:error].to_s]
-      flsh[:text] += content_tag :ul, errors.collect{|msg| content_tag :li, h(msg)}
-    elsif options[:success] and options[:success].any?
+      if options[:error] === true
+        # use defaults
+      elsif options[:error].any?
+        flsh[:text] += content_tag :p, options[:text] if options[:text]
+        if options[:error].is_a? Array
+          flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg|
+            content_tag :li, h(msg)
+          }
+        else
+          flsh[:text] += content_tag :p, options[:error] if options[:error]
+        end
+      end
+    elsif options[:success]
       flsh[:type] = 'info'
-      flsh[:text] += content_tag :p, options[:text] if options[:text]
-      flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg| content_tag :li, h(msg)}
+      if options[:success] === true
+        # use defaults
+      elsif options[:success].any?
+        flsh[:text] += content_tag :p, options[:text] if options[:text]
+        if options[:success].is_a? Array
+          flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg|
+            content_tag :li, h(msg)
+          }
+        else
+          flsh[:text] += content_tag :p, options[:success] if options[:success]
+        end
+      end
+    else
+      flsh[:type] = options[:type]
+      flsh[:text] += options[:text]
     end
   end
 
+  private
+  
+  def build_notice_area(type, title, text)
+    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
+    heading = content_tag(:div, heading, :class => 'heading')
+    if text and text.any?
+      text = content_tag(:div, text, :class => 'text')
+    else
+      text = ""
+    end
+    content_tag(:div, heading+text, :class => type)
+  end
 
+  def exception_detailed_message(exception)
+    message = exception.clean_message
+    file, line = exception.backtrace.first.split(":")[0, 2]
+    if File.exists?(file)
+      message << "\n\n"
+      code = File.readlines(file)
+      line = line.to_i
+      min = [line - 2, 0].max
+      max = line + 2
+      (min..max).each do |n|
+        if n == line
+          message << "=> "
+        else
+          message << "   "
+        end
+        message << ("%4d" % n)
+        message << code[n]
+      end
+    end
+    message
+  end
 end
 

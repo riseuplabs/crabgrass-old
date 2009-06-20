@@ -1,38 +1,45 @@
-<%= link_to "<span class='small_icon plus_16'>#{"Contribute"[:contribute_content_link]}</span>", {:controller => '/pages', :action => 'create'}, :class => "contribute round" %>
+<%= create_page_link %>
 
 <ul class='side_list'>
-  <%- active = params[:controller] == 'me/dashboard' -%>
+  <% active = controller?('me/dashboard') %>
   <li class='small_icon home_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Dashboard'[:me_dashboard_link],
     '/me/dashboard',
-    params[:controller] == 'me/dashboard'
+    active
   ) %></li>
 
-  <%- active = params[:controller] == 'me/inbox' -%>
-  <li id='inbox_line' class='small_icon archive_16<%= active ? ' active' : '' %>'><%= link_to_active(
+  <% active = controller?('me/inbox') %>
+  <li id='inbox_line' class='small_icon inbox_16<%= active ? ' active' : '' %>'><%= link_to_active(
      'Inbox'[:me_inbox_link],
     '/me/inbox',
     active
   ) %></li>
 
-  <%- active = params[:controller] == 'me/search' -%>
+  <% active = controller?('me/search') %>
   <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Search'[:me_search_link],
     '/me/search',
     active
   ) %></li>
 
-  <%- active = params[:controller] == 'me/tasks' -%>
+  <% active = controller?('me/tasks') %>
   <li class='small_icon page_tasks_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Tasks'[:me_tasks_link],
     '/me/tasks/pending',
     active
   ) %></li>
 
-  <%- active = params[:controller] == 'me/requests' -%>
+  <% active = controller?('me/requests') %>
   <li id='requests_line' class='small_icon info_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Requests'[:me_requests_link],
+    'Requests'[:requests],
     {:controller => '/me/requests', :action => 'to_me'},
+    active
+  ) %></li>
+
+  <% active = controller?('me/trash') %>
+  <li id='trash_line' class='small_icon trash_16<%= active ? ' active' : '' %>'><%= link_to_active(
+    'Trash'[:trash],
+    {:controller => '/me/trash'},
     active
   ) %></li>
 
@@ -42,16 +49,17 @@
 
 <%- cache(me_cache_key) do -%>
   <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
-
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.networks } %>
+  <%- if current_site.has_networks? -%>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.select{|g| g.network?}} %>
+  <%- end -%>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.normals } %>
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.committees } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => current_user.contacts } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => User.contacts_of(current_user) } %>
 
 <%- end -%>
 
-<%= javascript_tag remote_function(:url => {:controller => '/me/base', :action => :counts }) %>
+<%= javascript_tag remote_function(:url => me_params(:action => :counts)) %>
 

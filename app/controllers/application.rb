@@ -1,40 +1,61 @@
 class ApplicationController < ActionController::Base
 
-  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper
+  helper CommonHelper
+  helper PathFinder::Options
+  helper Formy
+  permissions 'application'
 
-  # TODO: remove these, access via ActionController::Base.helpers() instead.
+  # TODO: remove these, access via self.view() instead.
   include AuthenticatedSystem	
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
   include ErrorHelper     # for displaying errors and messages to the user
-  include PathFinder::Options       # for Page.find_by_path options
   include ContextHelper
   include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::AssetTagHelper
   include ImageHelper
+  include PermissionsHelper
 
+  include PathFinder::Options                   # for Page.find_by_path options
+  include ControllerExtension::CurrentSite
+  include ControllerExtension::UrlIdentifiers
+  
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
-  
 
   # the order of these filters matters. change with caution.
-  prepend_before_filter :fetch_site # needs to come before fetch_profile in
-                                    # profile controller
+  before_filter :essential_initialization
   around_filter :set_language
-  before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
+  before_filter :set_timezone, :pre_clean
   around_filter :rescue_authentication_errors
+  before_filter :header_hack_for_ie6
+  before_render :context_if_appropriate
 
-  session :session_secure => true if Crabgrass::Config.https_only
-  protect_from_forgery :secret => Crabgrass::Config.secret
-  layout 'default'
+  session :session_secure => Conf.enforce_ssl
+  # ^^ TODO: figure out how to use current_site.enforce_ssl instead
+  protect_from_forgery :secret => Conf.secret
+
+  # no layout for HTML responses to ajax requests
+  layout proc{ |c| c.request.xhr? ? false : 'default' }
+
+  # ensure that essential_initialization ALWAYS comes first
+  def self.prepend_before_filter(*filters, &block)
+    filter_chain.skip_filter_in_chain(:essential_initialization, &:before?)
+    filter_chain.prepend_filter_to_chain(filters, :before, &block)
+    filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
+  end
 
   protected
 
-  def fetch_site
-    @site = Site.default
-  end
+  ##
+  ## CALLBACK FILTERS
+  ## 
 
-  before_filter :header_hack_for_ie6
+  def essential_initialization
+    current_site
+  end
+  
   def header_hack_for_ie6
     #
     # the default http header cache-control in rails is:
@@ -47,19 +68,91 @@ class ApplicationController < ActionController::Base
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
   end
 
+  # an around filter responsible for setting the current language.
+  # order of precedence in choosing a language:
+  # (1) the current session
+  # (2) the current_user's settings
+  # (3) the request's Accept-Language header
+  # (4) the site default
+  # (5) english
+  def set_language
+    session[:language_code] ||= begin
+      if LANGUAGES.empty?
+        'en_US'
+      elsif !logged_in? || current_user.language.empty?
+        code = request.compatible_language_from(AVAILABLE_LANGUAGE_CODES)
+        code ||= current_site.default_language
+        code ||= 'en_US'
+        code.sub('-', '_')
+      else
+        current_user.language.to_sym
+      end
+    end
+
+    if session[:language_code]
+      Gibberish.use_language(session[:language_code]) { yield }
+    else
+      yield
+    end
+  end
+
+  # if we have login_required this will be called and check the
+  # permissions accordingly
+  def authorized?
+    may_action?(params[:action])
+  end
+
+  # set the current timezone, if the user has it configured.
+  def set_timezone
+    Time.zone = current_user.time_zone if logged_in?
+  end
+
+  # TODO: figure out what the hell is the purpose of this?
+  def pre_clean
+    User.current = nil
+  end
+
+  # A special 'before_render' filter that calls 'context()' if this is a normal
+  # request for html and there has not been a redirection. This allows
+  # subclasses to put their navigation setup calls in context() because
+  # it will only get called when appropriate.
+  def context_if_appropriate
+    if !@skip_context and normal_request?
+      @skip_context = true
+      context()
+    end
+    true
+  end
+  def context; end
+
+  ##
+  ## HELPERS
+  ##
+
+  # In a view, we get access to the controller via controller(). The 'view' method
+  # lets controllers have access to the view helpers.
+  def view
+    self.class.helpers
+  end
+
+  def current_appearance
+    current_site.custom_appearance || CustomAppearance.default
+  end
+  helper_method :current_appearance
+
+  #
+  # returns a hash of options to be given to the mailers. These can be
+  # overridden, but these defaults are pretty good. See models/mailer.rb.
+  #
   def mailer_options
-    opts = {:site => @site, :current_user => current_user, :host => request.host,
-     :protocol => request.protocol, :page => @page}
+    from_address = current_site.email_sender.sub('$current_host',request.host)
+    from_name    = current_site.email_sender_name.sub('$user_name', current_user.display_name).sub('$site_title', current_site.title)
+    opts = {:site => current_site, :current_user => current_user, :host => request.host,
+     :protocol => request.protocol, :page => @page, :from_address => from_address, 
+     :from_name => from_name}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
-  
-  # returns true if params[:action] matches one of the args.
-  # useful in authorized?() methods.
-  def action?(*actions)
-    actions.include?(params[:action].to_sym)
-  end
-  helper_method :action?
 
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included "as needed". A controller can set a custom stylesheet
@@ -102,19 +195,7 @@ class ApplicationController < ActionController::Base
       read_inheritable_attribute "javascript"
     end
   end
-    
-  def handle_rss(locals)
-    # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
-    if params[:path].any? and 
-        (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
-      response.headers['Content-Type'] = 'application/rss+xml'   
-      render :partial => '/pages/rss', :locals => locals
-      return true
-    else
-      return false
-    end
-  end
-     
+  
   # some helpers we include in controllers. this allows us to 
   # grab the controller that will work in a view context and a
   # controller context.
@@ -140,47 +221,12 @@ class ApplicationController < ActionController::Base
   
   private
   
-  def pre_clean
-    User.current = nil
-  end
-
-  def set_timezone
-    Time.zone = current_user.time_zone if logged_in?
-  end
-
   def rescue_authentication_errors
     yield
   rescue ActionController::InvalidAuthenticityToken
     render :template => 'account/csrf_error'
   rescue PermissionDenied
     access_denied
-  end
-
-  # an around filter responsible for setting the current language.
-  # order of precedence in choosing a language:
-  # (1) the current session
-  # (2) the current_user's settings
-  # (3) the site default
-  # (4) english
-  def set_language
-    if LANGUAGES.any?
-      session[:language_code] ||= begin
-        if !logged_in? or current_user.language.nil?
-          language = LANGUAGES.detect{|l|l.code == @site.default_language}
-          language ||= LANGUAGES.detect{|l|l.code == 'en_US'}
-          language_code = language.code.to_sym
-        else
-          language_code = current_user.language.to_sym
-        end
-      end
-    else
-      session[:language_code] = 'en_US'
-    end
-    if session[:language_code]
-      Gibberish.use_language(session[:language_code]) { yield }
-    else
-      yield
-    end
   end
  
   ## handy way to get back where we came from
@@ -207,6 +253,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # TODO: move to new permission system as soon as it is ready
+  helper_method :may_signup?
+  def may_signup?
+    if current_site.signup_mode == Conf::SIGNUP_MODE[:invite_only]
+      session[:user_has_accepted_invite] == true
+    elsif current_site.signup_mode == Conf::SIGNUP_MODE[:closed]
+      false
+    else
+      true
+    end
+  end
 
+  # Returns true if the current request is of type html and we have not 
+  # redirected. However, IE 6 totally sucks, and sends the wrong request
+  # which sometimes appears as :gif. 
+  def normal_request?
+    format = request.format.to_sym
+    response.redirected_to.nil? and
+    (format == :html or format == :all or format == :gif)
+  end
 
 end

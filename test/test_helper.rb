@@ -29,6 +29,24 @@ def showlog
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
+# This is a testable class that emulates an uploaded file
+# Even though this is exactly like a ActionController::TestUploadedFile
+# i can't get the tests to work unless we use this.
+class MockFile
+  attr_reader :path
+	def initialize(path); @path = path; end
+	def size; 1; end
+  def original_filename; @path.split('/').last; end
+  def read; File.open(@path) { |f| f.read }; end
+  def rewind; end
+end
+
+
+def mailer_options
+  {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
+  :protocol => 'http://', :port => '3000', :page => @page}
+end
+
 class Test::Unit::TestCase
 
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -68,6 +86,19 @@ class Test::Unit::TestCase
     true
   end
   
+  # currently, for normal requests, we just redirect to the login page
+  # when permission is denied. but this should be improved.
+  def assert_permission_denied
+    assert_equal 'error', flash[:type]
+    assert_equal 'Permission Denied', flash[:title]
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
+  ##
+  ## ASSET HELPERS
+  ##
+
   def upload_data(file)
     type = 'image/png' if file =~ /\.png$/
     type = 'image/jpeg' if file =~ /\.jpg$/
@@ -76,9 +107,14 @@ class Test::Unit::TestCase
     fixture_file_upload('files/'+file, type)
   end
 
+  def upload_avatar(file)
+    MockFile.new(RAILS_ROOT + '/test/fixtures/files/' + file)
+  end
+
   def read_file(file)
     File.read( RAILS_ROOT + '/test/fixtures/files/' + file )
   end
+
 
 =begin
   def assert_login_required(method, url)
@@ -138,5 +174,45 @@ See also doc/SPHINX_README"
     end
   end
 
+  def disable_site_testing
+    Conf.disable_site_testing
+    Site.current = Site.new
+    @controller.disable_current_site if @controller
+  end
+
+  def enable_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name)
+      yield
+      disable_site_testing
+    else
+      if site_name
+        Conf.enable_site_testing(sites(site_name))
+        Site.current = sites(site_name) 
+      else
+        Conf.enable_site_testing()
+        Site.current = Site.new
+      end
+      @controller.enable_current_site if @controller
+    end
+  end
+
+  ##
+  ## DEBUGGING HELPERS
+  ##
+
+  # prints out a readable version of the response. Useful when using the debugger
+  def response_body
+    puts @response.body.gsub(/<\/?[^>]*>/, "").split("\n").select{|str|str.strip.any?}.join("\n")
+  end
+
+  ##
+  ## ROUTE HELPERS
+  ##
+
+  def url_for(options)
+    url = ActionController::UrlRewriter.new(@request, nil)
+    url.rewrite(options)
+  end
 
 end

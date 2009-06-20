@@ -1,0 +1,37 @@
+<% @title_box = content_tag(:h1, (@active_tab == :groups ? 'Directory of Groups'[:directory_of_groups] : 'Directory of Networks'[:directory_of_networks])) -%>
+<%- @info_box_class = 'tabs' -%>
+<%- @info_box = capture do -%>
+<%
+  if @active_tab == :groups 
+    method = :group_directory_url
+    my_groups = 'My Groups'[:my_groups]
+  else
+    method = :network_directory_url
+    my_groups = 'My Networks'[:my_networks]
+  end
+%>
+<%= Formy.tabs do |f|
+  f.tab do |t|
+    t.label my_groups
+    t.url send(method, :action => :my)
+    t.selected action?(:my)
+  end
+  f.tab do |t|
+    t.label 'Recently Created'[:recently_created]
+    t.url send(method, :action => :recent)
+    t.selected action?(:recent)
+  end
+  f.tab do |t|
+    t.label 'Most Active'[:most_active]
+    t.url send(method, :action => :most_active)
+    t.selected action?(:most_active)
+  end
+  f.tab do |t|
+    t.label 'All Groups'[:all_groups]
+    t.url send(method, :action => :search)
+    t.selected action?(:search)
+  end
+end %>
+<%- end -%>
+
+

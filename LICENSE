@@ -1,3 +1,15 @@
+= INCLUDED LIBRARIES AND PLUGINS
+
+Unless otherwise specified, the license for crabgrass source is the GNU AGPL,
+included below.
+
+However, Crabgrass includes many third party libraries and plugins which are not
+distributable using the AGPL. This libraries are all covered by free software
+licenses, but not the AGPL. For the sake of convenience, these libraries are
+included in the standard distribution of Crabgrass. See AUTHORS for a list of
+the licensing terms of included software.
+
+
 = GNU AFFERO GENERAL PUBLIC LICENSE
 
 Version 3, 19 November 2007

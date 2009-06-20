@@ -1,0 +1,19 @@
+<% type = 'send' if type.nil? -%>
+<% notify = true if notify.nil? -%>
+
+<div class='share_page'>
+  <h2 class="first"><%= 'Share this page with:'[:share_page_recipients, "Page"[:page]] %></h2>
+
+  <div id='share_error_message'></div>
+
+  <%= render :partial => 'base_page/share/add_recipient_widget' %>
+
+  <% if notify %>
+    <h2><%= 'Send Notification'[:notify_page_link] %></h2>
+    <table class='notify'>
+      <%= render :partial => 'base_page/share/notification_message_form' %>
+    </table>
+  <% end %>
+
+</div>
+

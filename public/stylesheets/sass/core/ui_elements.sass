@@ -1,5 +1,3 @@
-@import common.sass
-
 //
 // UI ELEMENTS
 // 
@@ -21,11 +19,15 @@ ul.plain
   padding: 0
   margin: 0
   list-style: none
+ul.plain ul
+  list-style: none
 ul.floatlist li
   float: left
   margin-right: 1em
 .nowrap
   white-space: nowrap
+.small
+  font-size: 0.9em
 
 //
 // LINKS
@@ -78,6 +80,14 @@ a[name]
   color: #ccc
 
 //
+// ENTITIES
+//
+
+.entity .name
+  font-weight: bold
+  overflow: hidden
+
+//
 // SIDE LIST
 // 
 
@@ -85,9 +95,12 @@ ul.side_list
   padding: 0
   margin: 0
   list-style: none
-  margin-bottom: 0.5em
-  clear: left
-  a
+  //margin-bottom: 0.5em
+  clear: both
+  ul
+    list-style: none
+    padding-left: 2em
+  a, .a
     //text-decoration: none
     display: block
     padding-top: 4px
@@ -101,8 +114,8 @@ ul.side_list
   li
     &.active, &:hover
     &.small_icon
-      padding-left: 25px
-      background-position: 2px 50%
+      padding-left: 19px
+      background-position: 0 50%
 
 //
 // TABS
@@ -139,8 +152,12 @@ ul.tabset
       padding: 0.5em 1em
       // i don't understand why this is needed:
       cursor: pointer
+      &.small_icon
+        padding-left: 28px
+        margin-left: 0.5em
+        background-position: 8px 50%
       &.active
-        background: white
+        background-color: white
         border: 1px solid #999
         border-bottom: 0
 
@@ -151,11 +168,16 @@ ul.tabset
 input[type="hidden"]
   display: none
 
+//input[type="checkbox"]
+//  vertical-align: sub
+
 option
   &.indented
-    margin-left: 1em
+    margin-left: 1.5em
   &.section
     font-weight: bold
+  //&.spaced
+  //  margin-top: 0.5em
 
 label.date span
   font-size: 0.8em
@@ -167,14 +189,13 @@ label.date span
   max-width: 80em
 
 // make checkboxes have a hanging indent look, like bullets.
-label.checkbox
+label.checkbox, label.radio
   display: block
   margin-left: 1.7em
-input.checkbox
+input.checkbox, input.radio
   position: relative
   top: 2px
   margin-left: -1.6em
-
 
 //
 // ROUNDY CORNERS
@@ -207,6 +228,13 @@ input.checkbox
 //
 // UTILITY
 //
+
+.selfclear:after
+  content: "."
+  display: block
+  height: 0
+  clear: both
+  visibility: hidden
 
 .clear
   clear: both 
@@ -251,36 +279,41 @@ span.break
 h1
   &.dim
     color: #738899
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   &.bright
     color: #5B97CB
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   &.alert
     color: #CE4A48
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
 h2
+  &.first
+    padding-top: 0
+    margin-top: 0
+  &.dark
+    color: #CE4A48
   &.dim
     color: #738899
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   &.bright
     color: #5B97CB
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   &.alert
     color: #CE4A48
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
-  &.section
-    color: #333
-    margin-bottom: 0.5em
-    background-color: #dfdfdf
-    border: 1px solid #bbb
-    padding: 0.25em
-    -moz-border-radius: 6px
+//  &.section
+//    color: #333
+//    margin-bottom: 0.5em
+//    background-color: #dfdfdf
+//    border: 1px solid #bbb
+//    padding: 0.25em
+//    -moz-border-radius: 6px
   span
     font-size: 0.6em
     white-space: nowrap
@@ -288,15 +321,15 @@ h2
 h3
   &.dim
     color: #738899
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   &.bright
     color: #5B97CB
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   &.alert
     color: #CE4A48
-    text-transform: capitalize
+//    text-transform: capitalize
     margin: 0
   span
     font-size: 0.6em
@@ -387,6 +420,9 @@ table.plain
       border: 1px solid #929292
       color: #929292
 
+.pagination_label
+  text-align: center
+
 .letter_pagination
   padding: 1em 0
   text-align: center
@@ -410,3 +446,221 @@ table.plain
     &.disabled
       padding: 0
       color: #edf2e3
+
+//
+// AUTO COMPLETE
+//
+
+.autocomplete-w1
+  background: url(/images/ui/shadow.png) no-repeat bottom right
+  position: absolute
+  top: 7px
+  left: 6px
+  z-index: 200
+
+.autocomplete
+  width: 300px
+  border: 1px solid #999
+  background-color: white
+  cursor: pointer
+  text-align: left
+  max-height: 350px
+  overflow: auto
+  margin: -6px 6px 6px -6px
+  overflow-x: hidden
+  .selected
+    background: #eee
+  div
+    padding: 1px 0 1px 5px
+    white-space: nowrap
+  p
+    margin: 0
+  strong
+    font-weight: normal
+    color: #3399FF
+  em
+    font-weight: bold
+    font-style: normal
+
+// div.auto_complete
+//  background: #fff
+//  ul
+//    border: 1px solid #888
+//    margin: 0
+//    padding: 0
+//    width: 100%
+//    list-style-type: none
+//    li
+//      margin: 0
+//      padding: 8px
+//      cursor: pointer
+//    li.selected
+//      background-color: #ffb
+//    strong.highlight
+//      color: #800
+//      margin: 0
+//      padding: 0
+
+//
+// ERRORS
+//
+
+blockquote.error
+  padding: 0.5em
+  background: #fcc
+  border: 1px solid red
+
+div
+  &.fieldWithErrors
+    border: 2px solid red
+    display: table-cell
+    + div.fieldWithErrors
+      display: none
+
+.small_notice
+  background: #fcc
+  border: 1px solid red
+  h2
+    border: 0
+    font-size: 1em
+    color: black
+
+.big_notice
+  padding: 0 4em 1.5em 4em
+  h2
+    font-size: 1.2em
+    img
+      vertical-align: middle
+  p, li
+    color: black
+    margin-left: 2em
+  div.text
+    border-top: 1px solid #999
+    background-color: #fafafa
+    // some kind of bug:
+    padding: 0.01em
+  div.heading
+    background-color: #dfdfdf
+    // some kind of bug:
+    padding: 0.01em
+  div.error
+    border: 2px solid red
+    color: #900
+  div.info
+    border: 2px solid green
+    color: #090
+  div.update
+    border: 2px solid blue
+    color: #009
+
+
+
+//
+// DIALOG PAGES
+// (they are like dialog boxes, but they are their own stand alone page)
+//
+
+div.dialog
+  width: 50%
+  margin: 5em auto
+  ul
+    list-style: none
+    padding: 0
+    li
+      margin: 1em 0
+
+//
+// FORMS
+//
+
+table.form
+  margin-left: 1em
+  border-collapse: collapse
+  tr.first td
+    border-top: 0
+  & > tbody > tr > td
+    vertical-align: top
+    border-top: 1px dotted #ccc
+  td.heading
+    padding: 0.5em 0
+    h2
+      color: #666
+      font-size: 1.5em
+      margin: 0
+  td.label
+    font-weight: bold
+    white-space: nowrap
+    text-align: right
+    padding: 1em
+    padding-right: 0
+  td.input
+    padding: 1em
+    width: 35em
+  //td.input
+  //  white-space: nowrap
+  //td.first
+  //  padding-top: 0
+  .info
+    font-size: 0.9em
+    font-style: italic
+    color: #777
+  input[type=text], textarea
+    font-size: 1em
+    width: 100%
+  
+
+.form_buttons
+  padding-top: 1em
+  margin-top: 2em
+  margin-bottom: 0
+  text-align: right
+  border-top: 1px dotted #ccc
+  input
+    font-size: 1.25em
+    padding: 0.1em 0.5em
+    margin-left: 0.5em
+
+//
+// QUICK SEARCH FORM
+//
+
+// the old one
+form.minisearch
+  float: right
+  text-align: right
+  color= !banner_search_fg_color
+  fieldset
+    float: right
+    padding= !banner_search_padding
+    border= !banner_search_border 
+    background-color= !banner_search_bg_color
+  .minisearch_text
+    background-color= !banner_search_bg_color
+    border: none
+    color= !banner_search_text_color
+    width: 13em
+  .minisearch_submit
+    display: inline
+    border: 0
+    background= !banner_search_img "no-repeat 0% 50%"
+    vertical-align: middle
+    padding-left: 16px
+    color= !banner_search_fg_color
+
+// the new one
+form.mini_search
+  table
+    padding= !banner_search_padding
+    border= !banner_search_border 
+    //background-color= !banner_search_bg_color
+    background-color: white
+  .mini_search_submit
+    background= "white" !banner_search_img "no-repeat 0% 50%"
+    border: 0
+    width: 20px
+  .mini_search_text
+    background-color: white
+    border: 0
+
+
+

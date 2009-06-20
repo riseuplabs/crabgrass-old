@@ -7,7 +7,9 @@ module AuthenticatedSystem
 
   def load_user(id)
     update_last_seen_at(id)
-    User.find_by_id(id)
+    user = User.find_by_id(id)
+    user.current_site = current_site if user
+    return user
   end
   
   # Returns true or false if the user is logged in.
@@ -80,23 +82,18 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      if logged_in?
-        flash_message :title => :permission_denied.t,
-          :error => :permission_denied_description.t
-      else
-        flash_message :title => :login_required.t,
-          :success => :login_required_description.t
-      end
-
       respond_to do |format|
         # rails defaults to first format if params[:format] is not set
         format.html do
+          flash_auth_error(:later)
           redirect_to :controller => '/account', :action => 'login',
             :redirect => request.request_uri
         end
-        format.js do 
+        format.js do
+          flash_auth_error(:now)
           render :update do |page|
             page.replace_html 'message', display_messages
+            page << 'window.location.hash = "message"'
           end
         end
         format.xml do
@@ -143,11 +140,28 @@ module AuthenticatedSystem
     end
 
   private
-    @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
-    # gets BASIC auth info
-    def get_auth_data
-      auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
-      auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
-      return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
+
+  @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
+  # gets BASIC auth info
+  def get_auth_data
+    auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+    auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
+    return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
+  end
+
+
+  def flash_auth_error(mode)
+    if mode == :now
+      flsh = flash.now
+    else
+      flsh = flash
     end
+
+    if logged_in?
+      add_flash_message(flsh, :title => "Permission Denied"[:alert_permission_denied], :error => 'You do not have sufficient permission to perform that action.'[:permission_denied_description])
+    else
+      add_flash_message(flsh, :title => 'Login Required'[:login_required], :success => 'Please login to perform that action.'[:login_required_description])
+    end
+  end
+
 end

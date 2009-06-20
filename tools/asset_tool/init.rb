@@ -5,10 +5,8 @@ PageClassRegistrar.add(
   :controller => 'asset_page',
   :model => 'Asset',
   :icon => 'page_package',
-  :class_display_name => 'file',
-  :class_description => :file_class_description,
-  :class_group => 'asset', 
-  :order => 20
+  :class_group => ['media', 'media:image', 'media:audio', 'media:document'],
+  :order => 10
 )
 
 #self.override_views = true

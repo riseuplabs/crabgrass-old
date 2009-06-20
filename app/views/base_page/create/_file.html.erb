@@ -1,4 +1,8 @@
-<tr>
-  <td class='label'><%= 'File'[:file] %></td>
-  <td><%= file_field 'asset', 'uploaded_data', :size => 38 %></td>
-</tr>
+<%
+  form.row do |r|
+    r.label 'File'[:file]
+    r.input file_field('asset', 'uploaded_data', :size => 29)
+    r.info help(:upload_file)
+  end
+%>
+

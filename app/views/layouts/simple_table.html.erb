@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir="<%= language_direction %>" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" >
+<head>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+  <%= favicon_link %>
+  <title><%=h title_from_context %></title>
+  <!-- begin styling -->
+  <%= crabgrass_stylesheets %>
+  <!-- end styling -->
+  <!-- begin scripts -->
+  <%= crabgrass_javascripts %>
+  <!-- end scripts -->
+  <%= call_hook :html_head %>
+  <%= yield :html_head %>
+</head>
+
+<body class="<%= language_direction %>">
+
+<div id='header'>
+  <div id='masthead'>
+  <%= custom_masthead_site_title %>
+  <%= call_hook :masthead %>
+<%= render :partial => 'layouts/menu' %>
+  </div>
+	<% if @banner %><div id='banner'><div class='content'><%= @banner %></div></div><% end %>
+</div>
+
+<div id='wrapper'>
+<%= render :partial => 'layouts/messages' %>
+<%= render :file => 'layouts/simple_table/'+type_of_column_layout %>
+</div>
+
+<div id='footer'><div class='content'>
+  <%= render :partial => 'layouts/footer' %>
+  <%= call_hook :footer_content %>
+</div></div>
+
+<div id='popup_holder'></div>
+
+</body>
+</html>
+

@@ -10,7 +10,7 @@
 </tr>
 <tr>
   <td class='left'>
-    <% form_for :user do |f| -%>
+    <% form_for(:user, :html => {:id => 'signup_form'}) do |f| -%>
 
       <p>
         <label for="login"><%= 'Your login name'[:signup_login_name] %> </label><br/>
@@ -29,26 +29,14 @@
         <%= f.password_field :password_confirmation %>
       </p>
 
-      <div class='p'>
-      <%= "Password Strength"[:signup_password_strength] %>:
-      <div class="pw_meter">
-        <div id="pw_bar">
-        </div>
-      </div>
-      <%= observe_field('user_password', :function => "set_pw_bar(value, #{MIN_PASSWORD_STRENGTH});", :frequency => 0.25) %>
-      <span id='pw_time_to_crack' style='display:none'><%= "(takes {time} to crack)"[:signup_time_to_crack_password, {:time => "<span id='pw_time'>??</span>"}] %>
-</span>
-      <%- %w(date_centuries date_years date_months date_weeks date_days date_hours date_minutes date_seconds).each do |time| -%>
-        <%=  hidden_field_tag(time, time.t) %>
-      <%- end -%>
-      </div>
+      <%= call_hook :signup_form_password %>
 
       <%= render :partial => 'signup_agreement_checkbox' %>
 
       <p>
         <label for="email"><%= "Your Email"[:signup_email] %></label><br/>
         <%= f.text_field :email%>
-        <%- unless Crabgrass::Config.require_user_email -%>
+        <%- unless current_site.require_user_email -%>
         <br />
         <i><%= "Optional: used if you forget your password"[:signup_email_info] %></i>
         <%- end -%>

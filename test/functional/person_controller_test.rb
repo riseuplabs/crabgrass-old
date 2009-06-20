@@ -5,7 +5,7 @@ require 'person_controller'
 class PersonController; def rescue_action(e) raise e end; end
 
 class PersonControllerTest < Test::Unit::TestCase
-  fixtures :users, :pages
+  fixtures :users, :pages, :sites, :profiles
   
   def setup
     @controller = PersonController.new
@@ -29,8 +29,10 @@ class PersonControllerTest < Test::Unit::TestCase
   end
 
   def test_search_not_logged_in
+    # note: if yellow doesn't have a public profile, you will get weird results.
     get :search, :id => users(:yellow).login
     assert_response :success
+    assert_not_nil assigns(:pages)
     assert_nil assigns(:pages).find { |p| !p.public? }
   end
 

@@ -1,7 +1,0 @@
-<% @title_box = content_tag :h1, :networks.t -%>
-
-<%= letter_pagination_links({:controller => 'networks', :action => 'list'}, :available_letters => @pagination_letters) %>
-
-<%= render :partial => 'group', :collection => @networks %>
-
-<br style='clear:both' />

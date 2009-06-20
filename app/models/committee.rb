@@ -1,5 +1,13 @@
 class Committee < Group
+  before_destroy :eliminate_councilship
   
+  def eliminate_councilship
+    if g = Group.find(:first, :conditions => { :council_id => self.id })
+      g.council_id = nil
+      g.save!
+    end
+  end
+
   # NAMING
   # the name of a committee includes the name of the parent, 
   # so the committee names are unique. however, for display purposes
@@ -16,12 +24,13 @@ class Committee < Group
   
   # what we show to the user
   def display_name
-    read_attribute(:display_name) || short_name
+    if read_attribute(:full_name).any?
+      read_attribute(:full_name)
+    else
+      short_name
+    end
   end
 
-  def display_name=(name)
-    write_attribute(:display_name, name)
-  end
   #has_many :delegations, :dependent => :destroy
   #has_many :groups, :through => :delegations
   #def group()
@@ -58,19 +67,22 @@ class Committee < Group
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
     elsif access == :view
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
 
-
-  ####################################################################
+  # DEPRECATED
+  # returns true if self is part of given network
+  def belongs_to_network?(network)
+    self.parent.networks.include?(network)
+  end
+  
+  ##
   ## relationships to users
-  def may_be_pestered_by?(user)
-    return true if user.member_of?(self)
-    return true if parent and parent.publicly_visible_committees
-    return false
+  ##
+
+  def may_be_pestered_by!(user)
+    super and parent.profiles.visible_by(user).may_see_committees?
   end
   
 end

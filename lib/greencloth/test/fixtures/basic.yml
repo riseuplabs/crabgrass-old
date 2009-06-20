@@ -1,0 +1,541 @@
+---
+name: headers
+in: "header one\n=====\nheader two\n----"
+out: "<h1 class=\"first\">header one</h1>\n<h2>header two</h2>"
+---
+name: headers
+in: "la la la\n\nheader one\n=====\nheader two\n----\nla la la"
+out: "<p>la la la</p>\n<h1 class=\"first\">header one</h1>\n<h2>header two</h2>\n<p>la la la</p>"
+--- 
+name: paragraphs
+desc: Textile looks for paragraphs in your text.  Paragraphs are separated by one blank line. Every paragraph is translated as an HTML paragraph.
+in: |-
+  A single paragraph.
+  
+  Followed by another.
+out: |-
+  <p>A single paragraph.</p>
+  <p>Followed by another.</p>
+---
+name: block containing block start
+in: |-
+  I saw a ship. It ate my elephant.
+out: |-
+  <p>I saw a ship. It ate my elephant.</p>
+---
+name: extended block containing block start
+in: |-
+  p.. I saw a ship. It ate my elephant.
+  
+  When the elephant comes to take a p. you...
+out: |-
+  <p>I saw a ship. It ate my elephant.</p>
+  <p>When the elephant comes to take a p. you&#8230;</p>
+---
+name: blockquote containing block start
+in: |-
+  bq. I saw a ship. It ate my elephant.
+out: |-
+  <blockquote>
+  <p>I saw a ship. It ate my elephant.</p>
+  </blockquote>
+---
+name: extended blockquote containing block start
+in: |-
+  bq.. I saw a ship. It ate my elephant.
+
+  When the elephant comes to take a p. you...
+out: |-
+  <blockquote>
+  <p>I saw a ship. It ate my elephant.</p>
+  <p>When the elephant comes to take a p. you&#8230;</p>
+  </blockquote>
+--- 
+name: notextile block containing block start
+in: |-
+  notextile. I saw a ship. It ate my elephant.
+out: |-
+  I saw a ship. It ate my elephant.
+valid_out: false
+---
+name: extended notextile block containing block start
+in: |-
+  notextile.. I saw a ship. It ate my elephant.
+
+  When the elephant comes to take a p. you...
+out: |-
+  I saw a ship. It ate my elephant.
+  
+  When the elephant comes to take a p. you...
+valid_out: false
+--- 
+name: pre block containing block start
+in: |-
+  pre. I saw a ship. It ate my elephant.
+out: |-
+  <pre>I saw a ship. It ate my elephant.</pre>
+---
+name: extended pre block containing block start
+in: |-
+  pre.. I saw a ship. It ate my elephant.
+
+  When the elephant comes to take a p. you...
+out: |-
+  <pre>I saw a ship. It ate my elephant.</pre>
+
+  <pre>When the elephant comes to take a p. you&#8230;</pre>
+  --- 
+name: html tags
+desc: You can certainly use HTML tags inside your Textile documents.  HTML will only be escaped if it&#8217;s found in a <code>pre</code> or <code>code</code> block.
+in: |-
+  I am very serious.
+  
+  <pre>
+    I am very serious.
+  </pre>
+out: |-
+  <p>I am very serious.</p>
+
+  <pre>  I am very serious.
+  </pre>
+--- 
+name: line breaks
+desc: Line breaks are converted to HTML breaks.
+in: |-
+  I spoke.
+  And none replied.
+out: |-
+  <p>I spoke.<br />
+  And none replied.</p>
+html_no_breaks: |-
+  <p>I spoke.
+  And none replied.</p>
+lite_mode_out: |-
+  I spoke.<br />
+  And none replied.
+--- 
+name: curly quotes
+desc: Single- and double-quotes around words or phrases are converted to curly quotations, much easier on the eye.
+in: "\"Observe!\""
+out: <p>&#8220;Observe!&#8221;</p>
+--- 
+name: double hyphens
+desc: Double hyphens are replaced with an em-dash.
+in: Observe--very nice!
+out: <p>Observe&#8212;very nice!</p>
+latex: "Observe---very nice!\n\n"
+--- 
+name: double hyphens with spaces
+desc: Double hyphens are replaced with an em-dash and surrounding spaces are preserved.
+in: Observe -- very nice!
+out: <p>Observe &#8212; very nice!</p>
+latex: "Observe --- very nice!\n\n"
+--- 
+name: parenthetical phrase set off with em dashes
+desc: Sentences with two em dashes should not turn them into strikethroughs
+in: An emdash indicates a parenthetical thought--like this one--which is set apart from the rest of a sentence.
+out: "<p>An emdash indicates a parenthetical thought&#8212;like this one&#8212;which is set apart from the rest of a sentence.</p>"
+latex: "An emdash indicates a parenthetical thought---like this one---which is set apart from the rest of a sentence.\n\n"
+---
+name: parenthetical phrase set off with em dashes surrounded by spaces
+desc: Sentences with two em dashes should not turn them into strikethroughs
+in: An emdash indicates a parenthetical thought -- like this one -- which is set apart from the rest of a sentence.
+out: "<p>An emdash indicates a parenthetical thought &#8212; like this one &#8212; which is set apart from the rest of a sentence.</p>"
+latex: "An emdash indicates a parenthetical thought --- like this one --- which is set apart from the rest of a sentence.\n\n"
+---
+name: single hyphens with spaces
+desc: Single hyphens are replaced with en-dashes if they are surrounded by spaces.
+in: Observe - tiny and brief.
+out: <p>Observe &#8211; tiny and brief.</p>
+latex: "Observe--tiny and brief.\n\n"
+--- 
+name: midword hyphens 
+desc: Single hyphens are left alone if not surrounded by spaces.
+in: Observe the nicely-done hyphen.
+out: <p>Observe the nicely-done hyphen.</p>
+--- 
+name: ellipses
+desc: Triplets of periods become an ellipsis.
+in: Observe...
+out: <p>Observe&#8230;</p>
+lite_mode_out: Observe&#8230;
+--- 
+name: dimension sign
+desc: The letter 'x' becomes a dimension sign when used between digits.
+in: "Observe: 2x3."
+out: "<p>Observe: 2&#215;3.</p>"
+--- 
+name: dimension sign with space after
+in: "The room is 2x3 inches big."
+out: "<p>The room is 2&#215;3 inches big.</p>"
+--- 
+name: dimension sign with spaces
+in: "Observe: 2 x 4."
+out: "<p>Observe: 2 &#215; 4.</p>"
+--- 
+name: dimension signs chained
+in: "Observe: 2x3x4."
+out: "<p>Observe: 2&#215;3&#215;4.</p>"
+lite_mode_out: "Observe: 2&#215;3&#215;4."
+--- 
+name: dimension signs with double primes
+in: 'My mouse: 2.5" x 4".'
+out: '<p>My mouse: 2.5&#8243; &#215; 4&#8243;.</p>'
+--- 
+name: dimension signs with single primes
+in: "My office: 5' x 4.5'."
+out: "<p>My office: 5&#8242; &#215; 4.5&#8242;.</p>"
+--- 
+name: trademark and copyright
+desc: Conversion of trademark and copyright symbols.
+in: one(TM), two(R), three(C).
+out: <p>one&#8482;, two&#174;, three&#169;.</p>
+lite_mode_out: one&#8482;, two&#174;, three&#169;.
+--- 
+name: headers
+desc: To make an entire paragraph into a Header, place “h<em>n</em>.” at its beginning, where <em>n</em> is a number from 1-6.
+in: h3. Header 3
+out: <h3>Header 3</h3>
+--- 
+name: blockquote
+desc: To make an entire paragraph into a block quotation, place “bq.” before it.
+in: |-
+  Any old text
+  
+  bq. A block quotation.
+  
+  Any old text
+out: |-
+  <p>Any old text</p>
+  <blockquote>
+  <p>A block quotation.</p>
+  </blockquote>
+  <p>Any old text</p>
+--- 
+name: em
+desc: Emphasis to text is added by surrounding a phrase with underscores.  In HTML, this often appears as <em>italics</em>.
+in: I _believe_ every word.
+out: <p>I <em>believe</em> every word.</p>
+lite_mode_out: "I <em>believe</em> every word."
+--- 
+name: strong
+desc: Strength can be give to text by surrounding with asterisks.  In HTML, this strength appears as <strong>bold</strong>.
+in: And then? She *fell*!
+out: <p>And then? She <strong>fell</strong>!</p>
+lite_mode_out: "And then? She <strong>fell</strong>!"
+--- 
+name: force bold italics
+desc: Both italics and bold can be forced by doubling the underscores or asterisks.
+in: |-
+  I __know__.
+  I **really** __know__.
+out: |-
+  <p>I <i>know</i>.<br />
+  I <b>really</b> <i>know</i>.</p>
+--- 
+name: citation
+desc: Use double question marks to indicate <em>citation</em>.  The title of a book, for instance.
+in: ??Cat's Cradle?? by Vonnegut
+out: <p><cite>Cat&#8217;s Cradle</cite> by Vonnegut</p>
+--- 
+name: code phrases
+desc: Code phrases can be surrounded by at-symbols.
+in: Convert with @r.to_html@
+out: <p>Convert with <code>r.to_html</code></p>
+lite_mode_out: Convert with <code>r.to_html</code>
+---
+name: code phrases not created with multiple email addresses
+in: Please email why@domain.com or jason@domain.com.
+out: <p>Please email why@domain.com or jason@domain.com.</p>
+--- 
+name: del
+desc: To indicate a passage which has been deleted, surround the passage with hypens.
+in: I'm -sure- not sure.
+out: <p>I&#8217;m <del>sure</del> not sure.</p>
+--- 
+name: ins
+desc: Pluses around a passage indicate its insertion.
+in: You are a +pleasant+ child.
+out: <p>You are a <ins>pleasant</ins> child.</p>
+--- 
+name: superscript
+desc: To superscript a phrase, surround with carets.
+in: a ^2^ + b ^2^ = c ^2^
+out: <p>a <sup>2</sup> + b <sup>2</sup> = c <sup>2</sup></p>
+--- 
+name: subscript
+desc: To subscript, surround with tildes.
+in: log ~2~ x
+out: <p>log <sub>2</sub> x</p>
+--- 
+name: span
+desc: Lastly, if you find yourself needing to customize the style of a passage, use percent symbols to translate the passage as an HTML span.
+in: I'm %unaware% of most soft drinks.
+out: <p>I&#8217;m <span>unaware</span> of most soft drinks.</p>
+--- 
+name: style span
+desc: This way, you can apply style settings, as described in the next section to arbitrary phrases.
+in: |-
+  I'm %{color:red}unaware%
+  of most soft drinks.
+out: |-
+  <p>I&#8217;m <span style="color:red;">unaware</span><br />
+  of most soft drinks.</p>
+lite_mode_out: |-
+  I&#8217;m <span style="color:red;">unaware</span><br />
+  of most soft drinks.
+--- 
+name: css class
+desc: A block can be tagged with a CSS class by circling the class in parentheses and placing it just before the period which marks the block.
+in: p(example1). An example
+out: <p class="example1">An example</p>
+--- 
+name: css style
+desc: Style settings can be provided directly by surrounding them in curly braces.
+in: p{color:blue;margin:30px}. Spacey blue
+out: <p style="color:blue;margin:30px;">Spacey blue</p>
+--- 
+name: align justified
+desc: Text inside blocks can be aligned in four basic ways.
+in: p<>. justified
+out: <p style="text-align:justify;">justified</p>
+--- 
+name: indentation
+desc: Indentation can also be specified by provide a single left paren for every 1em to the left.  A single right paren for every 1em to the right.
+in: p))). right ident 3em
+out: <p style="padding-right:3em;">right ident 3em</p>
+--- 
+name: indentation and alignment
+desc: Identation may be coupled with alignment.
+in: h2()>. Bingo.
+out: <h2 style="padding-left:1em;padding-right:1em;text-align:right;" class="first">Bingo.</h2>
+--- 
+name: numbered list
+desc: To make a numbered list, place each item in its own paragraph, preceded by &#8221;#&#8221;.
+in: |-
+  # A first item
+  # A second item
+  # A third
+out: |-
+  <ol>
+  	<li>A first item</li>
+  	<li>A second item</li>
+  	<li>A third</li>
+  </ol>
+--- 
+name: nested numbered lists
+desc: These lists may be nested by increasing the number of pound symbols preceding child entries.
+in: |-
+  # Fuel could be:
+  ## Coal
+  ## Gasoline
+  ## Electricity
+  # Humans need only:
+  ## Water
+  ## Protein
+out: |-
+  <ol>
+  	<li>Fuel could be:
+  	<ol>
+  		<li>Coal</li>
+  		<li>Gasoline</li>
+  		<li>Electricity</li>
+  	</ol></li>
+  	<li>Humans need only:
+  	<ol>
+  		<li>Water</li>
+  		<li>Protein</li>
+  	</ol></li>
+  </ol>
+--- 
+name: bulleted list
+desc: Bulleted lists use an asterisk in place of the pound.
+in: |-
+  * A first item
+  * A second item
+  * A third
+out: |-
+  <ul>
+  	<li>A first item</li>
+  	<li>A second item</li>
+  	<li>A third</li>
+  </ul>
+--- 
+name: nested bulleted lists
+desc: These lists may be nested in like manner.
+in: |-
+  * Fuel could be:
+  ** Coal
+  ** Gasoline
+  ** Electricity
+  * Humans need only:
+  ** Water
+  ** Protein
+out: |-
+  <ul>
+  	<li>Fuel could be:
+  	<ul>
+  		<li>Coal</li>
+  		<li>Gasoline</li>
+  		<li>Electricity</li>
+  	</ul></li>
+  	<li>Humans need only:
+  	<ul>
+  		<li>Water</li>
+  		<li>Protein</li>
+  	</ul></li>
+  </ul>
+--- 
+name: links
+desc: Basic links are comprised of a phrase which is linked to a <acronym title="Universal Resource Locator">URL</acronym>.  Place the descriptive phrase in quotation marks.  Follow it immediately by a colon and the URL.
+in: I searched [Google -> http://google.com].
+out: <p>I searched <a href="http://google.com">Google</a>.</p>
+lite_mode_out: I searched <a href="http://google.com">Google</a>.
+--- 
+name: image
+desc: You can embed an image in your Textile document by surrounding its URL with exclamation marks.
+in: "!http://hobix.com/sample.jpg!"
+out: <p><img src="http://hobix.com/sample.jpg" alt="" /></p>
+lite_mode_out: <img src="http://hobix.com/sample.jpg" alt="" />
+--- 
+name: image title
+desc: A title for the image can also be provided in parens, just before the closing exclamation.
+in: "!openwindow1.gif(Bunny.)!"
+out: <p><img src="openwindow1.gif" title="Bunny." alt="Bunny." /></p>
+--- 
+name: image links
+desc: Links can be attached to images with a colon.
+in: "!openwindow1.gif!:http://hobix.com/"
+out: <p><a href="http://hobix.com/"><img src="openwindow1.gif" alt="" /></a></p>
+--- 
+name: image alignments
+desc: Alignments can be applied as well to images.
+in: |-
+  !>obake.gif!
+  
+  And others sat all round the small
+  machine and paid it to sing to them.
+out: |-
+  <p style="float:right;" class="right"><img src="obake.gif" alt="" /></p>
+  <p>And others sat all round the small<br />
+  machine and paid it to sing to them.</p>
+--- 
+name: acronym definitions
+desc: Definitions for acronyms can be provided by following an acronym with its definition in parens.
+in: We use CSS(Cascading Style Sheets).
+out: <p>We use <acronym title="Cascading Style Sheets"><span class="caps">CSS</span></acronym>.</p>
+lite_mode_out: We use <acronym title="Cascading Style Sheets"><span class="caps">CSS</span></acronym>.
+no_span_caps_out: <p>We use <acronym title="Cascading Style Sheets">CSS</acronym>.</p>
+---
+name: extended block followed by pre block
+in: |-
+  div.. Just a test.
+  
+  Second div.
+  
+  pre. A pre block ends it.
+out: |-
+  <div>Just a test.</div>
+  <div>Second div.</div>
+  <pre>A pre block ends it.</pre>
+---
+name: extended block followed by blockquote
+in: |-
+  div.. Just a test.
+
+  Second div.
+
+  bq. A blockquote ends it.
+out: |-
+  <div>Just a test.</div>
+  <div>Second div.</div>
+  <blockquote>
+  <p>A blockquote ends it.</p>
+  </blockquote>
+---
+name: extended block followed by block code
+in: |-
+  div.. Just a test.
+
+  Second div.
+
+  bc. A blockcode ends it.
+out: |-
+  <div>Just a test.</div>
+  <div>Second div.</div>
+  <pre><code>A blockcode ends it.</code></pre>
+---
+name: extended block followed by notextile block
+in: |-
+  div.. Just a test.
+
+  Second div.
+
+  notextile. A notextile block ends it.
+out: |-
+  <div>Just a test.</div>
+  <div>Second div.</div>
+  A notextile block ends it.
+valid_out: false
+---
+name: simple parentheses
+in: |-
+  before (in parens) after
+out: |-
+  <p>before (in parens) after</p>
+---
+name: parentheses in underscores
+in: |-
+  before _(in parens)_ after
+out: |-
+  <p>before <em>(in parens)</em> after</p>
+---
+name: parentheses in asterisks
+in: |-
+  before *(in parens)* after
+out: |-
+  <p>before <strong>(in parens)</strong> after</p>
+---
+name: parentheses in underscores in quotes
+in: |-
+  "before _(in parens)_ after"
+out: |-
+  <p>&#8220;before <em>(in parens)</em> after&#8221;</p>
+---
+name: underscores in parentheses
+in: |-
+   one _two three_ (four _five six_) seven
+out: |-
+  <p>one <em>two three</em> (four <em>five six</em>) seven</p>
+---
+name: underscores in parentheses in quotes
+in: |-
+   "one _two three_ (four _five six_) seven"
+out: |-
+  <p>&#8220;one <em>two three</em> (four <em>five six</em>) seven&#8221;</p>
+---
+name: underscores in parentheses 2
+in: |-
+   one (two _three four_) five
+out: |-
+  <p>one (two <em>three four</em>) five</p>
+---
+name: underscores in parentheses in quotes 2
+in: |-
+   "one (two _three four_) five"
+out: |-
+  <p>&#8220;one (two <em>three four</em>) five&#8221;</p>
+
+
+# ids are disabled in greencloth
+#--- 
+#name: css id
+#desc: An element ID can be given by prefixing the ID with a pound symbol and using it in place of the class.
+#in: p(#big-red). Red here
+#out: <p id="big-red">Red here</p>
+#--- 
+#name: class and id combined
+#desc: Class and ID can be combined by placing the class first.
+#in: p(example1#big-red2). Red here
+#out: <p class="example1" id="big-red2">Red here</p>
+

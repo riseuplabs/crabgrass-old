@@ -117,7 +117,7 @@ class CommitteeTest < Test::Unit::TestCase
   end
 
   def test_cant_pester_private_committee
-    g = Group.create :name => 'riseup', :publicly_visible_committees => false
+    g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 
@@ -129,8 +129,8 @@ class CommitteeTest < Test::Unit::TestCase
 
   def test_can_pester_public_committee
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = true
-    g.publicly_visible_committees = true
+    g.profiles.public.update_attribute(:may_see, true)
+    g.profiles.public.update_attribute(:may_see_committees, true)
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 
@@ -139,5 +139,19 @@ class CommitteeTest < Test::Unit::TestCase
     assert c.may_be_pestered_by?(u), 'should be able to be pestered by user'
     assert u.may_pester?(c), 'should be able to pester committee of group with public committees'
   end
+
+  def test_add_council
+    network = groups(:cnt)
+    council = Council.create!(:name => 'council')
+    network.add_committee!(council)
+    network.reload
+    council.reload
+    assert_equal 'Network', network.type
+    assert_equal 'Council', council.type
+    assert_equal council.id, network.council_id
+    assert_equal council, network.council
+    assert_equal network.id, council.parent_id
+  end
+
 end
 

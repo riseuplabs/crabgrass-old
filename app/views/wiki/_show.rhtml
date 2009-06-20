@@ -1,3 +1,4 @@
+<% wiki = @wiki if wiki.nil? %>
 <div id='wiki-area'>
-<%= render :partial => 'wiki/show_wiki' %>
+<%= render :partial => 'wiki/show_wiki', :locals => {:wiki => wiki} %>
 </div>

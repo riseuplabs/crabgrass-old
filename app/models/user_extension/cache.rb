@@ -111,7 +111,7 @@ module UserExtension
         :friend_id_cache => friend,
         :foe_id_cache    => foe
     end
-      
+    
     # include direct memberships, committees, and networks
     def get_group_ids
       if self.id
@@ -127,7 +127,7 @@ module UserExtension
         committee = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
           WHERE groups.parent_id IN (#{direct.join(',')})
-          AND groups.is_council = 0
+          AND groups.type = 'Committee'
         ])
         network = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
@@ -144,7 +144,7 @@ module UserExtension
           committee += Group.connection.select_values(%Q[
             SELECT groups.id FROM groups
             WHERE groups.parent_id IN (#{network.join(',')})
-            AND groups.is_council = 0
+            AND groups.type = 'Committee'
           ])
         end
         admin_for = Group.connection.select_values(%Q[
@@ -165,6 +165,12 @@ module UserExtension
 
     def get_peer_ids(group_ids)
       return [] unless self.id
+      # site networks are broad umbrella networks every user of the
+      # site is a member of - thus they should not be considered for
+      # determining who is a peer.
+      ## TODO: exclude all networks
+      site_networks = Site.find(:all).collect{|s| s.network_id}
+      group_ids -= site_networks
       User.connection.select_values( %Q[
         SELECT DISTINCT users.id FROM users
         INNER JOIN memberships ON users.id = memberships.user_id

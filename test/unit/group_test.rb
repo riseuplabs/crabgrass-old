@@ -46,7 +46,7 @@ class GroupTest < Test::Unit::TestCase
 
   def test_cant_pester_private_group
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = false
+    g.profiles.public.update_attribute(:may_see, false)
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
@@ -55,7 +55,7 @@ class GroupTest < Test::Unit::TestCase
 
   def test_can_pester_public_group
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = true
+    g.profiles.public.update_attribute(:may_see, true)
     u = User.create :login => 'user'
     
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
@@ -105,14 +105,17 @@ class GroupTest < Test::Unit::TestCase
   end
 
   def test_name_change
-    group = groups(:rainbow)
-    user = users(:blue)
+    group = groups(:true_levellers)
+    user = users(:gerrard)
 
     version = user.version
 
-    group.name = 'colors'
+    group.name = 'diggers'
     group.save!
-   
+
+    # note: if the group has a committee, and the user is a member of that
+    # committee, then the user's version will increment by more than one, 
+    # since the committees also experience a name change.
     assert_equal version+1, user.reload.version, 'user version should increment on group name change'
   end
   
@@ -133,6 +136,62 @@ class GroupTest < Test::Unit::TestCase
 
     # nothing matches
     assert Group.alphabetized('z').empty?
+  end
+
+  def test_destroy
+    g = Group.create :name => 'fruits'
+    g.add_user! users(:blue)
+    g.add_user! users(:red)
+
+    g.reload
+    g.destroy
+    # memberships should be destroyed
+    assert_nil Membership.find_by_id(g.memberships[0].id), "first membership should be destroyed"
+    assert_nil Membership.find_by_id(g.memberships[1].id), "second membership should be destroyed"
+
+    red = users(:red)
+    assert_nil GroupLostUserActivity.for_dashboard(red).find(:first), "there should be no user left group message"
+
+    destroyed_act = GroupDestroyedActivity.for_dashboard(red).unique.find(:first)
+    assert destroyed_act, "there should exist a group destroyed activity message"
+
+    assert_equal g.name, destroyed_act.groupname, "the activity should have the correct group name"
+  end
+
+  def test_avatar
+    group = nil
+    assert_difference 'Avatar.count' do
+      group = Group.create(:name => 'groupwithavatar', :avatar => {
+        :image_file => upload_avatar('image.png')
+      })
+    end
+    group.reload
+    assert group.avatar.has_saved_image?
+    #assert_equal 880, group.avatar.image_file_data.size
+    # ^^ alas, this produces different results on different machines :(
+    avatar_id = group.avatar.id
+
+    group.avatar.image_file = upload_avatar('photo.jpg')
+    group.avatar.save!
+    group.save!
+    group.reload
+    assert group.avatar.has_saved_image?
+    assert_equal avatar_id, group.avatar.id
+    #assert_equal 18408, group.avatar.image_file_data.size
+
+    assert_no_difference 'Avatar.count' do 
+      group.avatar = {:image_file => upload_avatar('bee.jpg')}
+      group.save!
+    end
+    group.reload
+    assert group.avatar.has_saved_image?
+    assert_equal avatar_id, group.avatar.id
+    #assert_equal 19987, group.avatar.image_file_data.size
+
+    assert_difference 'Avatar.count', -1 do
+      group.destroy
+    end
+
   end
 
 end

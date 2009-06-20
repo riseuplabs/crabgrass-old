@@ -22,13 +22,13 @@ module PathFinder::Mysql::BuilderFilters
     Time.zone.local_to_utc(time)
   end
 
-  def filter_starts
-    @date_field = "starts_at"
-  end
-
-  def filter_created
-    @date_field = "created_at"
-  end
+  # def filter_starts
+  #   @date_field = "starts_at"
+  # end
+  # 
+  # def filter_created
+  #   @date_field = "created_at"
+  # end
 
   def filter_updated
     @date_field = "updated_at"
@@ -64,11 +64,11 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'pages.updated_at > pages.created_at'
   end
  
-  def filter_upcoming
-    @conditions << 'pages.starts_at > ?'
-    @values << Time.now
-    @order << 'pages.starts_at DESC' if @order
-  end
+  # def filter_upcoming
+  #   @conditions << 'pages.starts_at > ?'
+  #   @values << Time.now
+  #   @order << 'pages.starts_at DESC' if @order
+  # end
   
   def filter_ago(near,far)
     near = near.to_i.days.ago
@@ -142,10 +142,37 @@ module PathFinder::Mysql::BuilderFilters
   ### OTHER PAGE COLUMNS
   #++
 
-  def filter_type(page_class_group)
-    page_class_names = Page.class_group_to_class_names(page_class_group)
-    @conditions << 'pages.type IN (?)'
-    @values << page_class_names
+  # filter on page type or types, and maybe even media flag too!
+  # eg values:
+  # media-image+file, media-image+gallery, file,
+  # text+wiki, text, wiki
+  def filter_type(arg)
+    if arg =~ /[\+\ ]/
+      page_group, page_type = arg.split(/[\+\ ]/)
+    elsif Page.is_page_group?(arg)
+      page_group = arg
+    elsif Page.is_page_type?(arg)
+      page_type = arg
+    end
+
+    if page_group =~ /^media-(image|audio|video|document)$/
+      media_type = page_group.sub(/^media-/,'')
+      @conditions << "pages.is_#{media_type} = ?" # only safe because of regexp in if
+      @values << true
+    end
+
+    if page_type
+      @conditions << 'pages.type = ?'
+      @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
+    elsif page_group
+      @conditions << 'pages.type IN (?)'
+      @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
+    else
+      # we didn't find either a type or a group for arg
+      # just search for arg. this should return an empty set
+      @conditions << 'pages.type = ?'
+      @values <<  arg # example 'bad_page_type'
+    end
   end
 
   def filter_created_by(id)
@@ -234,6 +261,18 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]
     @order << "user_participations.changed_at DESC" if @order
+  end
+
+  def filter_admin(user_id)
+    @conditions << 'user_participations.user_id = ? AND user_participations.access = ?'
+    @values << user_id.to_i
+    @values << ACCESS[:admin]
+  end
+
+  def filter_contributed_group(group_id)
+    @conditions << 'user_participations.user_id IN (?) AND user_participations.changed_at IS NOT NULL'
+    @values << Group.find(group_id).user_ids
+    @order = ["user_participations.changed_at DESC"]
   end
 
 #turning RDoc comments back on. 

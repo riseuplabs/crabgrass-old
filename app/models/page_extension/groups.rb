@@ -1,9 +1,6 @@
-=begin
-
-RELATIONSHIP TO GROUPS
-    
-=end
-
+#
+# Page relationship to Groups
+#
 module PageExtension::Groups
 
   def self.included(base)
@@ -62,9 +59,26 @@ module PageExtension::Groups
   end
 
   # returns all the groups with a particular access level
+  # - use option :all for all the accesslevels
+  # --
+  #   TODO
+  #   what is the purpose of this method? 
+  #
+  #   i think it can be removed.
+  #
+  #   also, page.groups_with_access(:all) will always be equal to page.groups
+  #   groups don't have a group_participation record unless they have been
+  #   granted access (unlike user_participation records)
+  #
+  #   -elijah
+  # --
   def groups_with_access(access)
     group_participations.collect do |gpart|
-      gpart.group if gpart.access == ACCESS[access]
+      if access == :all
+        gpart.group if ACCESS.include?(gpart.access)
+      else  
+        gpart.group if gpart.access == ACCESS[access]
+      end  
     end.compact
   end
 
@@ -74,32 +88,53 @@ module PageExtension::Groups
     # (based on what pages the current_user can see)
     # 
     def month_counts(options)
-      group = options[:group]
-      current_user = options[:current_user]
       field = case options[:field]
         when 'created': 'created_at'
         when 'updated': 'updated_at'
-        when 'starts': 'starts_at'
         else 'error'
-      end
-
-      if current_user and current_user.may?(:edit, group)
-        # current_user can see all the group's pages
-        access_filter = PageTerms.access_filter_for(group)
-      elsif current_user
-        # current_user can see public pages OR pages it has access to.
-        access_filter = "(%s) (%s)" % [PageTerms.access_filter_for(group, :public), PageTerms.access_filter_for(group, current_user)]
-      else
-        # only show public pages
-        access_filter = PageTerms.access_filter_for(group, :public)
       end
 
       sql = "SELECT MONTH(pages.#{field}) AS month, YEAR(pages.#{field}) AS year, count(pages.id) as page_count "
       sql += "FROM pages JOIN page_terms ON pages.id = page_terms.page_id "
-      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) " % access_filter
+      sql += "WHERE MATCH(page_terms.access_ids,page_terms.tags) AGAINST ('%s' IN BOOLEAN MODE) AND page_terms.flow IS NULL " % access_filter(options)
       sql += "GROUP BY year, month ORDER BY year, month"
       Page.connection.select_all(sql)
     end
+
+    def tags_for_group(options)
+      Tag.find_by_sql(%Q[
+        SELECT tags.*, count(name) as count
+        FROM tags
+        INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
+        INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
+        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{access_filter(options)}' IN BOOLEAN MODE) AND page_terms.flow IS NULL
+        GROUP BY name
+        ORDER BY name
+      ])
+    end
+
+
+    def access_filter(options)
+      group = options[:group]
+      current_user = options[:current_user]
+      if current_user and current_user.may?(:edit, group)
+        # current_user can see all the group's pages
+        PageTerms.access_filter_for(group)
+      elsif current_user
+        # current_user can see public pages OR pages it has access to.
+        "(%s) (%s)" % [PageTerms.access_filter_for(group, :public), PageTerms.access_filter_for(group, current_user)]
+      else
+        # only show public pages
+        PageTerms.access_filter_for(group, :public)
+      end
+    end
+   
+    # updates the denormalized copies of group name
+    def change_group_name(group_id, new_name)
+      Page.connection.execute("UPDATE pages SET `group_name` = #{connection.quote(new_name)} WHERE pages.group_id = #{connection.quote(group_id)}")
+      Page.connection.execute "UPDATE pages SET `owner_name` = #{connection.quote(new_name)} WHERE pages.owner_id = #{connection.quote(group_id)} AND pages.owner_type = 'Group'"
+    end
+
   end
 
 end

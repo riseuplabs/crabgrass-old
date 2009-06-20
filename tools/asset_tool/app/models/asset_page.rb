@@ -1,4 +1,6 @@
 class AssetPage < Page
+  include PageExtension::RssData
+  
   def supports_attachments
     false
   end
@@ -49,9 +51,7 @@ class AssetPage < Page
         asset.page_terms_id = terms.id
         asset.save_without_revision!
       end
-      terms.media = asset.media_flag_enums
     end
   end
-
 end
 

@@ -1,10 +1,11 @@
+<%# locals: wiki %>
 <div style='position:relative'>
   <div class='wiki'>
-    <%= @wiki.body_html %>
+    <%= wiki.body_html %>
   </div>
   <div class='edit-tab'>
     <span>
-      <%= wiki_edit_link %>
+      <%= wiki_edit_link(wiki.id) %>
     </span>
   </div>
 </div>

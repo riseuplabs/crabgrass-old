@@ -1,16 +1,13 @@
 require 'cgi'
 
-=begin
-
-These are page related helpers that might be needed anywhere in the code.
-For helpers just for page controllers, see base_page_helper.rb
-
-=end
+# These are page related helpers that might be needed anywhere in the code.
+# For helpers just for page controllers, see base_page_helper.rb
 
 module PageHelper
   
-  ######################################################
+  ##
   ## PAGE URLS
+  ##
 
   #
   # build a url of the form:
@@ -44,13 +41,16 @@ module PageHelper
   end
   
   def page_path(context,name,options)
-    [context, name, options.delete(:action), options.delete(:id)].compact.join('/')
+    # if controller is set, encode it with the action.
+    action = [options.delete(:controller), options.delete(:action)].compact.join('-')
+    [context, name, action, options.delete(:id).to_s].select(&:any?).join('/')
   end
   
   # like page_url, but it returns a direct URL that bypasses the dispatch
   # controller. intended for use with ajax calls. 
   def page_xurl(page,options={})
-    hash = {:page_id => page.id, :id => 0, :action => 'show', :controller => '/' + page.controller}
+    options[:controller] = '/' + [page.controller, options.delete(:controller)].compact.join('_')
+    hash = {:page_id => page.id, :id => 0, :action => 'show'}
     url_for(hash.merge(options))
   end
   
@@ -126,12 +126,13 @@ module PageHelper
   end
 
 
-  ######################################################
+  ##
   ## PAGE LISTINGS AND TABLES
+  ##
 
   SORTABLE_COLUMNS = %w(
-    created_at created_by_login updated_at updated_by_login group_name owner_name 
-    title starts_at posts_count contributors_count stars
+    created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
+    group_name owner_name title posts_count contributors_count stars
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -172,7 +173,6 @@ module PageHelper
   ## used to create the page list headings
 
   def page_path_link(text,path='',image=nil)
-
     hash         = params.dup
     new_path     = parsed_path(path)
     current_path = parsed_path(hash[:path])
@@ -182,7 +182,6 @@ module PageHelper
       # special hack for landing pages using the weird dispatcher route.
       hash = "/%s?path=%s" % [params[:_context], hash[:path].join('/')]
     end
-
     link_to text, hash
   end
 
@@ -197,16 +196,26 @@ module PageHelper
       page_icon(page)
     elsif column == :checkbox
       check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+    elsif column == :admin_checkbox
+      if current_user.may? :admin, page
+        check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+      else
+        "&nbsp"
+      end
     elsif column == :title
       page_list_title(page, column, participation)
     elsif column == :updated_by or column == :updated_by_login
       page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :created_by or column == :created_by_login
       page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
+    elsif column == :deleted_by or column == :deleted_by_login
+      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
     elsif column == :updated_at
       friendly_date(page.updated_at)
     elsif column == :created_at
       friendly_date(page.created_at)
+    elsif column == :deleted_at
+      friendly_date(page.updated_at)
     elsif column == :happens_at
       friendly_date(page.happens_at)
     elsif column == :group or column == :group_name
@@ -225,6 +234,8 @@ module PageHelper
       page_list_owner_with_icon(page)
     elsif column == :last_updated
       page_list_updated_or_created(page)
+    elsif column == :contribution
+      page_list_contribution(page)
     elsif column == :posts
       page.posts_count
     elsif column == :last_post
@@ -253,6 +264,14 @@ module PageHelper
     content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
   end
 
+  def page_list_contribution(page)
+    field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
+    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
+    username = link_to_user(page.updated_by_login)
+    date     = friendly_date(page.send(field))
+    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
+  end
+
   def page_list_title(page, column, participation = nil)
     title = link_to(h(page.title), page_url(page))
     if participation and participation.instance_of? UserParticipation
@@ -272,17 +291,21 @@ module PageHelper
       list_heading 'group'.t, 'group_name', options
     
     # empty <th>s contain an nbsp to prevent collapsing in IE
-    elsif column == :icon or column == :checkbox or column == :discuss
+    elsif column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
       "<th>&nbsp;</th>" 
     
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
       list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
+    elsif column == :deleted_by or column == :deleted_by_login
+      list_heading 'deleted by'[:page_list_heading_deleted_by], 'updated_by_login', options
     elsif column == :updated_at
       list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
     elsif column == :created_at
       list_heading 'created'[:page_list_heading_created], 'created_at', options
+    elsif column == :deleted_at
+      list_heading 'deleted'[:page_list_heading_deleted], 'updated_at', options
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
@@ -297,6 +320,8 @@ module PageHelper
       list_heading "owner"[:page_list_heading_owner], 'owner_name', options
     elsif column == :last_updated
       list_heading "last updated"[:page_list_heading_last_updated], 'updated_at', options
+    elsif column == :contribution
+      list_heading "contribution"[:page_list_heading_contribution], 'updated_at', options
     elsif column
       list_heading column.to_s.t, column.to_s, options
     end
@@ -333,14 +358,15 @@ module PageHelper
     html = "<td class='excerpt', colspan='#{column_size}'>"
     html += "page sent by {user} on {date}"[:page_notice_message, {:user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time])}]
     if notice[:message].any?
-      html += 'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      html += ' '+'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
     end
     html += "</td>"
     content_tag(:tr, html, :class => "page_info")
   end
 
-  ######################################################
+  ##
   ## PAGE MANIPULATION
+  ##
 
   #
   # Often when you run a page search, you will get an array of UserParticipation
@@ -390,17 +416,52 @@ module PageHelper
     return today, yesterday, week, later
   end
 
-  ######################################################
+  ##
   ## FORM HELPERS
+  ##
 
-  ## options for a page type dropdown menu
-  def options_for_select_page_type(default_selected)
-    array = @site.available_page_types.collect do |page_class_string|
+  def display_page_class_grouping(group)
+    "page_group_#{group.gsub(':','_')}".t 
+  end
+  
+  def tree_of_page_types(available_page_types=nil, options={})
+    available_page_types ||= current_site.available_page_types
+    page_groupings = []
+    available_page_types.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      page_group = page_class.class_group.first
-      [page_group.pluralize.t, page_group]
+      next if page_class.internal
+      if options[:simple]
+        page_groupings << page_class.class_group.to_a.first
+      else
+        page_groupings.concat page_class.class_group
+      end
     end
-    options_for_select([['all page types'.t,'']] + array, default_selected)
+    page_groupings.uniq!
+    tree = [] 
+    page_groupings.each do |grouping|
+      entry = {:name => grouping, :display => display_page_class_grouping(grouping),
+         :url => grouping.gsub(':','-')}
+      entry[:pages] = Page.class_group_to_class(grouping).select{ |page_klass|
+       !page_klass.internal && available_page_types.include?(page_klass.full_class_name)
+      }.sort_by{|page_klass| page_klass.order }
+      tree << entry
+    end
+    return tree.sort_by{|entry| PageClassProxy::ORDER.index(entry[:name])||100 }
+  end
+  
+  ## options for a page type dropdown menu for searching
+  def options_for_select_page_type(default_selected=nil)
+    default_selected.sub!(' ', '+') if default_selected
+    menu_items = []
+    tree_of_page_types.each do |grouping|
+      menu_items << [grouping[:display], grouping[:url]]
+      sub_items = grouping[:pages].collect do |page_class|
+         ["#{grouping[:display]} > #{page_class.class_display_name}",
+         "#{grouping[:url]}+#{page_class.url}"]
+       end
+       menu_items.concat sub_items if sub_items.size > 1
+    end
+    options_for_select([['all page types'.t,'']] + menu_items, default_selected)
   end
   
   ## Creates options useable in a select() for the various states
@@ -414,6 +475,55 @@ module PageHelper
     options_for_select(['unread','pending','starred'].to_localized_select, selected)
   end
 
+  # returns option tags usable in a select menu to choose a group from the
+  # groups current_user is a member of or has access to.
+  # accepted options:
+  #  :group -- a group object to make selected
+  #  :include_me -- if true, include option for 'me'
+  def options_for_page_owner(options={})
+    groups = current_user.groups.select { |group|
+      !group.committee?
+    }.sort { |a, b|
+       a.display_name.downcase <=> b.display_name.downcase
+    }
+    html = [] 
+
+    if options[:group]
+      selected_group = options[:group].name
+    elsif params[:group]
+      selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
+    elsif params[:page] and params[:page][:owner]
+      selected_group = params[:page][:owner]
+    else
+      selected_group = nil
+    end
+
+    if !Conf.ensure_page_owner? and options[:include_me]
+      html << content_tag(:option, "None"[:none], :value => "", :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic')
+      selected_group = 'none'
+    end
+
+    if options[:include_me]
+      me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
+      html << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
+    end
+
+    groups.collect do |group|
+      selected = selected_group == group.name ? 'selected' : nil
+      html << content_tag( :option, truncate(group.display_name,40), :value => group.name, :class => 'spaced', :selected => selected )
+      group.committees.each do |committee|
+        selected = selected_group == committee.name ? 'selected' : nil
+        html << content_tag( :option, truncate(committee.display_name,40), :value => committee.name, :class => 'indented', :selected => selected)
+      end
+    end
+
+    html.join("\n")
+  end
+
+  ##
+  ## PAGE CREATION
+  ##
+
   ## Link to the action for the form to create a page of a particular type.
   def create_page_url(page_class=nil, options={})
     if page_class
@@ -423,6 +533,23 @@ module PageHelper
     else
       url_for(options.merge(:controller => '/pages', :action => 'create'))
     end
+  end
+
+  def create_page_link(group=nil)
+    url = {:controller => '/pages', :action => 'create'}
+    if group
+      url[:group] = group.name
+    end
+    #  icon = 'page_add'
+    #  text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
+    #  klass = 'contribute group_contribute'
+    icon = 'plus'
+    text = "Create Page"[:contribute_content_link]
+    klass = 'contribute'
+    content_tag(:div,
+      link_to(text, url, :class => "small_icon #{icon}_16"),
+      :class => klass
+    )
   end
 
 #  def create_page_link(text,options={})

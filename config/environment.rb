@@ -1,11 +1,21 @@
 #
 # THINGS TO CONFIGURE
 # 
-# Hopefully, nothing here needs to be changed. But you should change stuff in:
+# There are three files that need to be configured for crabgrass: 
 # 
+#   * config/secret.txt  (rake make_a_secret)
 #   * config/database.yml
-#   * config/sites.yml
-#   * config/email.yml
+#   * config/crabgrass.[production|development|test].yml
+#
+# Hopefully, nothing in environment.rb will need to be changed.
+#
+# There are many levels of possible defaults for configuration options. 
+# In order of precedence, crabgrass will search:
+# 
+#   (1) the current site
+#   (2) the default site (if a site has default == true)
+#   (3) options configured in the file config/crabgrass.*.yml
+#   (4) last-stop hardcoded defaults in lib/crabgrass/conf.rb
 #
 # RAILS INITIALIZATION PROCESS:
 #
@@ -48,14 +58,18 @@ Rails::Initializer.run do |config|
   ### (2) CONFIG BLOCK
   ###
 
-  config.load_paths += %w(activity assets associations discussion chat observers profile poll task requests).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths += %w(activity assets associations discussion chat observers profile poll task requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths << "#{RAILS_ROOT}/app/permissions"
+
+  Engines.mix_code_from(:permissions)
 
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :contact_observer, :message_page_observer #, :user_relation_observer
+    :group_observer, :contact_observer, :message_page_observer
+    # :user_relation_observer
 
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based
@@ -81,7 +95,7 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = false
 
   # the absolutely required gems
-  config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
+  #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
 
   #config.frameworks += [ :action_web_service]
@@ -90,6 +104,12 @@ Rails::Initializer.run do |config|
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
 
   # See Rails::Configuration for more options
+
+  # we want handle sass templates ourselves
+  # so we must not load the 'plugins/rails.rb' part of Sass
+  module Sass
+    RAILS_LOADED = true
+  end
 
   ###
   ### (3) ENVIRONMENT 
@@ -121,6 +141,7 @@ end
 ###
 ### (7) FINALLY
 ###
+
 #require 'actionwebservice'
 #require RAILS_ROOT+'/vendor/plugins/actionwebservice/lib/actionwebservice'
 
@@ -128,6 +149,8 @@ end
 # Lots of errors if this is enabled:
 ActiveRecord::Base.partial_updates = false
 
-# build an array of PageClassProxy objects
+# build a hash of PageClassProxy objects {'TaskListPage' => <TaskListPageProxy>}
 PAGES = PageClassRegistrar.proxies.dup.freeze
+Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
+
 

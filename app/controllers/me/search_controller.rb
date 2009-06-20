@@ -31,18 +31,8 @@ class Me::SearchController < Me::BaseController
     
   protected
 
-  # it is impossible to see anyone else's me page,
-  # so no authorization is needed.
-  def authorized?
-    return true
-  end
-  
-  def fetch_user
-    @user = current_user
-  end
-  
   def context
-    me_context('large')
+    super
     add_context 'Search'[:me_search_link], url_for(:controller => '/me/search', :action => nil, :path => params[:path])
   end
 
@@ -66,4 +56,3 @@ class Me::SearchController < Me::BaseController
   end
     
 end
-

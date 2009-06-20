@@ -1,15 +1,23 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def link_char(links)
-    if links.first.is_a? Symbol
-      char = links.shift
-      return ' &bull; ' if char == :bullet
-      return ' | '
-    else
-      return ' | '
+  ##
+  ## HTML CONTENT HELPERS
+  ##
+
+  def content_tag_if(tag, content, options={})
+    if content.any?
+      content_tag(tag, content, options)
     end
   end
+
+  def option_empty(label='')
+    %(<option value=''>#{label}</option>)
+  end
+
+  ##
+  ## LINK HELPERS
+  ##
 
   ## makes this: link | link | link
   def link_line(*links)
@@ -21,6 +29,17 @@ module ApplicationHelper
     content_tag(:span, links.compact.join(char), :class => 'link_line')
   end
 
+  ##
+  ## GENERAL UTILITY
+  ##
+
+  # returns the first of the args where any? returns true
+  def first_with_any(*args)
+    for str in args
+      return str if str.any?
+    end
+  end
+  
   ## coverts bytes into something more readable 
   def friendly_size(bytes)
     return unless bytes
@@ -43,10 +62,6 @@ module ApplicationHelper
     session[:logged_in_since] || Time.now
   end
 
-  def option_empty(label='')
-    %(<option value=''>#{label}</option>)
-  end
-
   # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
   # Only need this helper once, it will provide an interface to convert a block into a partial.
   # 1. Capture is a Rails helper which will 'capture' the output of a block into a variable
@@ -56,6 +71,10 @@ module ApplicationHelper
     options.merge!(:body => capture(&block))
     concat(render(:partial => partial_name, :locals => options), block.binding)
   end
+
+  ##
+  ## CRABGRASS SPECIFIC
+  ##
 
   def mini_search_form(options={})
     unless params[:action] == 'search' or params[:controller] =~ /search|inbox/
@@ -83,17 +102,35 @@ module ApplicationHelper
                                     }
   end
 
-  def pagination_links(things, param_name='page')
-    will_paginate things, :param_name => param_name, :renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]
+  # 
+  # Default pagination link options:
+  # 
+  #   :class        => 'pagination',
+  #   :prev_label   => '&laquo; Previous',
+  #   :next_label   => 'Next &raquo;',
+  #   :inner_window => 4, # links around the current page
+  #   :outer_window => 1, # links around beginning and end
+  #   :separator    => ' ',
+  #   :param_name   => :page,
+  #   :params       => nil,
+  #   :renderer     => 'WillPaginate::LinkRenderer',
+  #   :page_links   => true,
+  #   :container    => true
+  #
+  def pagination_links(things, options={})
+    defaults = {:renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+    will_paginate(things, defaults.merge(options))
   end
   
   def options_for_my_groups(selected=nil)
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
   
-  def options_for_language(selected=nil)
+  def options_for_language(selected=nil)  
     selected ||= session[:language_code].to_s
-    options_for_select(LANGUAGES.to_select(:name, :code), selected)
+    selected = selected.sub(/_\w\w$/, '') # remove locale
+    options_array = LANGUAGES.collect {|code, lang| [lang.name, code.to_s]}
+    options_for_select(options_array, selected)
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
@@ -113,6 +150,38 @@ module ApplicationHelper
   def side_list_li(options)
      active = url_active?(options[:url]) || options[:active]
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
+  end
+
+  def formatting_reference_link
+   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+  end
+
+  # returns the related help string, but only if it is translated.
+  def help(symbol)
+    symbol = "#{symbol}_help".to_sym
+    text = ""[symbol]
+    text.any? ? text : nil
+  end
+
+  def debug_permissions
+    if RAILS_ENV == 'development'
+      permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+      permission_methods.collect do |section|
+        content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+      end
+    end
+  end
+
+  private
+
+  def link_char(links)
+    if links.first.is_a? Symbol
+      char = links.shift
+      return ' &bull; ' if char == :bullet
+      return ' | '
+    else
+      return ' | '
+    end
   end
 
 end

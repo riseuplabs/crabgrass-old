@@ -1,0 +1,9 @@
+args = {
+  :url => url_for(:controller => instance.url, :only_path => false),
+  :type => instance.content_type
+}
+args[:fileSize] = instance.size if instance.size
+args[:isDefault] = "true" if instance == asset
+args[:width] = instance.width if instance.width
+args[:height] = instance.height if instance.height
+xml.media :content, args

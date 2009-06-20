@@ -11,6 +11,12 @@ module PathFinder::Mysql::Options
     options
   end
 
+  def self.options_for_mentor(path, options)
+    options.merge({
+      :user_ids => options[:user_ids]+options[:current_user].student_ids
+    })
+  end
+
   def self.options_for_public(path, options)
     options.merge({
       :public => true
@@ -27,13 +33,22 @@ module PathFinder::Mysql::Options
     })
   end
 
+  # pass :committees => false to exclude sub-committees from the results.
   def self.options_for_group(path, options)
     group = options[:callback_arg_group]
-    group_id = group.is_a?(Group) ? group.id : group.to_i
+    if group.is_a?(Group)
+      if options[:committees] == false
+        group_ids = [group.id]
+      else
+        group_ids = group.group_and_committee_ids
+      end
+    else
+      group_ids = [group.to_i]
+    end
 
     options.merge({
      :public => true,
-     :secondary_group_ids => [group_id]
+     :secondary_group_ids => group_ids
     })
   end
 

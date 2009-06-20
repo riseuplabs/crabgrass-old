@@ -2,10 +2,8 @@ PageClassRegistrar.add(
   'Gallery',
   :controller => 'gallery',
   :icon => 'page_gallery',
-  :class_display_name => 'gallery',
-  :class_description => :gallery_class_description,
-  :class_group => ['gallery', 'image'],
-  :order => 31
+  :class_group => ['media', 'media:image', 'collection'],
+  :order => 30
 )
 
 apply_mixin_to_model(Asset, AssetsHaveGalleries)

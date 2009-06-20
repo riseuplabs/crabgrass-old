@@ -1,0 +1,17 @@
+"1":
+  id: 1
+  description: "Tell me everything about you!"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+  responses_count: 7
+  
+"2":
+  id: 2
+  description: "A complex survey that's good for deleting stuff from"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+  responses_count: 0
+
+"3":
+  id: 3
+  description: "A complex survey that's good for deleting stuff from"
+  created_at: <%= (Time.now - 2.months).to_s(:db) %>
+  responses_count: 0

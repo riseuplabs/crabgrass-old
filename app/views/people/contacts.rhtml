@@ -1,6 +1,6 @@
-<% if logged_in? %>
-  <% @title_box = content_tag :h1, :my_contacts.t -%>
+<%= render :partial => 'tabs' %>
 
+<% if logged_in? %>
   <%= letter_pagination_links({:controller => 'people', :action => 'contacts'}, :available_letters => @pagination_letters) %>
 
   <div class='workarea'>

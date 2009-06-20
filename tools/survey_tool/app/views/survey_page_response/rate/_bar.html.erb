@@ -1,0 +1,12 @@
+<table><tr>
+  <td><%= image_tag '/images/emotes/sad.png', :size => '24x24' %></td>
+  <% 1.upto(10) do |i| -%>
+    <td><label>
+    <%= radio_button_tag(:rating, i, i == @rating, :class => "rate_button", :onClick => js_next_response(i)) %>
+    <%= i %>
+    </label></td>
+  <% end -%>
+  <td><%= image_tag '/images/emotes/smile.png', :size => '24x24' %></td>
+  <td>&nbsp;<%= spinner('next_response') %></td>
+</tr></table>
+

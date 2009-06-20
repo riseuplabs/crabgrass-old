@@ -31,12 +31,12 @@ module AuthenticatedUser
 
   def self.included(base)
     base.extend   ClassMethods
-    base.instance_eval do
-      # a class attr which is set to the currently logged in user
-      cattr_accessor :current
-      
+    base.instance_eval do      
       # Virtual attribute for the unencrypted password
       attr_accessor :password
+
+      # the current site (set tmp on a per-request basis)
+      attr_accessor :current_site
 
       validates_presence_of     :login
       validates_presence_of     :password,                   :if => :password_required?
@@ -48,37 +48,7 @@ module AuthenticatedUser
       before_save :encrypt_password
     end
   end
-  
-  def validate
-    if password_required? and MIN_PASSWORD_STRENGTH > 0
-      errors.add(:password, "Password is not strong enough"[:validation_password_not_strong_enough]) unless self.check_strength(self.password)
-      errors.add(:password, "Password and Login may not be the same"[:validation_password_and_login_not_the_same]) if self.password == self.login
-    end
-  end 
-  
-  # http://www.codeandcoffee.com/2007/06/27/how-to-make-a-password-strength-meter-like-google/
-  # http://snippets.dzone.com/posts/show/4698  
-
-  # the PW strength is the amount of time needed to bruteforce a password in 
-  # years, at approximately 1000 tries per second.
-  # I don't know what a good value would be, just tried around a litte
-  
-  PASSWORD_SETS = {
-    /[a-z]/ => 26,
-    /[A-Z]/ => 26,
-    /[0-9]/ => 10,
-    /[^\w]/ => 32
-  }
-  def check_strength(password)
-    return false unless password.any?
-    set_size = 0
-    PASSWORD_SETS.each_pair {|k,v| set_size += v if password =~ k}
-    combinations = set_size ** password.length
-    # assuming 1000 tries per second
-    days = combinations.to_f / 1000 / 86400
-    (days / 365) > MIN_PASSWORD_STRENGTH
-  end
-
+    
   module ClassMethods
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     def authenticate(login, password)
@@ -94,7 +64,10 @@ module AuthenticatedUser
     def find_for_forget(email)
       find :first, :conditions => ['email = ?', email]
     end
-        
+    
+    # set to the currently logged in user. 
+    def current; Thread.current[:user]; end
+    def current=(user); Thread.current[:user] = user; end
   end
 
   # Encrypts the password with the user salt
@@ -121,6 +94,11 @@ module AuthenticatedUser
     self.remember_token_expires_at = nil
     self.remember_token            = nil
     save(false)
+  end
+
+  # authenticated users are real, unathenticated are not
+  def real?
+    true
   end
 
   protected

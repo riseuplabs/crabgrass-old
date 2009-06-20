@@ -63,32 +63,48 @@ module ContextHelper
   # group, person, or page context. 
 
   def group_context(size='large', update_breadcrumbs=true)
-    return network_context(size, update_breadcrumbs) if @group and @group.is_a? Network
+    return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
-    add_context 'groups'.t, groups_url(:action => nil)
-    if @group
-      if @group.committee?
+    add_context 'Groups'[:groups], groups_url(:action => nil)
+    if @group and !@group.new_record?
+      if @group.committee? or @group.council?
         if @group.parent
-          add_context @group.parent.display_name, group_url(:id => @group.parent, :action => 'show')
-        elsif @parent
-          add_context @parent.display_name, groups_url(:id => @parent, :action => 'show')
+          add_context @group.parent.display_name, url_for_group(@group.parent)
         end
       end
       add_context @group.display_name, url_for_group(@group, :action => 'show')
-      set_banner "group/banner_#{size}", @group.banner_style
+      set_banner "groups/navigation/banner_#{size}", @group.banner_style
+    elsif @parent
+      add_context @parent.display_name, url_for_group(@parent, :action => 'show')
+      set_banner "groups/navigation/banner_#{size}", @parent.banner_style
+    else
+      set_banner "groups/directory/banner", ''
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
   
   def network_context(size='large', update_breadcrumbs=true)
     @active_tab = :networks
-    add_context 'networks'.t, networks_url(:action => 'list')
-    if @group
-      add_context @group.display_name, url_for_group(@group)
-      set_banner "group/banner_#{size}", @group.banner_style
+    if @group and !@group.new_record?
+      if @group == current_site.network
+        site_network_context(size, update_breadcrumbs)
+      else
+        add_context "Networks"[:networks], network_directory_url
+        add_context @group.display_name, url_for_group(@group)
+        set_banner "groups/navigation/banner_#{size}", @group.banner_style
+      end
+    else
+      add_context "Networks"[:networks], network_directory_url
+      set_banner "groups/directory/banner", ''
     end
     breadcrumbs_from_context if update_breadcrumbs
+  end
+
+  def site_network_context(size='large', update_breadcrumbs=true)
+    @active_tab = :home
+    @banner = nil
+    @banner_style = nil
   end
 
   def person_context(size='large', update_breadcrumbs=true)
@@ -125,7 +141,9 @@ module ContextHelper
           me_context('small', false)
         end
       else
-        # unknown context. will we ever get here?
+        # not sure what tab should be active when there is no page owner...
+        @banner = nil
+        @banner_style = nil
       end
       if logged_in? and referer_has_crumbs?(@page)
         breadcrumbs_from_referer(@page)
@@ -137,11 +155,11 @@ module ContextHelper
       # there is no page, but for some reason we are still using a page
       # context. so, we just use what we are given.
       if @group or @group = Group.find_by_id(params[:group_id])
-        group_context('small', false)
+        group_context('small', true)
       elsif @user and current_user != @user
-        person_context('small', false)
+        person_context('small', true)
       elsif @user and current_user == @user
-        me_context('small', false)
+        me_context('small', true)
       end
     end
 
@@ -214,4 +232,3 @@ module ContextHelper
   end
   
 end
-

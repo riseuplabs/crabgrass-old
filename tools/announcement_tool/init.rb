@@ -2,10 +2,9 @@ PageClassRegistrar.add(
   'AnnouncementPage',
   :controller => 'announcement_page',
   :icon => 'page_notice',
-  :class_display_name => 'announcement',
-  :class_description => "A little advertising",
-  :class_group => 'wiki',
-  :order => 4
+  :class_group => 'text',
+  :order => 4,
+  :internal => true
 )
 
 self.load_once = false

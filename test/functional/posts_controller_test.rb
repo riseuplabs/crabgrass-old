@@ -5,7 +5,7 @@ require 'posts_controller'
 class PostsController; def rescue_action(e) raise e end; end
 
 class PostsControllerTest < Test::Unit::TestCase
-  fixtures :pages, :users, :groups, :user_participations, :group_participations, :discussions, :memberships
+  fixtures :pages, :users, :groups, :user_participations, :group_participations, :discussions, :memberships, :sites
 
   def setup
     @controller = PostsController.new
@@ -46,7 +46,11 @@ class PostsControllerTest < Test::Unit::TestCase
     login_as :red
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     post_id = pages(:page1).discussion.posts.last.id
+    assert_no_difference 'Post.find(post_id).ratings.count' do
+      post :twinkle, :id => post_id
+    end
 
+    login_as :blue
     assert_difference 'Post.find(post_id).ratings.count' do
       post :twinkle, :id => post_id
     end
@@ -57,6 +61,7 @@ class PostsControllerTest < Test::Unit::TestCase
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     post_id = pages(:page1).discussion.posts.last.id
 
+    login_as :blue
     post :twinkle, :id => post_id
 
     assert_difference 'Post.find(post_id).ratings.count', -1 do
