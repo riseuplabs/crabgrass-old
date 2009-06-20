@@ -93,10 +93,7 @@ Personal_Interests: "Int\xC3\xA9r\xC3\xAAts personnels"
 logout_success: Au revoir
 signup_title: "Cr\xC3\xA9ez votre compte"
 menu_chat: Salon de Discussion
-<<<<<<< HEAD:lang/fr_FR.yml
-=======
 caption: "l\xC3\xA9gende"
->>>>>>> unicef/master:lang/fr_FR.yml
 summary_help: "Optionnel. Le sommaire est une phrase ou un paragraphe qui d\xC3\xA9crit bri\xC3\xA8vement le contenu de cette page."
 user: Utilisateur
 image_count_total: ":count Images"
