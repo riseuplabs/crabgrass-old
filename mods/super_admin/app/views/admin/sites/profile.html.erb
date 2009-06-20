@@ -5,20 +5,20 @@
 <span><i><%= flash[:notice] %></i></span>
 <br />
 <span><b>Profiles:</b></span>  
-<% f.fields_for(:profile_enabled) do |pe| %>
+<% f.fields_for(:profiles) do |p| %>
   <ul style="list-style-type:none;">
     <li>
-      <%= pe.check_box :public, { :checked => current_site.profile_enabled?(:public) } %>
-      <%= pe.label :public, 'Public' %>
+      <%= p.check_box :public, { :checked => current_site.profile_enabled?(:public) } %>
+      <%= p.label :public, 'Public' %>
     </li>
     <li>
-      <%= pe.check_box :private, { :checked => current_site.profile_enabled?(:private) } %>
-      <%= pe.label :private, 'Private' %>
+      <%= p.check_box :private, { :checked => current_site.profile_enabled?(:private) } %>
+      <%= p.label :private, 'Private' %>
     </li>
   </ul>
 <% end -%>
 <span><b>Profile Fields:</b></span>
-<% fields_for(:profile_fields) do |pf| -%>
+<% f.fields_for(:profile_fields) do |pf| -%>
   <ul style="list-style-type:none;">
   <% %w(basic notes phone_numbers email_addresses locations im_addresses websites cryptkeys).each do |field| -%>
     <li>
