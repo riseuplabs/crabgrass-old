@@ -4,7 +4,7 @@
   <%= link_to avatar_for(group, 'medium'), url -%>
   </td><td>
   <%= link_to group.display_name, url -%>
-  <div><%= group.profiles.public.summary_html %></div>
+  <div><%# group.profiles.public.summary_html %></div>
   </td></tr>
   <% if show_committees %>
   <tr>

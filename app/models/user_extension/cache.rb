@@ -127,7 +127,7 @@ module UserExtension
         committee = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
           WHERE groups.parent_id IN (#{direct.join(',')})
-          AND groups.is_council = 0
+          AND groups.type = 'Committee'
         ])
         network = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
@@ -144,7 +144,7 @@ module UserExtension
           committee += Group.connection.select_values(%Q[
             SELECT groups.id FROM groups
             WHERE groups.parent_id IN (#{network.join(',')})
-            AND groups.is_council = 0
+            AND groups.type = 'Committee'
           ])
         end
         admin_for = Group.connection.select_values(%Q[

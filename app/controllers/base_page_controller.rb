@@ -12,6 +12,7 @@ class BasePageController < ApplicationController
   javascript 'page'
   javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
   permissions 'base_page', 'posts'
+  helper 'groups'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods

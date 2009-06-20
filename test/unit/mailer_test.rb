@@ -51,11 +51,6 @@ class MailerTest < Test::Unit::TestCase
       quoted_printable(subject, CHARSET)
     end
 
-    def mailer_options
-      {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
-      :protocol => 'http://', :port => '3000', :page => @page}
-    end
-
 end
 
 

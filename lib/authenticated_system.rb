@@ -149,19 +149,18 @@ module AuthenticatedSystem
     return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
   end
 
+
   def flash_auth_error(mode)
     if mode == :now
-		  if logged_in?
-		    flash_message_now :title => :permission_denied.t, :error => :permission_denied_description.t
-		  else
-		    flash_message_now :title => :login_required.t, :success => :login_required_description.t
-		  end
-    elsif mode == :later
-		  if logged_in?
-		    flash_message :title => :permission_denied.t, :error => :permission_denied_description.t
-		  else
-		    flash_message :title => :login_required.t, :success => :login_required_description.t
-		  end
+      flsh = flash.now
+    else
+      flsh = flash
+    end
+
+    if logged_in?
+      add_flash_message(flsh, :title => "Permission Denied"[:alert_permission_denied], :error => 'You do not have sufficient permission to perform that action.'[:permission_denied_description])
+    else
+      add_flash_message(flsh, :title => 'Login Required'[:login_required], :success => 'Please login to perform that action.'[:login_required_description])
     end
   end
 

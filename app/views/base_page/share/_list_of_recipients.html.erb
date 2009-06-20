@@ -7,7 +7,7 @@
   #
   # %>
 <% empty_box = false if empty_box.nil? %>
-<table><tbody id="share_page_recipient_table">
+<table><tbody class="autocomplete_results_table" id="share_page_recipient_table">
 <% if !empty_box %>
   <% if @page && @page.recipients.any? -%>
     <% @page.recipients.each do |recipient, access| %>

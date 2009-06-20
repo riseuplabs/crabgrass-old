@@ -14,6 +14,7 @@
   show_extras ||= 'false'
   show_page_types ||= 'true'
   url ||= params.allow(:controller, :action, :id)
+  url[:path] = nil if url.is_a?(Hash)
 
   group_id = parsed.int_for('group')
   if group_id

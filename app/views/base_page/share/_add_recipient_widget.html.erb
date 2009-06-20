@@ -81,7 +81,7 @@
     </td>
   </tr>
 </table>
-<div id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
+<div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
 </div>
 

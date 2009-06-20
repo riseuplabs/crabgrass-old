@@ -28,9 +28,6 @@ all the relationship between a page and its groups is stored in the group_partic
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.boolean  "static"
-    t.datetime "static_expires"
-    t.boolean  "static_expired"
     t.integer  "stars",              :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
@@ -67,7 +64,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Subclass
   include PageExtension::Index
 #  include PageExtension::Linking
-  include PageExtension::Static
+  include PageExtension::Starring
 
   acts_as_taggable_on :tags
   acts_as_site_limited

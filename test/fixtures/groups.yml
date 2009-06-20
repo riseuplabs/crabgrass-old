@@ -57,14 +57,12 @@ private_committee:
   id: 1002
   parent_id: 1000
   name: public_group_everyone_can_see+private_committee
-#  summary: The private committee of the public group that everyone can see
   type: Committee
 
 
 private_group:
   id: 2000
-  name: private_group_not_everyone_can_see
-#  summary: The private group that not everyone can see
+  name: private_group
 
 # these two are also the sites networks.
 cnt:

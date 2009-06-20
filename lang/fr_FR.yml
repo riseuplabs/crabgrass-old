@@ -34,9 +34,12 @@ upload_attachment: Joindre un fichier
 toggle_selection: "Inverser La S\xC3\xA9lection"
 order_changed: "Arrangement modifi\xC3\xA9."
 organizational_role: "r\xC3\xB4le organisationnel"
+coordinator_help: "<b>Coordinateur</b> Cet acc\xC3\xA8s conf\xC3\xA8re un pouvoir complet a cette page (y compris effacer et partager)."
+icon: Icone
 page_group_text: Texte et Discussions
 email_addresses: Adresses Mail
 join_chat: rejoindre le salon de discussion
+photo: Photo
 welcome_upload_icon_link: "D\xC3\xA9finir un avatar"
 at_least_one_recipient_is_required: choisir au moins un destinataire
 media_videos: "Vid\xC3\xA9os"
@@ -90,9 +93,14 @@ Personal_Interests: "Int\xC3\xA9r\xC3\xAAts personnels"
 logout_success: Au revoir
 signup_title: "Cr\xC3\xA9ez votre compte"
 menu_chat: Salon de Discussion
+<<<<<<< HEAD:lang/fr_FR.yml
+=======
+caption: "l\xC3\xA9gende"
+>>>>>>> unicef/master:lang/fr_FR.yml
 summary_help: "Optionnel. Le sommaire est une phrase ou un paragraphe qui d\xC3\xA9crit bri\xC3\xA8vement le contenu de cette page."
 user: Utilisateur
 image_count_total: ":count Images"
+location: Emplacement
 group_profile_description_may_see_networks: "Publier les r\xC3\xA9seaux dont ce {group_type} est membre."
 trash_description: "La poubelle est l'endroit o\xC3\xB9 se trouvent toutes vos pages supprim\xC3\xA9es. Vous pouvez r\xC3\xA9cup\xC3\xA9rer une page en cliquant {undelete} ou la d\xC3\xA9truire d\xC3\xA9finitivement en cliquant {destroy}."
 profile_last_login: "Derni\xC3\xA8re Connexion"
@@ -104,6 +112,7 @@ welcome_find_groups_text: "Parcourir le r\xC3\xA9pertoire des groupes pour en re
 media_document: Document
 activity_user_left_group: "{user} a quitt\xC3\xA9 le {group_type} {group}"
 collection: collection
+see_all_link: Tout afficher
 password_error_too_short: n'est pas bon, il est trop court.
 page_group_task: "T\xC3\xA2ches"
 no_images_in_gallery: Aucune image dans la Galerie
@@ -150,6 +159,7 @@ page_is_not_static: La page n'est pas statique
 recent_pages: "Pages r\xC3\xA9centes"
 invite_accept_via_existing_account: "J'ai d\xC3\xA9j\xC3\xA0 un compte"
 display_name: "Nom affich\xC3\xA9"
+width: largeur
 delete_page_via_trash_info: "Ceci d\xC3\xA9placera la page dans la poubelle, d'o\xC3\xB9 elle pourra \xC3\xAAtre r\xC3\xA9cup\xC3\xA9r\xC3\xA9e si n\xC3\xA9cessaire."
 welcome_find_people_text: "Parcourir le r\xC3\xA9pertoire des utilisateurs \xC3\xA0 la recherche de celles et ceux que vous connaissez."
 page_group_media_document: Documents
@@ -211,6 +221,7 @@ councils: Conseils
 email: Mail
 create_a_new_thing: "Cr\xC3\xA9er un-e nouvel-le :thing"
 my_world_heading: Mon Univers
+most_active: Les plus actifs
 welcome_create_group_link: "Cr\xC3\xA9er un nouveau groupe"
 view_requests: voir les demandes
 your_login: Votre identifiant
@@ -263,9 +274,11 @@ create_page: "Cr\xC3\xA9er Une Page"
 Highest_Contributors: Contributeurs les plus actifs
 media_images: Images
 signup_login_name: Votre nom d'utilisateur
+participant_help: "<b>Participant</b> cet acc\xC3\xA8s donne le pouvoir d'editer et de contribuer a cette page."
 file_class_description: "Un fichier t\xC3\xA9l\xC3\xA9charg\xC3\xA9."
 approve: approuver
 council_help: "Si ce groupe poss\xC3\xA8de un conseil, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
+recently_created: "R\xC3\xA9cemment cr\xC3\xA9\xC3\xA9"
 unknown: Inconnu
 summary: Sommaire
 only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en \xC3\xAAtes le dernier membre"
@@ -304,6 +317,7 @@ pending_tasks: "t\xC3\xA2ches en cours."
 data_for_page_missing: Le contenu pour cette page est manquant.
 monday: Lundi
 activity_user_destroyed: "{user} s'est retir\xC3\xA9"
+membership: "Adh\xC3\xA9sion"
 profile_option_may_see: Profil visible
 details_link: "D\xC3\xA9tails"
 me_dashboard_link: Tableau de bord
@@ -311,6 +325,7 @@ rejected: "rejet\xC3\xA9es"
 signup_confirm_password: Confirmation du mot de passe
 delete_this_version: effacer cette version
 password_was_reset: "Votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\xC3\xA9"
+additional_page_access: "Acc\xC3\xA8s Additionnel"
 tags_help: "Optionnel. Utilisez comme \xC3\xA9tiquette quelques mots qui d\xC3\xA9crivent cette page."
 Work: Travail
 group_directory_link: "r\xC3\xA9pertoire des groupes"
@@ -376,6 +391,7 @@ personal_message: message personnel
 name: Nom
 destroy_group_link: "D\xC3\xA9truire {group_type}"
 page_details: "D\xC3\xA9tails de la page"
+welcome_hide_link: "Cacher le message d'accueil "
 upload_image_help: "Optionnel. Choisissez une premi\xC3\xA8re image \xC3\xA0 envoyer sur cette page."
 page_group_media_audio: Audio
 remove_from_inbox: "Retirer de la boite de r\xC3\xA9ception"
@@ -402,6 +418,8 @@ page_details_link: "D\xC3\xA9tails {page_class}"
 date_months: mois
 add_im_address: "Ajouter une adresse de messagerie instantan\xC3\xA9e"
 my_peers_description: utilisateurs inscrits dans au moins un de mes groupes
+viewer_help: "<b>Lecteur</b> Cet acc\xC3\xA8s donne le pouvoir de lire cette page et rien de plus."
+photo_credit: "Cr\xC3\xA9dit photo"
 version_doesnt_exist: Il n'y a pas de version :version
 send_message_link: Envoyer un message
 group_members_publicly_visible: Afficher publiquement les membres du groupe
@@ -508,6 +526,7 @@ participation: Participation
 announcement_page_display: Annonce
 send_invites_headline: "Envoyer des invitations \xC3\xA0 rejoindre {group}"
 invalid_email_text: L'adresse mail fournie est invalide.
+video_embed: Embed
 group_join_chat: Rejoindre Salon de Discussion
 viewed: Vu
 accept_usage_agreement: J'accepte les termes des conditions d'utilisation
@@ -524,6 +543,7 @@ member_groups_of_network: Groupes membres
 recipient_tip: "S\xC3\xA9parez les destinataires par des virgules, des espaces ou de nouvelles lignes."
 alert_saved: "Modifications effectu\xC3\xA9es"
 month_short_september: Sep
+welcome_show_link: Afficher le message d'accueil
 my_contacts_link: mes ami-e-s
 featured_content: Contenu Important
 updated: "mis \xC3\xA0 jour"
@@ -587,6 +607,7 @@ other_formats: autres formats
 task_list_page_display: "Liste de T\xC3\xA2ches"
 organization: organisation
 approve_contact_info: "Cet-te utilisat-rice-eur vous a d\xC3\xA9j\xC3\xA0 demand\xC3\xA9-e comme ami-e. Voulez-vous l'accepter ?"
+basic_settings: Parametres
 page_group_media: "Multim\xC3\xA9dia"
 viewers: Lecteurs
 rate_many_page_description: "Cr\xC3\xA9er une liste de choix \xC3\xA0 approuver ou infirmer."
@@ -640,6 +661,9 @@ month_short_january: Jan
 folder_display: Dossier
 invite_accept_info: "Avez-vous d\xC3\xA9j\xC3\xA0 un compte sur ce site ? Cliquez sur l'un des liens suivants pour accepter l'invitation."
 signup_success: "Enregistrement r\xC3\xA9ussi"
+leave_group_link: Quitter {group_type}
+requests: Requetes
+height: Hauteur
 email_notice_hello_with_message: "Bonjour, {from} vous a envoy\xC3\xA9 une page web avec le message suivant : {message}"
 email_notice_access: "Vous pouvez acc\xC3\xA9der \xC3\xA0 cette page ici :"
 options: Options
@@ -653,6 +677,8 @@ welcome_find_groups_link: Trouver des groupes
 this_is_coordinating: C'est le <strong>conseil de coordination</strong> de {parent_group}.
 share_page_recipients_selection: Faites votre choix
 csrf_error_message: "Votre demande de connexion ressemble \xC3\xA0 une tentative de piratage de ce site. Pas d'inqui\xC3\xA9tude: cette erreur arrive fr\xC3\xA9quemment m\xC3\xAAme pour des demandes anodines. Nous sommes simplement particuli\xC3\xA8rement parano\xC3\xAFaques. Tout ce que vous avez \xC3\xA0 faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:"
+visibility: Visibilite
+administration: Administration
 welcome_create_page_text: "Vous pouvez cr\xC3\xA9er de nouvelles discussions, de nouveaux wiki, t\xC3\xA9l\xC3\xA9charger des images et des fichiers, des listes de t\xC3\xA2ches, et bien d'autres choses encore..."
 type_your_messages_here: "\xC3\x89crivez votre message ici et validez avec la touche Entr\xC3\xA9e..."
 send_invites_button: Envoyer des Invitations
@@ -726,6 +752,7 @@ no_tags: aucun tag
 activity_group_destroyed: "{group} a \xC3\xA9t\xC3\xA9 d\xC3\xA9truit par {user}"
 contacts: Ami-e-s
 insert_image_instructions: "Cliquer sur une image pour l'ins\xC3\xA9rer dans le texte du wiki."
+thing_settings: "Param\xC3\xA8tres {thing}"
 profile_saved: "Votre profil est sauvegard\xC3\xA9."
 unfeature_button: Supprimer l'importance !
 share_page_email: Envoyer une notification par mail

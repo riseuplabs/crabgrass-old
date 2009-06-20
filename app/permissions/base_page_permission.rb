@@ -18,9 +18,7 @@ module BasePagePermission
   end
 
   def may_show_page?(page = @page)
-    !page or
-    page.public? or
-    current_user.may?(:view, page)
+    !page or current_user.may?(:view, page)
   end
 
   ##
@@ -105,7 +103,7 @@ module BasePagePermission
   alias_method :may_watch_page?, :may_show_page?
   
   def may_public_page?(page=@page)
-    current_user.may?i :admin, page
+    current_user.may? :admin, page
   end
 
   def may_move_page?(page=@page)
