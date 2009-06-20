@@ -28,9 +28,11 @@
   <li class="<%= 'active' if @active == 'siteadmin_basic' %>">
     <%= link_to 'basic', ''  %>
   </li>
-  <li class="<%= 'active' if @active == 'siteadmin_custom_appearances' %>">
-    <%= link_to 'custom appearence', edit_custom_appearance_url(current_site.custom_appearance) %>
-  </li>
+  <% if current_site.custom_appearance %>
+    <li class="<%= 'active' if @active == 'siteadmin_custom_appearances' %>">
+      <%= link_to 'custom appearence', edit_custom_appearance_url(current_site.custom_appearance) %>
+    </li>
+  <% end %>
   <li class="<%= 'active' if @active == 'siteadmin_profile' %>">
     <%= link_to 'profile', '' %>
   </li>
