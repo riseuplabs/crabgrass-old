@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090619075032) do
+ActiveRecord::Schema.define(:version => 20090621045020) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -112,13 +112,6 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
 
   add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
   add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
-
-  create_table "contacts", :id => false, :force => true do |t|
-    t.integer "user_id",    :limit => 11
-    t.integer "contact_id", :limit => 11
-  end
-
-  add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id",  :limit => 11
@@ -487,6 +480,15 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
 
   add_index "ratings", ["user_id"], :name => "fk_ratings_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
+
+  create_table "relationships", :force => true do |t|
+    t.integer "user_id",       :limit => 11
+    t.integer "contact_id",    :limit => 11
+    t.string  "type",          :limit => 10
+    t.integer "discussion_id", :limit => 11
+  end
+
+  add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "requests", :force => true do |t|
     t.integer  "created_by_id",         :limit => 11
