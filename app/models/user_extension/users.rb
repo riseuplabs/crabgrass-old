@@ -44,7 +44,9 @@ module UserExtension::Users
 
       ## RELATIONSHIPS
 
-      has_many :relationships, :dependent => :destroy
+      has_many :relationships, :dependent => :destroy do
+        def with(user) find_by_contact_id(user.id) end
+      end
       has_many :discussions, :through => :relationships
       has_many :contacts,    :through => :relationships
       has_many :friends,     :through => :relationships,
@@ -100,14 +102,15 @@ module UserExtension::Users
   #
   def add_contact!(other_user, type=nil)
     type = 'Friendship' if type == :friend
-    unless relationship = self.relationships.find_by_contact_id(other_user.id)
-      relationship = Relationship.new(:user => self, :contact => other_user)
+
+    unless relationship = other_user.relationships.with(self)
+      relationship = Relationship.new(:user => other_user, :contact => self)
     end
     relationship.type = type
     relationship.save!
 
-    unless relationship = other_user.relationships.find_by_contact_id(self.id)
-      relationship = Relationship.new(:user => other_user, :contact => self)
+    unless relationship = self.relationships.with(other_user)
+      relationship = Relationship.new(:user => self, :contact => other_user)
     end
     relationship.type = type
     relationship.save!
@@ -121,15 +124,17 @@ module UserExtension::Users
     other_user.contacts.reset
     other_user.friends.reset
     other_user.update_contacts_cache
+
+    return relationship
   end
 
   # this should be the ONLY way contacts are deleted
   def remove_contact!(other_user)
-    if self.relationships.find_by_contact_id(other_user.id)
+    if self.relationships.with(other_user)
       self.contacts.delete(other_user)
       self.update_contacts_cache
     end
-    if other_user.relationships.find_by_contact_id(self.id)
+    if other_user.relationships.with(self)
        other_user.contacts.delete(self)
        other_user.update_contacts_cache
     end

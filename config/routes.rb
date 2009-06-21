@@ -6,7 +6,7 @@
 # with any of our other routes).
 # 
 
-ActionController::Routing::Routes.draw do |map|  
+ActionController::Routing::Routes.draw do |map|
 
   # total hackety magic:
   map.filter 'crabgrass_routing_filter'
@@ -50,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.people  'people/:action/:id', :controller => 'people'
   map.connect 'person/:action/:id/*path', :controller => 'person'
   map.connect 'messages/:user/:action/:id', :controller => 'messages', :action => 'index', :id => nil
+  map.resources :conversations
 
   ##
   ## EMAIL

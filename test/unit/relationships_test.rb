@@ -80,6 +80,25 @@ class RelationshipsTest < Test::Unit::TestCase
     assert a.contacts.include?(c)
   end
 
+  def test_relationship_discussion
+    a = users(:red)
+    b = users(:green)
+    a.add_contact!(b)
+    
+    assert_no_difference 'Discussion.count' do
+      a.relationships.with(b)
+    end
+
+    discussion = nil    
+    assert_difference 'Discussion.count' do 
+      discussion = a.relationships.with(b).discussion
+    end
+
+    assert discussion
+    assert_equal discussion, b.relationships.with(a).discussion
+
+  end
+
   def test_associations
     assert check_associations(Relationship)
   end  
