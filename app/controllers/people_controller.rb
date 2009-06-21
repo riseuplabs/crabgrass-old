@@ -14,13 +14,13 @@ class PeopleController < ApplicationController
     @users = User.on(current_site).recent.paginate :page => @page_number if logged_in?
   end
 
-  def contacts
+  def friends
     return unless logged_in?
 
-    @users = (User.contacts_of(current_user).on(current_site).alphabetized(@letter_page)).paginate :page => @page_number
+    @users = (User.friends_of(current_user).on(current_site).alphabetized(@letter_page)).paginate :page => @page_number
 
     # what letters can be used for pagination
-    @pagination_letters = (User.contacts_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.friends_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   def peers

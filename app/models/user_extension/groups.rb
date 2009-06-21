@@ -1,24 +1,20 @@
-=begin
-
-Everything to do with user <> group relationships should be here.
-
-How to use
------------
-
-There is only one valid way to establish membership between user and group:
-
-group.add_user! user
-
-Other methods should not be used!
-
-Membership information is cached in the user table. It will get
-automatically updated whenever membership is created or destroyed. In cases
-of indirect membership (all_groups) the database is correctly updated
-but the in-memory object will need to be reloaded if you want the new data.
-
-=end
-
-module UserExtension::Organize
+#  Everything to do with user <> group relationships should be here.
+#  
+#  "memberships" is the join table:
+#    user has many groups through memberships
+#    group has many users through memberships
+#
+#  There is only one valid way to establish membership between user and group:
+#
+#    group.add_user! user
+#
+#  Other methods should not be used!
+#
+#  Membership information is cached in the user table. It will get automatically
+#  updated whenever membership is created or destroyed. In cases of indirect
+#  membership (all_groups) the database is correctly updated but the in-memory
+#  object will need to be reloaded if you want the new data.
+module UserExtension::Groups
   def self.included(base)
     base.instance_eval do
       has_many :memberships, :foreign_key => 'user_id',

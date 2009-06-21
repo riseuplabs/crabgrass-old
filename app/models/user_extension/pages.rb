@@ -1,10 +1,11 @@
-=begin
-
-A user's relationship to pages
-
-=end
-
-module UserExtension::Sharing
+#
+# A user's relationship to pages
+#
+# "user_participations" is the join table:
+#   user has many pages through user_participations
+#   page has many users through user_participations
+#
+module UserExtension::Pages
 
   ##
   ## ASSOCIATIONS

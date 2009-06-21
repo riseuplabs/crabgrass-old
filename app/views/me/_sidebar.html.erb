@@ -57,7 +57,7 @@
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.committees } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => User.contacts_of(current_user) } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => current_user.friends} %>
 
 <%- end -%>
 

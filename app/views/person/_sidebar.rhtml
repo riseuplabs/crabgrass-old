@@ -20,6 +20,6 @@
 
   <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => @user.groups.visible_by(current_user).committees } if @profile.may_see_groups? %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:friends], :entities => @user.contacts } if @profile.may_see_contacts? %> 
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Friends"[:friends], :entities => @user.friends } if @profile.may_see_contacts? %> 
 
 <%- end -%>
