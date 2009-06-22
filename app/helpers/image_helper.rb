@@ -277,7 +277,21 @@ module ImageHelper
 
   def display_media(media, size=:medium)
     if media.respond_to?(:is_image?) and media.is_image?
-      image_tag(media.thumbnail(size).url)
+      if media.respond_to?(:thumbnail)
+        thumbnail = media.thumbnail(size)
+        if thumbnail.nil? or thumbnail.failure?
+          dims = case size
+            when :small  : '64x64'
+            when :medium : '200x200'
+            when :large  : '500x500'
+          end
+          image_tag('/images/ui/corrupted/corrupted.png', :size => dims)
+        else
+          image_tag(thumbnail.url, :height => thumbnail.height, :width => thumbnail.width)
+        end
+      else
+        # not sure what we are trying to display
+      end
     elsif media.respond_to?(:is_video?) and media.is_video?
       media.build_embed
     end

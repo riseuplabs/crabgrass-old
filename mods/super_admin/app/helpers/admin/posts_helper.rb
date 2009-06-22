@@ -22,9 +22,9 @@ module Admin::PostsHelper
 
   def post_link(post)
     if post.discussion.page
-      link_to_if(post.deleted_at.nil?, post.body[0..240] + '...', "#{page_url(post.discussion.page)}#posts-#{post.id}")
+      link_to_if(post.deleted_at.nil?, post.body[0..60] + '...', "#{page_url(post.discussion.page)}#posts-#{post.id}")
     elsif post.discussion.commentable
-      link_to_if(post.deleted_at.nil?, post.body[0..240] + '...', url_for_user(post.discussion.user))
+      link_to_if(post.deleted_at.nil?, post.body[0..60] + '...', url_for_user(post.discussion.commentable))
     end
   end
   

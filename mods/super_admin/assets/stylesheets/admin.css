@@ -154,17 +154,17 @@ table tr th {
   text-align:left;
   font-size:1.1em;
   padding-left:1em;
-  padding-right:3em;
+  padding-right:1em;
 }
 
-table tr td { line-height:1.7em; padding-left:0.5em; padding-right:3em; vertical-align:top;}
+table tr td { line-height:1.7em; padding-left:0.5em; padding-right:1em; vertical-align:top;}
 
 table tr.row_0 { background:#ddd; }
 table tr.row_1 { background:#fff; }
 
 /* show/edit/become/destroy links */
-table tr td span.actions { border:solid 0.15em #333; font-size: 0.8em; padding:0.3em; margin:0.4em; }
-table tr td span.actions a { text-decoration:none; margin-right:1.5em; }
+table tr td span.actions { border:solid 0.15em #333; font-size: 0.8em; padding:0.3em; margin:0.3em; }
+table tr td span.actions a { text-decoration:none; margin-right:0.5em; }
 
 span.alphabetical_filter {
   text-align:center;
