@@ -23,7 +23,6 @@ class Groups::FeaturesController < Groups::BaseController
     # and feature if
     participation = @group.participations.find_by_page_id(params[:page_id])
     participation.feature!
-
   end
 
   def destroy
