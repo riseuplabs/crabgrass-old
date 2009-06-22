@@ -92,6 +92,25 @@ class PageTerms < ActiveRecord::Base
     write_attribute(:page_created_at, value)
   end
 
+  # return nil if the object does not have an id in the access_ids string.
+  # otherwise, returns a number
+  def access_ids_include?(*args)
+    hash = {}
+    args.each do |object|
+      if object.is_a? User
+        hash[:user_ids] ||= []
+        hash[:user_ids] << object.id 
+      elsif object.is_a? Group
+        hash[:group_ids] ||= []
+        hash[:group_ids] << object.id 
+      elsif object == :public
+        hash[:public] = true
+      end
+    end
+    id = Page.access_ids_for(hash).first
+    return self.access_ids =~ /(^| )#{id}( |$)/
+  end
+
   # returns a string suitable for using in a fulltext match against
   # page_terms.access_ids. The args are any number of users or groups or :public.
   # the filter will require that all args match.

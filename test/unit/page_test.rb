@@ -184,7 +184,9 @@ class PageTest < Test::Unit::TestCase
   def test_attachments
     page = Page.create! :title => 'page with attachments', :user => users(:blue)
     page.add_attachment! :uploaded_data => upload_data('photo.jpg')
-    
+   
+    assert_equal page.page_terms, page.assets.first.page_terms 
+
     assert_equal 'photo.jpg', page.assets.first.filename    
     page.assets.each do |asset|
       assert !asset.public?
