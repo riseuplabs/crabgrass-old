@@ -15,7 +15,7 @@ set :branch, "youthportal"
 deploy_host = "bunting.riseup.net"
 staging_host = "bunting_staging.riseup.net"
 
-staging = true
+staging = ENV['TARGET'] != 'production'
 
 set :app_db_host, 'localhost'
 set :app_db_user, 'crabgrass'
