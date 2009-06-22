@@ -11,7 +11,7 @@ ACCESS_EDIT = 2
 ACCESS_VIEW = 3
 
 # types of page flows
-FLOW = {:deleted => 3, :gallery => 4, :announcement => 5}.freeze
+FLOW = {:deleted => 3, :announcement => 5}.freeze
 
 # enum of media types
 MEDIA_TYPE = {

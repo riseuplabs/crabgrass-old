@@ -13,7 +13,7 @@ class GalleryController < BasePageController
 
   def show
     params[:page] ||= 1
-    @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+    @images = @page.images.visible_to(current_user).paginate(:page => params[:page])
     #@cover = @page.cover
   end
 
@@ -132,22 +132,7 @@ class GalleryController < BasePageController
   
   def find
     existing_ids = @page.image_ids
-    # this call doesn't return anything as Asset.visible_to isn't working.
-    # see my comment in app/models/asset.rb for details.
-    #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
-    results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-      (a.page && current_user.may?(:view, a.page)) ? a : nil
-    }
-    current_page = (params[:page] or 1)
-    per_page = 30
-    @images = WillPaginate::Collection.create(current_page,
-                                              per_page,
-                                              results.size) do |pager|
-      start = (current_page-1)*per_page
-      result_slice = (results.to_array[start, per_page] rescue
-                      results[start, per_page])
-      pager.replace(results[start, per_page])
-    end
+    @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
   rescue => exc
     flash_message :exception => exc
     redirect_to :action => 'show', :page_id => @page.id
