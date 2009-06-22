@@ -15,7 +15,7 @@ set :branch, "cc-rewrite"
 deploy_host = "yellowhammer.riseup.net"
 staging_host = "209.234.253.11"
 
-staging = true
+staging = ENV['TARGET'] != 'production'
 
 set :app_db_host, 'localhost'
 set :app_db_user, 'crabgrass'
