@@ -16,7 +16,7 @@ move_image_left: "D\xC3\xA9placer l'image \xC3\xA0 gauche"
 peers: Pairs
 add_star_link: "Ajouter une \xC3\xA9toile (:star_count)"
 password_error_too_common: "n'est pas bon, il est bas\xC3\xA9 sur un mot du dictionnaire."
-current_video_sources: "actuellement support\xC3\xA9s: youtube, blip.tv, google video, vimeo"
+current_video_sources: "Actuellement support\xC3\xA9s: youtube, blip.tv, google video et vimeo."
 wall_post_button: "\xC3\x89crire un Nouveau Message"
 group_profile_description_may_see: "Si coch\xC3\xA9, les informations ci-dessous seront visibles. sinon, le profil de ce {group_type} seront compl\xC3\xA8tement cach\xC3\xA9es."
 archive: Archive
@@ -73,7 +73,7 @@ you_are_not_member_of_any_group: "Vous n'\xC3\xAAtes membre d'aucun groupe."
 try_again: Essayer encore
 contact: Ami-e
 wiki_revert_version: "Revenir \xC3\xA0 la Version {version}"
-page_owner_help: "Optionnel. Le propri\xC3\xA9taire de la page est la personne ou le groupe qui poss\xC3\xA8de la responsabilit\xC3\xA9 premi\xC3\xA8re de la page. Vous pouvez choisir vous-m\xC3\xAAme, ou n'importe lequel de vos groupes."
+page_owner_help: "Le propri\xC3\xA9taire de la page est la personne ou le groupe qui a la responsabilit\xC3\xA9 premi\xC3\xA8re de la page. Vous pouvez choisir vous-m\xC3\xAAme, ou n'importe lequel de vos groupes."
 welcome_title: Bienvenue sur {site_title}
 usage_agreement_required: "L'acceptation des conditions d'utilisation est n\xC3\xA9cessaire"
 file_size: Taille du fichier
@@ -82,7 +82,7 @@ activate_js_to_rearrange_photos: "Activer JavaScript pour pouvoir r\xC3\xA9arran
 media_for_group: "%s dans %s"
 medium: moyenne
 websites: sites web
-reject_button: rejeter
+reject_button: Rejeter
 group_publicly_visible_description: "Le groupe appara\xC3\xAEt dans le r\xC3\xA9pertoire public et le <i>profil</i> du groupe est visible de tou-te-s \xC3\xA0 %s/yourgroupname."
 Language: Langue
 coordinator: Coordinateur
@@ -170,7 +170,7 @@ invite_accept_via_register: Je dois ouvrir un compte
 move_image_right: "D\xC3\xA9placer l'image \xC3\xA0 droite"
 signup_link: Besoin d'un nouveau compte ?
 download: "T\xC3\xA9l\xC3\xA9chargement"
-all_groups: tous les groupes
+all_groups: Tous Les Groupes
 welcome_login_message: message de bienvenue
 committee_publicly_visible: Publier les commissions
 save_button: Sauvegarder
@@ -220,7 +220,7 @@ create_a_new_thing: "Cr\xC3\xA9er un-e nouvel-le :thing"
 my_world_heading: Mon Univers
 most_active: Les plus actifs
 welcome_create_group_link: "Cr\xC3\xA9er un nouveau groupe"
-view_requests: voir les demandes
+view_requests: Voir les Demandes
 your_login: Votre identifiant
 slideshow_delay_input: "Mettre \xC3\xA0 jour toutes les :input_field secondes"
 my_dashboard: Mon tableau de bord
@@ -254,7 +254,7 @@ destroy_confirmation: "\xC3\x8Ates vous certain de vouloir effacer ce {thing}? C
 group_has_no_public_profile: Ce groupe n'a pas de profil public.
 Category: "Cat\xC3\xA9gorie"
 invalid_email: Mail invalide
-send_invites: envoyer des invitations
+send_invites: Envoyer des Invitations
 month_short_march: Mar
 file_must_be_image_error: "Le fichier doit \xC3\xAAtre une image pour pouvoir \xC3\xAAtre ajout\xC3\xA9 \xC3\xA0 une galerie."
 month_short_february: "F\xC3\xA9v"
@@ -309,7 +309,7 @@ activity_user_status: "{user} est maintenant {status}"
 location_city: ville
 page_notice_message: "page envoy\xC3\xA9e par {user} le {date}"
 friday: Vendredi
-my_groups_link: mes groupes
+my_groups_link: Mes Groupes
 pending_tasks: "t\xC3\xA2ches en cours."
 data_for_page_missing: Le contenu pour cette page est manquant.
 monday: Lundi
@@ -325,7 +325,7 @@ password_was_reset: "Votre mot de passe a \xC3\xA9t\xC3\xA9 r\xC3\xA9initialis\x
 additional_page_access: "Acc\xC3\xA8s Additionnel"
 tags_help: "Optionnel. Utilisez comme \xC3\xA9tiquette quelques mots qui d\xC3\xA9crivent cette page."
 Work: Travail
-group_directory_link: "r\xC3\xA9pertoire des groupes"
+group_directory_link: "R\xC3\xA9pertoire des Groupes"
 remove_contact_info: "Si vous retirez quelqu'un de la liste de vos ami-e-s, vous ne serez plus en mesure de voir quand il-le est connect\xC3\xA9-e, ni de voir son profil complet. De m\xC3\xAAme, le/la retirer de vos ami-e-s fera que vous serez \xC3\xA9galement retir\xC3\xA9-e de la liste de ses ami-e-s."
 date_seconds: secondes
 from: de
@@ -366,11 +366,11 @@ page_list_heading_created: "cr\xC3\xA9\xC3\xA9"
 date_days: jours
 remove_contact_confirmation: "Voulez-vous vraiment ne plus \xC3\xAAtre ami-e avec %s ?"
 password_ok: est OK.
-view_all: tout voir
+view_all: Tout Voir
 group_wiki: Wiki du groupe
 group_successfully_created: "Le groupe est cr\xC3\xA9\xC3\xA9."
 delete_page_via_trash: "D\xC3\xA9placer \xC3\xA0 la Poubelle"
-approve_button: approuver
+approve_button: Approuver
 create_page_button: "Cr\xC3\xA9er {page_class}"
 password_error_confirmation: "ne correspond pas \xC3\xA0 la v\xC3\xA9rification du mot de passe."
 external_video_page_description: "Afficher une vid\xC3\xA9o h\xC3\xA9berg\xC3\xA9e sur un autre site "
@@ -379,7 +379,7 @@ recent_contributions: "Contributions r\xC3\xA9centes"
 add_description: Ajouter une description
 menu_home: Accueil
 menu_me: Moi
-directory_of_groups: "R\xC3\xA9pertoire des groupes"
+directory_of_groups: "R\xC3\xA9pertoire des Groupes"
 my_peers: Mes Pairs
 date_hours: heures
 wont_be_able_to_save: Vous ne serez pas en mesure de sauvegarder cette page
@@ -392,7 +392,7 @@ welcome_hide_link: "Cacher le message d'accueil "
 upload_image_help: "Optionnel. Choisissez une premi\xC3\xA8re image \xC3\xA0 envoyer sur cette page."
 page_group_media_audio: Audio
 remove_from_inbox: "Retirer de la boite de r\xC3\xA9ception"
-recipients: destinataires
+recipients: Destinataires
 profile_private_description: "Ce profil est priv\xC3\xA9 et est uniquement visible de vos ami-e-s."
 no_members: (aucun membre)
 descriptive_name_for_display: "Un nom explicite utilis\xC3\xA9 pour l'affichage"
@@ -485,7 +485,7 @@ add_button: Ajouter
 group_profile_description_may_see_committees: Publier les commissions de ce {group_type}.
 diff_link: "voir les diff\xC3\xA9rences"
 away: absent
-request_join_group_link: demande pour joindre {group_type}
+request_join_group_link: Demande pour Rejoindre {group_type}
 page: Page
 sucessfully_removed_image: "Image retir\xC3\xA9e ! (:undo_link)"
 set_status_button: "D\xC3\xA9finir le statut"
@@ -513,7 +513,7 @@ media_alls: "M\xC3\xA9dias"
 upload_file_help: "Obligatoire. Choisissez un fichier \xC3\xA0 envoyer sur cette page."
 survey_your_rating_of_this_response: "Votre \xC3\xA9valuation de cette r\xC3\xA9ponse"
 not_featured_content: Contenu non important
-edit_settings: "modifier les param\xC3\xA8tres"
+edit_settings: "Modifier les Param\xC3\xA8tres"
 create_button: "Cr\xC3\xA9er"
 location_state: "\xC3\xA9tat/province"
 share_button: Partager
@@ -562,7 +562,7 @@ survey_response_by: "R\xC3\xA9ponse de {login}"
 School: "\xC3\x89cole"
 group_home_headline: Page d'Accueil du {group_type}
 last_name: nom
-directory_of_networks: "R\xC3\xA9pertoire des r\xC3\xA9seaux"
+directory_of_networks: "R\xC3\xA9pertoire des R\xC3\xA9seaux"
 forgotten_email_address: "Quelle adresse mail avez vous donn\xC3\xA9 lors de la cr\xC3\xA9ation du compte ?"
 edit_title: modifier le titre
 contribute_group_content_link: "Ajouter une page au/\xC3\xA0 la {group}"
@@ -571,7 +571,7 @@ you_have_no_peers: Vous n'avez pas de pair
 status_pending: en attente
 no_change: aucun changement
 invite_not_found: "Invitation non trouv\xC3\xA9e"
-invite_info: "Entrez la liste des noms d'utilisateur ou des adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce %s."
+invite_info: "Entrez la liste des noms d'utilisateur ou des adresses mail des personnes que vous voulez inviter \xC3\xA0 rejoindre ce {group_type}."
 attachments: Fichiers joints
 link_name_description: "C'est ce nomp qui sera utilise pour identifier ce groupe dans les liens et les URLs. Il ne doit contenir que des caract\xC3\xA8res alphanum\xC3\xA9riques non accentu\xC3\xA9s sans espace."
 user_profile_description_allow_peers: "Si coch\xC3\xA9, les personnes avec qui vous partagez un groupe seront en mesure de voir votre profil priv\xC3\xA9."
@@ -619,8 +619,8 @@ coordinators: coordinateurs
 outgoing: Sortant
 reject: rejeter
 month_short_august: "Ao\xC3\xBB"
-sharing_help: "Optionnel. Vous pouvez partager cette page avec plusieurs receveurs (utilisat-rice-eur-s ou groupes). L'acc\xC3\xA8s <b>Coordinateur</b> accordera les droits complets \xC3\xA0 cette page (y compris la suppression et le partage). L'acc\xC3\xA8s <b>Participant</b> accordera le droit de modification et d'ajout \xC3\xA0 cette page. L'acc\xC3\xA8s <b>Lecteur</b> permet de voir la page, et rien d'autre."
-join_group_link: rejoindre {group_type}
+sharing_help: Optionnel. Vous pouvez partager cette page avec plusieurs destinataires (utilisat-rice-eur-s ou groupes).
+join_group_link: Rejoindre {group_type}
 video_service_is_not_supported: "n'est pas support\xC3\xA9 (actuellement seulement youtube, google video, blip.tv et vimeo)"
 viewer: Lecteur
 user_or_group_name: Utilisateur ou nom de groupe
@@ -636,7 +636,7 @@ page_list_heading_title: titre
 survey_rating_enabled: "Activer l'\xC3\xA9valuation des r\xC3\xA9ponses ?"
 only_me: Moi
 profile_option_may_see_networks: "Afficher ses r\xC3\xA9seaux"
-video_embed_code_prompt: "Code import\xC3\xA9 depuis une source vid\xC3\xA9o ext\xC3\xA9rieure"
+video_embed_code_prompt: "Code import\xC3\xA9 depuis une source vid\xC3\xA9o ext\xC3\xA9rieure."
 cancel_button: Annuler
 article_page_display: Article
 required: (requis)
