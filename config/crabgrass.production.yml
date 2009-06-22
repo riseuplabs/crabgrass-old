@@ -20,6 +20,7 @@ enabled_languages:
   - ar_EG
   - fr_FR
   - ru_RU
+  - tr_TR
 enabled_mods:
   - super_admin
 enabled_tools:
