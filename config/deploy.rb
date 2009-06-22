@@ -16,8 +16,6 @@ deploy_host = "siskin.riseup.net"
 #staging_host = "staging.siskin.riseup.net"
 staging_host = "staging.share.unicefinnovation.org"
 
-staging = true
-
 set :app_db_host, 'localhost'
 set :app_db_user, 'crabgrass'
 set :app_db_pass, 'Ohteec2c'
@@ -26,6 +24,8 @@ set :secret, "d24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac321
 ##
 ## Items you should probably leave alone
 ##
+
+staging = ENV['TARGET'] != 'production'
 
 set :scm, "git"
 set :local_repository, "#{File.dirname(__FILE__)}/../"
