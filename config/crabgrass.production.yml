@@ -18,8 +18,8 @@ enabled_languages:
   - es_ES
   - pt_BR
   - ar_EG
+  - tr_TR
 enabled_mods:
-#  - super_admin
 enabled_tools:
   - asset_tool
   - core_tools
