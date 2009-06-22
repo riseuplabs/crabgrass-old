@@ -140,7 +140,17 @@ module AssetExtension # :nodoc:
     ## override attributes
     ## 
     
+    # Sets a new filename.
     def filename=(value)
+      write_attribute :filename, sanitize_filename(value)
+    end
+
+    # Sets a new base filename, without changing the extension
+    def base_filename=(value)
+      return unless value
+      if read_attribute(:filename) and !value.ends_with?(ext)
+        value += ext
+      end
       write_attribute :filename, sanitize_filename(value)
     end
 

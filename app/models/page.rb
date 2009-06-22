@@ -58,18 +58,17 @@ all the relationship between a page and its groups is stored in the group_partic
 
 class Page < ActiveRecord::Base
   extend PathFinder::FindByPath
-  include PageExtension::Users
-  include PageExtension::Groups
-  include PageExtension::Create
-  include PageExtension::Subclass
-  include PageExtension::Index
-#  include PageExtension::Linking
-  include PageExtension::Starring
+  include PageExtension::Users     # page <> users relationship
+  include PageExtension::Groups    # page <> group relationship
+  include PageExtension::Assets    # page <> asset relationship
+  include PageExtension::Create    # page creation
+  include PageExtension::Subclass  # page subclassing
+  include PageExtension::Index     # page full text searching
+  include PageExtension::Starring  # ???
 
   acts_as_taggable_on :tags
   acts_as_site_limited
   attr_protected :owner
-
 
   ##
   ## NAMES SCOPES
@@ -155,8 +154,6 @@ class Page < ActiveRecord::Base
 
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
-  has_many :assets, :dependent => :destroy
-  belongs_to :cover, :class_name => "Asset"
 
   validates_presence_of :title
   validates_associated :data
@@ -220,30 +217,10 @@ class Page < ActiveRecord::Base
     end
   end
 
-  # sets the default media flags. can be overridden by the subclasses.
-  before_save :update_media_flags
-  def update_media_flags
-    if self.data
-      self.is_image = self.data.is_image? if self.data.respond_to?('is_image?')
-      self.is_audio = self.data.is_audio? if self.data.respond_to?('is_audio?')
-      self.is_video = self.data.is_video? if self.data.respond_to?('is_video?')
-      self.is_document = self.data.is_document? if self.data.respond_to?('is_document?')
-    end
-    true
-  end
-  
+    
   ##
   ## PAGE ACCESS CONTROL
   ##
-
-  ## update attachment permissions
-  after_save :update_access
-  def update_access
-    if public_changed?
-      assets.each { |asset| asset.update_access }
-    end
-    true
-  end
 
   # returns true if self is part of given network
   # DEPRECATED
@@ -262,6 +239,8 @@ class Page < ActiveRecord::Base
     groups.include?(network) ? true : false
     true
   end
+
+  public
 
   # This method should never be called directly. It should only be called
   # from User#may?()
@@ -463,6 +442,8 @@ class Page < ActiveRecord::Base
   ##
   ## MISC. HELPERS
   ##
+
+  public
 
   # tmp in-memory storage used by views
   def flag

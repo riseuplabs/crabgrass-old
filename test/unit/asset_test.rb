@@ -95,10 +95,10 @@ class AssetTest < Test::Unit::TestCase
 
   def test_rename
     @asset = Asset.create :uploaded_data => upload_data('image.png')
-    @asset.filename = 'newimage.jpg'
+    @asset.base_filename = 'newimage'
     @asset.save
     
-    assert_equal "%s/0000/%04d/newimage.jpg" % [@@private,@asset.id], @asset.private_filename
+    assert_equal "%s/0000/%04d/newimage.png" % [@@private,@asset.id], @asset.private_filename
     assert File.exists?(@asset.private_filename)
     assert !File.exists?("%s/0000/%04d/image.png" % [@@private,@asset.id])
   end
