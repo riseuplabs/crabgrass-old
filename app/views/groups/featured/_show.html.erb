@@ -1,4 +1,4 @@
-1<% @featured_pages = Page.find_by_path(
+<% @featured_pages = Page.find_by_path(
   [ 'featured_by', @group.id, 
     'descending', 'updated_at'],
   options_for_group(@group).merge(
