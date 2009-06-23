@@ -406,3 +406,50 @@ survey_blank:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
     
+
+### Connecting Classrooms ###
+<%
+owner_groups = [['teachers','5000'],['class1','7'],['class2','8'],
+                ['class1+workgroup', '72'],['class2+workgroup', '82'],
+                ['class1+teachers', '71'],['class2+teachers', '81']]
+owner_users = [['student','101'],['teacher','102'], ['visitor', '103'],
+               ['other_student','104'],['other_teacher','105'], ['other_visitor', '106']]
+%>
+
+<% for i in 1001..1100 %>
+<% idx = (0..6).to_a.select{|g| i%(g+7)==0}.last
+    if idx.nil?
+      group_id = nil
+    else
+      group_name, group_id = owner_groups[idx]
+    end
+    user_name, user_id = owner_users.select{|o| i%(o[1].to_i - 94)==0}.last
+    user_name, user_id = owner_users.select{|o| i%(o[1].to_i - 100)==0}.last unless user_id
+    updated = rand(46080)
+    created = updated + rand(46080) %>
+page<%=i%>:
+  id: <%=i%>
+  title: "<%= garble(5..50) %>"
+  summary: "<%= garble(40..300) %>"
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+<% if rand(3) == 0 %>
+  resolved: false
+<% end %>
+  updated_by_login: <%= user_name %>
+  updated_by_id: <%= user_id %>
+  created_by_login: <%= user_name %>
+  created_by_id: <%= user_id %>
+<% if !group_id.nil?%>
+  group_id: <%= group_id %>
+  group_name: <%= group_name %>
+  owner_type: Group
+  owner_id: <%= group_id %>
+  owner_name: <%= group_name %>
+<% else %>
+  owner_type: User
+  owner_id: <%= user_id %>
+  owner_name: <%= user_name %>  
+<% end %>
+  type: DiscussionPage
+<% end %>

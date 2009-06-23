@@ -39,3 +39,12 @@ federation3003:
 federation3003b:
   group_id: 3003 #fau
   network_id: 3002  # on both sites so the animals can join.
+
+
+### Connecting Classrooms - all groups are on site 1. ###
+<% for g in [5000, 7,8,71,72,81,82] do %>
+
+site1_<%=g%>:
+  group_id: <%=g%>
+  network_id: 3001
+<% end %>

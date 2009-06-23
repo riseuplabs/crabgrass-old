@@ -117,4 +117,24 @@ superadmin_blue:
   group_id: 4001
   user_id: 4
 
+### Connecting Classrooms specific ###
+
+<%
+group_id_to_member_ids = {
+  5000 => [2, 5],  # teachers
+  7 => [1, 2, 3],  # first class
+  8 => [2, 3, 4, 5, 6], # second class
+  71 => [2, 3],    # first class teach + visit
+  81 => [3, 5, 6], # second class teach + visit
+  72 => [1, 3],    # first class workgroup
+  82 => [4, 5] # second class workgroup
+}
+%>
+<% for g in group_id_to_member_ids.keys do %>
+<% for m in group_id_to_member_ids[g] do %>
+group_<%="#{g}_#{m}"%>:
+  group_id: <%=g%>
+  user_id: <%=m + 100%>
+<% end %>
+<% end %>
 

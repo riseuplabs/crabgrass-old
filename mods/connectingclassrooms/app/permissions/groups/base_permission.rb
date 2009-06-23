@@ -29,13 +29,4 @@ module Groups::BasePermission
   def may_create_subcommittees?(group = @group)
     current_user.may?(:admin, group) and group.parent_id.nil?
   end
-
-  ##
-  ## DISPLAY PERMISSIONS
-  ##
-
-  def may_contributions_group?(group = @group)
-    true
-  end
 end
-

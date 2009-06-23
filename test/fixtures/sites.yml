@@ -15,7 +15,7 @@ local:
   domain: localhost
   custom_appearance_id: 2
   network_id: 3001
-  council_id: 1 # true levellers
+  council_id: 5000 # teachers
   login_redirect_url: /me/dashboard
   limited: false
   chat: false

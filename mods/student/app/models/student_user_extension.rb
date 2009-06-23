@@ -35,7 +35,9 @@ module StudentUserExtension
       student = []
       if direct.any?
         Site.find(:all).each do |site|
-          next unless direct.include?(site.council_id)        # User is a teacher on site.
+          # we first check if the user is a teacher on site.
+          next unless direct.include?(site.council_id)
+          next if (all & site.group_ids).empty?
           real_admin_for = Group.connection.select_values(%Q[
             SELECT groups.id FROM groups
             WHERE groups.id IN (#{(all & site.group_ids).join(',')})

@@ -121,6 +121,11 @@ class Asset < ActiveRecord::Base
     true
   end
  
+  def has_access?(access, user)
+    return has_access!(access, user)
+  rescue PermissionDenied
+    return false
+  end
 #
 # SITES
 #
