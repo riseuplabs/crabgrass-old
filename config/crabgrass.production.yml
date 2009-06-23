@@ -23,6 +23,7 @@ enabled_languages:
   - tr_TR
 enabled_mods:
   - super_admin
+  - evil_mod
 enabled_tools:
   - asset_tool
   - core_tools
