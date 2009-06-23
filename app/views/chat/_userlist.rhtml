@@ -1,4 +1,4 @@
-<% for c_user in @channel_users %>
+<% for c_user in @channel.channels_users %>
   <div class="user">
   <%= avatar_for c_user.user, 'xsmall' %>
   <%= link_to_user c_user.user %>

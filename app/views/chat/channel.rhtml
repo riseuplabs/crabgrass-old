@@ -46,7 +46,7 @@ complete = "eval(request.responseText)"
 <% end -%>
 
 <%= # update the user list
-wait_time = 10
+wait_time = 4
 periodically_call_remote(:url => { :controller => 'chat',
 			      	   :action => 'user_list',
 				   :id => @channel},

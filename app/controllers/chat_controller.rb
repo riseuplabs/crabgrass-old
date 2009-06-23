@@ -12,7 +12,7 @@ class ChatController < ApplicationController
   permissions 'chat'
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user, :except => :index
-  
+
   # show a list of available channels
   def index
     if logged_in?
@@ -20,22 +20,17 @@ class ChatController < ApplicationController
     end
   end
 
-  def user_list
-    render :partial => 'chat/userlist', :layout => false
-  end
-
   # http request front door
   # everything else is xhr request.
   def channel
-    unless @channel.users.include?(@user)
+    #unless @channel.users.include?(@user)
       user_joins_channel(@user, @channel)
-      record_user_action :not_typing
-    end
+    #end
+    @channel_user.record_user_action :not_typing
     @messages = @channel.latest_messages
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
   end
-  
-  
+
   # Post a user's message to a channel
   def say
     return false unless request.xhr?
@@ -60,38 +55,42 @@ class ChatController < ApplicationController
       @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
     end
 
-    record_user_action :just_finished_typing
+    @channel_user.record_user_action :just_finished_typing
  
     render :layout => false
   end
 
   def user_is_typing
     return false unless request.xhr?
-    record_user_action :typing
+    @channel_user.record_user_action :typing
     render :nothing => true
   end
-  
+
   # Get the latest messages since the user last got any
   def poll_channel_for_updates
     return false unless request.xhr?
-
-    # update last_seen for this user
-    @channel_user = ChatChannelsUser.find(:first,
-                                          :conditions => {:channel_id => @channel,
-                                                          :user_id => @user})
-    @channel_user.last_seen = Time.now
-    @channel_user.save
 
     # get latest messages, update id of last seen message
     session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
     
-    record_user_action :not_typing
+    @channel_user.record_user_action :not_typing
     
     render :layout => false
   end
   
+  def user_list
+    @channel.users_just_left.each do |ex_user|
+      user_leaves_channel(ex_user.user, @channel)
+      ex_user.destroy
+    end
+
+    @channel_user.record_user_action
+   
+    render :partial => 'chat/userlist', :layout => false
+  end
+
   private
   
   # Get channel and user info that most methods use
@@ -107,7 +106,10 @@ class ChatController < ApplicationController
         end
       end
     end
-    @channel_users = @channel.active_channel_users
+    @channel_user = ChatChannelsUser.find(:first,
+                                          :conditions => {:channel_id => @channel,
+                                                          :user_id => @user})
+    @channel_user = ChatChannelsUser.create({:channel => @channel, :user => @user}) unless @channel_user
     true
   end
 
