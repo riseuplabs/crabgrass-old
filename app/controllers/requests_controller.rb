@@ -123,7 +123,7 @@ class RequestsController < ApplicationController
     flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
     redirect_to current_site.login_redirect(current_user)
   rescue Exception => exc
-    flash_message_now :exception => exc    
+    @exc = exc
   end
 
   protected
