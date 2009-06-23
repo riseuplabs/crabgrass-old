@@ -1,8 +1,8 @@
-<% @featured_pages = Page.find_by_path(
+1<% @featured_pages = Page.find_by_path(
   [ 'featured_by', @group.id, 
     'descending', 'updated_at'],
   options_for_group(@group).merge(
-    :flow => [nil, :gallery]))
+    :flow => [nil]))
   if @featured_pages.any? || current_user.may?(:admin,@group) %>
 <hr class="thick" />
 <h2 class="alert">
