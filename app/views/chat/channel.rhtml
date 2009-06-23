@@ -36,7 +36,7 @@ complete = "eval(request.responseText)"
   <td width="1%" id='handle'><%= current_user.login %></td>
   <td width="99%">
     <% default_text = "Type your messages here and press enter..."[:type_your_messages_here] -%>
-    <input id="entryfield" type="text" name="message" value="<%=default_text%>"
+    <input id="entryfield" type="text" name="message" autocomplete="off" value="<%=default_text%>"
       onclick="if ($('entryfield').value == '<%=default_text%>') {$('entryfield').clear();}"
       />
     <input type="submit" value="Say" style="display: none;" />
@@ -44,6 +44,16 @@ complete = "eval(request.responseText)"
 </tr>
 </table>
 <% end -%>
+
+<%= # update the user list
+wait_time = 4
+periodically_call_remote(:url => { :controller => 'chat',
+			      	   :action => 'user_list',
+				   :id => @channel},
+			 :frequency => wait_time,
+			 :update => 'userlist')
+
+%>
 
 <%= # poll server every wait_time seconds for new messages
 wait_time = 3
