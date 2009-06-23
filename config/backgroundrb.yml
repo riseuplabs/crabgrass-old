@@ -34,6 +34,8 @@
       :trigger_args: <%= daily %>
     :clean_codes:
       :trigger_args: <%= daily %>
+    :update_dailies:
+      :trigger_args: <%= daily %>
     :update_trackings:
       :trigger_args: <%= hourly %>
     :reindex_sphinx:
