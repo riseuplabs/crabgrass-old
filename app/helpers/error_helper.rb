@@ -91,6 +91,7 @@ module ErrorHelper
 
   # display flash messages with appropriate styling
   def display_messages(size=:big)
+    return "" if flash[:hide]
     @display_message ||= begin
       if flash[:type].empty?
         ""
@@ -103,6 +104,39 @@ module ErrorHelper
         content_tag(:div, notice_contents, :class => size.to_s + '_notice')
       end
     end
+  end
+
+  # 
+  # Used in controllers to render an error template base on an exception.
+  #
+  # for example:
+  #   
+  #   def show
+  #     ...
+  #   rescue Exception => exc
+  #     render_error(exc)
+  #   end
+  #
+  # If flash_message_now(exc) has not yet been called, then this method will
+  # call it.
+  #
+  def render_error(exc=nil)
+    unless flash[:type] == 'error'
+      flash_message_now :exception => exc
+    end
+    if exc and exc.is_a? ErrorNotFound
+      render :template => 'common/error', :status => 404
+    else
+      render :template => 'common/error'
+    end
+  end
+
+  def raise_error(message)
+    raise ErrorMessage.new(message)
+  end
+
+  def raise_not_found(message)
+    raise ErrorNotFound.new(message)
   end
 
   ##
@@ -141,7 +175,7 @@ module ErrorHelper
       elsif exc.is_a? ActiveRecord::RecordInvalid
         add_flash_message(flsh, :text => options[:text], :object => exc.record)
       else
-        add_flash_message(flsh, :text => "#{:error.t}: #{exc.class}", :error => exc.to_s)
+        add_flash_message(flsh, :title => 'Error'[:alert_error], :error => exc.to_s)
       end
     elsif options[:object]
       object = options[:object]

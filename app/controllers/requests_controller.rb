@@ -93,7 +93,7 @@ class RequestsController < ApplicationController
 
     if @request
       if @request.state != 'pending'
-        @error = "Invite has already been redeemed"[:invite_redeemed]
+        raise_error "Invite has already been redeemed"[:invite_redeemed]
       elsif logged_in?
         redirect_to redeem_url
       else
@@ -108,10 +108,11 @@ class RequestsController < ApplicationController
           :redirect => redeem_url
         })
       end
+    else
+      raise_not_found "Invite"[:invite]
     end
-
   rescue Exception => exc
-    flash_message_now :exception => exc
+    render_error(exc)
   end
 
   # redeem the invite after first login or register
@@ -123,7 +124,7 @@ class RequestsController < ApplicationController
     flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
     redirect_to current_site.login_redirect(current_user)
   rescue Exception => exc
-    @exc = exc
+    render_error(exc)
   end
 
   protected
