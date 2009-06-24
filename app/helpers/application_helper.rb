@@ -118,7 +118,11 @@ module ApplicationHelper
   #   :container    => true
   #
   def pagination_links(things, options={})
-    defaults = {:renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+    if request.xhr?
+      defaults = {:renderer => LinkRenderer::Ajax, :prev_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next]}
+    else
+      defaults = {:renderer => LinkRenderer::Dispatch, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+    end
     will_paginate(things, defaults.merge(options))
   end
   

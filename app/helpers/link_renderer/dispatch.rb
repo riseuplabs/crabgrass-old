@@ -1,5 +1,5 @@
 
-class DispatchLinkRenderer < WillPaginate::LinkRenderer
+class LinkRenderer::Dispatch < WillPaginate::LinkRenderer
   def url_for(page)
     #require 'ruby-debug'; debugger
     if @template.params[:_context] or @template.params[:_page]

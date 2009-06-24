@@ -94,6 +94,10 @@ module ImageHelper
     "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
   end
 
+  def big_spinner()
+    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;"
+  end
+
   # we can almost do this to trick ie into working with event.target,
   # which would eliminate the need for random ids.
   #
@@ -121,11 +125,12 @@ module ImageHelper
       :loading => spinner_icon_on(icon, id),
       :complete => spinner_icon_off(icon, id)
     }
-    class_options = {:class => "small_icon #{icon}_16", :id => id}
+    html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
+    html_options[:id] ||= id
     link_to_remote(
       label,
       options.merge(icon_options),
-      class_options.merge(html_options)
+      html_options
     )
   end
 
