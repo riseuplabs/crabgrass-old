@@ -63,4 +63,53 @@ class RequestsControllerTest < Test::Unit::TestCase
     end
   end
 
+  def test_accept_error_bad_code
+    #url = "http://localhost:3000/invites/accept/bad-code/root_at_localhost"
+
+    get :accept, :path => ['bad-code', 'root_at_localhost']
+    assert_response :not_found
+    assert_error_message
+  end
+
+  def test_accept_error_already_redeemed
+    req = RequestToJoinUsViaEmail.create(
+      :created_by => users(:dolphin),
+      :email => 'root@localhost',
+      :requestable => groups(:animals),
+      :language => languages(:pt)
+    )
+    request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
+    request.approve_by!(users(:red))
+
+    #url = "http://localhost:3000/invites/accept/#{req.code}/root_at_localhost"
+
+    get :accept, :path => [req.code, 'root_at_localhost']
+    assert_response :success
+    assert_error_message(/#{Regexp.escape(:invite_redeemed.t)}/)
+  end
+
+  def test_redeem_error
+    login_as :blue
+
+    get :redeem, :email => 'bogus', :code => 'bogus'
+    assert_response :not_found
+    assert_error_message
+  end
+
+  def test_already_redeemed_error
+    req = RequestToJoinUsViaEmail.create(
+      :created_by => users(:dolphin),
+      :email => 'root@localhost',
+      :requestable => groups(:animals),
+      :language => languages(:pt)
+    )
+    request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
+    request.approve_by!(users(:red))
+    
+    login_as :red
+    get :redeem, :email => req.email, :code => req.code
+    assert_response :success
+    assert_error_message(/#{Regexp.escape(:invite_redeemed.t)}/)
+  end
+
 end
