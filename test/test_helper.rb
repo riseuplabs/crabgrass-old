@@ -95,6 +95,13 @@ class Test::Unit::TestCase
     assert_redirected_to :controller => :account, :action => :login
   end
 
+  def assert_error_message(regexp=nil)
+    assert_equal 'error', flash[:type]
+    if regexp
+      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp, flash[:text]]
+    end
+  end
+
   ##
   ## ASSET HELPERS
   ##
