@@ -23,7 +23,6 @@ enabled_mods:
 enabled_tools:
   - asset_tool
   - core_tools
-  - event_tool
   - ranked_vote_tool
   - rate_many_tool
   - task_list_tool
@@ -32,7 +31,6 @@ enabled_tools:
   - gallery_tool
   - external_video_tool
   - announcement_tool
-  - feed_tool
 email:
   delivery_method: :sendmail
 ensure_page_owner: false
@@ -43,6 +41,8 @@ ensure_page_owner: false
 
 sites:
   - name: share
+    admin_group: admins
+  - name: facts
     admin_group: admins
 
 ##
@@ -56,7 +56,6 @@ email_sender: "robot@$current_host"
 tracking: true
 available_page_types:
   - AssetPage
-  - EventPage
   - ExternalVideoPage
   - TaskListPage
   - DiscussionPage
@@ -66,4 +65,5 @@ available_page_types:
   - ArticlePage
   - Gallery
   - WikiPage
+  - SurveyPage
 
