@@ -212,11 +212,13 @@ module PathFinder::Mysql::BuilderFilters
   #++
   
   def filter_ascending(sortkey)
+    sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s ASC" % sortkey
   end
   
   def filter_descending(sortkey)
+    sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s DESC" % sortkey
   end
