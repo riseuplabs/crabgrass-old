@@ -37,14 +37,8 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_equal :private, assigns(:access), "teacher should have access to private group information for class1"
     # testing link display
     assert_select 'ul.side_list' do |ul|
-      # this one should check for contributions
-      # how ever none of the following seem to 
-      # work - will check back later TODO
-      # assert_select 'li.group_contributions_16'
-      # assert_select 'li.small_icon.group_contributions_16'
-      # assert_select 'a', "Contributions"
+      assert_select 'li[class="small_icon group_contributions_16 "]'
     end
-
 
     #show the teachers council you belong to
     get :show, :id => groups(:class1_teachers).name
