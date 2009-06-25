@@ -152,6 +152,12 @@ namespace :crabgrass do
     #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{release_path}/public/favicon.ico"
     #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{release_path}/public/favicon.png"
   end
+
+  desc "refresh the staging database"
+  task :refresh do 
+    run "mkdir -p #{deploy_to}/tmp/"
+    run "touch #{deploy_to}/tmp/refresh.txt"
+  end
 end
 
 namespace :debian do
