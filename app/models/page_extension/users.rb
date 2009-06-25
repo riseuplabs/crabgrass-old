@@ -50,7 +50,11 @@ module PageExtension::Users
   
   # like user_participations.find_by_user_id, but uses already included data
   def participation_for_user(user) 
-    user_participations.detect{|p| p.user_id==user.id }
+    if user.real?
+      user_participations.detect{|p| p.user_id==user.id }
+    else
+      false
+    end
   end
 
   # A list of the user participations, with the following properties:

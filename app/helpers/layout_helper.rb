@@ -1,8 +1,9 @@
 module LayoutHelper
 
-  ##########################################
-  # DISPLAYING BREADCRUMBS and CONTEXT
-  
+  ##
+  ## DISPLAYING BREADCRUMBS and CONTEXT
+  ##
+
   def link_to_breadcrumbs(min_length = 3)
     if @breadcrumbs and @breadcrumbs.length >= min_length
       content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
@@ -15,9 +16,10 @@ module LayoutHelper
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
 
-  #########################################
-  # TITLE
-  
+  ##
+  ## TITLE
+  ##
+
   def title_from_context
     (
       [@html_title] +
@@ -26,9 +28,10 @@ module LayoutHelper
     ).compact.join(' - ')
   end
       
-  ###########################################
-  # STYLESHEET
-  
+  ##
+  ## STYLESHEET
+  ##
+
   # CustomAppearances model allows administrators to override the default css values
   # this method will link to the appropriate overriden css
   def themed_stylesheet_link_tag(path)
@@ -77,6 +80,9 @@ module LayoutHelper
     lines << stylesheet_link_tag('ie/ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
+    if language_direction == "rtl"
+      lines << themed_stylesheet_link_tag('rtl')
+    end
     lines.join("\n")
   end
 
@@ -102,9 +108,18 @@ module LayoutHelper
       'right'
     end
   end
+
+  def language_direction
+    @language_direction ||= if LANGUAGES[session[:language_code]].safe_send(:rtl)
+      "rtl"
+    else
+      "ltr"
+    end
+  end
   
-  ############################################
-  # JAVASCRIPT
+  ##
+  ## JAVASCRIPT
+  ##
 
   # includes the correct javascript tags for the current request.
   # if the special symbol :extra has been specified as a required js file,
@@ -143,8 +158,9 @@ module LayoutHelper
     lines.join("\n")
   end
   
-  ############################################
-  # BANNER
+  ##
+  ## BANNER
+  ##
 
   # banner stuff
   def banner_style
@@ -157,9 +173,10 @@ module LayoutHelper
     @banner_style.color if @banner_style
   end
 
-  ############################################
-  # CONTEXT STYLES
-  
+  ##
+  ## CONTEXT STYLES
+  ##
+
   def background_color
     "#ccc"
   end
@@ -181,8 +198,9 @@ module LayoutHelper
     style.join("\n")
   end
 
-  ###########################################
-  # LAYOUT STRUCTURE
+  ##
+  ## LAYOUT STRUCTURE
+  ##
 
   # builds and populates a table with the specified number of columns
   def column_layout(cols, items, options = {}, &block)
@@ -216,9 +234,18 @@ module LayoutHelper
     lines.join("\n")
   end
 
+  ##
+  ## PARTIALS
+  ##
 
-  ############################################
-  # CUSTOMIZED STUFF
+  def dialog_page(options = {}, &block)
+    block_to_partial('common/dialog_page', options, &block)
+  end
+  
+
+  ##
+  ## CUSTOMIZED STUFF
+  ##
 
   # build a masthead, using a custom image if available
   def custom_masthead_site_title

@@ -1,19 +1,20 @@
 --- 
-add_encryption_key: Aggiungi Chiave di Cifratura
 group_not_allowed_to_view_image_error: "Non \xC3\xA8 permesso vedere questa immagine al gruppo che possiede questa pagina."
 Personal: Personale
 small: piccolo
+add_encryption_key: Aggiungi Chiave di Cifratura
 folder_page_description: Una collezione di risorse.
 menu_networks: Reti
 my_requests_headline: Le Mie Richieste
-add_star_link: Aggiungi Stella {:star_count}
 groups: Gruppi
 title: Titolo
 month_short_april: Apr
 request_to_friend_description: ":user vorrebbe essere il contatto di :other_user"
 move_image_left: Sposta immagine a sinistra
 peers: peer
+add_star_link: Aggiungi Stella {:star_count}
 current_video_sources: "al momento sono supportati: youtube, blip.tv, google video, vimeo"
+archive: Archivio
 request_to_join_us_description: ":user \xC3\xA8 stato invitato a entrare nel grupo :group"
 wiki_page_display: Wiki
 break_lock: annulla blocco
@@ -50,7 +51,6 @@ dont_have_permission_to_create_committees: Non hai i permessi necessari per crea
 activate_js_to_rearrange_photos: Devi attivare JavaScript per poter riordinare le foto con il Drag&Drop!
 media_for_group: "%s in %s"
 medium: medium
-achive: Archivio
 coordinator: Coordinatore
 reject_button: rifiuta
 group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo we.riseup.net/nomedeltuogruppo."
@@ -73,6 +73,7 @@ my_settings: Impostazioni per {user}
 locations: Indirizzi
 Home: Pagina Iniziale
 last_change: ultimo cambiamento
+contributed: Contributo
 create_page_data: dati {page_class}
 archive_filter_created_link: Data Creata
 edit_attachments_link: Modifica
@@ -120,8 +121,8 @@ add_one_or_more_tags: "Aggiungi una o pi\xC3\xB9 etichette, separate da virgole"
 forgot_password_text: "Se hai dimenticato la password che usi per effettuare l'accesso, possiamo inviarti un link via email che ti permetter\xC3\xA0 di generarne una nuova."
 login: Accesso
 add_new_attachment: Aggiungi Nuovo Allegato
-article_page_description: Post di un blog o articolo di notizie.
 separate_tags: Separa i diversi tag con delle virgole.
+article_page_description: Post di un blog o articolo di notizie.
 inbox_description: Elenco di pagine a cui sto partecipando attivamente o di cui seguo i cambiamenti
 all_content: Tutto il Contenuto
 delete_page_link: Elimina :page_class
@@ -137,20 +138,19 @@ my_dashboard: La mia bacheca
 slideshow_delay_input: Aggiorna ogni :input_field secondi
 network: Rete
 view_requests: vedi richieste
-minimum_stars_for_important_pages_description: "Imposta il numero minimo di stelle perch\xC3\xA9 una pagina appaia nella lista \"importanti\" nella pagina iniziale del gruppo."
 date_older: "Pi\xC3\xB9 vecchi"
 your_login: Il tuo login
 my_status_heading: Il Tuo Stato Attuale
 signup_email_info: "Opzionale: usato se dimentichi la tua password"
 next_change: modifica successiva
 create_task_list: crea nuova lista dei compiti
+check_all: Seleziona tutto
 archive_headline: Archivio
 signup_email: La tua e-mail
 alert_error: Errore
 full: pieno
 login_button: Entra
 remove_from_gallery: Rimuovi dalla galleria
-destroy_group: distruggi %s
 group_has_no_public_profile: Questo gruppo non ha un profilo pubblico.
 Category: Categoria
 invalid_email: Indirizzo email non valido
@@ -177,7 +177,6 @@ gallery_class_description: Una collezione di immagini.
 unknown: sconosciuto
 approval_vote: voto di approvazione
 signup_info: Scegli il tuo nome utente e la tua password, poi fai click su "%s"
-committee_type_description: "Che tipo di comitato sar\xC3\xA0 questo?"
 location_address: indirizzo
 Admin: Amministratore
 link_name: Nome Link
@@ -245,6 +244,7 @@ directory_of_groups: Elenco dei gruppi
 personal_message: messaggio personale
 wont_be_able_to_save: Non potrai salvare questa pagina
 request_to_join_our_network_description: "il gruppo :group \xC3\xA8 stato inviato a entrare nella rete :network"
+destroy_group_link: distruggi {group_type}
 remove_from_inbox: Rimuovi da "In Arrivo"
 recipients: destinatari
 no_members: (non ci sono membri)
@@ -259,12 +259,10 @@ edit: modifica
 phone_numbers: Numeri di Telefono
 view_slideshow: Vedi Presentazione
 video: video
-requests_for_group: Richieste per %s
 page_details_link: Dettagli :page_class
 add_im_address: Aggiungi Indirizzo IM
 removing_image: Rimozione immagine in corso...
 wiki_is_locked: "Questo wiki \xC3\xA8 bloccato da :user"
-coordinating_council_description: L'appartenenza a questo comitato garantisce uno speciale <i>accesso amministrativo</i> al :group_type <b>:group_name</b>.
 group_members_publicly_visible: Rendi i Membri Publicamente Visibili
 page_list_heading_updated_by: aggiornata da
 version_doesnt_exist: Non esiste la versione :version
@@ -290,7 +288,6 @@ starred: speciali
 add_phone_number: Aggiungi Numero di Telefono
 created_by: Creato da
 Work_Life: Vita Lavorativa
-minimum_stars_for_important_pages: Numero minimo di stelle per pagine importanti
 wiki_page_description: Un documento di testo a forma libera.
 tags: Tag
 message_must_not_be_empty: il messaggio non deve essere vuoto
@@ -338,7 +335,6 @@ edit_settings: modifica impostazioni
 create_button: Crea
 not_featured_content: Non ancora un contenuto in evidenza
 requests_from_me: Richieste da me
-create_page_share: Chi ha accesso a questo {page_class}?
 invalid_email_text: "L'indirizzo email che hai inserito non \xC3\xA8 valido."
 send_invites_headline: Invia inviti per entrare nel gruppo
 accept_usage_agreement: Accetto i termini di utilizzo
@@ -373,7 +369,6 @@ attachments: Allegati
 no_change: nessun cambiamento
 invite_info: Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo %s.
 status_pending: pendente
-me_requests_link: Richieste
 date_yesterday: Ieri
 show_gallery: Mostra Galleria
 upload_image: Carica Immagine
@@ -392,6 +387,7 @@ task_list_page_display: Lista dei compiti
 organization: organizzazione
 approve_contact_info: "Esiste gi\xC3\xA0 una richiesta di contatto da questo utente. Vuoi approvarla?"
 to: a
+basic_settings: Impostazioni di base
 menu_link_logout: Disconnetti
 group_successfully_updated: Gruppo aggiornato con successo.
 large: grande
@@ -411,9 +407,9 @@ private_profile: Profilo Privato
 error_saving_new_order: Errore durante il salvataggio del riordinamento!
 page_list_heading_title: titolo
 request_to_join_your_network_description: ":group ha richiesto di entrare nella rete :network"
-article_page_display: articolo
 video_embed_code_prompt: Inserisci il codice per il video esterno
 cancel_button: Annulla
+article_page_display: articolo
 not_set: non impostato
 tuesday: "Marted\xC3\xAC"
 settings: Impostazioni
@@ -429,8 +425,9 @@ month_short_january: Gen
 signup_success: Registrazione eseguita con successo
 edit_featured_content: modifica contenuti in evidenza
 alert_field_errors: Ci sono problemi con i seguenti campi
-comparing_changes_header: "Confronto dei cambiamenti fatti da {user} alle {when} da {old_version} a {new_version}"
+comparing_changes_header: Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version
 csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si pu\xC3\xB2 verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, \xC3\xA8 sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
+administration: Amministrazione
 send_invites_button: Invia Inviti
 date_centuries: secoli
 current_attachments: Allegati Correnti
@@ -460,7 +457,6 @@ approved: approvato
 Social_Change_Interests: Interessi riguardanti il cambiamento sociale
 upload_new_image: carica nuova immagine
 request_to_join_us_via_email_description: ":email \xC3\xA8 stato invitato/a a entrare nel gruppo :group"
-page_info: Informazioni pagina
 message_page_display: Messaggio
 Announcements: Annunci
 wednesday: "Mercoled\xC3\xAC"

@@ -2,6 +2,7 @@ class GalleryController < BasePageController
   
   stylesheet 'gallery'
   javascript :extra, 'page'
+  permissions 'gallery'
   
   include GalleryHelper
   include BasePageHelper
@@ -12,7 +13,7 @@ class GalleryController < BasePageController
 
   def show
     params[:page] ||= 1
-    @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+    @images = @page.images.visible_to(current_user).paginate(:page => params[:page])
     #@cover = @page.cover
   end
 
@@ -113,8 +114,12 @@ class GalleryController < BasePageController
         raise PermissionDenied
       end
     end
-    @page.cover = params[:id]
+    asset = Asset.find_by_id(params[:id])
+
+    @page.cover = asset
     current_user.updated(@page)
+    @page.save!
+
     if request.xhr?
       render :text => :album_cover_changed.t, :layout => false
     else
@@ -127,22 +132,7 @@ class GalleryController < BasePageController
   
   def find
     existing_ids = @page.image_ids
-    # this call doesn't return anything as Asset.visible_to isn't working.
-    # see my comment in app/models/asset.rb for details.
-    #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
-    results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-      (a.page && current_user.may?(:view, a.page)) ? a : nil
-    }
-    current_page = (params[:page] or 1)
-    per_page = 30
-    @images = WillPaginate::Collection.create(current_page,
-                                              per_page,
-                                              results.size) do |pager|
-      start = (current_page-1)*per_page
-      result_slice = (results.to_array[start, per_page] rescue
-                      results[start, per_page])
-      pager.replace(results[start, per_page])
-    end
+    @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
   rescue => exc
     flash_message :exception => exc
     redirect_to :action => 'show', :page_id => @page.id
@@ -228,29 +218,6 @@ class GalleryController < BasePageController
   #  flash_message_now :exception => exc
   end
 
-  def create
-    @page_class = get_page_type
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        @page = create_new_page!(@page_class)
-        params[:assets].each do |file|
-          next if file.size == 0 # happens if no file was selected
-          asset = Asset.make(:uploaded_data => file)
-          @page.add_image!(asset, current_user)
-        end
-        return redirect_to(create_page_url(AssetPage, :gallery => @page.id)) if params[:add_more_files]
-        return redirect_to(page_url(@page))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
-    end
-  end
-  
   def upload
     logger.fatal 'go ahead'
     if request.xhr?
@@ -283,19 +250,6 @@ class GalleryController < BasePageController
 
   protected
  
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:add, :remove, :find, :upload, :add_star, :remove_star,
-                  :change_image_title, :make_cover)
-      current_user.may?(:edit, @page)
-    elsif action?(:show, :comment_image, :detail_view, :slideshow, :download)
-      @page.public? or current_user.may?(:view,@page)
-    else
-      current_user.may?(:admin, @page)
-    end  
-  end
-  
   def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true
@@ -308,6 +262,24 @@ class GalleryController < BasePageController
    end
   end
 
-  
+  def build_page_data
+    @assets ||= []
+    params[:assets].each do |file|
+      next if file.size == 0 # happens if no file was selected
+      asset = Asset.make(:uploaded_data => file)
+      @assets << asset
+      @page.add_image!(asset, current_user)
+    end
+    # gallery page has no 'data' field
+    return nil
+  end
+
+  def destroy_page_data
+    @assets.compact.each do |asset|
+      asset.destroy unless asset.new_record?
+      asset.page.destroy if asset.page and !asset.page.new_record?
+    end
+  end
+
 end
 

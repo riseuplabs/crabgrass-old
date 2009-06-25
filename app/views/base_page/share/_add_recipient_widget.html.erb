@@ -3,11 +3,16 @@
   add_button_id = 'add_recipient_button'
   autocomplete_id_number = rand(1000000)
 
+  access = may_select_access_participation? ?
+    "$('recipient[access]').value" :
+    %{'#{default_access}'}
+
+
   # the remote action that is triggered when the 'add' button is pressed (or 
   # the popup item is selected).
   add_action = {
     :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
-    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + $('recipient[access]').value},
+    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access}},
     :loading => spinner_icon_on('plus', add_button_id),
     :complete => spinner_icon_off('plus', add_button_id)
   }
@@ -49,13 +54,16 @@
   recipients_exist = @page && @page.recipients.any?
 %>
 <table class='share_page_recipient_add'>
+<!--
   <tr>
     <td><%= 'User or group name'[:user_or_group_name]%>:</td>
     <td>&nbsp;</td>
-    <td><%= 'Grant Access'[:grant_access]%>:</td>
-    <td>&nbsp;</td>
+    <%- if may_select_access_participation?-%>
+      <td><%= 'Grant Access'[:grant_access]%>:</td>
+    <%- end -%>
     <td>&nbsp;</td>
   </tr>
+-->
   <tr>
     <td style='width:100%'>
       <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
@@ -64,7 +72,7 @@
     </td>
     <td>&nbsp;</td>
     <td>
-      <%- if @page.nil? or current_user.may?(:admin,@page) -%>
+      <%- if may_select_access_participation?-%>
         <%= select_page_access 'recipient[access]', :blank => false %>
       <%- end -%>
     </td>
@@ -73,7 +81,7 @@
     </td>
   </tr>
 </table>
-<div id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
+<div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
 </div>
 

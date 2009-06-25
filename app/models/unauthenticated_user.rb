@@ -24,4 +24,10 @@ class UnauthenticatedUser
   def method_missing(method)
     raise PermissionDenied
   end
+
+  # authenticated users are real, we are not.
+  def real?
+    false
+  end
+
 end

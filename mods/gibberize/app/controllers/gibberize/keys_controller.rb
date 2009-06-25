@@ -3,8 +3,10 @@ class Gibberize::KeysController < Gibberize::BaseController
   # GET /keys
   def index
     @language = Language.find_by_code(params[:language])
-    if @language
-      @filter = params[:filter]
+    @filter = params[:filter]
+    if @filter == 'search'
+      @keys = Key.by_name.paginate(:page => params[:page], :conditions => ['keys.name LIKE ?', "%"+(params[:search]||"")+"%"])
+    elsif @language
       redirect_to params.merge(:filter => 'untranslated') unless @filter
       if @filter == 'all'
         @keys = Key.by_name.paginate(:page => params[:page])
@@ -14,8 +16,6 @@ class Gibberize::KeysController < Gibberize::BaseController
         @keys = Key.by_name.untranslated(@language).paginate(:page => params[:page])
       elsif @filter == 'out_of_date'
         @keys = Key.by_name.out_of_date(@language).paginate(:page => params[:page])
-      elsif @filter == 'search'
-        @keys = Key.by_name.paginate(:page => params[:page], :conditions => ['keys.name LIKE ?', "%"+(params[:search]||"")+"%"])
       elsif @filter == 'custom'
         @keys = Key.by_name.custom(@language).paginate(:page => params[:page])
       end

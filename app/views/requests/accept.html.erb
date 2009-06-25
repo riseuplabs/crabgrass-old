@@ -1,20 +1,14 @@
-<% @title_box = content_tag :h1, 'Accept invitation to join group'[:invite_accept_headline] %>
-
-<% if @error %>
-  <blockquote><h2>
-    <%= @error %>
-  </h2></blockquote>
-<% elsif @request and @request.pending? %>
-  <%= :invite_accept_info.t %>
-  <blockquote><h2>
-    <%= link_to 'I already have an account'[:invite_accept_via_existing_account], @login_url %>
-  </h2></blockquote>
-  <blockquote><h2>
-    <%= link_to 'I need to register a new account'[:invite_accept_via_register], @register_url %>
-  </h2></blockquote>
-<% else %>
-  <blockquote><h2>
-    <%= 'Error'.t %>: <%= 'Invite not found'.t %>
-  </h2></blockquote>
-<% end  %>
+<% dialog_page(
+  :title => 'Accept invitation to join group'[:invite_accept_headline, @request.group.name], 
+  :details => "Click one of the following to accept the invite"[:invite_accept_info]
+) do %>
+  <ul>
+    <li>
+      <%= link_to_with_icon('user', 'I already have an account'[:invite_accept_via_existing_account], @login_url) %>
+    </li>
+    <li>
+      <%= link_to_with_icon('user_add', 'I need to register a new account'[:invite_accept_via_register], @register_url) %>
+    </li>
+  </ul>
+<% end %>
 

@@ -1,0 +1,11 @@
+<div class='wing'>
+  <h3><%= 'Membership'[:membership] %></h3>
+  <ul class='side_list'>
+    <%= content_tag_if(:li, list_membership_link) %>
+    <%= content_tag_if(:li, join_group_link) %>
+    <%= content_tag_if(:li, leave_group_link) %>
+    <%= content_tag_if(:li, invite_link) %>
+    <%= content_tag_if(:li, requests_link) %>
+  </ul>
+  <%= render :partial => 'groups/navigation/side_links' %>
+</div>

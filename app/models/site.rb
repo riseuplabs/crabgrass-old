@@ -96,10 +96,10 @@ class Site < ActiveRecord::Base
     end
   end
 
-  proxy_to_conf :name, :title, :pagination_size, :default_language, :email_sender,
-    :available_page_types, :tracking, :evil, :enforce_ssl, :show_exceptions,
-    :require_user_email, :domain, :profiles, :profile_fields, :chat?, 
-    :translation_group, :limited?
+  proxy_to_conf :name, :title, :pagination_size, :default_language,
+    :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
+    :enforce_ssl, :show_exceptions, :require_user_email, :domain, :profiles,
+    :profile_fields, :chat?, :translation_group, :limited?, :signup_mode
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
@@ -112,13 +112,6 @@ class Site < ActiveRecord::Base
   ##
   ## RELATIONS
   ##
-
-  # a user can be autoregistered in site.network
-  def add_user!(user)
-    unless self.network.nil? or user.member_of?(self.network) or self.new_record?
-      self.network.add_user!(user)
-    end
-  end
   
   # gets all the pages for all the groups in the site
   # this does not work. network.pages only contains
@@ -211,7 +204,19 @@ class Site < ActiveRecord::Base
   ##
   
   def add_user!(user)
-    network.add_user!(user) if network and !user.member_of?(network)
+    if network and !user.member_of?(network)
+      network.add_user!(user)
+    end
+  end
+
+  ##
+  ## RELATIONSHIP TO GROUPS
+  ##
+
+  def add_group!(group)
+    if network and !group.member_of?(network) and group.normal?
+      network.groups << group
+    end
   end
 
 end

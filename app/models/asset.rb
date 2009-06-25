@@ -63,6 +63,9 @@ TODO:
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -78,6 +81,9 @@ class Asset < ActiveRecord::Base
   # it always picks "Asset". So, we hardcode what the query should be:
   POLYMORPH_AS_PARENT = 'SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = "#{self.type_as_parent}"'
 
+  # fields in assets table not in asset_versions
+  NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
+
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include AssetExtension::Upload
@@ -89,30 +95,31 @@ class Asset < ActiveRecord::Base
   ##
   
   # checks wether the given `user' has permission `perm' on this Asset.
-  # Permission to an Asset will be granted in any of the following ways:
-  #  * The Asset belongs to an AssetPage and the given `user' is given 
-  #    access to it
-  #  * The Asset is part of a Gallery with access for `user'
-  #  * The Asset is an attachment of a Page `user' may access.
+  #
+  # there is only one way that a user may have access to an asset:
+  #
+  #    if the user also has access to the asset's page 
+  #
+  # not all assets have a page. for them, this test will fail.
+  # (for example, assets that are part of profiles).
+  #
+  # Adding an asset to a gallery does not confir any special access.
+  # If you have access to the gallery, but not an asset in the gallery, then
+  # you are not able to see the asset.
+  #
   # Return value:
   #   returns always true
   #   raises PermissionDenied if the user has no access.
-  # Note: This method is normally called through User#may! or the 
-  #       weaker User#may?
-  def has_access! perm, user
-    raise PermissionDenied unless self.page
-    p = self.page.has_access!(perm, user)
-  rescue PermissionDenied
-    ##
-    ## I think there is a much better way to do this -elijah
-    ##
-    Gallery rescue nil # assure load_missing_constant loads this if possible
-    unless defined?(Gallery) &&
-        self.galleries.any? &&
-        self.galleries.select {|g| user.may?(perm, g) ? g : nil}.any?
-      raise PermissionDenied
+  #
+  # has_access! is called by User.may?
+  #
+  def has_access!(perm, user)
+    # If the perm is :view, use the quick visibility check
+    if perm == :view
+      return true if self.visible?(user)
     end
-    true
+    raise PermissionDenied unless self.page
+    self.page.has_access!(perm, user)
   end
  
 #
@@ -189,8 +196,7 @@ class Asset < ActiveRecord::Base
       read_attribute('content_type') || 'application/octet-stream'
     end
   end
-  self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
-     'is_image' << 'is_audio' << 'is_video' << 'is_document'
+  self.non_versioned_columns.concat NON_VERSIONED
 
   ##
   ## DEFINE THE CLASS Asset::Version

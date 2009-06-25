@@ -10,7 +10,7 @@ class ChatChannel < ActiveRecord::Base
       ChatChannelsUser.create join_attrs.merge(:user => user, :channel => proxy_owner)
     end
 #    def cleanup
-#      connection.execute("DELETE FROM channels_users WHERE last_seen < DATE_SUB(\'#{ Time.now.strftime("%Y-%m-%d %H:%M:%S") }\', INTERVAL 1 MINUTE) OR last_seen IS NULL")
+#      connection.execute("DELETE FROM channels_users WHERE last_seen < DATE_SUB(\'#{ Time.zone.now.strftime("%Y-%m-%d %H:%M:%S") }\', INTERVAL 1 MINUTE) OR last_seen IS NULL")
 #    end
   end
   
@@ -20,25 +20,17 @@ class ChatChannel < ActiveRecord::Base
     end
   end
   
-  def destroy_old_messages
-    count = messages.count
-    if count > keep
-      delete_this_many = count - keep
-      connection.execute "DELETE FROM messages WHERE channel_id = %s ORDER BY id ASC LIMIT %s" % [self.id, delete_this_many]
-    end
-  end
-    
-  def latest_messages(qty = nil)
-    qty ||= keep
-    messages.find(:all, :limit => qty, :order => 'created_at DESC').reverse
+  def latest_messages(time = nil)
+    time ||= 1.day.ago.to_s(:db)
+    messages.find(:all, :conditions => ["created_at < ?", time], :order => 'created_at DESC').reverse
   end
   
   def users_just_left
-    User.find_by_sql(["SELECT u.* FROM users u, channels_users cu WHERE cu.last_seen < DATE_SUB(?, INTERVAL 1 MINUTE) AND cu.user_id = u.id AND cu.channel_id = ?", Time.now.strftime("%Y-%m-%d %H:%M:%S"), self.id])
+    ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 30 SECOND) AND channel_id = ?", Time.zone.now.to_s(:db), self.id])
   end
   
   def active_channel_users
-    @active_channel_users ||= ChatChannelsUser.find_by_sql(["SELECT * FROM channels_users cu WHERE cu.last_seen >= DATE_SUB(?, INTERVAL 1 MINUTE) AND cu.channel_id = ?", Time.now.strftime("%Y-%m-%d %H:%M:%S"), self.id])
+    @active_channel_users = ChatChannelsUser.find_by_sql(["SELECT * FROM channels_users cu WHERE cu.last_seen >= ? AND cu.channel_id = ?", 30.seconds.ago.to_s(:db), self.id])
   end
   
   def keep
@@ -61,6 +53,6 @@ class ChatChannel < ActiveRecord::Base
     end
     
     self.users.delete(user)
-    self.users.push_with_attributes(user, { :last_seen => Time.now, :typing => 10 })
+    self.users.push_with_attributes(user, { :last_seen => Time.zone.now, :typing => 10 })
   end
 end

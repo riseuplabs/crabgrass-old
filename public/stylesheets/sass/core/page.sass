@@ -76,18 +76,19 @@ div
 // SHARE PAGE WIDGET
 //
 
+// the input form area
 table.share_page_recipient_add
   width: 100%
   div.scroll
-    overflow: auto
+    overflow: auto 
     height: 20em
     width: 13em
     padding: 0.5em
     font-size: 0.8em
 
-#share_page_recipient_area
-  margin: 4px
-  margin-right: 10px
+// the enclosure for the list of added recipients
+.autocomplete_results_area
+  margin: 6px 10px 6px 10px
   border: 1px solid #ccc
   max-height: 15em
   overflow: auto
@@ -96,7 +97,8 @@ table.share_page_recipient_add
   table
     width: 100%
 
-#share_page_recipient_table
+// the list af added recipients
+.autocomplete_results_table
   td
     padding: 4px
     border-bottom: 1px solid #ccc
@@ -142,15 +144,6 @@ table.notify
     td
       padding-top: 1em
 
-.share_page
-  div.error
-    background: #fcc
-    border: 1px solid red
-    h2
-      border: 0
-      font-size: 1em
-      color: black
-
 //
 // PAGE SIDEBAR
 //
@@ -167,12 +160,13 @@ table.notify
     background: #e0e0e0
     text-transform: uppercase
     font-size: 0.8em
-    padding: 0.5em 0 0.5em .75em
+    padding: 0.5em 0.75em
     margin: 2.5em 0 0.5em 0
     -moz-border-radius: 4px
   ul.rule
     border-top: 1px dotted #fff
     padding-top: 0.5em
+    margin-top: 0.5em
   ul.names li:first-child
     border-top: 0
   ul.names li
@@ -185,8 +179,7 @@ table.notify
       margin-right: -20px
   input.check
     float: left
-    margin-left: -23px
-    margin-top: 7px
+    margin: 7px 0 0 -18px
   .tags
     overflow: hidden
   .tags a
@@ -299,10 +292,6 @@ div.title_box
 div.popup
   border= !popup_border
   background= !popup_bg
-  z-index: 101
-  position: absolute
-  top: -32px
-  right: 43px
   h1
     background: #999
     color: white
@@ -329,8 +318,8 @@ div.popup_arrow
   width: 15px
   background: url(/images/ui/wedge_right.png)
   position: absolute
-  top: 24px
-  right: -23px
+  top: 30px
+  right: -15px
 
 div#popup_holder
   position: absolute

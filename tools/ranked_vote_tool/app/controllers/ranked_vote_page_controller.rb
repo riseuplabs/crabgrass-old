@@ -33,6 +33,7 @@ class RankedVotePageController < BasePageController
   before_filter :fetch_poll
   before_filter :find_possibles, :only => [:show, :edit] 
   stylesheet 'vote'
+  permissions 'ranked_vote_page'
   javascript :extra, 'page'
      
   def show
@@ -156,10 +157,6 @@ class RankedVotePageController < BasePageController
     return array_of_votes, who_voted_for
   end
   
-  def authorized?
-    return super unless @page
-    current_user.may?(:admin, @page)
-  end  
   
   def fetch_poll
     @poll = @page.data if @page
@@ -183,6 +180,10 @@ class RankedVotePageController < BasePageController
 
   def setup_view
     @show_print = true
-  end  
+  end
+
+  def build_page_data
+    Poll.new
+  end
 end
 

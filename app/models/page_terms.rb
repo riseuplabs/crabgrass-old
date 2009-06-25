@@ -64,8 +64,6 @@ class PageTerms < ActiveRecord::Base
       # timedates
       has :page_created_at
       has :page_updated_at
-      has :starts_at
-      has :ends_at
       has :views_count
 
       # ids
@@ -92,6 +90,25 @@ class PageTerms < ActiveRecord::Base
   end
   def created_at=(value)
     write_attribute(:page_created_at, value)
+  end
+
+  # return nil if the object does not have an id in the access_ids string.
+  # otherwise, returns a number
+  def access_ids_include?(*args)
+    hash = {}
+    args.each do |object|
+      if object.is_a? User
+        hash[:user_ids] ||= []
+        hash[:user_ids] << object.id 
+      elsif object.is_a? Group
+        hash[:group_ids] ||= []
+        hash[:group_ids] << object.id 
+      elsif object == :public
+        hash[:public] = true
+      end
+    end
+    id = Page.access_ids_for(hash).first
+    return self.access_ids =~ /(^| )#{id}( |$)/
   end
 
   # returns a string suitable for using in a fulltext match against

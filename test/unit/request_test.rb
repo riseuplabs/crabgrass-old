@@ -139,7 +139,7 @@ class RequestTest < ActiveSupport::TestCase
       req.approve_by!(outsider)
     end
 
-    assert_raises Exception, 'should only be able to redeem pending requests' do
+    assert_raises ErrorMessage, 'should only be able to redeem pending requests' do
       req = RequestToJoinUsViaEmail.redeem_code!(outsider, req.code, 'root@localhost')
     end
 

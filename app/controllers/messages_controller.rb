@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
 
   verify :method => :post, :only => [:destroy, :create, :set_status]
   helper 'messages', 'context'
+  permissions 'messages'
   stylesheet 'messages'
 
   before_filter :login_required
@@ -53,14 +54,18 @@ class MessagesController < ApplicationController
     @post.body = @post.body[0..140]
     @post.discussion  = current_user.discussion
     @post.user = current_user
-    @post.save!
-    current_user.discussion.save
+    begin
+      @post.save!
+      current_user.discussion.save
 
-    # this should be in an observer, but the wall posts are not yet
-    # identifiable as different from discussion posts. 
-    MessageWallActivity.create!({
-      :user => @user, :author => current_user, :post => @post
-    })
+      # this should be in an observer, but the wall posts are not yet
+      # identifiable as different from discussion posts.
+      MessageWallActivity.create!({
+        :user => @user, :author => current_user, :post => @post
+      })
+    rescue ActiveRecord::RecordInvalid => exc
+      flash_message :exception => exc
+    end
 
     redirect_to url_for(:controller => '/me/dashboard', :action => nil)
   end
@@ -79,16 +84,6 @@ class MessagesController < ApplicationController
     @discussion = @user.ensure_discussion
   end
 
-  def authorized?
-    if !logged_in? or @user.nil?
-      false
-    elsif action?(:destroy, :set_status)
-      current_user == @user
-    else
-      @profile = @user.profiles.visible_by(current_user)
-      @profile.may_see?
-    end
-  end
 
   def context
     if logged_in? and current_user == @user

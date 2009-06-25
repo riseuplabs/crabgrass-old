@@ -16,7 +16,7 @@ urchinTracker();
 
   protected
   def config
-    Site.default.evil.respond_to?(:[]) ? Site.default.evil["google_analytics"] : nil
+    current_site.evil.respond_to?(:[]) ? current_site.evil["google_analytics"] : nil
   end
 
   def enabled?

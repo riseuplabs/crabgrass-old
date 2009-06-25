@@ -1,6 +1,6 @@
 <div class="account_links">
 <% if logged_in? -%>
-  <%= link_to 'Account'[:menu_link_account], :controller => '/me', :action => 'edit' %>
+  <%= link_to 'Account'[:menu_link_account], me_url(:action => 'edit') %>
   &bull;
   <%= link_to "Logout"[:menu_link_logout] + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
   <%= call_hook :top_right_links %>

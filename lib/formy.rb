@@ -2,17 +2,15 @@
 
 FORMY -- a form creator for rails
 
-<%=
- form :option => value do
-   title "My Form"
-   label "Mail Client"
-   row :option => value do
-     info "info about this row"
-     label "row label"
-     input text_field('object','method')
-   end
- end
-%>
+<%= Formy.form :option => value do |f|
+  f.title "My Form"
+  f.label "Mail Client"
+  f.row do |r|
+    r.info "info about this row"
+    r.label "row label"
+    r.input text_field('object','method')
+  end
+end %>
 
 A form consistants of a tree of elements. 
 Each element may contain other elements. 
@@ -55,11 +53,11 @@ the rules for javascript tabs:
 end
 %>
 
-<div class='tab-content tab-area' id='tab-one-div'>
+<div class='tab_content' id='tab-one-div'>
   <%= render :partial => 'something/good' %>
 </div>
 
-<div class='tab-content tab-area' id='tab-two-div' style='display:none'>
+<div class='tab_content' id='tab-two-div' style='display:none'>
   <%= render :partial => 'something/better' %>
 </div>
 
@@ -75,7 +73,9 @@ module Formy
 #       :checkbox, :tab, :link, :selectedx
 #  end
   
-  #### FORM CREATION ##################################################
+  ##
+  ## FORM CREATION
+  ##
   
   def self.create(options={})
     @@base = f = Form.new(options)
@@ -102,7 +102,9 @@ module Formy
     f.to_s
   end
   
-  #### HELPER METHODS #################################################
+  ##
+  ## HELPER METHODS
+  ##
   
   # sets up form keywords. when a keyword is called,
   # it tries to call this method on the current form element. 
@@ -130,7 +132,9 @@ module Formy
     ActionController::Routing::Routes.recognize_path(path)
   end
    
-  #### BASE CLASSES ###################################################
+  ##
+  ## BASE CLASSES
+  ##
     
   class Buffer
     def initialize
@@ -146,13 +150,18 @@ module Formy
   
   class Element
     include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::JavascriptHelper
 
     def initialize(form,options={})
       @base = form
       @options = options
+      if @options[:hide]
+        @options[:style] = ['display:none;', @options[:style]].combine
+      end
       @elements = []                     # sub elements held by this element
       @buffer = Buffer.new
     end
+
     # takes "object.attribute" or "attribute" and spits out the
     # correct object and attribute strings.
     def get_object_attr(object_dot_attr)
@@ -160,38 +169,55 @@ module Formy
       attr = object_dot_attr[/([^\.]*)$/]
       return [object,attr]
     end
+
     def push
       @base.depth += 1
       @base.current_element.push(self)
     end
+
     def pop
       @base.depth -= 1
       @base.current_element.pop
     end
+
     def open
       puts "<!-- begin #{self.classname} -->"
       push
     end
+
     def close
       pop
       puts "<!-- end #{self.classname} -->"
     end
+
     def classname
       self.class.to_s[/[^:]*$/].downcase
     end
+
     def to_s
       @buffer.to_s
     end
+
     def raw_puts(str)
       @buffer << str
     end
+
     def indent(str)
       ("  " * @base.depth) + str.to_s + "\n"
     end
+
     def puts(str)
       @buffer << indent(str)
     end
-  
+
+    def parent
+      @base.current_element[-2]
+    end
+
+    def tag(element_tag, value, options={})
+      content_tag(element_tag, value, {:style => @options[:style], :class => @options[:class], :id => @options[:id]})
+    end
+
     def self.sub_element(*class_names)
       for class_name in class_names
         method_name = class_name.to_s.gsub(/^.*::/,'').downcase
@@ -206,6 +232,7 @@ module Formy
         end_eval
       end
     end
+
     def self.element_attr(*attr_names)
       for a in attr_names
         a = a.id2name
@@ -254,19 +281,29 @@ module Formy
   class Tabset < Root 
     class Tab < Element
       # required: label & ( link | url | show_tab )
-      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class
+      #
+      # if show_tab is set to an dom id that ends in '_panel', then special things happen:
+      #
+      #  (1) the link is given an id with _panel replaced by _link
+      #  (2) the window.location.hash is set by removing '_panel'
+      #
+      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class, :hash
       
       def close
         selected = 'active' if "#{@selected}" == "true"
-        @class = [@class, selected].join(' ')
-        @style ||= @icon ? "background: url(/images/#{@icon}) no-repeat center left" : nil
+        @class = [@class, selected, ("small_icon #{@icon}_16" if @icon)].compact.join(' ')
         if @link
           a_tag = @link
         elsif @url
           a_tag = content_tag :a, @label, :href => @url, :class => @class, :style => @style, :id => @id
         elsif @show_tab
-          onclick = "show_tab(this, $('%s'))" % @show_tab
-          @id = @show_tab + '_link'
+          if @show_tab =~ /_panel$/
+            @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
+            onclick = "showTab(this, $('%s'), '%s')" % [@show_tab, @hash]
+            @id = @show_tab.sub(/_panel$/, '_link')
+          else
+            onclick = "showTab(this, $('%s'))" % @show_tab
+          end
           a_tag = content_tag :a, @label, :onclick => onclick, :class => @class, :style => @style, :id => @id
         end
         puts content_tag(:li, a_tag, :class => 'tab')
@@ -357,20 +394,30 @@ module Formy
   #### FORM CLASSES ###################################################
     
   class Form < Root
-    sub_element :row, :section
-    
     def title(value)
-      puts "<tr class='title'><td colspan='3'>#{value}</td></tr>"
+      puts "<tr class='title #{first}'><td colspan='2'>#{value}</td></tr>"
     end
     
     def label(value="&nbsp;")
-      @elements << indent("<tr class='label'><td colspan='3'>#{value}</td></tr>")
+      @elements << indent("<tr class='label #{first}'><td colspan='2'>#{value}</td></tr>")
     end
     
     def spacer
-      @elements << indent("<tr class='spacer'><td colspan='3'><div></div></td></tr>")
+      @elements << indent("<tr class='spacer'><td colspan='2'><div></div></td></tr>")
     end
       
+    def heading(text)
+      @elements << indent("<tr class='#{first}'><td colspan='2' class='heading'><h2>#{text}</h2></td></tr>")
+    end
+
+    def hidden(text)
+      @elements << indent("<tr style='display:none'><td>#{text}</td></tr>")
+    end
+
+    def raw(text)
+      @elements << indent("<tr><td colspan='2'>#{text}</td></tr>")
+    end
+
     def open
       super
       puts "<table class='form'>"
@@ -381,68 +428,104 @@ module Formy
       @elements.each {|e| raw_puts e}
       puts "</table>"
       super
-    end  
-  end
-    
-  class Section < Element
-    sub_element :row
-    
-    def label(value)
-      puts "label(#{value})<br>"
     end
 
-  end
-  
-  class Row < Element
-    element_attr :info, :label, :input, :heading
-    sub_element :checkbox
-	
-    def open
-      super
-      puts "<tr class='row'>"
-    end
-    
-    def close
-      @input ||= @elements.first.to_s
-      labelspan = inputspan = infospan = 1
-      labelspan = 2 if @label and not @input
-      inputspan = 2 if @input and not @label and     @info
-      inputspan = 2 if @input and     @label and not @info
-      infospan  = 2 if @info  and     @label and not @input
-      labelspan = 3 if @label and not @input and not @info
-      inputspan = 3 if @input and not @label and not @info
-      infospan  = 3 if @info  and not @label and not @input
-      puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>" if @label
-      if @input =~ /\n/
-        puts "<td colspan='#{inputspan}' class='input'>"
-        raw_puts @input
-        puts "</td>"
-      else
-        puts "<td colspan='#{inputspan}' class='input'>#{@input}</td>"
+    def first
+      if @first.nil?
+        @first = false
+        return 'first' 
       end
-      puts "<td colspan='#{infospan}' class='info'>#{@info}</td>"   if @info
-      puts "</tr>"      
-      super
     end
-  end  
+
+#    class Section < Element
+#      sub_element :row
+#      def label(value)
+#        puts "label(#{value})<br>"
+#      end
+#    end
+
+    class Row < Element
+      element_attr :info, :label, :input, :id, :style, :classes
   
-  class Checkbox < Element
-    element_attr :label, :input
+      def open
+        super
+        @options[:style] ||= :hang
+      end
+      
+      def close
+        @input ||= @elements.first.to_s
+        if @options[:style] == :hang
+          @label ||= '&nbsp;'
+          labelspan = inputspan = 1
+          #labelspan = 2 if @label and not @input
+          #inputspan = 2 if @input and not @label
+          puts "<tr class='row #{parent.first} #{@classes}' id='#{@id}' style='#{@style}'>"
+          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>"
+          if @input
+            puts "<td colspan='#{inputspan}' class='input'>"
+            puts @input
+            if @info
+              puts "<div class='info'>#{@info}</div>"
+            end
+            puts "</td>"
+          end
+          puts "</tr>"
+        elsif @options[:style] == :stack
+          if @label
+            puts '<tr><td class="label">%s</td></tr>' % @label
+          end
+          puts '<tr class="%s">' % @options[:class]
+          puts '<td class="input">%s</td>' % @input
+          puts '<td class="info">%s</td>' % @info
+          puts '</tr>'
+        end
+        super
+      end
+
+      class Checkboxes < Element
+        def open
+          super
+          puts "<table>"
+        end
+  
+        def close
+          puts @elements.join("\n")
+          puts "</table>"
+          super
+        end
+        
+        class Checkbox < Element
+          element_attr :label, :input, :info
+
+          def open
+            super
+          end
     
-    def close
-      id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
-      label = "<label for='#{id}'>#{@label}</label>"
-      puts "<table cellpadding='0' cellspacing='0'><tr><td>#{@input}</td><td>#{label}</td></tr></table>"
-      super
-    end
-  end
-  
-  
-  class Item < Element
-    element_attr :object, :field, :label
-    def to_s
-      "<label>#{@field} #{@label}</label>"
-    end
+          def close
+            id = @input.match(/id=["'](.*?)["']/).to_a[1] if @input
+            label = content_tag :label, @label, :for => id
+            puts tag(:tr, content_tag(:td, @input) + content_tag(:td, label))
+            if @info
+              puts tag(:tr, content_tag(:td, '&nbsp;') + content_tag(:td, @info, :class => 'info'))
+            end
+            super
+          end
+        end
+        sub_element Form::Row::Checkboxes::Checkbox
+      end
+      sub_element Form::Row::Checkboxes
+      
+    end  
+
+    sub_element Form::Row
+    
+#    class Item < Element
+#      element_attr :object, :field, :label
+#      def to_s
+#        "<label>#{@field} #{@label}</label>"
+#      end
+#    end
+
   end
 
 end

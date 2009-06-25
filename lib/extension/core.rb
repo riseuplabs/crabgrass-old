@@ -8,6 +8,10 @@ class NilClass
   def any?
     false
   end
+
+  def any
+    false
+  end
   
   # nil.to_s => ""
   def empty?
@@ -45,6 +49,9 @@ class Object
     false
   end
   
+  def safe_send(symbol, *args)
+    self.send(symbol, *args) if self.respond_to?(symbol)
+  end
 end
 
 class Array
@@ -66,14 +73,22 @@ class Array
   def any_in?(array)
     return (self & array).any?
   end
+
+  # [1,2,3].to_h {|i| [i, i*2]}
+  # => {1 => 2, 2 => 4, 3 => 6}
   def to_h(&block)
     Hash[*self.collect { |v|
-      [v, block.call(v)]
+      block.call(v)
     }.flatten]
   end
 
   def path
     join('/')
+  end
+
+  # an alias for self.compact.join(' ')
+  def combine(delimiter = ' ')
+    compact.join(delimiter)
   end
 
 =begin

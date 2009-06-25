@@ -114,24 +114,34 @@ label}</a></span>)
     link_to(link_label,url_hash, :class => selected_class)
   end
 
+  # returns true if the current params matches url_hash
   def url_active?(url_hash)
     return false unless url_hash.is_a? Hash
 
-    if params[:controller] && params[:controller] !~ /^\//
-      params[:controller] = '/' + params[:controller]
-    end
-    if url_hash[:controller] && url_hash[:controller] !~ /^\//
-      url_hash[:controller] = '/' + url_hash[:controller] unless url_hash[:controller] =~ /^\//
-    end
-  
-    url_hash[:action] = 'index' if url_hash[:action].nil?
+    normalize_controller(params)
+    normalize_controller(url_hash)
+    url_hash[:action] ||= 'index'
 
-    selected = url_hash.inject(true) do |selected, p|
-      param, value = p
-      selected and params[param].to_s == value.to_s
+    selected = true
+    url_hash.each do |key, value|
+      selected = compare_param(params[key], value)
+      break unless selected
     end
+    selected
+  end
 
-    return selected
+  private
+
+  # ensure a comparible controller name without a leading /
+  def normalize_controller(hash)
+    hash[:controller].gsub!(/^\//, '') if hash[:controller]
+  end
+
+  def compare_param(a,b)
+    a = a.to_param
+    b = b.to_param
+    return true if b.empty?
+    return a == b
   end
 
 end

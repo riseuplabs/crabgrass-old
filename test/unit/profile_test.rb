@@ -2,10 +2,22 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProfileTest < Test::Unit::TestCase
 
-  fixtures :users, :groups, :profiles
+  fixtures :users, :groups, :profiles, :external_videos
+
+  @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
+  @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
     Time.zone = TimeZone["Pacific Time (US & Canada)"]
+    FileUtils.mkdir_p(@@private)
+    FileUtils.mkdir_p(@@public)
+    #Media::Process::Base.log_to_stdout_when = :always
+    Media::Process::Base.log_to_stdout_when = :on_error
+  end
+
+  def teardown
+    FileUtils.rm_rf(@@private)
+    FileUtils.rm_rf(@@public)
   end
 
   def test_adding_profile
@@ -36,7 +48,7 @@ class ProfileTest < Test::Unit::TestCase
     blue = users(:blue)
     red = users(:red)
     
-    red.add_contact!(blue)
+    red.add_contact!(blue, :friend)
     
     blue.profiles.private.update_attribute(:organization, 'rainbows')
     blue.profiles.public.update_attribute(:organization, 'none')
@@ -106,7 +118,31 @@ class ProfileTest < Test::Unit::TestCase
 
     assert_equal  correct_names, names
   end
-  
+
+  def test_assets
+    user = users(:blue)
+    profile = user.profiles.create :stranger => true, :first_name => user.name
+    
+    assert_difference 'Asset.count' do
+      profile.save_from_params(:photo => {
+        :uploaded_data => upload_data('image.png'), :caption => 'pigeon point'
+      })
+    end
+
+    assert_equal 'image.png', profile.photo(true).filename
+    assert_equal 'pigeon point', profile.photo.caption
+
+    assert_difference 'ExternalVideo.count' do
+      profile.save_from_params(:video => {
+        :media_embed => external_videos(:beauty_is_in_the_street_video).media_embed
+      })
+    end
+
+    assert_difference 'Asset.count', -1 do
+     	 profile.destroy
+    end
+  end
+
   def test_associations
     assert check_associations(Profile)
   end

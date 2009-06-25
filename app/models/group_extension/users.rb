@@ -7,8 +7,10 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
-      has_many :memberships, :dependent => :destroy,
-        :before_add => :check_duplicate_memberships
+      after_destroy :destroy_memberships
+#      before_create :set_created_by
+
+      has_many :memberships, :before_add => :check_duplicate_memberships
 
       has_many :users, :through => :memberships do
         def <<(*dummy)
@@ -18,7 +20,12 @@ module GroupExtension::Users
           raise Exception.new("don't call delete on group.users");
         end
       end
-    end     
+
+      # tmp hack until we have a better viewing system in place.
+      named_scope :most_visits, {:order => 'count(memberships.total_visits) DESC', :group => 'groups.id', :joins => :memberships}
+
+      named_scope :recent_visits, {:order => 'memberships.visited_at DESC', :group => 'groups.id', :joins => :memberships}
+    end
   end
 
   def user_ids
@@ -75,7 +82,22 @@ module GroupExtension::Users
     @user_ids = nil
     self.increment!(:version)
   end
-  
+
+  protected
+
+  def destroy_memberships
+    user_names = []
+    self.memberships.each do |membership|
+      user_names << membership.user.name
+      membership.skip_destroy_notification = true
+      membership.destroy
+    end
+  end
+
+  def set_created_by
+    self.created_by ||= User.current
+  end
+
 # maps a user <-> group relationship to user <-> language
 #  def in_user_terms(relationship)
 #    case relationship

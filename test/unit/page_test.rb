@@ -86,14 +86,14 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_destroy
-    page = RateManyPage.create :title => 'short lived'
+    page = RateManyPage.create! :title => 'short lived', :data => Poll.new
     poll_id = page.data.id
     page.destroy
     assert_equal nil, Poll.find_by_id(poll_id), 'the page data must be destroyed with the page'
   end
 
   def test_delete_and_undelete
-    page = RateManyPage.create :title => 'longer lived'
+    page = RateManyPage.create! :title => 'longer lived', :data => Poll.new
     poll_id = page.data.id
     assert_equal page.flow, nil, 'a new page should have flow nil'
     page.delete
@@ -167,11 +167,75 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_page_default_owner
+    Conf.ensure_page_owner = false
+    page = Page.create! :title => 'x', :user => users(:blue),
+      :share_with => groups(:animals), :access => :admin
+    assert_nil page.owner_name
+    assert_nil page.owner_id
+
+    Conf.ensure_page_owner = true
     page = Page.create! :title => 'x', :user => users(:blue),
       :share_with => groups(:animals), :access => :admin
     assert_equal groups(:animals).name, page.owner_name
     assert_equal groups(:animals).id, page.owner_id
     assert_equal groups(:animals), page.owner
+  end
+
+  def test_attachments
+    page = Page.create! :title => 'page with attachments', :user => users(:blue)
+    page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+   
+    assert_equal page.page_terms, page.assets.first.page_terms 
+
+    assert_equal 'photo.jpg', page.assets.first.filename    
+    page.assets.each do |asset|
+      assert !asset.public?
+    end
+
+    page.public = true
+    page.save
+
+    page.assets(true).each do |asset|
+      assert asset.public?
+    end
+
+    assert_difference('Page.count', -1) do
+      assert_difference('Asset.count', -1) do
+        page.destroy
+      end
+    end
+  end
+
+  def test_attachment_options
+    asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
+    page = Page.create! :title => 'page with attachments' do |page|
+      page.add_attachment! asset, :filename => 'picture', :cover => true
+    end
+    
+    assert_equal 'picture.jpg', page.assets.first.filename
+    assert_equal asset, page.cover
+  end
+
+  def test_attachment_building
+    assert_no_difference 'Page.count' do
+      assert_no_difference 'Asset.count' do
+        assert_raises ActiveRecord::RecordInvalid do
+          Page.create! do |page|
+            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+          end
+        end
+      end
+    end
+    assert_difference 'Page.count' do
+      assert_difference 'Asset.count' do
+        assert_nothing_raised do
+          page = Page.create!(:title => 'hi') do |page|
+            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+          end
+          assert_equal 'photo.jpg', page.assets.first.filename
+        end
+      end
+    end
   end
 
   protected

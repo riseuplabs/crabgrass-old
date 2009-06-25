@@ -3,21 +3,25 @@ class BasePage::AssetsController < ApplicationController
 
   before_filter :login_required
   helper 'base_page', 'base_page/assets'
+  permissions 'base_page'
 
-  def show_popup
+  def show
+    if params[:close]
+      render :template => 'base_page/reset_sidebar'
+    end
   end
 
-  def close
+  def update
+    @page.cover = @asset
+    @page.save!
     render :template => 'base_page/reset_sidebar'
   end
 
   ## TODO: notify page watcher that an attachment has been added?
+  ## TODO: use iframe trick to make this ajaxy
   def create
-    @asset = Asset.build params[:asset]
-    @asset.parent_page = @page
-    @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
-    @asset.save
-    flash_message :object => @asset
+    asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    flash_message :object => asset
     redirect_to page_url(@page)
   end
 
@@ -34,10 +38,6 @@ class BasePage::AssetsController < ApplicationController
 
   protected
 
-  def authorized?
-    current_user.may? :edit, @page
-  end
-
   prepend_before_filter :fetch_data
   def fetch_data
     @page = Page.find params[:page_id] if params[:page_id]
@@ -48,4 +48,3 @@ class BasePage::AssetsController < ApplicationController
   end
 
 end
-

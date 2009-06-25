@@ -26,6 +26,8 @@ class PagesController < ApplicationController
 
   stylesheet 'page_creation', :action => :create
 
+  permissions 'pages'
+
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
   def initialize(options={})
@@ -62,14 +64,6 @@ class PagesController < ApplicationController
         
   protected
   
-  def authorized?
-    # see BaseController::authorized?
-    if @page
-      return current_user.may?(:admin, @page)
-    else
-      return true
-    end
-  end
 
   def context
     return true unless request.get? # skip the context on posts, it won't be shown anyway
@@ -78,7 +72,8 @@ class PagesController < ApplicationController
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user 
     page_context
-    add_context("Create Page"[:create_page], :controller => 'pages', :action => 'create', :group => params[:group])
+    context_name = "Create a new {thing}"[:create_a_new_thing, "Page"[:page]].titleize
+    add_context(context_name, :controller => 'pages', :action => 'create', :group => params[:group])
     true
   end
   

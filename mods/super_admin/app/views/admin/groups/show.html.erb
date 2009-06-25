@@ -1,35 +1,64 @@
+
 <p>
   <%= link_to '%s home page' % @group.name, url_for_group(@group) %>
 </p>
 
-<p>
-  <b>Name:</b>
+<table>
+  <tr>
+    <th>
+  Name:
+    </th>
+   <td>
   <%=h @group.name %>
-</p>
+  </td>
+</tr>
 
-<p>
-  <b>Full name:</b>
+<tr>
+<th>
+  Full name:
+</th>
+<td>
   <%=h @group.full_name %>
-</p>
-
-<p>
-  <b>Summary:</b>
-  <%=h @group.summary %>
-</p>
-
-<p>
-  <b>Created at:</b>
-  <%=h @group.created_at %>
-</p>
-
-<p>
-  <b>Updated at:</b>
-  <%=h @group.updated_at %>
-</p>
-<p>
-  <b>Memberships:</b>
-  <%= @group.users.collect{|u| link_to u.login, user_path(u) }.join(' ') %>
-</p>
-
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+</td>
+</tr>
+<!--
+  <tr>
+    <th>
+      Summary:
+    </th>
+    <td>
+      <%# h @group.summary %>
+    </td>
+  </tr>
+-->
+  <tr>
+    <th>
+      Created at:
+    </th>
+    <td>
+      <%=h @group.created_at %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      Updated at:
+    </th>
+    <td>
+      <%=h @group.updated_at %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      Memberships:
+    </th>
+    <td>
+      <%= @group.users.collect{|u| link_to u.login, user_path(u) }.join(' ') %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan=2>
+      <%= link_to 'Edit', edit_group_path(@group) %> |
+      <%= link_to 'Back', groups_path %>
+    </td>
+  </tr>
+</table>

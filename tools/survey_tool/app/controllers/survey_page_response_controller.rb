@@ -7,11 +7,9 @@ class SurveyPageResponseController < BasePageController
   javascript :extra
   javascript 'survey'
   helper 'survey_page'
+  permissions 'survey_page'
 
   verify :method => :post, :only => [:make, :update, :destroy]
-
-  include SurveyPagePermissionsHelper
-  helper 'survey_page_permissions'
 
   def new
     @response = SurveyResponse.new 
@@ -117,31 +115,11 @@ class SurveyPageResponseController < BasePageController
 
   protected
 
-  def authorized?
-    return true if @page.nil?
-    @response = @survey.responses.find_by_id(params[:id]) if params[:id]
-
-    if action?(:new, :make)
-      may_create_survey_response?
-    elsif action?(:update, :edit)
-      may_modify_survey_response?(@response)
-    elsif action?(:destroy, :edit)
-      may_destroy_survey_response?(@response)
-    elsif action?(:show)
-      may_view_survey_response?(@response)
-    elsif action?(:list)
-      may_view_survey_response?
-    elsif action?(:rate)
-      may_rate_survey_response?(@response)
-    else
-      current_user.may?(:admin,@page)
-    end
-  end
-
   # called early in filter chain
   def fetch_data
     return true unless @page
     @survey = @page.data || Survey.new
+    @response = @survey.responses.find_by_id(params[:id]) if params[:id]
   end
 
   def setup_view

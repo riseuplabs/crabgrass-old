@@ -45,42 +45,42 @@ module PathFinder::Sphinx::BuilderFilters
   # we assume the values pass to the finder are local
   #++
 
-  def filter_starts
-    @date_field = :starts_at
-  end
-
-  def filter_after(date)
-    if date == 'now'
-       date = Time.zone.now
-    else
-       if date == 'today'
-          date = to_utc(local_now.at_beginning_of_day)
-       else
-          year, month, day = date.split('-')
-          date = to_utc Time.in_time_zone(year, month, day)
-       end
-    end
-    @conditions[@date_field] = range(date, date+100.years)
-  end
-
-  def filter_before(date)
-    if date == 'now'
-       date = Time.now
-    else
-       if date == 'today'
-          date = Time.zone.now.to_date
-       else
-          year, month, day = date.split('-')
-          date = to_utc Time.in_time_zone(year, month, day)
-       end
-    end
-    @conditions[@date_field] = range(date-100.years, date)
-  end
-
-  def filter_upcoming
-    @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
-    @order << 'pages.starts_at DESC'
-  end
+  # def filter_starts
+  #   @date_field = :created_at
+  # end
+  # 
+  # def filter_after(date)
+  #   if date == 'now'
+  #      date = Time.zone.now
+  #   else
+  #      if date == 'today'
+  #         date = to_utc(local_now.at_beginning_of_day)
+  #      else
+  #         year, month, day = date.split('-')
+  #         date = to_utc Time.in_time_zone(year, month, day)
+  #      end
+  #   end
+  #   @conditions[@date_field] = range(date, date+100.years)
+  # end
+  # 
+  # def filter_before(date)
+  #   if date == 'now'
+  #      date = Time.now
+  #   else
+  #      if date == 'today'
+  #         date = Time.zone.now.to_date
+  #      else
+  #         year, month, day = date.split('-')
+  #         date = to_utc Time.in_time_zone(year, month, day)
+  #      end
+  #   end
+  #   @conditions[@date_field] = range(date-100.years, date)
+  # end
+  # 
+  # def filter_upcoming
+  #   @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
+  #   @order << 'pages.starts_at DESC'
+  # end
   
   def filter_ago(near,far)
     @conditions[:page_updated_at] = range(far.to_i.days.ago, near.to_i.days.ago)
@@ -98,14 +98,14 @@ module PathFinder::Sphinx::BuilderFilters
     @conditions[:page_created_at] = range(date - 100.years, date)
   end
  
-  def filter_month(month)
-    year = Time.zone.now.year
-    @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
-  end
-
-  def filter_year(year)
-    @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
-  end
+  # def filter_month(month)
+  #   year = Time.zone.now.year
+  #   @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
+  # end
+  # 
+  # def filter_year(year)
+  #   @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
+  # end
   
   ####
 

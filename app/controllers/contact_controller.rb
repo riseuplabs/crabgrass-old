@@ -1,9 +1,11 @@
 #
 # a controller for managing contacts
+# currently, this only manages friendships
 #
 
 class ContactController < ApplicationController
 
+  permissions 'contact'
   before_filter :login_required
   
   def add
@@ -49,7 +51,6 @@ class ContactController < ApplicationController
   prepend_before_filter :fetch_user
   def fetch_user
     @user = User.find_by_login params[:id] if params[:id]
-    @is_contact = (logged_in? and current_user.friend_of?(@user))
     @past_request = RequestToFriend.created_by(@user).to_user(current_user).appearing_as_state('pending')
     true
   end
@@ -59,19 +60,4 @@ class ContactController < ApplicationController
     add_context 'contact', url_for(:controller => 'contact', :action => 'add', :id => @user)
   end
   
-  def authorized?
-    return false unless logged_in?
-    return false unless @user
-
-    if action?(:add)
-      @user.profiles.visible_by(current_user).may_request_contact?
-    elsif action?(:remove)
-      true # current_user.friend_of?(@user) <- we let the action handle the permissions
-    elsif action?(:approve)
-      @past_request.any?
-    elsif action?(:already_friends)
-      true
-    end
-  end
 end
-

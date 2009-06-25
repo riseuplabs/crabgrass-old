@@ -6,10 +6,13 @@ This is the controller that all page controllers are based on.
 
 class BasePageController < ApplicationController
 
+  include BasePageHelper
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
+  permissions 'base_page', 'posts'
+  helper 'groups'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -47,37 +50,34 @@ class BasePageController < ApplicationController
   # can be overridden by the subclasses
   def create
     @page_class = get_page_type
+    # permissions have to be set before we call @page_class.build!
+    setup_params_page_access
+    @page = build_new_page(@page_class)
+
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?;
+    elsif request.post?
       begin
-        @page = create_new_page!(@page_class)
+        # setup the data (done by subclasses)
+        @data = build_page_data
+        raise ActiveRecord::RecordInvalid.new(@data) if @data and !@data.valid?
+
+        # save the page (also saves the data)
+        @page.data = @data
+        @page.save!
+
         return redirect_to(page_url(@page))
       rescue Exception => exc
-        @page = exc.record
+        destroy_page_data
+        # in case page gets saved before the exception happens
+        @page.destroy unless @page.new_record?
         flash_message_now :exception => exc
       end
-    else
-      @page = build_new_page(@page_class)
     end
-    render :template => 'base_page/create'
   end
 
   protected
 
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:show_popup)
-      true
-    elsif action?(:show)
-      current_user.may?(:view, @page)
-    elsif action?(:destroy)
-      current_user.may?(:delete, @page)
-    else
-      current_user.may?(:admin, @page)
-    end
-  end
 
   def choose_layout
     return 'default' if params[:action] == 'create'
@@ -96,8 +96,8 @@ class BasePageController < ApplicationController
   
   after_filter :save_if_needed
   def save_if_needed
-    @upart.save if @upart and @upart.changed?
-    @page.save if @page and @page.changed?
+    @upart.save if @upart and !@upart.new_record? and @upart.changed?
+    @page.save if @page and !@page.new_record? and @page.changed?
     true
   end
   
@@ -125,15 +125,6 @@ class BasePageController < ApplicationController
 
       # hide the right column 
       @hide_right_column = false if @hide_right_column.nil?
-
-      if !request.xhr?
-        unless action?(:create)
-          @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
-        end
-        if !@hide_right_column and !action?(:create) and (action?(:show,:edit) or @show_right_column)
-          @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
-        end
-      end
     end
     true
   end
@@ -179,15 +170,24 @@ class BasePageController < ApplicationController
     @post = Post.new
     @show_reply = @posts.any? if @show_reply.nil?
   end
-      
+
   def context
-    return true if request.xhr? # skip for ajax requests
     if action?(:create)
-      (@group = Group.find_by_name(params[:group])) or (@user = current_user)
-      page_context
-      add_context "Create Page"[:create_page], :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
+      if @group = Group.find_by_name(params[:group])
+        page_context
+      else
+        @user = current_user
+        me_context
+      end
+
+      context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
+      add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
+      @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
+      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
+        @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+      end
     end
     true
   end
@@ -195,30 +195,40 @@ class BasePageController < ApplicationController
   ##
   ## default page creation methods used by tool controllers
   ##
-  
+
   def get_page_type(param=nil)
     param ||= params[:id]
-    raise ErrorMessage.new('page type required') unless param
+    raise 'page type required' unless param
     return Page.param_id_to_class(param)
   end
 
-  def create_new_page!(page_class)
-     page_class.create!(params[:page].merge(
-       :user => current_user,
-       :share_with => params[:recipients],
-       :access => (params[:access]||'view').to_sym
-     ))  
-  end
-
   def build_new_page(page_class)
-     params[:page] ||= HashWithIndifferentAccess.new
-     page_class.build!(params[:page])
-     #.merge(
-     #  :user => current_user,
-     #  :share_with => params[:recipients],
-     #  :access => (params[:access]||'view').to_sym
-     #))  
+     opts = (params[:page] || HashWithIndifferentAccess.new).dup
+     page_class.build!(opts)
   end
 
+  def setup_params_page_access
+    params[:page] ||= HashWithIndifferentAccess.new
+    params[:page][:user] = current_user
+    params[:page][:share_with] = params[:recipients]
+    params[:page][:access] = access_from_params(params[:access])
+  end
+
+
+  # returns a new data object for page initialization
+  # tools override this to build their own data objects
+  def build_page_data
+    # if something goes terribly wrong with the data do this:
+    # @page.errors.add_to_base "something went terrible wrong"[:terrible_wrongness]
+    # raise ActiveRecord::RecordInvalid.new(@page)
+
+    # return new data if everything goes well
+  end
+
+  def destroy_page_data
+    if @data and !@data.new_record?
+      @data.destroy
+    end
+  end
 end
 

@@ -1,3 +1,15 @@
+#
+#  create_table "discussions", :force => true do |t|
+#    t.integer  "posts_count",      :limit => 11, :default => 0
+#    t.datetime "replied_at"
+#    t.integer  "replied_by_id",    :limit => 11
+#    t.integer  "last_post_id",     :limit => 11
+#    t.integer  "page_id",          :limit => 11
+#    t.integer  "commentable_id",   :limit => 11
+#    t.string   "commentable_type"
+#  end
+#  add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
+#
 class Discussion < ActiveRecord::Base
  
   ##

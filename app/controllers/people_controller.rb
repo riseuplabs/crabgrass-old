@@ -11,32 +11,32 @@ For processing a single user, see PersonController.
 class PeopleController < ApplicationController
   
   def index
-    @users = User.recent.paginate :page => @page_number, :per_page => @per_page if logged_in?
+    @users = User.on(current_site).recent.paginate :page => @page_number if logged_in?
   end
 
-  def contacts
+  def friends
     return unless logged_in?
 
-    @users = (User.contacts_of(current_user).alphabetized(@letter_page)).paginate :page => @page_number, :per_page => @per_page
+    @users = (User.friends_of(current_user).on(current_site).alphabetized(@letter_page)).paginate :page => @page_number
 
     # what letters can be used for pagination
-    @pagination_letters = (User.contacts_of(current_user).logins_only).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.friends_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   def peers
     return unless logged_in?
 
-    @users = User.peers_of(current_user).alphabetized(@letter_page).paginate :page => @page_number, :per_page => @per_page
+    @users = User.peers_of(current_user).on(current_site).alphabetized(@letter_page).paginate :page => @page_number
      # what letters can be used for pagination
-    @pagination_letters = (User.peers_of(current_user).logins_only).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.peers_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   def directory
     return unless logged_in?
 
-    @users = User.alphabetized(@letter_page).paginate :page => @page_number, :per_page => @per_page
+    @users = User.on(current_site).alphabetized(@letter_page).paginate :page => @page_number
     # what letters can be used for pagination
-    @pagination_letters = (User.logins_only).collect{|u| u.login.first.upcase}.uniq
+    @pagination_letters = (User.on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
   end
 
   protected
@@ -44,7 +44,6 @@ class PeopleController < ApplicationController
   before_filter :prepare_pagination
   def prepare_pagination
     @page_number = params[:page] || 1
-    @per_page = 10
     @letter_page = params[:letter] || ''
   end
   

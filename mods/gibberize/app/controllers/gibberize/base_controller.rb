@@ -12,7 +12,7 @@ class Gibberize::BaseController < ApplicationController
   include Gibberize::TranslationsHelper
 
   def index
-    @languages = LANGUAGES
+    @languages = LANGUAGES.values
   end
 
   def apply_translations

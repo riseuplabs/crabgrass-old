@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
 
-  helper PageHelper, UrlHelper, Formy, LayoutHelper, LinkHelper, TimeHelper, ErrorHelper, ImageHelper, JavascriptHelper, PathFinder::Options, PostHelper, CacheHelper
+  helper CommonHelper
+  helper PathFinder::Options
+  helper Formy
+  permissions 'application'
 
   # TODO: remove these, access via self.view() instead.
   include AuthenticatedSystem	
@@ -8,13 +11,15 @@ class ApplicationController < ActionController::Base
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
   include ErrorHelper     # for displaying errors and messages to the user
-  include PathFinder::Options       # for Page.find_by_path options
   include ContextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
   include ImageHelper
+  include PermissionsHelper
 
+  include PathFinder::Options                   # for Page.find_by_path options
   include ControllerExtension::CurrentSite
+  include ControllerExtension::UrlIdentifiers
   
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -22,15 +27,17 @@ class ApplicationController < ActionController::Base
   # the order of these filters matters. change with caution.
   before_filter :essential_initialization
   around_filter :set_language
-  before_filter :set_timezone, :pre_clean, :breadcrumbs, :context
+  before_filter :set_timezone, :pre_clean
   around_filter :rescue_authentication_errors
   before_filter :header_hack_for_ie6
+  before_render :context_if_appropriate
 
   session :session_secure => Conf.enforce_ssl
   # ^^ TODO: figure out how to use current_site.enforce_ssl instead
   protect_from_forgery :secret => Conf.secret
 
-  layout 'default'
+  # no layout for HTML responses to ajax requests
+  layout proc{ |c| c.request.xhr? ? false : 'default' }
 
   # ensure that essential_initialization ALWAYS comes first
   def self.prepend_before_filter(*filters, &block)
@@ -89,6 +96,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # if we have login_required this will be called and check the
+  # permissions accordingly
+  def authorized?
+    may_action?(params[:action])
+  end
+
   # set the current timezone, if the user has it configured.
   def set_timezone
     Time.zone = current_user.time_zone if logged_in?
@@ -99,6 +112,19 @@ class ApplicationController < ActionController::Base
     User.current = nil
   end
 
+  # A special 'before_render' filter that calls 'context()' if this is a normal
+  # request for html and there has not been a redirection. This allows
+  # subclasses to put their navigation setup calls in context() because
+  # it will only get called when appropriate.
+  def context_if_appropriate
+    if !@skip_context and normal_request?
+      @skip_context = true
+      context()
+    end
+    true
+  end
+  def context; end
+
   ##
   ## HELPERS
   ##
@@ -106,7 +132,6 @@ class ApplicationController < ActionController::Base
   # In a view, we get access to the controller via controller(). The 'view' method
   # lets controllers have access to the view helpers.
   def view
-    #ActionController::Base.helpers
     self.class.helpers
   end
 
@@ -120,40 +145,14 @@ class ApplicationController < ActionController::Base
   # overridden, but these defaults are pretty good. See models/mailer.rb.
   #
   def mailer_options
-    from_address = current_site.email_sender.gsub('$current_host',request.host)
+    from_address = current_site.email_sender.sub('$current_host',request.host)
+    from_name    = current_site.email_sender_name.sub('$user_name', current_user.display_name).sub('$site_title', current_site.title)
     opts = {:site => current_site, :current_user => current_user, :host => request.host,
-     :protocol => request.protocol, :page => @page, :from_address => from_address}
+     :protocol => request.protocol, :page => @page, :from_address => from_address, 
+     :from_name => from_name}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
-  
-  # returns true if params[:action] matches one of the args.
-  # useful in authorized?() methods.
-  def action?(*actions)
-    actions.include?(params[:action].to_sym)
-  end
-  helper_method :action?
-
-  # returns true if params[:controller] matches one of the args.
-  def controller?(*controllers)
-    controllers.include?(params[:controller].to_sym)
-  end
-  helper_method :controller?
-
-  # returns true if params[:id] matches the id passed in
-  # the arguments may include the id in the form of an integer,
-  # string, or active record object.
-  def id?(*ids)
-    for obj in ids
-      if obj.is_a?(ActiveRecord::Base)
-        return true if obj.id == params[:id].to_i
-      elsif obj.is_a?(Integer) or obj.is_a?(String)
-        return true if obj.to_i == params[:id].to_i
-      end
-    end
-    return false
-  end
-  helper_method :id?
 
   # rather than include every stylesheet in every request, some stylesheets are 
   # only included "as needed". A controller can set a custom stylesheet
@@ -196,19 +195,7 @@ class ApplicationController < ActionController::Base
       read_inheritable_attribute "javascript"
     end
   end
-    
-  def handle_rss(locals)
-    # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
-    if params[:path].any? and 
-        (params[:path][0] == 'rss' or (params[:path][-1] == 'rss' and params[:path][-2] != 'text'))
-      response.headers['Content-Type'] = 'application/rss+xml'   
-      render :partial => '/pages/rss', :locals => locals
-      return true
-    else
-      return false
-    end
-  end
-     
+  
   # some helpers we include in controllers. this allows us to 
   # grab the controller that will work in a view context and a
   # controller context.
@@ -264,6 +251,27 @@ class ApplicationController < ActionController::Base
     else
       return super(template_name)
     end
+  end
+
+  # TODO: move to new permission system as soon as it is ready
+  helper_method :may_signup?
+  def may_signup?
+    if current_site.signup_mode == Conf::SIGNUP_MODE[:invite_only]
+      session[:user_has_accepted_invite] == true
+    elsif current_site.signup_mode == Conf::SIGNUP_MODE[:closed]
+      false
+    else
+      true
+    end
+  end
+
+  # Returns true if the current request is of type html and we have not 
+  # redirected. However, IE 6 totally sucks, and sends the wrong request
+  # which sometimes appears as :gif. 
+  def normal_request?
+    format = request.format.to_sym
+    response.redirected_to.nil? and
+    (format == :html or format == :all or format == :gif)
   end
 
 end

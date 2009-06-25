@@ -1,11 +1,11 @@
 class ProfileController < ApplicationController
+  permissions 'profile'
 
-  before_filter :login_required
-  prepend_before_filter :fetch_profile
-  #append_before_filter :fetch_profile_settings
-  #layout :choose_layout
+  before_filter :fetch_profile, :login_required
   stylesheet 'profile'
   helper 'me/base'
+  #permissions 'profiles'
+  verify :method => :post, :only => :update  
   
   def show
   end
@@ -15,7 +15,6 @@ class ProfileController < ApplicationController
       @tabs = 'me/base/profile_tabs'
     end
     if request.post?
-      apply_settings_to_params!
       @profile.save_from_params params['profile']
       if @profile.valid?
         flash_message :success => "Your profile has been saved."[:profile_saved]
@@ -23,7 +22,7 @@ class ProfileController < ApplicationController
       end
     end
   end
-  
+
   # ajax
   def add_location
     multiple = params[:multiple]
@@ -70,8 +69,7 @@ class ProfileController < ApplicationController
     render :update do |page|
       page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => ProfileWebsite.new, :multiple => multiple}
     end
-  end
-  
+  end  
 
   def add_crypt_key
     multiple = params[:multiple]
@@ -88,8 +86,8 @@ class ProfileController < ApplicationController
       @profile = current_user.profiles.public
     elsif params[:id] == 'private' #&& @site.profiles.private?
       @profile = current_user.profiles.private
-    else
-      @profile = Profile.find params[:id]
+    #else
+    #  @profile = Profile.find params[:id]
     end
     @entity = @profile.entity
     if @entity.is_a?(User)
@@ -107,53 +105,28 @@ class ProfileController < ApplicationController
   #                       @site.profiles.private)
   #end
 
-  # removes everything from params that isn't to be included, due to the profile
-  # settings of the current site.
-  def apply_settings_to_params!
-    # values are preset (select field), so we ignore them
-    ignore = { 
-      'location' => ['location_type'],
-      'note' => ['note_type']
-    }
-    %w(crypt_key email_address location website note im_address
-       phone_number).each do |element|
-      next unless (this_params = params['profile'][plural = element.pluralize])
-#      if !@profile_settings.element?(element)
-#        params['profile'][plural] = []
-#        text << "  don't want it though\n"
-#        next
-#      end
-#      if !@profile_settings.multiple?(element)
-#        if this_params.kind_of? Array
-#          params['profile'][plural] = [this_params.first]
-#        else
-#          params['profile'][plural] = this_params[this_params.keys.first]
-#        end
-#      end
-      # elements with all fields empty shouldn't be fatal errors that prevent us
-      # from saving.
-      valid_keys = this_params.map do |key, value|
-        values = ((ignored_keys = ignore[element]) ?
-                  value.allow(value.keys-ignored_keys).values :
-                  value.values)
-        values.map(&:empty?).include?(false) ? key : nil
-      end.compact
-      params['profile'][plural] = this_params.allow(valid_keys)
-    end
-  end
-  
-  # always have access to self
-  def authorized?
-    if @entity.is_a?(User) and current_user == @entity
-      return true
-    elsif @entity.is_a?(Group)
-      return true if action_name == 'show'
-      return true if logged_in? and current_user.member_of?(@entity)
-      return false
-    elsif action_name =~ /add_/
-     return true # TODO: this is the right way to do this
-    end
-  end
+#  # removes everything from params that isn't to be included, due to the profile
+#  # settings of the current site.
+#  def apply_settings_to_params!
+#    # values are preset (select field), so we ignore them
+#    ignore = { 
+#      'location' => ['location_type'],
+#      'note' => ['note_type']
+#    }
+#    %w(crypt_key email_address location website note im_address
+#       phone_number).each do |element|
+#      next unless (this_params = params['profile'][plural = element.pluralize])
+#      # elements with all fields empty shouldn't be fatal errors that prevent us
+#      # from saving.
+#      valid_keys = this_params.map do |key, value|
+#        values = ((ignored_keys = ignore[element]) ?
+#                  value.allow(value.keys-ignored_keys).values :
+#                  value.values)
+#        values.map(&:empty?).include?(false) ? key : nil
+#      end.compact
+#      params['profile'][plural] = this_params.allow(valid_keys)
+#    end
+#  end
   
   before_filter :setup_layout
   def setup_layout
@@ -170,5 +143,12 @@ class ProfileController < ApplicationController
     @banner = render_to_string :partial => 'me/banner'
   end
 
+  def authorized?
+    if params[:action] =~ /^add_/
+      true
+    else
+      may_action?(params[:action], @entity)
+    end
+  end
 
 end

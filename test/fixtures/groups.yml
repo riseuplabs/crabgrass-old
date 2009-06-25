@@ -20,57 +20,49 @@ true_levellers:
   id: 1
   name: the-true-levellers
   full_name: The True Levellers
-  summary: We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow
 
 animals:
   id: 2
   name: animals
-  summary: all the animals party down!
   site_id: 2
 
 rainbow:
   id: 3
   name: rainbow
-  summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   site_id: 1
 
 warm:
   id: 31
   parent_id: 3
   name: rainbow+the-warm-colors
-  summary: colors that are warm.
   type: Committee
 
 cold:
   id: 32
   parent_id: 3
   name: rainbow+the-cold-colors
-  summary: colors that are cold.
   type: Committee
-
 
 public_group:
   id: 1000
   name: public_group_everyone_can_see
-  summary: The public group that everyone can see
+#  summary: The public group that everyone can see
 public_committee:
   id: 1001
   parent_id: 1000
   name: public_group_everyone_can_see+public_committee
-  summary: The public committee of the public group that everyone can see
+#  summary: The public committee of the public group that everyone can see
   type: Committee
 private_committee:
   id: 1002
   parent_id: 1000
   name: public_group_everyone_can_see+private_committee
-  summary: The private committee of the public group that everyone can see
   type: Committee
 
 
 private_group:
   id: 2000
-  name: private_group_not_everyone_can_see
-  summary: The private group that not everyone can see
+  name: private_group
 
 # these two are also the sites networks.
 cnt:

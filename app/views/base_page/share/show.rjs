@@ -1,0 +1,8 @@
+if params[:name] == 'share'
+  page.replace_html 'popup_holder', :partial => 'base_page/share/share_popup'
+else
+  page.replace_html 'popup_holder', :partial => 'base_page/share/notify_popup'
+end
+page['popup_holder'].setStyle( popup_holder_style )
+page.replace_html 'message', display_messages if display_messages.any?
+

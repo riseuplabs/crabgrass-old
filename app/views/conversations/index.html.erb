@@ -1,0 +1,17 @@
+<h1>Listing conversations</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for discussion in @discussions %>
+  <% relationship = current_user.relationships.find_by_discussion_id(discussion.id) %>
+  <tr>
+    <td><%= relationship.contact.name %>
+    <td><%= link_to 'Show', show_conversation_path(:id => user) %></td>
+    <td><%# link_to 'Destroy', conversation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+

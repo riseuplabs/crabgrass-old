@@ -30,6 +30,7 @@ h3
 div#wrapper
   padding= !outer_margin
   background= !body_bg_color !body_bg_image "repeat-x"
+  overflow: auto
 
 //
 // MASTHEAD
@@ -205,33 +206,13 @@ div#top_menu
     vertical-align: middle
     &.avatar
       margin-right: 1em
-  h1, h3
+  h1, h2, h3
     padding: 0
     margin: 0
+  h2
+    font-size: 1.5em
   a
     color: white
-
-form.minisearch
-  float: right
-  text-align: right
-  color= !banner_search_fg_color
-  fieldset
-    float: right
-    padding= !banner_search_padding
-    border= !banner_search_border 
-    background-color= !banner_search_bg_color
-  .minisearch_text
-    background-color= !banner_search_bg_color
-    border: none
-    color= !banner_search_text_color
-    width: 13em
-  .minisearch_submit
-    display: inline
-    border: 0
-    background= !banner_search_img "no-repeat 0% 50%"
-    vertical-align: middle
-    padding-left: 16px
-    color= !banner_search_fg_color
 
 //
 // TITLE_BOX
@@ -348,47 +329,8 @@ form.minisearch
   div.language_menu
     float: right
 
-//
-// ERRORS
-//
 
 #message
-  div.notice
+  div.big_notice
     padding: 0 4em 1.5em 4em
-    h2
-      font-size: 1.2em
-      img
-        vertical-align: middle
-    p, li
-      color: black
-      margin-left: 2em
-  div.text
-    border-top: 1px solid #999
-    background-color: #fafafa
-    // some kind of bug:
-    padding: 0.01em
-  div.heading
-    background-color: #dfdfdf
-    // some kind of bug:
-    padding: 0.01em
-  div.error
-    border: 2px solid red
-    color: #900
-  div.info
-    border: 2px solid green
-    color: #090
-  div.update
-    border: 2px solid blue
-    color: #009
-    
-    
-div
-  &.fieldWithErrors
-    border: 2px solid red
-    display: table-cell
-    + div.fieldWithErrors
-      display: none
-
-.pagination_label
-  text-align: center
 

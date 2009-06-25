@@ -2,6 +2,7 @@ log/*.log
 log/searchd.*
 tmp/**/*
 .DS_Store
+.idea
 .AppleDouble
 :2eDS_Store
 :2e_*
@@ -25,3 +26,4 @@ public/stylesheets/themes
 public/javascripts/all.js
 public/assets/*
 lang/la_US.yml
+tmp/webrat-*

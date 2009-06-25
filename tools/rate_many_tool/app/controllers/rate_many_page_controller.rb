@@ -1,6 +1,7 @@
 class RateManyPageController < BasePageController
   before_filter :fetch_poll
   javascript :extra, 'page'
+  permissions 'rate_many_page'
   
   def show
   	@possibles = @poll.possibles.sort_by{|p| p.position||0 }
@@ -85,16 +86,6 @@ class RateManyPageController < BasePageController
 
   protected
   
-  # eventually, add more fine grained permissions.
-  # this is the default:
-#  def authorized?
-#    if @page
-#      current_user.may?(:admin, @page)
-#    else
-#      true
-#    end
-#  end
-
   def fetch_poll
     return true unless @page
     @poll = @page.data
@@ -102,5 +93,9 @@ class RateManyPageController < BasePageController
 
   def setup_view
     @show_print = true
+  end
+
+  def build_page_data
+    Poll.new
   end
 end

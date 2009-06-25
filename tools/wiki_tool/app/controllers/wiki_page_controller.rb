@@ -5,38 +5,8 @@ class WikiPageController < BasePageController
   stylesheet 'wiki_edit'
   javascript 'wiki_edit'
   helper :wiki # for wiki toolbar stuff
+  permissions 'wiki_page'
   #verify :method => :post, :only => [:revert]
-
-  ##
-  ## ACCESS: no restriction
-  ##
-
-  def create
-    @page_class = WikiPage
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        @page = create_new_page!(@page_class)
-        if params[:asset] and params[:asset][:uploaded_data].any?
-          @asset = Asset.make!(params[:asset].merge(:parent_page => @page))
-          image_tag = "!<%s!:%s" % [@asset.thumbnail(:medium).url,@asset.url]
-        end
-        body = "%s\n\n%s" % [image_tag, params[:body]]
-        @page.update_attribute(:data, Wiki.create(:user => current_user, :body => body))
-        if body.strip.empty?
-          return redirect_to(page_url(@page, :action => 'edit'))
-        else
-          return redirect_to(page_url(@page, :action => 'show'))
-        end
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
-    end
-  end
 
   ##
   ## ACCESS: public or :view
@@ -178,20 +148,6 @@ class WikiPageController < BasePageController
     end
   end
 
-  def authorized?
-    if @page
-      if %w(show print).include? params[:action]
-        @page.public? or current_user.may?(:view, @page)
-      elsif %w(edit break_lock upload).include? params[:action]
-        current_user.may?(:edit, @page)
-      else
-        current_user.may?(:admin, @page)
-      end
-    else
-      true
-    end
-  end
-
   def update_inline_html(heading)
     @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
     # render the edit remaining forms
@@ -241,4 +197,8 @@ class WikiPageController < BasePageController
     Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
   end
 
+  # called during BasePage::create
+  def build_page_data
+    Wiki.new(:user => current_user, :body => "")
+  end
 end

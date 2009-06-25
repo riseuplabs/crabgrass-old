@@ -2,42 +2,12 @@ class AssetPageController < BasePageController
   before_filter :fetch_asset
 #  javascript :extra
   stylesheet 'asset'
+  permissions 'asset_page'
 
   include AssetPageHelper
 
   def show
     redirect_to page_url(@page, :action => 'error') unless @asset
-  end
-
-  def create
-    @page_class = AssetPage
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?      
-      return flash_message_now(:error => "No data uploaded") unless params[:asset][:uploaded_data].any?
-      begin
-        # create asset
-        @asset = Asset.make params[:asset]
-        unless @asset.valid?
-          flash_message_now :object => @asset
-          return
-        end
-        
-        params[:page][:title] = @asset.basename unless params[:page][:title].any?
-        @page = @page_class.create!(params[:page].merge(
-          :user => current_user,
-          :share_with => params[:recipients],
-          :access => params[:access],
-          :data => @asset
-        ))  
-        redirect_to(page_url(@page))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    else
-      @page = build_new_page(@page_class)
-    end
   end
 
   def update
@@ -100,18 +70,6 @@ class AssetPageController < BasePageController
   end
 
   protected
-  
-  def authorized?
-    if @page.nil?
-      true
-    elsif action?(:update, :add_to_gallery)
-      current_user.may?(:edit,@page)
-    elsif action?(:generate_preview, :show)
-      @page.public? or current_user.may?(:view,@page)
-    else
-      current_user.may?(:admin, @page)
-    end  
-  end
  
   def fetch_asset
     @asset = @page.data if @page
@@ -121,5 +79,15 @@ class AssetPageController < BasePageController
     @show_attach = false
     @show_posts = true
   end
-  
+
+  def build_page_data
+    unless params[:asset][:uploaded_data].any?
+      @page.errors.add_to_base "No data uploaded"[:no_data_uploaded]
+      raise ActiveRecord::RecordInvalid.new(@page)
+    end
+
+    asset = Asset.make params[:asset]
+    @page[:title] = asset.basename unless @page[:title].any?
+    asset
+  end
 end

@@ -1,10 +1,12 @@
 class CollectionController < BasePageController
 
+  permissions 'collection'
   ##
   ## ACCESS: no restriction
   ##
 
   def create
+    raise "CollectionController#create deprecated. Use BasePageController#create and CollectionController#build_page_data methods"
     @page_class = Collection
     if request.post?
       return redirect_to(create_page_url) if params[:cancel]
@@ -71,20 +73,6 @@ I guess these aren't applicable to colletions
 
   def cancel
     redirect_to page_url(@page, :action => 'show')
-  end
-
-  def authorized?
-    if @page
-      if %w(show print diff version versions).include? params[:action]
-        @page.public? or current_user.may?(:view, @page)
-      elsif %w(edit break_lock).include? params[:action]
-        current_user.may?(:edit, @page)
-      else
-        current_user.may?(:admin, @page)
-      end
-    else
-      true
-    end
   end
 
 end

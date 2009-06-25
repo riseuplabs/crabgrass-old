@@ -28,11 +28,6 @@ all the relationship between a page and its groups is stored in the group_partic
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.boolean  "static"
-    t.datetime "static_expires"
-    t.boolean  "static_expired"
     t.integer  "stars",              :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
@@ -43,6 +38,7 @@ all the relationship between a page and its groups is stored in the group_partic
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
+    t.datetime "happens_at"
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -55,8 +51,6 @@ all the relationship between a page and its groups is stored in the group_partic
   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
-  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
 
   Yeah, so, there are way too many indices on the pages table.
@@ -64,17 +58,25 @@ all the relationship between a page and its groups is stored in the group_partic
 
 class Page < ActiveRecord::Base
   extend PathFinder::FindByPath
-  include PageExtension::Users
-  include PageExtension::Groups
-  include PageExtension::Create
-  include PageExtension::Subclass
-  include PageExtension::Index
-#  include PageExtension::Linking
-  include PageExtension::Static
+  include PageExtension::Users     # page <> users relationship
+  include PageExtension::Groups    # page <> group relationship
+  include PageExtension::Assets    # page <> asset relationship
+  include PageExtension::Create    # page creation
+  include PageExtension::Subclass  # page subclassing
+  include PageExtension::Index     # page full text searching
+  include PageExtension::Starring  # ???
 
   acts_as_taggable_on :tags
   acts_as_site_limited
   attr_protected :owner
+
+  ##
+  ## NAMES SCOPES
+  ##
+
+  named_scope :only_public, :conditions => {:public => true}
+  named_scope :only_images, :conditions => {:is_image => true}
+  named_scope :only_videos, :conditions => {:is_video => true}
 
   ##
   ## PAGE NAMING
@@ -93,7 +95,7 @@ class Page < ActiveRecord::Base
   end
 
   def flow= flow
-    if flow.kind_of? Integer
+    if flow.kind_of?(Integer) || flow.nil?
       write_attribute(:flow, flow)
     elsif flow.kind_of?(Symbol) && FLOW[flow]
       write_attribute(:flow, FLOW[flow])
@@ -152,7 +154,6 @@ class Page < ActiveRecord::Base
 
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
-  has_many :assets, :dependent => :destroy
 
   validates_presence_of :title
   validates_associated :data
@@ -216,30 +217,10 @@ class Page < ActiveRecord::Base
     end
   end
 
-  # sets the default media flags. can be overridden by the subclasses.
-  before_save :update_media_flags
-  def update_media_flags
-    if self.data
-      self.is_image = self.data.is_image? if self.data.respond_to?('is_image?')
-      self.is_audio = self.data.is_audio? if self.data.respond_to?('is_audio?')
-      self.is_video = self.data.is_video? if self.data.respond_to?('is_video?')
-      self.is_document = self.data.is_document? if self.data.respond_to?('is_document?')
-    end
-    true
-  end
-  
+    
   ##
   ## PAGE ACCESS CONTROL
   ##
-
-  ## update attachment permissions
-  after_save :update_access
-  def update_access
-    if public_changed?
-      assets.each { |asset| asset.update_access }
-    end
-    true
-  end
 
   # returns true if self is part of given network
   # DEPRECATED
@@ -254,11 +235,12 @@ class Page < ActiveRecord::Base
     groups = self.groups_with_access(:view)
     groups | self.groups_with_access(:edit)
     groups | self.groups_with_access(:admin)
-    groups | self.groups_with_access(:comment)
 
     groups.include?(network) ? true : false
     true
   end
+
+  public
 
   # This method should never be called directly. It should only be called
   # from User#may?()
@@ -272,12 +254,8 @@ class Page < ActiveRecord::Base
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
-  # DEPRECATED permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   :delete  -- can user destroy page?
-  #  
   # DEPRECATED BEHAVIOR:
-  # :edit and :comment should return false for deleted pages.
+  # :edit should return false for deleted pages.
   #
   def has_access!(perm, user)
 
@@ -286,8 +264,6 @@ class Page < ActiveRecord::Base
     ## until the new permission system is working.
     ## then, this logic should all be moved there. 
     return false if tmp_hack_for_deleted_pages?(perm)
-    return tmp_hack_when_access_is_delete(user) if perm == :delete
-    perm = tmp_hack_for_comment() if perm == :comment
     ## END TEMP HACKS
     #########################################################
 
@@ -318,27 +294,9 @@ class Page < ActiveRecord::Base
     parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
   end
 
-  # this is some really horrible stuff that i want to go away very quickly.
-  # some sites want to restrict page deletion to only people who are admins
-  # of groups that have admin access to the page. crabgrass does not work this
-  # way and is a total violation of the permission logic. there is a better way,
-  # and it should be replaced for this.
-  def tmp_hack_when_access_is_delete(user)
-    parts = []
-    parts << participation_for_user(user)
-    parts.concat participation_for_groups(user.admin_for_group_ids)
-    return parts.compact.detect{|part| part.access == ACCESS[:admin]}
-  end
-
   # do not allow comments or editing of deleted pages:
   def tmp_hack_for_deleted_pages?(perm)
-    self.deleted? and (perm == :edit or perm == :comment)
-  end
-
-  # by default, if a user can edit the page, they can comment.
-  # this can be overridden by subclasses.
-  def tmp_hack_for_comment
-    :view
+    self.deleted? and (perm == :edit)
   end
 
   public
@@ -378,38 +336,53 @@ class Page < ActiveRecord::Base
   # this attr is protected from mass assignment.
   def owner=(entity)
     if entity.is_a? String
-      entity = User.find_by_login(entity) || Group.find_by_name(entity)
+      if entity.empty?
+        entity = nil
+      else
+        entity = User.find_by_login(entity) || Group.find_by_name(entity)
+      end
     end
-    raise ArgumentError.new("cannot set page.owner to nil") if entity.nil?
-
-    self.owner_id = entity.id
-    self.owner_name = entity.name
-    if entity.is_a? Group
-      self.owner_type = "Group"
-      self.group_name = self.owner_name
-      self.group_id = self.owner_id
-    elsif entity.is_a? User
-      self.owner_type = "User"
+    if entity.nil?
+      if Conf.ensure_page_owner?
+        raise ArgumentError.new("cannot set page.owner to nil")
+      else
+        self.owner_id = nil
+        self.owner_name = nil
+        self.owner_type = nil
+      end
     else
-      raise Exception.new('must be user or group')
+      self.owner_id = entity.id
+      self.owner_name = entity.name
+      if entity.is_a? Group
+        self.owner_type = "Group"
+        self.group_name = self.owner_name
+        self.group_id = self.owner_id
+      elsif entity.is_a? User
+        self.owner_type = "User"
+      else
+        raise Exception.new('must be user or group')
+      end
+      part = most_privileged_participation_for(entity)
+      self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+      return self.owner(true)
     end
-    part = most_privileged_participation_for(entity)
-    self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
-    return self.owner(true)
   end
 
   before_create :ensure_owner
   def ensure_owner
-    if owner
-      ## do nothing!
-    elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
-      self.owner = gp.group
-    elsif self.created_by
-      self.owner = self.created_by
-    else
-      # in real life, we should not get here. but in tests, we make pages a lot
-      # that don't have a group or user.
+    if Conf.ensure_page_owner?
+      if owner
+        ## do nothing!
+      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+        self.owner = gp.group
+      elsif self.created_by
+        self.owner = self.created_by
+      else
+        # in real life, we should not get here. but in tests, we make pages a lot
+        # that don't have a group or user.
+      end
     end
+    return true
   end
 
   # a list of people and groups that have admin access to this page
@@ -470,11 +443,14 @@ class Page < ActiveRecord::Base
   ## MISC. HELPERS
   ##
 
+  public
+
   # tmp in-memory storage used by views
   def flag
     @flags ||= {}
   end
 
+  # DEPRECATED
   def self.make(function,options={})
     PageStork.send(function, options)
   end

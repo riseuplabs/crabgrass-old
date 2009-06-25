@@ -1,46 +1,19 @@
-<!--
-<table>
-  <tr>
-    <td class='label'><%= 'Title'.t %></td>
-    <td><%= text_field 'page', 'title', :size => 38 %></td>
-    <%= javascript_tag %( $("page_title").focus() ) %>
-  </tr>
-  <tr>
-    <td class='label'><%= 'Summary'.t %></td>
-    <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
-  </tr>
-  <tr>
-    <td class='label'><%= 'Tags'.t %></td>
-    <td>
-      <%= text_field 'page', 'tag_list', :size => 38 %><br/>
-      <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
-    </td>
-  </tr>
-</table>
--->
-
-<h2><%= '{page_class} information'[:create_page_information, {:page_class => page_class}].capitalize %></h2>
-
-<dl>
-
-  <dt><%= 'Title'.t %></dt>
-  <dd><%= text_field 'page', 'title', :size => 38 %><%= javascript_tag %( $("page_title").focus() ) %></dd>
-
-  <dt><%= 'Summary'.t %></dt>
-  <dd><%= text_area 'page', 'summary', :size => '38x3' %></dd>
-
-  <dt><%= 'Tags'.t %></dt>
-  <dd><%= text_field 'page', 'tag_list', :size => 38 %><br/>
-<i>(<%= 'separate tags using commas'[:separate_tags]%>)</i></dd>
-
-</dl>
-
-<% if sections.any_in? ['file','files','external_video','body', 'image', 'event'] -%>
-  <h2><%= '{page_class} data'[:create_page_data, {:page_class => page_class}].capitalize %></h2>
-  <dl>
-  <% sections.each do |section| %>
-    <%= render :partial => "base_page/create/#{section}" %>
-  <% end %>
-  </dl>
-<% end %>
+<%
+  #form.heading '{page_class} Information'[:create_page_information, "Page"[:page]]
+  form.row do |r|
+    r.label 'Title'[:title]
+    r.input text_field('page', 'title', :size => 40)
+    r.info help(:title)
+  end
+  form.row do |r|
+    r.label 'Summary'[:summary]
+    r.input text_area('page', 'summary', :size => '40x3')
+    r.info help(:summary)
+  end
+  form.row do |r|
+    r.label 'Tags'[:tags]
+    r.input text_field('page', 'tag_list', :size => 40)
+    r.info "%s %s" % [help(:tags), 'Separate tags using commas'[:separate_tags]]
+  end
+%>
 

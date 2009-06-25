@@ -1,4 +1,17 @@
-#
+=begin
+
+create_table "external_videos", :force => true do |t|
+  t.string   "media_key"
+  t.string   "media_url"
+  t.string   "media_thumbnail_url"
+  t.text     "media_embed"
+  t.integer  "page_terms_id",       :limit => 11
+  t.datetime "created_at",                        :null => false
+  t.datetime "updated_at",                        :null => false
+end
+
+=end
+
 # this is largely taken from the network.greenchange codebase
 # http://github.com/sethwalker/greenchange/tree/master/app/models/external_video.rb
 #
@@ -7,6 +20,9 @@ class ExternalVideo < ActiveRecord::Base
   include PageData
   before_save :update_page_terms
   
+  HEIGHT_RE = /height(="|:)(\d+)/
+  WIDTH_RE = /width(="|:)(\d+)/
+
   SERVICES = [
 
     { :name => :youtube,
@@ -72,11 +88,11 @@ class ExternalVideo < ActiveRecord::Base
   end
 
   def height
-    media_embed[/height(="|:)(\d+)/, 2] || default_height
+    read_attribute(:height) || (media_embed && media_embed[HEIGHT_RE, 2]) || default_height
   end
 
   def width
-    media_embed[/width(="|:)(\d+)/, 2] || default_width
+    read_attribute(:width) || (media_embed && media_embed[WIDTH_RE, 2]) || default_width
   end
 
   def default_width
@@ -87,8 +103,8 @@ class ExternalVideo < ActiveRecord::Base
     service[:default_height] if service
   end
 
-  def build_embed
-    service[:template ] % [media_key, width, height] if service
+  def build_embed(crop_width = width, crop_height = height)
+    service[:template ] % [media_key, crop_width, crop_height] if service
   end
   
   def media_embed=(str)

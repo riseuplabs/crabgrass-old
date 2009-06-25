@@ -6,12 +6,20 @@
 #    t.boolean "public",          :default => false
 #  end
 #
+# also defined:
+# 
+#   avatar.image_file
+#
+# Which one do you use? Always use image_file to set the data, and
+# always use image_file_data to retreive the image data.
+#
 
 class Avatar < ActiveRecord::Base
 
   acts_as_fleximage do
     default_image_path "public/images/default/96.jpg"
     require_image false
+    output_image_jpg_quality 95
 #    image_directory 'public/images/uploaded'  \ how do we migrate
 #    image_storage_format :png                 / to using these options?
     preprocess_image do |image|

@@ -10,6 +10,12 @@ ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icon
 /* status hack to make set_status form not get too big */
 table.set_status {width:80%;}
 
+/* clearing */
+.selfclear {
+  zoom: 1; /* triggers hasLayout */
+  display: block; /* resets display */
+}
+
 /* ie7 puts the scroll bar over top the enclosed content */
 div.page_scroll {
   overflow: hidden;
@@ -26,4 +32,7 @@ div.page_list {width: 100%;}
 
 /* hide the message area */
 #message {line-height: 1px;}
+
+/* temp hack for temp site home */
+form.mini_search table {width: 17em;}
 

@@ -5,7 +5,7 @@
 #
 #
 
-class SiteNetworkController < NetworkController
+class SiteNetworkController < NetworksController
 
   def show
     redirect_to '/'

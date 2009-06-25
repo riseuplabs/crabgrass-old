@@ -1,3 +1,8 @@
-<dt><%= 'File'[:file] %></dt>
-<dd><%= file_field 'asset', 'uploaded_data', :size => 22 %></dd>
+<%
+  form.row do |r|
+    r.label 'File'[:file]
+    r.input file_field('asset', 'uploaded_data', :size => 29)
+    r.info help(:upload_file)
+  end
+%>
 

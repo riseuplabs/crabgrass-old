@@ -15,6 +15,11 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+require 'webrat'
+Webrat.configure do |config|
+  config.mode = :rails
+end
+
 module Tool; end
 
 
@@ -27,6 +32,24 @@ module Tool; end
 #
 def showlog
   ActiveRecord::Base.logger = Logger.new(STDOUT)
+end
+
+# This is a testable class that emulates an uploaded file
+# Even though this is exactly like a ActionController::TestUploadedFile
+# i can't get the tests to work unless we use this.
+class MockFile
+  attr_reader :path
+	def initialize(path); @path = path; end
+	def size; 1; end
+  def original_filename; @path.split('/').last; end
+  def read; File.open(@path) { |f| f.read }; end
+  def rewind; end
+end
+
+
+def mailer_options
+  {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
+  :protocol => 'http://', :port => '3000', :page => @page}
 end
 
 class Test::Unit::TestCase
@@ -68,6 +91,26 @@ class Test::Unit::TestCase
     true
   end
   
+  # currently, for normal requests, we just redirect to the login page
+  # when permission is denied. but this should be improved.
+  def assert_permission_denied
+    assert_equal 'error', flash[:type]
+    assert_equal 'Permission Denied', flash[:title]
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
+  def assert_error_message(regexp=nil)
+    assert_equal 'error', flash[:type]
+    if regexp
+      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp, flash[:text]]
+    end
+  end
+
+  ##
+  ## ASSET HELPERS
+  ##
+
   def upload_data(file)
     type = 'image/png' if file =~ /\.png$/
     type = 'image/jpeg' if file =~ /\.jpg$/
@@ -76,9 +119,14 @@ class Test::Unit::TestCase
     fixture_file_upload('files/'+file, type)
   end
 
+  def upload_avatar(file)
+    MockFile.new(RAILS_ROOT + '/test/fixtures/files/' + file)
+  end
+
   def read_file(file)
     File.read( RAILS_ROOT + '/test/fixtures/files/' + file )
   end
+
 
 =begin
   def assert_login_required(method, url)
@@ -161,9 +209,59 @@ See also doc/SPHINX_README"
     end
   end
 
+  ##
+  ## DEBUGGING HELPERS
+  ##
+
   # prints out a readable version of the response. Useful when using the debugger
   def response_body
     puts @response.body.gsub(/<\/?[^>]*>/, "").split("\n").select{|str|str.strip.any?}.join("\n")
   end
 
+  ##
+  ## ROUTE HELPERS
+  ##
+
+  def url_for(options)
+    url = ActionController::UrlRewriter.new(@request, nil)
+    url.rewrite(options)
+  end
+
+  ##
+  ## FIXTURE HELP
+  ##
+
+  # we use transactional fixtures for everything except page terms
+  # page_terms is a different ttable type (MyISAM) which doesn't support transactions
+  # this method will reload the original page terms from the fixture files
+  def reset_page_terms_from_fixtures
+    fixture_path = ActiveSupport::TestCase.fixture_path
+    Fixtures.reset_cache
+    Fixtures.create_fixtures(fixture_path, ["page_terms"])
+  end
+
+  ##
+  ## MORE ASSERTS
+  ##
+
+  def assert_layout(layout)
+    assert_equal layout, @response.layout
+  end
+
+  ##
+  ## AUTHENTICATION
+  ##
+
+  # the normal acts_as_authenticated 'login_as' does not work for integration tests
+  def login(user)
+    post '/account/login', {:login => user.to_s, :password => user.to_s}
+  end
+
+end
+
+# some special rules for integration tests
+class ActionController::IntegrationTest
+  # we load all fixtures because webrat integration test should see exactly
+  # the same thing the user sees in development mode
+  fixtures :all
 end

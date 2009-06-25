@@ -18,7 +18,7 @@ class BasePage::TagsControllerTest < Test::Unit::TestCase
   
   def test_show_popup
     login_as :blue
-    get :show_popup, :page_id => 1, :page => "640x480", :position => "60x20"
+    get :show, :page_id => 1, :page => "640x480", :position => "60x20"
     assert_response :success
   end
 

@@ -127,7 +127,7 @@ module UserExtension
         committee = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
           WHERE groups.parent_id IN (#{direct.join(',')})
-          AND groups.is_council = 0
+          AND groups.type = 'Committee'
         ])
         network = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
@@ -144,7 +144,7 @@ module UserExtension
           committee += Group.connection.select_values(%Q[
             SELECT groups.id FROM groups
             WHERE groups.parent_id IN (#{network.join(',')})
-            AND groups.is_council = 0
+            AND groups.type = 'Committee'
           ])
         end
         admin_for = Group.connection.select_values(%Q[
@@ -182,9 +182,9 @@ module UserExtension
     def get_contact_ids()
       return [[],[]] unless self.id
       foe = [] # no foes yet.
-      friend = Contact.connection.select_values( %Q[
-        SELECT contacts.contact_id FROM contacts
-        WHERE contacts.user_id = #{self.id}
+      friend = Relationship.connection.select_values( %Q[
+        SELECT relationships.contact_id FROM relationships
+        WHERE relationships.type = 'Friendship' AND relationships.user_id = #{self.id}
       ])
       [friend,foe]
     end

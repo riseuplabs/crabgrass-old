@@ -2,6 +2,8 @@ class CustomAppearancesController < ApplicationController
   stylesheet :custom_appearance
   javascript :extra
   helper ColorPickerHelper
+#, Admin::UsersHelper, Admin::GroupsHelper, Admin::EmailBlastsHelper, Admin::AnnouncementsHelper, Admin::PagesHelper, Admin::PostsHelper
+  permissions 'custom_appearances'
 
   before_filter :view_setup, :except => [:favicon, :available]
   before_filter :login_required, :except => [:favicon]
@@ -9,6 +11,7 @@ class CustomAppearancesController < ApplicationController
 
   # GET edit_custom_appearance_url
   def edit
+    #render :layout => 'admin'
   end
 
   # PUT custom_appearance_url
@@ -33,22 +36,8 @@ protected
     @appearance = CustomAppearance.find(params[:id])
   end
 
-  def authorized?
-    return false unless logged_in?
-    if current_site and @appearance == current_site.custom_appearance and current_site.super_admin_group
-      if current_user.may?(:admin, current_site.super_admin_group)
-        return true
-      end
-    end
-
-    if current_site and @appearance == current_site.custom_appearance
-      return true if current_user.may?(:admin, current_site)
-    end
-
-    return false
-  end
-
   def view_setup
     @selected_tab = params['tab'] || 'masthead'
   end
+
 end

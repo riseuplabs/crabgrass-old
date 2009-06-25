@@ -4,7 +4,7 @@
   f.tab do |t|
     t.label "Show"[:show]
     t.url page_url(@page,:action=>'show')
-    t.selected action?(:show) && controller?(:wiki_page)
+    t.selected action?(:show) && !controller?(:wiki_page_version)
     t.class 'page_url'
   end
   if logged_in? and current_user.may?(:edit, @page)

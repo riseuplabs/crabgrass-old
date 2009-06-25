@@ -22,13 +22,13 @@ module PathFinder::Mysql::BuilderFilters
     Time.zone.local_to_utc(time)
   end
 
-  def filter_starts
-    @date_field = "starts_at"
-  end
-
-  def filter_created
-    @date_field = "created_at"
-  end
+  # def filter_starts
+  #   @date_field = "starts_at"
+  # end
+  # 
+  # def filter_created
+  #   @date_field = "created_at"
+  # end
 
   def filter_updated
     @date_field = "updated_at"
@@ -64,11 +64,11 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'pages.updated_at > pages.created_at'
   end
  
-  def filter_upcoming
-    @conditions << 'pages.starts_at > ?'
-    @values << Time.now
-    @order << 'pages.starts_at DESC' if @order
-  end
+  # def filter_upcoming
+  #   @conditions << 'pages.starts_at > ?'
+  #   @values << Time.now
+  #   @order << 'pages.starts_at DESC' if @order
+  # end
   
   def filter_ago(near,far)
     near = near.to_i.days.ago
@@ -212,11 +212,13 @@ module PathFinder::Mysql::BuilderFilters
   #++
   
   def filter_ascending(sortkey)
+    sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s ASC" % sortkey
   end
   
   def filter_descending(sortkey)
+    sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s DESC" % sortkey
   end
@@ -261,6 +263,18 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]
     @order << "user_participations.changed_at DESC" if @order
+  end
+
+  def filter_admin(user_id)
+    @conditions << 'user_participations.user_id = ? AND user_participations.access = ?'
+    @values << user_id.to_i
+    @values << ACCESS[:admin]
+  end
+
+  def filter_contributed_group(group_id)
+    @conditions << 'user_participations.user_id IN (?) AND user_participations.changed_at IS NOT NULL'
+    @values << Group.find(group_id).user_ids
+    @order = ["user_participations.changed_at DESC"]
   end
 
 #turning RDoc comments back on. 

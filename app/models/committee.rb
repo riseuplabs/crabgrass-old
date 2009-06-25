@@ -24,13 +24,13 @@ class Committee < Group
   
   # what we show to the user
   def display_name
-    read_attribute(:full_name) || short_name
+    if read_attribute(:full_name).any?
+      read_attribute(:full_name)
+    else
+      short_name
+    end
   end
 
-  ## TODO: i do not like this. there is no attribute display_name.
-  def display_name=(name)
-    write_attribute(:display_name, name)
-  end
   #has_many :delegations, :dependent => :destroy
   #has_many :groups, :through => :delegations
   #def group()
@@ -40,7 +40,6 @@ class Committee < Group
   # called when the parent's name has change
   def parent_name_changed
     self.name = short_name
-    self.save
   end
 
   # custom name setter so that we can ensure that the parent's
@@ -68,29 +67,22 @@ class Committee < Group
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
     elsif access == :view
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
 
-#
-# SITES
-#
-#############################  
-
+  # DEPRECATED
   # returns true if self is part of given network
   def belongs_to_network?(network)
     self.parent.networks.include?(network)
   end
   
-  
-  ####################################################################
+  ##
   ## relationships to users
-  def may_be_pestered_by?(user)
-    return true if user.member_of?(self)
-    return true if parent and parent.publicly_visible_committees
-    return false
+  ##
+
+  def may_be_pestered_by!(user)
+    super and parent.profiles.visible_by(user).may_see_committees?
   end
   
 end

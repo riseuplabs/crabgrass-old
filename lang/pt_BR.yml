@@ -1,20 +1,21 @@
 --- 
-add_encryption_key: Adicionar chave de criptografia
 group_not_allowed_to_view_image_error: "O grupo dono desta p\xC3\xA1gina n\xC3\xA3o tem autoriza\xC3\xA7\xC3\xA3o para ver esta foto."
 Personal: Pessoal
 small: pequeno
+add_encryption_key: Adicionar chave de criptografia
 folder_page_description: "Compila\xC3\xA7\xC3\xA3o de recursos."
 menu_networks: Redes
 group_summary: "Breve descri\xC3\xA7\xC3\xA3o do grupo %s."
 my_requests_headline: Meus Pedidos
-add_star_link: Adicionar estrela {:star_count)
 groups: Grupos
 title: "T\xC3\xADtulo"
 month_short_april: Abr
 request_to_friend_description: ":user gostaria de ser contato de :other_user"
 move_image_left: "Colocar a imagem \xC3\xA0 esquerda"
 peers: Parceiros
+add_star_link: Adicionar estrela {:star_count)
 current_video_sources: "atualmente suporta: youtube, blip.tv, google video, vimeo"
+archive: Arquivo
 left_the_chatroom: saiu do bate-papo
 request_to_join_us_description: ":user foi convidado para fazer parte de :group"
 wiki_page_display: Wiki
@@ -62,7 +63,6 @@ dont_have_permission_to_create_committees: "Voc\xC3\xAA n\xC3\xA3o est\xC3\xA1 a
 activate_js_to_rearrange_photos: Ativar Javascript para usar Drag&Drop para reorganizar as fotos!
 media_for_group: "%s em %s"
 medium: "interm\xC3\xA9dio"
-achive: Arquivo
 coordinator: Coordenador
 reject_button: recusar
 group_publicly_visible_description: "O grupo aparece em um diret\xC3\xB3rio p\xC3\xBAblico e o <i>profile</i> do grupo \xC3\xA9 vis\xC3\xADvel para n\xC3\xA3o membros do we.riseup.net/yourgroupname."
@@ -142,7 +142,6 @@ media_audio: "Grava\xC3\xA7\xC3\xA3o de som"
 media_without_group: Todos %s
 personal_message_class_description: "Mensagem pessoal enviada a diferentes destinat\xC3\xA1rios."
 leave_group: sair do %s
-working_group: grupo de trabalho
 location_country: "pa\xC3\xADs"
 reset_password_mail_greeting: "%s, sua senha foi restabelecida conforme voc\xC3\xAA pediu."
 login_name: "Usu\xC3\xA1rio"
@@ -152,8 +151,8 @@ forgot_password_text: "Se voc\xC3\xAA esqueceu sua senha para fazer log in, n\xC
 login: Login
 add_new_attachment: Anexar Novo Arquivo
 participant: Participante
-article_page_description: "Atualiza\xC3\xA7\xC3\xA3o do blog ou artigo jornal\xC3\xADstico."
 separate_tags: "Separar tags usando v\xC3\xADrgulas."
+article_page_description: "Atualiza\xC3\xA7\xC3\xA3o do blog ou artigo jornal\xC3\xADstico."
 inbox_description: "Caixa de entrada das p\xC3\xA1ginas das quais eu estou participando ativamente ou esperando mudan\xC3\xA7as"
 all_content: "Todos os Conte\xC3\xBAdos"
 share_page_recipients_results: Este {page_class} vai ser partilhado com
@@ -174,7 +173,6 @@ my_dashboard: Meu Painel
 slideshow_delay_input: Atualize cada :input_field segundos
 network: rede
 view_requests: ver pedidos
-minimum_stars_for_important_pages_description: "Estabele\xC3\xA7a o m\xC3\xADnimo necess\xC3\xA1rio de estrelas para uma p\xC3\xA1gina aparecer como 'importante' - na landing page do grupo"
 date_older: Mais antiga
 your_login: "Seu nome de usu\xC3\xA1rio"
 my_status_heading: Seu Estado Atual
@@ -187,7 +185,6 @@ alert_error: Erro
 full: completo
 login_button: Log in
 remove_from_gallery: Tirar da galeria
-destroy_group: destruir %s
 group_has_no_public_profile: "Este grupo n\xC3\xA3o tem um perfil p\xC3\xBAblico."
 Category: Categoria
 invalid_email: "E-mail inv\xC3\xA1lido"
@@ -207,6 +204,7 @@ version_number: "vers\xC3\xA3o :version"
 media_images: Imagens
 uploaded_image_cropped: "A imagem carregada ser\xC3\xA1 cortada e expandida a um quadrado de 96 pixels."
 signup_login_name: "Seu nome de usu\xC3\xA1rio"
+council_help: "Se este grupo tiver um conselho coordenador, ent\xC3\xA3o apenas um membro desse conselho pode administrar o grupo. Caso contr\xC3\xA1rio, qualquer membro do grupo pode faz\xC3\xAA-lo."
 file_class_description: Arquivo carregado.
 approve: aprovar
 allow_membership_requests: "Permitir Pedidos de Participa\xC3\xA7\xC3\xA3o"
@@ -216,7 +214,6 @@ gallery_class_description: "Compila\xC3\xA7\xC3\xA3o de imagens."
 unknown: desconhecido
 approval_vote: "voto de aprova\xC3\xA7\xC3\xA3o"
 signup_info: "Escolha seu nome de usu\xC3\xA1rio e sua senha, ent\xC3\xA3o clique \"%s\""
-committee_type_description: "Qual seria o tipo deste comit\xC3\xAA?"
 location_address: "endere\xC3\xA7o"
 Admin: "Administra\xC3\xA7\xC3\xA3o"
 link_name: Nome do link
@@ -226,7 +223,6 @@ print_underlined_p: <u>p</u>rint
 month_short_december: Dez
 post_message: Publicar Mensagem
 login_required: "Login obrigat\xC3\xB3rio"
-commitee_type: "Tipo de Comit\xC3\xAA"
 my_completed_tasks_link: Completo
 galleries: Galerias
 reset_password_mail_sent: "Foi enviado um e-mail com instru\xC3\xA7\xC3\xB5es para restabelecer sua senha."
@@ -300,6 +296,7 @@ name: Nome
 personal_message: mensagem pessoal
 wont_be_able_to_save: "Voc\xC3\xAA n\xC3\xA3o vai poder salvar esta p\xC3\xA1gina"
 request_to_join_our_network_description: O grupo :group foi convidado para fazer parte da rede :network
+destroy_group_link: Destruir {group_type}
 remove_from_inbox: Eliminar da caixa de entrada
 recipients: "destinat\xC3\xA1rios"
 no_members: (no members)
@@ -316,7 +313,6 @@ edit: editar
 phone_numbers: Telefones
 view_slideshow: Ver Slideshow
 video: "v\xC3\xADdeo"
-requests_for_group: Pedidos de %s
 my_peers_description: "usu\xC3\xA1rios com os quais eu participo de um mesmo grupo"
 date_months: meses
 page_details_link: "Detalhes de :page_class "
@@ -325,7 +321,6 @@ removing_image: Eliminar imagem...
 wiki_is_locked: "Atualmente, esta wiki est\xC3\xA1 bloqueada por :user"
 invite_accept_headline: Aceitar convite para fazer parte do grupo
 send_message_link: Enviar Mensagem
-coordinating_council_description: "Fazer parte deste comit\xC3\xAA confere <i>acesso administrativo</i> especial ao <b>:group_name</b> de :group_type."
 group_members_publicly_visible: "Tornar P\xC3\xBAblicos os Membros"
 page_list_heading_updated_by: atualizado por
 version_doesnt_exist: "N\xC3\xA3o h\xC3\xA1 nenhuma vers\xC3\xA3o :version"
@@ -353,7 +348,6 @@ starred: estrelado
 add_phone_number: "Adicionar N\xC3\xBAmero de Telefone"
 created_by: Criado por
 Work_Life: Vida de Trabalho
-minimum_stars_for_important_pages: "Estrelas m\xC3\xADnimas para p\xC3\xA1ginas importantes"
 wiki_page_description: Um documento com formato de texto livre.
 tags: Tags
 message_must_not_be_empty: "a mensagem deve ter alg\xC3\xBAm conte\xC3\xBAdo"
@@ -406,7 +400,6 @@ share_button: Partilhar
 participation: "Participa\xC3\xA7\xC3\xA3o"
 edit_attachments: Editar Arquivos Anexos
 requests_from_me: Meus pedidos
-create_page_share: Quem tem acesso a este {page_class}?
 invalid_email_text: "O endere\xC3\xA7o de e-mail digitado \xC3\xA9 inv\xC3\xA1lido."
 send_invites_headline: Enviar convites para fazer parte de {group}
 viewed: Visitado/a
@@ -449,7 +442,6 @@ no_change: "nenhuma altera\xC3\xA7\xC3\xA3o"
 invite_info: "Digite uma lista de identifica\xC3\xA7\xC3\xB5es de usu\xC3\xA1rio ou de endere\xC3\xA7os de e-mail de pessoas que voc\xC3\xAA gostaria de convidar para fazerem parte deste %s."
 status_pending: pendente
 this_is_committee: "Este comit\xC3\xAA faz parte do {parent_group}."
-me_requests_link: Pedidos
 none: nenhum/a
 date_yesterday: Ontem
 show_gallery: Mostrar Galeria
@@ -485,7 +477,6 @@ viewer: Espectador
 request_status: Este pedido foi :status por :user em :time
 all_people: todas as pessoas
 video_service_is_not_supported: "n\xC3\xA3o \xC3\xA9 compat\xC3\xADvel (atualmente, apenas youtube, google video, blip.tv, e vimeo)"
-working_group_description: "Fazer parte deste comit\xC3\xAA <i>n\xC3\xA3o confere acesso</i> a qualquer grupo que n\xC3\xA3o seja o <b>:group_name</b> do :group_type."
 location_postal_code: "c\xC3\xB3digo_de_endere\xC3\xA7amento_postal_CEP"
 login_failed: "N\xC3\xA3o foi poss\xC3\xADvel fazer login"
 add_photo_to_gallery: "adicionar foto a galeria: "
@@ -493,9 +484,9 @@ private_profile: Perfil Privado
 error_saving_new_order: Erro ao salvar novo comando!
 page_list_heading_title: "t\xC3\xADtulo"
 request_to_join_your_network_description: ":group pediu para fazer parte da rede :network"
-article_page_display: artigo
 video_embed_code_prompt: "C\xC3\xB3digo incrustado de uma fonte de v\xC3\xADdeo externa"
 cancel_button: Cancelar
+article_page_display: artigo
 not_set: "n\xC3\xA3o configurado"
 tuesday: "ter\xC3\xA7a-feira"
 settings: "Configura\xC3\xA7\xC3\xA3o"
@@ -515,9 +506,8 @@ usage_agreement_heading: "Termos e Condi\xC3\xA7\xC3\xB5es de Uso"
 search_headline: Pesquisar
 edit_featured_content: "editar conte\xC3\xBAdo em destaque"
 alert_field_errors: "H\xC3\xA1 problemas com os campos seguintes"
-comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por {user} em {when} de {old_version} para {new_version}"
+comparing_changes_header: "Comparando altera\xC3\xA7\xC3\xB5es feitas por :user em :when de :old_version para :new_version"
 this_is_coordinating: "Este comit\xC3\xAA \xC3\xA9 o <strong>conselho coordenador</strong> do {parent_group}."
-edit_council_help_text: "Se este grupo tiver um conselho coordenador, ent\xC3\xA3o apenas um membro desse conselho pode administrar o grupo. Caso contr\xC3\xA1rio, qualquer membro do grupo pode faz\xC3\xAA-lo."
 share_page_recipients_selection: "Fa\xC3\xA7a sua sele\xC3\xA7\xC3\xA3o"
 csrf_error_message: "Seu pedido de log in parece ser uma tentativa de hackear este site. N\xC3\xA3o se preocupe: \xC3\xA9 um erro freq\xC3\xBCente, at\xC3\xA9 no caso dos pedidos mais inocentes. N\xC3\xB3s estamos apenas sendo excessivamente paran\xC3\xB3icos. Voc\xC3\xAA s\xC3\xB3 tem que voltar a carregar a p\xC3\xA1gina antes de tentar fazer log in. Voc\xC3\xAA pode usar este link para tentar novamente:\r\n"
 type_your_messages_here: Digite suas mensagens aqui e clique entrar...
@@ -554,7 +544,6 @@ Social_Change_Interests: "Interesses quanto a mudan\xC3\xA7a social"
 upload_images: Carregar
 upload_new_image: carregar nova imagem
 request_to_join_us_via_email_description: ":email foi convidado para fazer parte de :group"
-page_info: "Informa\xC3\xA7\xC3\xA3o da p\xC3\xA1gina"
 message_page_display: Mensagem
 watch_checkbox: "Procurar Atualiza\xC3\xA7\xC3\xB5es"
 Announcements: Recados

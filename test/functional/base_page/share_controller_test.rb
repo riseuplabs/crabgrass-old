@@ -91,7 +91,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert @group.may?(:admin, @page), 'public group should have access to page'
     
     # get a private group. and try tp share with it
-    @group_private = Group.find_by_name('private_group_not_everyone_can_see')   
+    @group_private = Group.find_by_name('private_group')   
     assert @group_private, 'private group should exist' 
     assert !@group_private.may?(:admin, @page), 'private group should not have access to page originally'
  
@@ -204,7 +204,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
       assert_not_nil assigns(:recipients)
       assert_select 'tr.unsaved'
     else
-      assert_select 'div.notice'
+      assert_select 'div.big_notice'
     end
   end
   

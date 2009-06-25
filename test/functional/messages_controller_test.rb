@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
   def setup
     @controller = MessagesController.new
@@ -11,7 +11,7 @@ class MessagesControllerTest < ActionController::TestCase
 
   def test_create
     login_as :red
-    assert_difference 'Post.count', 1 do
+    assert_difference 'Post.count' do
       post :create,
         :post => {:body => 'test red to blue'},
         :user => 'blue', 
@@ -74,6 +74,13 @@ class MessagesControllerTest < ActionController::TestCase
     assert_no_difference 'Post.count' do
       post :set_status, :user => 'blue',
         :post => {:body => 'testing set status on blue.'}
+      assert_response :redirect
+    end
+
+    # setting blank status does nothing
+    assert_no_difference 'Post.count' do
+      post :set_status, :user => 'red',
+        :post => {:body => ''}
       assert_response :redirect
     end
   end

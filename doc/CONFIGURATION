@@ -72,7 +72,11 @@ For SMTP, to enable ssl connection the port must be 587 or 465. Some SMTP auth r
 === Miscellanous Global Options
 
 paranoid_emails
-if true, then urls sent in emails will be obscured.
+  If true, then urls sent in emails will be obscured and will expire after 30 days.
+
+ensure_page_owner
+  If true, then every page must have an owner. If false, you are allowed to create
+  pages without owners. The default is true.
 
 === Sites
 
@@ -137,7 +141,13 @@ title:
   the title of the website.
  
 email_sender:
-  email address that outgoing emails are sent from.
+  email address that outgoing emails are sent from. $current_host expands
+  to be the domain of the current request. the defaul is: 'robot@$current_host'
+
+email_sender_name:
+  the name part of the "from" field. $user_name expands to the current user's
+  display name, and $site_title expands to the title of the current site.
+  the default is: '$site_title ($user_name)'
  
 enforce_ssl:
   if true, cookies will only work over tls/ssl.
@@ -167,6 +177,12 @@ limited:
   if set to true, then a user can only see people, groups, and pages from the
   current site. stuff from other sites will appear invisible. (note, currently, 
   this is not actually stored in the database but must be globally configured).
+
+signup_mode:
+  determines how signup works. there are three options:
+  (1) default --> anyone can sign up
+  (2) closed  --> no one can sign up
+  (3) invite_only --> you can sign up only if you were invited to join a group.
 
 Unfrequently modified options:
 

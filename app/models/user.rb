@@ -1,10 +1,13 @@
 class User < ActiveRecord::Base
 
-  # core user extentions
-  include UserExtension::Cache      # should come first
-  include UserExtension::Socialize  # user <--> user
-  include UserExtension::Organize   # user <--> groups
-  include UserExtension::Sharing    # user <--> pages
+  ##
+  ## CORE EXTENSIONS
+  ##
+
+  include UserExtension::Cache      # cached user data (should come first)
+  include UserExtension::Users      # user <--> user
+  include UserExtension::Groups     # user <--> groups
+  include UserExtension::Pages      # user <--> pages
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
@@ -50,12 +53,7 @@ class User < ActiveRecord::Base
   ## USER IDENTITY
   ##
 
-  belongs_to :avatar
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-
-  # this is a hack to get 'has_many :profiles' to polymorph
-  # on User instead of AuthenticatedUser
-  #def self.base_class; User; end
+  belongs_to :avatar, :dependent => :destroy
   
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   before_validation :clean_names
@@ -120,6 +118,16 @@ class User < ActiveRecord::Base
   
   def time_zone
     read_attribute(:time_zone) || Time.zone_default
+  end
+
+  ##
+  ## PROFILE
+  ##
+
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+  
+  def profile
+    self.profiles.visible_by(User.current)
   end
 
   ##
@@ -204,9 +212,20 @@ class User < ActiveRecord::Base
   end
   
   def may!(perm, protected_thing)
+    return false if protected_thing.nil?
     return true if protected_thing.new_record?
-    @access ||= {}
-    (@access["#{protected_thing.to_s}"] ||= {})[perm] ||= protected_thing.has_access!(perm,self)
+    key = "#{protected_thing.to_s}"
+    if @access and @access[key] and !@access[key][perm].nil?
+      result = @access[key][perm]
+    else
+      result = protected_thing.has_access!(perm,self) rescue PermissionDenied
+      # has_access! might call clear_access_cache, so we need to rebuild it
+      # after it has been called.
+      @access ||= {}
+      @access[key] ||= {}
+      @access[key][perm] = result
+    end
+    result or raise PermissionDenied.new
   end
 
   # zeros out the in-memory page access cache. generally, this is called for

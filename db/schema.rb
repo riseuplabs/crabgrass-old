@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090523034728) do
+ActiveRecord::Schema.define(:version => 20090621045020) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -65,6 +65,9 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
   end
 
   add_index "assets", ["version"], :name => "index_assets_version"
@@ -110,13 +113,6 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
   add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
   add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
-  create_table "contacts", :id => false, :force => true do |t|
-    t.integer "user_id",    :limit => 11
-    t.integer "contact_id", :limit => 11
-  end
-
-  add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
-
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id",  :limit => 11
     t.boolean "preferred",                 :default => false
@@ -158,13 +154,18 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
   add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
 
   create_table "events", :force => true do |t|
-    t.text    "description"
-    t.text    "description_html"
-    t.boolean "is_all_day",       :default => false
-    t.boolean "is_cancelled",     :default => false
-    t.boolean "is_tentative",     :default => true
-    t.string  "location"
+    t.text     "description"
+    t.text     "description_html"
+    t.boolean  "is_all_day",       :default => false
+    t.boolean  "is_cancelled",     :default => false
+    t.boolean  "is_tentative",     :default => true
+    t.string   "location"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
   end
+
+  add_index "events", ["starts_at"], :name => "index_events_on_starts_at"
+  add_index "events", ["ends_at"], :name => "index_events_on_ends_at"
 
   create_table "external_videos", :force => true do |t|
     t.string   "media_key"
@@ -174,6 +175,9 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.integer  "page_terms_id",       :limit => 11
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.integer  "height",              :limit => 3
+    t.integer  "width",               :limit => 3
+    t.integer  "player",              :limit => 1
   end
 
   create_table "federatings", :force => true do |t|
@@ -188,12 +192,13 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
   create_table "group_participations", :force => true do |t|
-    t.integer  "group_id",       :limit => 11
-    t.integer  "page_id",        :limit => 11
-    t.integer  "access",         :limit => 11
-    t.boolean  "static",                       :default => false
+    t.integer  "group_id",          :limit => 11
+    t.integer  "page_id",           :limit => 11
+    t.integer  "access",            :limit => 11
+    t.boolean  "static",                          :default => false
     t.datetime "static_expires"
-    t.boolean  "static_expired",               :default => false
+    t.boolean  "static_expired",                  :default => false
+    t.integer  "featured_position", :limit => 11
   end
 
   add_index "group_participations", ["group_id", "page_id"], :name => "index_group_participations"
@@ -207,7 +212,6 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.string   "full_name"
-    t.string   "summary"
     t.string   "url"
     t.string   "type"
     t.integer  "parent_id",  :limit => 11
@@ -218,7 +222,6 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.string   "style"
     t.string   "language",   :limit => 5
     t.integer  "version",    :limit => 11, :default => 0
-    t.boolean  "is_council",               :default => false
     t.integer  "min_stars",  :limit => 11, :default => 1
     t.integer  "site_id",    :limit => 11
   end
@@ -307,8 +310,6 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.integer  "group_id",           :limit => 11
     t.integer  "created_by_id",      :limit => 11
     t.integer  "updated_by_id",      :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "page_updated_at"
     t.datetime "page_created_at"
     t.boolean  "delta"
@@ -351,11 +352,6 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.boolean  "static"
-    t.datetime "static_expires"
-    t.boolean  "static_expired"
     t.integer  "stars",              :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
@@ -366,6 +362,8 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.boolean  "is_video"
     t.boolean  "is_document"
     t.integer  "site_id",            :limit => 11
+    t.datetime "happens_at"
+    t.integer  "cover_id",           :limit => 11
   end
 
   add_index "pages", ["name"], :name => "index_pages_on_name"
@@ -378,8 +376,6 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
   add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
-  add_index "pages", ["starts_at"], :name => "index_pages_on_starts_at"
-  add_index "pages", ["ends_at"], :name => "index_pages_on_ends_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
 
   create_table "phone_numbers", :force => true do |t|
@@ -449,7 +445,7 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.datetime "updated_at"
     t.string   "birthday",               :limit => 8
     t.boolean  "fof"
-    t.string   "summary"
+    t.text     "summary"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
@@ -468,6 +464,8 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.string   "language",               :limit => 5
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
+    t.integer  "video_id",               :limit => 11
+    t.text     "summary_html"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -482,6 +480,15 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
 
   add_index "ratings", ["user_id"], :name => "fk_ratings_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
+
+  create_table "relationships", :force => true do |t|
+    t.integer "user_id",       :limit => 11
+    t.integer "contact_id",    :limit => 11
+    t.string  "type",          :limit => 10
+    t.integer "discussion_id", :limit => 11
+  end
+
+  add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "requests", :force => true do |t|
     t.integer  "created_by_id",         :limit => 11
@@ -548,6 +555,8 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
     t.string  "login_redirect_url"
     t.boolean "chat"
     t.boolean "limited"
+    t.integer "signup_mode",          :limit => 1
+    t.string  "email_sender_name",    :limit => 40
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -676,6 +685,7 @@ ActiveRecord::Schema.define(:version => 20090523034728) do
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"
+
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id",       :limit => 11
     t.integer  "user_id",       :limit => 11

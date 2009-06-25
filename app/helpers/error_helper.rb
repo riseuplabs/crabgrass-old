@@ -6,15 +6,8 @@ module ErrorHelper
   ## GENERATING NOTICES
   ##
 
-  #
-  # a one stop shopping function for flash messages
-  # usage:
-  # message :object => @user
-  # message :error => 'you messed up good'
-  # message :success => 'yeah, you rock'
-  #
-  ## TODO: destroy with helper, replace with flash_message
-  ## and flash_message_now
+  # DEPRECATED
+  # DEPRECATED
   def message(opts)    
     if opts[:success]
       flash[:notice] = opts[:success]
@@ -58,6 +51,9 @@ module ErrorHelper
   #   flash_message :error => 'no'
   #      (same as :type => 'error', :title => 'Changes could not be saved', :text => 'no')
   #
+  #   flash_message :success
+  #      (same as :success => true)
+  #
   # Special objects:
   #
   #   flash_message :exception => exc
@@ -94,7 +90,8 @@ module ErrorHelper
   end
 
   # display flash messages with appropriate styling
-  def display_messages()
+  def display_messages(size=:big)
+    return "" if flash[:hide]
     @display_message ||= begin
       if flash[:type].empty?
         ""
@@ -103,38 +100,50 @@ module ErrorHelper
           flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
           flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
         end
-        build_notice_area(flash[:type], flash[:title], flash[:text])
+        notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
+        content_tag(:div, notice_contents, :class => size.to_s + '_notice')
       end
     end
   end
 
-  # use by ajax
-  ## TODO: remove, replace with message_text()
-  def notify_errors(title, errors)
-     text = "<ul>" + errors.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     build_notice_area('error', title, text)
-  end
- 
-   # use by ajax
-  ## TODO: remove, replace with message_text()
-  def notify_infos(title, infos)
-     text = "<ul>" + infos.collect{|e|"<li>#{e}</li>"}.join("\n") + "</li>"
-     build_notice_area('info', title, text)
+  # 
+  # Used in controllers to render an error template base on an exception.
+  #
+  # for example:
+  #   
+  #   def show
+  #     ...
+  #   rescue Exception => exc
+  #     render_error(exc)
+  #   end
+  #
+  # If flash_message_now(exc) has not yet been called, then this method will
+  # call it.
+  #
+  def render_error(exc=nil)
+    unless flash[:type] == 'error'
+      flash_message_now :exception => exc
+    end
+    if exc and exc.is_a? ErrorNotFound
+      render :template => 'common/error', :status => 404
+    else
+      render :template => 'common/error'
+    end
   end
 
-  private
-  
-  def build_notice_area(type, title, text)
-    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
-    heading = content_tag(:div, heading, :class => 'heading')
-    if text and text.any?
-      text = content_tag(:div, text, :class => 'text')
-    else
-      text = ""
-    end
-    heading_and_text = content_tag(:div, heading+text, :class => type)
-    content_tag(:div, heading_and_text, :class => 'notice')
+  def raise_error(message)
+    raise ErrorMessage.new(message)
   end
+
+  def raise_not_found(message)
+    raise ErrorNotFound.new(message)
+  end
+
+  ##
+  ## BUILDING THE MESSAGE
+  ## normally, this should not be called directly, but there are a few times
+  ## when it is useful.
+  ##
 
   #
   # parses options to build the appropriate objects in the particular flash
@@ -148,6 +157,10 @@ module ErrorHelper
   # :object | :success | :error | :exception
   #
   def add_flash_message(flsh, options)
+    if options.is_a? Symbol
+      options = {options => true}
+    end
+
     flsh[:text] ||= ""
     flsh[:text] += content_tag(:p, options[:text]) if options[:text]
     flsh[:title] = options[:title] || flsh[:title]
@@ -162,7 +175,7 @@ module ErrorHelper
       elsif exc.is_a? ActiveRecord::RecordInvalid
         add_flash_message(flsh, :text => options[:text], :object => exc.record)
       else
-        add_flash_message(flsh, :text => "#{:error.t}: #{exc.class}", :error => exc.to_s)
+        add_flash_message(flsh, :title => 'Error'[:alert_error], :error => exc.to_s)
       end
     elsif options[:object]
       object = options[:object]
@@ -177,9 +190,13 @@ module ErrorHelper
         # use defaults
       elsif options[:error].any?
         flsh[:text] += content_tag :p, options[:text] if options[:text]
-        flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg|
-          content_tag :li, h(msg)
-        }
+        if options[:error].is_a? Array
+          flsh[:text] += content_tag :ul, options[:error].to_a.collect{|msg|
+            content_tag :li, h(msg)
+          }
+        else
+          flsh[:text] += content_tag :p, options[:error] if options[:error]
+        end
       end
     elsif options[:success]
       flsh[:type] = 'info'
@@ -187,11 +204,31 @@ module ErrorHelper
         # use defaults
       elsif options[:success].any?
         flsh[:text] += content_tag :p, options[:text] if options[:text]
-        flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg|
-          content_tag :li, h(msg)
-        }
+        if options[:success].is_a? Array
+          flsh[:text] += content_tag :ul, options[:success].to_a.collect{|msg|
+            content_tag :li, h(msg)
+          }
+        else
+          flsh[:text] += content_tag :p, options[:success] if options[:success]
+        end
       end
+    else
+      flsh[:type] = options[:type]
+      flsh[:text] += options[:text]
     end
+  end
+
+  private
+  
+  def build_notice_area(type, title, text)
+    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
+    heading = content_tag(:div, heading, :class => 'heading')
+    if text and text.any?
+      text = content_tag(:div, text, :class => 'text')
+    else
+      text = ""
+    end
+    content_tag(:div, heading+text, :class => type)
   end
 
   def exception_detailed_message(exception)

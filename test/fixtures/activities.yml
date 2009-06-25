@@ -89,7 +89,7 @@ activities_007:
   key: "502126422"
   extra: "--- \n\
     :snippet: blah blah blah blah\n\
-    :id: 1\n"
+    :id: 3\n"
   object_id: "3"
   created_at: "<%= 1.hour.ago.to_s(:db) %>"
 activities_008: 

@@ -1,6 +1,7 @@
 <% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
 
   <blockquote>
+    <div id="popup_message"></div>
     <table class='fieldset plain'>
     <tr>
       <td><b><%= 'Owner'[:page_list_heading_owner] %></b></td>
@@ -22,19 +23,19 @@
   </blockquote>
 
   <%= render :partial => 'base_page/participation/details_tabs' -%>
-  <div class='tab-content tab-area' id='permissions_tab'>
+  <div class='tab_content tab_area' id='permissions_tab'>
     <%= render :partial => 'base_page/participation/permissions' %>
   </div>
-  <div class='tab-content tab-area' id='participation_tab' style='display:none'>
+  <div class='tab_content tab_area' id='participation_tab' style='display:none'>
     <%= render :partial => 'base_page/participation/participation' %>
   </div>
 
   <div class='buttons'>
     <% form_remote_tag(
-    :url => {:controller => 'participation', :action => 'close_details', :page_id => @page.id},
+    :url => {:controller => 'participation', :action => 'show', :page_id => @page.id},
     :loading => show_spinner('popup')) do -%>
      <%= spinner 'popup' %>
-     <%= submit_tag :close_button.t, :name => 'cancel' %>
+     <%= submit_tag "Close"[:close_button], :name => 'cancel' %>
     <% end -%>
   </div>
 

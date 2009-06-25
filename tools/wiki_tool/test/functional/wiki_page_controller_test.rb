@@ -37,22 +37,23 @@ class WikiPageControllerTest < ActionController::TestCase
   
   def test_create
     login_as :quentin
-    
+
     assert_no_difference 'Page.count' do
-      post 'create', :page => {:title => nil}
+      post 'create', :id => WikiPage.param_id, :page => {:title => nil}
       assert_equal 'error', flash[:type], "page title should be required"
     end
-    
+
     assert_difference 'Page.count' do
       post :create, :id => WikiPage.param_id, :group_id=> "", :create => "Create page", :tag_list => "", 
            :page => {:title => 'my title', :summary => ''}
       assert_response :redirect
       assert_not_nil assigns(:page)
       assert_not_nil assigns(:page).data
-      # i don't think the wiki needs to be locked at creation.
-      # it will be locked soon enough when on the :edit action
-      #assert_equal true, assigns(:page).data.locked?, "the wiki should be locked by the creator"
-      assert_redirected_to @controller.page_url(assigns(:page), :action=>'edit')
+
+      assert_redirected_to @controller.page_url(assigns(:page), :action => 'show')
+      get :show, :page_id => assigns(:page).id
+
+      assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
     end
   end
 

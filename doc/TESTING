@@ -2,6 +2,22 @@
 
 TODO: this needs a lot of help.
 
+== Required Gems for Running Tests
+
+hpricot
+nokogiri
+launchy
+ruby-debug
+
+On debian, nokogiri requires: libxslt1-dev libxml2-dev
+
+== Integration Tests
+
+Run 'rake db:fixtures:load RAILS_ENV=test' before running integration tests. Otherwise they will not work. Instead of fixtures, integration tests expect the whole database to be ready.
+
+If an integration test modifies the page_terms table somehow (adding new permissions to pages for example) then it should clean it up (page_terms are non-transactional) by calling 'reset_page_terms_from_fixtures' in the 'teardown' method.
+
+
 == Testings Mods
 
 A great deal of the crabgrass code is in the form of engines-enhanced

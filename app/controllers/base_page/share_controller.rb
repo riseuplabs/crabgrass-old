@@ -29,6 +29,7 @@ class BasePage::ShareController < ApplicationController
   verify :xhr => true
 
   helper 'base_page', 'base_page/share'
+  permissions 'base_page'
 
   def auto_complete
     # i am searching by display_name only under protest. this is going to
@@ -37,7 +38,7 @@ class BasePage::ShareController < ApplicationController
     recipients = Group.find(:all,
       :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
       :limit => 20)
-    recipients += User.find(:all,
+    recipients += User.on(current_site).find(:all,
       :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
       :limit => 20)
     recipients = recipients.sort_by{|r|r.name}[0..19]
@@ -48,13 +49,8 @@ class BasePage::ShareController < ApplicationController
     }
   end
   
-  # display the share popup via ajax
-  def show_popup
-    if params[:name] == 'share'
-      render :template => 'base_page/share/show_share_popup'
-    else
-      render :template => 'base_page/share/show_notify_popup'
-    end
+  # display the share or notify popup via ajax
+  def show
   end  
   
   # there are three ways to submit the form:
@@ -118,19 +114,10 @@ class BasePage::ShareController < ApplicationController
     render :template => 'base_page/show_errors'
   end
 
-  def authorized?
-    if @page
-      current_user.may? :admin, @page
-    else
-      true
-    end
-  end
-
   prepend_before_filter :fetch_page
   def fetch_page
     if params[:page_id].any?
       @page = Page.find_by_id(params[:page_id])
-      @upart = @page.participation_for_user(current_user)
     end
     true
   end
@@ -138,7 +125,7 @@ class BasePage::ShareController < ApplicationController
   def find_recipient(recipient_name)
     recipient_name.strip!
     return nil unless recipient_name.any?
-    recipient = User.find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
+    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
     if recipient.nil?
       flash_message_now(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)
@@ -154,21 +141,32 @@ class BasePage::ShareController < ApplicationController
 
   private
 
-   # convert {:checkbox => '1'} to {:checkbox => true}
-   def convert_checkbox_boolean(hsh)
-     hsh.each_pair do |key,val|
-       if val == '0'
-         hsh[key] = false
-       elsif val == '1'
-         hsh[key] = true
-       end
-     end
-   end
+  def authorized?
+    return true if @page.nil?
+    if action?(:update)
+      may_share_page?
+    elsif action?(:notify)
+      may_notify_page?
+    elsif action?(:show, :auto_complete)
+      true
+    end
+  end
+
+  # convert {:checkbox => '1'} to {:checkbox => true}
+  def convert_checkbox_boolean(hsh)
+    hsh.each_pair do |key,val|
+      if val == '0'
+        hsh[key] = false
+      elsif val == '1'
+        hsh[key] = true
+      end
+    end
+  end
 
   # this should be in a helper somewhere, but i don't know how to generate 
   # json response in the view. 
   def display_on_two_lines(entity)
-   "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
 end

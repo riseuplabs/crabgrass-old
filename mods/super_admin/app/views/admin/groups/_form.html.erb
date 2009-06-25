@@ -1,0 +1,12 @@
+<tr>
+  <td><%= f.label :full_name, "Name" %></td><td><%= f.text_field :full_name %></td>
+</tr>
+<tr>
+  <td><%= f.label :name, "Link Name" %></td><td><%= f.text_field :name %></td>
+</tr>
+<tr>
+  <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p></td>
+</tr>
+<tr>
+  <td><%= f.label :image_file, "Picture" %></td><td><%= f.file_field :image_file %></td>
+</tr>

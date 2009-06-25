@@ -5,7 +5,7 @@ require 'contact_controller'
 class ContactController; def rescue_action(e) raise e end; end
 
 class ContactControllerTest < Test::Unit::TestCase
-  fixtures :users, :contacts, :sites
+  fixtures :users, :relationships, :sites
   
   def setup
     @controller = ContactController.new
@@ -30,7 +30,7 @@ class ContactControllerTest < Test::Unit::TestCase
   def test_remove
     login_as :blue
 
-    count = "Contact.count :conditions => 'user_id = #{users(:blue).id}'"
+    count = "Friendship.count :conditions => 'user_id = #{users(:blue).id}'"
 
     assert_no_difference count do
       get :remove, :id => users(:orange).login

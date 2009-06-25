@@ -31,10 +31,10 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     login_as(:blue)
     # blue can edit page 1
 
-    xhr :post, :update_public, :public => 'true', :page_id => 1
+    xhr :post, :update_public, :add => true, :page_id => 1
     assert_equal true, Page.find(1).public?
     
-    xhr :post, :update_public, :public => 'null', :page_id => 1
+    xhr :post, :update_public, :add => false, :page_id => 1
     assert_equal false, Page.find(1).public?
     
     
@@ -42,24 +42,24 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     @asset = Asset.create :uploaded_data => upload_data('photo.jpg'), :page_id => 1
     @asset.save
 
-    xhr :post, :update_public, :public => 'true', :page_id => 1
+    xhr :post, :update_public, :add => true, :page_id => 1
     assert_equal true, Page.find(1).public?
     
-    xhr :post, :update_public, :public => 'null', :page_id => 1
+    xhr :post, :update_public, :add => false, :page_id => 1
     assert_equal false, Page.find(1).public?
     
   end
 
   def test_add_star
     login_as(:blue)
-    post :add_star, :page_id => 1
+    post :update_star, :page_id => 1, :add => true
     assert Page.find(1).participation_for_user(users(:blue)).star?
   end
   
   def test_remove_star
     login_as(:blue)
     Page.find(1).participation_for_user(users(:blue)).update_attribute(:star, false)
-    post :remove_star, :page_id => 1
+    post :update_star, :page_id => 1, :add => false
     assert !Page.find(1).participation_for_user(users(:blue)).star?
   end
   
@@ -69,7 +69,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   
   def test_remove_watch
     login_as :blue
-    post :add_star, :page_id => 1 # need to get something to set up session variable
+    post :update_star, :page_id => 1, :add => true # need to get something to set up session variable
     user = @controller.current_user
     
     name = 'my new page'
@@ -88,7 +88,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     inbox_pages = Page.find_by_path('', @controller.options_for_inbox)
     assert inbox_pages.find {|p| p.id = page.id}, "new wiki should be in blue's inbox"
     
-    post :remove_watch, :page_id => page.id
+    post :update_watch, :page_id => page.id, :add => false
     page.reload
     
     assert !page.participation_for_user(user).watch?, 'should not be watched'
@@ -107,17 +107,51 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     @page.save!
     @page.reload
     assert @page.group_ids.include?(friend_group.id)
-    assert_equal @owner.id, @page.owner_id
+    if Conf.ensure_page_owner?
+      assert_equal @owner.id, @page.owner_id
+    end
     @page.reload
-    
+
     login_as :blue
     post :destroy, :page_id => @page.id, :upart_id => @page.user_participations.detect{|up|up.user==friend_user}.id
     
     post :destroy, :page_id => @page.id, :gpart_id => @page.group_participations.detect{|gp|gp.group==friend_group}.id
     
     @page = Page.find(@page.id)
-    assert_equal @owner.id, @page.owner_id
+    if Conf.ensure_page_owner?
+      assert_equal @owner.id, @page.owner_id
+    else
+      assert_nil @page.owner_id
+    end
     assert_equal [@owner.id], @page.user_ids
+  end
+
+  def test_destroy_error
+    login_as :blue
+
+    owner = users(:green)
+    user = users(:blue)
+    group = groups(:rainbow)
+    page = Page.create! :title => 'robot tea party', :user => owner, :share_with => user
+    assert user.may?(:admin, page)
+
+    assert_no_difference 'UserParticipation.count', 'should not be able to delete ourselves' do
+      post :destroy, :page_id => page.id, :upart_id => page.participation_for_user(user).id
+    end
+
+    owner.share_page_with!(page, group, :access => :admin)
+    page.save!
+    assert page.participation_for_group(group)
+    assert group.may?(:admin, page)
+
+    assert_difference 'UserParticipation.count', -1, 'should be able to delete now' do
+      post :destroy, :page_id => page.id, :upart_id => page.participation_for_user(user).id
+    end
+
+    assert_no_difference 'GroupParticipation.count', 'should not be able to delete' do
+      post :destroy, :page_id => page.id, :gpart_id => page.participation_for_group(group).id
+    end
+
   end
 
   def test_details
@@ -135,7 +169,8 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     page = Page.create! :title => 'snowy snow', :user => user, :share_with => group2, :access => :admin
     login_as :blue
     post :move, :page_id => page.id, :group_id => group2.id
-    assert_equal group2, page.owner.reload
+    assert assigns(:page).owner
+    assert_equal group2, assigns(:page).owner
   end
   
   def test_share
@@ -173,7 +208,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     page.reload
     assert group.may?(:admin, page), 'public group should have access to page'
     
-    group_private = Group.find_by_name('private_group_not_everyone_can_see')   
+    group_private = Group.find_by_name('private_group')   
     assert group, 'private group should exist'
     assert !group_private.may?(:admin, page), 'private group should not have access to page originally'
  

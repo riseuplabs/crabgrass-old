@@ -10,7 +10,7 @@ class ExternalVideoPageControllerTest < ActionController::TestCase
   def test_create
     login_as :quentin
     num_pages = Page.count
-    post :create, :page => {:title => 'my title event' },
+    post :create, :id => ExternalVideoPage.param_id, :page => {:title => 'my title event' },
                     :external_video => {:media_embed => video_embed_code}
 
     assert_not_nil assigns(:page)
@@ -23,7 +23,7 @@ class ExternalVideoPageControllerTest < ActionController::TestCase
 
     data_ids, page_ids, page_urls = [],[],[]
     3.times do
-      post 'create', :page => {:title => "dupe", :summary => ""},
+      post 'create', :id => ExternalVideoPage.param_id, :page => {:title => "dupe", :summary => ""},
                       :external_video => {:media_embed => video_embed_code}
       page = assigns(:page)
 
