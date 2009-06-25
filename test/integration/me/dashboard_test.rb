@@ -38,12 +38,24 @@ class Me::DashboardTest < ActionController::IntegrationTest
   end
 
   def test_joining_network_updates_dashboard
-    login 'dolphin'
-
+    login 'aaron'
     visit '/cnt'
-    click_link 'join Network'
+    click_link 'Request to Join Network'
     click_button 'Send Request'
-    # TODO: fix the bug and finish the test
+    assert_contain 'Request to join has been sent'
+
+    login 'blue'
+    visit '/me/dashboard'
+    click_link 'Requests'
+    assert_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
+
+    click_link 'approve' # will click the first one
+    assert_not_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
+
+    login 'aaron'
+    visit '/me/dashboard'
+
+    assert_contain %r{My World\s*Networks\s*Confederación Nacional del Trabajo \(cnt\)}
   end
 
   def test_joining_group_updates_dashboard
@@ -70,7 +82,6 @@ class Me::DashboardTest < ActionController::IntegrationTest
     assert_contain 'Aaron! requested to join animals'
 
     click_link 'approve' # will click the first one
-    # reload
     assert_not_contain 'Aaron! requested to join animals'
 
     login 'aaron'
