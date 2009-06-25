@@ -19,6 +19,7 @@ class Avatar < ActiveRecord::Base
   acts_as_fleximage do
     default_image_path "public/images/default/96.jpg"
     require_image false
+    output_image_jpg_quality 100
 #    image_directory 'public/images/uploaded'  \ how do we migrate
 #    image_storage_format :png                 / to using these options?
     preprocess_image do |image|
