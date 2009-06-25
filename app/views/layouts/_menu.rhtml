@@ -39,7 +39,6 @@
   <%# for now, i am disabling these tabs when not logged in. why? because
       the controllers currently bomb out in bad ways if you are not logged in. %>
   <%- if logged_in? -%>
-<<<<<<< HEAD:app/views/layouts/_menu.rhtml
   <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
     <span class="topnav"><%= link_to_active "People"[:menu_people], people_url(:action => :friends), @active_tab == :people %></span>
     <ul class="people_dashboard selfclear">
@@ -89,13 +88,6 @@
          </li>
        </ul>
     </li>
-
-    <%- if current_site.has_networks? -%>
-      <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
-        <% url = logged_in? ? network_directory_url(:action => :my) : network_directory_url %>
-        <span><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
-      </li>
-    <%- end -%>
   <%- end -%>
 
   <%- if logged_in? and current_site.chat? -%>
@@ -104,6 +96,7 @@
   </li>
   <%- end -%>
 
+  <%- end -%>
   <%= call_hook :top_menu %>
 </ul>
 <div style='clear: both;'></div>
