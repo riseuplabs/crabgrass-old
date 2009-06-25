@@ -7,11 +7,8 @@ class Me::TrashControllerTest < ActionController::TestCase
 
   def teardown
     # we use transactional fixtures for everything except page terms
-    # page_terms is a different table type (MyISAM) which doesn't support transactions
-    # so let's reload page_terms from the db each time
-    fixture_path = ActiveSupport::TestCase.fixture_path
-    Fixtures.reset_cache
-    Fixtures.create_fixtures(fixture_path, ["page_terms"])
+    # page_terms is a different ttable type (MyISAM) which doesn't support transactions
+    reset_page_terms_from_fixtures
   end
 
   def test_index_and_undelete
