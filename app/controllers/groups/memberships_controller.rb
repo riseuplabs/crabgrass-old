@@ -5,6 +5,7 @@ class Groups::MembershipsController < Groups::BaseController
 
   permissions 'groups/memberships', 'requests' 
   before_filter :fetch_group, :login_required
+  verify :method => :post, :only => [:join]
 
   ###### PUBLIC ACTIONS #########################################################
 
@@ -36,7 +37,8 @@ class Groups::MembershipsController < Groups::BaseController
     redirect_to url_for_group(@group)
   end
   
-  # used only in the special case when you have admin access to a group that you are not yet directly a member of
+  # used only in the special case when you have admin access to a group that you
+  # are not yet directly a member of.
   def join
     @group.add_user!(current_user)
     redirect_to url_for_group(@group)

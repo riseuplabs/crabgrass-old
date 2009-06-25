@@ -67,15 +67,18 @@ class AssetsControllerTest < Test::Unit::TestCase
   end
 
   def test_permissions
-    login_as :blue
+    User.current = nil # required, otherwise, create_page will add current user.
 
     @user = users(:blue)
-    @page = create_page
-
+    @page = create_page :title => 'test-access'
     assert !@user.may?(:edit, @page), 'user should not have write access to the page'
     
-    post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
-    assert_redirected_to :controller => "/account", :action => "login"
+    login_as :blue
+
+    assert_no_difference 'Asset.count' do
+      post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
+    end
+    assert_permission_denied
 
     @page.add(@user, :access => :edit)
     @page.save
