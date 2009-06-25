@@ -58,7 +58,7 @@ Rails::Initializer.run do |config|
   ### (2) CONFIG BLOCK
   ###
 
-  config.load_paths += %w(activity assets associations discussion chat observers profile poll task requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
   config.load_paths << "#{RAILS_ROOT}/app/permissions"
   config.load_paths << "#{RAILS_ROOT}/app/sweepers"
 

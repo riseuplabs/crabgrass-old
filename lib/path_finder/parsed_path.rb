@@ -35,6 +35,9 @@ class PathFinder::ParsedPath < Array
     'name' => 1,
     'changed' => 0,
     'text' => 1,
+    'most_views' => 2,
+    'most_edits' => 2,
+    'most_stars' => 2,
     
     
     # associations

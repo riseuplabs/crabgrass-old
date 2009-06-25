@@ -223,6 +223,32 @@ module PathFinder::Mysql::BuilderFilters
     @order << "pages.%s DESC" % sortkey
   end
 
+  def filter_most(what, num, unit)
+    unit=unit.downcase.pluralize
+    num.gsub!(/[^\d]+/, ' ')
+    if unit=="days"
+      @conditions << "dailies.created_at > NOW() - INTERVAL %s DAY" % num
+      @order << ["SUM(dailies.#{what}) DESC"]
+    elsif unit=="hours"
+      @conditions << "hourlies.created_at > NOW() - INTERVAL %s HOUR" % num
+      @order << ["SUM(hourlies.#{what}) DESC"]
+    else
+      return
+    end
+  end
+
+  def filter_most_views(num, unit)
+    filter_most("views", num, unit)
+  end
+
+  def filter_most_edits(num, unit)
+    filter_most("edits", num, unit)
+  end
+
+  def filter_most_stars(num, unit)
+    filter_most("rated", num, unit)
+  end
+
   #--
   #### BOOLEAN ####
   #++
