@@ -70,7 +70,7 @@ module Groups::Search
   def tasks
     @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
-    #render :action => "print_tasks", :layout => false if params[:print]
+    search_template('tasks')
   end
 
   def trash
