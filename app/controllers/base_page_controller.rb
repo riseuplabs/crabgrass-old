@@ -30,9 +30,9 @@ class BasePageController < ApplicationController
   append_before_filter :load_posts
   # :load_posts should come after :setup_default_view, to give controllers an
   # opportunity to disable loading of posts or to load posts via an alternate
-  # method.  
+  # method.
 
-  # if the page controller is call by our custom DispatchController, 
+  # if the page controller is call by our custom DispatchController,
   # objects which have already been loaded will be passed to the tool
   # via this initialize method.
   def initialize(options={})
@@ -40,12 +40,12 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
-  end  
+  end
 
   ##
   ## CREATION
-  ## 
-    
+  ##
+
   # the form to create this type of page
   # can be overridden by the subclasses
   def create
@@ -83,7 +83,7 @@ class BasePageController < ApplicationController
     return 'default' if params[:action] == 'create'
     return 'page'
   end
-  
+
   after_filter :update_viewed
   def update_viewed
     if @upart and @page and params[:action] == 'show'
@@ -93,46 +93,50 @@ class BasePageController < ApplicationController
     end
     true
   end
-  
+
   after_filter :save_if_needed
   def save_if_needed
     @upart.save if @upart and !@upart.new_record? and @upart.changed?
     @page.save if @page and !@page.new_record? and @page.changed?
     true
   end
-  
+
   after_filter :update_view_count
   def update_view_count
     return true unless @page and @page.id
     if current_site.tracking
-      Tracking.insert_delayed(:page => @page, :group => @group, :user => current_user)
+      Tracking.insert_delayed(:page => @page,
+                              :group => @group,
+                              :user => current_user,
+                              :action => trac_action_from_params)
     else
-      Tracking.insert_delayed(:page => @page)
+      Tracking.insert_delayed(:page => @page,
+                              :action => trac_action_from_params)
     end
     return true
   end
-  
+
   def setup_default_view
     if request.get?
       setup_view        # allow subclass to override view defaults
       @show_posts       = action?(:show) || action?(:print) if @show_posts.nil?
       @show_attachments = true           if @show_attachments.nil?
-      @show_tags        = true           if @show_tags.nil? 
+      @show_tags        = true           if @show_tags.nil?
       @html_title       = @page.title    if @page && @html_title.nil?
 
       # show the right column in actions other than :show,:edit
       @show_right_column = false if @show_right_column.nil?
 
-      # hide the right column 
+      # hide the right column
       @hide_right_column = false if @hide_right_column.nil?
     end
     true
   end
-  
+
   # to be overwritten by subclasses.
   def setup_view
   end
- 
+
   # don't require a login for public pages
   def login_or_public_page_required
     if action_name == 'show' and @page and @page.public?
@@ -141,11 +145,11 @@ class BasePageController < ApplicationController
       return login_required
     end
   end
-    
+
   def fetch_page_data
     return true unless @page or params[:page_id]
     unless @page
-      # typically, @page will be loaded by the dispatch controller. 
+      # typically, @page will be loaded by the dispatch controller.
       # however, in some cases (like ajax) we bypass the dispatch controller
       # and need to grab the page here.
       @page = Page.find(params[:page_id])
@@ -191,7 +195,7 @@ class BasePageController < ApplicationController
     end
     true
   end
-  
+
   ##
   ## default page creation methods used by tool controllers
   ##
@@ -229,6 +233,13 @@ class BasePageController < ApplicationController
     if @data and !@data.new_record?
       @data.destroy
     end
+  end
+
+  def track_action_from_params
+    case params[:action]
+    when 'create' then :edit
+    when 'edit' then :edit
+    when 'show' then :view
   end
 end
 

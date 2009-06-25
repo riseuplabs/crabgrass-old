@@ -26,7 +26,13 @@ class CronWorker < BackgrounDRb::MetaWorker
   # updates dailies from the data in the hourlies table.
   # this should be called once per day.
   def update_dailies
-    Tracking.update_dailies
+    Daily.update
+  end
+
+  # updates the last_seen field of the users table.
+  # this should be called every other minute.
+  def update_last_seen
+    Tracking.update_last_seen
   end
 
   # the output of this is logged to: log/backgroundrb_debug_11006.log

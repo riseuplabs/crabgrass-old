@@ -5,31 +5,51 @@ class Tracking < ActiveRecord::Base
   belongs_to :group
   belongs_to :user
 
+  @@seen_users=Set.new
+
+  # Tracks the actions quickly. Following things can be tracked:
+  # :user - user that was doing anything
+  # :action - one of :view, :edit, :star
+  # :page - page that this happened on
+  # :group - group context
   def self.insert_delayed(things={})
-    page_or_id  = things[:page]
-    group_or_id = things[:group]
-    user_or_id  = things[:user]
-    page_id  = (page_or_id.is_a?(Fixnum)  ? page_or_id  : page_or_id.id)  if page_or_id
-    group_id = (group_or_id.is_a?(Fixnum) ? group_or_id : group_or_id.id) if group_or_id
-    user_id  = (user_or_id.is_a?(User) ? user_or_id.id  : user_or_id)  if user_or_id
     connection.execute("INSERT DELAYED INTO #{table_name}
-                       (page_id, group_id, user_id, tracked_at)
-                       VALUES (#{connection.quote(page_id)},
-                               #{connection.quote(group_id)},
-                               #{connection.quote(user_id)}, NOW() )")
+                       (page_id, group_id, user_id, action_id, tracked_at)
+                       VALUES (#{quoted_id(things[:page])},
+                               #{quoted_id(things[:group])},
+                               #{quoted_id(things[:user])},
+                               #{ACTION[things[:action]]|| 1},
+                               NOW() )")
+    true
   end
+
+  def self.saw_user(user_id)
+    @@seen_users << user_id
+    true
+  end
+  ##
+  ## Sets last_seen for users that were active in the last 5 minutes.
+  ##
+  def self.update_last_seen_users
+    connection.execute("UPDATE users,#{table_name}
+                       SET users.last_seen_at = NOW() - INTERVAL 1 MINUTE
+                       WHERE users.id IN (#{@@seen_users.to_a.join(', ')})")
+    @@seen_users.clear
+    true
+  end
+
 
   ##
   ## Takes all the page view records that have been inserted into trackings
-  ## table and updates the view counts in the hourlies and dailies tables with
-  ## this data. Afterward, all the data in the page_views table is deleted.
+  ## table and updates the view counts in the hourlies and membership tables with
+  ## this data. Afterward, all the data in trackings table is deleted.
   ##
 
-  def self.update_trackings
+  def self.process
     begin
       connection.execute("LOCK TABLES #{table_name} WRITE, hourlies WRITE, memberships WRITE")
       connection.execute("DELETE QUICK FROM hourlies WHERE created_at < NOW() - INTERVAL 1 DAY")
-      connection.execute("INSERT DELAYED INTO hourlies
+      connection.execute("INSERT INTO hourlies
                            (page_id, views, ratings, edits, created_at)
                          SELECT page_id, COUNT(*) AS c, NULL, NULL, now()
                            FROM #{table_name} GROUP BY page_id")
@@ -56,5 +76,17 @@ class Tracking < ActiveRecord::Base
                        SET pages.views_count = page_terms.views_count
                        WHERE pages.id=page_terms.page_id")
     true
+  end
+
+  def self.quoted_id(thing)
+    connection.quote(id_from(thing))
+  end
+
+  def self.id_from(thing)
+    if thing
+      thing.is_a?(Fixnum) ?
+        thing :
+        thing.id
+    end
   end
 end
