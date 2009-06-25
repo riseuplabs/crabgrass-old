@@ -229,4 +229,14 @@ See also doc/SPHINX_README"
   def assert_layout(layout)
     assert_equal layout, @response.layout
   end
+
+  ##
+  ## AUTHENTICATION
+  ##
+
+  # the normal acts_as_authenticated 'login_as' does not work for integration tests
+  def login(user)
+    post '/account/login', {:login => user.to_s, :password => user.to_s}
+  end
+
 end
