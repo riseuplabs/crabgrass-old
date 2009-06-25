@@ -8,6 +8,7 @@ class GroupsController < Groups::BaseController
   before_filter :fetch_group, :except => [:create, :new, :index]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]
   verify :method => :post, :only => [:create, :update, :destroy]
+  cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
    helper 'task_list_page' # :only => ['tasks']
