@@ -84,9 +84,9 @@ class BasePageController < ApplicationController
     return 'page'
   end
 
-  after_filter :update_viewed
+  after_filter :update_viewed, :only => :show
   def update_viewed
-    if @upart and @page and params[:action] == 'show'
+    if @upart and @page
       @upart.viewed_at = Time.now
       @upart.notice = nil
       @upart.viewed = true
@@ -101,17 +101,18 @@ class BasePageController < ApplicationController
     true
   end
 
-  after_filter :update_view_count
+  after_filter :update_view_count, :only => [:show, :edit, :create]
   def update_view_count
     return true unless @page and @page.id
-    if current_site.tracking
+    action = track_action_from_params
+    if current_site.tracking and action
       Tracking.insert_delayed(:page => @page,
                               :group => @group,
                               :user => current_user,
-                              :action => trac_action_from_params)
-    else
+                              :action => action)
+    elsif action
       Tracking.insert_delayed(:page => @page,
-                              :action => trac_action_from_params)
+                              :action => action)
     end
     return true
   end
@@ -240,6 +241,7 @@ class BasePageController < ApplicationController
     when 'create' then :edit
     when 'edit' then :edit
     when 'show' then :view
+    end
   end
 end
 

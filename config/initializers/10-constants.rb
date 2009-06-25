@@ -26,8 +26,9 @@ ACTION = {
   :view => 1,
   :edit => 2,
   :star => 3,
-  :comment => 4,
-  :share => 5
+  :unstar => 4,
+  :comment => 5, # not used yet
+  :share => 6 # not used yet
 }.freeze
 
 ARROW = " &raquo; "

@@ -13,13 +13,10 @@ class Tracking < ActiveRecord::Base
   # :page - page that this happened on
   # :group - group context
   def self.insert_delayed(things={})
+    return false if things.empty?
     connection.execute("INSERT DELAYED INTO #{table_name}
-                       (page_id, group_id, user_id, action_id, tracked_at)
-                       VALUES (#{quoted_id(things[:page])},
-                               #{quoted_id(things[:group])},
-                               #{quoted_id(things[:user])},
-                               #{ACTION[things[:action]]|| 1},
-                               NOW() )")
+      (page_id, group_id, user_id, action_id, tracked_at)
+      VALUES (#{quoted_id(things[:page])}, #{quoted_id(things[:group])}, #{quoted_id(things[:user])}, #{ACTION[things[:action]]|| 1}, NOW() )")
     true
   end
 

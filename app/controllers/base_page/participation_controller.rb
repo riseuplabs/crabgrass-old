@@ -88,6 +88,20 @@ class BasePage::ParticipationController < ApplicationController
     render :template => 'base_page/participation/reset_star_line'
   end
 
+  after_filter :track_starring, :only => :update_star
+  def track_starring
+    action = params[:add] ? :star : :unstar
+    if current_site.tracking
+      Tracking.insert_delayed(:page => @page,
+                              :group => @group,
+                              :user => current_user,
+                              :action => action)
+    elsif
+      Tracking.insert_delayed(:page => @page,
+                              :action => action)
+    end
+  end
+
   def update_watch
     @upart = @page.add(current_user, :watch => params[:add])
     @upart.save!
