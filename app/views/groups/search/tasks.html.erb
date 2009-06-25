@@ -1,0 +1,14 @@
+<% @title_box = content_tag :h1, 'tasks'.t %>
+<span style="position:absolute; right: 10px; top: 40px;"><%= link_to "print", "?print=1" %></span>
+  
+<div>
+  <b><%= "pending tasks."[:pending_tasks] %></b>
+  <%= typed_create_page_link(TaskListPage, @group) if may_create_group_page? %>
+
+</div>
+
+<p>
+<%= render :partial => 'tasks/list' %>
+</p>
+
+

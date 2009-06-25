@@ -46,6 +46,9 @@ module UserExtension::Organize
         def committees
           self.select{|group|group.committee?}
         end
+        def councils
+          self.select{|group|group.council?}
+        end
       end
 
       # all groups, including groups we have indirect access to even when there

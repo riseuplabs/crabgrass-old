@@ -29,7 +29,7 @@ module GroupsHelper
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
     if may_join_memberships?
-      link_to("join {group_type}"[:join_group, @group.group_type], {:controller => :membership, :action => 'join', :group_id => @group.id})
+      link_to("Join {group_type}"[:join_group_link, @group.group_type], {:controller => 'groups/memberships', :action => 'join', :id => @group}, :method => :post)
     elsif may_create_join_request?
       link_to("request to join {group_type}"[:request_join_group_link, @group.group_type], {:controller => 'groups/requests', :action => 'create_join', :id => @group})
     end
