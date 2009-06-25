@@ -1,6 +1,5 @@
 module PageExtension::Tracking
   def self.included(base)
-    base.extend ClassMethods
     base.send(:include, InstanceMethods)
     base.instance_eval do
       has_many :dailies
