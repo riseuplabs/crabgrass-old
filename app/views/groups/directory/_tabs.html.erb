@@ -5,9 +5,11 @@
   if @active_tab == :groups 
     method = :group_directory_url
     my_groups = 'My Groups'[:my_groups]
+    all_groups = 'All Groups'[:all_groups]
   else
     method = :network_directory_url
     my_groups = 'My Networks'[:my_networks]
+    all_groups = 'All Networks'[:all_networks]
   end
 %>
 <%= Formy.tabs do |f|
@@ -27,7 +29,7 @@
     t.selected action?(:most_active)
   end
   f.tab do |t|
-    t.label 'All Groups'[:all_groups]
+    t.label all_groups
     t.url send(method, :action => :search)
     t.selected action?(:search)
   end

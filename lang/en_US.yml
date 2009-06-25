@@ -669,9 +669,11 @@ created: "created"
 unread: "unread"
 read: "read"
 starred: "starred"
-all_people: "all people"
+all_people: "All People"
 all_groups: "All Groups"
-all_states: "all states"
+all_networks: "All Networks"
+# ^^ i think this should go away soon, as soon as we have a better group directory.
+all_states: "All States"
 
 # page list
 
