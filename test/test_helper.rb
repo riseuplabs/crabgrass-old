@@ -258,3 +258,10 @@ See also doc/SPHINX_README"
   end
 
 end
+
+# some special rules for integration tests
+class ActionController::IntegrationTest
+  # we load all fixtures because webrat integration test should see exactly
+  # the same thing the user sees in development mode
+  fixtures :all
+end
