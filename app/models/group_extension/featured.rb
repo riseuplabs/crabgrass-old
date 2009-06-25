@@ -84,11 +84,13 @@ module GroupParticipationExtension
     module InstanceMethods
 
       def feature!
-        self.update_attributes!({:static => true})
+        # find and increment the higest sibling position
+        position = self.group.participations.maximum(:featured_position).to_i + 1
+        self.update_attributes!({:static => true, :featured_position => position})
       end
 
       def unfeature!
-        self.update_attributes!({:static => false})
+        self.update_attributes!({:static => false, :featured_position => nil})
       end
 
 
