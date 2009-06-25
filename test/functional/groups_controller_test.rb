@@ -17,6 +17,12 @@ class GroupsControllerTest < Test::Unit::TestCase
     Conf.disable_site_testing
   end
 
+  def test_tasks
+    login_as :blue
+    get :tasks, :id => groups(:rainbow).to_param
+    assert_response :success
+  end
+
 =begin
   def test_my
     login_as :gerrard

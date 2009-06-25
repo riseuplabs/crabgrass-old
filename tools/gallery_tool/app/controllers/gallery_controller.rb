@@ -290,7 +290,7 @@ class GalleryController < BasePageController
   end
 
   def destroy_page_data
-    @assets.each do |asset|
+    @assets.compact.each do |asset|
       asset.destroy unless asset.new_record?
       asset.page.destroy if asset.page and !asset.page.new_record?
     end

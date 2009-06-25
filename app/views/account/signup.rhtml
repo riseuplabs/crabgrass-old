@@ -5,7 +5,7 @@
       <%= render :partial => 'layouts/language' %>
     </div>
     <h2 class='alert'><%= "Create Your Account"[:signup_title] %></h2>
-    <%= 'Choose your login name and your password then click "%s"'[:signup_info] % 'Sign up'[:signup_button] %>
+    <%= 'Choose your login name and your password then click "%s"'[:signup_info, 'Sign up'[:signup_button]] %>
   </td>
 </tr>
 <tr>
@@ -13,19 +13,19 @@
     <% form_for(:user, :html => {:id => 'signup_form'}) do |f| -%>
 
       <p>
-        <label for="login"><%= 'Your login name'[:signup_login_name] %> </label><br/>
+        <%= f.label :login, 'Your login name'[:signup_login_name] %><br/>
         <%= f.text_field :login %>
       </p>
 
       <script>document.getElementById('user_login').focus();</script>
 
       <p>
-        <label for="password"><%= 'Your Password'[:signup_password]%></label><br/>
+        <%= f.label :password, 'Your Password'[:signup_password] %><br/>
         <%= f.password_field :password %>
       </p>
 
       <p>
-        <label for="password_confirmation"><%= "Confirm Password"[:signup_confirm_password] %></label><br/>
+        <%= f.label :password_confirmation, "Confirm Password"[:signup_confirm_password] %><br/>
         <%= f.password_field :password_confirmation %>
       </p>
 
@@ -34,8 +34,9 @@
       <%= render :partial => 'signup_agreement_checkbox' %>
 
       <p>
-        <label for="email"><%= "Your Email"[:signup_email] %></label><br/>
+        <%= f.label :email, "Your Email"[:signup_email] %><br/>
         <%= f.text_field :email%>
+
         <%- unless current_site.require_user_email -%>
         <br />
         <i><%= "Optional: used if you forget your password"[:signup_email_info] %></i>
