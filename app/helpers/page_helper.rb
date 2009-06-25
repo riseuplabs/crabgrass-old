@@ -552,6 +552,12 @@ module PageHelper
     )
   end
 
+  #  group -- what group we are creating the page for
+  #  type -- the page class we are creating
+  def typed_create_page_link(page_type, group=nil)
+    link_to "Create a New {thing}"[:create_a_new_thing, page_type.class_display_name] + ARROW, create_page_url(page_type, :group => @group)
+  end
+
 #  def create_page_link(text,options={})
 #    url = url_for :controller => '/pages', :action => 'create'
 #    ret = ""

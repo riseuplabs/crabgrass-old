@@ -9,6 +9,12 @@ class GroupsController < Groups::BaseController
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]
   verify :method => :post, :only => [:create, :update, :destroy]
 
+  ## TODO: remove all task list stuff from this controller
+   helper 'task_list_page' # :only => ['tasks']
+   stylesheet 'tasks', :action => :tasks
+   javascript :extra, :action => :tasks
+  ## end task list cruft
+
   include Groups::Search
 
   # called by dispatcher
