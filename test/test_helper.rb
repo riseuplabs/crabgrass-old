@@ -15,6 +15,11 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+require 'webrat'
+Webrat.configure do |config|
+  config.mode = :rails
+end
+
 module Tool; end
 
 
