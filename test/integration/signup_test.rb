@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/integration_test_helper"
+require "#{File.dirname(__FILE__)}/../test_helper"
 
 class SignupTest < ActionController::IntegrationTest
 

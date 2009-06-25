@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/integration_test_helper"
+require "#{File.dirname(__FILE__)}/../test_helper"
 
 class MeTest < ActionController::IntegrationTest
   def test_upload_avatar_icon

@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/../../../../test/integration/integration_test_helper"
+require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
 class GalleryTest < ActionController::IntegrationTest
   def test_create_gallery_with_images

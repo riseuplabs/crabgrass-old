@@ -1,7 +1,9 @@
-require "#{File.dirname(__FILE__)}/integration_test_helper"
+require "#{File.dirname(__FILE__)}/../test_helper"
 
 class AccountTest < ActionController::IntegrationTest
   def test_login_as_user
+    require 'ruby-debug';debugger;1-1
+    # return
     visit '/'
     fill_in "Login name", :with => 'blue'
     fill_in "Password", :with => 'blue'
@@ -11,7 +13,7 @@ class AccountTest < ActionController::IntegrationTest
     assert_contain "My Dashboard"
   end
 
-  def test_logout_and_login_as_different_user
+  def atest_logout_and_login_as_different_user
     login "gerrard"
 
     visit '/'

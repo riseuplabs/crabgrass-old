@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/../integration_test_helper"
+require "#{File.dirname(__FILE__)}/../../test_helper"
 
 class Me::DashboardTest < ActionController::IntegrationTest
   def test_hide_show_welcome_message_persists
