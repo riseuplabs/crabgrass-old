@@ -46,7 +46,7 @@ These gems are required for Crabgrass:
 
 These gems are optional:
 
-  gem install haml ruby-debug hpricot nokogiri mime-types chronic packet --no-ri --no-rdoc
+  gem install haml ruby-debug hpricot nokogiri launchy mime-types chronic packet --no-ri --no-rdoc
 
 See GEMS[link:files/doc/GEMS.html] for a description of what these gems are used for.
 
