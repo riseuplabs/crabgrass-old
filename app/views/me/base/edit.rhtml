@@ -26,7 +26,7 @@
       <%= f.file_field :image_file %><br /><br />
       <%= "or image URL"[:or_image_url] %><br />
       <%= f.text_field :image_file_url %><br />
-      <%= hidden_field_tag 'redirect', url_for(:controller=>'me/base',:action=>'edit') %>
+      <%= hidden_field_tag 'redirect', url_for(:controller => 'me',:action=>'edit') %>
       <%= hidden_field_tag 'user_id', @user.id %>
       <br /><%= submit_tag 'Upload Image'[:upload_image] %>
     <% end -%>
