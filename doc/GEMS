@@ -9,12 +9,17 @@ haml:: used to generate css from site themes (custom appearances)
 = Suggested Gems
 
 mime-types:: used to overcome a file uploading bug in ie6.
-hpricot:: used for testing.
-nokogiri:: used for testing (by webrat plugin)
-launchy:: used for testing (by webrat plugin)
-ruby-debug:: used for testing.
 chronic:: required by backgroundrb.
 packet:: required by backgroundrb. 
+
+testing:
+
+hpricot:: used for testing.
+ruby-debug:: used for testing.
+nokogiri:: used for testing (by webrat plugin)
+launchy:: used for testing (by webrat plugin)
+
+On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
 = Entirely Optional Gems
 

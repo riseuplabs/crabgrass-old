@@ -2,6 +2,15 @@
 
 TODO: this needs a lot of help.
 
+== Required Gems for Running Tests
+
+hpricot
+nokogiri
+launchy
+ruby-debug
+
+On debian, nokogiri requires: libxslt1-dev libxml2-dev
+
 == Integration Tests
 
 Run 'rake db:fixtures:load RAILS_ENV=test' before running integration tests. Otherwise they will not work. Instead of fixtures, integration tests expect the whole database to be ready.
