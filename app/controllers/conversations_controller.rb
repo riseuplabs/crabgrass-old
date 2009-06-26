@@ -12,12 +12,14 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    @discussions = current_user.discussions.paginate(:page => params[:page], :order => 'replied_at DESC')
+    @discussions = current_user.discussions.paginate(:page => params[:page], :order => 'replied_at DESC', :include => :relationships)
   end
 
   # GET /conversations/<username>
   def show
     fetch_data
+    @relationship.update_attributes(:viewed_at => Time.now, :unread_count => 0)
+    UnreadActivity.create(:user => current_user)
     @posts = @discussion.posts.paginate(:page => params[:page], :order => 'created_at DESC')
   rescue Exception => exc
     flash_message_now :exception => exc
@@ -29,8 +31,8 @@ class ConversationsController < ApplicationController
     @post = @discussion.posts.create do |post|
       post.body = params[:post][:body]
       post.user = current_user
-      #post.type = "PrivatePost"
     end
+    @discussion.increment_unread_for(@user)
     redirect_to conversation_path(:id => @user)
   rescue Exception => exc
     flash_message_now :exception => exc
@@ -61,8 +63,17 @@ class ConversationsController < ApplicationController
   end
 
   def context
-    @title_box = content_tag :h1, "Private conversation with {user_name}"[:private_conversation, @user.display_name]
-    person_context
+    if @user
+      @title_box = content_tag :h1, "Private conversation with {user_name}"[:private_conversation, @user.display_name]
+      person_context
+      set_breadcrumbs([
+        ['me', '/me'],
+        ['conversations', conversations_url],
+        [h(@user.display_name), url_for_user(@user)]
+      ])
+    else
+      me_context
+    end
   end
 
 end

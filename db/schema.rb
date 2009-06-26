@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090621045020) do
+ActiveRecord::Schema.define(:version => 20090626071633) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -482,10 +482,12 @@ ActiveRecord::Schema.define(:version => 20090621045020) do
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
 
   create_table "relationships", :force => true do |t|
-    t.integer "user_id",       :limit => 11
-    t.integer "contact_id",    :limit => 11
-    t.string  "type",          :limit => 10
-    t.integer "discussion_id", :limit => 11
+    t.integer  "user_id",       :limit => 11
+    t.integer  "contact_id",    :limit => 11
+    t.string   "type",          :limit => 10
+    t.integer  "discussion_id", :limit => 11
+    t.datetime "viewed_at"
+    t.integer  "unread_count",  :limit => 11, :default => 0
   end
 
   add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"

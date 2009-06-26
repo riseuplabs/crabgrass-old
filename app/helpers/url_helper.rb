@@ -295,6 +295,7 @@ module UrlHelper
   #   :avatar => nil | :xsmall | :small | :medium | :large | :xlarge (default: nil)
   #   :format => :short | :full | :both | :hover | :twolines (default: full)
   #   :block => false | true (default: false)
+  #   :link => nil | true | url (default: nil)
   #   :class => passed through to the tag as html class attr
   #   :style => passed through to the tag as html style attr
   def display_entity(entity, options={})
@@ -303,17 +304,27 @@ module UrlHelper
     options[:class] = [options[:class], 'entity'].join(' ')
     options[:block] = true if options[:format] == :twolines
 
+    name = entity.name
+    display_name = h(entity.display_name)
+    both_names = h(entity.both_names)
+    if options[:link]
+      url = options[:link] === true ? url_for_entity(entity) : options[:link]
+      name = link_to(name, url)
+      display_name = link_to(display_name, url)
+      both_name = link_to(both_names, url)
+    end
+
     if options[:avatar]
       url = avatar_url(:id => (entity.avatar||0), :size => options[:avatar])
       options[:class] = [options[:class], "name_icon", options[:avatar]].compact.join(' ')
       options[:style] = [options[:style], "background-image:url(#{url})"].compact.join(';')
     end
     display, title, hover = case options[:format]
-      when :short then [entity.name, h(entity.display_name), nil]
-      when :full then [h(entity.display_name), entity.name, nil]
-      when :both then [h(entity.both_names), nil, nil]
-      when :hover then [entity.name, nil, h(entity.display_name)]
-      when :twolines then ["<div class='name'>%s</div>%s"%[entity.name, (h(entity.display_name) if entity.name != entity.display_name)], nil, nil]
+      when :short then [name,         display_name, nil]
+      when :full  then [display_name, name,         nil]
+      when :both  then [both_names,   nil,          nil]
+      when :hover then [name,         nil,          display_name]
+      when :twolines then ["<div class='name'>%s</div>%s"%[name, (display_name if name != display_name)], nil, nil]
     end
     if hover
       display += content_tag(:b,hover)
