@@ -36,6 +36,17 @@ class NilClass
   end
 end
 
+# a class that return nil for everything, and never complains
+# useful like so:
+#   Group.find(:first).if_not_nil.display_name
+#
+class SilentNil
+  include Singleton
+  def method_missing(*args)
+    nil
+  end
+end
+
 class Object
   def cast!(class_constant)
     raise TypeError.new unless self.is_a? class_constant
@@ -51,6 +62,10 @@ class Object
   
   def safe_send(symbol, *args)
     self.send(symbol, *args) if self.respond_to?(symbol)
+  end
+
+  def if_not_nil
+    self.nil? ? SilentNil.instance : self
   end
 end
 
