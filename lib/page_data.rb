@@ -47,8 +47,8 @@ module PageData
   protected
  
   def ensure_page_terms
-    if self.page_terms_id.nil?
-      self.page_terms_id = self.page.page_terms.id if self.page
+    if self.page_terms.nil?
+      self.page_terms = self.page.page_terms if self.page
     end 
   end
 
