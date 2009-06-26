@@ -12,8 +12,7 @@ class GalleryController < BasePageController
   verify :method => :post, :only => [:add, :remove]
 
   def show
-    params[:page] ||= 1
-    @images = @page.images.visible_to(current_user).paginate(:page => params[:page])
+    @images = paginate_images
     #@cover = @page.cover
   end
 
@@ -101,8 +100,7 @@ class GalleryController < BasePageController
   end
   
   def edit
-    params[:page] ||= 1
-    @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+    @images = paginate_images
   end
   
   def make_cover
@@ -266,7 +264,9 @@ class GalleryController < BasePageController
     @assets ||= []
     params[:assets].each do |file|
       next if file.size == 0 # happens if no file was selected
-      asset = Asset.make(:uploaded_data => file)
+      asset = Asset.make(:uploaded_data => file) do |asset|
+        asset.parent_page = @page
+      end
       @assets << asset
       @page.add_image!(asset, current_user)
     end
@@ -279,6 +279,32 @@ class GalleryController < BasePageController
       asset.destroy unless asset.new_record?
       asset.page.destroy if asset.page and !asset.page.new_record?
     end
+  end
+
+  # 
+  # there appears to be a bug in will_paginate. it only appears when
+  # doing two inner joins and there are more records than the per_page size.
+  #
+  # unfortunately, this is what we need for returning the images the current
+  # user has access to see.
+  #
+  # This works as expected:
+  #
+  #   @page.images.visible_to(current_user).find(:all)
+  #
+  # That is just great, but we also want to paginate. This blows up horribly,
+  # if there are more than three images:
+  #
+  #  @page.images.visible_to(current_user).paginate :page => 1, :per_page => 3
+  #
+  # So, this method uses two queries to get around the double join, so that 
+  # will_paginate doesn't freak out.
+  #
+  # The first query just grabs all the potential image ids (@page.image_ids)
+  #
+  def paginate_images
+    params[:page] ||= 1
+    Asset.visible_to(current_user).paginate(:page => params[:page], :conditions => ['assets.id IN (?)', @page.image_ids])
   end
 
 end

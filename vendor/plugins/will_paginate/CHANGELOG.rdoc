@@ -1,7 +1,25 @@
-== master
+== 2.3.6, released 2008-10-26
 
-* ActiveRecord 2.1: remove :include from count query when tables are not
-  referenced in :conditions
+* Rails 2.2 fix: stop using `extract_attribute_names_from_match` inernal AR method, it no longer exists
+
+== 2.3.5, released 2008-10-07
+
+* update the backported named_scope implementation for Rails versions older than 2.1
+* break out of scope of paginated_each() yielded block when used on named scopes
+* fix paginate(:from)
+
+== 2.3.4, released 2008-09-16
+
+* Removed gem dependency to Active Support (causes trouble with vendored rails).
+* Rails 2.1: fix a failing test and a deprecation warning.
+* Cope with scoped :select when counting.
+
+== 2.3.3, released 2008-08-29
+
+* Ensure that paginate_by_sql doesn't change the original SQL query.
+* RDoc love (now live at http://mislav.caboo.se/static/will_paginate/doc/)
+* Rename :prev_label to :previous_label for consistency. old name still functions but is deprecated
+* ActiveRecord 2.1: Remove :include option from count_all query when it's possible.
 
 == 2.3.2, released 2008-05-16
 

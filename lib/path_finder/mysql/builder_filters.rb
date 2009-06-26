@@ -283,6 +283,7 @@ module PathFinder::Mysql::BuilderFilters
   def filter_featured_by(group_id)
     @conditions << 'group_participations.group_id = ? AND group_participations.static = TRUE'
     @values << [group_id.to_i]
+    @order << "group_participations.featured_position ASC"
   end
 
   def filter_contributed(user_id)
