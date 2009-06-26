@@ -19,8 +19,8 @@ class CronWorker < BackgrounDRb::MetaWorker
 
   # updates page.views_count and hourlies from the data in the trackings table.
   # this should be called frequently.
-  def update_trackings
-    Tracking.update_trackings
+  def process_trackings
+    Tracking.process
   end
 
   # updates dailies from the data in the hourlies table.

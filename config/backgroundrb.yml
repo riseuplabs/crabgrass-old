@@ -37,7 +37,7 @@
       :trigger_args: <%= daily %>
     :update_dailies:
       :trigger_args: <%= daily %>
-    :update_trackings:
+    :process_trackings:
       :trigger_args: <%= hourly %>
     :update_last_seen:
       :trigger_args: <%= two_minutes %>

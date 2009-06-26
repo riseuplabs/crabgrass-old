@@ -15,8 +15,8 @@ class Tracking < ActiveRecord::Base
   def self.insert_delayed(things={})
     return false if things.empty?
     connection.execute("INSERT DELAYED INTO #{table_name}
-      (page_id, group_id, user_id, action_id, tracked_at)
-      VALUES (#{quoted_id(things[:page])}, #{quoted_id(things[:group])}, #{quoted_id(things[:user])}, #{ACTION[things[:action]]|| 1}, NOW() )")
+      (page_id, group_id, user_id, views, edits, stars, tracked_at)
+      VALUES (#{values_for_tracking(things).join(', ')})")
     true
   end
 
@@ -48,7 +48,7 @@ class Tracking < ActiveRecord::Base
       connection.execute("DELETE QUICK FROM hourlies WHERE created_at < NOW() - INTERVAL 1 DAY")
       connection.execute("INSERT INTO hourlies
                            (page_id, views, ratings, edits, created_at)
-                         SELECT page_id, COUNT(*) AS c, NULL, NULL, now()
+                         SELECT page_id, SUM(views), SUM(stars), SUM(edits), now()
                            FROM #{table_name} GROUP BY page_id")
 
       connection.execute("CREATE TEMPORARY TABLE group_view_counts
@@ -73,6 +73,19 @@ class Tracking < ActiveRecord::Base
                        SET pages.views_count = page_terms.views_count
                        WHERE pages.id=page_terms.page_id")
     true
+  end
+
+  protected
+
+  # returns an array of (page_id, group_id, user_id, views, edits, stars, tracked_at)
+  # for use in mysql values
+  def self.values_for_tracking(things)
+    views = things[:action] == :view ? 1 : 0
+    edits = things[:action] == :edit ? 1 : 0
+    stars = things[:action] == :star ? 1 : 0
+    stars -= things[:action] == :unstar ? 1 : 0
+    thing_ids = things.values_at(:page, :group, :user).collect{|t| quoted_id(t)}
+    thing_ids.concat [views, edits, stars, "NOW()"]
   end
 
   def self.quoted_id(thing)
