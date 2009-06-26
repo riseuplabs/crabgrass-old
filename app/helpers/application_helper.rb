@@ -106,7 +106,7 @@ module ApplicationHelper
   # Default pagination link options:
   # 
   #   :class        => 'pagination',
-  #   :prev_label   => '&laquo; Previous',
+  #   :previous_label   => '&laquo; Previous',
   #   :next_label   => 'Next &raquo;',
   #   :inner_window => 4, # links around the current page
   #   :outer_window => 1, # links around beginning and end
@@ -119,9 +119,9 @@ module ApplicationHelper
   #
   def pagination_links(things, options={})
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :prev_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next]}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next]}
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
     end
     will_paginate(things, defaults.merge(options))
   end
