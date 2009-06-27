@@ -47,15 +47,6 @@ share_page_recipients: "Wsp\xC3\xB3\xC5\x82u\xC5\xBCytkowuj {page_class} z"
 saturday: Sobota
 prev_change: "Wcze\xC5\x9Bniejsza zmiana"
 group_information: Informacje o :group_type
-welcome_text: "Witamy!\r\n\
-  \r\n\
-  Cze\xC5\x9B\xC4\x87. Ten tekst jest szybkim wprowadzeniem dla nowych u\xC5\xBCytkownik\xC3\xB3w. Przy nast\xC4\x99pnym logowaniu wyl\xC4\x85dujesz od razu na swojej [stronie domowej -> /me/dashboard] kt\xC3\xB3ra b\xC4\x99dzie zimnym i pustym miejscem do p\xC3\xB3ki nie do\xC5\x82\xC4\x85czysz do grup i nie dodasz kontakt\xC3\xB3w.\r\n\
-  \r\n\
-  Wi\xC4\x99c, najlepszym co mo\xC5\xBCesz zrobi\xC4\x87 to do\xC5\x82\xC4\x85czy\xC4\x87 albo stworzy\xC4\x87 jak\xC4\x85\xC5\x9B grup\xC4\x99. \xC5\xBBeby to zrobi\xC4\x87 musisz przej\xC5\x9B\xC4\x87 do [katalogu grup -> /groups] i albo klikn\xC4\x85\xC4\x87 na \"stw\xC3\xB3rz now\xC4\x85 grup\xC4\x99\" albo znajd\xC5\xBA grup\xC4\x99 do kt\xC3\xB3rej chcesz do\xC5\x82\xC4\x85czy\xC4\x87 i klikn\xC4\x85\xC4\x87 na \"do\xC5\x82\xC4\x85cz\".\r\n\
-  \r\n\
-  Kiedy twoje zg\xC5\x82oszenie zostanie zaakceptowane mo\xC5\xBCesz uploadowa\xC4\x87 (za\xC5\x82adowa\xC4\x87 na stron\xC4\x99 grupy) materia\xC5\x82y, tworzy\xC4\x87 listy zada\xC5\x84, strony dyskusji, strony wiki, ankiety i g\xC5\x82osowania oraz wysy\xC5\x82a\xC4\x87 wiadomo\xC5\x9Bci \xC5\xBCeby komunikowa\xC4\x87 si\xC4\x99 i wsp\xC3\xB3\xC5\x82pracowa\xC4\x87 w grupie. Jak z ka\xC5\xBCd\xC4\x85 now\xC4\x85 platform\xC4\x85 mo\xC5\xBCesz potrzebowa\xC4\x87 chwili \xC5\xBCeby nauczy\xC4\x87 si\xC4\x99 obs\xC5\x82ugi i trybu pracy. \xC5\xBBeby znale\xC5\xBA\xC4\x87 odpowied\xC5\xBA na pytania takie jak czym r\xC3\xB3\xC5\xBCni si\xC4\x99 strona domowa od skrzynki zajrzyj na [strony pomocy -> /crabgrass/table-of-contents].\r\n\
-  \r\n\
-  Rozw\xC3\xB3j tego systemu oparty jest na informacjach od jego u\xC5\xBCytkownik\xC3\xB3w, wi\xC4\x99c prosimy, [do\xC5\x82\xC4\x85cz -> /users] do grupy u\xC5\xBCytkownik\xC3\xB3w i kliknij \"get involved\" na dole dowolnej strony je\xC5\x9Bli chcesz zaanga\xC5\xBCowa\xC4\x87 si\xC4\x99 w rozw\xC3\xB3j tej platformy. "
 wall_heading: "Publiczny Mur z Wiadomo\xC5\x9Bciami"
 time_zone: Strefa Czasowa
 task_list_page_description: Lista wszystkich danych.
@@ -665,9 +656,9 @@ add_websites: "Dodaj stron\xC4\x99"
 forgot_password_link: "Odzyskiwanie has\xC5\x82a"
 me_search_link: Szukaj
 my_groups: Moje Grupy
-page_with_message: "z wiadomo\xC5\x9Bci\xC4\x85"
 group_discussion: dyskusja
 my_pending_tasks_link: W toku
+page_with_message: "z wiadomo\xC5\x9Bci\xC4\x85"
 insert_image_heading: Wklej obraz
 password_error_username: "has\xC5\x82o zawiera nazw\xC4\x99 u\xC5\xBCytkownika"
 reset_password_text: "Cze\xC5\x9B\xC4\x87, %s.Je\xC5\x9Bli zapomnia\xC5\x82e\xC5\x9B/\xC5\x82a\xC5\x9B has\xC5\x82a kt\xC3\xB3rego uzywasz do rejestracji, mo\xC5\xBCesz ustawi\xC4\x87 nowe tutaj."

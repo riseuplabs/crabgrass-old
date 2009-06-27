@@ -81,10 +81,13 @@ module ErrorHelper
   ## DISPLAYING NOTICES
   ##
 
-  # like message() but can be used in rjs templates
-  # it uses javascript to rewrite the message area
-  # page.replace_html 'message', message_text(:object => @page) unless @page.valid?
-  def message_text(option)
+  # A combination of flash_message and display_messages.
+  # It is use in rjs templates.
+  #
+  # For example: 
+  #   page.replace_html 'message', message_text(:object => @page) unless @page.valid?
+  #
+  def message_text(options)
     add_flash_message(flash, options)
     display_messages
   end

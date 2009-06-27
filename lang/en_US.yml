@@ -291,6 +291,8 @@ activity_user_destroyed: "{user} has retired"
 activity_group_created: "{user} created {group_type} {group}"
 activity_group_destroyed: "{group} was destroyed by {user}"
 activity_wall_message: "{author} wrote to {user}: {message}"
+activity_unread: "You have {count} unread [private messages]"
+activity_unread_singular: "You have an unread [private message]"
 
 ##
 ## ASSETS
@@ -1037,7 +1039,7 @@ you_have_no_peers: 'You have no peers'
 ## AUTHENTICATED SYSTEM
 ##
 
-login_required: 'Login required'
+login_required: 'Login Required'
 login_required_description: 'Please login to perform that action.'
 permission_denied_description: 'You do not have sufficient permission to perform that action.'
 
