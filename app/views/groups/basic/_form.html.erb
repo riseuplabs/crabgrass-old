@@ -3,7 +3,7 @@
   <%= Formy.form do |f|
     f.row do |r|
       r.label "Full name"[:fullname]
-      r.input text_field 'group', 'full_name', :size => 40, :maxlength => 100
+      r.input text_field('group', 'full_name', :size => 40, :maxlength => 100)
       r.info "A descriptive name used for display."[:descriptive_name_for_display]
     end
     f.row do |r|
