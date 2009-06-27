@@ -31,15 +31,6 @@ login_failed: Kunne ikke logge ind
 login_button: Log ind
 approve_contact_info: "En kontakt ans\xC3\xB8gning findes allerede for denne bruger. Vil du godkende den?"
 login: Log ind
-welcome_text: "* Velkommen *\r\n\
-  \r\n\
-  Hej. Dette er en lille intro til nye brugere. N\xC3\xA6ste gang du logger ind, vil du lander p\xC3\xA5 [dit instrumentbr\xC3\xA6t -> /me/dashboard], som vil blive et koldt og ensomt sted, indtil du tilmelder dig grupper og laver kontakter til andre brugere.\r\n\
-  \r\n\
-  S\xC3\xA5 det bedste man kan g\xC3\xB8re som en ny bruger, er at oprette en gruppe eller deltage i en gruppe. For at g\xC3\xB8re dette g\xC3\xA5r du til [gruppe mappe -> /groups] og enten klikker p\xC3\xA5 \"Opret en ny gruppe\" eller klikker p\xC3\xA5 den gruppe, du \xC3\xB8nsker at tilslutte dig og find \"Tilmeld dig gruppen\" link.\r\n\
-  \r\n\
-  N\xC3\xA5r din anmodning er blevet accepteret kan du overf\xC3\xB8re aktiver, skabe opgavelister, diskussioner, wikis, afstemninger, og beskeder til at kommunikere, samarbejde, og f\xC3\xA5 tingene gjort indenfor gruppen. Som enhver ny platform skal du s\xC3\xA6tter dig ind i arbejdsgangen. For at f\xC3\xA5 svar p\xC3\xA5 sp\xC3\xB8rgsm\xC3\xA5l s\xC3\xA5som \"Hvad er forskellen mellem indbakke og instrumentbr\xC3\xA6t?\" kan du tjekke [hj\xC3\xA6lpe sider -> /crabgrass/table-of-contents].\r\n\
-  \r\n\
-  Udviklingen er drevet af brugernes feedback, s\xC3\xA5 [tilmeld -> /users] dig \"bruger feedback gruppen\" og engagere dig ved at klikke p\xC3\xA5 \"Deltag\" linket nederst i hver side."
 signup_email: Din Email
 signup_title: Opret Din Profil
 recipient_tip: Adskil modtagere med kommaer, mellemrum eller nye linjer

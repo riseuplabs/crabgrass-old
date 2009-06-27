@@ -53,15 +53,6 @@ add_location: Agregar Lugar
 share_page_recipients: Compartir esta {page_class} con
 saturday: sabado
 group_information: ":group_type Informaci\xC3\xB3n"
-welcome_text: "*Bienvenido*\r\n\
-  \r\n\
-  Hola. Esta es una peque\xC3\xB1a introducci\xC3\xB3n para los nuevos usuarios. La pr\xC3\xB3xima vez que ingreses aterrizar\xC3\xA1s en [tu tablero -> /me/dashboard] el cual ser\xC3\xA1 un lugar fr\xC3\xADo y solitario hasta que te unas a grupos y hagas contactos.\r\n\
-  \r\n\
-  Entonces, la mejor cosa que puedes hacer como un/una nuevo usuario es crear un grupo o unirte a uno. Para hacer eso, dir\xC3\xADgete al [directorio de grupos -> /groups] y haz click en crear grupo o en el grupo que deseas unirte y busca el enlace \"unirte al grupo\".\r\n\
-  \r\n\
-  Una vez que tu petici\xC3\xB3n sea aceptada, puedes subir archivos, crear listas de tareas, discusiones, wikis, votaciones y mensajes para comunicar, colaborar y realizar cosas dentro del grupo. Como cualquier nueva plataforma necesitar\xC3\xA1s familiarizarte con el estilo de trabajo. Para ayudarte a responder preguntas como cual es la diferencia entre inbox y el tablero, revisa las [p\xC3\xA1ginas de ayuda -> /crabgrass/table-of-contents].\r\n\
-  \r\n\
-  El desarrollo va encaminado de acuerdo a la retroalimentaci\xC3\xB3n de los usuarios, entonces por favor [\xC3\xBAnete -> /users] al grupo feedback e invol\xC3\xBAcrate haciendo click en el enlace \"get involved\" al final de cada p\xC3\xA1gina."
 prev_change: cambio anterior
 page_create_owner: "Propietario de p\xC3\xA1gina"
 wall_heading: "Muro de mensajes p\xC3\xBAblicos"
@@ -173,7 +164,6 @@ signup_link: "\xC2\xBFNecesitas una nueva cuenta?"
 download: Descargar
 status_resolved: resuelto
 all_groups: todos los grupos
-welcome_login_message: mensaje de bienvenida en la entrada
 create_page_information: "{page_class} informaci\xC3\xB3n"
 committee_publicly_visible: "Hacer comit\xC3\xA9s p\xC3\xBAblicos"
 pagination_previous: anterior
@@ -241,9 +231,9 @@ check_all: Marcar todo
 notify_new_access: "<b>Nuevo Acceso:</b> compartir esta p\xC3\xA1gina con nuevas personas o grupos, y notificarles."
 page_group_event: Eventos
 public_checkbox_help: "Si se selecciona, cualquiera puede ver esta p\xC3\xA1gina."
-coordinating_council: "consejo de coordinaci\xC3\xB3n"
 signup_email: "Tu correo electr\xC3\xB3nico"
 alert_error: Error
+coordinating_council: "consejo de coordinaci\xC3\xB3n"
 full: completo
 confirmation: "\xC2\xBFEst\xC3\xA1s seguro?"
 password_error_default: no es lo suficientemente fuerte

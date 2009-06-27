@@ -31,15 +31,6 @@ media_videos: Video
 friends: Amici
 add_location: Aggiungi Indirizzo
 group_information: Informazioni su :group_type
-welcome_text: "*Bevenuto*\r\n\
-  \r\n\
-  Ciao. Questa \xC3\xA8 una breve introduzione per i nuovi utenti. La prossima volta che effettuerai l'accesso verrai portato nella tua [bacheca -> /me/dashboard] che sar\xC3\xA0 un posto freddo e solitario finch\xC3\xA9 non entrarai a far parte di qualche gruppo o inizierai a fare contatti.\r\n\
-  \r\n\
-  Quindi, la migliore cosa da fare come nuovo utente \xC3\xA8 quella di creare un gruppo o entrare a far parte di un gruppo esistente. Per farlo, vai all'[elenco dei gruppi -> /groups] e fai click su \"crea un nuovo gruppo\" oppure clicca su un gruppo di cui vuoi entrare a far parte e cerca il link \"Entra nel gruppo\".\r\n\
-  \r\n\
-  Le tue richieste di entrar a far parte di un gruppo saranno soggette a approvazione da parte di quel gruppo. Una volta che farai parte di un gruppo potrai caricare risorse, creare liste dei compiti, discussioni, wiki, sondaggi e messaggi per comunicare, collaborare e far funzionare il gruppo. Come con qualsiasi altra piattaforma di lavoro, avrai bisogno di un po' di tempo per familiarizzare con il flusso di lavoro. Per aiutarti a rispondere a domande come \"qual \xC3\xA8 la differenza tra gli elementi in arrivo e la bacheca, dai un'occhiata alle [pagine di aiuto -> /crabgrass/table-of-contents].\r\n\
-  \r\n\
-  Lo sviluppo di questa piattaforma \xC3\xA8 guidato dal feedback degli utenti. Se vuoi contribuire, entra nel gruppo [users -> /users]. Per farlo, basta cliccare sul link \"Entra\" in fondo alla pagina."
 prev_change: modifica precedente
 time_zone: Fuso Orario
 page_not_part_of_group: Questa pagina non fa parte di questo gruppo
@@ -62,9 +53,9 @@ logout_success: Arrivederci
 signup_title: Crea il tuo account
 menu_chat: Chat
 image_count_total: ":count Immagini"
-contribute_content_link: Contribuisci
 page_locked_header: Pagina Bloccata
 all_page_types: tutti i tipi di pagina
+contribute_content_link: Contribuisci
 media_document: Documento
 activity_user_left_group: "{user} ha lasciato {group_type} {group}"
 collection: collezione
