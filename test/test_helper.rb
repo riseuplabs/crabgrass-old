@@ -100,6 +100,13 @@ class Test::Unit::TestCase
     assert_redirected_to :controller => :account, :action => :login
   end
 
+  def assert_login_required
+    assert_equal 'info', flash[:type]
+    assert_equal 'Login Required', flash[:title]
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
   def assert_error_message(regexp=nil)
     assert_equal 'error', flash[:type]
     if regexp
