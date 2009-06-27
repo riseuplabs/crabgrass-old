@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090626081151) do
+ActiveRecord::Schema.define(:version => 20090626232457) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -474,7 +474,7 @@ ActiveRecord::Schema.define(:version => 20090626081151) do
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
     t.boolean  "may_request_membership"
-    t.integer  "membership_policy",      :limit => 11
+    t.integer  "membership_policy",      :limit => 11, :default => 0
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
     t.boolean  "may_request_contact",                  :default => true
