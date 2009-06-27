@@ -3,8 +3,10 @@ group_not_allowed_to_view_image_error: "Bu sayfan\xC4\xB1n ait oldu\xC4\x9Fu gru
 Personal: "Ki\xC5\x9Fisel"
 add_encryption_key: "\xC5\x9Eifreleme Anahtar\xC4\xB1 Ekle"
 small: "ku\xC3\xA7uk"
+user_profile_description_may_pester: "Ki\xC5\x9Filerin sizinle i\xC3\xA7erik payla\xC5\x9Fmalar\xC4\xB1na ve size davet g\xC3\xB6ndermelerine izin verin."
 menu_networks: "A\xC4\x9Flar"
 folder_page_description: Dosya koleksiyonu.
+peers: "E\xC5\x9Fler"
 request_to_friend_description: ":user , :other_user adl\xC4\xB1 ki\xC5\x9Finin arkada\xC5\x9F\xC4\xB1 olmak istiyor"
 my_requests_headline: "\xC4\xB0steklerim"
 move_image_left: "G\xC3\xB6r\xC3\xBCnt\xC3\xBCy\xC3\xBC sola ta\xC5\x9F\xC4\xB1"
@@ -15,6 +17,7 @@ month_short_april: Nis
 add_star_link: "Y\xC4\xB1ld\xC4\xB1z ekle (:star_count)"
 password_error_too_common: "yeterince iyi de\xC4\x9Fil, s\xC3\xB6zl\xC3\xBCkte bulunabilecek bir kelime i\xC3\xA7eriyor."
 current_video_sources: "Desteklenenler: youtube, blip.tv, google video, vimeo"
+wall_post_button: "Yeni \xC4\xB0leti Yap\xC4\xB1\xC5\x9Ft\xC4\xB1r"
 request_to_join_us_description: ":user adl\xC4\xB1 kullan\xC4\xB1c\xC4\xB1 :group grubuna kat\xC4\xB1lmas\xC4\xB1 i\xC3\xA7in davet edildi"
 left_the_chatroom: "Sohbet odas\xC4\xB1ndan ayr\xC4\xB1ld\xC4\xB1"
 wiki_page_display: Viki Sayfa
@@ -24,8 +27,10 @@ archive: "Ar\xC5\x9Fiv"
 or_image_url: "ya da g\xC3\xB6r\xC3\xBCnt\xC3\xBCn\xC3\xBCn linki"
 add_comment: Yorum ekle
 login_password: "\xC5\x9Eifre"
+users_wall: ":user'in Duvar\xC4\xB1"
 profile_option_may_see_groups: "Grup \xC3\xBCyeliklerini g\xC3\xB6ster"
 notify_contribution: "v<b>Prior Contribution:</b> ki\xC5\x9Fileri bu sayfaya <b>katk\xC4\xB1da bulunanlar</b> konusunda bilgilendirin."
+toggle_selection: "Ge\xC3\xA7i\xC5\x9F Tu\xC5\x9Flar\xC4\xB1 Se\xC3\xA7imi"
 order_changed: "S\xC4\xB1ralama de\xC4\x9Fi\xC5\x9Fti."
 upload_attachment: Dosya ekle
 organizational_role: "kurumsal g\xC3\xB6rev"
@@ -43,9 +48,14 @@ recent_wall_posts: "En Son Duvar Yaz\xC4\xB1lar\xC4\xB1"
 email_link_expires: "Bu ba\xC4\x9Flant\xC4\xB1 {days} g\xC3\xBCn i\xC3\xA7inde ge\xC3\xA7erlili\xC4\x9Fini yitirecektir."
 add_location: Konum Ekle
 friends: "Arkada\xC5\x9Flar"
+share_page_recipients: "Bu {page_class}'y\xC4\xB1 Payla\xC5\x9F"
 prev_change: "\xC3\x96nceki De\xC4\x9Fi\xC5\x9Fiklik"
 saturday: Cumartesi
 group_information: ":group_type Bilgiler"
+task_list_page_description: "Yap\xC4\xB1lacak i\xC5\x9Flerin bir listesini olu\xC5\x9Fturur. Bu sayede kendinizi ya da di\xC4\x9Ferlerini g\xC3\xB6revlendirebilirsiniz."
+share_page_recipients_sections: "Gruplar\xC4\xB1n\xC4\xB1zdan ya da arkada\xC5\x9Flar\xC4\xB1n\xC4\xB1zdan se\xC3\xA7in"
+wall_heading: "Genel \xC4\xB0leti Duvar\xC4\xB1"
+wiki_lost_text_confirmation: "Kaydedilmemi\xC5\x9F t\xC3\xBCm bilgiler silinecek? Emin misiniz?"
 page_not_part_of_group: "Sayfa bu grubun par\xC3\xA7as\xC4\xB1 de\xC4\x9Fil"
 page_create_owner: Sayfa Sahibi
 delete: Sil
@@ -53,6 +63,9 @@ time_zone: Saat Dilimi
 you_are_not_member_of_any_group: "Herhangi bir grubun \xC3\xBCyesi de\xC4\x9Filsin."
 contact: "Arkada\xC5\x9F"
 try_again: Tekrar dene
+usage_agreement_required: "Kullan\xC4\xB1c\xC4\xB1 s\xC3\xB6zle\xC5\x9Fmesinin kabul\xC3\xBC gerekmektedir."
+wiki_revert_version: "{version} S\xC3\xBCr\xC3\xBCm\xC3\xBCne Geri D\xC3\xB6n"
+page_owner_help: "Sayfa sahibi, bu sayfa i\xC3\xA7in \xC3\xB6ncelikli sorumlulu\xC4\x9Fa sahip olan ki\xC5\x9Fi ya da gruptur. Kendinizi, ya da i\xC3\xA7inde bulundu\xC4\x9Funuz gruplar\xC4\xB1 se\xC3\xA7ebilirsiniz."
 media_for_group: "%s %s '\xC4\xB1n i\xC3\xA7inde"
 file_size: "Dosya boy\xC3\xBCt\xC3\xBC"
 dont_have_permission_to_create_committees: "%s alt\xC4\xB1nda komite olu\xC5\x9Fturma izniniz yok."
@@ -65,11 +78,13 @@ Language: Dil
 coordinator: "Koordinat\xC3\xB6r"
 delete_version_confirm: "Bu versiyonu silmek istedi\xC4\x9Finizden emin misiniz?"
 websites: "Websiteleri "
+signup_title: "Kullan\xC4\xB1c\xC4\xB1 Hesab\xC4\xB1n\xC4\xB1z\xC4\xB1 Yarat\xC4\xB1n"
 Personal_Interests: "Ki\xC5\x9Fisel \xC4\xB0lgiler"
 logout_success: "G\xC3\xBCle g\xC3\xBCle"
 menu_chat: Sohbet
 featured_content_header: "G\xC3\xB6sterilen \xC4\xB0cerik"
 tasks: "G\xC3\xB6revler"
+summary_help: "\xC4\xB0ste\xC4\x9Fe ba\xC4\x9Fl\xC4\xB1. \xC3\x96zet, bu sayfan\xC4\xB1n i\xC3\xA7eri\xC4\x9Fini k\xC4\xB1saca tan\xC4\xB1mlayan bir c\xC3\xBCmle ya da paragraftan olu\xC5\x9Fur."
 image_count_total: ":count Foto\xC4\x9Fraflar"
 user: "Kullan\xC4\xB1c\xC4\xB1"
 caption: "Ba\xC5\x9Fl\xC4\xB1k"
@@ -80,6 +95,7 @@ page_locked_header: Sayfa Kilitli
 profile_last_login: "Son giri\xC5\x9F"
 all_page_types: "t\xC3\xBCm sayfa t\xC3\xBCrleri"
 contribute_content_link: "Sayda olu\xC5\x9Ftur"
+welcome_message: "Crabgrass, sosyal de\xC4\x9Fi\xC5\x9Fim \xC3\xB6rg\xC3\xBCtlerinin, i\xC5\x9Flemlerini yapmalar\xC4\xB1n\xC4\xB1, kararlar vermelerini, i\xC5\x9Fbirli\xC4\x9Fi yapmalar\xC4\xB1n\xC4\xB1 ve a\xC4\x9F vas\xC4\xB1tas\xC4\xB1yla temasta olmalar\xC4\xB1n\xC4\xB1 sa\xC4\x9Flar."
 welcome_find_groups_text: "\xC3\x9Cye olmak istedi\xC4\x9Finiz gruplar\xC4\xB1 bulmak i\xC3\xA7in gruplar rehberini taray\xC4\xB1n."
 media_document: Belge
 activity_user_left_group: "{user} {group_type} {group} grubundana ayr\xC4\xB1ld\xC4\xB1"
@@ -115,11 +131,14 @@ me_inbox_link: Gelen kutusu
 trash: "\xC3\x87\xC3\xB6p Sepeti"
 undo: Geri al
 action: uygulama
+set_status_messsage: "\xC5\x9Eu anda ne yap\xC4\xB1yorsunuz?"
 profile_option_may_request_membership: "\xC3\x9Cyelik ba\xC5\x9Fvurular\xC4\xB1na izin ver"
 password_reset_ok_text: "\xC5\x9Eifreniz ba\xC5\x9Far\xC4\xB1yla s\xC4\xB1f\xC4\xB1rland\xC4\xB1. \xC5\x9Eimdi yeni \xC5\x9Fifrenizle siteye giri\xC5\x9F yapabilirsiniz. "
 new_network: "Yeni a\xC4\x9F"
 Founded: Kuruldu
 my_contacts: "Arkada\xC5\x9Flar\xC4\xB1m"
+redirect_to_foreign_domain: "Giri\xC5\x9F yapt\xC4\xB1ktan sonra yabanc\xC4\xB1 bir etki alan\xC4\xB1na (:url) y\xC3\xB6nlenmeye \xC3\xA7al\xC4\xB1\xC5\x9F\xC4\xB1yorsunuz. G\xC3\xBCvenlik sebepleri dolay\xC4\xB1s\xC4\xB1yla URL'den bu parametreyi kald\xC4\xB1rd\xC4\xB1k."
+page_is_not_static: "Sayfa sabit de\xC4\x9Fil"
 public_profile: Genel Profil
 requests_to_me: bana
 invalid_token_text: "Belirtti\xC4\x9Finiz \xC5\x9Fifre s\xC4\xB1f\xC4\xB1rlama ba\xC4\x9Flant\xC4\xB1s\xC4\xB1 ge\xC3\xA7ersiz. Daha \xC3\xB6nce kullan\xC4\xB1lm\xC4\xB1\xC5\x9F veya s\xC3\xBCresi ge\xC3\xA7mi\xC5\x9F olabilir."
@@ -128,6 +147,8 @@ back_button: Geri
 invite_accept_via_existing_account: "Zaten bir kullan\xC4\xB1c\xC4\xB1 hesab\xC4\xB1m var"
 display_name: "\xC4\xB0smi g\xC3\xB6ster"
 recent_pages: En Son Sayfalar
+you_have_no_contacts: "\xC5\x9Eu anda arkada\xC5\x9F\xC4\xB1n\xC4\xB1z yok"
+signup_link: "Yeni bir kullan\xC4\xB1c\xC4\xB1 hesab\xC4\xB1na ihtiyac\xC4\xB1n\xC4\xB1z var m\xC4\xB1?"
 status_resolved: "\xC3\xA7\xC3\xB6z\xC3\xBCld\xC3\xBC"
 notify_page_link: "Bilgilendirme G\xC3\xB6nder"
 move_image_right: "G\xC3\xB6r\xC3\xBCnt\xC3\xBCy\xC3\xBC sa\xC4\x9Fa ta\xC5\x9F\xC4\xB1"
@@ -141,13 +162,16 @@ delete_page_via_trash_info: "Sayfa \xC3\xA7\xC3\xB6p sepetine ta\xC5\x9F\xC4\xB1
 download: "\xC4\xB0ndir"
 width: "Geni\xC5\x9Flik"
 all_groups: "T\xC3\xBCm Gruplar"
+welcome_login_message: "!>/plugin_assets/riseup/riseup-yellow.gif!\r\n\
+  \r\n Bu web sitesi, grup ve a\xC4\x9F organizasyonu i\xC3\xA7in tasarlanan ve 'k\xC3\xBCresel adalet hareketinin' gereksinimlerine uyarlanan <a href=\"http://www.affero.org/oagpl.html\">software libre</a> bir web uygulamas\xC4\xB1 olan Crabgrass taraf\xC4\xB1ndan y\xC3\xBCr\xC3\xBCt\xC3\xBClmektedir. Uzun vadeli amac\xC4\xB1, etkin, konfederal, ve do\xC4\x9Frudan demokrasi ama\xC3\xA7l\xC4\xB1 sosyal de\xC4\x9Fi\xC5\x9Fim \xC5\x9Febekelerinin olu\xC5\x9Fumunu kolayla\xC5\x9Ft\xC4\xB1rmak ve onlara teknik destek sa\xC4\x9Flamakt\xC4\xB1r. [more... -> /crabgrass/about]\r\n  \r\n  h3. Sitede yeni misiniz?\r\n\
+  \r\n  [Buradan kay\xC4\xB1t olun -> /account/signup]. Hen\xC3\xBCz erken geli\xC5\x9Fim d\xC3\xB6nemindeyiz. De\xC4\x9Fi\xC5\x9Fiklikler kullan\xC4\xB1c\xC4\xB1lar\xC4\xB1n geri bildirimlerine g\xC3\xB6re \xC5\x9Fekillendi\xC4\x9Finden, siteyi nas\xC4\xB1l kulland\xC4\xB1\xC4\x9F\xC4\xB1n\xC4\xB1z, nelerin de\xC4\x9Fi\xC5\x9Fmesini istedi\xC4\x9Finiz, ho\xC5\x9Funuza giden ve gitmeyen \xC5\x9Feyler gibi konularda bizi bilgilendirdi\xC4\x9Finizden emin olun."
 save_button: Kaydet
 pagination_previous: "\xC3\x96nceki"
 committees: Komiteler
 create_page_information: "{page_class} Bilgi"
 media_video: Video
-welcome_login_message: "ho\xC5\x9Fgeldin giri\xC5\x9F mesaj\xC4\xB1"
 committee_publicly_visible: "Komiteleri Herkese G\xC3\xB6r\xC3\xBCn\xC3\xBCr Yap"
+no_peers_msg: "\xC5\x9Eu anda e\xC5\x9Finiz yok."
 personal_message_class_description: "Birseysel al\xC4\xB1c\xC4\xB1lara birer ki\xC5\x9Fisel mesaj g\xC3\xB6nderildi."
 survey_questions: Sorular
 media_without_group: Hepsi %s
@@ -167,12 +191,15 @@ add_new_attachment: Yeni Dosya Ekle
 article_page_description: "Bir blog g\xC3\xB6nderisi veya haber yaz\xC4\xB1s\xC4\xB1 olu\xC5\x9Ftur."
 participant: "Kat\xC4\xB1l\xC4\xB1mc\xC4\xB1"
 inbox_description: "Aktif olarak kat\xC4\xB1ld\xC4\xB1\xC4\x9F\xC4\xB1m ya da de\xC4\x9Fi\xC5\x9Fikliklerini takip etti\xC4\x9Fim sayfalar i\xC3\xA7in gelen kutusu"
+share_page_recipients_results: "Bu {page_class} payla\xC5\x9F\xC4\xB1l\xC4\xB1yor:  "
 page_group_collection: Koleksiyonlar
 all_content: "T\xC3\xBCm icerik"
 delete_page_link: "{page_class} '\xC4\xB1 Sil"
 Mobile: Mobil
 welcome_upload_icon_text: "Simgeniz olarak kullanmak \xC3\xBCzere bir g\xC3\xB6r\xC3\xBCnt\xC3\xBC y\xC3\xBCkleyin. Bu simge yapt\xC4\xB1\xC4\x9F\xC4\xB1n\xC4\xB1z her yorumun yan\xC4\xB1nda g\xC3\xB6r\xC3\xBCnecektir."
 external_video_page_display: Harici Video
+state: durum
+survey_responses_enabled: "Yeni cevaplara olanak verecek misiniz? \xC4\xB0\xC5\x9Faretlendi\xC4\x9Fi takdirde, ki\xC5\x9Filer anketi yapabilecekler. Anketi kapatmak i\xC3\xA7in i\xC5\x9Fareti kald\xC4\xB1r\xC4\xB1n."
 page_list_heading_stars: "y\xC4\xB1ld\xC4\xB1zlar"
 page_list_heading_last_updated: "en son g\xC3\xBCncelleme"
 invalid_token: "Ge\xC3\xA7ersiz Token"
@@ -184,6 +211,7 @@ my_world_heading: "D\xC3\xBCnyam"
 councils: Konseyler
 email: E-posta
 create_a_new_thing: "Yeni bir {thing} olu\xC5\x9Ftur"
+view_requests: "\xC4\xB0stekleri G\xC3\xB6r\xC3\xBCnt\xC3\xBCle"
 slideshow_delay_input: "Her :input_field saniyede g\xC3\xBCncelle"
 my_dashboard: Panom
 most_active: "En \xC3\x87ok Etkin"
@@ -191,12 +219,15 @@ network: "A\xC4\x9F"
 welcome_create_group_link: "Yeni grup olu\xC5\x9Ftur"
 date_older: Daha eski
 your_login: "Giri\xC5\x9Finiz"
+survey_rate_this_response: "Bu Cevab\xC4\xB1 De\xC4\x9Ferlendiriniz"
+signup_email_info: "\xC4\xB0ste\xC4\x9Fe ba\xC4\x9Fl\xC4\xB1: \xC5\x9Fifrenizi unuttu\xC4\x9Funuz zaman kullan\xC4\xB1l\xC4\xB1r"
 survey_my_response: "Cevab\xC4\xB1m"
 my_status_heading: Mevcut Durum
-next_change: "Sonraki De\xC4\x9Fi\xC5\x9Fiklik"
 preview: "G\xC3\xB6r\xC3\xBCnt\xC3\xBCle"
+next_change: "Sonraki De\xC4\x9Fi\xC5\x9Fiklik"
 create_task_list: "yeni g\xC3\xB6rev listesi olu\xC5\x9Ftur"
 folder_class_description: "Di\xC4\x9Fer sayfalar\xC4\xB1 organize etmek i\xC3\xA7in bir klas\xC3\xB6r olu\xC5\x9Fturun"
+public_checkbox_help: "E\xC4\x9Fer kontrol edildiyse, herkes bu sayfay\xC4\xB1 g\xC3\xB6r\xC3\xBCnt\xC3\xBCleyebilir."
 signup_email: Email Adresiniz
 notify_new_access: "<b>Yeni Eri\xC5\x9Fim:</b> bu sayfay\xC4\xB1 yeni ki\xC5\x9Filerle veya gruplarla payla\xC5\x9F ve onlara haber ver."
 page_group_event: Etkinlikler
@@ -205,6 +236,7 @@ check_all: Hepsini Kontrol Et
 coordinating_council: Koordinasyon Konseyi
 full: "T\xC3\xBCm\xC3\xBC"
 archive_headline: "Ar\xC5\x9Fiv"
+survey_may_see_responses: "Cevaplar g\xC3\xB6r\xC3\xBClebilir mi?"
 password_error_default: "\xC5\x9Fifre yeterince zor de\xC4\x9Fil."
 thing_not_found: "{thing} bulunamad\xC4\xB1"
 return_link: "Geri d\xC3\xB6n"
@@ -236,6 +268,7 @@ participant_help: "<b>Kat\xC4\xB1l\xC4\xB1mc\xC4\xB1</b> giri\xC5\x9Fi bu sayfay
 file_class_description: "Y\xC3\xBCklenmi\xC5\x9F dosya."
 approve: onay
 council_help: "E\xC4\x9Fer bu grubun bir koordinasyon konseyi varsa, yaln\xC4\xB1zca bu konseyin \xC3\xBCyesi olan bir kullan\xC4\xB1c\xC4\xB1 grubu y\xC3\xB6netebilir. Aksi halde, grubun herhangi bir \xC3\xBCyesi y\xC3\xB6netici olabilir. "
+signup_info: "Kullan\xC4\xB1c\xC4\xB1 ad\xC4\xB1 ve \xC5\x9Fifrenizi se\xC3\xA7ip ard\xC4\xB1ndan \"%s\" tu\xC5\x9Funa bas\xC4\xB1n\xC4\xB1z"
 only_last_menber_can_delete_group: "Bir grubu sadece son \xC3\xBCyeyseniz silebilirsiniz"
 gallery_class_description: "Resimlerden olu\xC5\x9Fan koleksiyon"
 summary: "\xC3\x96zet"
@@ -259,6 +292,7 @@ reset_password_mail_sent: "\xC5\x9Eifrenizi s\xC4\xB1f\xC4\xB1rlamak i\xC3\xA7in
 my_completed_tasks_link: "Tamamland\xC4\xB1"
 new_people_link: "Yeni ki\xC5\x9Filer"
 galleries: Galeriler
+user_profile_description_may_see_contacts: "Ki\xC5\x9Filere arkada\xC5\x9F listenizi g\xC3\xB6rme izni verir."
 reset_password_mail_warning: "E\xC4\x9Fer \xC5\x9Fifrenizin de\xC4\x9Fi\xC5\x9Fmesini istemiyorsan\xC4\xB1z, l\xC3\xBCtfen bizimle ba\xC4\x9Flant\xC4\xB1 kurun"
 alert_permission_denied: "\xC4\xB0zin Reddedildi"
 read: oku
@@ -281,6 +315,7 @@ membership: "\xC3\x9Cyelik"
 rejected: reddedildi
 delete_this_version: bu versiyonu sil
 details_link: "Ayr\xC4\xB1nt\xC4\xB1lar"
+tags_help: "\xC4\xB0ste\xC4\x9Fe ba\xC4\x9Fl\xC4\xB1. Etiketler i\xC3\xA7in, bu sayfay\xC4\xB1 en iyi tan\xC4\xB1mlayacak bir ka\xC3\xA7 kelime kullan\xC4\xB1n."
 remove_contact_info: "Ki\xC5\x9Fileri arkada\xC5\x9F listenizden silerseniz, profillerini ve \xC3\xA7evrimi\xC3\xA7i olduklar\xC4\xB1 zaman\xC4\xB1 g\xC3\xB6remezsiniz. Ayr\xC4\xB1ca, onlar\xC4\xB1 arkada\xC5\x9F listenizden silmeniz, sizin de onlar\xC4\xB1n listesinden silinmeniz anlam\xC4\xB1na gelecektir. "
 group_directory_link: Grup Rehberi
 additional_page_access: "Ek eri\xC5\x9Fim"
@@ -290,6 +325,7 @@ Work: !binary |
 date_seconds: Sanyeler
 from: kimden
 discuss_request_link: "bu talebi :person_or_group ile tart\xC4\xB1\xC5\x9F"
+user_profile_description_may_request_contact: "Ki\xC5\x9Filere, arkada\xC5\x9F\xC4\xB1n\xC4\xB1z olma iste\xC4\x9Finde bulunma izni verir."
 no_contacts_msg: "Arkada\xC5\x9F\xC4\xB1n\xC4\xB1z yok."
 menu_people: "Ki\xC5\x9Filer"
 group_administration_not_allowed: "Bu grubu y\xC3\xB6netme yetkiniz yok."
@@ -318,6 +354,8 @@ create_committee: "komite olu\xC5\x9Ftur"
 date_this_week: "Ge\xC3\xA7en Hafta"
 recent_activity: En Son Etkinlik
 drag_and_drop_to_rearrange_photos: "G\xC3\xB6r\xC3\xBCnt\xC3\xBCleri d\xC3\xBCzenlemek icin s\xC3\xBCr\xC3\xBCkle ve b\xC4\xB1rak"
+share_this_page: "Bu Sayfay\xC4\xB1 Payla\xC5\x9F"
+subject_must_not_be_empty: "alan bo\xC5\x9F b\xC4\xB1rak\xC4\xB1lamaz"
 remove_contact_confirmation: "%s ile art\xC4\xB1k arkada\xC5\x9F olmak istemedi\xC4\x9Finizden emin misiniz?"
 page_list_heading_created: "olu\xC5\x9Fturuldu"
 delete_page_via_shred_info: "Bu sayfay\xC4\xB1 kal\xC4\xB1c\xC4\xB1 olarak yok edeceksiniz. Bu eylem geri al\xC4\xB1namaz."
@@ -329,6 +367,7 @@ group_successfully_created: "Grup ba\xC5\x9Far\xC4\xB1yla olu\xC5\x9Fturuldu."
 approve_button: Onayla
 delete_page_via_trash: "\xC3\x87\xC3\xB6p Sepetine Ta\xC5\x9F\xC4\xB1"
 create_page_button: "Olu\xC5\x9Ftur {page_class}"
+my_peers: "E\xC5\x9Flerim"
 password_error_confirmation: "\xC5\x9Eifre do\xC4\x9Frulamas\xC4\xB1, \xC5\x9Fifre ile uyu\xC5\x9Fmuyor."
 remove_friend_link: "Arkada\xC5\x9Flarlar\xC4\xB1mdan \xC3\xA7\xC4\xB1kar"
 menu_home: Anasayfa
@@ -338,6 +377,7 @@ add_description: "A\xC3\xA7\xC4\xB1klama ekle"
 menu_me: Ben
 directory_of_groups: Grupler Dizini
 date_hours: Saatler
+wont_be_able_to_save: "Bu sayfay\xC4\xB1 kaydedemeyeceksiniz."
 request_to_join_our_network_description: ":group grubu, :network a\xC4\x9F\xC4\xB1na kat\xC4\xB1lmas\xC4\xB1 i\xC3\xA7in davet edildi"
 personal_message: "ki\xC5\x9Fisel mesaj"
 page_details: "Sayfa ayr\xC4\xB1nt\xC4\xB1lar\xC4\xB1"
@@ -363,10 +403,17 @@ edit: "D\xC3\xBCzenleme"
 phone_numbers: "Telefon Numaralar\xC4\xB1"
 view_slideshow: "Slayt g\xC3\xB6sterisini g\xC3\xB6r\xC3\xBCnt\xC3\xBCle"
 video: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC"
+wiki_is_locked: "Bu viki h\xC3\xA2len :user taraf\xC4\xB1ndan kilitlenmi\xC5\x9F durumda"
+rate_many_page_display: Onay Anketi
+my_peers_description: "Ortak bir grubu payla\xC5\x9Ft\xC4\xB1\xC4\x9F\xC4\xB1m kullan\xC4\xB1c\xC4\xB1lar"
 page_details_link: "{page_class} Detaylar\xC4\xB1"
 removing_image: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC Kald\xC4\xB1r\xC4\xB1l\xC4\xB1yor..."
 date_months: aylar
 add_im_address: IM Adresi ekle
+viewer_help: "<b>Viewer</b> giri\xC5\x9Fi bu sayfay\xC4\xB1 g\xC3\xB6r\xC3\xBCn\xC3\xBCr yapar, ba\xC5\x9Fka bir etkisi olmaz."
+version_doesnt_exist: ":version s\xC3\xBCr\xC3\xBCm\xC3\xBC mevcut de\xC4\x9Fildir."
+send_message_link: "\xC4\xB0leti G\xC3\xB6nder"
+photo_credit: Kaynak
 page_list_heading_updated_by: "g\xC3\xBCncelleyen"
 invite_accept_headline: "\"{group_name}\" grubuna kat\xC4\xB1lma davetini kabul et"
 image_count: "Foto\xC4\x9Fraf :number of :count"
@@ -376,8 +423,10 @@ media_documents: Belgeler
 folder_page_display: Dosya
 private: "\xC3\x96zel"
 recent_network_pages: "En Son A\xC4\x9F Sayfalar\xC4\xB1"
+ranked_vote_instructions: "\xC3\x96n\xC3\xBCn\xC3\xBCzdeki listeden \xC3\xB6\xC4\x9Feleri, en \xC3\xA7ok tercih edilen en \xC3\xBCste, en az tercih edilen en alta gelecek \xC5\x9Fekilde s\xC3\xBCr\xC3\xBCkleyip b\xC4\xB1rak\xC4\xB1n. Bitirdi\xC4\x9Finiz zaman, oyunuzu kaydetmek i\xC3\xA7in l\xC3\xBCtfen onaylay\xC4\xB1n."
 no_title_given: "(ba\xC5\x9Fl\xC4\xB1k yok)"
 feature_button: "G\xC3\xB6ster!"
+successful_undelete_image: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC ba\xC5\x9Far\xC4\xB1yla geri al\xC4\xB1nd\xC4\xB1."
 page_list_heading_updated: "g\xC3\xBCncellendi"
 no_public_profiles: "Hen\xC3\xBCz a\xC3\xA7\xC4\xB1k profiliniz yok..."
 message_page_description: "Bireysel al\xC4\xB1c\xC4\xB1lara ki\xC5\x9Fisel mesaj g\xC3\xB6nder."
@@ -385,6 +434,7 @@ share_page_link: "Payla\xC5\x9F :page_class"
 welcome_create_group_text: "Yeni grup olu\xC5\x9Ftur ve \xC3\xBCye olmalar\xC4\xB1 i\xC3\xA7in insanlar\xC4\xB1 davet et. Gruplar sayesinde di\xC4\x9Fer insanlarla payla\xC5\x9F\xC4\xB1mda bulunabilir ve i\xC5\x9F birli\xC4\x9Fi yapabilirsiniz."
 welcome_edit_profile_text: "A\xC3\xA7\xC4\xB1k ve \xC3\xB6zel profillerinizi d\xC3\xBCzenleyerek di\xC4\x9Fer insanlar\xC4\xB1n hakk\xC4\xB1n\xC4\xB1zda daha fazla bilgi sahibi olmas\xC4\xB1n\xC4\xB1 sa\xC4\x9Flay\xC4\xB1n."
 back_to_group: "geri d\xC3\xB6n :group_name"
+my_peers_link: "e\xC5\x9Flerim"
 my_tasks_headline: "G\xC3\xB6revlerim"
 contact_request_message_label: "%s kullan\xC4\xB1c\xC4\xB1s\xC4\xB1na neden onun arkada\xC5\x9F\xC4\xB1 olmak istedi\xC4\x9Finizi s\xC3\xB6yleyin."
 people: "Ki\xC5\x9Filer"
@@ -398,6 +448,7 @@ add_phone_number: Telefon numara ekle
 created_by: "Taraf\xC4\xB1ndan olu\xC5\x9Fturuldu"
 wiki_section_edit: "Bu B\xC3\xB6l\xC3\xBCm\xC3\xBC D\xC3\xBCzenle"
 Work_Life: "\xC4\xB0\xC5\x9F Ya\xC5\x9Fam\xC4\xB1"
+wiki_page_description: "Sonradan \xC3\xB6zg\xC3\xBCr bi\xC3\xA7imde d\xC3\xBCzenlenebilecek bir metin belgesi yarat\xC4\xB1n."
 message_must_not_be_empty: "mesaj bo\xC5\x9F olmamal\xC4\xB1"
 page_group_media_video: Videolar
 new_password: "Yen\xC4\xB1 \xC5\x9Fifre"
@@ -428,6 +479,8 @@ add_button: Ekle
 diff_link: "de\xC4\x9Fi\xC5\x9Fiklikleri incele"
 away: "D\xC4\xB1\xC5\x9Far\xC4\xB1da"
 group_profile_description_may_see_committees: "Ki\xC5\x9Filere {group_type} t\xC3\xBCr\xC3\xBCndeki gruplarda hangi komiteler oldu\xC4\x9Funu g\xC3\xB6rme izni ver."
+select_image_file: "g\xC3\xB6r\xC3\xBCnt\xC3\xBC dosyas\xC4\xB1 se\xC3\xA7in"
+sucessfully_removed_image: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC ba\xC5\x9Far\xC4\xB1yla kald\xC4\xB1r\xC4\xB1ld\xC4\xB1! (:undo_link)"
 request_join_group_link: "{group_type} grubuna kat\xC4\xB1lmak i\xC3\xA7in izin al "
 set_status_button: Durumu ayarla
 rss_feed: RSS Bildirimcisi
@@ -442,9 +495,12 @@ group_invite_email: "{from_user} sizi \"{group}\" grubuna kat\xC4\xB1lmaya davet
   \r\n\
   Bu gruba kat\xC4\xB1lmak istiyorsan\xC4\xB1z, buraya t\xC4\xB1klay\xC4\xB1n:\r\n\
   \r\n  {accept_invite_link}"
+see_more_link: "Daha Fazlas\xC4\xB1"
 survey_may_rate: "Cevaplar\xC4\xB1 oylar m\xC4\xB1s\xC4\xB1n\xC4\xB1z?"
 new_people: "Yen\xC4\xB1 ki\xC5\x9Filer"
 media_alls: Medya
+survey_your_rating_of_this_response: "Bu Cevap i\xC3\xA7in Verdi\xC4\x9Finiz Oy"
+upload_file_help: "Gerekli. Bu sayfaya y\xC3\xBCklemek i\xC3\xA7in bir dosya se\xC3\xA7in."
 not_featured_content: "Hen\xC3\xBCz G\xC3\xB6sterilmi\xC5\x9F \xC4\xB0\xC3\xA7erik De\xC4\x9Fil"
 edit_settings: "Ayarlar\xC4\xB1 De\xC4\x9Fi\xC5\x9Ftir"
 create_button: "Olu\xC5\x9Ftur"
@@ -453,6 +509,7 @@ participation: "Kat\xC4\xB1l\xC4\xB1m"
 share_button: "Payla\xC5\x9F"
 edit_attachments: "Eklentileri D\xC3\xBCzenle"
 requests_from_me: benden
+send_invites_headline: "{group} grubuna kat\xC4\xB1l\xC4\xB1m i\xC3\xA7in davet g\xC3\xB6nder"
 invalid_email_text: "Verdi\xC4\x9Finiz email adresi ge\xC3\xA7ersiz."
 announcement_page_display: Duyuru
 video_embed: "yerle\xC5\x9Ftir"
@@ -467,6 +524,7 @@ add_existing_image: "Foto\xC4\x9Fraf ekle"
 add_contact_info: "Arkada\xC5\x9F listenizdeki kullan\xC4\xB1c\xC4\xB1lar sizin ba\xC4\x9Flant\xC4\xB1 durumunuzu ve profil bilgilerinize ula\xC5\x9Fabilir. Arkada\xC5\x9F listesine dahil oldu\xC4\x9Funuz kullan\xC4\xB1c\xC4\xB1lar, sizin arkada\xC5\x9F listenize eklenecektir."
 subject: Konu
 current_tags: En Son Etiketler
+recipient_tip: "Al\xC4\xB1c\xC4\xB1lar\xC4\xB1, virg\xC3\xBCl, bo\xC5\x9Fluk, ya da yeni sat\xC4\xB1rlarla ay\xC4\xB1r\xC4\xB1n."
 member_groups_of_network: "\xC3\x9Cye Gruplar"
 discussion_page_description: "Gruplarla veya di\xC4\x9Fer kullan\xC4\xB1c\xC4\xB1larla bir konu hakk\xC4\xB1nda tart\xC4\xB1\xC5\x9F."
 alert_saved: "De\xC4\x9Fi\xC5\x9Fiklikler kaydedildi"
@@ -489,12 +547,15 @@ create_group_link: Yeni grup ekle
 versions: "S\xC3\xBCr\xC3\xBCmler"
 history: "Ge\xC3\xA7mi\xC5\x9F"
 group_invite_subject: "\"{group}\" grubuna kat\xC4\xB1lmak i\xC3\xA7in davet"
+survey_response_by: "{login} taraf\xC4\xB1ndan verilen cevap"
 group_home_headline: "{group_type} Anasayfa"
 last_name: Soy ad
 directory_of_networks: "A\xC4\x9F Rehberi"
 forgotten_email_address: "Hesab\xC4\xB1n\xC4\xB1z\xC4\xB1 a\xC3\xA7arken bize hangi e-posta adresinizi vermi\xC5\x9Ftiniz?"
 edit_title: "ba\xC5\x9Fl\xC4\xB1\xC4\x9F\xC4\xB1 d\xC3\xBCzenle"
 School: Okul
+you_have_no_peers: "\xC5\x9Eu anda e\xC5\x9Finiz yok."
+link_name_description: "Bu grup, internet linki ve URL'lerde bu isimle i\xC5\x9Faret edilecektir. \xC4\xB0sim yaln\xC4\xB1zca harfler ve rakamlardan olu\xC5\x9Fabilir, bo\xC5\x9Fluk b\xC4\xB1rak\xC4\xB1lamaz."
 status_pending: |
   bekleyen
 
@@ -504,7 +565,9 @@ no_change: "De\xC4\x9Fi\xC5\x9Fiklik Yok"
 attachments: Eklentiler
 message: Mesaj
 contribute_group_content_link: "{group} Grubuna Sayfa Ekle"
+user_profile_description_allow_peers: "\xC4\xB0\xC5\x9Faretlendi\xC4\x9Fi takdirde, ortak bir grubu payla\xC5\x9Ft\xC4\xB1\xC4\x9F\xC4\xB1n\xC4\xB1z ki\xC5\x9Filer sizin \xC3\xB6zel profilinizi g\xC3\xB6r\xC3\xBCnt\xC3\xBCleyebilecekler."
 this_is_committee: "Bu komite {parent_group}'in bir par\xC3\xA7as\xC4\xB1d\xC4\xB1r."
+signup_success_message: "Kay\xC4\xB1t oldu\xC4\x9Funuz i\xC3\xA7in te\xC5\x9Fekk\xC3\xBCr ederiz!"
 show_gallery: "Galeriyi G\xC3\xB6ster"
 password_error_too_similar: "iyi de\xC4\x9Fil, yeterince farkl\xC4\xB1 karakterler i\xC3\xA7ermiyor."
 group_profile_description_may_request_membership: "\xC4\xB0nsanlar\xC4\xB1n {group_type} grubuna \xC3\xBCyelik talebi g\xC3\xB6ndermesine izin ver."
@@ -517,6 +580,10 @@ menu_groups: Gruplar
 approval_vote_class_description: "Her olas\xC4\xB1l\xC4\xB1\xC4\x9F\xC4\xB1 onayla ya da geri \xC3\xA7evir"
 password_confirmation: "\xC5\x9Eifre Do\xC4\x9Frulama"
 month_short_october: Ekim
+share_page_message: "Bir ileti g\xC3\xB6nderin (iste\xC4\x9Fe ba\xC4\x9Fl\xC4\xB1)"
+profile_option_may_pester: "Rahats\xC4\xB1z edilmeme izin ver"
+profile_option_allow_peers: "E\xC5\x9Flere taraf\xC4\xB1ndan g\xC3\xB6r\xC3\xBClebilir"
+title_help: "Gerekli. Bu ba\xC5\x9Fl\xC4\xB1k sayfay\xC4\xB1 tan\xC4\xB1mlamak i\xC3\xA7in kullan\xC4\xB1l\xC4\xB1r."
 more_information: Daha Fazla Bilgi
 created_on: "Olu\xC5\x9Fturuldu"
 dont_understand_group_type: ":type grup tipi anla\xC5\x9F\xC4\xB1lmad\xC4\xB1"
@@ -526,6 +593,7 @@ to: "'e"
 organization: organizasyon
 activity_group_created: "{user} olu\xC5\x9Fturuldu {group_type} {group}"
 approve_contact_info: "Bu kullanc\xC4\xB1 taraf\xC4\xB1ndan size g\xC3\xB6nderilmi\xC5\x9F bir arkada\xC5\x9Fl\xC4\xB1k talebi zaten var. Onayl\xC4\xB1yor musunuz?"
+rate_many_page_description: "Ki\xC5\x9Filerin onaylamas\xC4\xB1 ya da onaylamamas\xC4\xB1 i\xC3\xA7in se\xC3\xA7eneklerden olu\xC5\x9Fan bir liste haz\xC4\xB1rlay\xC4\xB1n."
 page_group_media: Multimedya
 viewers: "G\xC3\xB6r\xC3\xBCnt\xC3\xBCleyenler"
 menu_link_logout: "\xC3\x87\xC4\xB1k\xC4\xB1\xC5\x9F"
@@ -540,6 +608,8 @@ reject: reddet
 outgoing: Giden
 coordinators: "Koordinat\xC3\xB6rler"
 month_short_august: "Au\xC4\x9F"
+sharing_help: "\xC4\xB0ste\xC4\x9Fe ba\xC4\x9Fl\xC4\xB1.Bu sayfay\xC4\xB1 \xC3\xA7oklu al\xC4\xB1c\xC4\xB1larla (kullan\xC4\xB1c\xC4\xB1lar ya da gruplarla) payla\xC5\x9Fabilirsiniz."
+video_service_is_not_supported: "desteklenmiyor (h\xC3\xA2len yaln\xC4\xB1zca youtube, google video, blip.tv, ve vimeo desteklenmektedir)"
 request_status: "Bu istek :user taraf\xC4\xB1ndan :time 'da :status"
 join_group_link: "Kat\xC4\xB1l {group_type}"
 viewer: "G\xC3\xB6r\xC3\xBCnt\xC3\xBCleyici"
@@ -552,15 +622,19 @@ login_failed: "Giri\xC5\x9F Ba\xC5\x9Far\xC4\xB1s\xC4\xB1z"
 add_photo_to_gallery: Galeriye resim ekle
 location_postal_code: posta kodu
 error_saving_new_order: "Yeni d\xC3\xBCzenin kaydedilmesinde hata!"
+survey_rating_enabled: "Cevaplar\xC4\xB1n oylanmas\xC4\xB1na izin verir misiniz?"
+video_embed_code_prompt: "D\xC4\xB1\xC5\x9Far\xC4\xB1dan bir video kayna\xC4\x9F\xC4\xB1n\xC4\xB1n kodunu yerle\xC5\x9Ftirin - g\xC3\xB6m\xC3\xBCn."
 profile_option_may_see_networks: "A\xC4\x9Flar\xC4\xB1 g\xC3\xB6ster"
 only_me: Sadece ben
 cancel_button: "Vazge\xC3\xA7 d\xC3\xBC\xC4\x9Fmesi"
 article_page_display: "Yaz\xC4\xB1"
+survey_rate_responses: "Cevaplar\xC4\xB1 De\xC4\x9Ferlendir"
 profile_option_may_see_members: "Grup \xC3\xBCyelerini g\xC3\xB6ster"
 not_set: "ayarlanmad\xC4\xB1"
 tuesday: "Sal\xC4\xB1"
 settings: Ayarlar
 required: (gerekli)
+ranked_vote_page_description: "Ki\xC5\x9Filer i\xC3\xA7in, tercihlerini s\xC4\xB1ralamalar\xC4\xB1 i\xC3\xA7in se\xC3\xA7enekler sunan bir liste haz\xC4\xB1rlay\xC4\xB1n."
 information: Bilgi
 file: Dosya
 expired_featured_content: "S\xC3\xBCresi Ge\xC3\xA7mi\xC5\x9F G\xC3\xB6sterilen \xC4\xB0\xC3\xA7erik"
@@ -585,12 +659,16 @@ email_notice_hello_with_message: "Merhaba, {from} size bu mesaj\xC4\xB1n i\xC3\x
 comparing_changes_header: "{user} taraf\xC4\xB1ndan {when} tarihinde {old_version} s\xC3\xBCr\xC3\xBCm\xC3\xBCnden {new_version} s\xC3\xBCr\xC3\xBCm\xC3\xBCne yap\xC4\xB1lan de\xC4\x9Fi\xC5\x9Fiklikleri k\xC4\xB1yasl\xC4\xB1yor"
 options: "Se\xC3\xA7enekler"
 email_notice_access: "Bu sayfaya  buradan eri\xC5\x9Febilirsiniz:"
+share_page_recipients_selection: "Se\xC3\xA7iminizi yap\xC4\xB1n\xC4\xB1z"
+this_is_coordinating: "Bu, {parent_group} i\xC3\xA7in<strong>coordinating council</strong> ."
 welcome_find_groups_link: Grupleri bul
 csrf_error_message: "Giri\xC5\x9F ba\xC5\x9Fvurunuz, siteyi \xC3\xA7\xC3\xB6kertmeye y\xC3\xB6nelik bir deneme g\xC3\xB6r\xC3\xBCn\xC3\xBCm\xC3\xBCndedir. Endi\xC5\x9Felenmeyin: bu hata genellikle masum kullan\xC4\xB1c\xC4\xB1lar\xC4\xB1n ba\xC5\x9Fvurular\xC4\xB1nda bile s\xC4\xB1k s\xC4\xB1k ortaya \xC3\xA7\xC4\xB1kabilmektedir. Bu tip a\xC5\x9F\xC4\xB1r\xC4\xB1 \xC3\xB6nlemler sizin g\xC3\xBCvenli\xC4\x9Finiz i\xC3\xA7indir. Bu a\xC5\x9Famada yapman\xC4\xB1z gereken giri\xC5\x9F yapmadan \xC3\xB6nce sayfay\xC4\xB1 yeniden y\xC3\xBCklemenizdir. Tekrar denemek i\xC3\xA7in \xC5\x9Fu ba\xC4\x9Flant\xC4\xB1y\xC4\xB1 takip edebilirsiniz:"
+type_your_messages_here: "\xC4\xB0letilerinizi buraya yaz\xC4\xB1n ve enter tu\xC5\x9Funa bas\xC4\xB1n..."
 send_invites_button: "Davetleri G\xC3\xB6nder"
 welcome_create_page_text: "Yeni tart\xC4\xB1\xC5\x9Fma konular\xC4\xB1, yeni viki sayfalar\xC4\xB1 a\xC3\xA7abilir, resimler ve dosyalar y\xC3\xBCkleyebilir, g\xC3\xB6rev listeleri ba\xC5\x9Flatabilir ve daha fazlas\xC4\xB1n\xC4\xB1 yapabilirsiniz..."
 visibility: "G\xC3\xB6r\xC3\xBCn\xC3\xBCrl\xC3\xBCk"
 administration: "Y\xC3\xB6netim"
+user_profile_description_may_see_groups: "Ki\xC5\x9Filere, hangi gruplara \xC3\xBCye oldu\xC4\x9Funuzu g\xC3\xB6rme izni verir."
 me_search_description: "Eri\xC5\x9Fiminiz olan b\xC3\xBCt\xC3\xBCn sayfalarda arat"
 page_list: Sayfa listesi
 gallery_description: "\xC3\x87oklu resimler y\xC3\xBCkleyin ya da varolan resimleri tek bir dizi olarak organize edin"
@@ -621,7 +699,9 @@ page_added_to_group: "Bu sayfa \xC5\x9Fu gruba eklenecek: {group_type} {group_na
 no_group_named: <b>:name</b> isimli bir grup yok.
 im_addresses: IM Adresleri
 public_key: "A\xC3\xA7\xC4\xB1k Anahtar"
+page_list_heading_posts: bildiriler
 password_error_whitespace: "iyi de\xC4\x9Fil, tamam\xC4\xB1yla beyaz bo\xC5\x9Fluktan olu\xC5\x9Fuyor."
+user_profile_description_may_see: "\xC4\xB0\xC5\x9Faretlendi\xC4\x9Fi takdirde, a\xC5\x9Fa\xC4\x9F\xC4\xB1daki profil bilgileri g\xC3\xB6r\xC3\xBCn\xC3\xBCr hale gelecektir. Aksi h\xC3\xA2lde, profiliniz b\xC3\xBCt\xC3\xBCn\xC3\xBCyle saklanacakt\xC4\xB1r."
 page_group_vote: Anketler ve oylar
 Social_Change_Interests: "Sosyal De\xC4\x9Fi\xC5\x9Fime Dayal\xC4\xB1 \xC4\xB0lgiler"
 all_people_link: "b\xC3\xBCt\xC3\xBCn ki\xC5\x9Filer"
@@ -633,6 +713,9 @@ request_to_join_us_via_email_description: ":email , :group grubuna kat\xC4\xB1lm
 message_page_display: "Ki\xC5\x9Fisel Mesaj"
 upload_images: "Y\xC3\xBCkle"
 upload_new_image: "Yeni g\xC3\xB6r\xC3\xBCnt\xC3\xBC y\xC3\xBCkle"
+regenerate: "k\xC3\xBC\xC3\xA7\xC3\xBCk resimler olu\xC5\x9Fturun"
+watch_checkbox: "G\xC3\xBCncellemeler \xC4\xB0\xC3\xA7in G\xC3\xB6zat\xC4\xB1n"
+survey_may_see_ratings: "Derecelendirmeler g\xC3\xB6r\xC3\xBClebilir mi?"
 Announcements: Duyurular
 wednesday: "\xC3\x87ar\xC5\x9Famba"
 include_full_checkbox: "tam g\xC3\xB6r\xC3\xBCnt\xC3\xBCye ba\xC4\x9Flant\xC4\xB1y\xC4\xB1 dahil et"
@@ -644,6 +727,7 @@ asset_page_description: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC, belge, hesap \xC3\xA7izel
 month_short_june: Haz
 incoming: Gelen
 announcement_page_description: Duyuru ekle.
+when_does_feature_expire: "Bu \xC3\xB6zelli\xC4\x9Fin s\xC3\xBCresi ne zaman biter?"
 activity_wall_message: "{author} {user} kullan\xC4\xB1c\xC4\xB1s\xC4\xB1na yazd\xC4\xB1: {message}"
 break_lock_button: "Kilitlemeyi Kald\xC4\xB1r"
 members: "\xC3\x9Cyeler"
@@ -654,12 +738,15 @@ no_tags: etiket yok
 insert_image_instructions: "Vikipedi metninin i\xC3\xA7ine eklemek i\xC3\xA7in g\xC3\xB6r\xC3\xBCnt\xC3\xBCye t\xC4\xB1klay\xC4\xB1n."
 activity_group_destroyed: "{group} taraf\xC4\xB1ndan kald\xC4\xB1r\xC4\xB1ld\xC4\xB1 {user}"
 contacts: "Aarkada\xC5\x9Flar"
+my_peers_explain: "Ortak bir grubu payla\xC5\x9Ft\xC4\xB1\xC4\x9F\xC4\xB1m kullan\xC4\xB1c\xC4\xB1lar"
+share_page_email: E-mail yoluyla bildir
 permission_denied_description: "Bu i\xC5\x9Flemi y\xC3\xBCr\xC3\xBCtmek i\xC3\xA7in yeterli izniniz yok."
 thing_settings: "{thing} Ayarlar\xC4\xB1"
 reset_password: "\xC5\x9Eifreyi S\xC4\xB1f\xC4\xB1rla"
 already_contacts_info: "Bu kullan\xC4\xB1c\xC4\xB1yla zaten arkada\xC5\x9Fs\xC4\xB1n\xC4\xB1z."
 profile_saved: Profiliniz kaydedildi.
 unfeature_button: "G\xC3\xB6sterimden kald\xC4\xB1r!"
+survey_page_description: "Ki\xC5\x9Filerin cevaplamas\xC4\xB1 i\xC3\xA7in bir dizi soru olu\xC5\x9Fturun."
 saved_new_order: Yeni talimat kaydedildi!
 mark_pages_as_featured_content_for_group: "Burada sayfalar\xC4\xB1 bu grubun g\xC3\xB6sterilen i\xC3\xA7eri\xC4\x9Fi olarak i\xC5\x9Faretleyebilirsiniz."
 me_search_link: Ara
@@ -668,8 +755,10 @@ my_groups: "Gruplar\xC4\xB1m"
 edit_tags_link: "D\xC3\xBCzenle"
 add_websites: Web Sitesi Ekle
 forgot_password_link: "\xC5\x9Eifremi unuttum"
+page_with_message: mesaj ile
 my_pending_tasks_link: Bekliyor
 group_discussion: "tart\xC4\xB1\xC5\x9Fma"
 insert_image_heading: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC Ekle"
+reset_password_text: "Merhaba, %s. E\xC4\x9Fer giri\xC5\x9Fte kulland\xC4\xB1\xC4\x9F\xC4\xB1n\xC4\xB1z \xC5\x9Fifrenizi unuttuysan\xC4\xB1z, buradan yeni bir tane ayarlayabilirsiniz."
 password_error_username: "yeterince iyi de\xC4\x9Fil, kullan\xC4\xB1c\xC4\xB1 ad\xC4\xB1n\xC4\xB1za dayan\xC4\xB1yor."
 image_title: "G\xC3\xB6r\xC3\xBCnt\xC3\xBC ba\xC5\x9Fl\xC4\xB1\xC4\x9F\xC4\xB1: %s"
