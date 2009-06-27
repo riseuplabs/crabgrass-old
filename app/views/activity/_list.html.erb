@@ -2,17 +2,7 @@
 <div class='activities'>
   <ul class='plain'>
     <% activities.each do |activity| -%>
-      <li class="small_icon <%=activity.icon%>_16">
-        <%= [
-          expand_links(
-            activity.description({
-              :view => self,
-              :current_user => (current_user if logged_in?)
-            })
-          ),
-          (friendly_date(activity.created_at) if activity.created_at)
-        ].compact.join(BULLET) %>
-      </li>
+      <%= display_activity(activity) %>
     <% end -%>
   </ul>
 </div>

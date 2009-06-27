@@ -4,10 +4,11 @@ class UnreadActivity < Activity
   validates_presence_of :subject_id
 
   alias_attr :user, :subject
-  alias_attr :unread_count, :extra
+  alias_attr :author, :object
+  alias_attr :unread_count, :key
 
   def validate_on_create
-    unless unread_count.to_i > 0
+    unless unread_count > 0
       errors.add("unread_count", "must be greater than zero")
     end
   end
@@ -17,7 +18,7 @@ class UnreadActivity < Activity
   before_validation_on_create :set_access
   def set_access
     self.access = Activity::PRIVATE
-    self.unread_count = user.relationships.sum('unread_count').to_s
+    self.unread_count = user.relationships.sum('unread_count') || 0
   end
 
   # We want to delete the other UnreadActivities even if we don't pass
@@ -30,11 +31,22 @@ class UnreadActivity < Activity
 
   public
 
-  def description(options={})
-    "You have {count} unread [private messages]"[:activity_unread, unread_count].sub(
-      /\[(.*)\]/,
-      options[:view].link_to('\1', options[:view].send(:conversations_path))
-    )
+  def description(view)
+    if unread_count == 1
+      str = "You have an unread [private message]"[:activity_unread_singular]
+      if author
+        link = view.send(:conversation_path, :id => author)
+      else
+        link = view.send(:conversations_path)
+      end
+    else
+      str = "You have {count} unread [private messages]"[:activity_unread, unread_count]
+      link = view.send(:conversations_path)
+    end
+
+    str.sub(/\[(.*)\]/) do |match|
+      view.link_to($1, link)
+    end
   end
 
   def created_at

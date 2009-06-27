@@ -142,13 +142,29 @@ module ApplicationHelper
     content_tag tag, text + span, :class => klass
   end
 
-  # converts span tags from a model (request or activity) and inserts links
-  def expand_links(text)
-    text.gsub(/<span class="user">(.*?)<\/span>/) do |match|
-      link_to_user($1)
-    end.gsub(/<span class="group">(.*?)<\/span>/) do |match|
-      link_to_group($1)
+  def expand_links(description)
+    description.gsub(/<span class="(.*?)">(.*?)<\/span>/) do |match|
+      case $1
+        when "user": link_to_user($2)
+        when "group": link_to_group($2)
+      end
     end
+  end
+
+  def display_activity(activity)
+    return unless activity
+
+    description = activity.safe_description(self)
+    return unless description
+
+    description = expand_links(description)
+
+    icon = activity.icon
+    created_at = (friendly_date(activity.created_at) if activity.created_at)
+    more_link = activity.link
+    more_link = content_tag(:span, more_link, :class => 'commands') if more_link
+    
+    content_tag :li, [description, more_link, created_at].compact.join(BULLET), :class => "small_icon #{icon}_16"
   end
 
   def side_list_li(options)

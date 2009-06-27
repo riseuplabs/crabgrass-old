@@ -16,7 +16,7 @@ class UserJoinedGroupActivity < Activity
   end
 
 
-  def description(options={})
+  def description(view=nil)
     "{user} has joined {group_type} {group}"[
       :activity_user_joined_group, {
         :user => user_span(:user),

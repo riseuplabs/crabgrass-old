@@ -7,7 +7,7 @@
 #
 class ConversationsController < ApplicationController
     
-  before_filter :login_required
+  before_filter :fetch_data, :login_required
   permissions :posts
 
   # GET /conversations
@@ -19,8 +19,8 @@ class ConversationsController < ApplicationController
   def show
     fetch_data
     @relationship.update_attributes(:viewed_at => Time.now, :unread_count => 0)
-    UnreadActivity.create(:user => current_user)
     @posts = @discussion.posts.paginate(:page => params[:page], :order => 'created_at DESC')
+    @last_post = @posts.first
   rescue Exception => exc
     flash_message_now :exception => exc
   end
@@ -31,6 +31,9 @@ class ConversationsController < ApplicationController
     @post = @discussion.posts.create do |post|
       post.body = params[:post][:body]
       post.user = current_user
+      post.type = "PrivatePost"
+      post.in_reply_to = Post.find_by_id(params[:in_reply_to_id])
+      post.recipient = @user
     end
     @discussion.increment_unread_for(@user)
     redirect_to conversation_path(:id => @user)
@@ -49,9 +52,11 @@ class ConversationsController < ApplicationController
   protected
 
   def authorized?
-    # the data we show here is keyed to current user, so it is impossible to do
-    # anything here which you should not be allowed to do.
-    true
+    if action?(:update)
+      may_create_private_message?(@user)
+    else
+      true
+    end
   end
 
   def fetch_data
@@ -68,8 +73,8 @@ class ConversationsController < ApplicationController
       person_context
       set_breadcrumbs([
         ['me', '/me'],
-        ['conversations', conversations_url],
-        [h(@user.display_name), url_for_user(@user)]
+        ['conversations', conversations_path],
+        [h(@user.display_name), conversation_path(:id => @user)]
       ])
     else
       me_context
