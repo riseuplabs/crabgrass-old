@@ -185,14 +185,6 @@ event3:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
-hello:
-  id: 205
-  title: hello
-  type: MessagePage
-<% updated = rand(46080); created = updated + rand(46080) %>
-  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
-  created_at: "<%= created.minutes.ago.to_s(:db) %>"
-
 delete_test: # also serves as flow test.
   id: 207
   title: delete test
@@ -218,22 +210,6 @@ wiki:
   updated_by_id: 3
   updated_by_login: gerrard
 <% updated = rand(46080); created = updated + rand(46080) %>
-  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
-  created_at: "<%= created.minutes.ago.to_s(:db) %>"
-
-message:
-  id: 220
-  title: test message
-  summary: Testing the MessagePageActivity
-  type: MessagePage
-  created_by_id: 3
-  created_by_login: gerrard
-  updated_by_id: 3
-  updated_by_login: gerrard
-  owner_type: User
-  owner_id: 3
-  owner_name: gerrard
-<% updated = rand(46); created = updated + rand(46) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
