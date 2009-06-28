@@ -9,12 +9,15 @@
 development:
   port: 3312
   address: localhost
+  morphology: stem_en
   
 test:
   port: 3313
   address: localhost
+  morphology: stem_en
 
 production:
   port: 3312
   address: localhost
+  morphology: stem_en
 
