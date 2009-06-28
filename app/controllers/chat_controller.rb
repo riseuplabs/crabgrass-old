@@ -12,6 +12,7 @@ class ChatController < ApplicationController
   permissions 'chat'
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user, :except => :index
+  append_before_filter :breadcrumbs
 
   # show a list of available channels
   def index
@@ -149,6 +150,7 @@ class ChatController < ApplicationController
   def breadcrumbs
     add_context 'chat', '/chat'
     add_context @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
+    @active_tab = :chat
   end
   
 end
