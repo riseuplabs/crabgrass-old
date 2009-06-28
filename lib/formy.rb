@@ -445,7 +445,7 @@ module Formy
 #    end
 
     class Row < Element
-      element_attr :info, :label, :input, :id, :style, :classes
+      element_attr :info, :label, :label_for, :input, :id, :style, :classes
   
       def open
         super
@@ -460,7 +460,7 @@ module Formy
           #labelspan = 2 if @label and not @input
           #inputspan = 2 if @input and not @label
           puts "<tr class='row #{parent.first} #{@classes}' id='#{@id}' style='#{@style}'>"
-          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>"
+          puts "<td colspan='#{labelspan}' class='label'><label for='#{@label_for}'>#{@label}</label></td>"
           if @input
             puts "<td colspan='#{inputspan}' class='input'>"
             puts @input
