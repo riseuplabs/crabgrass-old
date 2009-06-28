@@ -1,0 +1,39 @@
+<% hide_heading = false if hide_heading.nil? %>
+<% hide_profile = false if hide_profile.nil? %>
+
+<% unless hide_heading %>
+<h2 class='dim'><%= "Welcome to {site_title}, {user_name}!"[:welcome_heading, {:site_title => current_site.title, :user_name => current_user.display_name}] %></h2>
+<% end %>
+
+<p class='description'><%= "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."[:welcome_message] %> <%# link_to "More Information"[:more_information]+ARROW, :welcome_message_more_information_url.t %> </p>
+
+<table>
+<tr>
+
+  <td>
+    <h3 class='small_icon network_16'><%= link_to "Visit the network"[:welcome_visit_network_link], :controller => '/networks', :action => 'nil' %></h3>
+    <span><%= "Networks have the most recent and interesting information from the largest collection of people. Join up and explore."[:welcome_visit_network_text] %></span>
+  </td>
+
+  <td>
+    <h3 class='small_icon group_16'><%= link_to "Find groups"[:welcome_find_groups_link], :controller => '/groups', :action => nil %></h3>
+    <span><%= "Browse the group directory for groups to join."[:welcome_find_groups_text] %></span>
+  </td>
+
+</tr>
+
+<tr>
+
+  <td>
+    <h3 class='small_icon user_icon_16'><%= link_to "Upload a user icon"[:welcome_upload_icon_link], :controller => '/me', :action => 'edit', :id => nil %></h3>
+    <span><%= "Upload an image to use as your icon. This icon will appear next to every comment you make."[:welcome_upload_icon_text] %></span>
+  </td>
+
+  <td>
+    <h3 class='small_icon page_add_16'><%= link_to "Create a new page"[:welcome_create_page_link], :controller => '/pages', :action => 'create' %></h3>
+    <span><%= "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."[:welcome_create_page_text] %></span>
+  </td>
+
+</tr>
+</table>
+
