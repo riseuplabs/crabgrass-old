@@ -1,3 +1,13 @@
 private_profile: "Profil"
 contribute_content_link: Contribuer
+welcome_login_message: |
+Bienvenue sur la page de connection de Connecting Classrooms. Si vous ne possédez pas encore de compte d’utilisateur, merci de veiller à respecter le format suivant pour votre nom d’utilisateur. Il comprend votre prénom, les initiales de votre école et le nom de votre pays, chaque élément étant séparé du suivant par le signe “underscore”: (prénom_initialesdel’école_pays). Le respect de cette norme est très important et vous permettra d’être accepté par les groupes et les réseaux auxquels vous souhaitez vous joindre.
 
+welcome_message: |
+Bienvenue sur le programme Connecting Classrooms. Merci de vous être connecté! Vous pouvez visiter le réseau Alimentation & Agriculture pour voir les contributions des écoles participantes. (Si vous ne faites pas encore partie du réseau, c’est le moment d’ouvrir un compte d’utilisateur). Si vous rencontrez des difficultés, vous pouvez vous rendre sur le forum d’aide qui se trouve sur la page d’accueil du réseau. C’est le meilleur endroit pour poser vos questions. Si vous êtes un professeur ou un coordinateur, veuillez vérifier que vous faites bien partie du groupe des professeurs ou du groupe des coordéinateurs. Merci de votre travail et de votre enthousiasme!
+
+welcome_heading: "Bienvenue sur le programme Connecting Classrooms. Nous attendons vos contributions avec impatience."
+
+welcome_upload_icon_text: "Ajoutez une photo à votre profil. Attention: assurez-vous que votre visage est bien au milieu de l’image."
+welcome_find_groups_text: "Utilisez l’outil de recherche de groupes pour retrouver le groupe de votre école et explorez les pages d’autres classes dans le monde."
+welcome_create_page_link: "C’est grâce à la fonction de création d’une nouvelle page que vous pourrez faire des contributions. N’oubliez pas que ce travail de collaboration avec vos camarades de classe devra tous vous représenter."

@@ -1,2 +1,14 @@
 private_profile: "Profile"
 contribute_content_link: "Contribute"
+welcome_login_message: |
+Welcome to the Connecting Classrooms log in page. If you have not yet created an account, please remember that this program has a strict formula for the usernames of its members. Your username displays your first name, the initials of your school and the name of your country all separated by underscores: (firstname_schoolinitials_count ry). Please be sure to create an appropriate name, that is the way to ensure that you are accepted into the groups and networks that you wish to join.
+
+welcome_message: |
+Welcome to the Connecting Classrooms project. Thanks for logging in! Please visit the Food and Agriculture network to see all of the latest contributions from our participating schools. (If you haven’t joined the network yet, please do.) If you have any trouble, there is a help and support forum on the network home page. That is the best place for you to ask your questions. If you are a teacher or a coordinator, please make sure that you are in the teacher or coordinator groups. Thanks for all your hard work and enthusiasm!"
+
+welcome_heading: "Welcome to the Connecting Classrooms project. We look forward to your participation."
+
+welcome_upload_icon_text: "Please add your picture to your profile. Remember to have your face in the middle of the picture so that it displays clearly."
+welcome_find_groups_text: "Use the find groups tool to locate your school’s group and to explore the pages of other classes around the world."
+welcome_create_page_link: "The create a new page function is the way that you can make your contributions. Remember to do this work with your classmates in a way that represents you all."
+
