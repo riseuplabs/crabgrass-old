@@ -1,0 +1,167 @@
+/** standard scaffold **/
+
+body, p, ol, ul, td
+  :font-family verdana, arial, helvetica, sans-serif
+  :font-size   13px
+  :line-height 18px
+pre
+  :background-color #eee
+  :padding 10px
+  :font-size 11px
+a 
+  :color #000
+  &:visited
+    :color #666
+  &:hover
+    :text-decoration underline
+  &.active
+    :background #666
+    :color white
+.fieldWithErrors
+  :padding 2px
+  :background-color red
+  :display table
+.errorExplanation
+  :width 400px
+  :border 2px solid red
+  :padding 7px
+  :padding-bottom 12px
+  :margin-bottom 20px
+  :background-color #f0f0f0
+.errorExplanation h2
+  :text-align left
+  :font-weight bold
+  :padding 5px 5px 5px 15px
+  :font-size 12px
+  :margin -7px
+  :background-color #c00
+  :color #fff
+.errorExplanation p
+  :color #333
+  :margin-bottom 0
+  :padding 5px
+.errorExplanation ul li
+  :font-size 12px
+  :list-style square
+
+/**** super admin styles ****/
+
+body
+  :padding 5px
+table#container
+  :min-width 960px
+  :border-spacing 0px
+  :border-collapse collapse
+  :border solid 0.2em grey
+  :padding 0px
+#header
+  :color #999
+  :background-color lightgrey
+  :border solid 0.2em grey
+  :padding 0.2em
+  :padding-top 0.5em !important
+  :padding-left 0.5em !important
+  a
+    :text-decoration none
+    :color black
+    :font-weight normal
+    :hover
+      :text-decoration underline
+      :background none
+  h1
+    :font-size 1.5em
+    :margin 0
+    :padding 0
+.toplink
+  :float right
+  :padding 0.2em
+#navigation
+  :background-color lightgrey
+  :border 0.2em solid grey
+  :height 100%
+  :width 14.1em
+  :vertical-align top
+  :padding-right 0em
+  :padding-left 0em
+  h4
+    :margin-top 1em
+    :margin-bottom 0em
+    :padding-left 0.5em
+  ul.admin_nav
+    :list-style none
+    :margin 0em
+    :padding 0em
+    :width 100%
+    li
+      :list-style none
+      :margin 0px
+      :padding 0px
+      :padding-left 1em
+      :width 94.2%
+      :display block
+      &.active
+        :background white
+        :border-top 0.2em solid grey
+        :border-bottom 0.2em solid grey
+    a
+      :color black
+      :text-decoration none
+#content
+  :height 100%
+  :padding-top 1em
+  :padding-left 3em
+  :vertical-align top
+
+table
+  tr
+    th
+      :text-decoration underline
+      :font-weight normal
+      :text-align left
+      :font-size 1.1em
+      :padding-left 1em
+      :padding-right 1em
+    td
+      :line-height 1.7em
+      :padding-left 0.5em
+      :padding-right 1em
+      :vertical-align top
+      span.actions
+        :border solid 0.15em #333
+        :font-size 0.8em
+        :padding 0.3em
+        :margin 0.3em
+        a
+          :text-decoration none
+          :margin-right 0.5em
+    .row_0
+      :background #ddd
+    .row_1
+      :background #fff
+span.alphabetical_filter
+  :text-align center
+  a
+    :font-size 1.1em
+    :font-weight bold
+    :color #bbb
+    :text-decoration none
+  .alphabetical_filter_letter.inverted
+    :background #333
+    :color #ddd
+label
+  :font-weight bold
+  :text-align right
+table.form tr td input, table.form tr td select, table.form tr td textarea
+  :width 15em
+  :font-size 1em
+div#moderation_navigation
+  :border 1px solid grey
+  :padding 0.1em
+  :padding-left 1em
+  :padding-right 1em
+  :margin-bottom 1em
+ul.tabset
+  :list-style-type none
+  li
+    :display inline
+

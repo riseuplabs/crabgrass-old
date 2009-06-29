@@ -1,9 +1,9 @@
-class CustomAppearancesController < ApplicationController
-  stylesheet :custom_appearance
+class Admin::CustomAppearancesController < Admin::BaseController
+  stylesheet :custom_appearance, :admin
   javascript :extra
-  helper ColorPickerHelper
-#, Admin::UsersHelper, Admin::GroupsHelper, Admin::EmailBlastsHelper, Admin::AnnouncementsHelper, Admin::PagesHelper, Admin::PostsHelper
-  permissions 'custom_appearances'
+
+  helper ColorPickerHelper, Admin::UsersHelper, Admin::GroupsHelper, Admin::EmailBlastsHelper, Admin::AnnouncementsHelper, Admin::PagesHelper, Admin::PostsHelper, 'custom_appearances', 'admin/custom_appearances'
+  permissions 'admin/custom_appearances'
 
   before_filter :view_setup, :except => [:favicon, :available]
   before_filter :login_required, :except => [:favicon]
@@ -14,13 +14,13 @@ class CustomAppearancesController < ApplicationController
       current_site.create_custom_appearance
       current_site.save
     end
-    redirect_to edit_custom_appearance_url(current_site.custom_appearance)
+    redirect_to edit_admin_custom_appearance_url(current_site.custom_appearance)
   end
 
   # GET edit_custom_appearance_url
   def edit
-    #render :layout => 'admin'
-    @active = 'siteadmin_custom_appearances'
+    @admin_active_tab = 'custom_appearances_edit'
+    @active_tab = :admin
     render :layout => 'admin'
   end
 

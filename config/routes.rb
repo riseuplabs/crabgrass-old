@@ -18,6 +18,14 @@ ActionController::Routing::Routes.draw do |map|
   # optionally load these plugin routes, if they happen to be loaded
   map.from_plugin :super_admin rescue NameError
   map.from_plugin :gibberize   rescue NameError
+  
+  map.namespace :admin do |admin|
+    admin.resources :announcements
+    admin.resources :email_blasts
+    admin.resources :custom_appearances, :only => [:edit, :update]
+    admin.sites 'sites/:action', :controller => 'sites'
+    admin.root :controller  => 'base'
+  end
 
   ##
   ## ASSET
@@ -72,7 +80,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.login 'account/login',   :controller => 'account',   :action => 'login'
-  map.resources :custom_appearances, :only => [:edit, :update]
+  #map.resources :custom_appearances, :only => [:edit, :update]
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 
   map.connect '', :controller => 'root'
