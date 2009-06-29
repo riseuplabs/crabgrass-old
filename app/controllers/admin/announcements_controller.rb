@@ -1,6 +1,8 @@
 class Admin::AnnouncementsController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
+  permissions 'admin/announcements'
+  
   def index
     @pages = Page.paginate_by_path('descending/created_at', :page => params[:page], :flow => :announcement)
   end

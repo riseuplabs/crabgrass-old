@@ -13,6 +13,12 @@
   <li class="<%= 'active' if @admin_active_tab == 'sites_signup' %>">
     <%= link_to 'sign up', admin_sites_path(:action => 'signup') %>
   </li>
+  <li class="<%= 'active' if @admin_active_tab == 'announcements_new'%>">
+    <%= link_to 'create announcements', :controller => '/announcement_page', :action => 'create', :id => 'announcement' %>
+  </li>
+  <li class="<%= 'active' if @admin_active_tab == 'announcements_index'%>">
+    <%= link_to 'edit announcements', announcements_path %>
+  <li>
 </ul>
 
 <!-- <h4>Moderation</h4> -->

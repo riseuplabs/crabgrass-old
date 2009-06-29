@@ -1,24 +1,18 @@
 <h4>Superadmin</h4>
 <ul class="admin_nav">
-  <li class="<%= 'active' if @active == 'create_users'%>">
+  <li class="<%= 'active' if @admin_active_tab == 'users_new'%>">
     <%= link_to 'create users', new_admin_user_path %>
   </li>
-  <li class="<%= 'active' if @active == 'edit_users'%>">
+  <li class="<%= 'active' if @admin_active_tab == 'users_index'%>">
     <%= link_to 'edit users', users_path %>
   </li>
-  <li class="<%= 'active' if @active == 'create_groups'%>">
+  <li class="<%= 'active' if @admin_active_tab == 'groups_new'%>">
     <%= link_to 'create groups', new_group_path %>
   </li>
-  <li class="<%= 'active' if @active == 'edit_groups'%>">
+  <li class="<%= 'active' if @admin_active_tab == 'groups_index'%>">
     <%= link_to 'edit groups', groups_path %>
   </li>
-  <li class="<%= 'active' if @active == 'email_blasts'%>">
+  <li class="<%= 'active' if @admin_active_tab == 'email_blasts_index'%>">
     <%= link_to 'email blasts', email_blasts_path %>
   </li>
-  <li class="<%= 'active' if @active == 'create_announcements'%>">
-    <%= link_to 'create announcements', :controller => '/announcement_page', :action => 'create', :id => 'announcement' %>
-  </li>
-  <li class="<%= 'active' if @active == 'edit_announcements'%>">
-    <%= link_to 'edit announcements', announcements_path %>
-  <li>
 </ul>
