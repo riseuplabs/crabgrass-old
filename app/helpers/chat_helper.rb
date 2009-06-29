@@ -15,8 +15,7 @@ module ChatHelper
   end
   
   def scroll_conversation_script
-    %(if ($('conversation').scrollTop > $('conversation').scrollHeight - 1.5* $('conversation').clientHeight)
-        { $('conversation').scrollTop = $('conversation').scrollHeight - $('conversation').clientHeight; })
+    "$('conversation').scrollTop = $('conversation').scrollHeight;"
   end
   
   # this isn't working yet, but is more in the rails way, using JavascriptGenerator
@@ -28,7 +27,7 @@ module ChatHelper
   end
   
   def insert_message_script(message)
-    %(new Insertion.Bottom('stage', '#{escape_javascript message_content(message)}');)
+    %(new Insertion.Bottom('conversation', '#{escape_javascript message_content(message)}');)
   end
 
   def num_active_in_channel(group_id)
