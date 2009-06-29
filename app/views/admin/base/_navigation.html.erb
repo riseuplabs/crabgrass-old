@@ -1,33 +1,8 @@
 
-<!-- <h4>Superadmin</h4> -->
-<!-- <ul> -->
-<!--   <li class="<%= 'active' if @active == 'create_users'%>"> -->
-<!--     <%#= link_to 'create users', new_user_path %> -->
-<!--   </li> -->
-<!--   <li class="<%= 'active' if @active == 'edit_users'%>"> -->
-<!--     <%#= link_to 'edit users', users_path %> -->
-<!--   </li> -->
-<!--   <li class="<%= 'active' if @active == 'create_groups'%>"> -->
-<!--     <%#= link_to 'create groups', new_group_path %> -->
-<!--   </li> -->
-<!--   <li class="<%= 'active' if @active == 'edit_groups'%>"> -->
-<!--     <%#= link_to 'edit groups', groups_path %> -->
-<!--   </li> -->
-<!--   <li class="<%= 'active' if @active == 'email_blasts'%>"> -->
-<!--     <%#= link_to 'email blasts', email_blasts_path %> -->
-<!--   </li> -->
-<!--   <li class="<%= 'active' if @active == 'create_announcements'%>"> -->
-<!--     <%#= link_to 'create announcements', :controller => '/announcement_page', :action => 'create', :id => 'announcement' %> -->
-<!--   </li> -->
-<!--   <li class="<%= 'active' if @active == 'edit_announcements'%>"> -->
-<!--     <%#= link_to 'edit announcements', announcements_path %> -->
-<!--   </li> -->
-<!-- </ul> -->
-
 <h4>SiteAdmin</h4>
 <ul class="admin_nav">
   <li class="<%= 'active' if @admin_active_tab == 'sites_basic' %>">
-    <%= link_to 'basic', admin_sites_path(:action => 'basic')  %>
+    <%= link_to 'edit', admin_sites_path(:action => 'basic')  %>
   </li>
   <li class="<%= 'active' if @admin_active_tab == 'custom_appearances_edit' %>">
     <%= link_to 'custom appearence', admin_custom_appearances_path %>

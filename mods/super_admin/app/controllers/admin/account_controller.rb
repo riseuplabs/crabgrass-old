@@ -1,4 +1,6 @@
 class Admin::AccountController < Admin::BaseController
+  
+  permissions 'admin/super'
 
   # make an admin user assume the identity of another user
   def become

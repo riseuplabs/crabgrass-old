@@ -7,8 +7,9 @@ class Admin::BaseController < ApplicationController
   layout 'admin'
   
   stylesheet('admin')
-  
-  helper 'admin/users', 'admin/memberships', 'application', 'admin/custom_appearances'
+
+  helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', 'admin/custom_appearances', PageHelper, UrlHelper, ErrorHelper, LinkHelper, ApplicationHelper, TimeHelper
+
   
   before_filter :login_required
   before_filter :set_active_tab

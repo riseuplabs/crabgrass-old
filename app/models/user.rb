@@ -278,4 +278,5 @@ class User < ActiveRecord::Base
   # TODO: this does not belong here, should be in the mod, but it was not working
   # there.
   include UserExtension::SuperAdmin rescue NameError
+  include UserExtension::Moderator  rescue NameError
 end
