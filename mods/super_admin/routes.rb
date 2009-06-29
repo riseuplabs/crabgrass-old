@@ -18,8 +18,5 @@ map.namespace :admin do |admin|
   admin.resources :groups
   admin.resources :users
   admin.resources :memberships
-  # TODO: take these out into moderation mod
-  admin.resources :pages
-  admin.resources :posts
 end
 

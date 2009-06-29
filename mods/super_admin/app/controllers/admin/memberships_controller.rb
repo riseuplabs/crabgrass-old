@@ -1,6 +1,8 @@
 class Admin::MembershipsController < Admin::BaseController
   before_filter :find_membership, :except => :create
   before_filter :find_group_and_user, :only => :create
+  
+  permissions 'admin/super'
 
   def create
     if @group and @user
