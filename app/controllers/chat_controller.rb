@@ -93,6 +93,12 @@ class ChatController < ApplicationController
     render :partial => 'chat/userlist', :layout => false
   end
 
+  def leave_channel
+     user_leaves_channel(@user, @channel)
+     @channel_user.destroy
+     redirect_to :controller => :me, :action => :dashboard
+  end
+
   private
   
   # Get channel and user info that most methods use
