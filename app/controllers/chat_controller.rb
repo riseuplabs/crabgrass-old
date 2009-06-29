@@ -30,6 +30,7 @@ class ChatController < ApplicationController
     @channel_user.record_user_action :not_typing
     @messages = @channel.latest_messages
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
+    @html_title = Time.now.strftime('%Y.%m.%d')
   end
 
   # Post a user's message to a channel

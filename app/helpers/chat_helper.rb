@@ -1,7 +1,7 @@
 module ChatHelper
 
   def message_time_and_name(created_at, name)
-    %(<span class="time">#{created_at.strftime('%Y.%m.%d %R')}</span> <span class="sender">#{name}</span> )
+    %(<span class="time">#{created_at.strftime('%R')}</span> <span class="sender">#{name}</span> )
   end  
 
   def message_content(message)
@@ -11,7 +11,7 @@ module ChatHelper
   end
   
   def set_time_and_name_script
-    %(time_and_name = '#{message_time_and_name(Time.zone.now, @user.name)}';)
+    %(time_and_name = '#{message_time_and_name(Time.now, @user.name)}';)
   end
   
   def scroll_conversation_script
