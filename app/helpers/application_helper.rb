@@ -106,7 +106,7 @@ module ApplicationHelper
   # Default pagination link options:
   # 
   #   :class        => 'pagination',
-  #   :prev_label   => '&laquo; Previous',
+  #   :previous_label   => '&laquo; Previous',
   #   :next_label   => 'Next &raquo;',
   #   :inner_window => 4, # links around the current page
   #   :outer_window => 1, # links around beginning and end
@@ -119,9 +119,9 @@ module ApplicationHelper
   #
   def pagination_links(things, options={})
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :prev_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next]}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next]}
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
     end
     will_paginate(things, defaults.merge(options))
   end
@@ -142,13 +142,29 @@ module ApplicationHelper
     content_tag tag, text + span, :class => klass
   end
 
-  # converts span tags from a model (request or activity) and inserts links
-  def expand_links(text)
-    text.gsub(/<span class="user">(.*?)<\/span>/) do |match|
-      link_to_user($1)
-    end.gsub(/<span class="group">(.*?)<\/span>/) do |match|
-      link_to_group($1)
+  def expand_links(description)
+    description.gsub(/<span class="(.*?)">(.*?)<\/span>/) do |match|
+      case $1
+        when "user": link_to_user($2)
+        when "group": link_to_group($2)
+      end
     end
+  end
+
+  def display_activity(activity)
+    return unless activity
+
+    description = activity.safe_description(self)
+    return unless description
+
+    description = expand_links(description)
+
+    icon = activity.icon
+    created_at = (friendly_date(activity.created_at) if activity.created_at)
+    more_link = activity.link
+    more_link = content_tag(:span, more_link, :class => 'commands') if more_link
+    
+    content_tag :li, [description, more_link, created_at].compact.join(BULLET), :class => "small_icon #{icon}_16"
   end
 
   def side_list_li(options)

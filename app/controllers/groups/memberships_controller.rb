@@ -37,8 +37,8 @@ class Groups::MembershipsController < Groups::BaseController
     redirect_to url_for_group(@group)
   end
   
-  # used only in the special case when you have admin access to a group that you
-  # are not yet directly a member of.
+  # used when you have admin access to a group that you
+  # or when this is an open group
   def join
     @group.add_user!(current_user)
     redirect_to url_for_group(@group)

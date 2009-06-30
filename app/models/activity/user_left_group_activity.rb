@@ -1,5 +1,5 @@
 class UserLeftGroupActivity < UserJoinedGroupActivity
-  def description(options={})
+  def description(view=nil)
     "{user} has left {group_type} {group}"[
        :activity_user_left_group, {
          :user => user_span(:user),

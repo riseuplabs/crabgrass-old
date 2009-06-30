@@ -27,22 +27,22 @@ class MessageWallActivity < Activity
     self.access = Activity::PUBLIC
   end
 
-  def description(options={})
-    commands = []
+  def description(view=nil)
     if extra[:type] == "status"
       txt = '{user} {message}' % {:user => user_span(:author), :message => extra[:snippet]}
     else
       txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_span(:user), :author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
     end
     if txt[-3..-1] == '...'
-      commands << content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
+      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
     else
-      commands << content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
+      @link = content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
     end
-    #if options[:current_user] and options[:current_user].id == user_id
-    #  commands << content_tag(:a, 'delete'[:delete], :href => "/messages/#{user_id}/destroy/#{post_id}")
-    #end
-    txt + BULLET + content_tag(:span, commands.join(BULLET), :class => 'commands')
+    return txt
+  end
+
+  def link
+    @link
   end
 
   def icon

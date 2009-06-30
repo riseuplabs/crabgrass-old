@@ -25,7 +25,9 @@ module AuthenticatedSystem
   protected 
 
     def update_last_seen_at(user_id)
-      User.update_all ['last_seen_at = ?', Time.now], ['id = ?', user_id] 
+      # we are caching these and only writing every other minute.
+      Tracking.saw_user(user_id)
+      #User.update_all ['last_seen_at = ?', Time.now], ['id = ?', user_id]
       #current_user.last_seen_at = Time.now
     end
     

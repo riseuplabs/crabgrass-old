@@ -12,6 +12,7 @@ class ChatController < ApplicationController
   permissions 'chat'
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user, :except => :index
+  append_before_filter :breadcrumbs
 
   # show a list of available channels
   def index
@@ -29,6 +30,7 @@ class ChatController < ApplicationController
     @channel_user.record_user_action :not_typing
     @messages = @channel.latest_messages
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
+    @html_title = Time.now.strftime('%Y.%m.%d')
   end
 
   # Post a user's message to a channel
@@ -91,6 +93,12 @@ class ChatController < ApplicationController
     render :partial => 'chat/userlist', :layout => false
   end
 
+  def leave_channel
+     user_leaves_channel(@user, @channel)
+     @channel_user.destroy
+     redirect_to :controller => :me, :action => :dashboard
+  end
+
   private
   
   # Get channel and user info that most methods use
@@ -149,6 +157,7 @@ class ChatController < ApplicationController
   def breadcrumbs
     add_context 'chat', '/chat'
     add_context @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
+    @active_tab = :chat
   end
   
 end

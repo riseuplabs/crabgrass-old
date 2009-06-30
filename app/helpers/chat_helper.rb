@@ -1,7 +1,7 @@
 module ChatHelper
 
   def message_time_and_name(created_at, name)
-    %(<span class="time">#{created_at.strftime('%Y.%m.%d %R')}</span> <span class="sender">#{name}</span> )
+    %(<span class="time">#{created_at.strftime('%R')}</span> <span class="sender">#{name}</span> )
   end  
 
   def message_content(message)
@@ -11,12 +11,11 @@ module ChatHelper
   end
   
   def set_time_and_name_script
-    %(time_and_name = '#{message_time_and_name(Time.zone.now, @user.name)}';)
+    %(time_and_name = '#{message_time_and_name(Time.now, @user.name)}';)
   end
   
   def scroll_conversation_script
-    %(if ($('conversation').scrollTop > $('conversation').scrollHeight - 1.5* $('conversation').clientHeight)
-        { $('conversation').scrollTop = $('conversation').scrollHeight - $('conversation').clientHeight; })
+    "$('conversation').scrollTop = $('conversation').scrollHeight;"
   end
   
   # this isn't working yet, but is more in the rails way, using JavascriptGenerator
@@ -28,7 +27,7 @@ module ChatHelper
   end
   
   def insert_message_script(message)
-    %(new Insertion.Bottom('stage', '#{escape_javascript message_content(message)}');)
+    %(new Insertion.Bottom('conversation', '#{escape_javascript message_content(message)}');)
   end
 
   def num_active_in_channel(group_id)

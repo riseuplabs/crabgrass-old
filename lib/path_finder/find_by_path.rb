@@ -44,7 +44,7 @@ module PathFinder
     private
 
     def builder(path, options)
-      query_method  = resolve_method(options)
+      query_method  = options[:method] || :mysql
       query_options = resolve_options(query_method, path, options)
       PathFinder.get_builder(query_method).new(path, query_options)
     end
@@ -58,13 +58,13 @@ module PathFinder
       end
     end
 
-    def resolve_method(options)
-      options[:method] ||= :mysql
-      if !ThinkingSphinx.updates_enabled? and options[:method] == :sphinx
-        options[:method] = :mysql
-      end
-      options[:method]
-    end
+    #def resolve_method(options)
+    #  options[:method] ||= :mysql
+    #  if !ThinkingSphinx.updates_enabled? and options[:method] == :sphinx
+    #    options[:method] = :mysql
+    #  end
+    #  options[:method]
+    #end
 
   end # FindByPath
 end # PathFinder

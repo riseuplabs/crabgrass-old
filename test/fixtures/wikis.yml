@@ -10,17 +10,28 @@ second:
   
 multi_section:
   id: 3
-  version: 1
+  version: 3
   body: |-
-    h2. section one
-       
+    h1. Top Oversection
+    
+    
+    section one
+    -----------
+    
     s1 text 1
     s1 text 2
     
     h2. section two
     
+    h3. subsection for section two
+    
     s2 text #1
     s2 more text
+    
+    h3. a blank subsection. just the title
+    
+    Second Oversection
+    =================
     
     h2. section three
     

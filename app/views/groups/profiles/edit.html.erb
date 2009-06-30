@@ -6,6 +6,7 @@
     f.heading "Information"[:information]
     f.row do |r|
       r.label "Summary"[:summary]
+      r.label_for 'profile_summary'
       r.input text_area('profile', 'summary', :rows => 5, :cols => 40)
     end
     if @profile.summary_html.any?
@@ -16,6 +17,7 @@
     end
     f.row do |r|
       r.label "Location"[:location]
+      r.label_for 'profile_place'
       r.input text_field('profile', 'place')
     end
     f.heading "Photo"[:photo]
@@ -26,15 +28,18 @@
     else
       f.row do |r|
         r.label "File"[:file]
-        r.input file_field_tag('profile[photo][uploaded_data]')
+        r.label_for 'profile_photo_uploaded_data'
+        r.input file_field_tag('profile[photo][uploaded_data]', :id => 'profile_photo_uploaded_data')
       end
       f.row do |r|
         r.label "Caption"[:caption]
-        r.input text_field_tag('profile[photo][caption]', '')
+        r.label_for 'profile_photo_caption'
+        r.input text_field_tag('profile[photo][caption]', '', :id => 'profile_photo_caption')
       end
       f.row do |r|
         r.label "Photo Credit"[:photo_credit]
-        r.input text_field_tag('profile[photo][credit]', '')
+        r.label_for 'profile_photo_photo'
+        r.input text_field_tag('profile[photo][credit]', '', :id => 'profile_photo_photo')
       end      
     end
     f.heading "Video"[:media_video]
@@ -47,15 +52,18 @@
     end
     f.row do |r|
       r.label "Embed"[:video_embed]
-      r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40)
+      r.label_for 'profile_video_media_embed'
+      r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40, :id => 'profile_video_media_embed')
     end
     f.row do |r|
       r.label "Height"[:height]
-      r.input text_field_tag('profile[video][height]', video.height)
+      r.label_for 'profile_video_height'
+      r.input text_field_tag('profile[video][height]', video.height, :id => 'profile_video_height')
     end
     f.row do |r|
       r.label "Width"[:width]
-      r.input text_field_tag('profile[video][width]', video.width)
+      r.label_for 'profile_video_width'
+      r.input text_field_tag('profile[video][width]', video.width, :id => 'profile_video_width')
     end      
   end %>
   <p class="form_buttons"><%= submit_tag "Save"[:save_button], :name => 'save' %></p>

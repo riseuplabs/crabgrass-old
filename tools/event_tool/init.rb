@@ -6,7 +6,7 @@ PageClassRegistrar.add(
   :model => 'Event',
   :icon => 'date',
   :class_group => 'planning',
-  :order => 120
+  :internal => true
 )
 
 #self.override_views = true

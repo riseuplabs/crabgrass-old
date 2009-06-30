@@ -45,6 +45,12 @@ complete = "eval(request.responseText)"
 </table>
 <% end -%>
 
+<p>
+<% form_tag(:action => :leave_channel, :id => @channel) do %>
+  <input type='submit' value='<%= "Leave channel"[:leave_channel] %>' />
+<% end %>
+</p>
+
 <%= # update the user list
 wait_time = 4
 periodically_call_remote(:url => { :controller => 'chat',

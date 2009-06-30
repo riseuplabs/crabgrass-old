@@ -5,7 +5,8 @@
   else
     form.row do |r|
       r.label "Page Owner (optional)"[:page_create_owner]
-      r.input select_tag('page[owner]', options_for_page_owner(:include_me => true))
+      r.label_for 'page_owner'
+      r.input select_tag('page[owner]', options_for_page_owner(:include_me => true), :id => 'page_owner')
       r.info help(:page_owner)
     end
   end

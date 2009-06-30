@@ -31,4 +31,17 @@ class BasePage::TitleControllerTest < Test::Unit::TestCase
     assert_equal "new-name", Page.find(1).name
   end
 
+  def test_update_name
+    login_as(:blue)
+    page = Page.find(42)
+    assert groups(:rainbow).may?(:admin, page)
+    assert page.groups.include? groups(:rainbow)
+
+    assert_equal 42, groups(:rainbow).pages.find_by_id(42).id
+
+    post :update, :page_id => 42, :page => {:name => 'a shoe horn with teeth', :title => page.title}, :save => true
+
+    assert_equal 42, groups(:rainbow).pages.find_by_name('a-shoe-horn-with-teeth').id
+  end
+
 end

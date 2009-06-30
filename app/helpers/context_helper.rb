@@ -44,11 +44,15 @@ module ContextHelper
     @context << [text,url]
   end
 
-  def add_breadcrumb(text, url)
-    @breadcrumbs ||= []
-    @breadcrumbs << [text,url]
-  end
+  ##def add_breadcrumb(text, url)
+  ##  @breadcrumbs ||= []
+  ##  @breadcrumbs << [text,url]
+  ##end
   
+  def set_breadcrumbs(hash)
+    @breadcrumbs = hash.to_a
+  end
+
   def set_banner(partial, style)
     @banner = render_to_string :partial => partial
     @banner_style = style
@@ -109,7 +113,7 @@ module ContextHelper
 
   def person_context(size='large', update_breadcrumbs=true)
     @active_tab = :people
-    add_context 'people'.t, people_url
+    add_context "People"[:people], people_url
     if @user
       add_context @user.display_name, url_for_user(@user, :action => 'show')
       set_banner "person/banner_#{size}", @user.banner_style

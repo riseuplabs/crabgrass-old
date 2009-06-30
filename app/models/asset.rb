@@ -295,23 +295,23 @@ class Asset < ActiveRecord::Base
   # if attributes[:page] is given, an AssetPage is created with the given 
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
-  def self.make(attributes = nil)
+  def self.make(attributes = nil, &block)
     begin
-      return self.make!(attributes)
+      return self.make!(attributes, &block)
     rescue Exception => exc
       return nil
     end
   end
   
-  def self.make!(attributes = nil)
+  def self.make!(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.create!(attributes)
+    asset_class.create!(attributes, &block)
   end
 
   # like make(), but builds the asset in memory and does not save it.
-  def self.build(attributes = nil)
+  def self.build(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.new(attributes)
+    asset_class.new(attributes, &block)
   end
   
   # eg: 'image/jpg' --> ImageAsset
@@ -359,6 +359,11 @@ class Asset < ActiveRecord::Base
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
   # download_gallery action to find out if it's cached zips are up to date.
+  #
+  # hmm... i don't think this is a good idea. it will result in the Gallery page
+  # being marked as updated in the recent pages feed, even when it has not been.
+  # -elijah
+  #
   def update_galleries
     if galleries.any?
       galleries.each { |g| g.save }

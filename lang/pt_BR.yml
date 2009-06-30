@@ -39,15 +39,6 @@ add_location: Adicionar Local
 share_page_recipients: Partilhar este {page_class} com
 saturday: "s\xC3\xA1bado"
 group_information: "Informa\xC3\xA7\xC3\xA3o do :group_type"
-welcome_text: "*Bem-vindo/a*\r\n\
-  \r\n\
-  Ol\xC3\xA1! Esta \xC3\xA9 uma breve introdu\xC3\xA7\xC3\xA3o para novos usu\xC3\xA1rios. Da pr\xC3\xB3xima vez que voc\xC3\xAA entrar, voc\xC3\xAA ir\xC3\xA1 direto para [your dashboard -> /me/dashboard] que ser\xC3\xA1 um espa\xC3\xA7o frio e solit\xC3\xA1rio enquanto voc\xC3\xAA n\xC3\xA3o fa\xC3\xA7a parte de grupos e estabele\xC3\xA7a contatos.\r\n\
-  \r\n\
-  Portanto, o melhor que voc\xC3\xAA pode fazer como novo usu\xC3\xA1rio \xC3\xA9 criar um grupo ou entrar em um. Para isso, v\xC3\xA1 ao [group directory -> /groups] e clique em \"criar um novo grupo\" ou no grupo do qual voc\xC3\xAA quer fazer parte e encontre o link \"entrar no grupo\".\r\n\
-  \r\n\
-  Assim que seu pedido \xC3\xA9 aceito, voc\xC3\xAA pode carregar ativos, gerar listas de  tarefas, discuss\xC3\xB5es, wikis, pesquisas de opini\xC3\xA3o e mensagens para se comunicar, colaborar, e realizar coisas com no \xC3\xA2mbito do grupo. Como qualquer outra plataforma nova, voc\xC3\xAA ter\xC3\xA1 de se familiarizar com o fluxo de trabalho. Para ajudar a responder perguntas como qual \xC3\xA9 a diferen\xC3\xA7a entre a caixa de entrada e o painel, visite as [help pages -> /crabgrass/table-of-contents].\r\n\
-  \r\n\
-  O desenvolvimento \xC3\xA9 conduzido pelo feedback dos usu\xC3\xA1rios, portanto, [join -> /users] o grupo de feedback dos usu\xC3\xA1rios e participe clicando no link \"envolva-se\" no fim de cada p\xC3\xA1gina.\r\n"
 prev_change: "mudan\xC3\xA7a anterior"
 delete: Eliminar
 share_page_recipients_sections: Escolha dentre seus grupos ou amigos
@@ -77,9 +68,9 @@ signup_title: Crie sua conta
 menu_chat: Bate-Papo
 user: "Usu\xC3\xA1rio"
 image_count_total: ":count Fotos"
-contribute_content_link: Contribuir
 page_locked_header: "P\xC3\xA1gina bloqueada"
 all_page_types: "todos os tipos de p\xC3\xA1ginas"
+contribute_content_link: Contribuir
 media_document: Documento
 activity_user_left_group: "{user} abandonou o {group} {group_type} "
 collection: "cole\xC3\xA7\xC3\xA3o"

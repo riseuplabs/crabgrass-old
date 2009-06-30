@@ -47,15 +47,6 @@ add_location: "Ort hinzuf\xC3\xBCgen"
 friends: Freunde
 prev_change: "Letzte \xC3\x84nderung"
 saturday: Samstag
-welcome_text: "*Willkommen*\r\n\
-  \r\n\
-  Hallo. Das ist eine kurze Einf\xC3\xBChrung f\xC3\xBCr neue BenutzerInnen. Beim n\xC3\xA4chsten Mal einloggen wirst du bei [deiner \xC3\x9Cbersicht -> /me/dashboard] landen, welche aber kalt und leer bleiben wird, bis du dich Gruppen anschlie\xC3\x9Ft und Kontakte kn\xC3\xBCpfst.\r\n\
-  \r\n\
-  Also, das beste was du als neueR BenutzerIn machen kannst, ist eine neue Gruppe zu gr\xC3\xBCnden oder dich einer bestehenden Gruppe anzuschlie\xC3\x9Fen. Um das zu machen, gehe zur [Gruppen\xC3\xBCbersicht -> /groups] and klicke entweder \"Erstelle eine neue Gruppe\" oder klicke auf die Gruppe, welcher du dich anschlie\xC3\x9Fen willst - dort dr\xC3\xBCcke dann \"Anschlie\xC3\x9Fen\".\r\n\
-  \r\n\
-  Sobald deine Anfrage akzeptiert ist kannst du Dateien hochladen, Aufgabenlisten erstellen, Wikis bearbeiten, Umfragen ins Leben rufen und Nachrichten erzeugen zum Kommunizieren, oder sonst irgendwie innerhalb der Gruppe mitarbeiten. Wie bei jeder neuen Platform wirst du dich auch hier erst einarbeiten m\xC3\xBCssen. Wenn du Fragen hast, wie zum Beispiel was der Unterschied zwischen dem Eingang und der \xC3\x9Cbersicht ist, kannst du bei den [Hilfeseiten -> /crabgrass/table-of-contents] nachsehen.\r\n\
-  \r\n\
-  Die Entwicklung wird vom BenutzerInnenfeedback vorangetrieben, also bitte [schlie\xC3\x9Fe -> /users] dich der BenutzerInnenfeedbackgruppe an und beteilige dich, indem du auf den \"Mitmachen\"-Link am unterem Ende jeder Seite klickst.\r\n"
 share_page_recipients: Teile diese {page_class} mit
 group_information: ":group_type Information"
 wiki_lost_text_confirmation: Aller ungesicherter Text wird verlohren gehen. Bist du Dir sicher?
@@ -159,7 +150,6 @@ edit_featured_content_for_group: "Ausgew\xC3\xA4hlte Inhalte von :group_name bea
 move_image_right: Bild nach rechts verschieben
 download: Herunterladen
 all_groups: alle Gruppen
-welcome_login_message: willkommen login meldung
 save_button: Speichern
 pagination_previous: "zur\xC3\xBCck"
 committees: Arbeitsgruppen

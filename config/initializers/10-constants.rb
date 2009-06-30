@@ -21,6 +21,16 @@ MEDIA_TYPE = {
   :document => 4
 }.freeze
 
+# enum of actions for tracking
+ACTION = {
+  :view => 1,
+  :edit => 2,
+  :star => 3,
+  :unstar => 4,
+  :comment => 5, # not used yet
+  :share => 6 # not used yet
+}.freeze
+
 ARROW = " &raquo; "
 BULLET = " &bull; "
 RARROW = " &raquo; "

@@ -18,7 +18,7 @@ class TwinkledActivity < Activity
     self.access = Activity::PRIVATE
   end
 
-  def description(options={})
+  def description(view=nil)
     '{user} has starred your post "{post}"'[
        :activity_twinkled, 
        {:user => user_span(:twinkler), :post => post_span(post)}

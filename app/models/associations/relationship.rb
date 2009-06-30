@@ -18,6 +18,10 @@ class Relationship < ActiveRecord::Base
       self.discussion_id = disc.id
     else
       disc = self.create_discussion
+      if mirror_twin
+        mirror_twin.discussion = disc
+        mirror_twin.save if !mirror_twin.new_record?
+      end
     end
     self.save unless self.new_record?
     return disc
