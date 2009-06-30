@@ -1,0 +1,8 @@
+<% if @groups.any? %>
+  <%= render :partial => 'group', :collection => @groups %>
+<% else %>
+  <p><%= "No Results"[:no_search_results] %></p>
+<% end %>
+
+
+
