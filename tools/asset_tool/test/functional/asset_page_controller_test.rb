@@ -36,13 +36,11 @@ class AssetPageControllerTest < ActionController::TestCase
     get 'create', :id => AssetPage.param_id
 
     assert_no_difference 'Asset.count' do
-      post 'create', :id => AssetPage.param_id, :page => {:title => 'test'}, :asset => {:uploaded_data => ""}
-      assert_equal 'error', flash[:type], "shouldn't be able to create an asset page with no asset"
-    end
+      assert_no_difference 'Page.count' do
 
-    assert_no_difference 'Page.count' do
-      post 'create', :id => AssetPage.param_id, :page => {:title => 'test'}, :asset => {:uploaded_data => ""}
-      assert_equal 'error', flash[:type], "shouldn't be able to create an asset page with no asset"
+        post 'create', :id => AssetPage.param_id, :page => {:title => 'test'}, :asset => {:uploaded_data => ""}
+        assert_equal 'error', flash[:type], "shouldn't be able to create an asset page with no asset"
+      end
     end
     
     assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do
