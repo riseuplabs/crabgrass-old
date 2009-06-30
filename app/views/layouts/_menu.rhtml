@@ -7,9 +7,9 @@
         <span class="topnav"><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
       </li>
     <%- end -%>
-    <li id='menu_me' class='<%= @active_tab == :me ? 'active' : '' %>'>
+    <li id='menu-me' class='<%= @active_tab == :me ? 'active' : '' %>'>
       <span class="topnav"><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
-      <ul class="menu_dashboard selfclear">
+      <ul class="menu_dashboard selfclear" style="display: none">
         <li class="leftcol">
           <ul class="side_list">
             <li class="small_icon home_16"><a href="/me/dashboard">Dashboard</a></li>
@@ -39,9 +39,9 @@
   <%# for now, i am disabling these tabs when not logged in. why? because
       the controllers currently bomb out in bad ways if you are not logged in. %>
   <%- if logged_in? -%>
-  <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
+  <li id='menu-people' class='<%= @active_tab == :people ? 'active' : '' %>'>
     <span class="topnav"><%= link_to_active "People"[:menu_people], people_url(:action => :friends), @active_tab == :people %></span>
-    <ul class="people_dashboard selfclear">
+    <ul class="people_dashboard selfclear" style="display: none">
       <li>
          <h3 class="dim">Friends <span>• <a href="#">More »</a></span></h3>
          <div class="people_list selfclear">
@@ -51,10 +51,11 @@
     </ul>
   </li>
 
-  <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
+  <li id='menu-groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
-    <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %></span>
-    <ul class="groups_dashboard selfclear">
+    <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %>
+    </span>
+    <ul class="groups_dashboard selfclear" style="display: none">
       <li class="leftcol">
         <ul>
           <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
@@ -74,10 +75,10 @@
   </li>
 
   <%- if current_site.has_networks? -%>
-    <li id='menu_networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
+    <li id='menu-networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
       <% url = logged_in? ? network_directory_url(:action => :my) : network_directory_url %>
       <span class="topnav"><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
-      <ul class="networks_dashboard selfclear">
+      <ul class="networks_dashboard selfclear" style="display: none">
          <li>
            <ul>
              <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>

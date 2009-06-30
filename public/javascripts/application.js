@@ -165,3 +165,42 @@ function activateLocationHash(default_hash) {
     }
   }
 }
+
+/** menu navigation **/
+var SubMenu = Class.create({
+  initialize: function(li) {
+    this.show_timeout = null;
+    this.hide_timeout = null;
+    if(!$(li)) return;
+    this.trigger = $(li);
+    if(!this.trigger) return;
+    this.menu = $(li).down('ul');
+    if(!this.menu) return;
+    this.trigger.observe('mouseover', this.showMenu.bind(this));
+    this.trigger.observe('mouseout', this.hideMenu.bind(this));
+    //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
+  },
+
+  showMenu: function(event) {
+    event.stop();
+    $$('ul.submenu').without(this.menu).invoke('hide');
+    if (this.hide_timeout) window.clearTimeout(this.hide_timeout);
+    this.show_timeout = Element.show.delay(.3,this.menu);
+  },
+
+  hideMenu: function(event) {
+    event.stop();
+    $$('ul.submenu').without(this.menu).invoke('hide');
+    if (this.show_timeout) window.clearTimeout(this.show_timeout);
+    this.hide_timeout = Element.hide.delay(.3, this.menu);
+  }
+
+});
+
+
+document.observe('dom:loaded', function() {
+  new SubMenu("menu-me");
+  new SubMenu("menu-people");
+  new SubMenu("menu-groups");
+  new SubMenu("menu-networks");
+});
