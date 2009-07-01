@@ -166,7 +166,10 @@ function activateLocationHash(default_hash) {
   }
 }
 
-/** menu navigation **/
+//
+// TOP MENUS
+//
+
 var SubMenu = Class.create({
   initialize: function(li) {
 //    this.show_timeout = null;
@@ -182,15 +185,24 @@ var SubMenu = Class.create({
     //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
   },
  
+  menuIsOpen: function() {
+    return($$('ul.submenu').detect(function(e){return e.visible()}) != null);
+  },
+
   clearEvents: function(event) {
     event.stop();
     $$('ul.submenu').without(this.menu).invoke('hide');
   },
 
   showMenu: function(event) {
-    this.clearEvents(event);
     if (this.timeout) window.clearTimeout(this.timeout);
-    this.timeout = Element.show.delay(.3,this.menu);
+    if (this.menuIsOpen()) {
+      Element.show(this.menu);
+      this.clearEvents(event);
+    } else {
+      this.timeout = Element.show.delay(.3,this.menu);
+      this.clearEvents(event);
+    }
   },
 
   hideMenu: function(event) {
