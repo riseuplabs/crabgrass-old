@@ -35,7 +35,7 @@ class BasePage::TitleControllerTest < Test::Unit::TestCase
     login_as(:blue)
     page = Page.find(42)
     assert groups(:rainbow).may?(:admin, page)
-    assert page.groups.include? groups(:rainbow)
+    assert page.groups.include?(groups(:rainbow))
 
     assert_equal 42, groups(:rainbow).pages.find_by_id(42).id
 
