@@ -3,7 +3,10 @@
   <li class="<%= 'active' if @admin_active_tab == 'page_moderation'%>">
     <%= link_to 'page moderation', pages_path %>
   </li>
-  <li class="<%= 'active' if @admin_active_tab == 'post_moderation'%>">
-    <%= link_to 'post moderation', posts_path %>
+  <li class="<%= 'active' if @admin_active_tab == 'page_post_moderation' %>">
+    <%= link_to 'page post moderation', admin_discussion_posts_path %>
+  </li>
+  <li class="<%= 'active' if @admin_active_tab == 'wall_post_moderation' %>">
+    <%= link_to 'wall post moderation', admin_wall_posts_path %>
   </li>
 </ul>

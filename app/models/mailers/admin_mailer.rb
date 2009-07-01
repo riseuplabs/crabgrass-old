@@ -1,5 +1,4 @@
 class AdminMailer < Mailer
- 
   def blast(user, options)
     setup(options)
     setup_user(user)
@@ -24,5 +23,5 @@ class AdminMailer < Mailer
     @sent_on      = Time.now
     @body[:user]  = user
   end
-  
+
 end

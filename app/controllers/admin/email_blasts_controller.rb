@@ -1,6 +1,8 @@
 class Admin::EmailBlastsController < Admin::BaseController
   verify :method => :post, :only => [:blast]
   
+  permissions 'admin/email_blasts'
+  
   def index  
   end
   
