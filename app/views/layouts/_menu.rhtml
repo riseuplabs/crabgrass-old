@@ -41,16 +41,18 @@
   <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
     <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
-
-    <% if logged_in? and current_user.may?(:admin, current_site) -%>
-      <li id='menu_people' class='<%= @active_tab == :admin ? 'active' : '' %>'>
-        <span><%= link_to_active "Admin"[:menu_admin], { :controller => 'admin/base' }, @active_tab == :admin %></span>
-      </li>
-    <% end -%>
-
   <%- end -%>
 
+  <% if logged_in? and current_user.may?(:admin, current_site) -%>
+    <li id='menu_admin' class='<%= @active_tab == :admin ? 'active' : '' %>'>
+      <span><%= link_to_active "Admin"[:menu_admin], { :controller => 'admin/base' }, @active_tab == :admin %></span>
+    </li>
+  <% end -%>
+
   <%= call_hook :top_menu %>
+
+
+
 </ul>
 <div style='clear: both;'></div>
 </div>

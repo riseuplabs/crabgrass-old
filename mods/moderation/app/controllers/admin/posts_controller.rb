@@ -1,21 +1,25 @@
 class Admin::PostsController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
+  permissions 'admin/moderation'
+  
   def index
     view = params[:view] || 'all'
     @current_view = view
     if view == 'all'
-      @posts = Post.paginate :page => params[:page], :order => 'updated_at DESC'
+      options = { :order => 'updated_at DESC' }
     elsif %w(new pending).include?(view)
       # all posts that have been flagged as inappropriate have not had any admin action yet.
-      @posts = Post.paginate :page => params[:page], :conditions => ['(vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC'
+      options = { :conditions => ['(vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC' }
     elsif view == 'vetted'
       # all posts that have been marked as vetted by an admin (and are not deleted)
-      @posts = Post.paginate :page => params[:page], :conditions => ['vetted = ? AND deleted_at IS NULL', true], :order => 'updated_at DESC'  
+      options = { :conditions => ['vetted = ? AND deleted_at IS NULL', true], :order => 'updated_at DESC' }
     elsif view == 'deleted'
       # list the pages that are 'deleted' by being hidden from view.
-      @posts = Post.paginate :page => params[:page], :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' 
+      options = { :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' }
     end
+    # defined by subclasses
+    fetch_posts(options)
   end
 
   # for vetting:       params[:post][:vetted] == true
@@ -25,6 +29,7 @@ class Admin::PostsController < Admin::BaseController
     @posts.update_attributes(params[:post])
     redirect_to :action => 'index', :view => params[:view]
   end
+  
 
   # Approves a post by marking :vetted = true
   def approve
@@ -53,8 +58,7 @@ class Admin::PostsController < Admin::BaseController
   end
   
   def set_active_tab
-    @active = 'post_moderation'
+    @active_tab = :moderation
   end
-
 end
 

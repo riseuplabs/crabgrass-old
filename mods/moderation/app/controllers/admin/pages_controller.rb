@@ -1,6 +1,8 @@
 class Admin::PagesController < Admin::BaseController
   verify :method => :post, :only => [:update]
   
+  permissions 'admin/moderation'
+  
   def index
     view = params[:view] || 'all'
     @current_view = view
@@ -85,7 +87,7 @@ class Admin::PagesController < Admin::BaseController
   protected
   
   def set_active_tab
-    @active = 'page_moderation'
+    @admin_active_tab = 'page_moderation'
   end
 end
 

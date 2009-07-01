@@ -4,7 +4,11 @@ module Admin::ModerationPermission
   end
 
   %w(index show new edit create update destroy).each do |action|
-    %w(pages posts).each do |controller|
+    alias_method "may_#{action}_pages?".intern,           :may_moderate?
+  end
+  
+  %w(index update approve trash undelete).each do |action|
+    %w(wall_posts discussion_posts).each do |controller|
       alias_method "may_#{action}_#{controller}?".intern, :may_moderate?
     end
   end

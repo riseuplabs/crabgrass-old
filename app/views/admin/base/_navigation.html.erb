@@ -1,24 +1,25 @@
-
-<h4>SiteAdmin</h4>
-<ul class="admin_nav">
-  <li class="<%= 'active' if @admin_active_tab == 'sites_basic' %>">
-    <%= link_to 'edit', admin_sites_path(:action => 'basic')  %>
-  </li>
-  <li class="<%= 'active' if @admin_active_tab == 'custom_appearances_edit' %>">
-    <%= link_to 'custom appearence', admin_custom_appearances_path %>
-  </li>
-  <li class="<%= 'active' if @admin_active_tab == 'sites_profile' %>">
-    <%= link_to 'profile', admin_sites_path(:action => 'profile') %>
-  </li>
-  <li class="<%= 'active' if @admin_active_tab == 'sites_signup' %>">
-    <%= link_to 'sign up', admin_sites_path(:action => 'signup') %>
-  </li>
-  <li class="<%= 'active' if @admin_active_tab == 'announcements_new'%>">
-    <%= link_to 'create announcements', :controller => '/announcement_page', :action => 'create', :id => 'announcement' %>
-  </li>
-  <li class="<%= 'active' if @admin_active_tab == 'announcements_index'%>">
-    <%= link_to 'edit announcements', announcements_path %>
-  <li>
-</ul>
+<% if current_user.may?(:admin, current_site) -%>
+  <h4>SiteAdmin</h4>
+  <ul class="admin_nav">
+    <li class="<%= 'active' if @admin_active_tab == 'sites_basic' %>">
+      <%= link_to 'edit', admin_sites_path(:action => 'basic')  %>
+    </li>
+    <li class="<%= 'active' if @admin_active_tab == 'custom_appearances_edit' %>">
+      <%= link_to 'custom appearence', admin_custom_appearances_path %>
+    </li>
+    <li class="<%= 'active' if @admin_active_tab == 'sites_profile' %>">
+      <%= link_to 'profile', admin_sites_path(:action => 'profile') %>
+    </li>
+    <li class="<%= 'active' if @admin_active_tab == 'sites_signup' %>">
+      <%= link_to 'sign up', admin_sites_path(:action => 'signup') %>
+    </li>
+    <li class="<%= 'active' if @admin_active_tab == 'announcements_new'%>">
+      <%= link_to 'create announcements', :controller => '/announcement_page', :action => 'create', :id => 'announcement' %>
+    </li>
+    <li class="<%= 'active' if @admin_active_tab == 'announcements_index'%>">
+      <%= link_to 'edit announcements', announcements_path %>
+    <li>
+  </ul>
+<% end -%>
 
 <%= call_hook(:admin_nav) %>
