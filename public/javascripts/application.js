@@ -169,8 +169,9 @@ function activateLocationHash(default_hash) {
 /** menu navigation **/
 var SubMenu = Class.create({
   initialize: function(li) {
-    this.show_timeout = null;
-    this.hide_timeout = null;
+//    this.show_timeout = null;
+//    this.hide_timeout = null;
+    this.timeout = null;
     if(!$(li)) return;
     this.trigger = $(li);
     if(!this.trigger) return;
@@ -180,19 +181,22 @@ var SubMenu = Class.create({
     this.trigger.observe('mouseout', this.hideMenu.bind(this));
     //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
   },
-
-  showMenu: function(event) {
+ 
+  clearEvents: function(event) {
     event.stop();
     $$('ul.submenu').without(this.menu).invoke('hide');
-    if (this.hide_timeout) window.clearTimeout(this.hide_timeout);
-    this.show_timeout = Element.show.delay(.3,this.menu);
+  },
+
+  showMenu: function(event) {
+    this.clearEvents(event);
+    if (this.timeout) window.clearTimeout(this.timeout);
+    this.timeout = Element.show.delay(.3,this.menu);
   },
 
   hideMenu: function(event) {
-    event.stop();
-    $$('ul.submenu').without(this.menu).invoke('hide');
-    if (this.show_timeout) window.clearTimeout(this.show_timeout);
-    this.hide_timeout = Element.hide.delay(.3, this.menu);
+    this.clearEvents(event);
+    if (this.timeout) window.clearTimeout(this.timeout);
+    this.timeout = Element.hide.delay(.3, this.menu);
   }
 
 });
