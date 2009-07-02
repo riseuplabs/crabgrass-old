@@ -33,7 +33,8 @@ module Groups::BasePermission
   alias_method :may_new_group?, :may_create_group?
 
   def may_create_council?(group = @group)
-    group.parent_id.nil? and current_user.may?(:admin, group)
+    group.parent_id.nil? and
+    current_user.may?(:admin, group)
   end
 
   def may_create_network?
