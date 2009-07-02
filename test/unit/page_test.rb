@@ -134,15 +134,15 @@ class PageTest < Test::Unit::TestCase
     assert check_associations(Page)
   end
   
-  def test_thinking_sphinx
-    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
-      page = Page.new :title => 'title'
-      page.expects(:save_without_after_commit_callback)
-      page.save
-    else
-      puts "thinking sphinx is not included"
-    end
-  end
+#  def test_thinking_sphinx
+#    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
+#      page = Page.new :title => 'title'
+#      page.expects(:save_without_after_commit_callback)
+#      page.save
+#    else
+#      puts "thinking sphinx is not included"
+#    end
+#  end
 
   def test_page_owner
     page = nil
