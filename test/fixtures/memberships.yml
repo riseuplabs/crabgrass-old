@@ -54,7 +54,8 @@ e:
 f:
   group_id: 3
   user_id: 9
-  
+  id: <%= id += 1 %>
+
 # rainbows warm committee
 # members: red, orange, yellow
 warm_red:
