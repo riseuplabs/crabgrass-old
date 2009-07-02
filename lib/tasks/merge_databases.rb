@@ -8,14 +8,14 @@ $database_from = {
   :adapter  => "mysql",
   :host     => "localhost",
   :username => "crabgrass",
-  :password => "xxxx",
-  :database => "db-to-merge-from"
+  :password => "ien1Zei2",
+  :database => "stopx"
 }
 
 $database_to = :production    # whatever is configured in database.yml
 
 $site_id = 1
-$from_asset_dir = ''
+$from_asset_dir = '/usr/apps/crabgrass/stopx/assets'
 
 # stuff that should not need changing
 
@@ -146,7 +146,7 @@ task :merge_databases => :environment do
         putc '.'; STDOUT.flush()
         if model.is_a? Asset
           puts "moving %s --> %s" % ["#{$from_asset_dir}/0000/#{original_id}", File.dirname(newrecord.private_filename)]
-          #File.rename("#{$from_asset_dir}/0000/#{original_id}", File.dirname(newrecord.private_filename))
+          File.rename("#{$from_asset_dir}/0000/#{original_id}", File.dirname(newrecord.private_filename))
         end
       end
       puts
