@@ -229,7 +229,7 @@ module PageHelper
         icon_tag('star_empty')
       end
     elsif column == :views
-      page.views_count
+      page.views || page.views_count
     elsif column == :owner
       page.owner_name
     elsif column == :owner_with_icon
@@ -239,7 +239,7 @@ module PageHelper
     elsif column == :contribution
       page_list_contribution(page)
     elsif column == :posts
-      page.posts_count
+      page.edits || page.posts_count
     elsif column == :last_post
       if page.discussion
         content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to('view'[:view], page_url(page)+"#posts-#{page.discussion.last_post_id}")]

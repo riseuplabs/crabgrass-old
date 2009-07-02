@@ -31,16 +31,47 @@ class RootController < ApplicationController
   end
 
   def most_viewed
-    update_page_list('most_viewed_panel',
-      :pages => paginate('descending', 'views'),
-      :columns => [:views, :icon, :title, :last_updated], 
-      :sortable => false
-    )
+    @panel='most_viewed'
+    if time_span=params[:time_span]
+      pages = pages_for_timespan('most_views',time_span)
+      update_page_list("#{time_span}_panel",
+        :pages => pages,
+        :columns => [:views, :icon, :title, :last_updated],
+        :sortable => false)
+    else
+      render_timed_panel
+    end
+  end
+
+  def most_contributions
+    @panel='most_contributions'
+    if time_span=params[:time_span]
+      pages = pages_for_timespan('most_edits',time_span)
+      update_page_list("#{time_span}_panel",
+        :pages => pages,
+        :columns => [:posts, :icon, :title, :last_updated],
+        :sortable => false)
+    else
+      render_timed_panel
+    end
+  end
+
+  def most_stars
+    @panel='most_stars'
+    if time_span=params[:time_span]
+      pages = pages_for_timespan('most_stars',time_span)
+      update_page_list("#{time_span}_panel",
+        :pages => pages,
+        :columns => [:stars, :icon, :title, :last_updated],
+        :sortable => false)
+    else
+      render_timed_panel
+    end
   end
 
   def announcements
     update_page_list('announcements_panel', 
-      :pages => paginate('descending','created_at', :flow => :announcement)
+                     :pages => paginate('descending','created_at', :flow => :announcement)
     )
   end
 
@@ -54,6 +85,26 @@ class RootController < ApplicationController
   end
 
   protected
+
+  def pages_for_timespan(filter_by, time_span)
+    case time_span
+    when 'today' then
+      paginate(filter_by, '24', 'hours')
+    when 'this_week' then
+      paginate(filter_by, '7', 'days')
+    when 'this_month' then
+      paginate(filter_by, '30', 'days')
+    when 'ever' then
+      case filter_by
+      when 'most_views' then
+        paginate('descending','views')
+      when 'most_edits' then
+        paginate('descending','post_counts') #TODO we do not count total edits yet...
+      when 'most_stars' then
+        paginate('descending','stars')
+      end
+    end
+  end
 
   def authorized?
     true
@@ -86,6 +137,11 @@ class RootController < ApplicationController
     end
   end
 
+  def render_timed_panel
+      render :update do |page|
+        page.replace_html "#{@panel}_panel", :partial => 'root/timed_panel', :locals => {:panel => @panel}
+      end
+  end
   ##
   ## lists of active groups and users. used by the view. 
   ##
