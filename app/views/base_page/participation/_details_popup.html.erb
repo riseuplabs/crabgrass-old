@@ -1,4 +1,11 @@
-<% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
+<%
+  after_load_js = %Q[
+   after_load_function = function() {
+     Field.focus('add_names');
+  }]
+%>
+<%= javascript_tag(after_load_js) %>
+<%# popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
 
   <blockquote>
     <div id="popup_message"></div>
@@ -38,5 +45,4 @@
      <%= submit_tag "Close"[:close_button], :name => 'cancel' %>
     <% end -%>
   </div>
-
-<% end -%>
+<%# end -%>

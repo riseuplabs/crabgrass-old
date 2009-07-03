@@ -1,3 +1,10 @@
+<%
+ after_load_js = %Q[
+  after_load_function = function() {
+  }
+ ]
+%>
+<%= javascript_tag(after_load_js) %>
 <% popup('Delete Page'[:delete_page], :id => 'trash_popup', :width => '25em') do -%>
 <% form_remote_tag(
   :url => {:controller => '/base_page/trash', :action => 'update', :page_id => @page.id},

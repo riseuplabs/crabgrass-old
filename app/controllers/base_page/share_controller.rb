@@ -49,8 +49,10 @@ class BasePage::ShareController < ApplicationController
     }
   end
   
+  
   # display the share or notify popup via ajax
   def show
+    render :partial => 'base_page/share/' + params[:name] + '_popup'
   end  
   
   # there are three ways to submit the form:

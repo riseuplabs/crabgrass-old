@@ -1,5 +1,12 @@
-<%- form_url = {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id} -%>
+<%
+ after_load_js = %Q[
+  after_load_function = function() {
+  }
+ ]
+%>
+<%= javascript_tag(after_load_js) %>
 
+<%- form_url = {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id} -%>
 <% popup("Send Notification"[:notify_page_link], :id => 'notify_popup', :width => '40em') do -%>
   <% form_remote_tag(
     :url => form_url,

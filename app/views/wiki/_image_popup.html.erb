@@ -1,5 +1,11 @@
+<%
+ after_load_js = %Q[
+  after_load_function = function() {
+  }
+ ]
+%>
+<%= javascript_tag(after_load_js) %>
 <div id='<%= image_popup_id(wiki) %>' class='image_popup' style='padding: 1em; background: #eee'>
-  <h1><%= "Insert Image"[:insert_image_heading] %></h1>
   <%= "Click on an image thumbnail to insert it into the wiki text."[:insert_image_instructions] %>
   <p>
     <%= select_tag 'image_size', options_for_select([[:small.t, '0'],[:medium.t,'1'],[:large.t, '2'],[:full.t, '3']]), :id => 'image_size-' + wiki.id.to_s %>
@@ -16,6 +22,6 @@
   <% end -%>
   <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
 
-  <p><%= button_to_function 'Close'[:close_button], "$('#{image_popup_id(wiki)}').hide();" %></p>
+  <p><%= button_to_function 'Close'[:close_button], "Modalbox.hide();" %></p>
 </div>
 

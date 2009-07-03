@@ -9,8 +9,9 @@ class BasePageController < ApplicationController
   include BasePageHelper
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
+  stylesheet 'modalbox'
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
+  javascript 'effects', 'controls', 'autocomplete', 'builder', 'modalbox' # require for sharing autocomplete
   permissions 'base_page', 'posts'
   helper 'groups'
 

@@ -1,3 +1,10 @@
+<%
+ after_load_js = %Q[
+  after_load_function = function() {
+  }
+ ]
+%>
+<%= javascript_tag(after_load_js) %>
 <% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :width => '25em') do -%>
   <blockquote>
   <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>

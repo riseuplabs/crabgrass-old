@@ -38,16 +38,18 @@
   # called to convert the row data into a value
   extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
 
-  auto_complete_js = %Q[
-    new Autocomplete('recipient_name', { 
-      serviceUrl:'/base_page/share/auto_complete',
-      minChars:2,
-      maxHeight:400,
-      width:300,
-      onSelect: #{after_update_function},
-      rowRenderer: #{render_popup_row_function},
-      selectValue: #{extract_value_from_row_function}
-    }, #{autocomplete_id_number});
+  after_load_js = %Q[
+   after_load_function = function() {
+     new Autocomplete('recipient_name', { 
+       serviceUrl:'/base_page/share/auto_complete',
+       minChars:2,
+       maxHeight:400,
+       width:300,
+       onSelect: #{after_update_function},
+       rowRenderer: #{render_popup_row_function},
+       selectValue: #{extract_value_from_row_function}
+      }, #{autocomplete_id_number});
+    }
   ]
 
   # if there are no recipients at all, we will do not show the box
@@ -68,7 +70,7 @@
     <td style='width:100%'>
       <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
           :onkeypress => key_pressed_function %>
-      <%= javascript_tag(auto_complete_js) %>
+      <%= javascript_tag(after_load_js) %>
     </td>
     <td>&nbsp;</td>
     <td>
@@ -84,4 +86,3 @@
 <div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
 </div>
-

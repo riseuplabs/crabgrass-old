@@ -225,18 +225,14 @@ module BasePageHelper
   #
   def show_popup_link(options)
     options[:controller] ||= options[:name]
-    link_to_remote_with_icon(
-      options[:label],
-      :url => {
+    popup_url = url_for({
         :controller => "base_page/#{options[:controller]}",
         :action => 'show',
         :popup => true,
         :page_id => @page.id,
         :name => options[:name]
-       },
-      :with => "absolutePositionParams(this)",
-      :icon => options[:icon]
-    )
+       })
+    link_to_function options[:label], "Modalbox.show('#{popup_url}',{title:'#{options[:label]}',overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"
   end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked

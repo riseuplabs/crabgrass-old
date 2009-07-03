@@ -61,13 +61,13 @@ class BasePage::ParticipationController < ApplicationController
     flash_message_now :exception => exc
     show_error_message
   end
-
+  
   def show
-    if params[:popup]
-      render :template => 'base_page/participation/show_' + params[:name] + '_popup'
-    elsif params[:cancel]
-      close_popup
-    end
+     if params[:popup]
+       render :partial => 'base_page/participation/' + params[:name] + '_popup'
+     elsif params[:cancel]
+       close_popup
+     end
   end
 
   ##

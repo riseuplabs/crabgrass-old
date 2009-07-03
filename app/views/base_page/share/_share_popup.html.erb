@@ -1,5 +1,4 @@
 <%- form_url = {:controller => 'base_page/share', :action => 'update', :page_id => @page.id} -%>
-
 <% popup('Share Page'[:share_page_link] % {:page_class => page_class.titlecase}, :id => 'share_popup', :width => '40em') do -%>
   <% form_remote_tag(
     :url => form_url,
@@ -17,4 +16,3 @@
     </div>
   <% end -%>
 <% end -%>
-

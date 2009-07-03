@@ -3,9 +3,10 @@ module ControllerExtension::WikiImagePopup
   def image_popup_show
     @images = image_popup_visible_images
     popup_id = 'image_popup-' + @wiki.id.to_s
-    render(:update) do |page|
-      page.replace popup_id, :partial => 'wiki/image_popup', :locals => {:wiki => @wiki}
-    end
+    #render(:update) do |page|
+    #  page.replace popup_id, :partial => 'wiki/image_popup', :locals => {:wiki => @wiki}
+    #end
+    render :partial => 'wiki/image_popup', :locals => {:wiki => @wiki}
   end
 
   # upload image via xhr
