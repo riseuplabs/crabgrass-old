@@ -228,8 +228,8 @@ module PageHelper
       else
         icon_tag('star_empty')
       end
-    elsif column == :views
-      page.views || page.views_count
+    elsif column == :views or column == :views_count
+      page.views_count
     elsif column == :owner
       page.owner_name
     elsif column == :owner_with_icon
@@ -318,7 +318,7 @@ module PageHelper
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
       list_heading 'stars'[:page_list_heading_stars], 'stars', options
-    elsif column == :views
+    elsif column == :views or column == :views_count
       list_heading 'views'[:page_list_heading_views], 'views', options
     elsif column == :owner_with_icon || column == :owner
       list_heading "owner"[:page_list_heading_owner], 'owner_name', options

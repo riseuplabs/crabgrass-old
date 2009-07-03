@@ -97,8 +97,8 @@ form.mini_search table {
     t.show_tab 'most_viewed_panel'
   end
   f.tab do |t|
-    t.label 'Most Contributions'
-    t.show_tab 'most_contributions_panel'
+    t.label 'Most Active'
+    t.show_tab 'most_active_panel'
   end
   f.tab do |t|
     t.label 'Most Stars'
@@ -124,7 +124,7 @@ end %>
 <%= big_spinner %>
 </div>
 
-<div id='most_contibutions_panel' class="tab_content tab_area" style="display:none" onclick="<%= load_panel('most_contributions') %>">
+<div id='most_active_panel' class="tab_content tab_area" style="display:none" onclick="<%= load_panel('most_active') %>">
  <%= big_spinner %>
 </div>
 

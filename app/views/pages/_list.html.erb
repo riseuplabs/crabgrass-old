@@ -21,6 +21,8 @@ local variables which may be passed in
 
   * show_time_dividers: defaults to true if sorting by time.
 
+  * heading_partial: if set, this partial will be included before anything else.
+
 =end
 
 
@@ -29,9 +31,11 @@ columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors
 colspan = columns.size
 heading = true if heading.nil?
 show_pagination_controls = true if pages.is_a? WillPaginate::Collection
+pagination_options = {} if pagination_options.nil?
 show_time_dividers = parsed_path.sort_by_time? if show_time_dividers.nil?
 any_results = pages.any?
 sortable = true if sortable.nil?
+heading_partial = false if heading_partial.nil?
 
 if show_time_dividers
   today, yesterday, week, later = divide_pages_by_recency(pages)
@@ -40,7 +44,8 @@ if show_time_dividers
 end
 
 -%>
-<%= pagination_links(pages) if any_results and show_pagination_controls %>
+<%= render(:partial => heading_partial) if heading_partial %>
+<%= pagination_links(pages, pagination_options) if any_results and show_pagination_controls %>
 <div class='page_list'>
   <table>
     <%- if !any_results -%>
@@ -112,5 +117,5 @@ end
     <% end -%>
   </table>
 </div>
-<%= pagination_links(pages) if any_results and show_pagination_controls %>
+<%= pagination_links(pages, pagination_options) if any_results and show_pagination_controls %>
 

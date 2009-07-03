@@ -31,47 +31,38 @@ class RootController < ApplicationController
   end
 
   def most_viewed
-    @panel='most_viewed'
-    if time_span=params[:time_span]
-      pages = pages_for_timespan('most_views',time_span)
-      update_page_list("#{time_span}_panel",
-        :pages => pages,
-        :columns => [:views, :icon, :title, :last_updated],
-        :sortable => false)
-    else
-      render_timed_panel
-    end
+    update_page_list("most_viewed_panel",
+      :pages => pages_for_timespan('most_views'),
+      :columns => [:views, :icon, :title, :last_updated],
+      :sortable => false,
+      :heading_partial => 'root/time_links',
+      :pagination_options => {:params => {:time_span => params[:time_span]}}
+    )
   end
 
-  def most_contributions
-    @panel='most_contributions'
-    if time_span=params[:time_span]
-      pages = pages_for_timespan('most_edits',time_span)
-      update_page_list("#{time_span}_panel",
-        :pages => pages,
-        :columns => [:posts, :icon, :title, :last_updated],
-        :sortable => false)
-    else
-      render_timed_panel
-    end
+  def most_active
+    update_page_list("most_active_panel",
+      :pages => pages_for_timespan('most_edits'),
+      :columns => [:contributors, :icon, :title, :last_updated],
+      :sortable => false,
+      :heading_partial => 'root/time_links',
+      :pagination_options => {:params => {:time_span => params[:time_span]}}
+    )
   end
 
   def most_stars
-    @panel='most_stars'
-    if time_span=params[:time_span]
-      pages = pages_for_timespan('most_stars',time_span)
-      update_page_list("#{time_span}_panel",
-        :pages => pages,
-        :columns => [:stars, :icon, :title, :last_updated],
-        :sortable => false)
-    else
-      render_timed_panel
-    end
+    update_page_list("most_stars_panel",
+      :pages => pages_for_timespan('most_stars'),
+      :columns => [:stars, :icon, :title, :last_updated],
+      :sortable => false, 
+      :heading_partial => 'root/time_links', 
+      :pagination_options => {:params => {:time_span => params[:time_span]}}
+    )
   end
 
   def announcements
     update_page_list('announcements_panel', 
-                     :pages => paginate('descending','created_at', :flow => :announcement)
+      :pages => paginate('descending','created_at', :flow => :announcement)
     )
   end
 
@@ -86,7 +77,8 @@ class RootController < ApplicationController
 
   protected
 
-  def pages_for_timespan(filter_by, time_span)
+  def pages_for_timespan(filter_by)
+    time_span = params[:time_span] || 'all_time'
     case time_span
     when 'today' then
       paginate(filter_by, '24', 'hours')
@@ -94,12 +86,12 @@ class RootController < ApplicationController
       paginate(filter_by, '7', 'days')
     when 'this_month' then
       paginate(filter_by, '30', 'days')
-    when 'ever' then
+    when 'all_time' then
       case filter_by
       when 'most_views' then
         paginate('descending','views')
       when 'most_edits' then
-        paginate('descending','post_counts') #TODO we do not count total edits yet...
+        paginate('descending','contributors_count') #TODO we do not count total edits yet...
       when 'most_stars' then
         paginate('descending','stars')
       end
@@ -131,17 +123,18 @@ class RootController < ApplicationController
     Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page], :per_page => 5}.merge(options)))
   end
 
-  def update_page_list(target, locals)
+  def update_page_list(target, locals)   
     render :update do |page|
       page.replace_html target, :partial => 'pages/list', :locals => locals
     end
   end
 
-  def render_timed_panel
-      render :update do |page|
-        page.replace_html "#{@panel}_panel", :partial => 'root/timed_panel', :locals => {:panel => @panel}
-      end
-  end
+#  def render_timed_panel
+#      render :update do |page|
+#        page.replace_html "#{@panel}_panel", :partial => 'root/timed_panel', :locals => {:panel => @panel}
+#      end
+#  end
+
   ##
   ## lists of active groups and users. used by the view. 
   ##
