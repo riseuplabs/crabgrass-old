@@ -42,7 +42,7 @@ class MessagePageActivity < Activity
       ]
     end
       page_link = content_tag(:a,'a message'[:a_message_link],
-                             :href => "/#{page.owner_name}/#{page.friendly_url}")
+                             :href => "/page/#{page.friendly_url}")
       title = content_tag(:span,page.title,:class => 'message')
       return "You received {message_tag} from {other_user}: {title}"[
        :activity_message_received,
