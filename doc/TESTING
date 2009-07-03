@@ -8,6 +8,7 @@ hpricot
 nokogiri
 launchy
 ruby-debug
+redgreen (optional but recommended, redgreen colorizes test output)
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
