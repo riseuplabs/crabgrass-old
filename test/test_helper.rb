@@ -20,6 +20,8 @@ Webrat.configure do |config|
   config.mode = :rails
 end
 
+require 'shoulda/rails'
+
 module Tool; end
 
 

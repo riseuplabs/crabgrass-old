@@ -268,7 +268,7 @@ class Asset < ActiveRecord::Base
   def update_is_attachment
     if page_id_changed?
       self.is_attachment = true if page_id
-      self.page_terms = (page.page_terms if page_id)
+      self.page_terms = (page.page_terms if page)
     end
   end
   

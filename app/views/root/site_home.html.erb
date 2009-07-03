@@ -79,7 +79,7 @@ form.mini_search table {
   </div>
 <%- end -%>
 
-<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => current_user.may?(:admin, @group)} %>
+<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
 
 <br/>
 

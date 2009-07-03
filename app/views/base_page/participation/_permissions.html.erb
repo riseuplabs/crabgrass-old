@@ -35,7 +35,7 @@
   </table>
 </div>
 
-<% if current_user.may?(:admin, @page) and not @page.deleted? -%>
+<% if current_user.may_create_participation?-%>
 <p>
   <%- form_remote_tag(
     :url => {:controller => 'participation', :action => 'create', :page_id => @page.id},

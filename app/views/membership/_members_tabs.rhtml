@@ -13,7 +13,7 @@
       t.selected params[:controller] == '/membership' && params[:action] == 'groups'
     end
   end
-  if committee? and current_user.may?(:admin, group)
+  if may_edit_memberships?(group)
     f.tab do |t|
       t.label 'Edit Committee'[:edit_committe]
       t.url url_for(:controller => 'membership', :action => 'edit', :id => group)

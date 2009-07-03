@@ -80,8 +80,7 @@ class MessagesController < ApplicationController
       @user = User.find_by_login params[:user]
     end
 
-    ## what is this ensure_discussion stuff? I don't like it.
-    @discussion = @user.ensure_discussion
+    @discussion = @user.discussion
   end
 
 
