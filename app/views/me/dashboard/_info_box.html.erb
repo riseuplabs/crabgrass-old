@@ -1,13 +1,18 @@
-<table class="columns">
-<tr colspan='2'><td><%= header_with_more(:h3, :dim, "Recent Activity"[:recent_activity], nil) %></td></tr>
-<tr>
-  <%- length = @activities.size -%>
-  <%- half = (length/2.0).ceil %>
-  <td class="left">
-    <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
-  </td>
-  <td class="right">
-    <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
-  </td>
-</tr>
-</table>
+<%- @info_box = capture do -%>
+  <table class="columns">
+  <tr>
+     <td colspan="2"><%= render :partial => @message_box %></td>
+  </tr>
+  <tr>
+    <%- length = @activities.size -%>
+    <%- half = (length/2.0).ceil %>
+    <td class="left">
+      <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
+    </td>
+    <td class="right">
+      <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
+      <%= link_to('More'[:more_link] + ARROW, @more_activity_url) if @more_activity_url%>
+    </td>
+  </tr>
+  </table>
+<%- end -%>

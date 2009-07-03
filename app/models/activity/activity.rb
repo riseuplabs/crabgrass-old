@@ -85,7 +85,7 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :newest, {:order => 'created_at DESC', :limit => 10}
+  named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
 

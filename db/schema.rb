@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090626234003) do
+ActiveRecord::Schema.define(:version => 20090703091241) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
     t.integer  "access",       :limit => 1,  :default => 2
     t.integer  "related_id",   :limit => 11
     t.integer  "site_id",      :limit => 11
+    t.boolean  "flag"
   end
 
   add_index "activities", ["created_at"], :name => "created_at"

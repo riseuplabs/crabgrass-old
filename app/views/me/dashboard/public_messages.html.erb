@@ -1,0 +1,4 @@
+<% @message_box = 'messages/form' %>
+<% @more_activity_url = url_for(:controller => '/messages', :action => 'index', :user => current_user) %>
+<%= render :file => 'me/dashboard/index' %>
+

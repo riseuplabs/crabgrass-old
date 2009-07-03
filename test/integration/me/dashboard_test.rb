@@ -34,7 +34,7 @@ class Me::DashboardTest < ActionController::IntegrationTest
     # select the text input
     assert_have_selector "#post_body", :value => 'Staying orange here'
     # check text with regular expression
-    assert_contain %r{Recent Activity\s*Orange! Staying orange here}
+    assert_contain %r{Orange! Staying orange here}
   end
 
   def test_joining_network_updates_dashboard
