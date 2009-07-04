@@ -244,7 +244,12 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_edits(num, unit)
-    filter_most("edits", num, unit)
+    unit=unit.upcase.singularize
+    return unless ["DAY", "HOUR"].include?(unit)
+    num.gsub!(/[^\d]+/, ' ')
+    @conditions << "user_participations.changed_at > NOW() - INTERVAL %s %s" % [num, unit]
+    @order << "SUM(1) DESC"   # SUM(1) works like COUNT but gets registered by the builder.
+    @select = "pages.*, SUM(1) AS contributors_count"
   end
 
   def filter_most_stars(num, unit)
