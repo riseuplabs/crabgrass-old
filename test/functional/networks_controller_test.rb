@@ -37,6 +37,15 @@ class NetworksControllerTest < Test::Unit::TestCase
     end
   end
 
+  def create_with_no_groups
+    login_as :blue
+    post :create, :group => {:name => 'baby-bat'}
+    network = Network.find(:last)
+    assert 'baby-bat', network.name
+    assert network.users.any?
+    assert 'blue', network.users.first.name
+  end
+
   def test_failed_create
     login_as :red
     get :new

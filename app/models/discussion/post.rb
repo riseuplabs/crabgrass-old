@@ -27,6 +27,12 @@ class Post < ActiveRecord::Base
   validates_presence_of :discussion, :user, :body  
   alias :created_by :user
   
+  attr_accessor :in_reply_to    # the post this post was in reply to.
+                                # it is tmp var used when post activities.
+
+  attr_accessor :recipient      # for private posts, a tmp var to store who
+                                # this post is being sent to. used by activities.
+
   ##
   ## methods
   ##

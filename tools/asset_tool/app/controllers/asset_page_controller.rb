@@ -86,7 +86,7 @@ class AssetPageController < BasePageController
       raise ActiveRecord::RecordInvalid.new(@page)
     end
 
-    asset = Asset.make params[:asset]
+    asset = Asset.build params[:asset]
     @page[:title] = asset.basename unless @page[:title].any?
     asset
   end

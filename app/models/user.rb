@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   ## CORE EXTENSIONS
   ##
 
-  include UserExtension::Cache      # should come first
-  include UserExtension::Socialize  # user <--> user
-  include UserExtension::Organize   # user <--> groups
-  include UserExtension::Sharing    # user <--> pages
+  include UserExtension::Cache      # cached user data (should come first)
+  include UserExtension::Users      # user <--> user
+  include UserExtension::Groups     # user <--> groups
+  include UserExtension::Pages      # user <--> pages
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 

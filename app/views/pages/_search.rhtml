@@ -1,7 +1,7 @@
 <%# this is a partial of search controls to be used by any search view %>
 <% 
   if @user
-    users ||= @user.contacts
+    users ||= @user.friends
     groups ||= @user.groups
     users.unshift @user unless users.include? @user
   else

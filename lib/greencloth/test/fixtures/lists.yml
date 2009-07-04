@@ -282,10 +282,12 @@ name: list with double colons
 in: |-
   * one:: fish
   * TWO:: fish
+  * three::
 out: |-
   <ul>
   	<li><b>one:</b> fish</li>
   	<li><b><span class="caps">TWO</span>:</b> fish</li>
+  	<li><b>three:</b> </li>
   </ul>
 ---
 name: lists with links and linefeed

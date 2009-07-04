@@ -10,8 +10,7 @@ task :fix_asset_pages_for_galleries => :environment do
   $stdout.puts "Turning Pages into AssetPages."
   pages = Page.find(:all, :conditions => {
               :type => nil,
-              :data_type => "Asset",
-              :flow => FLOW[:gallery]})
+              :data_type => "Asset"})
   pages.each do |p|
     p.update_attribute(:type, "AssetPage")
   end
@@ -22,8 +21,7 @@ task :remove_messed_up_asset_pages => :environment do
   $stdout.puts "Removing Asset Pages from the gallery that do not have a valid data_type."
   removed = Page.destroy_all("data_type IS NULL AND
                          data_id IS NOT NULL AND
-                         type = 'AssetPage' AND
-                         flow = #{FLOW[:gallery]}")
+                         type = 'AssetPage'")
   $stdout.puts "Removed #{removed.count} pages."
 end
 

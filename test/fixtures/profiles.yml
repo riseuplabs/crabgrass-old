@@ -122,6 +122,7 @@ profile_for_diggers:
   id: 10
   entity_type: "Group"
   entity_id: 1
+  membership_policy: 1
   stranger: true
   summary: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
   summary_html: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"

@@ -1,0 +1,2 @@
+class PublicPost < Post
+end

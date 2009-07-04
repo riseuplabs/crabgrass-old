@@ -49,7 +49,7 @@ Autocomplete.getInstance = function(id){
 };
 
 Autocomplete.highlight = function(value, re){
-  return value.replace(re, function(match){ return '<strong>' + match + '<\/strong>' });
+  return value.replace(re, function(match){ return '<ins>' + match + '<\/ins>' });
 };
 
 Autocomplete.prototype = {

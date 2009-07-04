@@ -48,7 +48,7 @@ class ProfileTest < Test::Unit::TestCase
     blue = users(:blue)
     red = users(:red)
     
-    red.add_contact!(blue)
+    red.add_contact!(blue, :friend)
     
     blue.profiles.private.update_attribute(:organization, 'rainbows')
     blue.profiles.public.update_attribute(:organization, 'none')

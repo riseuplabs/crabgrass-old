@@ -121,10 +121,9 @@ ul.side_list
 // TABS
 // 
 
-.tab-area
+.tab_area
   background-color: white
-  padding: 1em
-  border-top: 0
+  padding-top: 1em
   clear: left
 
 ul.tabset
@@ -271,6 +270,12 @@ span.break
   line-height: 1px
   float: right !important
   float: none
+
+// use classes so that we can reverse for rtl
+.align_right
+  text-align: right
+.align_left
+  text-align: left
 
 //
 // COLORED HEADINGS
@@ -475,8 +480,8 @@ table.plain
     white-space: nowrap
   p
     margin: 0
-  strong
-    font-weight: normal
+  ins
+    text-decoration: none
     color: #3399FF
   em
     font-weight: bold

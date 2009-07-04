@@ -1,0 +1,39 @@
+<% @title_box = content_tag(:h1, 'Private Conversations') %>
+
+<%# move to stylesheets when we have a real design for this page %>
+<% content_for :style do %>
+table.pretty td {vertical-align: top;}
+table.pretty tr.message:hover {background-color: #ffffdd;}
+table.pretty tr.message td {cursor: pointer}
+<% end %>
+
+<table class="pretty">
+  <tr>
+    <td><h2 class="alert">Person</h2></td>
+    <td></td>
+    <td><h2 class="alert">Last Message</h2></td>
+  </tr>
+<% for discussion in @discussions %>
+  <% relationship = discussion.relationships.for_user(current_user) %>
+  <% other_user = relationship.contact %>
+  <tr class="message" onclick="window.location='<%= conversation_path(:id => other_user)%>'">
+    <td>
+      <%= display_entity(other_user, :avatar => :medium, :format => :twolines) %>
+    </td>
+    <td>
+      <%= relationship.unread_count %>/<%= discussion.posts_count %> <%= "Unread"[:unread] %>
+    </td>
+    <% if post = (discussion.last_post_by(other_user) || discussion.last_post) %>
+      <td>
+        <i><%= friendly_date(post.created_at) %>
+        <%= h(post.user.display_name) %></i>
+        <%= post.body_html %>
+      </td>
+     <% else %>
+      <td>&nbsp;</td>
+     <% end %>
+  </tr>
+<% end %>
+</table>
+
+<%= pagination_links(@discussions) %>

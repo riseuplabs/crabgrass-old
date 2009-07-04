@@ -1,6 +1,17 @@
-<% color = cycle('shade-odd', 'shade-even') %>
+<%
+   color = cycle('shade-odd', 'shade-even') 
+   show = @show_reply if show.nil?
+   url ||= @create_post_url
+   url ||= url_for(:controller => '/posts', :action => 'create')
+   form_method = false if form_method.nil?
+   if form_method
+     html = {:method => form_method}
+   else
+     html = nil
+   end
+%>
 
-<% if @show_reply %>
+<% if show %>
 <tbody>
 <% else %>
 <tbody id='reply_container' style='display:none;'>
@@ -21,14 +32,14 @@
   </td>
   <td class="post-body" id="reply">
     <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
-    <%- url = @create_post_url || url_for(:controller => '/posts', :action => 'create') -%>
-    <%- form_for :post, :url => url do |f| -%>
+    <%- form_for(:post, :url => url, :html => html) do |f| -%>
       <div class='fieldset'>
         <%= f.text_area :body, :rows => 8, :class => 'post_body' %>    
-        <%= hidden_field_tag('page_id', @page.id) %>
+        <%= hidden_field_tag('page_id', @page.id) if @page %>
         <%= hidden_field_tag('paging', @discussion.last_page) %>
         <%= hidden_field_tag('from', params[:from] || 'groups' ) %>
         <%= hidden_field_tag('from_id', params[:from_id] || params[:group_name] ) %>
+        <%= hidden_field_tag('in_reply_to_id', @last_post.id) if @last_post and @last_post.user_id != current_user.id%>
 
         <div style="float: left"><%= submit_tag "Post Message"[:post_message], :name => 'post_message' %></div>
         <%= formatting_reference_link %>

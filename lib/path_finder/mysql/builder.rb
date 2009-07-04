@@ -156,7 +156,8 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :offset => @offset,       # /   
       :order => order,
       :include => @include,
-      :select => @select
+      :select => @select,
+      :group => sql_for_group(order)
     }
   end
 
@@ -184,18 +185,19 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_joins(conditions_string)
     joins = []
-    
-    if /user_participations\./ =~ conditions_string
-      joins << :user_participations
+    [:user_participations, :group_participations, :page_terms, :dailies, :hourlies].each do |j|
+      if /#{j.to_s}\./ =~ conditions_string
+        joins << j
+      end
     end
-    if /group_participations\./ =~ conditions_string
-      joins << :group_participations
-    end
-    if /page_terms\./ =~ conditions_string
-      joins << :page_terms
-    end
-    
     return joins
+  end
+
+  # TODO: make this more generall so it works with all aggregation functions.
+  def sql_for_group(order_string)
+    if /SUM\(/ =~ order_string
+      "pages.id"
+    end
   end
     
   def sql_for_order

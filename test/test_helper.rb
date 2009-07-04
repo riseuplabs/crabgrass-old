@@ -15,6 +15,13 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+require 'webrat'
+Webrat.configure do |config|
+  config.mode = :rails
+end
+
+require 'shoulda/rails'
+
 module Tool; end
 
 
@@ -95,6 +102,13 @@ class Test::Unit::TestCase
     assert_redirected_to :controller => :account, :action => :login
   end
 
+  def assert_login_required
+    assert_equal 'info', flash[:type]
+    assert_equal 'Login Required', flash[:title]
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
   def assert_error_message(regexp=nil)
     assert_equal 'error', flash[:type]
     if regexp
@@ -157,23 +171,15 @@ class Test::Unit::TestCase
   rake RAILS_ENV=test db:test:prepare db:fixtures:load  # (should not be necessary, but always a good first step)
   rake RAILS_ENV=test ts:index ts:start                 # (needed to build the sphinx index and start searchd)
   rake test:functionals
-See also doc/SPHINX_README"
+See also doc/SPHINX"
       @@sphinx_hints_printed = true
     end
 
   end
 
   def sphinx_working?(test_name="")
-    if `which searchd`.empty?
-      print 'skip' #(skipping %s: sphinx not installed)' % test_name
-      print_sphinx_hints
-      false
-    elsif !sphinx_running?
-      print 'skip' #'(skipping %s: sphinx not running)' % test_name
-      print_sphinx_hints
-      false
-    elsif !ThinkingSphinx.updates_enabled?
-      print 'skip' #'(skipping %s: sphinx updated disabled)' % test_name
+    if !ThinkingSphinx.sphinx_running?
+      print 'skip'
       print_sphinx_hints
       false
     else
@@ -223,6 +229,19 @@ See also doc/SPHINX_README"
   end
 
   ##
+  ## FIXTURE HELP
+  ##
+
+  # we use transactional fixtures for everything except page terms
+  # page_terms is a different ttable type (MyISAM) which doesn't support transactions
+  # this method will reload the original page terms from the fixture files
+  def reset_page_terms_from_fixtures
+    fixture_path = ActiveSupport::TestCase.fixture_path
+    Fixtures.reset_cache
+    Fixtures.create_fixtures(fixture_path, ["page_terms"])
+  end
+
+  ##
   ## MORE ASSERTS
   ##
 
@@ -239,4 +258,14 @@ See also doc/SPHINX_README"
     post '/account/login', {:login => user.to_s, :password => user.to_s}
   end
 
+<<<<<<< HEAD:test/test_helper.rb
+=======
+end
+
+# some special rules for integration tests
+class ActionController::IntegrationTest
+  # we load all fixtures because webrat integration test should see exactly
+  # the same thing the user sees in development mode
+  fixtures :all
+>>>>>>> master:test/test_helper.rb
 end

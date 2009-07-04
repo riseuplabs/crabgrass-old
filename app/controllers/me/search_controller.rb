@@ -37,7 +37,7 @@ class Me::SearchController < Me::BaseController
   end
 
   def add_excerpts_to_pages(pages)
-    config = ThinkingSphinx::Configuration.new
+    config = ThinkingSphinx::Configuration.instance
     client = Riddle::Client.new config.address, config.port
 
     results = client.excerpts(

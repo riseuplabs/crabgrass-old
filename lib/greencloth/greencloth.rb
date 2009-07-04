@@ -128,8 +128,8 @@ module GreenClothFormatterHTML
 
   # convert "* hi:: there" --> "<li><b>hi:</b> there</li>"
   def li_open(opts)
-    opts[:text].sub!(/^(.+):: /, '<b>\1:</b> ')
-    "#{li_close unless opts.delete(:first)}#{"\t" * opts[:nest]}<li#{pba(opts)}>#{opts[:text]}"
+    opts[:text].sub!(/^(.+)::( |$)/, '<b>\1:</b> ')
+    super
   end
 
   def tr_open(opts)

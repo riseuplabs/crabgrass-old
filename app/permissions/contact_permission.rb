@@ -29,10 +29,10 @@ module ContactPermission
     return false
   end
 
-  def may_message_contact?(user=@user)
-    logged_in? and
-    user != current_user
-  end
+  #def may_message_contact?(user=@user)
+  #  logged_in? and
+  #  user != current_user
+  #end
 
   def may_approve_contact?(user=@user)
     logged_in? and @past_request.any?
