@@ -114,6 +114,15 @@ label}</a></span>)
     link_to(link_label,url_hash, :class => selected_class)
   end
 
+  # like link_to_remote, but sets the class to be 'active' if the link is
+  # active (:active => true)
+  def link_to_remote_active(link_label, options, html_options={})
+    active = options.delete(:active) || html_options.delete(:active)
+    selected_class = active ? 'active' : ''
+    html_options[:class] = [html_options[:class], selected_class].combine
+    link_to_remote(link_label, options, html_options)
+  end
+
   # returns true if the current params matches url_hash
   def url_active?(url_hash)
     return false unless url_hash.is_a? Hash
