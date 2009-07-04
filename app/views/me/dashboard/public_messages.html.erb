@@ -1,4 +1,12 @@
-<% @message_box = 'messages/form' %>
+<%
+  @message_box ||= render(
+    :partial => 'common/say_form',
+    :locals => {
+      :submit => "Post New Message"[:wall_post_button],
+      :url => url_for(:controller => '/messages', :action => 'create', :user => @user)
+    }
+  )
+%>
 <% @more_activity_url = url_for(:controller => '/messages', :action => 'index', :user => current_user) %>
 <%= render :file => 'me/dashboard/index' %>
 

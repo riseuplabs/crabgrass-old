@@ -271,6 +271,12 @@ span.break
   float: right !important
   float: none
 
+// use classes so that we can reverse for rtl
+.align_right
+  text-align: right
+.align_left
+  text-align: left
+
 //
 // COLORED HEADINGS
 //
@@ -474,8 +480,8 @@ table.plain
     white-space: nowrap
   p
     margin: 0
-  strong
-    font-weight: normal
+  ins
+    text-decoration: none
     color: #3399FF
   em
     font-weight: bold

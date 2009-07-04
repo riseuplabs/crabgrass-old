@@ -62,6 +62,10 @@ class Activity < ActiveRecord::Base
   end
 
   # to be defined by subclasses
+  def style()
+  end
+
+  # to be defined by subclasses
   def description(view) end
 
   # to be defined by subclasses

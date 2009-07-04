@@ -143,7 +143,7 @@ module ApplicationHelper
   end
 
   def expand_links(description)
-    description.gsub(/<span class="(.*?)">(.*?)<\/span>/) do |match|
+    description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
       case $1
         when "user": link_to_user($2)
         when "group": link_to_group($2)
@@ -159,12 +159,14 @@ module ApplicationHelper
 
     description = expand_links(description)
 
-    icon = activity.icon
+    css_class = "small_icon #{activity.icon}_16"
+    css_style = activity.style
+    
     created_at = (friendly_date(activity.created_at) if activity.created_at)
     more_link = activity.link
     more_link = content_tag(:span, more_link, :class => 'commands') if more_link
     
-    content_tag :li, [description, more_link, created_at].compact.join(BULLET), :class => "small_icon #{icon}_16"
+    content_tag :li, [description, more_link, created_at].compact.join(BULLET), :class => css_class, :style => css_style
   end
 
   def side_list_li(options)

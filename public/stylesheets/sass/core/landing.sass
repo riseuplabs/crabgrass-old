@@ -156,21 +156,38 @@ div
 // STATUS
 // 
 
-.set_status
-  width: 100%
-  td
-    vertical-align: middle
-    padding: 0.5em
-
-.title_box table
-  width: 100%
-  td.left
-    width: 1%
-    white-space: nowrap
-  td.right
-    padding-left: 4em
-    width: 99%
-    text-align: right
+.dashboard_message
+  padding: 0em 1em 0.5em 1em
+  table
+    margin: 0 auto
+  img
+    margin-top: 2px
+  .submit
+    margin-left: 18px
+  .speech
+    padding: 2px
+    background: white
+    border: 2px solid #999
+    -moz-border-radius: 6px
+    position: relative
+    left: 10px
+    textarea
+      height: 1.2em
+    .textinput
+      font-size: 1em
+      font-family: monospace
+      border: 0
+      background: white
+      overflow: auto
+      &.tall
+        height: 6em
+  .triangle
+    position: absolute
+    top: 4px
+    margin-left: 3px
+    background: transparent url(/images/ui/say.gif) no-repeat 0 50%
+    height: 18px
+    width: 9px
 
 //
 // ACTIVITIES

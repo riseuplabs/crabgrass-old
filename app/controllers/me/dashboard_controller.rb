@@ -1,5 +1,9 @@
 class Me::DashboardController < Me::BaseController
-  
+
+  # for autocomplete  
+  javascript 'effects', 'controls', 'autocomplete', :action => :private_messages
+  helper 'autocomplete'
+
   def index
     @activities = Activity.for_dashboard(current_user).only_visible_groups.newest.unique.find(:all, :limit => 12)
     fetch_data

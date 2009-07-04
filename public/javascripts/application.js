@@ -93,6 +93,11 @@ function decorate_wiki_edit_links(ajax_link) {
   );
 }
 
+function setRows(elem, rows) {
+  elem.rows = rows;
+  elem.toggleClassName('tall');
+}
+
 //
 // EVENTS
 //

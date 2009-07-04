@@ -1,4 +1,13 @@
-<% @message_box ||= 'messages/status_form' %>
+<%
+  @message_box ||= render(
+    :partial => 'common/say_form',
+    :locals => {
+      :submit => "Set Status"[:set_status_button], 
+      :url => url_for(:controller => '/messages', :action => 'set_status', :user => current_user),
+      :text => @current_status
+    }
+  )
+%>
 
 <%= render :partial => 'me/dashboard/title_box' %>
 
