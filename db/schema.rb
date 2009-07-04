@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090704130039) do
+ActiveRecord::Schema.define(:version => 20090704155537) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -335,7 +335,7 @@ ActiveRecord::Schema.define(:version => 20090704130039) do
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media"
-    t.integer  "stars_count",        :limit => 11
+    t.integer  "stars_count",        :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0, :null => false
     t.string   "owner_name"
   end
@@ -373,7 +373,7 @@ ActiveRecord::Schema.define(:version => 20090704130039) do
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.integer  "stars_count",        :limit => 11
+    t.integer  "stars_count",        :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
