@@ -154,8 +154,7 @@ namespace :crabgrass do
 
   desc "refresh the staging database"
   task :refresh do 
-    run "mkdir -p #{deploy_to}/tmp/"
-    run "touch #{deploy_to}/tmp/refresh.txt"
+    run "touch #{deploy_to}/shared/tmp/refresh.txt"
   end
 
 end
