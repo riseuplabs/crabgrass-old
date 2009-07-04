@@ -10,9 +10,9 @@ class BasePageController < ApplicationController
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
+  javascript 'effects', 'controls', 'autocomplete' # for autocomplete
   permissions 'base_page', 'posts'
-  helper 'groups'
+  helper 'groups', 'autocomplete'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
