@@ -8,10 +8,10 @@ will not work and searching will fall back to dumb mysql searches.
 
 check http://www.sphinxsearch.com/downloads.html for the latest version
 
+  sudo apt-get install libmysqlclient15-dev build-essential
   wget http://www.sphinxsearch.com/downloads/sphinx-xxxxxx.tar.gz
   tar xzvf sphinx-xxxxxx.tar.gz
   cd sphinx-xxxxxxx
-  sudo apt-get install libmysqlclient15-dev
   ./configure -sysconfdir=/etc
   make
   sudo make install

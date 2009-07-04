@@ -1,0 +1,17 @@
+<%= render :partial => 'tabs' %>
+
+<% if logged_in? %>
+  <%= letter_pagination_links({:controller => 'people', :action => 'friends'}, :available_letters => @pagination_letters) %>
+
+  <div class='workarea'>
+  <%= render :partial => 'users' %>
+  <br class='clear' />
+
+  <%= pagination_links @users %>
+  </div>
+
+  <%= call_hook :bottom_people_list %>
+
+<% else %>
+  <%= "No public profiles yet..."[:no_public_profiles] %>
+<% end %>

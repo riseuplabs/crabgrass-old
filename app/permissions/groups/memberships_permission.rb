@@ -5,7 +5,10 @@ module Groups::MembershipsPermission
     current_user.may?(:admin, group)
   end
 
-  alias_method :may_join_memberships?, :may_create_memberships?
+  def may_join_memberships?(group=@group)
+    logged_in? and
+    (current_user.may?(:admin, group) or group.open_membership?)
+  end
 
   # for now, there is only an edit ui for committees  
   def may_edit_memberships?(group=@group)

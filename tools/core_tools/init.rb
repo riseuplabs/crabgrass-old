@@ -1,9 +1,3 @@
-# this should not exist:
-#PageClassRegistrar.add(
-#  'Page',
-#  :controller => 'page',
-#  :class_display_name => 'basic page'
-#)
   
 PageClassRegistrar.add(
   'DiscussionPage',
@@ -18,10 +12,8 @@ PageClassRegistrar.add(
   :controller => 'message_page',
   :icon => 'page_message',
   :class_group => ['text', 'discussion'],
-  :order => 3
+  :internal => true
 )
 
-
-#self.override_views = true
 self.load_once = false
 

@@ -42,8 +42,10 @@ class AccountController < ApplicationController
         session[:language_code] = previous_language
       end
       
-      params[:redirect] = nil unless params[:redirect].any?
       current_site.add_user!(current_user)
+      UnreadActivity.create(:user => current_user)
+
+      params[:redirect] = nil unless params[:redirect].any?
       redirect_to(params[:redirect] || current_site.login_redirect(current_user))
     else
       flash_message :title => "Could not log in"[:login_failed],

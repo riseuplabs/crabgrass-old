@@ -143,11 +143,11 @@ end
       )
       html << '<br/>'
     end
-    content_tag :div, html.join("\n"), :id => id, :style => 'display:none', :class => 'tab-content'
+    content_tag :div, html.join("\n"), :id => id, :style => 'display:none', :class => 'tab_content'
   end
 
   def share_freeform_recipient_pane()
-    content_tag :div, text_area_tag('recipients_text_area', '', :style => 'width:100%', :id => 'recipient_list'), :id => 'share_freeform', :class => 'tab-content', :style => 'display:none'
+    content_tag :div, text_area_tag('recipients_text_area', '', :style => 'width:100%', :id => 'recipient_list'), :id => 'share_freeform', :class => 'tab_content', :style => 'display:none'
   end
 
 

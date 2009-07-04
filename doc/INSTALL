@@ -25,6 +25,10 @@ These packages are optional, but necessary for image thumbnails and document pre
 
   apt-get install openoffice.org openoffice.org-headless msttcorefonts
 
+These packages are required by Nokogiri gem (used by the webrat testing pluging)
+  
+  apt-get install libxslt1-dev libxml2-dev
+
 For more information on generating previews, see ASSETS[link:files/doc/ASSETS.html].
 
 = Install Gems
@@ -42,7 +46,7 @@ These gems are required for Crabgrass:
 
 These gems are optional:
 
-  gem install haml ruby-debug hpricot mime-types chronic packet --no-ri --no-rdoc
+  gem install haml ruby-debug hpricot nokogiri launchy mime-types chronic packet --no-ri --no-rdoc
 
 See GEMS[link:files/doc/GEMS.html] for a description of what these gems are used for.
 

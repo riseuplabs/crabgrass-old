@@ -18,5 +18,10 @@ module RootHelper
     end
   end
 
+  def load_panel(panel_name)
+   remote_function(:url => {:controller => 'root', :action => panel_name})
+    #, :update => "#{panel_name}_panel")
+  end
+
 end
 

@@ -291,6 +291,7 @@ activity_user_destroyed: "{user} has retired"
 activity_group_created: "{user} created {group_type} {group}"
 activity_group_destroyed: "{group} was destroyed by {user}"
 activity_wall_message: "{author} wrote to {user}: {message}"
+activity_message: "{author} wrote: {message}"
 activity_unread: "You have {count} unread [private messages]"
 activity_unread_singular: "You have an unread [private message]"
 
@@ -560,6 +561,7 @@ create_committee: "create committee"
 group_language: "The main language of this %s."
 group_summary: "Brief information regarding this %s."
 new_network: "New network"
+group_membership_count: "{count} Members"
 
 # directory
 
@@ -979,7 +981,7 @@ wiki_revert_version: "Revert To Version {version}"
 ## WALL
 ## 
 
-set_status_button: "Set Status"
+set_status_button: "Update Status"
 my_status_heading: "Your Current Status"
 # ^^ no longer used
 users_wall: ":user's Wall"
@@ -1017,6 +1019,8 @@ email_link_expires: "This link will expire in {days} days."
 ##
 ## PEOPLE (i.e., PeopleController)
 ##
+last_seen: last seen
+all: All
 
 directory_of_people: Directory of People
 no_contacts_msg: You have no friends.
@@ -1091,3 +1095,17 @@ welcome_create_group_text: "Create a new group and invite other people to join. 
 welcome_create_page_link: "Create a new page"
 welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
 
+##
+## SITE HOME
+##
+have_your_say: "Have Your Say!"
+contribute_to_site: "Contribute to Site"
+create_a_group: "Create a Group"
+see_tips_to_get_started: "See Tips to get started"
+most_active_members: "Most Active Members"
+recently_active_members: "Recently Active Members"
+most_active_groups: "Most Active Groups"
+recently_active_groups: "Recently Active Groups"
+network_aettings: "Network Settings"
+administer_site: "Administer Site"
+edit_appearance: "Edit Appearance"

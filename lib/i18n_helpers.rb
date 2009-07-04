@@ -29,7 +29,9 @@ end
 
 class Symbol
   def t()
-    self.to_s.t(self)
+    # this special form will default to english if the symbol 
+    # cannot be found for the current language.
+    ""[self]
   end
 end
 

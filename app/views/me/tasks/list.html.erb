@@ -10,7 +10,7 @@
 </table>
 <% end -%>
 
-<%= render(:partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_page_types => 'false'}) %>
+<%= render(:partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups, :show_page_types => 'false'}) %>
 
 <%= render :partial => 'tasks/list' %>
 

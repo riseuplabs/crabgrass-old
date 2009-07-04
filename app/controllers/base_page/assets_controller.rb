@@ -20,15 +20,8 @@ class BasePage::AssetsController < ApplicationController
   ## TODO: notify page watcher that an attachment has been added?
   ## TODO: use iframe trick to make this ajaxy
   def create
-    @asset = Asset.build params[:asset]
-    @asset.parent_page = @page
-    @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
-    @asset.save
-    if params[:use_as_cover]
-      @page.cover = @asset
-      @page.save!
-    end
-    flash_message :object => @asset
+    asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    flash_message :object => asset
     redirect_to page_url(@page)
   end
 

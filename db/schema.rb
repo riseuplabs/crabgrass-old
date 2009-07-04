@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090619075032) do
+ActiveRecord::Schema.define(:version => 20090703091241) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
     t.integer  "access",       :limit => 1,  :default => 2
     t.integer  "related_id",   :limit => 11
     t.integer  "site_id",      :limit => 11
+    t.boolean  "flag"
   end
 
   add_index "activities", ["created_at"], :name => "created_at"
@@ -113,13 +114,6 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
   add_index "codes", ["code"], :name => "index_codes_on_code", :unique => true
   add_index "codes", ["expires_at"], :name => "index_codes_on_expires_at"
 
-  create_table "contacts", :id => false, :force => true do |t|
-    t.integer "user_id",    :limit => 11
-    t.integer "contact_id", :limit => 11
-  end
-
-  add_index "contacts", ["contact_id", "user_id"], :name => "index_contacts"
-
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id",  :limit => 11
     t.boolean "preferred",                 :default => false
@@ -138,6 +132,16 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
     t.integer  "masthead_asset_id", :limit => 11
     t.integer  "favicon_id",        :limit => 11
   end
+
+  create_table "dailies", :force => true do |t|
+    t.integer "page_id",    :limit => 11
+    t.integer "views",      :limit => 11
+    t.integer "ratings",    :limit => 11
+    t.integer "edits",      :limit => 11
+    t.date    "created_at"
+  end
+
+  add_index "dailies", ["page_id"], :name => "index_dailies_on_page_id"
 
   create_table "discussions", :force => true do |t|
     t.integer  "posts_count",      :limit => 11, :default => 0
@@ -235,6 +239,16 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
   add_index "groups", ["parent_id"], :name => "index_groups_parent_id"
+
+  create_table "hourlies", :force => true do |t|
+    t.integer  "page_id",    :limit => 11
+    t.integer  "views",      :limit => 11
+    t.integer  "ratings",    :limit => 11
+    t.integer  "edits",      :limit => 11
+    t.datetime "created_at"
+  end
+
+  add_index "hourlies", ["page_id"], :name => "index_hourlies_on_page_id"
 
   create_table "im_addresses", :force => true do |t|
     t.integer "profile_id", :limit => 11
@@ -461,7 +475,7 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
     t.boolean  "may_request_membership"
-    t.integer  "membership_policy",      :limit => 11
+    t.integer  "membership_policy",      :limit => 11, :default => 0
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
     t.boolean  "may_request_contact",                  :default => true
@@ -487,6 +501,17 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
 
   add_index "ratings", ["user_id"], :name => "fk_ratings_user"
   add_index "ratings", ["rateable_type", "rateable_id"], :name => "fk_ratings_rateable"
+
+  create_table "relationships", :force => true do |t|
+    t.integer  "user_id",       :limit => 11
+    t.integer  "contact_id",    :limit => 11
+    t.string   "type",          :limit => 10
+    t.integer  "discussion_id", :limit => 11
+    t.datetime "viewed_at"
+    t.integer  "unread_count",  :limit => 11, :default => 0
+  end
+
+  add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"
 
   create_table "requests", :force => true do |t|
     t.integer  "created_by_id",         :limit => 11
@@ -680,6 +705,9 @@ ActiveRecord::Schema.define(:version => 20090619075032) do
     t.integer  "user_id",    :limit => 11
     t.integer  "group_id",   :limit => 11
     t.datetime "tracked_at"
+    t.boolean  "views"
+    t.boolean  "edits"
+    t.boolean  "stars"
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"

@@ -2,17 +2,15 @@
 
 FORMY -- a form creator for rails
 
-<%=
- form :option => value do
-   title "My Form"
-   label "Mail Client"
-   row :option => value do
-     info "info about this row"
-     label "row label"
-     input text_field('object','method')
-   end
- end
-%>
+<%= Formy.form :option => value do |f|
+  f.title "My Form"
+  f.label "Mail Client"
+  f.row do |r|
+    r.info "info about this row"
+    r.label "row label"
+    r.input text_field('object','method')
+  end
+end %>
 
 A form consistants of a tree of elements. 
 Each element may contain other elements. 
@@ -55,11 +53,11 @@ the rules for javascript tabs:
 end
 %>
 
-<div class='tab-content tab-area' id='tab-one-div'>
+<div class='tab_content' id='tab-one-div'>
   <%= render :partial => 'something/good' %>
 </div>
 
-<div class='tab-content tab-area' id='tab-two-div' style='display:none'>
+<div class='tab_content' id='tab-two-div' style='display:none'>
   <%= render :partial => 'something/better' %>
 </div>
 
@@ -152,6 +150,7 @@ module Formy
   
   class Element
     include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::JavascriptHelper
 
     def initialize(form,options={})
       @base = form
@@ -282,7 +281,13 @@ module Formy
   class Tabset < Root 
     class Tab < Element
       # required: label & ( link | url | show_tab )
-      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class
+      #
+      # if show_tab is set to an dom id that ends in '_panel', then special things happen:
+      #
+      #  (1) the link is given an id with _panel replaced by _link
+      #  (2) the window.location.hash is set by removing '_panel'
+      #
+      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class, :hash
       
       def close
         selected = 'active' if "#{@selected}" == "true"
@@ -292,8 +297,13 @@ module Formy
         elsif @url
           a_tag = content_tag :a, @label, :href => @url, :class => @class, :style => @style, :id => @id
         elsif @show_tab
-          onclick = "show_tab(this, $('%s'))" % @show_tab
-          @id = @show_tab + '_link'
+          if @show_tab =~ /_panel$/
+            @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
+            onclick = "showTab(this, $('%s'), '%s')" % [@show_tab, @hash]
+            @id = @show_tab.sub(/_panel$/, '_link')
+          else
+            onclick = "showTab(this, $('%s'))" % @show_tab
+          end
           a_tag = content_tag :a, @label, :onclick => onclick, :class => @class, :style => @style, :id => @id
         end
         puts content_tag(:li, a_tag, :class => 'tab')
@@ -435,7 +445,7 @@ module Formy
 #    end
 
     class Row < Element
-      element_attr :info, :label, :input, :id, :style, :classes
+      element_attr :info, :label, :label_for, :input, :id, :style, :classes
   
       def open
         super
@@ -450,7 +460,7 @@ module Formy
           #labelspan = 2 if @label and not @input
           #inputspan = 2 if @input and not @label
           puts "<tr class='row #{parent.first} #{@classes}' id='#{@id}' style='#{@style}'>"
-          puts "<td colspan='#{labelspan}' class='label'>#{@label}</td>"
+          puts "<td colspan='#{labelspan}' class='label'><label for='#{@label_for}'>#{@label}</label></td>"
           if @input
             puts "<td colspan='#{inputspan}' class='input'>"
             puts @input

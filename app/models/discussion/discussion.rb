@@ -1,3 +1,15 @@
+#
+#  create_table "discussions", :force => true do |t|
+#    t.integer  "posts_count",      :limit => 11, :default => 0
+#    t.datetime "replied_at"
+#    t.integer  "replied_by_id",    :limit => 11
+#    t.integer  "last_post_id",     :limit => 11
+#    t.integer  "page_id",          :limit => 11
+#    t.integer  "commentable_id",   :limit => 11
+#    t.string   "commentable_type"
+#  end
+#  add_index "discussions", ["page_id"], :name => "index_discussions_page_id"
+#
 class Discussion < ActiveRecord::Base
  
   ##
@@ -8,14 +20,43 @@ class Discussion < ActiveRecord::Base
   belongs_to :replied_by, :class_name => 'User'
   belongs_to :last_post, :class_name => 'Post'
   
+  # i think this is currently unused?
   has_one :profile, :foreign_key => 'discussion_id'
 
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => 'Post'
 
   belongs_to :commentable, :polymorphic => true
+
+  # if we are a private discussion:
+  has_many :relationships do
+    def contact_of(user)
+      self.select {|relationship| return relationship.contact if relationship.user_id == user.id}
+    end
+    def for_user(user)
+      self.select {|relationship| return relationship if relationship.user_id == user.id}
+    end
+  end
   
-  belongs_to :user, :polymorphic => true
-  
+  ##
+  ## PRIVATE DISCUSSION
+  ##
+
+  def last_post_by(user)
+    self.posts.find_by_user_id(user.id, :order => 'created_at DESC')
+  end
+
+  #def unread_count(user)
+  #  if relationship = self.relationships.for_user(user)
+  #    self.posts.count :conditions => ['created_at > ?', relationship.viewed_at]
+  #  else
+  #    0
+  #  end
+  #end
+
+  def increment_unread_for(user)
+    relationships.for_user(user).if_not_nil.increment!(:unread_count)
+  end
+
   ## 
   ## attributes
   ##

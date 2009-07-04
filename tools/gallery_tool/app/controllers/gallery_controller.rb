@@ -12,8 +12,7 @@ class GalleryController < BasePageController
   verify :method => :post, :only => [:add, :remove]
 
   def show
-    params[:page] ||= 1
-    @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+    @images = paginate_images
     #@cover = @page.cover
   end
 
@@ -101,8 +100,7 @@ class GalleryController < BasePageController
   end
   
   def edit
-    params[:page] ||= 1
-    @images = @page.images.paginate(:page => params[:page], :per_page => 16)
+    @images = paginate_images
   end
   
   def make_cover
@@ -132,22 +130,7 @@ class GalleryController < BasePageController
   
   def find
     existing_ids = @page.image_ids
-    # this call doesn't return anything as Asset.visible_to isn't working.
-    # see my comment in app/models/asset.rb for details.
-    #   @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
-    results = Asset.media_type(:image).exclude_ids(existing_ids).most_recent.select { |a|
-      (a.page && current_user.may?(:view, a.page)) ? a : nil
-    }
-    current_page = (params[:page] or 1)
-    per_page = 30
-    @images = WillPaginate::Collection.create(current_page,
-                                              per_page,
-                                              results.size) do |pager|
-      start = (current_page-1)*per_page
-      result_slice = (results.to_array[start, per_page] rescue
-                      results[start, per_page])
-      pager.replace(results[start, per_page])
-    end
+    @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
   rescue => exc
     flash_message :exception => exc
     redirect_to :action => 'show', :page_id => @page.id
@@ -281,7 +264,9 @@ class GalleryController < BasePageController
     @assets ||= []
     params[:assets].each do |file|
       next if file.size == 0 # happens if no file was selected
-      asset = Asset.make(:uploaded_data => file)
+      asset = Asset.make(:uploaded_data => file) do |asset|
+        asset.parent_page = @page
+      end
       @assets << asset
       @page.add_image!(asset, current_user)
     end
@@ -294,6 +279,32 @@ class GalleryController < BasePageController
       asset.destroy unless asset.new_record?
       asset.page.destroy if asset.page and !asset.page.new_record?
     end
+  end
+
+  # 
+  # there appears to be a bug in will_paginate. it only appears when
+  # doing two inner joins and there are more records than the per_page size.
+  #
+  # unfortunately, this is what we need for returning the images the current
+  # user has access to see.
+  #
+  # This works as expected:
+  #
+  #   @page.images.visible_to(current_user).find(:all)
+  #
+  # That is just great, but we also want to paginate. This blows up horribly,
+  # if there are more than three images:
+  #
+  #  @page.images.visible_to(current_user).paginate :page => 1, :per_page => 3
+  #
+  # So, this method uses two queries to get around the double join, so that 
+  # will_paginate doesn't freak out.
+  #
+  # The first query just grabs all the potential image ids (@page.image_ids)
+  #
+  def paginate_images
+    params[:page] ||= 1
+    Asset.visible_to(current_user).paginate(:page => params[:page], :conditions => ['assets.id IN (?)', @page.image_ids])
   end
 
 end
