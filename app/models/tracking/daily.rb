@@ -6,8 +6,8 @@ class Daily < ActiveRecord::Base
     begin
       connection.execute("LOCK TABLES hourlies WRITE, dailies WRITE")
       connection.execute("DELETE QUICK FROM dailies WHERE created_at < NOW() - INTERVAL 30 DAY")
-      connection.execute("INSERT DELAYED INTO dailies (page_id, views, ratings, edits, created_at)
-        SELECT hourlies.page_id, sum(hourlies.views), sum(hourlies.ratings), sum(hourlies.edits), now() - INTERVAL 1 DAY
+      connection.execute("INSERT DELAYED INTO dailies (page_id, views, stars, edits, created_at)
+        SELECT hourlies.page_id, sum(hourlies.views), sum(hourlies.stars), sum(hourlies.edits), now() - INTERVAL 1 DAY
         FROM hourlies
         GROUP BY hourlies.page_id")
     ensure
