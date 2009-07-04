@@ -229,9 +229,11 @@ module PathFinder::Mysql::BuilderFilters
     if unit=="days"
       @conditions << "dailies.created_at > NOW() - INTERVAL %s DAY" % num
       @order << ["SUM(dailies.#{what}) DESC"]
+      @select = "pages.*, SUM(dailies.#{what}) AS #{what}"
     elsif unit=="hours"
       @conditions << "hourlies.created_at > NOW() - INTERVAL %s HOUR" % num
       @order << ["SUM(hourlies.#{what}) DESC"]
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{what}"
     else
       return
     end
@@ -246,7 +248,7 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_stars(num, unit)
-    filter_most("rated", num, unit)
+    filter_most("ratings", num, unit)
   end
 
   #--
