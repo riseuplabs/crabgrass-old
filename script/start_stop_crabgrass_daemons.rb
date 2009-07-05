@@ -9,6 +9,7 @@ $environment = 'production'
 $root = Pathname.new(__FILE__).dirname.dirname.realpath
 $backgroundrb_config_file = "#{$root}/config/backgroundrb.yml"
 $sphinx_config_file = "#{$root}/config/#{$environment}.sphinx.conf"
+$sphinx_db_file = "#{$root}/db/sphinx/production/page_terms_core.sph"
 $ts_config_file = "#{$root}/config/sphinx.yml"
 $backgroundrb_port = 0
 
@@ -43,8 +44,12 @@ def ensure_sphinx_config
   assert_file_exists($ts_config_file)
   unless File.exists? $sphinx_config_file
     puts 'No sphinx configuration exists, creating one (%s)' % $sphinx_config_file
-    system("rake thinking_sphinx:config RAILS_ENV=#{$environment}")
+    system("rake thinking_sphinx:configure RAILS_ENV=#{$environment}")
     assert_file_exists($sphinx_config_file)
+  end
+  unless File.exists? $sphinx_db_file
+    puts "No sphinx db exists... creating index now"
+    system("rake thinking_sphinx:index RAILS_ENV=#{$environment}")
   end
 end
 
