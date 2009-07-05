@@ -24,7 +24,16 @@ class UserParticipationTest < Test::Unit::TestCase
     p.reload
     assert_equal 'banana', p.updated_by_login, 'cached updated_by_login should be "banana"'
   end
-    
+  
+  def test_updated
+    u = users(:blue)
+    page = Page.create :title => 'hello', :user => u
+    assert_equal 0, page.contributors_count
+    u.updated(page)
+    page.save
+    assert_equal 1, page.reload.contributors_count
+  end
+
   def test_participations
     user = User.find 4
     group = Group.find 3
