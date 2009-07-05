@@ -136,8 +136,8 @@ module ImageHelper
 
   def link_to_function_with_icon(label, function, options={})
     icon = options.delete(:icon)
-    class_options = {:class => "small_icon #{icon}_16"}
-    link_to_function(label, function, class_options.merge(options))
+    options[:class] = ['small_icon', "#{icon}_16", options[:class]].combine
+    link_to_function(label, function, options)
   end
 
   def link_to_remote_icon(icon, options={}, html_options={})
