@@ -212,6 +212,7 @@ module ApplicationHelper
     if links.first.is_a? Symbol
       char = links.shift
       return ' &bull; ' if char == :bullet
+      return ' ' if char == :none
       return ' | '
     else
       return ' | '
