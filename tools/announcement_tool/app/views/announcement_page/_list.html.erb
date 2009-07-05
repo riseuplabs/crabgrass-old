@@ -1,11 +1,11 @@
 <% announcements = @announcements if announcements.nil? %>
 <% if announcements.any? %>
 <div class="announcements">
-  <%= header_with_more(:h2, 'bright', "Announcements"[:Announcements], nil) %>
+  <%= header_with_more(:h2, 'bright', "Announcements"[:Announcements], group_search_url('type', 'announcement')) %>
   <table><tr>
   <% announcements.each do |page| %>
     <td>
-      <h3 class="alert small_icon exclamation_16"><%= link_to h(page.title), page_url(page) %></h3>
+      <h3 class="alert small_icon page_notice_16"><%= link_to h(page.title), page_url(page) %></h3>
       <p><%= truncate(page.wiki.body_html, 250, '... ' + link_to('more'.t + ARROW, page_url(page))) %></p>
     </td>
   <% end %>

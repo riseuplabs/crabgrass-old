@@ -161,6 +161,10 @@ module PathFinder::Mysql::BuilderFilters
       @values << true
     end
 
+    if page_type == 'announcement'
+      @flow = :announcement
+    end
+
     if page_type
       @conditions << 'pages.type = ?'
       @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
@@ -199,12 +203,12 @@ module PathFinder::Mysql::BuilderFilters
   end
   
   def filter_stars(star_count)
-    @conditions << 'pages.stars >= ?'
+    @conditions << 'pages.stars_count >= ?'
     @values << star_count
   end
 
   def filter_starred
-    @conditions << 'pages.stars > 0'
+    @conditions << 'pages.stars_count > 0'
   end
 
   #--
@@ -228,12 +232,12 @@ module PathFinder::Mysql::BuilderFilters
     num.gsub!(/[^\d]+/, ' ')
     if unit=="days"
       @conditions << "dailies.created_at > NOW() - INTERVAL %s DAY" % num
-      @order << ["SUM(dailies.#{what}) DESC"]
-      @select = "pages.*, SUM(dailies.#{what}) AS #{what}"
+      @order << "SUM(dailies.#{what}) DESC"
+      @select = "pages.*, SUM(dailies.#{what}) AS #{what}_count"
     elsif unit=="hours"
       @conditions << "hourlies.created_at > NOW() - INTERVAL %s HOUR" % num
-      @order << ["SUM(hourlies.#{what}) DESC"]
-      @select = "pages.*, SUM(hourlies.#{what}) AS #{what}"
+      @order << "SUM(hourlies.#{what}) DESC"
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{what}_count"
     else
       return
     end
@@ -244,11 +248,16 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_edits(num, unit)
-    filter_most("edits", num, unit)
+    unit=unit.upcase.singularize
+    return unless ["DAY", "HOUR"].include?(unit)
+    num.gsub!(/[^\d]+/, ' ')
+    @conditions << "user_participations.changed_at > NOW() - INTERVAL %s %s" % [num, unit]
+    @order << "SUM(1) DESC"   # SUM(1) works like COUNT but gets registered by the builder.
+    @select = "pages.*, SUM(1) AS contributors_count"
   end
 
   def filter_most_stars(num, unit)
-    filter_most("ratings", num, unit)
+    filter_most("stars", num, unit)
   end
 
   #--

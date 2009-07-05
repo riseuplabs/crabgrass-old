@@ -35,16 +35,16 @@ class MessageWallActivity < Activity
     else
       txt = '{author} wrote: {message}'[:activity_message, {:author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
     end
-    if txt[-3..-1] == '...'
-      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
-    else
-      @link = content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
-    end
+#    if txt[-3..-1] == '...'
+#      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#    else
+#      @link = content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#    end
     return txt
   end
 
   def link
-    @link
+    {:controller => '/messages', :user => user, :action => 'show', :id => post_id}
   end
 
   def icon
