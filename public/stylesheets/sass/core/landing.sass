@@ -194,12 +194,22 @@ div
 //
 
 .activities li
-  color: #666
-  margin-bottom: 0.75em
+  color: #333
+  margin-bottom: 1em
   padding-left: 24px
-  span.commands a
-    text-transform: lowercase
+  span.commands a:hover
+    background: #00F
+    color: white
+    text-decoration: none
   img
     max-width: 200px
     max-height: 200px
+  &.small_icon
+    background-position: 0 2px
+  label.date
+    font-style: italic
+    color: #999
+  br
+    display: none
+
 

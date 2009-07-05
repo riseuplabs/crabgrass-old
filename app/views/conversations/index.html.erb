@@ -3,8 +3,6 @@
 <%# move to stylesheets when we have a real design for this page %>
 <% content_for :style do %>
 table.pretty td {vertical-align: top;}
-table.pretty tr.message:hover {background-color: #ffffdd;}
-table.pretty tr.message td {cursor: pointer}
 <% end %>
 
 <table class="pretty">
@@ -16,7 +14,7 @@ table.pretty tr.message td {cursor: pointer}
 <% for discussion in @discussions %>
   <% relationship = discussion.relationships.for_user(current_user) %>
   <% other_user = relationship.contact %>
-  <tr class="message" onclick="window.location='<%= conversation_path(:id => other_user)%>'">
+  <tr class="clickable" onclick="window.location='<%= conversation_path(:id => other_user)%>'">
     <td>
       <%= display_entity(other_user, :avatar => :medium, :format => :twolines) %>
     </td>
