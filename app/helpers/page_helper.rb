@@ -132,7 +132,7 @@ module PageHelper
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
-    group_name owner_name title posts_count contributors_count stars
+    group_name owner_name title posts_count contributors_count stars_count
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -223,8 +223,8 @@ module PageHelper
     elsif column == :contributors_count or column == :contributors
       page.contributors_count
     elsif column == :stars_count or column == :stars
-      if page.stars > 0
-        content_tag(:span, "%s %s" % [icon_tag('star'), page.stars], :class => 'star')
+      if page.stars_count > 0
+        content_tag(:span, "%s %s" % [icon_tag('star'), page.stars_count], :class => 'star')
       else
         icon_tag('star_empty')
       end
@@ -317,7 +317,7 @@ module PageHelper
     elsif column == :last_post
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
-      list_heading 'stars'[:page_list_heading_stars], 'stars', options
+      list_heading 'stars'[:page_list_heading_stars], 'stars_count', options
     elsif column == :views or column == :views_count
       list_heading 'views'[:page_list_heading_views], 'views', options
     elsif column == :owner_with_icon || column == :owner

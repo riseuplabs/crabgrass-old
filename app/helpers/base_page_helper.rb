@@ -118,7 +118,7 @@ module BasePageHelper
         add = true
         label = 'Add Star (:star_count)'[:add_star_link]
       end
-      label = label % {:star_count => @page.stars}
+      label = label % {:star_count => @page.stars_count}
       url = {:controller => 'base_page/participation', :action => 'update_star',
              :add => add, :page_id => @page.id}
       link = link_to_remote_with_icon(label, :url => url, :icon => icon)

@@ -74,7 +74,7 @@ page<%=i%>:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 <% if rand(3) == 0 %>
-  stars: <%= rand(4) %>
+  stars_count: <%= rand(4) %>
 <% end %>
   views_count: <%= rand(100) %>
 <% if rand(3) == 0 %>

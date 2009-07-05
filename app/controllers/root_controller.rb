@@ -89,11 +89,11 @@ class RootController < ApplicationController
     when 'all_time' then
       case filter_by
       when 'most_views' then
-        paginate('descending','views')
+        paginate('descending','views_count')
       when 'most_edits' then
-        paginate('descending','contributors_count') #TODO we do not count total edits yet...
+        paginate(filter_by, '365', 'days') #TODO: contributors count does not seem to get updated
       when 'most_stars' then
-        paginate('descending','stars')
+        paginate('descending','stars_count')
       end
     end
   end
@@ -105,6 +105,8 @@ class RootController < ApplicationController
   def site_home
     @active_tab = :home
     @group.profiles.public.create_wiki unless @group.profiles.public.wiki
+    @announcements = Page.find_by_path('limit/3/descending/created_at',
+      options_for_group(@group, :flow => :announcement))
     render :template => 'root/site_home'    
   end
 
