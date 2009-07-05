@@ -161,6 +161,10 @@ module PathFinder::Mysql::BuilderFilters
       @values << true
     end
 
+    if page_type == 'announcement'
+      @flow = :announcement
+    end
+
     if page_type
       @conditions << 'pages.type = ?'
       @values << Page.param_id_to_class_name(page_type) # eg 'RateManyPage'
