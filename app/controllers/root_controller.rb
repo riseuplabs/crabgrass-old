@@ -89,11 +89,11 @@ class RootController < ApplicationController
     when 'all_time' then
       case filter_by
       when 'most_views' then
-        paginate('descending','views')
+        paginate('descending','views_count')
       when 'most_edits' then
-        paginate('descending','contributors_count') #TODO we do not count total edits yet...
+        paginate(filter_by, '365', 'days') #TODO: contributors count does not seem to get updated
       when 'most_stars' then
-        paginate('descending','stars')
+        paginate('descending','stars_count')
       end
     end
   end
