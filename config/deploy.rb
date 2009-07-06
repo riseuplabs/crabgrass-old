@@ -50,12 +50,6 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}"
 
-##
-## SSH OPTIONS
-##
-
-# ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
-# ssh_options[:port] = 25
 
 ## 
 ## CUSTOM TASKS
@@ -157,6 +151,20 @@ namespace :crabgrass do
     run "touch #{deploy_to}/shared/tmp/refresh.txt"
   end
 
+  desc "starts the crabgrass daemons"
+  task :restart do
+    run "#{deploy_to}/current/script/start_stop_crabgrass_daemons.rb restart"
+  end
+
+  desc "get the status of the crabgrass daemons"
+  task :status do
+    run "#{deploy_to}/current/script/start_stop_crabgrass_daemons.rb status"
+  end
+
+  desc "reindex sphinx"
+  task :index do
+    run "cd #{deploy_to}/current; rake ts:index RAILS_ENV=production"
+  end  
 end
 
 namespace :debian do
