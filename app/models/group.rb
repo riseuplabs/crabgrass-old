@@ -277,7 +277,7 @@ class Group < ActiveRecord::Base
   # to it also get changed
   def update_name_copies
     if name_changed? and !name_was.nil?
-      Page.change_group_name(id, name)
+      Page.update_owner_name(self)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
       committees.each {|c|

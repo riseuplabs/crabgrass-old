@@ -165,7 +165,7 @@ module BasePageHelper
   def page_tags
     if @page.tags.any?
       links = @page.tags.collect do |tag|
-        tag_link(tag, @page.group_name, @page.created_by_login)
+        tag_link(tag, @page.owner)
       end.join("\n")
       content_tag :div, links, :class => 'tags'
     elsif may_update_tags?

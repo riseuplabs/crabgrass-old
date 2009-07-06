@@ -56,7 +56,6 @@ class PageTerms < ActiveRecord::Base
       # denormalized names
       indexes :created_by_login, :sortable => true
       indexes :updated_by_login, :sortable => true
-      indexes :group_name,       :sortable => true
       indexes :owner_name,       :sortable => true
 
       ## attributes ##
@@ -69,7 +68,6 @@ class PageTerms < ActiveRecord::Base
       # ids
       has :created_by_id
       has :updated_by_id
-      has :group_id
 
       # flags and access
       has :resolved

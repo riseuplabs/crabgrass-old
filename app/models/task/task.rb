@@ -20,8 +20,8 @@ class Task < ActiveRecord::Base
     true
   end
 
-  def group_name
-    task_list.page.group_name if task_list.page
+  def owner_name
+    task_list.page.owner_name if task_list.page
   end
 
   def completed=(is_completed)

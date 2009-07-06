@@ -233,7 +233,7 @@ module UserExtension
       def increment_version(ids)
         return unless ids.any?
         self.connection.execute(
-          public_sanitize_sql(
+          quote_sql(
             ["UPDATE `users` SET version=version+1 WHERE id IN (?)", ids]
           )
         )

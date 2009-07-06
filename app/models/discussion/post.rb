@@ -53,9 +53,9 @@ class Post < ActiveRecord::Base
     return post
   end
  
-  # used for default group, if present, to set for any embedded links
-  def group_name
-    discussion.page.group_name if discussion.page
+  # used for default context, if present, to set for any embedded links
+  def owner_name
+    discussion.page.owner_name if discussion.page
   end
 
   # used for indexing
