@@ -70,7 +70,7 @@ module ContextHelper
     return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
-    add_context 'Groups'[:groups], groups_url(:action => nil)
+    add_context 'Groups'[:groups], group_directory_url
     if @group and !@group.new_record?
       if @group.committee? or @group.council?
         if @group.parent
@@ -131,7 +131,7 @@ module ContextHelper
   end
 
   def page_context
-    if @page
+    if @page and !@page.new_record?
       if @group and @page.group_ids.include?(@group.id)
         group_context('small', false)
       elsif @page.owner_type == "Group"

@@ -1,0 +1,18 @@
+<% 
+  if params[:_page]
+    title = '{thing} not found'[:thing_not_found, 'Page'[:page]]
+    thing = params[:_page]
+  else
+    title = '{thing} not found'[:thing_not_found, 'Group'[:group]]
+    thing = params[:_context]
+  end
+%>
+<% dialog_page(:title => title, :details => '') do %>
+  <p><%= "Sorry, we were unable to locate '{thing}'"[:thing_not_found_description, thing] %></p>
+  <% if params[:_page] and logged_in? %>
+  <ul>
+   <li><%= create_page_link %></li>
+  </ul>
+  <% end %>
+<% end %>
+

@@ -300,8 +300,8 @@ class GreenCloth < RedCloth::TextileDoc
   # custom restrictions
   attr_accessor :outline   # if true, enable table of contents
 
-  def initialize(string, default_group_name = 'page', restrictions = [])
-    @default_group = default_group_name
+  def initialize(string, default_owner_name = 'page', restrictions = [])
+    @default_owner = default_owner_name
     restrictions.each { |r| method("#{r}=").call( true ) }
 
     # filter_ids    -- don't allow the user to set dom ids in the markup. This can
@@ -633,7 +633,7 @@ class GreenCloth < RedCloth::TextileDoc
             end
             unless a_tag
               from ||= page_name.nameized? ? page_name.denameize : page_name
-              context_name ||= @default_group
+              context_name ||= @default_owner
               to = '/%s/%s%s' % [context_name.nameize, page_name.nameize, anchor]
             end
           end

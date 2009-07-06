@@ -28,16 +28,17 @@ module GroupExtension::Pages
     else
       participation = page.group_participations.build attributes.merge(:page_id => page.id, :group_id => id)
     end
-    page.group_id_will_change!
     page.association_will_change(:groups)
+    page.groups_changed = true
     return participation
   end
 
   def remove_page(page)
     page.groups.delete(self)
-    page.group_id_will_change!
     page.association_will_change(:groups)
     page.group_participations.reset
+    page.groups_changed = true
+    page
   end
   
   def may?(perm, page)

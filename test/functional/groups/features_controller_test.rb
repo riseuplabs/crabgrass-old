@@ -81,10 +81,13 @@ class Groups::FeaturesControllerTest < ActionController::TestCase
   end
 
   def test_autocomplete
-    pages = @group.pages.select {|page| page.title =~ /ie/}
+    DiscussionPage.create!(:title => 'woozier', :owner => @group)
+    DiscussionPage.create!(:title => 'zanier', :owner => @group)
+
+    pages = @group.pages.select {|page| page.title =~ /ier/}
     assert pages.any?
 
-    xhr :get, :auto_complete, :id => @group.name, :query => 'ie'
+    xhr :get, :auto_complete, :id => @group.name, :query => 'ier'
 
     assert_response :success
     assert_layout nil
@@ -95,9 +98,9 @@ class Groups::FeaturesControllerTest < ActionController::TestCase
     end
     assert response.is_a?(Hash), "JSON response should get parsed"
 
-    assert_equal response["suggestions"], pages.collect(&:title), "suggestions should be all the matching page titles"
-    assert_equal response["query"], "ie"
-    assert_equal response["data"], pages.collect(&:id), "suggestions 'data' field should contain page ids"
+    assert_equal pages.collect(&:title), response["suggestions"], "suggestions should be all the matching page titles"
+    assert_equal "ier", response["query"]
+    assert_equal pages.collect(&:id), response["data"], "suggestions 'data' field should contain page ids"
   end
 
   def test_non_xhr_redirect_to_index

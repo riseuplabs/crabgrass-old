@@ -1,5 +1,4 @@
-<div id='page-holder'>
-  <div id='page-list'>
-    <%= render :partial => 'pages/list' %>
-  </div>
+<div id='page_list'>
+  <%= render :partial => 'pages/list', :locals => {:pages => @pages, :columns => [:contributors, :stars, :owner_with_icon, :icon, :title, :last_updated], :sortable => false} %>
 </div>
+

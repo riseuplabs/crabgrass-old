@@ -403,28 +403,25 @@ class Wiki < ActiveRecord::Base
   ##
   
   # clears the rendered html. this is called
-  # when a group's name is changed or some other event happens
-  # which might affect how the html is rendered by wholecloth.
-  # this only clears the primary group's wikis, which should be fine
-  # because default_group_name just uses the primary group's name.
-  def self.clear_all_html(group)
+  # when a group/user name is changed or some other event happens
+  # which might affect how the html is rendered by greencloth.
+  # 
+  def self.clear_all_html(owner)
     # for wiki's owned by pages
-    Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE data_type='Wiki' and group_id = #{group.id.to_i})")
-    # for wiki's owned by groups
-    Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = #{group.id.to_i})")
+    Wiki.connection.execute(quote_sql([
+      "UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE pages.data_type='Wiki' and pages.owner_id = ? AND pages.owner_type = ?)",
+      owner.id,
+      owner.class.class_name
+    ]))
+
+    # for wiki's owned by by profiles
+    Wiki.connection.execute(quote_sql([
+      "UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = ? AND entity_type = ?)",
+      owner.id,
+      owner.class.class_name
+    ]))
   end
-  
-  def default_group_name # :nodoc #
-    if page and page.group_name
-      #.sub(/\+.*$/,'') # remove everything after +
-      page.group_name
-    elsif profile
-      profile.entity.name
-    else
-      'page'
-    end
-  end
-  
+    
   ##
   ## RELATIONSHIP TO PAGES
   ##

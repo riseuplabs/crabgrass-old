@@ -235,7 +235,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
-    Page.public_sanitize_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
+    Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
   end    
 end
 
