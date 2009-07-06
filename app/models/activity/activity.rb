@@ -62,6 +62,10 @@ class Activity < ActiveRecord::Base
   end
 
   # to be defined by subclasses
+  def style()
+  end
+
+  # to be defined by subclasses
   def description(view) end
 
   # to be defined by subclasses
@@ -85,7 +89,7 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :newest, {:order => 'created_at DESC', :limit => 10}
+  named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
 

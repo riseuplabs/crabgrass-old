@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090626234003) do
+ActiveRecord::Schema.define(:version => 20090706040853) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
     t.integer  "access",       :limit => 1,  :default => 2
     t.integer  "related_id",   :limit => 11
     t.integer  "site_id",      :limit => 11
+    t.boolean  "flag"
   end
 
   add_index "activities", ["created_at"], :name => "created_at"
@@ -135,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
   create_table "dailies", :force => true do |t|
     t.integer "page_id",    :limit => 11
     t.integer "views",      :limit => 11
-    t.integer "ratings",    :limit => 11
+    t.integer "stars",      :limit => 11
     t.integer "edits",      :limit => 11
     t.date    "created_at"
   end
@@ -242,7 +243,7 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
   create_table "hourlies", :force => true do |t|
     t.integer  "page_id",    :limit => 11
     t.integer  "views",      :limit => 11
-    t.integer  "ratings",    :limit => 11
+    t.integer  "stars",      :limit => 11
     t.integer  "edits",      :limit => 11
     t.datetime "created_at"
   end
@@ -324,17 +325,15 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
     t.integer  "rating",             :limit => 11
     t.integer  "contributors_count", :limit => 11
     t.integer  "flow",               :limit => 11
-    t.string   "group_name"
     t.string   "created_by_login"
     t.string   "updated_by_login"
-    t.integer  "group_id",           :limit => 11
     t.integer  "created_by_id",      :limit => 11
     t.integer  "updated_by_id",      :limit => 11
     t.datetime "page_updated_at"
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media"
-    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "stars_count",        :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0, :null => false
     t.string   "owner_name"
   end
@@ -367,12 +366,10 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
     t.integer  "contributors_count", :limit => 11, :default => 0
     t.integer  "posts_count",        :limit => 11, :default => 0
     t.string   "name"
-    t.integer  "group_id",           :limit => 11
-    t.string   "group_name"
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "stars_count",        :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
@@ -386,10 +383,8 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
     t.integer  "cover_id",           :limit => 11
   end
 
-  add_index "pages", ["name"], :name => "index_pages_on_name"
   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
   add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
-  add_index "pages", ["group_id"], :name => "index_page_group_id"
   add_index "pages", ["type"], :name => "index_pages_on_type"
   add_index "pages", ["flow"], :name => "index_pages_on_flow"
   add_index "pages", ["public"], :name => "index_pages_on_public"
@@ -397,6 +392,7 @@ ActiveRecord::Schema.define(:version => 20090626234003) do
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
+  add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "profile_id",        :limit => 11

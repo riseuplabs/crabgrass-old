@@ -29,7 +29,7 @@ class Avatar < ActiveRecord::Base
     
   def self.pixels(size)
     case size.to_s
-      when 'tiny';   '12x12'
+      when 'tiny';   '16x16'
       when 'xsmall'; '22x22'
       when 'small' ; '32x32'
       when 'medium'; '48x48'

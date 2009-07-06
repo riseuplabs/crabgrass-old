@@ -44,10 +44,8 @@ class Groups::FeaturesController < Groups::BaseController
   end
 
   def auto_complete
-    # Do a LIKE SQL query for a page.title.
-    # could get slow
     like_query = "#{params[:query]}%"
-    pages = @group.pages.find(:all, :conditions => ["pages.title LIKE ?", like_query])
+    pages = Page.find_by_path(['text',params[:query]], options_for_group(@group))
     render :json => {
       :query => params[:query],
       :suggestions => pages.collect(&:title),

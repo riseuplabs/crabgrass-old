@@ -16,9 +16,10 @@ module PageExtension::Groups
 
       has_many :namespace_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})'
 
-      # override the ActiveRecord created method
-      remove_method :namespace_group_ids
-      remove_method :group_ids
+      remove_method :namespace_group_ids  # override the ActiveRecord
+      remove_method :group_ids            # created method so we can used cached copy.
+      
+      attr_accessor :groups_changed       # set to true of group_participations has changed.
     end
   end
 
@@ -127,12 +128,6 @@ module PageExtension::Groups
         # only show public pages
         PageTerms.access_filter_for(group, :public)
       end
-    end
-   
-    # updates the denormalized copies of group name
-    def change_group_name(group_id, new_name)
-      Page.connection.execute("UPDATE pages SET `group_name` = #{connection.quote(new_name)} WHERE pages.group_id = #{connection.quote(group_id)}")
-      Page.connection.execute "UPDATE pages SET `owner_name` = #{connection.quote(new_name)} WHERE pages.owner_id = #{connection.quote(group_id)} AND pages.owner_type = 'Group'"
     end
 
   end

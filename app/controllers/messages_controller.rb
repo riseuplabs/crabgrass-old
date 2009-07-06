@@ -18,55 +18,36 @@ class MessagesController < ApplicationController
   def destroy
     post = Post.find params[:id]
     post.destroy
-    activity = MessageWallActivity.find_by_related_id(post.id)
-    activity.destroy
-    redirect_to from_url
+    redirect_to url_for(:action => nil)
   end
 
   def create
-    @user.discussion = Discussion.create if @user.discussion.nil?
-    @discussion = @user.discussion
-    @post = Post.new(params[:post])
-    @post.discussion = @user.discussion
-
-    # enforce a restricted lite mode for wall messages
-    @post.body_html = GreenCloth.new(@post.body, 'page', [:lite_mode]).to_html
-
-    @post.user = current_user
-    @post.save!
-    @user.discussion.save!
-    
-    # this should be in an observer, but the wall posts are not yet
-    # identifiable as different from discussion posts. 
-    MessageWallActivity.create!({
-      :user => @user, :author => current_user, :post => @post
-    })
-
-    redirect_to(url_for_user(@user))
+    @post = PublicPost.create() do |post|
+      post.body = params[:post][:body]
+      post.discussion = @user.discussion
+      post.user = current_user
+      post.recipient = @user
+      # enforce a restricted lite mode for wall messages
+      post.body_html = GreenCloth.new(post.body, 'page', [:lite_mode]).to_html
+    end
+  rescue ActiveRecord::RecordInvalid => exc
+    flash_message :exception => exc
+  ensure   
+    redirect_to referer
   end
 
   def set_status
-    if current_user.discussion.nil?
-      current_user.discussion = Discussion.create
+    @post = StatusPost.create do |post|
+      post.body = params[:post][:body]
+      post.body = post.body[0..140] if post.body
+      post.discussion = current_user.discussion
+      post.user = current_user
+      post.recipient = current_user
+      post.body_html = GreenCloth.new(post.body, 'page', [:lite_mode]).to_html
     end
-    @discussion = current_user.discussion
-    @post = StatusPost.new(params[:post])
-    @post.body = @post.body[0..140]
-    @post.discussion  = current_user.discussion
-    @post.user = current_user
-    begin
-      @post.save!
-      current_user.discussion.save
-
-      # this should be in an observer, but the wall posts are not yet
-      # identifiable as different from discussion posts.
-      MessageWallActivity.create!({
-        :user => @user, :author => current_user, :post => @post
-      })
-    rescue ActiveRecord::RecordInvalid => exc
-      flash_message :exception => exc
-    end
-
+  rescue ActiveRecord::RecordInvalid => exc
+    flash_message :exception => exc
+  ensure
     redirect_to url_for(:controller => '/me/dashboard', :action => nil)
   end
 

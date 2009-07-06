@@ -30,19 +30,21 @@ class MessageWallActivity < Activity
   def description(view=nil)
     if extra[:type] == "status"
       txt = '{user} {message}' % {:user => user_span(:author), :message => extra[:snippet]}
-    else
+    elsif user_id != author_id
       txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_span(:user), :author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
-    end
-    if txt[-3..-1] == '...'
-      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
     else
-      @link = content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
+      txt = '{author} wrote: {message}'[:activity_message, {:author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
     end
+#    if txt[-3..-1] == '...'
+#      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#    else
+#      @link = content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#    end
     return txt
   end
 
   def link
-    @link
+    {:controller => '/messages', :user => user, :action => 'show', :id => post_id}
   end
 
   def icon
@@ -51,6 +53,11 @@ class MessageWallActivity < Activity
     else
       'comment'
     end
+  end
+
+  def style
+    url = '/avatars/%s/%s.jpg?%s' % [author.avatar_id||0, 'tiny', author.updated_at.to_i]
+    "background-image: url(#{url});"
   end
 
 end

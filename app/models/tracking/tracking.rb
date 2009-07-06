@@ -47,7 +47,7 @@ class Tracking < ActiveRecord::Base
       connection.execute("LOCK TABLES #{table_name} WRITE, hourlies WRITE, memberships WRITE")
       connection.execute("DELETE QUICK FROM hourlies WHERE created_at < NOW() - INTERVAL 1 DAY")
       connection.execute("INSERT INTO hourlies
-                           (page_id, views, ratings, edits, created_at)
+                           (page_id, views, stars, edits, created_at)
                          SELECT page_id, SUM(views), SUM(stars), SUM(edits), now()
                            FROM #{table_name} GROUP BY page_id")
 
@@ -68,7 +68,7 @@ class Tracking < ActiveRecord::Base
     # do this after unlocking tables just to try to minimize the amount of time tables are locked…
     connection.execute("UPDATE page_terms,hourlies
                        SET page_terms.views_count = page_terms.views_count + hourlies.views
-                       WHERE page_terms.id=hourlies.page_id AND hourlies.created_at > NOW() - INTERVAL 30 MINUTE")
+                       WHERE page_terms.page_id=hourlies.page_id AND hourlies.created_at > NOW() - INTERVAL 30 MINUTE")
     connection.execute("UPDATE page_terms,pages
                        SET pages.views_count = page_terms.views_count
                        WHERE pages.id=page_terms.page_id")

@@ -291,6 +291,7 @@ activity_user_destroyed: "{user} has retired"
 activity_group_created: "{user} created {group_type} {group}"
 activity_group_destroyed: "{group} was destroyed by {user}"
 activity_wall_message: "{author} wrote to {user}: {message}"
+activity_message: "{author} wrote: {message}"
 activity_unread: "You have {count} unread [private messages]"
 activity_unread_singular: "You have an unread [private message]"
 
@@ -980,7 +981,7 @@ wiki_revert_version: "Revert To Version {version}"
 ## WALL
 ## 
 
-set_status_button: "Set Status"
+set_status_button: "Update Status"
 my_status_heading: "Your Current Status"
 # ^^ no longer used
 users_wall: ":user's Wall"

@@ -31,10 +31,32 @@ class RootController < ApplicationController
   end
 
   def most_viewed
-    update_page_list('most_viewed_panel',
-      :pages => paginate('descending', 'views'),
-      :columns => [:views, :icon, :title, :last_updated], 
-      :sortable => false
+    update_page_list("most_viewed_panel",
+      :pages => pages_for_timespan('most_views'),
+      :columns => [:views, :icon, :title, :last_updated],
+      :sortable => false,
+      :heading_partial => 'root/time_links',
+      :pagination_options => {:params => {:time_span => params[:time_span]}}
+    )
+  end
+
+  def most_active
+    update_page_list("most_active_panel",
+      :pages => pages_for_timespan('most_edits'),
+      :columns => [:contributors, :icon, :title, :last_updated],
+      :sortable => false,
+      :heading_partial => 'root/time_links',
+      :pagination_options => {:params => {:time_span => params[:time_span]}}
+    )
+  end
+
+  def most_stars
+    update_page_list("most_stars_panel",
+      :pages => pages_for_timespan('most_stars'),
+      :columns => [:stars, :icon, :title, :last_updated],
+      :sortable => false, 
+      :heading_partial => 'root/time_links', 
+      :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
 
@@ -55,6 +77,27 @@ class RootController < ApplicationController
 
   protected
 
+  def pages_for_timespan(filter_by)
+    time_span = params[:time_span] || 'all_time'
+    case time_span
+    when 'today' then
+      paginate(filter_by, '24', 'hours')
+    when 'this_week' then
+      paginate(filter_by, '7', 'days')
+    when 'this_month' then
+      paginate(filter_by, '30', 'days')
+    when 'all_time' then
+      case filter_by
+      when 'most_views' then
+        paginate('descending','views_count')
+      when 'most_edits' then
+        paginate(filter_by, '365', 'days') #TODO: contributors count does not seem to get updated
+      when 'most_stars' then
+        paginate('descending','stars_count')
+      end
+    end
+  end
+
   def authorized?
     true
   end
@@ -62,6 +105,8 @@ class RootController < ApplicationController
   def site_home
     @active_tab = :home
     @group.profiles.public.create_wiki unless @group.profiles.public.wiki
+    @announcements = Page.find_by_path('limit/3/descending/created_at',
+      options_for_group(@group, :flow => :announcement))
     render :template => 'root/site_home'    
   end
 
@@ -77,14 +122,20 @@ class RootController < ApplicationController
 
   def paginate(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
-    Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page], :per_page => 5}.merge(options)))
+    Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page]}.merge(options)))
   end
 
-  def update_page_list(target, locals)
+  def update_page_list(target, locals)   
     render :update do |page|
       page.replace_html target, :partial => 'pages/list', :locals => locals
     end
   end
+
+#  def render_timed_panel
+#      render :update do |page|
+#        page.replace_html "#{@panel}_panel", :partial => 'root/timed_panel', :locals => {:panel => @panel}
+#      end
+#  end
 
   ##
   ## lists of active groups and users. used by the view. 

@@ -1,48 +1,59 @@
-#
-# REMEMBER: you can see available tasks with "cap -T"
-#
+##
+## REMEMBER: you can see available tasks with "cap -T"
+##
+
+##
+## Items to configure
+##
 
 set :application, "crabgrass"
+set :user, "crabgrass"
 
-# deploy with git
-set :repository,  "labs.riseup.net/crabgrass.git"
+set :repository, "labs.riseup.net/crabgrass.git"
+set :branch, "master"
+
+deploy_host = "xxxxxx"
+staging_host = "xxxxxx"
+
+staging = ENV['TARGET'] != 'production'
+
+set :app_db_host, 'localhost'
+set :app_db_user, 'crabgrass'
+set :app_db_pass, 'xxxxxxxxx'
+set :secret,  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+##
+## Items you should probably leave alone
+##
+
 set :scm, "git"
-#set :branch, "master"
-
 set :local_repository, "#{File.dirname(__FILE__)}/../"
 
-# set :deploy_via, :remote_cache  # if your server has direct access to the repository  
-set :deploy_via, :copy  # if you server does NOT have direct access to the repository
+set :deploy_via, :remote_cache
+
+# as an alternative, if you server does NOT have direct git access to the,
+# you can deploy_via :copy, which will build a tarball locally and upload
+# it to the deploy server.
+#set :deploy_via, :copy
 set :copy_strategy, :checkout
 set :copy_exclude, [".git"]
 
 set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)  
-
 set :keep_releases, 3
 
 ssh_options[:paranoid] = false  
 set :use_sudo, false   
 
-role :web, "we.riseup.net"
-role :app, "we.riseup.net"
-role :db, "we.riseup.net", :primary=>true
+role :web, (staging ? staging_host : deploy_host)
+role :app, (staging ? staging_host : deploy_host)
+role :db, (staging ? staging_host : deploy_host), :primary=>true
 
-set :deploy_to, "/usr/apps/#{application}" 
-set :user,      'crabgrass'
+set :deploy_to, "/usr/apps/#{application}"
 
-set :app_db_host, 'localhost'
-set :app_db_user, 'crabgrass'
-set :app_db_pass, 'xxxxxxxxx'
 
-# =============================================================================
-# SSH OPTIONS
-# =============================================================================
-# ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
-# ssh_options[:port] = 25
-
-# =============================================================================
-# TASKS
-# =============================================================================
+## 
+## CUSTOM TASKS
+## 
 
 namespace :passenger do
   desc "Restart rails application"
@@ -62,8 +73,6 @@ namespace :passenger do
     sudo "passenger-status"
   end
 end
-
-after :deploy, "passenger:restart"
 
 # CREATING DATABASE.YML
 # inspired by http://www.jvoorhis.com/articles/2006/07/07/managing-database-yml-with-capistrano
@@ -104,9 +113,10 @@ namespace :crabgrass do
     run "mkdir -p #{deploy_to}/#{shared_dir}/index"
     run "mkdir -p #{deploy_to}/#{shared_dir}/public_assets"
     run "mkdir -p #{deploy_to}/#{shared_dir}/latex"
-      
+    
     run "mkdir -p #{deploy_to}/#{shared_dir}/config"   
     put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
+    put secret, "#{deploy_to}/#{shared_dir}/config/secret.txt"
   end
 
   desc "Link in the shared dirs" 
@@ -130,12 +140,50 @@ namespace :crabgrass do
     run "ln -nfs #{shared_path}/latex #{release_path}/public/latex"
 
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
-    
-    run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{release_path}/public/favicon.ico"
-    run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{release_path}/public/favicon.png"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/secret.txt #{release_path}/config/secret.txt"
+
+    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{release_path}/public/favicon.ico"
+    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{release_path}/public/favicon.png"
+  end
+
+  desc "refresh the staging database"
+  task :refresh do 
+    run "touch #{deploy_to}/shared/tmp/refresh.txt"
+  end
+
+  desc "starts the crabgrass daemons"
+  task :restart do
+    run "#{deploy_to}/current/script/start_stop_crabgrass_daemons.rb restart"
+  end
+
+  desc "get the status of the crabgrass daemons"
+  task :status do
+    run "#{deploy_to}/current/script/start_stop_crabgrass_daemons.rb status"
+  end
+
+  desc "reindex sphinx"
+  task :index do
+    run "cd #{deploy_to}/current; rake ts:index RAILS_ENV=production"
+  end  
+end
+
+namespace :debian do
+  desc "Setup rails symlinks, for debian location"
+  task :symlinks do
+    run "ln -s /usr/share/rails/actionmailer #{release_path}/vendor/actionmailer"
+    run "ln -s /usr/share/rails/actionpack #{release_path}/vendor/actionpack"
+    run "ln -s /usr/share/rails/activemodel #{release_path}/vendor/actionmodel"
+    run "ln -s /usr/share/rails/activerecord #{release_path}/vendor/activerecord"
+    run "ln -s /usr/share/rails/activeresource #{release_path}/vendor/activeresource"
+    run "ln -s /usr/share/rails/activesupport #{release_path}/vendor/activesupport"
+    run "ln -s /usr/share/rails #{release_path}/vendor/rails"
+    run "ln -s /usr/share/rails/railties #{release_path}/vendor/railties"
   end
 end
 
-after :deploy, "crabgrass:link_to_shared"
-after :setup, "crabgrass:create_shared"
+after  "deploy:setup",   "crabgrass:create_shared"
+after  "deploy:symlink", "crabgrass:link_to_shared"
+before "deploy:restart", "debian:symlinks"
+after  "deploy:restart", "passenger:restart"
+
 

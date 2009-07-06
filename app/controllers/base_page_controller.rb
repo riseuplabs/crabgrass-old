@@ -11,9 +11,10 @@ class BasePageController < ApplicationController
   stylesheet 'page_creation', :action => :create
   stylesheet 'modalbox'
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete', 'builder', 'modalbox' # require for sharing autocomplete
+  javascript 'effects', 'controls', 'autocomplete', 'builder', 'modalbox' # for autocomplete
+  javascript 'effects', 'controls', 'autocomplete'
   permissions 'base_page', 'posts'
-  helper 'groups'
+  helper 'groups', 'autocomplete'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -179,12 +180,9 @@ class BasePageController < ApplicationController
 
   def context
     if action?(:create)
-      if @group = Group.find_by_name(params[:group])
-        page_context
-      else
-        @user = current_user
-        me_context
-      end
+      @group = Group.find_by_name(params[:group])
+      @user = current_user
+      page_context
 
       context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]

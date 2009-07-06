@@ -6,11 +6,11 @@ require 'positional'
 # add rank calculation functions to BordaResult class
 # should this go in its own function?
 class BordaResult
+
   def rank(possible)
     @ranks ||= calculate_ranks
 	  return @ranks[possible]  		
   end
-  
   
   private 
 
@@ -24,7 +24,6 @@ class BordaResult
       previous_points = points[candidate]
     end
     return ranks
-  	
   end
 
 end
@@ -42,6 +41,9 @@ class RankedVotePageController < BasePageController
     array_of_votes, @who_voted_for = build_vote_arrays    
     @result = BordaVote.new( array_of_votes ).result
     @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+  end
+
+  def edit
   end
 
   # ajax or post

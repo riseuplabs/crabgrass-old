@@ -1,0 +1,44 @@
+<%
+  ##
+  ## LOCAL VARS
+  ##
+
+  url = '' if url.nil?
+  submit = 'submit' if submit.nil?
+  text = "" if text.nil?
+  autocomplete = false if autocomplete.nil?
+  eat_enter = "return(!enterPressed(event));"
+%>
+
+<% form_tag(url) do %>
+<table>
+<% if autocomplete %>
+<tr><td colspan="3"><b>Recipient</b></td></tr>
+<tr>
+  <td>&nbsp;</td>
+  <td>
+    <div class="speech">
+      <%= text_field_tag 'id', '', :id => 'recipient_name', :style => 'width:100%', :onkeypress => eat_enter, :class => 'textinput' %>
+    </div>
+    <%= autocomplete_users_tag('recipient_name') %>
+  </td>
+  <td>&nbsp;</td>
+</tr>
+<tr><td colspan="3"><b>Message</b></td></tr>
+<% end %>
+<tr>
+  <td><%= avatar_for(current_user, :xsmall) %></td>
+  <td>
+    <div style="position: relative">
+      <div class="speech">
+        <%= text_area_tag 'post[body]', text, 'size' => '30x1', :onfocus => 'setRows($("say_text"), 5)', :onblur => 'setRows($("say_text"), 1)', :id => 'say_text', :class => 'textinput' %>
+      </div>
+      <div class="triangle"></div>
+    </div>
+  </td>
+  <td>
+   <%= submit_tag submit, :class => 'submit' %>
+  </td>
+</tr>
+</table>
+<% end %>

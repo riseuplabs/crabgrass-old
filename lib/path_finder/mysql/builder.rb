@@ -195,8 +195,8 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   # TODO: make this more generall so it works with all aggregation functions.
   def sql_for_group(order_string)
-    if /SUM\(/ =~ order_string
-      "pages.id"
+    if match = /SUM\(.*\)/.match(order_string)
+      "pages.id HAVING #{match} > 0"
     end
   end
     
@@ -235,7 +235,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
-    Page.public_sanitize_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
+    Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
   end    
 end
 

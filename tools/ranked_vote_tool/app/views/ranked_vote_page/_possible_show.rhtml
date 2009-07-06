@@ -5,13 +5,10 @@
 
 possible_id        = "possible_#{possible.id}"
 details_id         = "#{possible_id}_details"
-possible_show_id   = "#{possible_id}_show"
-possible_edit_id   = "#{possible_id}_edit"
-possible_edit_form = "#{possible_edit_id}_form"
 edit_url           = page_xurl(@page, :action=>'edit_possible', :id=>possible.id)
-edit_function      = remote_function(:url => edit_url)
-edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
-             "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
+#edit_function      = remote_function(:url => edit_url)
+#edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');" +
+#             "if ($('#{possible_edit_form}')==null) {#{edit_function}}"
 -%>
   <div class='name'>
     <% if possible.description.any? -%>
@@ -19,7 +16,7 @@ edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');"
     <% else -%>
       <%=h possible.name %>
     <% end -%>
-    &nbsp;<%= link_to_function(image_tag('actions/pencil.png'), edit_click, :class => 'edit') %>
+    &nbsp;<%= link_to_remote_with_icon("Edit"[:edit], {:url => edit_url}, :icon=>'pencil', :class => 'edit') %>
   </div>
   <div class='indent possible_details' id="<%=details_id%>" style='display: none'>
     <%= possible.description_html %>
