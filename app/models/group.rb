@@ -33,12 +33,6 @@ class Group < ActiveRecord::Base
   include GroupExtension::Pages      # group <--> page behavior
 
   acts_as_site_limited
-
-  # DEPRECATED
-  def belongs_to_network?(network)
-    ( self.networks.include?(network) or 
-      self == network )
-  end
     
   attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 

@@ -227,24 +227,6 @@ class Page < ActiveRecord::Base
   ## PAGE ACCESS CONTROL
   ##
 
-  # returns true if self is part of given network
-  # DEPRECATED
-  # -- TODO
-  #   i don't think this does what it is supposed to do.
-  #   this code would be better:
-  #     self.group_ids.any_in?(network.group_ids + [network.id])
-  #   this does a big intersection, slow but not that slow on the limited size of the arrays.
-  #   -elijah
-  # --
-  def belongs_to_network?(network)
-    groups = self.groups_with_access(:view)
-    groups | self.groups_with_access(:edit)
-    groups | self.groups_with_access(:admin)
-
-    groups.include?(network) ? true : false
-    true
-  end
-
   public
 
   # This method should never be called directly. It should only be called
