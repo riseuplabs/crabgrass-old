@@ -543,7 +543,9 @@ class GreenCloth < RedCloth::TextileDoc
           c.chop! # remove last char from c.
         end
         label = c
-        url = %(#{b=="www."?"http://www.":b}#{c})
+
+        url = ((b == "www.") ? "http://www." : b).to_s + c.to_s
+        # url = %(#{b=="www."?"http://www.":b}#{c})
         link = nil
         if @block
           link = @block.call(:auto => true, :url => url)
