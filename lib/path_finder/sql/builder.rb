@@ -253,7 +253,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   end
 
   def sql_for_where(conditions, values)
-    Page.public_sanitize_sql([sql_for_conditions(conditions)] + values )
+    Page.quote_sql([sql_for_conditions(conditions)] + values )
   end
     
 end

@@ -84,8 +84,6 @@ page<%=i%>:
 <% user_name, user_id = owner_users[rand(4)] %>
   updated_by_login: <%= user_name %>
   updated_by_id: <%= user_id %>
-  group_id: <%= group_id %>
-  group_name: <%= group_name %>
 <% if rand(1) == 0 %>
   owner_type: Group
   owner_id: <%= group_id %>
@@ -151,8 +149,6 @@ tasklist2:
 #   data_id: 1
 #   created_by_id: 9
 #   updated_by_id: 9
-#   group_id: <%= 3 %>
-#   group_name: rainbow
 # <% updated = rand(46080); created = updated + rand(46080) %>
 #   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
 #   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -165,8 +161,6 @@ tasklist2:
 #   data_id: 2
 #   created_by_id: 9
 #   updated_by_id:  9
-#   group_id: <%= 3 %>
-#   group_name: rainbow
 # <% updated = rand(46080); created = updated + rand(46080) %>
 #   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
 #   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -179,8 +173,6 @@ tasklist2:
 #   data_id: 3
 #   created_by_id: 4
 #   updated_by_id:  4
-#   group_id: <%= 3 %>
-#   group_name: rainbow
 # <% updated = rand(46080); created = updated + rand(46080) %>
 #   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
 #   created_at: "<%= created.minutes.ago.to_s(:db) %>"
@@ -264,7 +256,9 @@ video1:
 ##
 
 asset1: 
-  group_name: animals
+  owner_name: animals
+  owner_id: 2
+  owner_type: Group
   name: 
   created_by_login: blue
   updated_by_id: "4"
@@ -274,7 +268,6 @@ asset1:
   data_type: Asset
   type: AssetPage
   updated_by_login: blue
-  group_id: "2"
   message_count: "0"
   created_by_id: "4"
   id: "211"
@@ -289,7 +282,9 @@ asset1:
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
 asset2: 
-  group_name: animals
+  owner_name: animals
+  owner_id: 2
+  owner_type: Group
   name: 
   created_by_login: blue
   updated_by_id: "4"
@@ -299,7 +294,6 @@ asset2:
   data_type: Asset
   type: AssetPage
   updated_by_login: blue
-  group_id: "2"
   message_count: "0"
   created_by_id: "4"
   id: "212"
@@ -314,7 +308,9 @@ asset2:
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
 asset3: 
-  group_name: animals
+  owner_name: animals
+  owner_id: 2
+  owner_type: Group
   name: 
   created_by_login: blue
   updated_by_id: "4"
@@ -324,7 +320,6 @@ asset3:
   data_type: Asset
   type: AssetPage
   updated_by_login: blue
-  group_id: "2"
   message_count: "0"
   created_by_id: "4"
   id: "213"
