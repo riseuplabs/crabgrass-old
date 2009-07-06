@@ -33,6 +33,9 @@
 
 class DispatchController < ApplicationController
 
+  javascript 'controls', 'builder', 'effects', 'modalbox'
+  stylesheet 'modalbox'
+  
   def process(request, response, method = :perform_action, *arguments)
     super(request, response, :dispatch)
   end

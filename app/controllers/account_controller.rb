@@ -3,7 +3,7 @@ class AccountController < ApplicationController
   stylesheet 'account'
 
   before_filter :view_setup
-  skip_before_filter :verify_authenticity_token, :only => :login
+  skip_before_filter :verify_authenticity_token, :only => {:login, :show_login_popup}
 
   # TODO: it would be good to require post for logout in the future
   verify :method => :post, :only => [:language]
@@ -14,6 +14,10 @@ class AccountController < ApplicationController
     end
   end
 
+  def show_login_popup
+    render :partial => 'login_popup', :layout => false
+  end
+  
   def login
     if !( params[:redirect].empty? || params[:redirect] =~ /^https?:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
       flash_message(:title => 'Illegal redirect'[:illegal_redirect],
