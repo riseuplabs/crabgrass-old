@@ -122,8 +122,8 @@ module PageExtension::Index
       terms = (self.page_terms ||= self.build_page_terms)
 
       # attributes
-      %w[updated_at created_at created_by_id updated_by_id group_id
-      created_by_login updated_by_login group_name owner_name resolved 
+      %w[updated_at created_at created_by_id updated_by_id
+      created_by_login updated_by_login owner_name resolved 
       flow contributors_count stars_count].each do |field|
         terms.send("#{field}=",self.send(field))
       end

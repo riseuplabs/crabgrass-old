@@ -48,6 +48,8 @@ class MockFile
   def rewind; end
 end
 
+class ParamHash < HashWithIndifferentAccess
+end
 
 def mailer_options
   {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',

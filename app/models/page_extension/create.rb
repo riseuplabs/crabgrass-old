@@ -40,12 +40,16 @@ module PageExtension::Create
       end
     end
 
+    #
+    # build a page in memory, but don't save anything.
+    #
     def build!(attributes={}, &block)
       if attributes.is_a?(Array)
         # act like normal create
         super(attributes, &block)
       else
         # extract extra attributes
+        attributes = attributes.dup
         user       = attributes.delete(:user)
         owner      = attributes.delete(:owner)
         recipients = attributes.delete(:share_with)

@@ -30,8 +30,6 @@ module PageHelper
       path = page_path(@group.name, page.name_url, options)
     elsif page.owner_name
       path = page_path(page.owner_name, page.name_url, options)
-    elsif page.group_name
-      path = page_path(page.group_name, page.name_url, options)
     elsif page.created_by_id
       path = page_path(page.created_by_login, page.friendly_url, options)
     else
@@ -78,8 +76,8 @@ module PageHelper
       url = ['/people', 'show', @user]
     elsif logged_in?
       url = ['/me',     nil,    nil]
-    elsif page and page.group_name
-      url = ['/groups', 'show', page.group_name]
+    elsif page and page.owner_name
+      return '/'+page.owner_name
     else
       raise "From url cannot be determined" # i don't know what to do here.
     end
@@ -132,7 +130,7 @@ module PageHelper
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
-    group_name owner_name title posts_count contributors_count stars_count
+    owner_name title posts_count contributors_count stars_count
   ).freeze
 
   # Used to create the page list headings. set member variable @path beforehand
@@ -160,7 +158,7 @@ module PageHelper
         link = page_path_link(text,"ascending/#{action}")
         arrow = icon_tag('sort_down')
       end
-    elsif %w(title created_by_login updated_by_login group_name).include? action
+    elsif %w(title created_by_login updated_by_login).include? action
       link = page_path_link(text, "ascending/#{action}")
       selected = options[:selected]
     else
@@ -218,8 +216,6 @@ module PageHelper
       friendly_date(page.updated_at)
     elsif column == :happens_at
       friendly_date(page.happens_at)
-    elsif column == :group or column == :group_name
-      page.group_name ? link_to_group(page.group_name) : '&nbsp;'
     elsif column == :contributors_count or column == :contributors
       page.contributors_count
     elsif column == :stars_count or column == :stars
@@ -288,14 +284,9 @@ module PageHelper
     return title
   end
   
-  def page_list_heading(column, options={})
-    if column == :group or column == :group_name
-      list_heading 'group'.t, 'group_name', options
-    
-    # empty <th>s contain an nbsp to prevent collapsing in IE
-    elsif column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
-      "<th>&nbsp;</th>" 
-    
+  def page_list_heading(column, options={})   
+    if column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
+      "<th>&nbsp;</th>" # empty <th>s contain an nbsp to prevent collapsing in IE
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
@@ -532,7 +523,7 @@ module PageHelper
   def create_page_url(page_class=nil, options={})
     if page_class
       controller = page_class.controller 
-      id = page_class.class_display_name.nameize
+      id = page_class.param_id
       "/#{controller}/create/#{id}" + build_query_string(options)
     else
       url_for(options.merge(:controller => '/pages', :action => 'create'))

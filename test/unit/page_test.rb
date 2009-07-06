@@ -20,6 +20,49 @@ class PageTest < Test::Unit::TestCase
     end
   end
 
+  def test_unique_names_with_recipients
+    user = users(:penguin)
+    
+    params = ParamHash.new("title"=>"beet", "owner"=>user, "user"=>user, "share_with"=>{user.login=>{"access"=>"admin"}})
+
+    assert_difference 'Page.count' do
+      assert_difference 'PageTerms.count' do
+        assert_difference 'UserParticipation.count' do
+          WikiPage.create!(params)
+        end
+      end
+    end
+  
+    assert_no_difference 'Page.count', 'no new page' do
+      assert_no_difference 'PageTerms.count', 'no new page terms' do
+        assert_no_difference 'UserParticipation.count', 'no new user part' do
+           assert_raises ActiveRecord::RecordInvalid do
+             WikiPage.create!(params)
+           end
+        end
+      end
+    end
+
+  end
+
+  def test_build
+    user = users(:kangaroo)
+    page = nil   
+    assert_no_difference 'Page.count', 'no new page' do
+      assert_no_difference 'PageTerms.count', 'no new page terms' do
+        assert_no_difference 'UserParticipation.count', 'no new user part' do
+          page = WikiPage.build!(:title => 'hi', :user => user)
+        end
+      end
+    end
+    assert_difference 'Page.count' do
+      assert_difference 'PageTerms.count' do
+        assert_difference 'UserParticipation.count' do
+          page.save
+        end
+      end
+    end
+  end
 
   # this is a test if we are using has_many_polymorphic
   # currently, we are using a single belongs_to that is polymorphic
@@ -79,10 +122,10 @@ class PageTest < Test::Unit::TestCase
   def test_denormalized
     user = User.find 3
     group = Group.find 3
-    p = create_page :title => 'oak tree'
-    p.add(group)
-    p.save
-    assert_equal group.name, p.group_name, 'page should have a denormalized copy of the group name'
+    page = create_page :title => 'oak tree'
+    page.add(group, :access => :admin)
+    page.save
+    assert_equal group.name, page.owner_name, 'page should have a denormalized copy of the group name'
   end
 
   def test_destroy

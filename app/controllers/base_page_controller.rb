@@ -178,12 +178,9 @@ class BasePageController < ApplicationController
 
   def context
     if action?(:create)
-      if @group = Group.find_by_name(params[:group])
-        page_context
-      else
-        @user = current_user
-        me_context
-      end
+      @group = Group.find_by_name(params[:group])
+      @user = current_user
+      page_context
 
       context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]

@@ -7,6 +7,8 @@ class Event < ActiveRecord::Base
   validates_presence_of :starts_at
   validates_presence_of :ends_at
 
+  delegate :owner_name, :to => :page
+
   def page
       pages.first || parent_page
   end
@@ -19,13 +21,4 @@ class Event < ActiveRecord::Base
     self.description
   end
 
-  protected
-
-  def default_group_name
-    if page and page.group_name
-      page.group_name
-    else
-      'page'
-    end
-  end
 end
