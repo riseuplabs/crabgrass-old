@@ -14,6 +14,10 @@ class Wiki::LockingTest < Test::Unit::TestCase
       assert_raises WikiLockException {@wiki.lock 'bad-nontexistant-section-header', @blue}
     end
 
+    should "raise WikiLockException when unlocking a non-existant section" do
+      assert_raises WikiLockException {@wiki.unlock 'bad-nontexistant-section-header', @blue}
+    end
+
     context "when a user locks a section-two" do
       setup { @wiki.lock 'section-two', @blue }
       end
@@ -132,15 +136,15 @@ class Wiki::LockingTest < Test::Unit::TestCase
       end
 
       should "raise an exception (and keep the same state) when a different user tries to lock a section" do
-        assert_raises WikiLockException {@wiki.lock 'section_one', @red}
+        assert_raises WikiLockException {@wiki.lock 'section-one', @red}
 
         assert_same_elements @wiki.sections_open_for(@blue), @wiki.all_sections
         assert @wiki.sections_open_for(@red).empty?
         assert_same_elements @wiki.sections_open_for(@red), @wiki.all_sections
       end
 
-      context "and that user locks a section" do
-        setup {@wiki.lock 'section_one', @blue}
+      context "and that user locks a 'section-one'" do
+        setup {@wiki.lock 'section-one', @blue}
 
         should "appear to that user that all sections can be edited and none are locked" do
           assert_same_elements @wiki.sections_open_for(@blue), @wiki.all_sections
@@ -152,7 +156,7 @@ class Wiki::LockingTest < Test::Unit::TestCase
           assert_same_elements @wiki.sections_locked_for(@red), @wiki.all_sections
         end
 
-        context "and then unlocks that section" do
+        context "and then unlocks 'section-one'" do
           setup {@wiki.lock 'section-one', @blue}
 
           should "appear to that user that all sections can be edited and none are locked" do

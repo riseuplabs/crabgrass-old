@@ -8,6 +8,8 @@ class WikiPageController < BasePageController
   permissions 'wiki_page'
   #verify :method => :post, :only => [:revert]
 
+  before_filter :setup_wiki_rendering
+
   ##
   ## ACCESS: public or :view
   ##
@@ -20,8 +22,7 @@ class WikiPageController < BasePageController
       @last_seen = @wiki.first_since( @upart.viewed_at )
     end
     # render if needed
-    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-
+    # @wiki.render_html
     if logged_in? and heading = @wiki.currently_editing_section(current_user)
       # if the user has a particular section locked, then show it to them.
       if heading == :all
@@ -138,6 +139,13 @@ class WikiPageController < BasePageController
     return true unless @page
 
     @wiki = @page.data
+  end
+
+  def setup_wiki_rendering
+    return unless @wiki
+    
+    @wiki.render_body_html_proc {|body| render_wiki_markup_to_html(body, @page.owner_name)}
+    
   end
 
   # before filter

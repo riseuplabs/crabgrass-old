@@ -336,6 +336,10 @@ class GreenCloth < RedCloth::TextileDoc
 
     return html
   end
+  
+  def to_structure
+    {:document => {}}
+  end
 
   # populates @headings, and then restores the string to its original form.
   def extract_headings()

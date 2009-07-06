@@ -4,8 +4,8 @@ module ControllerExtension::WikiRenderer
 
   protected
 
-  def render_wiki_html(body, context_name)
-    context_name ||= 'page'
+  def render_wiki_markup_to_html(body, context_name = 'page')
+    # context_name ||= 'page'
     greencloth = GreenCloth.new(body, context_name, [:outline])
 
     greencloth.to_html do |link_data|
@@ -18,50 +18,6 @@ module ControllerExtension::WikiRenderer
     end
   end
 
-  # each section in the html could be locked or editable for +user+
-  # this method adds correct links to edit each section
-  # later it could add other dynamic per-user things
-  def generate_wiki_html_for_user(wiki, user)
-    html = wiki.body_html
-
-    return html unless user.may?(:edit, wiki.page)
-
-    html_sections = html.index_split(/<div\s*class\s*=\s*['"]wiki_section/)
-
-    output_html = ""
-    html_sections.each do |section|
-      start_div_re = /(<div\s*class="wiki_section"\s*id="wiki_section-(\d+)">)/
-      # replace the start div with (itself + edit link)
-      section_with_link = section.sub(start_div_re) do
-        existing_div = $1
-        section_index = $2.to_i
-
-        link_html = section_edit_tag(wiki, user, section_index)
-
-        existing_div + "\n  " + link_html
-      end
-      output_html << section_with_link
-    end
-    return output_html
-  end
-
-  # create a link to edit this section for the user
-  # unless the section is locked
-  def section_edit_tag(wiki, user, section_index)
-    html = "<div class=\"editsection\" id=\"editsection-#{section_index}\">"
-    if wiki.editable_by?(user, section_index)
-      label = image_tag("actions/pencil.png") + "edit section"
-      html << content_tag(:a, label, :href => page_url(wiki.page, :action => 'edit', :section => section_index))
-    else
-      # must be unlocked
-      locker_id = wiki.locked_by_id(section_index)
-      locker = User.find(locker_id)
-      label = image_tag("png/16/lock.png") + "break lock by #{locker.display_name}"
-      html << content_tag(:a, label, :href => page_url(wiki.page, :action => 'edit', :section => section_index))
-    end
-    html << "</div>"
-  end
-  
   private
   
   #
