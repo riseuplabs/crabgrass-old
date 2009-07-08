@@ -116,7 +116,18 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert @committee, 'committee rainbow+the-warm-colors should exist'
     #assert_share_with(@page,@committee,:admin)
   end
-  
+
+  def test_add_access_to_group_committee
+    login_as :blue
+    @page = groups(:rainbow).pages.find(:first)
+    xhr :post, :update,
+          :page_id => @page.id,
+          :add => true,
+          :recipient => {:name => "rainbow+the-cold-colors", :access => "admin"}
+
+    assert_successful_post('add', 'should add the committe to the list of unsaved share items')
+  end
+
   def test_add_access_to_user_with_existing_group_participation_that_affects_the_user
     # Scenarios with overlapping Group / UserParticipations
     
@@ -198,13 +209,13 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
   
   
   # asserts that the last called request was answered with success, and the response includes a notice-div
-  def assert_successful_post(update='share')
+  def assert_successful_post(update='share', message=nil)
     assert_response :success
     if update == 'add'
       assert_not_nil assigns(:recipients)
-      assert_select 'tr.unsaved'
+      assert_select 'tr.unsaved', nil, message
     else
-      assert_select 'div.big_notice'
+      assert_select 'div.big_notice', nil, message
     end
   end
   
