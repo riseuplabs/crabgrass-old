@@ -19,6 +19,9 @@
     <li class="<%= 'active' if @admin_active_tab == 'announcements_index'%>">
       <%= link_to 'edit announcements', announcements_path %>
     <li>
+    <li class="<%= 'active' if @admin_active_tab == 'email_blasts_index'%>">
+      <%= link_to 'email blasts', email_blasts_path %>
+    </li>
   </ul>
 <% end -%>
 
