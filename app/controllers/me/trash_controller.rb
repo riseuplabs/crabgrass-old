@@ -25,7 +25,7 @@ class Me::TrashController < Me::BaseController
       full_url = url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
     end
     @pages = Page.paginate_by_path(params[:path] + ['admin', current_user.id], options_for_me(:page => params[:page], :flow => :deleted))
-    @columns = [:admin_checkbox, :icon, :title, :group, :deleted_by, :deleted_at, :contributors_count]
+    @columns = [:admin_checkbox, :icon, :title, :owner, :deleted_by, :deleted_at, :contributors_count]
     handle_rss(
       :link => full_url,
       :title => 'Crabgrass Trash',
