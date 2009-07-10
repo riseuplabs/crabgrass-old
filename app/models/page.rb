@@ -92,7 +92,7 @@ class Page < ActiveRecord::Base
   def validate
     if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
       errors.add 'name', 'is already taken'
-    elsif name_changed?
+    elsif name_changed? and name.any?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
