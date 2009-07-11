@@ -23,6 +23,8 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :announcements
     admin.resources :email_blasts
+    admin.resources :users, :only => [:new, :create]
+    admin.resources :groups, :only => [:new, :create]
     admin.resources :custom_appearances, :only => [:edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'

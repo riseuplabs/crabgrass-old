@@ -23,6 +23,16 @@
       <%= link_to 'email blasts', email_blasts_path %>
     </li>
   </ul>
+
+  <h4>Populate Site</h4>
+  <ul class="admin_nav">
+    <li class="<%= 'active' if @admin_active_tab == 'users_create' %>">
+      <%= link_to 'create users', new_admin_user_path %>
+    </li>
+    <li class="<%= 'active' if @admin_active_tab == 'groups_create' %>">
+      <%= link_to 'create groups', new_admin_group_path %>
+    </li>
+  </ul>
 <% end -%>
 
 <%= call_hook(:admin_nav) %>
