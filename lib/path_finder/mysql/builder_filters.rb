@@ -231,11 +231,11 @@ module PathFinder::Mysql::BuilderFilters
     unit=unit.downcase.pluralize
     num.gsub!(/[^\d]+/, ' ')
     if unit=="days"
-      @conditions << "dailies.created_at > NOW() - INTERVAL %s DAY" % num
+      @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
       @order << "SUM(dailies.#{what}) DESC"
       @select = "pages.*, SUM(dailies.#{what}) AS #{what}_count"
     elsif unit=="hours"
-      @conditions << "hourlies.created_at > NOW() - INTERVAL %s HOUR" % num
+      @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
       @order << "SUM(hourlies.#{what}) DESC"
       @select = "pages.*, SUM(hourlies.#{what}) AS #{what}_count"
     else
@@ -248,12 +248,7 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_edits(num, unit)
-    unit=unit.upcase.singularize
-    return unless ["DAY", "HOUR"].include?(unit)
-    num.gsub!(/[^\d]+/, ' ')
-    @conditions << "user_participations.changed_at > NOW() - INTERVAL %s %s" % [num, unit]
-    @order << "SUM(1) DESC"   # SUM(1) works like COUNT but gets registered by the builder.
-    @select = "pages.*, SUM(1) AS contributors_count"
+    filter_most("views", num, unit)
   end
 
   def filter_most_stars(num, unit)
