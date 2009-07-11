@@ -5,14 +5,14 @@
 <div id="moderation_navigation">
   <div style="display:inline;'">
     <%= "All Posts:"%>&nbsp;
-    <%= link_to_active( 'all', { :controller => 'admin/posts', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
-    <%= link_to_active( 'pending', :controller => 'admin/posts', :action => 'index', :view => 'pending')%>
+    <%= link_to_active( 'all', { :controller => 'admin/wall_posts', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
+    <%= link_to_active( 'pending', :controller => 'admin/wall_posts', :action => 'index', :view => 'pending')%>
   </div>
   <div style="display:inline; margin-left:2em;'">
     <%= "Flagged Posts:"%>&nbsp;&nbsp;
-    <%= link_to_active( 'new', :controller => 'admin/posts', :action => 'index', :view => 'new')%>&nbsp;
-    <%= link_to_active( 'vetted',  :controller => 'admin/posts', :action => 'index', :view => 'vetted')%>&nbsp;
-    <%= link_to_active( 'deleted', :controller => 'admin/posts', :action => 'index', :view => 'deleted')%>
+    <%= link_to_active( 'new', :controller => 'admin/wall_posts', :action => 'index', :view => 'new')%>&nbsp;
+    <%= link_to_active( 'vetted',  :controller => 'admin/wall_posts', :action => 'index', :view => 'vetted')%>&nbsp;
+    <%= link_to_active( 'deleted', :controller => 'admin/wall_posts', :action => 'index', :view => 'deleted')%>
   </div>
 </div>
 
