@@ -99,7 +99,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @date_field  = 'created_at'
 
     # magic will_paginate paginating (count required)
-    @per_page    = options[:per_page]
+    @per_page    = 2 # options[:per_page]
     @page        = options[:page]
     # limiting   (count not required)
     @limit       = nil
