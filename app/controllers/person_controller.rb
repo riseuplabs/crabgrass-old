@@ -41,7 +41,7 @@ class PersonController < ApplicationController
       params[:path] = ['descending', 'updated_at'] if params[:path].empty?
       params[:path] += ['contributed', @user.id]
       @pages = Page.paginate_by_path(params[:path], options_for_user(@user, :page => params[:page]))
-      @columns = [:icon, :title, :group, :updated_by, :updated_at, :contributors]
+      @columns = [:icon, :title, :owner, :updated_by, :updated_at, :contributors]
     end
 
     handle_rss :title => @user.name, :link => url_for_user(@user),

@@ -10,7 +10,10 @@ module ProfileMethods
   # returns the best profile for user to see
   def visible_by(user)
     if user
-      profile = find_by_access(*(proxy_owner.relationships_to(user) + [:stranger]))
+      relationships = proxy_owner.relationships_to(user) + [:stranger]
+      filter_relationships_for_site(relationships, user.current_site)
+
+      profile = find_by_access(*relationships)
     else
       profile = find_by_access :stranger
     end
@@ -21,6 +24,7 @@ module ProfileMethods
   # in this order of precedence: foe, friend, peer, fof, stranger.
   def find_by_access(*args)
     args.map!{|i| if i==:member; :friend; else; i; end}
+    
     conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
     find(
       :first,
@@ -47,6 +51,15 @@ module ProfileMethods
       create(args)
     end
   end
-  
+
+  protected
+
+  def filter_relationships_for_site(relationships, site)
+    # filter possible profiles on current_site
+    if site
+      relationships.delete(:stranger) unless site.profile_enabled? 'public'
+      relationships.delete(:friend) unless site.profile_enabled? 'private'
+    end
+  end
 end
 
