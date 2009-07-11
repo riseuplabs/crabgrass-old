@@ -121,7 +121,6 @@ class BasePage::ParticipationController < ApplicationController
                 Group.find_by_name params[:group_id]
               end
       raise PermissionDenied.new unless current_user.member_of?(group)
-      @page.remove(@page.group) if @page.group
       @page.owner = group
       current_user.updated(@page)
       @page.save!

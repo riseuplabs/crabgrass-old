@@ -2,7 +2,6 @@
 
 =end
 class ProfileNote < ActiveRecord::Base
-  validates_presence_of :type
   validates_presence_of :body
 
   set_table_name 'profile_notes'
