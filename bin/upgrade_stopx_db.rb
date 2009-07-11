@@ -10,7 +10,13 @@ custom_appearance = CustomAppearance.create!
 
 site = Site.create! :name => 'stopx', :title => 'Stop Exploitation', :domain => 'my.stopx.org', :limited => true, :network_id => network.id, :has_networks => false, :signup_mode => Conf::SIGNUP_MODE[:invite_only], :custom_appearance_id => custom_appearance.id
 
-User.all.each {|user| network.add_user!(user) unless user.member_of?(network)}
+User.all.each do |user|
+  begin
+    user.clear_cache
+    network.add_user!(user)
+  rescue Exception
+  end
+end
 
 GroupGainedUserActivity.destroy_all
 GroupLostUserActivity.destroy_all
