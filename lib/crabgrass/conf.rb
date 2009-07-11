@@ -99,6 +99,7 @@ class Conf
     self.show_exceptions   = true
     self.domain            = 'localhost'
     self.chat              = true
+    self.signup_mode       = SIGNUP_MODE[:default]
     
     # instance configuration
     self.enabled_mods  = []

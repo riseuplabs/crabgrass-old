@@ -8,14 +8,14 @@
 <br />
 <% Conf::SIGNUP_MODE.each_pair do |key, value| -%>
   <span>
-    <%= f.radio_button :signup_mode, value, :checked => (current_site.signup_mode == value) %><%= label key, key.to_s.t %>
+    <label><%= f.radio_button :signup_mode, value, :checked => (current_site.signup_mode == value) %><%= key.to_s.t %></label>
     <i><%= "#{key}_description".t %></i>
   </span>
   <br />
 <% end -%>
 <br />
 <span>
-  <%= f.check_box :require_user_email, :checked => (current_site.require_user_email or false)%><%= label :require_user_email, 'require_user_email' %>
+  <%= f.check_box :require_user_email, :checked => (current_site.require_user_email or false)%><%= f.label :require_user_email, 'require_user_email' %>
 </span>
 <br /><br />
 <span><%= submit_tag 'Save', :style => 'width:7em;' %></span>

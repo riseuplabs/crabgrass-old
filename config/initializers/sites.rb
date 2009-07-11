@@ -28,6 +28,8 @@ begin
         else
           puts "ERROR (%s): site admin group name '%s' not found in database! (skipping site)" % [Conf.configuration_filename, site_conf['admin_group']]
         end
+      else
+        ids << site.id
       end
     else
       if Site.count == 0

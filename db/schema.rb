@@ -575,6 +575,8 @@ ActiveRecord::Schema.define(:version => 20090706040853) do
     t.boolean "limited"
     t.integer "signup_mode",          :limit => 1
     t.string  "email_sender_name",    :limit => 40
+    t.string  "profiles"
+    t.string  "profile_fields"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
