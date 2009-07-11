@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090706040853) do
+ActiveRecord::Schema.define(:version => 20090711054954) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
