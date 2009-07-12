@@ -1,0 +1,12 @@
+<%= render :partial => 'tabs' %>
+
+<%= render :partial => 'users' %>  
+
+<br class='clear' />
+<h3 class='dim pagination_label'>
+  <%= "new people in last 2 weeks"[:new_people_in_weeks]%>
+</h3>
+<%= pagination_links @users %>
+
+<%= call_hook :bottom_people_list %>
+

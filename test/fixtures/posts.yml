@@ -4,6 +4,7 @@ gerrard_to_blue:
   discussion_id: 3
   body: "Hi Blue, Just testing messages."
   body_html: "Hi Blue, Just testing messages."
+  type: "PublicPost"
 <% updated = created = rand(46080) %>
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 10.minutes.ago.to_s(:db) %>"

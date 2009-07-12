@@ -1,5 +1,4 @@
 <% @title_box = content_tag :h1, "Public Message Wall"[:wall_heading] %>
-<% add_context h(@post.body[0..10]), url_for(:controller => '/messages', :user => @user.login, :action => 'show', :id => @post.id) %>
 
 <blockquote>
 

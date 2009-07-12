@@ -72,7 +72,19 @@ class Post < ActiveRecord::Base
       rating.rating == 1 and rating.user_id == user.id
     end
   end
+
+  def public?
+    false
+  end
   
+  def private?
+    false
+  end
+
+  def lite_html
+    GreenCloth.new(self.body, 'page', [:lite_mode]).to_html
+  end
+
   protected
 
   def after_create

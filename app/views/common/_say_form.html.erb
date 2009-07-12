@@ -6,13 +6,13 @@
   url = '' if url.nil?
   submit = 'submit' if submit.nil?
   text = "" if text.nil?
-  autocomplete = false if autocomplete.nil?
+  recipient = false if recipient.nil?
   eat_enter = "return(!enterPressed(event));"
 %>
 
 <% form_tag(url) do %>
-<table>
-<% if autocomplete %>
+<table class="say">
+<% if recipient %>
 <tr><td colspan="3"><b>Recipient</b></td></tr>
 <tr>
   <td>&nbsp;</td>
@@ -31,7 +31,7 @@
   <td>
     <div style="position: relative">
       <div class="speech">
-        <%= text_area_tag 'post[body]', text, 'size' => '30x1', :onfocus => 'setRows($("say_text"), 5)', :onblur => 'setRows($("say_text"), 1)', :id => 'say_text', :class => 'textinput' %>
+        <%= text_area_tag 'post[body]', text, 'size' => '40x1', :onfocus => 'setRows($("say_text"), 5)', :onblur => 'setRows($("say_text"), 1)', :id => 'say_text', :class => 'textinput' %>
       </div>
       <div class="triangle"></div>
     </div>
