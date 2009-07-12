@@ -1,12 +1,16 @@
 module MessagesHelper
 
   def display_post(post)
-    render(:partial => (post.type == 'StatusPost' ? 'messages/status_post' : 'messages/post'), :locals => {:post => post})
+    render(:partial => 'messages/post', :locals => {:post => post})
   end
   
   def delete_post(post)
-    if current_user.discussion.id == post.discussion.id
-      link_to("Delete Post"[:delete_post], url_for(:controller => '/messages', :action => 'destroy', :id => post.id, :user => current_user.login ), :method => 'post')
+    if may_destroy_messages?(@user,@post)
+      if current_user.discussion.id == post.discussion.id
+        link_to("Delete"[:delete], my_public_message_url(post), :method => :delete)
+      elsif current_user.id == post.user_id
+        link_to("Delete"[:delete], person_message_url(@user, post), :method => :delete)
+      end
     end
   end
 

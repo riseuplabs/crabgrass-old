@@ -12,6 +12,7 @@ class PersonController < ApplicationController
 
   helper 'task_list_page', 'profile'
   stylesheet 'tasks', :action => :tasks
+  stylesheet 'messages', :action => :show
   permissions 'contact', 'profile', 'messages'
 
   def initialize(options={})
