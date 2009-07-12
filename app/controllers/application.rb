@@ -219,6 +219,18 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # shows a generic not found page
+  def render_not_found
+    @skip_context = true
+    render :template => 'common/not_found', :status => :not_found
+  end
+
+  # shows a generic permission denied page
+  def render_permission_denied
+    @skip_context = true
+    render :template => 'common/permission_denied'
+  end
+
   private
   
   def rescue_authentication_errors
