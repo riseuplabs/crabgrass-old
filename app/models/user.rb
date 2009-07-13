@@ -126,8 +126,9 @@ class User < ActiveRecord::Base
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
-  def profile
-    self.profiles.visible_by(User.current)
+  def profile(reload=false)
+    @profile = nil if reload
+    @profile ||= self.profiles.visible_by(User.current)
   end
 
   ##
