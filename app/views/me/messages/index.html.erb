@@ -1,0 +1,8 @@
+<%= render :partial => 'me/messages/tabs' %>
+
+<% if @activities.any? %>
+  <%= render :partial => 'activity/list', :locals => {:activities => @activities} %>
+<% else %>
+  <p><%= "None"[:empty_results] %></p>
+<% end %>
+

@@ -57,6 +57,8 @@ module ErrorHelper
   #   flash_message :info => 'hi'
   #      (to be used in the future)
   #
+  #   flash_message :permission_denied
+  #
   # Special objects:
   #
   #   flash_message :exception => exc
@@ -224,6 +226,8 @@ module ErrorHelper
       options[:title] = options[:info]
       options[:success] = true
       add_flash_message(flsh, options)
+    elsif options[:permission_denied]
+      add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied])
     else
       flsh[:type] = options[:type]
       flsh[:text] += options[:text]

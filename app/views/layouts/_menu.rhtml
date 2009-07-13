@@ -20,7 +20,7 @@
       the controllers currently bomb out in bad ways if you are not logged in. %>
   <%- if logged_in? -%>
     <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
-      <span><%= link_to_active "People"[:menu_people], people_url(:action => :friends), @active_tab == :people %></span>
+      <span><%= link_to_active "People"[:menu_people], people_directory_url(:friends), @active_tab == :people %></span>
     </li>
 
     <li id='menu_groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>

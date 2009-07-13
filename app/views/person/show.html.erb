@@ -14,20 +14,29 @@
 ### INFO BOX
 #%> 
 
+<% @message_box = render(
+  :partial => 'common/say_form',
+  :locals => {
+    :submit => "Say"[:say_message_button],
+    :url => person_messages_path(@user)
+  }
+) %>
 <%- @info_box = capture do -%>
   <%- length = @activities.size -%>
-  <table class="columns">
+  <%- half = (length/2.0).ceil -%>
+  <table class="columns three_sections">
+    <%- if may_create_messages? -%>
+    <tr>
+       <td colspan="2" class="say_box"><%= @message_box %></td>
+    </tr>
+    <%- end -%>
     <tr>
       <td class="left">
-        <%= header_with_more :h3, :dim, "Recent Activity".t %>
-        <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..((length+2)/2-1)]} %>
+        <%# header_with_more :h3, :dim, "Recent Activity".t %>
+        <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
       </td>
       <td class="right">
-        <%= render :partial => 'activity/list', :locals => {:activities => @activities[((length+2)/2)..(length-1)]} %>
-        <%= header_with_more :h3, :dim, "Public Message Wall"[:wall_heading] %>
-        <%- if may_create_messages? -%>
-          <%= render :partial => 'messages/form' %>
-        <%- end -%>
+        <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
       </td>
     </tr>
   </table>

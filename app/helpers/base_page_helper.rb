@@ -321,7 +321,7 @@ module BasePageHelper
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
         possibles = @page.admins.to_select('both_names', 'name')
         unless Conf.ensure_page_owner?
-          possible += + [["(#{"None"[:none]})",""]]
+          possibles << ["(#{"None"[:none]})",""]
         end
         concat(
           select_tag(

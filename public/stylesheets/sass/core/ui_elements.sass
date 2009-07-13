@@ -103,7 +103,7 @@ ul.side_list
   clear: both
   ul
     list-style: none
-    padding-left: 2em
+    padding-left: 16px
   a, .a
     //text-decoration: none
     display: block
@@ -294,16 +294,13 @@ span.break
 
 h1
   &.dim
-    color: #738899
-//    text-transform: capitalize
+    color= !dim_heading_color 
     margin: 0
   &.bright
     color: #5B97CB
-//    text-transform: capitalize
     margin: 0
   &.alert
-    color: #CE4A48
-//    text-transform: capitalize
+    color= !strong_heading_color
     margin: 0
 h2
   &.first
@@ -410,6 +407,7 @@ table.plain
 .pagination
   padding: 1em 0
   text-align: center
+  clear: both
   a
     padding: 0 5px 1px 5px
     border: 1px solid #9aafe5
