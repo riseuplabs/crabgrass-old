@@ -475,6 +475,7 @@ module PageHelper
   # accepted options:
   #  :group -- a group object to make selected
   #  :include_me -- if true, include option for 'me'
+  #  :include_none -- if true, include an option for 'none'
   def options_for_page_owner(options={})
     groups = current_user.groups.select { |group|
       !group.committee?
@@ -487,13 +488,21 @@ module PageHelper
       selected_group = options[:group].name
     elsif params[:group]
       selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
-    elsif params[:page] and params[:page][:owner]
+    elsif params[:page] and params[:page].is_a?(Hash) and params[:page][:owner]
       selected_group = params[:page][:owner]
     else
       selected_group = nil
     end
 
-    if !Conf.ensure_page_owner? and options[:include_me]
+    if options.key?(:group) and options[:group].nil?
+      # if this method was called with :group => nil, a group must have been intended
+      # but the group was not there, so we include none
+      options[:include_none] = true
+    elsif !Conf.ensure_page_owner?
+      options[:include_none] = true
+    end
+
+    if options[:include_none]
       html << content_tag(:option, "None"[:none], :value => "", :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic')
       selected_group = 'none'
     end
