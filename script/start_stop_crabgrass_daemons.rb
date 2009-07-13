@@ -33,6 +33,14 @@ def process_command
   when 'status'
     status_sphinx
     status_backgroundrb
+  when 'start-sphinx'
+    start_sphinx
+  when 'stop-sphinx'
+    stop_sphinx
+  when 'start-bgrb'
+    start_backgroundrb
+  when 'stop-bgrb'
+    stop_backgroundrb
   end
 end
 

@@ -21,6 +21,13 @@ module PageExtension::Groups
     end
   end
 
+  # returns the owner if the owner happens to be a group
+  def group
+    if owner and owner.is_a? Group
+      owner
+    end
+  end
+
   # When getting a list of ids of groups for this page,
   # we use group_participations. This way, we will have
   # current data even if a group is added and the page

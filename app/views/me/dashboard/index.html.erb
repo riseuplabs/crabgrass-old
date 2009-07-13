@@ -2,9 +2,9 @@
   @message_box ||= render(
     :partial => 'common/say_form',
     :locals => {
-      :submit => "Set Status"[:set_status_button], 
-      :url => url_for(:controller => '/messages', :action => 'set_status', :user => current_user),
-      :text => @current_status
+      :submit => "Say"[:say_message_button], 
+      :url => my_public_messages_path,
+      :text => current_user.current_status
     }
   )
 %>

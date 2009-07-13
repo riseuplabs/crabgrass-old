@@ -14,7 +14,7 @@ class Me::BaseController < ApplicationController
   end
 
   def fetch_user
-    @user = current_user
+    @user ||= current_user
   end
   
   def context
