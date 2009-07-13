@@ -320,7 +320,6 @@ module BasePageHelper
     if may_move_page?
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
         possibles = @page.admins.to_select('both_names', 'name')
-        require 'ruby-debug';debugger;1-1
         unless Conf.ensure_page_owner?
           possibles << ["(#{"None"[:none]})",""]
         end
