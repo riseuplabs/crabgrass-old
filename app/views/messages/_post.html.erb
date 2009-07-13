@@ -1,8 +1,7 @@
-<div class="float_left icon clear"><%= avatar_for(post.user, 'small') %></div>
-<div class="float_left">
+<div class="message name_icon shy_parent" style="<%= avatar_style(post.user, 'small')%>">
   <%= link_to_user(post.user) %> <%= friendly_date(post.created_at) %>
   <div class="body">
-     <%= post.body_html %>  <%= delete_post(post) %>
+     <%= post.body_html %>&nbsp;&nbsp;<%= delete_post(post) %>
   </div>
 </div>
 
