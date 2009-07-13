@@ -9,7 +9,7 @@
   recipient = false if recipient.nil?
   eat_enter = "return(!enterPressed(event));"
 %>
-
+<% if logged_in? %>
 <% form_tag(url) do %>
 <table class="say">
 <% if recipient %>
@@ -41,4 +41,5 @@
   </td>
 </tr>
 </table>
+<% end %>
 <% end %>

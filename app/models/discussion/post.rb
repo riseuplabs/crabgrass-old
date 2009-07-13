@@ -73,12 +73,13 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # this should be able to be handled in the subclasses, but sometimes
+  # when you create a new post, the subclass is not set yet.
   def public?
-    false
+    ['Post', 'PublicPost', 'StatusPost'].include?(read_attribute(:type))
   end
-  
   def private?
-    false
+    'PrivatePost' == read_attribute(:type)
   end
 
   def lite_html

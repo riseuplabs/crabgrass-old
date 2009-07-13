@@ -38,7 +38,7 @@ class Me::PublicMessagesController < Me::BaseController
       post.discussion = current_user.discussion
       post.user = current_user
       post.recipient = current_user
-      post.body_html = GreenCloth.new(post.body, 'page', [:lite_mode]).to_html
+      post.body_html = post.lite_html
     end
   rescue ActiveRecord::RecordInvalid => exc
     flash_message :exception => exc
