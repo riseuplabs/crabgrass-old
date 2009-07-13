@@ -1,4 +1,6 @@
-<% @title_box = content_tag :h1, "Public Message Wall"[:wall_heading] %>
+<% if @posts.empty? %>
+  <%= "No Results"[:no_search_results] %>
+<% else %>
 <%
 
   today = []
@@ -32,33 +34,32 @@
 
 <%= pagination_links @posts %>
 
-<div class="wall_posts">
-<table><tr>
+<div class="messages">
 <% if today.any? -%>
-  <tr><td colspan='2' class='date'><%= "Today"[:date_today] -%></td></tr>
+  <div class='date_heading'><%= "Today"[:date_today] -%></div>
   <% today.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if yesterday.any? -%>
-  <tr><td colspan='2' class='date'><%= "Yesterday"[:date_yesterday] -%></td></tr>
+  <div class='date_heading'><%= "Yesterday"[:date_yesterday] -%></div>
   <% yesterday.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if week.any? -%>
-  <tr><td colspan='2' class='date'><%= "This Past Week"[:date_this_week] -%></td></tr>
+  <div class='date_heading'><%= "This Past Week"[:date_this_week] -%></div>
   <% week.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if later.any? -%>
-  <tr><td colspan='2' class='date'><%= "Older"[:date_older] -%></td></tr>
+  <div class='date_heading'><%= "Older"[:date_older] -%></div>
   <% later.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
-</tr></table>
 </div>
 
 <%= pagination_links @posts %>
+<% end %>

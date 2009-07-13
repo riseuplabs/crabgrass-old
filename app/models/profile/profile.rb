@@ -122,6 +122,9 @@ class Profile < ActiveRecord::Base
     self.membership_policy == MEMBERSHIP_POLICY[name.to_sym]
   end
 
+  def may_comment?() read_attribute(:may_pester) end
+  def may_comment=(value) write_attribute(:may_pester, value) end
+
   ##
   ## ASSOCIATED ATTRIBUTES
   ##

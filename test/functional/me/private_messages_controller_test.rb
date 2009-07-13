@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../../test_helper'
 
-class ConversationsControllerTest < ActionController::TestCase
+class Me::PrivateMessagesControllerTest < ActionController::TestCase
   fixtures :users, :relationships
 
   def test_should_get_index
@@ -71,10 +71,4 @@ class ConversationsControllerTest < ActionController::TestCase
     assert_equal 1, UnreadActivity.for_dashboard(users(:orange)).first.unread_count
   end
 
-#  def test_should_destroy_conversation
-#    assert_difference('Conversation.count', -1) do
-#      delete :destroy, :id => conversations(:one).id
-#    end
-#    assert_redirected_to conversations_path
-#  end
 end

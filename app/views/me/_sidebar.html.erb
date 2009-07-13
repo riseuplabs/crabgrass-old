@@ -1,8 +1,8 @@
-<%= create_page_link %>
+<%# create_page_link %>
 
 <ul class='side_list'>
   <% active = controller?('me/dashboard') %>
-  <li class='small_icon home_16<%= active ? ' active' : '' %>'><%= link_to_active(
+  <li class='small_icon house_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Dashboard'[:me_dashboard_link],
     '/me/dashboard',
     active
@@ -15,10 +15,10 @@
     active
   ) %></li>
 
-  <% active = controller?('me/search') %>
-  <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Search'[:me_search_link],
-    '/me/search',
+  <% active = controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
+  <li class='small_icon page_message_16<%= active ? ' active' : '' %>'><%= link_to_active(
+    'Messages'[:messages],
+    my_messages_path,
     active
   ) %></li>
 
@@ -36,12 +36,42 @@
     active
   ) %></li>
 
-  <% active = controller?('me/trash') %>
-  <li id='trash_line' class='small_icon trash_16<%= active ? ' active' : '' %>'><%= link_to_active(
-    'Trash'[:trash],
-    {:controller => '/me/trash'},
-    active
-  ) %></li>
+<!--
+  <li class="small_icon mime_default_16">
+    <%= link_to 'My Pages', '' %>
+  </li>
+
+  <ul>
+    <li class="small_icon plus_16">
+      <%= link_to 'Create Page', '' %>
+    </li>
+
+    <li class="small_icon page_add_16">
+      <%= link_to 'My Contributions', '' %>
+    </li>
+
+    <li class="small_icon caution_16">
+      <%= link_to 'Needs My Attention', '' %>
+    </li>
+
+    <li class="small_icon refresh_16">
+      <%= link_to 'Watch for Changes', '' %>
+    </li>
+-->
+
+    <% active = controller?('me/search') %>
+    <li class='small_icon magnifier_16<%= active ? ' active' : '' %>'><%= link_to_active(
+      'Search'[:me_search_link],
+      '/me/search',
+      active
+    ) %></li>
+
+    <% active = controller?('me/trash') %>
+    <li id='trash_line' class='small_icon trash_16<%= active ? ' active' : '' %>'><%= link_to_active(
+      'Trash'[:trash],
+      {:controller => '/me/trash'},
+      active
+    ) %></li>  
 
 </ul>
 
@@ -63,5 +93,5 @@
 
 <%- end -%>
 
-<%= javascript_tag remote_function(:url => me_params(:action => :counts)) %>
+<%# javascript_tag remote_function(:url => me_params(:action => :counts)) %>
 

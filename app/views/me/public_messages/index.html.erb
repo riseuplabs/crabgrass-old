@@ -1,0 +1,15 @@
+<% render :partial => 'me/messages/tabs' %>
+
+<div class="say_box">
+<%= render(
+  :partial => 'common/say_form',
+  :locals => {
+    :submit => "Say"[:say_message_button], 
+    :url => my_public_messages_path,
+    :text => current_user.current_status
+  }
+) %>
+</div>
+
+<%= render :partial => 'messages/time_sorted_list' %>
+

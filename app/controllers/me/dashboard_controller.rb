@@ -1,23 +1,21 @@
 class Me::DashboardController < Me::BaseController
 
-  # for autocomplete  
-  javascript 'effects', 'controls', 'autocomplete', :action => :private_messages
-  helper 'autocomplete'
+  stylesheet 'messages'
 
   def index
     @activities = Activity.for_dashboard(current_user).only_visible_groups.newest.unique.find(:all, :limit => 12)
     fetch_data
   end
   
-  def private_messages
-    @activities = PrivatePostActivity.for_dashboard(current_user).newest.find(:all, :limit => 20)
-    fetch_data
-  end
+  #def private_messages
+  #  @activities = PrivatePostActivity.for_dashboard(current_user).newest.find(:all, :limit => 20)
+  #  fetch_data
+  #end
 
-  def public_messages
-    @activities = MessageWallActivity.for_dashboard(current_user).newest.find(:all, :limit => 20)
-    fetch_data
-  end
+  #def public_messages
+  #  @activities = MessageWallActivity.for_dashboard(current_user).newest.find(:all, :limit => 20)
+  #  fetch_data
+  #end
 
   def show_welcome_box
     current_user.update_or_create_setting(:show_welcome => true)
@@ -37,7 +35,6 @@ class Me::DashboardController < Me::BaseController
     
     @pages = Page.find_by_path(params[:path], options_for_me)
     @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_user(current_user, :flow => :announcement))
-    @current_status = current_user.current_status
   end
 
 end

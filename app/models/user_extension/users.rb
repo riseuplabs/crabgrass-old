@@ -89,7 +89,7 @@ module UserExtension::Users
     
     # returns the users current status by returning his latest status_posts.body
     def current_status
-      self.discussion.posts.find_all_by_type('StatusPost').last.body rescue nil
+      @current_status ||= self.discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
     end
 
     def discussion_with_auto_create(*args)

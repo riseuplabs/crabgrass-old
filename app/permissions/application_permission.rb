@@ -5,7 +5,7 @@ module ApplicationPermission
   end
 
   def may_create_private_message?(user=@user)
-    user.profile.may_pester?
+    current_user != user and user.profile.may_pester?
   end
 
 end
