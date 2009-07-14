@@ -88,7 +88,6 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @access_filter_clause = [] # to be used by path filters
 
     ## page stuff
-    @path        = cleanup_path(path)
     @conditions  = []
     @values      = []
     @order       = []
@@ -108,7 +107,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @select      = options[:select]
 
     # parse the path and apply each filter
-    apply_filters_from_path( @path )
+    apply_filters_from_path( path )
   end
 
   def find

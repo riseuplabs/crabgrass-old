@@ -58,6 +58,12 @@ class ApplicationControllerTest < ActionController::TestCase
     #assert_route 'me/edit', @controller.me_params(:action => 'edit')
   end
 
+  def test_parsed_path
+    require 'path_finder'
+    path = PathFinder::ParsedPath.new(:type => :text)
+    assert_equal "/groups/archive/animals/type/text", url_for(:controller => 'groups', :action => 'archive', :id => 'animals', :path => path, :only_path => true)
+  end
+
   protected
 
   def assert_route(url, hash)

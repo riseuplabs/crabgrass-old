@@ -54,6 +54,7 @@ class ApplicationController < ActionController::Base
 
   def essential_initialization
     current_site
+    @path = parse_filter_path(params[:path])
   end
   
   def header_hack_for_ie6
@@ -139,6 +140,12 @@ class ApplicationController < ActionController::Base
     current_site.custom_appearance || CustomAppearance.default
   end
   helper_method :current_appearance
+
+  # create a filter ParsedPath
+  def parse_filter_path(path)
+    path.is_a?(PathFinder::ParsedPath) ? path : PathFinder::ParsedPath.new(path)
+  end
+  helper_method :parse_filter_path
 
   #
   # returns a hash of options to be given to the mailers. These can be

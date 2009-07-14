@@ -111,19 +111,6 @@ module PageHelper
     query_string || ""
   end
   
-  def filter_path()
-    params[:path] || []
-  end
-  def parsed_path(path=nil)
-    if path
-      @latest_parsed_path = controller.parse_filter_path(path)
-    else
-      @latest_parsed_path ||= controller.parse_filter_path(filter_path)
-    end
-    return @latest_parsed_path
-  end
-
-
   ##
   ## PAGE LISTINGS AND TABLES
   ##
@@ -133,8 +120,7 @@ module PageHelper
     owner_name title posts_count contributors_count stars_count
   ).freeze
 
-  # Used to create the page list headings. set member variable @path beforehand
-  # if you want the links to take it into account instead of params[:path]
+  # Used to create the page list headings.
   # option defaults:
   #  :selected => false
   #  :sortable => true
@@ -145,13 +131,11 @@ module PageHelper
       return content_tag(:th, text, :class => options[:class])
     end
 
-    path   = filter_path()
-    parsed = parsed_path()
     selected = false
     arrow = ''
-    if parsed.sort_arg?(action)
+    if @path.sort_arg?(action)
       selected = true
-      if parsed.keyword?('ascending')
+      if @path.keyword?('ascending')
         link = page_path_link(text,"descending/#{action}")
         arrow = icon_tag('sort_up')
       else
@@ -169,16 +153,13 @@ module PageHelper
   end
 
   ## used to create the page list headings
-
-  def page_path_link(text,path='',image=nil)
-    hash         = params.dup
-    new_path     = parsed_path(path)
-    current_path = parsed_path(hash[:path])
-    hash[:path]  = current_path.merge(new_path).flatten
-
+  def page_path_link(text,link_path='',image=nil)
+    hash          = params.dup.to_hash        # hash must not be HashWithIndifferentAccess
+    hash['path']  = @path.merge(link_path)    # we want to preserve the @path class
+    
     if params[:_context]
       # special hack for landing pages using the weird dispatcher route.
-      hash = "/%s?path=%s" % [params[:_context], hash[:path].join('/')]
+      hash = "/%s?path=%s" % [params[:_context], hash[:path].to_s]
     end
     link_to text, hash
   end
@@ -235,7 +216,7 @@ module PageHelper
     elsif column == :contribution
       page_list_contribution(page)
     elsif column == :posts
-      page.edits || page.posts_count
+      page.posts_count
     elsif column == :last_post
       if page.discussion
         content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to('view'[:view], page_url(page)+"#posts-#{page.discussion.last_post_id}")]

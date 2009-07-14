@@ -13,31 +13,18 @@ class Me::TasksController < Me::BaseController
   # assigned to as task
 
   def pending
-    if request.post?
-      path = build_filter_path(params[:search])
-      redirect_to url_for(:controller => 'me/tasks',
-        :action => params[:action], :path => nil) + path
-    else
-      list_tasks('pending')  
-    end
+    list_tasks('pending')  
   end
   def completed
-    if request.post?
-      path = build_filter_path(params[:search])
-      redirect_to url_for(:controller => 'me/tasks',
-        :action => params[:action], :path => nil) + path
-    else
-      list_tasks('completed')
-    end
+    list_tasks('completed')
   end
 
   def list_tasks(status)
     if request.post?
-      path = build_filter_path(params[:search])
-      redirect_to url_for(:controller => 'me/tasks', :action => params[:action], :path => nil)
+      path = paser_filter_path(params[:search])
+      redirect_to url_for(:controller => 'me/tasks', :action => status, :path => nil) + path
     else
-      path = parsed_path.set_keyword('type','task').to_path
-      @pages = Page.find_by_path(path, options_for_me)
+      @pages = Page.find_by_path(@path.merge(:type => :task), options_for_me)
       @task_lists = @pages.collect{|page|page.data}
       @show_user = current_user
       @show_status = status

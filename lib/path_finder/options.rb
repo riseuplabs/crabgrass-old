@@ -67,16 +67,6 @@ module PathFinder::Options
     ).merge(args)
   end
 
-  # contructs a path from a set of search params
-  def build_filter_path(search)
-    PathFinder::ParsedPath.new(search).to_path
-  end
-
-  # builds a parsed path from a text path.
-  def parse_filter_path(path)
-    PathFinder::ParsedPath.new(path)
-  end
-
   private
   
   def default_options   # :nodoc:
