@@ -15,6 +15,10 @@ module ApplicationHelper
     %(<option value=''>#{label}</option>)
   end
 
+  def format_text(str)
+    str.any? ? GreenCloth.new(str).to_html() : ''
+  end
+
   ##
   ## LINK HELPERS
   ##

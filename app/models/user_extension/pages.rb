@@ -266,8 +266,8 @@ module UserExtension::Pages
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
-
-    if options[:send_notice]
+    # if send_notice option is selected, and no user participation exists yet
+    if options[:send_notice] && (!page.users.include?(user) || options[:notify])
       attrs[:inbox] = true
       if options[:send_message].any?
         attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}
