@@ -77,8 +77,12 @@ module UrlHelper
     opts
   end
 
-  def person_search_url(path)
+  def person_search_url(*path)
     url_for_user(@user, :action => 'search', :path => parse_filter_path(path))
+  end
+
+  def me_search_url(*path)
+    me_params(:action => 'search', :path => parse_filter_path(path))
   end
 
   ##

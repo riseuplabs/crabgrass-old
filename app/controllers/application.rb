@@ -143,7 +143,13 @@ class ApplicationController < ActionController::Base
 
   # create a filter ParsedPath
   def parse_filter_path(path)
-    path.is_a?(PathFinder::ParsedPath) ? path : PathFinder::ParsedPath.new(path)
+    if path.is_a?(PathFinder::ParsedPath)
+      path
+    elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
+      PathFinder::ParsedPath.new(path[0])
+    else
+      PathFinder::ParsedPath.new(path)
+    end
   end
   helper_method :parse_filter_path
 
