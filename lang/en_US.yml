@@ -62,6 +62,7 @@ recently_created: "Recently Created"
 most_active: "Most Active"
 no_search_results: "No Results"
 empty_results: "None"
+not_found: "Not Found"
 unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
@@ -74,6 +75,7 @@ summary: "Summary"
 edit: "Edit"
 preview: "Preview"
 private: "Private"
+public: "Public"
 options: "Options"
 permissions: "Permissions"
 description: "Description"
@@ -902,6 +904,7 @@ alert_not_saved: "Changes could not be saved"
 alert_field_errors: "There are problems with the following fields"
 alert_saved: "Changes saved"
 alert_permission_denied: "Permission Denied"
+alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
 alert_error: "Error"
 
 ##
@@ -982,14 +985,18 @@ wiki_revert_version: "Revert To Version {version}"
 ## 
 
 set_status_button: "Update Status"
-my_status_heading: "Your Current Status"
-# ^^ no longer used
-users_wall: ":user's Wall"
-## ^^ no longer used
-recent_wall_posts: "Recent Wall Posts"
-## ^^ no longer used
+say_message_button: "Say"
 wall_heading: "Public Message Wall"
 wall_post_button: "Post New Message"
+
+my_status_heading: "Your Current Status"
+# ^^ no longer used
+
+users_wall: ":user's Wall"
+## ^^ no longer used
+
+recent_wall_posts: "Recent Wall Posts"
+## ^^ no longer used
 
 ##
 ## EMAIL
@@ -1098,6 +1105,7 @@ welcome_create_page_text: "You can create new discussions, new wiki pages, uploa
 ##
 ## SITE HOME
 ##
+
 have_your_say: "Have Your Say!"
 contribute_to_site: "Contribute to Site"
 create_a_group: "Create a Group"

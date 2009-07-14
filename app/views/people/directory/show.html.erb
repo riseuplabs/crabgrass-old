@@ -1,0 +1,13 @@
+<%= render :partial => 'tabs' %>
+
+<%= letter_pagination_links({}, :available_letters => @pagination_letters) %>
+
+<%= render :partial => 'users' %>
+
+<br class='clear' />
+
+<%= pagination_links @users %>
+
+<%= call_hook :bottom_people_list %>
+
+

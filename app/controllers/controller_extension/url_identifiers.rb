@@ -40,6 +40,8 @@ module ControllerExtension::UrlIdentifiers
         return true if obj == params[:id].to_i
       elsif obj.is_a?(String)
         return true if obj == params[:id].to_s
+      elsif obj.is_a?(Symbol)
+        return true if obj.to_s == params[:id].to_s
       end
     end
     return false

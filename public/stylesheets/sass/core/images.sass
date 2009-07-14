@@ -49,10 +49,13 @@
   &.xsmall
     padding: 2px 0 4px 26px
   &.small
-    padding: 8px 0 8px 36px
+    padding-left: 36px
+    height: 32px
     display: block
   &.medium
-    padding: 10px 0 10px 56px
+    padding: 15px 0 15px 60px
+    display: block
+    font-size: 1.3em
   b
     display: none
 
@@ -160,4 +163,18 @@ ul.icon_boxes
     a
       display: block
 
-  img
+//
+// SHY LINKS
+//
+
+// these are links that should not be visible until you hover over a parent 
+// element. opacity works in most browsers, but not ie6. It can be hacked using
+// filter: alpha(opacity=50); height:1%;"
+
+.shy_parent:hover
+  .shy
+    opacity: 1
+
+.shy
+  opacity: 0
+

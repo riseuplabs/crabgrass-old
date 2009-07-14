@@ -15,6 +15,10 @@ module ApplicationHelper
     %(<option value=''>#{label}</option>)
   end
 
+  def format_text(str)
+    str.any? ? GreenCloth.new(str).to_html() : ''
+  end
+
   ##
   ## LINK HELPERS
   ##
@@ -163,11 +167,11 @@ module ApplicationHelper
 
     more_link = activity.link
     if more_link.is_a? Hash
-      more_link = link_to(content_tag(:b, ARROW), more_link)
+      more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
     end
     more_link = content_tag(:span, more_link, :class => 'commands') if more_link
 
-    css_class = "small_icon #{activity.icon}_16"
+    css_class = "small_icon #{activity.icon}_16 shy_parent"
     css_style = activity.style
     
     content_tag :li, [description, created_at, more_link].combine, :class => css_class, :style => css_style

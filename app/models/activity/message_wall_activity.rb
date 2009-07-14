@@ -44,7 +44,11 @@ class MessageWallActivity < Activity
   end
 
   def link
-    {:controller => '/messages', :user => user, :action => 'show', :id => post_id}
+    if user == User.current
+      {:controller => '/me/public_messages', :id => post_id, :action => 'show'}
+    else
+      {:controller => '/people/messages', :person_id => user, :id => post_id, :action => 'show'}
+    end
   end
 
   def icon

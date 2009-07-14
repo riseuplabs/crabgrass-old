@@ -1,9 +1,20 @@
-<% @title_box = content_tag(:h1, 'Private Conversations') %>
+<% render :partial => 'me/messages/tabs' %>
 
 <%# move to stylesheets when we have a real design for this page %>
 <% content_for :style do %>
 table.pretty td {vertical-align: top;}
 <% end %>
+
+<div class="say_box">
+<%= render(
+  :partial => 'common/say_form',
+  :locals => {
+    :submit => "Send Message"[:send_message_link], 
+    :url => my_private_messages_path,
+    :recipient => true
+  }
+) %>
+</div>
 
 <table class="pretty">
   <tr>
@@ -14,9 +25,9 @@ table.pretty td {vertical-align: top;}
 <% for discussion in @discussions %>
   <% relationship = discussion.relationships.for_user(current_user) %>
   <% other_user = relationship.contact %>
-  <tr class="clickable" onclick="window.location='<%= conversation_path(:id => other_user)%>'">
+  <tr class="clickable" onclick="window.location='<%= my_private_message_path(other_user)%>'">
     <td>
-      <%= display_entity(other_user, :avatar => :medium, :format => :twolines) %>
+      <%= display_entity(other_user, :avatar => :small, :format => :twolines) %>
     </td>
     <td>
       <%= relationship.unread_count %>/<%= discussion.posts_count %> <%= "Unread"[:unread] %>

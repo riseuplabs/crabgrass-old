@@ -66,7 +66,8 @@ class BasePage::ShareController < ApplicationController
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
-
+      # we save if we are in share or notify process
+      options[:notify] = params[:notify]
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
       flash_message_now :success => @success_msg

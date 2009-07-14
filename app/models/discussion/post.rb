@@ -72,7 +72,20 @@ class Post < ActiveRecord::Base
       rating.rating == 1 and rating.user_id == user.id
     end
   end
-  
+
+  # this should be able to be handled in the subclasses, but sometimes
+  # when you create a new post, the subclass is not set yet.
+  def public?
+    ['Post', 'PublicPost', 'StatusPost'].include?(read_attribute(:type))
+  end
+  def private?
+    'PrivatePost' == read_attribute(:type)
+  end
+
+  def lite_html
+    GreenCloth.new(self.body, 'page', [:lite_mode]).to_html
+  end
+
   protected
 
   def after_create
