@@ -39,6 +39,9 @@ class Group < ActiveRecord::Base
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
 
+  # group <--> chat channel relationship
+  has_one :chat_channel
+
   ##
   ## FINDERS
   ## 

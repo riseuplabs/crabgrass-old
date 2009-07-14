@@ -19,6 +19,16 @@ class ChatController < ApplicationController
   def index
     if logged_in?
       @groups = current_user.all_groups
+      channel_users = {}
+      @groups.each do |group|
+        if group.chat_channel
+          channel_users[group] = group.chat_channel.active_channel_users.size
+        else
+          channel_users[group] = 0
+        end
+      end
+      @group_array = channel_users.sort {|a,b| a[1] <=> b[1]}
+      @group_array.reverse!
     end
   end
 
