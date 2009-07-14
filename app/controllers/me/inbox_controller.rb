@@ -2,8 +2,8 @@ class Me::InboxController < Me::BaseController
  
   def search
     if request.post?
-      path = build_filter_path(params[:search])
-      if path == '/'
+      path = parse_filter_path(params[:search])
+      if path.empty?
         redirect_to url_for(:controller => '/me/inbox', :action => nil, :path => nil)
       else
         redirect_to url_for(:controller => '/me/inbox', :action => 'search', :path => nil) + path
@@ -18,9 +18,8 @@ class Me::InboxController < Me::BaseController
   end
 
   def list
-    params[:path] = ['descending', 'updated_at'] if params[:path].empty?
-  
-    @pages = Page.paginate_by_path(params[:path], options_for_inbox(:page => params[:page]))
+    @path.default_sort('updated_at')
+    @pages = Page.paginate_by_path(@path, options_for_inbox(:page => params[:page]))
     add_user_participations(@pages)
     handle_rss(
       :title => 'Crabgrass Inbox',
