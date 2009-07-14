@@ -9,6 +9,7 @@
 class ChatController < ApplicationController
   include ChatHelper
   stylesheet 'chat' 
+  stylesheet 'groups'
   permissions 'chat'
   before_filter :login_required 
   prepend_before_filter :get_channel_and_user, :except => :index
@@ -97,6 +98,36 @@ class ChatController < ApplicationController
      user_leaves_channel(@user, @channel)
      @channel_user.destroy
      redirect_to :controller => :me, :action => :dashboard
+  end
+
+  def archive
+    @path = params[:path] || []
+    @parsed = parse_filter_path(params[:path])
+    @months = ChatMessage.months(@channel)
+    unless @months.empty?
+      @current_year  = (Date.today).year
+      @start_year    = @months[0]['year'] || @current_year.to_s
+      @current_month = (Date.today).month
+
+      # normalize path
+      unless @parsed.keyword?('date')
+        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']]
+      end
+      @parsed = parse_filter_path(@path)
+      date = @parsed.keyword?('date')[1]
+      date =~ /(\d{4})-(\d{1,2})-?(\d{0,2})/
+      @year = year = $1
+      @month = month = $2
+      @day = day = $3
+      unless day.empty?
+        @messages = []
+        ChatMessage.for_day(@channel, year, month, day).each do |m|
+          @messages << "#{m.sender_name}: #{m.content}"
+        end
+      else
+        @days = ChatMessage.days(@channel, year, month)
+      end
+    end
   end
 
   private
