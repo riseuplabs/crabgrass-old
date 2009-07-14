@@ -21,7 +21,7 @@ class PersonController < ApplicationController
   end
     
   def show
-    @activities = Activity.for_user(@user, (current_user if logged_in?)).only_visible_groups.newest.unique.find(:all)
+    @activities = Activity.for_user(@user, (current_user if logged_in?)).only_visible_groups.newest.unique.find(:all, :limit => 20)
         
     params[:path] ||= ""
     params[:path] = params[:path].split('/')
@@ -36,12 +36,11 @@ class PersonController < ApplicationController
   def search
     redirect_to :controller => 'people' unless @user
     if request.post?
-      path = build_filter_path(params[:search])
+      path = parse_filter_path(params[:search])
       redirect_to url_for_user(@user, :action => 'search', :path => path)
     else
-      params[:path] = ['descending', 'updated_at'] if params[:path].empty?
-      params[:path] += ['contributed', @user.id]
-      @pages = Page.paginate_by_path(params[:path], options_for_user(@user, :page => params[:page]))
+      @path.default_sort('updated_at').merge!(:contributed => @user.id)
+      @pages = Page.paginate_by_path(@path, options_for_user(@user, :page => params[:page]))
       @columns = [:icon, :title, :owner, :updated_by, :updated_at, :contributors]
     end
 

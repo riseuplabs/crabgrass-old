@@ -10,6 +10,8 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   include PathFinder::Sphinx::BuilderFilters
 
   def initialize(path, options)
+    @original_path = path
+    @original_options = options
 
     # filter on access_ids:
     @with = []
@@ -36,11 +38,10 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     @conditions   = {}
     @order        = ""
     @search_text  = ""
-    @path         = cleanup_path(path)   
     @per_page    = options[:per_page] || SECTION_SIZE
     @page        = options[:page] || 1
 
-    apply_filters_from_path( @path )
+    apply_filters_from_path( path )
     @order = nil unless @order.any? # the default sphinx sort is "@relevance DESC"
   end
 
@@ -64,6 +65,8 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
       # but sometimes it does, and if it does we don't want to bomb out.
     end
     page_terms.replace(pages)
+  rescue ThinkingSphinx::ConnectionError
+    PathFinder::Mysql::Builder.new(@original_path, @original_options).find         # fall back to mysql
   end
 
   def paginate
@@ -74,7 +77,7 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     PageTerms.search_for_ids(@search_text, :with => @with, :without => @without, 
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page).size
+  rescue ThinkingSphinx::ConnectionError
+    PathFinder::Mysql::Builder.new(@original_path, @original_options).count        # fall back to mysql
   end
-
-
 end

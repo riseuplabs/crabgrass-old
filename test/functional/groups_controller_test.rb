@@ -1,19 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'groups_controller'
-#showlog
-# Re-raise errors caught by the controller.
-class GroupsController; def rescue_action(e) raise e end; end
 
-class GroupsControllerTest < Test::Unit::TestCase
+class GroupsControllerTest < ActionController::TestCase
   fixtures :groups, :users, :memberships, :profiles, :pages, :sites,
             :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 
   def setup
-    @controller = GroupsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     Conf.disable_site_testing
   end
 
@@ -21,6 +14,12 @@ class GroupsControllerTest < Test::Unit::TestCase
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param
     assert_response :success
+  end
+
+  def test_discussions
+    login_as :blue
+    get :discussions, :id => groups(:rainbow).to_param
+    assert_response :success 
   end
 
 =begin

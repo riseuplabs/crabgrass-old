@@ -6,13 +6,13 @@ module Groups::Search
 
   def search
     if request.post?
-      path = parse_filter_path(params[:search]).flatten
+      path = parse_filter_path(params[:search])
       redirect_to group_search_url(:action => 'search', :path => path)
     else
-      #params[:path] = ['descending', 'updated_at'] if params[:path].empty?
-      @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page]))
+      @path.default_sort('updated_at')
+      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :per_page => 5))
 
-      if parsed_path.sort_arg?('created_at') or parsed_path.sort_arg?('created_by_login')
+      if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
         @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
       else
         @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
@@ -23,9 +23,7 @@ module Groups::Search
   end
 
   def archive
-    @path = params[:path] || []
-    @parsed = parse_filter_path(params[:path])
-    @field = @parsed.keyword?('updated') ? 'updated' : 'created'
+    @field = @path.keyword?('updated') ? 'updated' : 'created'
 
     @months = Page.month_counts(:group => @group, :current_user => (current_user if logged_in?), :field => @field)
     unless @months.empty?
@@ -34,11 +32,10 @@ module Groups::Search
       @current_month = (Date.today).month
 
       # normalize path
-      unless @parsed.keyword?('date')
-        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']]
+      unless @path.keyword?('date')
+        @path.merge!( :date => ("%s-%s" % [@months.last['year'], @months.last['month']]) )
       end
-      @path.unshift(@field) unless @parsed.keyword?(@field)
-      @parsed = parse_filter_path(@path)
+      @path.set_keyword(@field)
 
       # find pages
       @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
@@ -75,11 +72,11 @@ module Groups::Search
 
   def trash
     if request.post?
-      path = parse_filter_path(params[:search]).flatten
+      path = parse_filter_path(params[:search])
       redirect_to url_for_group(@group, :action => 'trash', :path => path)
     else
-      params[:path] = ['descending', 'updated_at'] if params[:path].empty?
-      @pages = Page.paginate_by_path(params[:path], options_for_group(@group, :page => params[:page], :flow => :deleted))
+      @path.default_sort('updated_at')
+      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :flow => :deleted))
       @columns = [:admin_checkbox, :icon, :title, :deleted_by, :deleted_at, :contributors_count]
       hide_users
       search_template('trash')
@@ -87,20 +84,16 @@ module Groups::Search
   end
 
   def discussions
-    params[:path] = ['descending', 'updated_at'] if params[:path].empty?
-    @pages = Page.paginate_by_path(['type','discussion'] + params[:path],
-      options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
+    @path.default_sort('updated_at').merge!(:type => :discussion)
+    @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
     @columns = [:icon, :title, :posts, :contributors, :last_post]
     search_template('discussions')
   end
 
   def contributions
-    params[:path] ||= ""
-    params[:path] = params[:path].split('/')
-    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
-    params[:path] += ['limit','20', 'contributed_group', @group.id.to_s]
+    @path.default_sort('updated_at').merge!(:limit => 20, :contributed_group => @group.id)
 
-    @pages = Page.find_by_path(params[:path], options_for_contributions).each do |page|
+    @pages = Page.find_by_path(@path, options_for_contributions).each do |page|
       page.updated_by_id = page.user_id # user_id is from user_participation.
       page.updated_by_login = User.find(page.user_id).login
       page.updated_at = page.changed_at # changed_at is from user_participation.

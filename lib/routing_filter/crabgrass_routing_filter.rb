@@ -48,10 +48,14 @@ class RoutingFilter::CrabgrassRoutingFilter < RoutingFilter::Base
   end
 
   # hash => uri
-  def around_generate(controller, *args, &block)
+  def around_generate(params, *args, &block)
     # Alter arguments here before they are passed to `url_for`. 
     # Make sure to yield (calls the next around filter if present and 
     # eventually `url_for` on the controller):
+
+    if params.is_a? Hash and params[:path].is_a? PathFinder::ParsedPath
+      params[:path] = params[:path].to_param
+    end
 
     returning yield do |result|
       # You can change the generated url_or_path here. Make sure to use

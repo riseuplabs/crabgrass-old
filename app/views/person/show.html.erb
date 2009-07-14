@@ -47,10 +47,10 @@
 #%>
 
 <div class='section'>
-  <%= header_with_more(:h2, :alert, "Recent Contributions".t, person_search_url('descending', 'updated_at')) %>
+  <%= header_with_more(:h2, :alert, "Recent Contributions".t, person_search_url(:descending => 'updated_at')) %>
   <div class='page_scroll'>
     <%= render :partial => 'pages/list' %>
     <br/>
-    <%= link_to :more.t + ARROW, person_search_url('descending', 'updated_at') %>
+    <%= link_to :more.t + ARROW, person_search_url(:descending => :updated_at) %>
   </div>
 </div>
