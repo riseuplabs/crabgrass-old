@@ -6,7 +6,7 @@ class Me::SearchController < Me::BaseController
     if request.post?
       redirect_to( me_url(:action => 'search') + parse_filter_path(params[:search]) )
     else
-      @path.default_sort('updated_at')
+      @path.default_sort('updated_at') if @path.search_text.empty?
       @pages = Page.paginate_by_path(@path, options_for_me(:method => :sphinx, :page => params[:page]))
       
       # if there was a text string in the search, generate extracts for the results      
@@ -44,11 +44,11 @@ class Me::SearchController < Me::BaseController
       :docs             => pages.collect {|page| page.page_terms ? page.page_terms.body : ""},
       :words            => @path.search_text,
       :index            => "page_terms_core",
-      :before_match     => "<b>",
-      :after_match      => "</b>",
+      :before_match     => "{bold}",
+      :after_match      => "{/bold}",
       :chunk_separator  => " ... ",
-      :limit            => 400,
-      :around           => 20
+      :limit            => 400,        # the max size of the total result
+      :around           => 5           # how much text around each match to show. it is not characters. words maybe?
     )
     results.each_with_index do |result, i|
       pages[i].flag[:excerpt] = result

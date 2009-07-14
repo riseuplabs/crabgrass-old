@@ -325,9 +325,14 @@ module PageHelper
     end
 
     if page.flag[:excerpt]
-      trs << content_tag(:tr, content_tag(:td, page.flag[:excerpt], :class => 'excerpt', :colspan=>columns.size))
+      trs << content_tag(:tr, content_tag(:td,'&nbsp;') + content_tag(:td, escape_excerpt(page.flag[:excerpt]), :class => 'excerpt', :colspan=>columns.size))
     end
     trs.join("\n")
+  end
+
+  # allow bold in the excerpt, but no other html. We use special {bold} for bold.
+  def escape_excerpt(str)
+    h(str).gsub /\{(\/?)bold\}/, '<\1b>'
   end
 
   def page_notice_row(notice, column_size)
