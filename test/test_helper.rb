@@ -260,8 +260,6 @@ See also doc/SPHINX"
     post '/account/login', {:login => user.to_s, :password => user.to_s}
   end
 
-<<<<<<< HEAD:test/test_helper.rb
-=======
 end
 
 # some special rules for integration tests
@@ -269,5 +267,4 @@ class ActionController::IntegrationTest
   # we load all fixtures because webrat integration test should see exactly
   # the same thing the user sees in development mode
   fixtures :all
->>>>>>> master:test/test_helper.rb
 end
