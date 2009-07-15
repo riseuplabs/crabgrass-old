@@ -17,7 +17,7 @@
           <span class="actions">
             <%= link_to 'Show', group %>
             <%= link_to 'Edit', edit_group_path(group) %>
-            <%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to 'Destroy', group, :confirm => "Are you sure you want to delete group '#{group.name}'?", :method => :delete %>
           </span>
         </td>
       </tr>
