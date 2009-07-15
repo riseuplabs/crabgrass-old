@@ -28,7 +28,7 @@ class PrivatePostActivity < Activity
   public
 
   def description(view)
-    url = view.send(:conversation_path, :id => user_from_name)
+    url = view.send(:my_private_message_path, user_from_name)
     link_text = reply ? 'a reply'[:a_reply_link] : 'a message'[:a_message_link]
 
     "You received {message_tag} from {other_user}: {title}"[

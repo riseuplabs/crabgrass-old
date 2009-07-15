@@ -7,6 +7,6 @@ table.members td {padding: 12px;}
 <% if may_update_group? -%>
   <%= render :partial => 'admin' %>
 <% end -%>
-<% if may_create_committee? -%>
+<% if may_create_memberships? -%>
   <%= render :partial => 'committee' %>
 <% end -%>

@@ -7,8 +7,6 @@
   else
     users ||= nil; groups ||= nil 
   end
-  path = params[:path]
-  parsed = parsed_path(path)
 
   # we use strings for boolean so that we can correctly set defaults
   show_extras ||= 'false'
@@ -16,7 +14,7 @@
   url ||= params.allow(:controller, :action, :id)
   url[:path] = nil if url.is_a?(Hash)
 
-  group_id = parsed.int_for('group')
+  group_id = @path.int_for('group')
   if group_id
     group = Group.find_by_id(group_id)
     groups += [group] if group
@@ -28,34 +26,34 @@
 <% form_tag(url) do -%>
 
 <% if show_page_types == 'true' -%>
-<%= select_tag 'search[type]', options_for_select_page_type(parsed.arg_for('type')) %>
+<%= select_tag 'search[type]', options_for_select_page_type(@path.arg_for('type')) %>
 <% end -%>
 
 <% if users.any? -%>
 <%= select_tag 'search[person]', "<option value=''>#{'all people'.t}</option>"+
-options_from_collection_for_select(users, "id", "name", parsed.int_for('person')) %>
+options_from_collection_for_select(users, "id", "name", @path.int_for('person')) %>
 <% end -%>
 
 <% if groups -%>
 <%= select_tag 'search[group]', "<option value=''>#{'all groups'.t}</option>"+
-options_from_collection_for_select(groups, "id", "name", parsed.int_for('group')) %>
+options_from_collection_for_select(groups, "id", "name", @path.int_for('group')) %>
 <% end -%>
 
 <% if show_extras == 'true' -%>
-<%# select_month(parsed.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
-<%# select_year(parsed.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
+<%# select_month(@path.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
+<%# select_year(@path.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
 
 <%= select_tag 'search[page_state]', "<option value=''>#{'all states'.t}</option>"+
-options_for_page_states(parsed) %>
+options_for_page_states(@path) %>
 <!--
-<label><%= check_box_tag 'search[pending]', 'true', parsed.keyword?('pending') %> pending</label>
-<label><%= check_box_tag 'search[starred]', 'true', parsed.keyword?('starred') %> starred</label>
+<label><%= check_box_tag 'search[pending]', 'true', @path.keyword?('pending') %> pending</label>
+<label><%= check_box_tag 'search[starred]', 'true', @path.keyword?('starred') %> starred</label>
 -->
 <% end -%>
 
 <span style='white-space: nowrap'>
-<%= text_field_tag 'search[text]', parsed.arg_for('text') && parsed.arg_for('text').gsub('+',' '), :size => '20' %>
-<%= submit_tag 'Search'.t %>
+<%= text_field_tag 'search[text]', @path.search_text, :size => '20' %>
+<%= submit_tag 'Search'[:search] %>
 </span>
 
 <script type="text/javascript">

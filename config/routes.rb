@@ -114,6 +114,11 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
   ##
+  ## CHAT
+  ##
+  map.connect 'chat/:action/:id', :controller => 'chat'
+  map.connect 'chat/:action/:id/*path', :controller => 'chat', :action => 'archive'
+  ##
   ## DEFAULT ROUTE
   ##
 

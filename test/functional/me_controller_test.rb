@@ -41,7 +41,7 @@ class MeControllerTest < Test::Unit::TestCase
 
     post :search, :search => search_opts
     assert_response :redirect
-    assert_redirected_to me_url(:action => 'search') + @controller.build_filter_path(search_opts)
+    assert_redirected_to me_url(:action => 'search') + @controller.parse_filter_path(search_opts)
 
     search_opts[:text] = "e"
     post :search, :search => search_opts

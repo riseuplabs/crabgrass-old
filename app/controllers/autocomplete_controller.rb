@@ -2,19 +2,27 @@
 # Handles the population of autocomplete results for various autocomplete fields
 #
 # TODO: currently, this is something of a security hole.
+# TODO: currently, we do not search for committees by their short name.
 #
 class AutocompleteController < ApplicationController
   verify :xhr => true
 
   def entities
-    filter = "#{params[:query]}%"
-    recipients = Group.find(:all,
-      :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
-      :limit => 20)
-    recipients += User.on(current_site).find(:all,
-      :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-      :limit => 20)
-    recipients = recipients.sort_by{|r|r.name}[0..19]
+    # check if we are preloading...
+    if params[:query] == ""
+      recipients = current_user.groups
+      recipients += User.friends_of(current_user)
+    else
+      filter = "#{params[:query]}%"
+      recipients = Group.find(:all,
+        :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? ) AND
+          groups.id NOT IN (?)", filter, filter, current_user.group_ids],
+        :limit => 20)
+      recipients += User.on(current_site).strangers_to(current_user).find(:all,
+        :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
+        :limit => 20)
+      recipients = recipients.sort_by{|r|r.name}[0..19]
+    end
     render :json => {
       :query => params[:query],
       :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
@@ -23,10 +31,14 @@ class AutocompleteController < ApplicationController
   end
 
   def people
-    filter = "#{params[:query]}%"
-    recipients = User.on(current_site).find(:all,
-      :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-      :limit => 20)
+    if params[:query] == ""
+      recipients = User.friends_of(current_user)
+    else
+      filter = "#{params[:query]}%"
+      recipients = User.on(current_site).strangers_to(current_user).find(:all,
+        :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
+        :limit => 20)
+    end
     render :json => {
       :query => params[:query],
       :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
