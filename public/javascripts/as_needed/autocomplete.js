@@ -18,6 +18,8 @@ var Autocomplete = function(el, options, id){
   this.selectedIndex = -1;
   this.currentValue = this.el.value;
   this.intervalId = 0;
+  this.preloadedSuggestions = 0;
+  this.renderedQuery = "";
   this.cachedResponse = [];
   this.instanceId = null;
   this.onChangeInterval = null;
@@ -63,7 +65,7 @@ Autocomplete.prototype = {
         me.killSuggestions();
         me.disableKillerFn();
       }
-    } .bindAsEventListener(this);
+    }.bindAsEventListener(this);
 
     if (!this.options.width) { this.options.width = this.el.getWidth(); }
 
@@ -81,13 +83,16 @@ Autocomplete.prototype = {
     this.mainContainerId = div.identify();
     this.container = $('Autocomplete_' + this.id);
     this.fixPosition();
-    
+
     Event.observe(this.el, window.opera ? 'keypress':'keydown', this.onKeyPress.bind(this));
     Event.observe(this.el, 'keyup', this.onKeyUp.bind(this));
     Event.observe(this.el, 'blur', this.enableKillerFn.bind(this));
+    /* If we have preloaded data we might want to display it on focus.*/ 
     Event.observe(this.el, 'focus', this.fixPosition.bind(this));
     this.container.setStyle({ maxHeight: this.options.maxHeight + 'px' });
     this.instanceId = Autocomplete.instances.push(this) - 1;
+    /* I think we should trigger a preloading request from here */
+    this.requestSuggestions("");
   },
 
   fixPosition: function() {
@@ -97,6 +102,7 @@ Autocomplete.prototype = {
 
   enableKillerFn: function() {
     Event.observe(document.body, 'click', this.killerFn);
+    Event.observe(document.body, 'click', this.hide.bind(this));
   },
 
   disableKillerFn: function() {
@@ -169,26 +175,68 @@ Autocomplete.prototype = {
       this.ignoreValueChange = false;
       return;
     }
-    if (this.currentValue === '' || this.currentValue.length < this.options.minChars) {
+    if (this.currentValue === '') {
       this.hide();
-    } else {
+    } else if (this.currentValue.length < this.options.minChars) {
+      /* display preloaded suggestions if there are any. */
+      this.updateSuggestions("");
+      this.suggest();
+    } else { 
       this.getSuggestions();
+      this.suggest();
     }
   },
 
   getSuggestions: function() {
     var cr = this.cachedResponse[this.currentValue];
     if (cr && Object.isArray(cr.suggestions)) {
-      this.suggestions = cr.suggestions;
-      this.data = cr.data;
-      this.suggest();
-    } else if (!this.isBadQuery(this.currentValue)) {
-      new Ajax.Request(this.serviceUrl, {
-        parameters: { query: this.currentValue },
-        onComplete: this.processResponse.bind(this),
-        method: 'get'
-      });
+      this.updateSuggestions(cr);
+      return;
     }
+    if (this.isBadQuery(this.currentValue)) {return;}
+    /*
+     * First we check if we have the cachedResponse from a previous query.
+     * If we do and it has less than 20 suggestions it has a full result set and all we need to do is
+     * filter these results to build the new result set.
+     */
+    var l = this.currentValue.length - 1;
+    var cr1 = this.cachedResponse[this.currentValue.substring(0,l)];
+    while (l-- >= this.options.minChars && !cr1) {
+      cr1 = this.cachedResponse[this.currentValue.substring(0,l)];
+    }
+    if (cr1 && Object.isArray(cr1.suggestions)) {
+      if (cr1.suggestions.length < 20) {
+        this.cachedResponse[this.currentValue] = this.filterResponse(cr1);
+        this.updateSuggestions(this.cachedResponse[this.currentValue]);
+      } else {
+        this.updateSuggestions(this.filterResponse(cr1));
+        this.requestSuggestions(this.currentValue);
+      }
+      if (this.suggestions.length === 0 && this.currentValue.length >= this.options.minChars) { 
+        this.badQueries.push(this.currentValue);
+      }
+    } else {
+      this.requestSuggestions(this.currentValue);
+      this.updateSuggestions("");
+    }
+  },
+
+  filterResponse: function(response) {
+    var re = new RegExp('[\\s\+>]' + this.currentValue.match(/\w+/g).join('|\\s\+>'), 'gi');
+    var suggest=[];
+    var dat=[];
+    response.suggestions.each( function(value, i) {
+      if (value.match(re)) {
+        suggest.push(value);
+        dat.push(response.data[i]);
+      }
+    }.bind(this));
+    var ret = {
+      data:dat,
+      query:this.currentValue,
+      suggestions:suggest 
+    };
+    return ret;
   },
 
   isBadQuery: function(q) {
@@ -206,19 +254,51 @@ Autocomplete.prototype = {
   },
 
   suggest: function() {
+    var content = [];
     if (this.suggestions.length === 0) {
       this.hide();
       return;
     }
-    var content = [];
-    var re = new RegExp('\\b' + this.currentValue.match(/\w+/g).join('|\\b'), 'gi');
-    this.suggestions.each(function(value, i) {
-      content.push((this.selectedIndex === i ? '<div class="selected"' : '<div'),
-' onclick="Autocomplete.instances[', this.instanceId, '].select(', i, ');" onmouseover="Autocomplete.instances[', this.instanceId, '].activate(', i, ');">', this.renderRow(value, re, this.data[i]), '</div>');
-    } .bind(this));
+    this.suggestions.each(function (value, i) {
+/* Haven't gotten a hr to work with both the mouse over as well as the key downs.
+ * TODO: add it as special element to the suggestions array so the array and the
+ *       display are in sync index wise. We just leave it out until that's done.
+ *     if (i == this.preloadedSuggestions && i > 0 && i < this.suggestions.length) {
+ *       content.push('<hr/>');
+ *     }
+ */
+      content.push(this.displaySuggestion(value, i, this.data[i]));
+    }.bind(this));
     this.enabled = true;
     this.fixPosition();
     this.container.update(content.join('')).show();
+  },
+
+  displaySuggestion: function(value, i, data) {
+    var content = [];
+    var re = new RegExp('\\b' + this.currentValue.match(/\w+/g).join('|\\b'), 'gi');
+    content.push((this.selectedIndex === i ? '<div class="selected"' : '<div'),
+      ' onclick="Autocomplete.instances[', this.instanceId, '].select(', i, ');"',
+      ' onmouseover="Autocomplete.instances[', this.instanceId, '].activate(', i, ');">',
+      this.renderRow(value, re, data),
+      '</div>');
+    return content.join('');
+  },
+
+  /* This will append the Suggestions from a cached response to the
+   * display.
+   */
+  appendSuggestions: function(response) {
+    this.suggestions = this.suggestions.concat(response.suggestions);
+    this.data = this.data.concat(response.data);
+  },
+
+  requestSuggestions: function(query) {
+    new Ajax.Request(this.serviceUrl, {
+          parameters: { query: query },
+          onComplete: this.processResponse.bind(this),
+          method: 'get'
+        });
   },
 
   processResponse: function(xhr) {
@@ -227,11 +307,30 @@ Autocomplete.prototype = {
       response = xhr.responseText.evalJSON();
       if (!Object.isArray(response.data)) { response.data = []; }
     } catch (err) { return; }
-    this.suggestions = response.suggestions;
-    this.data = response.data;
     this.cachedResponse[response.query] = response;
-    if (response.suggestions.length === 0) { this.badQueries.push(response.query); }
-    if (response.query === this.currentValue) { this.suggest(); }
+    if (this.currentValue.indexOf(response.query) === 0 &&
+        response.query.length >= this.renderedQuery.length) {
+      this.updateSuggestions(this.filterResponse(response));
+      this.suggest();
+    }
+    if (this.suggestions.length === 0) { this.badQueries.push(response.query);}
+  },
+
+  /* this will update the Suggestions with the given response.
+   * if response is "" only preloaded Suggestions will be used.
+   */
+  updateSuggestions: function(response) {
+    this.suggestions=[]
+    this.data=[]
+    if (this.cachedResponse[""]) {
+      var filtered = this.filterResponse(this.cachedResponse[""]);
+      this.appendSuggestions(filtered); /*adding preloaded suggestions*/
+    }
+    this.preloadedSuggestions=this.suggestions.length
+    if (response != "") {
+      this.appendSuggestions(response);
+      this.renderedQuery=response.query;
+    }
   },
 
   activate: function(index) {
