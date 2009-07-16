@@ -153,7 +153,7 @@ class PathFinder::ParsedPath < Array
         element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
       end
     end
-    if last = 'rss' and unparsable.include?('rss')
+    if last == 'rss' and unparsable.include?('rss')
       @format = last.to_s
     end
     return self

@@ -84,9 +84,11 @@ form.mini_search table {
 <br/>
 
 <%= Formy.tabs do |f|
-  f.tab do |t|
-    t.label 'Featured'
-    t.show_tab 'featured_panel'
+  if @show_featured
+    f.tab do |t|
+      t.label 'Featured'
+      t.show_tab 'featured_panel'
+    end
   end
   f.tab do |t|
     t.label 'Recent Pages'
@@ -109,12 +111,17 @@ end %>
 <% content_for :tail do %>
  <%# this activates the correct tab based on the #hash when a page is first
      loaded. The default is 'featured', if no window.location.hash is set. %>
- <%= javascript_tag("activateLocationHash('featured')") %>
+ <% default_tab = @show_featured ? 'featured' : 'recent_pages' %>
+ <%= javascript_tag("activateLocationHash('#{default_tab}')") %>
 <% end %>
 
+<div class="rigid_page_scroll">
+
+<% if @show_featured %>
 <div id='featured_panel' class="tab_content tab_area" style="display:none" onclick="<%= load_panel('featured') %>">
  <%= big_spinner %>
 </div>
+<% end %>
 
 <div id='recent_pages_panel' class="tab_content tab_area" style="display:none" onclick="<%= load_panel('recent_pages') %>">
  <%= big_spinner %>
@@ -132,3 +139,4 @@ end %>
  <%= big_spinner %>
 </div>
 
+</div>

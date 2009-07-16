@@ -147,6 +147,8 @@ module PathFinder::Mysql::BuilderFilters
   # media-image+file, media-image+gallery, file,
   # text+wiki, text, wiki
   def filter_type(arg)
+    return if arg == 'all'
+
     if arg =~ /[\+\ ]/
       page_group, page_type = arg.split(/[\+\ ]/)
     elsif Page.is_page_group?(arg)

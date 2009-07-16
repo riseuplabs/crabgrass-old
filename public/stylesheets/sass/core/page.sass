@@ -62,6 +62,14 @@ div
   clear: left
   padding-top: none
 
+// the fixed height is necessary to prevent ugly flashes
+// when a different tab is selected. 
+.rigid_page_scroll
+  height: 40em
+  clear: left
+  overflow-y: auto
+  overflow-x: hidden
+
 .filter_menu
   display: none
 
