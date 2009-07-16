@@ -885,7 +885,9 @@ month_short_november: Nov
 month_short_december: Dec
 date_today: Today
 date_yesterday: Yesterday
-date_this_week: This Past Week
+date_this_week: This Week
+date_this_month: This Month
+date_all_time: All Time
 date_older: Older
 date_centuries: centuries
 date_years: years
