@@ -77,7 +77,8 @@ class RootController < ApplicationController
       :columns => [:stars, :icon, :title, :last_updated], 
       :heading_partial => 'root/type_links',
       :sortable => false,
-      :show_time_dividers => true
+      :show_time_dividers => true,
+      :pagination_options => {:params => {:type => params[:type]}}
     )
   end
 
