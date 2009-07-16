@@ -19,7 +19,11 @@ ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icon
 div.popup_arrow {right: -16px} /* move popup nub slightly */
 
 /* page list */
-/* .page_icon {line-height: 1px; vertical-align: top;} */
+div.page_scroll {
+  width: 99.9%;
+  zoom: 1;
+}
+div.page_list {zoom: 1;}
 
 /* clearing */
 .selfclear {
