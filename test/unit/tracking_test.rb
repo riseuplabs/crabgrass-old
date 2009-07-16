@@ -24,7 +24,19 @@ class TrackingTest < Test::Unit::TestCase
     page = pages(:wiki) #id = 210
     group = groups(:rainbow)
     action = :view
-    assert_tracking(user, group, page, action)
+    # let's clean things up first so they do not get in the way...
+    Tracking.process
+    Daily.update
+    Hourly.find(:all).each{|h| h.destroy}
+    assert_difference 'Hourly.count' do
+      # 1, "hourly should be created for the tracked view" do
+      assert_tracking(user, group, page, action)
+      Tracking.process
+    end
+    assert_difference 'Daily.count' do
+    #, 1, "daily should be created from the existing hourlies" do
+      Daily.update
+    end
   end
 
   # This can theoretically fail because of te insert_delayed not having inserted
