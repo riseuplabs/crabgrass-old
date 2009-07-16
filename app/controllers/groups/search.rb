@@ -10,7 +10,7 @@ module Groups::Search
       redirect_to group_search_url(:action => 'search', :path => path)
     else
       @path.default_sort('updated_at')
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :per_page => 5))
+      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
 
       if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
         @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
