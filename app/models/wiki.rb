@@ -217,7 +217,6 @@ class Wiki < ActiveRecord::Base
   # reading body_html or saving this wiki
   # will regenerate body_html from body if render_body_html_proc is available
   def body=(body)
-    require 'ruby-debug';debugger;1-1
     write_attribute(:body, body)
     # invalidate body_html and raw_structure
     if body_changed?
@@ -241,9 +240,10 @@ class Wiki < ActiveRecord::Base
 
     read_attribute(:raw_structure) || write_attribute(:raw_structure, {})
   end
-  
+
+  alias_method :existing_section_locks, :section_locks
   def section_locks
-    WikiLock.find_by_wiki_id(self.id) || create_section_locks
+    existing_section_locks || create_section_locks(:wiki => self)
   end
 
   # sets the block used for rendering the body to html
