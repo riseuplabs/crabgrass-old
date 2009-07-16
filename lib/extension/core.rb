@@ -36,10 +36,8 @@ class NilClass
   end
 end
 
-# a class that return nil for everything, and never complains
-# useful like so:
-#   Group.find(:first).if_not_nil.display_name
-#
+# A class that return nil for everything, and never complains.
+# Used by Object#try().
 class SilentNil
   include Singleton
   def method_missing(*args)
@@ -60,13 +58,29 @@ class Object
     false
   end
   
-  def safe_send(symbol, *args)
-    self.send(symbol, *args) if self.respond_to?(symbol)
+  #
+  # Object#try() has been added to rails 2.3. It allows you to call a method on
+  # an object in safe way that will not bomb out if the object is nil or the
+  # method does not exist.
+  #
+  # This try is similar, but also accepts zero args or multiple args.
+  # 
+  # Examples:
+  #
+  #  1. @person.try(:name)
+  #  2. @person.try.name
+  #  3. @person.try(:name=, 'bob')
+  #
+  def try(method=nil, *args)
+    if method.nil?
+      self.nil? ? SilentNil.instance : self   
+    elsif respond_to? method
+      send(method, *args)
+    else
+      nil
+    end
   end
 
-  def if_not_nil
-    self.nil? ? SilentNil.instance : self
-  end
 end
 
 class Array
