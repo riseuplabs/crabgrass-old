@@ -7,19 +7,11 @@
         <span class="topnav"><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
       </li>
     <%- end -%>
-    <li id='menu-me' class='<%= @active_tab == :me ? 'active' : '' %>'>
+    <li id='menu-me' class='menu <%= @active_tab == :me ? 'active' : '' %>'>
       <span class="topnav"><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
       <ul class="menu_dashboard selfclear submenu" style="display: none">
         <li class="leftcol">
-          <ul class="side_list">
-            <li class="small_icon home_16"><a href="/me/dashboard">Dashboard</a></li>
-            <li class="small_icon archive_16" id="inbox_line"><a class="" href="/me/inbox">Inbox</a></li>
-            <li class="small_icon magnifier_16"><a class="" href="/me/search">Search</a></li>
-            <li class="small_icon page_tasks_16"><a class="" href="/me/tasks/pending">Tasks</a></li>
-            <li class="small_icon info_16" id="requests_line"><a class="" href="/me/requests/to_me">Requests</a></li>
-            <li class="small_icon trash_16" id="trash_line"><a class="" href="/me/trash">Trash</a></li>
-          </ul>
-          <a class="contribute round" href=""><span class="small_icon plus_16">Contribute</span></a>
+          <%= render :partial => 'me/mebar', :locals => { :menu_id => '_menu' }  %>  
         </li>
         <li class="rightcol">
           <h3 class="dim">Recent Pages</h3>
@@ -39,7 +31,7 @@
   <%# for now, i am disabling these tabs when not logged in. why? because
       the controllers currently bomb out in bad ways if you are not logged in. %>
   <%- if logged_in? -%>
-  <li id='menu-people' class='<%= @active_tab == :people ? 'active' : '' %>'>
+  <li id='menu-people' class='menu <%= @active_tab == :people ? 'active' : '' %>'>
     <span class="topnav"><%= link_to_active "People"[:menu_people], people_directory_url(:friends), @active_tab == :people %></span>
     <ul class="people_dashboard selfclear submenu" style="display: none">
       <li>
@@ -50,7 +42,7 @@
       </li>
     </ul>
   </li>
-  <li id='menu-groups' class='<%= @active_tab == :groups ? 'active' : '' %>'>
+  <li id='menu-groups' class='menu <%= @active_tab == :groups ? 'active' : '' %>'>
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
     <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %>
     </span>
@@ -74,7 +66,7 @@
   </li>
 
   <%- if current_site.has_networks? -%>
-    <li id='menu-networks' class='<%= @active_tab == :networks ? 'active' : '' %>'>
+    <li id='menu-networks' class='menu <%= @active_tab == :networks ? 'active' : '' %>'>
       <% url = logged_in? ? network_directory_url(:action => :my) : network_directory_url %>
       <span class="topnav"><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
       <ul class="networks_dashboard selfclear submenu" style="display: none">
