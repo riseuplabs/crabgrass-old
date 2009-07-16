@@ -64,7 +64,7 @@ module UserExtension::Users
 
       # not friends of... used for autocomplete when we preloaded the friends.
       named_scope(:strangers_to, lambda do |user|
-        {:conditions => ['users.id NOT IN (?)', user.friend_id_cache]}
+        {:conditions => ['users.id NOT IN (?)', user.friend_id_cache + [user.id]]}
       end)
 
 #      has_and_belongs_to_many :contacts,

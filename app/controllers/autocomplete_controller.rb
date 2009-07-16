@@ -14,10 +14,18 @@ class AutocompleteController < ApplicationController
       recipients += User.friends_of(current_user)
     else
       filter = "#{params[:query]}%"
-      recipients = Group.find(:all,
-        :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? ) AND
-          groups.id NOT IN (?)", filter, filter, current_user.group_ids],
-        :limit => 20)
+      if current_user.group_ids.any?
+        recipients = Group.find(:all,
+          :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? ) AND
+            NOT groups.id IN (?)",
+            filter, filter, current_user.group_ids],
+          :limit => 20)
+      else
+        recipients = Group.find(:all,
+          :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
+            filter, filter],
+          :limit => 20)
+      end
       recipients += User.on(current_site).strangers_to(current_user).find(:all,
         :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
         :limit => 20)
