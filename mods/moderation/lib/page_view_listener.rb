@@ -27,18 +27,18 @@ class PageViewListener < Crabgrass::Hook::ViewListener
       link = link_to_remote_icon('sad_plus',
         :url=>{:controller => 'yucky', :post_id => post.id, :action => 'add'},
         :confirm => 'Are you sure this comment is inappropriate? Click \'yes\' *only if* you think this is offensive, rude or unkind. A moderator will look at the post soon.'[:confirm_inappropriate_comment])
-      #link = link_to image_tag('/plugin_assets/super_admin/images/face-sad.png'),
+      #link = link_to image_tag('/plugin_assets/moderation/images/face-sad.png'),
       #  :controller => 'yucky', :post_id => post.id, :action => 'add'
     elsif rating.rating == YUCKY_RATING
       link = link_to_remote_icon('sad_minus', :url=>{:controller => 'yucky', :post_id => post.id, :action => 'remove'})
-      #link = link_to image_tag('/plugin_assets/super_admin/images/face-smile.png'),
+      #link = link_to image_tag('/plugin_assets/moderation/images/face-smile.png'),
       #  :controller => 'yucky', :post_id => post.id, :action => 'remove'
     end
     content_tag :div, link, :class => 'post_action_icon', :style => 'margin-right:22px; display: block'
   end
 
   def html_head(context)
-    stylesheet_link_tag('crabgrass', :plugin => 'super_admin')
+    stylesheet_link_tag('crabgrass', :plugin => 'moderation')
   end
 
   private
