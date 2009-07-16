@@ -23,8 +23,8 @@ ActiveRecord::Base.class_eval do
     define_method(:format_body) {
       if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
-        if respond_to?('group_name')
-          self.body_html = GreenCloth.new(body,group_name, flags[:options]).to_html
+        if respond_to?('owner_name')
+          self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html
         else
           self.body_html = GreenCloth.new(body, 'page', flags[:options]).to_html
         end
@@ -46,8 +46,11 @@ ActiveRecord::Base.class_eval do
   end
   
   # make sanitize_sql public so we can use it ourselves
-  def self.public_sanitize_sql(condition)
+  def self.quote_sql(condition)
     sanitize_sql(condition)
+  end
+  def quote_sql(condition)
+    self.class.quote_sql(condition)
   end
   
   # class_attribute()

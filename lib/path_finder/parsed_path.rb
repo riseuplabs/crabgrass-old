@@ -110,8 +110,10 @@ class PathFinder::ParsedPath < Array
   #
   def initialize(path=nil)
     return unless path
+    last = nil
     if path.is_a? String or path.is_a? Array
       path = path.split('/') if path.instance_of? String
+      last = path.last
       path = path.reverse
       while keyword = path.pop
         if PATH_KEYWORDS[keyword]
@@ -129,15 +131,16 @@ class PathFinder::ParsedPath < Array
       path = path.sort{|a,b| (PATH_ORDER[a[0]]||PATH_ORDER['default']) <=> (PATH_ORDER[b[0]]||PATH_ORDER['default']) }
       path.each do |pair|
         key, value = pair
+        key = key.to_s
         if PATH_KEYWORDS[key]
           if key == 'page_state' and value.any? # handle special pseudo keyword... 
-            self << [value]
+            self << [value.to_s]
           elsif PATH_KEYWORDS[key] == 0
             self << [key] if value == 'true'
-          elsif PATH_KEYWORDS[key] == 1 and value.any?
-            self << [key, value]
+          elsif PATH_KEYWORDS[key] == 1 and !value.nil? and !value.to_s.empty?
+            self << [key, value.to_s]
           elsif PATH_KEYWORDS[key] == 2 and value.size = 2
-            self << [key, value[0], value[1]]
+            self << [key, value[0].to_s, value[1].to_s]
           end
         else
           self.unparsable << key
@@ -150,6 +153,9 @@ class PathFinder::ParsedPath < Array
         element[1].sub!('+', ' ') # trick CGI.escape to encode '+' as '+'.
       end
     end
+    if last == 'rss' and unparsable.include?('rss')
+      @format = last.to_s
+    end
     return self
   end
 
@@ -157,7 +163,23 @@ class PathFinder::ParsedPath < Array
   # converts a parsed path to a string, suitable for a url.
   #
   def to_path
-    '/' + self.flatten.collect{|i|CGI.escape i}.join('/')
+    '/' + self.flatten.collect{|i|CGI.escape i}.join('/') + (@format || '')
+  end
+  alias_method :to_s, :to_path     # manual string conversion
+  alias_method :to_str, :to_path   # automatic string conversion
+  
+  def to_param
+    self.flatten + (@format ? [@format] : [])
+  end
+  def join(char=nil)
+    to_param.join(char)
+  end
+
+  #
+  # generates a string useful for display in the page title
+  #
+  def title
+    self.collect{|segment| segment.join(' ')}.join(' > ')
   end
 
   # return true if keyword is in the path
@@ -210,22 +232,38 @@ class PathFinder::ParsedPath < Array
     sort_arg?('created_at') or sort_arg?('updated_at')
   end
 
+
+  ##
+  ## SETTERS
+  ##
+
   def remove_sort
     self.delete_if{|e| e[0] == 'ascending' or e[0] == 'descending' }
   end
-  
-  # converts this parsed path into a string path
-  def to_s
-    self.flatten.join('/')
+
+  # adds the sort field, but only if there is none set yet.
+  def default_sort(field, direction='descending')
+    unless sort_arg?
+      self << [direction, field]
+    end
+    self
   end
-  
+    
   # merge two parsed paths together.
   # for duplicate keywords use the ones in the path_b arg
   def merge(path_b)
     path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
     path_a = self.dup
     path_a.remove_sort if path_b.sort_arg?
-    (path_a + path_b).uniq
+    path_a.replace((path_a + path_b).uniq)
+  end
+
+  # same as merge, but replaces self.
+  def merge!(path_b)
+    path_b = PathFinder::ParsedPath.new(path_b) unless path_b.is_a? PathFinder::ParsedPath
+    self.remove_sort if path_b.sort_arg?
+    self.concat(path_b).uniq!
+    self
   end
 
   # replace one keyword with another. 
@@ -249,5 +287,19 @@ class PathFinder::ParsedPath < Array
     end
   end
 
+  # returns a new path with the specified format.
+  # if arg is nil, just returns the current format.
+  def format(format_type=nil)
+    if format_type.nil?
+      @format
+    else
+      path = self.dup
+      path.format = format_type
+      path
+    end
+  end
+  def format=(value)
+    @format = value.to_s
+  end
 end
 

@@ -61,6 +61,12 @@ class RankedVotePageControllerTest < ActionController::TestCase
     end
   end
 
+  def test_show_new
+    login_as :blue
+    post 'create', :page => {:title => "vote"}, :id => RankedVotePage.param_id
+    get :edit, :page_id => assigns(:page).id
+    assert_response :success
+  end
 
   # TODO: tests for sort, update_possible, edit_possible, destroy_possible,
 end

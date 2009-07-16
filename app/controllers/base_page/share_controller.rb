@@ -24,30 +24,11 @@
 #
 class BasePage::ShareController < ApplicationController
 
-  before_filter :login_required, :except => [:auto_complete]
-  protect_from_forgery :except => [:auto_complete]
+  before_filter :login_required
   verify :xhr => true
 
-  helper 'base_page', 'base_page/share'
+  helper 'base_page', 'base_page/share', 'autocomplete'
   permissions 'base_page'
-
-  def auto_complete
-    # i am searching by display_name only under protest. this is going to
-    # make it s.l.o.w.
-    filter = "#{params[:query]}%"
-    recipients = Group.find(:all,
-      :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
-      :limit => 20)
-    recipients += User.on(current_site).find(:all,
-      :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-      :limit => 20)
-    recipients = recipients.sort_by{|r|r.name}[0..19]
-    render :json => {
-      :query => params[:query],
-      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
-      :data => recipients.collect{|r|r.avatar_id||0}
-    }
-  end
   
   # display the share or notify popup via ajax
   def show
@@ -83,7 +64,8 @@ class BasePage::ShareController < ApplicationController
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
-
+      # we save if we are in share or notify process
+      options[:notify] = params[:notify]
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
       flash_message_now :success => @success_msg
@@ -161,12 +143,6 @@ class BasePage::ShareController < ApplicationController
         hsh[key] = true
       end
     end
-  end
-
-  # this should be in a helper somewhere, but i don't know how to generate 
-  # json response in the view. 
-  def display_on_two_lines(entity)
-    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
 end

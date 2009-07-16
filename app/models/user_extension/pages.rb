@@ -147,16 +147,16 @@ module UserExtension::Pages
     raise PermissionDenied.new unless self.may?(:edit, page)
     now = Time.now
 
+    unless page.contributors.include?(self)
+      page.contributors_count += 1
+    end
+
     # create self's participation if it does not exist
     my_part = find_or_build_participation(page)
     my_part.update_attributes(
       :changed_at => now, :viewed_at => now, :viewed => true,
       :resolved => (options[:resolved] || options[:all_resolved] || my_part.resolved?)
     )
-
-    unless page.contributors.include?(self)
-      page.contributors_count +=1
-    end
      
     # update everyone's participation
     page.user_participations.each do |party|
@@ -266,8 +266,8 @@ module UserExtension::Pages
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
-
-    if options[:send_notice]
+    # if send_notice option is selected, and no user participation exists yet
+    if options[:send_notice] && (!page.users.include?(user) || options[:notify])
       attrs[:inbox] = true
       if options[:send_message].any?
         attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}

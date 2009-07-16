@@ -1,12 +1,25 @@
 class PostObserver < ActiveRecord::Observer
 
   def after_create(post)
-    if post.type == "PrivatePost"
-      if post.in_reply_to
-        PrivatePostReplyActivity.create(:user_to => post.recipient, :user_from => post.user, :post => post)
-      else
-        PrivatePostActivity.create(:user_to => post.recipient, :user_from => post.user, :post => post)
-      end
+    if post.private?
+      PrivatePostActivity.create(
+        :user_to => post.recipient, :user_from => post.user,
+        :post => post, :reply => !post.in_reply_to.nil?
+      )
+    elsif post.public?
+      MessageWallActivity.create(
+        :user => post.recipient, :author => post.user, :post => post
+      )
+    end
+  end
+
+  def after_destroy(post)
+    if post.private?
+      activity = PrivatePostActivity.find_by_related_id(post.id)
+      activity.destroy if activity
+    elsif post.public?
+      activity = MessageWallActivity.find_by_related_id(post.id)
+      activity.destroy if activity
     end
   end
 

@@ -20,6 +20,8 @@ Webrat.configure do |config|
   config.mode = :rails
 end
 
+require 'shoulda/rails'
+
 module Tool; end
 
 
@@ -46,6 +48,8 @@ class MockFile
   def rewind; end
 end
 
+class ParamHash < HashWithIndifferentAccess
+end
 
 def mailer_options
   {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
@@ -94,15 +98,15 @@ class Test::Unit::TestCase
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
   def assert_permission_denied
-    assert_equal 'error', flash[:type]
-    assert_equal 'Permission Denied', flash[:title]
+    assert_equal 'error', flash[:type], 'missing "permission denied" message'
+    assert_equal 'Permission Denied', flash[:title], 'missing "permission denied" message'
     assert_response :redirect
     assert_redirected_to :controller => :account, :action => :login
   end
 
   def assert_login_required
-    assert_equal 'info', flash[:type]
-    assert_equal 'Login Required', flash[:title]
+    assert_equal 'info', flash[:type], 'missing "login required" message'
+    assert_equal 'Login Required', flash[:title], 'missing "login required" message'
     assert_response :redirect
     assert_redirected_to :controller => :account, :action => :login
   end

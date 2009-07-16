@@ -41,16 +41,28 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
+
+  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+    me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
+    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+  end
+
   map.connect 'me/:action/:id',             :controller => 'me'
 
   ##
   ## PEOPLE
   ##
   
-  map.people  'people/:action/:id', :controller => 'people'
+  map.resources :people_directory, :as => 'directory', :path_prefix => 'people', :controller => 'people/directory'
+
+  map.with_options(:namespace => 'people/') do |people_space|
+    people_space.resources :people do |people|
+      people.resources :messages
+    end
+  end
+
   map.connect 'person/:action/:id/*path', :controller => 'person'
-  map.connect 'messages/:user/:action/:id', :controller => 'messages', :action => 'index', :id => nil
-  map.resources :conversations
 
   ##
   ## EMAIL
@@ -90,6 +102,11 @@ ActionController::Routing::Routes.draw do |map|
   map.networks 'networks/:action/:id', :controller => 'networks'
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
+  ##
+  ## CHAT
+  ##
+  map.connect 'chat/:action/:id', :controller => 'chat'
+  map.connect 'chat/:action/:id/*path', :controller => 'chat', :action => 'archive'
   ##
   ## DEFAULT ROUTE
   ##

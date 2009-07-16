@@ -136,8 +136,7 @@ class WikiPageController < BasePageController
   # called early in filter chain
   def fetch_data
     return true unless @page
-
-    @wiki = @page.data
+    @wiki = @page.wiki
   end
 
   # before filter

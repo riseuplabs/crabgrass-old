@@ -29,7 +29,7 @@ class Tracking < ActiveRecord::Base
   ##
   def self.update_last_seen_users
     connection.execute("UPDATE users,#{table_name}
-                       SET users.last_seen_at = NOW() - INTERVAL 1 MINUTE
+                       SET users.last_seen_at = UTC_TIMESTAMP() - INTERVAL 1 MINUTE
                        WHERE users.id IN (#{@@seen_users.to_a.join(', ')})")
     @@seen_users.clear
     true
@@ -44,12 +44,23 @@ class Tracking < ActiveRecord::Base
 
   def self.process
     begin
-      connection.execute("LOCK TABLES #{table_name} WRITE, hourlies WRITE, memberships WRITE")
-      connection.execute("DELETE QUICK FROM hourlies WHERE created_at < NOW() - INTERVAL 1 DAY")
+      connection.execute("LOCK TABLES #{table_name} WRITE, hourlies WRITE, memberships WRITE, user_participations WRITE")
+      connection.execute("DELETE QUICK FROM hourlies WHERE created_at < UTC_TIMESTAMP() - INTERVAL 1 DAY")
       connection.execute("INSERT INTO hourlies
-                           (page_id, views, ratings, edits, created_at)
-                         SELECT page_id, SUM(views), SUM(stars), SUM(edits), now()
-                           FROM #{table_name} GROUP BY page_id")
+                           (page_id, views, stars, edits, created_at)
+                           SELECT trackings.page_id, trackings.view_count, trackings.star_count,
+                                  participations.contributor_count, UTC_TIMESTAMP()
+                           FROM (
+                             SELECT page_id, SUM(views) as view_count, SUM(stars) as star_count
+                             FROM #{table_name} GROUP BY page_id
+                           ) as trackings, (
+                             SELECT page_id, COUNT(*) as contributor_count
+                             FROM user_participations
+                             WHERE (user_participations.changed_at > UTC_TIMESTAMP() - INTERVAL 1 HOUR)
+                             GROUP BY page_id
+                           ) as participations
+                           WHERE trackings.page_id = participations.page_id
+                         ")
 
       connection.execute("CREATE TEMPORARY TABLE group_view_counts
                          SELECT COUNT(*) AS c, user_id, group_id, MAX(tracked_at) as tracked_at
@@ -68,7 +79,7 @@ class Tracking < ActiveRecord::Base
     # do this after unlocking tables just to try to minimize the amount of time tables are locked…
     connection.execute("UPDATE page_terms,hourlies
                        SET page_terms.views_count = page_terms.views_count + hourlies.views
-                       WHERE page_terms.id=hourlies.page_id AND hourlies.created_at > NOW() - INTERVAL 30 MINUTE")
+                       WHERE page_terms.page_id=hourlies.page_id AND hourlies.created_at > UTC_TIMESTAMP() - INTERVAL 30 MINUTE")
     connection.execute("UPDATE page_terms,pages
                        SET pages.views_count = page_terms.views_count
                        WHERE pages.id=page_terms.page_id")
@@ -85,7 +96,7 @@ class Tracking < ActiveRecord::Base
     stars = things[:action] == :star ? 1 : 0
     stars -= things[:action] == :unstar ? 1 : 0
     thing_ids = things.values_at(:page, :group, :user).collect{|t| quoted_id(t)}
-    thing_ids.concat [views, edits, stars, "NOW()"]
+    thing_ids.concat [views, edits, stars, "UTC_TIMESTAMP()"]
   end
 
   def self.quoted_id(thing)

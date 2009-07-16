@@ -93,6 +93,11 @@ function decorate_wiki_edit_links(ajax_link) {
   );
 }
 
+function setRows(elem, rows) {
+  elem.rows = rows;
+  elem.toggleClassName('tall');
+}
+
 //
 // EVENTS
 //
@@ -130,6 +135,7 @@ function absolutePositionParams(obj) {
 
 //
 // DYNAMIC TABS
+// naming scheme: location.hash => '#most-viewed', tablink.id => 'most_viewed_link', tabcontent.id => 'most_viewed_panel'
 //
 
 function evalAttributeOnce(element, attribute) {
@@ -153,16 +159,14 @@ function showTab(tabLink, tabContent, hash) {
   return false;
 }
 
-function activateLocationHash(default_hash) {
-  if (hash = (window.location.hash || default_hash)) {
+var defaultHash = null;
+
+function showTabByHash() {
+  if (hash = (window.location.hash || defaultHash)) {
     hash = hash.replace(/^#/, '').replace(/-/g, '_');
     tabContent = $(hash + '_panel');
-    if (tabContent) {
-      tabContent.show();
-      evalAttributeOnce(tabContent, 'onclick');
-      tabLink = $(hash + '_link');
-      if (tabLink) {tabLink.addClassName('active');}
-    }
+    tabLink = $(hash + '_link');
+    showTab(tabLink, tabContent)
   }
 }
 
@@ -220,3 +224,20 @@ document.observe('dom:loaded', function() {
   new SubMenu("menu-groups");
   new SubMenu("menu-networks");
 });
+
+// DEAD SIMPLE AJAX HISTORY
+// allow location.hash change to trigger a callback event.
+//
+
+var onHashChanged = null; // called whenever location.hash changes
+var currentHash = '##';
+function pollHash() {
+  if ( window.location.hash != currentHash ) {
+    currentHash = window.location.hash;
+    onHashChanged();
+  }
+}
+document.observe("dom:loaded", function() {
+  if (onHashChanged) {setInterval("pollHash()", 100)}
+});
+

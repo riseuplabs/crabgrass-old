@@ -222,6 +222,14 @@ div#top_menu
   background-color= !title_box_bg_color
   border-bottom= "1px solid" !title_box_border_color
   padding: 1em
+  &.tabs
+    padding: 0
+    overflow: hidden
+    border-bottom: 0
+    h1
+      margin: 0.5em
+  ul.tabset.top a.active
+    background-color= !info_box_bg_color
   .summary
     color: #555
   h1
@@ -248,7 +256,7 @@ div#top_menu
     vertical-align: top
     &.right
       padding-left: 1em
-      border-left: 1px dotted #ccc
+      //border-left: 1px dotted #ccc
       width: 50%
     &.left
       width: 50%
@@ -323,6 +331,7 @@ div#top_menu
     float: left
     width: 45%
     padding: 0 2em
+    clear: both
   div.right
     float: left
     width: 45%

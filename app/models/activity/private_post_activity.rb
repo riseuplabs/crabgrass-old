@@ -10,6 +10,7 @@ class PrivatePostActivity < Activity
   alias_attr :user_from, :object
   alias_attr :post_id, :related_id
   alias_attr :snippet, :extra
+  alias_attr :reply, :flag
 
   def post=(post)
     self.post_id = post.id
@@ -26,9 +27,9 @@ class PrivatePostActivity < Activity
 
   public
 
-  def description(view, options={})
-    url = view.send(:conversation_path, :id => user_from_name)
-    link_text = options[:message_link_text] || 'a message'[:a_message_link]
+  def description(view)
+    url = view.send(:my_private_message_path, user_from_name)
+    link_text = reply ? 'a reply'[:a_reply_link] : 'a message'[:a_message_link]
 
     "You received {message_tag} from {other_user}: {title}"[
        :activity_message_received,

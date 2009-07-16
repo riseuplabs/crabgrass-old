@@ -20,7 +20,6 @@ class Membership < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :group
-  belongs_to :page
 
   named_scope :alphabetized_by_user, lambda { |letter|
     opts = {

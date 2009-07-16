@@ -1,0 +1,23 @@
+<% render :partial => 'me/messages/tabs' %>
+
+<div style='padding-bottom: 1em'>
+<%= display_entity(@user, :type => :twolines, :avatar => :medium, :block => true) %>
+</div>
+
+<div id="posts">
+  <table border="0" cellspacing="0" cellpadding="0" class="posts">
+    <% if may_create_private_message?(@user) %>
+      <%= render :partial => 'posts/reply',
+         :locals => {:show => true, :form_method => :put, :url => my_private_message_url(@user)} %>
+    <% end %>
+
+    <%= post_pagination_links %>
+
+    <%- for post in @posts do -%>
+      <%= render :partial => 'posts/post', :locals => {:post => post} %>
+    <%- end -%>
+
+    <%= post_pagination_links %>
+  </table>
+</div>
+

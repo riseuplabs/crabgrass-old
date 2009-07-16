@@ -1,0 +1,9 @@
+<% year_month = @parsed.first_arg_for('date') -%>
+<div class='page_list'>
+  <table>
+      <%- @days.each do |day| -%>
+        <tr><td><%= link_to "Channel messages on #{year_month}-#{day['day']}", :action => :archive, :path => ["date", "#{year_month}-#{day['day']}"] %></td></tr>
+      <%- end -%>
+  </table>
+</div>
+

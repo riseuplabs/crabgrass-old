@@ -122,17 +122,6 @@ class Asset < ActiveRecord::Base
     self.page.has_access!(perm, user)
   end
  
-#
-# SITES
-#
-#############################  
-  
-  # returns true if self is part of the given network
-  # [TODO] make this work with assets without page
-  def belongs_to_network?(network)
-    return true if self.page && self.page.groups.include?(network)
-  end
-  
   def participation_for_groups ids
     gparts = self.page.participation_for_groups(ids)
     if(self.galleries.any?)
@@ -268,7 +257,7 @@ class Asset < ActiveRecord::Base
   def update_is_attachment
     if page_id_changed?
       self.is_attachment = true if page_id
-      self.page_terms = (page.page_terms if page_id)
+      self.page_terms = (page.page_terms if page)
     end
   end
   

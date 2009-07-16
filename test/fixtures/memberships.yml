@@ -1,120 +1,155 @@
+<% id = 0 %>
+
 # blue is in every group
 blue1:
   group_id: 1
   user_id: 4
+  id: <%= id += 1 %>
 blue2:
   group_id: 2
   user_id: 4
+  id: <%= id += 1 %>
 blue3:
   group_id: 3
   user_id: 4
+  id: <%= id += 1 %>
 blue_pub:
   group_id: 1000
   user_id: 4
+  id: <%= id += 1 %>
 blue5:
   group_id: 2000
   user_id: 4
+  id: <%= id += 1 %>
 pub_13:  # blue should not be alone in public so he can leave.
   group_id: 1000
   user_id: 13
+  id: <%= id += 1 %>
+
 # group 1
 
 one:
   group_id: "1"
   user_id: "3"
+  id: <%= id += 1 %>
 
 # rainbows
 
 b:
   group_id: 3
   user_id: 5
+  id: <%= id += 1 %>
 c:
   group_id: 3
   user_id: 6
+  id: <%= id += 1 %>
 d:
   group_id: 3
   user_id: 7
+  id: <%= id += 1 %>
 e:
   group_id: 3
   user_id: 8
+  id: <%= id += 1 %>
 f:
   group_id: 3
   user_id: 9
-  
+  id: <%= id += 1 %>
+
 # rainbows warm committee
 # members: red, orange, yellow
 warm_red:
   group_id: 31
   user_id: 8
+  id: <%= id += 1 %>
 warm_orange:
   group_id: 31
   user_id: 5
+  id: <%= id += 1 %>
 warm_yellow:
   group_id: 31
   user_id: 7
+  id: <%= id += 1 %>
 
 # rainbows cold committee
 # members: green, blue, purple
 cold_green:
   group_id: 32
   user_id: 9
+  id: <%= id += 1 %>
 cold_blue:
   group_id: 32
   user_id: 4
+  id: <%= id += 1 %>
 cold_purple:
   group_id: 32
   user_id: 6
+  id: <%= id += 1 %>
 
 # animals
 
 g:
   group_id: 2
   user_id: 10
+  id: <%= id += 1 %>
 h:
   group_id: 2
   user_id: 11
+  id: <%= id += 1 %>
 i:
   group_id: 2
   user_id: 12
+  id: <%= id += 1 %>
 j:
   group_id: 2
   user_id: 13
+  id: <%= id += 1 %>
 
 # fau
 
 gerrard_in_fau:
   group_id: 3003
   user_id: 3
+  id: <%= id += 1 %>
 
 # users on the default site
 
 green_def:
   group_id: 3001
   user_id: 9
+  id: <%= id += 1 %>
 
 blue_def:
   group_id: 3001
   user_id: 4
+  id: <%= id += 1 %>
 
 # animals on the second site
 
 gs:
   group_id: 3002
   user_id: 10
+  id: <%= id += 1 %>
+
 hs:
   group_id: 3002
   user_id: 11
+  id: <%= id += 1 %>
+
 is:
   group_id: 3002
   user_id: 12
+  id: <%= id += 1 %>
+
 js:
   group_id: 3002
   user_id: 13
+  id: <%= id += 1 %>
 
 # user blue is a member of the superadmin group
 
 superadmin_blue:
   group_id: 4001
   user_id: 4
-
+  id: <%= id += 1 %>
 

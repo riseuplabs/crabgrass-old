@@ -26,9 +26,6 @@ class Discussion < ActiveRecord::Base
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => 'Post'
 
   belongs_to :commentable, :polymorphic => true
-  
-  # user's public wall (via commentable)
-  belongs_to :user, :polymorphic => true
 
   # if we are a private discussion:
   has_many :relationships do
@@ -57,7 +54,7 @@ class Discussion < ActiveRecord::Base
   #end
 
   def increment_unread_for(user)
-    relationships.for_user(user).if_not_nil.increment!(:unread_count)
+    relationships.for_user(user).try.increment!(:unread_count)
   end
 
   ## 

@@ -128,4 +128,9 @@ profile_for_diggers:
   summary_html: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
 
 
+public_profile_for_blue:
+  id: 11
+  entity_type: "User"
+  entity_id: 4
+  stranger: true
 

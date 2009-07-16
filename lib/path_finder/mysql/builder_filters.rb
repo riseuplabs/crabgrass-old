@@ -147,6 +147,8 @@ module PathFinder::Mysql::BuilderFilters
   # media-image+file, media-image+gallery, file,
   # text+wiki, text, wiki
   def filter_type(arg)
+    return if arg == 'all'
+
     if arg =~ /[\+\ ]/
       page_group, page_type = arg.split(/[\+\ ]/)
     elsif Page.is_page_group?(arg)
@@ -159,6 +161,10 @@ module PathFinder::Mysql::BuilderFilters
       media_type = page_group.sub(/^media-/,'')
       @conditions << "pages.is_#{media_type} = ?" # only safe because of regexp in if
       @values << true
+    end
+
+    if page_type == 'announcement'
+      @flow = :announcement
     end
 
     if page_type
@@ -199,12 +205,12 @@ module PathFinder::Mysql::BuilderFilters
   end
   
   def filter_stars(star_count)
-    @conditions << 'pages.stars >= ?'
+    @conditions << 'pages.stars_count >= ?'
     @values << star_count
   end
 
   def filter_starred
-    @conditions << 'pages.stars > 0'
+    @conditions << 'pages.stars_count > 0'
   end
 
   #--
@@ -227,11 +233,13 @@ module PathFinder::Mysql::BuilderFilters
     unit=unit.downcase.pluralize
     num.gsub!(/[^\d]+/, ' ')
     if unit=="days"
-      @conditions << "dailies.created_at > NOW() - INTERVAL %s DAY" % num
-      @order << ["SUM(dailies.#{what}) DESC"]
+      @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
+      @order << "SUM(dailies.#{what}) DESC"
+      @select = "pages.*, SUM(dailies.#{what}) AS #{what}_count"
     elsif unit=="hours"
-      @conditions << "hourlies.created_at > NOW() - INTERVAL %s HOUR" % num
-      @order << ["SUM(hourlies.#{what}) DESC"]
+      @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
+      @order << "SUM(hourlies.#{what}) DESC"
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{what}_count"
     else
       return
     end
@@ -242,11 +250,11 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_edits(num, unit)
-    filter_most("edits", num, unit)
+    filter_most("views", num, unit)
   end
 
   def filter_most_stars(num, unit)
-    filter_most("rated", num, unit)
+    filter_most("stars", num, unit)
   end
 
   #--

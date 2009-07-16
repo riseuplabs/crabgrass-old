@@ -15,6 +15,10 @@ module ApplicationHelper
     %(<option value=''>#{label}</option>)
   end
 
+  def format_text(str)
+    str.any? ? GreenCloth.new(str).to_html() : ''
+  end
+
   ##
   ## LINK HELPERS
   ##
@@ -143,7 +147,7 @@ module ApplicationHelper
   end
 
   def expand_links(description)
-    description.gsub(/<span class="(.*?)">(.*?)<\/span>/) do |match|
+    description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
       case $1
         when "user": link_to_user($2)
         when "group": link_to_group($2)
@@ -158,13 +162,19 @@ module ApplicationHelper
     return unless description
 
     description = expand_links(description)
-
-    icon = activity.icon
+   
     created_at = (friendly_date(activity.created_at) if activity.created_at)
+
     more_link = activity.link
-    more_link = content_tag(:span, more_link, :class => 'commands') if more_link
+    if more_link.is_a? Hash
+      more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
+    end
+    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands') if more_link
+
+    css_class = "small_icon #{activity.icon}_16 shy_parent"
+    css_style = activity.style
     
-    content_tag :li, [description, more_link, created_at].compact.join(BULLET), :class => "small_icon #{icon}_16"
+    content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
   end
 
   def side_list_li(options)
@@ -198,6 +208,7 @@ module ApplicationHelper
     if links.first.is_a? Symbol
       char = links.shift
       return ' &bull; ' if char == :bullet
+      return ' ' if char == :none
       return ' | '
     else
       return ' | '

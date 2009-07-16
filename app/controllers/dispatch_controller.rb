@@ -43,9 +43,13 @@ class DispatchController < ApplicationController
       load_current_site
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
-      @user = current_user
-      set_language do
-        render :action => "not_found", :status => :not_found
+      if logged_in? and (@group or (@user and @user == current_user))
+        flash_message :info => '{thing} not found'[:thing_not_found, 'Page'[:page]]
+        redirect_to create_page_url(WikiPage, {:group => @group, 'page[title]' => params[:_page]})
+      else
+        set_language do
+          render(:template => 'dispatch/not_found', :status => :not_found)
+        end
       end
     end
   end
@@ -94,16 +98,13 @@ class DispatchController < ApplicationController
       # find just pages with the name that are owned by the group
       # no group should have multiple pages with the same name
       @page = find_page_by_group_and_name(@group, page_handle)
+    elsif @user
+      @page = find_page_by_user_and_name(@user, page_handle)
     else
-      if @user
-        @pages = find_pages_by_user_and_name(@user, page_handle)
-      else
-        @pages = find_pages_with_unknown_context(page_handle)
-      end
+      @pages = find_pages_with_unknown_context(page_handle)
       if @pages.size == 1
-        @page = find_page_by_id( @pages.first.id )
-      elsif @pages.any?
-        # show a list of pages if more than one was found
+        @page = @pages.first
+      elsif @pages.size > 1
         return controller_for_list_of_pages(page_handle)
       end
     end
@@ -139,20 +140,56 @@ class DispatchController < ApplicationController
     Page.find_by_id(id.to_i, :include => includes )
   end
   
-  # almost every page is fetched using this function
-  # we attempt to load the page using the group directly. 
-  # if that fails, then we resort to searching the entire
-  # page namespace.
+  # Almost every page is retrieved from the database using this method.
+  # (1) first, we attempt to load the page using the page owner directly.
+  # (2) if that fails, then we resort to searching the entire
+  #     namespace of the group
+  #
+  # Suppose two groups share a page. Only one can be the owner. 
+  # 
+  # When linking to the page from the owner's home, we just
+  # do /owner-name/page-name. No problem, everyone is happy. 
+  #
+  # But what link do we use for the non-owner's home? /non-owner-name/page-name.
+  # This makes it so the banner will belong to the non-owner and it will not
+  # be jarring click on a link from the non-owner's home and get teleported to
+  # some other group. 
+  #
+  # In order to make this work, we need the second query that includes all the
+  # group participation objects.
+  # 
+  # It is true that we could just do without the first query. It makes it slower
+  # when the owner is not the context. However, this first query is much faster
+  # and is likely to be used much more often than the second query.
+  #
   def find_page_by_group_and_name(group, name)
-    page = group.pages.find(:first, :conditions => ['pages.name = ?',name])
-    return page if page
-    ids = Group.namespace_ids(group.id)
-    Page.find(:first, :conditions => ['pages.name = ? AND group_participations.group_id IN (?)', name, ids], :joins => :group_participations)
+    Page.find(
+      :first, :conditions => [
+        'pages.name = ? AND pages.owner_id = ? AND pages.owner_type = ?',
+         name, group.id, 'Group'
+      ]
+    ) or Page.find(
+      :first, :conditions => [
+         'pages.name = ? AND group_participations.group_id IN (?)',
+          name, Group.namespace_ids(group.id)
+      ],
+      :joins => :group_participations
+    )    
   end
-
   
-  def find_pages_by_user_and_name(user, name)
-    user.pages.find(:all, :conditions => ['pages.name = ?',name])
+  #
+  # The main method for loading pages that are in a user context.
+  #
+  # User context is less forgiving then group context. We only return
+  # a page if the owner matches exactly.
+  #
+  def find_page_by_user_and_name(user, name)
+    Page.find(
+      :first, :conditions => [
+        'pages.name = ? AND pages.owner_id = ? AND pages.owner_type = ?',
+         name, user.id, 'User'
+      ]
+    )    
   end
   
   def find_pages_with_unknown_context(name)
@@ -161,7 +198,7 @@ class DispatchController < ApplicationController
     else
       options = options_for_public
     end
-    Page.find_by_path ["name",name], options
+    Page.paginate_by_path ["name",name], options
   end
   
   def controller_for_list_of_pages(name)

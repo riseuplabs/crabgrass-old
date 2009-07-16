@@ -116,7 +116,18 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert @committee, 'committee rainbow+the-warm-colors should exist'
     #assert_share_with(@page,@committee,:admin)
   end
-  
+
+  def test_add_access_to_group_committee
+    login_as :blue
+    @page = groups(:rainbow).pages.find(:first)
+    xhr :post, :update,
+          :page_id => @page.id,
+          :add => true,
+          :recipient => {:name => "rainbow+the-cold-colors", :access => "admin"}
+
+    assert_successful_post('add', 'should add the committe to the list of unsaved share items')
+  end
+
   def test_add_access_to_user_with_existing_group_participation_that_affects_the_user
     # Scenarios with overlapping Group / UserParticipations
     
@@ -198,13 +209,13 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
   
   
   # asserts that the last called request was answered with success, and the response includes a notice-div
-  def assert_successful_post(update='share')
+  def assert_successful_post(update='share', message=nil)
     assert_response :success
     if update == 'add'
       assert_not_nil assigns(:recipients)
-      assert_select 'tr.unsaved'
+      assert_select 'tr.unsaved', nil, message
     else
-      assert_select 'div.big_notice'
+      assert_select 'div.big_notice', nil, message
     end
   end
   
@@ -214,7 +225,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     assert_select 'div.error'
   end
   
-  # test if notifying an existing user works
+  # test if sharing with and notifying a new user works
   def test_notification
     login_as :blue
     page = Page.find(1)
@@ -225,12 +236,41 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
     # assert that a UserParticipation for the User and Page already exists
     upart = UserParticipation.find_by_page_id_and_user_id(page.id, user2.id)
     assert upart, 'the userparticipation should already exist to notify the user'
+    assert !upart.inbox,'participation.inbox flag should be false'
     
     # try to push the participation to inbox
-    xhr :post, :update, {:page_id => 1, :share => true, :recipients => [user2.login.to_sym], :send_notice => "1", :send_message => 'additional_message'}
+    xhr :post, :notify, {:page_id => 1, :notify => "1", :recipients => { user2.login.to_sym => { :send_notice => 1} }, :notification => {:send_notice => "1", :send_message => 'additional_message'}, :recipient => {:access => 'admin'}}
     assert_response :success
     upart.reload
-    assert !upart.inbox, 'participation.inbox should be set to false now'
+    assert upart.inbox, 'participation.inbox should be set to true now'
+  end
+  
+  # test if notifying an existing user works
+  def test_share_and_notify
+    login_as :blue
+    page = Page.find(1)
+    assert page, 'page should exist (load the fixtures first, dumbass!!)'
+    
+    user1 = User.find_by_login('blue')
+    user2 = User.find_by_login('red')
+    user3 = User.find_by_login('orange')
+    
+    # assert that there is no existing user_participation for the page and the user yet
+    upart = UserParticipation.find_by_page_id_and_user_id(page.id, user3.id)
+    assert !upart, 'this user_participation should not yet exist'
+    
+    upart_old = UserParticipation.find_by_page_id_and_user_id(page.id, user2.id)
+    assert upart_old, 'a participation for this user should already exist'
+    assert !upart_old.inbox, 'the inbox flag for this participation should be set to false'
+    
+    # try to push the participation to inbox
+    xhr :post, :update, {:page_id => 1, :share => true, :recipients => {user3.login.to_sym => {:access => 'admin'}, user2.login.to_sym => {:access => 'admin'} }, :notification => { :send_notice => "1", :send_message => 'additional_message'}}
+    assert_response :success
+    upart = UserParticipation.find_by_page_id_and_user_id(page.id, user3.id)
+    assert upart, 'a participation for this user should exist now'
+    assert upart.inbox, 'participation.inbox should be set to true now'
+    upart_old.reload
+    assert !upart_old.inbox, 'participation.inbox for this user should still be false'
   end
   
   def test_notify_group

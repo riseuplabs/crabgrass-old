@@ -1,12 +1,10 @@
 <% 
   empty_box = false if empty_box.nil? 
   add_button_id = 'add_recipient_button'
-  autocomplete_id_number = rand(1000000)
 
   access = may_select_access_participation? ?
     "$('recipient[access]').value" :
     %{'#{default_access}'}
-
 
   # the remote action that is triggered when the 'add' button is pressed (or 
   # the popup item is selected).
@@ -30,25 +28,7 @@
   # we clear the recipient_name field so that we don't get a double submit
   after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
 
-  # called in order to render a popup row
-  # it is a little too complicated. basically, we want to just highlight
-  # the text but not the html tags.
-  render_popup_row_function = %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
-
-  # called to convert the row data into a value
-  extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
-
-  auto_complete_js = %Q[
-    new Autocomplete('recipient_name', { 
-      serviceUrl:'/base_page/share/auto_complete',
-      minChars:2,
-      maxHeight:400,
-      width:300,
-      onSelect: #{after_update_function},
-      rowRenderer: #{render_popup_row_function},
-      selectValue: #{extract_value_from_row_function}
-    }, #{autocomplete_id_number});
-  ]
+  auto_tag = autocomplete_entity_tag('recipient_name', :onselect => after_update_function)
 
   # if there are no recipients at all, we will do not show the box
   recipients_exist = @page && @page.recipients.any?
@@ -68,7 +48,7 @@
     <td style='width:100%'>
       <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
           :onkeypress => key_pressed_function %>
-      <%= javascript_tag(auto_complete_js) %>
+      <%= auto_tag %>
     </td>
     <td>&nbsp;</td>
     <td>

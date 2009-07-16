@@ -33,17 +33,14 @@ class Group < ActiveRecord::Base
   include GroupExtension::Pages      # group <--> page behavior
 
   acts_as_site_limited
-
-  # DEPRECATED
-  def belongs_to_network?(network)
-    ( self.networks.include?(network) or 
-      self == network )
-  end
     
   attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
+
+  # group <--> chat channel relationship
+  has_one :chat_channel
 
   ##
   ## FINDERS
@@ -277,7 +274,7 @@ class Group < ActiveRecord::Base
   # to it also get changed
   def update_name_copies
     if name_changed? and !name_was.nil?
-      Page.change_group_name(id, name)
+      Page.update_owner_name(self)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
       committees.each {|c|

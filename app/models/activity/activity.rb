@@ -62,6 +62,10 @@ class Activity < ActiveRecord::Base
   end
 
   # to be defined by subclasses
+  def style()
+  end
+
+  # to be defined by subclasses
   def description(view) end
 
   # to be defined by subclasses
@@ -85,7 +89,7 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :newest, {:order => 'created_at DESC', :limit => 10}
+  named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
 
@@ -215,7 +219,7 @@ class Activity < ActiveRecord::Base
   # often, stuff that we want to report activity on has already been 
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    name = self.send("#{thing}_name") || self.send(thing).if_not_nil.name || "unknown"[:unknown]
+    name = self.send("#{thing}_name") || self.send(thing).try.name || "unknown"[:unknown]
     '<span class="%s">%s</span>' % [type, name]
   end
 

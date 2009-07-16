@@ -73,7 +73,16 @@ module UrlHelper
       opts[:controller] = 'networks' if opts[:id].network?
     end
     opts[:path] ||= args if args.any?
+    opts[:path] = parse_filter_path(opts[:path])
     opts
+  end
+
+  def person_search_url(*path)
+    url_for_user(@user, :action => 'search', :path => parse_filter_path(path))
+  end
+
+  def me_search_url(*path)
+    me_params(:action => 'search', :path => parse_filter_path(path))
   end
 
   ##
@@ -263,11 +272,6 @@ module UrlHelper
     avatar + link_to(label, path, :class => klass, :style => style)
   end
 
-  def person_search_url(*path)
-    url_for_user(@user, :action => 'search', :path => path)
-  end
-
-
   ##
   ## GENERIC PERSON OR GROUP 
   ##
@@ -360,25 +364,16 @@ module UrlHelper
   end
   
   # return true if this is an rss request. Unfornately, for routes with
-  # glob *paths, we can't use :format, or at least I cannot get it working.
+  # glob *paths, we can't use :format. the ParsedPath @path, however, does
+  # a good job of identifying trailing format codes that are not otherwise
+  # unparsable as part of the path.
   def rss_request?
-    if params[:path].any? and params[:path][-1] == 'rss'
-      parsed_path.unparsable.last == 'rss'
-      # ^^ if the last element of the parsed path is 'rss' (or ['x','rss']),
-      # then it means we have a path like text/rss, where a trailing 'rss' is
-      # intended for the text search, not the format.
-    else
-      false
-    end
+    @path.format == 'rss'
   end
 
   # used to build an rss link from the current params[:path]
   def current_rss_path
-    path = params[:path] || []
-    unless parsed_path.unparsable.last == 'rss'  
-      path = path + ['rss']
-    end
-    path
+    @path.format('rss') # returns a copy of @path with format set
   end
 
 end
