@@ -43,4 +43,40 @@ class AutocompleteControllerTest < Test::Unit::TestCase
     assert_equal response["query"], 'pu',
       "response.query should contain the query string."
   end
+
+  def test_querying_entities_without_groups
+    # Regression test.
+    # The sql term for querying was messed up for users who
+    # did not have any groups.
+    login_as :quentin
+    assert_equal 0, users(:quentin).groups.count,
+      "quentin should not be in any groups."
+    xhr :get, :entities, :query => 'an'
+    assert_response :success
+    response = ActiveSupport::JSON.decode(@response.body)
+    assert_equal response["suggestions"].count, response["data"].count,
+      "there should be as many data objects as suggestions."
+    assert response["suggestions"].count > 0,
+      "there should be suggestions for quentin starting with 'an' -> animals."
+    assert_equal response["query"], 'an',
+      "response.query should contain the query string."
+  end
+
+  def test_querying_entities_without_friends
+    # Regression test.
+    # The sql term for querying was messed up for users who
+    # did not have any friends.
+    login_as :red
+    assert_equal 0, users(:red).friends.count,
+      "red should not have any friends."
+    xhr :get, :entities, :query => 'bl'
+    assert_response :success
+    response = ActiveSupport::JSON.decode(@response.body)
+    assert_equal response["suggestions"].count, response["data"].count,
+      "there should be as many data objects as suggestions."
+    assert response["suggestions"].count > 0,
+      "there should be suggestions for red starting with 'bl' -> blue."
+    assert_equal response["query"], 'bl',
+      "response.query should contain the query string."
+  end
 end
