@@ -47,6 +47,14 @@ module UserExtension::Groups
         end
       end
 
+      # primary groups are:
+      # (1) groups user has a direct membership in.
+      # (2) committees only if the user is not also the member of the parent group
+      # (3) not networks
+      # 'primary groups' is useful when you want to list of the user's groups,
+      # including committees only when necessary.
+      has_many :primary_groups, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql})) AND /*SITE_LIMITED*/'
+
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
       has_many :all_groups, :class_name => 'Group', 
