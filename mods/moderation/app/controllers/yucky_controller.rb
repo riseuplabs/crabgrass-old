@@ -8,7 +8,7 @@ class YuckyController < ApplicationController
   # marks the rateable as yucky!
   def add
     @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)
-    @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count) 
+    @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
     
     case @rateable_type
       when :post; add_post
@@ -54,7 +54,7 @@ class YuckyController < ApplicationController
   def remove_post
     render :update do |page|
       page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
-    end  
+    end
   end
   
   
@@ -83,7 +83,7 @@ class YuckyController < ApplicationController
     end
   end
 
-  #def send_user_notification   
+  #def send_user_notification
   #  page = Page.make :private_message, :to => current_user, :from => current_user, :title => 'Your complaint has been noticed!', :body => :inapp_noticifation.t
   #  page.save
   #end

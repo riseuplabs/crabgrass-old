@@ -23,7 +23,7 @@ class Admin::PostsController < Admin::BaseController
   end
 
   # for vetting:       params[:post][:vetted] == true
-  # for hiding:        params[:post][:deleted] == true 
+  # for hiding:        params[:post][:deleted] == true
   def update
     @posts = Post.find(params[:id])
     @posts.update_attributes(params[:post])
@@ -39,7 +39,7 @@ class Admin::PostsController < Admin::BaseController
     post.ratings.destroy_all
     
     redirect_to :action => 'index', :view => params[:view]
-  end     
+  end
 
   # Reject a post by setting deleted_at=now, the post will now be 'deleted'(hidden)
   def trash

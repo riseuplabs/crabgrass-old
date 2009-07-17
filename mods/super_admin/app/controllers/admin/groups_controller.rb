@@ -68,12 +68,12 @@ class Admin::GroupsController < Admin::BaseController
       for size in %w(xsmall small medium large xlarge)
         expire_page :controller => 'static', :action => 'avatar', :id => @group.avatar.id, :size => size
       end
-      @group.avatar.image_file = params[:image_file] 
+      @group.avatar.image_file = params[:image_file]
       @group.avatar.save!
     elsif params[:image_file]
       avatar = Avatar.create(:image_file => params[:image_file])
       @group.avatar = avatar
-    end  
+    end
     
     respond_to do |format|
       if @group.update_attributes(params[:group])

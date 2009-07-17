@@ -13,7 +13,7 @@
   <%- else -%>
     <li class='<%= @active_tab == :home ? 'active' : '' %>'>
       <span><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
-    </li>    
+    </li>
   <%- end -%>
 
   <%# for now, i am disabling these tabs when not logged in. why? because

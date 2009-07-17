@@ -34,7 +34,7 @@ module Admin::PostsHelper
     elsif post.discussion.commentable
       link_to(post.discussion.commentable.display_name, url_for_user(post.discussion.commentable))
     end
-  end 
+  end
           
 end
 

@@ -18,7 +18,7 @@ module Admin::CustomAppearancesPermission
   def may_update_custom_appearances?(appearance=@appearance)
     return false unless logged_in? and
       current_site and
-      ( ! appearance || 
+      ( ! appearance ||
         appearance == current_site.custom_appearance )
 
     current_user.may?(:admin, current_site)

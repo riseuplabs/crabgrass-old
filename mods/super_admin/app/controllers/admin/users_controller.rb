@@ -74,7 +74,7 @@ class Admin::UsersController < Admin::BaseController
     else
       avatar = Avatar.create(params[:image])
       @user.avatar = avatar
-    end    
+    end
     
     respond_to do |format|
       if @user.update_attributes(params[:user])

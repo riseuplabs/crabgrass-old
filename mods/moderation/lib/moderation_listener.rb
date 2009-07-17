@@ -6,7 +6,7 @@ class ModerationListener < Crabgrass::Hook::ViewListener
     content_tag(:li, content_tag(:span, link_to_active( "Moderation"[:menu_moderation],
                                                         { :controller => 'admin/pages' },
                                                         @active_tab == :moderation ) ),
-                :class => (@active_tab == :moderation ? 'active' : '')) 
+                :class => (@active_tab == :moderation ? 'active' : ''))
     end
   end
 

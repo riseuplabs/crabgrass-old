@@ -41,7 +41,7 @@ class Admin::PagesController < Admin::BaseController
     redirect_to :action => 'index', :view => params[:view]
   end
 
-  # remote action. call with params[:view ] to view the desired pages. ie, hidden, vetted or pending	
+  # remote action. call with params[:view ] to view the desired pages. ie, hidden, vetted or pending
   def filter
     index
   end
@@ -54,7 +54,7 @@ class Admin::PagesController < Admin::BaseController
     # get rid of all yucky associated with the page
     page.ratings.destroy_all
     redirect_to :action => 'index', :view => params[:view]
-  end 	
+  end
 
   # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
@@ -77,7 +77,7 @@ class Admin::PagesController < Admin::BaseController
     redirect_to :action => 'index', :view => params[:view]
   end
 
-# set page.public = false 
+# set page.public = false
   def remove_public
     page = Page.find params[:id]
     page.update_attributes({:public => false, :public_requested => true})

@@ -37,7 +37,7 @@ class Admin::GroupsControllerTest < ActionController::TestCase
     login_as :blue
     post :create, :group => {:name => 'testgroup', :link_name => 'TestGroup' }
     assert_redirected :action => 'show'
-    assert_equal assigns(:group).login, 'testgroup'    
+    assert_equal assigns(:group).login, 'testgroup'
     # todo: assert failing create test
   end
   

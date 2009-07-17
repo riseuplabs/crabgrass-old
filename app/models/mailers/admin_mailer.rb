@@ -12,7 +12,7 @@ class AdminMailer < Mailer
     setup_user(user)
     @subject += "Inappropriate Content"
     body :message => options[:body], :url => link(options[:url]), :owner => options[:owner]
-  end	   
+  end
 
   protected
   

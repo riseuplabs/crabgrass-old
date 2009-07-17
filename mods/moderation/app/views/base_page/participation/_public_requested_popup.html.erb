@@ -3,7 +3,7 @@
   <p>
     <% form_remote_tag(
 		       :url => {:controller => 'participation', :action => 'close_public_requested', :page_id => @page.id},
-		       :loading => show_spinner('popup')) do -%>      
+		       :loading => show_spinner('popup')) do -%>
       <%= submit_tag 'Close', :name => 'cancel' %>
       <%= spinner 'popup' %>
     <% end -%>

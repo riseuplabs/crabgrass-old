@@ -170,7 +170,7 @@ class Site < ActiveRecord::Base
   end
 
   ##
-  ## LOGGING IN 
+  ## LOGGING IN
   ##
 
   # Where does the user go when they login? Let the site decide.
@@ -197,7 +197,7 @@ class Site < ActiveRecord::Base
   #        (means: things, where we log, if he has already seen them)
   #
   
-  # tells the site, that a user has seen something 
+  # tells the site, that a user has seen something
   #def seen_by_user(user,element)
   # membership = self.network.memberships.find_by_user_id(user.id)
   # membership.seen ||= []
@@ -211,7 +211,7 @@ class Site < ActiveRecord::Base
   #  membership.seen.delete(element)
   #end
   
-  # tells us, that a user of this site has already seen this  
+  # tells us, that a user of this site has already seen this
   #def seen_for_user?(user,element)
   #  membership = self.network.memberships.find_by_user_id(user.id)
   #  ( membership.seen && membership.seen.include?(element.to_s)) ? true : false

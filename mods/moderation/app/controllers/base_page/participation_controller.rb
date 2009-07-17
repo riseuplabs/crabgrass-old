@@ -5,7 +5,7 @@ class BasePage::ParticipationController < ApplicationController
   verify :method => :post, :only => [:move]
   
   def update_public
-    if current_user.moderator?   
+    if current_user.moderator?
       @page.public = ('true' == params[:public])
     else
       @page.public_requested = ('true' == params[:public])

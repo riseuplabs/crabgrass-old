@@ -53,7 +53,7 @@ class PagesControllerTest < ActionController::TestCase
     redirect_to :action => 'index', :view => params[:view]
   end
 
-# set page.public = false 
+# set page.public = false
   def remove_public
     page = Page.find params[:id]
     page.update_attributes({:public => false, :public_requested => true})

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   include UserExtension::Users      # user <--> user
   include UserExtension::Groups     # user <--> groups
   include UserExtension::Pages      # user <--> pages
-  include UserExtension::Tags       # user <--> tags  
+  include UserExtension::Tags       # user <--> tags
   include UserExtension::AuthenticatedUser
 
   ##
@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
 
   ##
   ## ASSOCIATED DATA
-  ## 
+  ##
 
   has_many :task_participations, :dependent => :destroy
   has_many :tasks, :through => :task_participations do
@@ -205,7 +205,7 @@ class User < ActiveRecord::Base
   #
   # Currently, this includes Page and Group.
   #
-  # this method gets called a lot (ie current_user.may?(:admin,@page)) so 
+  # this method gets called a lot (ie current_user.may?(:admin,@page)) so
   # we in-memory cache the result.
   #
   def may?(perm, protected_thing)
@@ -271,7 +271,7 @@ class User < ActiveRecord::Base
         :joins => :memberships,
         :conditions => ["memberships.group_id = ?", site.network.id]
       }
-    else 
+    else
       {}
     end
   end)
