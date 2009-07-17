@@ -463,7 +463,7 @@ module PageHelper
   #  :include_me -- if true, include option for 'me'
   #  :include_none -- if true, include an option for 'none'
   def options_for_page_owner(options={})
-    groups = current_user.primary_groups.sort { |a, b|
+    groups = current_user.primary_groups_and_networks.sort { |a, b|
        a.display_name.downcase <=> b.display_name.downcase
     }
     html = [] 

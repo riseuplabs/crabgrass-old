@@ -67,11 +67,18 @@ class RootController < ApplicationController
   end
 
   def recent_pages
+    if params[:type]
+      page = paginate('descending', 'updated_at', 'type', params[:type])
+    else
+      page = paginate('descending', 'updated_at')
+    end
     update_page_list('recent_pages_panel', 
-      :pages => paginate('descending', 'updated_at'),
+      :pages => page,
       :columns => [:stars, :icon, :title, :last_updated], 
+      :heading_partial => 'root/type_links',
       :sortable => false,
-      :show_time_dividers => true
+      :show_time_dividers => true,
+      :pagination_options => {:params => {:type => params[:type]}}
     )
   end
 
@@ -107,6 +114,7 @@ class RootController < ApplicationController
     @group.profiles.public.create_wiki unless @group.profiles.public.wiki
     @announcements = Page.find_by_path('limit/3/descending/created_at',
       options_for_group(@group, :flow => :announcement))
+    @show_featured = Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
     render :template => 'root/site_home'    
   end
 

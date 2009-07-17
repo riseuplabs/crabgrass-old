@@ -287,7 +287,18 @@ module Formy
       #  (1) the link is given an id with _panel replaced by _link
       #  (2) the window.location.hash is set by removing '_panel'
       #
-      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class, :hash
+      # optional attributes:
+      #   selected -- tab is active if true
+      #   icon -- name of an icon to give the tab
+      #   id -- dom id for the tab link
+      #   style -- custom css
+      #   class -- custom css class
+      #
+      # show_tab modifiers:
+      #   hash -- overide default location.hash that is activated when this tab is activated
+      #   default -- if true, this is the default tab that gets loaded.
+      #
+      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class, :hash, :default
       
       def close
         selected = 'active' if "#{@selected}" == "true"
@@ -305,6 +316,9 @@ module Formy
             onclick = "showTab(this, $('%s'))" % @show_tab
           end
           a_tag = content_tag :a, @label, :onclick => onclick, :class => @class, :style => @style, :id => @id
+          if @default
+            puts javascript_tag('defaultHash = "%s"' % @hash)
+          end
         end
         puts content_tag(:li, a_tag, :class => 'tab')
         super

@@ -76,7 +76,17 @@ class Committee < Group
   ##
 
   def may_be_pestered_by!(user)
-    super and (user.member_of?(self.parent) or parent.profiles.visible_by(user).may_see_committees?)
+    if user.member_of?(self)
+      true  # members may pester
+    elsif user.member_of?(self.parent)
+      true  # members of parents may pester
+    elsif profile.may_see? and parent.profile.may_see_committees?
+      true  # strangers may pester if they can see self, and parent thinks that is ok.
+            # TODO: i think it would be better for us to ensure that if the parent forbits
+            # seeing committee, that all the subcommittees just have may_see set to false.
+    else
+      false
+    end
   end
   
 end

@@ -53,13 +53,13 @@ class Tracking < ActiveRecord::Base
                            FROM (
                              SELECT page_id, SUM(views) as view_count, SUM(stars) as star_count
                              FROM #{table_name} GROUP BY page_id
-                           ) as trackings, (
+                           ) as trackings LEFT JOIN(
                              SELECT page_id, COUNT(*) as contributor_count
                              FROM user_participations
                              WHERE (user_participations.changed_at > UTC_TIMESTAMP() - INTERVAL 1 HOUR)
                              GROUP BY page_id
                            ) as participations
-                           WHERE trackings.page_id = participations.page_id
+                           ON trackings.page_id = participations.page_id
                          ")
 
       connection.execute("CREATE TEMPORARY TABLE group_view_counts

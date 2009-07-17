@@ -58,9 +58,14 @@ div
   max-height: 40em
   overflow: auto
   border-top: 1px solid #ccc
-  //border-bottom: 1px solid #ccc
   clear: left
   padding-top: none
+
+// the fixed height is necessary to prevent ugly flashes
+// when a different tab is selected. 
+.page_scroll.rigid
+  height: 40em
+  border: none
 
 .filter_menu
   display: none
@@ -281,11 +286,6 @@ div.title_box
     font-size: 1.5em
     font-weight: normal
     line-height: 1.2em
-  .title_edit_link
-    display: none
-    float: right
-  &:hover .title_edit_link
-    display: block
 
 //
 // POPUP!

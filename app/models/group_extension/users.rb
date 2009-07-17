@@ -84,7 +84,7 @@ module GroupExtension::Users
   end
 
   def open_membership?
-    self.profile.membership_policy_is? :open
+    self.profiles.public.membership_policy_is? :open
   end
 
   protected
