@@ -107,6 +107,28 @@ class WikiPageControllerTest < ActionController::TestCase
     assert_equal ["section-one", "section-two"], wiki.sections_not_locked_for(users(:gerrard)), "sections one and two should not look locked to gerrard"
   end
 
+  # various regression tests for text that has thrown errors in the past.
+  def test_edit_inline_with_problematic_text
+    login_as :blue
+
+    ##
+    ## headings without a leading return. (ie "</ul><h1>" )
+    ##
+
+    page = WikiPage.create! :title => 'problem text', :owner => 'blue' do |page|
+      page.data = Wiki.new(:body => "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n")
+    end
+    get :show, :page_id => page.id
+    page = assigns(:page)
+    assert_nothing_raised do
+      xhr :get, :edit_inline, :page_id => page.id, :id => "hello"
+      textarea = assigns(:wiki).body_html.match(/<textarea.*>(.*)<\/textarea>/m)[1]
+      assert_nil textarea.match(/goodbye/)
+      assert_not_nil assigns(:wiki).body_html.match(/goodbye/), 'outside the form, goodbye heading should be on the wiki'
+    end
+    assert_response :success
+  end
+
   def test_save_inline
     login_as :blue
     xhr :get, :edit_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three"
