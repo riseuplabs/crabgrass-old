@@ -46,6 +46,8 @@
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
     <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %>
     </span>
+      <%= render :partial => 'avatars/dropdown_boxes', :entities => current_user.memberships.recently_active %>
+<!--
     <ul class="groups_dashboard selfclear submenu" style="display: none">
       <li class="leftcol">
         <ul>
@@ -63,6 +65,7 @@
         <a style="float: right;" href="#">See all »</a>
       </li>
     </ul>
+-->
   </li>
 
   <%- if current_site.has_networks? -%>

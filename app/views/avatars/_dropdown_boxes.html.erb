@@ -1,0 +1,24 @@
+<%#
+  # this partial display a grid of little avatar boxes. 
+  # arguments: groups, people, side
+  # This markup and css may seem odd, but it works in all browsers.
+-%>
+<%
+  ul_class = '' if ul_class.nil?
+  entities = [] if entities.nil?
+  left_col = entities[0..entities.size/2]
+  right_col = entities[entities.size/3+1..entities.size]
+  ### or use splice?
+%>
+<ul class='<%= ul_class %> selfclear submenu' style="display: none;">
+  <li class='leftcol'>
+    <ul>
+      <% entities.each do |entity| -%>
+      <li>
+        <%= display_entity(entity, :avatar => 'small', :format => 'twolines', :link => 'true') %>
+      </li>
+      <% end -%>
+    </ul>
+  </li>
+</ul>
+
