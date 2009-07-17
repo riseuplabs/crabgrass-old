@@ -36,3 +36,8 @@ div.page_list {width: 100%;}
 /* temp hack for temp site home */
 form.mini_search table {width: 17em;}
 
+/* opacity fix */
+.shy { filter: alpha(opacity=0); zoom: 1; background-color: white; }
+.shy:hover { filter: alpha(opacity=100)}
+.shy_parent:hover .shy { filter: alpha(opacity=60)}
+

@@ -32,8 +32,9 @@ div.page_list {zoom: 1;}
 }
 
 /* opacity fix */
-.shy_parent:hover .shy { opacity: alpha(opacity=100) }
-.shy { filter: alpha(opacity=0) }
+.shy { filter: alpha(opacity=0); zoom: 1; background-color: white; }
+.shy:hover { filter: alpha(opacity=100)}
+.shy_parent:hover .shy { filter: alpha(opacity=60)}
 
 /**
  ** FIRST-CHILD EMULATION
