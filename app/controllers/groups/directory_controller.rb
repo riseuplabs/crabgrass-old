@@ -2,6 +2,10 @@ class Groups::DirectoryController < Groups::BaseController
 
   before_filter :set_group_type
 
+  def index
+    logged_in? ? redirect_to(:action => 'my') : redirect_to(:action => 'search')
+  end
+
   def recent
     user = logged_in? ? current_user : nil
     @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])

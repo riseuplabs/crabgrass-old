@@ -64,13 +64,13 @@ module UrlHelper
     opts = {
       :id => @group,
       :action => 'search',
-      :controller => 'groups'
+      :controller => '/groups'
     }
     if args.first.is_a? Hash
       opts.merge!(args.shift)
     end
     if opts[:id] and opts[:id].respond_to?('network?')
-      opts[:controller] = 'networks' if opts[:id].network?
+      opts[:controller] = '/networks' if opts[:id].network?
     end
     opts[:path] ||= args if args.any?
     opts[:path] = parse_filter_path(opts[:path])

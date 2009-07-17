@@ -131,8 +131,6 @@ label}</a></span>)
   def url_active?(url_hash)
     return false unless url_hash.is_a? Hash
 
-    normalize_controller(params)
-    normalize_controller(url_hash)
     url_hash[:action] ||= 'index'
 
     selected = true
@@ -153,8 +151,15 @@ label}</a></span>)
   def compare_param(a,b)
     a = a.to_param
     b = b.to_param
-    return true if b.empty?
-    return a == b
+    if b.empty?
+      true
+    elsif a == b
+      true
+    elsif a.sub(/^\//, '') == b.sub(/^\//, '')
+      true # a controller of '/groups' should match 'groups'
+    else
+      false
+    end
   end
 
 end
