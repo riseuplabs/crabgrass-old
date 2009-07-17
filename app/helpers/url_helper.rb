@@ -350,6 +350,10 @@ module UrlHelper
     ]
   end
 
+  def me_rss
+    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, 'Inbox'[:inbox]]
+  end
+
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
   # although, this will be hard, since it seems *path globbing doesn't work
   # with :format. 
