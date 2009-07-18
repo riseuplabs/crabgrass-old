@@ -677,4 +677,20 @@ form.mini_search
     border: 0
 
 
+//
+// SHY LINKS
+//
+
+// these are links or elements that should not be visible until you hover over a parent 
+// element. the problem with display:none is that it removes the element from the layout
+// and then making it visible again can lead to weird jerkiness. so, instead, we use opacity
+// for this.
+
+.shy_parent:hover .shy
+  opacity: 0.6
+  &:hover
+    opacity: 1
+
+.shy
+  opacity: 0
 

@@ -142,12 +142,16 @@ class GroupTest < Test::Unit::TestCase
     g = Group.create :name => 'fruits'
     g.add_user! users(:blue)
     g.add_user! users(:red)
-
     g.reload
-    g.destroy
-    # memberships should be destroyed
-    assert_nil Membership.find_by_id(g.memberships[0].id), "first membership should be destroyed"
-    assert_nil Membership.find_by_id(g.memberships[1].id), "second membership should be destroyed"
+
+    page = DiscussionPage.create! :title => 'hello', :user => users(:blue), :owner => g
+    assert_equal page.owner, g
+
+    assert_difference 'Membership.count', -2 do
+      g.destroy
+    end
+    
+    assert_nil page.reload.owner_id
 
     red = users(:red)
     assert_nil GroupLostUserActivity.for_dashboard(red).find(:first), "there should be no user left group message"
