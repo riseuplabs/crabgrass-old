@@ -1,4 +1,4 @@
-<%# create_page_link %>
+<%= create_page_link %>
 
 <ul class='side_list'>
   <% active = controller?('me/dashboard') %>
@@ -18,7 +18,7 @@
   <% active = controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
   <li class='small_icon page_message_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Messages'[:messages],
-    my_messages_path,
+    my_private_messages_path,
     active
   ) %></li>
 
