@@ -15,14 +15,12 @@
     active
   ) %></li>
 
-<!--
   <% active = controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
   <li class='small_icon page_message_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Messages'[:messages],
-    my_messages_path,
+    my_private_messages_path,
     active
   ) %></li>
--->
 
   <% active = controller?('me/tasks') %>
   <li class='small_icon page_tasks_16<%= active ? ' active' : '' %>'><%= link_to_active(

@@ -13,6 +13,8 @@ module GroupExtension::Pages
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
       end
+      
+      has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
     end     
   end
 

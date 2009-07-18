@@ -198,6 +198,17 @@ class PageSharingTest < Test::Unit::TestCase
     end
   end
 
+  # share with a committee you are a member of, but you are not a member of the parent group.
+  def test_share_with_committee
+    owner = users(:penguin)
+    page = Page.create!(:title => 'title', :user => owner)
+    committee = groups(:cold)
+    assert owner.member_of?(committee)
+    assert_nothing_raised do
+      owner.share_page_with!(page, 'rainbow+the-cold-colors', {})
+    end
+  end
+
   protected
   
   def create_page(options = {})

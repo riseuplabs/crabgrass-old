@@ -1,303 +1,198 @@
 --- 
-group_not_allowed_to_view_image_error: "Non \xC3\xA8 permesso vedere questa immagine al gruppo che possiede questa pagina."
-Personal: Personale
-small: piccolo
-add_encryption_key: Aggiungi Chiave di Cifratura
-folder_page_description: Una collezione di risorse.
-menu_networks: Reti
-my_requests_headline: Le Mie Richieste
-groups: Gruppi
-title: Titolo
-month_short_april: Apr
-request_to_friend_description: ":user vorrebbe essere il contatto di :other_user"
-move_image_left: Sposta immagine a sinistra
-peers: peer
-add_star_link: Aggiungi Stella {:star_count}
-current_video_sources: "al momento sono supportati: youtube, blip.tv, google video, vimeo"
-archive: Archivio
-request_to_join_us_description: ":user \xC3\xA8 stato invitato a entrare nel grupo :group"
-wiki_page_display: Wiki
-break_lock: annulla blocco
-or_image_url: o URL dell'immagine
-add_comment: Aggiungi Commento
-login_password: Password
-order_changed: Ordine cambiato.
-organizational_role: ruolo nell'organizzazione
-toggle_selection: Toggle selezione
-email_addresses: Indirizzi Email
-join_chat: entra in chat
-at_least_one_recipient_is_required: "\xC3\xA8 richiesto almeno un destinatario"
-media_videos: Video
-friends: Amici
-add_location: Aggiungi Indirizzo
-group_information: Informazioni su :group_type
-prev_change: modifica precedente
-time_zone: Fuso Orario
-page_not_part_of_group: Questa pagina non fa parte di questo gruppo
-task_list_page_description: Una lista di cose da fare.
-contact: Contatto
-try_again: Prova di nuovo
-file_size: Dimensioni file
-dont_have_permission_to_create_committees: Non hai i permessi necessari per creare comitati in %s
-activate_js_to_rearrange_photos: Devi attivare JavaScript per poter riordinare le foto con il Drag&Drop!
-media_for_group: "%s in %s"
-medium: medium
-coordinator: Coordinatore
-reject_button: rifiuta
-group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo we.riseup.net/nomedeltuogruppo."
-Language: Lingua
-delete_version_confirm: Sei sicuro/a di voler eliminare questa versione?
-websites: Siti Web
-Personal_Interests: Interessi Personali
-logout_success: Arrivederci
-signup_title: Crea il tuo account
-menu_chat: Chat
-image_count_total: ":count Immagini"
-page_locked_header: Pagina Bloccata
-all_page_types: tutti i tipi di pagina
-contribute_content_link: Contribuisci
-media_document: Documento
-activity_user_left_group: "{user} ha lasciato {group_type} {group}"
-collection: collezione
-no_images_in_gallery: Nessuna immagine nella galleria
-my_settings: Impostazioni per {user}
-locations: Indirizzi
-Home: Pagina Iniziale
-last_change: ultimo cambiamento
-contributed: Contributo
-create_page_data: dati {page_class}
-archive_filter_created_link: Data Creata
-edit_attachments_link: Modifica
-join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sar\xC3\xA0 stata approvata. Puoi controllare lo stato delle tue richieste visitando \"%s\"."
-add_email_address: Aggiungi Indirizzo Email
-month_short_may: Mag
-Committee: comitato
-group: Gruppo
-format: Formato
-media_image: Immagine
-confirm_new_password: Conferma Nuova Password
-logout_success_message: Disconnessione effettuata con successo.
-undo: annulla
-me_inbox_link: In arrivo
-action: azione
-Founded: Fondato
-new_network: Nuova rete
-password_reset_ok_text: "La tua password \xC3\xA8 stata reimpostata con successo. Adesso puoi effettuare l'accesso con la tua nuova password."
-public_profile: Profilo Pubblico
-invalid_token_text: "Il link per la reimpostazione della password non \xC3\xA8 valido. Potrebbe essere gi\xC3\xA0 stato usato, o essere scaduto."
-requests_to_me: Richieste da me
-back_button: Indietro
-page_is_not_static: "La pagina non \xC3\xA8 statica"
-display_name: Nome visualizzato
-sunday: Domenica
-edit_featured_content_for_group: Modifica Contenuti in Evidenza per :group_name
-move_image_right: Sposta immagine a destra
-signup_link: Vuoi creare un nuovo account?
-download: Scarica
-status_resolved: risolto
-all_groups: tutti i gruppi
-create_page_information: informazioni {page_class}
-committee_publicly_visible: Rendi Comitati Visibili Pubblicamente
-pagination_previous: precedente
-committees: comitati
-save_button: Salva
-media_video: Video
-media_audio: Registrazione audio
-media_without_group: Tuttti %s
-personal_message_class_description: Un messaggio personale inviato a diversi destinatari.
-location_country: paese
-reset_password_mail_greeting: "%s, la tua password \xC3\xA8 stata reimpostata come hai richiesto."
-login_name: Nome utente
-add_one_or_more_tags: "Aggiungi una o pi\xC3\xB9 etichette, separate da virgole"
-forgot_password_text: "Se hai dimenticato la password che usi per effettuare l'accesso, possiamo inviarti un link via email che ti permetter\xC3\xA0 di generarne una nuova."
-login: Accesso
-add_new_attachment: Aggiungi Nuovo Allegato
-separate_tags: Separa i diversi tag con delle virgole.
-article_page_description: Post di un blog o articolo di notizie.
-inbox_description: Elenco di pagine a cui sto partecipando attivamente o di cui seguo i cambiamenti
-all_content: Tutto il Contenuto
-delete_page_link: Elimina :page_class
-Mobile: Cellulare
-state: stato
-invalid_token: Token Non Valido
-month_short_july: Lug
-search: Cerca
-my_world_heading: Il Mio Mondo
-create_a_new_thing: Crea un nuovo :thing
-email: Email
-my_dashboard: La mia bacheca
-slideshow_delay_input: Aggiorna ogni :input_field secondi
-network: Rete
-view_requests: vedi richieste
-date_older: "Pi\xC3\xB9 vecchi"
-your_login: Il tuo login
-my_status_heading: Il Tuo Stato Attuale
-signup_email_info: "Opzionale: usato se dimentichi la tua password"
-next_change: modifica successiva
-create_task_list: crea nuova lista dei compiti
-check_all: Seleziona tutto
-archive_headline: Archivio
-signup_email: La tua e-mail
-alert_error: Errore
-full: pieno
-login_button: Entra
-remove_from_gallery: Rimuovi dalla galleria
-group_has_no_public_profile: Questo gruppo non ha un profilo pubblico.
-Category: Categoria
-invalid_email: Indirizzo email non valido
-group_home_welcome: Benvenuto/a
-month_short_march: Mar
-file_must_be_image_error: Il file deve essere un'immagine per essere caricato in una galleria.
-month_short_february: Feb
-descriptions: Descrizioni
-Fax: Fax
-edit_gallery: Modifica Galleria
-send_invites: invia inviti
-pending: Pendenti
-Highest_Contributors: "Contributori Pi\xC3\xB9 Attivi"
-create_page: Crea Pagina
-version_number: versione :version
-media_images: Immagini
-uploaded_image_cropped: "L'immagine caricata verr\xC3\xA0 ridimensionata a 96x96 pixel."
-signup_login_name: Il tuo nome utente
-file_class_description: Un file caricato.
-approve: approva
-summary: Sommario
-only_last_menber_can_delete_group: Puoi cancellare un gruppo solamente se sei l'ultimo membro rimanente.
-gallery_class_description: Una collezione di immagini.
-unknown: sconosciuto
-approval_vote: voto di approvazione
-signup_info: Scegli il tuo nome utente e la tua password, poi fai click su "%s"
-location_address: indirizzo
+About_Me: Dico di me
 Admin: Amministratore
-link_name: Nome Link
-my_tasks_description: Lista dei compiti a cui ho accesso
-me_tasks_link: compiti
-print_underlined_p: Stampa (<u>p</u>)
-month_short_december: Dic
-my_completed_tasks_link: Completato
-galleries: Gallerie
-reset_password_mail_sent: "Ti \xC3\xA8 stata inviata un'email contenente le istruzioni per reimpostare la tua password."
-reset_password_mail_warning: Se non hai richiesto che la tua password fosse cambiata, contattaci.
-alert_permission_denied: Permesso Negato
-location_city: "citt\xC3\xA0"
-activity_user_status: "{user} adesso \xC3\xA8 {status}"
-friday: "Venerd\xC3\xAC"
-pending_tasks: compiti pendenti.
-data_for_page_missing: Dati mancanti per questa pagina.
-monday: "Luned\xC3\xAC"
-activity_user_destroyed: "{user} si \xC3\xA8 congedato"
-me_dashboard_link: Bacheca
-rejected: rifiutato
-signup_confirm_password: Conferma password
-delete_this_version: cancella questa versione
-password_was_reset: "La tua password \xC3\xA8 stata reimpostata"
-remove_contact_info: "Se rimuovi qualcuno dalla tua lista dei contatti, non potrai pi\xC3\xB9 vedere se ha effettuato l'accesso o vedere il suo profilo. Inoltre, questo significa che verrai rimosso anche dalla sua lista dei contatti."
-Work: Lavoro
-from: da
-discuss_request_link: discuti questa richiesta con :person_or_group
-group_administration_not_allowed: Non puoi amministrare questo gruppo.
-menu_people: Persone
-send_button: Invia
-gallery_display: galleria
-saving_your_changes: Salvataggio dei cambiamenti in corso...
-add_another_file: Aggiungi un altro file
+Announcements: Annunci
+Category: Categoria
+Committee: comitato
+Fax: Fax
+Founded: Fondato
+Highest_Contributors: "Contributori Pi\xC3\xB9 Attivi"
+Home: Pagina Iniziale
+Language: Lingua
+Mobile: Cellulare
 Other: Altro
-media_audios: Registrazioni Audio
-close_button: Chiudi
-fullname: Nome Completo
-username: Nome Utente
-page_list_heading_created_by: creata da
-download_gallery: Scarica Galleria
-access: Accesso
-password: Password
 Pager: Cercapersone
-current_featured_content: Contenuti in evidenza
-create_committee: crea comitato
-date_this_week: Settimana passata
-recent_activity: "Attivit\xC3\xA0 Recenti"
-drag_and_drop_to_rearrange_photos: Trascina e rilascia le immagini per riordinarle
-date_days: giorni
-subject_must_not_be_empty: l'oggetto non deve essere vuoto
-page_list_heading_created: creata
-remove_contact_confirmation: Sei sicuro di voler rimuovere il contatto "%s"?
-group_wiki: Wiki del gruppo
-view_all: vedi tutti
-group_successfully_created: Gruppo creato con successo.
-approve_button: approva
-create_page_button: Crea pagina
-date_hours: ore
-remove_friend_link: Rimuovi Dai Miei Contatti
-add_description: Aggiungi Descrizione
-menu_home: Pagina iniziale
-menu_me: Io
-directory_of_groups: Elenco dei gruppi
-personal_message: messaggio personale
-wont_be_able_to_save: Non potrai salvare questa pagina
-request_to_join_our_network_description: "il gruppo :group \xC3\xA8 stato inviato a entrare nella rete :network"
-destroy_group_link: distruggi {group_type}
-remove_from_inbox: Rimuovi da "In Arrivo"
-recipients: destinatari
-no_members: (non ci sono membri)
-descriptive_name_for_display: Un nome descrittivo usato per la visualizzazione
-profile_private_description: "Questo profilo \xC3\xA8 privato ed \xC3\xA8 visibile solamente ai tuoi contatti."
-signup_password: La tua password
-alert_not_saved: Impossibile salvare le modifiche apportate
-formatting_reference_link: riferimenti per la formattazione
-created: creato
-group_members_publicly_visible_description: "I membri non sono visibili dai non membri a we.riseup.net/nomedeltuogruppo. Inoltre, il nome del gruppo sar\xC3\xA0 elencato nella pagina del profilo di ogni membro (all'indirizzo we.riseup.net/nomeutente)"
-edit: modifica
-phone_numbers: Numeri di Telefono
-view_slideshow: Vedi Presentazione
-video: video
-page_details_link: Dettagli :page_class
-add_im_address: Aggiungi Indirizzo IM
-removing_image: Rimozione immagine in corso...
-wiki_is_locked: "Questo wiki \xC3\xA8 bloccato da :user"
-group_members_publicly_visible: Rendi i Membri Publicamente Visibili
-page_list_heading_updated_by: aggiornata da
-version_doesnt_exist: Non esiste la versione :version
-image_count: Immagine :number di :count
-media_documents: Documenti
-folder_page_display: Cartella
-requested_forgot_password: Hai richiesto di cambiare la tua password
-ranked_vote_instructions: |-
-  Trascina e rilascia gli elementi della lista per metterli nell'ordine che preferisci.
-  Quando hai finito, fai click su Conferma per registrare il tuo voto.
-no_title_given: (senza titolo)
-feature_button: Metti in Evidenza!
-page_list_heading_updated: aggiornata
-successful_undelete_image: Imagine recuperata con successo.
-back_to_group: back_to :group_name
-my_tasks_headline: I Miei Compiti
-contact_request_message_label: "Spiega a %s perch\xC3\xA9 vorresti diventare un suo contatto."
-cancel_link: annulla
-no_search_results: Nessun Risultato
-activity_contact_created: "{user} ha aggiunto {other_user} come contatto"
-file_version_deleted: file di versione eliminato
-starred: speciali
-add_phone_number: Aggiungi Numero di Telefono
-created_by: Creato da
+Personal: Personale
+Personal_Interests: Interessi Personali
+School: Scuola
+Social_Change_Interests: Interessi riguardanti il cambiamento sociale
+Work: Lavoro
 Work_Life: Vita Lavorativa
-wiki_page_description: Un documento di testo a forma libera.
-tags: Tag
-message_must_not_be_empty: il messaggio non deve essere vuoto
-my_tasks: Compiti
-month_short_november: Nov
-new_password: Nuova Password
-my_pages: Le Mie Pagine
-edit_profile_link: Modifica Profilo
-save_changes: Salva Modifiche
-reactivate_button: Riattiva!
-approve_or_reject_link: approva o rifiuta questa richiesta
-password_reset: Reimpostazione Password
-collection_class_description: Pagine speciali che contengono altre pagine.
+accept_usage_agreement: Accetto i termini di utilizzo
+access: Accesso
+action: azione
+activate_js_to_rearrange_photos: Devi attivare JavaScript per poter riordinare le foto con il Drag&Drop!
+activity_contact_created: "{user} ha aggiunto {other_user} come contatto"
+activity_group_created: "{user} ha creato {group_type} {group}"
+activity_group_destroyed: "{group} \xC3\xA8 stato distrutto da {user}"
+activity_user_destroyed: "{user} si \xC3\xA8 congedato"
+activity_user_joined_group: "{user} si \xC3\xA8 unito a {group_type} {group}"
+activity_user_left_group: "{user} ha lasciato {group_type} {group}"
+activity_user_status: "{user} adesso \xC3\xA8 {status}"
+activity_wall_message: "{author}ha scritto a {user}: {message}"
+add_another_file: Aggiungi un altro file
 add_button: Aggiungi
-remove: rimuovi
-unread: non letti
-new_group: Nuovo gruppo
+add_comment: Aggiungi Commento
+add_contact_info: "Quando aggiungi un utente alla lista dei tuoi contatti, sar\xC3\xA0 in grado di vedere se hai effettuato l'accesso e potr\xC3\xA0 vedere il tuo profilo. Inoltre, una volta che diventi un contatto per un'altro utente, anche l'altro utente diventa un tuo contatto."
+add_description: Aggiungi Descrizione
+add_email_address: Aggiungi Indirizzo Email
+add_encryption_key: Aggiungi Chiave di Cifratura
+add_existing_image: Aggiungi Foto
+add_im_address: Aggiungi Indirizzo IM
+add_location: Aggiungi Indirizzo
+add_new_attachment: Aggiungi Nuovo Allegato
+add_one_or_more_tags: "Aggiungi una o pi\xC3\xB9 etichette, separate da virgole"
+add_phone_number: Aggiungi Numero di Telefono
+add_photo_to_gallery: "aggiungi foto alla galleria:"
+add_star_link: Aggiungi Stella {:star_count}
+add_tags: Aggiungi Etichette
+add_websites: Aggiungi Siti Web
+administration: Amministrazione
+alert_error: Errore
+alert_field_errors: Ci sono problemi con i seguenti campi
+alert_not_saved: Impossibile salvare le modifiche apportate
+alert_permission_denied: Permesso Negato
+alert_saved: Cambiamenti salvati
+all_content: Tutto il Contenuto
+all_groups: tutti i gruppi
+all_page_types: tutti i tipi di pagina
+all_people: tutte le persone
+all_people_link: nuove persone
+all_states: tutti gli stati
+already_contacts_info: "Sei gi\xC3\xA0 un contatto di questa persona."
+approval_vote: voto di approvazione
+approval_vote_class_description: "Approvazione o disapprovazione di ogni possibilit\xC3\xA0."
+approve: approva
+approve_button: approva
+approve_contact_info: "Esiste gi\xC3\xA0 una richiesta di contatto da questo utente. Vuoi approvarla?"
+approve_or_reject_link: approva o rifiuta questa richiesta
+approved: approvato
+archive: Archivio
+archive_filter_created_link: Data Creata
+archive_filter_updated_link: Ultimo Appuntamento Aggiornato
+archive_headline: Archivio
+article_page_description: Post di un blog o articolo di notizie.
+article_page_display: articolo
+at_least_one_recipient_is_required: "\xC3\xA8 richiesto almeno un destinatario"
+attachments: Allegati
 away: via
+back_button: Indietro
+back_to_group: back_to :group_name
+basic_settings: Impostazioni di base
+break_lock: annulla blocco
+break_lock_button: Annulla Blocco
+cancel_button: Annulla
+cancel_link: annulla
+check_all: Seleziona tutto
+close_button: Chiudi
+collection: collezione
+collection_class_description: Pagine speciali che contengono altre pagine.
+committee_publicly_visible: Rendi Comitati Visibili Pubblicamente
+committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo we.riseup.net/nomedeltuogruppo
+committees: comitati
+comparing_changes_header: Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version
+confirm_new_password: Conferma Nuova Password
+contact: Contatto
+contact_request_message_label: "Spiega a %s perch\xC3\xA9 vorresti diventare un suo contatto."
+contacts: contatti
+contribute_content_link: Contribuisci
+contributed: Contributo
+coordinator: Coordinatore
+create_a_new_thing: Crea un nuovo :thing
+create_button: Crea
+create_committee: crea comitato
+create_group_link: crea gruppo
+create_page: Crea Pagina
+create_page_button: Crea pagina
+create_page_data: dati {page_class}
+create_page_information: informazioni {page_class}
+create_task_list: crea nuova lista dei compiti
+created: creato
+created_by: Creato da
+created_on: Creato il
+created_when_by: creato il :when da :user
+csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si pu\xC3\xB2 verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, \xC3\xA8 sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
+current_attachments: Allegati Correnti
+current_featured_content: Contenuti in evidenza
+current_tags: Etichette Correnti
+current_video_sources: "al momento sono supportati: youtube, blip.tv, google video, vimeo"
+data_for_page_missing: Dati mancanti per questa pagina.
+date: data
+date_centuries: secoli
+date_days: giorni
+date_hours: ore
+date_minutes: minuti
+date_older: "Pi\xC3\xB9 vecchi"
+date_this_week: Settimana passata
+date_today: Oggi
+date_yesterday: Ieri
+delete_page_link: Elimina :page_class
+delete_this_version: cancella questa versione
+delete_version_confirm: Sei sicuro/a di voler eliminare questa versione?
+description: descrizione
+descriptions: Descrizioni
+descriptive_name_for_display: Un nome descrittivo usato per la visualizzazione
+destroy: distruggi
+destroy_group_link: distruggi {group_type}
 diff_link: diff
+directory_of_groups: Elenco dei gruppi
+discuss_request_link: discuti questa richiesta con :person_or_group
+discussions: Discussioni
+display_name: Nome visualizzato
+dont_have_permission_to_create_committees: Non hai i permessi necessari per creare comitati in %s
+dont_understand_group_type: Impossibile capire il tipo di gruppo :type
+download: Scarica
+download_gallery: Scarica Galleria
+drag_and_drop_to_rearrange_photos: Trascina e rilascia le immagini per riordinarle
+edit: modifica
+edit_attachments_link: Modifica
+edit_featured_content: modifica contenuti in evidenza
+edit_featured_content_for_group: Modifica Contenuti in Evidenza per :group_name
+edit_gallery: Modifica Galleria
+edit_profile_link: Modifica Profilo
+edit_settings: modifica impostazioni
+edit_tags_link: Modifica
+edit_underlined_e: Modifica (<u>e</u>)
+email: Email
+email_addresses: Indirizzi Email
+error_saving_new_order: Errore durante il salvataggio del riordinamento!
+expired_featured_content: Contenuti in Evidenza Scaduti
+feature_button: Metti in Evidenza!
+featured_content: Contenuti in Evidenza
+file: File
+file_class_description: Un file caricato.
+file_must_be_image_error: Il file deve essere un'immagine per essere caricato in una galleria.
+file_size: Dimensioni file
+file_version_deleted: file di versione eliminato
+first_name: nome
+folder_page_description: Una collezione di risorse.
+folder_page_display: Cartella
+forgot_password_link: Ho dimenticato la mia password.
+forgot_password_mail_expiry: "Questo link rimarr\xC3\xA0 valido per 24 ore. Se non avrai ancora cambiato la password dopo questo periodo di tempo, dovrai richiedere un nuovo link per cambiare la tua password."
+forgot_password_mail_greeting: "%s, per cambiare la tua password, visita"
+forgot_password_text: "Se hai dimenticato la password che usi per effettuare l'accesso, possiamo inviarti un link via email che ti permetter\xC3\xA0 di generarne una nuova."
+forgotten_email_address: Quale indirizzo email hai inserito quando hai creato il tuo account?
+format: Formato
+formatting_reference_link: riferimenti per la formattazione
+friday: "Venerd\xC3\xAC"
+friends: Amici
+from: da
+full: pieno
+fullname: Nome Completo
+galleries: Gallerie
+gallery_class_description: Una collezione di immagini.
+gallery_display: galleria
+general_info: Informazioni Generali
+grant_access: Permetti Accesso
+group: Gruppo
+group_administration_not_allowed: Non puoi amministrare questo gruppo.
+group_directory: Elenco dei Gruppi
+group_discussion: discussione di gruppo
+group_discussion_class_description: Una discussione di gruppo su un particolare argomento.
+group_has_no_public_profile: Questo gruppo non ha un profilo pubblico.
+group_home_headline: Pagina iniziale {group_type}
+group_home_welcome: Benvenuto/a
+group_information: Informazioni su :group_type
 group_invite_email: |
   {from_user} ti ha invitato/a a entrare nel gruppo "{group}".
   
@@ -311,200 +206,278 @@ group_invite_email: |
   
   Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
 
-media_all: Media
-locking_error: Errore bloccante. Impossibile salvare i tuoi dati, qualcun altro ha salvato i nuovi cambiamenti prima di te.
-sucessfully_removed_image: Immagine rimossa con successo! (:undo_link)
-first_name: nome
-select_image_file: seleziona il file dell'immagine
-discussions: Discussioni
-login_failure_reason: Nome utente o password non corretti.
-rss_feed: Feed RSS
-see_more_link: "Di Pi\xC3\xB9"
-media_alls: Media
-location_state: provincia
-edit_settings: modifica impostazioni
-create_button: Crea
-not_featured_content: Non ancora un contenuto in evidenza
-requests_from_me: Richieste da me
+group_invite_subject: Invito a entrare nel gruppo "{group}"
+group_members_publicly_visible: Rendi i Membri Publicamente Visibili
+group_members_publicly_visible_description: "I membri non sono visibili dai non membri a we.riseup.net/nomedeltuogruppo. Inoltre, il nome del gruppo sar\xC3\xA0 elencato nella pagina del profilo di ogni membro (all'indirizzo we.riseup.net/nomeutente)"
+group_not_allowed_to_view_image_error: "Non \xC3\xA8 permesso vedere questa immagine al gruppo che possiede questa pagina."
+group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo \xC3\xA8 visibile dai non iscritti all'indirizzo we.riseup.net/nomedeltuogruppo."
+group_successfully_created: Gruppo creato con successo.
+group_successfully_updated: Gruppo aggiornato con successo.
+group_wiki: Wiki del gruppo
+groups: Gruppi
+history: Storia
+im_addresses: Indirizzi IM
+image_count: Immagine :number di :count
+image_count_total: ":count Immagini"
+image_title: "Titolo immagine: %s"
+inbox_description: Elenco di pagine a cui sto partecipando attivamente o di cui seguo i cambiamenti
+include_full_checkbox: includi link nell'immagine grande
+incoming: In arrivo
+information: Informazioni
+invalid_email: Indirizzo email non valido
 invalid_email_text: "L'indirizzo email che hai inserito non \xC3\xA8 valido."
-send_invites_headline: Invia inviti per entrare nel gruppo
-accept_usage_agreement: Accetto i termini di utilizzo
-current_tags: Etichette Correnti
-destroy: distruggi
-add_existing_image: Aggiungi Foto
-add_contact_info: "Quando aggiungi un utente alla lista dei tuoi contatti, sar\xC3\xA0 in grado di vedere se hai effettuato l'accesso e potr\xC3\xA0 vedere il tuo profilo. Inoltre, una volta che diventi un contatto per un'altro utente, anche l'altro utente diventa un tuo contatto."
-subject: oggetto
-recipient_tip: Separa i diversi destinatari con virgole, spazi o ritorni a capo.
-alert_saved: Cambiamenti salvati
+invalid_token: Token Non Valido
+invalid_token_text: "Il link per la reimpostazione della password non \xC3\xA8 valido. Potrebbe essere gi\xC3\xA0 stato usato, o essere scaduto."
+invite_info: Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo %s.
+join_chat: entra in chat
+join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sar\xC3\xA0 stata approvata. Puoi controllare lo stato delle tue richieste visitando \"%s\"."
+large: grande
+last_change: ultimo cambiamento
+last_name: cognome
+link_name: Nome Link
+location_address: indirizzo
+location_city: "citt\xC3\xA0"
+location_country: paese
+location_postal_code: codice postale
+location_state: provincia
+locations: Indirizzi
+locked_by_user: Bloccato da :user
+locking_error: Errore bloccante. Impossibile salvare i tuoi dati, qualcun altro ha salvato i nuovi cambiamenti prima di te.
+login: Accesso
+login_button: Entra
+login_failed: Impossibile accedere
+login_failure_reason: Nome utente o password non corretti.
+login_name: Nome utente
+login_password: Password
+logout: Disconnetti
+logout_success: Arrivederci
+logout_success_message: Disconnessione effettuata con successo.
+make_album_cover: rendi questa immagine la copertina dell'album
+mark_pages_as_featured_content_for_group: Qui puoi fare in modo che delle pagine divengano contenuti in evidenza di questo gruppo.
+me_dashboard_link: Bacheca
+me_inbox_link: In arrivo
+me_search_description: Cerca in tutte le pagine a cui hai accesso
+me_search_link: Cerca
+me_tasks_link: compiti
+media_all: Media
+media_alls: Media
+media_audio: Registrazione audio
+media_audios: Registrazioni Audio
+media_document: Documento
+media_documents: Documenti
+media_for_group: "%s in %s"
+media_image: Immagine
+media_images: Immagini
+media_video: Video
+media_videos: Video
+media_without_group: Tuttti %s
+medium: medium
+members: Membri
+menu_chat: Chat
+menu_groups: Gruppi
+menu_home: Pagina iniziale
+menu_link_account: Account
+menu_link_logout: Disconnetti
+menu_me: Io
+menu_networks: Reti
+menu_people: Persone
+message_must_not_be_empty: il messaggio non deve essere vuoto
+message_page_display: Messaggio
+middle_name: middle
+monday: "Luned\xC3\xAC"
+month_short_april: Apr
+month_short_august: Ago
+month_short_december: Dic
+month_short_february: Feb
+month_short_january: Gen
+month_short_july: Lug
+month_short_june: Giu
+month_short_march: Mar
+month_short_may: Mag
+month_short_november: Nov
+month_short_october: Ott
 month_short_september: Set
-forgot_password_mail_expiry: "Questo link rimarr\xC3\xA0 valido per 24 ore. Se non avrai ancora cambiato la password dopo questo periodo di tempo, dovrai richiedere un nuovo link per cambiare la tua password."
-general_info: Informazioni Generali
-request_to_join_you_description: ":user ha richiesto di entrare nel gruppo :group"
-date_today: Oggi
-forgot_password_mail_greeting: "%s, per cambiare la tua password, visita"
-updated: aggiornati
-group_discussion_class_description: Una discussione di gruppo su un particolare argomento.
-featured_content: Contenuti in Evidenza
+most_viewed: "Pi\xC3\xB9 Visti"
+move_image_left: Sposta immagine a sinistra
+move_image_right: Sposta immagine a destra
+move_page_link: Sposta :page_class
+my_completed_tasks_link: Completato
+my_dashboard: La mia bacheca
+my_groups: I Miei Gruppi
+my_pages: Le Mie Pagine
+my_pending_tasks_link: Pendenti
+my_requests_headline: Le Mie Richieste
+my_settings: Impostazioni per {user}
+my_status_heading: Il Tuo Stato Attuale
+my_tasks: Compiti
+my_tasks_description: Lista dei compiti a cui ho accesso
+my_tasks_headline: I Miei Compiti
+my_world_heading: Il Mio Mondo
+network: Rete
+network_invite_info: Inserisci i nomi dei gruppi che vorresti invitare in questa rete.
+networks: reti
+new_group: Nuovo gruppo
+new_network: Nuova rete
+new_password: Nuova Password
+next_change: modifica successiva
+no_change: nessun cambiamento
+no_committees: nessun comitato
+no_group_named: "non c'\xC3\xA8 nessun gruppo chiamato <strong>:name</strong>."
+no_images_in_gallery: Nessuna immagine nella galleria
+no_members: (non ci sono membri)
+no_search_results: Nessun Risultato
+no_tags: nessun tag
+no_title_given: (senza titolo)
+not_featured_content: Non ancora un contenuto in evidenza
+not_set: non impostato
+only_last_menber_can_delete_group: Puoi cancellare un gruppo solamente se sei l'ultimo membro rimanente.
+or_image_url: o URL dell'immagine
+order_changed: Ordine cambiato.
+organization: organizzazione
+organizational_role: ruolo nell'organizzazione
+other_formats: Altri Formati
+outgoing: Uscenti
+page_details_link: Dettagli :page_class
+page_is_not_static: "La pagina non \xC3\xA8 statica"
+page_list: Lista pagine
+page_list_heading_created: creata
+page_list_heading_created_by: creata da
+page_list_heading_posts: post
+page_list_heading_title: titolo
+page_list_heading_updated: aggiornata
+page_list_heading_updated_by: aggiornata da
+page_locked_header: Pagina Bloccata
+page_not_part_of_group: Questa pagina non fa parte di questo gruppo
+pagination_next: successivo
+pagination_previous: precedente
+password: Password
+password_confirmation: Conferma password
+password_reset: Reimpostazione Password
+password_reset_ok_text: "La tua password \xC3\xA8 stata reimpostata con successo. Adesso puoi effettuare l'accesso con la tua nuova password."
+password_was_reset: "La tua password \xC3\xA8 stata reimpostata"
+peers: peer
+pending: Pendenti
+pending_tasks: compiti pendenti.
+personal_message: messaggio personale
+personal_message_class_description: Un messaggio personale inviato a diversi destinatari.
+phone_numbers: Numeri di Telefono
+prev_change: modifica precedente
+print_underlined_p: Stampa (<u>p</u>)
+private_profile: Profilo Privato
+profile_private_description: "Questo profilo \xC3\xA8 privato ed \xC3\xA8 visibile solamente ai tuoi contatti."
 profile_public_description: "Questo profilo \xC3\xA8 pubblico e sar\xC3\xA0 visibile a chiunque visiti questi sito.\r\n\
   Altri utenti potranno inoltre cercare tra le informazioni inserite.\r\n\
   Sii cauto quando aggiungi informazioni personali al tuo profilo pubblico."
-create_group_link: crea gruppo
-group_invite_subject: Invito a entrare nel gruppo "{group}"
-versions: versioni
-history: Storia
-group_home_headline: Pagina iniziale {group_type}
-last_name: cognome
-forgotten_email_address: Quale indirizzo email hai inserito quando hai creato il tuo account?
-School: Scuola
-attachments: Allegati
-no_change: nessun cambiamento
-invite_info: Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo %s.
-status_pending: pendente
-date_yesterday: Ieri
-show_gallery: Mostra Galleria
-upload_image: Carica Immagine
-signup_success_message: Grazie per esserti registrato!
-created_when_by: creato il :when da :user
-approval_vote_class_description: "Approvazione o disapprovazione di ogni possibilit\xC3\xA0."
-password_confirmation: Conferma password
-menu_groups: Gruppi
-signup_button: Registrati
-month_short_october: Ott
-created_on: Creato il
-dont_understand_group_type: Impossibile capire il tipo di gruppo :type
-activity_group_created: "{user} ha creato {group_type} {group}"
-other_formats: Altri Formati
-task_list_page_display: Lista dei compiti
-organization: organizzazione
-approve_contact_info: "Esiste gi\xC3\xA0 una richiesta di contatto da questo utente. Vuoi approvarla?"
-to: a
-basic_settings: Impostazioni di base
-menu_link_logout: Disconnetti
-group_successfully_updated: Gruppo aggiornato con successo.
-large: grande
-committee_publicly_visible_description: I comitati sono visibili dai non-memrbi all'indirizzo we.riseup.net/nomedeltuogruppo
-thursday: "Gioved\xC3\xAC"
-description: descrizione
-reject: rifiuta
-outgoing: Uscenti
-month_short_august: Ago
-request_status: "Questa richiesta \xC3\xA8 stata :status da :user il :time"
-all_people: tutte le persone
-video_service_is_not_supported: "non \xC3\xA8 supportato (al momento sono supportati solamente YouTube, Google Video, blip.tv e vimeo)"
-location_postal_code: codice postale
-login_failed: Impossibile accedere
-add_photo_to_gallery: "aggiungi foto alla galleria:"
-private_profile: Profilo Privato
-error_saving_new_order: Errore durante il salvataggio del riordinamento!
-page_list_heading_title: titolo
-request_to_join_your_network_description: ":group ha richiesto di entrare nella rete :network"
-video_embed_code_prompt: Inserisci il codice per il video esterno
-cancel_button: Annulla
-article_page_display: articolo
-not_set: non impostato
-tuesday: "Marted\xC3\xAC"
-settings: Impostazioni
-information: Informazioni
+public_profile: Profilo Pubblico
+ranked_vote_instructions: |-
+  Trascina e rilascia gli elementi della lista per metterli nell'ordine che preferisci.
+  Quando hai finito, fai click su Conferma per registrare il tuo voto.
 ranked_vote_page_description: "Possibilit\xC3\xA0 di rank in ordine di preferenza."
-file: File
-expired_featured_content: Contenuti in Evidenza Scaduti
-move_page_link: Sposta :page_class
-most_viewed: "Pi\xC3\xB9 Visti"
-locked_by_user: Bloccato da :user
-middle_name: middle
-month_short_january: Gen
-signup_success: Registrazione eseguita con successo
-edit_featured_content: modifica contenuti in evidenza
-alert_field_errors: Ci sono problemi con i seguenti campi
-comparing_changes_header: Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version
-csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si pu\xC3\xB2 verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, \xC3\xA8 sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
-administration: Amministrazione
+ranked_vote_page_display: Voto raggiunto
+reactivate_button: Riattiva!
+recent_activity: "Attivit\xC3\xA0 Recenti"
+recipient_tip: Separa i diversi destinatari con virgole, spazi o ritorni a capo.
+recipients: destinatari
+regenerate: rigenera miniature
+reject: rifiuta
+reject_button: rifiuta
+rejected: rifiutato
+remove: rimuovi
+remove_contact_confirmation: Sei sicuro di voler rimuovere il contatto "%s"?
+remove_contact_info: "Se rimuovi qualcuno dalla tua lista dei contatti, non potrai pi\xC3\xB9 vedere se ha effettuato l'accesso o vedere il suo profilo. Inoltre, questo significa che verrai rimosso anche dalla sua lista dei contatti."
+remove_friend_link: Rimuovi Dai Miei Contatti
+remove_from_gallery: Rimuovi dalla galleria
+remove_from_inbox: Rimuovi da "In Arrivo"
+removing_image: Rimozione immagine in corso...
+request_status: "Questa richiesta \xC3\xA8 stata :status da :user il :time"
+request_to_friend_description: ":user vorrebbe essere il contatto di :other_user"
+request_to_join_our_network_description: "il gruppo :group \xC3\xA8 stato inviato a entrare nella rete :network"
+request_to_join_us_description: ":user \xC3\xA8 stato invitato a entrare nel grupo :group"
+request_to_join_us_via_email_description: ":email \xC3\xA8 stato invitato/a a entrare nel gruppo :group"
+request_to_join_you_description: ":user ha richiesto di entrare nel gruppo :group"
+request_to_join_your_network_description: ":group ha richiesto di entrare nella rete :network"
+requested_forgot_password: Hai richiesto di cambiare la tua password
+requests_from_me: Richieste da me
+requests_to_me: Richieste da me
+reset_password: Reimposta Password
+reset_password_mail_greeting: "%s, la tua password \xC3\xA8 stata reimpostata come hai richiesto."
+reset_password_mail_sent: "Ti \xC3\xA8 stata inviata un'email contenente le istruzioni per reimpostare la tua password."
+reset_password_mail_warning: Se non hai richiesto che la tua password fosse cambiata, contattaci.
+reset_password_text: Ciao, %s. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui.
+rss_feed: Feed RSS
+save_button: Salva
+save_changes: Salva Modifiche
+saved_new_order: Nuovo ordine salvato!
+saving_your_changes: Salvataggio dei cambiamenti in corso...
+search: Cerca
+see_more_link: "Di Pi\xC3\xB9"
+select_image_file: seleziona il file dell'immagine
+send_button: Invia
+send_invites: invia inviti
 send_invites_button: Invia Inviti
-date_centuries: secoli
-current_attachments: Allegati Correnti
-networks: reti
-menu_link_account: Account
-page_list: Lista pagine
-date: data
-me_search_description: Cerca in tutte le pagine a cui hai accesso
-grant_access: Permetti Accesso
-About_Me: Dico di me
-no_committees: nessun comitato
+send_invites_headline: Invia inviti per entrare nel gruppo
+separate_tags: Separa i diversi tag con delle virgole.
+settings: Impostazioni
+show_gallery: Mostra Galleria
+signup_button: Registrati
+signup_confirm_password: Conferma password
+signup_email: La tua e-mail
+signup_email_info: "Opzionale: usato se dimentichi la tua password"
+signup_info: Scegli il tuo nome utente e la tua password, poi fai click su "{sign_up}"
+signup_link: Vuoi creare un nuovo account?
+signup_login_name: Il tuo nome utente
+signup_password: La tua password
+signup_success: Registrazione eseguita con successo
+signup_success_message: Grazie per esserti registrato!
+signup_title: Crea il tuo account
+slideshow_delay_input: Aggiorna ogni :input_field secondi
+small: piccolo
+starred: speciali
+state: stato
+status_pending: pendente
+status_resolved: risolto
+subject: oggetto
+subject_must_not_be_empty: l'oggetto non deve essere vuoto
+successful_undelete_image: Imagine recuperata con successo.
+sucessfully_removed_image: Immagine rimossa con successo! (:undo_link)
+summary: Sommario
+sunday: Domenica
+tags: Tag
+task_list_page_description: Una lista di cose da fare.
+task_list_page_display: Lista dei compiti
+thursday: "Gioved\xC3\xAC"
+time_zone: Fuso Orario
+title: Titolo
+to: a
+toggle_selection: Toggle selezione
+try_again: Prova di nuovo
+tuesday: "Marted\xC3\xAC"
+undo: annulla
+unfeature_button: Togli da In Evidenza!
+unknown: sconosciuto
+unread: non letti
+updated: aggiornati
+upload_image: Carica Immagine
+upload_new_image: carica nuova immagine
+uploaded_image_cropped: "L'immagine caricata verr\xC3\xA0 ridimensionata a 96x96 pixel."
+username: Nome Utente
+version_doesnt_exist: Non esiste la versione :version
+version_number: versione :version
+versions: versioni
+video: video
+video_class_description: Mostra un video ospitato su un sito esterno
+video_embed_code_prompt: Inserisci il codice per il video esterno
+video_service_is_not_supported: "non \xC3\xA8 supportato (al momento sono supportati solamente YouTube, Google Video, blip.tv e vimeo)"
+view_all: vedi tutti
+view_requests: vedi richieste
+view_slideshow: Vedi Presentazione
+websites: Siti Web
+wednesday: "Mercoled\xC3\xAC"
+when_does_feature_expire: "Quando questo contenuto in evidenza scadr\xC3\xA0?"
+wiki_is_locked: "Questo wiki \xC3\xA8 bloccato da :user"
+wiki_page_description: Un documento di testo a forma libera.
+wiki_page_display: Wiki
+wont_be_able_to_save: Non potrai salvare questa pagina
 you_are_viewing_version: Stai vedendo la versione :version di :user
 you_have_no_groups: Non sei membro di alcun gruppo
-video_class_description: Mostra un video ospitato su un sito esterno
-pagination_next: successivo
-activity_user_joined_group: "{user} si \xC3\xA8 unito a {group_type} {group}"
-network_invite_info: Inserisci i nomi dei gruppi che vorresti invitare in questa rete.
-make_album_cover: rendi questa immagine la copertina dell'album
-ranked_vote_page_display: Voto raggiunto
-no_group_named: "non c'\xC3\xA8 nessun gruppo chiamato <strong>:name</strong>."
-im_addresses: Indirizzi IM
-page_list_heading_posts: post
-date_minutes: minuti
-archive_filter_updated_link: Ultimo Appuntamento Aggiornato
-all_people_link: nuove persone
-approved: approvato
-Social_Change_Interests: Interessi riguardanti il cambiamento sociale
-upload_new_image: carica nuova immagine
-request_to_join_us_via_email_description: ":email \xC3\xA8 stato invitato/a a entrare nel gruppo :group"
-message_page_display: Messaggio
-Announcements: Annunci
-wednesday: "Mercoled\xC3\xAC"
-regenerate: rigenera miniature
-add_tags: Aggiungi Etichette
-include_full_checkbox: includi link nell'immagine grande
-logout: Disconnetti
-group_directory: Elenco dei Gruppi
-month_short_june: Giu
-incoming: In arrivo
-activity_wall_message: "{author}ha scritto a {user}: {message}"
-when_does_feature_expire: "Quando questo contenuto in evidenza scadr\xC3\xA0?"
-break_lock_button: Annulla Blocco
-members: Membri
-edit_underlined_e: Modifica (<u>e</u>)
-all_states: tutti gli stati
-no_tags: nessun tag
-activity_group_destroyed: "{group} \xC3\xA8 stato distrutto da {user}"
-contacts: contatti
-reset_password: Reimposta Password
-already_contacts_info: "Sei gi\xC3\xA0 un contatto di questa persona."
-unfeature_button: Togli da In Evidenza!
-me_search_link: Cerca
-edit_tags_link: Modifica
-mark_pages_as_featured_content_for_group: Qui puoi fare in modo che delle pagine divengano contenuti in evidenza di questo gruppo.
-saved_new_order: Nuovo ordine salvato!
-add_websites: Aggiungi Siti Web
-forgot_password_link: Ho dimenticato la mia password.
-my_groups: I Miei Gruppi
-group_discussion: discussione di gruppo
-my_pending_tasks_link: Pendenti
-image_title: "Titolo immagine: %s"
-reset_password_text: Ciao, %s. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui.
-usage_agreement_text: |
-  The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
-  
-  In consideration for your use of this service you agree to the following conditions:
-  
-  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site. 
-  
-  You also agree not to use our services to:
-  
-  * harass other people;
-  * harm or exploit minors;
-  * impersonate or cause others to believe that you are another person;
-  * send unsolicited messages;
-  * collect personal data from users of this service without their express consent; and
-  * interfere with or disrupt our services, those of our users or any other person or service;
-  
-  Further, you agree to:
-  
-  * avoid excessive use of our services;
-  * be responsible for maintaining the confidentiality of your accounts and passwords;
-  * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
-  * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
-  
-  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
-  
-  If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
-
+your_login: Il tuo login
