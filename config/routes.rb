@@ -84,6 +84,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.login 'account/login',   :controller => 'account',   :action => 'login'
+  map.confirmation 'confirmation/confirmation_popup', :controller => 'confirmation', :action => 'confirmation_popup'
   map.resources :custom_appearances, :only => [:edit, :update]
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 

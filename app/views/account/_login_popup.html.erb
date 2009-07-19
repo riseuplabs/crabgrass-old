@@ -1,0 +1,20 @@
+<div id="login_popup">
+  <% form_tag :controller => 'account', :action => 'login' do -%>
+  <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
+  <table>
+    <tr>
+      <td><%= "Username".t %></td>
+      <td><%= text_field_tag 'login' %></td>
+    </tr>
+    <tr>
+      <td><%= "Password".t %></td>
+      <td><%= password_field_tag 'password' %></td>
+    </tr>
+    <tr><td colspan="2" style="text-align:right">
+        <%# link_line(link_to('Need a new account?'[:signup_link], {:controller => '/account', :action => 'signup', :redirect => params[:redirect]}), link_to('I forgot my password'[:forgot_password_link], :controller => '/account', :action => 'forgot_password')) %>
+        <%= button_to_function "Cancel"[:cancel_button], "Modalbox.hide();" %>
+        <%= submit_tag _('Log in') %>
+      </td></tr>
+  </table>
+<% end -%>
+</div>

@@ -46,12 +46,6 @@ class ApplicationController < ActionController::Base
     filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
   end
   
-  # renders an modalbox enabled template, to show a confirmation dialoque
-  # needs to be accessable in several controllers
-  def confirmation_popup
-    render :partial => 'common/confirmation_popup'
-  end
-  
   protected
 
   ##
