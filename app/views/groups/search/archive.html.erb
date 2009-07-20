@@ -4,8 +4,8 @@
 
 <% @title_box = content_tag :h1, 'Archive'[:archive_headline] %>
 <% @info_box = link_line(
-  link_to_active('creation date'[:archive_filter_created_link], group_search_url(:action => 'archive', :path => @parsed.replace_keyword('updated','created').flatten), @parsed.keyword?('created')),
-  link_to_active('modification date'[:archive_filter_updated_link], group_search_url(:action => 'archive', :path => @parsed.replace_keyword('created','updated').flatten), @parsed.keyword?('updated'))
+  link_to_active('creation date'[:archive_filter_created_link], group_search_url(:action => 'archive', :path => @path.replace_keyword('updated','created')), @path.keyword?('created')),
+  link_to_active('modification date'[:archive_filter_updated_link], group_search_url(:action => 'archive', :path => @path.replace_keyword('created','updated')), @path.keyword?('updated'))
 ) %>
 
 <blockquote>
@@ -23,7 +23,7 @@
       <%- '1'.upto('12') do |month| -%>
         <td> 
           <%- if month_data = @months.detect {|a| a['year'] == year and a['month'] == month} -%>
-            <%- klass = @parsed.first_arg_for('date') == "#{year}-#{month}" ? 'invert' : '' -%>
+            <%- klass = @path.first_arg_for('date') == "#{year}-#{month}" ? 'invert' : '' -%>
             <%= link_to month_data["page_count"], group_search_url(:action => 'archive', :path => [@field, 'date', "#{year}-#{month}"]), :class => klass %> 
           <%- else -%>
             &nbsp;

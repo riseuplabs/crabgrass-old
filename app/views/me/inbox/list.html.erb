@@ -21,5 +21,7 @@ p#inbox_buttons {
   
 <% end # form -%>
 
-<link rel="alternate" href="/me/inbox/rss" title="RSS Feed" type="application/rss+xml" />
+<% content_for :html_head do %>
+  <%= me_rss %>
+<% end %>
 

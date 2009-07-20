@@ -34,7 +34,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     @limit       = options[:limit]
     @offset      = options[:offset]
 
-    @path        = cleanup_path(path)
+    @path        = path
     @and_clauses << [options[:conditions].dup] if options[:conditions]
     @values      = options[:values] ? options[:values].dup : []
     @flow        = options[:flow]

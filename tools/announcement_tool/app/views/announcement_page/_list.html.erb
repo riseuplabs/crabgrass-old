@@ -1,7 +1,12 @@
 <% announcements = @announcements if announcements.nil? %>
 <% if announcements.any? %>
+<% url = if @group
+  group_search_url('type', 'announcement')
+else
+  me_search_url('type', 'announcement')
+end %>
 <div class="announcements">
-  <%= header_with_more(:h2, 'bright', "Announcements"[:Announcements], group_search_url('type', 'announcement')) %>
+  <%= header_with_more(:h2, 'bright', "Announcements"[:Announcements], url) %>
   <table><tr>
   <% announcements.each do |page| %>
     <td>

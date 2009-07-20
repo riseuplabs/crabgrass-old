@@ -126,11 +126,7 @@ class GroupsController < Groups::BaseController
   end
 
   def search_path
-    params[:path] ||= ""
-    params[:path] = params[:path].split('/')
-    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
-    params[:path] += ['limit','20']
-    params[:path]
+    @path.default_sort('updated_at').merge!(:limit => 20)
   end
 
   def group_created_success
@@ -141,7 +137,7 @@ class GroupsController < Groups::BaseController
   def search_template(template)
     if rss_request?
       handle_rss(
-        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, parsed_path.collect{|segment| segment.join(' ')}.join(' > ')],
+        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, @path.title],
         :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')

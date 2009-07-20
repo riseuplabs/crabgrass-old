@@ -16,11 +16,14 @@ module UserExtension::Pages
       has_many :participations, :class_name => 'UserParticipation', 
         :after_add => :update_tag_cache, :after_remove => :update_tag_cache,
         :dependent => :destroy
+
       has_many :pages, :through => :participations do
         def pending
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
       end
+
+      has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
       
       named_scope(:most_active_on, lambda do |site, time|       
         ret = { :joins => [:participations, :memberships],

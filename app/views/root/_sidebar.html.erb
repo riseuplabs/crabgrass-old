@@ -22,7 +22,7 @@
 
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Members"[:most_active_members], :entities => most_active_users() } %>   
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Members"[:recently_active_members], :entities => recently_active_users() , :after => link_to('view all'[:view_all], '/people/friends')}  %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Members"[:recently_active_members], :entities => recently_active_users() , :after => link_to('view all'[:view_all], people_directory_index_path)} %>
 
 <br class='clear'/>
 
@@ -32,7 +32,7 @@
 
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Groups"[:most_active_groups], :entities => most_active_groups() } %>
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Groups"[:recently_active_groups], :entities => recently_active_groups(), :after => link_to('view all'[:view_all], '/groups/directory/most_active') } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Groups"[:recently_active_groups], :entities => recently_active_groups(), :after => link_to('view all'[:view_all], group_directory_params(:action => 'most_active')) } %>
 
 <br class='clear'/>
 

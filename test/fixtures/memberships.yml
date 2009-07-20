@@ -85,7 +85,11 @@ cold_purple:
   group_id: 32
   user_id: 6
   id: <%= id += 1 %>
-
+cold_penguin:
+  group_id: 32
+  user_id: 12
+  id: <%= id += 1 %>
+  
 # animals
 
 g:

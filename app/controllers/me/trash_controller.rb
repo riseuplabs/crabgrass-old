@@ -2,12 +2,8 @@ class Me::TrashController < Me::BaseController
 
   def search
     if request.post?
-      path = build_filter_path(params[:search])
-      if path == '/'
-        redirect_to url_for(:controller => '/me/trash', :action => nil, :path => nil)
-      else
-        redirect_to url_for(:controller => '/me/trash', :action => 'search', :path => nil) + path
-      end
+      path = parse_filter_path(params[:search])
+      redirect_to url_for(:controller => '/me/trash', :action => 'search', :path => nil) + path
     else
       list
     end
@@ -18,14 +14,12 @@ class Me::TrashController < Me::BaseController
   end
 
   def list
-    if params[:path].empty?
-      params[:path] = ['descending', 'updated_at']
-      full_url = url_for(:controller => '/me/trash', :action => nil, :path => nil)
-    else
-      full_url = url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
-    end
-    @pages = Page.paginate_by_path(params[:path] + ['admin', current_user.id], options_for_me(:page => params[:page], :flow => :deleted))
+    @path.default_sort('updated_at')
+    full_url = url_for(:controller => '/me/trash', :action => 'search', :path => @path)
+
+    @pages = Page.paginate_by_path(@path.merge(:admin => current_user.id), options_for_me(:page => params[:page], :flow => :deleted))
     @columns = [:admin_checkbox, :icon, :title, :owner, :deleted_by, :deleted_at, :contributors_count]
+
     handle_rss(
       :link => full_url,
       :title => 'Crabgrass Trash',

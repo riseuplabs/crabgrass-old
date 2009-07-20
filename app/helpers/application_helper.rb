@@ -169,21 +169,13 @@ module ApplicationHelper
     if more_link.is_a? Hash
       more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
     end
-    more_link = content_tag(:span, more_link, :class => 'commands') if more_link
+    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands') if more_link
 
     css_class = "small_icon #{activity.icon}_16 shy_parent"
     css_style = activity.style
     
-    content_tag :li, [description, created_at, more_link].combine, :class => css_class, :style => css_style
+    content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
   end
-
-#  def display_message_activity(post)
-#    onclick = "window.location='%s'" % url
-#    klass = 'clickable'
-#    description = 
-#    created_at = (friendly_date(post.created_at) if post.created_at)
-#    content_tag :li, [description, created_at].combine, :class => css_class, :style => css_style, :onclick => onclick  
-#  end
 
   def side_list_li(options)
      active = url_active?(options[:url]) || options[:active]

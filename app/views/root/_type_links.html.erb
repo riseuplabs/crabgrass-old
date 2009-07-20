@@ -1,0 +1,20 @@
+<% spinner_id = rand(100000) %>
+<div class='float_right'><%= spinner(spinner_id) %></div>
+<div class='sub_tabs'>
+<%= link_line(*(
+  [link_to_remote_active(
+    'All'[:all],
+    :url => url_for(:type => nil),
+    :active => params[:type].nil?,
+    :loading => show_spinner(spinner_id)
+  )] + ['text','vote','media'].collect { |type|
+    link_to_remote_active(
+      display_page_class_grouping(type),
+      :url => url_for(:type => type),
+      :active => (params[:type] == type),
+      :loading => show_spinner(spinner_id)
+    )
+  })
+) %>
+</div>
+<br/>
