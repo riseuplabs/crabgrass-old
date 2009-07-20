@@ -8,7 +8,7 @@ class Admin::CustomAppearancesController < Admin::BaseController
   before_filter :view_setup, :except => [:favicon, :available]
   before_filter :login_required, :except => [:favicon]
   prepend_before_filter :fetch_data, :except => [:favicon, :new]
-  
+
   def new
     unless current_site.custom_appearance
       current_site.create_custom_appearance
