@@ -47,11 +47,18 @@ module ActsAsSiteLimited
 
         # allows the use of special macro /*SITE_LIMITED*/ for :finder_sql
         def self.prepare_site_limited_sql(sql)
+          sub_site = "1"
           if Site.current and Site.current.limited?
-            sql.sub('/*SITE_LIMITED*/', "site_id = #{Site.current.id}")
-          else
-            sql.sub('/*SITE_LIMITED*/', "1")
+            sub_site = "#{Site.current.id}"
           end
+
+          if sql.is_a? Array
+            # [SELECT x FROM y WHERE z = ?, real_z]
+            sql.first.sub('/*SITE_LIMITED*/', sub_site)
+          else
+            sql.sub('/*SITE_LIMITED*/', sub_site)
+          end
+          sql
         end
 
         def self.prepare_site_limited_options(*args)
