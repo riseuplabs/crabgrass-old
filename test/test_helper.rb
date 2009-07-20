@@ -195,7 +195,7 @@ See also doc/SPHINX"
     @controller.disable_current_site if @controller
   end
 
-  def enable_site_testing(site_name=nil)
+  def enable_site_testing(site_name=nil, limited=true)
     if block_given?
       enable_site_testing(site_name)
       yield
@@ -206,9 +206,22 @@ See also doc/SPHINX"
         Site.current = sites(site_name) 
       else
         Conf.enable_site_testing()
+        # by default the request how ist test.host so we set the
+        # corresponding limited attribute.
+        Site.for_domain("test.host").first.update_attribute(:limited, limited)
         Site.current = Site.new
       end
       @controller.enable_current_site if @controller
+    end
+  end
+
+  def enable_unlimited_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name, false) do
+        yield
+      end
+    else
+      enable_site_testing(site_name, false)
     end
   end
 

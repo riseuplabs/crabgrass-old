@@ -54,3 +54,8 @@ malformed:
     
     s3 text 1
     s3 text 2
+
+announcement:
+  id: 5
+  body: there is a new video online now...
+  version: 1
