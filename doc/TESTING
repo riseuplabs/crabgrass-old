@@ -9,8 +9,24 @@ nokogiri
 launchy
 ruby-debug
 redgreen (optional but recommended, redgreen colorizes test output)
+Roman2K-rails-test-serving (purely optional - speeds up test runs)
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
+
+== Speeding Up Tests
+
+If you want to do proper test driven development, getting the tests to run faster is important. We don't use mocks, factories and other tricks to speed up the tests, but there is a simple way to speed up test loading time by 3
+
+RailsTestServing is a deamon that loads rails framework code and runs in the background. When you run the tests, the server will feed them the preloaded framework code, cutting down startup costs. This works with code reloading like you'd expect.
+
+First, add to bashrc/bash_profile/bash_login: `export RUBYLIB=".:test:$RUBYLIB"`
+
+Then run:
+sudo gem install Roman2K-rails-test-serving -s http://gems.github.com
+ruby test/test_helper.rb --serve
+ruby test/unit/my_test_file.rb [opts]
+
+Full manual: http://roman.flucti.com/a-test-server-for-rails-applications
 
 == Integration Tests
 
