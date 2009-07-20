@@ -2,11 +2,12 @@ module WikiExtension
   module Locking
 
     def lock!(section, user)
-      section_locks.lock(section, user)
+      section_locks.lock!(section, user)
     end
-
-    def unlock(section, user, opts = {})
-      section_locks.lock(section, user, opts)
+    
+    # opts can be :force => true :: won't throw a WikiLockException if user doesn't own the lock
+    def unlock!(section, user, opts = {})
+      section_locks.unlock!(section, user, opts)
     end
 
     # get a list of sections that the +user+ may not edit

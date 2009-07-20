@@ -29,57 +29,35 @@
 
 ##
 
+# requirements/ideas:
+# 1. nothing should get saved until we say save!
+# 2. updating body automatically updates html and structure
+# 3. wiki should never get saved with body/body products mismatch
+# 4. loaded wiki should see only the latest body products, if body was updated from outside
 class Wiki < ActiveRecord::Base
   include WikiExtension::Locking
   include WikiExtension::Sections
-  
 
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
   has_one :profile
   has_one :section_locks, :class_name => "WikiLock", :dependent => :destroy
 
-
   serialize :raw_structure, Hash
-
-  composed_of :structure, :class_name => "WikiExtension::WikiStructure", :mapping => %w(raw_structure)
+  
+  # need more control than composed of
+  attr_reader :structure
+  # composed_of :structure, :class_name => "WikiExtension::WikiStructure",
+  #               :mapping => %w(raw_structure raw_structure)
 
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
-  ##
-  ## LOCKING
-  ##
-  #  def section_heading_names
-  #    greencloth.heading_names
-  #  end
-  #
-  #  def subsection_heading_names(section)
-  #    return section_heading_names if section == :all
-  #    greencloth.subheading_names(section)
-  #  end
-  #
-  #  def parent_section_heading_names(section)
-  #    greencloth.parent_heading_names(section)
-  #  end
-  #
-  #  def greencloth
-  #    @greencloth ||= GreenCloth.new(self.body)
-  #  end
-
-  ##
-  ## VERSIONING
-  ##
-
   acts_as_versioned :if => :create_new_version? do
-    # these methods are added to both Wiki and Wiki::Version
-
     def self.included(base)
       base.belongs_to :user
     end
   end
-
-
 
   # only save a new version if the body has changed
   # and was not previously nil
@@ -91,7 +69,7 @@ class Wiki < ActiveRecord::Base
   end
 
 
-  # returns first version since @time@
+  # returns first version since +time+
   def first_version_since(time)
     return nil unless time
     versions.first :conditions => ["updated_at <= :time", {:time => time}],
@@ -113,46 +91,6 @@ class Wiki < ActiveRecord::Base
     destroy_versions_after(version_number)
   end
 
-  ##
-  ## SAVING
-  ##
-
-  #
-  # a smart update of the wiki, taking into account locking
-  # and the last time the wiki was saved by the same person.
-  #
-  # tries to save, throws an exception if anything goes wrong.
-  # possible exceptions:
-  #   ActiveRecord::StaleObjectError
-  #   ErrorMessage
-  #
-  # NOTE: for some reason, I am not sure why, calling wiki.save directly will
-  #       not work, because the version number is not incremented.
-  #       so, smart_save! must be the only way that the wiki gets saved.
-  # def smart_save!(params)
-  #   params[:heading] ||= :all
-  #
-  #
-  #   unless editable_by?(params[:user], params[:heading])
-  #     raise ErrorMessage.new("Cannot save your data, someone else has locked the page.")
-  #   end
-  #
-  #   self.body = params[:body]
-  #
-  #   if recent_edit_by?(params[:user])
-  #     save_without_revision
-  #     versions.find_by_version(version).update_attributes(:body => body, :body_html => body_html, :updated_at => Time.now)
-  #   else
-  #     self.user = params[:user]
-  #
-  #     # disable optimistic locking for saving the data with versioning
-  #     # optimistic locking is used whenever edit_locks Hash is updated (and then versioning is disabled)
-  #     without_locking {save!}
-  #   end
-  #
-  #   unlock(params[:heading])
-  # end
-
   def update_document!(user, current_version, text)
     update_section!(:document, user, current_version, text)
   end
@@ -173,46 +111,6 @@ class Wiki < ActiveRecord::Base
     self.save!
   end
 
-  ##### RENDERING #################################
-
-  # def body=(value)
-  #   write_attribute(:body, value)
-  #   write_attribute(:body_html, "")
-  # end
-  #
-  # def clear_html
-  #   update_attribute(:body_html, nil)
-  # end
-
-  # render_html is responsible for rendering wiki text to html markup.
-  #
-  # This rendering, however, is not handled by the wiki class: the block passed
-  # to render_html() does the conversion.
-  #
-  # render_html() should be called whenever the body_html needs to be shown, but
-  # the block will only actually get called if body_html needs updating.
-  #
-  # Example usage:
-  #
-  #   wiki.body_html # << not valid yet
-  #   wiki.render_html do |text|
-  #      GreenCloth.new(text).to_html
-  #   end
-  #   wiki.body_html # << now it is valid
-  #
-  # def render_html(&block)
-  #   if body.empty?
-  #     self.body_html = "<p></p>"
-  #   elsif body_html.empty?
-  #     self.body_html = block.call(body)
-  #   end
-  #   if body_html_changed?
-  #     without_timestamps do
-  #       save_without_revision!
-  #     end
-  #   end
-  # end
-
   # updating body will invalidate body_html
   # reading body_html or saving this wiki
   # will regenerate body_html from body if render_body_html_proc is available
@@ -221,7 +119,7 @@ class Wiki < ActiveRecord::Base
     # invalidate body_html and raw_structure
     if body_changed?
       write_attribute(:body_html, nil)
-      write_attribute(:raw_structure, {})
+      write_attribute(:raw_structure, nil)
     end
   end
 
@@ -229,21 +127,19 @@ class Wiki < ActiveRecord::Base
   def body_html
     update_body_html_and_structure
 
-    without_timestamps { save_without_revision! } if body_html_changed? and !new_record?
     read_attribute(:body_html)
   end
 
-  # will render if not up to date
+  # will calculate structure if not up to date
+  # calculating structure will also update body_html
   def raw_structure
     update_body_html_and_structure
-    without_timestamps { save_without_revision! } if raw_structure_changed? and !new_record?
 
     read_attribute(:raw_structure) || write_attribute(:raw_structure, {})
   end
 
-  alias_method :existing_section_locks, :section_locks
-  def section_locks
-    existing_section_locks || create_section_locks(:wiki => self)
+  def structure
+    @structure ||= WikiExtension::WikiStructure.new(raw_structure)
   end
 
   # sets the block used for rendering the body to html
@@ -251,22 +147,12 @@ class Wiki < ActiveRecord::Base
     @render_body_html_proc = block
   end
 
-  # returns html for wiki body
-  # user render_body_html_proc if available
-  # or default GreenCloth rendering otherwise
-  def render_body_html
-    if @render_body_html_proc
-      @render_body_html_proc.call(body.to_s)
-    else
-      GreenCloth.new(body, link_context, [:outline]).to_html
-    end
-  end
-
   # renders body_html and calculates structure if needed
   def update_body_html_and_structure
+    # require 'ruby-debug';debugger;1-1
     return unless needs_rendering?
     write_attribute(:body_html, render_body_html)
-    write_attribute(:raw_structure, GreenCloth.new(body.to_s).to_structure)
+    write_attribute(:raw_structure, render_raw_structure)
   end
 
   # returns true if wiki body is fresher than body_html
@@ -277,7 +163,7 @@ class Wiki < ActiveRecord::Base
     # whenever we set body, we reset body_html to nil, so this condition will
     # be true whenever body is changed
     # it will also be true when body_html is invalidated externally (like with Wiki.clear_all_html)
-    (html.blank? != body.blank?) or (rs.blank? != body.blank?)
+    (html.blank? != body.blank?) or rs.blank?
   end
 
   # update the latest Wiki::Version object with the newest attributes
@@ -332,6 +218,22 @@ class Wiki < ActiveRecord::Base
 
   protected
 
+  # hide the section_locks association from the world
+  # because we're creating a new WikiLocks object if there isn't one
+  # even worse, if the self is unsaved then creating section_locks will save self
+  # meaning that "w = Wiki.new; w.section_locks" would have the same effect as
+  # w = Wiki.new; w.section_locks = WikiLocks.new; w.save! w.section_locks.save!
+  # since it is not very polite to save a wiki without warning we hide section_locks
+  #
+  # the users of Wiki must "do: w = Wiki.new; w.lock!"
+  # this is polite, since the `!` (bang) on lock! warns the user something irreversible will happen
+  alias_method :existing_section_locks, :section_locks
+  def section_locks
+    # current section_locks or create a new one if it doesn't exist
+    # will save the wiki (if wiki is a new_record?) and will create a new WikiLock
+    existing_section_locks || create_section_locks(:wiki => self)
+  end
+
   # # used when wiki is rendered for deciding the prefix for some link urls
   def link_context
     if page and page.owner_name
@@ -350,35 +252,22 @@ class Wiki < ActiveRecord::Base
     end
   end
 
+  # returns html for wiki body
+  # user render_body_html_proc if available
+  # or default GreenCloth rendering otherwise
+  def render_body_html
+    if @render_body_html_proc
+      @render_body_html_proc.call(body.to_s)
+    else
+      GreenCloth.new(body.to_s, link_context, [:outline]).to_html
+    end
+  end
+
+  def render_raw_structure
+    GreenCloth.new(body.to_s).to_structure
+  end
+
   private
 
-  ## this is really confusing and needs to be cleaned up.
-  ##
-  ## if this is passed a section which we don't think exists, then the wiki
-  ## appears to be locked. This is a problem, because then you cannot ever
-  ## unlock the wiki.
-  ##
-  ## the hacky solution for now is to add this missing section to available
-  ## sections.
-  ##
-  ## also, without the hacky line, trying to edit a newly created wiki
-  ## throws an error that it is locked!
-  ##
-  ## also, if self.body == nil, then don't check the sections, because it will
-  ## bomb out.
-  ##
-  # def section_is_available_to_user(user, section)
-  #   if self.body.nil?
-  #     return editable_by?(user)
-  #   end
-  #
-  #   available_sections = sections_not_locked_for(user)
-  #
-  #   ## here is the hacky line:
-  #   available_sections << section unless section_heading_names.include?(section)
-  #
-  #   # the second clause (locked_by_id == ...) will include :all section
-  #   available_sections.include?(section) || self.locked_by_id(section) == user.id
-  # end
 
 end

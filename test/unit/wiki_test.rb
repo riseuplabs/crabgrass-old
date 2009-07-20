@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class WikiTest < Test::Unit::TestCase
   fixtures :users, :wikis
 
-  def should_have_latest_body body
+  def self.should_have_latest_body body
     should "have the latest body" do
       assert_equal body, @wiki.body
     end
@@ -13,7 +13,7 @@ class WikiTest < Test::Unit::TestCase
     end
   end
 
-  def should_have_latest_body_html body_html
+  def self.should_have_latest_body_html body_html
     should "have the latest body_html" do
       assert_equal body_html, @wiki.body_html
     end
@@ -23,7 +23,7 @@ class WikiTest < Test::Unit::TestCase
     end
   end
 
-  def should_have_latest_raw_structure raw_structure
+  def self.should_have_latest_raw_structure raw_structure
     should "have the latest raw_structure" do
       assert_equal raw_structure, @wiki.raw_structure
     end
@@ -34,7 +34,7 @@ class WikiTest < Test::Unit::TestCase
   end
 
   should "Wiki have good associations" do
-    assert check_associations(Wiki)
+    assert(check_associations(Wiki))
   end
 
 
@@ -46,7 +46,7 @@ class WikiTest < Test::Unit::TestCase
     end
 
     should "fail to save with no user set" do
-      assert_raises ActiveRecord::RecordInvalid { @wiki.save! }
+      assert_raises(ActiveRecord::RecordInvalid) { @wiki.save! }
     end
 
     should "fail to save if version is set too old" do
@@ -54,7 +54,7 @@ class WikiTest < Test::Unit::TestCase
     end
 
     should "fail to save when user is set to non locking user" do
-      assert_raise WikiLockException do
+      assert_raises(WikiLockException) do
         w.update_attributes! :body => 'catelope', :user => users(:red)
       end
     end
@@ -89,7 +89,7 @@ class WikiTest < Test::Unit::TestCase
         assert_nothing_raised { @wiki.save! }
       end
 
-      should_change "versions count", :from => 0, :to => 1 { @wiki.versions.size }
+      should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
 
       context "and then saved with the same body by different user" do
         setup do
@@ -97,9 +97,8 @@ class WikiTest < Test::Unit::TestCase
           assert_nothing_raised { @wiki.save! }
         end
 
-        should_not_change "versions count"{ @wiki.versions.size }
-
-        should_have_latest_body 'hi'
+        should_not_change("versions count") { @wiki.versions.size }
+        should_have_latest_body('hi')
         should_have_latest_body_html '<p>hi<p>'
       end
 
@@ -110,7 +109,7 @@ class WikiTest < Test::Unit::TestCase
           assert_nothing_raised { @wiki.save! }
         end
 
-        should_change "versions count", :from => 1, :to => 2 { @wiki.versions.size }
+        should_change("versions count", :from => 1, :to => 2) { @wiki.versions.size }
 
         should_have_latest_body 'hi there'
         should_have_latest_body_html '<p>hi there<p>'
@@ -123,7 +122,7 @@ class WikiTest < Test::Unit::TestCase
           assert_nothing_raised { @wiki.save! }
         end
 
-        should_not_change "versions count"{ @wiki.versions.size }
+        should_not_change("versions count") { @wiki.versions.size }
 
         should_have_latest_body 'hey you'
         should_have_latest_body_html '<p>hey you<p>'
@@ -137,11 +136,11 @@ class WikiTest < Test::Unit::TestCase
         assert_nothing_raised { @wiki.save! }
       end
 
-      should_change "versions count", :from => 0, :to => 1 { @wiki.versions.size }
+      should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
 
       should_have_latest_body ''
       should_have_latest_body_html ''
-      should_have_latest_raw_structure {}
+      should_have_latest_raw_structure({})
 
       context "and then saved with new body by a different user" do
         setup do
@@ -150,18 +149,17 @@ class WikiTest < Test::Unit::TestCase
           assert_nothing_raised { @wiki.save! }
         end
 
-        should_not_change "versions count" { @wiki.versions.size }
+        should_not_change("versions count") { @wiki.versions.size }
 
         should_have_latest_body 'oi'
         should_have_latest_body_html '<p>oi</p>'
 
-        should_have_latest_raw_structure {:document => {
+        should_have_latest_raw_structure({:document => {
           :parent => nil,
           :children => [],
           :start_index => 0,
           :end_index => 1,
-          :header_end_index => 0}
-          }
+          :header_end_index => 0}})
       end
 
     end
@@ -173,11 +171,11 @@ class WikiTest < Test::Unit::TestCase
         assert_nothing_raised { @wiki.save! }
       end
 
-      should_change "versions count", :from => 0, :to => 1 { @wiki.versions.size }
+      should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
 
       should_have_latest_body nil
       should_have_latest_body_html ''
-      should_have_latest_raw_structure {}
+      should_have_latest_raw_structure({})
 
 
       context "and then saved with new body by a different user" do
@@ -187,29 +185,28 @@ class WikiTest < Test::Unit::TestCase
           assert_nothing_raised { @wiki.save! }
         end
 
-        should_not_change "versions count" { @wiki.versions.size }
+        should_not_change("versions count") { @wiki.versions.size }
 
         should_have_latest_body 'oi'
         should_have_latest_body_html '<p>oi</p>'
 
-        should_have_latest_raw_structure {:document => {
+        should_have_latest_raw_structure({:document => {
           :parent => nil,
           :children => [],
           :start_index => 0,
           :end_index => 1,
-          :header_end_index => 0}
-          }
+          :header_end_index => 0}})
       end
     end
 
     context "with four versions" do
       setup do
         @wiki = Wiki.create! :body => '1111', :user => users(:blue)
-        @wiki.update_document!(users(:red) 1, '2222')
+        @wiki.update_document!(users(:red), 1, '2222')
         @wiki.update_document!(users(:green), 2, '3333')
         @wiki.update_document!(users(:blue), 3, '4444')
       end
-      should_change "versions count", :from => 0, :to => 4 { @wiki.versions.size }
+      should_change("versions count", :from => 0, :to => 4) { @wiki.versions.size }
 
       should "find version 1 body" do
         assert_equal '1111', @wiki.versions.find_by_version(1).body

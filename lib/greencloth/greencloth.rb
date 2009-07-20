@@ -336,9 +336,15 @@ class GreenCloth < RedCloth::TextileDoc
 
     return html
   end
-  
+
   def to_structure
-    {:document => {}}
+    {:document => {
+      :parent => nil,
+      :children => [],
+      :start_index => 0,
+      :end_index => length,
+      :header_end_index => 0}
+    }
   end
 
   # populates @headings, and then restores the string to its original form.
