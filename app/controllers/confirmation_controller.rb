@@ -1,8 +1,8 @@
-class ConfirmationController < ActionController::Base
+class ConfirmationController < ApplicationController
   # renders an modalbox enabled template, to show a confirmation dialoque
   # needs to be accessable in several controllers
   
-  verify :method => :get, :only => [:confirmation_popup]
+  verify :method => :post, :only => [:confirmation_popup]
   
   def confirmation_popup
     @confirmatione_title = params[:confirmation_title]

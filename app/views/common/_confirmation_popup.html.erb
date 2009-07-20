@@ -5,7 +5,7 @@
   }]
 %>
 <%=javascript_tag(after_load_js) %>
-<% form_tag confirmation_url do -%>
+<% form_tag @confirmation_url do -%>
   <%=@confirmation_text%>
   <%=submit_tag 'Confirm'%>
 <% end -%>
