@@ -137,6 +137,21 @@ class StatsController < ApplicationController
   end
   helper_method :groups_created
 
+  def pages_created(options={})
+    where = if options[:updated]
+      quote_sql('updated_at > ?', Time.now.utc - 2.week)
+    end
+    time_series_data(
+      :model => Page, :field => :created_at, :where => where
+    )
+  end
+  helper_method :pages_created
+
+  def pages_updated()
+    time_series_data(:model => Page, :field => :updated_at)
+  end
+  helper_method :pages_updated
+
   private
 
   def quote_sql(*args)
