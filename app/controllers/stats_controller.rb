@@ -132,7 +132,7 @@ class StatsController < ApplicationController
       quote_sql('groups.id IN (SELECT memberships.group_id FROM memberships WHERE memberships.visited_at > ?)', Time.now.utc - 2.week)
     end
     time_series_data(
-      :model => Group, :field => :created_at, :join => join, :where => where
+      :model => Group, :field => :created_at, :where => where
     )
   end
   helper_method :groups_created
