@@ -1,0 +1,21 @@
+<%
+   @order = 9
+   groups = groups_created
+   active = groups_created(:active => true)
+%>
+
+<%= section 'Groups' %>
+
+<%= subsection 'New' %>
+
+<%= time_series_chart(
+  {:label => 'new groups', :data => groups},
+  {:label => 'active groups', :data => active}
+)%>
+
+<%= subsection 'Total' %>
+
+<%= time_series_chart(
+  {:label => 'all groups', :data => cumulative(groups)},
+  {:label => 'active groups', :data => cumulative(active)}
+)%>
