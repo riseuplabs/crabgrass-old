@@ -3,6 +3,7 @@ module AuthenticatedSystem
   # Accesses the current user from the session.
   def current_user
     @current_user ||= (session[:user] && load_user(session[:user])) || UnauthenticatedUser.new
+    User.current ||= @current_user if @current_user.is_a? User
   end
 
   def load_user(id)
