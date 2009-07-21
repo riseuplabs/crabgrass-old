@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../test_helper'
 require 'admin/announcements_controller'
 
 # Re-raise errors caught by the controller.
-class Admin::AnnouncemetsController; def rescue_action(e) raise e end; end
+class Admin::AnnouncementsController; def rescue_action(e) raise e end; end
 
 class AnnouncementsControllerTest < Test::Unit::TestCase
 
@@ -74,11 +74,15 @@ class AnnouncementsControllerTest < Test::Unit::TestCase
   def assert_no_access(message="")
     get :index
     assert_response :redirect, message
+    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
     get :new
     assert_response :redirect, message
+    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
     post :update
     assert_response :redirect, message
+    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
     get :destroy
     assert_response :redirect, message
+    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
   end
 end

@@ -1,5 +1,5 @@
 module Admin::BasePermission
-  def may_index_base?
-    current_user.may?(:admin, current_site)
+  def may_index_admin?
+    current_site.id and may_admin_site?
   end
 end
