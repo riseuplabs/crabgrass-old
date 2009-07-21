@@ -75,7 +75,6 @@ class StatsController < ApplicationController
   def time_series_data(options)
     model = options[:model]
     table = model.table_name
-    join = options[:join]
 
     start = @start
     step = @step
@@ -95,7 +94,6 @@ class StatsController < ApplicationController
     model.connection.select_rows("
        SELECT UNIX_TIMESTAMP(#{table}.#{field}), count(*)
        FROM #{table}
-       #{join}
        #{where}
        GROUP BY (#{now} - UNIX_TIMESTAMP(#{table}.#{field})) DIV #{time_frame}
        ORDER BY #{table}.#{field}
@@ -121,7 +119,7 @@ class StatsController < ApplicationController
 
   def users_created(options={})
     where = if options[:active]
-      quote_sql('last_seen_at > ?', Time.now.utc - 1.week)
+      quote_sql('last_seen_at > ?', Time.now.utc - 2.week)
     end
     time_series_data(
       :model => User, :field => :created_at, :where => where
@@ -130,8 +128,8 @@ class StatsController < ApplicationController
   helper_method :users_created
 
   def groups_created(options={})
-    join, where = if options[:active]
-      ['JOIN memberships ON groups.id = memberships.group_id', quote_sql('memberships.visited_at > ?', Time.now.utc - 1.week)]
+    where = if options[:active]
+      quote_sql('groups.id IN (SELECT memberships.group_id FROM memberships WHERE memberships.visited_at > ?)', Time.now.utc - 2.week)
     end
     time_series_data(
       :model => Group, :field => :created_at, :join => join, :where => where
