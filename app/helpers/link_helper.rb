@@ -143,16 +143,13 @@ label}</a></span>)
 
   private
 
-  # ensure a comparible controller name without a leading /
-  def normalize_controller(hash)
-    hash[:controller].gsub!(/^\//, '') if hash[:controller]
-  end
-
   def compare_param(a,b)
     a = a.to_param
     b = b.to_param
     if b.empty?
       true
+    elsif a.empty?
+      false
     elsif a == b
       true
     elsif a.sub(/^\//, '') == b.sub(/^\//, '')
