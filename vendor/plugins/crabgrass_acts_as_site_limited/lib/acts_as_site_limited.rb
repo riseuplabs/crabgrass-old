@@ -54,9 +54,9 @@ module ActsAsSiteLimited
 
           if sql.is_a? Array
             # [SELECT x FROM y WHERE z = ?, real_z]
-            sql.first.sub('/*SITE_LIMITED*/', sub_site)
+            sql.first.sub!('/*SITE_LIMITED*/', sub_site)
           else
-            sql.sub('/*SITE_LIMITED*/', sub_site)
+            sql.sub!('/*SITE_LIMITED*/', sub_site)
           end
           sql
         end
