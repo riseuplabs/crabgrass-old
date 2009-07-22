@@ -213,6 +213,10 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'pages.stars_count > 0'
   end
 
+  def filter_contributed
+    @conditions << 'pages.contributors_count > 0'
+  end
+
   #--
   #### sorting  ####
   #++
