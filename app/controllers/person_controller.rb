@@ -26,7 +26,7 @@ class PersonController < ApplicationController
     params[:path] ||= ""
     params[:path] = params[:path].split('/')
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
-    params[:path] += ['limit','30', 'contributed', @user.id]
+    params[:path] += ['limit','30', 'contributed_by', @user.id]
 
     @columns = [:stars, :owner_with_icon, :icon, :title, :last_updated]
     options = options_for_user(@user, :page => params[:page])
