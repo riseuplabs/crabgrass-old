@@ -244,6 +244,20 @@ class ApplicationController < ActionController::Base
     render :template => 'common/permission_denied'
   end
 
+  def render_error(exception=nil)
+    if exception
+      if exception.try.options.try[:redirect]
+        flash_message :exception => exception
+        redirect_to exception.options[:redirect]
+        return
+      else
+        flash_message_now :exception => exception
+      end
+    end
+    @skip_context = true
+    render :template => 'common/error', :status => exception.try(:status)
+  end
+
   private
   
   def rescue_authentication_errors

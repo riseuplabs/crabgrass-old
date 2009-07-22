@@ -1,0 +1,21 @@
+<%
+   @order = 10
+   users = users_created
+   active = users_created(:active => true)
+%>
+
+<%= section 'Users' %>
+
+<%= subsection 'New' %>
+
+<%= time_series_chart(
+  {:label => 'all users', :data => users},
+  {:label => 'active users', :data => active}
+)%>
+
+<%= subsection 'Total' %>
+
+<%= time_series_chart(
+  {:label => 'all users', :data => cumulative(users)},
+  {:label => 'active active', :data => cumulative(active)}
+)%>

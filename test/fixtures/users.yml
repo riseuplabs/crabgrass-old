@@ -35,6 +35,7 @@
   email: <%= email || "#{login}@localhost" %>
   salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
-  created_at: <%= 5.days.ago.to_s :db %>
+  created_at: <%= rand(5).days.ago.to_s :db %>
+  last_seen_at: <%= rand(10).days.ago.to_s :db %>
 <% end %>
 
