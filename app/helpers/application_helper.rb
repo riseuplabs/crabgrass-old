@@ -106,6 +106,29 @@ module ApplicationHelper
                                     }
   end
 
+  # creates a popup-link using modalbox
+  def link_to_modalbox(url, label, params={}, options={})
+    link_to_function(label, modalbox_js(url, label, params, options))
+  end
+  
+  # creates a popup-link to a confirmation dialoque using modalbox
+  def link_to_confirmation_popup(label, params={}, options={})
+    url = url_for(:controller => 'confirmation', :action => 'confirmation_popup')
+    params.merge!({ :authenticity_token => form_authenticity_token })
+    options.merge!({:method => 'post'})
+    link_to_modalbox(url,label,params, options)
+  end
+  
+  def modalbox_js(url, label, params={}, options={})
+    request_method = options[:method] || 'get'
+    if !params.empty?
+      params = params.each_pair.map do |key, value|
+        "#{key}=#{url_encode(value)}" 
+      end.join('&')
+    end
+    "Modalbox.show('#{url}',{title:'#{label}', params:'#{params}', method:'#{request_method}', overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"
+  end
+  
   # 
   # Default pagination link options:
   # 

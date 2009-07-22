@@ -1,3 +1,9 @@
+<%
+  after_load_js = %Q[
+   after_load_function = function() {
+     Field.focus('login')}}); return false;
+  }]
+%>
 <div id="login_popup">
   <% form_tag :controller => 'account', :action => 'login' do -%>
   <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>

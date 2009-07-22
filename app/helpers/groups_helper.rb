@@ -38,14 +38,7 @@ module GroupsHelper
   def destroy_group_link
     # eventually, this should fire a request to destroy.
     if may_destroy_group?
-      
-      #link_to("Destroy {group_type}"[:destroy_group_link, @group.group_type], groups_url(:action => :destroy), {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase], :method => :post})
-      confirmation_url = groups_url(:action => :destroy)
-      confirmation_title = "Destroy {group_type}"[:destroy_group_link, @group.group_type]
-      confirmation_text = "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase]
-      popup_url = url_for(:controller => 'confirmation', :action => 'confirmation_popup')
-      params = "confirmation_url=#{url_encode(confirmation_url)}&confirmation_text=#{url_encode(confirmation_text)}&authenticity_token=#{form_authenticity_token}"
-      link_to_function(confirmation_title, "Modalbox.show('#{popup_url}', {title: '#{confirmation_title}', method: 'post', params: '#{params}'})")
+      link_to_confirmation_popup("Destroy {group_type}"[:destroy_group_link, @group.group_type], {:confirmation_url => groups_url(:action => :destroy), :confirmation_text => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase]})
     end
   end
 

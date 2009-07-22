@@ -96,7 +96,7 @@ module WikiHelper
   def image_popup_code_for_wiki_toolbar(wiki)
     text = "<img src='/images/textile-editor/img.png'/>"
     spinner = spinner('image', :show => true)
-    "Modalbox.show('#{image_popup_show_url(wiki)}',{title:'Insert Image',overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"
+    modalbox_js(image_popup_show_url(wiki), 'Insert Image'[:insert_image])
   end
 
   def image_popup_upload_url(wiki)

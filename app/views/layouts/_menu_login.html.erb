@@ -8,6 +8,9 @@
   <%= link_to "Logout"[:menu_link_logout] + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
   <%= call_hook :top_right_links %>
 <% elsif !@login_form_already_rendered -%>
-  <span><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "Modalbox.show('#{popup_url}',{title:'#{'Login'[:login]}',overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){Field.focus('login')}}); return false;" } %></span>  
+  <span>
+ 
+<%= link_to_modalbox(popup_url, 'Login'[:login], {:redirect => params[:redirect] || request.request_uri}) %>
+</span>  
 <% end -%>
 </div>

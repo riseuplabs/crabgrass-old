@@ -140,11 +140,7 @@ module BasePageHelper
   # used in the sidebar of deleted pages
   def destroy_line
     if may_destroy_page?
-      link = link_to("Destroy Immediately"[:delete_page_via_shred],
-        {:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy'},
-        :method => 'post',
-        :confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]]
-      )
+      link = link_to_confirmation_popup("Destroy Immediately"[:delete_page_via_shred], { :confirmation_url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy'), :confirmation_text =>  "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]]})
       content_tag :li, link, :class => 'small_icon minus_16'
     end
   end
@@ -232,7 +228,7 @@ module BasePageHelper
         :page_id => @page.id,
         :name => options[:name]
        })
-    link_to_function options[:label], "Modalbox.show('#{popup_url}',{title:'#{options[:label]}',overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"
+    link_to_modalbox(popup_url, options[:label])
   end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked
