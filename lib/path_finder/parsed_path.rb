@@ -29,6 +29,7 @@ class PathFinder::ParsedPath < Array
     'watching' => 0,
     'inbox' => 0,
     'starred' => 0,
+    'contributed' => 0,
     'stars' => 1,    
     'type' => 1,
     'tag' => 1,
