@@ -15,6 +15,17 @@ class WikiPageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_failed_show_without_login
+    # existing page
+    get :show, :page_id => pages(:wiki).id
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
+  def test_show_without_login
+    get :show, :page_id => pages(:public_wiki).id
+    assert_response :success
+  end
 =begin
   this test doesn't work, but the actual code does.
   not sure how to write this, the page is reset or something
