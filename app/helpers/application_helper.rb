@@ -112,11 +112,13 @@ module ApplicationHelper
   end
   
   # creates a popup-link to a confirmation dialoque using modalbox
-  def link_to_confirmation_popup(label, params={}, options={})
-    url = url_for(:controller => 'confirmation', :action => 'confirmation_popup')
-    params.merge!({ :authenticity_token => form_authenticity_token })
-    options.merge!({:method => 'post'})
-    link_to_modalbox(url,label,params, options)
+  def link_to_confirmation_popup(label, url, text, params={}, options={})
+    #url = url_for(:controller => 'confirmation', :action => 'confirmation_popup')
+    #params.merge!({ :authenticity_token => form_authenticity_token })
+    #options.merge!({:method => 'post'})
+    confirmation = render(:partial => 'common/confirmation_popup', :locals => {:confirmation_text => text, :confirmation_url => url}) + 
+    link_to_function(label, "Modalbox.show($('confirmation_dialog'), {title: '#{label}'})")
+    #link_to_modalbox(url,label,params,options)
   end
   
   def modalbox_js(url, label, params={}, options={})

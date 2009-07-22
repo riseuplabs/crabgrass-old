@@ -1,12 +1,13 @@
 <%
   after_load_js = %Q[
    after_load_function = function() {
-     Field.focus('add_names');
   }]
 %>
+<div id="confirmation_dialog" style="display:none;">
 <%=javascript_tag(after_load_js) %>
-<% form_tag @confirmation_url do -%>
-  <%=@confirmation_text%>
+<% form_tag confirmation_url do -%>
+  <%=confirmation_text%>
   <%=submit_tag 'Confirm'%>
 <% end -%>
 </form>
+</div>
