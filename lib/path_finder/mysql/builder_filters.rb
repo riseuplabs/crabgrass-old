@@ -299,7 +299,7 @@ module PathFinder::Mysql::BuilderFilters
     @order << "group_participations.featured_position ASC"
   end
 
-  def filter_contributed(user_id)
+  def filter_contributed_by(user_id)
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]
     @order << "user_participations.changed_at DESC" if @order
