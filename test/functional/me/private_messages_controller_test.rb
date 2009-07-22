@@ -12,6 +12,24 @@ class Me::PrivateMessagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_should_create_message
+    login_as :blue
+
+    assert_no_difference 'Post.count' do
+      post :create, :id => 'blue', :post => {:body => 'hi'}
+      assert_error_message
+    end
+    
+    assert_no_difference 'Post.count' do
+      post :create, :id => 'green', :post => {:body => ''}
+      assert_error_message
+    end
+
+    assert_difference 'Post.count' do
+      post :create, :id => 'green', :post => {:body => 'hi'}
+    end
+  end
+
   def test_should_show_conversation
     login_as :blue
 

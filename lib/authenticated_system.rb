@@ -2,8 +2,12 @@ module AuthenticatedSystem
 
   # Accesses the current user from the session.
   def current_user
-    @current_user ||= (session[:user] && load_user(session[:user])) || UnauthenticatedUser.new
-    User.current ||= @current_user if @current_user.is_a? User
+    @current_user ||= begin
+      user = load_user(session[:user]) if session[:user]
+      user ||= UnauthenticatedUser.new
+      User.current = user if user.is_a?(User) # why not UnauthenticatedUser?
+      user
+    end
   end
 
   def load_user(id)
@@ -74,6 +78,8 @@ module AuthenticatedSystem
       self.current_user ||= User.authenticate(username, passwd) || UnauthenticatedUser.new if username && passwd
       User.current = current_user
       logged_in? && authorized? ? true : access_denied
+    rescue ErrorMessage => exc
+      render_error(exc)
     end
     
     # Redirect as appropriate when an access request fails.
