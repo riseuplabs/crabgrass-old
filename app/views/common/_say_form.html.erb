@@ -5,7 +5,7 @@
 
   url = '' if url.nil?
   submit = 'submit' if submit.nil?
-  text = "" if text.nil?
+  text = params[:post].try[:body] if text.nil?
   recipient = false if recipient.nil?
   eat_enter = "return(!enterPressed(event));"
 %>
@@ -18,7 +18,7 @@
   <td>&nbsp;</td>
   <td>
     <div class="speech">
-      <%= text_field_tag 'id', '', :id => 'recipient_name', :style => 'width:100%', :onkeypress => eat_enter, :class => 'textinput' %>
+      <%= text_field_tag 'id', params[:id], :id => 'recipient_name', :style => 'width:100%', :onkeypress => eat_enter, :class => 'textinput' %>
     </div>
     <%= autocomplete_users_tag('recipient_name') %>
   </td>
