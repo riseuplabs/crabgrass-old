@@ -231,15 +231,16 @@ module PathFinder::Mysql::BuilderFilters
 
   def filter_most(what, num, unit)
     unit=unit.downcase.pluralize
+    name= what=="edits" ? "contributors" : what
     num.gsub!(/[^\d]+/, ' ')
     if unit=="days"
       @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
       @order << "SUM(dailies.#{what}) DESC"
-      @select = "pages.*, SUM(dailies.#{what}) AS #{what}_count"
+      @select = "pages.*, SUM(dailies.#{what}) AS #{name}_count"
     elsif unit=="hours"
       @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
       @order << "SUM(hourlies.#{what}) DESC"
-      @select = "pages.*, SUM(hourlies.#{what}) AS #{what}_count"
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
     else
       return
     end
@@ -250,7 +251,7 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_edits(num, unit)
-    filter_most("views", num, unit)
+    filter_most("edits", num, unit)
   end
 
   def filter_most_stars(num, unit)
