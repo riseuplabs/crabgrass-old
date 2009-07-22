@@ -219,7 +219,7 @@ class Activity < ActiveRecord::Base
   # often, stuff that we want to report activity on has already been 
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    name = self.send("#{thing}_name") || self.send(thing).if_not_nil.name || "unknown"[:unknown]
+    name = self.send("#{thing}_name") || self.send(thing).try.name || "unknown"[:unknown]
     '<span class="%s">%s</span>' % [type, name]
   end
 

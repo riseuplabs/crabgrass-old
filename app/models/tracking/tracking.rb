@@ -5,7 +5,7 @@ class Tracking < ActiveRecord::Base
   belongs_to :group
   belongs_to :user
 
-  @@seen_users=Set.new
+  @seen_users=Set.new
 
   # Tracks the actions quickly. Following things can be tracked:
   # :user - user that was doing anything
@@ -21,17 +21,17 @@ class Tracking < ActiveRecord::Base
   end
 
   def self.saw_user(user_id)
-    @@seen_users << user_id
+    @seen_users << user_id
     true
   end
   ##
   ## Sets last_seen for users that were active in the last 5 minutes.
   ##
   def self.update_last_seen_users
-    connection.execute("UPDATE users,#{table_name}
+    connection.execute("UPDATE users
                        SET users.last_seen_at = UTC_TIMESTAMP() - INTERVAL 1 MINUTE
-                       WHERE users.id IN (#{@@seen_users.to_a.join(', ')})")
-    @@seen_users.clear
+                       WHERE users.id IN (#{@seen_users.to_a.join(', ')})")
+    @seen_users.clear
     true
   end
 
@@ -43,23 +43,31 @@ class Tracking < ActiveRecord::Base
   ##
 
   def self.process
+    return if (Tracking.count == 0)
     begin
       connection.execute("LOCK TABLES #{table_name} WRITE, hourlies WRITE, memberships WRITE, user_participations WRITE")
-      connection.execute("DELETE QUICK FROM hourlies WHERE created_at < UTC_TIMESTAMP() - INTERVAL 1 DAY")
+      unprocessed_since=Tracking.find(:first, :order => :tracked_at).tracked_at
+      # ups - almost 20 lines of sql - this definitly needs a rewrite:
+      # TODO: include edit counts in normal trackings to avoid the LEFT JOIN --azul
       connection.execute("INSERT INTO hourlies
                            (page_id, views, stars, edits, created_at)
                            SELECT trackings.page_id, trackings.view_count, trackings.star_count,
-                                  participations.contributor_count, UTC_TIMESTAMP()
+                                  participations.contributor_count,
+                                  TIMESTAMPADD(HOUR, trackings.hour + 1, trackings.date)
                            FROM (
-                             SELECT page_id, SUM(views) as view_count, SUM(stars) as star_count
-                             FROM #{table_name} GROUP BY page_id
+                             SELECT page_id, SUM(views) as view_count, SUM(stars) as star_count,
+                               DATE(tracked_at) as date, HOUR(tracked_at) as hour
+                             FROM #{table_name} GROUP BY page_id, date, hour
                            ) as trackings LEFT JOIN(
-                             SELECT page_id, COUNT(*) as contributor_count
+                             SELECT page_id, COUNT(*) as contributor_count,
+                               DATE(changed_at) as date, HOUR(changed_at) as hour
                              FROM user_participations
-                             WHERE (user_participations.changed_at > UTC_TIMESTAMP() - INTERVAL 1 HOUR)
-                             GROUP BY page_id
+                             WHERE (user_participations.changed_at > '#{unprocessed_since.to_s(:db)}')
+                             GROUP BY page_id, date, hour
                            ) as participations
-                           ON trackings.page_id = participations.page_id
+                           ON trackings.page_id = participations.page_id AND
+                             trackings.date = participations.date AND
+                             trackings.hour = participations.hour
                          ")
 
       connection.execute("CREATE TEMPORARY TABLE group_view_counts
@@ -79,7 +87,7 @@ class Tracking < ActiveRecord::Base
     # do this after unlocking tables just to try to minimize the amount of time tables are locked…
     connection.execute("UPDATE page_terms,hourlies
                        SET page_terms.views_count = page_terms.views_count + hourlies.views
-                       WHERE page_terms.page_id=hourlies.page_id AND hourlies.created_at > UTC_TIMESTAMP() - INTERVAL 30 MINUTE")
+                       WHERE page_terms.page_id=hourlies.page_id AND hourlies.created_at > '#{unprocessed_since.to_s(:db)}' + INTERVAL 30 MINUTE")
     connection.execute("UPDATE page_terms,pages
                        SET pages.views_count = page_terms.views_count
                        WHERE pages.id=page_terms.page_id")
