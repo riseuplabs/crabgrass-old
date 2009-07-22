@@ -28,7 +28,7 @@ Modalbox.Methods = {
 		slideUpDuration: .5, // Default Modalbox hiding slide up effect in seconds
 		resizeDuration: .25, // Default resize duration seconds
 		inactiveFade: true, // Fades MB window on inactive state
-		transitions: true, // Toggles transition effects. Transitions are enabled by default
+		transitions: false, // Toggles transition effects. Transitions are disabled by default
 		loadingString: "Please wait. Loading...", // Default loading string message
 		closeString: "Close window", // Default title attribute for close window link
 		closeValue: "&times;", // Default string for close link in the header
@@ -160,9 +160,9 @@ Modalbox.Methods = {
 					}.bind(this)
 			});
 		} else {
-			$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
-			$(this.MBwindow).show();
-			this._setPosition(); 
+			//$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
+			//$(this.MBwindow).show();
+			//this._setPosition(); 
 			this.loadContent();
 		}
 		this._setWidthAndPosition = this._setWidthAndPosition.bindAsEventListener(this);
@@ -244,14 +244,9 @@ Modalbox.Methods = {
 					}.bind(this));
 				} else // URL given as a parameter. We'll request it via Ajax
 					new Ajax.Request( this.content, { method: this.options.method.toLowerCase(), parameters: this.options.params, 
-						onSuccess: function(transport) {
-							var response = new String(transport.responseText);
-							this._insertContent(transport.responseText.stripScripts(), function(){
-								response.extractScripts().map(function(script) { 
-									return eval(script.replace("<!--", "").replace("// -->", ""));
-								}.bind(window));
-							});
-						}.bind(this),
+						onSuccess: function(transport) {this._loadContentSuccess(transport)}.bind(this),
+//						onSuccess: this._loadContentSuccess,
+            onComplete: function(transport) {this._loadContentComplete(transport)}.bind(this),
 						onException: function(instance, exception){
 							Modalbox.hide();
 							throw('Modalbox Loading Error: ' + exception);
@@ -266,6 +261,23 @@ Modalbox.Methods = {
 			}
 		}
 	},
+
+  _loadContentSuccess: function(transport) {
+		$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
+		$(this.MBwindow).show();
+		this._setPosition();
+
+		var response = new String(transport.responseText);
+		this._insertContent(transport.responseText.stripScripts(), function(){
+			response.extractScripts().map(function(script) { 
+				return eval(script.replace("<!--", "").replace("// -->", ""));
+			}.bind(window));
+		});
+  },
+
+  _loadContentComplete: function(transport) {
+		(this.options.onComplete || Prototype.emptyFunction)();
+  },
 	
 	_insertContent: function(content, callback){
 		$(this.MBcontent).hide().update("");
