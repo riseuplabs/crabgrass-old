@@ -98,9 +98,9 @@ class RootController < ApplicationController
       when 'most_views' then
         paginate('descending','views_count')
       when 'most_edits' then
-        paginate('descending', 'contributors_count') #TODO: contributors count does not seem to get updated
+        paginate('descending', 'contributors_count', 'contributed') #TODO: contributors count does not seem to get updated
       when 'most_stars' then
-        paginate('descending','stars_count')
+        paginate('descending', 'stars_count', 'starred')
       end
     end
   end
