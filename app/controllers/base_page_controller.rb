@@ -10,7 +10,6 @@ class BasePageController < ApplicationController
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete' # for autocomplete
   permissions 'base_page', 'posts'
   helper 'groups', 'autocomplete'
 
