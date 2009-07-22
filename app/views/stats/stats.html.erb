@@ -16,6 +16,11 @@
     t.url url_for(:action => 'year')
     t.selected action?(:year)
   end
+  f.tab do |t|
+    t.label 'All Time'
+    t.url url_for(:action => 'all_time')
+    t.selected action?(:all_time)
+  end
 end %>
 
 <% partials = [] %>

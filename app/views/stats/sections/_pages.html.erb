@@ -1,7 +1,6 @@
 <%
    @order = 20
    new_pages = pages_created
-   new_pages_active = pages_created(:updated => true)
    updated_pages = pages_updated
 %>
 
@@ -12,13 +11,12 @@
 <%= time_series_chart(
   {:label => 'new pages', :data => new_pages},
   {:label => 'modified pages', :data => updated_pages}
-#  {:label => 'new pages recently modified', :data => new_pages_active}
 )%>
 
-<%= subsection 'Total' %>
+<%= subsection 'Totals' %>
 
 <%= time_series_chart(
-  {:label => 'total pages', :data => cumulative(new_pages)},
-  {:label => 'total pages recently modified', :data => cumulative(new_pages_active)}
+  {:label => 'total new pages', :data => cumulative(new_pages)},
+  {:label => 'total modified pages', :data => cumulative(updated_pages)}
 )%>
 

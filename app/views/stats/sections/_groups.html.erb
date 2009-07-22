@@ -19,3 +19,18 @@
   {:label => 'all groups', :data => cumulative(groups)},
   {:label => 'active groups', :data => cumulative(active)}
 )%>
+
+<%= subsection 'Group Size Frequency' %>
+
+<%= chart(
+  {:data => group_size_frequency, :label => 'number of groups by size of group'},
+  {
+    :xaxis => {:tickDecimals => 0},
+    :yaxis => {:tickDecimals => 0},
+    :legend => {:position => 'ne'},
+    :mouse => {
+      :track => true,
+      :trackFormatter => json_function('function(obj){return Math.floor(obj.y) + " groups have " + Math.floor(obj.x) + " members";}')
+    }
+  }
+) %>

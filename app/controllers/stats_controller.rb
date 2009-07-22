@@ -7,13 +7,13 @@ class StatsController < ApplicationController
   end
 
   def week
-    @step = :quarter_day
+    @step = :hour
     @start = Time.now.utc - 1.week
     render :template => 'stats/stats'
   end
   
   def month
-    @step = :day
+    @step = :quarter_day
     @start = Time.now.utc - 1.month
     render :template => 'stats/stats'
   end
@@ -21,6 +21,12 @@ class StatsController < ApplicationController
   def year
     @step = :week
     @start = Time.now.utc - 1.year
+    render :template => 'stats/stats'
+  end
+
+  def all_time
+    @step = :month
+    @start = 0
     render :template => 'stats/stats'
   end
 
@@ -41,25 +47,24 @@ class StatsController < ApplicationController
   
   protected
   
-  def stats_since(time)
-    @pages_created = Page.count 'id', :conditions => ['created_at > ? AND flow IS NULL', time]
-    @page_creators = Page.count_by_sql ["SELECT count(DISTINCT created_by_id) FROM pages WHERE created_at > ? AND FLOW IS NULL", time]
-    @pages_updated = Page.count 'id', :conditions => ['updated_at > ? AND flow IS NULL', time]
-    @page_updaters = Page.count_by_sql ["SELECT count(DISTINCT updated_by_id) FROM pages WHERE updated_at > ? AND FLOW IS NULL", time]
-    @wikis_updated = Wiki.count 'id', :conditions => ['updated_at > ?', time]
-
-    @users_created = User.on(current_site).count 'id', :conditions => ['created_at > ?', time]
-    @total_users   = User.on(current_site).count
-    @users_logged_in = User.on(current_site).count 'id', :conditions => ['last_seen_at > ?', time]
-    
-    @total_groups = Group.count
-    @groups_created = Group.count 'id', :conditions => ['created_at > ?', time]
-    counts_per_group = Membership.connection.select_values('SELECT count(id) FROM memberships GROUP BY group_id')
-    buckets = {}
-    counts_per_group.each{|i| i=i.to_i; buckets[i] ? buckets[i] += 1 : buckets[i] = 1 } 
-    puts buckets.inspect
-    @membership_counts = buckets.sort{|a,b| b <=> a}
-  end
+#  def stats_since(time)
+#    @pages_created = Page.count 'id', :conditions => ['created_at > ? AND flow IS NULL', time]
+#    @page_creators = Page.count_by_sql ["SELECT count(DISTINCT created_by_id) FROM pages WHERE created_at > ? AND FLOW IS NULL", time]
+#    @pages_updated = Page.count 'id', :conditions => ['updated_at > ? AND flow IS NULL', time]
+#    @page_updaters = Page.count_by_sql ["SELECT count(DISTINCT updated_by_id) FROM pages WHERE updated_at > ? AND FLOW IS NULL", time]
+#    @wikis_updated = Wiki.count 'id', :conditions => ['updated_at > ?', time]
+#    @users_created = User.on(current_site).count 'id', :conditions => ['created_at > ?', time]
+#    @total_users   = User.on(current_site).count
+#    @users_logged_in = User.on(current_site).count 'id', :conditions => ['last_seen_at > ?', time]
+#    
+#    @total_groups = Group.count
+#    @groups_created = Group.count 'id', :conditions => ['created_at > ?', time]
+#    counts_per_group = Membership.connection.select_values('SELECT count(id) FROM memberships GROUP BY group_id')
+#    buckets = {}
+#    counts_per_group.each{|i| i=i.to_i; buckets[i] ? buckets[i] += 1 : buckets[i] = 1 } 
+#    puts buckets.inspect
+#    @membership_counts = buckets.sort{|a,b| b <=> a}
+#  end
   
   def current_stats
     @cur_users_logged_in = User.on(current_site).count 'id', :conditions => ['last_seen_at > ?', 15.minutes.ago]
@@ -86,10 +91,11 @@ class StatsController < ApplicationController
     ].compact.join(' AND ').insert(0, "WHERE ")
     now = Time.now.utc.to_i
     time_frame = case step
+      when :hour:  1.hour.seconds
       when :quarter_day: 6.hours.seconds
       when :day:   1.day.seconds
-      when :month: 1.month.seconds
       when :week:  1.week.seconds
+      when :month: 1.month.seconds
     end
     model.connection.select_rows("
        SELECT UNIX_TIMESTAMP(#{table}.#{field}), count(*)
@@ -137,6 +143,17 @@ class StatsController < ApplicationController
   end
   helper_method :groups_created
 
+  def group_size_frequency()
+    membership_counts = {}  # group size => frequency
+    Membership.connection.select_values('SELECT count(id) FROM memberships GROUP BY group_id').each do |membership_count|
+      membership_count = membership_count.to_i
+      membership_counts[membership_count] ||= 0
+      membership_counts[membership_count] += 1
+    end
+    return membership_counts.to_a.sort{|a,b| a[0] <=> b[0] }
+  end
+  helper_method :group_size_frequency
+
   def pages_created(options={})
     where = if options[:updated]
       quote_sql('updated_at > ?', Time.now.utc - 2.week)
@@ -148,7 +165,10 @@ class StatsController < ApplicationController
   helper_method :pages_created
 
   def pages_updated()
-    time_series_data(:model => Page, :field => :updated_at)
+    time_series_data(
+      :model => Page, :field => :updated_at,
+      :where => 'updated_at > (created_at + INTERVAL 1 DAY)'
+    )
   end
   helper_method :pages_updated
 
