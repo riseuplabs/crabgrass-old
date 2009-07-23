@@ -4,6 +4,8 @@ table.members td {padding: 12px;}
 
 <%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
 
+<%= invite_link %>
+
 <% if current_site.tracking %>
 <b>Visits:</b>
 <%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month, 

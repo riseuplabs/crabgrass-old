@@ -3,7 +3,7 @@
 
 class Groups::MembershipsController < Groups::BaseController
 
-  permissions 'groups/memberships', 'requests' 
+  permissions 'groups/memberships', 'groups/requests' 
   before_filter :fetch_group, :login_required
   verify :method => :post, :only => [:join]
 
