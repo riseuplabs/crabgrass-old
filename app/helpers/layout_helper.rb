@@ -110,7 +110,7 @@ module LayoutHelper
   end
 
   def language_direction
-    @language_direction ||= if LANGUAGES[session[:language_code]].safe_send(:rtl)
+    @language_direction ||= if LANGUAGES[session[:language_code]].try.rtl
       "rtl"
     else
       "ltr"

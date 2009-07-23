@@ -54,7 +54,7 @@ class Discussion < ActiveRecord::Base
   #end
 
   def increment_unread_for(user)
-    relationships.for_user(user).if_not_nil.increment!(:unread_count)
+    relationships.for_user(user).try.increment!(:unread_count)
   end
 
   ## 
