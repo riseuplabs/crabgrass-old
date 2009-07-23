@@ -120,28 +120,13 @@ class Array
     compact.join(delimiter)
   end
 
-=begin
-  # returns a copy of the hash with symbols
-  def symbolize
-    self.map {|i| 
-      if(!i.nil? && P(i.respond_to?(m=:to_sym) || i.respond_to?(m=:symbolize)))
-        m == :to_sym ? i.to_sym : i.symbolize
-      else
-        i
-      end                 
-    }
-  end
-=end  
 end
 
 
 class Hash
-  # returns a copy of the hash,
-  # limited to the specified keys
+  # returns a copy of the hash, limited to the specified keys
   def allow(*keys)
-    if keys.first.is_a? Array
-      keys = keys.first
-    end
+    keys = keys.first if keys.first.is_a? Array
     hsh = {}
     keys.each do |key|
       value = self[key] || self[key.to_s] || self[key.to_sym]
@@ -149,17 +134,17 @@ class Hash
     end
     hsh
   end
-  
-=begin  
-  # returns a copy of the hash with symbols
-  def symbolize
-    self.keys.inject({})  { |m, k|
-      m[k.kind_of?(Hash) ? k.symbolize : (k.respond_to?(:to_sym) ? k.to_sym : k)] = ((v = v.to_sym    rescue nil) ||
-                                                                                     (v = v.symbolize rescue nil) || v)
-      m
-    }
-  end 
-=end  
+
+  # returns a copy of the hash, without any of the specified keys
+  def forbid(*keys)
+    keys = keys.first if keys.first.is_a? Array
+    hsh = self.clone
+    keys.each do |key|
+      hsh.delete(key); hsh.delete(key.to_s); hsh.delete(key.to_sym)
+    end
+    hsh
+  end
+
 end
 
 class Symbol

@@ -6,13 +6,38 @@ All rights reserved.
  
 VERSION 1.6.1
 Last Modified: 04/13/2008
+
+MODIFICATIONS FOR CRABGRASS:
+
+(1) commented out transitions (this will make the file smaller when minified)
+(2) added some ajax request event listeners
+(3) added option showAfterLoading
+
+THE EVENT LISTENERS:
+
+* beforeLoad — fires right before loading contents into the ModalBox. If the callback function returns false, content loading will skipped. This can be used for redirecting user to another MB-page for authorization purposes for example.
+* afterLoad — fires after loading content into the ModalBox (i.e. after showing or updating existing window).
+* beforeHide — fires right before removing elements from the DOM. Might be useful to get form values before hiding modalbox.
+* afterHide — fires after hiding ModalBox from the screen.
+* afterResize — fires after calling resize method.
+* onShow — fires on first appearing of ModalBox before the contents are being loaded.
+* onUpdate — fires on updating the content of ModalBox (on call of Modalbox.show method from active ModalBox instance).
+
+New event listeners added for crabgrass:
+
+* onComplete -- called when ajax request finishes
+* onLoading  -- called when ajax request starts loading
+* onSuccess  -- called when ajax request returns success
+
 */
+
+
 
 if (!window.Modalbox)
 	var Modalbox = new Object();
 
 Modalbox.Methods = {
-	overrideAlert: false, // Override standard browser alert message with ModalBox
+	overrideAlert: true, // Override standard browser alert message with ModalBox
 	focusableElements: new Array,
 	currFocused: 0,
 	initialized: false,
@@ -28,14 +53,18 @@ Modalbox.Methods = {
 		slideUpDuration: .5, // Default Modalbox hiding slide up effect in seconds
 		resizeDuration: .25, // Default resize duration seconds
 		inactiveFade: true, // Fades MB window on inactive state
-		transitions: false, // Toggles transition effects. Transitions are disabled by default
+//		transitions: true, // Toggles transition effects. Transitions are enabled by default
 		loadingString: "Please wait. Loading...", // Default loading string message
 		closeString: "Close window", // Default title attribute for close window link
 		closeValue: "&times;", // Default string for close link in the header
 		params: {},
 		method: 'get', // Default Ajax request method
 		autoFocusing: true, // Toggles auto-focusing for form elements. Disable for long text pages.
-		aspnet: false // Should be use then using with ASP.NET costrols. Then true Modalbox window will be injected into the first form element.
+		aspnet: false, // Should be use then using with ASP.NET costrols. Then true Modalbox window will be injected into the first form element.
+// begin hack
+		showAfterLoading: false // if true, the box does not appear until the ajax request returns 
+                                // with the contents of the box. has no effect on non-ajax popups
+// end hack
 	},
 	_options: new Object,
 	
@@ -114,12 +143,12 @@ Modalbox.Methods = {
 			if(options && typeof options.element != 'function') Object.extend(this.options, options); 
 			// Passing beforeHide callback
 			this.event("beforeHide");
-			if(this.options.transitions)
-				Effect.SlideUp(this.MBwindow, { duration: this.options.slideUpDuration, transition: Effect.Transitions.sinoidal, afterFinish: this._deinit.bind(this) } );
-			else {
+//			if(this.options.transitions)
+//				Effect.SlideUp(this.MBwindow, { duration: this.options.slideUpDuration, transition: Effect.Transitions.sinoidal, afterFinish: this._deinit.bind(this) } );
+//			else {
 				$(this.MBwindow).hide();
 				this._deinit();
-			}
+//			}
 		} else throw("Modalbox is not initialized.");
 	},
 	
@@ -142,27 +171,31 @@ Modalbox.Methods = {
 		}
 		this._setWidth();
 		this._setPosition();
-		if(this.options.transitions) {
-			$(this.MBoverlay).setStyle({opacity: 0});
-			new Effect.Fade(this.MBoverlay, {
-					from: 0, 
-					to: this.options.overlayOpacity, 
-					duration: this.options.overlayDuration, 
-					afterFinish: function() {
-						new Effect.SlideDown(this.MBwindow, {
-							duration: this.options.slideDownDuration, 
-							transition: Effect.Transitions.sinoidal, 
-							afterFinish: function(){ 
-								this._setPosition(); 
-								this.loadContent();
-							}.bind(this)
-						});
-					}.bind(this)
-			});
+		if(!this.options.showAfterLoading) {
+	//		if(this.options.transitions) {
+	//			$(this.MBoverlay).setStyle({opacity: 0});
+	//			new Effect.Fade(this.MBoverlay, {
+	//					from: 0, 
+	//					to: this.options.overlayOpacity, 
+	//					duration: this.options.overlayDuration, 
+	//					afterFinish: function() {
+	//						new Effect.SlideDown(this.MBwindow, {
+	//							duration: this.options.slideDownDuration, 
+	//							transition: Effect.Transitions.sinoidal, 
+	//							afterFinish: function(){ 
+	//								this._setPosition(); 
+	//								this.loadContent();
+	//							}.bind(this)
+	//						});
+	//					}.bind(this)
+	//			});
+	//		} else {
+				$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
+				$(this.MBwindow).show();
+				this._setPosition(); 
+				this.loadContent();
+	//		}
 		} else {
-			//$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
-			//$(this.MBwindow).show();
-			//this._setPosition(); 
 			this.loadContent();
 		}
 		this._setWidthAndPosition = this._setWidthAndPosition.bindAsEventListener(this);
@@ -177,29 +210,28 @@ Modalbox.Methods = {
 		var cHeight = $(this.MBcontent).getHeight();
 		var newHeight = ((wHeight - hHeight + byHeight) < cHeight) ? (cHeight + hHeight) : (wHeight + byHeight);
 		var newWidth = wWidth + byWidth;
-        this.options.width = newWidth;
+		this.options.width = newWidth;
 		if(options) this.setOptions(options); // Passing callbacks
-		if(this.options.transitions) {
-			new Effect.Morph(this.MBwindow, {
-				style: "width:" + newWidth + "px; height:" + newHeight + "px; left:" + ((oWidth - newWidth)/2) + "px",
-				duration: this.options.resizeDuration, 
-				beforeStart: function(fx){
-					fx.element.setStyle({overflow:"hidden"}); // Fix for MSIE 6 to resize correctly
-				},
-				afterFinish: function(fx) {
-					fx.element.setStyle({overflow:"visible"});
-					this.event("_afterResize"); // Passing internal callback
-					this.event("afterResize"); // Passing callback
-				}.bind(this)
-			});
-		} else {
+//		if(this.options.transitions) {
+//			new Effect.Morph(this.MBwindow, {
+//				style: "width:" + newWidth + "px; height:" + newHeight + "px; left:" + ((oWidth - newWidth)/2) + "px",
+//				duration: this.options.resizeDuration, 
+//				beforeStart: function(fx){
+//					fx.element.setStyle({overflow:"hidden"}); // Fix for MSIE 6 to resize correctly
+//				},
+//				afterFinish: function(fx) {
+//					fx.element.setStyle({overflow:"visible"});
+//					this.event("_afterResize"); // Passing internal callback
+//					this.event("afterResize"); // Passing callback
+//				}.bind(this)
+//			});
+//		} else {
 			this.MBwindow.setStyle({width: newWidth + "px", height: newHeight + "px"});
 			setTimeout(function() {
 				this.event("_afterResize"); // Passing internal callback
 				this.event("afterResize"); // Passing callback
 			}.bind(this), 1);
-		}
-		
+//		}		
 	},
 	
 	resizeToContent: function(options){
@@ -245,8 +277,10 @@ Modalbox.Methods = {
 				} else // URL given as a parameter. We'll request it via Ajax
 					new Ajax.Request( this.content, { method: this.options.method.toLowerCase(), parameters: this.options.params, 
 						onSuccess: function(transport) {this._loadContentSuccess(transport)}.bind(this),
-//						onSuccess: this._loadContentSuccess,
-            onComplete: function(transport) {this._loadContentComplete(transport)}.bind(this),
+// begin hack
+						onComplete: function(transport) {this.event('onComplete')}.bind(this),
+						onLoading: function(transport) {this.event('onLoading')}.bind(this),
+// end hack
 						onException: function(instance, exception){
 							Modalbox.hide();
 							throw('Modalbox Loading Error: ' + exception);
@@ -263,9 +297,14 @@ Modalbox.Methods = {
 	},
 
   _loadContentSuccess: function(transport) {
-		$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
-		$(this.MBwindow).show();
-		this._setPosition();
+// begin hack
+		this.event('onSuccess')
+		if (this.options.showAfterLoading) {
+			$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
+			$(this.MBwindow).show();
+			this._setPosition();
+		}
+// end hack
 
 		var response = new String(transport.responseText);
 		this._insertContent(transport.responseText.stripScripts(), function(){
@@ -273,11 +312,7 @@ Modalbox.Methods = {
 				return eval(script.replace("<!--", "").replace("// -->", ""));
 			}.bind(window));
 		});
-  },
-
-  _loadContentComplete: function(transport) {
-		(this.options.onComplete || Prototype.emptyFunction)();
-  },
+	},
 	
 	_insertContent: function(content, callback){
 		$(this.MBcontent).hide().update("");
@@ -328,8 +363,8 @@ Modalbox.Methods = {
 		if(this.options.overlayClose)
 			$(this.MBoverlay).observe("click", this.hideObserver);
 		$(this.MBclose).show();
-		if(this.options.transitions && this.options.inactiveFade)
-			new Effect.Appear(this.MBwindow, {duration: this.options.slideUpDuration});
+//		if(this.options.transitions && this.options.inactiveFade)
+//			new Effect.Appear(this.MBwindow, {duration: this.options.slideUpDuration});
 	},
 	
 	deactivate: function(options) {
@@ -339,8 +374,8 @@ Modalbox.Methods = {
 		if(this.options.overlayClose)
 			$(this.MBoverlay).stopObserving("click", this.hideObserver);
 		$(this.MBclose).hide();
-		if(this.options.transitions && this.options.inactiveFade)
-			new Effect.Fade(this.MBwindow, {duration: this.options.slideUpDuration, to: .75});
+//		if(this.options.transitions && this.options.inactiveFade)
+//			new Effect.Fade(this.MBwindow, {duration: this.options.slideUpDuration, to: .75});
 	},
 	
 	_initObservers: function(){
@@ -441,12 +476,12 @@ Modalbox.Methods = {
 	{	
 		this._removeObservers();
 		Event.stopObserving(window, "resize", this._setWidthAndPosition );
-		if(this.options.transitions) {
-			Effect.toggle(this.MBoverlay, 'appear', {duration: this.options.overlayDuration, afterFinish: this._removeElements.bind(this) });
-		} else {
+//		if(this.options.transitions) {
+//			Effect.toggle(this.MBoverlay, 'appear', {duration: this.options.overlayDuration, afterFinish: this._removeElements.bind(this) });
+//		} else {
 			this.MBoverlay.hide();
 			this._removeElements();
-		}
+//		}
 		$(this.MBcontent).setStyle({overflow: '', height: ''});
 	},
 	
@@ -492,10 +527,12 @@ Modalbox.Methods = {
 			theTop = document.body.scrollTop;
 		return theTop;
 	},
+
 	_prepareIE: function(height, overflow){
 		$$('html, body').invoke('setStyle', {width: height, height: height, overflow: overflow}); // IE requires width and height set to 100% and overflow hidden
 		$$("select").invoke('setStyle', {'visibility': overflow}); // Toggle visibility for all selects in the common document
 	},
+
 	event: function(eventName) {
 		if(this.options[eventName]) {
 			var returnValue = this.options[eventName](); // Executing callback

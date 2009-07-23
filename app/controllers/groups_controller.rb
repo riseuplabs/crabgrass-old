@@ -15,9 +15,6 @@ class GroupsController < Groups::BaseController
     stylesheet 'tasks', :action => :tasks
     javascript :extra, :action => :tasks
   ## end task list cruft
-
-  javascript 'effects', 'controls', 'builder', 'modalbox'
-  stylesheet 'modalbox'
   
   include Groups::Search
 

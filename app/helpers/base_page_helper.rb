@@ -190,15 +190,15 @@ module BasePageHelper
   # for the popup to display in the right spot, we actually offset it by
   # top: -32px, right: 43px from the natural position of the clicked element.
   #
-  def popup_holder_style
-    page_width, page_height = params[:page].split('x')
-    object_x, object_y      = params[:position].split('x')
-    right = page_width.to_i - object_x.to_i
-    top   = object_y.to_i
-    right += 17
-    top -= 32
-    "display: block; right: #{right}px; top: #{top}px;"
-  end
+#  def popup_holder_style
+#    page_width, page_height = params[:page].split('x')
+#    object_x, object_y      = params[:position].split('x')
+#    right = page_width.to_i - object_x.to_i
+#    top   = object_y.to_i
+#    right += 17
+#    top -= 32
+#    "display: block; right: #{right}px; top: #{top}px;"
+#  end
 
   # creates a <a> tag with an ajax link to show a sidebar popup
   # and change the icon of the enclosing <li> to be spinning
@@ -209,26 +209,16 @@ module BasePageHelper
   # optional:
   #  :controller -- controller to call show_popup on
   #
-  # NOTE: before you change the wacky way this works, be warned of this...
-  # The right column has overflow:hidden set. This means that the popup
-  # cannot be in the right column, or when it appears the window will not
-  # get bigger to show the whole popup, but it will just get clipped. 
-  # overflow:hidden is required for holygrail layout to work in ie.
-  # hence, absolutePositionParams()...  :(
-  #
-  # NOTE #2: this is no longer how the right column works. so we should not
-  # have to use absolutely positioned popups anymore.
-  #
   def show_popup_link(options)
     options[:controller] ||= options[:name]
     popup_url = url_for({
-        :controller => "base_page/#{options[:controller]}",
+        :controller => "base_page/#{options.delete(:controller)}",
         :action => 'show',
         :popup => true,
         :page_id => @page.id,
-        :name => options[:name]
+        :name => options.delete(:name)
        })
-    link_to_modalbox(popup_url, options[:label])
+    link_to_modal(options.delete(:label), popup_url, options)
   end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked

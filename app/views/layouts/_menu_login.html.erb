@@ -1,16 +1,30 @@
-<%
-  popup_url = url_for( :controller => 'account', :action => 'show_login_popup')
-%>
 <div class="account_links">
 <% if logged_in? -%>
-  <%= link_to 'Account'[:menu_link_account], me_url(:action => 'edit') %>
-  &bull;
+
+  <%= link_to 'Account'[:menu_link_account], me_url(:action => 'edit') %> &bull;
   <%= link_to "Logout"[:menu_link_logout] + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
   <%= call_hook :top_right_links %>
+
 <% elsif !@login_form_already_rendered -%>
+
+  <%
+    strings = {
+      :login           => "Login"[:login],
+      :username        => "Username"[:username],
+      :password        => "Password"[:password],
+      :forgot_password => 'forgot password'[:forgot_password_link],
+      :create_account  => 'create account'[:signup_link],
+      :redirect        => params[:redirect] || request.request_uri,
+      :token           => form_authenticity_token
+    } 
+    options = {
+      :may_signup => false #may_signup?
+    }
+  %>
   <span>
+    <%= link_to_function("Login"[:login], "loginDialog(#{strings.to_json}, #{options.to_json})") %>
+    <%# javascript_tag "loginDialog(#{strings.to_json}, #{options.to_json})" %>
+  </span>
  
-<%= link_to_modalbox(popup_url, 'Login'[:login], {:redirect => params[:redirect] || request.request_uri}) %>
-</span>  
 <% end -%>
 </div>

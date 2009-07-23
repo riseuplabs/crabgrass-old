@@ -25,6 +25,8 @@
   :position relative
   :background-color #EFEFEF
   :height 100%
+//  :border 2px solid black
+//  :border-top 0
 
 #MB_header
   :margin 0
@@ -36,6 +38,8 @@
 
 #MB_content
   :overflow auto
+  :padding 1em
+  :border-top 1px solid #F9F9F9
 
 #MB_caption
   :font bold 85% "Lucida Grande", Arial, sans-serif
@@ -52,28 +56,23 @@
   :padding 2px 3px
   :font-weight bold
   :text-decoration none 
-  :font-size 13px
+  :font-size 26px
+  :color #666
 
 #MB_close:hover
   :background transparent
+  :color #000
 
+//
+// what is displayed before any content for the box is loaded
+//
 #MB_loading
-  :padding 1.5em
-  :text-indent -10000px
-  :background transparent url(spinner.gif) 50% 0 no-repeat
+  :background white url(/images/spinner-big.gif) 50% 50% no-repeat
+  :color white
+  :height 100px
 
 #MB_window
   :background-color #EFEFEF
   :color #000
 
-#MB_content 
-  :border-top 1px solid #F9F9F9
 
-#MB_header
-  :border-bottom 1px solid #CCC
-
-#MB_close
-  :color #333
-
-#MB_close:hover 
-  :color #000

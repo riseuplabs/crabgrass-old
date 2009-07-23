@@ -181,9 +181,9 @@ include_full_checkbox: include link to full image
 ## ACCOUNT
 ##
 
-signup_link: "Need a new account?"
+signup_link: "New Account"
 signup_email_info: "Optional: used if you forget your password"
-forgot_password_link: "I forgot my password"
+forgot_password_link: "Forgot Password"
 signup_info: Choose your login name and your password then click "{sign_up}"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"

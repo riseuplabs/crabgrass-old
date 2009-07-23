@@ -186,3 +186,25 @@ function pollHash() {
 document.observe("dom:loaded", function() {
   if (onHashChanged) {setInterval("pollHash()", 100)}
 });
+
+//
+// COMMON MODAL DIALOGS
+//
+
+function loginDialog(txt,options) {
+  var form = '' +
+  '<form class="login_dialog" method="post" action="/account/login">' +
+  '  <input type="hidden" value="#{token}" name="authenticity_token" id="redirect"/>' +
+  '  <input type="hidden" value="#{redirect}" name="redirect" id="redirect"/>' +
+  '  <dl><dt>#{username}</dt><dd><input type="text" name="login" id="login"/></dd>' +
+  '  <dt>#{password}</dt><dd><input type="password" name="password" id="password"/></dd></dl>' +
+  '  <input type="submit" value="#{login}"/>' +
+  '  <span class="small">'
+  if (options['may_signup'])
+     form += '<a href="/account/signup">#{create_account}</a> | '
+  form += '<a href="/account/forgot_password">#{forgot_password}</a></span>' +
+  '</form>'
+  form = form.interpolate(txt);
+  Modalbox.show(form, {title:txt.login, width:350});
+}
+

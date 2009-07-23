@@ -121,11 +121,15 @@ module LayoutHelper
   ## JAVASCRIPT
   ##
 
-  # core js that we always need. controls.js is required for autocomplete.js
-  MAIN_JS = ['prototype', 'application', 'modalbox', 'controls', 'autocomplete']
+  # Core js that we always need.
+  # Currently, effects.js and controls.js are required for autocomplete.js.
+  # However, autocomplete uses very little of the controls.js code, which in turn
+  # should not need the effects.js at all. So, with a little effort, effects and
+  # controls could be moved to extra.
+  MAIN_JS = ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']
 
-  # extra js that we might sometimes need (mostly scriptaculous)
-  EXTRA_JS = ['effects', 'dragdrop', 'builder', 'slider']
+  # extra js that we might sometimes need
+  EXTRA_JS = ['dragdrop', 'builder', 'slider']
   
   # includes the correct javascript tags for the current request.
   # if the special symbol :extra has been specified as a required js file,
