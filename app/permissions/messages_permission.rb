@@ -9,7 +9,7 @@ module MessagesPermission
   # may current_user post to user's public message wall?
   def may_create_messages?(user=@user)
     logged_in? and (
-      (user == current_user) or user.profile.may_comment?
+      (user == current_user) or (user and user.profile.may_comment?)
     )
   end
 

@@ -6,7 +6,15 @@ class PermissionDenied < Exception; end
 class AssociationError < Exception; end
 
 # just report the error
-class ErrorMessage < Exception; end
+class ErrorMessage < Exception
+  def initialize(message, opts={})
+    @options = opts
+    super(message)
+  end
+  def options
+    @options
+  end
+end
 
 # report a not found error and return 404
 class ErrorNotFound < ErrorMessage
@@ -15,6 +23,9 @@ class ErrorNotFound < ErrorMessage
   end
   def to_s
     "{thing} not found"[:thing_not_found, @thing].capitalize
+  end
+  def status
+    :not_found
   end
 end
 

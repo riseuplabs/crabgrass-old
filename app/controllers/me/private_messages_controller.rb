@@ -24,29 +24,27 @@ class Me::PrivateMessagesController < Me::BaseController
 
   # GET /my/messages/private/<username>
   def show
-    @relationship.update_attributes(:viewed_at => Time.now, :unread_count => 0)
-    @posts = @discussion.posts.paginate(:page => params[:page], :order => 'created_at DESC')
-    @last_post = @posts.first
+    if @recipient
+      @relationship.update_attributes(:viewed_at => Time.now, :unread_count => 0)
+      @posts = @discussion.posts.paginate(:page => params[:page], :order => 'created_at DESC')
+      @last_post = @posts.first
+    end
   rescue Exception => exc
     flash_message_now :exception => exc
   end
 
   # POST /my/messages/private/<username>
   def create
-    update
+    create_private_message
+  rescue Exception => exc
+    flash_message :exception => exc
+    index
+    render :action => 'index'
   end
 
   # PUT /my/messages/private/<username>
   def update
-    @discussion.increment_unread_for(@user)
-    @post = @discussion.posts.create do |post|
-      post.body = params[:post][:body]
-      post.user = current_user
-      post.type = "PrivatePost"
-      post.in_reply_to = Post.find_by_id(params[:in_reply_to_id])
-      post.recipient = @user
-    end
-    redirect_to my_private_message_url(@user)
+    create_private_message
   rescue Exception => exc
     flash_message_now :exception => exc
     render :action => 'show'
@@ -61,8 +59,12 @@ class Me::PrivateMessagesController < Me::BaseController
   protected
 
   def authorized?
+    if current_user == @recipient
+      raise ErrorMessage.new("cannot send messages to yourself", :redirect => my_private_messages_url) 
+    end
+
     if action?(:update, :create)
-      may_create_private_message?(@user)
+      may_create_private_message?(@recipient)
     else
       true
     end
@@ -70,9 +72,11 @@ class Me::PrivateMessagesController < Me::BaseController
 
   def fetch_data
     if params[:id]
-      @user = User.find_by_login(params[:id])
-      @relationship = current_user.relationships.with(@user) || current_user.add_contact!(@user)
-      @discussion = @relationship.discussion
+      @recipient = User.find_by_login(params[:id])
+      if @recipient
+        @relationship = current_user.relationships.with(@recipient) || current_user.add_contact!(@recipient)
+        @discussion = @relationship.discussion
+      end
     end
   end
 
@@ -81,8 +85,25 @@ class Me::PrivateMessagesController < Me::BaseController
     if action?(:show)
       add_context('Messages'[:messages], my_messages_url)
       add_context('Private'[:private], my_private_messages_url)
-      add_context(h(@user.display_name), my_private_message_path(@user))
+      add_context(h(@recipient.display_name), my_private_message_path(@recipient))
     end
+  end
+
+  def create_private_message
+    if @recipient.nil?
+      raise ErrorMessage.new("{thing} not found"[:thing_not_found, params[:id]])
+    elsif params[:post].try[:body].empty?
+      raise ErrorMessage.new("message must not be empty"[:message_must_not_be_empty])
+    end
+    @discussion.increment_unread_for(@recipient)
+    @post = @discussion.posts.create do |post|
+      post.body = params[:post][:body]
+      post.user = current_user
+      post.type = "PrivatePost"
+      post.in_reply_to = Post.find_by_id(params[:in_reply_to_id])
+      post.recipient = @recipient
+    end
+    redirect_to my_private_message_url(@recipient)
   end
 
 end

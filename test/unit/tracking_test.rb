@@ -24,7 +24,32 @@ class TrackingTest < Test::Unit::TestCase
     page = pages(:wiki) #id = 210
     group = groups(:rainbow)
     action = :view
-    assert_tracking(user, group, page, action)
+    # let's clean things up first so they do not get in the way...
+    Tracking.process
+    Daily.update
+    Hourly.find(:all).each{|h| h.destroy}
+    assert_difference 'Hourly.count' do
+      # 1, "hourly should be created for the tracked view" do
+      assert_tracking(user, group, page, action)
+      Tracking.process
+    end
+    assert_difference 'Daily.count' do
+    #, 1, "daily should be created from the existing hourlies" do
+      Daily.update
+    end
+  end
+
+  # Testing the user seen functionality. We are tracking users this way in order
+  # to avoid the database access for every action.
+
+  def test_seeing_users
+    Tracking.saw_user(4)
+    Tracking.update_last_seen_users
+    assert_not_nil old_timestamp=User.find(4).last_seen_at, "blue should have last_seen updated."
+    sleep(1)
+    Tracking.saw_user(4)
+    Tracking.update_last_seen_users
+    assert ( old_timestamp<User.find(4).last_seen_at), "blue should have last_seen updated."
   end
 
   # This can theoretically fail because of te insert_delayed not having inserted

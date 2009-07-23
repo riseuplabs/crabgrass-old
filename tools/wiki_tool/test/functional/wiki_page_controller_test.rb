@@ -15,6 +15,17 @@ class WikiPageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_failed_show_without_login
+    # existing page
+    get :show, :page_id => pages(:wiki).id
+    assert_response :redirect
+    assert_redirected_to :controller => :account, :action => :login
+  end
+
+  def test_show_without_login
+    get :show, :page_id => pages(:public_wiki).id
+    assert_response :success
+  end
 =begin
   this test doesn't work, but the actual code does.
   not sure how to write this, the page is reset or something
@@ -105,6 +116,28 @@ class WikiPageControllerTest < ActionController::TestCase
     # nothing should appear locked to blue
     assert_equal wiki.section_heading_names, wiki.sections_not_locked_for(users(:blue)), "no sections should look locked to blue"
     assert_equal ["section-one", "section-two"], wiki.sections_not_locked_for(users(:gerrard)), "sections one and two should not look locked to gerrard"
+  end
+
+  # various regression tests for text that has thrown errors in the past.
+  def test_edit_inline_with_problematic_text
+    login_as :blue
+
+    ##
+    ## headings without a leading return. (ie "</ul><h1>" )
+    ##
+
+    page = WikiPage.create! :title => 'problem text', :owner => 'blue' do |page|
+      page.data = Wiki.new(:body => "\n\nh1. hello\n\n** what?\n\nh1. goodbye\n\n")
+    end
+    get :show, :page_id => page.id
+    page = assigns(:page)
+    assert_nothing_raised do
+      xhr :get, :edit_inline, :page_id => page.id, :id => "hello"
+      textarea = assigns(:wiki).body_html.match(/<textarea.*>(.*)<\/textarea>/m)[1]
+      assert_nil textarea.match(/goodbye/)
+      assert_not_nil assigns(:wiki).body_html.match(/goodbye/), 'outside the form, goodbye heading should be on the wiki'
+    end
+    assert_response :success
   end
 
   def test_save_inline

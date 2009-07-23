@@ -205,6 +205,21 @@ wiki:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
+public_wiki:
+  id: 220
+  title: public wiki
+  type: WikiPage
+  data_type: Wiki
+  data_id: 6
+  public: 1
+  created_by_id: 1
+  created_by_login: quentin
+  updated_by_id: 3
+  updated_by_login: gerrard
+<% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 malformed_wiki:
   id: 230
   title: malformed wiki

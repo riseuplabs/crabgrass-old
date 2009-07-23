@@ -10,7 +10,6 @@ class BasePageController < ApplicationController
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete' # for autocomplete
   permissions 'base_page', 'posts'
   helper 'groups', 'autocomplete'
 
@@ -186,7 +185,7 @@ class BasePageController < ApplicationController
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
-      @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
+      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
       if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
         @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
       end

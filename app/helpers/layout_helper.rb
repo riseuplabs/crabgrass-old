@@ -121,30 +121,46 @@ module LayoutHelper
   ## JAVASCRIPT
   ##
 
+  # Core js that we always need.
+  # Currently, effects.js and controls.js are required for autocomplete.js.
+  # However, autocomplete uses very little of the controls.js code, which in turn
+  # should not need the effects.js at all. So, with a little effort, effects and
+  # controls could be moved to extra.
+  MAIN_JS = ['prototype', 'application', 'effects', 'controls', 'autocomplete']
+   
+  # extra js that we might sometimes need
+  EXTRA_JS = ['dragdrop', 'builder', 'slider']
+  
   # includes the correct javascript tags for the current request.
   # if the special symbol :extra has been specified as a required js file,
-  # then this expands to all the scriptalicous files.
+  # then this expands to all the EXTRA_JS files.
   def optional_javascript_tag
     scripts = controller.class.javascript || {}
     js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
     return unless js_files.any?
     extra = js_files.delete(:extra)
-    js_files = js_files.collect do |jsfile|
-      if ['effects', 'dragdrop', 'controls', 'builder', 'slider'].include? jsfile
+    cache = false
+
+    args = js_files.collect do |jsfile|
+      if MAIN_JS.include? jsfile
+        nil # main js already is included
+      elsif EXTRA_JS.include? jsfile and !extra
         jsfile
       else
         "as_needed/#{jsfile}"
       end
-    end
+    end.compact.uniq
+
     if extra
-      js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
+      args += EXTRA_JS
+      args << {:cache => 'extra'}
     end
-    javascript_include_tag(*js_files)
+    javascript_include_tag(*args)
   end
   
   def crabgrass_javascripts
     lines = []
-    lines << javascript_include_tag('prototype', 'application', :cache => true)
+    lines << javascript_include_tag(MAIN_JS, :cache => 'main')
     lines << optional_javascript_tag
     lines << '<script type="text/javascript">'
     lines << @content_for_script

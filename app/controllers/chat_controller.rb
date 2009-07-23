@@ -145,7 +145,7 @@ class ChatController < ApplicationController
   # Get channel and user info that most methods use
   def get_channel_and_user
     @user = current_user
-    @channel = ChatChannel.find_by_id(params[:id])
+    @channel = ChatChannel.find_by_id(params[:id]) if params[:id].is_a? Numeric
     unless @channel
       @group = Group.find_by_name(params[:id])
       if @group

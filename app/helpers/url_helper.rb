@@ -64,13 +64,13 @@ module UrlHelper
     opts = {
       :id => @group,
       :action => 'search',
-      :controller => 'groups'
+      :controller => '/groups'
     }
     if args.first.is_a? Hash
       opts.merge!(args.shift)
     end
     if opts[:id] and opts[:id].respond_to?('network?')
-      opts[:controller] = 'networks' if opts[:id].network?
+      opts[:controller] = '/networks' if opts[:id].network?
     end
     opts[:path] ||= args if args.any?
     opts[:path] = parse_filter_path(opts[:path])
@@ -348,6 +348,10 @@ module UrlHelper
        url_for(group_search_url(:action => params[:action], :path => current_rss_path)),
        "RSS Feed"[:rss_feed]
     ]
+  end
+
+  def me_rss
+    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, 'Inbox'[:inbox]]
   end
 
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...

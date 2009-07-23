@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
-  include ErrorHelper     # for displaying errors and messages to the user
+  include FlashMessageHelper     # for displaying errors and messages to the user
   include ContextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
@@ -242,6 +242,20 @@ class ApplicationController < ActionController::Base
   def render_permission_denied
     @skip_context = true
     render :template => 'common/permission_denied'
+  end
+
+  def render_error(exception=nil)
+    if exception
+      if exception.try.options.try[:redirect]
+        flash_message :exception => exception
+        redirect_to exception.options[:redirect]
+        return
+      else
+        flash_message_now :exception => exception
+      end
+    end
+    @skip_context = true
+    render :template => 'common/error', :status => exception.try(:status)
   end
 
   private
