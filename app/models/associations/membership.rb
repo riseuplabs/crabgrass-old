@@ -38,11 +38,5 @@ class Membership < ActiveRecord::Base
 
   named_scope :with_users, :include => :user
 
-  named_scope :recently_active do
-### this is where RoR knowledge started to fail...
-#    self.find(:all, :limit => 10, :conditions => ['user_id = ?', user.id], :select => 'group_id', :order => 'visited_at DESC')
-#    {:order => 'visited_at DESC', :limit => 10}
-  end
-
 end
 

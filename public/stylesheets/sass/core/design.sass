@@ -161,21 +161,26 @@ div#top_menu
           float: left
           border-right= 1px solid !menu_border_color
           width: 12em
+          ul
+            li
+              padding-bottom: 2px
         li.rightcol
           padding: 0 0 0 10px
-          margin: 0 0 0 12em
-          border-left= 1px solid !menu_border_color
+          margin: 0 0 0 13em
+          //border-left= 1px solid !menu_border_color
+          ul li
+            padding-bottom: 2px
         ul.recent_pages a
           padding: 4px 0
-      \\&:hover
-      \\  ul
-      \\    display: block
+      //&:hover
+      //  ul
+      //    display: block
     ul.people_dashboard
       width: 210px
       padding: 10px
       div.people_list a img
         padding: 5px
-    ul.groups_dashboard
+    ul.groups_dashboard ul.networks_dashboard
       li.leftcol
         width: 50%
       li.rightcol
@@ -183,8 +188,8 @@ div#top_menu
       li.name_icon
         padding: 4px 0 4px 36px
         min-height: 36px
-    ul.networks_dashboard
-      width: 15em
+//    ul.networks_dashboard
+//      width: 15em
       li.name_icon
         padding: 4px 0 4px 36px
         min-height: 36px

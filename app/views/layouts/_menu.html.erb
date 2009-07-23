@@ -15,10 +15,13 @@
         </li>
         <li class="rightcol">
           <h3 class="dim">Recent Pages</h3>
+          <%= render :partial => 'pages/list', :locals => { :pages => current_user.pages.recent_pages, :columns => [:title], :show_pagination_controls => false, :heading => false } %>
+<!--
           <ul class="recent_pages">
             <li class="small_icon page_text_16"><a class="" href="#">A page name</a></li>
             <li class="small_icon page_text_16"><a class="" href="#">Some other page</a></li>
           </ul>
+-->
         </li>
       </ul>
     </li>
@@ -46,42 +49,14 @@
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
     <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %>
     </span>
-      <%= render :partial => 'avatars/dropdown_boxes', :entities => current_user.memberships.recently_active %>
-<!--
-    <ul class="groups_dashboard selfclear submenu" style="display: none">
-      <li class="leftcol">
-        <ul>
-          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
-          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
-          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass</a></li>
-        </ul>
-      </li>
-      <li class="rightcol">
-        <ul>
-          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
-          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
-          <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass</a></li>
-        </ul>
-        <a style="float: right;" href="#">See all »</a>
-      </li>
-    </ul>
--->
+      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'groups_dashboard', :entities => current_user.groups.recently_active } %>
   </li>
 
   <%- if current_site.has_networks? -%>
     <li id='menu-networks' class='menu <%= @active_tab == :networks ? 'active' : '' %>'>
       <% url = logged_in? ? network_directory_url(:action => :my) : network_directory_url %>
       <span class="topnav"><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
-      <ul class="networks_dashboard selfclear submenu" style="display: none">
-         <li>
-           <ul>
-             <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
-             <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass Dev Network</a></li>
-             <li style="background-image: url(https://we.riseup.net/avatars/1337/small.jpg);" class="name_icon small"><a href="/cgdev">Crabgrass</a></li>
-           </ul>
-           <a style="float: right;" href="#">See all »</a>
-         </li>
-       </ul>
+      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class => 'networks_dashboard', :entities => current_user.groups.recently_active } %>
     </li>
   <%- end -%>
 
