@@ -4,14 +4,8 @@ require 'account_controller'
 # Re-raise errors caught by the controller.
 class AccountController; def rescue_action(e) raise e end; end
 
-class AccountControllerTest < Test::Unit::TestCase
+class AccountControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites, :tokens
-
-  def setup
-    @controller = AccountController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_should_login_and_redirect
     get :login

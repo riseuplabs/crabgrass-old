@@ -49,16 +49,15 @@ module ActsAsSiteLimited
         def self.prepare_site_limited_sql(sql)
           sub_site = "1"
           if Site.current and Site.current.limited?
-            sub_site = "#{Site.current.id}"
+            sub_site = "site_id = #{Site.current.id}"
           end
 
           if sql.is_a? Array
             # [SELECT x FROM y WHERE z = ?, real_z]
-            sql.first.sub!('/*SITE_LIMITED*/', sub_site)
+            return sql.first.sub('/*SITE_LIMITED*/', sub_site)
           else
-            sql.sub!('/*SITE_LIMITED*/', sub_site)
+            return sql.sub('/*SITE_LIMITED*/', sub_site)
           end
-          sql
         end
 
         def self.prepare_site_limited_options(*args)
