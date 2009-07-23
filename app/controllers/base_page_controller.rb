@@ -11,8 +11,6 @@ class BasePageController < ApplicationController
   stylesheet 'page_creation', :action => :create
   stylesheet 'modalbox'
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete', 'builder', 'modalbox' # for autocomplete
-  javascript 'effects', 'controls', 'autocomplete'
   permissions 'base_page', 'posts'
   helper 'groups', 'autocomplete'
 
