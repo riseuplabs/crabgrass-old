@@ -1,6 +1,6 @@
 # this requires ActionView::Helpers::TagHelper 
 
-module ErrorHelper
+module FlashMessageHelper
 
   ##
   ## GENERATING NOTICES

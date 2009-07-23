@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
-  include ErrorHelper     # for displaying errors and messages to the user
+  include FlashMessageHelper     # for displaying errors and messages to the user
   include ContextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper

@@ -1,7 +1,7 @@
 class Admin::BaseController < ActionController::Base
 
   include ActionView::Helpers::TagHelper 
-  include ErrorHelper
+  include FlashMessageHelper
   include AuthenticatedSystem
 
   layout 'admin'
