@@ -9,11 +9,10 @@
 # (2) it is nice to be able to use --best compression for gzip.
 # (3) it is better to compress in advance, rather than on every request (ie apache deflate)
 #
-# These minified and compressed versions are only used in production mode, and 
-# only used if you have configured apache correctly.
+# These minified and compressed versions are only used in production mode.
 # 
-# For these js.gz files to get used, you need to use this configuration in apache:
-#
+# The compressed files are only used if you have configured apache correctly:
+# 
 # AddEncoding gzip .gz
 # RewriteCond %{HTTP:Accept-encoding} gzip
 # RewriteCond %{HTTP_USER_AGENT} !Safari
@@ -33,18 +32,27 @@
 MAIN_JS = ['prototype', 'application', 'controls', 'autocomplete']
 EXTRA_JS = ['effects', 'dragdrop', 'builder', 'slider']
 
-def compressor(files)
+# if minify_source is true, then the files passed in will get replaced with the
+# the minified versions
+def compressor(files, minify_source=false)
   files.each do |file|
     return if File.symlink?(file)
     path = File.dirname(File.dirname(__FILE__))
-    if ENV["VERBOSE"]
-      cmd = "java -jar #{path}/bin/yuicompressor-2.4.2.jar --verbose #{file} | gzip --best > #{file}.gz"
+    if minify_source
+      out_file = file
     else
-      cmd = "java -jar #{path}/bin/yuicompressor-2.4.2.jar #{file} | gzip --best > #{file}.gz"
+      out_file = '/tmp/' + File.basename(file)
     end
+
+    verbose = ENV["VERBOSE"] ? '--verbose' : ''
+    cmd = "java -jar #{path}/bin/yuicompressor-2.4.2.jar #{verbose} #{file} -o #{out_file}"
     puts cmd
     ret = system(cmd)
     raise "Minification failed for #{file}" if !ret
+    cmd = "gzip --best -c #{out_file} > #{file}.gz"
+    puts cmd
+    ret = system(cmd)
+    raise "Compression failed for #{file}" if !ret
   end
 end
 
@@ -58,9 +66,8 @@ task :minify do
     puts cmd; system(cmd)
     cmd = 'cat %s > extra.js' % EXTRA_JS.collect{|f|f+".js"}.join(' ')
     puts cmd; system(cmd)
-    compressor('main.js')
-    compressor('extra.js')
-    #compressor(FileList['public/javascripts/as_needed/*.js'])
+    compressor('main.js', true)
+    compressor('extra.js', true)
   end
 end
 
