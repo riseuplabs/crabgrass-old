@@ -83,6 +83,10 @@ module GroupExtension::Users
     self.increment!(:version)
   end
 
+  def open_membership?
+    self.profiles.public.membership_policy_is? :open
+  end
+
   protected
 
   def destroy_memberships

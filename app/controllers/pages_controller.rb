@@ -18,14 +18,9 @@ so that each tool can define their own method of creation.
 =end
 
 class PagesController < ApplicationController
-
-#  helper BasePageHelper
-  
-  before_filter :login_required
-  prepend_before_filter :fetch_page
-
+ 
+  before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :create
-
   permissions 'pages'
 
   # if this controller is called by DispatchController,
@@ -35,9 +30,6 @@ class PagesController < ApplicationController
     @pages = options[:pages] # a list of pages, if already fetched
   end  
 
-  ##############################################################
-  ## PUBLIC ACTIONS
-
   # a simple form to allow the user to select which type of page
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool). 
@@ -46,24 +38,28 @@ class PagesController < ApplicationController
   end
          
   # for quickly creating a wiki
-  def create_wiki
-    group = Group.find_by_name(params[:group])
-    if group.nil? or !current_user.member_of?(group)
-      flash_message_now :error => "Group does not exist or you do not have permission to create a page for that group"
-      render :text => '', :layout => 'default'
-    elsif page = group.pages.find_by_name(params[:name])
-      redirect_to page_url(page)
-    elsif params[:name].any?
-      raise PermissionDenied.new unless current_user.may_pester!(group)
-      name = params[:name]
-      page = WikiPage.create!(:title => name.titleize, :name => name.nameize,
-        :data => Wiki.create(:user => current_user), :user => current_user, :owner => group)
-      redirect_to page_url(page)
-    end
+  #def create_wiki
+  #  group = Group.find_by_name(params[:group])
+  #  if group.nil? or !current_user.member_of?(group)
+  #    flash_message_now :error => "Group does not exist or you do not have permission to create a page for that group"
+  #    render :text => '', :layout => 'default'
+  #  elsif page = group.pages.find_by_name(params[:name])
+  #    redirect_to page_url(page)
+  #  elsif params[:name].any?
+  #    raise PermissionDenied.new unless current_user.may_pester!(group)
+  #    name = params[:name]
+  #    page = WikiPage.create!(:title => name.titleize, :name => name.nameize,
+  #      :data => Wiki.create(:user => current_user), :user => current_user, :owner => group)
+  #    redirect_to page_url(page)
+  #  end
+  #end
+   
+  # display a list of pages when the url is ambiguous about which one to show.
+  # login is not required.
+  def search
   end
-        
-  protected
-  
+   
+  protected 
 
   def context
     return true unless request.get? # skip the context on posts, it won't be shown anyway
@@ -76,11 +72,5 @@ class PagesController < ApplicationController
     add_context(context_name, :controller => 'pages', :action => 'create', :group => params[:group])
     true
   end
-  
-  def fetch_page
-    @page = Page.find_by_id(params[:id]) if params[:id]
-    @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
-    true
-  end
-  
+    
 end

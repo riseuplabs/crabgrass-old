@@ -114,12 +114,23 @@ label}</a></span>)
     link_to(link_label,url_hash, :class => selected_class)
   end
 
+  # like link_to_remote, but sets the class to be 'active' if the link is
+  # active (:active => true)
+  def link_to_remote_active(link_label, options, html_options={})
+    active = options.delete(:active) || html_options.delete(:active)
+    selected_class = active ? 'active' : ''
+    html_options[:class] = [html_options[:class], selected_class].combine
+    if options[:icon] or html_options[:icon]
+      link_to_remote_with_icon(link_label, options, html_options)
+    else
+      link_to_remote(link_label, options, html_options)
+    end
+  end
+
   # returns true if the current params matches url_hash
   def url_active?(url_hash)
     return false unless url_hash.is_a? Hash
 
-    normalize_controller(params)
-    normalize_controller(url_hash)
     url_hash[:action] ||= 'index'
 
     selected = true
@@ -132,16 +143,20 @@ label}</a></span>)
 
   private
 
-  # ensure a comparible controller name without a leading /
-  def normalize_controller(hash)
-    hash[:controller].gsub!(/^\//, '') if hash[:controller]
-  end
-
   def compare_param(a,b)
     a = a.to_param
     b = b.to_param
-    return true if b.empty?
-    return a == b
+    if b.empty?
+      true
+    elsif a.empty?
+      false
+    elsif a == b
+      true
+    elsif a.sub(/^\//, '') == b.sub(/^\//, '')
+      true # a controller of '/groups' should match 'groups'
+    else
+      false
+    end
   end
 
 end

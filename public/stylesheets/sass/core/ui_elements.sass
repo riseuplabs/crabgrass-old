@@ -79,6 +79,10 @@ a[name]
 .link_line em
   color: #ccc
 
+.clickable:hover
+  background-color: #ffffdd
+  cursor: pointer
+
 //
 // ENTITIES
 //
@@ -99,7 +103,7 @@ ul.side_list
   clear: both
   ul
     list-style: none
-    padding-left: 2em
+    padding-left: 16px
   a, .a
     //text-decoration: none
     display: block
@@ -121,10 +125,9 @@ ul.side_list
 // TABS
 // 
 
-.tab-area
+.tab_area
   background-color: white
-  padding: 1em
-  border-top: 0
+  padding-top: 1em
   clear: left
 
 ul.tabset
@@ -160,6 +163,9 @@ ul.tabset
         background-color: white
         border: 1px solid #999
         border-bottom: 0
+
+.sub_tabs a
+  font-size: 0.85em
 
 //
 // FORM ELEMENTS
@@ -272,22 +278,29 @@ span.break
   float: right !important
   float: none
 
+// use classes so that we can reverse for rtl
+.align_right
+  text-align: right
+.align_left
+  text-align: left
+.float_right
+  float: right
+.float_left
+  float: left
+
 //
 // COLORED HEADINGS
 //
 
 h1
   &.dim
-    color: #738899
-//    text-transform: capitalize
+    color= !dim_heading_color 
     margin: 0
   &.bright
     color: #5B97CB
-//    text-transform: capitalize
     margin: 0
   &.alert
-    color: #CE4A48
-//    text-transform: capitalize
+    color= !strong_heading_color
     margin: 0
 h2
   &.first
@@ -394,6 +407,7 @@ table.plain
 .pagination
   padding: 1em 0
   text-align: center
+  clear: both
   a
     padding: 0 5px 1px 5px
     border: 1px solid #9aafe5
@@ -475,8 +489,8 @@ table.plain
     white-space: nowrap
   p
     margin: 0
-  strong
-    font-weight: normal
+  ins
+    text-decoration: none
     color: #3399FF
   em
     font-weight: bold
@@ -663,4 +677,20 @@ form.mini_search
     border: 0
 
 
+//
+// SHY LINKS
+//
+
+// these are links or elements that should not be visible until you hover over a parent 
+// element. the problem with display:none is that it removes the element from the layout
+// and then making it visible again can lead to weird jerkiness. so, instead, we use opacity
+// for this.
+
+.shy_parent:hover .shy
+  opacity: 0.6
+  &:hover
+    opacity: 1
+
+.shy
+  opacity: 0
 

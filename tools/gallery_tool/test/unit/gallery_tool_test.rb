@@ -32,34 +32,31 @@ class GalleryToolTest < Test::Unit::TestCase
     assert !a2.galleries.include?(gal)
   end
 
-  def test_adding_without_asset_page
-    user = User.find 4 # we need a user so we can check permissions.
-    wrong_user = User.find 1 # we need a user so we can check permissions.
+  def test_adding_attachment
+    user = users(:blue)
     gal = Gallery.create! :title => 'kites', :user => user
-    # test asset without AssetPage:
-    a = Asset.make(:uploaded_data => upload_data('image.png'))
-
+    asset = Asset.make(:uploaded_data => upload_data('image.png'))
+  
     assert_nothing_raised do
-      gal.add_image!(a, user) # this should create the AssetPage.
+      gal.add_image!(asset, user)
     end
-
-    assert gal.images.include?(a)
-    assert a.galleries.include?(gal)
-
-    # testing the AssetPage of a
-    assert a.page.data==a
-    assert a.page.is_a?(AssetPage)
-
-    assert_nothing_raised do
-      gal.remove_image!(a)
+  
+    assert asset.is_attachment?
+    assert gal.images.include?(asset)
+    assert asset.galleries.include?(gal)
+  
+    assert_difference 'Asset.count', -1 do
+      assert_nothing_raised do
+        gal.remove_image!(asset)
+      end
     end
-
-    assert !gal.images.include?(a)
-    assert !a.galleries.include?(gal)
+  
+    assert !gal.images.include?(asset)
+    assert !asset.galleries.include?(gal)
   end
 
   def test_position
-    user = User.find 4 # we need a user so we can check permissions.
+    user = users(:blue)
     gal = Gallery.create! :title => 'kites', :user => user
     Asset.media_type(:image).find(:all, :limit => 3).each do |asset|
       gal.add_image!(asset, user)
@@ -73,6 +70,41 @@ class GalleryToolTest < Test::Unit::TestCase
     new_positions = gal.images(true).collect{|image| image.id}
     assert_equal correct_new_positions, new_positions    
   end
+
+  def test_public
+    user = users(:blue)
+    gallery = Gallery.create! :title => 'fishies', :user => user do |page|
+      page.add_attachment! :uploaded_data => upload_data('image.png') 
+    end
+
+    gallery.add_image!(gallery.assets.first, user)
+    assert !gallery.images.first.public?
+
+    gallery.public = true
+    gallery.save
+    gallery.images(true).each do |image|
+      assert image.public?
+    end
+  end
+
+  def test_destroy
+    user = users(:blue)
+    gallery = nil
+    assert_difference 'Page.count' do
+      gallery = Gallery.create! :title => 'fishies', :user => user do |page|
+        page.add_attachment! :uploaded_data => upload_data('image.png') 
+      end
+      gallery.add_image!(gallery.assets.first, user)
+    end
+    assert_difference 'Page.count', -1 do
+      assert_difference 'Showing.count', -1 do
+        assert_difference 'Asset.count', -1 do
+          gallery.destroy
+        end
+      end
+    end
+  end
+
 
   #def test_add_before_save
   #  coll = Collection.create! :title => 'kites'

@@ -7,12 +7,12 @@ p#inbox_buttons {
 <% @info_box = "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %>
 
 
-<%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
+<%= render :partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
 
 <% form_tag({:controller => 'me/inbox', :action => 'update', :path => params[:path]}, {:id => 'inbox_form'}) do -%>  
 
 <%= render :partial => 'pages/list', :locals => {:heading => true, :checkbox => true, 
-    :columns => [:checkbox, :icon, :title, :group, :updated_by, :updated_at, :contributors]} %>
+    :columns => [:checkbox, :icon, :title, :owner, :updated_by, :updated_at, :contributors]} %>
 
 <p id='inbox_buttons'>
   <%= link_to_function 'Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %> &nbsp;&nbsp;
@@ -21,5 +21,7 @@ p#inbox_buttons {
   
 <% end # form -%>
 
-<link rel="alternate" href="/me/inbox/rss" title="RSS Feed" type="application/rss+xml" />
+<% content_for :html_head do %>
+  <%= me_rss %>
+<% end %>
 

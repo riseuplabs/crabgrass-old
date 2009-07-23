@@ -147,6 +147,8 @@ module PathFinder::Mysql::BuilderFilters
   # media-image+file, media-image+gallery, file,
   # text+wiki, text, wiki
   def filter_type(arg)
+    return if arg == 'all'
+
     if arg =~ /[\+\ ]/
       page_group, page_type = arg.split(/[\+\ ]/)
     elsif Page.is_page_group?(arg)
@@ -159,6 +161,10 @@ module PathFinder::Mysql::BuilderFilters
       media_type = page_group.sub(/^media-/,'')
       @conditions << "pages.is_#{media_type} = ?" # only safe because of regexp in if
       @values << true
+    end
+
+    if page_type == 'announcement'
+      @flow = :announcement
     end
 
     if page_type
@@ -199,12 +205,16 @@ module PathFinder::Mysql::BuilderFilters
   end
   
   def filter_stars(star_count)
-    @conditions << 'pages.stars >= ?'
+    @conditions << 'pages.stars_count >= ?'
     @values << star_count
   end
 
   def filter_starred
-    @conditions << 'pages.stars > 0'
+    @conditions << 'pages.stars_count > 0'
+  end
+
+  def filter_contributed
+    @conditions << 'pages.contributors_count > 0'
   end
 
   #--
@@ -212,13 +222,44 @@ module PathFinder::Mysql::BuilderFilters
   #++
   
   def filter_ascending(sortkey)
+    sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s ASC" % sortkey
   end
   
   def filter_descending(sortkey)
+    sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s DESC" % sortkey
+  end
+
+  def filter_most(what, num, unit)
+    unit=unit.downcase.pluralize
+    name= what=="edits" ? "contributors" : what
+    num.gsub!(/[^\d]+/, ' ')
+    if unit=="days"
+      @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
+      @order << "SUM(dailies.#{what}) DESC"
+      @select = "pages.*, SUM(dailies.#{what}) AS #{name}_count"
+    elsif unit=="hours"
+      @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
+      @order << "SUM(hourlies.#{what}) DESC"
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
+    else
+      return
+    end
+  end
+
+  def filter_most_views(num, unit)
+    filter_most("views", num, unit)
+  end
+
+  def filter_most_edits(num, unit)
+    filter_most("edits", num, unit)
+  end
+
+  def filter_most_stars(num, unit)
+    filter_most("stars", num, unit)
   end
 
   #--
@@ -255,9 +296,10 @@ module PathFinder::Mysql::BuilderFilters
   def filter_featured_by(group_id)
     @conditions << 'group_participations.group_id = ? AND group_participations.static = TRUE'
     @values << [group_id.to_i]
+    @order << "group_participations.featured_position ASC"
   end
 
-  def filter_contributed(user_id)
+  def filter_contributed_by(user_id)
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]
     @order << "user_participations.changed_at DESC" if @order

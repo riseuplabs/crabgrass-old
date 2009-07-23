@@ -1,6 +1,6 @@
 <% inside_layout 'simple_table' do -%>
 <% if @title_box.any? -%>
-<div class='title_box'>
+<div class='title_box <%= @title_box_class %>'>
   <%= link_to_breadcrumbs %>
   <%= @title_box %>
 </div>

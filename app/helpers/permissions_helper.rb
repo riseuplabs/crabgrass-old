@@ -90,6 +90,8 @@ module PermissionsHelper
       end
     elsif self.is_a? ActionController::Base
       if template_exists?(method_id) && template_public?(method_id)
+        # TODO: template_exists?() always returns false for tools.
+        # for now, this means that tools must explictly define every action.
         nil # ActionController::Base will render the template
       else
         raise NameError, "No method #{method_id}", caller

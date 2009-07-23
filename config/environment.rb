@@ -58,7 +58,7 @@ Rails::Initializer.run do |config|
   ### (2) CONFIG BLOCK
   ###
 
-  config.load_paths += %w(activity assets associations discussion chat observers profile poll task requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
+  config.load_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
   config.load_paths << "#{RAILS_ROOT}/app/permissions"
   config.load_paths << "#{RAILS_ROOT}/app/sweepers"
 
@@ -69,8 +69,7 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :contact_observer, :message_page_observer
-    # :user_relation_observer
+    :group_observer, :relationship_observer, :post_observer
 
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based

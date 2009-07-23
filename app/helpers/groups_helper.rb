@@ -87,7 +87,7 @@ module GroupsHelper
   end
 
   def membership_count_link
-    link_if_may("{count} members"[:group_membership_count, {:count=>(@group.users.count).to_s}] + ARROW,
+    link_if_may("{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}] + ARROW,
                    '/groups/memberships', 'list', @group) or
     "{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}]
   end

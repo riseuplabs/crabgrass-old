@@ -7,6 +7,12 @@ class DiscussionPageControllerTest < ActionController::TestCase
     @request.host = "localhost"
   end
 
+  def test_show
+    page = DiscussionPage.find :first, :conditions => {:public => true}
+    get :show, :page_id => page.id
+    assert_response :success
+  end
+
   def test_create_and_show
     login_as :orange
     

@@ -9,12 +9,11 @@ function quickRedReference() {
   return false;
 }
 
-// toggle the visibility of another element based on if
-// a checkbox is checked or not.
-function checkbox_toggle_visibility(checkbox, element_id) {
-  if (checkbox.checked) {$(element_id).show();}
-  else {$(element_id).hide();}
-}
+//
+// CSS UTILITY
+//
+
+function replace_class_name(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
 
 function setClassVisibility(selector, visibility) {
   $$(selector).each(function(element){
@@ -22,26 +21,21 @@ function setClassVisibility(selector, visibility) {
   })
 }
 
+//
+// FORM UTILITY
+//
+
+// toggle the visibility of another element based on if
+// a checkbox is checked or not.
+function checkbox_toggle_visibility(checkbox, element_id) {
+  if (checkbox.checked) {$(element_id).show();}
+  else {$(element_id).hide();}
+}
+
 // toggle all checkboxes of a particular css selected, based on the
 // checked status of the checkbox passed in.
 function toggle_all_checkboxes(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
-}
-
-function show_tab(tab_link, tab_content) {
-  tabset = tab_link.parentNode.parentNode
-  $$('ul.tabset a').each( function(elem) {
-    if (tabset == elem.parentNode.parentNode) {
-      elem.removeClassName('active');
-    }
-  })
-  $$('.tab-content').each( function(elem) {
-    elem.hide();
-  })
-  tab_link.addClassName('active');
-  tab_content.show();
-  tab_link.blur();
-  return false;
 }
 
 // submits a form, from the onclick of a link. 
@@ -67,26 +61,25 @@ function submit_form(form_element, name, value) {
   }
 }
 
-function replace_class_name(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
+//
+// TEXT AREAS
+//
 
-/** editing textareas **/
-
-/* element is a textarea object. value is some text */
-function insertAtCursor(element_id, value) {
-  var element = $(element_id);
+function insertAtCursor(text_area_id, text_to_insert) {
+  var element = $(text_area_id);
   element.focus();
   if (document.selection) {
     //IE support
     sel = document.selection.createRange();
-    sel.text = value;
+    sel.text = text_to_insert;
   } else if (element.selectionStart || element.selectionStart == '0') {
     //Mozilla/Firefox/Netscape 7+ support
     var startPos = element.selectionStart;
     var endPos   = element.selectionEnd;
-    element.value = element.value.substring(0, startPos) + value + element.value.substring(endPos, element.value.length);
-    element.setSelectionRange(endPos+value.length, endPos+value.length);
+    element.value = element.value.substring(0, startPos) + text_to_insert + element.value.substring(endPos, element.value.length);
+    element.setSelectionRange(endPos+text_to_insert.length, endPos+text_to_insert.length);
   } else {
-    element.value += value;
+    element.value += text_to_insert;
   }
 }
 
@@ -100,6 +93,15 @@ function decorate_wiki_edit_links(ajax_link) {
   );
 }
 
+function setRows(elem, rows) {
+  elem.rows = rows;
+  elem.toggleClassName('tall');
+}
+
+//
+// EVENTS
+//
+
 // returns true if the enter key was pressed
 function enterPressed(event) {
   if(event.which) { return(event.which == 13); }
@@ -111,33 +113,9 @@ function eventTarget(event) {
   return(event.target || event.srcElement); // IE doesn't use .target
 }
 
-/** menu navigation **/
-/*
-var SubMenu = Class.create({
-  initialize: function(li) {
-    if(!$(li)) return;
-    this.trigger = $(li).down('em');
-    if(!this.trigger) return;
-    this.menu = $(li).down('ul');
-    this.trigger.observe('click', this.respondToClick.bind(this));
-    document.observe('click', function(){ this.menu.hide()}.bind(this));
-  },
-  
-  respondToClick: function(event) {
-    event.stop();
-    $$('ul.submenu').without(this.menu).invoke('hide');
-    this.menu.toggle()
-  }
-});
-
-
-document.observe('dom:loaded', function() {
-  new SubMenu("menu-me");
-  new SubMenu("menu-people");
-});
-*/
-
-/** finding position **/
+//
+// POSITION
+//
 
 function absolutePosition(obj) {
   var curleft = curtop = 0;
@@ -154,3 +132,58 @@ function absolutePositionParams(obj) {
   page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
+
+//
+// DYNAMIC TABS
+// naming scheme: location.hash => '#most-viewed', tablink.id => 'most_viewed_link', tabcontent.id => 'most_viewed_panel'
+//
+
+function evalAttributeOnce(element, attribute) {
+  if (element.readAttribute(attribute)) {
+    eval(element.readAttribute(attribute));
+    element.writeAttribute(attribute, null);
+  }
+}
+
+function showTab(tabLink, tabContent, hash) {
+  tabset = tabLink.parentNode.parentNode
+  $$('ul.tabset a').each( function(elem) {
+    if (tabset == elem.parentNode.parentNode) {elem.removeClassName('active');}
+  })
+  $$('.tab_content').each( function(elem) {elem.hide();})
+  tabLink.addClassName('active');
+  tabContent.show();
+  evalAttributeOnce(tabContent, 'onclick');
+  tabLink.blur();
+  if (hash) {window.location.hash = hash}
+  return false;
+}
+
+var defaultHash = null;
+
+function showTabByHash() {
+  if (hash = (window.location.hash || defaultHash)) {
+    hash = hash.replace(/^#/, '').replace(/-/g, '_');
+    tabContent = $(hash + '_panel');
+    tabLink = $(hash + '_link');
+    showTab(tabLink, tabContent)
+  }
+}
+
+//
+// DEAD SIMPLE AJAX HISTORY
+// allow location.hash change to trigger a callback event.
+//
+
+var onHashChanged = null; // called whenever location.hash changes
+var currentHash = '##';
+function pollHash() {
+  if ( window.location.hash != currentHash ) {
+    currentHash = window.location.hash;
+    onHashChanged();
+  }
+}
+document.observe("dom:loaded", function() {
+  if (onHashChanged) {setInterval("pollHash()", 100)}
+});
+

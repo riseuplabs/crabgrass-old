@@ -54,6 +54,11 @@ module ErrorHelper
   #   flash_message :success
   #      (same as :success => true)
   #
+  #   flash_message :info => 'hi'
+  #      (to be used in the future)
+  #
+  #   flash_message :permission_denied
+  #
   # Special objects:
   #
   #   flash_message :exception => exc
@@ -81,10 +86,13 @@ module ErrorHelper
   ## DISPLAYING NOTICES
   ##
 
-  # like message() but can be used in rjs templates
-  # it uses javascript to rewrite the message area
-  # page.replace_html 'message', message_text(:object => @page) unless @page.valid?
-  def message_text(option)
+  # A combination of flash_message and display_messages.
+  # It is use in rjs templates.
+  #
+  # For example: 
+  #   page.replace_html 'message', message_text(:object => @page) unless @page.valid?
+  #
+  def message_text(options)
     add_flash_message(flash, options)
     display_messages
   end
@@ -96,9 +104,11 @@ module ErrorHelper
       if flash[:type].empty?
         ""
       else
-        if flash[:title].empty?
-          flash[:title] =  "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
-          flash[:title] =  "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
+        if flash[:title] == :skip
+          flash[:title] = nil
+        elsif flash[:title].empty?
+          flash[:title] = "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
+          flash[:title] = "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
         end
         notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
         content_tag(:div, notice_contents, :class => size.to_s + '_notice')
@@ -212,6 +222,12 @@ module ErrorHelper
           flsh[:text] += content_tag :p, options[:success] if options[:success]
         end
       end
+    elsif options[:info]
+      options[:title] = options[:info]
+      options[:success] = true
+      add_flash_message(flsh, options)
+    elsif options[:permission_denied]
+      add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied])
     else
       flsh[:type] = options[:type]
       flsh[:text] += options[:text]
@@ -221,8 +237,12 @@ module ErrorHelper
   private
   
   def build_notice_area(type, title, text)
-    heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
-    heading = content_tag(:div, heading, :class => 'heading')
+    if title
+      heading = content_tag(:h2, title, :class => "big_icon #{type}_48") 
+      heading = content_tag(:div, heading, :class => 'heading')
+    else
+      heading = ""
+    end
     if text and text.any?
       text = content_tag(:div, text, :class => 'text')
     else

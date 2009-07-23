@@ -1,4 +1,4 @@
-<div class='tab-content tab-area' id="favicon_tab" <%= tab_style 'favicon' %>>
+<div class='tab_content tab_area' id="favicon_tab" <%= tab_style 'favicon' %>>
   <% form_for @appearance, :html => { :multipart => true }  do |f| %>
     <%= input_selected_tab('favicon') %>
     <p> <%= "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."[:upload_favicon_image_label] %></p>

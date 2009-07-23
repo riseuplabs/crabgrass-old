@@ -182,9 +182,9 @@ module UserExtension
     def get_contact_ids()
       return [[],[]] unless self.id
       foe = [] # no foes yet.
-      friend = Contact.connection.select_values( %Q[
-        SELECT contacts.contact_id FROM contacts
-        WHERE contacts.user_id = #{self.id}
+      friend = Relationship.connection.select_values( %Q[
+        SELECT relationships.contact_id FROM relationships
+        WHERE relationships.type = 'Friendship' AND relationships.user_id = #{self.id}
       ])
       [friend,foe]
     end
@@ -233,7 +233,7 @@ module UserExtension
       def increment_version(ids)
         return unless ids.any?
         self.connection.execute(
-          public_sanitize_sql(
+          quote_sql(
             ["UPDATE `users` SET version=version+1 WHERE id IN (?)", ids]
           )
         )

@@ -16,6 +16,8 @@ class MeSearchControllerTest < Test::Unit::TestCase
   end
 
   def test_index
+    return unless sphinx_working?
+
     login_as :blue
 
     get :index
@@ -23,7 +25,8 @@ class MeSearchControllerTest < Test::Unit::TestCase
  end
  
  def test_text_search
-    return unless sphinx_working?(:test_text_search)
+    return unless sphinx_working?
+
     login_as :blue
 
     get :index, :path => ["text", "test"]
@@ -33,7 +36,8 @@ class MeSearchControllerTest < Test::Unit::TestCase
   end
 
  def test_text_search_and_sort
-    return unless sphinx_working?(:test_text_search_and_sort)
+    return unless sphinx_working?
+
     login_as :blue
 
     get :index, :path => ["text", "test", "ascending", "group_name"]

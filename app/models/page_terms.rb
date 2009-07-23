@@ -56,7 +56,6 @@ class PageTerms < ActiveRecord::Base
       # denormalized names
       indexes :created_by_login, :sortable => true
       indexes :updated_by_login, :sortable => true
-      indexes :group_name,       :sortable => true
       indexes :owner_name,       :sortable => true
 
       ## attributes ##
@@ -69,11 +68,10 @@ class PageTerms < ActiveRecord::Base
       # ids
       has :created_by_id
       has :updated_by_id
-      has :group_id
 
       # flags and access
       has :resolved
-      has :stars
+      has :stars_count
       has :access_ids, :type => :multi # multi: indexes as an array of ints
       has :media, :type => :multi
 
@@ -90,6 +88,25 @@ class PageTerms < ActiveRecord::Base
   end
   def created_at=(value)
     write_attribute(:page_created_at, value)
+  end
+
+  # return nil if the object does not have an id in the access_ids string.
+  # otherwise, returns a number
+  def access_ids_include?(*args)
+    hash = {}
+    args.each do |object|
+      if object.is_a? User
+        hash[:user_ids] ||= []
+        hash[:user_ids] << object.id 
+      elsif object.is_a? Group
+        hash[:group_ids] ||= []
+        hash[:group_ids] << object.id 
+      elsif object == :public
+        hash[:public] = true
+      end
+    end
+    id = Page.access_ids_for(hash).first
+    return self.access_ids =~ /(^| )#{id}( |$)/
   end
 
   # returns a string suitable for using in a fulltext match against

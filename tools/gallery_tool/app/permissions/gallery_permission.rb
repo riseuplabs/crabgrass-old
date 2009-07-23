@@ -11,4 +11,9 @@ module GalleryPermission
       current_user.may?(:admin, @page)
     end
   end
+
+  def may_show_image?(image)
+    image.public? or current_user.may?(:view, image)
+  end
+
 end

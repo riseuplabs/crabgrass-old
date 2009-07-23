@@ -88,7 +88,6 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @access_filter_clause = [] # to be used by path filters
 
     ## page stuff
-    @path        = cleanup_path(path)
     @conditions  = []
     @values      = []
     @order       = []
@@ -108,7 +107,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @select      = options[:select]
 
     # parse the path and apply each filter
-    apply_filters_from_path( @path )
+    apply_filters_from_path( path )
   end
 
   def find
@@ -156,7 +155,8 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :offset => @offset,       # /   
       :order => order,
       :include => @include,
-      :select => @select
+      :select => @select,
+      :group => sql_for_group(order)
     }
   end
 
@@ -184,18 +184,19 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_joins(conditions_string)
     joins = []
-    
-    if /user_participations\./ =~ conditions_string
-      joins << :user_participations
+    [:user_participations, :group_participations, :page_terms, :dailies, :hourlies].each do |j|
+      if /#{j.to_s}\./ =~ conditions_string
+        joins << j
+      end
     end
-    if /group_participations\./ =~ conditions_string
-      joins << :group_participations
-    end
-    if /page_terms\./ =~ conditions_string
-      joins << :page_terms
-    end
-    
     return joins
+  end
+
+  # TODO: make this more generall so it works with all aggregation functions.
+  def sql_for_group(order_string)
+    if match = /SUM\(.*\)/.match(order_string)
+      "pages.id HAVING #{match} > 0"
+    end
   end
     
   def sql_for_order
@@ -233,7 +234,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
-    Page.public_sanitize_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
+    Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
   end    
 end
 

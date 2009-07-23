@@ -1,0 +1,31 @@
+<% @title_box = content_tag :h1, "Public Message Wall"[:wall_heading] %>
+
+<blockquote>
+
+<table class='pretty'>
+
+  <tr>
+    <td>created by</td>
+    <td><%= link_to_user @post.user, :avatar => 'xsmall' %></td>
+  </tr>
+
+  <tr>
+    <td>created at</td>
+    <td><%= friendly_date(@post.created_at) %></td>
+  </tr>
+
+  <tr>
+    <td>message</td>
+    <td><%= @post.body_html %></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>
+      <%= link_line(:bullet, delete_post(@post)) %>
+    </td>
+  </tr>
+
+</table>
+
+</blockquote>

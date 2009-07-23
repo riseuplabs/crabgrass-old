@@ -8,13 +8,16 @@ class GalleryControllerTest < ActionController::TestCase
 
 # this controller does not really even exist yet:
   def test_create
-    login_as :quentin
-    num_pages = Page.count
-    post :create, :page_type => "Gallery", :page => {:title => 'picatures' }, :id => Gallery.param_id
+    login_as :blue
+
+    assert_difference 'Gallery.count' do
+      post :create, :id => Gallery.param_id, :page => {:title => 'pictures'}, :assets => [upload_data('photo.jpg')]
+    end
 
     assert_not_nil assigns(:page)
-    assert_equal "picatures", assigns(:page).title
-    assert_equal num_pages + 1, Page.count
+    assert_equal 1, assigns(:page).images.count
+    assert_not_nil assigns(:page).page_terms
+    assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
   end
 
   def test_create_same_name

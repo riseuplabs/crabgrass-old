@@ -139,11 +139,11 @@ module PathFinder::Sphinx::BuilderFilters
   end
   
   def filter_person(id)
-    @with[access_ids_key] = Page.access_ids_for(:user_ids => [id])
+    @with << ['access_ids', Page.access_ids_for(:user_ids => [id])]
   end
   
   def filter_group(id)
-    @with[access_ids_key] = Page.access_ids_for(:group_ids => [id])
+    @with << ['access_ids', Page.access_ids_for(:group_ids => [id])]
   end
 
   def filter_created_by(id)

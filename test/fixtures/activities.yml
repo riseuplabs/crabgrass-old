@@ -131,20 +131,6 @@ activities_010:
   extra: "test_user"
   object_id:
   created_at: "<%= 1.day.ago.to_s(:db) %>"
-activities_011: 
-  object_name: gerrard
-  subject_name: blue
-  type: MessagePageActivity
-  id: "11"
-  subject_type: User
-  subject_id: "4"
-  access: "1"
-  object_type: User
-  key: "1146383124"
-  extra:
-  related_id: "220"
-  object_id: "3"
-  created_at: "<%= 10.minutes.ago.to_s(:db) %>"
 activities_012:
   object_name: gerrard
   subject_name: blue

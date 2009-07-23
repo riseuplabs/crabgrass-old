@@ -64,16 +64,25 @@ module UrlHelper
     opts = {
       :id => @group,
       :action => 'search',
-      :controller => 'groups'
+      :controller => '/groups'
     }
     if args.first.is_a? Hash
       opts.merge!(args.shift)
     end
     if opts[:id] and opts[:id].respond_to?('network?')
-      opts[:controller] = 'networks' if opts[:id].network?
+      opts[:controller] = '/networks' if opts[:id].network?
     end
     opts[:path] ||= args if args.any?
+    opts[:path] = parse_filter_path(opts[:path])
     opts
+  end
+
+  def person_search_url(*path)
+    url_for_user(@user, :action => 'search', :path => parse_filter_path(path))
+  end
+
+  def me_search_url(*path)
+    me_params(:action => 'search', :path => parse_filter_path(path))
   end
 
   ##
@@ -263,11 +272,6 @@ module UrlHelper
     avatar + link_to(label, path, :class => klass, :style => style)
   end
 
-  def person_search_url(*path)
-    url_for_user(@user, :action => 'search', :path => path)
-  end
-
-
   ##
   ## GENERIC PERSON OR GROUP 
   ##
@@ -295,6 +299,7 @@ module UrlHelper
   #   :avatar => nil | :xsmall | :small | :medium | :large | :xlarge (default: nil)
   #   :format => :short | :full | :both | :hover | :twolines (default: full)
   #   :block => false | true (default: false)
+  #   :link => nil | true | url (default: nil)
   #   :class => passed through to the tag as html class attr
   #   :style => passed through to the tag as html style attr
   def display_entity(entity, options={})
@@ -303,17 +308,27 @@ module UrlHelper
     options[:class] = [options[:class], 'entity'].join(' ')
     options[:block] = true if options[:format] == :twolines
 
+    name = entity.name
+    display_name = h(entity.display_name)
+    both_names = h(entity.both_names)
+    if options[:link]
+      url = options[:link] === true ? url_for_entity(entity) : options[:link]
+      name = link_to(name, url)
+      display_name = link_to(display_name, url)
+      both_name = link_to(both_names, url)
+    end
+
     if options[:avatar]
       url = avatar_url(:id => (entity.avatar||0), :size => options[:avatar])
       options[:class] = [options[:class], "name_icon", options[:avatar]].compact.join(' ')
       options[:style] = [options[:style], "background-image:url(#{url})"].compact.join(';')
     end
     display, title, hover = case options[:format]
-      when :short then [entity.name, h(entity.display_name), nil]
-      when :full then [h(entity.display_name), entity.name, nil]
-      when :both then [h(entity.both_names), nil, nil]
-      when :hover then [entity.name, nil, h(entity.display_name)]
-      when :twolines then ["<div class='name'>%s</div>%s"%[entity.name, (h(entity.display_name) if entity.name != entity.display_name)], nil, nil]
+      when :short then [name,         display_name, nil]
+      when :full  then [display_name, name,         nil]
+      when :both  then [both_names,   nil,          nil]
+      when :hover then [name,         nil,          display_name]
+      when :twolines then ["<div class='name'>%s</div>%s"%[name, (display_name if name != display_name)], nil, nil]
     end
     if hover
       display += content_tag(:b,hover)
@@ -335,6 +350,10 @@ module UrlHelper
     ]
   end
 
+  def me_rss
+    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, 'Inbox'[:inbox]]
+  end
+
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...
   # although, this will be hard, since it seems *path globbing doesn't work
   # with :format. 
@@ -349,25 +368,16 @@ module UrlHelper
   end
   
   # return true if this is an rss request. Unfornately, for routes with
-  # glob *paths, we can't use :format, or at least I cannot get it working.
+  # glob *paths, we can't use :format. the ParsedPath @path, however, does
+  # a good job of identifying trailing format codes that are not otherwise
+  # unparsable as part of the path.
   def rss_request?
-    if params[:path].any? and params[:path][-1] == 'rss'
-      parsed_path.unparsable.last == 'rss'
-      # ^^ if the last element of the parsed path is 'rss' (or ['x','rss']),
-      # then it means we have a path like text/rss, where a trailing 'rss' is
-      # intended for the text search, not the format.
-    else
-      false
-    end
+    @path.format == 'rss'
   end
 
   # used to build an rss link from the current params[:path]
   def current_rss_path
-    path = params[:path] || []
-    unless parsed_path.unparsable.last == 'rss'  
-      path = path + ['rss']
-    end
-    path
+    @path.format('rss') # returns a copy of @path with format set
   end
 
 end

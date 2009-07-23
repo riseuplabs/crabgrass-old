@@ -1,7 +1,7 @@
 <% @title_box = content_tag :h1, "Search"[:my_search_headline] %>
 <% @info_box = "Search through all pages you have access to."[:me_search_description] %>
 
-<%= render :partial => 'pages/search', :locals => {:users => @user.contacts, :groups => @user.groups} %>
+<%= render :partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups} %>
 
 <br/>
 

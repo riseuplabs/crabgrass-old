@@ -1,0 +1,65 @@
+<% if @posts.empty? %>
+  <%= "No Results"[:no_search_results] %>
+<% else %>
+<%
+
+  today = []
+  yesterday = []
+  week = []
+  later = []
+  
+  posts = @posts.dup
+  post = posts.shift
+
+  while post and after_day_start?(post.updated_at)
+    today << post
+    post = posts.shift
+  end
+
+  while post and after_yesterday_start?(post.updated_at)
+    yesterday << post
+    post = posts.shift
+  end
+
+  while post and after_week_start?(post.updated_at)
+    week << post
+    post = posts.shift
+  end
+
+  while post
+    later << post
+    post = posts.shift
+  end
+-%>
+
+<%= pagination_links @posts %>
+
+<div class="messages">
+<% if today.any? -%>
+  <div class='date_heading'><%= "Today"[:date_today] -%></div>
+  <% today.each do |post| -%>
+    <%= display_post(post) -%>
+  <% end -%>
+<% end -%>
+<% if yesterday.any? -%>
+  <div class='date_heading'><%= "Yesterday"[:date_yesterday] -%></div>
+  <% yesterday.each do |post| -%>
+    <%= display_post(post) -%>
+  <% end -%>
+<% end -%>
+<% if week.any? -%>
+  <div class='date_heading'><%= "This Past Week"[:date_this_week] -%></div>
+  <% week.each do |post| -%>
+    <%= display_post(post) -%>
+  <% end -%>
+<% end -%>
+<% if later.any? -%>
+  <div class='date_heading'><%= "Older"[:date_older] -%></div>
+  <% later.each do |post| -%>
+    <%= display_post(post) -%>
+  <% end -%>
+<% end -%>
+</div>
+
+<%= pagination_links @posts %>
+<% end %>

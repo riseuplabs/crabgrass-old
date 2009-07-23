@@ -4,8 +4,17 @@ PAGE.RB
 
 A Page is the main content class. All actual content is a subclass of this class.
 
-denormalization:
-all the relationship between a page and its groups is stored in the group_participations table. however, we denormalize some of it: group_name and group_id are used to store the info for the 'primary group'. what does this mean? the primary group is what is show when listing pages and it is the default group when linking from a wiki.
+denormalization
+---------------
+
+  * updated_by_login
+  * created_by_login
+  * owner_name
+
+Upon further investigation, I am not sure that these are needed.
+
+schema
+--------
 
   create_table "pages", :force => true do |t|
     t.string   "title"
@@ -23,8 +32,6 @@ all the relationship between a page and its groups is stored in the group_partic
     t.integer  "contributors_count", :limit => 11, :default => 0
     t.integer  "posts_count",        :limit => 11, :default => 0
     t.string   "name"
-    t.integer  "group_id",           :limit => 11
-    t.string   "group_name"
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
@@ -41,10 +48,9 @@ all the relationship between a page and its groups is stored in the group_partic
     t.datetime "happens_at"
   end
 
-  add_index "pages", ["name"], :name => "index_pages_on_name"
+  add_index "pages", ["name","owner_id"], :name => "index_pages_on_name"
   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
   add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
-  add_index "pages", ["group_id"], :name => "index_page_group_id"
   add_index "pages", ["type"], :name => "index_pages_on_type"
   add_index "pages", ["flow"], :name => "index_pages_on_flow"
   add_index "pages", ["public"], :name => "index_pages_on_public"
@@ -58,18 +64,18 @@ all the relationship between a page and its groups is stored in the group_partic
 
 class Page < ActiveRecord::Base
   extend PathFinder::FindByPath
-  include PageExtension::Users
-  include PageExtension::Groups
-  include PageExtension::Create
-  include PageExtension::Subclass
-  include PageExtension::Index
-#  include PageExtension::Linking
-  include PageExtension::Starring
+  include PageExtension::Users     # page <> users relationship
+  include PageExtension::Groups    # page <> group relationship
+  include PageExtension::Assets    # page <> asset relationship
+  include PageExtension::Create    # page creation
+  include PageExtension::Subclass  # page subclassing
+  include PageExtension::Index     # page full text searching
+  include PageExtension::Starring  # ???
+  include PageExtension::Tracking  # page tracking views, edits and stars
 
   acts_as_taggable_on :tags
   acts_as_site_limited
   attr_protected :owner
-
 
   ##
   ## NAMES SCOPES
@@ -84,9 +90,9 @@ class Page < ActiveRecord::Base
   ##
 
   def validate
-    if (name_changed? or group_id_changed?) and name_taken?
+    if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
       errors.add 'name', 'is already taken'
-    elsif name_changed?
+    elsif name_changed? and name.any?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
@@ -129,9 +135,7 @@ class Page < ActiveRecord::Base
   # best guess uri string, sans protocol/host/port.
   # ie /rainbows/what-a-fine-page+5234
   def uri
-   return [group_name, name_url].path if group_name
-   return [created_by_login, friendly_url].path if created_by_login
-   return ['page', friendly_url].path
+    owner_name.any? ? [owner_name, name_url].path : ['page', friendly_url].path
   end
 
   # returns true if self's unique page name is already in use.
@@ -155,8 +159,6 @@ class Page < ActiveRecord::Base
 
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
-  has_many :assets, :dependent => :destroy
-  belongs_to :cover, :class_name => "Asset"
 
   validates_presence_of :title
   validates_associated :data
@@ -216,52 +218,16 @@ class Page < ActiveRecord::Base
   before_save :update_posts_count
   def update_posts_count
     if posts_count_changed?
-      self.posts_count = self.discussion.posts_count
+      self.posts_count = self.discussion.posts_count if self.discussion
     end
   end
 
-  # sets the default media flags. can be overridden by the subclasses.
-  before_save :update_media_flags
-  def update_media_flags
-    if self.data
-      self.is_image = self.data.is_image? if self.data.respond_to?('is_image?')
-      self.is_audio = self.data.is_audio? if self.data.respond_to?('is_audio?')
-      self.is_video = self.data.is_video? if self.data.respond_to?('is_video?')
-      self.is_document = self.data.is_document? if self.data.respond_to?('is_document?')
-    end
-    true
-  end
-  
+    
   ##
   ## PAGE ACCESS CONTROL
   ##
 
-  ## update attachment permissions
-  after_save :update_access
-  def update_access
-    if public_changed?
-      assets.each { |asset| asset.update_access }
-    end
-    true
-  end
-
-  # returns true if self is part of given network
-  # DEPRECATED
-  # -- TODO
-  #   i don't think this does what it is supposed to do.
-  #   this code would be better:
-  #     self.group_ids.any_in?(network.group_ids + [network.id])
-  #   this does a big intersection, slow but not that slow on the limited size of the arrays.
-  #   -elijah
-  # --
-  def belongs_to_network?(network)
-    groups = self.groups_with_access(:view)
-    groups | self.groups_with_access(:edit)
-    groups | self.groups_with_access(:admin)
-
-    groups.include?(network) ? true : false
-    true
-  end
+  public
 
   # This method should never be called directly. It should only be called
   # from User#may?()
@@ -320,11 +286,11 @@ class Page < ActiveRecord::Base
     self.deleted? and (perm == :edit)
   end
 
-  public
-
   ##
   ## RELATIONSHIP TO ENTITIES (GROUPS OR USERS)
   ##
+
+  public
 
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
@@ -376,8 +342,6 @@ class Page < ActiveRecord::Base
       self.owner_name = entity.name
       if entity.is_a? Group
         self.owner_type = "Group"
-        self.group_name = self.owner_name
-        self.group_id = self.owner_id
       elsif entity.is_a? User
         self.owner_type = "User"
       else
@@ -389,21 +353,24 @@ class Page < ActiveRecord::Base
     end
   end
 
-  before_create :ensure_owner
-  def ensure_owner
-    if Conf.ensure_page_owner?
-      if owner
-        ## do nothing!
-      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
-        self.owner = gp.group
-      elsif self.created_by
-        self.owner = self.created_by
-      else
-        # in real life, we should not get here. but in tests, we make pages a lot
-        # that don't have a group or user.
-      end
+  # updates the denormalized copies of owner name
+  def self.update_owner_name(owner)
+    Page.connection.execute(quote_sql([
+      "UPDATE pages SET `owner_name` = ? WHERE pages.owner_id = ? AND pages.owner_type = ?",
+      owner.name,
+      owner.id,
+      owner.class.class_name
+    ]))
+    if owner.is_a? User
+      Page.connection.execute(quote_sql([
+        "UPDATE pages SET updated_by_login = ? WHERE pages.updated_by_id = ?",
+        owner.login, owner.id
+      ]))
+      Page.connection.execute(quote_sql([
+        "UPDATE pages SET created_by_login = ? WHERE pages.created_by_id = ?",
+        owner.login, owner.id
+      ]))
     end
-    return true
   end
 
   # a list of people and groups that have admin access to this page
@@ -431,23 +398,41 @@ class Page < ActiveRecord::Base
     return ary.compact.sort_by{|item| item[0].name}
   end
 
+  protected
+
+  before_save :ensure_owner
+  def ensure_owner
+    if Conf.ensure_page_owner?
+      if owner_id
+        ## do nothing!
+      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+        self.owner = gp.group
+      elsif self.created_by
+        self.owner = self.created_by
+      else
+        # in real life, we should not get here. but in tests, we make pages a lot
+        # that don't have a group or user.
+      end
+    end
+    return true
+  end
+
   ##
   ## DENORMALIZATION
   ##
 
+  protected
+
   # denormalize hack follows:
   before_save :denormalize
   def denormalize
-    if self.owner_type != "Group" and self.group_name.empty? and group_participations.any?
-      group = group_participations.first.group
-      self.group_name = group.name
-      self.group_id = group.id
-    end
     if updated_by_id_changed?
       self.updated_by_login = (updated_by.login if updated_by)
     end
     true
   end
+
+  public
 
   # used to mark stuff that has been changed.
   # so that we know we need to update other stuff when saving.
@@ -463,6 +448,8 @@ class Page < ActiveRecord::Base
   ##
   ## MISC. HELPERS
   ##
+
+  public
 
   # tmp in-memory storage used by views
   def flag

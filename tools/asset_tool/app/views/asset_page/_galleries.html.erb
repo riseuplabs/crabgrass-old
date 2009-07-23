@@ -1,4 +1,4 @@
-<% galleries = (Page.find_by_path('type/gallery', options_for_group(@page.group)) - @asset.galleries  if @page.group) %>
+<% galleries = (Page.find_by_path('type/gallery', options_for_group(@page.owner)) - @asset.galleries if @page.owner && @page.owner.is_a?(Group)) %>
 <%- if @asset.is_image? and (@asset.galleries.any? or galleries.any?) -%>
   <br/>
   <h2 class='section'><%= 'Galleries'.t %></h2>

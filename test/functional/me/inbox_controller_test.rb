@@ -36,6 +36,13 @@ class InboxControllerTest < Test::Unit::TestCase
     
   end
 
+  def test_rss
+    login_as :blue
+    get :list, :path => ['rss']
+    assert_response :success
+    assert @response.headers['type'] =~ /rss/
+  end
+
   def test_remove_by_posting_to_index
     login_as :blue
     get :index
@@ -66,7 +73,7 @@ class InboxControllerTest < Test::Unit::TestCase
     post :search, :search => { :text => "baum", :type => "", :page_state => "", :person => "", :group => "" }, :commit => "Search"
     
     # perform a search for user and group
-    post :search, :search => { :text => "", :type => "", :page_state => "", :person => @user.contacts.first.login, :group => @user.groups.first.name }, :commit => "Search"
+    post :search, :search => { :text => "", :type => "", :page_state => "", :person => @user.friends.first.login, :group => @user.groups.first.name }, :commit => "Search"
     
     # testing all pages with all page states    
     #todo: this should be dynamically loaded from the sites available pages

@@ -119,6 +119,7 @@ namespace :crabgrass do
     run "mkdir -p #{deploy_to}/#{shared_dir}/index"
     run "mkdir -p #{deploy_to}/#{shared_dir}/public_assets"
     run "mkdir -p #{deploy_to}/#{shared_dir}/latex"
+    run "mkdir -p #{deploy_to}/#{shared_dir}/sphinx"
     
     run "mkdir -p #{deploy_to}/#{shared_dir}/config"   
     put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
@@ -148,16 +149,29 @@ namespace :crabgrass do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/secret.txt #{release_path}/config/secret.txt"
 
-    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{release_path}/public/favicon.ico"
-    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{release_path}/public/favicon.png"
+    run "rm -rf #{release_path}/db/sphinx"
+    run "ln -nfs #{shared_path}/sphinx #{release_path}/db/sphinx"
   end
 
   desc "refresh the staging database"
   task :refresh do 
-    run "mkdir -p #{deploy_to}/tmp/"
-    run "touch #{deploy_to}/tmp/refresh.txt"
+    run "touch #{deploy_to}/shared/tmp/refresh.txt"
   end
 
+  desc "starts the crabgrass daemons"
+  task :restart do
+    run "#{deploy_to}/current/script/start_stop_crabgrass_daemons.rb restart"
+  end
+
+  desc "get the status of the crabgrass daemons"
+  task :status do
+    run "#{deploy_to}/current/script/start_stop_crabgrass_daemons.rb status"
+  end
+
+  desc "reindex sphinx"
+  task :index do
+    run "cd #{deploy_to}/current; rake ts:index RAILS_ENV=production"
+  end  
 end
 
 namespace :debian do

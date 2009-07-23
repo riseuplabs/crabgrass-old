@@ -39,13 +39,17 @@ module Gibberish
       current_language == default_language
     end
 
-    def translations
-      @@languages[current_language] || {}
+    def translations(lang=nil)
+      lang ||= current_language
+      @@languages[lang] || {}
     end
 
     def translate(string, key, *args)
       return if reserved_keys.include? key
       target = translations[key] || string
+      ## crabgrass hack: default to english if empty target
+      target = (translations(:en)[key] || "") if target.empty?
+      ## end crabgrass hack
       interpolate_string(target.dup, *args.dup)
     end
 

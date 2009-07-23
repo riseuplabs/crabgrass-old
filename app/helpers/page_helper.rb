@@ -30,8 +30,6 @@ module PageHelper
       path = page_path(@group.name, page.name_url, options)
     elsif page.owner_name
       path = page_path(page.owner_name, page.name_url, options)
-    elsif page.group_name
-      path = page_path(page.group_name, page.name_url, options)
     elsif page.created_by_id
       path = page_path(page.created_by_login, page.friendly_url, options)
     else
@@ -78,8 +76,8 @@ module PageHelper
       url = ['/people', 'show', @user]
     elsif logged_in?
       url = ['/me',     nil,    nil]
-    elsif page and page.group_name
-      url = ['/groups', 'show', page.group_name]
+    elsif page and page.owner_name
+      return '/'+page.owner_name
     else
       raise "From url cannot be determined" # i don't know what to do here.
     end
@@ -113,30 +111,16 @@ module PageHelper
     query_string || ""
   end
   
-  def filter_path()
-    params[:path] || []
-  end
-  def parsed_path(path=nil)
-    if path
-      @latest_parsed_path = controller.parse_filter_path(path)
-    else
-      @latest_parsed_path ||= controller.parse_filter_path(filter_path)
-    end
-    return @latest_parsed_path
-  end
-
-
   ##
   ## PAGE LISTINGS AND TABLES
   ##
 
   SORTABLE_COLUMNS = %w(
     created_at created_by_login updated_at updated_by_login deleted_at deleted_by_login
-    group_name owner_name title posts_count contributors_count stars
+    owner_name title posts_count contributors_count stars_count
   ).freeze
 
-  # Used to create the page list headings. set member variable @path beforehand
-  # if you want the links to take it into account instead of params[:path]
+  # Used to create the page list headings.
   # option defaults:
   #  :selected => false
   #  :sortable => true
@@ -147,20 +131,18 @@ module PageHelper
       return content_tag(:th, text, :class => options[:class])
     end
 
-    path   = filter_path()
-    parsed = parsed_path()
     selected = false
     arrow = ''
-    if parsed.sort_arg?(action)
+    if @path.sort_arg?(action)
       selected = true
-      if parsed.keyword?('ascending')
+      if @path.keyword?('ascending')
         link = page_path_link(text,"descending/#{action}")
         arrow = icon_tag('sort_up')
       else
         link = page_path_link(text,"ascending/#{action}")
         arrow = icon_tag('sort_down')
       end
-    elsif %w(title created_by_login updated_by_login group_name).include? action
+    elsif %w(title created_by_login updated_by_login).include? action
       link = page_path_link(text, "ascending/#{action}")
       selected = options[:selected]
     else
@@ -171,16 +153,13 @@ module PageHelper
   end
 
   ## used to create the page list headings
-
-  def page_path_link(text,path='',image=nil)
-    hash         = params.dup
-    new_path     = parsed_path(path)
-    current_path = parsed_path(hash[:path])
-    hash[:path]  = current_path.merge(new_path).flatten
-
+  def page_path_link(text,link_path='',image=nil)
+    hash          = params.dup.to_hash        # hash must not be HashWithIndifferentAccess
+    hash['path']  = @path.merge(link_path)    # we want to preserve the @path class
+    
     if params[:_context]
       # special hack for landing pages using the weird dispatcher route.
-      hash = "/%s?path=%s" % [params[:_context], hash[:path].join('/')]
+      hash = "/%s?path=%s" % [params[:_context], hash[:path].to_s]
     end
     link_to text, hash
   end
@@ -218,16 +197,16 @@ module PageHelper
       friendly_date(page.updated_at)
     elsif column == :happens_at
       friendly_date(page.happens_at)
-    elsif column == :group or column == :group_name
-      page.group_name ? link_to_group(page.group_name) : '&nbsp;'
     elsif column == :contributors_count or column == :contributors
       page.contributors_count
     elsif column == :stars_count or column == :stars
-      if page.stars > 0
-        content_tag(:span, "%s %s" % [icon_tag('star'), page.stars], :class => 'star')
+      if page.stars_count > 0
+        content_tag(:span, "%s %s" % [icon_tag('star'), page.stars_count], :class => 'star')
       else
         icon_tag('star_empty')
       end
+    elsif column == :views or column == :views_count
+      page.views_count
     elsif column == :owner
       page.owner_name
     elsif column == :owner_with_icon
@@ -286,14 +265,9 @@ module PageHelper
     return title
   end
   
-  def page_list_heading(column, options={})
-    if column == :group or column == :group_name
-      list_heading 'group'.t, 'group_name', options
-    
-    # empty <th>s contain an nbsp to prevent collapsing in IE
-    elsif column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
-      "<th>&nbsp;</th>" 
-    
+  def page_list_heading(column, options={})   
+    if column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
+      "<th>&nbsp;</th>" # empty <th>s contain an nbsp to prevent collapsing in IE
     elsif column == :updated_by or column == :updated_by_login
       list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
@@ -315,7 +289,9 @@ module PageHelper
     elsif column == :last_post
       list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
     elsif column == :stars or column == :stars_count
-      list_heading 'stars'[:page_list_heading_stars], 'stars', options
+      list_heading 'stars'[:page_list_heading_stars], 'stars_count', options
+    elsif column == :views or column == :views_count
+      list_heading 'views'[:page_list_heading_views], 'views', options
     elsif column == :owner_with_icon || column == :owner
       list_heading "owner"[:page_list_heading_owner], 'owner_name', options
     elsif column == :last_updated
@@ -349,9 +325,14 @@ module PageHelper
     end
 
     if page.flag[:excerpt]
-      trs << content_tag(:tr, content_tag(:td, page.flag[:excerpt], :class => 'excerpt', :colspan=>columns.size))
+      trs << content_tag(:tr, content_tag(:td,'&nbsp;') + content_tag(:td, escape_excerpt(page.flag[:excerpt]), :class => 'excerpt', :colspan=>columns.size))
     end
     trs.join("\n")
+  end
+
+  # allow bold in the excerpt, but no other html. We use special {bold} for bold.
+  def escape_excerpt(str)
+    h(str).gsub /\{(\/?)bold\}/, '<\1b>'
   end
 
   def page_notice_row(notice, column_size)
@@ -421,7 +402,7 @@ module PageHelper
   ##
 
   def display_page_class_grouping(group)
-    "page_group_#{group.gsub(':','_')}".t 
+    "page_group_#{group.gsub(':','_')}".to_sym.t
   end
   
   def tree_of_page_types(available_page_types=nil, options={})
@@ -480,10 +461,9 @@ module PageHelper
   # accepted options:
   #  :group -- a group object to make selected
   #  :include_me -- if true, include option for 'me'
+  #  :include_none -- if true, include an option for 'none'
   def options_for_page_owner(options={})
-    groups = current_user.groups.select { |group|
-      !group.committee?
-    }.sort { |a, b|
+    groups = current_user.primary_groups_and_networks.sort { |a, b|
        a.display_name.downcase <=> b.display_name.downcase
     }
     html = [] 
@@ -492,13 +472,21 @@ module PageHelper
       selected_group = options[:group].name
     elsif params[:group]
       selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
-    elsif params[:page] and params[:page][:owner]
+    elsif params[:page] and params[:page].is_a?(Hash) and params[:page][:owner]
       selected_group = params[:page][:owner]
     else
       selected_group = nil
     end
 
-    if !Conf.ensure_page_owner? and options[:include_me]
+    if options.key?(:group) and options[:group].nil?
+      # if this method was called with :group => nil, a group must have been intended
+      # but the group was not there, so we include none
+      options[:include_none] = true
+    elsif !Conf.ensure_page_owner?
+      options[:include_none] = true
+    end
+
+    if options[:include_none]
       html << content_tag(:option, "None"[:none], :value => "", :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic')
       selected_group = 'none'
     end
@@ -528,7 +516,7 @@ module PageHelper
   def create_page_url(page_class=nil, options={})
     if page_class
       controller = page_class.controller 
-      id = page_class.class_display_name.nameize
+      id = page_class.param_id
       "/#{controller}/create/#{id}" + build_query_string(options)
     else
       url_for(options.merge(:controller => '/pages', :action => 'create'))

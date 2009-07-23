@@ -52,17 +52,44 @@ class Activity < ActiveRecord::Base
     self.object_name  ||= self.object.name if self.object and self.object.respond_to?(:name)
   end
 
-  # to be defined by subclasses
-  def icon() end
+  ##
+  ## ACTIVITY DISPLAY
+  ##
 
   # to be defined by subclasses
-  def description(options={}) end
+  def icon()
+    'exclamation'
+  end
+
+  # to be defined by subclasses
+  def style()
+  end
+
+  # to be defined by subclasses
+  def description(view) end
+
+  # to be defined by subclasses
+  def link() end
+
+  # calls description, and if there is any problem, then we self destruct.
+  # why? because activities hold pointers to all kinds of objects. These can be
+  # deleted at any time. So if there is an error, it is probably because we
+  # tried to reference a deleted record.
+  # 
+  # (normally, groups and users will not cause a problem, because most the time
+  # we cache their name's at the time of the activity's creation)
+  def safe_description(view=nil)
+    description(view)
+  rescue
+    self.destroy
+    nil
+  end
 
   ##
   ## FINDERS
   ##
 
-  named_scope :newest, {:order => 'created_at DESC', :limit => 10}
+  named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
 
@@ -152,10 +179,12 @@ class Activity < ActiveRecord::Base
   ## used by the description() method of Activity subclasses
   ##
 
+  # a safe way to reference a group, even if the group has been deleted.
   def group_span(attribute)
     thing_span(attribute, 'group')
   end
 
+  # a safe way to reference a user, even if the group has been deleted.
   def user_span(attribute)
     thing_span(attribute, 'user')
   end
@@ -187,15 +216,11 @@ class Activity < ActiveRecord::Base
 
   private
 
+  # often, stuff that we want to report activity on has already been 
+  # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    object = self.send(thing)
-    if object
-      name = object.name
-    else
-      name = self.send(thing.to_s + '_name')
-      name ||= 'unknown'.t
-    end
-    '<span class="%s">%s</span>' % [type,name]
+    name = self.send("#{thing}_name") || self.send(thing).if_not_nil.name || "unknown"[:unknown]
+    '<span class="%s">%s</span>' % [type, name]
   end
 
 end
