@@ -45,7 +45,7 @@ def compressor(files, minify_source=false)
     end
 
     verbose = ENV["VERBOSE"] ? '--verbose' : ''
-    cmd = "java -jar #{path}/bin/yuicompressor-2.4.2.jar #{verbose} #{file} -o #{out_file}"
+    cmd = "java -jar #{path}/bin/yuicompressor-2.4.2.jar --line-break 200 #{verbose} #{file} -o #{out_file}"
     puts cmd
     ret = system(cmd)
     raise "Minification failed for #{file}" if !ret
