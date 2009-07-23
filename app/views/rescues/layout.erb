@@ -20,8 +20,10 @@
       font-size: 1.5em;
     }
     div#content {
-      display: none;
       padding: 20px;
+    }
+    input#details {
+      display: none;
     }
     body, p, ol, ul, td {
       font-family: verdana, arial, helvetica, sans-serif;
@@ -40,7 +42,30 @@
   </style>
 
   <script type="text/javascript">
-    function toggleDetails() {
+    function init() {
+      if (!document.getElementById) {
+          return;
+      }
+      var detailsToggle = document.getElementById('details');
+      var contentDiv = document.getElementById('content');
+      detailsToggle.style.display = "inline";
+      contentDiv.style.display = "none";
+      addEvent(detailsToggle, 'click', toggleDetails, false);
+    }
+
+    function addEvent(elm, evType, fn, useCapture) {
+      if (elm.addEventListener){
+          elm.addEventListener(evType, fn, useCapture);
+          return true;
+      }else if (elm.attachEvent) {
+          var r = elm.attachEvent('on' + evType, fn);
+          return r;
+      }else {
+          elm['on' + evType] = fn;
+      }
+    }
+
+    function toggleDetails(e) {
       content = document.getElementById("content");
       detailsLink = document.getElementById("details");
       if (content.style.display == "block") {
@@ -51,6 +76,7 @@
         content.style.display = "block";
       }
     }
+    addEvent(window, 'load', init, false);
   </script>
 
 </head>
@@ -58,8 +84,7 @@
   <div id='wrapper'>
     <div id='header'>
       <h1>You have encountered a crabgrass error!</h1>
-      <input type="submit" value="Show Details" id="details" onclick="toggleDetails()" />
-<!--      <a id="details" href="#" onclick="toggleDetails()">Show details</a> -->
+      <input type="submit" value="Show Details" id="details" />
     </div>
     <div id='content'>
       <%= @contents %>
