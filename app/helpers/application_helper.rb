@@ -169,7 +169,7 @@ module ApplicationHelper
     if more_link.is_a? Hash
       more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
     end
-    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands') if more_link
+    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
 
     css_class = "small_icon #{activity.icon}_16 shy_parent"
     css_style = activity.style
