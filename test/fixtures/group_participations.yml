@@ -71,3 +71,19 @@ networkpage_<%=i%>:
   group_id: 300<%= rand(3)+1 %>
   access: 1
 <% end %>
+
+
+### Connecting Classrooms ###
+
+<% group_ids = [5000,7,8,72,82,71,81] %>
+<% i=100 %>
+<% for p in 1001..1100 %>
+  <% indexes = (0..6).to_a.select{|g| p%(g+7)==0} %>
+  <% for x in indexes %>
+grouppage_<%=p%>_<%=x%>:
+  id: <%=i+=1%>
+  page_id: <%=p%>
+  group_id: <%=group_ids[x]%>
+  access: 1
+  <% end %>
+<% end %>

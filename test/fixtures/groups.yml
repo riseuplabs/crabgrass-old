@@ -95,4 +95,61 @@ super_admin_group:
   type: Group
   site_id: 1
 
+#
+# for testing connecting classrooms
+#
 
+teachers:
+  id: 5000
+  name: teachers
+  full_name: group of teachers for cc testing
+  type: Group
+  site_id: 1
+
+class1:
+  id: 7
+  name: class1
+  full_name: first class for cc testing
+  type: Group
+  site_id: 1
+  council_id: 71
+
+class2:
+  id: 8
+  name: class2
+  full_name: second class for cc testing
+  type: Group
+  site_id: 1
+  council_id: 81
+
+class1_teachers:
+  id: 71
+  parent_id: 7
+  name: class1+teachers
+  full_name: the teachers and visitors in class1
+  type: Council
+  site_id: 1
+
+class1_workgroup:
+  id: 72
+  parent_id: 7
+  name: class1+workgroup
+  full_name: a subset of the students in class1
+  type: Committee
+  site_id: 1
+
+class2_teachers:
+  id: 81
+  parent_id: 8
+  name: class2+teachers
+  full_name: the teachers and visitors in class2
+  type: Council
+  site_id: 1
+
+class2_workgroup:
+  id: 82
+  parent_id: 8
+  name: class2+workgroup
+  full_name: a subset of the students in class2
+  type: Committee
+  site_id: 1
