@@ -16,6 +16,9 @@
   /name/<page name>
   /changed
   /text/<page text>
+  /most_views/<num>/{days,hours}
+  /most_edits/<num>/{days,hours}
+  /most_stars/<num>/{days,hours}
     
 === associations
   /person/<user id>

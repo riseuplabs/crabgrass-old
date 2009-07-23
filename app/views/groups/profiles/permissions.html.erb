@@ -31,9 +31,15 @@
         cbs.checkbox do |cb|
           cb.label "Allow Membership Requests"[:allow_membership_requests]
           cb.input check_box(:profile, :may_request_membership, :onclick => '')
-          cb.info 'A "join group" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected.'
+          cb.info 'A "join group" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected.'[:may_request_membership_description]
+        end
+        cbs.checkbox do |cb|
+          cb.label "Open Group"[:open_group]
+          cb.input check_box(:profile, :membership_policy, {:onclick => ''}, Profile::MEMBERSHIP_POLICY[:open], Profile::MEMBERSHIP_POLICY[:approval])
+          cb.info 'Users are immediately added to the group - request don\'t have to be approved'[:open_group_description]
         end
       end
+      
     end
     if may_create_council?
       f.row do |r|

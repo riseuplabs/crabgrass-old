@@ -35,12 +35,10 @@ module TaggingHelper
   end
 
 
-  def tag_link(tag, group_name=nil, user_name=nil, css_class='tag2')
+  def tag_link(tag, owner, css_class='tag2')
     name = CGI.escape tag.name
-    if group_name  
-      link_path = "/groups/tags/#{group_name}/#{name}"
-#    elsif user_name 
-#      link_path = "/person/tags/#{user_name}/#{name}"
+    if owner.name
+      link_path = "/groups/tags/#{owner.name}/#{name}"
     else
       link_path = "/me/search/tag/#{name}"
     end

@@ -40,18 +40,15 @@ class BasePage::ParticipationController < ApplicationController
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access. 
   def destroy
-    error = "You cannot remove your last remaining access to this page."[:remove_last_access_error]
-
+    error = "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."[:remove_access_error]
     upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
-    if upart and (@page.owner.nil? or (upart.user != @page.owner))
-      current_user.may_admin_page_without?(@page, upart) or raise ErrorMessage.new(error)
-      @page.remove(upart.user)
-    end
-
     gpart = (GroupParticipation.find(params[:gpart_id]) if params[:gpart_id])
-    if gpart and (@page.owner.nil? or (gpart.group != @page.owner))
-      current_user.may_admin_page_without?(@page, gpart) or raise ErrorMessage.new(error)
+    if may_remove_participation?(upart)
+      @page.remove(upart.user)
+    elsif may_remove_participation?(gpart)
       @page.remove(gpart.group)
+    else
+      raise ErrorMessage.new(error)
     end
 
     render :update do |page|
@@ -88,6 +85,20 @@ class BasePage::ParticipationController < ApplicationController
     render :template => 'base_page/participation/reset_star_line'
   end
 
+  after_filter :track_starring, :only => :update_star
+  def track_starring
+    action = params[:add] ? :star : :unstar
+    if current_site.tracking
+      Tracking.insert_delayed(:page => @page,
+                              :group => @group,
+                              :user => current_user,
+                              :action => action)
+    elsif
+      Tracking.insert_delayed(:page => @page,
+                              :action => action)
+    end
+  end
+
   def update_watch
     @upart = @page.add(current_user, :watch => params[:add])
     @upart.save!
@@ -110,7 +121,6 @@ class BasePage::ParticipationController < ApplicationController
                 Group.find_by_name params[:group_id]
               end
       raise PermissionDenied.new unless current_user.member_of?(group)
-      @page.remove(@page.group) if @page.group
       @page.owner = group
       current_user.updated(@page)
       @page.save!

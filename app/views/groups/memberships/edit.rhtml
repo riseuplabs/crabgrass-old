@@ -4,12 +4,9 @@ table.members td {padding: 12px;}
 
 <%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
 
-<% if logged_in? %>
-  <% if current_user.may?(:admin, @group) -%>
-    <%= render :partial => 'admin' %>
-  <% end -%>
-  <% if @group.committee? and current_user.may?(:admin,@group)-%>
-    <%= render :partial => 'committee' %>
-  <% end -%>
-<% end %>
-
+<% if may_update_group? -%>
+  <%= render :partial => 'admin' %>
+<% end -%>
+<% if may_create_memberships? -%>
+  <%= render :partial => 'committee' %>
+<% end -%>

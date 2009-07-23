@@ -17,10 +17,22 @@ class CronWorker < BackgrounDRb::MetaWorker
     # (on a system with user accounts, tmpreaper should be used instead.)
   end
 
-  # updates page.views_count from the data in the page_views table.
+  # updates page.views_count and hourlies from the data in the trackings table.
   # this should be called frequently.
-  def update_trackings
-    Tracking.update_trackings
+  def process_trackings
+    Tracking.process
+  end
+
+  # updates dailies from the data in the hourlies table.
+  # this should be called once per day.
+  def update_dailies
+    Daily.update
+  end
+
+  # updates the last_seen field of the users table.
+  # this should be called every other minute.
+  def update_last_seen
+    Tracking.update_last_seen
   end
 
   # the output of this is logged to: log/backgroundrb_debug_11006.log

@@ -14,44 +14,47 @@ Order of profile presidence (user sees the first one that matches):
  (5) stranger } the 'public' profile
 
   create_table "profiles", :force => true do |t|
-    t.integer  "entity_id",              :limit => 11
-    t.string   "entity_type"
-    t.boolean  "stranger"
-    t.boolean  "peer"
-    t.boolean  "friend"
-    t.boolean  "foe"
-    t.string   "name_prefix"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.string   "name_suffix"
-    t.string   "nickname"
-    t.string   "role"
-    t.string   "organization"
-    t.string   "place"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "birthday",               :limit => 8
-    t.boolean  "fof"
-    t.text     "summary"
-    t.text     "summary_html"
-    t.integer  "wiki_id",                :limit => 11
-    t.integer  "photo_id",               :limit => 11
-    t.integer  "layout_id",              :limit => 11
-    t.boolean  "may_see"                 :default => true
-    t.boolean  "may_see_committees"
-    t.boolean  "may_see_networks"
-    t.boolean  "may_see_members"
-    t.boolean  "may_request_membership"
-    t.integer  "membership_policy",      :limit => 11
-    t.boolean  "may_see_groups"
-    t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact"     :default => true
-    t.boolean  "may_pester"              :default => true
-    t.boolean  "may_burden"
-    t.boolean  "may_spy"
-    t.string   "language",               :limit => 5
+   t.integer  "entity_id",              :limit => 11
+   t.string   "entity_type"
+   t.boolean  "stranger"
+   t.boolean  "peer"
+   t.boolean  "friend"
+   t.boolean  "foe"
+   t.string   "name_prefix"
+   t.string   "first_name"
+   t.string   "middle_name"
+   t.string   "last_name"
+   t.string   "name_suffix"
+   t.string   "nickname"
+   t.string   "role"
+   t.string   "organization"
+   t.datetime "created_at"
+   t.datetime "updated_at"
+   t.string   "birthday",               :limit => 8
+   t.boolean  "fof"
+   t.text     "summary"
+   t.integer  "wiki_id",                :limit => 11
+   t.integer  "photo_id",               :limit => 11
+   t.integer  "layout_id",              :limit => 11
+   t.boolean  "may_see",                              :default => true
+   t.boolean  "may_see_committees"
+   t.boolean  "may_see_networks"
+   t.boolean  "may_see_members"
+   t.boolean  "may_request_membership"
+   t.integer  "membership_policy",      :limit => 11, :default => 0
+   t.boolean  "may_see_groups"
+   t.boolean  "may_see_contacts"
+   t.boolean  "may_request_contact",                  :default => true
+   t.boolean  "may_pester",                           :default => true
+   t.boolean  "may_burden"
+   t.boolean  "may_spy"
+   t.string   "language",               :limit => 5
+   t.integer  "discussion_id",          :limit => 11
+   t.string   "place"
+   t.integer  "video_id",               :limit => 11
+   t.text     "summary_html"
   end
+
 
 Applies to both groups and users: may_see, may_see_groups
 
@@ -60,7 +63,7 @@ Applies to users only: may_see_contacts, may_request_contact, may_pester
 Applies to groups only: may_see_committees, may_see_networks, may_see_members,
   may_request_membership, membership_policy
 
-Currently unused: membership_policy, may_burden, may_spy, language.
+Currently unused: may_burden, may_spy, language.
 
 =end
 
@@ -82,6 +85,14 @@ class Profile < ActiveRecord::Base
     self.entity_type = 'Group' if self.entity_type =~ /Group/
   end
   
+  ##
+  ## CONSTANTS
+  ##
+
+  # approval - user requests to join, group members approce (the default)
+  # open - anyone can join the group
+  MEMBERSHIP_POLICY = {:approval => 0, :open => 1}.freeze
+
   ##
   ## BASIC ATTRIBUTES
   ##
@@ -106,6 +117,13 @@ class Profile < ActiveRecord::Base
     return 'private' if friend?
     return 'unknown'
   end
+
+  def membership_policy_is? name
+    self.membership_policy == MEMBERSHIP_POLICY[name.to_sym]
+  end
+
+  def may_comment?() read_attribute(:may_pester) end
+  def may_comment=(value) write_attribute(:may_pester, value) end
 
   ##
   ## ASSOCIATED ATTRIBUTES

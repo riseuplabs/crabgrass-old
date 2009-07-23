@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   ## CORE EXTENSIONS
   ##
 
-  include UserExtension::Cache      # should come first
-  include UserExtension::Socialize  # user <--> user
-  include UserExtension::Organize   # user <--> groups
-  include UserExtension::Sharing    # user <--> pages
+  include UserExtension::Cache      # cached user data (should come first)
+  include UserExtension::Users      # user <--> user
+  include UserExtension::Groups     # user <--> groups
+  include UserExtension::Pages      # user <--> pages
   include UserExtension::Tags       # user <--> tags  
   include UserExtension::AuthenticatedUser
 
@@ -69,9 +69,9 @@ class User < ActiveRecord::Base
 
   after_save :update_name
   def update_name
-    if login_changed?
-      Page.connection.execute "UPDATE pages SET `updated_by_login` = '#{self.login}' WHERE pages.updated_by_id = #{self.id}"
-      Page.connection.execute "UPDATE pages SET `created_by_login` = '#{self.login}' WHERE pages.created_by_id = #{self.id}"
+    if login_changed? and !login_was.nil?
+      Page.update_owner_name(self)
+      Wiki.clear_all_html(self)
     end
   end
 
@@ -126,8 +126,9 @@ class User < ActiveRecord::Base
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
   
-  def profile
-    self.profiles.visible_by(User.current)
+  def profile(reload=false)
+    @profile = nil if reload
+    @profile ||= self.profiles.visible_by(User.current)
   end
 
   ##
@@ -171,6 +172,10 @@ class User < ActiveRecord::Base
       self.find(:all, :conditions => ['due_at <= ? AND completed_at IS NULL', 1.week.from_now])
     end
   end
+
+  # for now, destroy all of a user's posts if they are destroyed. unlike other software,
+  # we don't want to keep data on anyone after they have left.
+  has_many :posts, :dependent => :destroy
 
   after_destroy :destroy_requests
   def destroy_requests

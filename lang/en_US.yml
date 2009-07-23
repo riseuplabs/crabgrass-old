@@ -62,6 +62,7 @@ recently_created: "Recently Created"
 most_active: "Most Active"
 no_search_results: "No Results"
 empty_results: "None"
+not_found: "Not Found"
 unknown: "Unknown"
 search_headline: "Search"
 see_more_link: "More"
@@ -74,6 +75,7 @@ summary: "Summary"
 edit: "Edit"
 preview: "Preview"
 private: "Private"
+public: "Public"
 options: "Options"
 permissions: "Permissions"
 description: "Description"
@@ -182,7 +184,7 @@ include_full_checkbox: include link to full image
 signup_link: "Need a new account?"
 signup_email_info: "Optional: used if you forget your password"
 forgot_password_link: "I forgot my password"
-signup_info: Choose your login name and your password then click "%s"
+signup_info: Choose your login name and your password then click "{sign_up}"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
 login_name: "Login name"
@@ -291,6 +293,7 @@ activity_user_destroyed: "{user} has retired"
 activity_group_created: "{user} created {group_type} {group}"
 activity_group_destroyed: "{group} was destroyed by {user}"
 activity_wall_message: "{author} wrote to {user}: {message}"
+activity_message: "{author} wrote: {message}"
 activity_unread: "You have {count} unread [private messages]"
 activity_unread_singular: "You have an unread [private message]"
 
@@ -560,6 +563,7 @@ create_committee: "create committee"
 group_language: "The main language of this %s."
 group_summary: "Brief information regarding this %s."
 new_network: "New network"
+group_membership_count: "{count} Members"
 
 # directory
 
@@ -881,7 +885,9 @@ month_short_november: Nov
 month_short_december: Dec
 date_today: Today
 date_yesterday: Yesterday
-date_this_week: This Past Week
+date_this_week: This Week
+date_this_month: This Month
+date_all_time: All Time
 date_older: Older
 date_centuries: centuries
 date_years: years
@@ -900,6 +906,7 @@ alert_not_saved: "Changes could not be saved"
 alert_field_errors: "There are problems with the following fields"
 alert_saved: "Changes saved"
 alert_permission_denied: "Permission Denied"
+alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
 alert_error: "Error"
 
 ##
@@ -979,15 +986,19 @@ wiki_revert_version: "Revert To Version {version}"
 ## WALL
 ## 
 
-set_status_button: "Set Status"
-my_status_heading: "Your Current Status"
-# ^^ no longer used
-users_wall: ":user's Wall"
-## ^^ no longer used
-recent_wall_posts: "Recent Wall Posts"
-## ^^ no longer used
+set_status_button: "Update Status"
+say_message_button: "Say"
 wall_heading: "Public Message Wall"
 wall_post_button: "Post New Message"
+
+my_status_heading: "Your Current Status"
+# ^^ no longer used
+
+users_wall: ":user's Wall"
+## ^^ no longer used
+
+recent_wall_posts: "Recent Wall Posts"
+## ^^ no longer used
 
 ##
 ## EMAIL
@@ -1017,6 +1028,8 @@ email_link_expires: "This link will expire in {days} days."
 ##
 ## PEOPLE (i.e., PeopleController)
 ##
+last_seen: last seen
+all: All
 
 directory_of_people: Directory of People
 no_contacts_msg: You have no friends.
@@ -1091,3 +1104,18 @@ welcome_create_group_text: "Create a new group and invite other people to join. 
 welcome_create_page_link: "Create a new page"
 welcome_create_page_text: "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."
 
+##
+## SITE HOME
+##
+
+have_your_say: "Have Your Say!"
+contribute_to_site: "Contribute to Site"
+create_a_group: "Create a Group"
+see_tips_to_get_started: "See Tips to get started"
+most_active_members: "Most Active Members"
+recently_active_members: "Recently Active Members"
+most_active_groups: "Most Active Groups"
+recently_active_groups: "Recently Active Groups"
+network_aettings: "Network Settings"
+administer_site: "Administer Site"
+edit_appearance: "Edit Appearance"

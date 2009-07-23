@@ -20,6 +20,49 @@ class PageTest < Test::Unit::TestCase
     end
   end
 
+  def test_unique_names_with_recipients
+    user = users(:penguin)
+    
+    params = ParamHash.new("title"=>"beet", "owner"=>user, "user"=>user, "share_with"=>{user.login=>{"access"=>"admin"}})
+
+    assert_difference 'Page.count' do
+      assert_difference 'PageTerms.count' do
+        assert_difference 'UserParticipation.count' do
+          WikiPage.create!(params)
+        end
+      end
+    end
+  
+    assert_no_difference 'Page.count', 'no new page' do
+      assert_no_difference 'PageTerms.count', 'no new page terms' do
+        assert_no_difference 'UserParticipation.count', 'no new user part' do
+           assert_raises ActiveRecord::RecordInvalid do
+             WikiPage.create!(params)
+           end
+        end
+      end
+    end
+
+  end
+
+  def test_build
+    user = users(:kangaroo)
+    page = nil   
+    assert_no_difference 'Page.count', 'no new page' do
+      assert_no_difference 'PageTerms.count', 'no new page terms' do
+        assert_no_difference 'UserParticipation.count', 'no new user part' do
+          page = WikiPage.build!(:title => 'hi', :user => user)
+        end
+      end
+    end
+    assert_difference 'Page.count' do
+      assert_difference 'PageTerms.count' do
+        assert_difference 'UserParticipation.count' do
+          page.save
+        end
+      end
+    end
+  end
 
   # this is a test if we are using has_many_polymorphic
   # currently, we are using a single belongs_to that is polymorphic
@@ -79,10 +122,10 @@ class PageTest < Test::Unit::TestCase
   def test_denormalized
     user = User.find 3
     group = Group.find 3
-    p = create_page :title => 'oak tree'
-    p.add(group)
-    p.save
-    assert_equal group.name, p.group_name, 'page should have a denormalized copy of the group name'
+    page = create_page :title => 'oak tree'
+    page.add(group, :access => :admin)
+    page.save
+    assert_equal group.name, page.owner_name, 'page should have a denormalized copy of the group name'
   end
 
   def test_destroy
@@ -134,15 +177,15 @@ class PageTest < Test::Unit::TestCase
     assert check_associations(Page)
   end
   
-  def test_thinking_sphinx
-    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
-      page = Page.new :title => 'title'
-      page.expects(:save_without_after_commit_callback)
-      page.save
-    else
-      puts "thinking sphinx is not included"
-    end
-  end
+#  def test_thinking_sphinx
+#    if Page.included_modules.include? ThinkingSphinx::ActiveRecord
+#      page = Page.new :title => 'title'
+#      page.expects(:save_without_after_commit_callback)
+#      page.save
+#    else
+#      puts "thinking sphinx is not included"
+#    end
+#  end
 
   def test_page_owner
     page = nil
@@ -179,6 +222,63 @@ class PageTest < Test::Unit::TestCase
     assert_equal groups(:animals).name, page.owner_name
     assert_equal groups(:animals).id, page.owner_id
     assert_equal groups(:animals), page.owner
+  end
+
+  def test_attachments
+    page = Page.create! :title => 'page with attachments', :user => users(:blue)
+    page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+   
+    assert_equal page.page_terms, page.assets.first.page_terms 
+
+    assert_equal 'photo.jpg', page.assets.first.filename    
+    page.assets.each do |asset|
+      assert !asset.public?
+    end
+
+    page.public = true
+    page.save
+
+    page.assets(true).each do |asset|
+      assert asset.public?
+    end
+
+    assert_difference('Page.count', -1) do
+      assert_difference('Asset.count', -1) do
+        page.destroy
+      end
+    end
+  end
+
+  def test_attachment_options
+    asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
+    page = Page.create! :title => 'page with attachments' do |page|
+      page.add_attachment! asset, :filename => 'picture', :cover => true
+    end
+    
+    assert_equal 'picture.jpg', page.assets.first.filename
+    assert_equal asset, page.cover
+  end
+
+  def test_attachment_building
+    assert_no_difference 'Page.count' do
+      assert_no_difference 'Asset.count' do
+        assert_raises ActiveRecord::RecordInvalid do
+          Page.create! do |page|
+            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+          end
+        end
+      end
+    end
+    assert_difference 'Page.count' do
+      assert_difference 'Asset.count' do
+        assert_nothing_raised do
+          page = Page.create!(:title => 'hi') do |page|
+            page.add_attachment! :uploaded_data => upload_data('photo.jpg')
+          end
+          assert_equal 'photo.jpg', page.assets.first.filename
+        end
+      end
+    end
   end
 
   protected

@@ -33,14 +33,12 @@ class PageClassProxy
 
   def class_display_name
     symbol = (class_name.underscore + '_display').to_sym
-    default_text = short_class_name
-    default_text[symbol]
+    symbol.t
   end
 
   def class_description
     symbol = (class_name.underscore + '_description').to_sym
-    default_text = "(%s not yet translated)" % symbol
-    default_text[symbol]
+    symbol.t
   end
 
   def actual_class

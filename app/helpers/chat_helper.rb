@@ -1,7 +1,7 @@
 module ChatHelper
 
   def message_time_and_name(created_at, name)
-    %(<span class="time">#{created_at.strftime('%Y.%m.%d %R')}</span> <span class="sender">#{name}</span> )
+    %(<span class="time">#{created_at.strftime('%R')}</span> <span class="sender">#{name}</span> )
   end  
 
   def message_content(message)
@@ -15,8 +15,7 @@ module ChatHelper
   end
   
   def scroll_conversation_script
-    %(if ($('conversation').scrollTop > $('conversation').scrollHeight - 1.5* $('conversation').clientHeight)
-        { $('conversation').scrollTop = $('conversation').scrollHeight - $('conversation').clientHeight; })
+    "$('conversation').scrollTop = $('conversation').scrollHeight;"
   end
   
   # this isn't working yet, but is more in the rails way, using JavascriptGenerator
@@ -28,35 +27,7 @@ module ChatHelper
   end
   
   def insert_message_script(message)
-    %(new Insertion.Bottom('stage', '#{escape_javascript message_content(message)}');)
-  end
-
-  def record_user_action(action)
-    # tell the database that is user is still in the channel, decrement the is_typing counter
-    state = Integer(0)
-    @channels_user ||= @channel.channels_users.find_by_user_id(@user.id)
-    if @channels_user and @channels_user.status?
-      state = @channels_user.status
-    end
-    
-    if action == :not_typing
-      if state > 0
-        state -= 1
-      elsif state < 0
-        state += 1
-      end
-    elsif action == :typing
-      if state < 0
-        state += 1
-      else
-        state = 3
-      end
-    elsif action == :just_finished_typing
-      state = -2
-    end
-    
-    @channel.users.delete(@user)
-    @channel.users.push_with_attributes(@user, { :last_seen => Time.now, :status => state })
+    %(new Insertion.Bottom('conversation', '#{escape_javascript message_content(message)}');)
   end
 
   def num_active_in_channel(group_id)

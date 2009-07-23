@@ -40,7 +40,7 @@
 <tr>
 
   <td>
-    <h3 class='small_icon membership_add_16'><%= link_to "Create a new group"[:welcome_create_group_link], :controller => '/groups', :action => 'create' %></h3>
+    <h3 class='small_icon membership_add_16'><%= link_to "Create a new group"[:welcome_create_group_link], groups_url(:action => 'new') %></h3>
     <span><%= "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."[:welcome_create_group_text] %></span>
   </td>
 

@@ -5,6 +5,7 @@
   # sec[0,59] min[0,59], hour[0,23], day[1,31], month[1,12], weekday[0,6], year
   #
   
+  two_minutes = "0 */2 * * * * *"
   hourly     = "0 0 * * * * *"
   daily      = "0 0 4 * * * *"       # run at 4am
   three_days = "0 0 0 */3 * * *"
@@ -34,8 +35,12 @@
       :trigger_args: <%= daily %>
     :clean_codes:
       :trigger_args: <%= daily %>
-    :update_trackings:
+    :update_dailies:
+      :trigger_args: <%= daily %>
+    :process_trackings:
       :trigger_args: <%= hourly %>
+    :update_last_seen:
+      :trigger_args: <%= two_minutes %>
     :reindex_sphinx:
       :trigger_args: <%= hourly %>
 

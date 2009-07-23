@@ -55,19 +55,6 @@ module BasePageHelper
     (para||:view).to_sym
   end
 
-  ## POSTS HELPERS
-  ## (posts are handled by a seperate controller, but all the views for
-  ##  posts use this helper)
-  ##
-  
-  def created_modified_date(created, modified=nil)
-    return friendly_date(created) unless modified and (modified > created + 30.minutes)
-    created_date = friendly_date(created)
-    modified_date = friendly_date(modified)
-    detail_string = "created:&nbsp;#{created_date}<br/>modified:&nbsp;#{modified_date}"
-    link_to_function created_date, %Q[this.replace("#{detail_string}")], :class => 'dotted'
-  end
-
   ##
   ## SIDEBAR HELPERS
   ##
@@ -131,7 +118,7 @@ module BasePageHelper
         add = true
         label = 'Add Star (:star_count)'[:add_star_link]
       end
-      label = label % {:star_count => @page.stars}
+      label = label % {:star_count => @page.stars_count}
       url = {:controller => 'base_page/participation', :action => 'update_star',
              :add => add, :page_id => @page.id}
       link = link_to_remote_with_icon(label, :url => url, :icon => icon)
@@ -178,7 +165,7 @@ module BasePageHelper
   def page_tags
     if @page.tags.any?
       links = @page.tags.collect do |tag|
-        tag_link(tag, @page.group_name, @page.created_by_login)
+        tag_link(tag, @page.owner)
       end.join("\n")
       content_tag :div, links, :class => 'tags'
     elsif may_update_tags?
@@ -330,7 +317,7 @@ module BasePageHelper
   
   def select_page_owner(_erbout)
     owner_name = @page.owner ? @page.owner.name : ''
-    if current_user.may?(:admin, @page)
+    if may_move_page?
       form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
         possibles = @page.admins.to_select('both_names', 'name')
         require 'ruby-debug';debugger;1-1

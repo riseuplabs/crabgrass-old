@@ -122,6 +122,20 @@ module BasePagePermission
     page.nil? or current_user.may? :admin, page
   end
 
+  def may_remove_participation?(part)
+    if part.is_a?(UserParticipation)
+      part.user_id and
+      part.user != @page.owner and
+      current_user.may_admin_page_without?(@page, part)
+      # may_create_participation? || current_user == page.user
+    elsif part.is_a?(GroupParticipation)
+      part.group_id and
+      part.group != @page.owner and
+      current_user.may_admin_page_without?(@page, part)
+      # may_create_participation? || current_user.admin_for_group_ids.include?(gpart.group_id)
+    else false
+    end
+  end
   ##
   ## TITLE
   ##

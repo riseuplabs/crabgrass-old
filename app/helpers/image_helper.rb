@@ -46,6 +46,10 @@ module ImageHelper
     '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
   end
 
+  def avatar_style(viewable, size='medium')
+    "background-image: url(%s);" % avatar_url_for(viewable, size)
+  end
+
   ##
   ## PAGES
   ##
@@ -94,6 +98,10 @@ module ImageHelper
     "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
   end
 
+  def big_spinner()
+    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;"
+  end
+
   # we can almost do this to trick ie into working with event.target,
   # which would eliminate the need for random ids.
   #
@@ -121,22 +129,25 @@ module ImageHelper
       :loading => spinner_icon_on(icon, id),
       :complete => spinner_icon_off(icon, id)
     }
-    class_options = {:class => "small_icon #{icon}_16", :id => id}
+    html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
+    html_options[:id] ||= id
     link_to_remote(
       label,
       options.merge(icon_options),
-      class_options.merge(html_options)
+      html_options
     )
   end
 
   def link_to_function_with_icon(label, function, options={})
     icon = options.delete(:icon)
-    class_options = {:class => "small_icon #{icon}_16"}
-    link_to_function(label, function, class_options.merge(options))
+    options[:class] = ['small_icon', "#{icon}_16", options[:class]].combine
+    link_to_function(label, function, options)
   end
 
   def link_to_remote_icon(icon, options={}, html_options={})
-    link_to_remote_with_icon('', options, html_options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16 #{html_options[:class]}"))
+    html_options[:class] = [html_options[:class], 'small_icon_button'].combine
+    html_options[:icon] = icon
+    link_to_remote_with_icon('', options, html_options)
   end
 
   def link_to_function_icon(icon, function, options={})
@@ -145,6 +156,10 @@ module ImageHelper
 
   def link_to_with_icon(icon, label, url, options={})
     link_to label, url, options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+  end
+
+  def link_to_icon(icon, url, options={})
+    link_to_with_icon(icon, '', url, options)
   end
 
   def link_to_toggle(label, id)

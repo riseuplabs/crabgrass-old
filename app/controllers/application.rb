@@ -54,6 +54,7 @@ class ApplicationController < ActionController::Base
 
   def essential_initialization
     current_site
+    @path = parse_filter_path(params[:path])
   end
   
   def header_hack_for_ie6
@@ -140,6 +141,18 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_appearance
 
+  # create a filter ParsedPath
+  def parse_filter_path(path)
+    if path.is_a?(PathFinder::ParsedPath)
+      path
+    elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
+      PathFinder::ParsedPath.new(path[0])
+    else
+      PathFinder::ParsedPath.new(path)
+    end
+  end
+  helper_method :parse_filter_path
+
   #
   # returns a hash of options to be given to the mailers. These can be
   # overridden, but these defaults are pretty good. See models/mailer.rb.
@@ -219,6 +232,32 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # shows a generic not found page
+  def render_not_found
+    @skip_context = true
+    render :template => 'common/not_found', :status => :not_found
+  end
+
+  # shows a generic permission denied page
+  def render_permission_denied
+    @skip_context = true
+    render :template => 'common/permission_denied'
+  end
+
+  def render_error(exception=nil)
+    if exception
+      if exception.try.options.try[:redirect]
+        flash_message :exception => exception
+        redirect_to exception.options[:redirect]
+        return
+      else
+        flash_message_now :exception => exception
+      end
+    end
+    @skip_context = true
+    render :template => 'common/error', :status => exception.try(:status)
+  end
+
   private
   
   def rescue_authentication_errors

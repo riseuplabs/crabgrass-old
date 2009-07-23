@@ -11,7 +11,7 @@ ACCESS_EDIT = 2
 ACCESS_VIEW = 3
 
 # types of page flows
-FLOW = {:deleted => 3, :gallery => 4, :announcement => 5}.freeze
+FLOW = {:deleted => 3, :announcement => 5}.freeze
 
 # enum of media types
 MEDIA_TYPE = {
@@ -19,6 +19,16 @@ MEDIA_TYPE = {
   :audio => 2,
   :video => 3,
   :document => 4
+}.freeze
+
+# enum of actions for tracking
+ACTION = {
+  :view => 1,
+  :edit => 2,
+  :star => 3,
+  :unstar => 4,
+  :comment => 5, # not used yet
+  :share => 6 # not used yet
 }.freeze
 
 ARROW = " &raquo; "

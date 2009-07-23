@@ -44,11 +44,15 @@ module ContextHelper
     @context << [text,url]
   end
 
-  def add_breadcrumb(text, url)
-    @breadcrumbs ||= []
-    @breadcrumbs << [text,url]
-  end
+  ##def add_breadcrumb(text, url)
+  ##  @breadcrumbs ||= []
+  ##  @breadcrumbs << [text,url]
+  ##end
   
+  def set_breadcrumbs(hash)
+    @breadcrumbs = hash.to_a
+  end
+
   def set_banner(partial, style)
     @banner = render_to_string :partial => partial
     @banner_style = style
@@ -66,7 +70,7 @@ module ContextHelper
     return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
-    add_context 'Groups'[:groups], groups_url(:action => nil)
+    add_context 'Groups'[:groups], group_directory_url
     if @group and !@group.new_record?
       if @group.committee? or @group.council?
         if @group.parent
@@ -109,7 +113,7 @@ module ContextHelper
 
   def person_context(size='large', update_breadcrumbs=true)
     @active_tab = :people
-    add_context 'people'.t, people_url
+    add_context "People"[:people], people_url
     if @user
       add_context @user.display_name, url_for_user(@user, :action => 'show')
       set_banner "person/banner_#{size}", @user.banner_style
@@ -127,7 +131,7 @@ module ContextHelper
   end
 
   def page_context
-    if @page
+    if @page and !@page.new_record?
       if @group and @page.group_ids.include?(@group.id)
         group_context('small', false)
       elsif @page.owner_type == "Group"

@@ -136,8 +136,7 @@ class WikiPageController < BasePageController
   # called early in filter chain
   def fetch_data
     return true unless @page
-
-    @wiki = @page.data
+    @wiki = @page.wiki
   end
 
   # before filter
@@ -181,9 +180,8 @@ class WikiPageController < BasePageController
   # and replaces the section with the form. This is pretty crude, and might not
   # work in all cases.
   def replace_section_with_form(html, heading_start, heading_end, form)
-    index_start = html.index /^<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
-    if heading_end
-      index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
+    index_start = html.index /<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
+    if heading_end and index_end = html.index(/<h[1-4]><a name="#{Regexp.escape(heading_end)}">/)
       index_end -= 1
     else
       index_end = -1

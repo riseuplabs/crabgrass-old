@@ -18,12 +18,7 @@ class Network < Group
   has_many :federatings, :dependent => :destroy
   has_many :groups, :through => :federatings
   has_many :sites 
-  
-  # returns true if thing is part of the network
-  def has?(thing)
-    thing.belongs_to_network?(self) ? true : false
-  end
-    
+     
   # only this method should be used for adding groups to a network
   def add_group!(group, delegation=nil)
     self.federatings.create!(:group => group, :delegation => delegation, :council => council)

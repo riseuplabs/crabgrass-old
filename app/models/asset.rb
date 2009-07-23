@@ -95,43 +95,33 @@ class Asset < ActiveRecord::Base
   ##
   
   # checks wether the given `user' has permission `perm' on this Asset.
-  # Permission to an Asset will be granted in any of the following ways:
-  #  * The Asset belongs to an AssetPage and the given `user' is given 
-  #    access to it
-  #  * The Asset is part of a Gallery with access for `user'
-  #  * The Asset is an attachment of a Page `user' may access.
+  #
+  # there is only one way that a user may have access to an asset:
+  #
+  #    if the user also has access to the asset's page 
+  #
+  # not all assets have a page. for them, this test will fail.
+  # (for example, assets that are part of profiles).
+  #
+  # Adding an asset to a gallery does not confir any special access.
+  # If you have access to the gallery, but not an asset in the gallery, then
+  # you are not able to see the asset.
+  #
   # Return value:
   #   returns always true
   #   raises PermissionDenied if the user has no access.
-  # Note: This method is normally called through User#may! or the 
-  #       weaker User#may?
-  def has_access! perm, user
-    raise PermissionDenied unless self.page
-    p = self.page.has_access!(perm, user)
-  rescue PermissionDenied
-    ##
-    ## I think there is a much better way to do this -elijah
-    ##
-    Gallery rescue nil # assure load_missing_constant loads this if possible
-    unless defined?(Gallery) &&
-        self.galleries.any? &&
-        self.galleries.select {|g| user.may?(perm, g) ? g : nil}.any?
-      raise PermissionDenied
+  #
+  # has_access! is called by User.may?
+  #
+  def has_access!(perm, user)
+    # If the perm is :view, use the quick visibility check
+    if perm == :view
+      return true if self.visible?(user)
     end
-    true
+    raise PermissionDenied unless self.page
+    self.page.has_access!(perm, user)
   end
  
-#
-# SITES
-#
-#############################  
-  
-  # returns true if self is part of the given network
-  # [TODO] make this work with assets without page
-  def belongs_to_network?(network)
-    return true if self.page && self.page.groups.include?(network)
-  end
-  
   def participation_for_groups ids
     gparts = self.page.participation_for_groups(ids)
     if(self.galleries.any?)
@@ -267,7 +257,7 @@ class Asset < ActiveRecord::Base
   def update_is_attachment
     if page_id_changed?
       self.is_attachment = true if page_id
-      self.page_terms = (page.page_terms if page_id)
+      self.page_terms = (page.page_terms if page)
     end
   end
   
@@ -294,23 +284,23 @@ class Asset < ActiveRecord::Base
   # if attributes[:page] is given, an AssetPage is created with the given 
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
-  def self.make(attributes = nil)
+  def self.make(attributes = nil, &block)
     begin
-      return self.make!(attributes)
+      return self.make!(attributes, &block)
     rescue Exception => exc
       return nil
     end
   end
   
-  def self.make!(attributes = nil)
+  def self.make!(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.create!(attributes)
+    asset_class.create!(attributes, &block)
   end
 
   # like make(), but builds the asset in memory and does not save it.
-  def self.build(attributes = nil)
+  def self.build(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.new(attributes)
+    asset_class.new(attributes, &block)
   end
   
   # eg: 'image/jpg' --> ImageAsset
@@ -358,6 +348,11 @@ class Asset < ActiveRecord::Base
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
   # download_gallery action to find out if it's cached zips are up to date.
+  #
+  # hmm... i don't think this is a good idea. it will result in the Gallery page
+  # being marked as updated in the recent pages feed, even when it has not been.
+  # -elijah
+  #
   def update_galleries
     if galleries.any?
       galleries.each { |g| g.save }

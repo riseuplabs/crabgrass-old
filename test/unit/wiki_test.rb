@@ -121,18 +121,18 @@ class WikiTest < Test::Unit::TestCase
     assert_equal @orange_id, w.locked_by_id('section-two'), "orange should appear as the locker of wiki section two"
   end
 
-  def test_list_of_locked_sections
-    w = wikis(:multi_section)
-
-    # lock sections by different users
-    w.lock(Time.now, users(:orange), 'section-one')
-    w.lock(Time.now, users(:blue), 'section-two')
-
-    # check list of all sections and per-users lists
-    assert_equal ['section-two', 'section-one'].sort, w.locked_sections.sort, "wiki should have sections one and two locked"
-    assert_equal 'section-one', w.currently_editing_section(users(:orange)), "wiki should list section one as locked by orange"
-    assert_equal ['section-two'], w.locked_sections_not_by(users(:orange)), "wiki should list section two as locked by users other than orange"
-  end
+  # def test_list_of_locked_sections
+  #   w = wikis(:multi_section)
+  # 
+  #   # lock sections by different users
+  #   w.lock(Time.now, users(:orange), 'section-one')
+  #   w.lock(Time.now, users(:blue), 'section-two')
+  # 
+  #   # check list of all sections and per-users lists
+  #   assert_equal ['section-two', 'section-one'].sort, w.locked_sections.sort, "wiki should have sections one and two locked"
+  #   assert_equal 'section-one', w.currently_editing_section(users(:orange)), "wiki should list section one as locked by orange"
+  #   assert_equal ['section-two'], w.locked_sections_not_by(users(:orange)), "wiki should list section two as locked by users other than orange"
+  # end
 
   def test_lock_race_condition
     w = wikis(:multi_section)

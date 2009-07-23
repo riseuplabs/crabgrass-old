@@ -1,0 +1,11 @@
+<table class='pretty'>
+    <tr>
+      <th></th>
+      <th><%= "login"[:login] %></th>
+      <th><%= "name"[:name] %></th>
+      <th><%= "organization"[:organization] %></th>
+      <th><%= "location"[:location] %></th>
+      <th><%= "last seen"[:last_seen] %></th>
+    </tr>
+<%= render :partial => 'user', :collection => users %>
+</table>
