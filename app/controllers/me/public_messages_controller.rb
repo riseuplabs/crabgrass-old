@@ -43,7 +43,7 @@ class Me::PublicMessagesController < Me::BaseController
   rescue ActiveRecord::RecordInvalid => exc
     flash_message :exception => exc
   ensure
-    redirect_to my_public_messages_url
+    redirect_to referer
   end
    
   protected
