@@ -2,7 +2,7 @@ class MembershipObserver < ActiveRecord::Observer
 
   def after_create(membership)
     key = rand(Time.now)
-    return if membership.group == Site.current.network
+    return if membership.group_id == Site.current.try.network_id
     UserJoinedGroupActivity.create!(:user => membership.user, :group => membership.group, :key => key)
     GroupGainedUserActivity.create!(:user => membership.user, :group => membership.group, :key => key)
   end
