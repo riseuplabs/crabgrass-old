@@ -93,7 +93,7 @@ class RequestsController < ApplicationController
 
     if @request
       if @request.state != 'pending'
-        raise_error "Invite has already been redeemed"[:invite_redeemed]
+        raise_error "Invite has already been redeemed"[:invite_error_redeemed]
       elsif logged_in?
         redirect_to redeem_url
       else

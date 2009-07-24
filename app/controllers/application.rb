@@ -246,7 +246,7 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception=nil)
     if exception
-      if exception.try.options.try[:redirect]
+      if exception.try(:options).try[:redirect]
         flash_message :exception => exception
         redirect_to exception.options[:redirect]
         return
