@@ -8,14 +8,14 @@
 # We are currently using Mysql::Builder.
 
 class PathFinder::Sql::Builder < PathFinder::Builder
-  
+
   include PathFinder::Sql::BuilderFilters
 
-  public 
-  
+  public
+
   attr_accessor :and_clauses # used to build the current clause of the form (x and x)
   attr_accessor :values      # array of replacement values for the '?' in conditions
-  
+
   # initializes all the arrays for conditions, aliases, clauses and so on
   def initialize(path, options)
     @conditions  = []
@@ -75,10 +75,10 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   def sql_for_find
     # parse the path and apply each filter
     apply_filters_from_path( @path )
-    
+
     # get a hash of sql elements we will use to build actual sql
     query = build_query_hash()
-    
+
     # build the actual sql
     sql = []
     if query[:unions]
@@ -107,16 +107,16 @@ class PathFinder::Sql::Builder < PathFinder::Builder
 
     # helpful for debuggin tests:
     # puts sql.join("\n")
-    
+
     sql.join("\n")
   end
-  
+
   ######################################################################
   #### PRIVATE
-  
+
   private
-  
-  # 
+
+  #
   # returns a final hash of query options
   # called only by find_pages
   #
@@ -131,8 +131,8 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
-         
-    # handle order (and any necessary aliases)         
+
+    # handle order (and any necessary aliases)
     order = sql_for_order()
     if @aliases.any?
       @select = ([@select] + @aliases).join(', ')
@@ -145,7 +145,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
       where = nil
       joins = nil
     end
-    
+
     unions = nil
     if @union
       unions = @union.collect do |union|
@@ -154,9 +154,9 @@ class PathFinder::Sql::Builder < PathFinder::Builder
         ujoins = [ujoins,joins].join(' ') if joins
         uwhere = [uwhere,where].join(' AND ') if where
         { :joins => ujoins, :where => uwhere }
-      end   
+      end
     end
-         
+
     # make the hash
     return {
       :where => where,
@@ -171,8 +171,8 @@ class PathFinder::Sql::Builder < PathFinder::Builder
 
   ##########################################################
   ### UTILITY METHODS (called by build_query_hash)
-  
-  # convert the query we have built into an actual sql condition  
+
+  # convert the query we have built into an actual sql condition
   # the argument is an array, each element assumed to be a
   # separate AND clause
   def sql_for_conditions(and_clauses)
@@ -193,16 +193,16 @@ class PathFinder::Sql::Builder < PathFinder::Builder
       end
     }.join(') AND (') + ")"
   end
-  
+
   # if the conditions use user or group participations to limit which pages are returned,
   # then we must join in those tables. we don't use :include because we don't want the data,
-  # we just want to be able to add conditions to the query. We alias the tables because 
+  # we just want to be able to add conditions to the query. We alias the tables because
   # user_participations or group_participations might already be included as the main table, so
   # we have to give it a new name.
-  
+
   def sql_for_joins(conditions_string)
     joins = []
-    
+
     # main joins
     if /user_participations\./ =~ conditions_string
       joins << "LEFT OUTER JOIN user_participations ON user_participations.page_id = pages.id"
@@ -210,7 +210,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     if /group_participations\./ =~ conditions_string
       joins << "LEFT OUTER JOIN group_participations ON group_participations.page_id = pages.id"
     end
-    
+
     # alias the participation tables for joins with extra conditions
     # (for use when the main join has already been used)
     if /user_parts\./ =~ conditions_string
@@ -219,23 +219,23 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     if /group_parts\./ =~ conditions_string
       joins << "LEFT OUTER JOIN group_participations group_parts ON group_parts.page_id = pages.id"
     end
-    
+
     # special named joins for multiple tagging conditions
     for i in 1..4
       if /taggings#{i}\./ =~ conditions_string
         joins << "INNER JOIN taggings taggings#{i} ON (pages.id = taggings#{i}.taggable_id AND taggings#{i}.taggable_type = 'Page')"
-      end  
+      end
     end
 
     return joins.join("\n")
   end
-  
+
   def sql_for_order
     return if @order.nil?
-    filter_descending('updated_at') unless @order.any?   
+    filter_descending('updated_at') unless @order.any?
     @order.reject(&:blank?).join(', ')
   end
-    
+
   def add_flow(flow)
     if flow.nil?
       @conditions << 'pages.flow IS NULL'
@@ -255,5 +255,5 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   def sql_for_where(conditions, values)
     Page.quote_sql([sql_for_conditions(conditions)] + values )
   end
-    
+
 end

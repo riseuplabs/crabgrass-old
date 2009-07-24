@@ -1,4 +1,4 @@
-# 
+#
 # PathFinder::Sphinx::Builder
 #
 # Concrete subclass of PathFinder::Builder with support for sphinx as the backend.
@@ -51,7 +51,7 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
     # 'search_text' is used to search all the fulltext index.
-    page_terms = PageTerms.search @search_text, :with => @with, :without => @without, 
+    page_terms = PageTerms.search @search_text, :with => @with, :without => @without,
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page
 
@@ -74,7 +74,7 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   end
 
   def count
-    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without, 
+    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without,
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page).size
   rescue ThinkingSphinx::ConnectionError

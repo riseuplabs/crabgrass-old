@@ -5,11 +5,11 @@ module CrabgrassDispatcher
       base.extend ClassMethods
     end
     module ClassMethods
-      # validates_handle makes sure that 
+      # validates_handle makes sure that
       # (1) the handle is in a good format
       # (2) the handle is not taken by an existing group or user
       # (3) the handle does not collide with our routes or controllers
-      # 
+      #
       def validates_handle(*attr_names)
         configuration = { :message => ActiveRecord::Errors.default_error_messages[:invalid], :on => :save, :with => nil }
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
@@ -53,6 +53,6 @@ module CrabgrassDispatcher
           end
         end
       end
-    end   
+    end
   end
 end

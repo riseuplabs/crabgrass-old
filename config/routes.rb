@@ -4,7 +4,7 @@
 # or a new root path route. This way, group and user handles will not be created for those
 # (group name or user login are used as the :context in the default route, so it can't collide
 # with any of our other routes).
-# 
+#
 
 ActionController::Routing::Routes.draw do |map|
 
@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
   ## PEOPLE
   ##
-  
+
   map.resources :people_directory, :as => 'directory', :path_prefix => 'people', :controller => 'people/directory'
 
   map.with_options(:namespace => 'people/') do |people_space|
@@ -117,7 +117,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
   ## DISPATCHER
   ##
-  
+
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
 
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil

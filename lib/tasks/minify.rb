@@ -1,7 +1,7 @@
 # This task minifies and then compresses the crabgrass javascript.
 # It should be run every time you modify the code in one of the javascript files.
 #
-# There are a couple of reasons we might want to use this method instead of 
+# There are a couple of reasons we might want to use this method instead of
 # of the many other possibilities:
 #
 # (0) we want both minification and compression
@@ -10,9 +10,9 @@
 # (3) it is better to compress in advance, rather than on every request (ie apache deflate)
 #
 # These minified and compressed versions are only used in production mode.
-# 
+#
 # The compressed files are only used if you have configured apache correctly:
-# 
+#
 # AddEncoding gzip .gz
 # RewriteCond %{HTTP:Accept-encoding} gzip
 # RewriteCond %{HTTP_USER_AGENT} !Safari
