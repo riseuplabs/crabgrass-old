@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase
   fixtures :users, :sites, :groups, :memberships, :federatings
- 
+
   def setup
     Conf.enable_site_testing
   end
@@ -19,7 +19,7 @@ class UserTest < ActiveSupport::TestCase
     for u in [:student, :teacher, :visitor, :other_student, :other_teacher, :other_visitor] do
       assert users(u).update_membership_cache, 'updating membership_cache failed'
       # all teachers have students, only teachers have students
-      assert users(u).member_of?(groups(:teachers)) != users(u).student_id_cache.empty?, 'teachers should have students, non-teachers should not.' 
+      assert users(u).member_of?(groups(:teachers)) != users(u).student_id_cache.empty?, 'teachers should have students, non-teachers should not.'
     end
     assert users(:teacher).student_id_cache = [101, 103]
     assert users(:other_teacher).student_id_cache = [101, 102, 103, 104, 106]

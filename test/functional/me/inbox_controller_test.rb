@@ -18,22 +18,22 @@ class InboxControllerTest < Test::Unit::TestCase
     assert_response :redirect
     assert_redirected_to :controller => :account, :action => :login
   end
-  
+
   def test_index
     login_as :blue
     get :index
     assert_response :success
 
     assert assigns(:pages).length > 0
-    
+
     get :index, :path => ['ascending', 'title']
     assert_response :success
     assert assigns(:pages).length > 0
-    
+
     get :index, :path => ['unread']
     assert_response :success
     assert assigns(:pages).length > 0
-    
+
   end
 
   def test_rss
@@ -47,7 +47,7 @@ class InboxControllerTest < Test::Unit::TestCase
     login_as :blue
     get :index
     assert assigns(:pages).length > 0
-    
+
     removed_page_id = assigns(:pages).first.id
     puts assigns(:pages).clear
     post :update, :page_checked => { removed_page_id.to_s => "checked"}, :remove => true
@@ -55,7 +55,7 @@ class InboxControllerTest < Test::Unit::TestCase
                "page #{removed_page_id} shouldn't be in the inbox anymore"
   end
 
-  
+
   def test_search
     login_as :blue
     @user = users(:blue)
@@ -63,25 +63,25 @@ class InboxControllerTest < Test::Unit::TestCase
     assert @user.groups, 'the user should have at least one group for this test'
     assert @user.contacts, 'the user should have at least one contact for this test'
     # test some various calls on the search methods, that could come from the search_controller by post
-    
+
     #TODO: This test should also test if the right pages come back as result. This test only checks if posting a search leads into an error so far.
-    
-    
+
+
     # test with empty parameters (=> showing all pages}
-    post :search, :search => { :text => "", :type => "", :page_state => "", :person => "", :group => "" }, :commit => "Search"   
+    post :search, :search => { :text => "", :type => "", :page_state => "", :person => "", :group => "" }, :commit => "Search"
     # perform a text search
     post :search, :search => { :text => "baum", :type => "", :page_state => "", :person => "", :group => "" }, :commit => "Search"
-    
+
     # perform a search for user and group
     post :search, :search => { :text => "", :type => "", :page_state => "", :person => @user.friends.first.login, :group => @user.groups.first.name }, :commit => "Search"
-    
-    # testing all pages with all page states    
+
+    # testing all pages with all page states
     #todo: this should be dynamically loaded from the sites available pages
     page_types = Site.first.available_page_types.collect do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
       page_group = page_class.class_group.first
     end
-    
+
     #todo: this also should maybe loaded dynamically
     page_states = ["unread","pending","starred"]
     page_types.each do |type|
@@ -90,8 +90,8 @@ class InboxControllerTest < Test::Unit::TestCase
       end
     end
   end
-  
-  
+
+
   # stubs for testing actions
   # fill in when we know what they are supposed to do
   def test_update

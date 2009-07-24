@@ -49,7 +49,7 @@ class People::DirectoryController < People::BaseController
   def prepare_pagination
     @letter_page = params[:letter] || ''
   end
-  
+
   def context
     person_context
   end

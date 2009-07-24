@@ -14,5 +14,5 @@ class StaticController < ActionController::Base
       render :template => 'avatars/show.jpg.flexi'
     end
   end
-  
+
 end

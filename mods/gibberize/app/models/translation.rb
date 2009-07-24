@@ -19,14 +19,14 @@ class Translation < ActiveRecord::Base
   def default_text
     key.default
   end
-    
+
   def default
     Translation.find_by_key_id_and_language_id(self.key.id, Language.default.id)
   end
 
   def out_of_date?
     def_trans = default()
-    return def_trans && def_trans.updated_at > self.updated_at 
+    return def_trans && def_trans.updated_at > self.updated_at
   end
 
 end

@@ -36,21 +36,21 @@ class GalleryToolTest < Test::Unit::TestCase
     user = users(:blue)
     gal = Gallery.create! :title => 'kites', :user => user
     asset = Asset.make(:uploaded_data => upload_data('image.png'))
-  
+
     assert_nothing_raised do
       gal.add_image!(asset, user)
     end
-  
+
     assert asset.is_attachment?
     assert gal.images.include?(asset)
     assert asset.galleries.include?(gal)
-  
+
     assert_difference 'Asset.count', -1 do
       assert_nothing_raised do
         gal.remove_image!(asset)
       end
     end
-  
+
     assert !gal.images.include?(asset)
     assert !asset.galleries.include?(gal)
   end
@@ -68,13 +68,13 @@ class GalleryToolTest < Test::Unit::TestCase
     gal.showings.last.move_to_top
 
     new_positions = gal.images(true).collect{|image| image.id}
-    assert_equal correct_new_positions, new_positions    
+    assert_equal correct_new_positions, new_positions
   end
 
   def test_public
     user = users(:blue)
     gallery = Gallery.create! :title => 'fishies', :user => user do |page|
-      page.add_attachment! :uploaded_data => upload_data('image.png') 
+      page.add_attachment! :uploaded_data => upload_data('image.png')
     end
 
     gallery.add_image!(gallery.assets.first, user)
@@ -92,7 +92,7 @@ class GalleryToolTest < Test::Unit::TestCase
     gallery = nil
     assert_difference 'Page.count' do
       gallery = Gallery.create! :title => 'fishies', :user => user do |page|
-        page.add_attachment! :uploaded_data => upload_data('image.png') 
+        page.add_attachment! :uploaded_data => upload_data('image.png')
       end
       gallery.add_image!(gallery.assets.first, user)
     end
@@ -118,6 +118,6 @@ class GalleryToolTest < Test::Unit::TestCase
   def test_associations
     assert check_associations(Gallery)
     assert check_associations(Showing)
-  end  
+  end
 
 end

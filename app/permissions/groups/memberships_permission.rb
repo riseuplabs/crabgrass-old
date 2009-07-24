@@ -10,7 +10,7 @@ module Groups::MembershipsPermission
     (current_user.may?(:admin, group) or group.open_membership?)
   end
 
-  # for now, there is only an edit ui for committees  
+  # for now, there is only an edit ui for committees
   def may_edit_memberships?(group=@group)
     may_create_memberships? and group.committee?
   end

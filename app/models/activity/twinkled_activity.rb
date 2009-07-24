@@ -6,7 +6,7 @@ class TwinkledActivity < Activity
   validates_presence_of :subject_id
   validates_presence_of :object_id
   validates_presence_of :extra
-  
+
   serialize :extra
 
   alias_attr :user,       :subject
@@ -20,7 +20,7 @@ class TwinkledActivity < Activity
 
   def description(view=nil)
     '{user} has starred your post "{post}"'[
-       :activity_twinkled, 
+       :activity_twinkled,
        {:user => user_span(:twinkler), :post => post_span(post)}
     ]
   end

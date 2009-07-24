@@ -1,17 +1,17 @@
 # = PathFinder::Sql::BuilderFilters
 # This contains all the filters for the different path elements.
 # It gets included from the Builder.
-#  
+#
 
 module PathFinder::Sql::BuilderFilters
 
   protected
-  
+
   def filter_unread
     @conditions << 'user_participations.viewed = ?'
-    @values << false  
+    @values << false
   end
-  
+
   def filter_pending
     if @inbox
       @conditions << 'user_participations.resolved = ?'
@@ -46,7 +46,7 @@ module PathFinder::Sql::BuilderFilters
     @conditions << 'user_participations.star = ?'
     @values << true
   end
-  
+
   # def filter_starts
   #   @date_field = "starts_at"
   # end
@@ -76,7 +76,7 @@ module PathFinder::Sql::BuilderFilters
      @conditions << "pages.#{@date_field} <= ?"
      @values << date.to_s(:db)
   end
-  
+
   def filter_changed
     @conditions << 'pages.updated_at > pages.created_at'
   end
@@ -86,13 +86,13 @@ module PathFinder::Sql::BuilderFilters
   # dates in database are UTC
   # we assume the values pass to the finder are local
   #++
-  
+
   # def filter_upcoming
   #   @conditions << 'pages.starts_at > ?'
   #   @values << Time.now
   #   @order << 'pages.starts_at DESC' if @order
   # end
-  
+
   def filter_ago(near,far)
     near = near.to_i.days.ago
     far  = far.to_i.days.ago
@@ -100,21 +100,21 @@ module PathFinder::Sql::BuilderFilters
     @values << near
     @values << far
   end
-  
+
   def filter_created_after(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
     @conditions << 'pages.created_at > ?'
     @values << date.to_s(:db)
   end
-  
+
   def filter_created_before(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
     @conditions << 'pages.created_at < ?'
     @values << date.to_s(:db)
   end
- 
+
   #--
   # this is a grossly inefficient method
   #++
@@ -129,9 +129,9 @@ module PathFinder::Sql::BuilderFilters
     @conditions << "YEAR(DATE_ADD(pages.`#{@date_field}`, INTERVAL '#{offset}' SECOND)) = ?"
     @values << year.to_i
   end
-  
+
   ####
-  
+
   def filter_type(arg)
     if arg =~ /[\+\ ]/
       page_group, page_type = arg.split(/[\+\ ]/)
@@ -155,12 +155,12 @@ module PathFinder::Sql::BuilderFilters
       @values << Page.class_group_to_class_names(page_group) # eg ['WikiPage','SurveyPage']
     end
   end
-  
+
   def filter_person(id)
     @conditions << 'user_parts.user_id = ?'
     @values << id
   end
-  
+
   def filter_group(id)
     @conditions << 'group_parts.group_id = ?'
     @values << id
@@ -168,14 +168,14 @@ module PathFinder::Sql::BuilderFilters
 
   def filter_created_by(id)
     @conditions << 'pages.created_by_id = ?'
-    @values << id 
+    @values << id
   end
 
   def filter_not_created_by(id)
     @conditions << 'pages.created_by_id != ?'
-    @values << id 
+    @values << id
   end
-  
+
   def filter_tag(tag_name)
     if tag = Tag.find_by_name(tag_name)
       # TODO:  accept more than 4 tags, or issue a vaild error message
@@ -187,19 +187,19 @@ module PathFinder::Sql::BuilderFilters
       @conditions << "FALSE"
     end
   end
-  
+
   def filter_name(name)
     @conditions << 'pages.name = ?'
     @values << name
   end
-  
+
   #--
   #### sorting  ####
   # when doing UNION, you can only ORDER BY
   # aliased columns. So, in case we are doing a
   # union, the sorting will use an alias
   #++
-  
+
   def filter_ascending(sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     if @aliases and @order
@@ -208,7 +208,7 @@ module PathFinder::Sql::BuilderFilters
       @order << "pages_%s ASC" % sortkey
     end
   end
-  
+
   def filter_descending(sortkey)
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     if @aliases and @order
@@ -219,20 +219,20 @@ module PathFinder::Sql::BuilderFilters
   end
 
   #--
-  #### BOOLEAN ####  
+  #### BOOLEAN ####
   #++
-  
+
   def filter_or
     @or_clauses << @conditions
     @conditions = []
   end
-  
+
   #--
   ### LIMIT ###
   #++
   def filter_limit(limit)
     offset = 0
-    if limit.instance_of? String 
+    if limit.instance_of? String
       limit, offset = limit.split('-')
     end
     @limit = limit.to_i if limit

@@ -21,7 +21,7 @@ class String
   # discard capitalization
   alias :t :[]
 
-end 
+end
 
 def _(str)
   str[]
@@ -29,7 +29,7 @@ end
 
 class Symbol
   def t()
-    # this special form will default to english if the symbol 
+    # this special form will default to english if the symbol
     # cannot be found for the current language.
     ""[self]
   end
@@ -38,7 +38,7 @@ end
 #
 # override the gibberish translation method
 #
-# NOTE: 
+# NOTE:
 # This relies on a hack to Gibberish which turns
 # Gibberish.translations[x] from a Hash to a HashWithIndifferentAccess
 # (we don't want to create a bunch of symbols that are never
@@ -57,7 +57,7 @@ end
 #  def brackets_with_translation(*args)
 #    args = [underscore.tr(' ', '_').to_sym] if args.empty?
 #    first = args.first
-#    if !first.is_a?(String) and !first.is_a?(Symbol) 
+#    if !first.is_a?(String) and !first.is_a?(Symbol)
 #      brackets_without_translation(*args)
 #    elsif Gibberish.translations[first]
 #      key = args.shift

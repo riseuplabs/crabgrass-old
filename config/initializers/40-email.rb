@@ -7,7 +7,7 @@ if Conf.email
   if mailconfig.is_a?(Hash)
     # Enable deliveries
     ActionMailer::Base.perform_deliveries = true
-    
+
     mailconfig.each do |k, v|
       v.symbolize_keys! if v.respond_to?(:symbolize_keys!)
       ActionMailer::Base.send("#{k}=", v)

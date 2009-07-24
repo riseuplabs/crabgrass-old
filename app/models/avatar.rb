@@ -7,7 +7,7 @@
 #  end
 #
 # also defined:
-# 
+#
 #   avatar.image_file
 #
 # Which one do you use? Always use image_file to set the data, and
@@ -26,7 +26,7 @@ class Avatar < ActiveRecord::Base
       image.resize '96x96', :crop => true
     end
   end
-    
+
   def self.pixels(size)
     case size.to_s
       when 'tiny';   '16x16'
@@ -37,6 +37,6 @@ class Avatar < ActiveRecord::Base
       else; '96x96'
     end
   end
-  
+
 end
 

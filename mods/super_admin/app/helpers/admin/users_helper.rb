@@ -7,7 +7,7 @@ module Admin::UsersHelper
   def edit_user_path(arg)
     edit_admin_user_path(arg)
   end
- 
+
   def new_user_path
     new_admin_user_path
   end

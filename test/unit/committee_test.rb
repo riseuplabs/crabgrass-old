@@ -105,7 +105,7 @@ class CommitteeTest < Test::Unit::TestCase
 
     group_page = Page.create! :title => 'a group page',
       :public => false,
-      :user => other_user, 
+      :user => other_user,
       :share_with => g, :access => :admin
     group_page.save
     committee_page = Page.create! :title => 'a committee page',

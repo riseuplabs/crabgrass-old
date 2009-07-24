@@ -26,7 +26,7 @@ class People::MessagesControllerTest < ActionController::TestCase
       end
     end
   end
-  
+
   def test_may_not_create
     login_as :red
 
@@ -61,9 +61,9 @@ class People::MessagesControllerTest < ActionController::TestCase
       end
     end
   end
-  
+
   protected
- 
+
   def create_post(opts)
     PublicPost.create do |post|
       post.body = 'x'

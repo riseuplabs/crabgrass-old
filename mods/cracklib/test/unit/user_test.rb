@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase
- 
+
   def test_cracklib
 
     assert_raises ActiveRecord::RecordInvalid do
       User.create! :login => 'adorno',
-        :password => '1234567', 
+        :password => '1234567',
         :password_confirmation => '1234567'
     end
 

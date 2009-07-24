@@ -1,5 +1,5 @@
 #
-# overwriting permissions so groups and networks can only 
+# overwriting permissions so groups and networks can only
 # be created by site admins
 #
 # this is shared by all the Groups::XxxController classes
@@ -23,8 +23,8 @@ module Groups::BasePermission
   ##
   ## ORGANIZATIONAL PERMISSIONS
   ##
-  
-  # subcomittees may still be created by everyone. We also 
+
+  # subcomittees may still be created by everyone. We also
   # use this for exceptions to the may_create_group? rule.
   def may_create_subcommittees?(group = @group)
     current_user.may?(:admin, group) and group.parent_id.nil?

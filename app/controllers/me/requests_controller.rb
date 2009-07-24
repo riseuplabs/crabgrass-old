@@ -24,9 +24,9 @@ class Me::RequestsController < Me::BaseController
   def to_me
     @requests = Request.to_user(current_user).having_state(params[:state]).by_created_at.paginate(:page => params[:page])
   end
-    
+
   protected
-  
+
   before_filter :default_state
   def default_state
     params[:state] ||= 'pending'
@@ -42,6 +42,6 @@ class Me::RequestsController < Me::BaseController
     #  add_context "from me".t, url_for(:controller => '/me/requests', :action => 'from_me')
     #end
   end
-  
+
 end
 

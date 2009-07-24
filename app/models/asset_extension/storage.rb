@@ -63,7 +63,7 @@ module AssetExtension # :nodoc:
 
     ##
     ## ASSET PATHS
-    ## 
+    ##
 
     # what id number is this asset stored under?
     # overridden by thumbnails
@@ -71,7 +71,7 @@ module AssetExtension # :nodoc:
       id.to_i
     end
 
-    # with a path_id of 4, returns ['0000','0004']  
+    # with a path_id of 4, returns ['0000','0004']
     def partitioned_path
        ("%08d" % path_id).scan(/..../)
     end
@@ -80,7 +80,7 @@ module AssetExtension # :nodoc:
     def path(*args)
       args.flatten.compact.join('/')
     end
-    
+
     # eg RAILS_ROOT/assets/0000/0055/myfile.jpg
     # or RAILS_ROOT/assets/0000/0055/versions/1/myfile.jpg
     def private_filename
@@ -138,8 +138,8 @@ module AssetExtension # :nodoc:
 
     ##
     ## override attributes
-    ## 
-    
+    ##
+
     # Sets a new filename.
     def filename=(value)
       write_attribute :filename, sanitize_filename(value)
@@ -176,9 +176,9 @@ module AssetExtension # :nodoc:
 
     ##
     ## file management
-    ## 
+    ##
 
-    # Destroys the all files for this asset. 
+    # Destroys the all files for this asset.
     def destroy_file
       if is_version?
         # just remove version directory
@@ -195,12 +195,12 @@ module AssetExtension # :nodoc:
 
     def rename_file
       if filename_changed? and !new_record? and !uploaded_data_changed?
-        Dir.chdir( File.dirname(private_filename) ) do 
+        Dir.chdir( File.dirname(private_filename) ) do
           FileUtils.mv filename_was, filename
         end
       end
     end
-    
+
     # Saves the file to the file system
     def save_to_storage(temp_path)
       if File.exists?(temp_path)
@@ -210,7 +210,7 @@ module AssetExtension # :nodoc:
       end
       true
     end
-    
+
     def current_data
       File.file?(private_filename) ? File.read(private_filename) : nil
     end
@@ -253,10 +253,10 @@ module AssetExtension # :nodoc:
         #  alphanumeric characters
         #  hypen
         #  space
-        #  period 
+        #  period
         #name.gsub! /[^\w\.\ ]+/, '-'
 
-        # don't allow the thumbnail separator        
+        # don't allow the thumbnail separator
         name.gsub! /#{THUMBNAIL_SEPARATOR}/, ' '
 
         # remove weird constructions:
@@ -270,7 +270,7 @@ module AssetExtension # :nodoc:
       end
     end
 
-    # a utility function to remove a series of files. 
+    # a utility function to remove a series of files.
     def remove_files(*files)
       files.each do |file|
         File.unlink(file) if file and File.exists?(file)

@@ -1,6 +1,6 @@
 class Committee < Group
   before_destroy :eliminate_councilship
-  
+
   def eliminate_councilship
     if g = Group.find(:first, :conditions => { :council_id => self.id })
       g.council_id = nil
@@ -9,10 +9,10 @@ class Committee < Group
   end
 
   # NAMING
-  # the name of a committee includes the name of the parent, 
+  # the name of a committee includes the name of the parent,
   # so the committee names are unique. however, for display purposes
   # we want to just display the committee name without the parent name.
-  
+
   # parent name + committee name
   def full_name
     read_attribute(:name)
@@ -21,7 +21,7 @@ class Committee < Group
   def short_name
     (read_attribute(:name)||'').sub(/^.*\+/,'')
   end
-  
+
   # what we show to the user
   def display_name
     if read_attribute(:full_name).any?
@@ -53,7 +53,7 @@ class Committee < Group
     end
   end
   alias_method :short_name=, :name=
-  
+
   def parent=(p)
     raise 'call group.add_committee! instead'
   end
@@ -70,7 +70,7 @@ class Committee < Group
     end
     ok or raise PermissionDenied.new
   end
-  
+
   ##
   ## relationships to users
   ##
@@ -88,5 +88,5 @@ class Committee < Group
       false
     end
   end
-  
+
 end

@@ -11,7 +11,7 @@ module LayoutHelper
       ""
     end
   end
-  
+
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
@@ -27,7 +27,7 @@ module LayoutHelper
       [current_site.title]
     ).compact.join(' - ')
   end
-      
+
   ##
   ## STYLESHEET
   ##
@@ -42,7 +42,7 @@ module LayoutHelper
   end
 
   # custom stylesheet
-  # rather than include every stylesheet in every request, some stylesheets are 
+  # rather than include every stylesheet in every request, some stylesheets are
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
@@ -92,7 +92,7 @@ module LayoutHelper
     else
       ['/favicon.ico', '/favicon.png']
     end
-      
+
     %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
   <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
@@ -116,7 +116,7 @@ module LayoutHelper
       "ltr"
     end
   end
-  
+
   ##
   ## JAVASCRIPT
   ##
@@ -141,7 +141,7 @@ module LayoutHelper
     end
     javascript_include_tag(*js_files)
   end
-  
+
   def crabgrass_javascripts
     lines = []
     lines << javascript_include_tag('prototype', 'application', :cache => true)
@@ -157,7 +157,7 @@ module LayoutHelper
     lines << '<![endif]-->'
     lines.join("\n")
   end
-  
+
   ##
   ## BANNER
   ##
@@ -165,7 +165,7 @@ module LayoutHelper
   # banner stuff
   def banner_style
     "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
-  end  
+  end
   def banner_background
     @banner_style.background_color if @banner_style
   end
@@ -241,7 +241,7 @@ module LayoutHelper
   def dialog_page(options = {}, &block)
     block_to_partial('common/dialog_page', options, &block)
   end
-  
+
 
   ##
   ## CUSTOMIZED STUFF
@@ -253,7 +253,7 @@ module LayoutHelper
     if appearance and appearance.masthead_asset
       # use an image
       content_tag :div, :id => 'site_logo_wrapper' do
-        content_tag :a, :href => '/', :alt => current_site.title do 
+        content_tag :a, :href => '/', :alt => current_site.title do
           image_tag(appearance.masthead_asset.url, :id => 'site_logo')
         end
       end

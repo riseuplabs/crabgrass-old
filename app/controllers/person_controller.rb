@@ -19,10 +19,10 @@ class PersonController < ApplicationController
     super()
     @user = options[:user]   # the user context, if any
   end
-    
+
   def show
     @activities = Activity.for_user(@user, (current_user if logged_in?)).only_visible_groups.newest.unique.find(:all, :limit => 20)
-        
+
     params[:path] ||= ""
     params[:path] = params[:path].split('/')
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
@@ -55,18 +55,18 @@ class PersonController < ApplicationController
     @pages = Page.find_by_path('type/task/pending', options)
     @task_lists = @pages.collect{|p|p.data}
   end
-    
+
   protected
-  
+
   def context
     person_context
     #unless ['show'].include? params[:action]
     #  add_context params[:action], people_url(:action => params[:action], :id => @user)
     #end
   end
-  
+
   prepend_before_filter :fetch_user
-  def fetch_user 
+  def fetch_user
     @user ||= User.find_by_login params[:id] if params[:id]
     true
   end
@@ -87,7 +87,7 @@ class PersonController < ApplicationController
       else
         'everyone'
       end
-    if(@site.profiles.private? && 
+    if(@site.profiles.private? &&
        @site.profiles.private.visible_to?(vis_group))
       @profile = @user.profiles.private
     elsif(@site.profiles.public? &&
@@ -99,7 +99,7 @@ class PersonController < ApplicationController
     end
   end
 =end
-  
+
   before_filter :fetch_profile, :load_partials
   def fetch_profile
     if logged_in?
@@ -118,7 +118,7 @@ class PersonController < ApplicationController
       @profile = @user.profiles.public
     end
     unless @profile and @profile.may_see?
-      # make it appear as if the user does not exist if may_see? is false. 
+      # make it appear as if the user does not exist if may_see? is false.
       # or should we show an empty profile page?
       @user = nil
       no_context

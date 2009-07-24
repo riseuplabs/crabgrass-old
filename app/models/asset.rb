@@ -7,8 +7,8 @@ Assets use a lot of classes to manage a particular uploaded file:
   Asset::Version -- all the past and present versions of the main asset.
   Thumbnail      -- a processed representation of an Asset (usually a small image)
 
-  Every asset has many versions. Each asset, and each version, also 
-  have many thumbnails. 
+  Every asset has many versions. Each asset, and each version, also
+  have many thumbnails.
 
   Additionally, three modules are included by Asset:
     AssetExtension::Upload      -- handles uploading data
@@ -89,16 +89,16 @@ class Asset < ActiveRecord::Base
   include AssetExtension::Upload
   validates_presence_of :filename
 
-  
+
   ##
   ## ACCESS
   ##
-  
+
   # checks wether the given `user' has permission `perm' on this Asset.
   #
   # there is only one way that a user may have access to an asset:
   #
-  #    if the user also has access to the asset's page 
+  #    if the user also has access to the asset's page
   #
   # not all assets have a page. for them, this test will fail.
   # (for example, assets that are part of profiles).
@@ -121,7 +121,7 @@ class Asset < ActiveRecord::Base
     raise PermissionDenied unless self.page
     self.page.has_access!(perm, user)
   end
- 
+
   def has_access?(access, user)
     return has_access!(access, user)
   rescue PermissionDenied
@@ -136,11 +136,11 @@ class Asset < ActiveRecord::Base
     return gparts.flatten
   end
 
-  
+
   ##
   ## FINDERS
   ##
-  
+
   # Returns true if this Asset is currently the cover of the given `gallery'.
   # A Gallery can only have one cover at a time.
   def is_cover_of? gallery
@@ -159,9 +159,9 @@ class Asset < ActiveRecord::Base
 
   ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
-  ## 
+  ##
 
-  acts_as_versioned do 
+  acts_as_versioned do
     def self.included(base)
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
@@ -196,7 +196,7 @@ class Asset < ActiveRecord::Base
   ##
   ## DEFINE THE CLASS Asset::Version
   ##
-    
+
   # to be overridden in Asset::Version
   def version_path; []; end
   def is_version?; false; end
@@ -217,8 +217,8 @@ class Asset < ActiveRecord::Base
 
     # this object is a version, not the main asset
     def is_version?; true; end
-    
-    # delegate call to thumbdefs to our original Asset subclass. 
+
+    # delegate call to thumbdefs to our original Asset subclass.
     # eg: Asset::Version#thumbdefs --> ImageAsset.thumbdefs
     def thumbdefs
       versioned_type.constantize.class_thumbdefs if versioned_type
@@ -252,7 +252,7 @@ class Asset < ActiveRecord::Base
     page = page_id ? parent_page : pages.first
     return page
   end
-  
+
   # some asset subclasses (like AudioAsset) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
@@ -266,11 +266,11 @@ class Asset < ActiveRecord::Base
       self.page_terms = (page.page_terms if page)
     end
   end
-  
+
   ##
   ## ACCESS
   ##
-  
+
   def update_access
     public? ? add_symlink : remove_symlink
   end
@@ -278,7 +278,7 @@ class Asset < ActiveRecord::Base
   def public?
     page.nil? or page.public?
   end
-  
+
   ##
   ## ASSET CREATION
   ##
@@ -287,7 +287,7 @@ class Asset < ActiveRecord::Base
   # create on that class.
   # eg. Asset.make(attributes) ---> ImageAsset.create(attributes)
   #     if attributes contains an image file.
-  # if attributes[:page] is given, an AssetPage is created with the given 
+  # if attributes[:page] is given, an AssetPage is created with the given
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
   def self.make(attributes = nil, &block)
@@ -297,7 +297,7 @@ class Asset < ActiveRecord::Base
       return nil
     end
   end
-  
+
   def self.make!(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
     asset_class.create!(attributes, &block)
@@ -308,7 +308,7 @@ class Asset < ActiveRecord::Base
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
     asset_class.new(attributes, &block)
   end
-  
+
   # eg: 'image/jpg' --> ImageAsset
   def self.class_for_mime_type(mime)
     if mime
@@ -337,7 +337,7 @@ class Asset < ActiveRecord::Base
 
   before_save :reset_media_flags
   def reset_media_flags
-    if content_type_changed? 
+    if content_type_changed?
       is_audio = false
       is_video = false
       is_image = false
@@ -348,8 +348,8 @@ class Asset < ActiveRecord::Base
 
   # to be overridden by subclasses
   def update_media_flags() end
-  
-  
+
+
   after_save :update_galleries
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
@@ -365,7 +365,7 @@ class Asset < ActiveRecord::Base
     end
   end
 
-  # returns either :landscape or :portrait, depending on the format of the 
+  # returns either :landscape or :portrait, depending on the format of the
   # image.
   def image_format
     raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)

@@ -18,7 +18,7 @@ class ProfileImAddress < ActiveRecord::Base
     ['Jabber', 'IRC', 'Silc', 'Gizmo', 'AIM',
     'Google Talk', 'MSN', 'Skype', 'Yahoo', 'Other'].to_localized_select
   end
-  
+
   def icon
     'page_discussion'
   end

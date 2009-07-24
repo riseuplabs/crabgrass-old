@@ -7,7 +7,7 @@ module Gibberize::TranslationsHelper
   def edit_translation_path(arg)
     edit_gibberize_translation_path(arg)
   end
- 
+
   def new_translation_path
     new_gibberize_translation_path
   end

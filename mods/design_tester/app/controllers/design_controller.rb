@@ -12,9 +12,9 @@ class DesignController < ApplicationController
   #stylesheet 'post'
   stylesheet 'gallery'
   stylesheet 'contribute'
-  
+
   def index
-    data = params[:data]    
+    data = params[:data]
     if data
       @main_column  = read_file(data, 'main')
       @left_column  = read_file(data, 'left')
@@ -23,7 +23,7 @@ class DesignController < ApplicationController
       @footer       = read_file(data, 'footer')
       @title_box    = read_file(data, 'title_box')
       @info_box    = read_file(data, 'info_box')
-      
+
       @banner       ||= read_file('default', 'banner')
       @footer       ||= read_file('default', 'footer')
       @main_column  ||= read_file('default', 'main_column')
@@ -37,7 +37,7 @@ class DesignController < ApplicationController
     sleep 1
     render :nothing => true
   end
-  
+
   protected
 
   def fetch_random_data
@@ -52,7 +52,7 @@ class DesignController < ApplicationController
       end while @page.nil?
     end
   end
-  
+
   def read_file(dir, file)
     filename = "design/#{dir}/#{file}"
     app_base = File.dirname(File.dirname(__FILE__))

@@ -41,7 +41,7 @@ class Groups::RequestsControllerTest < Test::Unit::TestCase
 #    login_as :gerrard
 #    request = RequestToJoinUs.find(:last, :conditions => {:recipient_id => users(:orange)})
 #    get :destroy, :id => request.id
-#    assert_response :redirect    
+#    assert_response :redirect
   end
 
   def test_create_join
@@ -52,7 +52,7 @@ class Groups::RequestsControllerTest < Test::Unit::TestCase
       post :create_join, :group => groups(:animals), :send => "Send Request"
     end
   end
-  
+
   def test_list_group
     login_as :blue
     get :list, :id => groups(:rainbow).to_param
@@ -76,7 +76,7 @@ class Groups::RequestsControllerTest < Test::Unit::TestCase
       assert_permission_denied
     end
 
-    groups(:public_group).profile.update_attribute(:may_request_membership, true) 
+    groups(:public_group).profile.update_attribute(:may_request_membership, true)
     get :create_join, :id => groups(:public_group).to_param
     assert_response :success
     assert_difference 'Request.count', 1, "join request should create a request" do

@@ -59,7 +59,7 @@ class RequestsControllerTest < Test::Unit::TestCase
     end
     assert_difference 'RequestToJoinUs.count', -1 do
       post :destroy, :id => request.id
-      assert_response :redirect    
+      assert_response :redirect
     end
   end
 
@@ -105,7 +105,7 @@ class RequestsControllerTest < Test::Unit::TestCase
     )
     request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
     request.approve_by!(users(:red))
-    
+
     login_as :red
     get :redeem, :email => req.email, :code => req.code
     assert_response :success

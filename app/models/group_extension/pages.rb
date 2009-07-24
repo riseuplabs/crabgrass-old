@@ -13,16 +13,16 @@ module GroupExtension::Pages
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
       end
-      
+
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
-    end     
+    end
   end
 
   #
   # build or modify a group_participation between a group and a page
   # return the group_participation object, which must be saved for
   # changes to take effect.
-  # 
+  #
   def add_page(page, attributes)
     participation = page.participation_for_group(self)
     if participation
@@ -42,7 +42,7 @@ module GroupExtension::Pages
     page.groups_changed = true
     page
   end
-  
+
   def may?(perm, page)
     begin
        may!(perm,page)
@@ -50,7 +50,7 @@ module GroupExtension::Pages
        false
     end
   end
-  
+
   # perm one of :view, :edit, :admin
   # this is still a basic stub. see User.may!
   def may!(perm, page)
