@@ -43,7 +43,7 @@ class SocialUserTest < Test::Unit::TestCase
 
   def test_associations
     assert check_associations(User)
-  end  
+  end
 
   def test_pestering
     users(:green).profiles.public.may_pester = false
@@ -57,7 +57,7 @@ class SocialUserTest < Test::Unit::TestCase
     users(:green).profiles.public.save
     assert users(:kangaroo).may_pester?(users(:green)), 'should be able to pester if set in profile'
   end
-  
+
   protected
     def create_user(options = {})
       user = User.new({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))

@@ -10,7 +10,7 @@ class AccountControllerTest < ActionController::TestCase
   def test_should_login_and_redirect
     get :login
     assert_response :success
-    
+
     post :login, :login => 'quentin', :password => 'quentin'
     assert session[:user]
     assert_response :redirect
@@ -42,7 +42,7 @@ class AccountControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       post_signup_form
     end
-    session[:user_has_accepted_invite] = true    
+    session[:user_has_accepted_invite] = true
     assert_difference 'User.count' do
       post_signup_form
     end
@@ -108,7 +108,7 @@ class AccountControllerTest < ActionController::TestCase
     post :login, :login => 'quentin', :password => 'quentin', :remember_me => "0"
     assert_nil @response.cookies["auth_token"]
   end
-  
+
   def test_should_delete_token_on_logout
     login_as :quentin
     get :logout
@@ -139,28 +139,28 @@ class AccountControllerTest < ActionController::TestCase
     get :index
     assert !@controller.send(:logged_in?)
   end
-  
+
   def test_forgot_password
     get :forgot_password
     assert_response :success
-    
+
     old_count = Token.count
     post :forgot_password, :email => users(:quentin).email
     assert_response :redirect
     assert_equal old_count + 1, Token.count
-    
+
     token = Token.find(:last)
     assert_equal "recovery", token.action
     assert_equal users(:quentin).id, token.user_id
-    
+
     get :reset_password, :token => token.value
     assert_response :success
-    
+
     post :reset_password, :token => token.value, :new_password => "abcde", :password_confirmation => "abcde"
     assert_response :redirect
     assert_equal old_count, Token.count
   end
-  
+
   def test_forgot_password_invalid_email_should_stay_put
     post :forgot_password, :email => "not rfc822-compliant"
     assert_response :success
@@ -175,29 +175,29 @@ class AccountControllerTest < ActionController::TestCase
 
     get :reset_password, :token => "invalid"
     assert_response :redirect
-    
+
     get :reset_password, :token => tokens(:tokens_003).value
     assert_response :success
   end
-  
+
   protected
 
   def post_signup_form(options = {})
     post(:signup, {
       :user => {
          :login => 'quire',
-         :email => 'quire@localhost', 
+         :email => 'quire@localhost',
          :password => 'quire',
          :password_confirmation => 'quire'
       }.merge(options.delete(:user) || {}),
       :usage_agreement_accepted => "1"
     }.merge(options))
   end
-  
+
   def auth_token(token)
     CGI::Cookie.new('name' => 'auth_token', 'value' => token)
   end
-  
+
   def cookie_for(user)
     auth_token users(user).remember_token
   end

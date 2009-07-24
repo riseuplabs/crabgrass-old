@@ -6,7 +6,7 @@ class Me::RequestsController; def rescue_action(e) raise e end; end
 
 class Me::RequestsControllerTest < Test::Unit::TestCase
   fixtures :groups, :users, :memberships, :requests
-  
+
   def setup
     @controller = Me::RequestsController.new
     @request    = ActionController::TestRequest.new
@@ -20,7 +20,7 @@ class Me::RequestsControllerTest < Test::Unit::TestCase
     get :from_me
     assert_response :success
   end
-  
+
   def test_to_me
     login_as :blue
     get :to_me

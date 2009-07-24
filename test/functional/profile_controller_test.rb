@@ -13,7 +13,7 @@ class ProfileControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-=begin  
+=begin
   def test_show
     login_as :quentin
     user = users(:quentin)
@@ -27,7 +27,7 @@ class ProfileControllerTest < Test::Unit::TestCase
     assert_response :redirect
 
   end
-  
+
   def test_edit
     login_as :quentin
     user = users(:quentin)
