@@ -23,7 +23,7 @@ class MeSearchControllerTest < Test::Unit::TestCase
     get :index
     assert_response :success
  end
- 
+
  def test_text_search
     return unless sphinx_working?
 

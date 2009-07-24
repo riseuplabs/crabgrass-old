@@ -28,7 +28,7 @@ Engines::Plugin.class_eval do
   # take precedence over the views in the main application.
   # Otherwise, views in plugins that duplicate views in the
   # application are ignored.
-  # 
+  #
   # Defaults to false.
   attr_accessor :override_views
 
@@ -36,7 +36,7 @@ Engines::Plugin.class_eval do
   # in development mode (in other words, false will force the code to loaded
   # on each request).
   #
-  # Defaults to true. 
+  # Defaults to true.
   attr_reader :load_once
   def load_once=(new_value)
     @load_once = new_value
@@ -46,7 +46,7 @@ Engines::Plugin.class_eval do
       load_paths.each { |p| Dependencies.load_once_paths.delete(p) }
     end
   end
-  
+
   def initialize(directory)
     super directory
     @code_paths = default_code_paths
@@ -55,7 +55,7 @@ Engines::Plugin.class_eval do
     @override_views = false
     @load_once = true
   end
-  
+
   def add_plugin_view_paths
     view_path = File.join(directory, 'app', 'views')
     if File.exist?(view_path)
@@ -69,16 +69,16 @@ Engines::Plugin.class_eval do
   end
 
   #
-  # Some plugins have a problem: if a plugin applies a mixing directly to a 
+  # Some plugins have a problem: if a plugin applies a mixing directly to a
   # model in app/models, this mixin gets unloaded by rails after the first request.
   # This only happens in development mode. The symptom is an application that works
-  # for the first request but fails on subsiquent requests. 
+  # for the first request but fails on subsiquent requests.
   #
   # This is an attempt to get around that problem by re-applying any mixin
-  # that modifies the core models on each request. 
-  # 
+  # that modifies the core models on each request.
+  #
   # Normal plugins don't have this problem: they modify active record, and then
-  # the core models call these extensions which triggers the reloading of the 
+  # the core models call these extensions which triggers the reloading of the
   # plugin mixin.
   #
   def apply_mixin_to_model(model_class, mixin_module)
@@ -95,7 +95,7 @@ Engines::Plugin.class_eval do
         model_class.instance_eval &(mixin_module.add_to_class_definition())
       end
     }
-  end 
+  end
 
 end
 

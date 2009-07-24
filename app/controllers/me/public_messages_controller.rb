@@ -27,7 +27,7 @@ class Me::PublicMessagesController < Me::BaseController
       post.destroy
       redirect_to my_public_messages_url
     else
-      render_permission_denied    
+      render_permission_denied
     end
   end
 
@@ -45,9 +45,9 @@ class Me::PublicMessagesController < Me::BaseController
   ensure
     redirect_to referer
   end
-   
+
   protected
-  
+
   def context
     super
     if action?(:show)

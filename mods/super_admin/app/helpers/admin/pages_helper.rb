@@ -7,7 +7,7 @@ module Admin::PagesHelper
   def edit_pages_path(arg)
     edit_admin_pages_path(arg)
   end
- 
+
   def new_pages_path
     new_admin_pages_path
   end

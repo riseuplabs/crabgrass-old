@@ -3,11 +3,11 @@ class CorruptedAsset < Asset
   def is_image
     true
   end
-  
+
   def public?
     false
   end
-  
+
   def private_filename
     "#{RAILS_ROOT}/public/images/ui/corrupted/corrupted.png"
   end
@@ -23,7 +23,7 @@ class CorruptedAsset < Asset
   def height
     200 #512
   end
- 
+
   def width
     512
   end
@@ -36,9 +36,9 @@ class CorruptedAsset < Asset
   end
 
   define_thumbnails(
-    :small  => {:size => '64x64>',   :ext => 'jpg', :title => 'Small Thumbnail'}, 
-    :medium => {:size => '200x200>', :ext => 'jpg', :title => 'Medium Thumbnail'}, 
-    :large  => {:size => '500x500>', :ext => 'jpg', :title => 'Large Thumbnail'}  
+    :small  => {:size => '64x64>',   :ext => 'jpg', :title => 'Small Thumbnail'},
+    :medium => {:size => '200x200>', :ext => 'jpg', :title => 'Medium Thumbnail'},
+    :large  => {:size => '500x500>', :ext => 'jpg', :title => 'Large Thumbnail'}
   )
 
 end

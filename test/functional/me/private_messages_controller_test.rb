@@ -19,7 +19,7 @@ class Me::PrivateMessagesControllerTest < ActionController::TestCase
       post :create, :id => 'blue', :post => {:body => 'hi'}
       assert_error_message
     end
-    
+
     assert_no_difference 'Post.count' do
       post :create, :id => 'green', :post => {:body => ''}
       assert_error_message

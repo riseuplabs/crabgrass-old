@@ -29,7 +29,7 @@ class AssetPageControllerTest < ActionController::TestCase
 #    assert_template 'show'
     assert_equal asset.private_filename, assigns(:asset).private_filename, "should fetch the correct file"
   end
-  
+
   def test_create
     login_as :gerrard
 
@@ -42,17 +42,17 @@ class AssetPageControllerTest < ActionController::TestCase
         assert_equal 'error', flash[:type], "shouldn't be able to create an asset page with no asset"
       end
     end
-    
+
     assert_difference 'Thumbnail.count', 6, "image file should generate 6 thumbnails" do
       post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
       assert_response :redirect
     end
-    
+
   end
-  
+
   def test_create_same_name
     login_as :gerrard
-    
+
     data_ids, page_ids, page_urls = [],[],[]
     3.times do
       post 'create', :id => AssetPage.param_id, :page => {:title => "dupe", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
@@ -89,15 +89,15 @@ class AssetPageControllerTest < ActionController::TestCase
 
   def test_update
     login_as :gerrard
-    
+
     get 'create', :id => AssetPage.param_id
     post 'create', :id => AssetPage.param_id, :page => {:title => "title", :summary => ""}, :asset => {:uploaded_data => upload_data('photo.jpg')}
-    
+
     assert_difference 'Asset::Version.count', 1, "jpg should version" do
       post 'update', :page_id => assigns(:page).id, :asset => {:uploaded_data => upload_data('photo.jpg')}
     end
   end
-  
+
   def test_updated_by
     page = AssetPage.create(:title => 'hi', :user => users(:blue), :share_with => users(:kangaroo), :access => 'edit', :data => Asset.make(:uploaded_data => upload_data('photo.jpg')))
     assert_equal users(:blue).id, page.updated_by_id

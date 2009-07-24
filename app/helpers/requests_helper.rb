@@ -9,7 +9,7 @@ module RequestsHelper
 
     link_line(*links)
   end
-  
+
   def request_state_links
     hash = {:controller => params[:controller], :action => params[:action]}
     hash[:id] = @group if @group

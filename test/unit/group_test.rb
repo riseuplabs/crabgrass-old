@@ -14,7 +14,7 @@ class GroupTest < Test::Unit::TestCase
     g.add_user! users(:red)
 
     assert u.member_of?(g), 'user should be member of group'
-    
+
     g.memberships.each do |m|
       m.destroy
     end
@@ -48,7 +48,7 @@ class GroupTest < Test::Unit::TestCase
     g = Group.create :name => 'riseup'
     g.profiles.public.update_attribute(:may_see, false)
     u = User.create :login => 'user'
-    
+
     assert g.may_be_pestered_by?(u) == false, 'should not be able to be pestered by user'
     assert u.may_pester?(g) == false, 'should not be able to pester private group'
   end
@@ -57,7 +57,7 @@ class GroupTest < Test::Unit::TestCase
     g = Group.create :name => 'riseup'
     g.profiles.public.update_attribute(:may_see, true)
     u = User.create :login => 'user'
-    
+
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
     assert u.may_pester?(g) == true, 'should be able to pester private group'
   end
@@ -68,7 +68,7 @@ class GroupTest < Test::Unit::TestCase
     u = users(:blue)
     g.add_user!(u)
   end
-  
+
   def test_committee_access
     g = groups(:public_group)
     assert_equal [groups(:public_committee)],
@@ -88,20 +88,20 @@ class GroupTest < Test::Unit::TestCase
     assert_equal committee.parent, group
     assert blue.direct_member_of?(committee)
     assert !red.direct_member_of?(committee)
-    
+
     assert red.may?(:admin, group)
     assert blue.may?(:admin, group)
 
     assert_nothing_raised do
       group.add_committee!(committee, true)
     end
- 
+
     red.reload
     blue.reload
 
     assert !red.may_admin?(group)
     assert !red.may?(:admin, group)
-    assert blue.may?(:admin, group)   
+    assert blue.may?(:admin, group)
   end
 
   def test_name_change
@@ -114,11 +114,11 @@ class GroupTest < Test::Unit::TestCase
     group.save!
 
     # note: if the group has a committee, and the user is a member of that
-    # committee, then the user's version will increment by more than one, 
+    # committee, then the user's version will increment by more than one,
     # since the committees also experience a name change.
     assert_equal version+1, user.reload.version, 'user version should increment on group name change'
   end
-  
+
   def test_associations
     assert check_associations(Group)
   end
@@ -150,7 +150,7 @@ class GroupTest < Test::Unit::TestCase
     assert_difference 'Membership.count', -2 do
       g.destroy
     end
-    
+
     assert_nil page.reload.owner_id
 
     red = users(:red)
@@ -183,7 +183,7 @@ class GroupTest < Test::Unit::TestCase
     assert_equal avatar_id, group.avatar.id
     #assert_equal 18408, group.avatar.image_file_data.size
 
-    assert_no_difference 'Avatar.count' do 
+    assert_no_difference 'Avatar.count' do
       group.avatar = {:image_file => upload_avatar('bee.jpg')}
       group.save!
     end

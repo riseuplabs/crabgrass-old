@@ -29,7 +29,7 @@ class RequestsTest < ActionController::IntegrationTest
       assert_select elements[1], 'a', "I need to register a new account"
       assert_equal signup_url, elements[1]['href']
     end
-   
+
     get signup_url
     assert_response :success
 
@@ -38,7 +38,7 @@ class RequestsTest < ActionController::IntegrationTest
     end
 
     assert redirect?
-    assert_difference 'Membership.count' do    
+    assert_difference 'Membership.count' do
       follow_redirect!
     end
     assert_equal "/requests/redeem?code=#{req.code}&email=root@localhost", path
@@ -58,7 +58,7 @@ class RequestsTest < ActionController::IntegrationTest
     redirect_path = "/requests/redeem?code=#{req.code}&email=root@localhost"
     post('/account/login', {:redirect => redirect_path, :login => 'red', :password => 'red'})
     assert redirect?
-    assert_difference 'Membership.count' do    
+    assert_difference 'Membership.count' do
       follow_redirect!
     end
     assert redirect?

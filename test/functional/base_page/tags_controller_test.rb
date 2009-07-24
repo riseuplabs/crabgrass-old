@@ -15,7 +15,7 @@ class BasePage::TagsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
-  
+
   def test_show_popup
     login_as :blue
     get :show, :page_id => 1, :page => "640x480", :position => "60x20"
@@ -24,7 +24,7 @@ class BasePage::TagsControllerTest < Test::Unit::TestCase
 
   def test_update
     login_as :blue
-    
+
     post :update, :page_id => 1, :close => "close"
     assert_response :success
 

@@ -31,5 +31,5 @@ class PageTest < Test::Unit::TestCase
   end
 
   protected
-  
+
 end

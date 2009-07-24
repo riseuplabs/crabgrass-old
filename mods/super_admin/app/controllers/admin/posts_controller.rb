@@ -1,6 +1,6 @@
 class Admin::PostsController < Admin::BaseController
   verify :method => :post, :only => [:update]
-  
+
   def index
     view = params[:view] || 'all'
     @current_view = view
@@ -11,15 +11,15 @@ class Admin::PostsController < Admin::BaseController
       @posts = Post.paginate :page => params[:page], :conditions => ['(vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC'
     elsif view == 'vetted'
       # all posts that have been marked as vetted by an admin (and are not deleted)
-      @posts = Post.paginate :page => params[:page], :conditions => ['vetted = ? AND deleted_at IS NULL', true], :order => 'updated_at DESC'  
+      @posts = Post.paginate :page => params[:page], :conditions => ['vetted = ? AND deleted_at IS NULL', true], :order => 'updated_at DESC'
     elsif view == 'deleted'
       # list the pages that are 'deleted' by being hidden from view.
-      @posts = Post.paginate :page => params[:page], :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' 
+      @posts = Post.paginate :page => params[:page], :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC'
     end
   end
 
   # for vetting:       params[:post][:vetted] == true
-  # for hiding:        params[:post][:deleted] == true 
+  # for hiding:        params[:post][:deleted] == true
   def update
     @posts = Post.find(params[:id])
     @posts.update_attributes(params[:post])
@@ -32,9 +32,9 @@ class Admin::PostsController < Admin::BaseController
     post.update_attribute(:vetted, true)
     # get rid of all yucky associated with the post
     post.ratings.destroy_all
-    
+
     redirect_to :action => 'index', :view => params[:view]
-  end     
+  end
 
   # Reject a post by setting deleted_at=now, the post will now be 'deleted'(hidden)
   def trash
@@ -51,7 +51,7 @@ class Admin::PostsController < Admin::BaseController
     post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
-  
+
   def set_active_tab
     @active = 'post_moderation'
   end

@@ -7,7 +7,7 @@ class AccountController < ApplicationController
 
   # TODO: it would be good to require post for logout in the future
   verify :method => :post, :only => [:language]
-   
+
   def index
     if logged_in?
       redirect_to me_url
@@ -25,7 +25,7 @@ class AccountController < ApplicationController
     reset_session # important!!
                   # always force a new session on every login attempt
                   # in order to prevent session fixation attacks.
-    
+
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
       if params[:remember_me] == "1"
@@ -41,7 +41,7 @@ class AccountController < ApplicationController
       else
         session[:language_code] = previous_language
       end
-      
+
       current_site.add_user!(current_user)
       UnreadActivity.create(:user => current_user)
 
@@ -51,7 +51,7 @@ class AccountController < ApplicationController
       flash_message :title => "Could not log in"[:login_failed],
       :error => "Username or password is incorrect."[:login_failure_reason]
     end
-      
+
   end
 
   def signup
@@ -73,7 +73,7 @@ class AccountController < ApplicationController
       session[:signup_email_address] = nil
       self.current_user = @user
       current_site.add_user!(current_user)
-      
+
       redirect_to params[:redirect] || current_site.login_redirect(current_user)
       flash_message :title => 'Registration successful'[:signup_success],
         :success => "Thanks for signing up!"[:signup_success_message]
@@ -83,7 +83,7 @@ class AccountController < ApplicationController
     flash_message_now :exception => exc
     render :action => 'signup'
   end
- 
+
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
@@ -123,7 +123,7 @@ class AccountController < ApplicationController
       :success => "An email has been sent containing instructions for resetting your password."[:reset_password_email_sent]
     redirect_to :action => 'index'
   end
-  
+
   def reset_password
     @token = Token.find_by_value_and_action(params[:token], 'recovery')
     unless @token && !@token.expired?
@@ -131,10 +131,10 @@ class AccountController < ApplicationController
         :error => "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."[:invalid_token_text]
       redirect_to :action => 'index' and return
     end
-    
+
     @user = @token.user
     return unless request.post?
-    
+
     @user.password = params[:new_password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
@@ -147,13 +147,13 @@ class AccountController < ApplicationController
       flash_message_now :object => @user
     end
   end
-  
+
   protected
   #def send_welcome_message(user)
   #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
   #  page.save
   #end
-  
+
   def view_setup
     @active_tab = :home
   end

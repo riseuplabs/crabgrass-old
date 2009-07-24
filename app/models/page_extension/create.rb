@@ -23,15 +23,15 @@ module PageExtension::Create
   #
   # There are two versions create!() and create(). Both might throw exceptions
   # caused by bad sharing, but the first one will also throw exceptions if the
-  # attributes don't validate.  
-  # 
+  # attributes don't validate.
+  #
   module ClassMethods
     def create!(attributes = {}, &block)
       page = build!(attributes, &block)
       page.save!
       page
     end
-    
+
     def create(attributes={}, &block)
       begin
         create!(attributes, &block)
@@ -73,7 +73,7 @@ module PageExtension::Create
           end
           page
         end
-      end      
+      end
     end
 
     # parses a list of recipients, turning them into email, user, or group
@@ -93,7 +93,7 @@ module PageExtension::Create
       else
         entities = [recipients]
       end
-      
+
       entities.each do |entity|
         if entity.is_a? Group
           groups << entity
@@ -117,7 +117,7 @@ module PageExtension::Create
       [users, groups, emails]
     end # parse_recipients!
 
-  end # ClassMethods   
+  end # ClassMethods
 end # PageExtension::Create
 
 

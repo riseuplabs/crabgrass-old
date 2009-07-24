@@ -37,7 +37,7 @@ I guess these aren't applicable to colletions
 
   def versions
   end
-  
+
   def diff
   end
 =end

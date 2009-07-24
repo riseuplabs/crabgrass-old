@@ -7,7 +7,7 @@ class ContactController < ApplicationController
 
   permissions 'contact'
   before_filter :login_required
-  
+
   def add
     if current_user.friend_of?(@user)
       redirect_to :action => 'already_friends', :id => @user
@@ -24,7 +24,7 @@ class ContactController < ApplicationController
       end
     end
   end
-  
+
   def approve
     redirect_to :action => 'already_friends', :id => @user if current_user.friend_of?(@user)
   end
@@ -47,17 +47,17 @@ class ContactController < ApplicationController
   end
 
   protected
-  
+
   prepend_before_filter :fetch_user
   def fetch_user
     @user = User.find_by_login params[:id] if params[:id]
     @past_request = RequestToFriend.created_by(@user).to_user(current_user).appearing_as_state('pending')
     true
   end
-  
+
   def context
     person_context
     add_context 'contact', url_for(:controller => 'contact', :action => 'add', :id => @user)
   end
-  
+
 end

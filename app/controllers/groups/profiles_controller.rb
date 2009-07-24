@@ -9,7 +9,7 @@ class Groups::ProfilesController < Groups::BaseController
   def edit
     update if request.post?
   end
- 
+
   def media
     update if request.post?
   end
@@ -26,15 +26,15 @@ class Groups::ProfilesController < Groups::BaseController
     elsif params[:clear_video]
       @profile.video.destroy; @profile.video = nil
     else
-		  @profile.save_from_params params['profile']
-		  if @profile.valid?
-		    flash_message_now :success
-		  else
-		    flash_message_now :object => @profile
-		  end
+    @profile.save_from_params params['profile']
+    if @profile.valid?
+      flash_message_now :success
+    else
+      flash_message_now :object => @profile
+    end
     end
   end
- 
+
   def fetch_data
     if params[:id]
       @group = Group.find_by_name(params[:id])

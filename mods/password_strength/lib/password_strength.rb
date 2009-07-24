@@ -1,13 +1,13 @@
 # http://www.codeandcoffee.com/2007/06/27/how-to-make-a-password-strength-meter-like-google/
-# http://snippets.dzone.com/posts/show/4698  
+# http://snippets.dzone.com/posts/show/4698
 
-# the PW strength is the amount of time needed to bruteforce a password in 
+# the PW strength is the amount of time needed to bruteforce a password in
 # years, at approximately 1000 tries per second.
 # I don't know what a good value would be, just tried around a litte
 
 
 module PasswordStrength
- 
+
   PASSWORD_SETS = {
     /[a-z]/ => 26,
     /[A-Z]/ => 26,

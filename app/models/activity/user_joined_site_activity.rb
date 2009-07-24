@@ -8,5 +8,5 @@ class UserJoinedSiteActivity < UserJoinedGroupActivity
       }
     ]
   end
-  
+
 end

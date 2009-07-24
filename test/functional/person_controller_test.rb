@@ -6,12 +6,12 @@ class PersonController; def rescue_action(e) raise e end; end
 
 class PersonControllerTest < Test::Unit::TestCase
   fixtures :users, :pages, :sites, :profiles
-  
+
   def setup
     @controller = PersonController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    
+
     #Page.all.each {|p| p.update_page_terms}
   end
 

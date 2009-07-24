@@ -7,7 +7,7 @@ module Gibberize::LanguagesHelper
   def edit_language_path(arg)
     edit_gibberize_language_path(arg)
   end
- 
+
   def new_language_path
     new_gibberize_language_path
   end

@@ -3,7 +3,7 @@ module MessagesHelper
   def display_post(post)
     render(:partial => 'messages/post', :locals => {:post => post})
   end
-  
+
   def delete_post(post)
     if may_destroy_messages?(@user,@post)
       if current_user.discussion.id == post.discussion.id

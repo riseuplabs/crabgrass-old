@@ -6,7 +6,7 @@ class StaticController; def rescue_action(e) raise e end; end
 
 class StaticControllerTest < Test::Unit::TestCase
   fixtures :avatars
-  
+
   def setup
     @controller = StaticController.new
     @request    = ActionController::TestRequest.new
@@ -16,7 +16,7 @@ class StaticControllerTest < Test::Unit::TestCase
   def test_avatar
     get :avatar, :id => 0
     assert_response :success
-    
+
     post :avatar, :id => 0, :size => 'large'
     assert_response :success
   end
