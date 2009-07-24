@@ -1,10 +1,10 @@
 ##
 ## PAGE SHARING
-## 
+##
 #
 # Handles the sharing and notification of pages
 #
-# share this page with a notice message to any number of recipients. 
+# share this page with a notice message to any number of recipients.
 #
 # if the recipient is a user name, then the message and the page show up in
 # user's inbox, and optionally they are alerted via email.
@@ -12,10 +12,10 @@
 # if the recipient is an email address, an email is sent to the address with a
 # magic url that lets the recipient view the page by clicking on a link
 # and using their email as the password.
-# 
+#
 # the sending user must have admin access to send to recipients
 # who do not already have the ability to view the page.
-# 
+#
 # the recipient may be an entire group, in which case we grant access
 # to the group and send emails to each user in the group.
 #
@@ -29,11 +29,11 @@ class BasePage::ShareController < ApplicationController
 
   helper 'base_page', 'base_page/share', 'autocomplete'
   permissions 'base_page'
-  
+
   # display the share or notify popup via ajax
   def show
-  end  
-  
+  end
+
   # there are three ways to submit the form:
   # (1) cancel button (params[:cancel]==true)
   # (2) add button or return in add field (params[:add]==true)
@@ -81,12 +81,12 @@ class BasePage::ShareController < ApplicationController
     params[:share] = params[:notify] # act as if share button was pressed if notify pressed.
     update
   end
-  
+
   protected
 
   ##
   ## UI METHODS FOR THE SHARE & NOTIFY FORMS
-  ## 
+  ##
 
   def close_popup
     render :template => 'base_page/reset_sidebar'
@@ -107,7 +107,7 @@ class BasePage::ShareController < ApplicationController
   def find_recipient(recipient_name)
     recipient_name.strip!
     return nil unless recipient_name.any?
-    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
+    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
       flash_message_now(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)

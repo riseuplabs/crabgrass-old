@@ -30,7 +30,7 @@ class BasePage::AssetsController < ApplicationController
     respond_to do |format|
       format.js {render :nothing => true }
       format.html do
-        flash_message(:success => "attachment deleted") 
+        flash_message(:success => "attachment deleted")
         redirect_to(page_url(@page))
       end
     end

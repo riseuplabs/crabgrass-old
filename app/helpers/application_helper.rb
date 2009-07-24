@@ -43,8 +43,8 @@ module ApplicationHelper
       return str if str.any?
     end
   end
-  
-  ## coverts bytes into something more readable 
+
+  ## coverts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte
@@ -55,13 +55,13 @@ module ApplicationHelper
       '%s B' % bytes
     end
   end
-   
+
   def once?(key)
     @called_before ||= {}
     return false if @called_before[key]
     @called_before[key]=true
   end
-  
+
   def logged_in_since
     session[:logged_in_since] || Time.now
   end
@@ -106,9 +106,9 @@ module ApplicationHelper
                                     }
   end
 
-  # 
+  #
   # Default pagination link options:
-  # 
+  #
   #   :class        => 'pagination',
   #   :previous_label   => '&laquo; Previous',
   #   :next_label   => 'Next &raquo;',
@@ -129,12 +129,12 @@ module ApplicationHelper
     end
     will_paginate(things, defaults.merge(options))
   end
-  
+
   def options_for_my_groups(selected=nil)
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
-  
-  def options_for_language(selected=nil)  
+
+  def options_for_language(selected=nil)
     selected ||= session[:language_code].to_s
     selected = selected.sub(/_\w\w$/, '') # remove locale
     options_array = LANGUAGES.collect {|code, lang| [lang.name, code.to_s]}
@@ -162,7 +162,7 @@ module ApplicationHelper
     return unless description
 
     description = expand_links(description)
-   
+
     created_at = (friendly_date(activity.created_at) if activity.created_at)
 
     more_link = activity.link
@@ -173,7 +173,7 @@ module ApplicationHelper
 
     css_class = "small_icon #{activity.icon}_16 shy_parent"
     css_style = activity.style
-    
+
     content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
   end
 

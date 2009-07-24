@@ -15,15 +15,15 @@ class WikiController < ApplicationController
 
   include ControllerExtension::WikiRenderer
   include ControllerExtension::WikiImagePopup
-  
+
   before_filter :login_required, :except => [:show]
   before_filter :fetch_wiki
-  
+
   # show the rendered wiki
   def show
     @wiki.render_html{|body| render_wiki_html(body, @group.name)}
   end
-  
+
   # show the entire edit form
   def edit
     if @public and @private
@@ -50,7 +50,7 @@ class WikiController < ApplicationController
     return render(:action => 'done') if params[:close]
     @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
   end
-  
+
   # save the wiki show the preview
   def save
     return cancel if params[:cancel]
@@ -66,7 +66,7 @@ class WikiController < ApplicationController
       return render(:action => 'error')
     end
   end
-  
+
   # unlock everything and show the rendered wiki
   def done
     unlock_for_current_user
@@ -118,10 +118,10 @@ class WikiController < ApplicationController
       @profile = @group.profiles.find(params[:profile_id])
       @public = @group.profiles.public.wiki || @group.profiles.public.create_wiki(:user => current_user)
       @private = @group.profiles.private.wiki || @group.profiles.private.create_wiki(:user => current_user)
-      
+
       @wiki = @public if params[:wiki_id] == @public.id.to_s
       @wiki = @private if params[:wiki_id] == @private.id.to_s
-    end 
+    end
   end
 
   # which images should be displayed in the image upload popup

@@ -16,7 +16,7 @@ module PageExtension::Groups
 
       remove_method :namespace_group_ids  # override the ActiveRecord
       remove_method :group_ids            # created method so we can used cached copy.
-      
+
       attr_accessor :groups_changed       # set to true of group_participations has changed.
     end
   end
@@ -35,7 +35,7 @@ module PageExtension::Groups
   def group_ids
     group_participations.collect{|gpart|gpart.group_id}
   end
-  
+
   # returns an array of group ids that compose this page's namespace
   # includes direct groups and all the relatives of the direct groups.
   def namespace_group_ids
@@ -47,7 +47,7 @@ module PageExtension::Groups
 
   # takes an array of group ids, return all the matching group participations
   # this is called a lot, since it is used to determine permission for the page
-  def participation_for_groups(group_ids) 
+  def participation_for_groups(group_ids)
     group_participations.collect do |gpart|
       gpart if group_ids.include? gpart.group_id
     end.compact
@@ -68,7 +68,7 @@ module PageExtension::Groups
   # - use option :all for all the accesslevels
   # --
   #   TODO
-  #   what is the purpose of this method? 
+  #   what is the purpose of this method?
   #
   #   i think it can be removed.
   #
@@ -82,9 +82,9 @@ module PageExtension::Groups
     group_participations.collect do |gpart|
       if access == :all
         gpart.group if ACCESS.include?(gpart.access)
-      else  
+      else
         gpart.group if gpart.access == ACCESS[access]
-      end  
+      end
     end.compact
   end
 
@@ -92,7 +92,7 @@ module PageExtension::Groups
     #
     # returns an array of the number of pages in each month for a particular group.
     # (based on what pages the current_user can see)
-    # 
+    #
     def month_counts(options)
       field = case options[:field]
         when 'created': 'created_at'

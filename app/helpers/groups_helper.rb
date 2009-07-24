@@ -105,7 +105,7 @@ module GroupsHelper
   ##
   ## LAYOUT
   ##
-  
+
   def show_section(name)
     @group.group_setting ||= GroupSetting.new
     default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}

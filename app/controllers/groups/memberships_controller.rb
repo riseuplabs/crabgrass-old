@@ -3,7 +3,7 @@
 
 class Groups::MembershipsController < Groups::BaseController
 
-  permissions 'groups/memberships', 'groups/requests' 
+  permissions 'groups/memberships', 'groups/requests'
   before_filter :fetch_group, :login_required
   verify :method => :post, :only => [:join]
 
@@ -25,25 +25,25 @@ class Groups::MembershipsController < Groups::BaseController
   # edit committee settings (add/remove users) or admin a group (currently n/a)
   def edit
   end
-  
+
   ###### MEMBER ACTIONS #########################################################
-  
+
   # leave this group
   def leave
     return unless request.post? # show form on get
-    
+
     @group.remove_user!(current_user)
     flash_message :success => 'You have been removed from %s' / @group.name
     redirect_to url_for_group(@group)
   end
-  
+
   # used when you have admin access to a group that you
   # or when this is an open group
   def join
     @group.add_user!(current_user)
     redirect_to url_for_group(@group)
   end
-  
+
   ###### ADMIN ACTIONS #########################################################
 
   def update
@@ -52,7 +52,7 @@ class Groups::MembershipsController < Groups::BaseController
       new_ids = params[:group][:user_ids]
       @group.memberships.each do |m|
         if m.user.member_of?(@group.parent) and !new_ids.include?(m.user_id.to_s)
-          @group.remove_user!(m.user) 
+          @group.remove_user!(m.user)
         end
       end
       new_ids.each do |user_id|
@@ -64,9 +64,9 @@ class Groups::MembershipsController < Groups::BaseController
     end
     redirect_to :action => 'edit', :id => @group
   end
-    
+
   protected
-    
+
   def context
     @group_navigation = :membership
     super
@@ -74,7 +74,7 @@ class Groups::MembershipsController < Groups::BaseController
     #@left_column = render_to_string :partial => 'sidebar'
     @title_box = render_to_string :partial => 'title_box'
   end
-    
+
   before_filter :prepare_pagination
   def prepare_pagination
     @page_number = params[:page] || 1
@@ -100,6 +100,6 @@ class Groups::MembershipsController < Groups::BaseController
       end
     end
     false
-  end  
+  end
 
 end

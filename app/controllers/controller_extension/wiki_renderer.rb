@@ -61,13 +61,13 @@ module ControllerExtension::WikiRenderer
     end
     html << "</div>"
   end
-  
+
   private
-  
+
   #
   # handle auto links
   #
-  # if the url matches the domain of this website, 
+  # if the url matches the domain of this website,
   # then convert the auto link into a wiki link by looking up the page.
   #
   # TODO: it would be better to cleanup the raw greencloth markup instead of
@@ -75,7 +75,7 @@ module ControllerExtension::WikiRenderer
   #
   def generate_wiki_auto_link(url)
     exp = /^https?:\/\/#{Regexp.escape(request.host_with_port)}\//
-    if url =~ exp      
+    if url =~ exp
       path_without_domain = url.sub(exp,'')
       path_elements = path_without_domain.split('/')
       if path_elements.size == 2
@@ -85,7 +85,7 @@ module ControllerExtension::WikiRenderer
           content_tag :a, page.title, :href => page_url(page)
         rescue ActiveRecord::RecordNotFound => exc
           # not found
-          return nil 
+          return nil
         end
       else
         nil
@@ -94,7 +94,7 @@ module ControllerExtension::WikiRenderer
       nil
     end
   end
-  
+
   # generates an <a> tag from the a wiki link to a page, like these:
   #
   #  [ blah -> group/wiki_name ]

@@ -1,5 +1,5 @@
 class NetworksController < GroupsController
-  
+
   before_filter :check_site_settings, :only => :show
 
   def initialize(options={})
@@ -14,7 +14,7 @@ class NetworksController < GroupsController
   def new
     @group = Network.new
   end
- 
+
   def create
     @group = Network.new params[:group]
     @group.save!
@@ -30,7 +30,7 @@ class NetworksController < GroupsController
     flash_message_now :exception => exc
     render :template => 'groups/new'
   end
-  
+
   protected
 
   def context

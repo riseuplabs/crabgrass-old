@@ -7,7 +7,7 @@ class UserJoinedGroupActivity < Activity
 
   alias_attr :user,  :subject
   alias_attr :group, :object
-  
+
   before_create :set_access
   def set_access
     if user.profiles.public.may_see_groups? and group.profiles.public.may_see_members?
