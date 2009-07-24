@@ -57,25 +57,5 @@ module JavascriptHelper
     %[$('%s').update(%s);] % [element_id, html.inspect]
   end
 
-  #
-  # Takes a ruby hash and generates the text for a javascript hash.
-  # This is kind of like hash.to_json(), except that callbacks are wrapped in
-  # "function(n) {}".
-  #
-  def options_for_javascript_function(options)
-    hash = {}
-    options.each do |key,value|
-       if ActionView::Helpers::PrototypeHelper::CALLBACKS.include?(key)
-         name = 'on' + key.to_s.capitalize
-         hash[name] = "function(request){#{value}}"
-       elsif value === true or value === false
-         hash[key] = value
-       else
-         hash[key] = array_or_string_for_javascript(value)
-       end
-    end
-    options_for_javascript(hash)
-  end
-
 end
 

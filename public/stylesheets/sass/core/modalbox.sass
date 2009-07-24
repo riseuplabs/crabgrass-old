@@ -3,7 +3,7 @@
 //   #frame
 //     #header
 //     #content
-//       
+//       (.alert or .confirm)
 
 #MB_overlay
   :position absolute
@@ -24,6 +24,15 @@
   :border 0 solid
   :text-align left
   :z-index 10000
+//  :background-color #EFEFEF
+  :color #000
+  .buttons
+    text-align: right
+    margin-top: 1em
+    input
+      margin-left: 1em
+  blockquote
+    margin: 0
 
 #MB_window[id]
   :position fixed!important
@@ -78,8 +87,10 @@
   :color white
   :height 100px
 
-#MB_window
-  :background-color #EFEFEF
-  :color #000
+.MB_confirm
+  form
+    text-align: right
+    input
+      margin-left: 1em
 
 

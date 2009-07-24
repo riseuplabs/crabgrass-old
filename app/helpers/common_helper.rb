@@ -12,6 +12,7 @@ module CommonHelper
   include CacheHelper
   include PermissionsHelper
   include TaggingHelper
+  include ModalboxHelper
 
 end
 

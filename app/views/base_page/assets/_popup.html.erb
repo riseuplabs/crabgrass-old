@@ -1,11 +1,4 @@
-<%
- after_load_js = %Q[
-  after_load_function = function() {
-  }
- ]
-%>
-<%= javascript_tag(after_load_js) %>
-<% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :width => '25em') do -%>
+<%# refresh_sidebar_on_close %>
   <blockquote>
   <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>
   <p><%= "Use radio buttons to select the page cover"[:use_radio_buttons_to_select_page_cover] %>
@@ -45,6 +38,4 @@
          <%= submit_tag "Close"[:close_button], :name => 'close' %>
     <% end -%>
   </div>
-
-<% end -%>
 

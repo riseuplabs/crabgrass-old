@@ -1,10 +1,3 @@
-<%
- after_load_js = %Q[
-  after_load_function = function() {
-  }
- ]
-%>
-<%= javascript_tag(after_load_js) %>
-<% popup('Edit Tags'[:edit_tags], :id => 'tag_popup', :width => '25em') do -%>
-  <%= render :partial => 'base_page/tags/form' %>
-<% end -%>
+<%# refresh_sidebar_on_close %>
+<%= render :partial => 'base_page/tags/form' %>
+

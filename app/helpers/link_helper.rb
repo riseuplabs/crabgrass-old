@@ -141,43 +141,7 @@ label}</a></span>)
     selected
   end
 
-  ##
-  ## Modalbox dialog popup helpers
-  ## see also: lib/extensions/action_pack.rb link_to_remote_with_confirm()
-  ##
-
-  # creates a popup-link using modalbox
-  #
-  # contents may be:
-  # - url: then contents for the modalbox are loaded via ajax
-  # - html: the html is used to populate the modalbox
-  # - js Element object: the javascript object used to populate the modalbox.
-  #
-  def link_to_modal(label, contents, options={})
-    options.reverse_merge! :title => label
-    html_options = [:id, :class, :style, :icon]
-    if options[:icon] 
-      icon = options[:icon]
-      options[:id] ||= 'link%s'%rand(1000000)
-      options.merge!(
-        :loading => spinner_icon_on(icon, options[:id]),
-        :complete => spinner_icon_off(icon, options[:id]),
-        :showAfterLoading => true
-      )
-      function = modalbox_function(contents, options.forbid(html_options))
-      link_to_function_with_icon(label, function, options.allow(html_options))
-    else
-      function = modalbox_function(contents, options.forbid(html_options))
-      link_to_function(label, function, options.allow(html_options))
-    end
-  end
-
-  
   private
-
-  def modalbox_function(contents, options)
-    "Modalbox.show('#{contents}',#{ options_for_javascript_function(options) })"
-  end
 
   def compare_param(a,b)
     a = a.to_param

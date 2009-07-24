@@ -17,8 +17,7 @@
     </blockquote>
     <div class='buttons'>
       <%= spinner('move') %>
-      <%= button_to_remote("Cancel"[:cancel_button], close_action) %> &nbsp;
-      <%= submit_tag("Move"[:move_button], :name => 'move') %>
+      <%= close_popup_button %><%= submit_tag("Move"[:move_button], :name => 'move') %>
     </div>
   <% end -%>
 <% end -%>

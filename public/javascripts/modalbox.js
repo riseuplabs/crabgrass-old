@@ -12,6 +12,7 @@ MODIFICATIONS FOR CRABGRASS:
 (1) commented out transitions (this will make the file smaller when minified)
 (2) added some ajax request event listeners
 (3) added option showAfterLoading
+(4) added Modalbox.confirm()
 
 THE EVENT LISTENERS:
 
@@ -39,6 +40,7 @@ if (!window.Modalbox)
 Modalbox.Methods = {
 	overrideAlert: true, // Override standard browser alert message with ModalBox
 	focusableElements: new Array,
+	priorContent: new Array,             // added for cg
 	currFocused: 0,
 	initialized: false,
 	active: true,
@@ -67,10 +69,8 @@ Modalbox.Methods = {
 		method: 'get', // Default Ajax request method
 		autoFocusing: true, // Toggles auto-focusing for form elements. Disable for long text pages.
 		aspnet: false, // Should be use then using with ASP.NET costrols. Then true Modalbox window will be injected into the first form element.
-// begin hack
-		showAfterLoading: false // if true, the box does not appear until the ajax request returns 
+		showAfterLoading: false // added for cg. if true, the box does not appear until the ajax request returns 
                                 // with the contents of the box. has no effect on non-ajax popups
-// end hack
 	},
 	_options: new Object,
 	
@@ -127,6 +127,11 @@ Modalbox.Methods = {
 	show: function(content, options) {
 		if(!this.initialized) this._init(options); // Check for is already initialized
 		
+		// added for cg
+		if (this.MBwindow.style.display != "none") {
+			this.priorContent.push({content: $(this.MBcontent).innerHTML, caption: $(this.MBcaption).innerHTML, width: this.options.width});
+		} // end
+
 		this.content = content;
 		this.setOptions(options);
 		
@@ -157,6 +162,7 @@ Modalbox.Methods = {
 //				Effect.SlideUp(this.MBwindow, { duration: this.options.slideUpDuration, transition: Effect.Transitions.sinoidal, afterFinish: this._deinit.bind(this) } );
 //			else {
 				$(this.MBwindow).hide();
+				this.priorContent = []; // added for cg
 				this._deinit();
 //			}
 		} else throw("Modalbox is not initialized.");
@@ -169,22 +175,44 @@ Modalbox.Methods = {
 		this.hide();
 	},
 
-	// a replacement for standard alert()	
+	// a replacement for standard alert(). modified heavily for cg.
 	alert: function(message) {
 		Object.extend(this.strings, {'message':message})
 		var html = '<div class="MB_alert"><p>#{message}</p><input type="button" onclick="Modalbox.hide()" value="#{ok}" /></div>';
-		Modalbox.show(html.interpolate(this.strings), {title: this.strings.alert, width: 350});
+		this.show(html.interpolate(this.strings), {title: this.strings.alert, width: 350});
 	},
 	
-	// we cannot replace the standard confirm directly, because of the way it halt js execution.
-	// this, however, can be used to in combination with a custom helper
-	confirm: function(message, action) {
-		Object.extend(this.strings, {'message':message, 'action':action})
-		var html = '<div class="MB_confirm"><p>#{message}</p><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="button" onclick="#{action}" value="#{ok}" /></div>';
-		Modalbox.show(html.interpolate(this.strings), {title: this.strings.confirm, width: 350});
+	// we cannot replace the standard confirm directly, because of the way it halts js execution.
+	// this, however, can be used to in combination with a custom helper. 
+	// options for ajax: ok_function
+	// options for form: method, action, token
+	// added for cg
+	confirm: function(message, options) {
+		options = $H(this.strings).merge(options).merge({'message':message})
+		if (options.get('action')) {
+			var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="#{method}"><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+		} else if (options.get('ok_function')) {
+			var html = '<div class="MB_confirm"><p>#{message}</p><form><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.back()" value="#{cancel}" /><input type="button" onclick="#{ok_function}" value="#{ok}" /></form></div>';
+		}
+		this.show(html.interpolate(options), {title: options.get('title'), width: 350});
+		if (this.priorContent.size())
+			this.resizeToContent();
+	},
+
+	// closes the modalbox, or restores the previous content if there was any.
+	// added for cg
+	back: function() {
+		var prior = this.priorContent.pop();
+		if (prior) {
+			this.show(prior.content, {title:prior.caption, width:prior.width});
+			this.resizeToContent();
+		} else {
+			this.hide();
+		}
 	},
 
 	// turns on modalbox spinner
+	// added for cg
 	spin: function() {$('MB_spinner').show()},
 
 	_appear: function() { // First appearing of MB
@@ -213,10 +241,10 @@ Modalbox.Methods = {
 	//					}.bind(this)
 	//			});
 	//		} else {
-				$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
 				$(this.MBwindow).show();
-				this._setPosition(); 
 				this.loadContent();
+				this._setPosition(); 
+				$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
 	//		}
 		} else {
 			this.loadContent();
@@ -557,15 +585,17 @@ Modalbox.Methods = {
 	},
 
 	event: function(eventName) {
-		if(this.options[eventName]) {
-			var returnValue = this.options[eventName](); // Executing callback
-			this.options[eventName] = null; // Removing callback after execution
-			if(returnValue != undefined) 
-				return returnValue;
-			else 
-				return true;
-		}
-		return true;
+		try {
+			if(this.options[eventName]) {
+				var returnValue = this.options[eventName](); // Executing callback
+				this.options[eventName] = null; // Removing callback after execution
+				if(returnValue != undefined) 
+					return returnValue;
+				else 
+					return true;
+			}
+			return true;
+		} catch(e) {}
 	}
 };
 

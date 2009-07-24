@@ -212,13 +212,20 @@ module BasePageHelper
   def show_popup_link(options)
     options[:controller] ||= options[:name]
     popup_url = url_for({
-        :controller => "base_page/#{options.delete(:controller)}",
-        :action => 'show',
-        :popup => true,
-        :page_id => @page.id,
-        :name => options.delete(:name)
-       })
+      :controller => "base_page/#{options.delete(:controller)}",
+      :action => 'show',
+      :popup => true,
+      :page_id => @page.id,
+      :name => options.delete(:name)
+    })
+    options.merge!(:after_hide => 'afterHide()')
     link_to_modal(options.delete(:label), popup_url, options)
+  end
+
+  # to be included in the popup result for any popup that should refresh the sidebar when it closes.
+  # also, set refresh_sidebar to true one the popup_line call
+  def refresh_sidebar_on_close
+    javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
   end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked
@@ -231,13 +238,14 @@ module BasePageHelper
 
   def edit_attachments_line
     if may_show_page?
-      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach')
+      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach', :title => 'Edit Attachments'[:edit_attachments])
     end 
   end
 
   def edit_tags_line
     if may_update_tags?
-      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link], :icon => 'tag')
+      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link],
+        :title => 'Edit Tags'[:edit_tags], :icon => 'tag')
     end
   end
 
