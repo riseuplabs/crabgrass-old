@@ -31,17 +31,58 @@
 
       <%= call_hook :signup_form_password %>
 
-      <%= render :partial => 'signup_agreement_checkbox' %>
+      <% fields_for :visible_profile, @visible_profile do |profile| %>
+        <p>
+          <%= profile.label :first_name, "First Name"[:first_name_label] %>
+          <%= profile.text_field :first_name %>
+        </p>
+
+        <p>
+          <%= profile.label :last_name, "Last Name"[:last_name] %>
+          <%= profile.text_field :last_name %>
+        </p>
+
+          <% profile.fields_for :locations, :index => nil do |profile_locations| %>
+            <p>
+              <%= profile_locations.label :country_name, "Country"[:location_country] %>
+              <%= profile_locations.text_field :country_name %>
+            </p>
+
+            <p>
+              <%= profile_locations.label :city, "City"[:location_city] %><br/>
+              <%= profile_locations.text_field :city %>
+            </p>
+          <% end %>
+
+        <p>
+          <%= profile.label :organization, "Organization"[:organization] %>
+          <%= profile.text_field :organization %>
+        </p>
+
+      <% end %>
+
+      <p>
+        <%= "PRIVATE INFO: "[:private_info] %>
+        <i> <%= "Items below will only be seen by site administrators"[:private_info_description] %></i>
+      </p>
 
       <p>
         <%= f.label :email, "Your Email"[:signup_email] %><br/>
         <%= f.text_field :email%>
 
-        <%- unless current_site.require_user_email -%>
+        <!-- <%# unless current_site.require_user_email -%>
         <br />
-        <i><%= "Optional: used if you forget your password"[:signup_email_info] %></i>
-        <%- end -%>
+        <i><%# "Optional: used if you forget your password"[:signup_email_info] %></i>
+        <%# end -%> -->
       </p>
+      <% fields_for :hidden_profile, @hidden_profile do |profile| %>
+        <p>
+          <%= profile.label :birthday, "Date of Birth"[:date_of_birth] %> <br/>
+          <%= profile.date_select :birthday, :start_year => 1900, :end_year => 2009 %>
+        </p>
+      <% end %>
+
+      <%= render :partial => 'signup_agreement_checkbox' %>
 
       <p><%= submit_tag 'Sign up'[:signup_button] %></p>
 

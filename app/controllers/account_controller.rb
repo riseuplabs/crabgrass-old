@@ -3,6 +3,7 @@ class AccountController < ApplicationController
   stylesheet 'account'
 
   before_filter :view_setup
+  before_filter :setup_profiles, :only => :signup
   skip_before_filter :verify_authenticity_token, :only => :login
 
   # TODO: it would be good to require post for logout in the future
@@ -62,13 +63,21 @@ class AccountController < ApplicationController
     end
 
     @user = User.new(params[:user] || {:email => session[:signup_email_address]})
+    @hidden_profile.email_addresses.build(:email_address => @user.email, :email_type => "Other")
+    # require 'ruby-debug';debugger;1-1
 
     if request.post?
       if params[:usage_agreement_accepted] != "1"
-        raise ErrorMessage.new("Acceptance of the usage agreement is required"[:usage_agreement_required])
+        flash_message_now :error => "Acceptance of the usage agreement is required"[:usage_agreement_required]
+        raise ErrorMessage.new
       end
-
+      # @hidden_profile
       @user.avatar = Avatar.new
+      # @visible_profile.entity = @user
+      # @hidden_profile.entity = @user
+      @user.profiles << @visible_profile
+      @user.profiles << @hidden_profile
+
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
@@ -79,8 +88,20 @@ class AccountController < ApplicationController
         :success => "Thanks for signing up!"[:signup_success_message]
     end
   rescue Exception => exc
-    @user = exc.record
-    flash_message_now :exception => exc
+    @user = exc.record if exc.record
+    # massage the errors a bit
+    @hidden_profile.errors.each {|attribute, msg|
+      if attribute == "email_address"
+        @user.errors.add('email', msg)
+      else
+        @visible_profile.errors.add(attribute, msg)
+      end
+      }
+
+    @user.errors.clear_for_attribute("profiles")
+    flash_message_now :object => @user
+    flash_message_now :object => @visible_profile
+
     render :action => 'signup'
   end
 
@@ -158,4 +179,21 @@ class AccountController < ApplicationController
     @active_tab = :home
   end
 
+  def setup_profiles
+    if params[:visible_profile] and params[:visible_profile][:locations]
+      visible_profile_location = ProfileLocation.create(params[:visible_profile][:locations].first)
+      params[:visible_profile].delete(:locations)
+    end
+    @visible_profile = Profile.new(params[:visible_profile] || {})
+    @visible_profile.locations << visible_profile_location if visible_profile_location
+    @visible_profile.required_fields = [:first_name, :last_name, :organization, {:locations => [:city, :country_name]}]
+    if current_site.profile_enabled?(:public)
+      @visible_profile.stranger = true
+    else
+      @visible_profile.friend = true
+    end
+    @hidden_profile = Profile.new(params[:hidden_profile] || {})
+    @hidden_profile.required_fields = [:birthday, {:email_addresses => :email_address}]
+    # require 'ruby-debug';debugger;1-1
+  end
 end

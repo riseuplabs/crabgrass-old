@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090711054954) do
+ActiveRecord::Schema.define(:version => 20090724101212) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -459,7 +459,7 @@ ActiveRecord::Schema.define(:version => 20090711054954) do
     t.string   "organization"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "birthday",               :limit => 8
+    t.datetime "birthday"
     t.boolean  "fof"
     t.text     "summary"
     t.integer  "wiki_id",                :limit => 11

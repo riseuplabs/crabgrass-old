@@ -149,3 +149,10 @@ module ActiveRecord
   end
 end
 
+# need to have finer control over errors
+class ActiveRecord::Errors
+  def clear_for_attribute(attribute)
+    @errors.delete(attribute.to_s)
+  end
+end
+
