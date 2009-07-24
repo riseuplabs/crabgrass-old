@@ -22,13 +22,12 @@ test:
   id: 2
   name: "site2"
   title: "testing site"
-  # the domain for the testing site must be 'test.host'
+  # the domain for all testing sites must be 'test.host'
   # this is the request domain that is used by rails when testing.
   # this site is not used for most tests, but for some it is enabled.
   domain: "test.host"
   translation_group: "animals"
   network_id: 3002
-  council_id: 2 # animals - used for the admin controllers tests.
   # this is normally overwritten at startup by crabgrass. however, 
   # the way we enable sites for only some tests relies on their being
   # a super_admin_group_id defined for the test site.
@@ -41,10 +40,17 @@ limited:
   domain: "limited"
   title: "a limited site"
   limited: true
+# this site is used for admin controller tests
+# It has a council and a network but it is unlimited
+# so it does not depend on the groups and users site_ids
+# to be set to this site.
 unlimited:
   id: 4
   name: "unlimited"
-  domain: "unlimited"
+  # the domain for all testing sites must be 'test.host'
+  domain: "test.host"
+  network_id: 3002
+  council_id: 2 # animals - used for the admin controllers tests.
   title: "an unlimited site"
   limited: false
 redwood:

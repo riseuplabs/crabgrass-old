@@ -1,6 +1,6 @@
 #
 # This class provides access to config/crabgrass.RAILS_ENV.yml.
-# 
+#
 # The variables defined there are available as Config.varname
 #
 class Conf
@@ -15,15 +15,15 @@ class Conf
   ##
   ## CLASS ATTRIBUTES
   ## (these are ok, because they are shared among all sites)
-  ## 
+  ##
 
   # Site attributes that can only be specified in crabgrass.*.yml.
   cattr_accessor :name
   cattr_accessor :admin_group
 
   # Default values for site objects. If a site does not have
-  # a value defined for one of these, we use the default in 
-  # the config file, or defined here. 
+  # a value defined for one of these, we use the default in
+  # the config file, or defined here.
   cattr_accessor :title
   cattr_accessor :pagination_size
   cattr_accessor :default_language
@@ -37,9 +37,9 @@ class Conf
   cattr_accessor :require_user_email
   cattr_accessor :domain
   cattr_accessor :translation_group
-  cattr_accessor :chat 
+  cattr_accessor :chat
   cattr_accessor :signup_mode
-  
+
   # are in site, but I think they should be global
   cattr_accessor :translators
   cattr_accessor :translation_group
@@ -100,7 +100,7 @@ class Conf
     self.domain            = 'localhost'
     self.chat              = true
     self.signup_mode       = SIGNUP_MODE[:default]
-    
+
     # instance configuration
     self.enabled_mods  = []
     self.enabled_tools = []
@@ -123,16 +123,16 @@ class Conf
         puts "ERROR (%s): unknown option '%s'" % [configuration_filename,key]
       end
     end
-    
+
     # allow string (ie 'invite_only') in conf file.
     if self.signup_mode.is_a? String
-      unless SIGNUP_MODE.has_key? self.signup_mode.to_sym  
+      unless SIGNUP_MODE.has_key? self.signup_mode.to_sym
         raise Exception.new('signup_mode of "%s" is not recognized' % self.signup_mode)
       end
       self.signup_mode = SIGNUP_MODE[self.signup_mode.to_sym]
     end
     true
-  end 
+  end
 
   ##
   ## SITES
@@ -141,7 +141,11 @@ class Conf
   # can be called from a test's setup method in order to enable sites
   # for a particular set of tests without enabling sites for all tests.
   def self.enable_site_testing(site=nil)
-    self.enabled_site_ids = [1,2]
+    if site.nil?
+      self.enabled_site_ids = [1,2]
+    else
+      self.enabled_site_ids = Array(site.id)
+    end
   end
 
   def self.disable_site_testing
@@ -150,11 +154,11 @@ class Conf
 
   ##
   ## PLUGINS
-  ## 
+  ##
 
   # Called by lib/extension/engines.rb in order to determine if a plugin should
   # be loaded. Normal plugins are always loaded, we just might have disabled
-  # mods and tools. 
+  # mods and tools.
   def self.plugin_enabled?(plugin_path)
     if plugin_path =~ /^#{RAILS_ROOT}\/mods\//
       self.mod_enabled?( File.basename(plugin_path) )
@@ -165,8 +169,8 @@ class Conf
     end
   end
 
-  # a mod will be enabled if explicitly configured to be so, or if 
-  # ENV['MOD'] is set. 
+  # a mod will be enabled if explicitly configured to be so, or if
+  # ENV['MOD'] is set.
   def self.mod_enabled?(mod_name)
     self.enabled_mods.include?(mod_name) or ENV['MOD'] == mod_name
   end

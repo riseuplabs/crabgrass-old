@@ -4,16 +4,13 @@ require 'admin/custom_appearances_controller'
 # Re-raise errors caught by the controller.
 class Admin::CustomAppearancesController; def rescue_action(e) raise e end; end
 
-class CustomAppearancesControllerTest < Test::Unit::TestCase
+class Admin::CustomAppearancesControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships, :pages
 
   def setup
-    @controller = Admin::CustomAppearancesController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-    enable_unlimited_site_testing
-    @current_site=Site.for_domain("test.host").first
+    enable_site_testing('unlimited')
+    @current_site=Site.current
   end
 
   def teardown
