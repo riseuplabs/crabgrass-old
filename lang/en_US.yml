@@ -2,7 +2,7 @@
 
 ##
 ## TO BE DESTROYED
-## 
+##
 
 #permission_denied: 'Permission denied'
 
@@ -233,34 +233,34 @@ usage_agreement_required: "Acceptance of the usage agreement is required"
 usage_agreement_heading: "Usage Agreement"
 usage_agreement_text: |
   The services of this website are provided AS IS. You understand and agree that the OPERATOR of this website assumes no responsibility for, among other things, any service outages or interruptions, the unavailability of particular features or services, and your inability to access or make use of all or part of our services. Furthermore, you understand and agree that the OPERATOR assumes no responsibility for deletion, loss or mis-delivery of information stored or delivered through our services. The OPERATOR of this site make no warranties or guarantees at all.
-  
+
   In consideration for your use of this service you agree to the following conditions:
-  
-  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site. 
-  
+
+  You acknowledge and agree to not sell, resell or exploit the use of our services, access to our services or any of the content accessable through our services for any commercial purposes except to use such information or content for the sole purpose of listing our service in a search engine or other service directing users to our site.
+
   You also agree not to use our services to:
-  
+
   * harass other people;
   * harm or exploit minors;
   * impersonate or cause others to believe that you are another person;
   * send unsolicited messages;
   * collect personal data from users of this service without their express consent; and
   * interfere with or disrupt our services, those of our users or any other person or service;
-  
+
   Further, you agree to:
-  
+
   * avoid excessive use of our services;
   * be responsible for maintaining the confidentiality of your accounts and passwords;
   * be responsible for the actions of any person who uses your account or passwords to gain access to our systems;
   * notify us immediately of any unauthorized use of your accounts or any other breach of security at any time with relation to your account(s);
-  
-  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.  
-  
+
+  The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
+
   If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
 
 ##
 ## PASSWORD
-## 
+##
 
 # seems like some duplication here!
 password: "Password"
@@ -276,14 +276,14 @@ password_error_username: "is no good, it is based on your username."
 password_error_too_short: "is no good, it is too short."
 password_error_whitespace: "is no good, it is all whitespace."
 password_error_too_similar: "is no good, it does not contain enough different characters."
-password_error_too_simple: "is no good, it is too simplistic or predictable." 
+password_error_too_simple: "is no good, it is too simplistic or predictable."
 password_error_too_common: "is no good, it is based on a dictionary word."
 password_error_confirmation: "does not match password confirmation."
 
 
 ##
 ## ACTIVITIES
-## 
+##
 
 activity_contact_created: "{user} added {other_user} as a friend"
 activity_user_status: "{user} is now {status}"
@@ -370,7 +370,7 @@ image_title: "Image title: %s"
 
 ##
 ## ME
-## 
+##
 
 me_dashboard_link: "Dashboard"
 me_inbox_link: "Inbox"
@@ -413,11 +413,11 @@ set_status_messsage: What are you doing right now?
 
 ##
 ## PROFILE
-## 
+##
 
 profile_public_description: |
-  This profile is public and will be visible to anyone visiting this website. 
-  The information you put here is also searchable by other people. 
+  This profile is public and will be visible to anyone visiting this website.
+  The information you put here is also searchable by other people.
   Use caution when adding personal information to your public profile.
 
 profile_private_description: This profile is private and is only visible to your friends.
@@ -742,7 +742,7 @@ edit_attachments_link: "Edit"
 attachments: "Attachments"
 edit_attachments: "Edit Attachments"
 current_attachments: "Current Attachments"
-add_new_attachment: "Add New Attachment" 
+add_new_attachment: "Add New Attachment"
 upload_attachment: "Upload Attachment"
 
 # share/notify
@@ -862,7 +862,7 @@ page_group_task: Tasks
 
 ##
 ## DATES
-## 
+##
 
 sunday: Sunday
 monday: Monday
@@ -984,7 +984,7 @@ wiki_revert_version: "Revert To Version {version}"
 
 ##
 ## WALL
-## 
+##
 
 set_status_button: "Update Status"
 say_message_button: "Say"
@@ -1007,15 +1007,15 @@ recent_wall_posts: "Recent Wall Posts"
 group_invite_subject: "Invitation to join group \"{group}\""
 group_invite_email: |
   {from_user} has invited you to join group "{group}".
-  
+
   If you wish to join this group, click here:
-  
+
     {accept_invite_link}
-  
+
   The home page of this group can be found here:
-  
+
     {group_home_link}
-  
+
   If you do not wish to join this group, simply ignore this email.
 
 email_notice_subject: 'Check out page "{title}"'
@@ -1024,7 +1024,7 @@ email_notice_hello: "Hello, {from} has sent you a web page."
 email_notice_access: "You may access this page here:"
 email_link_expires: "This link will expire in {days} days."
 
- 
+
 ##
 ## PEOPLE (i.e., PeopleController)
 ##
@@ -1076,7 +1076,7 @@ current_tags: "Current Tags"
 
 
 ##
-## WELCOME 
+## WELCOME
 ##
 
 welcome_show_link: "Show Welcome"
