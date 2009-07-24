@@ -86,7 +86,7 @@ module BasePagePermission
   ##
   ## SHARING
   ##
- 
+
   def may_share_page?(page=@page)
     current_user.may?(:admin, page)
   end
@@ -98,10 +98,10 @@ module BasePagePermission
   ##
   ## PARTICIPATION
   ##
- 
+
   alias_method :may_star_page?, :may_show_page?
   alias_method :may_watch_page?, :may_show_page?
-  
+
   def may_public_page?(page=@page)
     current_user.may? :admin, page
   end

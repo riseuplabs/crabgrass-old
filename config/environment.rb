@@ -1,17 +1,17 @@
 #
 # THINGS TO CONFIGURE
-# 
-# There are three files that need to be configured for crabgrass: 
-# 
+#
+# There are three files that need to be configured for crabgrass:
+#
 #   * config/secret.txt  (rake make_a_secret)
 #   * config/database.yml
 #   * config/crabgrass.[production|development|test].yml
 #
 # Hopefully, nothing in environment.rb will need to be changed.
 #
-# There are many levels of possible defaults for configuration options. 
+# There are many levels of possible defaults for configuration options.
 # In order of precedence, crabgrass will search:
-# 
+#
 #   (1) the current site
 #   (2) the default site (if a site has default == true)
 #   (3) options configured in the file config/crabgrass.*.yml
@@ -76,7 +76,7 @@ Rails::Initializer.run do |config|
   # in order to do smart breadcrumbs. These means we cannot use cookie based
   # sessions because they are too limited in size. If you want to switch to a different
   # storage container, you need to disable breadcrumbs or store them someplace else,
-  # like an in-memory temporary table. 
+  # like an in-memory temporary table.
   config.action_controller.session_store = :p_store
 
   # store fragments on disk, we might have a lot of them.
@@ -88,7 +88,7 @@ Rails::Initializer.run do |config|
 
   # allow plugins in mods/ and pages/
   config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
- 
+
   # Deliveries are disabled by default. Do NOT modify this section.
   # Define your email configuration in email.yml instead.
   # It will automatically turn deliveries on
@@ -113,14 +113,14 @@ Rails::Initializer.run do |config|
   end
 
   ###
-  ### (3) ENVIRONMENT 
+  ### (3) ENVIRONMENT
   ###     config/environments/development.rb
   ###
 
   ###
   ### (4) PLUGINS
   ###     Plugins are loading in alphanumerical order across all
-  ###     all these directories:  
+  ###     all these directories:
   ###       vendors/plugins/*/init.rb
   ###       mods/*/init.rb
   ###       tools/*/init.rb

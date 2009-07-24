@@ -13,15 +13,15 @@ class Password < String
   # also use the characters + and /.
   #
   PASSWD_CHARS = '0123456789' +
-		 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-		 'abcdefghijklmnopqrstuvwxyz'
+   'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+   'abcdefghijklmnopqrstuvwxyz'
 
   # Valid salt characters for use by Password#crypt.
   #
   SALT_CHARS   = '0123456789' +
-		 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-		 'abcdefghijklmnopqrstuvwxyz' +
-		 './'
+   'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+   'abcdefghijklmnopqrstuvwxyz' +
+   './'
 
   # :stopdoc:
 
@@ -122,75 +122,75 @@ class Password < String
 
       while pw.length < length do
 
-	# Get a random phoneme and its length
-	phoneme = phonemes[ rand( nr_phonemes ) ]
-	ph_len = phoneme.length
+  # Get a random phoneme and its length
+  phoneme = phonemes[ rand( nr_phonemes ) ]
+  ph_len = phoneme.length
 
-	# Get its flags as an Array
-	ph_flags = PHONEMES[ phoneme.to_sym ]
-	ph_flags = [ ph_flags & CONSONANT, ph_flags & VOWEL,
-		     ph_flags & DIPHTHONG, ph_flags & NOT_FIRST ]
+  # Get its flags as an Array
+  ph_flags = PHONEMES[ phoneme.to_sym ]
+  ph_flags = [ ph_flags & CONSONANT, ph_flags & VOWEL,
+       ph_flags & DIPHTHONG, ph_flags & NOT_FIRST ]
 
-	# Filter on the basic type of the next phoneme
-	next if ph_flags.include? desired
+  # Filter on the basic type of the next phoneme
+  next if ph_flags.include? desired
 
-	# Handle the NOT_FIRST flag
-	next if first and ph_flags.include? NOT_FIRST
+  # Handle the NOT_FIRST flag
+  next if first and ph_flags.include? NOT_FIRST
 
-	# Don't allow a VOWEL followed a vowel/diphthong pair
-	next if prev.include? VOWEL and ph_flags.include? VOWEL and
-		ph_flags.include? DIPHTHONG
+  # Don't allow a VOWEL followed a vowel/diphthong pair
+  next if prev.include? VOWEL and ph_flags.include? VOWEL and
+  ph_flags.include? DIPHTHONG
 
-	# Don't allow us to go longer than the desired length
-	next if ph_len > length - pw.length
+  # Don't allow us to go longer than the desired length
+  next if ph_len > length - pw.length
 
-	# We've found a phoneme that meets our criteria
-	pw << phoneme
+  # We've found a phoneme that meets our criteria
+  pw << phoneme
 
-	# Handle ONE_CASE
-	if feature_flags.include? ONE_CASE
+  # Handle ONE_CASE
+  if feature_flags.include? ONE_CASE
 
-	  if (first or ph_flags.include? CONSONANT) and rand( 10 ) < 3
-	    pw[-ph_len, 1] = pw[-ph_len, 1].upcase
-	    feature_flags.delete ONE_CASE
-	  end
+    if (first or ph_flags.include? CONSONANT) and rand( 10 ) < 3
+      pw[-ph_len, 1] = pw[-ph_len, 1].upcase
+      feature_flags.delete ONE_CASE
+    end
 
-	end
+  end
 
-	# Is password already long enough?
-	break if pw.length >= length
+  # Is password already long enough?
+  break if pw.length >= length
 
-	# Handle ONE_DIGIT
-	if feature_flags.include? ONE_DIGIT
+  # Handle ONE_DIGIT
+  if feature_flags.include? ONE_DIGIT
 
-	  if ! first and rand( 10 ) < 3
-	    pw << ( rand( 10 ) + ?0 ).chr
-	    feature_flags.delete ONE_DIGIT
+    if ! first and rand( 10 ) < 3
+      pw << ( rand( 10 ) + ?0 ).chr
+      feature_flags.delete ONE_DIGIT
 
-	    first = true
-	    prev = []
-	    desired = Password.get_vowel_or_consonant
-	    next
-	  end
+      first = true
+      prev = []
+      desired = Password.get_vowel_or_consonant
+      next
+    end
 
-	end
+  end
 
-	if desired == CONSONANT
-	  desired = VOWEL
-	elsif prev.include? VOWEL or ph_flags.include? DIPHTHONG or
-	      rand(10) > 3
-	  desired = CONSONANT
-	else
-	  desired = VOWEL
-	end
+  if desired == CONSONANT
+    desired = VOWEL
+  elsif prev.include? VOWEL or ph_flags.include? DIPHTHONG or
+        rand(10) > 3
+    desired = CONSONANT
+  else
+    desired = VOWEL
+  end
 
-	prev = ph_flags
-	first = false
+  prev = ph_flags
+  first = false
       end
 
       # Try again
       break unless feature_flags.include? ONE_CASE or
-		   feature_flags.include? ONE_DIGIT
+     feature_flags.include? ONE_DIGIT
 
     end
 

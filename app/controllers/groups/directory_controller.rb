@@ -29,14 +29,14 @@ class Groups::DirectoryController < Groups::BaseController
     @show_committees = true
     render_list
   end
-   
+
   def most_active
     @groups = Group.only_type(@group_type).most_visits.paginate(:all, :page => params[:page])
     render_list
   end
 
   protected
-  
+
   def render_list
     render :template => 'groups/directory/list'
   end

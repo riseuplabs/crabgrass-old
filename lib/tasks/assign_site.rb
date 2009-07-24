@@ -1,13 +1,13 @@
 #
 # This task is for legacy data created before sites. It assigns
 # site_id to things that need to have site_id.
-# 
+#
 # You must run rake cg:update_page_terms after
-# 
+#
 namespace :cg do
 
   desc "sets site_id for every page, if possible"
-  task(:assign_sites => :environment) do 
+  task(:assign_sites => :environment) do
     site_ids = {}  # group_id ==> site_id
     Site.find(:all).each do |site|
       if site.network_id

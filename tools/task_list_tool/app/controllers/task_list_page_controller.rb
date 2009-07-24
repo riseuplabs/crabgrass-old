@@ -5,8 +5,8 @@ class TaskListPageController < BasePageController
   stylesheet 'tasks'
   permissions 'task_list_page'
   javascript :extra, 'page'
-  
-  def show 
+
+  def show
   end
 
   # ajax only, returns nothing
@@ -20,7 +20,7 @@ class TaskListPageController < BasePageController
       ids.reject!{|i|i.to_i == 0} # only allow integers
       @list.tasks.each do |task|
         i = ids.index( task.id.to_s )
-        task.without_timestamps do 
+        task.without_timestamps do
           task.update_attribute('position',i+1) if i
         end
       end
@@ -31,7 +31,7 @@ class TaskListPageController < BasePageController
     end
     render :nothing => true
   end
-  
+
   # ajax only, returns rjs
   def create_task
     return unless request.xhr?
@@ -40,7 +40,7 @@ class TaskListPageController < BasePageController
     @task.task_list = @list
     @task.save
   end
-  
+
   # ajax only, returns rjs
   def mark_task_complete
     return unless request.xhr?
@@ -56,7 +56,7 @@ class TaskListPageController < BasePageController
     @task.completed = false
     @task.move_to_bottom # also saves task
   end
-  
+
   # ajax only, returns nothing
   def destroy_task
     return unless request.xhr?
@@ -65,7 +65,7 @@ class TaskListPageController < BasePageController
     @task.destroy
     render :nothing => true
   end
-  
+
   # ajax only, returns rjs
   def update_task
     return unless request.xhr?
@@ -76,7 +76,7 @@ class TaskListPageController < BasePageController
       page.replace_html dom_id(@task), :partial => 'inner_task_show', :locals => {:task => @task}
     end
   end
-  
+
   # ajax only, returns rjs
   def edit_task
     return unless request.xhr?
@@ -87,7 +87,7 @@ class TaskListPageController < BasePageController
   end
 
   protected
-  
+
   def update_participations
     users_pending = {}
     page_resolved = true
@@ -107,12 +107,12 @@ class TaskListPageController < BasePageController
     users_pending.each do |user,pending|
       user.resolved(@page, (not pending))
     end
-    
+
     # current_user.updated(@page) <-- if we want the page to become unread on each update
     @page.save # instead of current_user.updated
     return true
   end
-  
+
   def fetch_task_list
     return true unless @page
     unless @page.data
@@ -121,7 +121,7 @@ class TaskListPageController < BasePageController
     end
     @list = @page.data
   end
-  
+
   def fetch_user_participation
     @upart = @page.participation_for_user(current_user) if @page and current_user
   end

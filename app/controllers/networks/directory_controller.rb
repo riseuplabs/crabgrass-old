@@ -7,7 +7,7 @@ class Networks::DirectoryController < Groups::DirectoryController
   end
 
   protected
-  
+
   def context
     network_context
   end

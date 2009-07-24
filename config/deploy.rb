@@ -38,11 +38,11 @@ set :deploy_via, :remote_cache
 set :copy_strategy, :checkout
 set :copy_exclude, [".git"]
 
-set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)  
+set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)
 set :keep_releases, 3
 
-ssh_options[:paranoid] = false  
-set :use_sudo, false   
+ssh_options[:paranoid] = false
+set :use_sudo, false
 
 role :web, (staging ? staging_host : deploy_host)
 role :app, (staging ? staging_host : deploy_host)
@@ -51,9 +51,9 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 set :deploy_to, "/usr/apps/#{application}"
 
 
-## 
+##
 ## CUSTOM TASKS
-## 
+##
 
 namespace :passenger do
   desc "Restart rails application"
@@ -103,7 +103,7 @@ end
 namespace :crabgrass do
 
   # rerun after_setup if you change the db configuration
-  desc "Create shared directories, update database.yml" 
+  desc "Create shared directories, update database.yml"
   task :create_shared, :roles => :app do
     run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/sessions"
     run "mkdir -p #{deploy_to}/#{shared_dir}/tmp/cache"
@@ -114,17 +114,17 @@ namespace :crabgrass do
     run "mkdir -p #{deploy_to}/#{shared_dir}/public_assets"
     run "mkdir -p #{deploy_to}/#{shared_dir}/latex"
     run "mkdir -p #{deploy_to}/#{shared_dir}/sphinx"
-    
-    run "mkdir -p #{deploy_to}/#{shared_dir}/config"   
-    put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml" 
+
+    run "mkdir -p #{deploy_to}/#{shared_dir}/config"
+    put database_configuration('app'), "#{deploy_to}/#{shared_dir}/config/database.yml"
     put secret, "#{deploy_to}/#{shared_dir}/config/secret.txt"
   end
 
-  desc "Link in the shared dirs" 
+  desc "Link in the shared dirs"
   task :link_to_shared do
     run "rm -rf #{release_path}/tmp"
     run "ln -nfs #{shared_path}/tmp #{release_path}/tmp"
-    
+
     run "rm -rf #{release_path}/index"
     run "ln -nfs #{shared_path}/index #{release_path}/index"
 
@@ -133,10 +133,10 @@ namespace :crabgrass do
 
     run "rm -rf #{release_path}/public/assets"
     run "ln -nfs #{shared_path}/public_assets #{release_path}/public/assets"
-      
+
     run "rm -rf #{release_path}/public/avatars"
     run "ln -nfs #{shared_path}/avatars #{release_path}/public/avatars"
-    
+
     run "rm -rf #{release_path}/public/latex"
     run "ln -nfs #{shared_path}/latex #{release_path}/public/latex"
 
@@ -148,7 +148,7 @@ namespace :crabgrass do
   end
 
   desc "refresh the staging database"
-  task :refresh do 
+  task :refresh do
     run "touch #{deploy_to}/shared/tmp/refresh.txt"
   end
 
@@ -165,7 +165,7 @@ namespace :crabgrass do
   desc "reindex sphinx"
   task :index do
     run "cd #{deploy_to}/current; rake ts:index RAILS_ENV=production"
-  end  
+  end
 end
 
 namespace :debian do

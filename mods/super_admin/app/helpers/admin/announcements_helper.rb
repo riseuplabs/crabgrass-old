@@ -7,7 +7,7 @@ module Admin::AnnouncementsHelper
   def edit_announcement_path(arg)
     edit_admin_announcement_path(arg)
   end
- 
+
   def new_announcement_path
     new_admin_announcement_path
   end

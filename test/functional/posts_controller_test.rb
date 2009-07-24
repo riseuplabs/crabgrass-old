@@ -20,29 +20,29 @@ class PostsControllerTest < Test::Unit::TestCase
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     assert pages(:page1).discussion.posts.last.body = 'test post'
   end
-  
+
   def test_edit
     login_as :red
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     post_id = pages(:page1).discussion.posts.last.id
-    
+
     post :edit, :id => post_id
 #    assert_template 'edit'
   end
-  
+
   def test_save
     login_as :red
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     post_id = pages(:page1).discussion.posts.last.id
 
-    post :save, :id => post_id, :body => 'new test post', :save => 'Save'  
+    post :save, :id => post_id, :body => 'new test post', :save => 'Save'
     assert pages(:page1).discussion.posts.last.body = 'new test post'
 
     post :save, :id => post_id, :body => 'new test post', :destroy => 'Delete'
     assert_nil pages(:page1).discussion.posts.detect { |post| post.body = 'new test post' }
   end
 
-  def test_twinkle   
+  def test_twinkle
     login_as :red
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     post_id = pages(:page1).discussion.posts.last.id

@@ -1,14 +1,14 @@
 class Admin::PagesController < Admin::BaseController
   verify :method => :post, :only => [:update]
-  
+
   def index
     view = params[:view] || 'all'
     @current_view = view
-    
+
     if params[:group] && params[:group].any?
       @group = Group.find(params[:group])
     end
-    
+
     if view == 'pending'
       # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
       options = { :conditions => ['flow IS NULL AND ((vetted = ? AND rating = ?) OR (public_requested = ? AND public = ?))', false, YUCKY_RATING, true, false], :joins => :ratings, :order => 'updated_at DESC' }
@@ -39,7 +39,7 @@ class Admin::PagesController < Admin::BaseController
     redirect_to :action => 'index', :view => params[:view]
   end
 
-  # remote action. call with params[:view ] to view the desired pages. ie, hidden, vetted or pending	
+  # remote action. call with params[:view ] to view the desired pages. ie, hidden, vetted or pending
   def filter
     index
   end
@@ -48,11 +48,11 @@ class Admin::PagesController < Admin::BaseController
   def approve
     page = Page.find params[:id]
     page.update_attribute(:vetted, true)
-    
+
     # get rid of all yucky associated with the page
     page.ratings.destroy_all
     redirect_to :action => 'index', :view => params[:view]
-  end 	
+  end
 
   # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
@@ -75,15 +75,15 @@ class Admin::PagesController < Admin::BaseController
     redirect_to :action => 'index', :view => params[:view]
   end
 
-# set page.public = false 
+# set page.public = false
   def remove_public
     page = Page.find params[:id]
     page.update_attributes({:public => false, :public_requested => true})
     redirect_to :action => 'index', :view => params[:view]
   end
- 
+
   protected
-  
+
   def set_active_tab
     @active = 'page_moderation'
   end

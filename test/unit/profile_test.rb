@@ -26,7 +26,7 @@ class ProfileTest < Test::Unit::TestCase
 
     assert p.valid?, 'profile should be created'
     assert_equal u.id, p.entity_id, 'profile should belong to blue'
-    
+
     p.save_from_params(
       :last_name => 'McBlue',
       :phone_numbers => {
@@ -37,26 +37,26 @@ class ProfileTest < Test::Unit::TestCase
     assert_equal '(206) 555-1111', p.phone_numbers.first.phone_number, 'save_from_params should update phone_numbers'
 
   end
-  
+
   def test_public_private
     user = users(:green)
     assert_not_equal nil, user.profiles.public.id, 'should have a public profile'
     assert_not_equal nil, user.profiles.private.id, 'should have a private profile'
   end
-  
+
   def test_permissions
     blue = users(:blue)
     red = users(:red)
-    
+
     red.add_contact!(blue, :friend)
-    
+
     blue.profiles.private.update_attribute(:organization, 'rainbows')
     blue.profiles.public.update_attribute(:organization, 'none')
-    
+
     profile = blue.profiles.visible_by(red)
     assert profile, 'red should be able to view blue profile'
     assert_equal "rainbows", profile.organization, "should show organization 'rainbows' in profile"
-    
+
     profile = blue.profiles.visible_by(nil)
     assert profile, 'there should be a public profile'
     assert_equal "none", profile.organization, "should show organization 'none' in profile"
@@ -67,30 +67,30 @@ class ProfileTest < Test::Unit::TestCase
     p = user.profiles.create :stranger => true
     assert_equal 'User', p.entity_type, 'polymorphic association should work even with single table inheritance'
   end
-    
+
   def test_wiki
     g = Group.create :name => 'trees'
     assert g.profiles.public, 'there should be a public profile'
     w = g.profiles.public.create_wiki
     assert_equal w.profile, g.profiles.public, 'wiki should have a profile'
   end
-  
+
   def test_find_by_access
     g = Group.create :name => 'berries'
     p1 = g.profiles.create(
-      :stranger => true, 
-      :may_see => true, 
-      :may_see_committees => false, 
+      :stranger => true,
+      :may_see => true,
+      :may_see_committees => false,
       :may_see_members => false,
       :may_request_membership => true
     )
     p2 = g.profiles.find_by_access(:stranger)
     p3 = g.profiles.public
-    
+
     assert_equal p1.id, p2.id, 'find_by_access should have returned the profile we just created'
     assert_equal p1.id, p3.id, 'profiles.public should return the profile we just created'
   end
-  
+
   def test_find_group
     user = users(:red)
 
@@ -98,7 +98,7 @@ class ProfileTest < Test::Unit::TestCase
       user.may?(:view,g)
     end
     visible_groups = Group.visible_by(user).only_groups.find(:all)
-    
+
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
     names         = visible_groups.collect{|g|g.name}.sort
 
@@ -112,7 +112,7 @@ class ProfileTest < Test::Unit::TestCase
       user.may?(:view,g)
     end
     visible_groups = Committee.visible_by(user).find(:all)
-    
+
     correct_names = correct_visible_groups.collect{|g|g.name}.sort
     names         = visible_groups.collect{|g|g.name}.sort
 
@@ -122,7 +122,7 @@ class ProfileTest < Test::Unit::TestCase
   def test_assets
     user = users(:blue)
     profile = user.profiles.create :stranger => true, :first_name => user.name
-    
+
     assert_difference 'Asset.count' do
       profile.save_from_params(:photo => {
         :uploaded_data => upload_data('image.png'), :caption => 'pigeon point'
@@ -139,14 +139,14 @@ class ProfileTest < Test::Unit::TestCase
     end
 
     assert_difference 'Asset.count', -1 do
-     	 profile.destroy
+   profile.destroy
     end
   end
 
   def test_associations
     assert check_associations(Profile)
   end
-  
+
   def test_unicef_specific_place_adjustments
     # The old way
     p = Profile.first
@@ -154,7 +154,7 @@ class ProfileTest < Test::Unit::TestCase
     p.save
     p = Profile.first
     assert_equal "Hamburg", p.place
-    
+
     # The new way
     p.city = "Hamburg"
     p.country = "Germoney"
@@ -164,6 +164,6 @@ class ProfileTest < Test::Unit::TestCase
     assert_equal "Hamburg", p.city
     assert_equal "Germoney", p.country
   end
-  
+
 end
 

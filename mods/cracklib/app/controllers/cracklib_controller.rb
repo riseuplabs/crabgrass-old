@@ -3,7 +3,7 @@ class CracklibController < ActionController::Base
   around_filter :set_language
 
   # example params:
-  #  
+  #
   #  "user"=>{"password_confirmation"=>"", "login"=>"blue", "password"=>"blue"}
   #
   def check

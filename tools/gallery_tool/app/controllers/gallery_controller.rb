@@ -1,9 +1,9 @@
 class GalleryController < BasePageController
-  
+
   stylesheet 'gallery'
   javascript :extra, 'page'
   permissions 'gallery'
-  
+
   include GalleryHelper
   include BasePageHelper
   include ActionView::Helpers::JavascriptHelper
@@ -27,8 +27,8 @@ class GalleryController < BasePageController
                          :action => 'detail_view',
                          :id => @image.id)
   end
-  
-  
+
+
   def add_star
     @image = @page.images.find(params[:id])
     @image.page.add(current_user, :star => true).save!
@@ -39,7 +39,7 @@ class GalleryController < BasePageController
     end
   end
 
- 
+
   def remove_star
     @image = @page.images.find(params[:id])
     @image.page.add(current_user, :star => false).save!
@@ -49,7 +49,7 @@ class GalleryController < BasePageController
       redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
     end
   end
-  
+
   def detail_view
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
@@ -66,8 +66,8 @@ class GalleryController < BasePageController
     @discussion ||= Discussion.new
     @create_post_url = url_for(:controller => 'gallery', :action => 'comment_image', :id => @image.id)
     load_posts()
-  end  
-  
+  end
+
   def change_image_title
     if request.post?
       # whoever may edit the gallery, may edit the assets too.
@@ -80,16 +80,16 @@ class GalleryController < BasePageController
       redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
     end
   end
-  
+
   def slideshow
     if params[:image_id] && params[:image_id] != 0
-      showing = @page.showings.find(:first, :conditions => { :asset_id => 
+      showing = @page.showings.find(:first, :conditions => { :asset_id =>
                                       params[:image_id]})
     else
       showing = @page.showings.first
     end
     @image = @page.images.find(showing.asset_id) if showing
-    @next_id = @page.showings.find(:first, :conditions => { 
+    @next_id = @page.showings.find(:first, :conditions => {
                                      :position => showing.position+1
                                    }, :select => 'asset_id').asset_id rescue nil
     if request.xhr?
@@ -98,11 +98,11 @@ class GalleryController < BasePageController
       render :layout => 'gallery_slideshow'
     end
   end
-  
+
   def edit
     @images = paginate_images
   end
-  
+
   def make_cover
     unless current_user.may?(:admin, @page)
       if request.xhr?
@@ -127,7 +127,7 @@ class GalleryController < BasePageController
   rescue ArgumentError # happens with wrong ID
     raise PermissionDenied
   end
-  
+
   def find
     existing_ids = @page.image_ids
     @images = Asset.visible_to(current_user, @page.group).exclude_ids(existing_ids).media_type(:image).most_recent.paginate(:page => params[:page])
@@ -135,7 +135,7 @@ class GalleryController < BasePageController
     flash_message :exception => exc
     redirect_to :action => 'show', :page_id => @page.id
   end
-  
+
   def download
     if params[:image_id]
       image = Asset.find(params[:image_id])
@@ -165,7 +165,7 @@ class GalleryController < BasePageController
             image_filename = image.filename
             extension = image_filename.split('.').last
             image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
-            
+
             zip.get_output_stream(image_name) { |f|
               f.write File.read(image.private_filename)
             }
@@ -175,7 +175,7 @@ class GalleryController < BasePageController
     end
     send_file(filepath, :filename => filename)
   end
-  
+
   def update_order
     if params[:images]
       text =""
@@ -228,7 +228,7 @@ class GalleryController < BasePageController
       redirect_to page_url(@page)
     end
   end
-  
+
   def upload_zip
     if request.get?
       redirect_to page_url(@page)
@@ -245,7 +245,7 @@ class GalleryController < BasePageController
     end
   end
 
-  
+
   def remove
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
@@ -262,7 +262,7 @@ class GalleryController < BasePageController
   end
 
   protected
- 
+
   def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true
@@ -296,7 +296,7 @@ class GalleryController < BasePageController
     end
   end
 
-  # 
+  #
   # there appears to be a bug in will_paginate. it only appears when
   # doing two inner joins and there are more records than the per_page size.
   #
@@ -312,7 +312,7 @@ class GalleryController < BasePageController
   #
   #  @page.images.visible_to(current_user).paginate :page => 1, :per_page => 3
   #
-  # So, this method uses two queries to get around the double join, so that 
+  # So, this method uses two queries to get around the double join, so that
   # will_paginate doesn't freak out.
   #
   # The first query just grabs all the potential image ids (@page.image_ids)

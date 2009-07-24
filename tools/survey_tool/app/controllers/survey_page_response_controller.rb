@@ -12,10 +12,10 @@ class SurveyPageResponseController < BasePageController
   verify :method => :post, :only => [:make, :update, :destroy]
 
   def new
-    @response = SurveyResponse.new 
+    @response = SurveyResponse.new
   end
 
-  # this should be 'create', but that is currently used by BasePageController. 
+  # this should be 'create', but that is currently used by BasePageController.
   # grrr. that breaks our nice CRUD.
   def make
     @response = @survey.responses.create!(params[:response]) do |resp|

@@ -8,7 +8,7 @@ class HTMLDiff
     f1 = Tempfile.new("crabgrass-diff-a")
     f1.write a
     f1.close
-          
+
     f2 = Tempfile.new("crabgrass-diff-b")
     f2.write b
     f2.close
@@ -22,7 +22,7 @@ class HTMLDiff
   end
 
   def self.cmd(*args)
-    cmdstr = args.collect{|arg| arg.shell_escape}.join(' ') 
+    cmdstr = args.collect{|arg| arg.shell_escape}.join(' ')
     log cmdstr
     output = `#{cmdstr}`
     return [$?.success?, output]

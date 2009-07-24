@@ -73,18 +73,18 @@ class Profile < ActiveRecord::Base
 
   ##
   ## RELATIONSHIPS TO USERS AND GROUPS
-  ## 
-  
+  ##
+
   belongs_to :entity, :polymorphic => true
   def user; entity; end
   def group; entity; end
-    
+
   before_create :fix_polymorphic_single_table_inheritance
   def fix_polymorphic_single_table_inheritance
     self.entity_type = 'User' if self.entity_type =~ /User/
     self.entity_type = 'Group' if self.entity_type =~ /Group/
   end
-  
+
   ##
   ## CONSTANTS
   ##
@@ -102,16 +102,16 @@ class Profile < ActiveRecord::Base
   def full_name
     [name_prefix, first_name, middle_name, last_name, name_suffix].reject(&:blank?) * ' '
   end
-  alias_method :name,  :full_name  
+  alias_method :name,  :full_name
 
   def public?
     stranger?
   end
-  
+
   def private?
     friend?
   end
-  
+
   def type
     return 'public' if stranger?
     return 'private' if friend?
@@ -137,7 +137,7 @@ class Profile < ActiveRecord::Base
 
   belongs_to :photo, :class_name => "Asset", :dependent => :destroy
   belongs_to :video, :class_name => "ExternalVideo", :dependent => :destroy
- 
+
   has_many :locations,
     :class_name => '::ProfileLocation',
     :dependent => :destroy, :order => "preferred desc"
@@ -182,7 +182,7 @@ class Profile < ActiveRecord::Base
       'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote,
       'crypt_keys'      => ::ProfileCryptKey
     }
-    
+
     profile_params.stringify_keys!
     params = profile_params.allow(valid_params)
     params['summary_html'] = nil if params['summary'] == ""
@@ -191,7 +191,7 @@ class Profile < ActiveRecord::Base
     params.each do |key,value|
       params[key] = nil unless value.any?
     end
-    
+
     # build objects from params
     collections.each do |collection_name, collection_class|
       params[collection_name] = profile_params[collection_name].collect do |key,value|
@@ -199,7 +199,7 @@ class Profile < ActiveRecord::Base
         collection_class.create( value.merge('profile_id' => self.id.to_i) )
       end || [] rescue []
     end
-    
+
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
@@ -213,7 +213,7 @@ class Profile < ActiveRecord::Base
     self.reload
     self
   end
-  
+
   def cover
     self.photo || self.video
   end
@@ -234,12 +234,12 @@ class Profile < ActiveRecord::Base
      end
      self.wall
    end
-   
+
    # UNICEF wants the "location" field in the general information section to
    # be split into "city" and "country". This is an attempt to archieve this
    # while keeping consistency with old data.
    # Old data will be displayed as the city now.
-   
+
    def place=(val)
      if val.kind_of?(String)
        write_attribute(:place, val)
@@ -247,7 +247,7 @@ class Profile < ActiveRecord::Base
        write_attribute(:place, val.to_yaml)
      end
    end
-   
+
    def place
      val = read_attribute(:place)
      if val =~ /^--- /
@@ -262,7 +262,7 @@ class Profile < ActiveRecord::Base
        val
      end
    end
-   
+
    def city
      val = place
      if val.kind_of?(String)
@@ -271,7 +271,7 @@ class Profile < ActiveRecord::Base
        val[:city]
      end
    end
-   
+
    def city=(val)
      place = self.place
      if place.kind_of?(Hash)
@@ -280,7 +280,7 @@ class Profile < ActiveRecord::Base
        self.place = { :city => val}
      end
    end
-   
+
    def country
      val = place
      if val.kind_of?(String)
@@ -289,7 +289,7 @@ class Profile < ActiveRecord::Base
        val[:country]
      end
    end
-   
+
    def country=(val)
      place = self.place
      if place.kind_of?(Hash)

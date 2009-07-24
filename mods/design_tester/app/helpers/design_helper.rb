@@ -15,15 +15,15 @@ module DesignHelper
     out << link_to(text, '#', :class => 'check')
     out << '</label>'
     out.join
-  end  
-  
+  end
+
   def side_user_link(user)
     content_tag :li, user.display_name
   end
-  
+
   def side_group_link(group)
     content_tag :li, group.display_name
   end
-  
+
 end
 

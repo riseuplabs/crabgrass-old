@@ -16,7 +16,7 @@ module JavascriptHelper
   end
 
   def reset_form(id)
-    "$('#{id}').reset();" 
+    "$('#{id}').reset();"
     # "Form.getInputs($('#{id}'), 'submit').each(function(x){x.disabled=false}.bind(this));"
   end
 

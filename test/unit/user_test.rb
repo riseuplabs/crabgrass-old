@@ -14,18 +14,18 @@ class UserTest < Test::Unit::TestCase
       u = create_user(:login => 'groups')
       assert u.errors.on(:login)
     end
-  
+
     g = Group.create :name => 'robot-overlord'
     assert_no_difference 'User.count' do
       u = create_user(:login => 'robot-overlord')
       assert u.errors.on(:login)
     end
   end
-  
+
   def test_associations
     assert check_associations(User)
   end
-  
+
   def test_alphabetized
     assert_equal User.all.size, User.alphabetized('').size
 
@@ -51,5 +51,5 @@ class UserTest < Test::Unit::TestCase
   def create_user(options = {})
     User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
   end
-  
+
 end

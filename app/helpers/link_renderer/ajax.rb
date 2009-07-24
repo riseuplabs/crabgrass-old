@@ -1,5 +1,5 @@
 #
-# See for other ways of doing ajax pagination: 
+# See for other ways of doing ajax pagination:
 #  http://weblog.redlinesoftware.com/2008/1/30/willpaginate-and-remote-links
 #
 #

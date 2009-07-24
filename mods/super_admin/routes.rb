@@ -5,7 +5,7 @@ include this in config/routes.rb to activate these routes:
   map.from_plugin :super_admin
 
 this will create the routes
-  /admin/groups -> Admin::GroupsController 
+  /admin/groups -> Admin::GroupsController
   /admin/users  -> Admin::UsersController
   /admin/pages -> Admin::PagesController
   /admin/posts -> Admin::PagesController

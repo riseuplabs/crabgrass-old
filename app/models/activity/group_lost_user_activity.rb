@@ -1,4 +1,4 @@
-class GroupLostUserActivity < GroupGainedUserActivity  
+class GroupLostUserActivity < GroupGainedUserActivity
   def description(view=nil)
     "{user} has left {group_type} {group}"[
       :activity_user_left_group, {

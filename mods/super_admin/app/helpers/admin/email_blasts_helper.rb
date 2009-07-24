@@ -7,7 +7,7 @@ module Admin::EmailBlastsHelper
   def edit_email_blasts_path(arg)
     edit_admin_email_blasts_path(arg)
   end
- 
+
   def new_email_blasts_path
     new_admin_email_blasts_path
   end
@@ -19,7 +19,7 @@ module Admin::EmailBlastsHelper
   def email_blasts_url(arg, options={})
     admin_email_blasts_url(arg, options)
   end
-  
+
 end
 
 

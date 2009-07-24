@@ -9,7 +9,7 @@ passing a block to to_html()
 
   process_link should return either nil or an <a> tag. If nil, then
   the greencloth default is used.
-  
+
   link_date is a hash that might include: url, label, context_name, page_name
 
 custom GreenCloth filters, without messing up <code> blocks
@@ -21,7 +21,7 @@ the filtering process to just apply something to non-code blocks (or to just
 apply to code blocks). It comes close, but there is a bug in the way escape_pre
 is called.
 
-Some problems: 
+Some problems:
 
 * We can't just run our filters before redcloth, because then the filters will
   apply to code blocks.
@@ -42,7 +42,7 @@ So, this is our strategy:
 
 (2) then we apply our custom greencloth filters.
 
-    a. one of the things these filters do is to offtag all the greencloth and 
+    a. one of the things these filters do is to offtag all the greencloth and
        auto url links. this is necessary at this stage so that redcloth can't
        mess up the urls
 
@@ -108,7 +108,7 @@ module GreenClothFormatterHTML
   end
 
   # add class='left' or class='right' to <p> to make it possible to set the
-  # margins in the stylesheet. 
+  # margins in the stylesheet.
   def p(opts)
     klass = opts[:float] ? ' class="%s"'%opts[:float] : ''
     "<p#{pba(opts)}#{klass}>#{opts[:text]}</p>\n"
@@ -122,7 +122,7 @@ module GreenClothFormatterHTML
   #  if opts[:text] =~ ALLOWED_HTML_TAGS_RE
   #    "#{opts[:text]}" # nil-safe
   #  else
-  #    html_esc(opts[:text], :html_escape_preformatted)    
+  #    html_esc(opts[:text], :html_escape_preformatted)
   #  end
   #end
 
@@ -150,7 +150,7 @@ module GreenClothFormatterHTML
 
   ##
   ## TOC: support for table of contents
-  ## 
+  ##
 
   # How mediawiki does it:
   # <p><a name="Notes" id="Notes"></a></p>
@@ -206,7 +206,7 @@ module GreenClothFormatterHTML
     'img' => ['src', 'alt', 'title'],
     'br' => [],
     'i' => nil,
-    'u' => nil, 
+    'u' => nil,
     'b' => nil,
     'pre' => nil,
     'kbd' => nil,
@@ -233,7 +233,7 @@ module GreenClothFormatterHTML
     'h4' => nil,
     'h5' => nil,
     'h6' => nil,
-    'notextile' => nil, 
+    'notextile' => nil,
     'blockquote' => ['cite'],
     'object' => ['width', 'height'],
     'param' => ['name','value'],
@@ -244,7 +244,7 @@ module GreenClothFormatterHTML
     clean_html(text, ALLOWED_TAGS) if sanitize_html # (sanitize_html should always be true)
   end
 
-  # this is an exact copy of the method by the same name defined in 
+  # this is an exact copy of the method by the same name defined in
   # lib/redcloth/formatters/html.rb (the mixin applied to this class),
   # but for some reason everything blows up horribly if we try to call clean_html.
   # This only happens with RedCloth 4.1.9. Debugging doesn't help, probably
@@ -310,7 +310,7 @@ class GreenCloth < RedCloth::TextileDoc
     super(string, [:filter_ids, :sanitize_html])
   end
 
-  # RedCloth calls clone of the GreenCloth object before 
+  # RedCloth calls clone of the GreenCloth object before
   # extending the object with the formatter. We want to be able
   # to reference the original object (so we can keep an offtags list)
   def initialize_copy(arg)
@@ -318,14 +318,14 @@ class GreenCloth < RedCloth::TextileDoc
     self.original = arg
     arg.formatter = self
   end
-  
+
   def to_html(*before_filters, &block)
     @block = block
 
     before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
       :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
       :normalize_heading_blocks, :quoted_block, :tables_with_tabs, :wrap_long_words]
- 
+
     formatter = self.clone()                   # \  in case one of the before filters
     formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
 
@@ -361,7 +361,7 @@ class GreenCloth < RedCloth::TextileDoc
   # the syntax slightly. In these cases, we simply modify the source text to
   # replace the greencloth markup with the equivelent redcloth markup before
   # any other processing is done.
-  
+
   TEXTILE_HEADING_RE = /^h[123]\./
 
   # allow setext style headings
@@ -372,7 +372,7 @@ class GreenCloth < RedCloth::TextileDoc
       "#{ tag }. #{$1}\n\n"
     end
   end
-  
+
   # why is this needed?
   def delete_leading_whitespace(text)
     self.sub!(/\A */, '')
@@ -418,7 +418,7 @@ class GreenCloth < RedCloth::TextileDoc
     offtag = offtag_it(body)
     if tag == '<pre>' or (leading_character.any? and leading_character!="\n")
       "#{tag}#{offtag}#{tag.sub('<','</')}"
-    else      
+    else
       "<pre><code>#{offtag}</code></pre>"
     end
   end
@@ -429,7 +429,7 @@ class GreenCloth < RedCloth::TextileDoc
 
   # blockquotes
   QUOTED_BLOCK_RE = /(^>.*$(.+\n)*\n*)+/
-    
+
   def quoted_block( text )
     text.gsub!( QUOTED_BLOCK_RE ) do |blk|
       blk.gsub!(/^> ?/, '')
@@ -494,7 +494,7 @@ class GreenCloth < RedCloth::TextileDoc
   def revert_offtags(html)
     html.gsub!(OFFTAG_RE) do |m|
       #puts m.inspect; puts self.offtags
-      str = self.offtags[$1.to_i-1][1] 
+      str = self.offtags[$1.to_i-1][1]
     end
     html
   end
@@ -513,7 +513,7 @@ class GreenCloth < RedCloth::TextileDoc
       [^=!:'"/]|               # 'leading punctuation, or
       ^                        # beginning of line
     )
-    (                          # (b) PROTOCOL 
+    (                          # (b) PROTOCOL
       (?:#{PROTOCOL}s?://)|    # protocol spec, or
       (?:www\.)                # www.*
     )
@@ -566,9 +566,9 @@ class GreenCloth < RedCloth::TextileDoc
     ([ \t]*[^\[\]]+)    # $text : one or more characters that are not [ or ] ($3)
     [ \t]*        # optional white space
     (.)\]         # end ] ($4 => last char)
-  /x 
+  /x
 
-  def bracket_links( text ) 
+  def bracket_links( text )
     text.gsub!( BRACKET_LINK_RE ) do |m|
       begin
         all, preceding_char, first_char, link_text, last_char = $~[0..4]
@@ -592,7 +592,7 @@ class GreenCloth < RedCloth::TextileDoc
           if link_text =~ /^.+\s*->\s*.+$/
             # link_text == "from -> to"
             from, to = link_text.split(/\s*->\s*/)[0..1]
-            from = "" unless from.instance_of? String # \ sanity check for 
+            from = "" unless from.instance_of? String # \ sanity check for
             to   = "" unless from.instance_of? String # / badly formed links
           else
             # link_text == "to" (ie, no link label)
@@ -600,7 +600,7 @@ class GreenCloth < RedCloth::TextileDoc
             to = link_text
           end
           if to =~ /^(\/|#{PROTOCOL}:\/\/)/
-            # the link is a fully formed url or an absolute path, eg: 
+            # the link is a fully formed url or an absolute path, eg:
             # to == https://riseup.net
             # to == /an/absolute/path
             from ||= to.gsub(/(^#{PROTOCOL}:\/\/|^\/|\/$)/, '')
@@ -654,7 +654,7 @@ class GreenCloth < RedCloth::TextileDoc
   ## WRAP LONG WORDS
   ## really long words totally mess up most layouts.
   ## so here we break them up with some special spans.
-  ## 
+  ##
 
   # this style is required to make this look right:
   # span.break {font-size:1px;line-height:1px;float:right !important;float:none;}
@@ -673,11 +673,11 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
-  
+
   ##
   ## DYNAMIC SYMBOLS
   ##
-  
+
   # dynamic symbols are expanded using some callback ruby code.
 
   DYNAMIC_SYMBOLS = ['toc']
@@ -690,13 +690,13 @@ class GreenCloth < RedCloth::TextileDoc
   end
 
   # symbol_toc defined in greencloth_outline
-  
+
   ##
   ## UTILITY
   ##
 
   private
-  
+
   # from actionview texthelper
   def truncate(text, length = 30, truncate_string = "...")
     if text.nil? then return end
@@ -720,7 +720,7 @@ unless "".respond_to? 'nameize'
   ## NOTE: you will want to translit non-ascii slugs to ascii.
   ## resist this impulse. nameized strings must remain utf8.
   ##
- 
+
   class String
     def nameize
       str = self.dup

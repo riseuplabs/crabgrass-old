@@ -22,7 +22,7 @@ module UserExtension::SuperAdmin
       end
     end
   end
-  
+
   module InstanceMethods
     # Returns true if self is a super admin. If self is the current_user
     # then no arguments are required. However, to test superadmin? on any

@@ -10,7 +10,7 @@ class PageAccessTest < Test::Unit::TestCase
   def test_access_via_group
     user  = users(:red)
     group = groups(:rainbow)
-    
+
     page = create_page :title => 'private page'
 
     assert !user.may?(:view, page), 'user should NOT be able to view page'
@@ -22,9 +22,9 @@ class PageAccessTest < Test::Unit::TestCase
     user.clear_access_cache
     assert !user.may?(:view, page), 'user should NOT be able to view page'
   end
-  
+
   def test_access_levels
-    user  = users(:red)  
+    user  = users(:red)
     page = create_page :title => 'private page'
 
     assert !user.may?(:view, page), 'user should NOT have any access to the page'
@@ -44,10 +44,10 @@ class PageAccessTest < Test::Unit::TestCase
   end
 
   protected
-  
+
   def create_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
     Page.create(defaults.merge(options))
   end
-  
+
 end

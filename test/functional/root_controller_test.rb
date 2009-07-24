@@ -5,7 +5,7 @@ require 'root_controller'
 class RootController; def rescue_action(e) raise e end; end
 
 class RootControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :pages, :memberships, 
+  fixtures :groups, :users, :pages, :memberships,
             :user_participations, :page_terms, :sites
 
   include UrlHelper
@@ -47,11 +47,11 @@ class RootControllerTest < Test::Unit::TestCase
       current_site=assigns["current_site"]
 
       assert_not_equal @controller.send(:most_active_users), [], "Expecting a list of most active users."
-      assert_nil @controller.send(:most_active_users).detect{|u| !u.site_ids.include?(current_site.id)}, 
+      assert_nil @controller.send(:most_active_users).detect{|u| !u.site_ids.include?(current_site.id)},
         "All users should be on current_site."
-  
+
       assert_not_equal @controller.send(:most_active_groups), [], "Expecting a list of most recent groups."
-      assert_nil @controller.send(:most_active_groups).detect{|u| u.site_id != current_site.id}, 
+      assert_nil @controller.send(:most_active_groups).detect{|u| u.site_id != current_site.id},
         "All groups should be on current_site."
     end
   end

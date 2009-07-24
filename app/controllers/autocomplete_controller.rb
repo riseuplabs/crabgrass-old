@@ -53,11 +53,11 @@ class AutocompleteController < ApplicationController
       :data => recipients.collect{|r|r.avatar_id||0}
     }
   end
-  
+
   private
 
-  # this should be in a helper somewhere, but i don't know how to generate 
-  # json response in the view. 
+  # this should be in a helper somewhere, but i don't know how to generate
+  # json response in the view.
   def display_on_two_lines(entity)
     "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end

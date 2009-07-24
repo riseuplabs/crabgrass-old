@@ -4,7 +4,7 @@
 # created_by: person who sent the invite
 #
 class RequestToJoinOurNetwork < Request
-  
+
   validates_format_of :requestable_type, :with => /Group/
   validates_format_of :recipient_type, :with => /Group/
 
@@ -22,7 +22,7 @@ class RequestToJoinOurNetwork < Request
 
   def network() requestable end
   def group() recipient end
-  
+
   def may_create?(user)
     user.may?(:admin,network)
   end
