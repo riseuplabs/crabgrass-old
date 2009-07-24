@@ -141,6 +141,11 @@ label}</a></span>)
     selected
   end
 
+  ##
+  ## Modalbox dialog popup helpers
+  ## see also: lib/extensions/action_pack.rb link_to_remote_with_confirm()
+  ##
+
   # creates a popup-link using modalbox
   #
   # contents may be:
@@ -167,6 +172,7 @@ label}</a></span>)
     end
   end
 
+  
   private
 
   def modalbox_function(contents, options)

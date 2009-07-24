@@ -102,6 +102,34 @@ class ActionView::Base
 end
 
 ###
+### USER MODALBOX FOR CONFIRM
+###
+
+#
+# redefines link_to_remote to use Modalbox.confirm() if options[:confirm] is set.
+# 
+# If cancel is pressed, then nothing happens.
+# If OK is pressed, then the remote function is fired off.
+#
+# While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
+#
+
+class ActionView::Base
+  def link_to_remote_with_confirm(name, options = {}, html_options = nil)
+    if options[:confirm]
+      message = options.delete(:confirm)
+      options[:complete] = [options[:complete], 'Modalbox.hide()'].compact.join('; ')
+      options[:loading] = [options[:loading], 'Modalbox.spin()'].compact.join('; ')
+      function = remote_function(options)
+      link_to_function(name, %[Modalbox.confirm('#{message}', "#{function}")], html_options)
+    else
+      link_to_remote_without_confirm(name, options, html_options)
+    end
+  end
+  alias_method_chain :link_to_remote, :confirm
+end
+
+###
 ### PERMISSIONS DEFINITION
 ###
 ActionController::Base.class_eval do

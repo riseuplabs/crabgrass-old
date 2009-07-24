@@ -42,6 +42,12 @@ Modalbox.Methods = {
 	currFocused: 0,
 	initialized: false,
 	active: true,
+	strings: {
+		ok: "OK",
+		cancel: "Cancel",
+		alert: "Alert",
+		confirm: "Confirm"
+	},
 	options: {
 		title: "ModalBox Window", // Title of the ModalBox window
 		overlayClose: true, // Close modal box by clicking on overlay
@@ -72,6 +78,10 @@ Modalbox.Methods = {
 		Object.extend(this.options, options || {});
 	},
 	
+	setStrings: function(strings) {
+		Object.extend(this.strings, strings || {});
+	},
+
 	_init: function(options) {
 		// Setting up original options with default options
 		Object.extend(this._options, this.options);
@@ -158,12 +168,25 @@ Modalbox.Methods = {
 		if(event.element().id == 'MB_overlay' && !this.options.overlayClose) return false;
 		this.hide();
 	},
-	
-	alert: function(message){
-		var html = '<div class="MB_alert"><p>' + message + '</p><input type="button" onclick="Modalbox.hide()" value="OK" /></div>';
-		Modalbox.show(html, {title: 'Alert: ' + document.title, width: 300});
+
+	// a replacement for standard alert()	
+	alert: function(message) {
+		Object.extend(this.strings, {'message':message})
+		var html = '<div class="MB_alert"><p>#{message}</p><input type="button" onclick="Modalbox.hide()" value="#{ok}" /></div>';
+		Modalbox.show(html.interpolate(this.strings), {title: this.strings.alert, width: 350});
 	},
-		
+	
+	// we cannot replace the standard confirm directly, because of the way it halt js execution.
+	// this, however, can be used to in combination with a custom helper
+	confirm: function(message, action) {
+		Object.extend(this.strings, {'message':message, 'action':action})
+		var html = '<div class="MB_confirm"><p>#{message}</p><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="button" onclick="#{action}" value="#{ok}" /></div>';
+		Modalbox.show(html.interpolate(this.strings), {title: this.strings.confirm, width: 350});
+	},
+
+	// turns on modalbox spinner
+	spin: function() {$('MB_spinner').show()},
+
 	_appear: function() { // First appearing of MB
 		if(Prototype.Browser.IE && !navigator.appVersion.match(/\b7.0\b/)) { // Preparing IE 6 for showing modalbox
 			window.scrollTo(0,0);

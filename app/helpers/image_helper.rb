@@ -125,10 +125,14 @@ module ImageHelper
   def link_to_remote_with_icon(label, options, html_options={})
     icon = options.delete(:icon) || html_options.delete(:icon)
     id = html_options[:id] || 'link%s'%rand(1000000)
-    icon_options = {
-      :loading => spinner_icon_on(icon, id),
-      :complete => spinner_icon_off(icon, id)
-    }
+    if options[:confirm]
+      icon_options = {} # don't bother with spinner for confirm links
+    else
+      icon_options = {
+        :loading => spinner_icon_on(icon, id),
+        :complete => spinner_icon_off(icon, id)
+      }
+    end
     html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
     html_options[:id] ||= id
     link_to_remote(
