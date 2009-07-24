@@ -52,7 +52,7 @@ class TestMarkup < Test::Unit::TestCase
   #end
 
   protected
- 
+
   def assert_markup(filename, doc, html)
     in_markup = doc['in']
     out_markup = doc['out'] || doc['html']

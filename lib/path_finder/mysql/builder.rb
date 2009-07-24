@@ -27,12 +27,12 @@
 # * the format of the values in access_ids is thus:
 #   * user ids are prefixed with 1
 #   * group ids are prefixed with 8
-#   * every id is at least four characters in length, 
+#   * every id is at least four characters in length,
 #     padded with zeros if necessary.
 #   * if page is public, id 0001 is present.
 #
 # So, suppose the current user was id 1, and they were
-# members of groups 1 and 2. 
+# members of groups 1 and 2.
 #
 # To find all the pages of group 1 that current_user may access:
 #
@@ -138,10 +138,10 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       @access_site_clause, @access_filter_clause, @tags].flatten.compact
 
     if fulltext_filter.any?
-      # it is absolutely vital that we MATCH against both access_ids and tags, 
+      # it is absolutely vital that we MATCH against both access_ids and tags,
       # because this is how the index is specified.
       @conditions << " MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)"
-      @values << fulltext_filter.join(' ') 
+      @values << fulltext_filter.join(' ')
     end
 
     conditions = sql_for_conditions
@@ -152,7 +152,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :conditions => conditions,
       :joins => sql_for_joins(conditions),
       :limit => @limit,         # \ manual offset or limit
-      :offset => @offset,       # /   
+      :offset => @offset,       # /
       :order => order,
       :include => @include,
       :select => @select,
@@ -198,13 +198,13 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       "pages.id HAVING #{match} > 0"
     end
   end
-    
+
   def sql_for_order
     return nil if @order.nil?
-    filter_descending('updated_at') unless @order.any?   
+    filter_descending('updated_at') unless @order.any?
     @order.reject(&:blank?).join(', ')
   end
-    
+
   def add_flow(flow)
     if flow.instance_of? Array
       cond = []
@@ -229,12 +229,12 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_conditions()
     add_flow( @flow )
-    
+
     # grab the remaining open clauses
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
     Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
-  end    
+  end
 end
 

@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::BaseController
   permissions 'admin/users'
- 
+
   # GET /users/new
   # GET /users/new.xml
   def new
@@ -16,11 +16,11 @@ class Admin::UsersController < Admin::BaseController
   def create
     @user = User.new(params[:user])
     @user.save!
-   
+
     # save avatar
     avatar = Avatar.create(params[:image])
     @user.avatar = avatar
-   
+
     respond_to do |format|
       if @user.save
         flash[:notice] = 'User was successfully created.'

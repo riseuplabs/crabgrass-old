@@ -12,9 +12,9 @@ module RankedVotePageHelper
 
  def details_id(possible)
    possible_id = "possible_#{possible.id}"
-   "#{possible_id}_details" 
+   "#{possible_id}_details"
  end
- 
+
 end
 
 

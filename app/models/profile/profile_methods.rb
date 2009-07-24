@@ -28,7 +28,7 @@ module ProfileMethods
     return nil if args.empty?
 
     args.map!{|i| if i==:member; :friend; else; i; end}
-    
+
     conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
     find(
       :first,
@@ -36,17 +36,17 @@ module ProfileMethods
       :order => 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
     )
   end
-  
+
   # a shortcut to grab the 'public' profile
   def public
     @public_profile ||= (find_by_access(:stranger) || create_or_build(:stranger => true))
   end
-  
+
   # a shortcut to grab the 'private' profile
   def private
     @private_profile ||= (find_by_access(:friend) || create(:friend => true))
   end
-  
+
   def create_or_build(args={})
     if proxy_owner.new_record?
       build(args)

@@ -1,6 +1,6 @@
 # = PathFinder::Options
 #
-# This module should be included in the Application class 
+# This module should be included in the Application class
 # so that all controllers have access to these methods.
 #
 # They are used as options for find_by_path in PathFinder::FindByPath
@@ -68,7 +68,7 @@ module PathFinder::Options
   end
 
   private
-  
+
   def default_options   # :nodoc:
     options = {
       :controller => get_controller,
@@ -85,7 +85,7 @@ module PathFinder::Options
     # limit pages to the current site.
     if get_controller.current_site.limited?
       # why site_ids instead of just site_id? perhaps in the future
-      # we will enable a user to login and see a configurable subset of the 
+      # we will enable a user to login and see a configurable subset of the
       # sites they have available to them.
       options[:site_ids] = [current_site.id]
     end

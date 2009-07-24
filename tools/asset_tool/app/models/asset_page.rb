@@ -1,6 +1,6 @@
 class AssetPage < Page
   include PageExtension::RssData
-  
+
   def supports_attachments
     false
   end
@@ -8,12 +8,12 @@ class AssetPage < Page
   def cover
     return asset if asset.is_a?(ImageAsset)
   end
-  
+
   def icon
     return asset.small_icon if asset
     return 'page_package'
   end
-    
+
   after_save :update_access
   def update_access
     asset.update_access if asset

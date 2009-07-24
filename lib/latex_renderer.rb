@@ -24,7 +24,7 @@
  # Original URL: http://web.mit.edu/~bens/Public/latexrender/class.latexrender.php
  # Ported to Ruby (by Jan Wikholm <jw@jw.fi>
  # Ruby version 1.0
- 
+
 require 'digest/md5'
 require 'rubygems'
 require 'open4' # gem
@@ -73,12 +73,12 @@ class LatexRenderer
                                         csname \\newhelp \\uppercase \\lowercase
                                         \\relax \\aftergroup \\afterassignment
                                         \\expandafter \\noexpand \\special}
-    
+
     @log = Logger.new(File.join(RAILS_ROOT, '/log/latex.log'))
     @log.level = Logger::DEBUG
     check_requisites # may throw exceptions
 
-    
+
     @formula = nil
     @errors = Array.new
   end
@@ -90,7 +90,7 @@ class LatexRenderer
         @log.info "%s includes: %s" % [@formula, cmd]
       end
     end
-      
+
     return !@errors.empty?
   end
   def process
@@ -118,7 +118,7 @@ class LatexRenderer
     #@filename = File.join(@final_dir, @md5hash + '.' + @@options[:image_format])
     ## CHANGED: we use a different method of caching.
     @filename = File.join(@temp_dir, @md5hash + '.' + @@options[:image_format])
-    
+
     @log.info "Filename: %s" % @filename
     if File.exists?(@filename)
       @log.info "File already exists"
@@ -142,7 +142,7 @@ class LatexRenderer
       end
     end
   end
-  
+
   def cleanup
     return
     @temp.each_value do |file|
@@ -155,22 +155,22 @@ class LatexRenderer
       end
     end
   end
-  
+
 
   def render_from_latex_to_image
     ## CHANGE: skip the wrapping, do it ourselves elsewhere.
     #wrapped_formula = wrap_formula(@formula)
     wrapped_formula = @formula
     @log.info wrapped_formula
-    
+
     # temp Latex file
     File.open(@temp[:latex], 'w') do |file|
       file.write wrapped_formula
     end
-    
+
     # temp dvi file
     from_latex_to_dpi = run_command("#{@@requisites[:latex]} --output-directory=#{@temp_dir} --interaction=nonstopmode #{@temp[:latex]}", "Conversion from Latex to DPI")
-    
+
     #convert dvi to ps using dvips
     from_dpi_to_ps = run_command("#{@@requisites[:dvips]} -E #{@temp[:dvi]} -o #{@temp[:ps]}", "Conversion from DPI to PS")
 
@@ -185,14 +185,14 @@ class LatexRenderer
                           )
     # full alpha-blending
     elsif @@options[:image_format] == 'png'
-      # convert ( 
-      #           ( 
-      #             ( 
-      #               -density xyz 123_tmp.ps -trim 
-      #             ) ( 
-      #               +clone -negate 
-      #             ) -compose CopyOpacity 
-      #           ) -composite 
+      # convert (
+      #           (
+      #             (
+      #               -density xyz 123_tmp.ps -trim
+      #             ) (
+      #               +clone -negate
+      #             ) -compose CopyOpacity
+      #           ) -composite
       #         ) -channel RGB -fx "white" 123_tmp.png
       final_cmd = sprintf('%s \( \( \( -density %s %s -trim \) \( +clone -negate \) -compose CopyOpacity \)' + \
                           ' -composite \) -channel RGB -fx "%s" %s',
@@ -224,7 +224,7 @@ class LatexRenderer
     end
 
     final_result = run_command(final_cmd, "Conversion from PS to final image")
-    
+
     dimensions = get_dimensions(@temp[:image])
     if (dimensions[0] > @@options[:size_limit_x] || dimensions[1] > @@options[:size_limit_y])
       raise "Image's dimensions excede constraint dimensions #{dimensions.join('x')}"
@@ -254,7 +254,7 @@ FORMULA
 
   def get_dimensions(filename)
     output = run_command("#{@@requisites[:identify]} #{filename}", "Getting dimensions from generated image")
-    
+
     dimensions = output.split(/ /)[2].split('x')
     [dimensions[0].to_i, dimensions[1].to_i]
   end
@@ -279,7 +279,7 @@ FORMULA
     output = stdout.readlines.join("\n")
     # close all pipes to avoid leaks - har har
     [stdin,stdout,stderr].each{|pipe| pipe.close}
-    
+
     if status.exitstatus == 1
       message = msg + " failed.\n #{str} caused the following error(s)\n#{err}\n#{output}"
       raise message

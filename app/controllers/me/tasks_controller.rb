@@ -13,7 +13,7 @@ class Me::TasksController < Me::BaseController
   # assigned to as task
 
   def pending
-    list_tasks('pending')  
+    list_tasks('pending')
   end
   def completed
     list_tasks('completed')
@@ -28,17 +28,17 @@ class Me::TasksController < Me::BaseController
       @task_lists = @pages.collect{|page|page.data}
       @show_user = current_user
       @show_status = status
-      render :action => 'list'      
+      render :action => 'list'
     end
   end
 
-    
+
   protected
-  
+
   def context
     super
     add_context 'Tasks'[:me_tasks_link], url_for(:controller => '/me/tasks', :action => params[:action], :path => params[:path])
   end
-  
+
 end
 

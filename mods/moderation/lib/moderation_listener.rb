@@ -1,6 +1,6 @@
 class ModerationListener < Crabgrass::Hook::ViewListener
   include Singleton
-  
+
   def top_menu(context)
     if logged_in? && current_user.moderator?
     content_tag(:li, content_tag(:span, link_to_active( "Moderation"[:menu_moderation],

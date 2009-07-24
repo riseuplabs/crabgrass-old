@@ -1,5 +1,5 @@
 #  Everything to do with user <> group relationships should be here.
-#  
+#
 #  "memberships" is the join table:
 #    user has many groups through memberships
 #    group has many users through memberships
@@ -59,7 +59,7 @@ module UserExtension::Groups
 '
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group', 
+      has_many :all_groups, :class_name => 'Group',
         :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql}) AND /*SITE_LIMITED*/' do
         def normals
           self.select{|group|group.normal?}

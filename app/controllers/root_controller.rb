@@ -54,14 +54,14 @@ class RootController < ApplicationController
     update_page_list("most_stars_panel",
       :pages => pages_for_timespan('most_stars'),
       :columns => [:stars, :icon, :title, :last_updated],
-      :sortable => false, 
-      :heading_partial => 'root/time_links', 
+      :sortable => false,
+      :heading_partial => 'root/time_links',
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
 
   def announcements
-    update_page_list('announcements_panel', 
+    update_page_list('announcements_panel',
       :pages => paginate('descending','created_at', :flow => :announcement)
     )
   end
@@ -72,9 +72,9 @@ class RootController < ApplicationController
     else
       page = paginate('descending', 'updated_at')
     end
-    update_page_list('recent_pages_panel', 
+    update_page_list('recent_pages_panel',
       :pages => page,
-      :columns => [:stars, :icon, :title, :last_updated], 
+      :columns => [:stars, :icon, :title, :last_updated],
       :heading_partial => 'root/type_links',
       :sortable => false,
       :show_time_dividers => true,
@@ -115,7 +115,7 @@ class RootController < ApplicationController
     @announcements = Page.find_by_path('limit/3/descending/created_at',
       options_for_group(@group, :flow => :announcement))
     @show_featured = Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
-    render :template => 'root/site_home'    
+    render :template => 'root/site_home'
   end
 
   def login_page
@@ -133,7 +133,7 @@ class RootController < ApplicationController
     Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page]}.merge(options)))
   end
 
-  def update_page_list(target, locals)   
+  def update_page_list(target, locals)
     render :update do |page|
       page.replace_html target, :partial => 'pages/list', :locals => locals
     end
@@ -146,14 +146,14 @@ class RootController < ApplicationController
 #  end
 
   ##
-  ## lists of active groups and users. used by the view. 
+  ## lists of active groups and users. used by the view.
   ##
 
   helper_method :most_active_groups
   def most_active_groups
     Group.only_groups.most_visits.find(:all, :limit => 5)
   end
-  
+
   helper_method :recently_active_groups
   def recently_active_groups
     Group.only_groups.recent_visits.find(:all, :limit => 10)

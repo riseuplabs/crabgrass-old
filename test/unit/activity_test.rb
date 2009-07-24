@@ -107,7 +107,7 @@ class ActivityTest < ActiveSupport::TestCase
     ##
 
     group.remove_user!(user)
-  
+
     act = GroupLostUserActivity.for_dashboard(notified_user).last
     assert_activity_for_user_group(act, user, group)
 

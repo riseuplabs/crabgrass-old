@@ -5,7 +5,7 @@ module MessagesPermission
   end
 
   alias_method :may_index_messages?, :may_show_messages?
-  
+
   # may current_user post to user's public message wall?
   def may_create_messages?(user=@user)
     logged_in? and (

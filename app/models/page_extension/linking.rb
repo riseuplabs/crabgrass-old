@@ -14,7 +14,7 @@ class CreatePolyLinks < ActiveRecord::Migration
       t.references :child, :polymorphic => true
       t.integer :position, :default => 0
     end
-    
+
     # note: the name suffixes with digits are specifying the key length to schema.rb
     execute "CREATE INDEX pc_0_0_2 ON links (parent_id, child_id, child_type(2))"
     execute "CREATE INDEX cp_0_2_0 ON links (child_id, child_type(2), parent_id)"
@@ -36,7 +36,7 @@ class CreatePolyLinks < ActiveRecord::Migration
       t.references :child
       t.integer :position, :default => 0
     end
-    
+
     add_index :links, [:parent_id, :child_id], :name => :pc
     add_index :links, [:child_id, :parent_id], :name => :cp
   end
@@ -54,17 +54,17 @@ end
 
 #
 # PageExtension::Linking -- All things related to pages linking to other pages.
-# 
+#
 #
 # ASSOCIATIONS
-# 
+#
 # Imagine a tree of Page objects, where each page can have any number of
 # parents and and number of children. OK, it is really a graph, but you get
 # the idea.
-# 
+#
 # On the parent side, the child nodes are available through 'children'
 # and the edges for the nodes are called 'links'
-# 
+#
 # The children of each page can be either pages or assets. To access just the
 # children that are assets, use the association 'child_assets'. For just pages,
 # use 'child_pages'.
@@ -80,7 +80,7 @@ end
 # On the child side, Asset and Page differ. For assets, the links to the parent
 # are available in an association called 'links'. The parents themselves are
 # called 'parents_of_children'
-# 
+#
 # Here are the associations on the child Asset:
 #
 # class Asset
@@ -99,27 +99,27 @@ end
 #   has_many :parents_of_children, { :foreign_key => "parent_id", :through => :links, :source => :parent, :class_name => "Collection" }
 # end
 #
-# All these associations are created automatically by has_many_polymorph. 
+# All these associations are created automatically by has_many_polymorph.
 # Very cool, except that it can be confusing to figure out what is going on
 # because all the associations are automatic.
-# 
+#
 #
 # ADDING AND REMOVING LINKS
-# 
+#
 # In order to add or remove a link between pages, you should ONLY use these
 # methods: add_child(), add_child!(), remove_child!()
 #
-# 
+#
 # OTHER METHODS
-# 
+#
 # parent.child_ids
-# 
+#
 
 module PageExtension::Linking
 
   def self.included(base)
     base.instance_eval do
-      
+
       has_many_polymorphs :children, :as => :parent, :through => :links,
        :order => 'position', :from => [:pages, :assets],
        :rename_individual_collections => true, :dependent => :destroy
@@ -158,7 +158,7 @@ module PageExtension::Linking
   end
 
   private
-  
+
   def reset_links(child)
     if child.respond_to?(:links_as_child)
       child.links_as_child.reset

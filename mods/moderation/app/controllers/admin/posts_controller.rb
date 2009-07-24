@@ -1,8 +1,8 @@
 class Admin::PostsController < Admin::BaseController
   verify :method => :post, :only => [:update]
-  
+
   permissions 'admin/moderation'
-  
+
   def index
     view = params[:view] || 'all'
     @current_view = view
@@ -29,7 +29,7 @@ class Admin::PostsController < Admin::BaseController
     @posts.update_attributes(params[:post])
     redirect_to :action => 'index', :view => params[:view]
   end
-  
+
 
   # Approves a post by marking :vetted = true
   def approve
@@ -37,7 +37,7 @@ class Admin::PostsController < Admin::BaseController
     post.update_attribute(:vetted, true)
     # get rid of all yucky associated with the post
     post.ratings.destroy_all
-    
+
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -56,7 +56,7 @@ class Admin::PostsController < Admin::BaseController
     post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
-  
+
   def set_active_tab
     @active_tab = :moderation
   end

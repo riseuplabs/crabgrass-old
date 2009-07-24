@@ -8,7 +8,7 @@ class Key < ActiveRecord::Base
   ##
   ## FINDERS
   ##
-  
+
   named_scope :translated, lambda { |language|
     {:joins => :translations, :conditions => ['language_id = ?', language.id]}
   }
@@ -24,7 +24,7 @@ class Key < ActiveRecord::Base
   named_scope :out_of_date, lambda { |language|
     {:joins => 'LEFT OUTER JOIN translations t1 ON keys.id = t1.key_id LEFT OUTER JOIN translations t2 ON keys.id = t2.key_id', :conditions => ["t1.language_id = ? AND t2.language_id = ? AND t1.updated_at < t2.updated_at", language.id, Language.default.id]}
   }
- 
+
   named_scope :by_name, :order => 'keys.name ASC'
 
   def untranslated_languages
@@ -40,7 +40,7 @@ class Key < ActiveRecord::Base
   def self.count_all
     @count ||= self.count().to_f
   end
-  
+
   def to_param
     self.name
   end

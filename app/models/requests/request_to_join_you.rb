@@ -1,12 +1,12 @@
 #
-# An outside user requests to join a group they are not part of. 
+# An outside user requests to join a group they are not part of.
 #
 # recipient: the group
 # requestable: not used
 # created_by: person who wants in
 #
 class RequestToJoinYou < Request
-  
+
   validates_format_of :recipient_type, :with => /Group/
 
   def validate_on_create

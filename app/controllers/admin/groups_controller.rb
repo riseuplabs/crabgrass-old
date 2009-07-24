@@ -1,6 +1,6 @@
 class Admin::GroupsController < Admin::BaseController
   permissions 'admin/groups'
- 
+
   # GET /groups/new
   # GET /groups/new.xml
   def new
@@ -15,11 +15,11 @@ class Admin::GroupsController < Admin::BaseController
   # POST /groups.xml
   def create
     @group = Group.new(params[:group])
-   
+
     # save avatar
     avatar = Avatar.create(params[:image])
     @group.avatar = avatar
-   
+
     respond_to do |format|
       if @group.save
         flash[:notice] = 'Group was successfully created.'

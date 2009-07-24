@@ -3,13 +3,13 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class PagesControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships
-  
+
   def setup
     # @controller = UsersController.new
     # @request = ActionController::TestRequest.new
     # @response = ActionController::TestResponse.new
   end
-  
+
   def test_index
     login_as :blue
     get :index
@@ -22,7 +22,7 @@ class PagesControllerTest < ActionController::TestCase
       assert_not_nil assigns(:pages)
     end
   end
-  
+
   def test_update
     login_as :blue
     @user = users(:red)
@@ -31,7 +31,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_redirected :action => 'show'
     assert_equal assigns(:user).login, 'RedRoot!'
   end
-  
+
     # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
     page = Page.find params[:id]
@@ -60,27 +60,27 @@ class PagesControllerTest < ActionController::TestCase
     redirect_to :action => 'index', :view => params[:view]
   end
 
-  
+
   def test_approve
-  
+
   end
-  
+
   def test_trash
     login_as :blue
     get :trash, :id => @page.id
     assert_response :success
     assert assigns(:user)
   end
-  
+
   def test_delete
     login_as :blue
     post :create, :user => {:login => 'testuser', :display_name => 'TestUser', :email => 'testuser@testsite.com', :password => 'testpassword', :password_confirmation => 'testpassword' }
     assert_redirected :action => 'show'
     assert_equal assigns(:user).login, 'testuser'
-    
+
     # todo: assert failing create test
   end
-  
+
   def test_update_public
     login_as :blue
     @user = users(:red)

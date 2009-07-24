@@ -9,12 +9,12 @@ class DiscussionPageControllerTest < ActionController::TestCase
 
   def test_create_and_show
     login_as :orange
-    
+
     assert_no_difference 'Page.count' do
       get :create, :id => DiscussionPage.param_id
       assert_response :success
     end
-  
+
     assert_difference 'DiscussionPage.count' do
       post :create, :id => DiscussionPage.param_id, :page => { :title => 'test discussion', :tag_list => 'humma, yumma' }
     end

@@ -6,7 +6,7 @@ module Admin::CustomAppearancesHelper
       new_admin_custom_appearance_url
     end
   end
-  
+
   def custom_appearance_path(*args)
     admin_custom_appearance_path(*args)
   end

@@ -7,7 +7,7 @@ module Admin::PostsHelper
   def edit_posts_path(arg)
     edit_admin_posts_path(arg)
   end
- 
+
   def new_posts_path
     new_admin_posts_path
   end
@@ -27,7 +27,7 @@ module Admin::PostsHelper
       link_to_if(post.deleted_at.nil?, post.body[0..60] + '...', url_for_user(post.discussion.commentable))
     end
   end
-  
+
   def page_link(post)
     if post.discussion.page
       link_to(post.discussion.page.title, page_url(post.discussion.page))
@@ -35,7 +35,7 @@ module Admin::PostsHelper
       link_to(post.discussion.commentable.display_name, url_for_user(post.discussion.commentable))
     end
   end
-          
+
 end
 
 

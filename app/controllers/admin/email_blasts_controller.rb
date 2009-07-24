@@ -1,11 +1,11 @@
 class Admin::EmailBlastsController < Admin::BaseController
   verify :method => :post, :only => [:blast]
- 
+
   permissions 'admin/email_blasts'
- 
+
   def index
   end
- 
+
   def blast
     email_options = mailer_options.merge({:subject => params[:subject], :body => params[:body]})
     build_recipient_list(params[:to]).each do |user|
@@ -13,17 +13,17 @@ class Admin::EmailBlastsController < Admin::BaseController
     end
     redirect_to :action => 'index'
   end
- 
+
   protected
- 
+
   def set_active_tab
     @active = 'email_blasts'
   end
- 
+
   def build_recipient_list(receipients)
     recipient_list = [ ]
     tokens = receipients.split(/[,;\s]+/)
-   
+
     tokens.each do |unformatted_token|
       token = unformatted_token.strip
       # Check if we have a special word e.g. Everyone

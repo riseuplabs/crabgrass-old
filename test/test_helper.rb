@@ -27,7 +27,7 @@ module Tool; end
 
 
 #
-# put this at the top of your test, before the class def, to see 
+# put this at the top of your test, before the class def, to see
 # the logs printed to stdout. useful for tracking what sql is called when.
 # probably way too much information unless run with -n to limit the test.
 # ie: ruby test/unit/page_test.rb -n test_destroy
@@ -41,8 +41,8 @@ end
 # i can't get the tests to work unless we use this.
 class MockFile
   attr_reader :path
-	def initialize(path); @path = path; end
-	def size; 1; end
+  def initialize(path); @path = path; end
+  def size; 1; end
   def original_filename; @path.split('/').last; end
   def read; File.open(@path) { |f| f.read }; end
   def rewind; end
@@ -83,7 +83,7 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
 
   include AuthenticatedTestHelper
-  
+
   # make sure the associations are at least defined properly
   def check_associations(m)
     @m = m.new
@@ -94,7 +94,7 @@ class Test::Unit::TestCase
     end
     true
   end
-  
+
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
   def assert_permission_denied
@@ -148,7 +148,7 @@ class Test::Unit::TestCase
       post action, url
       assert_redirect_to {:controller => 'account', :action => 'login'}, "post %s must require a login" % url.inspect
     end
-  end    
+  end
 
   def assert_login_not_required(method, url)
     if method == :get
@@ -158,7 +158,7 @@ class Test::Unit::TestCase
       post action, url
       assert_redirect_to {:controller => 'account', :action => 'login'}, "post %s must require a login" % url.inspect
     end
-  end    
+  end
 =end
 
   ##
@@ -203,7 +203,7 @@ See also doc/SPHINX"
     else
       if site_name
         Conf.enable_site_testing(sites(site_name))
-        Site.current = sites(site_name) 
+        Site.current = sites(site_name)
       else
         Conf.enable_site_testing()
         # by default the request how ist test.host so we set the

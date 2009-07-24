@@ -7,7 +7,7 @@ module Admin::MembershipsHelper
   def edit_membership_path(arg)
     edit_admin_membership_path(arg)
   end
- 
+
   def new_membership_path
     new_admin_membership_path
   end

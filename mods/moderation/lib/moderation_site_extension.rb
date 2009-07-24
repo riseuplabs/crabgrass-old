@@ -2,7 +2,7 @@ module ModerationSiteExtension
 
   module ClassMethods
   end
- 
+
   module InstanceMethods
   end
 

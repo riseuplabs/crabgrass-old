@@ -19,7 +19,7 @@ begin
           puts "ERROR (%s): site moderation group name '%s' not found in database!" % [Conf.configuration_filename, site_conf['moderation_group']]
         end
       end
-      
+
       if Conf.enabled_mods.include?('super_admin')
         admin_group = Group.find_by_name(site_conf['admin_group'])
         if admin_group

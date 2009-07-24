@@ -15,7 +15,7 @@ class AdminMailer < Mailer
   end
 
   protected
-  
+
   def setup_user(user)
     @recipients   = "#{user.email}"
     @from         = @from_address

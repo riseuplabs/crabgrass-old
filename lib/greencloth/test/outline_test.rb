@@ -24,7 +24,7 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal 'pears', greencloth.heading_tree.successor('tasty-apples').name
     assert_equal 'vegetables', greencloth.heading_tree.successor('pears').name
   end
-  
+
   def test_get_text
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
 
@@ -41,7 +41,7 @@ class TestHeadings < Test::Unit::TestCase
     greencloth = GreenCloth.new( in_texts(:weird_chars) )
     assert_equal "h1. i eat 'food'", greencloth.get_text_for_heading('i-eat-food')
   end
- 
+
   def test_get_setext_style_headings
     greencloth = GreenCloth.new( in_texts(:setext_trees) )
 
@@ -85,14 +85,14 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "<p><a href=\"http://example.com\">a link</a></p>",
       greencloth.to_html
   end
-  
+
   def test_anchor_link_with_whitespace_after_first_char
     greencloth = GreenCloth.new("[# link]")
     assert_equal "<p><a href=\"#link\">link</a></p>", greencloth.to_html
   end
-  
+
   protected
-  
+
   def in_texts(name)
     name = name.to_s.gsub('_',' ')
     text = (@fixtures[name]||{})['in']

@@ -1,4 +1,4 @@
-# this requires ActionView::Helpers::TagHelper 
+# this requires ActionView::Helpers::TagHelper
 
 module ErrorHelper
 
@@ -8,7 +8,7 @@ module ErrorHelper
 
   # DEPRECATED
   # DEPRECATED
-  def message(opts)    
+  def message(opts)
     if opts[:success]
       flash[:notice] = opts[:success]
     elsif opts[:error]
@@ -20,7 +20,7 @@ module ErrorHelper
       end
     elsif opts[:object]
       object = opts[:object]
-      unless object.errors.empty?        
+      unless object.errors.empty?
         flash.now[:error] = "Changes could not be saved."[:alert_not_saved]
         flash.now[:text] ||= ""
         flash.now[:text] += content_tag "p", "There are problems with the following fields"[:alert_field_errors] + ":"
@@ -31,14 +31,14 @@ module ErrorHelper
   end
 
   #
-  # Direct manipulation of the message display: 
+  # Direct manipulation of the message display:
   #
   #   flash_message :title => 'hello', :text => 'have a nice day', :type => 'info'
   #   flash_message :title => 'wrong', :text => 'you messed up', :type => 'error'
   #
-  # 
+  #
   # Shortcuts:
-  # 
+  #
   #   flash_message :success => true
   #      (same as :type => 'info', :title => 'Changes saved')
   #
@@ -89,7 +89,7 @@ module ErrorHelper
   # A combination of flash_message and display_messages.
   # It is use in rjs templates.
   #
-  # For example: 
+  # For example:
   #   page.replace_html 'message', message_text(:object => @page) unless @page.valid?
   #
   def message_text(options)
@@ -116,11 +116,11 @@ module ErrorHelper
     end
   end
 
-  # 
+  #
   # Used in controllers to render an error template base on an exception.
   #
   # for example:
-  #   
+  #
   #   def show
   #     ...
   #   rescue Exception => exc
@@ -158,7 +158,7 @@ module ErrorHelper
   #
   # parses options to build the appropriate objects in the particular flash
   # (flash or flash.now)
-  # 
+  #
   # this method should not be called directly. intead use flash_message and
   # flash_message_now
   #
@@ -189,7 +189,7 @@ module ErrorHelper
       end
     elsif options[:object]
       object = options[:object]
-      unless object.errors.empty?        
+      unless object.errors.empty?
         flsh[:type] = 'error'
         flsh[:text] += content_tag :p, "There are problems with the following fields"[:alert_field_errors] + ":"
         flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
@@ -235,10 +235,10 @@ module ErrorHelper
   end
 
   private
-  
+
   def build_notice_area(type, title, text)
     if title
-      heading = content_tag(:h2, title, :class => "big_icon #{type}_48") 
+      heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
       heading = content_tag(:div, heading, :class => 'heading')
     else
       heading = ""

@@ -1,6 +1,6 @@
 =begin
 
-Here in lies all the helpers for displaying icons, avatars, spinners, 
+Here in lies all the helpers for displaying icons, avatars, spinners,
 and various images.
 
 =end
@@ -13,7 +13,7 @@ module ImageHelper
   ## Some links have icons. Rather than use img tags, which can cause all
   ## kinds of trouble with the layout, crabgrass generally uses background
   ## images for the icon.
-  ## 
+  ##
 
   # for example icon_tag('pencil')
   def icon_tag(icon, size = 16)
@@ -23,7 +23,7 @@ module ImageHelper
 #  def pushable_icon_tag(icon, size = 16, id = nil)
 #    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
 #  end
-    
+
   ##
   ## AVATARS
   ##
@@ -39,7 +39,7 @@ module ImageHelper
       :class => (options[:class] || "avatar avatar_#{size}")
     )
   end
-  
+
   ## returns the url for the user's or group's avatar
   def avatar_url_for(viewable, size='medium')
     #avatar_url(:id => (viewable.avatar_id||0), :size => size)
@@ -53,7 +53,7 @@ module ImageHelper
   ##
   ## PAGES
   ##
-  ## every page has an icon. 
+  ## every page has an icon.
   ##
 
   ## returns the img tag for the page's icon
@@ -61,7 +61,7 @@ module ImageHelper
     content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
 #    image_tag "pages/#{page.icon}", :size => "22x22"
   end
-  
+
   ## returns css style text to display the page's icon
   def page_icon_style(icon)
    # XXX
@@ -73,7 +73,7 @@ module ImageHelper
   ##
   ## spinners are animated gifs that are used to show progress.
   ## see JavascriptHelper for showing and hiding spinners.
-  ## 
+  ##
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
@@ -92,7 +92,7 @@ module ImageHelper
     target = id ? "$('#{id}')" : 'eventTarget(event)'
     "replace_class_name(#{target}, '#{icon}_16', 'spinner_icon')"
   end
-  
+
   def spinner_icon_off(icon, id)
     target = id ? "$('#{id}')" : 'eventTarget(event)'
     "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
@@ -113,11 +113,11 @@ module ImageHelper
   #    return(event.target || event.srcElement); // IE doesn't use .target
   #  }
   #
-  # however, this can be used for non-ajax js.  
+  # however, this can be used for non-ajax js.
 
   ##
   ## LINKS WITH ICONS
-  ## 
+  ##
 
   # makes a cool link with an icon. if you click the link, some ajax
   # thing happens, and the icon is set to a spinner. The icon is
@@ -198,15 +198,15 @@ module ImageHelper
   # the image to meet new dimensions (using html/css, not actually scaling/cropping)
   #
   # eg: thumbnail_img_tag(thumb, :crop => '22x22')
-  # 
+  #
   # options:
   #  * :crop   -- the img is first scaled, then cropped to allow it to
   #               optimally fit in the cropped space.
-  #  * :scale  -- the img is scaled, preserving proportions 
+  #  * :scale  -- the img is scaled, preserving proportions
   #  * :crop!  -- crop, even if there is no known height and width
   #
   # note: if called directly, thumbnail_img_tag does not actually do the
-  #       cropping. rather, it generate a correct img tag for use with 
+  #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
   def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})

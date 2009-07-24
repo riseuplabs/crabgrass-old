@@ -12,12 +12,12 @@ class NilClass
   def any
     false
   end
-  
+
   # nil.to_s => ""
   def empty?
     true
   end
-  
+
   # nil.to_i => 0
   def zero?
     true
@@ -26,11 +26,11 @@ class NilClass
   def first
     nil
   end
-  
+
   def each
     nil
   end
-  
+
   def to_sym
     return self
   end
@@ -57,14 +57,14 @@ class Object
     end
     false
   end
-  
+
   #
   # Object#try() has been added to rails 2.3. It allows you to call a method on
   # an object in safe way that will not bomb out if the object is nil or the
   # method does not exist.
   #
   # This try is similar, but also accepts zero args or multiple args.
-  # 
+  #
   # Examples:
   #
   #  1. @person.try(:name)
@@ -73,7 +73,7 @@ class Object
   #
   def try(method=nil, *args)
     if method.nil?
-      self.nil? ? SilentNil.instance : self   
+      self.nil? ? SilentNil.instance : self
     elsif respond_to? method
       send(method, *args)
     else
@@ -86,7 +86,7 @@ end
 class Array
   # creates an array suitable for options_for_select
   # ids are converted to strings, so the 'selected' argument should
-  # be a string. 
+  # be a string.
   def to_select(field,id='id')
     self.collect { |x| [x.send(field).to_s,x.send(id).to_s] }
   end
@@ -98,7 +98,7 @@ class Array
   def to_localized_select
     self.collect{|a| [a.t, a.to_s] }
   end
-  
+
   def any_in?(array)
     return (self & array).any?
   end
@@ -123,15 +123,15 @@ class Array
 =begin
   # returns a copy of the hash with symbols
   def symbolize
-    self.map {|i| 
+    self.map {|i|
       if(!i.nil? && P(i.respond_to?(m=:to_sym) || i.respond_to?(m=:symbolize)))
         m == :to_sym ? i.to_sym : i.symbolize
       else
         i
-      end                 
+      end
     }
   end
-=end  
+=end
 end
 
 
@@ -149,8 +149,8 @@ class Hash
     end
     hsh
   end
-  
-=begin  
+
+=begin
   # returns a copy of the hash with symbols
   def symbolize
     self.keys.inject({})  { |m, k|
@@ -158,8 +158,8 @@ class Hash
                                                                                      (v = v.symbolize rescue nil) || v)
       m
     }
-  end 
-=end  
+  end
+=end
 end
 
 class Symbol

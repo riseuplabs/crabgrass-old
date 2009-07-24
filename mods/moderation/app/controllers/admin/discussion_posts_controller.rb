@@ -1,6 +1,6 @@
 class Admin::DiscussionPostsController < Admin::PostsController
   private
-  
+
   def fetch_posts(options)
     conditions = (options.delete(:conditions) || [])
     conditions[0] = "#{conditions[0] ? conditions[0]+' AND' : ''} discussions.commentable_type IS NULL"

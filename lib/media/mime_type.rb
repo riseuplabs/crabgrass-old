@@ -39,7 +39,7 @@ module Media
     def self.extension_from_mime_type(mime_type)
       lookup(mime_type,EXT)
     end
-    
+
     def self.mime_type_from_extension(ext)
       ext = File.extname(ext).gsub('.','') if ext =~ /\./
       mimetype = EXTENSIONS[ext]
@@ -55,12 +55,12 @@ module Media
     def self.description_from_mime_type(mime_type)
       lookup(mime_type,DESCRIPTION) || lookup(mime_group(mime_type),DESCRIPTION) || lookup('default',DESCRIPTION)
     end
-   
+
     EXT = 0; ICON = 1; ASSET_CLASS = 2; DESCRIPTION = 3;
     MIME_TYPES = {
       # mime_type       => [file_extension, icon, asset_class, description]
       'default'         => [nil,'default',:asset,'Unknown'],
-      
+
       'text/'           => [:txt,:html,:doc_asset, 'Text'],
       'text/html'       => [:html,:html,:doc_asset, 'Webpage'],
       'application/rtf' => [:rtf,:rtf,:doc_asset, 'Rich Text'],
@@ -74,15 +74,15 @@ module Media
       'application/bzpdf' => [:pdf,:pdf,:image_asset, 'Portable Document Format'],
       'application/gzpdf' => [:pdf,:pdf,:image_asset, 'Portable Document Format'],
       'application/postscript' => [:ps,:pdf,:image_asset,'Postscript'],
-      
+
       'text/spreadsheet'     => [:txt,:spreadsheet,:doc_asset,'Spreadsheet'],
       'application/gnumeric' => [:gnumeric,:spreadsheet,:doc_asset,'Gnumeric'],
       'application/kspread'  => [:kspread,:spreadsheet,:doc_asset,'KSpread'],
-          
+
       'application/scribus' => [:scribus,:doc,nil,'Scribus'],
       'application/abiword' => [:abw,:doc,:doc_asset,'Abiword'],
       'application/kword'   => [:kwd,:doc,:doc_asset,'KWord'],
-      
+
 
       'application/msword'     => [:doc,:msword,:text_asset,'MS Word'],
       'application/mswrite'    => [:doc,:msword,:text_asset,'MS Write'],
@@ -102,7 +102,7 @@ module Media
         [:pptx, :mspowerpoint,:doc_asset,'MS Powerpoint'],
       'application/vnd.openxmlformats-officedocument.presentationml.presentation' =>
         [:pptm, :mspowerpoint,:doc_asset,'MS Powerpoint'],
-      'application/vnd.openxmlformats-officedocument.presentationml.template' => 
+      'application/vnd.openxmlformats-officedocument.presentationml.template' =>
         [:potx,:mspowerpoint,:doc_asset,'MS Powerpoint Template'],
 
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document' =>
@@ -122,32 +122,32 @@ module Media
       'application/executable'        => [nil,:binary,nil,'Program'],
       'application/ms-dos-executable' => [nil,:binary,nil,'Program'],
       'application/octet-stream'      => [nil,:binary,nil],
-      
+
       'application/shellscript' => [:sh,:shell,nil,'Script'],
       'application/ruby'        => [:rb,:ruby,nil,'Script'],
-          
-      'application/vnd.oasis.opendocument.spreadsheet'  => 
+
+      'application/vnd.oasis.opendocument.spreadsheet'  =>
         [:ods,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Spreadsheet'],
-      'application/vnd.oasis.opendocument.formula'      => 
+      'application/vnd.oasis.opendocument.formula'      =>
         [nil,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Formula'],
-      'application/vnd.oasis.opendocument.chart'        => 
+      'application/vnd.oasis.opendocument.chart'        =>
         [nil,:oo_spreadsheet,:spreadsheet_asset, 'OpenDocument Chart'],
-      'application/vnd.oasis.opendocument.image'        => 
+      'application/vnd.oasis.opendocument.image'        =>
         [nil,:oo_graphics, :doc_asset, 'OpenDocument Image'],
-      'application/vnd.oasis.opendocument.graphics'     => 
+      'application/vnd.oasis.opendocument.graphics'     =>
         [:odg,:oo_graphics, :doc_asset, 'OpenDocument Graphics'],
-      'application/vnd.oasis.opendocument.presentation' => 
+      'application/vnd.oasis.opendocument.presentation' =>
         [:odp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
-      'application/vnd.oasis.opendocument.database'     => 
+      'application/vnd.oasis.opendocument.database'     =>
         [:odf,:oo_database,:doc_asset, 'OpenDocument Database'],
-      'application/vnd.oasis.opendocument.text-web'     => 
+      'application/vnd.oasis.opendocument.text-web'     =>
         [:html,:oo_html,:doc_asset, 'OpenDocument Webpage'],
       'application/vnd.oasis.opendocument.text'         =>
         [:odt,:oo_text,:doc_asset, 'OpenDocument Text'],
       'application/vnd.oasis.opendocument.text-master'  =>
         [:odm,:oo_text,:doc_asset, 'OpenDocument Master'],
 
-      'application/vnd.oasis.opendocument.presentation-template' =>   
+      'application/vnd.oasis.opendocument.presentation-template' =>
         [:otp,:oo_presentation,:doc_asset, 'OpenDocument Presentation'],
       'application/vnd.oasis.opendocument.graphics-template'     =>
         [:otg,:oo_graphics,:doc_asset, 'OpenDocument Graphics'],
@@ -172,7 +172,7 @@ module Media
       'video/' => [nil,:video,nil,'Video'],
 
       'audio/' => [nil,:audio,:audio_asset,'Audio'],
-      
+
       'image/'                   => [nil,:image,:image_asset,'Image'],
       'image/jpeg'               => [:jpg,:image,:image_asset],
       'image/png'                => [:png,:image,:png_asset],
@@ -184,12 +184,12 @@ module Media
       'image/bzeps'              => [:bzeps,:vector,:image_asset,'Vector Image'],
       'image/eps'                => [:eps,:vector,:image_asset,'Vector Image'],
       'image/gzeps'              => [:gzeps,:vector,:image_asset,'Vector Image'],
-      
+
       'application/pgp-encrypted' => [nil,:lock,nil,'Crypt'],
       'application/pgp-signature' => [nil,:lock,nil,'Crypt'],
       'application/pgp-keys'      => [nil,:lock,nil,'Crypt']
     }.freeze
-   
+
     #
     # This extension mapping is used to force certain mime types.
     # Usually, firefox does pretty good at reporting the correct mime-type,
@@ -197,7 +197,7 @@ module Media
     # gem to try to get the correct mime from the extension. Sometimes, however,
     # even this doesn't work. This able will force certain types when
     # MIME::Types fails or is ambiguous
-    # 
+    #
     EXTENSIONS = {
       'jpg' => 'image/jpeg',
       'png' => 'image/png',
@@ -224,6 +224,6 @@ module Media
       'xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template'
     }.freeze
 
-   
+
   end
 end
