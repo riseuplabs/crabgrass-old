@@ -122,12 +122,6 @@ class Asset < ActiveRecord::Base
     self.page.has_access!(perm, user)
   end
 
-  def has_access?(access, user)
-    return has_access!(access, user)
-  rescue PermissionDenied
-    return false
-  end
-
   def participation_for_groups ids
     gparts = self.page.participation_for_groups(ids)
     if(self.galleries.any?)

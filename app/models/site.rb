@@ -175,12 +175,6 @@ class Site < ActiveRecord::Base
     ok or raise PermissionDenied.new
   end
 
-  def has_access?(access, user)
-    return has_access!(access, user)
-  rescue PermissionDenied
-    return false
-  end
-
   # TODO : find a place to define all the elements, a site's user can see
   #        (means: things, where we log, if he has already seen them)
   #
