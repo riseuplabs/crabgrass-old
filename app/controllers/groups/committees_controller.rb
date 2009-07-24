@@ -18,7 +18,7 @@ class Groups::CommitteesController < GroupsController
   end
 
   protected
-  
+
   def authorized?
     true
   end

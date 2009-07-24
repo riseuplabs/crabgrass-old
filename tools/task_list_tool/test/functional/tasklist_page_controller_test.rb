@@ -5,7 +5,7 @@ class TaskListPageControllerTest < ActionController::TestCase
 
   def text_show
     login_as :quentin
-    
+
     get :show, :page_id => pages(:tasklist1)
     assert_response :success
 #    assert_template 'task_list_page/show'
@@ -18,7 +18,7 @@ class TaskListPageControllerTest < ActionController::TestCase
     @page = pages(:tasklist1)
     @page.add(@user, :access => :admin)
     @page.save!
-    
+
     assert_equal 1, Task.find(1).position
     assert_equal 2, Task.find(2).position
     assert_equal 3, Task.find(3).position
@@ -61,7 +61,7 @@ class TaskListPageControllerTest < ActionController::TestCase
     assert_equal tasks[6].position, 4
     assert_equal tasks[2].task_list_id, tasks[4].task_list_id
   end
-  
+
   def text_create_task
     login_as :blue
     pages(:tasklist1).add(users(:blue), :access => :admin)
@@ -70,7 +70,7 @@ class TaskListPageControllerTest < ActionController::TestCase
       xhr :post, :create_task, :controller => "task_list_page", :page_id => pages(:tasklist1).id, :task => {:name => "new task", :user_ids => ["5"], :description => "new task description"}
     end
   end
-  
+
   # TODO: tests for mark_task_complete, mark_task_pending, destroy_task, update_task, edit_task
 
 end

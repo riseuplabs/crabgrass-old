@@ -43,7 +43,7 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_nil assigns(:version)
   end
-  
+
   def test_diff
     login_as :orange
 

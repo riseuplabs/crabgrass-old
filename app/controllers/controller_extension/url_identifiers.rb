@@ -5,7 +5,7 @@
 module ControllerExtension::UrlIdentifiers
 
   def self.included(base)
-    base.class_eval do 
+    base.class_eval do
       helper_method :action?
       helper_method :controller?
       helper_method :id?

@@ -123,11 +123,11 @@ class WikiTest < Test::Unit::TestCase
 
   # def test_list_of_locked_sections
   #   w = wikis(:multi_section)
-  # 
+  #
   #   # lock sections by different users
   #   w.lock(Time.now, users(:orange), 'section-one')
   #   w.lock(Time.now, users(:blue), 'section-two')
-  # 
+  #
   #   # check list of all sections and per-users lists
   #   assert_equal ['section-two', 'section-one'].sort, w.locked_sections.sort, "wiki should have sections one and two locked"
   #   assert_equal 'section-one', w.currently_editing_section(users(:orange)), "wiki should list section one as locked by orange"
@@ -138,7 +138,7 @@ class WikiTest < Test::Unit::TestCase
     w = wikis(:multi_section)
 
     w.lock(Time.now, users(:orange), 'section-one')
-    assert_raises WikiLockException do 
+    assert_raises WikiLockException do
       w2 = Wiki.find(w.id)
       w2.lock(Time.now, users(:blue), 'section-one')
     end
@@ -167,7 +167,7 @@ class WikiTest < Test::Unit::TestCase
   end
 
   def test_reverting
-    wiki = Wiki.create! :body => '1111'    
+    wiki = Wiki.create! :body => '1111'
     wiki.smart_save!(:body => '2222', :user => users(:red))
     wiki.smart_save!(:body => '3333', :user => users(:green))
     wiki.smart_save!(:body => '4444', :user => users(:blue))

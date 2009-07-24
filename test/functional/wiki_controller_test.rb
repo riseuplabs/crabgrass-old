@@ -6,7 +6,7 @@ class WikiController; def rescue_action(e) raise e end; end
 
 class WikiControllerTest < Test::Unit::TestCase
   fixtures :groups, :pages, :users, :memberships, :sites
-  
+
   def setup
     @controller = WikiController.new
     @request    = ActionController::TestRequest.new

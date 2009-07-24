@@ -2,7 +2,7 @@
 #
 # Optionally, each end of a federating can specify which specific subgroup
 # of the group will have membership in the council of the networks.
-# 
+#
 # council     -- the subgroup of the network that is a council (ie admin group)
 # delegation  -- the delegation is a subgroup of the group joining the network.
 #                every member of the delegation will be made a member of the
@@ -31,5 +31,5 @@ class Federating < ActiveRecord::Base
 
   named_scope :alphabetized_by_group, :joins => :group, :order => 'groups.full_name ASC, groups.name ASC'
 
-  
+
 end

@@ -2,11 +2,11 @@ class RateManyPageController < BasePageController
   before_filter :fetch_poll
   javascript :extra, 'page'
   permissions 'rate_many_page'
-  
+
   def show
-  	@possibles = @poll.possibles.sort_by{|p| p.position||0 }
+  @possibles = @poll.possibles.sort_by{|p| p.position||0 }
   end
-  
+
   # ajax or post
   def add_possible
     return if request.get?
@@ -18,7 +18,7 @@ class RateManyPageController < BasePageController
       @poll.possibles.delete(@possible)
       flash_message_now :object => @possible unless @possible.valid?
       flash_message_now :object => @poll unless @poll.valid?
-      if request.post? 
+      if request.post?
         render :action => 'show'
       else
         render :text => 'error', :status => 500
@@ -26,17 +26,17 @@ class RateManyPageController < BasePageController
       return
     end
   end
-      
+
   def destroy_possible
     return unless @poll
     possible = @poll.possibles.find(params[:possible])
     possible.destroy
-    
+
     current_user.updated @page # update modified date, and auto_summary, but do not make it unresolved
 
-    redirect_to page_url(@page, :action => 'show')    
+    redirect_to page_url(@page, :action => 'show')
   end
-  
+
   def vote_one
     new_value = params[:value].to_i
     @possible = @poll.possibles.find(params[:id])
@@ -44,9 +44,9 @@ class RateManyPageController < BasePageController
     @possible.votes.create :user => current_user, :value => new_value
     current_user.updated(@page, :resolved => true)
   end
-  
+
   def vote
-    new_votes = params[:vote] || {} 
+    new_votes = params[:vote] || {}
 
     # destroy previous votes
     @poll.votes_by_user(current_user).each{|v| v.destroy}
@@ -64,7 +64,7 @@ class RateManyPageController < BasePageController
     @poll.votes.clear
     redirect_to page_url(@page, :action => 'show')
   end
-    
+
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -75,17 +75,17 @@ class RateManyPageController < BasePageController
     @poll.possibles.each do |possible|
       position = ids.index( possible.id.to_s )
       possible.update_attribute('position',position+1) if position
-    end	
+    end
     render :nothing => true
   end
-  
+
   def print
-  	@possibles = @poll.possibles.sort_by{|p| p.position||0 }
+  @possibles = @poll.possibles.sort_by{|p| p.position||0 }
     render :layout => "printer-friendly"
   end
 
   protected
-  
+
   def fetch_poll
     return true unless @page
     @poll = @page.data

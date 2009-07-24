@@ -48,12 +48,12 @@ module BackgrounDRb
       @logger = WorkerDummyLogger.new
       @thread_pool = ThreadPool.new
     end
-    
+
     def register_status(arg)
       @status = arg
     end
   end
-  
+
   class ThreadPool
     def defer(args,&block)
       yield args

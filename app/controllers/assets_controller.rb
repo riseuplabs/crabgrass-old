@@ -1,7 +1,7 @@
 class AssetsController < ApplicationController
 
-  permissions 'assets'  
-  
+  permissions 'assets'
+
   before_filter :public_or_login_required
   prepend_before_filter :fetch_asset, :only => [:show, :destroy]
   prepend_before_filter :initialize_asset, :only => :create #maybe we can merge these two filters
@@ -12,7 +12,7 @@ class AssetsController < ApplicationController
     @asset.filename = params[:asset_title]+@asset.suffix if params[:asset_title].any?
     true
   end
-  
+
   def show
     if @asset.public? and !File.exists?(@asset.public_filename)
       # update access and redirect iff asset is public AND the public
@@ -20,7 +20,7 @@ class AssetsController < ApplicationController
       @asset.update_access
       @asset.generate_thumbnails
       if @asset.thumbnails.any?
-        redirect_to # redirect to the same url again, but next time they will get the symlinks 
+        redirect_to # redirect to the same url again, but next time they will get the symlinks
       else
         return not_found
       end
@@ -42,7 +42,7 @@ class AssetsController < ApplicationController
     respond_to do |format|
       format.js { render :nothing => true }
       format.html do
-        message(:success => "file deleted") 
+        message(:success => "file deleted")
         redirect_to(page_url(@asset.page))
       end
     end
@@ -81,12 +81,12 @@ class AssetsController < ApplicationController
   # a custom access denied handler. I am not sure why we do this, and not just use
   # the default one.
   def access_denied
-    return super unless action?(:show) 
+    return super unless action?(:show)
     flash_message :error => 'You do not have sufficient permission to access that file' if logged_in?
     flash_message :error => 'Please login to access that file.' unless logged_in?
     redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
   end
-  
+
   def thumb_name_from_path(path)
     $~[1].to_sym if path =~ /#{THUMBNAIL_SEPARATOR}(.+)\./
   end

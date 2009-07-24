@@ -29,7 +29,7 @@ class Me::PublicMessagesControllerTest < ActionController::TestCase
       end
     end
     assert_response :redirect
-    
+
     assert_equal 'h1. <strong>hi</strong>', Post.find(:last).body_html
 
     assert_no_difference 'Post.count' do

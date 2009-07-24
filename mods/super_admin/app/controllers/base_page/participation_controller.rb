@@ -3,9 +3,9 @@ class BasePage::ParticipationController < ApplicationController
   before_filter :login_required
 
   verify :method => :post, :only => [:move]
-  
+
   def update_public
-    if current_user.superadmin?   
+    if current_user.superadmin?
       @page.public = ('true' == params[:public])
     else
       @page.public_requested = ('true' == params[:public])
@@ -14,9 +14,9 @@ class BasePage::ParticipationController < ApplicationController
     @page.save
     render :template => 'base_page/participation/reset_public_line'
   end
-  
+
   def close_public_requested
     close_popup
   end
-   
+
 end

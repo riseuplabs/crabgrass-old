@@ -5,8 +5,8 @@ class ProfileController < ApplicationController
   stylesheet 'profile'
   helper 'me/base'
   #permissions 'profiles'
-  verify :method => :post, :only => :update  
-  
+  verify :method => :post, :only => :update
+
   def show
   end
 
@@ -69,7 +69,7 @@ class ProfileController < ApplicationController
     render :update do |page|
       page.insert_html :bottom, 'profile_websites', :partial => 'website', :locals => {:website => ProfileWebsite.new, :multiple => multiple}
     end
-  end  
+  end
 
   def add_crypt_key
     multiple = params[:multiple]
@@ -77,9 +77,9 @@ class ProfileController < ApplicationController
       page.insert_html :bottom, 'profile_crypt_keys', :partial => 'crypt_key', :locals => {:crypt_key => ProfileCryptKey.new, :multiple => multiple}
     end
   end
-  
+
   protected
- 
+
   def fetch_profile
     return true unless params[:id]
     if params[:id] == 'public' #&& @site.profiles.public?
@@ -98,10 +98,10 @@ class ProfileController < ApplicationController
       raise Exception.new("could not determine entity type for profile: #{@profile.inspect}")
     end
   end
-  
+
   #def fetch_profile_settings
   #  return true unless @profile
-  #  @profile_settings = (@profile.public? ? @site.profiles.public : 
+  #  @profile_settings = (@profile.public? ? @site.profiles.public :
   #                       @site.profiles.private)
   #end
 
@@ -109,7 +109,7 @@ class ProfileController < ApplicationController
 #  # settings of the current site.
 #  def apply_settings_to_params!
 #    # values are preset (select field), so we ignore them
-#    ignore = { 
+#    ignore = {
 #      'location' => ['location_type'],
 #      'note' => ['note_type']
 #    }
@@ -127,7 +127,7 @@ class ProfileController < ApplicationController
 #      params['profile'][plural] = this_params.allow(valid_keys)
 #    end
 #  end
-  
+
   before_filter :setup_layout
   def setup_layout
     if @user
@@ -137,7 +137,7 @@ class ProfileController < ApplicationController
       #@tabs = 'profile/side_tabs'
     end
   end
-  
+
   def context
     me_context('large')
     @banner = render_to_string :partial => 'me/banner'

@@ -4,10 +4,10 @@
 # creator: user wanting a friend
 # recipient: potential friend
 # requestable: nil
-# 
+#
 #
 class RequestToFriend < Request
-  
+
   validates_format_of :recipient_type, :with => /User/
 
   def validate_on_create
@@ -37,7 +37,7 @@ class RequestToFriend < Request
     user == recipient or may_approve?(user)
   end
 
- 
+
   def after_approval
     recipient.add_contact!(created_by, :friend)
   end

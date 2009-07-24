@@ -1,4 +1,4 @@
-  
+
 PageClassRegistrar.add(
   'DiscussionPage',
   :controller => 'discussion_page',

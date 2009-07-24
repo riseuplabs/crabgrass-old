@@ -1,5 +1,5 @@
 
 class MessagePage < Page
-    
+
 end
 

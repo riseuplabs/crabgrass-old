@@ -3,15 +3,15 @@ class EventPageController < BasePageController
   permissions 'event_page'
 
   def show
-    @user_participation= UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})  
+    @user_participation= UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})
     if @user_participation.nil?
       @user_participation = UserParticipation.new
       @user_participation.user_id = @current_user.id
       @user_participation.page_id = @page.id
       @user_participation.save
-    end    
-    @watchers = UserParticipation.find(:all, :conditions => {:page_id => @page.id, :watch => TRUE})  
-    @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})  
+    end
+    @watchers = UserParticipation.find(:all, :conditions => {:page_id => @page.id, :watch => TRUE})
+    @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})
   end
 
 #  def edit
@@ -50,7 +50,7 @@ class EventPageController < BasePageController
 
  def participate
    @user_participation = UserParticipation.find(:first, :conditions => {:page_id => @page.id, :user_id => @current_user.id})
-   if !params[:user_participation_watch].nil? 
+   if !params[:user_participation_watch].nil?
      @user_participation.watch = params[:user_participation_watch]
      @user_participation.attend = false
    else
@@ -69,7 +69,7 @@ class EventPageController < BasePageController
    @watchers = UserParticipation.find(:all, :conditions => {:page_id => @page.id, :watch => TRUE})
    @attendies =  UserParticipation.find(:all, :conditions => {:page_id => @page.id, :attend => TRUE})
  end
- 
+
   protected
 
   def fetch_event
@@ -77,11 +77,11 @@ class EventPageController < BasePageController
     #@page.data ||= Event.new(:body => 'new page', :page => @page)
     @event = @page.data
   end
-  
+
   def setup_view
     @show_attach = true
   end
-  
+
   # set the right time format for the event
   def set_time (time)
     time

@@ -18,7 +18,7 @@ rescue
   unless ARGV.first == "create_a_secret"
     raise "Can't load the secret key from file #{secret_path}. Have you run 'rake create_a_secret'?"
   end
-end  
+end
 
 # TODO: banish SECTION_SIZE and replace with current_site.pagination_size
 SECTION_SIZE = Conf.pagination_size
@@ -33,13 +33,13 @@ module AfterMethod
 
   ##
   ## AFTER RESET APPLICATION
-  ## 
+  ##
   ## read all about it here:
   ## http://blog.nanorails.com/articles/2007/2/15/after_method
   ##
 
   #
-  # a method to add an 'after' callback to any class.method(). 
+  # a method to add an 'after' callback to any class.method().
   #
   def self.after_method(klass, target, feature, &block)
     # Strip out punctuation on predicates or bang methods since
@@ -52,7 +52,7 @@ module AfterMethod
           klass.send("register_#{feature}")
         end
       }
-      alias_method_chain target, "#{feature}" 
+      alias_method_chain target, "#{feature}"
     end
     klass.send("register_#{feature}")
   end

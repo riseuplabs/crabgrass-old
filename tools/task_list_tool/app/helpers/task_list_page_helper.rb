@@ -2,7 +2,7 @@ module TaskListPageHelper
 
   ##
   ## show task
-  ## 
+  ##
 
   # creates a checkbox tag for a task
   def task_checkbox(task)
@@ -35,7 +35,7 @@ module TaskListPageHelper
   def task_link_to_people(task)
     links = task.users.collect{|user|
       user == current_user ? link_to(current_user.login, {:controller => 'me/tasks', :action => nil, :id => nil}, :class => 'hov') : link_to_user(user, :action => 'tasks', :class => 'hov')
-    }.join(', ') 
+    }.join(', ')
     #links.any? ? links+': ' : ''
   end
 
@@ -54,7 +54,7 @@ module TaskListPageHelper
     button_to_function "Delete", function
   end
 
-  # a button to replace the task detail with a tast edit form. 
+  # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
       :url => page_xurl(@page, :action=>'edit_task', :id=>task.id),
@@ -66,14 +66,14 @@ module TaskListPageHelper
   def no_pending_tasks(visible)
     content_tag(:li, 'no pending tasks', :id => 'no_pending_tasks', :style => (visible ? nil : 'display:none'))
   end
-  
+
   def no_completed_tasks(visible)
     content_tag(:li, 'no completed tasks', :id => 'no_completed_tasks', :style => (visible ? nil : 'display:none'))
   end
 
   ##
   ## edit task form
-  ## 
+  ##
 
   def possible_users
     return @possible_users if @possible_users
@@ -91,7 +91,7 @@ module TaskListPageHelper
   def options_for_task_edit_form(task)
     [{
       :url => page_xurl(@page, :action=>'update_task', :id => task.id),
-      :loading  => show_spinner(task), 
+      :loading  => show_spinner(task),
       :html => {}
     }]
   end
@@ -115,7 +115,7 @@ module TaskListPageHelper
   ###
   ### new task form
   ###
-  
+
   def options_for_new_task_form
     [{
       :url      => page_xurl(@page, :action=>'create_task'),

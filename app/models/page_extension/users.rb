@@ -29,7 +29,7 @@ module PageExtension::Users
           find(:all, :conditions => 'changed_at IS NOT NULL')
         end
       end
-      
+
       remove_method :user_ids
       after_save :reset_users
     end
@@ -39,7 +39,7 @@ module PageExtension::Users
   def users_with_access
     user_participations.collect{|part| part.user if part.access }.compact
   end
-  
+
   # A contributor has actually modified the page in some way. A participant
   # simply has a user_participation record, maybe they have never even seen
   # the page.
@@ -47,9 +47,9 @@ module PageExtension::Users
   def contributors
     user_participations.collect{|part| part.user if part.changed_at }.compact
   end
-  
+
   # like user_participations.find_by_user_id, but uses already included data
-  def participation_for_user(user) 
+  def participation_for_user(user)
     if user.real?
       user_participations.detect{|p| p.user_id==user.id }
     else

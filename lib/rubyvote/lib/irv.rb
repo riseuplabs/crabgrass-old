@@ -13,7 +13,7 @@ class InstantRunoffVote < ElectionVote
   def result(params={})
     InstantRunoffResult.new(self, params)
   end
-  
+
   protected
   def tally_vote(vote)
     votecopy = vote.dup
@@ -86,7 +86,7 @@ class InstantRunoffResult < ElectionResult
     if params.has_key?('percent_retention')
       apply_retention(votes, votes_sum * params['percent_retention'])
     end
-    
+
     unless votes.length > 0
       @winners=[]
       return
@@ -137,14 +137,14 @@ protected
     @ranked_candidates.unshift(losers) unless losers.empty?
     losers.each { |loser| remove_candidate(votes, loser) }
   end
-  
+
   def next_round(votes, ranked_candidates)
     loser = ranked_candidates[-1]
     if votes.empty? or votes[loser][0] == votes[ranked_candidates[-2]][0]
       false
     else
       @ranked_candidates.unshift(loser)
-      remove_candidate(votes, loser) 
+      remove_candidate(votes, loser)
       true
     end
   end

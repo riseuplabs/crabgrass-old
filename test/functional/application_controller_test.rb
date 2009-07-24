@@ -12,16 +12,16 @@ class ApplicationControllerTest < ActionController::TestCase
   end
 
 #  def test_search_routes
-#    assert_route "search/rainbow/archive", 
+#    assert_route "search/rainbow/archive",
 #      @controller.group_search_url(:action => 'archive', :id => 'rainbow')
-#    assert_route "search/rainbow/search/type/page", 
+#    assert_route "search/rainbow/search/type/page",
 #      @controller.group_search_url(:action => 'search', :id => 'rainbow', :path => ['type','page'])
 #  end
 
 #  def test_search_routes
-#    assert_route "groups/rainbow/archive", 
+#    assert_route "groups/rainbow/archive",
 #      @controller.group_search_url(:action => 'archive', :id => 'rainbow')
-#    assert_route "groups/rainbow/search/type/page", 
+#    assert_route "groups/rainbow/search/type/page",
 #      @controller.group_search_url(:action => 'search', :id => 'rainbow', :path => ['type','page'])
 #  end
 
@@ -48,9 +48,9 @@ class ApplicationControllerTest < ActionController::TestCase
   end
 
   def test_me_routes
-    assert_route 'me/counts', 
+    assert_route 'me/counts',
       {:controller => 'me', :action => 'counts' }
-   
+
     assert_route 'me/edit',
       {:controller => 'me', :action => 'edit' }
 

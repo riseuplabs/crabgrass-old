@@ -1,6 +1,6 @@
 class Admin::BaseController < ActionController::Base
 
-  include ActionView::Helpers::TagHelper 
+  include ActionView::Helpers::TagHelper
   include ErrorHelper
   include AuthenticatedSystem
 
@@ -9,9 +9,9 @@ class Admin::BaseController < ActionController::Base
   helper 'admin/users', 'admin/groups', 'admin/memberships', 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', PageHelper, UrlHelper, ErrorHelper, LinkHelper, ApplicationHelper, TimeHelper
 
   before_filter :login_required
-  
+
   before_filter :set_active_tab
-  
+
   def set_active_tab
     controller = params[:controller].sub(/admin\//, '')
     @active = if %w(new create).include?(params[:action])
@@ -20,7 +20,7 @@ class Admin::BaseController < ActionController::Base
                 "edit_#{controller}"
               end
   end
-  
+
   include Admin::GroupsHelper
   include Admin::UsersHelper
   include Admin::MembershipsHelper
@@ -32,10 +32,10 @@ class Admin::BaseController < ActionController::Base
   include ControllerExtension::CurrentSite
 
   protect_from_forgery :secret => Conf.secret
-  
+
   def index
   end
-  
+
   #
   # returns a hash of options to be given to the mailers. These can be
   # overridden, but these defaults are pretty good. See models/mailer.rb.
@@ -47,7 +47,7 @@ class Admin::BaseController < ActionController::Base
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
-  
+
   protected
 
   def authorized?

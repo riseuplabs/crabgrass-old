@@ -1,7 +1,7 @@
 #
 # a UserParticipation holds the data representing a user's
 # relationship with a particular page.
-# 
+#
 # fields:
 # access, :integer      -- enum which determines page access. see 00-constants.rb
 # viewed_at, :datetime  -- last visit
@@ -21,16 +21,16 @@ class UserParticipation < ActiveRecord::Base
 
   #use this for counting stars :)
   include UserParticipationExtension::Starring
-  
+
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe
-  
+
   def access_sym
     ACCESS_TO_SYM[self.access]
   end
 
-  # can only be used to increase access. 
-  # because access is only increased, you cannot remove access with grant_access. 
+  # can only be used to increase access.
+  # because access is only increased, you cannot remove access with grant_access.
   def grant_access=(value)
     value = ACCESS[value] if value.is_a?(Symbol) or value.is_a?(String)
     if value
@@ -42,12 +42,12 @@ class UserParticipation < ActiveRecord::Base
     end
   end
 
-  # sets the access level to be value, regardless of what it was before. 
+  # sets the access level to be value, regardless of what it was before.
   # if value is nil, no change is made. If value is :none, then access is removed.
   def access=(value)
     return if value.nil?
     value = ACCESS[value] if value.is_a? Symbol or value.is_a?(String)
     write_attribute(:access, value)
-  end 
+  end
 end
 

@@ -7,7 +7,7 @@ in the tools directory.
 
 The methods in this module make use of the constant PAGES. This is hash of
 PageClassProxy objects. PageClassProxy objects store information about the
-page, but they they are just dummy classes. 
+page, but they they are just dummy classes.
 
 In development mode, rails is very aggressive about unloading and reloading
 classes as needed. Unfortunately, for crabgrass page types, rails always gets
@@ -22,7 +22,7 @@ PageClassRegistrar.add(
   :icon => 'package.png',
   :class_display_name => 'mine',
   :class_description => 'a page that is all mine',
-  :class_group => 'asset', 
+  :class_group => 'asset',
   :order => 20
 )
 
@@ -41,8 +41,8 @@ module PageExtension::Subclass
       include InstanceMethods
     end
   end
-    
-  module InstanceMethods    
+
+  module InstanceMethods
     def class_definition
       PAGES[self.class.name] || PageClassProxy.new({})
     end
@@ -68,7 +68,7 @@ module PageExtension::Subclass
     #    t[1].class_display_name.nameize == dn if t[1].class_display_name
     #  } || [])[1]
     #end
-    
+
     def param_id_to_class(page_type)
       PAGES.values.each do |proxy|
         return proxy if proxy.url == page_type
@@ -85,7 +85,7 @@ module PageExtension::Subclass
       return nil
     end
 
-    
+
     # return an array of page classes that are members of class_group
     # eg: 'vote' -> ['RateManyPage', 'RankedVotePage', 'SurveyPage']
     # each class group may have many pages in it, and each page may be in
@@ -116,7 +116,7 @@ module PageExtension::Subclass
       end
       false
     end
-    
+
     # 'rate-many' -> true
     # used by search filters
     def is_page_type?(page_type)
@@ -137,7 +137,7 @@ module PageExtension::Subclass
     def class_definition
       PAGES[name] || PageClassProxy.new
     end
-    
+
     def icon
       class_definition.icon
     end
@@ -162,5 +162,5 @@ module PageExtension::Subclass
       class_definition.url
     end
   end
-  
+
 end

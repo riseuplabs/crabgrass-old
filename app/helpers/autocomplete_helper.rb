@@ -4,7 +4,7 @@ module AutocompleteHelper
     options[:url] ||= '/autocomplete/entities'
     options[:onselect] ||= 'null'
     auto_complete_js = %Q[
-      new Autocomplete('#{field_id}', { 
+      new Autocomplete('#{field_id}', {
         serviceUrl:'#{options[:url]}',
         minChars:2,
         maxHeight:400,
@@ -22,7 +22,7 @@ module AutocompleteHelper
   end
 
   private
- 
+
   def autocomplete_id_number
     rand(100000000)
   end
