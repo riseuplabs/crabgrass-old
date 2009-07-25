@@ -1,14 +1,14 @@
 class Admin::BaseController < ApplicationController
 
   include ActionView::Helpers::TagHelper
-  include ErrorHelper
+  include FlashMessageHelper
   include AuthenticatedSystem
 
   layout 'admin'
 
   stylesheet('admin')
 
-  helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', 'admin/custom_appearances', PageHelper, UrlHelper, ErrorHelper, LinkHelper, ApplicationHelper, TimeHelper
+  helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', 'admin/custom_appearances', PageHelper, UrlHelper, FlashMessageHelper, LinkHelper, ApplicationHelper, TimeHelper
 
 
   before_filter :login_required
