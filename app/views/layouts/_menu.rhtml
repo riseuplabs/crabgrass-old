@@ -43,7 +43,7 @@
   </li>
   <%- end -%>
 
-  <% if logged_in? and current_user.may?(:admin, current_site) -%>
+  <% if logged_in? and may_admin_site? -%>
     <li id='menu_admin' class='<%= @active_tab == :admin ? 'active' : '' %>'>
       <span><%= link_to_active "Admin"[:menu_admin], { :controller => 'admin/base' }, @active_tab == :admin %></span>
     </li>

@@ -3,6 +3,7 @@ class Admin::AnnouncementsController < Admin::BaseController
 
   permissions 'admin/announcements'
 
+
   def index
     @pages = Page.paginate_by_path('descending/created_at', :page => params[:page], :flow => :announcement)
   end
@@ -17,9 +18,10 @@ class Admin::AnnouncementsController < Admin::BaseController
   end
 
   def destroy
-    @page = Page.find_by_id(params[:id])
+    # @page is loaded in may_destroy_announcemets
     @page.destroy
     redirect_to announcements_path
   end
+
 end
 

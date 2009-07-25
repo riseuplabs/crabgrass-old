@@ -4,15 +4,12 @@ require 'admin/announcements_controller'
 # Re-raise errors caught by the controller.
 class Admin::AnnouncementsController; def rescue_action(e) raise e end; end
 
-class AnnouncementsControllerTest < Test::Unit::TestCase
+class Admin::AnnouncementsControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships, :pages
 
   def setup
-    @controller = Admin::AnnouncementsController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-    enable_unlimited_site_testing
+    enable_site_testing('unlimited')
   end
 
   def teardown
@@ -46,9 +43,11 @@ class AnnouncementsControllerTest < Test::Unit::TestCase
 
   def test_edit
     login_as :penguin
-    get :edit, :id => 210
+    assert_raise ActiveRecord::RecordNotFound do
+      # 210 is not an AnnouncementPage
+      get :edit, :id => 210
+    end
     # penguin does not have access to this page.
-    assert_response :missing
     get :edit, :id => 260
     assert_response :success
   end
@@ -81,7 +80,7 @@ class AnnouncementsControllerTest < Test::Unit::TestCase
     post :update
     assert_response :redirect, message
     assert_redirected_to({:controller => 'account', :action => 'login'}, message)
-    get :destroy
+    get :destroy, :id => 260
     assert_response :redirect, message
     assert_redirected_to({:controller => 'account', :action => 'login'}, message)
   end

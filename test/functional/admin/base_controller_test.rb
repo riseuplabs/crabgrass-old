@@ -4,15 +4,12 @@ require 'admin/base_controller'
 # Re-raise errors caught by the controller.
 class Admin::BaseController; def rescue_action(e) raise e end; end
 
-class BaseControllerTest < Test::Unit::TestCase
+class Admin::BaseControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships, :pages
 
   def setup
-    @controller = Admin::BaseController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-    enable_unlimited_site_testing
+    enable_site_testing('unlimited')
   end
 
   def teardown
