@@ -1,11 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'account_controller'
 
-# Re-raise errors caught by the controller.
-class AccountController; def rescue_action(e) raise e end; end
-
 class AccountControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites, :tokens
+
+  def teardown
+    ActionMailer::Base.deliveries.clear
+  end
 
   def test_should_login_and_redirect
     get :login
@@ -30,21 +31,23 @@ class AccountControllerTest < ActionController::TestCase
     end
   end
 
-  def test_signup_disabled
-    Conf.signup_mode = Conf::SIGNUP_MODE[:closed]
-    assert_no_difference 'User.count' do
-      post_signup_form
+  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:closed]}) do
+    def test_signup_disabled
+      assert_no_difference 'User.count' do
+        post_signup_form
+      end
     end
   end
 
-  def test_signup_invite
-    Conf.signup_mode = Conf::SIGNUP_MODE[:invite_only]
-    assert_no_difference 'User.count' do
-      post_signup_form
-    end
-    session[:user_has_accepted_invite] = true
-    assert_difference 'User.count' do
-      post_signup_form
+  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:invite_only]}) do
+    def test_signup_invite
+      assert_no_difference 'User.count' do
+        post_signup_form
+      end
+      session[:user_has_accepted_invite] = true
+      assert_difference 'User.count' do
+        post_signup_form
+      end
     end
   end
 
@@ -84,13 +87,15 @@ class AccountControllerTest < ActionController::TestCase
     }
   end
 
-#  def test_should_require_email_on_signup
-#    assert_no_difference 'User.count' do
-#      post_signup_form(:user => {:email => nil})
-#      assert assigns(:user).errors.on(:email)
-#      assert_response :success
-#    end
-#  end
+  repeat_with_sites(:local => {:require_user_email => true}) do
+    def test_should_require_email_on_signup
+      assert_no_difference 'User.count' do
+        post_signup_form(:user => {:email => nil})
+        assert assigns(:user).errors.on(:email)
+        assert_response :success
+      end
+    end
+  end
 
   def test_should_logout
     login_as :quentin
@@ -178,6 +183,82 @@ class AccountControllerTest < ActionController::TestCase
 
     get :reset_password, :token => tokens(:tokens_003).value
     assert_response :success
+  end
+
+  repeat_with_sites(:local => {:needs_email_verification => false}) do
+    def test_should_not_send_email_verification_when_not_enabled
+      assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form }
+      assert_response :redirect
+      assert !assigns(:user).unverified
+    end
+  end
+
+  repeat_with_sites(:local => {:needs_email_verification => true}) do
+
+    def test_signup_with_verification
+      assert_difference('User.count', 1) { post_signup_form }
+
+      user = assigns(:user)
+      assert user.unverified
+      assert_equal 'quire', user.login
+    end
+
+    def test_signup_should_send_verification_email
+      assert_difference('ActionMailer::Base.deliveries.size', 1) { post_signup_form }
+
+      # should generate a token
+      token = assigns(:token)
+      assert_not_nil token
+      assert_equal 'verify', token.action
+
+      confirmation_email = ActionMailer::Base.deliveries.last
+      #  the email should be for the right person and the right site
+      assert_equal confirmation_email.to[0], 'quire@localhost'
+      assert_equal 'Welcome to {site_title}!'[:welcome_to_site_tile, {:site_title => Site.current.title}],
+                    confirmation_email.subject
+      # should have the right link
+      assert_match %r[http://test.host/account/verify/#{token.value}], confirmation_email.body
+    end
+
+    def test_invalid_looking_email_should_fail
+      assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form(:user => {:email => "BADEMAIL"}) }
+      assert assigns(:user).errors.on(:email)
+      assert_response :success
+    end
+
+    def test_login_without_verification_should_remind_to_verify
+      gerrard = users(:gerrard)
+      gerrard.update_attribute(:unverified, true)
+
+      post :login, :login => 'gerrard', :password => 'gerrard'
+      assert session[:user]
+      assert_response :redirect
+      assert_redirected_to :controller => 'account', :action => 'unverified'
+    end
+
+    def test_verify
+      gerrard = users(:gerrard)
+      gerrard.update_attribute(:unverified, true)
+      token = tokens(:verify_gerrard)
+
+      get :verify, :token => token.value
+
+      assert_equal token.id, assigns(:token).id
+      assert_response :redirect
+      assert_redirected_to '/'
+      assert_success_message /Successfully Verified/, /Thanks for signing up/
+    end
+
+    def test_unneeded_verification
+      gerrard = users(:gerrard)
+      token = tokens(:verify_gerrard)
+
+      get :verify_email, :token => token.value
+
+      assert_response :redirect
+      assert_redirected_to :controller => 'root', :action => 'index'
+      assert_success_message /Already.Verified/
+    end
   end
 
   protected
