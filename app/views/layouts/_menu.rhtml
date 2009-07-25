@@ -18,7 +18,7 @@
 
   <%# for now, i am disabling these tabs when not logged in. why? because
       the controllers currently bomb out in bad ways if you are not logged in. %>
-  <%- if logged_in? -%>
+  <%- if logged_in? and !current_user.unverified? -%>
     <li id='menu_people' class='<%= @active_tab == :people ? 'active' : '' %>'>
       <span><%= link_to_active "People"[:menu_people], people_directory_url(:friends), @active_tab == :people %></span>
     </li>
@@ -36,7 +36,7 @@
     <%- end -%>
   <%- end -%>
 
-  <%- if logged_in? and current_site.chat? -%>
+  <%- if logged_in? and !current_user.unverified? and current_site.chat? -%>
   <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
     <span><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
   </li>
