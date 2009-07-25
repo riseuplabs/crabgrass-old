@@ -70,7 +70,7 @@ module CustomAppearanceExtension
         raise ActiveRecord::RecordInvalid.new(self)
       end
     end
-    
+
     def masthead_background_parameter
       background = self.parameters['masthead_background'] || CustomAppearance.available_parameters['masthead_background']
       background = 'white' if !background || background.empty?
@@ -85,7 +85,7 @@ module CustomAppearanceExtension
           value = "#" + value
         end
       end
-      
+
       self.parameters['masthead_background'] = value.any? ? value : 'white'
     end
 

@@ -4,17 +4,17 @@ require 'cgi'
 # For helpers just for page controllers, see base_page_helper.rb
 
 module PageHelper
-  
+
   ##
   ## PAGE URLS
   ##
 
   #
   # build a url of the form:
-  #  
+  #
   #    /:context/:page/:action/:id
   #
-  # what is the :context? the order of precedence: 
+  # what is the :context? the order of precedence:
   #   1. current group name if set in the url and it has access to the page
   #   2. name of the page's primary group if it exists
   #   3. the user login that created the page
@@ -23,7 +23,7 @@ module PageHelper
   # what is :page? it will be the page name if it exists and the context
   # is a group. Otherwise, :page will have a friendly url that starts
   # with the page id.
-  # 
+  #
   def page_url(page,options={})
     options.delete(:action) if options[:action] == 'show' and not options[:id]
     if @group and @group.is_a?(Group) and page.group_ids.include?(@group.id)
@@ -37,32 +37,32 @@ module PageHelper
     end
     '/' + path + build_query_string(options)
   end
-  
+
   def page_path(context,name,options)
     # if controller is set, encode it with the action.
     action = [options.delete(:controller), options.delete(:action)].compact.join('-')
     [context, name, action, options.delete(:id).to_s].select(&:any?).join('/')
   end
-  
+
   # like page_url, but it returns a direct URL that bypasses the dispatch
-  # controller. intended for use with ajax calls. 
+  # controller. intended for use with ajax calls.
   def page_xurl(page,options={})
     options[:controller] = '/' + [page.controller, options.delete(:controller)].compact.join('_')
     hash = {:page_id => page.id, :id => 0, :action => 'show'}
     url_for(hash.merge(options))
   end
-  
+
   # a helper for links that are destined for the PagesController, not the
   # BasePageController or its decendents
   def pages_url(page,options={})
     url_for({:controller => 'pages',:id => page.id}.merge(options))
   end
-  
-  # 
+
+  #
   # returns the url that this page was 'from'.
-  # used when deleting this page, and other cases where we redirect back to 
+  # used when deleting this page, and other cases where we redirect back to
   # some higher containing context.
-  # 
+  #
   # TODO: i think this is no longer needed and should be phased out.
   #
   def from_url(page=nil)
@@ -83,19 +83,19 @@ module PageHelper
     end
     url_for :controller => url[0], :action => url[1], :id => url[2]
   end
-  
+
   #
   # lifted from active_record's routing.rb
-  # 
+  #
   # Build a query string from the keys of the given hash. If +only_keys+
   # is given (as an array), only the keys indicated will be used to build
   # the query string. The query string will correctly build array parameter
   # values.
   def build_query_string(hash, only_keys=nil)
-    elements = [] 
-    
+    elements = []
+
     only_keys ||= hash.keys
-    
+
     only_keys.each do |key|
       value = hash[key] or next
       key = CGI.escape key.to_s
@@ -106,11 +106,11 @@ module PageHelper
       end
       value.each { |val| elements << "#{key}=#{CGI.escape(val.to_param.to_s)}" }
     end
-    
+
     query_string = "?#{elements.join("&")}" unless elements.empty?
     query_string || ""
   end
-  
+
   ##
   ## PAGE LISTINGS AND TABLES
   ##
@@ -156,7 +156,7 @@ module PageHelper
   def page_path_link(text,link_path='',image=nil)
     hash          = params.dup.to_hash        # hash must not be HashWithIndifferentAccess
     hash['path']  = @path.merge(link_path)    # we want to preserve the @path class
-    
+
     if params[:_context]
       # special hack for landing pages using the weird dispatcher route.
       hash = "/%s?path=%s" % [params[:_context], hash[:path].to_s]
@@ -234,7 +234,7 @@ module PageHelper
       return link_to_user(page.owner, :avatar => 'xsmall')
     end
   end
-  
+
   def page_list_updated_or_created(page)
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
     label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
@@ -264,8 +264,8 @@ module PageHelper
     end
     return title
   end
-  
-  def page_list_heading(column, options={})   
+
+  def page_list_heading(column, options={})
     if column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
       "<th>&nbsp;</th>" # empty <th>s contain an nbsp to prevent collapsing in IE
     elsif column == :updated_by or column == :updated_by_login
@@ -318,7 +318,7 @@ module PageHelper
     trs << content_tag(:tr, tds.join("\n"), (unread ? {:class =>  'unread'}:{}))
 
     if participation and participation.is_a? UserParticipation and participation.notice
-      participation.notice.each do |notice| 
+      participation.notice.each do |notice|
         next unless notice.is_a? Hash
         trs << page_notice_row(notice, columns.size)
       end
@@ -351,7 +351,7 @@ module PageHelper
 
   #
   # Often when you run a page search, you will get an array of UserParticipation
-  # or GroupParticipation objects. 
+  # or GroupParticipation objects.
   #
   # This method will convert the array to Pages if they are not.
   #
@@ -404,7 +404,7 @@ module PageHelper
   def display_page_class_grouping(group)
     "page_group_#{group.gsub(':','_')}".to_sym.t
   end
-  
+
   def tree_of_page_types(available_page_types=nil, options={})
     available_page_types ||= current_site.available_page_types
     page_groupings = []
@@ -418,7 +418,7 @@ module PageHelper
       end
     end
     page_groupings.uniq!
-    tree = [] 
+    tree = []
     page_groupings.each do |grouping|
       entry = {:name => grouping, :display => display_page_class_grouping(grouping),
          :url => grouping.gsub(':','-')}
@@ -429,7 +429,7 @@ module PageHelper
     end
     return tree.sort_by{|entry| PageClassProxy::ORDER.index(entry[:name])||100 }
   end
-  
+
   ## options for a page type dropdown menu for searching
   def options_for_select_page_type(default_selected=nil)
     default_selected.sub!(' ', '+') if default_selected
@@ -444,7 +444,7 @@ module PageHelper
     end
     options_for_select([['all page types'.t,'']] + menu_items, default_selected)
   end
-  
+
   ## Creates options useable in a select() for the various states
   ## a page might be in. Used to filter on these states
   def options_for_page_states(parsed_path)
@@ -466,7 +466,7 @@ module PageHelper
     groups = current_user.primary_groups_and_networks.sort { |a, b|
        a.display_name.downcase <=> b.display_name.downcase
     }
-    html = [] 
+    html = []
 
     if options[:group]
       selected_group = options[:group].name
@@ -515,7 +515,7 @@ module PageHelper
   ## Link to the action for the form to create a page of a particular type.
   def create_page_url(page_class=nil, options={})
     if page_class
-      controller = page_class.controller 
+      controller = page_class.controller
       id = page_class.param_id
       "/#{controller}/create/#{id}" + build_query_string(options)
     else
@@ -555,7 +555,7 @@ module PageHelper
 #    end
 #    ret += link_to_function(text, 'event.target.parentNode.submit()')
 #    ret += "</form>"
-#    #link_to(text, {:controller => '/pages', :action => 'create'}.merge(options), :method => :post)  
+#    #link_to(text, {:controller => '/pages', :action => 'create'}.merge(options), :method => :post)
 #  end
-  
+
 end

@@ -1,5 +1,5 @@
 class Me::InboxController < Me::BaseController
- 
+
   def search
     if request.post?
       path = parse_filter_path(params[:search])
@@ -30,7 +30,7 @@ class Me::InboxController < Me::BaseController
 
   # post required
   def update
-    if params[:remove] 
+    if params[:remove]
       remove
     else
       ## add more actions here later
@@ -58,9 +58,9 @@ class Me::InboxController < Me::BaseController
       end
     end
   end
-  
+
   protected
-    
+
   # given an array of pages, find the corresponding user_participation records
   # and associate each participtions with the correct page.
   # afterwards, page.flag[:user_participation] should hold current_user's
@@ -73,7 +73,7 @@ class Me::InboxController < Me::BaseController
       pages_by_id[part.page_id].flag[:user_participation] = part
     end
   end
-  
+
   def context
     super
     add_context 'Inbox'[:me_inbox_link], url_for(:controller => '/me/inbox', :action => params[:action], :path => params[:path])

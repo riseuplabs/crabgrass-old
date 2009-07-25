@@ -1,4 +1,4 @@
-module PostsPermission 
+module PostsPermission
   def may_create_posts?(page=@page)
     logged_in? and
     current_user.may?(:view, page)

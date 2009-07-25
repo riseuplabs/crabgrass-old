@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   include UserExtension::Users      # user <--> user
   include UserExtension::Groups     # user <--> groups
   include UserExtension::Pages      # user <--> pages
-  include UserExtension::Tags       # user <--> tags  
+  include UserExtension::Tags       # user <--> tags
   include UserExtension::AuthenticatedUser
 
   ##
@@ -18,12 +18,20 @@ class User < ActiveRecord::Base
   include CrabgrassDispatcher::Validations
   validates_handle :login
 
-  validates_presence_of :email if Conf.require_user_email
-  # ^^ TODO: make this site specific
-  
+  validates_presence_of :email, :if => :should_validate_email
+
   validates_as_email :email
   before_validation 'self.email = nil if email.empty?'
   # ^^ makes the validation succeed if email == ''
+
+  def should_validate_email
+    should_validate = if Site.current
+      Site.current.require_user_email
+    else
+      Conf.require_user_email
+    end
+    should_validate
+  end
 
   ##
   ## NAMED SCOPES
@@ -48,19 +56,19 @@ class User < ActiveRecord::Base
   # select only logins
   named_scope :logins_only, :select => 'login'
 
-  
+
   ##
   ## USER IDENTITY
   ##
 
   belongs_to :avatar, :dependent => :destroy
-  
+
   validates_format_of :login, :with => /^[a-z0-9]+([-_\.]?[a-z0-9]+){1,17}$/
   before_validation :clean_names
-  
+
   def clean_names
     write_attribute(:login, (read_attribute(:login)||'').downcase)
-    
+
     t_name = read_attribute(:display_name)
     if t_name
       write_attribute(:display_name, t_name.gsub(/[&<>]/,''))
@@ -79,16 +87,16 @@ class User < ActiveRecord::Base
   def kill_avatar
     avatar.destroy if avatar
   end
-  
+
   # the user's custom display name, could be anything.
   def display_name
     read_attribute('display_name').any? ? read_attribute('display_name') : login
   end
-  
+
   # the user's handle, in same namespace as group name,
   # must be url safe.
   def name; login; end
-  
+
   # displays both display_name and name
   def both_names
     if read_attribute('display_name').any? and read_attribute('display_name') != name
@@ -102,7 +110,7 @@ class User < ActiveRecord::Base
   def cut_name
     name[0..20]
   end
-    
+
   def to_param
     return login
   end
@@ -111,11 +119,11 @@ class User < ActiveRecord::Base
     #@style ||= Style.new(:color => "#E2F0C0", :background_color => "#6E901B")
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
-    
+
   def online?
     last_seen_at > 10.minutes.ago if last_seen_at
   end
-  
+
   def time_zone
     read_attribute(:time_zone) || Time.zone_default
   end
@@ -125,7 +133,7 @@ class User < ActiveRecord::Base
   ##
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-  
+
   def profile(reload=false)
     @profile = nil if reload
     @profile ||= self.profiles.visible_by(User.current)
@@ -158,7 +166,7 @@ class User < ActiveRecord::Base
 
   ##
   ## ASSOCIATED DATA
-  ## 
+  ##
 
   has_many :task_participations, :dependent => :destroy
   has_many :tasks, :through => :task_participations do
@@ -186,13 +194,13 @@ class User < ActiveRecord::Base
   def rating_for(rateable)
     rateable.ratings.by_user(self).first
   end
-  
+
   # returns true if this user rated the rateable
   def rated?(rateable)
     return false unless rateable
     rating_for(rateable) ? true : false
   end
-    
+
 
   ##
   ## PERMISSIONS
@@ -205,7 +213,7 @@ class User < ActiveRecord::Base
   #
   # Currently, this includes Page and Group.
   #
-  # this method gets called a lot (ie current_user.may?(:admin,@page)) so 
+  # this method gets called a lot (ie current_user.may?(:admin,@page)) so
   # we in-memory cache the result.
   #
   def may?(perm, protected_thing)
@@ -215,7 +223,7 @@ class User < ActiveRecord::Base
       false
     end
   end
-  
+
   def may!(perm, protected_thing)
     return false if protected_thing.nil?
     return true if protected_thing.new_record?
@@ -271,7 +279,7 @@ class User < ActiveRecord::Base
         :joins => :memberships,
         :conditions => ["memberships.group_id = ?", site.network.id]
       }
-    else 
+    else
       {}
     end
   end)

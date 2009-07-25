@@ -1,5 +1,5 @@
 #  Everything to do with user <> group relationships should be here.
-#  
+#
 #  "memberships" is the join table:
 #    user has many groups through memberships
 #    group has many users through memberships
@@ -58,7 +58,7 @@ module UserExtension::Groups
       has_many :primary_groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => '(type IS NULL OR type = "Network" OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
-      has_many :all_groups, :class_name => 'Group', 
+      has_many :all_groups, :class_name => 'Group',
         :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{all_group_id_cache.to_sql}) AND /*SITE_LIMITED*/' do
         def normals
           self.select{|group|group.normal?}
@@ -135,7 +135,9 @@ module UserExtension::Groups
   end
 
   def check_duplicate_memberships(membership)
-    raise AssociationError.new('you cannot have duplicate membership') if self.group_ids.include?(membership.group_id)
+    if self.group_ids.include?(membership.group_id)
+      raise AssociationError.new 'You are already a member of that group.'[:invite_error_already_member]
+    end
   end
 end
 

@@ -28,7 +28,7 @@ module Media::Process
     def run(source_file, target_file, thumbdef)
       raise Errno::ENOENT.new(source_file) unless File.exists?(source_file)
       success = false
-      open_read_lock(source_file) do 
+      open_read_lock(source_file) do
         if open_write_lock_nonblocking(target_file) {
           success = run_on_locked_files(source_file, target_file, thumbdef) }
         else
@@ -77,6 +77,6 @@ module Media::Process
       end
       return run_at_least_once
     end
- 
+
   end # end chain
 end # end module

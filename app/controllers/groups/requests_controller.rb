@@ -19,7 +19,7 @@ class Groups::RequestsController < Groups::BaseController
 
   ##
   ## CREATION
-  ## 
+  ##
 
   def create_join
     if request.get?
@@ -50,7 +50,7 @@ class Groups::RequestsController < Groups::BaseController
     end
     users.each do |user|
       if params[:email_all]
-        emails << user.email     
+        emails << user.email
       else
         reqs << RequestToJoinUs.create(:created_by => current_user,
           :recipient => user, :requestable => @group)
@@ -90,7 +90,7 @@ class Groups::RequestsController < Groups::BaseController
   end
 
   protected
- 
+
   def context
     @group_navigation = :requests
     super

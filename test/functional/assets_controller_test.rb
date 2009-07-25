@@ -6,7 +6,7 @@ class AssetsController; def rescue_action(e) raise e end; end
 
 class AssetsControllerTest < Test::Unit::TestCase
   fixtures :users, :pages, :user_participations, :assets, :sites
-  
+
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
@@ -49,14 +49,14 @@ class AssetsControllerTest < Test::Unit::TestCase
     post :show, :id => @asset.id, :filename => [@asset.filename], :version => 2
     assert_response :success, "should get version 1 of asset"
     assert_equal @asset.versions.latest.private_filename, assigns(:asset).private_filename, "should be version 2 of asset"
-    
+
     post :show, :id => @asset.id, :filename => [@asset.filename], :version => 3
     assert_response :not_found, "should not find anything for version 2 of asset"
   end
-  
+
   def test_create
     login_as :blue
-    
+
     assert_difference 'Page.find(1).assets.length' do
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
     end
@@ -72,7 +72,7 @@ class AssetsControllerTest < Test::Unit::TestCase
     @user = users(:blue)
     @page = create_page :title => 'test-access'
     assert !@user.may?(:edit, @page), 'user should not have write access to the page'
-    
+
     login_as :blue
 
     assert_no_difference 'Asset.count' do
@@ -88,10 +88,10 @@ class AssetsControllerTest < Test::Unit::TestCase
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
     end
   end
-  
+
   def test_destroy
     login_as :blue
-    
+
     assert_difference 'Page.find(1).assets.length' do
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
     end

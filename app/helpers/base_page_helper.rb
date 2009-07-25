@@ -16,7 +16,7 @@ module BasePageHelper
   def return_to_page(page)
     content_tag(:p, link_to('&laquo; ' + 'return to'[:return_to] + ' <b>%s</b>' % @page.title, page_url(@page)))
   end
-  
+
   def recipient_checkbox_line(recipient, options={})
     name = CGI.escape(recipient.name) # so that '+' does show up as ' '
     ret = "<label>"
@@ -24,7 +24,7 @@ module BasePageHelper
     ret << display_entity(recipient, :avatar => :xsmall, :format => :hover)
     ret << "</label>"
   end
-    
+
   def link_to_user_participation(upart)
     klass = case upart.access_sym
       when :admin : 'tiny_wrench_16'
@@ -71,7 +71,7 @@ module BasePageHelper
     out << link_to_function(text, click, :class => 'check', :title => options[:title])
     #out << '</label>'
     out.join
-  end  
+  end
 
   def popup(title, options = {}, &block)
     style = [options.delete(:style), "width:%s" % options.delete(:width)].compact.join("; ")
@@ -80,14 +80,14 @@ module BasePageHelper
 
   ##
   ## SIDEBAR LINES
-  ## 
+  ##
 
   def watch_line
     if may_watch_page?
       existing_watch = (@upart and @upart.watch?) or false
-      li_id = 'watch_li' 
+      li_id = 'watch_li'
       checkbox_id = 'watch_checkbox'
-      url = {:controller => 'base_page/participation', :action => 'update_watch', 
+      url = {:controller => 'base_page/participation', :action => 'update_watch',
              :add => !existing_watch, :page_id => @page.id}
       checkbox_line = sidebar_checkbox('Watch For Updates'[:watch_checkbox], existing_watch, url, li_id, checkbox_id)
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
@@ -96,7 +96,7 @@ module BasePageHelper
 
   def public_line
     if may_public_page?
-      li_id = 'public_li' 
+      li_id = 'public_li'
       checkbox_id = 'public_checkbox'
       url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :add => !@page.public?}
       checkbox_line = sidebar_checkbox('Public'[:public_checkbox], @page.public?, url, li_id, checkbox_id, :title => "If checked, anyone may view this page."[:public_checkbox_help])
@@ -183,10 +183,10 @@ module BasePageHelper
 
   ##
   ## SIDEBAR POPUP LINES
-  ## 
+  ##
 
   # used by ajax show_popup.rjs templates
-  # 
+  #
   # for the popup to display in the right spot, we actually offset it by
   # top: -32px, right: 43px from the natural position of the clicked element.
   #
@@ -209,6 +209,18 @@ module BasePageHelper
   # optional:
   #  :controller -- controller to call show_popup on
   #
+
+  # NOTE: before you change the wacky way this works, be warned of this...
+  # The right column has overflow:hidden set. This means that the popup
+  # cannot be in the right column, or when it appears the window will not
+  # get bigger to show the whole popup, but it will just get clipped.
+  # overflow:hidden is required for holygrail layout to work in ie.
+  # hence, absolutePositionParams()...  :(
+  #
+  # NOTE #2: this is no longer how the right column works. so we should not
+  # have to use absolutely positioned popups anymore.
+  #
+  
   def show_popup_link(options)
     options[:controller] ||= options[:name]
     popup_url = url_for({
@@ -260,7 +272,7 @@ module BasePageHelper
       popup_line(:name => 'notify', :label => "Send Notification"[:notify_page_link] % {:page_class => page_class }, :icon => 'whistle', :controller => 'share')
     end
   end
- 
+
   def delete_line
     if may_delete_page?
       popup_line(:name => 'trash', :label => "Delete :page_class"[:delete_page_link] % {:page_class => page_class }, :icon => 'trash')
@@ -304,11 +316,11 @@ module BasePageHelper
   def page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize
   end
-  
+
   def select_page_owner(_erbout)
     owner_name = @page.owner ? @page.owner.name : ''
     if may_move_page?
-      form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do 
+      form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do
         possibles = @page.admins.to_select('both_names', 'name')
         unless Conf.ensure_page_owner?
           possibles << ["(#{"None"[:none]})",""]
@@ -329,5 +341,5 @@ module BasePageHelper
       "None"[:none]
     end
   end
-  
+
 end

@@ -15,7 +15,7 @@ module GroupExtension::Groups
       belongs_to :council, :class_name => 'Group'
       before_destroy :destroy_council
 
-      # Committees are children! They must respect their parent group. 
+      # Committees are children! They must respect their parent group.
       # This uses better_acts_as_tree, which allows callbacks.
       acts_as_tree(
 #        :dependent => :destroy,
@@ -29,7 +29,7 @@ module GroupExtension::Groups
       define_method :council do |*args|
         real_council(*args) || self
       end
-    end     
+    end
   end
 
   ##
@@ -79,7 +79,7 @@ module GroupExtension::Groups
 
   ##
   ## INSTANCE METHODS
-  ## 
+  ##
 
   module InstanceMethods
 
@@ -128,7 +128,7 @@ module GroupExtension::Groups
     def group_and_committee_ids
       @group_ids ||= ([self.id] + Group.committee_ids(self.id))
     end
-    
+
     # returns an array of committees visible to appropriate access level
     def committees_for(access)
       if access == :private
@@ -142,7 +142,7 @@ module GroupExtension::Groups
       end
     end
 
-    # whenever the structure of this group has changed 
+    # whenever the structure of this group has changed
     # (ie a committee or network has been added or removed)
     # this function should be called. Afterward, a save is required.
     def org_structure_changed(child=nil)

@@ -19,7 +19,7 @@ class GroupsControllerTest < ActionController::TestCase
   def test_discussions
     login_as :blue
     get :discussions, :id => groups(:rainbow).to_param
-    assert_response :success 
+    assert_response :success
   end
 
 =begin

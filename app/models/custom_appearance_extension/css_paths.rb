@@ -44,7 +44,7 @@ module CustomAppearanceExtension
         "themes/#{self.id}/#{self.updated_at.to_i}"
       end
     end
-  
+
     module ClassMethods
     end
   end

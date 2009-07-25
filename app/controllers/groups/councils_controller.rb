@@ -1,5 +1,5 @@
 class Groups::CouncilsController < Groups::CommitteesController
- 
+
   permissions 'groups/base'
 
   def new

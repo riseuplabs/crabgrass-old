@@ -11,7 +11,7 @@ class SpiderTest < ActionController::IntegrationTest
     post '/account/login', :login => 'quentin', :password => 'quentin'
     assert session[:user]
     assert_response :redirect
-    
+
     # where we are redirected depends
     assert_redirected_to @controller.current_site.login_redirect(@controller.current_user)
     follow_redirect!

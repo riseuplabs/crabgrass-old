@@ -57,7 +57,7 @@ module GroupExtension::Users
     ret << :stranger if ret.empty?
     ret
   end
-  
+
   # this is the ONLY way to add users to a group.
   # all other methods will not work.
   def add_user!(user)
@@ -68,7 +68,7 @@ module GroupExtension::Users
     @user_ids = nil
     self.increment!(:version)
   end
-  
+
   # this is the ONLY way to remove users from a group.
   # all other methods will not work.
   def remove_user!(user)
@@ -108,7 +108,7 @@ module GroupExtension::Users
 #      when :member;   'friend'
 #      when :ally;     'peer'
 #      else; relationship.to_s
-#    end  
+#    end
 #  end
 
 end
