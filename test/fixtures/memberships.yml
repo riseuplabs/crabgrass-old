@@ -128,7 +128,12 @@ blue_def:
   user_id: 4
   id: <%= id += 1 %>
 
-# animals on the second site
+# animals and blue on the second site
+
+blue_test:
+  group_id: 3002
+  user_id: 4
+  id: <%= id += 1 %>
 
 gs:
   group_id: 3002
