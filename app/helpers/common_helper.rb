@@ -13,6 +13,7 @@ module CommonHelper
   include PermissionsHelper
   include TaggingHelper
   include ModalboxHelper
+  include FormHelper
 
 end
 
