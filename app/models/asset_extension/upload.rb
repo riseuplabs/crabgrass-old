@@ -36,7 +36,7 @@ module AssetExtension
 
     module ClassMethods
     end
-   
+
     module InstanceMethods
       def uploaded_data=(file_data)
         return nil if file_data.nil? || file_data.size == 0
@@ -46,7 +46,7 @@ module AssetExtension
         if self.class != klass
            # we are attempting something weird and strange:
            # the new file_data is totally different than our previous file data,
-           # so we try to make ourselves quack like the new asset class. 
+           # so we try to make ourselves quack like the new asset class.
            self.thumbnails.clear
            self.type = Media::MimeType.asset_class_from_mime_type(mime_type)
            self.thumbdefs = klass.class_thumbdefs
@@ -76,7 +76,7 @@ module AssetExtension
         create_thumbnail_records
         true
       end
-      
+
       def uploaded_data_changed?
         @temp_files.any?
       end

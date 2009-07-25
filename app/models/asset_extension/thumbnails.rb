@@ -10,8 +10,8 @@ Thumbdef options:
  * :depends    -- specifies the name of a thumbnail that must be created first.
                   if :depends is specified it is used as the source file for this
                   thumbnail instead of the main asset.
- * :proxy      -- suppose you need other thumbnails to depend on a thumbnail of 
-                  of type odt, but the main asset might be an odt... setting 
+ * :proxy      -- suppose you need other thumbnails to depend on a thumbnail of
+                  of type odt, but the main asset might be an odt... setting
                   proxy to true will make it so that we use the main asset
                   file instead of generating a new one (but only if the mime
                   types match).
@@ -28,7 +28,7 @@ module AssetExtension
         include InstanceMethods
       end
     end
-    
+
     class ThumbDef
       attr_accessor :size, :name, :ext, :mime_type, :depends, :proxy, :title
       def initialize(name, hsh)
@@ -53,9 +53,9 @@ module AssetExtension
         self.class_thumbdefs.any?
       end
     end
-   
+
     module InstanceMethods
- 
+
       # allow for dynamic reassignment of thumbdefs for instances
       def thumbdefs
         @thumbdefs || class_thumbdefs
@@ -110,7 +110,7 @@ module AssetExtension
 #              thumb_done[thumb.depends_on.name] = true
 #            end
 #            thumb.generate
-#            thumb_done[thumb.name] = true          
+#            thumb_done[thumb.name] = true
 #          end
         end
         if versions.latest
@@ -156,7 +156,7 @@ module AssetExtension
         end
       end
 
-      # create thumbnail database records in self that are the 
+      # create thumbnail database records in self that are the
       # same as the ones in orig_model (with a different parent)
       # only called on Asset::Versions
       def clone_thumbnails_from(orig_model)
@@ -164,7 +164,7 @@ module AssetExtension
           t = Thumbnail.create thumbnail.attributes.merge(:parent_id => self.id, :parent_type => 'Asset::Version')
         end
       end
- 
+
     end
   end
 end

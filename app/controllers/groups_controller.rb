@@ -73,9 +73,9 @@ class GroupsController < Groups::BaseController
       redirect_to me_url
     end
   end
-  
+
   protected
-  
+
   def fetch_group
     @group = Group.find_by_name params[:id] if params[:id]
     if @group
@@ -108,7 +108,7 @@ class GroupsController < Groups::BaseController
       end
     end
   end
-  
+
   # returns a private wiki if it exists, a public one otherwise
   # TODO: make this less ugly, move to models
   def private_or_public_wiki

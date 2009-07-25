@@ -4,7 +4,7 @@
 # It is a little confusing, but there are many possible page <> asset
 # relationships:
 #
-# attachments: 
+# attachments:
 #
 #   asset belongs to parent_page (this file)
 #   page has many assets (this file)
@@ -39,7 +39,7 @@ module PageExtension::Assets
   #
   # Additionally, this method will work with pages that saved or are new_record?()
   #
-  # Available options: 
+  # Available options:
   # - :cover -- if true, make this asset a cover asset
   # - :filename -- if set, rename the asset using this filename
   #
@@ -55,14 +55,14 @@ module PageExtension::Assets
     asset.base_filename = options[:filename] if options[:filename].any?
 
     unless asset.new_record?
-      asset.save! 
+      asset.save!
     end
-    
+
     unless self.new_record?
       self.assets.reset
       self.save! if self.cover_id_changed?
     end
- 
+
     return asset
   end
 

@@ -13,12 +13,12 @@ class PageClassProxy
   attr_accessor :class_name, :full_class_name, :internal, :order, :short_class_name
 
   ORDER = ['text', 'media', 'vote', 'planning']
-  
+
 #  cattr_accessor :quiet
 
   def initialize(arg=nil)
     raise 'error' unless arg.is_a? Hash
-    
+
     if arg[:class_name]
       arg.each do |key,value|
         method = key.to_s + '='

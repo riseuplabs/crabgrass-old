@@ -9,9 +9,9 @@ module PageData
         :conditions => ['MATCH(page_terms.access_ids,page_terms.tags) AGAINST (? IN BOOLEAN MODE)', access_filter]
       }
     }
-    
+
     base.named_scope :most_recent, :order => 'updated_at DESC'
-    
+
     base.named_scope :exclude_ids, lambda {|ids|
       if ids.any? and ids.is_a? Array
         {:conditions => ["#{base.table_name}.id NOT IN (?)", ids]}
@@ -33,7 +33,7 @@ module PageData
       #  def page; self; end
       #end
     end
-    
+
     base.before_save :ensure_page_terms
   end
 
@@ -45,11 +45,11 @@ module PageData
   end
 
   protected
- 
+
   def ensure_page_terms
     if self.page_terms.nil?
       self.page_terms = self.page.page_terms if self.page
-    end 
+    end
   end
 
 end

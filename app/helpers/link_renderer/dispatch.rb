@@ -8,7 +8,7 @@ class LinkRenderer::Dispatch < WillPaginate::LinkRenderer
       url += "/#{@template.params[:_page]}" if @template.params[:_page]
       url += "/#{@options[:params][:action]}" if @options[:params] and @options[:params][:action]
       url += "?#{param_name}=#{page}"
-      # TODO: handle other params in addition to :action. 
+      # TODO: handle other params in addition to :action.
       return url
     else
       super(page)

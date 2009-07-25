@@ -7,7 +7,7 @@ class FriendActivity < Activity
 
   alias_attr :user,       :subject
   alias_attr :other_user, :object
-  
+
   before_create :set_access
   def set_access
     # this has a weird side effect of creating public and private
@@ -23,7 +23,7 @@ class FriendActivity < Activity
 
   def description(view=nil)
     "{user} added {other_user} as a contact"[
-       :activity_contact_created, 
+       :activity_contact_created,
        {:user => user_span(:user), :other_user => user_span(:other_user)}
     ]
   end

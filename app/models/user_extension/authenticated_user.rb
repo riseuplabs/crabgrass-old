@@ -4,18 +4,18 @@
 # Table name: users
 #
 #  id                        :integer(11)   not null, primary key
-#  login                     :string(255)   
-#  email                     :string(255)   
-#  crypted_password          :string(40)    
-#  salt                      :string(40)    
-#  created_at                :datetime      
-#  updated_at                :datetime      
-#  remember_token            :string(255)   
-#  remember_token_expires_at :datetime      
-#  display_name              :string(255)   
-#  time_zone                 :string(255)   
-#  language                  :string(5)     
-#  avatar_id                 :integer(11)   
+#  login                     :string(255)
+#  email                     :string(255)
+#  crypted_password          :string(40)
+#  salt                      :string(40)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  remember_token            :string(255)
+#  remember_token_expires_at :datetime
+#  display_name              :string(255)
+#  time_zone                 :string(255)
+#  language                  :string(5)
+#  avatar_id                 :integer(11)
 #
 
 ##
@@ -26,12 +26,12 @@
 
 require 'digest/sha1'
 module UserExtension
-module AuthenticatedUser 
+module AuthenticatedUser
   #set_table_name 'users'
 
   def self.included(base)
     base.extend   ClassMethods
-    base.instance_eval do      
+    base.instance_eval do
       # Virtual attribute for the unencrypted password
       attr_accessor :password
 
@@ -48,7 +48,7 @@ module AuthenticatedUser
       before_save :encrypt_password
     end
   end
-    
+
   module ClassMethods
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     def authenticate(login, password)
@@ -64,8 +64,8 @@ module AuthenticatedUser
     def find_for_forget(email)
       find :first, :conditions => ['email = ?', email]
     end
-    
-    # set to the currently logged in user. 
+
+    # set to the currently logged in user.
     def current; Thread.current[:user]; end
     def current=(user); Thread.current[:user] = user; end
   end
@@ -80,7 +80,7 @@ module AuthenticatedUser
   end
 
   def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at 
+    remember_token_expires_at && Time.now.utc < remember_token_expires_at
   end
 
   # These create and unset the fields required for remembering users between browser closes
@@ -103,16 +103,16 @@ module AuthenticatedUser
 
   protected
 
-  # before filter 
+  # before filter
   def encrypt_password
     return if password.blank?
     self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
     self.crypted_password = encrypt(password)
   end
-  
+
   def password_required?
     crypted_password.blank? || !password.blank?
   end
-  
+
 end
 end

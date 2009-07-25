@@ -5,7 +5,7 @@ module CommonHelper
   include LayoutHelper
   include LinkHelper
   include TimeHelper
-  include ErrorHelper
+  include FlashMessageHelper
   include ImageHelper
   include JavascriptHelper
   include PostHelper

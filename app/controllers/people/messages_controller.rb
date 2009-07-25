@@ -48,7 +48,7 @@ class People::MessagesController < People::BaseController
   ensure
     redirect_to url_for_user(@user)
   end
-   
+
   protected
 
   def fetch_post

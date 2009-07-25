@@ -72,7 +72,7 @@ class PluralityVote < ElectionVote
   def result
     PluralityResult.new(self)
   end
-  
+
   protected
   def verify_vote(vote=nil)
     vote ? true : false
@@ -132,25 +132,25 @@ class ElectionResult
   def winner?
     @winners.length > 0 and not @winners[0].nil?
   end
-  
+
 end
 
 class PluralityResult < ElectionResult
   attr_reader :ranked_candidates
   attr_reader :points
-  
+
   def initialize(voteobj=nil)
     super(voteobj)
 
     votes = @election.votes
     candidates = @election.candidates
-    
+
     @ranked_candidates = votes.sort do |a, b|
       b[1] <=> a[1]
     end.collect {|a| a[0]}
-    
+
     @points = @election.votes
-    
+
     # winners are anyone who has the same number of votes as the
     # first person
     @winners = @ranked_candidates.find_all do |i|
@@ -163,7 +163,7 @@ end
 # identically to results from plurality
 class ApprovalResult < PluralityResult
 end
-  
+
 class ElectionError < ArgumentError
 end
 

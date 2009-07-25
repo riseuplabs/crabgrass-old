@@ -1,6 +1,6 @@
 # = PathFinder::Builder
-# 
-# An abstract super class of 
+#
+# An abstract super class of
 # PathFinder::Sql::Builder,
 # PathFinder::Mysql::Builder and
 # PathFinder::Sphinx::Builder
@@ -12,11 +12,11 @@ class PathFinder::Builder
   # overridden by sub classes
   def initialize(path, options)
   end
-  
+
   # overridden by sub classes
   def build_query_hash()
   end
-  
+
   # parses path into filters and applies each filter
   def apply_filters_from_path( path )
     if path.is_a?(PathFinder::ParsedPath)
@@ -31,6 +31,6 @@ class PathFinder::Builder
       self.send(filter_method, *args) if self.respond_to? filter_method
     end
   end
-  
+
 end
 

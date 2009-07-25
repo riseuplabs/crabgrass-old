@@ -20,8 +20,8 @@ class MeTasksControllerTest < Test::Unit::TestCase
       get action
       assert_redirected_to :controller => 'account', :action => 'login'
     end
-  end  
- 
+  end
+
   def test_pending
     login_as :blue
     get :pending

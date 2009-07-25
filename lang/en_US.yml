@@ -664,6 +664,12 @@ invite_accept_via_existing_account: "I already have an account"
 invite_accept_via_register: "I need to register a new account"
 join_group_success: "You have joined group {group_name}"
 
+# invite/request errors
+
+invite_error_redeemed: "Invite has already been redeemed."
+invite_error_already_member: "You are already a member of that group."
+invite_not_found: "Invite not found"
+
 ##
 ## PAGES
 ##

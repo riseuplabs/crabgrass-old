@@ -19,15 +19,15 @@
       t.string   "type"
       t.datetime "created_at"
       t.datetime "updated_at"
-      
+
       t.integer  "site_id"
     end
 =end
 
 #
 # Anytime an action needs approval, a Request is made.
-# This includes invitations, requests to join, RSVP, etc. 
-# 
+# This includes invitations, requests to join, RSVP, etc.
+#
 class Request < ActiveRecord::Base
 
   acts_as_site_limited
@@ -36,7 +36,7 @@ class Request < ActiveRecord::Base
   belongs_to :approved_by, :class_name => 'User'
 
   belongs_to :recipient, :polymorphic => true
-  belongs_to :requestable, :polymorphic => true  
+  belongs_to :requestable, :polymorphic => true
 
   belongs_to :shared_discussion, :class_name => 'Discussion'
   belongs_to :private_discussion, :class_name => 'Discussion'
@@ -142,7 +142,7 @@ class Request < ActiveRecord::Base
 
   ##
   ## finite state machine
-  ## 
+  ##
   ## There’s a time when the operation of the machine becomes so odious, makes
   ## you so sick at heart, that you can't take part, you can’t even passively
   ## take part, and you’ve got to put your bodies upon the gears and upon the
@@ -150,7 +150,7 @@ class Request < ActiveRecord::Base
   ## stop! And you’ve got to indicate to the people who run it, to the people
   ## who own it, that unless you’re free, the machine will be prevented from
   ## working at all! --Mario Savio
-  ## 
+  ##
 
   acts_as_state_machine :initial => :pending
   state :pending
@@ -174,7 +174,7 @@ class Request < ActiveRecord::Base
   ##
   ## MISC
   ##
-  
+
   # used by subclass's description()
   # if you change this to display_name, make sure to escape it!
   def user_span(user)
@@ -189,7 +189,7 @@ class Request < ActiveRecord::Base
     destroy_all ['created_by_id = ?', user.id]
     destroy_all ["recipient_id = ? AND recipient_type = 'User'", user.id]
   end
- 
+
   # destroy all requests relating to this group
   def self.destroy_for_group(group)
     destroy_all ["recipient_id = ? AND recipient_type = 'Group'", group.id]
