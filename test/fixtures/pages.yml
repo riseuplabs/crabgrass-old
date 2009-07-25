@@ -140,6 +140,7 @@ tasklist2:
 <% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  site_id: 2 # so this can be found by site tests for root controller
 
 # event1:
 #   id: 202
