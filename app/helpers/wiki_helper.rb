@@ -88,16 +88,20 @@ module WikiHelper
   def create_wiki_toolbar(wiki)
     body_id = wiki_body_id(wiki)
     toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = image_popup_code_for_wiki_toolbar(wiki)
+    image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
 
     "wiki_edit_add_toolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
   end
 
-  def image_popup_code_for_wiki_toolbar(wiki)
-    text = "<img src='/images/textile-editor/img.png'/>"
-    spinner = spinner('image', :show => true)
-    modalbox_js(image_popup_show_url(wiki), 'Insert Image'[:insert_image])
-  end
+#  def image_popup_code_for_wiki_toolbar(wiki)
+    #text = "<img src='/images/textile-editor/img.png'/>"
+    #spinner = spinner('image', :show => true)
+#    remote_function(
+#      :loading => replace_html('markdown_image_button-' + wiki.id.to_s, spinner),
+#      :complete => replace_html('markdown_image_button-' + wiki.id.to_s, ''),
+#      :url => image_popup_show_url(wiki))
+#    modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
+#  end
 
   def image_popup_upload_url(wiki)
     # this method is used both by WikiPageController and WikiPage to
