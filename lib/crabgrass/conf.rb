@@ -101,6 +101,7 @@ class Conf
     self.domain            = 'localhost'
     self.chat              = true
     self.needs_email_verification = false
+    self.signup_mode       = SIGNUP_MODE[:default]
 
     # instance configuration
     self.enabled_mods  = []

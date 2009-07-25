@@ -576,6 +576,8 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
     t.integer "signup_mode",              :limit => 1
     t.string  "email_sender_name",        :limit => 40
     t.boolean "needs_email_verification",               :default => false
+    t.string  "profiles"
+    t.string  "profile_fields"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true

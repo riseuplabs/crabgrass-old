@@ -3,7 +3,7 @@ class SurveyPageController < BasePageController
   stylesheet 'survey'
   javascript :extra
   javascript 'survey'
- 
+
   permissions 'survey_page'
 
 #  def new

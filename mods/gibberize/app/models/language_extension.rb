@@ -13,7 +13,7 @@ module LanguageExtension
       @default ||= find_by_code('en_US')
     end
   end
- 
+
   module InstanceMethods
     def percent_complete()
       count = Key.count_all

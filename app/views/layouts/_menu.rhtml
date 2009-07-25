@@ -34,6 +34,7 @@
         <span><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
       </li>
     <%- end -%>
+
   <%- end -%>
 
   <%- if logged_in? and !current_user.unverified? and current_site.chat? -%>
@@ -42,7 +43,16 @@
   </li>
   <%- end -%>
 
+  <% if logged_in? and may_admin_site? -%>
+    <li id='menu_admin' class='<%= @active_tab == :admin ? 'active' : '' %>'>
+      <span><%= link_to_active "Admin"[:menu_admin], { :controller => 'admin/base' }, @active_tab == :admin %></span>
+    </li>
+  <% end -%>
+
   <%= call_hook :top_menu %>
+
+
+
 </ul>
 <div style='clear: both;'></div>
 </div>

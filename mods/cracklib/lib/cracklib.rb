@@ -21,7 +21,7 @@ module Cracklib
         return return_str
       end
     end
-  end    
+  end
 
   BASED_ON_USERNAME = "it is based on your username"
   CONFIRMATION_MISMATCH = "it does not match password confirmation"

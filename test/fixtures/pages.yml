@@ -266,6 +266,25 @@ video1:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
+announcement1:
+  id: 260
+  title: Beauty is in the Street Video Available
+  summary: we even summarize it here.
+  type: AnnouncementPage
+  data_id: 5
+  data_type: Wiki
+  owner_id: 1
+  owner_type: Group
+  public: "1"
+  flow: "<%= FLOW[:announcement]%>"
+  created_by_id: 1
+  created_by_login: quentin
+  updated_by_id: 3
+  updated_by_login: gerrard
+<% updated = rand(4608); created = updated + rand(4608) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
 ##
 ## ASSETS
 ##

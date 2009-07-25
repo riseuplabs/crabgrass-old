@@ -298,6 +298,16 @@ See also doc/SPHINX"
     # Site.current = old_site
   end
 
+  def enable_unlimited_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name, false) do
+        yield
+      end
+    else
+      enable_site_testing(site_name, false)
+    end
+  end
+
   ##
   ## DEBUGGING HELPERS
   ##

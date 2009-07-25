@@ -9,23 +9,23 @@ class MessagePageControllerTest < ActionController::TestCase
 
   def test_create_and_show
     login_as :orange
-    
+
     assert_no_difference 'Page.count' do
       get :create, :id => MessagePage.param_id
       assert_response :success
 #      assert_template 'message_page/create'
     end
-  
+
     assert_difference 'MessagePage.count' do
       post :create, :id => MessagePage.param_id, :title => 'test title', :to => 'red', :message => 'hey d00d'
       assert_response :redirect
     end
-    
+
     p = Page.find(:all)[-1] # most recently created page (?)
     assert p.users.include?(User.find_by_login 'red'), "MessagePage should be shared with red."
     assert p.users.include?(User.find_by_login 'orange'), "MessagePage should be shared with orange."
     assert !p.user_participations.map(&:inbox).include?(false), "MessagePage should be sent to inbox."
-    
+
     get :show, :page_id => p.id
     assert_response :success
 #    assert_template 'message_page/show'

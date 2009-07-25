@@ -2,7 +2,7 @@ module SiteExtension
 
   module ClassMethods
   end
- 
+
   module InstanceMethods
   end
 

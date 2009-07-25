@@ -541,6 +541,4 @@ module Formy
 #    end
 
   end
-
 end
-

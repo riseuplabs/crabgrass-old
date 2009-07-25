@@ -1,6 +1,8 @@
 class Admin::GroupsController < Admin::BaseController
-  
+
   before_filter :fetch_group_by_name, :only => [ :show, :edit, :update, :destroy ]
+
+  permissions 'admin/super'
 
   # GET /groups
   # GET /groups.xml
@@ -40,11 +42,11 @@ class Admin::GroupsController < Admin::BaseController
   # POST /groups.xml
   def create
     @group = Group.new(params[:group])
-    
+
     # save avatar
     avatar = Avatar.create(params[:image])
     @group.avatar = avatar
-    
+
     respond_to do |format|
       if @group.save
         flash[:notice] = 'Group was successfully created.'
@@ -60,19 +62,19 @@ class Admin::GroupsController < Admin::BaseController
   # PUT /groups/1
   # PUT /groups/1.xml
   def update
-    
+
     # save or update avatar
     if @group.avatar && params[:image_file]
       for size in %w(xsmall small medium large xlarge)
         expire_page :controller => 'static', :action => 'avatar', :id => @group.avatar.id, :size => size
       end
-      @group.avatar.image_file = params[:image_file] 
+      @group.avatar.image_file = params[:image_file]
       @group.avatar.save!
     elsif params[:image_file]
       avatar = Avatar.create(:image_file => params[:image_file])
       @group.avatar = avatar
-    end  
-    
+    end
+
     respond_to do |format|
       if @group.update_attributes(params[:group])
         flash[:notice] = 'Group was successfully updated.'
@@ -96,10 +98,10 @@ class Admin::GroupsController < Admin::BaseController
       format.xml  { head :ok }
     end
   end
-  
+
   private
   def fetch_group_by_name
     @group = Group.find_by_name(params[:id])
   end
-  
+
 end
