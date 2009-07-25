@@ -4,7 +4,7 @@
   }]
 
   close_action = {
-    :url => {:controller => 'base_page/participation', :action => 'move', :page_id => @page.id, :cancel => true}, 
+    :url => {:controller => 'base_page/participation', :action => 'move', :page_id => @page.id, :cancel => true},
     :loading => show_spinner('move')
   }
 %>
@@ -17,7 +17,7 @@
     </blockquote>
     <div class='buttons'>
       <%= spinner('move') %>
-      <%= close_popup_button %><%= submit_tag("Move"[:move_button], :name => 'move') %>
+      <%= close_modal_button %><%= submit_tag("Move"[:move_button], :name => 'move') %>
     </div>
   <% end -%>
 <% end -%>
