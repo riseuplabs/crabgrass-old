@@ -1,20 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'root_controller'
-#showlog
-# Re-raise errors caught by the controller.
-class RootController; def rescue_action(e) raise e end; end
 
-class RootControllerTest < Test::Unit::TestCase
+class RootControllerTest < ActionController::TestCase
   fixtures :groups, :users, :pages, :memberships,
             :user_participations, :page_terms, :sites
 
   include UrlHelper
-
-  def setup
-    @controller = RootController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def teardown
   end
@@ -22,7 +13,7 @@ class RootControllerTest < Test::Unit::TestCase
   def test_index_logged_in
     login_as :red
 
-    enable_site_testing :test do
+    with_site :test do
       get :index
       assert_response :success
     end
@@ -37,7 +28,7 @@ class RootControllerTest < Test::Unit::TestCase
   end
 
   def test_site_home
-    enable_site_testing :test do
+    with_site :test do
       login_as :red
       get :index
       assert_response :success
@@ -56,4 +47,22 @@ class RootControllerTest < Test::Unit::TestCase
     end
   end
 
+  # Examples for site testing:
+  repeat_with_sites(:local => {:title => "Site One"}, :test => {:title => "Site Two"}) do
+    # will generate two methods:
+    # 1) test_title_with_site_local
+    # 2) test_title_with_site_test
+    def test_title
+      get :index
+      assert_select 'title', Site.current.title
+    end
+  end
+
+  def test_local_title
+    with_site :local do
+      get :index
+      assert_select 'title', "site1"
+      assert_select 'title', Site.current.title
+    end
+  end
 end

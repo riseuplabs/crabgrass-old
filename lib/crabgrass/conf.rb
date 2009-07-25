@@ -141,8 +141,9 @@ class Conf
 
   # can be called from a test's setup method in order to enable sites
   # for a particular set of tests without enabling sites for all tests.
-  def self.enable_site_testing(site=nil)
-    self.enabled_site_ids = [1,2]
+  def self.enable_site_testing(site = nil)
+    enabled_ids = site ? [site.id] : [1, 2]
+    self.enabled_site_ids = enabled_ids
   end
 
   def self.disable_site_testing
