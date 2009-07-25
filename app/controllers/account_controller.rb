@@ -55,7 +55,6 @@ class AccountController < ApplicationController
   end
 
   def signup
-    require 'ruby-debug';debugger;1-1
     if current_site.signup_redirect_url.any?
       redirect_to current_site.signup_redirect_url
     elsif !may_signup?
