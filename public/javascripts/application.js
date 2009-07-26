@@ -61,6 +61,27 @@ function submit_form(form_element, name, value) {
   }
 }
 
+// give a radio button group name, return the value of the currently 
+// selected button. 
+function activeRadioValue(name) {
+  try { return $$('input[name='+name+']').detect(function(e){return $F(e)}).value; } catch(e) {}
+}
+
+function insertImage(wikiId) {
+  try {
+    var assetId = activeRadioValue('image');
+    var link = $('link_to_image').checked;
+    var size = activeRadioValue('image_size');
+    var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
+    var url = thumbnails[size];
+    var insertText = '\n!' + url + '!';
+    if (link)
+      insertText += ':' + thumbnails['full'];
+    insertText += '\n';    
+    insertAtCursor(wikiId, insertText);
+  } catch(e) {}
+}
+
 //
 // TEXT AREAS
 //

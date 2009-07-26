@@ -45,7 +45,7 @@ module ModalboxHelper
 
   # close the modal box
   def close_modal_button(label=nil)
-    button_to_function((label == :cancel ? "Cancel"[:cancel_button] : "Close"[:close_button]), 'Modalbox.hide()')
+    button_to_function((label == :cancel ? "Cancel"[:cancel_button] : "Close"[:close_button]), 'Modalbox.hide();')
   end
 
   # to be called each and every time the popup might have changed size
@@ -63,6 +63,10 @@ module ModalboxHelper
 
   def modalbox_function(contents, options)
     "Modalbox.show('%s', %s)" % [contents, options_for_modalbox_function(options)]
+  end
+
+  def close_modal_function()
+    'Modalbox.hide();'
   end
 
   private

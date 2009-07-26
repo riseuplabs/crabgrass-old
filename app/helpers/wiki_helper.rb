@@ -75,10 +75,12 @@ module WikiHelper
     style = "height:64px;width:64px"
     if @images.any?
       items = radio_buttons_tag(:image, @images.collect do |asset|
-        [thumbnail_img_tag(asset, :small, :scale => '64x64'), 
-         thumbnail_urls_to_json(asset)]
+        [thumbnail_img_tag(asset, :small, :scale => '64x64'), asset.id]
       end)
-      content_tag :div, items, :class => 'swatch_list'
+      data = @images.collect do |asset|
+        content_tag(:input, '', :id => "#{asset.id}_thumbnail_data", :value => thumbnail_urls_to_json(asset), :type => 'hidden')
+      end.join
+      content_tag :div, data + items, :class => 'swatch_list'
     end
   end
 
@@ -89,10 +91,8 @@ module WikiHelper
       :full   => asset.url }.to_json
   end
 
-  def insert_image_function
-    urls = %['#{asset.thumbnail(:small).url}', '#{asset.thumbnail(:medium).url}', '#{asset.thumbnail(:large).url}', '#{asset.url}']
-    insert_text = %{'!' + [#{urls}][$('#{'image_size-' + wiki.id.to_s}').value] + '!' + ($('#{'image_link-' + wiki.id.to_s}').checked ? ':#{asset.url}' : '')}
-    function = %[insertAtCursor('#{wiki_body_id(wiki)}',#{insert_text})]
+  def insert_image_function(wiki)
+    "insertImage('%s');" % wiki_body_id(wiki)
   end
 
   def create_wiki_toolbar(wiki)
