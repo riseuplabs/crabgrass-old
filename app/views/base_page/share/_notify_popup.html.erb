@@ -1,13 +1,4 @@
-<%
- after_load_js = %Q[
-  after_load_function = function() {
-  }
- ]
-%>
-<%= javascript_tag(after_load_js) %>
-
 <%- form_url = {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id} -%>
-<% popup("Send Notification"[:notify_page_link], :id => 'notify_popup', :width => '40em') do -%>
   <% form_remote_tag(
     :url => form_url,
     :loading => show_spinner('popup'),
@@ -20,10 +11,8 @@
 
     <div class='buttons'>
       <%= spinner 'popup' %> &nbsp;
-      <%= submit_tag "Cancel"[:cancel_button], :name => 'cancel' %> &nbsp;
-      <%= submit_tag "Send Notification"[:notify_page_link], :name => 'notify' %>
+      <%= close_modal_button(:cancel) %><%= submit_tag "Send Notification"[:notify_page_link], :name => 'notify' %>
     </div>
   <% end -%>
-
 <% end -%>
 

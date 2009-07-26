@@ -40,22 +40,21 @@
 #MB_frame
   :position relative
   :background-color= !popup_bg
-  :height 100%
-//  :border 2px solid black
-//  :border-top 0
+// this is disable for crabgrass.
+//  :height 100%
 
 #MB_header
   :margin 0
   :height 2.1em
   :padding 0.4em
-  :background #999999 none repeat scroll 0 0
-  :border-bottom 1px solid #666666
+  :background #999 none repeat scroll 0 0
+  :border-bottom 1px solid #777
   :margin 0
 
 #MB_content
   :overflow auto
   :padding 1em
-  :border-top 1px solid #F9F9F9
+  :border-top 1px solid #ccc
 
 #MB_caption
   :font bold 85% "Lucida Grande", Arial, sans-serif
@@ -66,12 +65,12 @@
 
 #MB_close
   :display block
-  :position absolute 
+  :position absolute
   :right 5px
   :top 4px
   :padding 2px 3px
   :font-weight bold
-  :text-decoration none 
+  :text-decoration none
   :font-size 26px
   :color #666
 
@@ -83,9 +82,13 @@
 // what is displayed before any content for the box is loaded
 //
 #MB_loading
-  :background white url(/images/spinner-big.gif) 50% 50% no-repeat
-  :color white
+  :background= !popup_bg "url(/images/spinner-big.gif) 50% 50% no-repeat"
+  :color= !popup_bg
   :height 100px
+
+//
+// CUSTOM CG STYLES
+//
 
 .MB_confirm
   form
@@ -93,4 +96,17 @@
     input
       margin-left: 1em
 
+#MB_frame table.styled
+  border-collapse: collapse
 
+#MB_frame table.styled td
+  background: white
+  border-top: 1px solid #ccc
+  border-bottom: 1px solid #ccc
+  padding: 0.5em
+
+#MB_frame .buttons
+  padding: 1em
+  margin: 1em -1em -1em -1em
+  background: #EBEAE6
+  border-top: 1px solid white

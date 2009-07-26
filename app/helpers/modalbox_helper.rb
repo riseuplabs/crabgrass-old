@@ -27,7 +27,7 @@ module ModalboxHelper
   def link_to_modal(label, contents, options={})
     options.reverse_merge! :title => label
     html_options = [:id, :class, :style, :icon]
-    if options[:icon] 
+    if options[:icon]
       icon = options[:icon]
       options[:id] ||= 'link%s'%rand(1000000)
       options.merge!(
@@ -44,13 +44,13 @@ module ModalboxHelper
   end
 
   # close the modal box
-  def close_modal_button
-    button_to_function "Close"[:close_button], 'Modalbox.hide()'
+  def close_modal_button(label=nil)
+    button_to_function((label == :cancel ? "Cancel"[:cancel_button] : "Close"[:close_button]), 'Modalbox.hide()')
   end
 
   # to be called each and every time the popup might have changed size
   def resize_modal
-    'Modalbox.resizeToContent();'    
+    'Modalbox.resizeToContent();'
   end
 
   # loads the localized string into modalbox
@@ -61,11 +61,11 @@ module ModalboxHelper
 #    });
   end
 
-  private
-
   def modalbox_function(contents, options)
     "Modalbox.show('%s', %s)" % [contents, options_for_modalbox_function(options)]
   end
+
+  private
 
   #
   # Takes a ruby hash and generates the text for a javascript hash.
@@ -92,7 +92,7 @@ module ModalboxHelper
     options_for_javascript(hash)
   end
 
-  public 
+  public
 
   module ActionViewExtension
 
@@ -109,7 +109,7 @@ module ModalboxHelper
 
     #
     # redefines link_to_remote to use Modalbox.confirm() if options[:confirm] is set.
-    # 
+    #
     # If cancel is pressed, then nothing happens.
     # If OK is pressed, then the remote function is fired off.
     #
@@ -127,7 +127,7 @@ module ModalboxHelper
       if message
         ## if called when the modalbox is already open, it is important that we
         ## call back() before the other complete callbacks. Otherwise, the html
-        ## they expect to be there might be missing. 
+        ## they expect to be there might be missing.
         options[:loading]  = ['Modalbox.spin()', options[:loading]].compact.join('; ')
         options[:loaded] = ['Modalbox.back()', options[:loaded]].compact.join('; ')
         ok_function = remote_function(options)
@@ -140,7 +140,7 @@ module ModalboxHelper
 
     #
     # redefines link_to to use Modalbox.confirm() if options[:confirm] is set.
-    # 
+    #
     # If cancel is pressed, then nothing happens.
     # If OK is pressed, then a form submit happens, using the action and method specified.
     #
@@ -176,12 +176,12 @@ end
 #  def link_to_modalbox(url, label, params={}, options={})
 #    link_to_function(label, modalbox_js(url, label, params, options))
 #  end
-#   
+#
 #  def modalbox_js(url, label, params={}, options={})
 #    request_method = options[:method] || 'get'
 #    if !params.empty?
 #      params = params.each_pair.map do |key, value|
-#        "#{key}=#{url_encode(value)}" 
+#        "#{key}=#{url_encode(value)}"
 #      end.join('&')
 #    end
 #    "Modalbox.show('#{url}',{title:'#{label}', params:'#{params}', method:'#{request_method}', overlayDuration:0.2,slideDownDuration:0.5,slideUpDuration:0.5,transitions:false,afterLoad: function(){after_load_function();}});"

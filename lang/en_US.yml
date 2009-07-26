@@ -5,6 +5,8 @@
 ##
 
 #permission_denied: 'Permission denied'
+#upload_attachment: "Upload Attachment"
+#rename :upload_images -> :upload
 
 ##
 ## UNUSED, BUT KEEP ANYWAY
@@ -73,6 +75,7 @@ return_link: "Return"
 
 summary: "Summary"
 edit: "Edit"
+upload: "Upload"
 preview: "Preview"
 private: "Private"
 public: "Public"
@@ -402,7 +405,6 @@ upload_image: "Upload Image"
 uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
 select_image_file: "select image file"
 or_image_url: "or image URL"
-upload_images: Upload
 save_changes: Save Changes
 username: Username
 display_name: Display name
@@ -749,7 +751,6 @@ attachments: "Attachments"
 edit_attachments: "Edit Attachments"
 current_attachments: "Current Attachments"
 add_new_attachment: "Add New Attachment"
-upload_attachment: "Upload Attachment"
 
 # share/notify
 
