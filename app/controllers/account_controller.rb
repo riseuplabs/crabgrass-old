@@ -5,7 +5,7 @@ class AccountController < ApplicationController
   before_filter :view_setup
   before_filter :setup_profiles, :only => :signup
 
-  skip_before_filter :redirect_unverified_user, :only => [:unverified, :login, :logout, :signup, :verify]
+  skip_before_filter :redirect_unverified_user, :only => [:unverified, :login, :logout, :signup, :verify_email]
 
   # TODO: it would be good to require post for logout in the future
   verify :method => :post, :only => [:language]
@@ -111,9 +111,9 @@ class AccountController < ApplicationController
 
 
   # verify the users email
-  def verify
+  def verify_email
     @token = Token.find_by_value_and_action(params[:token], 'verify')
-    @token.destroy
+    @token.destroy if @token
     if @token.nil? or @token.user.nil? or !@token.user.unverified?
       flash_message :info => "Already Verified."[:already_verified], :text => "You don't need to verify again."[:already_verified_text]
     else

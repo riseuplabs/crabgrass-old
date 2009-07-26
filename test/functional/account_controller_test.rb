@@ -218,7 +218,7 @@ class AccountControllerTest < ActionController::TestCase
       assert_equal 'Welcome to {site_title}!'[:welcome_to_site_tile, {:site_title => Site.current.title}],
                     confirmation_email.subject
       # should have the right link
-      assert_match %r[http://test.host/account/verify/#{token.value}], confirmation_email.body
+      assert_match %r[http://test.host/verify_email/#{token.value}], confirmation_email.body
     end
 
     def test_invalid_looking_email_should_fail
@@ -242,7 +242,7 @@ class AccountControllerTest < ActionController::TestCase
       gerrard.update_attribute(:unverified, true)
       token = tokens(:verify_gerrard)
 
-      get :verify, :token => token.value
+      get :verify_email, :token => token.value
 
       assert_equal token.id, assigns(:token).id
       assert_response :redirect
@@ -257,6 +257,20 @@ class AccountControllerTest < ActionController::TestCase
       get :verify_email, :token => token.value
 
       assert_response :redirect
+      assert_redirected_to :controller => 'root', :action => 'index'
+      assert_success_message /Already.Verified/
+    end
+
+    def test_verify_twice
+      gerrard = users(:gerrard)
+      gerrard.update_attribute(:unverified, true)
+      token = tokens(:verify_gerrard)
+
+      get :verify_email, :token => token.value
+      assert_redirected_to '/'
+      assert_success_message /Successfully Verified/, /Thanks for signing up/
+
+      get :verify_email, :token => token.value
       assert_redirected_to :controller => 'root', :action => 'index'
       assert_success_message /Already.Verified/
     end
