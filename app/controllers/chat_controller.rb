@@ -12,7 +12,7 @@ class ChatController < ApplicationController
   stylesheet 'groups'
   permissions 'chat'
   before_filter :login_required
-  prepend_before_filter :get_channel_and_user, :except => :index
+  prepend_before_filter :get_channel_and_user
   append_before_filter :breadcrumbs
 
   # show a list of available channels
@@ -145,7 +145,7 @@ class ChatController < ApplicationController
   # Get channel and user info that most methods use
   def get_channel_and_user
     @user = current_user
-    @channel = ChatChannel.find_by_id(params[:id]) if params[:id].is_a? Numeric
+    @channel = ChatChannel.find_by_id(params[:id]) if params[:id] !~ /\D/
     unless @channel
       @group = Group.find_by_name(params[:id])
       if @group
