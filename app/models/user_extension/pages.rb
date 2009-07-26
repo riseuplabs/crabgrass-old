@@ -26,15 +26,19 @@ module UserExtension::Pages
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
 
       named_scope(:most_active_on, lambda do |site, time|
-        ret = { :joins => [:participations, :memberships],
+        ret = {
+          :joins => "
+            INNER JOIN user_participations
+              ON users.id = user_participations.user_id
+            INNER JOIN pages
+              ON pages.id = user_participations.page_id AND
+              pages.site_id = #{site.id}",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :select => "users.*, memberships.group_id, user_participations.changed_at"
+          :select => "users.*, user_participations.changed_at"
         }
-        if time.nil?
-          ret[:conditions] = ["memberships.group_id = ?", site.network.id]
-        else
-          ret[:conditions] = ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id]
+        if time
+          ret[:conditions] = ["user_participations.changed_at >= ?", time]
         end
         ret
       end)
