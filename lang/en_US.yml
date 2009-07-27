@@ -7,6 +7,7 @@
 #permission_denied: 'Permission denied'
 #upload_attachment: "Upload Attachment"
 #rename :upload_images -> :upload
+#insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
 ##
 ## UNUSED, BUT KEEP ANYWAY
@@ -984,7 +985,6 @@ you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: "view changes"
 created_when_by: "created :when by :user"
 insert_image_heading: "Insert Image"
-insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
 wiki_section_edit: "Edit This Section"
 wiki_revert_version: "Revert To Version {version}"

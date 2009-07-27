@@ -1,5 +1,5 @@
 function quickRedReference() {
-  window.open( 
+  window.open(
     "/static/greencloth",
     "redRef",
     "height=600,width=750/inv,channelmode=0,dependent=0," +
@@ -38,7 +38,7 @@ function toggle_all_checkboxes(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
 }
 
-// submits a form, from the onclick of a link. 
+// submits a form, from the onclick of a link.
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
 // value is optional.
 function submit_form(form_element, name, value) {
@@ -61,26 +61,48 @@ function submit_form(form_element, name, value) {
   }
 }
 
+// give a radio button group name, return the value of the currently
+// selected button.
+function activeRadioValue(name) {
+  try { return $$('input[name='+name+']').detect(function(e){return $F(e)}).value; } catch(e) {}
+}
+
+function insertImage(wikiId) {
+  try {
+    var assetId = activeRadioValue('image');
+    var link = $('link_to_image').checked;
+    var size = activeRadioValue('image_size');
+    var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
+    var url = thumbnails[size];
+    var insertText = '\n!' + url + '!';
+    if (link)
+      insertText += ':' + thumbnails['full'];
+    insertText += '\n';
+    insertAtCursor(wikiId, insertText);
+  } catch(e) {}
+}
+
 //
 // TEXT AREAS
 //
 
-function insertAtCursor(text_area_id, text_to_insert) {
-  var element = $(text_area_id);
-  element.focus();
+function insertAtCursor(textarea, text) {
+  var element = $(textarea);
   if (document.selection) {
     //IE support
     sel = document.selection.createRange();
-    sel.text = text_to_insert;
+    sel.text = text;
   } else if (element.selectionStart || element.selectionStart == '0') {
     //Mozilla/Firefox/Netscape 7+ support
     var startPos = element.selectionStart;
     var endPos   = element.selectionEnd;
-    element.value = element.value.substring(0, startPos) + text_to_insert + element.value.substring(endPos, element.value.length);
-    element.setSelectionRange(endPos+text_to_insert.length, endPos+text_to_insert.length);
+    element.value = element.value.substring(0, startPos) + text + element.value.substring(endPos, element.value.length);
+    element.setSelectionRange(startPos, endPos+text.length);
+    element.scrollTop = startPos
   } else {
-    element.value += text_to_insert;
+    element.value += text;
   }
+  element.focus();
 }
 
 function decorate_wiki_edit_links(ajax_link) {
