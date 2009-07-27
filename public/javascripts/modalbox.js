@@ -13,6 +13,7 @@ MODIFICATIONS FOR CRABGRASS:
 (2) added some ajax request event listeners
 (3) added option showAfterLoading
 (4) added Modalbox.confirm()
+(5) stripped out all the resize code. it seems to only be needed for fancy animation, but makes everything more complicated.
 
 THE EVENT LISTENERS:
 
@@ -56,10 +57,10 @@ Modalbox.Methods = {
 		width: 500, // Default width in px
 		height: 90, // Default height in px
 		overlayOpacity: .65, // Default overlay opacity
-		overlayDuration: .25, // Default overlay fade in/out duration in seconds
-		slideDownDuration: .5, // Default Modalbox appear slide down effect in seconds
-		slideUpDuration: .5, // Default Modalbox hiding slide up effect in seconds
-		resizeDuration: .25, // Default resize duration seconds
+//		overlayDuration: .25, // Default overlay fade in/out duration in seconds
+//		slideDownDuration: .5, // Default Modalbox appear slide down effect in seconds
+//		slideUpDuration: .5, // Default Modalbox hiding slide up effect in seconds
+//		resizeDuration: .25, // Default resize duration seconds
 		inactiveFade: true, // Fades MB window on inactive state
 //		transitions: true, // Toggles transition effects. Transitions are enabled by default
 		loadingString: "", // Default loading string message
@@ -196,8 +197,8 @@ Modalbox.Methods = {
 			var html = '<div class="MB_confirm"><p>#{message}</p><form><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.back()" value="#{cancel}" /><input type="button" onclick="#{ok_function}" value="#{ok}" /></form></div>';
 		}
 		this.show(html.interpolate(options), {title: options.get('title'), width: 350});
-		if (this.priorContent.size())
-			this.resizeToContent();
+		//if (this.priorContent.size())
+		//	this.resizeToContent();
 	},
 
 	// closes the modalbox, or restores the previous content if there was any.
@@ -206,7 +207,7 @@ Modalbox.Methods = {
 		var prior = this.priorContent.pop();
 		if (prior) {
 			this.show(prior.content, {title:prior.caption, width:prior.width});
-			this.resizeToContent();
+			//this.resizeToContent();
 		} else {
 			this.hide();
 		}
@@ -221,8 +222,8 @@ Modalbox.Methods = {
 			window.scrollTo(0,0);
 			this._prepareIE("100%", "hidden");
 		}
-		this._setWidth();
-		this._setPosition();
+//		this._setWidth();
+//		this._setPosition();
 		if(!this.options.showAfterLoading) {
 	//		if(this.options.transitions) {
 	//			$(this.MBoverlay).setStyle({opacity: 0});
@@ -244,7 +245,6 @@ Modalbox.Methods = {
 	//		} else {
 				$(this.MBwindow).show();
 				this.loadContent();
-				this._setPosition();
 				$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
 	//		}
 		} else {
@@ -253,65 +253,66 @@ Modalbox.Methods = {
 		}
 		this._setWidthAndPosition = this._setWidthAndPosition.bindAsEventListener(this);
 		Event.observe(window, "resize", this._setWidthAndPosition);
+		this._setWidthAndPosition();
 	},
 
-	resize: function(byWidth, byHeight, options) { // Change size of MB without loading content
-		var oWidth = $(this.MBoverlay).getWidth();
-		var wHeight = $(this.MBwindow).getHeight();
-		var wWidth = $(this.MBwindow).getWidth();
-		var hHeight = $(this.MBheader).getHeight();
-		var cHeight = $(this.MBcontent).getHeight();
-		var newHeight = ((wHeight - hHeight + byHeight) < cHeight) ? (cHeight + hHeight) : (wHeight + byHeight);
-		var newWidth = wWidth + byWidth;
-		this.options.width = newWidth;
-		if(options) this.setOptions(options); // Passing callbacks
-//		if(this.options.transitions) {
-//			new Effect.Morph(this.MBwindow, {
-//				style: "width:" + newWidth + "px; height:" + newHeight + "px; left:" + ((oWidth - newWidth)/2) + "px",
-//				duration: this.options.resizeDuration,
-//				beforeStart: function(fx){
-//					fx.element.setStyle({overflow:"hidden"}); // Fix for MSIE 6 to resize correctly
-//				},
-//				afterFinish: function(fx) {
-//					fx.element.setStyle({overflow:"visible"});
-//					this.event("_afterResize"); // Passing internal callback
-//					this.event("afterResize"); // Passing callback
-//				}.bind(this)
-//			});
-//		} else {
-			//this.MBwindow.setStyle({width: newWidth + "px", height: newHeight + "px"});
-			this.MBwindow.setStyle({width: newWidth + "px"}); // mod for cg
-			setTimeout(function() {
-				this.event("_afterResize"); // Passing internal callback
-				this.event("afterResize"); // Passing callback
-			}.bind(this), 1);
+//	resize: function(byWidth, byHeight, options) { // Change size of MB without loading content
+//		var oWidth = $(this.MBoverlay).getWidth();
+//		var wHeight = $(this.MBwindow).getHeight();
+//		var wWidth = $(this.MBwindow).getWidth();
+//		var hHeight = $(this.MBheader).getHeight();
+//		var cHeight = $(this.MBcontent).getHeight();
+//		var newHeight = ((wHeight - hHeight + byHeight) < cHeight) ? (cHeight + hHeight) : (wHeight + byHeight);
+//		var newWidth = wWidth + byWidth;
+//		this.options.width = newWidth;
+//		if(options) this.setOptions(options); // Passing callbacks
+////		if(this.options.transitions) {
+////			new Effect.Morph(this.MBwindow, {
+////				style: "width:" + newWidth + "px; height:" + newHeight + "px; left:" + ((oWidth - newWidth)/2) + "px",
+////				duration: this.options.resizeDuration,
+////				beforeStart: function(fx){
+////					fx.element.setStyle({overflow:"hidden"}); // Fix for MSIE 6 to resize correctly
+////				},
+////				afterFinish: function(fx) {
+////					fx.element.setStyle({overflow:"visible"});
+////					this.event("_afterResize"); // Passing internal callback
+////					this.event("afterResize"); // Passing callback
+////				}.bind(this)
+////			});
+////		} else {
+//			//this.MBwindow.setStyle({width: newWidth + "px", height: newHeight + "px"});
+//			this.MBwindow.setStyle({width: newWidth + "px"}); // mod for cg
+//			setTimeout(function() {
+//				this.event("_afterResize"); // Passing internal callback
+//				this.event("afterResize"); // Passing callback
+//			}.bind(this), 1);
+////		}
+//	},
+
+//	resizeToContent: function(options){
+
+//		// Resizes the modalbox window to the actual content height.
+//		// This might be useful to resize modalbox after some content modifications which were changed ccontent height.
+
+//		var byHeight = this.options.height - $(this.MBwindow).getHeight();
+//		if(byHeight != 0) {
+//			if(options) this.setOptions(options); // Passing callbacks
+//			Modalbox.resize(0, byHeight);
 //		}
-	},
+//	},
 
-	resizeToContent: function(options){
+//	resizeToInclude: function(element, options){
 
-		// Resizes the modalbox window to the actual content height.
-		// This might be useful to resize modalbox after some content modifications which were changed ccontent height.
+//		// Resizes the modalbox window to the camulative height of element. Calculations are using CSS properties for margins and border.
+//		// This method might be useful to resize modalbox before including or updating content.
 
-		var byHeight = this.options.height - $(this.MBwindow).getHeight();
-		if(byHeight != 0) {
-			if(options) this.setOptions(options); // Passing callbacks
-			Modalbox.resize(0, byHeight);
-		}
-	},
-
-	resizeToInclude: function(element, options){
-
-		// Resizes the modalbox window to the camulative height of element. Calculations are using CSS properties for margins and border.
-		// This method might be useful to resize modalbox before including or updating content.
-
-		var el = $(element);
-		var elHeight = el.getHeight() + parseInt(el.getStyle('margin-top'), 0) + parseInt(el.getStyle('margin-bottom'), 0) + parseInt(el.getStyle('border-top-width'), 0) + parseInt(el.getStyle('border-bottom-width'), 0);
-		if(elHeight > 0) {
-			if(options) this.setOptions(options); // Passing callbacks
-			Modalbox.resize(0, elHeight);
-		}
-	},
+//		var el = $(element);
+//		var elHeight = el.getHeight() + parseInt(el.getStyle('margin-top'), 0) + parseInt(el.getStyle('margin-bottom'), 0) + parseInt(el.getStyle('border-top-width'), 0) + parseInt(el.getStyle('border-bottom-width'), 0);
+//		if(elHeight > 0) {
+//			if(options) this.setOptions(options); // Passing callbacks
+//			Modalbox.resize(0, elHeight);
+//		}
+//	},
 
 	_update: function() { // Updating MB in case of wizards
 		$(this.MBcontent).update($(this.MBloading).update(this.options.loadingString));
@@ -357,10 +358,9 @@ Modalbox.Methods = {
 			return;
 		this.event('onSuccess');
 		if (this.options.showAfterLoading) {
-			$(this.MBoverlay).setStyle({opacity: this.options.overlayOpacity});
+			this.MBoverlay.setStyle({opacity: this.options.overlayOpacity});
 			this.MBoverlay.show();
-			$(this.MBwindow).show();
-			this._setPosition();
+			this.MBwindow.show();
 		}
 		// end cg
 
@@ -386,23 +386,24 @@ Modalbox.Methods = {
 			if(Prototype.Browser.IE) // Toggling back visibility for hidden selects in IE
 				$$("#MB_content select").invoke('setStyle', {'visibility': ''});
 		}
-
+		this._setPosition();
 		// Prepare and resize modal box for content
-		if(this.options.height == this._options.height) {
-			Modalbox.resize((this.options.width - $(this.MBwindow).getWidth()), $(this.MBcontent).getHeight() - $(this.MBwindow).getHeight() + $(this.MBheader).getHeight(), {
-				afterResize: function(){
-					setTimeout(function(){ // MSIE fix
-						this._putContent(callback);
-					}.bind(this),1);
-				}.bind(this)
-			});
-		} else { // Height is defined. Creating a scrollable window
-			this._setWidth();
-			this.MBcontent.setStyle({overflow: 'auto', height: $(this.MBwindow).getHeight() - $(this.MBheader).getHeight() - 13 + 'px'});
-			setTimeout(function(){ // MSIE fix
-				this._putContent(callback);
-			}.bind(this),1);
-		}
+//		if(this.options.height == this._options.height) {
+//			try { dim = this.MBwindow.getDimensions(); } catch(e) {}
+//			Modalbox.resize((this.options.width - dim.width), this.MBcontent.getHeight() - dim.height + this.MBheader.getHeight(), {
+//				afterResize: function(){
+//					setTimeout(function(){ // MSIE fix
+//						this._putContent(callback);
+//					}.bind(this),1);
+//				}.bind(this)
+//			});
+//		} else { // Height is defined. Creating a scrollable window
+//			this._setWidth();
+//			this.MBcontent.setStyle({overflow: 'auto', height: $(this.MBwindow).getHeight() - $(this.MBheader).getHeight() - 13 + 'px'});
+//			setTimeout(function(){ // MSIE fix
+//				this._putContent(callback);
+//			}.bind(this),1);
+//		}
 	},
 
 	_putContent: function(callback){
@@ -569,7 +570,14 @@ Modalbox.Methods = {
 	},
 
 	_setPosition: function () {
-		$(this.MBwindow).setStyle({left: (($(this.MBoverlay).getWidth() - $(this.MBwindow).getWidth()) / 2 ) + "px"});
+		this.MBwindow.setStyle({left: ((this.MBoverlay.getWidth() - this.MBwindow.getWidth()) / 2 ) + "px"});
+		var height = document.viewport.getHeight()
+		if (this.MBcontent.getHeight() + this.MBheader.getHeight() > height) {
+			this.MBframe.setStyle({overflow: 'auto', height: height + 'px'});
+			setTimeout(function(){ this._putContent(); }.bind(this),1); // MSIE fix
+		} else {
+			this.MBframe.setStyle({height: 'auto'});
+		}
 	},
 
 	_setWidthAndPosition: function () {

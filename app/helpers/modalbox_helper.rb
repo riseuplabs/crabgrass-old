@@ -50,7 +50,9 @@ module ModalboxHelper
 
   # to be called each and every time the popup might have changed size
   def resize_modal
-    'Modalbox.resizeToContent();'
+    # i have removed all the resize code from Modalbox. it seemed to be only needed for
+    # animations, and it made compatibility with cg more difficult.
+    "" #'Modalbox.resizeToContent();'
   end
 
   # loads the localized string into modalbox
