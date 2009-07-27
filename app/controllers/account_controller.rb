@@ -102,8 +102,10 @@ class AccountController < ApplicationController
       end
       }
 
-    @user.errors.clear_for_attribute("profiles")
-    flash_message_now :object => @user
+    if @user
+      @user.errors.clear_for_attribute("profiles")
+      flash_message_now :object => @user
+    end
     flash_message_now :object => @visible_profile
 
     render :action => 'signup'
