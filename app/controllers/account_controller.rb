@@ -92,7 +92,7 @@ class AccountController < ApplicationController
     @token = Token.find_by_value_and_action(params[:token], 'verify')
     @token.destroy if @token
     if @token.nil? or @token.user.nil? or !@token.user.unverified?
-      flash_message :info => "Already Verified."[:already_verified], :text => "You don't need to verify again."[:already_verified_text]
+      flash_message :title => "Already Verified."[:already_verified], :success => "You don't need to verify again."[:already_verified_text]
     else
       @token.user.update_attribute(:unverified, false)
       flash_message :title => 'Successfully Verified Email Address'[:successfully_verified_email_message],
