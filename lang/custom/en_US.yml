@@ -48,6 +48,62 @@ welcome_login_message_for_site_stopx: |
 welcome_message_for_site_stopx: |
   The StopXploitation community site is a private social networking and media sharing site for young activists working to end the sexual exploitation of children and adolescents.
 
+group_invite_email_for_site_stopx: "{from_user} has invited you to join the community \"{group}\".\r\n\
+  \r\n\
+  Welcome to StopX.org, an online networking platform for young people who want to connect with each other in the fight against sexual exploitation. This e-mail serves as your official invitation to the site, and is the only way for you to create an account. \r\n\
+  \r\n\
+  Clicking on the link below will start the account creation process, which will make you a full member of the platform.\r\n\
+  \r\n\
+  \r\n  {accept_invite_link}\r\n\
+  \r\n\
+  After you have become a member on the site, you will see a welcome note that gives you basic directions and some example of actions to help you get started.\r\n\
+  \r\n\
+  StopX.org is a private community site, which means that only people who are invited can join. Because the issue of sexual exploitation is very sensitive, it is crucial to ensure that privacy is respected and that everyone can express himself or herself freely and responsibly. This space is your space, and as members of a community it is your responsibility to make it a respectful and productive environment. Nevertheless, we are here to help and support you in your work. If you ever have any issues or concerns, you can always contact our Community Moderators or the main Site Administrator. More information on how to do this will be available on the site.\r\n\
+  \r\n\
+  Upon joining the site, we ask you to take a moment and learn about online safety and the community agreement.\r\n\
+  \r\n\
+  Welcome \xE2\x80\x93 and enjoy your StopX experience!\r\n\
+  \r\n\
+  The StopX team\r\n\
+  \r\n\
+  \r\n\
+  The home page of the StopX.org community can be found here:\r\n\
+  \r\n  {group_home_link}\r\n\
+  \r\n\
+  If you do not wish to join, simply ignore this email.\r\n"
+
+
+usage_agreement_text_for_site_stopx: "Registration to this community is by invitation only. All members must agree to adhere to the conditions of this agreement.\r\n\
+  \r\n\
+  If you agree, please check the \xE2\x80\x98I agree\xE2\x80\x99 checkbox and press the \xE2\x80\x98Register.\xE2\x80\x99\r\n\
+  \r\n\
+  h2. DO\r\n\
+  \r\n\
+  Make sure your parents or guardians approve your StopX.org membership (especially if you are under 18). \r\n\
+  \r\n\
+  Use all available tools to help you take action against the sexual exploitation of children and adolescents. \r\n\
+  \r\n\
+  Connect with others members of the community and work together to make a difference. \r\n\
+  \r\n\
+  Respect each other. \r\n\
+  \r\n\
+  h2. DO NOT\r\n\
+  \r\n\
+  Do not use profane, vulgar, abusive or threatening language.\r\n\
+  \r\n\
+  Do not threaten or promote hatred towards individuals or groups. \r\n\
+  \r\n\
+  Do not use the workspace to talk about issues that are not advocacy-related work to further the movement against the sexual exploitation of children and adolescents. \r\n\
+  \r\n\
+  Do not give out your full name, address, or telephone number in the site. \r\n \r\n\
+  All messages express the views of the author. Neither the owners nor the developers of StopX.org will be held responsible for the content of any message.\r\n\
+  \r\n\
+  StopX members shall not use any portion of the StopX website in connection with any commercial activities/endeavors. StopX respects the intellectual property rights of others and prohibits users from uploading, posting or otherwise transmitting copies of intellectual property (including, but not limited to, audio-visual or photographic content) in a manner which violates the intellectual property rights of any another party. Rights-protected intellectual and creative property is for personal individual use. StopX members will be notified of violations, flagged, and ultimately have their accounts terminated following violations of these terms.\r\n\
+  \r\n\
+  By agreeing to these rules, you promise that you will not post any messages that are obscene, vulgar, sexually-orientated, hateful, threatening, or otherwise violate any laws. \r\n\
+  \r\n\
+  The Stopx.org administrator reserves the right to remove or edit any membership."
+
 ##
 ## GENERAL
 ##

@@ -12,3 +12,62 @@ welcome_login_message_for_site_stopx: |
 welcome_message_for_site_stopx: |
   O StopXploitation é uma rede social privada e um site de mídia compartilhada para jovens ativistas que trabalham para pôr fim à exploração sexual de crianças e adolescentes.
 
+usage_agreement_text_for_site_stopx: "O cadastro nessa comunidade s\xC3\xB3 pode ser feito atrav\xC3\xA9s de um convite. Todos os membros devem concordar em aderir as condi\xC3\xA7\xC3\xB5es deste acordo. \r\n\
+  \r\n\
+  Se voc\xC3\xAA concorda, por favor clique no \xE2\x80\x9CEu concordo\xE2\x80\x9D e aperte \xE2\x80\x9Ccadastrar\xE2\x80\x9D. \r\n\
+  \r\n\
+  FA\xC3\x87A\r\n\
+  \r\n\
+  Tenha certeza de que seus pais ou tutores legais est\xC3\xA3o de acordo com a sua participa\xC3\xA7\xC3\xA3o na comunidade StopX.org (principalmente se voc\xC3\xAA tiver menos de 18 anos de idade).\r\n\
+  \r\n\
+  Utilize todas as ferramentas dispon\xC3\xADveis para te ajudar a agir contra a explora\xC3\xA7\xC3\xA3o sexual de crian\xC3\xA7as e adolescentes. \r\n\
+  \r\n\
+  Conecte com outros membros da comunidade e trabalhe com eles para fazer a diferen\xC3\xA7a. \r\n\
+  \r\n\
+  Respeitem uns aos outros.\r\n\
+  \r\n\
+  N\xC3\x83O FA\xC3\x87A \r\n\
+  \r\n\
+  N\xC3\xA3o use um linguajar profano, vulgar, abusivo ou amea\xC3\xA7ador. \r\n\
+  \r\n\
+  N\xC3\xA3o ameace ou demonstre \xC3\xB3dio contra indiv\xC3\xADduos ou grupos. \r\n\
+  \r\n\
+  N\xC3\xA3o use o espa\xC3\xA7o de trabalho para falar de assuntos n\xC3\xA3o relacionados ao trabalho de advocacia promovendo o movimento contra a explora\xC3\xA7\xC3\xA3o sexual de crian\xC3\xA7as e adolescentes. \r\n\
+  \r\n\
+  N\xC3\xA3o divulgue o seu nome completo, endere\xC3\xA7o ou n\xC3\xBAmero de telefone no site.\r\n\
+  \r\n\
+  Todas as mensagens e seus conte\xC3\xBAdos expressam os pontos de vista do autor. Nem os donos nem os criadores do StopX.org podem ser considerados respons\xC3\xA1veis pelo conte\xC3\xBAdo de qualquer p\xC3\xA1gina ou mensagem.\r\n\
+  \r\n\
+  Os membros do StopX.org n\xC3\xA3o devem utilizar nenhuma parte do site para atividades ou fins comerciais. O StopX.org respeita os direitos de propriedade intelectual de todos e pro\xC3\xADbe seus membros de baixar, postar ou transmitir c\xC3\xB3pias de propriedades intelectuais (incluindo, mas n\xC3\xA3o limitado a conte\xC3\xBAdo \xC3\xA1udio-visual ou fotogr\xC3\xA1fico) em viola\xC3\xA7\xC3\xA3o aos direitos de propriedade intelectual de outro indiv\xC3\xADduo ou grupo. Propriedades intelectuais e culturais protegidas por direitos s\xC3\xA3o para uso individual e pessoal. Caso haja viola\xC3\xA7\xC3\xB5es desses termos, os membros do StopX ser\xC3\xA3o notificados das mesmas, marcados e, finalmente, ter\xC3\xA3o as suas contas encerradas. \r\n\
+  \r\n\
+  \r\n\
+  \r\n\
+  \r\n\
+  Ao concordar com essas regras, voc\xC3\xAA est\xC3\xA1 confirmando que n\xC3\xA3o ir\xC3\xA1 postar nenhuma mensagem obscena, vulgar, amea\xC3\xA7adora ou que viole qualquer lei. \r\n\
+  \r\n\
+  A administra\xC3\xA7\xC3\xA3o do StopX.org se reserva o direito de remover ou editar qualquer cadastro."
+
+
+group_invite_email_for_site_stopx: "{from_user} convidou voc\xC3\xAA para fazer parte da comunidade \"{group}\".\r\n\
+  \r\n\
+  Seja bem-vindo ao StopX.org, uma comunidade online para jovens que querem se conectar com outros jovens na luta contra a explora\xC3\xA7\xC3\xA3o sexual. Esse e-mail \xC3\xA9 o seu convite oficial para acessar o site, e \xC3\xA9 o \xC3\xBAnico meio para a cria\xC3\xA7\xC3\xA3o de uma conta.\r\n\
+  \r\n\
+  Para iniciar o processo basta clicar no link abaixo, e voc\xC3\xAA se tornar\xC3\xA1 membro da comunidade. \r\n\
+  \r\n\
+  \r\n  {accept_invite_link}\r\n\
+  \r\n\
+  Uma vez que voc\xC3\xAA estiver cadastrado no StopX.org, aparecer\xC3\xA1 na sua tela uma nota de boas vindas com informa\xC3\xA7\xC3\xB5es b\xC3\xA1sicas sobre como proceder. \r\n\
+  \r\n\
+  StopX.org \xC3\xA9 uma comunidade online privada, e s\xC3\xB3 pode ser acessada por aqueles que forem convidados. Reconhecendo a natureza sens\xC3\xADvel do tema, \xC3\xA9 extremamente importante que a privacidade seja respeitada, e que todos os membros possam se expressar de maneira livre e respons\xC3\xA1vel. Esse espa\xC3\xA7o \xC3\xA9 seu espa\xC3\xA7o, e como membro da comunidade \xC3\xA9 sua responsabilidade fazer com que esse ambiente seja respeitoso e produtivo. Ainda assim, nos estaremos aqui para ajudar e apoiar o seu trabalho. Caso haja qualquer d\xC3\xBAvida ou problema, n\xC3\xA3o hesite em entrar em contato com nossos moderadores de comunidade ou com o administrador central. Informa\xC3\xA7\xC3\xB5es adicionais poder\xC3\xA3o ser encontradas no site.\r\n\
+  \r\n\
+  Antes de completar o processo, nos pedimos a voc\xC3\xAA que aprenda mais sobre seguran\xC3\xA7a online e leia o acordo da comunidade. \r\n\
+  \r\n\
+  Seja bem-vindo e aproveite a sua experi\xC3\xAAncia StopX!\r\n\
+  \r\n\
+  Time StopX\r\n\
+  \r\n\
+  Visite a homepage do StopX.org:\r\n\
+  \r\n  {group_home_link}\r\n\
+  \r\n\
+  Se voc\xC3\xAA n\xC3\xA3o quiser fazer parte, apenas ignore esta mensagem.\r\n"
+
