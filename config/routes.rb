@@ -97,7 +97,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login 'account/login',   :controller => 'account',   :action => 'login'
   #map.resources :custom_appearances, :only => [:edit, :update]
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
-  map.account_verify '/account/verify/:token', :controller => 'account', :action => 'verify'
+  map.account_verify '/verify_email/:token', :controller => 'account', :action => 'verify_email'
   map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
