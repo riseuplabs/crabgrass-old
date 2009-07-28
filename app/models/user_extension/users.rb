@@ -56,6 +56,9 @@ module UserExtension::Users
       has_many :contacts,    :through => :relationships
       has_many :friends,     :through => :relationships,
         :conditions => "relationships.type = 'Friendship'", :source => :contact
+        def recently_active
+          find(:all, :limit => 10, :order => 'last_seen_at')
+        end
 
       # same result as user.friends, but chainable with other named scopes
       named_scope(:friends_of, lambda do |user|

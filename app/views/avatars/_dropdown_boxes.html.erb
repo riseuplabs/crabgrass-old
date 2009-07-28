@@ -6,29 +6,19 @@
 <%
   ul_class = '' if ul_class.nil?
   entities = [] if entities.nil?
-  left_col = entities[0..entities.size/2]
-  right_col = entities[entities.size/2+1..entities.size]
-  ### or use splice?
+  half = entities.size/2.to_int
+  left_col = entities.slice!(0, half)
+  right_col = entities
 %>
 <ul class='<%= ul_class %> selfclear submenu' style="display: none;">
   <li class='leftcol'>
     <ul>
-      <% left_col.each do |entity| -%>
-      <li>
-        <%= 
-	   display_entity(entity, {:avatar => 'small', :format => :short, :link => true }) 
-	 %>
-      </li>
-      <% end -%>
+      <%= render :partial => 'avatars/dropdown_entity', :collection => left_col %>
     </ul>
   </li>
   <li class='rightcol'>
     <ul>
-      <% right_col.each do |entity| -%>
-      <li>
-        <%= display_entity(entity, {:avatar => 'small', :format => :short, :link => true }) %>
-      </li>
-      <% end -%>
+      <%= render :partial => 'avatars/dropdown_entity', :collection => right_col %>
     </ul>
   </li>
 </ul>

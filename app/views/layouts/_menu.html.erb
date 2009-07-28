@@ -15,13 +15,14 @@
         </li>
         <li class="rightcol">
           <h3 class="dim">Recent Pages</h3>
-          <%= render :partial => 'pages/list', :locals => { :pages => current_user.pages.recent_pages, :columns => [:title], :show_pagination_controls => false, :heading => false } %>
-<!--
+<!--          
+for use with partial when we're ready:
+:pages => current_user.pages.recent_pages
+-->
           <ul class="recent_pages">
             <li class="small_icon page_text_16"><a class="" href="#">A page name</a></li>
             <li class="small_icon page_text_16"><a class="" href="#">Some other page</a></li>
           </ul>
--->
         </li>
       </ul>
     </li>
@@ -36,6 +37,8 @@
   <%- if logged_in? -%>
   <li id='menu-people' class='menu <%= @active_tab == :people ? 'active' : '' %>'>
     <span class="topnav"><%= link_to_active "People"[:menu_people], people_directory_url(:friends), @active_tab == :people %></span>
+    <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'people_dashboard', :entities => current_user.friends.recently_active } %>
+<!--
     <ul class="people_dashboard selfclear submenu" style="display: none">
       <li>
          <h3 class="dim">Friends <span>• <a href="#">More »</a></span></h3>
@@ -44,6 +47,7 @@
          </div>
       </li>
     </ul>
+-->
   </li>
   <li id='menu-groups' class='menu <%= @active_tab == :groups ? 'active' : '' %>'>
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
