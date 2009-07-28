@@ -88,6 +88,8 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
 
   map.connect '', :controller => 'root'
+  
+  map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
   ## GROUP
