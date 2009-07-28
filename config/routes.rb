@@ -57,6 +57,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
     me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
     me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+    me.resources :my_activities,       :as => 'activities',       :controller => 'activities'
   end
 
   map.connect 'me/:action/:id',             :controller => 'me'

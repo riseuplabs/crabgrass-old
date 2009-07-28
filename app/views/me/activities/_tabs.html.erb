@@ -1,0 +1,14 @@
+<% @title_box = capture do -%>
+  <h1><%= "My Activity"[:my_activity_headline] %></h1>
+<% end -%>
+<% @info_box_class = 'tabs' %>
+<% @info_box = capture do -%>
+  <%= Formy.tabs do |f|
+    f.tab do |t|
+      t.label 'Recent'[:overview]
+      t.url my_activities_path
+      t.selected controller?('me/activities')
+      t.icon 'hourglass'
+    end
+  end %>
+<% end -%>

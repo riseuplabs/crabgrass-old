@@ -1,0 +1,9 @@
+<%= render :partial => 'me/activities/tabs' %>
+
+<% if @activities.any? %>
+  <%= will_paginate @activities %>
+  <%= render :partial => 'activity/list', :locals => {:activities => @activities} %>
+  <%= will_paginate @activities %>
+<% else %>
+  <p><%= "None"[:empty_results] %></p>
+<% end %>
