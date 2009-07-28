@@ -4,6 +4,7 @@ class Me::DashboardController < Me::BaseController
 
   def index
     @activities = Activity.for_dashboard(current_user).only_visible_groups.newest.unique.find(:all, :limit => 12)
+    @more_activity_url = my_activities_path
     fetch_data
   end
 
