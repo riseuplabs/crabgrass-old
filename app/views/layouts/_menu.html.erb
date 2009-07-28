@@ -9,22 +9,7 @@
     <%- end -%>
     <li id='menu-me' class='menu <%= @active_tab == :me ? 'active' : '' %>'>
       <span class="topnav"><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
-      <ul class="menu_dashboard selfclear submenu" style="display: none">
-        <li class="leftcol">
-          <%= render :partial => 'me/mebar', :locals => { :menu_id => '_menu' }  %>  
-        </li>
-        <li class="rightcol">
-          <h3 class="dim">Recent Pages</h3>
-<!--          
-for use with partial when we're ready:
-:pages => current_user.pages.recent_pages
--->
-          <ul class="recent_pages">
-            <li class="small_icon page_text_16"><a class="" href="#">A page name</a></li>
-            <li class="small_icon page_text_16"><a class="" href="#">Some other page</a></li>
-          </ul>
-        </li>
-      </ul>
+      <%= render :partial => 'layouts/menu_me_dropdown' %>
     </li>
   <%- else -%>
     <li class='<%= @active_tab == :home ? 'active' : '' %>'>
@@ -38,16 +23,6 @@ for use with partial when we're ready:
   <li id='menu-people' class='menu <%= @active_tab == :people ? 'active' : '' %>'>
     <span class="topnav"><%= link_to_active "People"[:menu_people], people_directory_url(:friends), @active_tab == :people %></span>
     <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'people_dashboard', :entities => current_user.friends.recently_active } %>
-<!--
-    <ul class="people_dashboard selfclear submenu" style="display: none">
-      <li>
-         <h3 class="dim">Friends <span>• <a href="#">More »</a></span></h3>
-         <div class="people_list selfclear">
-           <a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a><a href="#"><img src="/avatars/2/small.jpg" /></a>
-         </div>
-      </li>
-    </ul>
--->
   </li>
   <li id='menu-groups' class='menu <%= @active_tab == :groups ? 'active' : '' %>'>
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>

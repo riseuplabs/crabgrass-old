@@ -1,0 +1,9 @@
+<ul class="menu_dashboard selfclear submenu" style="display: none">
+  <li class="leftcol">
+  <%= render :partial => 'me/mebar', :locals => { :menu_id => '_menu' }  %>
+  </li>
+  <li class="rightcol">
+  <h3 class="dim">Recent Pages</h3>
+  <%= render :partial => 'pages/list_title_only', :locals => {:pages => current_user.pages.recent_pages, :ul_class=> 'recent_pages' } %>
+  </li>
+</ul>
