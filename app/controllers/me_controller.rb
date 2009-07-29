@@ -28,6 +28,11 @@ class MeController < Me::BaseController
     render :text => avatar_for(@user,"x-large")
   end
 
+  def recent_pages
+    return false unless request.xhr?
+    @recent_pages_list = current_user.pages.recent_pages
+  end
+
   protected
 
   def context
