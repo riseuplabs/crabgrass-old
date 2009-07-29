@@ -1,12 +1,12 @@
 #
-# Otherwise known as a group membership invitation 
+# Otherwise known as a group membership invitation
 #
 # recipient: person who may be added to group
 # requestable: the group
 # created_by: person who sent the invite
 #
 class RequestToJoinUs < Request
-  
+
   validates_format_of :requestable_type, :with => /Group/
   validates_format_of :recipient_type, :with => /User/
 

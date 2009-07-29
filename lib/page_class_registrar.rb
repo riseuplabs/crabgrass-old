@@ -20,7 +20,7 @@ class PageClassRegistrar
   def self.list
     self.proxies.values
   end
-  
+
   def self.proxy(arg)
     self.proxies[arg] || PageClassProxy.new
   end

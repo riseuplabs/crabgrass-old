@@ -26,7 +26,7 @@ class Me::TrashController < Me::BaseController
       :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
     ) or render(:action => 'list')
   end
-    
+
   # post required
   def update
     pages = params[:page_checked]

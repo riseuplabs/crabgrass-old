@@ -10,14 +10,14 @@ class GroupParticipationTest < Test::Unit::TestCase
 
     group.name = 'colors'
     group.save!
-    
+
     assert pages.size > 0
     pages.each do |page|
       page.reload
       assert_equal group.name, page.owner_name
     end
   end
-  
+
   def test_associations
     assert check_associations(GroupParticipation)
   end

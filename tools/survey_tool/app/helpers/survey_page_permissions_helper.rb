@@ -57,7 +57,7 @@ module SurveyPagePermissionsHelper
       false
     end
   end
-  
+
   def may_rate_survey_response?(response=nil)
     return false unless logged_in?
 
@@ -90,14 +90,14 @@ module SurveyPagePermissionsHelper
 
   def may_modify_survey?
     return false unless logged_in?
-    current_user.may?(:admin, @page)    
+    current_user.may?(:admin, @page)
   end
 
   # we assume that may_view_survey_response has already been
   # called and returned true.
   def may_view_survey_question?(response, question)
     return false unless logged_in?
-    
+
     if question.private?
       if current_user.may?(:admin, @page)
         true
@@ -110,6 +110,6 @@ module SurveyPagePermissionsHelper
       true
     end
   end
-  
+
 end
 

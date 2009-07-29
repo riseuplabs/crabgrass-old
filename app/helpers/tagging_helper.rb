@@ -6,7 +6,7 @@
 #  <% tag_cloud @tags, %w(tag1 tag2 tag3 tag4) do |tag, css_class| %>
 #    <%= link_to tag.name, { :action => :tag, :id => tag.name }, :class => css_class %>
 #  <% end %>
-#  
+#
 # CSS:
 #
 #  .tag1 { font-size: 1.0em; }
@@ -24,7 +24,7 @@ module TaggingHelper
       max_list_count = tags.sort_by(&:count)[0-max_list].count if tags.size >= max_list
       max_list_count = tags.sort_by(&:count)[0].count if tags.size < max_list
     end
-    
+
     tag_count = 0
     tags.each do |tag|
       next if max_list and (tag.count < max_list_count || (tag.count == max_list_count && tag_count >= max_list))

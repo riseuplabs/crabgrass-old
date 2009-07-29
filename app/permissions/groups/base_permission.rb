@@ -17,12 +17,12 @@ module Groups::BasePermission
     logged_in? and current_user.may?(:admin, group)
   end
   alias_method :may_edit_group?, :may_update_group?
-  
+
   def may_destroy_group?(parent = @group)
     if parent.council != parent
       current_user.may?(:admin, parent)
     else # no explicit council
-      parent.users.size == 1 and 
+      parent.users.size == 1 and
         current_user.member_of?(parent)
     end
   end
@@ -69,7 +69,7 @@ module Groups::BasePermission
   ##
   ## ORGANIZATIONAL PERMISSIONS
   ##
-  
+
   def may_show_subcommittees_of_group?(group = @group)
     return false if group.parent_id
     if logged_in?
@@ -91,7 +91,7 @@ module Groups::BasePermission
       group.profiles.public.may_see_members?
     end
   end
- 
+
   ##
   ## EXTRA
   ##

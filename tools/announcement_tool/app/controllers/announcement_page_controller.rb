@@ -7,7 +7,7 @@ class AnnouncementPageController < WikiPageController
   end
 
   private
-  
+
   # dump the sidebar
   def setup_view
     if logged_in? and @page and current_user.may?(:admin,@page)
@@ -18,7 +18,7 @@ class AnnouncementPageController < WikiPageController
     @show_posts = false
     @show_reply = false
   end
-  
+
   def fetch_wiki
     return true unless @page
     raise "Announcement has no Content" unless @wiki = @page.data

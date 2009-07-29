@@ -1,5 +1,5 @@
 class IntegerAnswer < SurveyAnswer
-  
+
   def validate
     if(self.minimum.any? && self.minimum > self.value)
       errors.add(:value, "must be greater than #{self.minimum}")
@@ -8,7 +8,7 @@ class IntegerAnswer < SurveyAnswer
       errors.add(:value, "must be smaller than #{self.maximum}")
     end
   end
-  
+
   def self.minimum ; self.question.minimum ; end
   def self.maximum ; self.question.maximum ; end
   def value ; read_attribute(:value).to_i ; end

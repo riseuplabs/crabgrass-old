@@ -1,5 +1,5 @@
 #
-# A script to merge two crabgrass databases. 
+# A script to merge two crabgrass databases.
 #
 
 # stuff to configure
@@ -38,19 +38,19 @@ end
 
 def get_max_ids(models)
   hsh = {}
-  models.each do |model|  
+  models.each do |model|
     hsh[model.class_name] = model.maximum(:id) + 1
   end
   return hsh
 end
 
-desc "merge two databases." 
+desc "merge two databases."
 task :merge_databases => :environment do
   ActiveRecord::Base.establish_connection $database_from
   models = get_models
   users_from = User.find(:all)
   groups_from = Group.find(:all)
-  
+
   ActiveRecord::Base.establish_connection $database_to
   max_ids = get_max_ids(models)
 
@@ -69,7 +69,7 @@ task :merge_databases => :environment do
   ThinkingSphinx.updates_enabled = false
 
   models.each do |model|
-    puts    
+    puts
     puts ':::::::::::::: ' + model.class_name + ' :::::::::::::::'
     puts
     model.class_eval do |base|

@@ -20,7 +20,7 @@ class PathFinder::ParsedPath < Array
   PATH_KEYWORDS = {
     # boolean
     'or' => 0,
-    
+
     # conditions
     'unread' => 0,
     'pending' => 0,
@@ -39,8 +39,8 @@ class PathFinder::ParsedPath < Array
     'most_views' => 2,
     'most_edits' => 2,
     'most_stars' => 2,
-    
-    
+
+
     # associations
     'person' => 1,
     'group' => 1,
@@ -59,7 +59,7 @@ class PathFinder::ParsedPath < Array
 #    'created_before' => 1,
 #    'before' => 1,
 #    'after' => 1,
-    
+
     # date field
     'starts' => 0,
     'updated' => 0,
@@ -67,13 +67,13 @@ class PathFinder::ParsedPath < Array
 
     # limit
     'limit' => 1,
-        
+
     # sorting
     'ascending' => 1,
     'descending' => 1,
 #    'recent' => 1,
 #    'old' => 1,
-    
+
     # pseudo keywords (used to make forms easier)
     # ie {:page_state => 'unread'}
     'page_state' => 1
@@ -107,7 +107,7 @@ class PathFinder::ParsedPath < Array
   #  array  --  ['person','23','starred'] --> [['person','23'],['starred']]
   #  hash   --  {"month"=>"6", "pending"=>"true"} --> [['month','6'],['pending']]
   #
-  # the hash form is used to generate a path from the params from a search form. 
+  # the hash form is used to generate a path from the params from a search form.
   #
   def initialize(path=nil)
     return unless path
@@ -134,7 +134,7 @@ class PathFinder::ParsedPath < Array
         key, value = pair
         key = key.to_s
         if PATH_KEYWORDS[key]
-          if key == 'page_state' and value.any? # handle special pseudo keyword... 
+          if key == 'page_state' and value.any? # handle special pseudo keyword...
             self << [value.to_s]
           elsif PATH_KEYWORDS[key] == 0
             self << [key] if value == 'true'
@@ -168,7 +168,7 @@ class PathFinder::ParsedPath < Array
   end
   alias_method :to_s, :to_path     # manual string conversion
   alias_method :to_str, :to_path   # automatic string conversion
-  
+
   def to_param
     self.flatten + (@format ? [@format] : [])
   end
@@ -189,7 +189,7 @@ class PathFinder::ParsedPath < Array
       e[0] == word
     end
   end
-  
+
   # returns the first argument of the pathkeyword
   # if:   path = "/person/23"
   # then: first_arg_for('person') == 23
@@ -205,7 +205,7 @@ class PathFinder::ParsedPath < Array
   def int_for(word)
     (arg_for(word)||0).to_i
   end
-  
+
   # returns the arguments for the keyword
   def args_for(word)
     keyword?(word)
@@ -218,7 +218,7 @@ class PathFinder::ParsedPath < Array
     return nil unless element
     return element[1].gsub('+', ' ')
   end
-  
+
   # returns true if arg is the value for a sort keyword
   # ie sort_arg('created_at') is true if path == /ascending/created_at
   def sort_arg?(arg=nil)
@@ -228,7 +228,7 @@ class PathFinder::ParsedPath < Array
       keyword?('ascending') or keyword?('descending')
     end
   end
-  
+
   def sort_by_time?
     sort_arg?('created_at') or sort_arg?('updated_at')
   end
@@ -249,7 +249,7 @@ class PathFinder::ParsedPath < Array
     end
     self
   end
-    
+
   # merge two parsed paths together.
   # for duplicate keywords use the ones in the path_b arg
   def merge(path_b)
@@ -267,7 +267,7 @@ class PathFinder::ParsedPath < Array
     self
   end
 
-  # replace one keyword with another. 
+  # replace one keyword with another.
   def replace_keyword(keyword, newkeyword, arg1=nil, arg2=nil)
     PathFinder::ParsedPath.new.replace(collect{|elem|
       if elem[0] == keyword

@@ -33,7 +33,7 @@ class GalleryController < BasePageController
   end
 
   protected
- 
+
   def existing_asset_ids(page)
     page.children.collect do |child|
       if child.is_a? Asset

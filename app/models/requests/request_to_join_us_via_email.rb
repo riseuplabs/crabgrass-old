@@ -3,12 +3,12 @@
 # to an email address and not a user.
 #
 # email: send the request to this address.
-# recipient: set once the code is redeemed. 
+# recipient: set once the code is redeemed.
 # requestable: the group
 # created_by: person who sent the invite
 #
 class RequestToJoinUsViaEmail < Request
-  
+
   validates_format_of :requestable_type, :with => /Group/
   validates_presence_of :email
   validates_as_email :email
@@ -54,7 +54,7 @@ class RequestToJoinUsViaEmail < Request
     request = find_by_code_and_email(code,email)
     if request
       if request.state != 'pending'
-        raise ErrorMessage.new("Invite has already been redeemed"[:invite_redeemed])
+        raise ErrorMessage.new("Invite has already been redeemed"[:invite_error_redeemed])
       end
       request.recipient = user
       request.save!

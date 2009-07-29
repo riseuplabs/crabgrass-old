@@ -41,8 +41,8 @@ class AssetPageController < BasePageController
       page.replace_html 'preview_area', asset_link_with_preview(@asset)
     end
   end
-  
-  # xhr request  
+
+  # xhr request
   def add_file_field
     render :update do |page|
       page.insert_html :before, 'add_file_field', render(:partial => 'file_field')
@@ -70,11 +70,11 @@ class AssetPageController < BasePageController
   end
 
   protected
- 
+
   def fetch_asset
     @asset = @page.data if @page
   end
-  
+
   def setup_view
     @show_attach = false
     @show_posts = true

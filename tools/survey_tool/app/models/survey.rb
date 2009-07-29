@@ -6,7 +6,7 @@
 #  end
 #
 class Survey < ActiveRecord::Base
-  
+
   serialize :settings
   serialize_default :settings, {:edit_may_create => true, :edit_may_see_responses => true}
 
@@ -24,7 +24,7 @@ class Survey < ActiveRecord::Base
       self.find(:all, :conditions => ['survey_responses.user_id != ? AND ratings.user_id = ?',user.id,user.id], :include => :ratings, :order => 'ratings.created_at ASC', :limit => count)
     end
   end
-  
+
   def self.define_boolean_serialized_attrs(*args)
     args.each do |attribute|
       define_method(attribute) {settings[attribute]}
@@ -38,7 +38,7 @@ class Survey < ActiveRecord::Base
     :edit_may_rate,   :edit_may_see_ratings,
     :view_may_create, :view_may_see_responses,
     :view_may_rate,   :view_may_see_ratings
-      
+
   def new_questions_attributes=(question_attributes)
     question_attributes.keys.each do |id|
       if id[0..2] == "new"
@@ -59,7 +59,7 @@ class Survey < ActiveRecord::Base
   end
 
   protected
-  
+
   # i can't get the counter cache to work
   def update_counter
     self.update_attribute(:responses_count, self.response_ids.size)

@@ -8,11 +8,11 @@
 
 class ChatController < ApplicationController
   include ChatHelper
-  stylesheet 'chat' 
+  stylesheet 'chat'
   stylesheet 'groups'
   permissions 'chat'
-  before_filter :login_required 
-  prepend_before_filter :get_channel_and_user, :except => :index
+  before_filter :login_required
+  prepend_before_filter :get_channel_and_user
   append_before_filter :breadcrumbs
 
   # show a list of available channels
@@ -47,11 +47,11 @@ class ChatController < ApplicationController
   # Post a user's message to a channel
   def say
     return false unless request.xhr?
-    
+
     # Get the message
     message = params[:message]
     return false unless message
-    
+
     if message.match(/^\/\w+/)
       # It's an IRC style command
       command, arguments = message.scan(/^\/(\w+)(.+?)$/).flatten
@@ -69,7 +69,7 @@ class ChatController < ApplicationController
     end
 
     @channel_user.record_user_action :just_finished_typing
- 
+
     render :layout => false
   end
 
@@ -87,12 +87,12 @@ class ChatController < ApplicationController
     session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
-    
+
     @channel_user.record_user_action :not_typing
-    
+
     render :layout => false
   end
-  
+
   def user_list
     @channel.users_just_left.each do |ex_user|
       user_leaves_channel(ex_user.user, @channel)
@@ -100,7 +100,7 @@ class ChatController < ApplicationController
     end
 
     @channel_user.record_user_action
-   
+
     render :partial => 'chat/userlist', :layout => false
   end
 
@@ -141,11 +141,11 @@ class ChatController < ApplicationController
   end
 
   private
-  
+
   # Get channel and user info that most methods use
   def get_channel_and_user
     @user = current_user
-    @channel = ChatChannel.find_by_id(params[:id]) if params[:id].is_a? Numeric
+    @channel = ChatChannel.find_by_id(params[:id]) if params[:id] !~ /\D/
     unless @channel
       @group = Group.find_by_name(params[:id])
       if @group
@@ -162,28 +162,28 @@ class ChatController < ApplicationController
     true
   end
 
-  
+
   def user_say_in_channel(user, channel, say)
     say = sanitize(say)
     #say = say.gsub(":)", "<img src='../images/emoticons/smiley.png' \/>")
     ChatMessage.new(:channel => channel, :content => say, :sender => user).save
   end
-  
+
   def user_action_in_channel(user, channel, say)
     ChatMessage.new(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action').save
   end
-  
+
   def user_joins_channel(user, channel)
     ChatMessage.new(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys').save
   end
-  
+
   def user_leaves_channel(user, channel)
     ChatMessage.new(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys').save
   end
-  
+
   def sanitize(say)
-# we'll use GreenCloth to process the say string --- 
-# this makes links clickable, and allows inline images, 
+# we'll use GreenCloth to process the say string ---
+# this makes links clickable, and allows inline images,
 # and can easily be extended to use smilies, etc...
 #
 # the only trick is that GreenCloth returns the text wrapped
@@ -194,11 +194,11 @@ class ChatController < ApplicationController
     say.gsub!(/<\/p>$/, '')
     return say
   end
-  
+
   def breadcrumbs
     add_context 'chat', '/chat'
     add_context @channel.name, url_for(:controller => 'chat', :action => 'channel', :id => @channel.name) if @channel
     @active_tab = :chat
   end
-  
+
 end

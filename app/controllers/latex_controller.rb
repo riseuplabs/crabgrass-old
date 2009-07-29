@@ -13,9 +13,9 @@ require 'base64'
 
 class LatexController < ApplicationController
 
-  skip_before_filter :login_required  
+  skip_before_filter :login_required
   #caches_page :show
-  
+
   def show
     begin
       equation = params[:path].join("\n")
@@ -36,9 +36,9 @@ class LatexController < ApplicationController
       render :text => "<pre>%s</pre>" % exc.to_s
     end
   end
-  
+
   private
-  
+
   def decode_and_expand_url_data(string)
     Zlib::Inflate.inflate( Base64.decode64( string.gsub('|','/') ) )
   end
@@ -55,21 +55,21 @@ class LatexController < ApplicationController
     File.delete filename if File.exists? filename
     return blob
   end
-  
+
   # this works, but seems to have reentrant problems.
   # if you try to get two images at once, it bombs out.
   def xx_get_image_from_latex(latex)
     filename = '/tmp/crabgrass-latex-' + Digest::MD5.hexdigest(latex)
     File.open(filename+'.tex', "w") {|f| f.print latex}
     IO.popen("latex -output-director /tmp "+filename+'.tex') {|io| nil while io.gets}
-		img = Magick::ImageList.new(filename + '.dvi')
-		img.trim!
-		blob = img.to_blob {|info| info.format = 'PNG' }
-		FileUtils.rm Dir.glob(filename+'*')
+  img = Magick::ImageList.new(filename + '.dvi')
+  img.trim!
+  blob = img.to_blob {|info| info.format = 'PNG' }
+  FileUtils.rm Dir.glob(filename+'*')
     return blob
   end
-  
-  
+
+
   @@latex_head = %q(
 \documentclass[12pt]{article}
 \usepackage{amsmath}

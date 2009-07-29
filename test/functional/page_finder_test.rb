@@ -5,7 +5,7 @@ A test for the Page.find_by_path ability (the code for this is in lib/path_finde
 The general strategy here is to get a set of page ids using a brute force method
 (such as loading all the pages and rejecting or accepting them using ruby code
 instead of mysql conditions), and then we compare this set of 'reference' page ids
-to the set of page ids return by the find_by_path method. 
+to the set of page ids return by the find_by_path method.
 
 If the sets differ, then the find_by_path method fucked up and it is back to the
 drawing board.
@@ -22,7 +22,7 @@ class AccountController; def rescue_action(e) raise e end; end
 class PageFinderTest < Test::Unit::TestCase
   fixtures :groups, :users, :memberships, :pages, :sites,
    :user_participations, :group_participations, :taggings, :tags
-  
+
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.
     @request    = ActionController::TestRequest.new
@@ -33,34 +33,34 @@ class PageFinderTest < Test::Unit::TestCase
   def test_group_pages_not_authed
     dont_login
     group = groups(:rainbow)
-    
+
     gparts = GroupParticipation.find( :all, :conditions => ['group_id = ?', group.id])
     reference_ids = page_ids(gparts) do |page|
       true if page.public? and page.flow == nil
     end
     path_ids = page_ids(Page.find_by_path('/', @controller.options_for_group(group)))
-    
-    assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal'
   end
-  
+
   def test_group_pages_authed
     login(:blue)
     user = users(:blue)
     group = groups(:rainbow)
-    
+
     gparts = GroupParticipation.find( :all, :conditions => ['group_id = ?', group.id])
     reference_ids = page_ids(gparts) do |page|
       true if (page.public? or user.may?(:view,page)) and page.flow == nil
     end
     path_ids = page_ids(Page.find_by_path('/', @controller.options_for_group(group)))
-    
-    assert_equal reference_ids, path_ids, 'page ids sets must be equal (difference = %s)' % (reference_ids - path_ids) 
+
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal (difference = %s)' % (reference_ids - path_ids)
   end
 
   def test_dashboard
     login(:red)
     user = users(:red)
-    
+
     pages = Page.find( :all, :conditions => ['flow IS NULL'] )
     pages = sort_descending(pages, 'updated_at')
     pages = pages.select do |page|
@@ -68,7 +68,7 @@ class PageFinderTest < Test::Unit::TestCase
     end
     pages = limit(pages,20)
     reference_ids = page_ids(pages)
-    
+
     path_ids = page_ids(
       Page.find_by_path('/descending/updated_at/limit/20', @controller.options_for_me() )
     )
@@ -81,35 +81,35 @@ class PageFinderTest < Test::Unit::TestCase
       puts 'in path but not in reference'
       debug(Page.find(pid),user)
     end
-    assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal'
   end
 
   def test_user_pages_authed
     login(:blue)
     current_user = users(:blue)
     user = users(:red)
-    
+
     uparts = UserParticipation.find :all, :conditions => ['user_id = ?', user.id]
     reference_ids = page_ids(uparts) do |page|
       true if current_user.may?(:view,page) or page.public?
     end
-    
+
     pages = Page.find_by_path('/',@controller.options_for_user(user))
     path_ids = page_ids(pages)
-   
+
     assert_equal reference_ids, path_ids, 'page ids sets must be equal'
   end
 
   def test_unread_inbox_count
     login(:blue)
     user = users(:blue)
-    
-    uparts = UserParticipation.find :all, :conditions => ['user_id = ? AND inbox = ? AND viewed = ?', user.id, true, false]  
+
+    uparts = UserParticipation.find :all, :conditions => ['user_id = ? AND inbox = ? AND viewed = ?', user.id, true, false]
     unread_count = Page.count_by_path('unread', @controller.options_for_inbox)
-    
+
     assert_equal uparts.size, unread_count, 'unread inbox counts should match'
   end
-    
+
   def test_inbox_pending
     login(:blue)
     user = users(:blue)
@@ -120,8 +120,8 @@ class PageFinderTest < Test::Unit::TestCase
     path_ids = page_ids(pages)
 
     assert_equal reference_ids, path_ids, 'pending inbox pages should match'
-  end 
-  
+  end
+
   def test_pagination
     login(:blue)
     user = users(:blue)
@@ -137,13 +137,13 @@ class PageFinderTest < Test::Unit::TestCase
     options = @controller.options_for_me(:page => 1, :per_page => 10)
     pages = Page.paginate_by_path('/descending/updated_at/', options)
     path_ids = page_ids(pages)
-    
+
     assert_equal reference_ids, path_ids, 'pagination pages should match'
   end
-  
+
   def test_flow
     dont_login
-    
+
     flow_page = pages(:delete_test)
     pages = Page.find_by_path('/',:flow => :deleted)
     assert_not_nil pages, 'find with flow condition should return one page'
@@ -153,7 +153,7 @@ class PageFinderTest < Test::Unit::TestCase
   def test_tagging
     login(:blue)
     user = users(:blue)
-    
+
     name = 'test page'
     page = WikiPage.new do |p|
       p.title = name.titleize
@@ -165,10 +165,10 @@ class PageFinderTest < Test::Unit::TestCase
     page.add(groups(:rainbow))
     page.tag_list = "pig, fish, elephant"
     page.save!
-    
-    pages = Page.find_by_path('/tag/fish/', @controller.options_for_group(groups(:rainbow)))   
+
+    pages = Page.find_by_path('/tag/fish/', @controller.options_for_group(groups(:rainbow)))
     assert_equal page.id, pages.first.id, 'find by tag should return correct page'
-    
+
     pages = Page.find_by_path('/tag/fish/', @controller.options_for_me)
     assert_equal page.id, pages.first.id, 'find by tag should return correct page, for me'
   end
@@ -176,12 +176,12 @@ class PageFinderTest < Test::Unit::TestCase
   def test_group_tasks
     login(:blue)
     group = groups(:rainbow)
-    
+
     gparts = GroupParticipation.find :all, :conditions => ['group_id = ?', group.id]
     reference_ids = page_ids(gparts) do |page|
       true if page.instance_of? TaskListPage and !page.resolved?
     end
-    
+
     pages = Page.find_by_path('type/task/pending', @controller.options_for_group( groups(:rainbow) ))
     path_ids = page_ids(pages)
 
@@ -193,17 +193,17 @@ class PageFinderTest < Test::Unit::TestCase
     login(:blue)
     user = users(:blue)
     group = groups(:rainbow)
-    
+
     pages = Page.find( :all, :conditions => ['flow IS NULL'] )
     pages = pages.select do |page|
       group.may?(:view,page) and user.may?(:view,page)
     end
     reference_ids = page_ids(pages)
-    
+
     path_ids = page_ids(
       Page.find_by_path('/group/%s'%group.id, @controller.options_for_me() )
     )
-    
+
     (reference_ids - path_ids).each do |pid|
       puts 'in reference but not in path: id=%s'%pid
       debug(Page.find(pid),user)
@@ -212,10 +212,10 @@ class PageFinderTest < Test::Unit::TestCase
       puts 'in path but not in reference: id=%s'%pid
       debug(Page.find(pid),user)
     end
-    assert_equal reference_ids, path_ids, 'page ids sets must be equal' 
+    assert_equal reference_ids, path_ids, 'page ids sets must be equal'
   end
 
-  
+
   def test_stress
     # normally, we don't run this test because it takes too long.
     # run like so: ruby page_finder_test -n test_stress
@@ -238,7 +238,7 @@ class PageFinderTest < Test::Unit::TestCase
       print " "
       STDOUT.flush
     end
-     
+
     puts 'finding pages: '
     groups.each do |group|
       benchmark{ pages = Page.find_by_path('', @controller.options_for_group(group) ) }
@@ -247,7 +247,7 @@ class PageFinderTest < Test::Unit::TestCase
   end
 
   protected
-  
+
   def login(user = :blue)
     # starts a session and logs in as user 'blue'
     # 'login_as' must come before 'get', otherwise
@@ -257,11 +257,11 @@ class PageFinderTest < Test::Unit::TestCase
     login_as user
     get :index
   end
-  
+
   def dont_login
     get :index
   end
-  
+
   # takes an array of Pages, UserParticipations, or GroupParticipations
   # and returns a Set of page ids. If a block is given, then the page
   # is passed to the block and if the block evaluates to false then
@@ -295,7 +295,7 @@ class PageFinderTest < Test::Unit::TestCase
       exit
     end
   end
-  
+
   def sort_descending(pages,field)
     pages.compact.sort{|a,b| (b.send(field)||0).to_i <=> (a.send(field)||0).to_i }
   end
@@ -303,7 +303,7 @@ class PageFinderTest < Test::Unit::TestCase
   def sort_ascending(pages,field)
     pages.compact.sort{|a,b| (a.send(field)||0).to_i <=> (b.send(field)||0).to_i }
   end
-  
+
   def limit(pages,limit)
     pages[0..(limit-1)]
   end
@@ -338,5 +338,5 @@ class PageFinderTest < Test::Unit::TestCase
      puts '     -----'
    end
   end
-    
+
 end

@@ -6,16 +6,16 @@ class PollPossible < ActiveRecord::Base
   acts_as_list
   belongs_to :poll
   has_many :votes, :dependent => :destroy, :class_name => 'PollVote', :foreign_key => 'possible_id'
-  format_attribute :description  
+  format_attribute :description
   validates_presence_of :name
-  
-  
+
+
   # rails doesn't let you serialize instances of auto loaded classes
   # see the bug here: http://dev.rubyonrails.org/ticket/7537
   # i tried config.load paths, i tried requiring all the actions in environment.rb
   # and here (which *sometimes* works), but they didn't work.
-  # so, instead, we do this sillyness, taken from 
-  # http://wiki.rubyonrails.org/rails/pages/HowtoUseYAMLWithUnknownClasses  
+  # so, instead, we do this sillyness, taken from
+  # http://wiki.rubyonrails.org/rails/pages/HowtoUseYAMLWithUnknownClasses
   def action
     #read_attribute('action').scan(/!ruby\/object:(.*) \n/).uniq.each { |c| require c[0].underscore }
     read_attribute('action').scan(/!ruby\/object:(.*) \n/).uniq.each{|classes| mod = Module; classes[0].split('::').each {|const| mod = mod.const_get(const)}}
@@ -24,17 +24,17 @@ class PollPossible < ActiveRecord::Base
   def action=(s)
     write_attribute('action',YAML.dump(s))
   end
-  
+
   def vote_by_user(user)
     votes.detect {|v| v.user_id == user.id}
   end
-  
+
   def value_by_user(user, default=-1)
     v = vote_by_user(user)
     return v.value if v
     return default
   end
-  
+
   # the score is the sum of:
   # (vote value) x (count of votes with that value)
   def score
@@ -69,6 +69,6 @@ class PollPossible < ActiveRecord::Base
     end
     "%02x%02x%02x" % [ rgb['r'], rgb['g'], rgb['b'] ]
   end
-  
-  
+
+
 end

@@ -1,5 +1,5 @@
 module Mailers::Request
-  
+
   # Send an email letting the user know that a page has been 'sent' to them.
   def request_to_join_us(request, options)
     setup(options)

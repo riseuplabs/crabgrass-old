@@ -2,17 +2,17 @@
 # Here lies many helpers for making links and buttons.
 #
 # Traditionally, all POSTS are done with submit buttons and all
-# GETS are done with links. On occasion, we might want to mix it up. 
+# GETS are done with links. On occasion, we might want to mix it up.
 # These helpers let us do that, and use the accesskey facility in gecko
 # browsers.
-# 
+#
 # Submitting forms
 # ----------------
 #
 # submit_tag
-# The normal built in function. do :class => 'button' or :class => 'link' to 
+# The normal built in function. do :class => 'button' or :class => 'link' to
 # change how it looks.
-# 
+#
 # submit_link
 # a link which will submit the form.
 #
@@ -21,33 +21,33 @@
 # ---------------------------
 #
 # Normally, when a form is submitted it is simply submitted. Often, we would
-# like to be able to have two different submit buttons. Here is how you would 
+# like to be able to have two different submit buttons. Here is how you would
 # do that:
 #
 #   submit_tag 'Save', :name => 'save'
 #   submit_tag 'Cancel', :name => 'cancel'
 #
-# In the controller, then test for params[:save] or params[:cancel]. The 
+# In the controller, then test for params[:save] or params[:cancel]. The
 # values will be useless (set to 'Save' and 'Cancel' in this case, but it could
 # be anything if using translations). Normally, setting :name does not work for
 # ajax forms. This is changed with a modification of the default submit_tag
 # function. All the submit helpers accept the name parameter.
 #
-# 
+#
 # Creating get requests
 # ---------------------
-# 
+#
 # link_to (built-in)
 # this is the built in function for links, no change here.
 #
 # button_to (built-in)
 # pass method get to options.
 # eg. button_to('label', {:action => 'xxx', :method => 'get'}, {:class => 'whatever'})
-#  
+#
 #
 # Creating post requests
 # ------------------------
-# 
+#
 # button_to (built in)
 # creates a button that creates a post request.
 #
@@ -60,12 +60,12 @@
 # -----------------------
 #
 # link_to_remote (built in)
-# 
+#
 # button_to_remote (built in)
 #
 #
 module LinkHelper
-  
+
   # link to if and only if...
   # like link_to_if, but return nil if the condition is false
   def link_to_iff(condition, name, options = {}, html_options = {}, &block)
@@ -75,7 +75,7 @@ module LinkHelper
       nil
     end
   end
-  
+
   ### SUBMITS ###
 
   def submit_link(label, options={})
@@ -89,27 +89,27 @@ module LinkHelper
     end
     %Q(<span class='#{options[:class]}'><a href='#' onclick='#{onclick}' style
 ='#{options[:style]}' class='#{options[:class]}' accesskey='#{accesskey}'>#{
-label}</a></span>)    
+label}</a></span>)
   end
-  
+
   ### AJAX ###
- 
+
   # def button_to_remote()
   #  to be written
-  # end 
-  
+  # end
+
   ### UTIL ###
-  
+
   def shortcut_key(label)
     label.gsub!(/\[(.)\]/, '<u>\1</u>')
     /<u>(.)<\/u>/.match(label).to_a[1]
   end
-  
+
   # just like link_to, but sets the <a> tag to have class 'active'
   # if last argument is true or if the url is in the form of a hash
   # and the current params match this hash.
   def link_to_active(link_label, url_hash, active=nil)
-    active = url_active?(url_hash) || active  # yes this is weird, but we want url_active? to always get called.
+    active = active || url_active?(url_hash)
     selected_class = active ? 'active' : ''
     link_to(link_label,url_hash, :class => selected_class)
   end
@@ -152,6 +152,10 @@ label}</a></span>)
       false
     elsif a == b
       true
+    elsif a.is_a?(Array) or b.is_a?(Array)
+      a = a.to_a.sort
+      b = b.to_a.sort
+      b == a
     elsif a.sub(/^\//, '') == b.sub(/^\//, '')
       true # a controller of '/groups' should match 'groups'
     else

@@ -1,4 +1,4 @@
-# 
+#
 # PathFinder::Sphinx::Builder
 #
 # Concrete subclass of PathFinder::Builder with support for sphinx as the backend.
@@ -45,13 +45,13 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
     @order = nil unless @order.any? # the default sphinx sort is "@relevance DESC"
   end
 
-  def find
+  def search
     # puts "PageTerms.search #{@search_text.inspect}, :with => #{@with.inspect}, :without => #{@without.inspect}, :conditions => #{@conditions.inspect}, :page => #{@page.inspect}, :per_page => #{@per_page.inspect}, :order => #{@order.inspect}, :include => :page"
 
     # 'with' is used to limit the query using an attribute.
     # 'conditions' is used to search for on specific fields in the fulltext index.
     # 'search_text' is used to search all the fulltext index.
-    page_terms = PageTerms.search @search_text, :with => @with, :without => @without, 
+    page_terms = PageTerms.search @search_text, :with => @with, :without => @without,
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page
 
@@ -65,16 +65,22 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
       # but sometimes it does, and if it does we don't want to bomb out.
     end
     page_terms.replace(pages)
+  end
+
+  def find
+    search
   rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options).find         # fall back to mysql
+    PathFinder::Mysql::Builder.new(@original_path, @original_options).find     # fall back to mysql
   end
 
   def paginate
-    find # sphinx search *always* paginates
+    search # sphinx search *always* paginates
+  rescue ThinkingSphinx::ConnectionError
+    PathFinder::Mysql::Builder.new(@original_path, @original_options).paginate     # fall back to mysql
   end
 
   def count
-    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without, 
+    PageTerms.search_for_ids(@search_text, :with => @with, :without => @without,
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page).size
   rescue ThinkingSphinx::ConnectionError

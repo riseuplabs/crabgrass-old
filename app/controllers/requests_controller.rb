@@ -1,6 +1,6 @@
 #
 # Requests Controller.
-#  
+#
 # For code specific to group requests, see groups/requests_controller.rb
 #
 # For code specific to me requests, see me/requests_controller.rb
@@ -81,19 +81,19 @@ class RequestsController < ApplicationController
 #    render :update {|page| page.hide(@request.dom_id)}
 #  rescue Exception => exc
 #    flash_message_now :exception => exc
-#  end   
-  
+#  end
+
   ##
   ## email responses
   ##
-  
+
   def accept
     # redeem_url must be *relative*
-    redeem_url = url_for(:only_path => true, :controller => 'requests', :action => 'redeem', :email => @email, :code => @code) 
+    redeem_url = url_for(:only_path => true, :controller => 'requests', :action => 'redeem', :email => @email, :code => @code)
 
     if @request
       if @request.state != 'pending'
-        raise_error "Invite has already been redeemed"[:invite_redeemed]
+        raise_error "Invite has already been redeemed"[:invite_error_redeemed]
       elsif logged_in?
         redirect_to redeem_url
       else

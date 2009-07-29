@@ -5,8 +5,8 @@ class Relationship < ActiveRecord::Base
   belongs_to :contact, :class_name => 'User', :foreign_key => :contact_id
   belongs_to :discussion, :dependent => :destroy
 
-  # 
-  # auto-create discussion when needed. 
+  #
+  # auto-create discussion when needed.
   #
 
   def discussion_with_auto_create(*args)

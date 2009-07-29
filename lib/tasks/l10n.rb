@@ -10,7 +10,7 @@ CUSTOM_LANG_DIR = "#{LANG_DIR}/custom"
 class String
   def pig
     return self unless self =~ /^[a-z]/i
-    
+
     self =~ /^([a-z]*)(.*)$/i
     word = $1
     punctuation = $2
@@ -50,7 +50,7 @@ def load_language_file(lang_file, options={})
           putc '.'
         else
           print "(update:%s)" % k
-          t.update_attributes(:text => v, :custom => custom) 
+          t.update_attributes(:text => v, :custom => custom)
         end
       else
         Translation.create(:text => v, :key => key, :language => language, :custom => custom)
@@ -170,7 +170,7 @@ namespace :cg do
         end
       end
     end
-    
+
     desc "Create a piglatin file for testing"
     task(:create_piglatin) do
       english = YAML::load_file(File.join(LANG_DIR, 'en_US.yml'))
@@ -183,7 +183,7 @@ namespace :cg do
         YAML::dump(piglatin, outfile)
       end
     end
-    
+
     desc "Enable piglatin in the app"
     task(:enable_piglatin => :environment) do
       Language.create(:name => "piglatin", :code => "la_US")
