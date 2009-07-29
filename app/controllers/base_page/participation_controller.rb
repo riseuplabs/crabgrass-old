@@ -19,7 +19,7 @@ class BasePage::ParticipationController < ApplicationController
   ## Participation CRUD
   ##
 
-  # create or update a user_participation object, granting new access. 
+  # create or update a user_participation object, granting new access.
   def create
     begin
       users, groups, emails = Page.parse_recipients!(params[:add_names])
@@ -38,7 +38,7 @@ class BasePage::ParticipationController < ApplicationController
 
   ## technically, we should probably not destroy the participations
   ## however, since currently the existance of a participation means
-  ## view access, then we need to destory them to remove access. 
+  ## view access, then we need to destory them to remove access.
   def destroy
     error = "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."[:remove_access_error]
     upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
@@ -88,15 +88,12 @@ class BasePage::ParticipationController < ApplicationController
   after_filter :track_starring, :only => :update_star
   def track_starring
     action = params[:add] ? :star : :unstar
-    if current_site.tracking
-      Tracking.insert_delayed(:page => @page,
-                              :group => @group,
-                              :user => current_user,
-                              :action => action)
-    elsif
-      Tracking.insert_delayed(:page => @page,
-                              :action => action)
-    end
+    group = current_site.tracking? && @group
+    user  = current_site.tracking? && current_user
+    Tracking.insert_delayed(
+      :page => @page, :action => action,
+      :group => group, :current_user => user
+    )
   end
 
   def update_watch
@@ -125,7 +122,7 @@ class BasePage::ParticipationController < ApplicationController
       current_user.updated(@page)
       @page.save!
       clear_referer(@page)
-      redirect_to page_url(@page)      
+      redirect_to page_url(@page)
     end
   end
 
@@ -143,7 +140,7 @@ class BasePage::ParticipationController < ApplicationController
     clear_referer(@page)
     redirect_to page_url(@page)
   end
-    
+
   protected
 
   def authorized?
@@ -161,7 +158,7 @@ class BasePage::ParticipationController < ApplicationController
   end
 
   # given the params[:recipients] returns an options-hash for recipients
-#  def get_recipients_with_options(recipients_with_options)  
+#  def get_recipients_with_options(recipients_with_options)
 #    options_with_recipients = {}
 #    recipients_with_options.each_pair do |recipient,options|
 #      if options.kind_of?(Hash)
@@ -171,10 +168,10 @@ class BasePage::ParticipationController < ApplicationController
 #      @recipients ||= []
 #      @recipients << recipient
 #    end
-#    options_with_recipients   
+#    options_with_recipients
 #  end
 
-#  
+#
 #  def symbolize_options options
 #    return options unless options.respond_to?(:each)
 #    symbolized_options = {}

@@ -2,18 +2,18 @@
 # A controller for private messages
 #
 # All private messages are stored in a discussion object that is shared by
-# exactly two people. 
+# exactly two people.
 #
 # These two people always share the same discussion record whenever they send
 # messages back and forth
 #
 class Me::PrivateMessagesController < Me::BaseController
-  
+
   prepend_before_filter :fetch_data
   permissions 'posts'
   stylesheet 'messages'
 
-  # for autocomplete  
+  # for autocomplete
   javascript 'effects', 'controls', 'autocomplete', :action => :index
   helper 'autocomplete'
 
@@ -25,7 +25,7 @@ class Me::PrivateMessagesController < Me::BaseController
   # GET /my/messages/private/<username>
   def show
     if @recipient
-      @relationship.update_attributes(:viewed_at => Time.now, :unread_count => 0)
+      @relationship.update_attributes(:visited_at => Time.now, :total_visits => @relationship.total_visits+1, :unread_count => 0)
       @posts = @discussion.posts.paginate(:page => params[:page], :order => 'created_at DESC')
       @last_post = @posts.first
     end
@@ -60,7 +60,7 @@ class Me::PrivateMessagesController < Me::BaseController
 
   def authorized?
     if current_user == @recipient
-      raise ErrorMessage.new("cannot send messages to yourself", :redirect => my_private_messages_url) 
+      raise ErrorMessage.new("cannot send messages to yourself", :redirect => my_private_messages_url)
     end
 
     if action?(:update, :create)

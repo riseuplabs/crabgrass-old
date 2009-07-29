@@ -14,7 +14,7 @@
   <%- else -%>
     <li class='<%= @active_tab == :home ? 'active' : '' %>'>
       <span class="topnav"><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
-    </li>    
+    </li>
   <%- end -%>
 
   <%# for now, i am disabling these tabs when not logged in. why? because
@@ -28,14 +28,14 @@
     <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
     <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %>
     </span>
-      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'groups_dashboard', :entities => current_user.groups.recently_active } %>
+      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'groups_dashboard', :entities => current_user.primary_groups.most_active } %>
   </li>
 
   <%- if current_site.has_networks? -%>
     <li id='menu-networks' class='menu <%= @active_tab == :networks ? 'active' : '' %>'>
       <% url = logged_in? ? network_directory_url(:action => :my) : network_directory_url %>
       <span class="topnav"><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
-      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class => 'networks_dashboard', :entities => current_user.groups.recently_active } %>
+      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class => 'networks_dashboard', :entities => current_user.primary_networks.most_active } %>
     </li>
   <%- end -%>
 
