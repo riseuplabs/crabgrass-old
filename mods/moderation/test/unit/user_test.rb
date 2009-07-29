@@ -1,11 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  fixtures :users, :sites, :groups, :pages, :posts
+  fixtures :users, :sites, :groups, :pages, :posts, :memberships
 
   def setup
-    debugger
-    Conf.enable_site_testing("moderation")
+    enable_site_testing("moderation")
   end
 
   def test_mixin_is_working

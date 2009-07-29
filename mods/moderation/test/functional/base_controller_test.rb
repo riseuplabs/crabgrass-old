@@ -5,7 +5,7 @@ class Admin::BaseControllerTest < ActionController::TestCase
   fixtures :users, :sites, :groups, :memberships
 
   def setup
-    Conf.enable_site_testing
+    enable_site_testing("moderation")
   end
 
   def test_user_authorization
