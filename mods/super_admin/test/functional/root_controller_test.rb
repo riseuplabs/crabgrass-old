@@ -3,7 +3,7 @@ require 'root_controller'
 class RootController; def rescue_action(e) raise e end; end
 
 class RootControllerTest < Test::Unit::TestCase
-  fixtures :groups, :users, :pages, :memberships, 
+  fixtures :groups, :users, :pages, :memberships,
             :user_participations, :page_terms, :sites
 
   include UrlHelper

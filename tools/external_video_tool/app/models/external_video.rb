@@ -19,7 +19,7 @@ end
 class ExternalVideo < ActiveRecord::Base
   include PageData
   before_save :update_page_terms
-  
+
   HEIGHT_RE = /height(="|:)(\d+)/
   WIDTH_RE = /width(="|:)(\d+)/
 
@@ -49,7 +49,7 @@ class ExternalVideo < ActiveRecord::Base
       :default_height =>  '300',
       :template => %Q[<embed src="http://blip.tv/play/%1$s" type="application/x-shockwave-flash" width="%2$d" height="%3$d" allowscriptaccess="always" allowfullscreen="true"></embed>]
     },
-    
+
     { :name => :vimeo,
       :token => /vimeo\.com/,
       :media_key_pattern => /vimeo.com\/moogaloop.swf\?clip_id=([\w-]+)/,
@@ -76,7 +76,7 @@ class ExternalVideo < ActiveRecord::Base
   end
 
   def thumbnail_url
-    service[:thumbnail_template] % media_key if media_key and service and service[:thumbnail_template] 
+    service[:thumbnail_template] % media_key if media_key and service and service[:thumbnail_template]
   end
 
   def media_key
@@ -106,7 +106,7 @@ class ExternalVideo < ActiveRecord::Base
   def build_embed(crop_width = width, crop_height = height)
     service[:template ] % [media_key, crop_width, crop_height] if service
   end
-  
+
   def media_embed=(str)
     # @service is a cache that needs to be cleared
     @service = nil

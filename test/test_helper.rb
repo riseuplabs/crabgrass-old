@@ -118,6 +118,16 @@ class Test::Unit::TestCase
     end
   end
 
+  def assert_success_message(title_regexp = nil, text_regexp = nil)
+    assert_equal 'info', flash[:type]
+    if title_regexp
+      assert flash[:title] =~ title_regexp, 'success message title did not match %s. it was %s.'%[title_regexp, flash[:text]]
+    end
+    if text_regexp
+      assert flash[:text] =~ text_regexp, 'success message text did not match %s. it was %s.'%[text_regexp, flash[:text]]
+    end
+  end
+
   ##
   ## ASSET HELPERS
   ##
@@ -286,6 +296,16 @@ See also doc/SPHINX"
     # # restore
     # Conf.enabled_site_ids = old_enabled_site_ids
     # Site.current = old_site
+  end
+
+  def enable_unlimited_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name, false) do
+        yield
+      end
+    else
+      enable_site_testing(site_name, false)
+    end
   end
 
   ##

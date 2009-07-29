@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_timezone, :pre_clean
   around_filter :rescue_authentication_errors
   before_filter :header_hack_for_ie6
+  before_filter :redirect_unverified_user
   before_render :context_if_appropriate
 
   session :session_secure => Conf.enforce_ssl
@@ -67,6 +68,12 @@ class ApplicationController < ActionController::Base
     # (where the date specified is right now)
     #
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
+  end
+
+  def redirect_unverified_user
+    if logged_in? and current_user.unverified?
+      redirect_to account_url(:action => 'unverified')
+    end
   end
 
   # an around filter responsible for setting the current language.
@@ -246,7 +253,7 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception=nil)
     if exception
-      if exception.try.options.try[:redirect]
+      if exception.try(:options).try[:redirect]
         flash_message :exception => exception
         redirect_to exception.options[:redirect]
         return

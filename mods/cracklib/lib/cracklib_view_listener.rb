@@ -8,7 +8,7 @@ class CracklibViewListener < Crabgrass::Hook::ViewListener
       </div>
     ] + observe_form(:signup_form, :url => { :controller => :cracklib, :action => :check }, :frequency => 0.5, :update => 'password_strength')
   end
-   
+
   def html_head(context)
     return unless params[:controller] == 'account'
     %Q[

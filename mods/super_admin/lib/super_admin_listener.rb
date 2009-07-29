@@ -9,12 +9,8 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
     end
   end
 
-  def top_menu(context)
-    return unless logged_in?
-    if current_user.superadmin? or session[:admin]
-      content_tag(:li, content_tag(:span, link_to("Admin", '/admin')))
-    end
+  def admin_nav(context)
+    render(:partial => '/admin/base/super_admin_nav') if may_super?
   end
 
 end
-

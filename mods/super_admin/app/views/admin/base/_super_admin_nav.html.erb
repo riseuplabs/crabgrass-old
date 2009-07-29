@@ -1,0 +1,15 @@
+<h4>Superadmin</h4>
+<ul class="admin_nav">
+  <li class="<%= 'active' if @admin_active_tab == 'users_new'%>">
+    <%= link_to 'create users', new_admin_user_path %>
+  </li>
+  <li class="<%= 'active' if @admin_active_tab == 'users_index'%>">
+    <%= link_to 'edit users', users_path %>
+  </li>
+  <li class="<%= 'active' if @admin_active_tab == 'groups_new'%>">
+    <%= link_to 'create groups', new_group_path %>
+  </li>
+  <li class="<%= 'active' if @admin_active_tab == 'groups_index'%>">
+    <%= link_to 'edit groups', groups_path %>
+  </li>
+</ul>

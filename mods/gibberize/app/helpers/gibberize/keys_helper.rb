@@ -7,7 +7,7 @@ module Gibberize::KeysHelper
   def edit_key_path(arg)
     edit_gibberize_key_path(arg)
   end
- 
+
   def new_key_path
     new_gibberize_key_path
   end
