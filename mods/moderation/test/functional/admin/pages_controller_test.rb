@@ -2,9 +2,13 @@ require File.dirname(__FILE__) + '/../../test_helper'
 
 class Admin::PagesControllerTest < ActionController::TestCase
 
-  fixtures :users, :sites, :groups, :memberships
+  fixtures :users, :sites, :groups, :memberships, :pages
 
-  def test_index
+  def setup
+    enable_site_testing("moderation")
+  end
+
+  def test_index_view
     login_as :blue
     get :index
     assert_response :success
@@ -19,76 +23,37 @@ class Admin::PagesControllerTest < ActionController::TestCase
 
   def test_update
     login_as :blue
-    @user = users(:red)
-    # test change password and display name
-    post :update, :user => {:login => @user.login, :display_name => 'RedRoot!', :email => @user.email, :password => 'changedpassword', :password_confirmation => 'changedpassword' }
-    assert_redirected :action => 'show'
-    assert_equal assigns(:user).login, 'RedRoot!'
+    page = pages(:video1) #blue does not have access to video1
+    # test change moderation flags should be possible never the less.
+    [:public, :vetted].each do |para|
+      post :update, :id => page.id, :page => {para => true}
+      assert_response :redirect
+      assert_redirected_to :action => 'index'
+      assert page.reload.send("#{para.to_s}?")
+    end
+    [:public, :vetted].each do |para|
+      post :update, :id => page.id, :page => {para => false}
+      assert_response :redirect
+      assert_redirected_to :action => 'index'
+      assert !page.reload.send("#{para.to_s}?")
+    end
   end
 
-    # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
-  def trash
-    page = Page.find params[:id]
-    page.update_attribute(:flow, FLOW[:deleted])
-    redirect_to :action => 'index', :view => params[:view]
-  end
-
-  # undelete a page by setting setting flow=nil, the page will now be 'undeleted'(unhidden)
-  def undelete
-    page = Page.find params[:id]
-    page.update_attribute(:flow, nil)
-    redirect_to :action => 'index', :view => params[:view]
-  end
-
-  # set page.public = true for a page which has its flag public_requested = true
-  def update_public
-    page = Page.find params[:id]
-    page.update_attributes({:public => params[:public], :public_requested => false})
-    redirect_to :action => 'index', :view => params[:view]
-  end
-
-# set page.public = false
-  def remove_public
-    page = Page.find params[:id]
-    page.update_attributes({:public => false, :public_requested => true})
-    redirect_to :action => 'index', :view => params[:view]
-  end
-
-
-  def test_approve
-
-  end
-
-  def test_trash
+  def test_update_restricted_to_moderation
     login_as :blue
-    get :trash, :id => @page.id
-    assert_response :success
-    assert assigns(:user)
+    page = pages(:video1) #blue does not have access to video1
+    post :update, :id => page.id, :page => {:title => "pwned"}
+    assert_response :redirect
+    assert_redirected_to({:controller => 'account', :action => 'login'},
+      "blue may moderate but not change the page.")
   end
 
-  def test_delete
-    login_as :blue
-    post :create, :user => {:login => 'testuser', :display_name => 'TestUser', :email => 'testuser@testsite.com', :password => 'testpassword', :password_confirmation => 'testpassword' }
-    assert_redirected :action => 'show'
-    assert_equal assigns(:user).login, 'testuser'
-
-    # todo: assert failing create test
+  def test_update_restricted_to_moderators
+    login_as :red
+    page = pages(:video1) #blue does not have access to video1
+    post :update, :id => page.id, :page => {:vetted => true}
+    assert_response :redirect
+    assert_redirected_to({:controller => 'account', :action => 'login'},
+      "red may not moderate the page.")
   end
-
-  def test_update_public
-    login_as :blue
-    @user = users(:red)
-    get :edit, :user_id => @user.id
-    assert_response :success
-    assert_equal @user.login, assigns(:user).login
-  end
-
-  def test_remove_public
-    login_as :blue
-    @user = users(:red)
-    get :destroy, :id => @user.login
-    assert_redirected :action => 'index'
-    assert_nil User.find_by_login(@user.login)
-  end
-
 end
