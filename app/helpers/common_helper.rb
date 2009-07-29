@@ -1,5 +1,6 @@
 module CommonHelper
 
+  include MenuHelper
   include PageHelper
   include UrlHelper
   include LayoutHelper

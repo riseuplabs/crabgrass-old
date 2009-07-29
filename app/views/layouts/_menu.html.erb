@@ -1,54 +1,48 @@
 <div id="top_menu">
 <%= render :partial => 'layouts/menu_login' %>
 <ul>
-  <%- if logged_in? -%>
-    <%- if current_site.network -%>
-      <li id='menu_home' class='<%= @active_tab == :home ? 'active' : '' %>'>
-        <span class="topnav"><%= link_to_active 'Home'[:menu_home], '/', @active_tab == :home %></span>
-      </li>
-    <%- end -%>
-    <li id='menu-me' class='menu <%= @active_tab == :me ? 'active' : '' %>'>
-      <span class="topnav"><%= link_to_active 'Me'[:menu_me], '/me/dashboard', @active_tab == :me %></span>
-      <%= render :partial => 'layouts/menu_me_dropdown' %>
-    </li>
-  <%- else -%>
-    <li class='<%= @active_tab == :home ? 'active' : '' %>'>
-      <span class="topnav"><%= link_to_active "Home"[:menu_home], '/', @active_tab == :home %></span>
-    </li>
-  <%- end -%>
 
-  <%# for now, i am disabling these tabs when not logged in. why? because
-      the controllers currently bomb out in bad ways if you are not logged in. %>
-  <%- if logged_in? -%>
-  <li id='menu-people' class='menu <%= @active_tab == :people ? 'active' : '' %>'>
-    <span class="topnav"><%= link_to_active "People"[:menu_people], people_directory_url(:friends), @active_tab == :people %></span>
-    <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'people_dashboard', :entities => current_user.friends.recently_active } %>
-  </li>
-  <li id='menu-groups' class='menu <%= @active_tab == :groups ? 'active' : '' %>'>
-    <% url = logged_in? ? group_directory_url(:action => :my) : group_directory_url %>
-    <span class="topnav"><%= link_to_active "Groups"[:menu_groups], url, @active_tab == :groups %>
-    </span>
-      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class=>'groups_dashboard', :entities => current_user.primary_groups.most_active } %>
-  </li>
+%   if logged_in?
+%     if current_site.network
+<%=     top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
+%     end
+<%=   top_menu('menu_me', 'Me'[:menu_me], '/me/dashboard', :active => @active_tab == :me, :menu_items => sub_menu('me')) %>
+%   else
+<%=   top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
+%   end
 
-  <%- if current_site.has_networks? -%>
-    <li id='menu-networks' class='menu <%= @active_tab == :networks ? 'active' : '' %>'>
-      <% url = logged_in? ? network_directory_url(:action => :my) : network_directory_url %>
-      <span class="topnav"><%= link_to_active "Networks"[:menu_networks], url, @active_tab == :networks %></span>
-      <%= render :partial => 'avatars/dropdown_boxes', :locals => {:ul_class => 'networks_dashboard', :entities => current_user.primary_networks.most_active } %>
-    </li>
-  <%- end -%>
+<%# for now, i am disabling these tabs when not logged in. why? because
+    the controllers currently bomb out in bad ways if you are not logged in. %>
 
-  <%- if logged_in? and current_site.chat? -%>
-  <li class='<%= @active_tab == :chat ? 'active' : '' %>'>
-    <span class="topnav"><%= link_to_active "Chat"[:menu_chat], '/chat', @active_tab == :chat %></span>
-  </li>
-  <%- end -%>
+%   if logged_in?
+<%=   top_menu "menu_people",
+        "People"[:menu_people],
+        people_directory_url(:friends),
+        :active => @active_tab == :people,
+        :menu_items => sub_menu('boxes', :entities => current_user.friends.recently_active ) %>
 
-  <%- end -%>
-  <%= call_hook :top_menu %>
+<%=   top_menu "menu_groups",
+        "Groups"[:menu_groups],
+        group_directory_url,
+        :active => @active_tab == :groups,
+        :menu_items => sub_menu('boxes', :entities => current_user.primary_groups.most_active ) %>
+
+%     if current_site.has_networks?
+<%=     top_menu "menu_networks",
+          "Networks"[:menu_networks],
+          network_directory_url,
+          :active => @active_tab == :networks,
+          :menu_items => sub_menu('boxes', :entities => current_user.primary_networks.most_active ) %>
+%     end
+%   end
+%   if logged_in? and current_site.chat?
+<%=   top_menu "menu_chat", "Chat"[:menu_chat], '/chat', :active => @active_tab == :chat %>
+%   end
+<%= call_hook :top_menu %>
+
 </ul>
 <div style='clear: both;'></div>
 </div>
 
 <%= javascript_tag remote_function(:url => me_params(:action => :recent_pages)) %>
+

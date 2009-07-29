@@ -1,5 +1,5 @@
 <%#
-  # this partial display a grid of little avatar boxes. 
+  # this partial display a grid of little avatar boxes.
   # arguments: groups, people, side
   # This markup and css may seem odd, but it works in all browsers.
 -%>
@@ -18,13 +18,17 @@
 <ul class='<%= ul_class %> selfclear submenu' style="display: none;">
   <li class='leftcol'>
     <ul>
-      <%= render :partial => 'avatars/dropdown_entity', :collection => left_col %>
+      <%- for entity in left_col -%>
+        <li><%= display_entity(entity, {:avatar => 'small', :format => :short, :link => true }) %></li>
+      <%- end -%>
     </ul>
   </li>
   <% if not right_col.empty? -%>
     <li class='rightcol'>
       <ul>
-        <%= render :partial => 'avatars/dropdown_entity', :collection => right_col %>
+        <%- for entity in right_col -%>
+          <li><%= display_entity(entity, {:avatar => 'small', :format => :short, :link => true }) %></li>
+        <%- end -%>
       </ul>
     </li>
   <% end -%>

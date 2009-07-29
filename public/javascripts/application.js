@@ -1,5 +1,5 @@
 function quickRedReference() {
-  window.open( 
+  window.open(
     "/static/greencloth",
     "redRef",
     "height=600,width=750/inv,channelmode=0,dependent=0," +
@@ -38,7 +38,7 @@ function toggle_all_checkboxes(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
 }
 
-// submits a form, from the onclick of a link. 
+// submits a form, from the onclick of a link.
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
 // value is optional.
 function submit_form(form_element, name, value) {
@@ -188,7 +188,7 @@ var SubMenu = Class.create({
     this.trigger.observe('mouseout', this.hideMenu.bind(this));
     //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
   },
- 
+
   menuIsOpen: function() {
     return($$('ul.submenu').detect(function(e){return e.visible()}) != null);
   },
@@ -217,14 +217,14 @@ var SubMenu = Class.create({
 
 });
 
-
 document.observe('dom:loaded', function() {
-  new SubMenu("menu-me");
-  new SubMenu("menu-people");
-  new SubMenu("menu-groups");
-  new SubMenu("menu-networks");
+  new SubMenu("menu_me");
+  new SubMenu("menu_people");
+  new SubMenu("menu_groups");
+  new SubMenu("menu_networks");
 });
 
+//
 // DEAD SIMPLE AJAX HISTORY
 // allow location.hash change to trigger a callback event.
 //
