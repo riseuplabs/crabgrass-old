@@ -133,7 +133,7 @@ div#top_menu
         padding: 0.25em 0.5em
         border: 1px solid
         border-color= !menu_border_color
-        width: 30em
+        //width: 30em
         z-index: 99
         ul
           border: 0 none transparent
@@ -159,15 +159,15 @@ div#top_menu
           padding-left: 25px
         li.leftcol
           float: left
-          border-right= 1px solid !menu_border_color
           width: 12em
           ul
             li
               padding-bottom: 2px
         li.rightcol
+          width: 12em
           padding: 0 0 0 10px
           margin: 0 0 0 13em
-          //border-left= 1px solid !menu_border_color
+          border-left= 1px solid !menu_border_color
           ul li
             padding-bottom: 2px
         ul.recent_pages a
@@ -175,16 +175,11 @@ div#top_menu
       //&:hover
       //  ul
       //    display: block
-    ul.people_dashboard
-      width: 210px
-      padding: 10px
-      div.people_list a img
-        padding: 5px
-    ul.groups_dashboard ul.networks_dashboard
-      li.leftcol
-        width: 50%
-      li.rightcol
-        margin-left: 50%
+    ul.groups_dashboard ul.networks_dashboard ul.people_dashboard
+      //li.leftcol
+        //width: 50%
+      //li.rightcol
+        //margin-left: 12em 
       li.name_icon
         padding: 4px 0 4px 36px
         min-height: 36px
