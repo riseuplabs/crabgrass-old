@@ -16,6 +16,23 @@ class YuckyController < ApplicationController
     end
   end
 
+  def add_chat
+    group = Group.find params[:id]
+    page = WikiPage.new
+    page.title = "Chat moderation. Group: #{group.name}. Time: #{Time.zone.now}"
+    page.owner = current_user
+    body = "#{current_user.login} marked chat for group [#{group.name}->/chat/archive/#{group.name}] as inappropriate on #{Time.zone.now}"
+    data = Wiki.new do |w|
+      w.user =  current_user
+      w.body = body
+    end
+    page.data = data
+    page.save
+    @rateable = page
+    add
+    redirect_to referer
+  end
+
   # removes any yucky marks from the rateable
   def remove
     if rating = @rateable.ratings.by_user(current_user).first
@@ -68,8 +85,14 @@ class YuckyController < ApplicationController
   end
 
   def authorized?
+    # when flagging a chat channel @rateable is created by the add_chat action
+    # so it doesn't exist at this point
+    if @rateable
     # you can't flag your own content as (in)appropriate!
-    @rateable.created_by != current_user
+      @rateable.created_by != current_user
+    else
+      true
+    end
   end
 
   prepend_before_filter :fetch_rateable
