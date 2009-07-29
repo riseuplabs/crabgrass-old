@@ -22,7 +22,7 @@ module UserExtension::Pages
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
         def recent_pages
-          find(:all, :order => 'updated_at', :limit => 5)
+          find(:all, :order => 'updated_at DESC', :limit => 5)
         end
       end
 
