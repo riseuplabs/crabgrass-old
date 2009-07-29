@@ -13,10 +13,10 @@ class UserTest < Test::Unit::TestCase
 
   def test_sites
     user = users(:blue)
-    
+
     assert_equal true, user.all_groups.any?
     assert_equal [1,1,2,2,2], user.all_groups.collect{|g|g.site_id}.compact.sort
-    
+
     site = sites(:limited)
     groups(:true_levellers).update_attribute(:site_id, site.id)
 
@@ -27,5 +27,5 @@ class UserTest < Test::Unit::TestCase
   end
 
   protected
-  
+
 end

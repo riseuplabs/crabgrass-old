@@ -42,10 +42,10 @@ class WikiPageControllerTest < ActionController::TestCase
     users(:blue).updated(page)
     login_as :orange
     get :show, :page_id => page.id
-    assert_not_nil assigns(:last_seen), 'last_seen should be set, since the page has changed'    
+    assert_not_nil assigns(:last_seen), 'last_seen should be set, since the page has changed'
   end
 =end
-  
+
   def test_create
     login_as :quentin
 
@@ -55,7 +55,7 @@ class WikiPageControllerTest < ActionController::TestCase
     end
 
     assert_difference 'Page.count' do
-      post :create, :id => WikiPage.param_id, :group_id=> "", :create => "Create page", :tag_list => "", 
+      post :create, :id => WikiPage.param_id, :group_id=> "", :create => "Create page", :tag_list => "",
            :page => {:title => 'my title', :summary => ''}
       assert_response :redirect
       assert_not_nil assigns(:page)
@@ -74,7 +74,7 @@ class WikiPageControllerTest < ActionController::TestCase
     get :edit, :page_id => pages(:wiki).id
     assert_kind_of Hash, assigns(:wiki).locked?, "editing a wiki should lock it"
     assert_equal users(:orange).id, assigns(:wiki).locked_by_id, "should be locked by orange"
-    
+
     assert_no_difference 'pages(:wiki).updated_at' do
       post :edit, :page_id => pages(:wiki).id, :cancel => 'true'
       assert_equal nil, pages(:wiki).data.locked?, "cancelling the edit should unlock wiki"
@@ -94,7 +94,7 @@ class WikiPageControllerTest < ActionController::TestCase
 
     get :print, :page_id => pages(:wiki).id
     assert_response :success
-#    assert_template 'print'    
+#    assert_template 'print'
   end
 
   def test_preview

@@ -41,8 +41,8 @@ end
 # i can't get the tests to work unless we use this.
 class MockFile
   attr_reader :path
-	def initialize(path); @path = path; end
-	def size; 1; end
+  def initialize(path); @path = path; end
+  def size; 1; end
   def original_filename; @path.split('/').last; end
   def read; File.open(@path) { |f| f.read }; end
   def rewind; end
@@ -115,6 +115,16 @@ class Test::Unit::TestCase
     assert_equal 'error', flash[:type]
     if regexp
       assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp, flash[:text]]
+    end
+  end
+
+  def assert_success_message(title_regexp = nil, text_regexp = nil)
+    assert_equal 'info', flash[:type]
+    if title_regexp
+      assert flash[:title] =~ title_regexp, 'success message title did not match %s. it was %s.'%[title_regexp, flash[:text]]
+    end
+    if text_regexp
+      assert flash[:text] =~ text_regexp, 'success message text did not match %s. it was %s.'%[text_regexp, flash[:text]]
     end
   end
 
@@ -286,6 +296,16 @@ See also doc/SPHINX"
     # # restore
     # Conf.enabled_site_ids = old_enabled_site_ids
     # Site.current = old_site
+  end
+
+  def enable_unlimited_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name, false) do
+        yield
+      end
+    else
+      enable_site_testing(site_name, false)
+    end
   end
 
   ##

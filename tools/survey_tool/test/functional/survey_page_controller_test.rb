@@ -1,21 +1,21 @@
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
 class SurveyPageControllerTest < ActionController::TestCase
-    
+
   fixtures :users, :pages, :groups, :user_participations, :survey_questions,
     :surveys, :survey_responses, :survey_answers
-  
+
   def test_create_survey
     login_as :blue
     post :create, :page => {:title => "a little survey for you"}, :id=>"survey"
     page = assigns(:page)
-    
+
     post :edit, :page_id => page.id, :survey => {:description => 'description'}
     assert assigns(:survey).valid?
     assert assigns(:page).valid?
     assert_not_nil Page.find(assigns(:page).id).data
   end
-  
+
   def test_save_survey
     login_as :blue
     get :edit, :page_id => pages("survey_blank").id

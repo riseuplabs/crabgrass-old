@@ -19,11 +19,11 @@ class TranslationTest < ActiveSupport::TestCase
 #    trans = Translation.new valid_translation.merge(:text => nil)
 #    assert !trans.save, "translation should require some text"
 #  end
-  
+
 #  def test_best_guess
 #    assert_equal "Hello", Translation.best_guess(keys(:hello), languages(:english))
 #  end
-  
+
 #  def test_wanted_from
 #    assert_equal Translation, Translation.wanted_from(users(:abie)).class
 #  end

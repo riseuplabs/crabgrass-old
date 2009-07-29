@@ -19,17 +19,17 @@ class Tool::BasePageControllerTest < Test::Unit::TestCase
     get :create, :id => WikiPage.param_id
     assert_response :redirect
     assert_redirected_to :controller => 'account', :action => 'login'
-    
+
     post :create, :id => WikiPage.param_id
     assert_redirected_to :controller => 'account', :action => 'login'
   end
 
   def test_create_with_login
     login_as :orange
-    
+
     get :create, :id => WikiPage.param_id
     assert_response :success
-  
+
     assert_difference 'Page.count' do
       post :create, :id => WikiPage.param_id, :page => { :title => 'test title' }
       assert_response :redirect

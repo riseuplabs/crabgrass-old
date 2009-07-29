@@ -7,7 +7,7 @@ class Me::SearchController; def rescue_action(e) raise e end; end
 class MeSearchControllerTest < Test::Unit::TestCase
   fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
-           :pages, :tasks, :task_participations, :task_lists, :page_terms
+           :pages, :page_terms
 
   def setup
     @controller = Me::SearchController.new
@@ -23,8 +23,17 @@ class MeSearchControllerTest < Test::Unit::TestCase
     get :index
     assert_response :success
  end
- 
- def test_text_search
+
+  def test_mysql_pagination
+    return if sphinx_working?
+
+    login_as :blue
+    get :index
+    assert assigns(:pages)
+    assert assigns(:pages).total_pages
+  end
+
+  def test_text_search
     return unless sphinx_working?
 
     login_as :blue
@@ -32,15 +41,16 @@ class MeSearchControllerTest < Test::Unit::TestCase
     get :index, :path => ["text", "test"]
     assert_response :success
     assert assigns(:pages).any?, "should find a page"
+    assert assigns(:pages).total_pages
     assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"
   end
 
- def test_text_search_and_sort
+  def test_text_search_and_sort
     return unless sphinx_working?
 
     login_as :blue
 
-    get :index, :path => ["text", "test", "ascending", "group_name"]
+    get :index, :path => ["text", "test", "ascending", "owner_name"]
     assert_response :success
     assert assigns(:pages).any?, "should find a page"
     assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"

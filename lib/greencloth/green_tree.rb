@@ -50,7 +50,7 @@ class GreenTree < Array
         end
       elsif !node.leaf?
         found = node.successor(heading_name)
-        return found unless found.nil? 
+        return found unless found.nil?
       end
     end
     return nil # not found
@@ -87,7 +87,7 @@ class GreenTree < Array
       # find the first occurance of this node in the markup
       self.markup_index = markup.index(self.markup_regexp)
       if self.markup_index.nil?
-        puts "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup" 
+        puts "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
@@ -102,22 +102,22 @@ class GreenTree < Array
     end
   end
 
-  # returns a regexp that can be used to find the original markup for 
+  # returns a regexp that can be used to find the original markup for
   # this node in a body of greencloth text. it is a little iffy.
-  # the text we have (self.text) has already been transformed by 
+  # the text we have (self.text) has already been transformed by
   # greencloth (there is not a good way around this). So, we have
   # some transformed text, that we then need to match against original text.
-  # yep, it is that ugly. 
+  # yep, it is that ugly.
   def markup_regexp
     # take out carriage returns
     heading_text = Regexp.escape(self.text.gsub(/\r\n/, "\n"))
 
     # remove html entities, and let them match any character
     heading_text.gsub!(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.')
- 
+
     # add back carriage returns as optional
     heading_text.gsub!('\\n', '\\r?\\n')
-    
+
     Regexp.union(
       /^#{heading_text}\s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)/,
       /^h#{heading_level}\. #{heading_text}\s*?(\r?\n\r?\n?|$)/

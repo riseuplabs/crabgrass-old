@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class DiscussionTest < Test::Unit::TestCase
   fixtures :users, :pages
-  
+
   def test_creation
     discussion = Discussion.create
     post       = discussion.posts.create(:body => 'hi', :user => users(:blue))
@@ -21,7 +21,7 @@ class DiscussionTest < Test::Unit::TestCase
     assert_nothing_raised do
       post.save!
     end
-    
+
     discussion.posts.inspect
     ## ^^^ without this line, the next assertion fails. WTF!!!!
     assert_equal 1, discussion.posts.size

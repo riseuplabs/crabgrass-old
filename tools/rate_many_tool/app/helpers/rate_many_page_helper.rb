@@ -9,8 +9,8 @@ module RateManyPageHelper
   def map(value)
     @@map[value]
   end
-  
-  
+
+
   # value a string, one of 'good', 'ok', 'bad', 'no'
   def button_row(possible, vote, value)
     voters_list = @allvotes[value].to_sentence if @allvotes[value]

@@ -10,12 +10,26 @@ begin
   Conf.sites.each do |site_conf|
     site = Site.find_by_name(site_conf['name'])
     if site
-      admin_group = Group.find_by_name(site_conf['admin_group'])
-      if admin_group
-        site.update_attribute(:super_admin_group_id, admin_group.id)
-        ids << site.id
+      # TODO: figure out a way to put these into the corresponding mods
+      if Conf.enabled_mods.include?('moderation')
+      moderation_group = Group.find_by_name(site_conf['moderation_group'])
+        if moderation_group
+          site.update_attribute(:moderation_group_id, moderation_group.id)
+        else
+          puts "ERROR (%s): site moderation group name '%s' not found in database!" % [Conf.configuration_filename, site_conf['moderation_group']]
+        end
+      end
+
+      if Conf.enabled_mods.include?('super_admin')
+        admin_group = Group.find_by_name(site_conf['admin_group'])
+        if admin_group
+          site.update_attribute(:super_admin_group_id, admin_group.id)
+          ids << site.id
+        else
+          puts "ERROR (%s): site admin group name '%s' not found in database! (skipping site)" % [Conf.configuration_filename, site_conf['admin_group']]
+        end
       else
-        puts "ERROR (%s): site admin group name '%s' not found in database! (skipping site)" % [Conf.configuration_filename, site_conf['admin_group']]
+        ids << site.id
       end
     else
       if Site.count == 0

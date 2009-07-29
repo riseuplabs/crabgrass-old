@@ -6,7 +6,7 @@ module StatsHelper
   # ]
   def time_series_chart(*datas)
     draw_chart(
-      datas, 
+      datas,
       :xaxis => {
         :noTicks => 7,
         :tickFormatter => json_function('function(n){ var t = new Date(); t.setTime(n*1000); return t.toLocaleDateString();}')
@@ -43,7 +43,7 @@ module StatsHelper
     ])
   end
 
-  def document_observe(content) 
+  def document_observe(content)
     "document.observe('dom:loaded', function(){\n%s\n});" % content
   end
 
@@ -53,7 +53,7 @@ module StatsHelper
 
   def chart_function(id, datas, options)
     chart_def = []
-    datas.each do |data, i| 
+    datas.each do |data, i|
       chart_def << "{data:%s, label:'%s', lines:{fill: true}}, " % [data[:data].to_json, data[:label]]
     end
     "  Flotr.draw(\n    $('%s'), [\n      %s\n    ],\n    %s\n  );" % [id, chart_def.join("\n      "), options.to_json]

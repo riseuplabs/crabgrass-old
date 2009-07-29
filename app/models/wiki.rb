@@ -46,14 +46,14 @@ class Wiki < ActiveRecord::Base
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
   has_one :profile
-  
+
   ##
   ## LOCKING
   ##
 
   # a word about timezones:
   # to get an attribute in UTC, you must do:
-  #   wiki.locked_at_before_type_cast 
+  #   wiki.locked_at_before_type_cast
   # otherwise, the times reported by active record objects
   # are always local.
 
@@ -160,7 +160,7 @@ class Wiki < ActiveRecord::Base
       return false
     end
   end
-  
+
   # returns an array of locked section names
   def locked_sections
     edit_locks.keys
@@ -226,14 +226,14 @@ class Wiki < ActiveRecord::Base
   ## VERSIONING
   ##
 
-  acts_as_versioned :if => :save_new_version? do 
+  acts_as_versioned :if => :save_new_version? do
     # these methods are added to both Wiki and Wiki::Version
 
     def self.included(base)
       base.belongs_to :user
     end
 
-    def body=(value) # :nodoc: 
+    def body=(value) # :nodoc:
       write_attribute(:body, value)
       write_attribute(:body_html, "")
     end
@@ -263,7 +263,7 @@ class Wiki < ActiveRecord::Base
     def render_html(&block)
       if body.empty?
         self.body_html = "<p></p>"
-      elsif body_html.empty? 
+      elsif body_html.empty?
         self.body_html = block.call(body)
       end
       if body_html_changed?
@@ -275,7 +275,7 @@ class Wiki < ActiveRecord::Base
           end
         end
       end
-    end 
+    end
   end
 
   self.non_versioned_columns << 'edit_locks' << 'lock_version'
@@ -286,12 +286,12 @@ class Wiki < ActiveRecord::Base
   def save_new_version? #:nodoc:
     self.body_changed? and self.body_was.any?
   end
-  
+
   # returns true if the last version was created recently by this same author.
   def recent_edit_by?(author)
     (user == author) and updated_at and (updated_at > 30.minutes.ago)
-  end 
-  
+  end
+
   # returns first version since @time@
   def first_since(time)
     return nil unless time
@@ -314,8 +314,8 @@ class Wiki < ActiveRecord::Base
   ##
   ## SAVING
   ##
-  
-  # 
+
+  #
   # a smart update of the wiki, taking into account locking
   # and the last time the wiki was saved by the same person.
   #
@@ -359,12 +359,12 @@ class Wiki < ActiveRecord::Base
   end
 
   ##### RENDERING #################################
- 
+
   def body=(value)
     write_attribute(:body, value)
     write_attribute(:body_html, "")
   end
- 
+
   def clear_html
     update_attribute(:body_html, nil)
   end
@@ -388,7 +388,7 @@ class Wiki < ActiveRecord::Base
   def render_html(&block)
     if body.empty?
       self.body_html = "<p></p>"
-    elsif body_html.empty? 
+    elsif body_html.empty?
       self.body_html = block.call(body)
     end
     if body_html_changed?
@@ -397,35 +397,34 @@ class Wiki < ActiveRecord::Base
       end
     end
   end
-  
+
   ##
   ## RELATIONSHIP TO GROUPS
   ##
-  
-  # clears the rendered html. this is called
-  # when a group/user name is changed or some other event happens
-  # which might affect how the html is rendered by greencloth.
-  # 
+
+  # Clears the rendered HTML. This should be called when a group/user name is
+  # changed or some other event happens which might affect how the HTML is
+  # rendered by greencloth.
   def self.clear_all_html(owner)
     # for wiki's owned by pages
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE pages.data_type='Wiki' and pages.owner_id = ? AND pages.owner_type = ?)",
+      "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ?",
       owner.id,
       owner.class.class_name
     ]))
 
     # for wiki's owned by by profiles
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = ? AND entity_type = ?)",
+      "UPDATE wikis, profiles SET wikis.body_html = NULL WHERE profiles.wiki_id = wikis.id AND profiles.entity_id = ? AND profiles.entity_type = ?",
       owner.id,
       owner.class.class_name
     ]))
   end
-    
+
   ##
   ## RELATIONSHIP TO PAGES
   ##
-    
+
   # returns the page associated with this wiki, if any.
   def page
     # we do this so that we can access the page even before page or wiki are saved
@@ -474,7 +473,7 @@ class Wiki < ActiveRecord::Base
 
   private
 
-  ## this is really confusing and needs to be cleaned up. 
+  ## this is really confusing and needs to be cleaned up.
   ##
   ## if this is passed a section which we don't think exists, then the wiki
   ## appears to be locked. This is a problem, because then you cannot ever
@@ -482,7 +481,7 @@ class Wiki < ActiveRecord::Base
   ##
   ## the hacky solution for now is to add this missing section to available
   ## sections.
-  ## 
+  ##
   ## also, without the hacky line, trying to edit a newly created wiki
   ## throws an error that it is locked!
   ##

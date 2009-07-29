@@ -4,10 +4,10 @@ class SurveyPage < Page
     # uses SurveyQuestion.to_s()
     survey ? survey.questions.join("\n") : ""
   end
-  
+
   def survey
     data
   end
-  
+
 end
 

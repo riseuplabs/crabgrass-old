@@ -4,7 +4,7 @@
 #
 # "relationships" is the join table:
 #    user has many users through relationships
-# 
+#
 module UserExtension::Users
 
   def self.included(base)
@@ -12,14 +12,14 @@ module UserExtension::Users
     base.send :include, InstanceMethods
 
     base.instance_eval do
-  
+
       serialize_as IntArray, :friend_id_cache, :foe_id_cache
 
       initialized_by :update_contacts_cache,
         :friend_id_cache, :foe_id_cache
 
       ## PEERS
-      
+
       # (peer_id_cache defined in UserExtension::Organize)
       has_many :peers, :class_name => 'User',
         :finder_sql => 'SELECT users.* FROM users WHERE users.id IN (#{peer_id_cache.to_sql})' do
@@ -28,7 +28,7 @@ module UserExtension::Users
         def find(*args)
           options = args.extract_options!
           sql = @finder_sql
-  
+
           sql += " ORDER BY " + sanitize_sql(options[:order]) if options[:order]
           sql += sanitize_sql [" LIMIT ?", options[:limit]] if options[:limit]
           sql += sanitize_sql [" OFFSET ?", options[:offset]] if options[:offset]
@@ -77,7 +77,7 @@ module UserExtension::Users
 #        :foreign_key => "user_id",
 #        :uniq => true} do
 #          def online
-#            find( :all, 
+#            find( :all,
 #              :conditions => ['users.last_seen_at > ?',10.minutes.ago],
 #              :order => 'users.last_seen_at DESC' )
 #          end
@@ -86,15 +86,15 @@ module UserExtension::Users
 #          end
 #      end
 
-    end 
+    end
   end
-  
+
   module InstanceMethods
 
     ##
     ## STATUS / PUBLIC WALL
     ##
-    
+
     # returns the users current status by returning his latest status_posts.body
     def current_status
       @current_status ||= self.discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
@@ -105,7 +105,7 @@ module UserExtension::Users
         self.discussion = Discussion.create do |d|
           d.commentable = self
         end
-      end  
+      end
     end
 
     ##
@@ -114,7 +114,7 @@ module UserExtension::Users
 
     # Creates a relationship between self and other_user. This should be the ONLY
     # way that contacts are created.
-    # 
+    #
     # If type is :friend or "Friendship", then the relationship from self to other
     # user will be one of friendship.
     #
@@ -164,22 +164,22 @@ module UserExtension::Users
          other_user.update_contacts_cache
       end
     end
-    
+
     def stranger_to?(user)
       !peer_of?(user) and !contact_of?(user)
     end
-    
+
     def peer_of?(user)
       id = user.instance_of?(Integer) ? user : user.id
-      peer_id_cache.include?(id)  
+      peer_id_cache.include?(id)
     end
-    
+
     def friend_of?(user)
       id = user.instance_of?(Integer) ? user : user.id
       friend_id_cache.include?(id)
     end
     alias :contact_of? :friend_of?
-    
+
     def relationship_to(user)
       relationships_to(user).first
     end
@@ -207,7 +207,7 @@ module UserExtension::Users
         false
       end
     end
-    
+
     def may_be_pestered_by!(user)
       # TODO: perhaps being someones friend or peer does not automatically
       # mean that you can pester them. It should all be based on the profile?

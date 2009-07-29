@@ -3,7 +3,7 @@ namespace :cg do
 =begin
   ##
   ## this code seems to be missing doc/*
-  ## 
+  ##
 
   output_dir = 'doc/app'
   target = output_dir + '/index.html'
@@ -36,11 +36,11 @@ namespace :cg do
   ##
   ## i think they differ. the first seems to be a call to the app:doc
   ## task in rails itself. At least removing all the redoc_files_include
-  ## lines but one from the app:doc task in 
+  ## lines but one from the app:doc task in
   ##  /var/lib/gems/1.8/gems/rails-2.1.0/
   ## really seems to speed things up.
   ## the second seems to be this task.
-  ## no idea why. 
+  ## no idea why.
   ##    --azul
 
   desc "Generate documentation for Crabgrass"

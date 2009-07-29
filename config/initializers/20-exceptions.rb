@@ -1,5 +1,5 @@
 # the user does not have permission to do that.
-class PermissionDenied < Exception; end    
+class PermissionDenied < Exception; end
 
 # thrown when an activerecord has made a bad association
 # (for example, duplicate associations to the same object).
@@ -52,11 +52,11 @@ class WikiLockException < Exception; end
 #    @page = exc.record
 #    flash_message_now :exception => exc
 #  end
-# 
+#
 #  This way, errors can be handled by the exception, and the field in the form
 #  will get little red boxes because @page is set.
 #  nifty.
-# 
+#
 class Exception
   def record
     nil

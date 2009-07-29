@@ -33,7 +33,7 @@ class Group < ActiveRecord::Base
   include GroupExtension::Pages      # group <--> page behavior
 
   acts_as_site_limited
-    
+
   attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 
   # not saved to database, just used by activity feed:
@@ -44,7 +44,7 @@ class Group < ActiveRecord::Base
 
   ##
   ## FINDERS
-  ## 
+  ##
 
   # finds groups that user may see
   named_scope :visible_by, lambda { |user|
@@ -59,7 +59,7 @@ class Group < ActiveRecord::Base
 
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
-  
+
   named_scope(:only_type, lambda do |group_type|
     group_type = group_type.to_s.capitalize
     if group_type == 'Group'
@@ -72,7 +72,7 @@ class Group < ActiveRecord::Base
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
   }
- 
+
   named_scope :alphabetized, lambda { |letter|
     opts = {
       :order => 'groups.full_name ASC, groups.name ASC'
@@ -105,7 +105,7 @@ class Group < ActiveRecord::Base
     if t_name
       write_attribute(:name, t_name.downcase)
     end
-    
+
     t_name = read_attribute(:full_name)
     if t_name
       write_attribute(:full_name, t_name.gsub(/[&<>]/,''))
@@ -118,7 +118,7 @@ class Group < ActiveRecord::Base
     return nil unless name.any?
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
-  
+
   # name stuff
   def to_param; name; end
   def display_name; full_name.any? ? full_name : name; end
@@ -134,7 +134,7 @@ class Group < ActiveRecord::Base
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
 
-  # type of group  
+  # type of group
   def committee?; instance_of? Committee; end
   def network?;   instance_of? Network;   end
   def normal?;    instance_of? Group;     end
@@ -146,7 +146,7 @@ class Group < ActiveRecord::Base
   ##
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-  
+
   def profile
     self.profiles.visible_by(User.current)
   end
@@ -154,8 +154,8 @@ class Group < ActiveRecord::Base
   ##
   ## AVATAR
   ##
- 
-  public 
+
+  public
 
   belongs_to :avatar, :dependent => :destroy
 
@@ -182,7 +182,7 @@ class Group < ActiveRecord::Base
 
   ##
   ## RELATIONSHIP TO ASSOCIATED DATA
-  ## 
+  ##
 
   protected
 
@@ -190,7 +190,7 @@ class Group < ActiveRecord::Base
   def destroy_requests
     Request.destroy_for_group(self)
   end
-  
+
   after_destroy :update_networks
   def update_networks
     self.networks.each do |network|
@@ -212,7 +212,7 @@ class Group < ActiveRecord::Base
       false
     end
   end
-  
+
   ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
     if user.member_of?(self) or profiles.visible_by(user).may_see?
@@ -240,7 +240,7 @@ class Group < ActiveRecord::Base
   rescue PermissionDenied
     return false
   end
-  
+
   ##
   ## GROUP SETTINGS
   ##
@@ -254,7 +254,7 @@ class Group < ActiveRecord::Base
     self.group_setting = GroupSetting.new
     self.group_setting.save
   end
-  
+
   #Defaults!
   def tool_allowed(tool)
     group_setting.allowed_tools.nil? or group_setting.allowed_tools.index(tool)
@@ -265,9 +265,9 @@ class Group < ActiveRecord::Base
     template_data = (group_setting || GroupSetting.new).template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
     template_data[section]
   end
-  
+
   protected
-  
+
   after_save :update_name_copies
 
   # if our name has changed, ensure that denormalized references
@@ -284,5 +284,5 @@ class Group < ActiveRecord::Base
       User.increment_version(self.user_ids)
     end
   end
-  
+
 end

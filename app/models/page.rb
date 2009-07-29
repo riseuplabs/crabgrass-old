@@ -222,7 +222,7 @@ class Page < ActiveRecord::Base
     end
   end
 
-    
+
   ##
   ## PAGE ACCESS CONTROL
   ##
@@ -249,7 +249,7 @@ class Page < ActiveRecord::Base
     ########################################################
     ## THESE ARE TEMPORARY HACKS...
     ## until the new permission system is working.
-    ## then, this logic should all be moved there. 
+    ## then, this logic should all be moved there.
     return false if tmp_hack_for_deleted_pages?(perm)
     ## END TEMP HACKS
     #########################################################
@@ -262,13 +262,13 @@ class Page < ActiveRecord::Base
       actual_access_level = participation.access || ACCESS[:view]
       asked_access_level >= actual_access_level
     end
-    
+
     allowed ? true : raise(PermissionDenied.new)
   end
 
   protected
 
-  # returns the participation object for entity with the highest access level. 
+  # returns the participation object for entity with the highest access level.
   # If no participation exists, we return nil.
   def most_privileged_participation_for(entity)
     parts = []
@@ -387,7 +387,7 @@ class Page < ActiveRecord::Base
   end
 
   # returns an array of each users or group and their access to this page.
-  # self.owner is removed from the list. 
+  # self.owner is removed from the list.
   # eg: [[<user1>,:edit],[<user2>,:admin]]
   def recipients
     ary = self.user_participations.collect{|part|

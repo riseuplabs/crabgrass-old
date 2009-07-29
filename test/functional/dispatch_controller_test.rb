@@ -45,15 +45,15 @@ class DispatchControllerTest < Test::Unit::TestCase
     login_as :blue
     get :dispatch, :_page => 1  # need this to make @controller.current_user = blue
     user = @controller.current_user
-    
+
     page = Page.find(1)
-    
+
     assert user.may?(:admin, page), "blue should have access to page 1"
     get :dispatch, :_page => page.id
 
     # the following is a very brittle test
     # assert_tag 'remove from my inbox'
-    
+
     post 'pages/remove_from_my_pages/1'
   end
 

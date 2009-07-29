@@ -15,7 +15,7 @@ FLOW = {:deleted => 3, :announcement => 5}.freeze
 
 # enum of media types
 MEDIA_TYPE = {
-  :image => 1, 
+  :image => 1,
   :audio => 2,
   :video => 3,
   :document => 4
@@ -45,7 +45,7 @@ RECENT_SINCE_TIME = 2.weeks.ago.freeze
 #
 # Build the list of available languages.
 # This little bit of code produces:
-#  
+#
 #  LANGUAGES = {
 #   :en => #<Language code:"en_US" ...>,
 #   :es => #<Language code:"es_ES" ..>
@@ -59,7 +59,7 @@ begin
 
   # intersect with the enabled langs in configuration
   if Conf.enabled_languages.any?
-    lang_codes = possible & Conf.enabled_languages 
+    lang_codes = possible & Conf.enabled_languages
   else
     lang_codes = possible
   end

@@ -6,7 +6,7 @@ class AvatarsController; def rescue_action(e) raise e end; end
 
 class AvatarsControllerTest < Test::Unit::TestCase
   fixtures :avatars
-  
+
   def setup
     @controller = AvatarsController.new
     @request    = ActionController::TestRequest.new

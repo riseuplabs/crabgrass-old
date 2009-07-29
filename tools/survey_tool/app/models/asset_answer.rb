@@ -1,4 +1,4 @@
-class AssetAnswer < SurveyAnswer  
+class AssetAnswer < SurveyAnswer
   belongs_to :asset, :dependent => :destroy
 
   def display_value

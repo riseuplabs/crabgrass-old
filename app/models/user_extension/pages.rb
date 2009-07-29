@@ -13,7 +13,7 @@ module UserExtension::Pages
 
   def self.included(base)
     base.instance_eval do
-      has_many :participations, :class_name => 'UserParticipation', 
+      has_many :participations, :class_name => 'UserParticipation',
         :after_add => :update_tag_cache, :after_remove => :update_tag_cache,
         :dependent => :destroy
 
@@ -27,21 +27,25 @@ module UserExtension::Pages
       end
 
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
-      
-      named_scope(:most_active_on, lambda do |site, time|       
-        ret = { :joins => [:participations, :memberships],
+
+      named_scope(:most_active_on, lambda do |site, time|
+        ret = {
+          :joins => "
+            INNER JOIN user_participations
+              ON users.id = user_participations.user_id
+            INNER JOIN pages
+              ON pages.id = user_participations.page_id AND
+              pages.site_id = #{site.id}",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :select => "users.*, memberships.group_id, user_participations.changed_at"
+          :select => "users.*, user_participations.changed_at"
         }
-        if time.nil?
-          ret[:conditions] = ["memberships.group_id = ?", site.network.id]
-        else
-          ret[:conditions] = ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id]
+        if time
+          ret[:conditions] = ["user_participations.changed_at >= ?", time]
         end
         ret
       end)
-      
+
       named_scope(:most_active_since, lambda do |time|
         { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
           :group => "users.id",
@@ -49,8 +53,8 @@ module UserExtension::Pages
           :conditions => ["user_participations.changed_at >= ?", time],
           :select => "users.*" }
       end)
-     
-      named_scope(:not_inactive, lambda do 
+
+      named_scope(:not_inactive, lambda do
         if self.respond_to? :inactive_user_ids
           {:conditions => ["users.id NOT IN (?)", inactive_user_ids]}
         else
@@ -84,14 +88,14 @@ module UserExtension::Pages
       self.update_participation(participation, part_attrs)
     else
       participation = self.build_participation(page, part_attrs)
-    end  
+    end
     page.association_will_change(:users)
     participation
   end
 
   ## called only by add_page
   def update_participation(participation, part_attrs)
-    if part_attrs[:notice]        
+    if part_attrs[:notice]
       part_attrs[:viewed] = false
       if participation.notice
         if repeat_notice?(participation.notice, part_attrs[:notice])
@@ -121,7 +125,7 @@ module UserExtension::Pages
   end
 
   # remove self from the page.
-  # only call by page.remove(user)    
+  # only call by page.remove(user)
   def remove_page(page)
     clear_access_cache
     page.users.delete(self)
@@ -129,16 +133,16 @@ module UserExtension::Pages
     page.association_will_change(:users)
     page.user_participations.reset
   end
-     
+
   # set resolved status vis-à-vis self.
   def resolved(page, resolved_flag)
     find_or_build_participation(page).update_attributes :resolved => resolved_flag
   end
-  
+
   def find_or_build_participation(page)
-    page.participation_for_user(self) || page.user_participations.build(:user_id => self.id) 
+    page.participation_for_user(self) || page.user_participations.build(:user_id => self.id)
   end
-  
+
   # This should be called when a user modifies a page and that modification
   # should trigger a notification to page watchers. Also, if a page state changes
   # from pending to resolved, we also update everyone's user participation.
@@ -163,7 +167,7 @@ module UserExtension::Pages
       :changed_at => now, :viewed_at => now, :viewed => true,
       :resolved => (options[:resolved] || options[:all_resolved] || my_part.resolved?)
     )
-     
+
     # update everyone's participation
     page.user_participations.each do |party|
       unless party.user_id == self.id
@@ -171,7 +175,7 @@ module UserExtension::Pages
         party.viewed = false
         party.inbox = true if party.watch?
       end
-      party.save      
+      party.save
     end
     # this is unfortunate, because perhaps we have already just modified the page?
     page.resolved = options[:all_resolved] || page.resolved?
@@ -184,11 +188,11 @@ module UserExtension::Pages
   ##
 
   # valid recipients:
-  # 
+  #
   #  array form: ['green','blue','animals']
-  #  hash form: {'green' => {:access => :admin}} 
+  #  hash form: {'green' => {:access => :admin}}
   #  object form: [#<User id: 4, login: "blue">]
-  # 
+  #
   # valid options:
   #        :access -- sets access level directly. one of nil, :admin, :edit, or
   #                   :view. (nil will remove access)
@@ -224,7 +228,7 @@ module UserExtension::Pages
         users_to_email << user if user.wants_notification_email?
       end
     end
-    
+
     ## add groups to page
     groups.each do |group|
       users_to_pester = self.share_page_with_group!(page, group, options)
@@ -260,13 +264,13 @@ module UserExtension::Pages
     end
   end
 
-  # 
+  #
   # share a page with another user
-  # 
+  #
   # see may_share!() for when a user may share a page.
   # also, we don't grant new permissions if the user already has the permissions
   # via a group membership.
-  # 
+  #
   # see share_page_with!() for options
   #
   def share_page_with_user!(page, user, options={})
@@ -294,7 +298,7 @@ module UserExtension::Pages
     upart.save! unless page.changed?
   end
 
-  
+
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
     if options.key?(:access) # might be nil
@@ -338,7 +342,7 @@ module UserExtension::Pages
 
   #
   # check that +self+ may pester user and has admin access if sharing requires
-  # granting new access. 
+  # granting new access.
   #
   def may_share!(page,entity,options)
     user  = entity if entity.is_a? User
@@ -367,12 +371,12 @@ module UserExtension::Pages
     end
   end
 
-  # return true if the user may still admin a page even if we 
+  # return true if the user may still admin a page even if we
   # destroy the particular participation object
   def may_admin_page_without?(page, participation)
     method = participation.class.name.underscore.pluralize # user_participations or group_participations
     original = page.send(method).clone
-    page.send(method).delete_if {|part| part.id == participation.id} 
+    page.send(method).delete_if {|part| part.id == participation.id}
     begin
       result = page.has_access!(:admin, self)
     rescue PermissionDenied

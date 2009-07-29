@@ -41,7 +41,7 @@ class BasePage::AssetsControllerTest < Test::Unit::TestCase
 
   def test_create_and_destroy
     login_as :blue
-    
+
     assert_difference 'Page.find(1).assets.length' do
       post :create, :page_id => 1, :asset => {:uploaded_data => upload_data('photo.jpg')}
     end

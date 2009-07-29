@@ -16,7 +16,7 @@ Conf.always_renegerate_themed_stylesheet = false
 
 ##
 ## CACHING
-## 
+##
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
@@ -34,7 +34,7 @@ MAKE_ASSET_BUNDLES = true
 
 ##
 ## LOGGING
-## 
+##
 
 # use syslog if available
 begin
@@ -45,7 +45,7 @@ rescue LoadError => exc
   # i guess there is no syslog_logger
 end
 
-# the default log level for production should be to only log warnings. 
+# the default log level for production should be to only log warnings.
 config.log_level = :warn
 if defined? Engines
   Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)

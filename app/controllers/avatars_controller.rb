@@ -4,7 +4,7 @@
 
 class AvatarsController < ApplicationController
 
-  def create 
+  def create
     unless params[:image]
       flash[:error] = "no image uploaded"
       render(:nothing => true, :layout => true)

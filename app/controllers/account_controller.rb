@@ -3,11 +3,12 @@ class AccountController < ApplicationController
   stylesheet 'account'
 
   before_filter :view_setup
-  skip_before_filter :verify_authenticity_token, :only => :login
+
+  skip_before_filter :redirect_unverified_user, :only => [:unverified, :login, :logout, :signup, :verify_email]
 
   # TODO: it would be good to require post for logout in the future
   verify :method => :post, :only => [:language]
-   
+
   def index
     if logged_in?
       redirect_to me_url
@@ -25,7 +26,7 @@ class AccountController < ApplicationController
     reset_session # important!!
                   # always force a new session on every login attempt
                   # in order to prevent session fixation attacks.
-    
+
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
       if params[:remember_me] == "1"
@@ -41,17 +42,15 @@ class AccountController < ApplicationController
       else
         session[:language_code] = previous_language
       end
-      
+
       current_site.add_user!(current_user)
       UnreadActivity.create(:user => current_user)
-
-      params[:redirect] = nil unless params[:redirect].any?
-      redirect_to(params[:redirect] || current_site.login_redirect(current_user))
+      redirect_successful_login
     else
       flash_message :title => "Could not log in"[:login_failed],
       :error => "Username or password is incorrect."[:login_failure_reason]
     end
-      
+
   end
 
   def signup
@@ -69,11 +68,14 @@ class AccountController < ApplicationController
       end
 
       @user.avatar = Avatar.new
+      @user.unverified = current_site.needs_email_verification
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
       current_site.add_user!(current_user)
-      
+
+      send_email_verification if current_site.needs_email_verification
+
       redirect_to params[:redirect] || current_site.login_redirect(current_user)
       flash_message :title => 'Registration successful'[:signup_success],
         :success => "Thanks for signing up!"[:signup_success_message]
@@ -83,7 +85,26 @@ class AccountController < ApplicationController
     flash_message_now :exception => exc
     render :action => 'signup'
   end
- 
+
+
+  # verify the users email
+  def verify_email
+    @token = Token.find_by_value_and_action(params[:token], 'verify')
+    @token.destroy if @token
+    if @token.nil? or @token.user.nil? or !@token.user.unverified?
+      flash_message :title => "Already Verified."[:already_verified], :success => "You don't need to verify again."[:already_verified_text]
+    else
+      @token.user.update_attribute(:unverified, false)
+      flash_message :title => 'Successfully Verified Email Address'[:successfully_verified_email_message],
+        :success => "Thanks for signing up!"[:signup_success_message]
+    end
+
+    redirect_to '/'
+  end
+
+  def unverified
+  end
+
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
@@ -123,7 +144,7 @@ class AccountController < ApplicationController
       :success => "An email has been sent containing instructions for resetting your password."[:reset_password_email_sent]
     redirect_to :action => 'index'
   end
-  
+
   def reset_password
     @token = Token.find_by_value_and_action(params[:token], 'recovery')
     unless @token && !@token.expired?
@@ -131,10 +152,10 @@ class AccountController < ApplicationController
         :error => "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."[:invalid_token_text]
       redirect_to :action => 'index' and return
     end
-    
+
     @user = @token.user
     return unless request.post?
-    
+
     @user.password = params[:new_password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
@@ -147,13 +168,29 @@ class AccountController < ApplicationController
       flash_message_now :object => @user
     end
   end
-  
+
   protected
   #def send_welcome_message(user)
   #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
   #  page.save
   #end
-  
+
+  # where to go when the user logs in?
+  # depends on the settings (for example, unverified users should not see any pages)
+  def redirect_successful_login
+    params[:redirect] = nil unless params[:redirect].any?
+    if current_user.unverified?
+      redirect_to :action => 'unverified'
+    else
+      redirect_to(params[:redirect] || current_site.login_redirect(current_user))
+    end
+  end
+
+  def send_email_verification
+    @token = Token.create!(:user => current_user, :action => 'verify')
+    Mailer.deliver_email_verification(@token, mailer_options)
+  end
+
   def view_setup
     @active_tab = :home
   end

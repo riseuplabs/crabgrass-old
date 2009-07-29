@@ -10,7 +10,7 @@ class EventPageControllerTest < ActionController::TestCase
   def test_create
     login_as :quentin
     num_pages = Page.count
-    post :create, :id => EventPage.param_id, :page => {:title => 'my title event' }, 
+    post :create, :id => EventPage.param_id, :page => {:title => 'my title event' },
                     :event => {"is_all_day"=>"1", "location"=>"right here, right now"}, "date_start"=>"28/5/2009"
 
     assert_not_nil assigns(:page)
@@ -44,7 +44,7 @@ class EventPageControllerTest < ActionController::TestCase
       page_urls << page.name_url
     end
   end
-  
+
 =begin
 
   def test_get_create

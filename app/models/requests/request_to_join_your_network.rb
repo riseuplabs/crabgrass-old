@@ -1,15 +1,15 @@
 #
-# An outside user requests for their group to be part of a network. 
+# An outside user requests for their group to be part of a network.
 #
 # recipient: the network
 # requestable: the group
 # created_by: person in group who want their group in the network
 #
 class RequestToJoinYourNetwork < Request
-  
+
   validates_format_of :recipient_type, :with => /Group/
   validates_format_of :requestable_type, :with => /Group/
-  
+
   def validate_on_create
     unless recipient.type =~ /Network/
       errors.add_to_base('recipient must be a network')
@@ -24,7 +24,7 @@ class RequestToJoinYourNetwork < Request
 
   def group() requestable end
   def network() recipient end
-  
+
   def may_create?(user)
     user.may?(:admin,group)
   end

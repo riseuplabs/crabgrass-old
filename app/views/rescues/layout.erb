@@ -20,8 +20,22 @@
       font-size: 1.5em;
     }
     div#content {
-      display: none;
       padding: 20px;
+    }
+    #links {
+      display: none;
+      font-size: smaller;
+      font-decoration: bold;
+      color: #fff;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #000;
+      background: #fff;
+      text-decoration: underline;
     }
     body, p, ol, ul, td {
       font-family: verdana, arial, helvetica, sans-serif;
@@ -33,24 +47,51 @@
       padding: 10px;
       font-size: 11px;
     }
-    a { color: #fff; }
-    a:visited { color: #999; }
-    a:hover { color: #fff; background-color:#000; }
+    #traces a {
+      color: #000;
+    }
 
   </style>
 
   <script type="text/javascript">
-    function toggleDetails() {
+    function init() {
+      if (!document.getElementById) {
+          return;
+      }
+      var linksDiv = document.getElementById('links');
+      var detailsToggle = document.getElementById('details');
+      var contentDiv = document.getElementById('content');
+      linksDiv.style.display = "block";
+      contentDiv.style.display = "none";
+      addEvent(detailsToggle, 'click', toggleDetails, false);
+    }
+
+    function addEvent(elm, evType, fn, useCapture) {
+      if (elm.addEventListener){
+          elm.addEventListener(evType, fn, useCapture);
+          return true;
+      }else if (elm.attachEvent) {
+          var r = elm.attachEvent('on' + evType, fn);
+          return r;
+      }else {
+          elm['on' + evType] = fn;
+      }
+    }
+
+    function toggleDetails(e) {
       content = document.getElementById("content");
       detailsLink = document.getElementById("details");
       if (content.style.display == "block") {
-        detailsLink.value = "Show Details";
+        //detailsLink.value = "Show Details";
+	detailsLink.innerHTML = "Show Details";
         content.style.display = "none";
       }else {
-        detailsLink.value = "Hide Details";
+        //detailsLink.value = "Hide Details";
+        detailsLink.innerHTML = "Hide Details";
         content.style.display = "block";
       }
     }
+    addEvent(window, 'load', init, false);
   </script>
 
 </head>
@@ -58,8 +99,9 @@
   <div id='wrapper'>
     <div id='header'>
       <h1>You have encountered a crabgrass error!</h1>
-      <input type="submit" value="Show Details" id="details" onclick="toggleDetails()" />
-<!--      <a id="details" href="#" onclick="toggleDetails()">Show details</a> -->
+      <div id='links'>
+        <a href="/me/dashboard">Go Back</a> | <a href="#" id="details">Show Details</a> 
+      </div>
     </div>
     <div id='content'>
       <%= @contents %>
