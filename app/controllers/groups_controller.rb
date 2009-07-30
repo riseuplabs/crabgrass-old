@@ -11,11 +11,11 @@ class GroupsController < Groups::BaseController
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
-   helper 'task_list_page' # :only => ['tasks']
-   stylesheet 'tasks', :action => :tasks
-   javascript :extra, :action => :tasks
+    helper 'task_list_page' # :only => ['tasks']
+    stylesheet 'tasks', :action => :tasks
+    javascript :extra, :action => :tasks
   ## end task list cruft
-
+  
   include Groups::Search
 
   # called by dispatcher

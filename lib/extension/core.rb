@@ -184,16 +184,23 @@ end
 
 
 class Hash
-  # returns a copy of the hash,
-  # limited to the specified keys
+  # returns a copy of the hash, limited to the specified keys
   def allow(*keys)
-    if keys.first.is_a? Array
-      keys = keys.first
-    end
+    keys = keys.first if keys.first.is_a? Array
     hsh = {}
     keys.each do |key|
       value = self[key] || self[key.to_s] || self[key.to_sym]
       hsh[key] = value if value
+    end
+    hsh
+  end
+
+  # returns a copy of the hash, without any of the specified keys
+  def forbid(*keys)
+    keys = keys.first if keys.first.is_a? Array
+    hsh = self.clone
+    keys.each do |key|
+      hsh.delete(key); hsh.delete(key.to_s); hsh.delete(key.to_sym)
     end
     hsh
   end

@@ -104,16 +104,16 @@ class BasePageController < ApplicationController
   def update_view_count
     return true unless @page and @page.id
     action = track_action_from_params
-    if current_site.tracking and action
-      Tracking.insert_delayed(:page => @page,
-                              :group => @group,
-                              :user => current_user,
-                              :action => action)
-    elsif action
-      Tracking.insert_delayed(:page => @page,
-                              :action => action)
-    end
-    return true
+    return true unless action
+
+    group = current_site.tracking? && @group
+    group ||= current_site.tracking? && @page.owner.is_a?(Group) && @page.owner
+    user  = current_site.tracking? && @page.owner.is_a?(User) && @page.owner
+    Tracking.insert_delayed(
+      :page => @page, :current_user => current_user, :action => action,
+      :group => group, :user => user
+    )
+    true
   end
 
   def setup_default_view

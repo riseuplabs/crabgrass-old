@@ -103,6 +103,10 @@ Rails::Initializer.run do |config|
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
 
+  # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
+  # for information on how trim_mode works.
+  config.action_view.erb_trim_mode = '%-'
+
   # See Rails::Configuration for more options
 
   # we want handle sass templates ourselves

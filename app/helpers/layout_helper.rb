@@ -126,11 +126,11 @@ module LayoutHelper
   # However, autocomplete uses very little of the controls.js code, which in turn
   # should not need the effects.js at all. So, with a little effort, effects and
   # controls could be moved to extra.
-  MAIN_JS = ['prototype', 'application', 'effects', 'controls', 'autocomplete']
+  MAIN_JS = ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']
 
   # extra js that we might sometimes need
   EXTRA_JS = ['dragdrop', 'builder', 'slider']
-
+  
   # includes the correct javascript tags for the current request.
   # if the special symbol :extra has been specified as a required js file,
   # then this expands to all the EXTRA_JS files.

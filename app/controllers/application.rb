@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     filter_chain.prepend_filter_to_chain(filters, :before, &block)
     filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
   end
-
+  
   protected
 
   ##

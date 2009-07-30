@@ -1,4 +1,3 @@
-<% popup('Delete Page'[:delete_page], :id => 'trash_popup', :width => '25em') do -%>
 <% form_remote_tag(
   :url => {:controller => '/base_page/trash', :action => 'update', :page_id => @page.id},
   :loading => show_spinner('popup')) do -%>
@@ -30,9 +29,8 @@
   </blockquote>
   <div class="buttons">
     <%= spinner 'popup' %>
-    <%= submit_tag "Cancel"[:cancel_button], :name => 'cancel' %>
+    <%= close_modal_button(:cancel) %>
     <%= submit_tag "Delete"[:delete_button], :name => 'delete' %>
   </div>
-<% end -%>
 <% end -%>
 

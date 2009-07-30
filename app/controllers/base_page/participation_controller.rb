@@ -58,13 +58,13 @@ class BasePage::ParticipationController < ApplicationController
     flash_message_now :exception => exc
     show_error_message
   end
-
+  
   def show
-    if params[:popup]
-      render :template => 'base_page/participation/show_' + params[:name] + '_popup'
-    elsif params[:cancel]
-      close_popup
-    end
+     if params[:popup]
+       render :partial => 'base_page/participation/' + params[:name] + '_popup'
+     elsif params[:cancel]
+       close_popup
+     end
   end
 
   ##
@@ -88,15 +88,12 @@ class BasePage::ParticipationController < ApplicationController
   after_filter :track_starring, :only => :update_star
   def track_starring
     action = params[:add] ? :star : :unstar
-    if current_site.tracking
-      Tracking.insert_delayed(:page => @page,
-                              :group => @group,
-                              :user => current_user,
-                              :action => action)
-    elsif
-      Tracking.insert_delayed(:page => @page,
-                              :action => action)
-    end
+    group = current_site.tracking? && @group
+    user  = current_site.tracking? && current_user
+    Tracking.insert_delayed(
+      :page => @page, :action => action,
+      :group => group, :current_user => user
+    )
   end
 
   def update_watch

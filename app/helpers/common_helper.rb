@@ -1,5 +1,6 @@
 module CommonHelper
 
+  include MenuHelper
   include PageHelper
   include UrlHelper
   include LayoutHelper
@@ -12,6 +13,8 @@ module CommonHelper
   include CacheHelper
   include PermissionsHelper
   include TaggingHelper
+  include ModalboxHelper
+  include FormHelper
 
 end
 

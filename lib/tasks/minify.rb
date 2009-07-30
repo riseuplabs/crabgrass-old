@@ -29,7 +29,7 @@
 # (5) If all the prior checks pass, then we append .gz to the requested filename.
 #
 
-MAIN_JS = ['prototype', 'application', 'effects', 'controls', 'autocomplete']
+MAIN_JS = ['prototype', 'application', 'effects', 'modalbox', 'controls', 'autocomplete']
 EXTRA_JS = ['dragdrop', 'builder', 'slider']
 
 # if minify_source is true, then the files passed in will get replaced with the
