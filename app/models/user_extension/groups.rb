@@ -45,6 +45,9 @@ module UserExtension::Groups
         def councils
           self.select{|group|group.council?}
         end
+        def recently_active
+          find(:all, :limit => 10, :order => 'memberships.visited_at DESC', :conditions => 'groups.type IS NULL')
+        end
       end
 
       # primary groups are:
@@ -54,8 +57,30 @@ module UserExtension::Groups
       # 'primary groups' is useful when you want to list of the user's groups,
       # including committees only when necessary. primary_groups_and_networks is the same
       # but it includes networks in addition to just groups.
-      has_many :primary_groups, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
-      has_many :primary_groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => '(type IS NULL OR type = "Network" OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+      has_many(:primary_groups, :class_name => 'Group', :through => :memberships,
+       :source => :group, :conditions => PRIMARY_GROUPS_CONDITION) do
+
+         # most active should return a list of groups that we are most interested in.
+         # this includes groups we have recently visited, and groups that we visit the most.
+         def most_active
+           max_visit_count = find(:first, :select => 'MAX(memberships.total_visits) as id').id || 1
+           select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
+           find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+         end
+      end
+
+      has_many(:primary_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_NETWORKS_CONDITION) do
+         # most active should return a list of groups that we are most interested in.
+         # this includes groups we have recently visited, and groups that we visit the most.
+         def most_active
+           max_visit_count = find(:first, :select => 'MAX(memberships.total_visits) as id').id || 1
+           select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
+           find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+         end
+      end
+
+      has_many :primary_groups_and_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_G_AND_N_CONDITION
+
       # all groups, including groups we have indirect access to even when there
       # is no membership join record. (ie committees and networks)
       has_many :all_groups, :class_name => 'Group',
@@ -139,5 +164,13 @@ module UserExtension::Groups
       raise AssociationError.new('You are already a member of that group.'[:invite_error_already_member])
     end
   end
+
+  private
+
+  PRIMARY_GROUPS_CONDITION   = '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_NETWORKS_CONDITION = '(type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_G_AND_N_CONDITION  = '(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
+
 end
 

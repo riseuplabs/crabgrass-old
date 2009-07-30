@@ -25,7 +25,7 @@ class Me::PrivateMessagesController < Me::BaseController
   # GET /my/messages/private/<username>
   def show
     if @recipient
-      @relationship.update_attributes(:viewed_at => Time.now, :unread_count => 0)
+      @relationship.update_attributes(:visited_at => Time.now, :total_visits => @relationship.total_visits+1, :unread_count => 0)
       @posts = @discussion.posts.paginate(:page => params[:page], :order => 'created_at DESC')
       @last_post = @posts.first
     end

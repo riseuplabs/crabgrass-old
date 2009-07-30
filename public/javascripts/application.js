@@ -193,6 +193,61 @@ function showTabByHash() {
 }
 
 //
+// TOP MENUS
+//
+
+var DropMenu = Class.create({
+  initialize: function(menu_id) {
+//    this.show_timeout = null;
+//    this.hide_timeout = null;
+    this.timeout = null;
+    if(!$(menu_id)) return;
+    this.trigger = $(menu_id);
+    if(!this.trigger) return;
+    this.menu = $(menu_id).down('.menu_items');
+    if(!this.menu) return;
+    this.trigger.observe('mouseover', this.showMenu.bind(this));
+    this.trigger.observe('mouseout', this.hideMenu.bind(this));
+    //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
+  },
+
+  menuIsOpen: function() {
+    return($$('.menu_items').detect(function(e){return e.visible()}) != null);
+  },
+
+  clearEvents: function(event) {
+    event.stop();
+    $$('.menu_items').without(this.menu).invoke('hide');
+  },
+
+  showMenu: function(event) {
+    evalAttributeOnce(this.menu, 'onclick');
+    if (this.timeout) window.clearTimeout(this.timeout);
+    if (this.menuIsOpen()) {
+      this.menu.show();
+      this.clearEvents(event);
+    } else {
+      this.timeout = Element.show.delay(.3,this.menu);
+      this.clearEvents(event);
+    }
+  },
+
+  hideMenu: function(event) {
+    this.clearEvents(event);
+    if (this.timeout) window.clearTimeout(this.timeout);
+    this.timeout = Element.hide.delay(.3, this.menu);
+  }
+
+});
+
+document.observe('dom:loaded', function() {
+  new DropMenu("menu_me");
+  new DropMenu("menu_people");
+  new DropMenu("menu_groups");
+  new DropMenu("menu_networks");
+});
+
+//
 // DEAD SIMPLE AJAX HISTORY
 // allow location.hash change to trigger a callback event.
 //
