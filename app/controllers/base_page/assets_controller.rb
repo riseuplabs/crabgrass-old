@@ -6,7 +6,11 @@ class BasePage::AssetsController < ApplicationController
   permissions 'base_page'
 
   def show
-    render :partial => 'base_page/assets/popup' if params[:popup]
+    if params[:popup]
+      render :partial => 'base_page/assets/popup'
+    else
+      render :nothing => true
+    end
   end
 
   def update
