@@ -11,4 +11,8 @@ module CacheHelper
     params.merge(:user_id => current_user.id, :version => current_user.version, :path => nil, :authenticity_token => nil)
   end
 
+  def menu_cache_key
+    {:user_id => current_user.id, :version => current_user.version}
+  end
+
 end

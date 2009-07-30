@@ -112,9 +112,10 @@
     <div id='header'>
       <h1>You have encountered a crabgrass error!</h1>
       <div id='links'>
-        <a href="/me/dashboard">Go Back</a> | <a href="#" id='bugreport_link'>Submit Bugreport</a> | <a href="#" id="details">Show Details</a> 
+        <a href="/me/dashboard">Go Back</a><!--| <a href="#" id='bugreport_link'>Submit Bugreport</a>--> | <a href="#" id="details">Show Details</a> 
       </div>
     </div>
+<!--
     <div id='bugreport'>
        <% form_tag('/bugreport/submit') do %>
          Please add a description of how you got to this page, and any additional comments:<br>
@@ -128,6 +129,7 @@
          <%= submit_tag("Submit Bug Report") %>
        <% end %>
     </div>
+-->
     <div id='content'>
       <%= @contents %>
     </div>
