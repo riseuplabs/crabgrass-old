@@ -3,8 +3,14 @@
     <tbody class="autocomplete_results_table" id="menu_items_ids">
       <% @menu_items.each do |menu_item| %>
         <tr id="<%= dom_id(menu_item) %>" class="menu_item_drag_handle">
-          <td style="width:100%">
-            <%= menu_item.page.title %>
+          <td>
+            <%= menu_item.position + 1 %>
+          </td>
+          <td style="width:50%">
+            <%= menu_item.title %>
+          </td>
+          <td style="width:50%">
+            <%= menu_item.link %>
           </td>
           <td>
             <% button_id = dom_id(menu_item, :minus_button) # id used to show the spinner %>
@@ -18,6 +24,3 @@
   <%= spinner(spinner_id)%>
   <%= handle_update_menu_item_order_javascript('menu_items_ids', spinner_id) %>
 <div>
-
-
-  

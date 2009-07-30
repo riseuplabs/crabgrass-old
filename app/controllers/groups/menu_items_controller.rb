@@ -1,13 +1,12 @@
-class Groups::MenuItemsController < ApplicationController
-  # GET /menu_items
-  # GET /menu_items.xml
-  def index
-    @menu_items = MenuItem.find(:all)
+class Groups::MenuItemsController < Groups::BaseController
+  javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
+  helper 'groups'
+  before_filter :fetch_data, :login_required
+  before_render :load_menu_items
 
-    respond_to do |format|
-      format.html # index.html.erb
-      #format.xml  { render :xml => @menu_items }
-    end
+  verify :only => :update, :method => :put, :redirect_to => {:action => :index}
+
+  def index
   end
 
   # GET /menu_items/1
@@ -54,32 +53,36 @@ class Groups::MenuItemsController < ApplicationController
     end
   end
 
-  # PUT /menu_items/1
-  # PUT /menu_items/1.xml
   def update
-    @menu_item = MenuItem.find(params[:id])
+    menu_item_ids = params[:menu_items_ids].collect(&:to_i)
 
-    respond_to do |format|
-      if @menu_item.update_attributes(params[:menu_item])
-        flash[:notice] = 'MenuItem was successfully updated.'
-        format.html { redirect_to(@menu_item) }
-        #format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        #format.xml  { render :xml => @menu_item.errors, :status => :unprocessable_entity }
-      end
+    menu_item_ids.each_with_index do |id, position|
+      # find the menu_item with this id
+      menu_item = MenuItem.find(id)
+      menu_item.update_attribute(:position, position)
     end
   end
 
-  # DELETE /menu_items/1
-  # DELETE /menu_items/1.xml
   def destroy
-    @menu_item = MenuItem.find(params[:id])
+    @menu_item = MenuItem.find(params[:menu_item_id])
     @menu_item.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(menu_items_url) }
-      #format.xml  { head :ok }
-    end
   end
+
+  def load_menu_items
+    @menu_items = @group.menu_items
+  end
+
+  def fetch_data
+    # must have a group
+    @group = Group.find_by_name(params[:id])
+  end
+
+  def context
+    group_settings_context
+  end
+
+  def authorized?
+    may_edit_menu?
+  end
+
 end
