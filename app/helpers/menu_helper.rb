@@ -17,7 +17,7 @@ module MenuHelper
     )
   end
 
-  def sub_menu(partial, locals={})
+  def menu_items(partial, locals={})
     render :partial => 'layouts/menu/'+partial, :locals => locals
   end
 

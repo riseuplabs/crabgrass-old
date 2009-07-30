@@ -6,6 +6,7 @@
 <%
   ul_class = '' if ul_class.nil?
   entities = [] if entities.nil?
+  entities.sort! {|a,b| a.name <=> b.name}
   if entities.size > 3
     half = entities.size/2.round
     right_col = entities.slice!(-half, half)
@@ -15,22 +16,22 @@
     right_col = []
   end
 %>
-<ul class='<%= ul_class %> selfclear submenu' style="display: none;">
-  <li class='leftcol'>
+<div class="menu_items" style="display: none">
+  <div class='leftcol'>
     <ul>
       <%- for entity in left_col -%>
-        <li><%= display_entity(entity, {:avatar => 'small', :format => :short, :link => true }) %></li>
+        <li><%= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines) %><li>
       <%- end -%>
     </ul>
-  </li>
+  </div>
   <% if not right_col.empty? -%>
-    <li class='rightcol'>
+    <div class='rightcol'>
       <ul>
         <%- for entity in right_col -%>
-          <li><%= display_entity(entity, {:avatar => 'small', :format => :short, :link => true }) %></li>
+          <li><%= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines, :link => true) %></li>
         <%- end -%>
       </ul>
-    </li>
+    </div>
   <% end -%>
-</ul>
+</div>
 

@@ -6,7 +6,7 @@
 %     if current_site.network
 <%=     top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
 %     end
-<%=   top_menu('menu_me', 'Me'[:menu_me], '/me/dashboard', :active => @active_tab == :me, :menu_items => sub_menu('me')) %>
+<%=   top_menu('menu_me', 'Me'[:menu_me], '/me/dashboard', :active => @active_tab == :me, :menu_items => menu_items('me')) %>
 %   else
 <%=   top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
 %   end
@@ -19,20 +19,20 @@
         "People"[:menu_people],
         people_directory_url(:friends),
         :active => @active_tab == :people,
-        :menu_items => sub_menu('boxes', :entities => current_user.friends.recently_active ) %>
+        :menu_items => menu_items('boxes', :entities => current_user.friends.most_active ) %>
 
 <%=   top_menu "menu_groups",
         "Groups"[:menu_groups],
         group_directory_url,
         :active => @active_tab == :groups,
-        :menu_items => sub_menu('boxes', :entities => current_user.primary_groups.most_active ) %>
+        :menu_items => menu_items('boxes', :entities => current_user.primary_groups.most_active ) %>
 
 %     if current_site.has_networks?
 <%=     top_menu "menu_networks",
           "Networks"[:menu_networks],
           network_directory_url,
           :active => @active_tab == :networks,
-          :menu_items => sub_menu('boxes', :entities => current_user.primary_networks.most_active ) %>
+          :menu_items => menu_items('boxes', :entities => current_user.primary_networks.most_active ) %>
 %     end
 %   end
 %   if logged_in? and current_site.chat?
@@ -43,6 +43,4 @@
 </ul>
 <div style='clear: both;'></div>
 </div>
-
-<%= javascript_tag remote_function(:url => me_params(:action => :recent_pages)) %>
 

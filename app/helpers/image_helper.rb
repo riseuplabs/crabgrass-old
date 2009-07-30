@@ -59,13 +59,6 @@ module ImageHelper
   ## returns the img tag for the page's icon
   def page_icon(page)
     content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
-#    image_tag "pages/#{page.icon}", :size => "22x22"
-  end
-
-  ## returns css style text to display the page's icon
-  def page_icon_style(icon)
-   # XXX
-   "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
 
   ##

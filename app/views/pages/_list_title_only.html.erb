@@ -1,11 +1,10 @@
-<% 
-  pages=[] if pages.nil? 
+<%
+  pages=[] if pages.nil?
   ul_class='' if ul_class.nil?
 %>
 <h3 class="dim">Recent Pages</h3>
 <ul class='<%= ul_class %>'>
   <% pages.each do |page| %>
-  <li class="small_icon page_text_16"><%= page_list_title(page, :title) %>
-  </li>
+    <li class="small_icon <%=page.icon%>_16"><%= page_list_title(page, :title) %></li>
   <% end %>
 </ul>

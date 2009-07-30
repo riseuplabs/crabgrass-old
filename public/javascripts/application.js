@@ -174,15 +174,15 @@ function showTabByHash() {
 // TOP MENUS
 //
 
-var SubMenu = Class.create({
-  initialize: function(li) {
+var DropMenu = Class.create({
+  initialize: function(menu_id) {
 //    this.show_timeout = null;
 //    this.hide_timeout = null;
     this.timeout = null;
-    if(!$(li)) return;
-    this.trigger = $(li);
+    if(!$(menu_id)) return;
+    this.trigger = $(menu_id);
     if(!this.trigger) return;
-    this.menu = $(li).down('ul');
+    this.menu = $(menu_id).down('.menu_items');
     if(!this.menu) return;
     this.trigger.observe('mouseover', this.showMenu.bind(this));
     this.trigger.observe('mouseout', this.hideMenu.bind(this));
@@ -190,18 +190,19 @@ var SubMenu = Class.create({
   },
 
   menuIsOpen: function() {
-    return($$('ul.submenu').detect(function(e){return e.visible()}) != null);
+    return($$('.menu_items').detect(function(e){return e.visible()}) != null);
   },
 
   clearEvents: function(event) {
     event.stop();
-    $$('ul.submenu').without(this.menu).invoke('hide');
+    $$('.menu_items').without(this.menu).invoke('hide');
   },
 
   showMenu: function(event) {
+    evalAttributeOnce(this.menu, 'onclick');
     if (this.timeout) window.clearTimeout(this.timeout);
     if (this.menuIsOpen()) {
-      Element.show(this.menu);
+      this.menu.show();
       this.clearEvents(event);
     } else {
       this.timeout = Element.show.delay(.3,this.menu);
@@ -218,10 +219,10 @@ var SubMenu = Class.create({
 });
 
 document.observe('dom:loaded', function() {
-  new SubMenu("menu_me");
-  new SubMenu("menu_people");
-  new SubMenu("menu_groups");
-  new SubMenu("menu_networks");
+  new DropMenu("menu_me");
+  new DropMenu("menu_people");
+  new DropMenu("menu_groups");
+  new DropMenu("menu_networks");
 });
 
 //
