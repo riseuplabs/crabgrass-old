@@ -31,6 +31,6 @@ page_for_group:
 network:
   title: Committee test
   link: /fai
-  position: 5
+  position: 0
   group_id: 1
   default: false

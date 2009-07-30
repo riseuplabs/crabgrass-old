@@ -1,6 +1,6 @@
-class CreateMenuEntries < ActiveRecord::Migration
+class CreateMenuItems < ActiveRecord::Migration
   def self.up
-    create_table :menu_entries do |t|
+    create_table :menu_items do |t|
       t.string :title
       t.string :link
       t.integer :position
@@ -12,6 +12,6 @@ class CreateMenuEntries < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :menu_entries
+    drop_table :menu_items
   end
 end

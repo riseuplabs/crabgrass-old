@@ -152,6 +152,18 @@ class Group < ActiveRecord::Base
   end
 
   ##
+  ## MENU_ITEMS
+  ##
+
+  has_many :menu_items, :dependent => :destroy, :order => :position
+
+
+  # TODO: add visibility to menu_items so they can be visible to members only.
+  # def menu_items
+  #   self.menu_items.visible_by(User.current)
+  # end
+
+  ##
   ## AVATAR
   ##
 

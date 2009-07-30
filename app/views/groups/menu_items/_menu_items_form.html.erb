@@ -1,0 +1,24 @@
+<% autocomplete_id = 'page_name_autocompleter' %>
+
+<div class='menu_items_form'>
+  <table class='menu_item_page_add'>
+    <tr>
+      <td style='width:100%'>
+        <%= text_field_tag 'page_name', '', :style => 'width:400px',
+            # do nothing if the user presses Enter
+            :onkeypress => "return(!enterPressed(event));" %>
+        <%= javascript_tag(new_autocomplete_javascript(autocomplete_id)) %>
+      </td>
+      <td>
+        <%= spinner(autocomplete_id) %>
+      </td>
+    </tr>
+  </table>
+
+  <div id="menu_items_list_container">
+    <%= render :partial => 'menu_items_list' unless @menu_items.empty? %>
+  </div>
+</div>
+
+
+
