@@ -1,10 +1,9 @@
 # this a generic rjs script to replace the sidebar with a fresh copy.
 # it also hides any open popups
 
+page.call 'Modalbox.hide'
 page.replace 'page_sidebar', :partial => 'base_page/sidebar'
 page.replace_html 'message', display_messages if display_messages.any?
 page.select('submit').each do |submit|
   submit.disable = false
 end
-page.hide 'popup_holder'
-

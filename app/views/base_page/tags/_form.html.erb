@@ -1,5 +1,4 @@
 <% form_remote_tag(*options_for_edit_tag_form) do -%>
-
   <blockquote>
     <h2 class="first"><%= 'Current Tags'[:current_tags] %></h2>
 
@@ -14,7 +13,7 @@
     <h2><%= 'Add Tags'[:add_tags] %></h2>
     <%= "Add one or more tags, separated by commas"[:add_one_or_more_tags]%>:
     <p>
-      <%= text_field_tag( 'add', '', { :size => 20 } ) %>
+      <%= text_field_tag( 'add', '', { :size => 20, :tabindex => 1 } ) %>
       <%= submit_tag :add_button.t, :name => 'add' %>
     </p>
   </blockquote>
@@ -22,8 +21,7 @@
   <div class='buttons'>
     <%= spinner('tag') %>
     <%= submit_tag :close_button.t, :name => 'close' %>
+    <%# close_modal_button %>
   </div>
 
 <% end %>
-
-<%= javascript_tag "Form.focusFirstElement('edit_tag_form');" %>

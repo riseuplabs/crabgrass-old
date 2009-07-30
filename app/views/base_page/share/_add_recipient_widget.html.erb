@@ -28,6 +28,28 @@
   # we clear the recipient_name field so that we don't get a double submit
   after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
 
+  # called in order to render a popup row
+  # it is a little too complicated. basically, we want to just highlight
+  # the text but not the html tags.
+  render_popup_row_function = %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
+
+  # called to convert the row data into a value
+  extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
+
+  after_load_js = %Q[
+   after_load_function = function() {
+     new Autocomplete('recipient_name', { 
+       serviceUrl:'/base_page/share/auto_complete',
+       minChars:2,
+       maxHeight:400,
+       width:300,
+       onSelect: #{after_update_function},
+       rowRenderer: #{render_popup_row_function},
+       selectValue: #{extract_value_from_row_function}
+      }, #{autocomplete_id_number});
+    }
+  ]
+
   auto_tag = autocomplete_entity_tag('recipient_name', :onselect => after_update_function)
 
   # if there are no recipients at all, we will do not show the box
@@ -48,6 +70,7 @@
     <td style='width:100%'>
       <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
           :onkeypress => key_pressed_function %>
+      <%= javascript_tag(after_load_js) %>
       <%= auto_tag %>
     </td>
     <td>&nbsp;</td>
@@ -64,4 +87,3 @@
 <div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
 </div>
-
