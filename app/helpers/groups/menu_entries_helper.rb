@@ -1,0 +1,2 @@
+module Groups::MenuEntriesHelper
+end

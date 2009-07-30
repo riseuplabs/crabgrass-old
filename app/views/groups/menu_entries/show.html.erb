@@ -1,0 +1,28 @@
+<p>
+  <b>Title:</b>
+  <%=h @menu_entry.title %>
+</p>
+
+<p>
+  <b>Link:</b>
+  <%=h @menu_entry.link %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%=h @menu_entry.position %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%=h @menu_entry.group_id %>
+</p>
+
+<p>
+  <b>Default:</b>
+  <%=h @menu_entry.default %>
+</p>
+
+
+<%= link_to 'Edit', edit_menu_entry_path(@menu_entry) %> |
+<%= link_to 'Back', menu_entries_path %>

@@ -1,0 +1,28 @@
+<h1>Listing menu_entries</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Link</th>
+    <th>Position</th>
+    <th>Group</th>
+    <th>Default</th>
+  </tr>
+
+<% for menu_entry in @menu_entries %>
+  <tr>
+    <td><%=h menu_entry.title %></td>
+    <td><%=h menu_entry.link %></td>
+    <td><%=h menu_entry.position %></td>
+    <td><%=h menu_entry.group_id %></td>
+    <td><%=h menu_entry.default %></td>
+    <td><%= link_to 'Show', menu_entry %></td>
+    <td><%= link_to 'Edit', edit_menu_entry_path(menu_entry) %></td>
+    <td><%= link_to 'Destroy', menu_entry, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New menu_entry', new_menu_entry_path %>
