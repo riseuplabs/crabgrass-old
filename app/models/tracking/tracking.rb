@@ -167,7 +167,7 @@ class Tracking < ActiveRecord::Base
       nil
     elsif thing.is_a?(Fixnum)
       thing
-    elsif thing.respond_to?(:id)
+    elsif thing.is_a?(ActiveRecord::Base)
       thing.id
     else
       nil
