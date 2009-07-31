@@ -541,7 +541,7 @@ module PageHelper
     end
   end
 
-  def create_page_link(group=nil)
+  def create_page_link(group=nil, options={})
     url = {:controller => '/pages', :action => 'create'}
     if group
       url[:group] = group.name
@@ -551,10 +551,11 @@ module PageHelper
     #  klass = 'contribute group_contribute'
     icon = 'plus'
     text = "Create Page"[:contribute_content_link]
-    klass = 'contribute'
+    klass = options[:no_create_page_bubble] ? '' : 'contribute'
+    #klass = 'contribute' if options[:create_page_bubble]
     content_tag(:div,
       link_to(text, url, :class => "small_icon #{icon}_16"),
-      :class => klass
+      :class => klass 
     )
   end
 

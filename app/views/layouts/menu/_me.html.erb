@@ -3,7 +3,7 @@
   ##%>
 <div class="menu_items" style="display: none" onclick="<%= remote_function(:url => me_params(:action => :recent_pages)) %>">
   <div class="leftcol">
-    <%= render :partial => 'me/mebar', :locals => { :skip_ids => true}  %>
+    <%= render :partial => 'me/mebar', :locals => { :skip_ids => true, :no_create_page_bubble => true}  %>
   </div>
   <div class="rightcol">
     <div id="recent_pages_dropdown"><%= big_spinner %></div>

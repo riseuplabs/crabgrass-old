@@ -1,8 +1,9 @@
 <%-
-   skip_ids = false if skip_ids.nil?
+  no_create_page_bubble = false if no_create_page_bubble.nil?
+  skip_ids = false if skip_ids.nil?
 -%>
 
-<%= create_page_link %>
+<%= create_page_link(nil, {:no_create_page_bubble => no_create_page_bubble}) %>
 
 <ul class='side_list'>
   <% active = controller?('me/dashboard') %>
