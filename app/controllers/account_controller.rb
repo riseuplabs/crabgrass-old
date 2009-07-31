@@ -23,12 +23,15 @@ class AccountController < ApplicationController
     end
     return unless request.post?
     previous_language = session[:language_code]
-    reset_session # important!!
-                  # always force a new session on every login attempt
-                  # in order to prevent session fixation attacks.
 
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
+      reset_session # important!!
+                    # always force a new session on every login success
+                    # in order to prevent session fixation attacks.
+      # have to reauth, since we cleared the session
+      self.current_user = User.authenticate(params[:login], params[:password])
+
       if params[:remember_me] == "1"
         self.current_user.remember_me
         cookies[:auth_token] = {
@@ -47,7 +50,7 @@ class AccountController < ApplicationController
       UnreadActivity.create(:user => current_user)
       redirect_successful_login
     else
-      flash_message :title => "Could not log in"[:login_failed],
+      flash_message_now :title => "Could not log in"[:login_failed],
       :error => "Username or password is incorrect."[:login_failure_reason]
     end
 
