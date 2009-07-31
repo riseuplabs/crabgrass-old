@@ -1,32 +1,13 @@
 <% autocomplete_id = 'page_name_autocompleter' %>
 
 <div class='menu_items_form'>
-
-  <%= Formy.form do |f|
-    f.row do |r|
-      r.label "Display name"[:menu_item_display_name]
-      r.label_for 'menu_item_title'
-      r.input text_field('menu_item', 'title', :size => 40, :maxlength => 100)
-      r.info "A short descriptive name displayed in the menu."[:descriptive_name_for_menu_item]
-    end
-    f.row do |r|
-      r.label "Type"[:type]
-      r.label_for 'menu_item_type'
-      r.input select('menu_item', 'type', MenuItem::TYPES)
-      r.info 'The type of link for the menu item'[:menu_item_link]
-    end
-    f.row do |r|
-      r.label "Link"[:link]
-      r.label_for 'menu_item_link'
-      r.input text_field('menu_item', 'link', :size => 40, :maxlength => 40)
-      javascript_tag(new_autocomplete_javascript(autocomplete_id))
-      spinner(autocomplete_id)
-      r.info "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."[:menu_item_link_description]
-    end
-  end
-  %>
-
   <div id="menu_items_list_container">
     <%= render :partial => 'menu_items_list' unless @menu_items.empty? %>
+  </div>
+</div>
+
+<div class='menu_items_form'>
+  <div id="new_menu_item_container">
+    <%= render :partial => 'new_menu_item'%>
   </div>
 </div>

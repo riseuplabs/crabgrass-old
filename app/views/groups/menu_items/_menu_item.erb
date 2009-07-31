@@ -1,0 +1,15 @@
+<tr id="<%= dom_id(menu_item) %>" class="menu_item_drag_handle">
+  <td>
+    <%= menu_item.position + 1 %>
+  </td>
+  <td style="width:50%">
+    <%= menu_item.title %>
+  </td>
+  <td style="width:50%">
+    <%= menu_item.link %>
+  </td>
+  <td>
+    <% button_id = dom_id(menu_item, :minus_button) # id used to show the spinner %>
+    <%= link_to_function_icon('minus', destroy_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
+  </td>
+</tr>

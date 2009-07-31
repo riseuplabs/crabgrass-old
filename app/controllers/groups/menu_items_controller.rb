@@ -36,21 +36,9 @@ class Groups::MenuItemsController < Groups::BaseController
     @menu_item = MenuItem.find(params[:id])
   end
 
-  # POST /menu_items
-  # POST /menu_items.xml
   def create
-    @menu_item = MenuItem.new(params[:menu_item])
-
-    respond_to do |format|
-      if @menu_item.save
-        flash[:notice] = 'MenuItem was successfully created.'
-        format.html { redirect_to(@menu_item) }
-        #format.xml  { render :xml => @menu_item, :status => :created, :location => @menu_item }
-      else
-        format.html { render :action => "new" }
-        #format.xml  { render :xml => @menu_item.errors, :status => :unprocessable_entity }
-      end
-    end
+    @group.add_menu_item(params[:menu_item])
+    @menu_items=@group.menu_items
   end
 
   def update

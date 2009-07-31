@@ -157,6 +157,10 @@ class Group < ActiveRecord::Base
 
   has_many :menu_items, :dependent => :destroy, :order => :position
 
+  def add_menu_item(params)
+    item=MenuItem.new(params.merge :group_id => self.id, :position => self.menu_items.count)
+    item.save
+  end
 
   # TODO: add visibility to menu_items so they can be visible to members only.
   # def menu_items
