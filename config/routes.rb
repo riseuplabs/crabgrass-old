@@ -101,6 +101,8 @@ ActionController::Routing::Routes.draw do |map|
   map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
+  
+  map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
   ## GROUP
