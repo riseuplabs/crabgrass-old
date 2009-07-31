@@ -12,7 +12,8 @@ module CacheHelper
   end
 
   def menu_cache_key
-    {:user_id => current_user.id, :version => current_user.version}
+    current_site_key = current_site.id ? "current_site="+current_site.id+"&" : ""
+    "menu/#{current_site_key}user_id=#{current_user.id}&version=#{current_user.version}"
   end
 
 end
