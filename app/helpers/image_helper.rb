@@ -194,7 +194,9 @@ module ImageHelper
   # creates an img tag for a thumbnail, optionally scaling the image or cropping
   # the image to meet new dimensions (using html/css, not actually scaling/cropping)
   #
-  # eg: thumbnail_img_tag(thumb, :crop => '22x22')
+  # eg: thumbnail_img_tag(asset, :medium, :crop => '22x22')
+  #
+  # thumbnail_name: one of :small, :medium, :large
   #
   # options:
   #  * :crop   -- the img is first scaled, then cropped to allow it to
@@ -206,7 +208,7 @@ module ImageHelper
   #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
-  def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
+  def thumbnail_img_tag(asset, thumbnail_name, options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]

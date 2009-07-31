@@ -158,17 +158,6 @@ module BasePageHelper
   ## SIDEBAR COLLECTIONS
   ##
 
-  def page_tags
-    if @page.tags.any?
-      links = @page.tags.collect do |tag|
-        tag_link(tag, @page.owner)
-      end.join("\n")
-      content_tag :div, links, :class => 'tags'
-    elsif may_update_tags?
-      ''
-    end
-  end
-
   def page_attachments
     if @page.assets.any?
       items = @page.assets.collect do |asset|
@@ -220,7 +209,7 @@ module BasePageHelper
   # NOTE #2: this is no longer how the right column works. so we should not
   # have to use absolutely positioned popups anymore.
   #
-  
+
   def show_popup_link(options)
     options[:controller] ||= options[:name]
     popup_url = url_for({
@@ -251,7 +240,7 @@ module BasePageHelper
   def edit_attachments_line
     if may_show_page?
       popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach', :title => 'Edit Attachments'[:edit_attachments])
-    end 
+    end
   end
 
   def edit_tags_line
