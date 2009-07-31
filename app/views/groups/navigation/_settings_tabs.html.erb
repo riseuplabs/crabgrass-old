@@ -22,6 +22,11 @@
     t.url groups_features_url(:action => :index)
     t.selected controller?('groups/features') && action?(:index)
   end
+  f.tab do |t|
+    t.label 'Navigation bar'[:menu_items]
+    t.url groups_menu_items_url(:action => :index)
+    t.selected controller?('groups/menu_items') && action?(:index)
+  end
 
 #  f.tab do |t|
 #    t.label 'Multimedia'[:page_group_media]
