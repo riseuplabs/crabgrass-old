@@ -39,6 +39,7 @@ class Mailer < ActionMailer::Base
   include Mailers::Page
   include Mailers::User
   include Mailers::Request
+  include Mailers::Bugreport
   include Mailers::Verification
 
   protected

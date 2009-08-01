@@ -27,7 +27,7 @@
     <%= call_hook :page_sidebar_actions %>
   <% end -%>
 
-  <%- if !(tag_content = page_tags).nil? -%>
+  <%- if !(tag_content = page_tags).nil? || may_update_tags? -%>
     <h3><%= 'tags'[:tags] %></h3>
     <div class='tags'>
       <%= tag_content %>

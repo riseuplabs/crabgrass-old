@@ -235,12 +235,14 @@ module PageHelper
     end
   end
 
-  def page_list_updated_or_created(page)
+  def page_list_updated_or_created(page, options={})
+    options[:type] ||= :twolines
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
     label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
+    separator = options[:type]==:twolines ? '<br/>' : '&bull;'
+    content_tag :span, "%s %s %s &bull; %s" % [username, separator, label, date], :class => 'nowrap'
   end
 
   def page_list_contribution(page)
@@ -254,15 +256,22 @@ module PageHelper
   def page_list_title(page, column, participation = nil)
     title = link_to(h(page.title), page_url(page))
     if participation and participation.instance_of? UserParticipation
-      title += " " + icon_tag("tiny_pending") unless participation.resolved?
+      #title += " " + icon_tag("tiny_pending") unless participation.resolved?
       title += " " + icon_tag("tiny_star") if participation.star?
     else
-      title += " " + icon_tag("tiny_pending") unless page.resolved?
+      #title += " " + icon_tag("tiny_pending") unless page.resolved?
     end
     if page.flag[:new]
       title += " <span class='newpage'>#{'new'.t}</span>"
     end
     return title
+  end
+
+  def page_list_posts_count(page)
+    if page.posts_count > 1
+      # i am not sure if this is very kosher in other languages:
+      "%s %s" % [page.posts_count, "posts"[:page_list_heading_posts]]
+    end
   end
 
   def page_list_heading(column, options={})
@@ -343,6 +352,15 @@ module PageHelper
     end
     html += "</td>"
     content_tag(:tr, html, :class => "page_info")
+  end
+
+  def page_tags(page=@page, join="\n")
+    if page.tags.any?
+      links = page.tags.collect do |tag|
+        tag_link(tag, page.owner)
+      end.join(join)
+      links
+    end
   end
 
   ##
@@ -523,7 +541,7 @@ module PageHelper
     end
   end
 
-  def create_page_link(group=nil)
+  def create_page_link(group=nil, options={})
     url = {:controller => '/pages', :action => 'create'}
     if group
       url[:group] = group.name
@@ -533,10 +551,11 @@ module PageHelper
     #  klass = 'contribute group_contribute'
     icon = 'plus'
     text = "Create Page"[:contribute_content_link]
-    klass = 'contribute'
+    klass = options[:no_create_page_bubble] ? '' : 'contribute'
+    #klass = 'contribute' if options[:create_page_bubble]
     content_tag(:div,
       link_to(text, url, :class => "small_icon #{icon}_16"),
-      :class => klass
+      :class => klass 
     )
   end
 
