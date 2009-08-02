@@ -1,8 +1,7 @@
 module WikiHelper
 
   def wiki_action(action, hash={})
-    {:controller => 'wiki', :action => action, :group_id => @group.id,
-     :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+    {:controller => 'wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
   end
 
   def wiki_edit_link(wiki_id=nil)
@@ -119,7 +118,7 @@ module WikiHelper
     if @page and @page.data and @page.data == wiki
       page_xurl(@page, :action => 'image_popup_upload', :wiki_id => wiki.id)
     else
-      wiki_action('image_popup_upload', :wiki_id => wiki.id)
+      url_for(wiki_action('image_popup_upload', :wiki_id => wiki.id).merge({:escape => false}))
     end
   end
 
@@ -129,7 +128,7 @@ module WikiHelper
     if @page and @page.data and @page.data == wiki
       page_xurl(@page, :action => 'image_popup_show', :wiki_id => wiki.id)
     else
-      wiki_action('image_popup_show', :wiki_id => wiki.id)
+      url_for(wiki_action('image_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
     end
   end
 
