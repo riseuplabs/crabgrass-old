@@ -114,6 +114,11 @@ class Profile < ActiveRecord::Base
     friend?
   end
 
+  def hidden?
+    # a profile is hidden if no relationship fields are set
+    !(friend? || stranger? || fof? || foe? || peer?)
+  end
+
   def type
     return 'public' if stranger?
     return 'private' if friend?
