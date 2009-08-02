@@ -9,7 +9,11 @@
     <%= menu_item.link %>
   </td>
   <td>
-    <% button_id = dom_id(menu_item, :minus_button) # id used to show the spinner %>
+    <% button_id = dom_id(menu_item, :edit_buttons) # id used to show the spinner %>
+    <%= link_to_function_icon('pencil', edit_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
+  </td>
+  <td>
+    <% button_id = dom_id(menu_item, :minus_buttons) # id used to show the spinner %>
     <%= link_to_function_icon('minus', destroy_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
   </td>
 </tr>

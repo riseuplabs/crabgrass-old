@@ -155,12 +155,23 @@ class Group < ActiveRecord::Base
   ## MENU_ITEMS
   ##
 
-  has_many :menu_items, :dependent => :destroy, :order => :position
+  has_many :menu_items, :dependent => :destroy, :order => :position do
+
+    def update_order(menu_item_ids)
+      menu_item_ids.each_with_index do |id, position|
+        # find the menu_item with this id
+        menu_item = self.find(id)
+        menu_item.update_attribute(:position, position)
+      end
+      self
+    end
+  end
 
   def add_menu_item(params)
     item=MenuItem.new(params.merge :group_id => self.id, :position => self.menu_items.count)
     item.save
   end
+
 
   # TODO: add visibility to menu_items so they can be visible to members only.
   # def menu_items

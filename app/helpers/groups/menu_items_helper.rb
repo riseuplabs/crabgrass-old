@@ -29,14 +29,47 @@ module Groups::MenuItemsHelper
     ]
   end
 
-  def destroy_menu_item_remote_function(feature, button_id)
+  def destroy_menu_item_remote_function(menu_item, button_id)
     remote_function({
       :url => {:controller => 'groups/menu_items', :action => 'destroy', :id => @group.name},
-      :with => %Q['menu_item_id=' + #{feature.id}],
+      :with => %Q['menu_item_id=' + #{menu_item.id}],
       :method => :delete,
       :update => 'menu_items_list_container',
       :loading => spinner_icon_on('minus', button_id),
       :complete => spinner_icon_off('minus', button_id)
+    })
+  end
+
+  def edit_menu_item_remote_function(menu_item, button_id)
+    remote_function({
+      :url => {:controller => 'groups/menu_items', :action => 'edit', :id => @group.name},
+      :with => %Q['menu_item_id=' + #{menu_item.id}],
+      :loading => spinner_icon_on('pencil', button_id),
+      :complete => spinner_icon_off('pencil', button_id)
+    })
+  end
+
+  def save_menu_item_remote_function(menu_item, button_id)
+    remote_function({
+      :url => {:controller => 'groups/menu_items', :action => 'update', :id => @group.name},
+      :with => %Q['menu_item_id=' + #{menu_item.id}],
+      :loading => spinner_icon_on('pencil', button_id),
+      :complete => spinner_icon_off('pencil', button_id)
+    })
+  end
+
+  def cancel_add_menu_item_function(menu_item, button_id)
+    update_page do |page|
+      page.remove dom_id(menu_item)
+    end
+  end
+
+  def cancel_edit_menu_item_remote_function(menu_item, button_id)
+    remote_function({
+      :url => {:controller => 'groups/menu_items', :action => 'edit', :id => @group.name},
+      :with => %Q['menu_item_id=' + #{menu_item.id}],
+      :loading => spinner_icon_on('pencil', button_id),
+      :complete => spinner_icon_off('pencil', button_id)
     })
   end
 

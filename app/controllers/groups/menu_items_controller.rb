@@ -1,39 +1,24 @@
 class Groups::MenuItemsController < Groups::BaseController
   javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
   helper 'groups'
-  before_filter :fetch_data, :login_required
-  before_render :load_menu_items
+  before_filter :fetch_data
+  before_filter :login_required
+  before_filter :load_menu_items
 
-  verify :only => :update, :method => :put, :redirect_to => {:action => :index}
+  verify :only => :update, :method => :put
 
   def index
   end
 
-  # GET /menu_items/1
-  # GET /menu_items/1.xml
   def show
-    @menu_item = MenuItem.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      #format.xml  { render :xml => @menu_item }
-    end
   end
 
-  # GET /menu_items/new
-  # GET /menu_items/new.xml
   def new
     @menu_item = MenuItem.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      #format.xml  { render :xml => @menu_item }
-    end
+    @menu_item.position = @group.menu_items.count
   end
 
-  # GET /menu_items/1/edit
   def edit
-    @menu_item = MenuItem.find(params[:id])
   end
 
   def create
@@ -42,22 +27,27 @@ class Groups::MenuItemsController < Groups::BaseController
   end
 
   def update
-    menu_item_ids = params[:menu_items_ids].collect(&:to_i)
-
-    menu_item_ids.each_with_index do |id, position|
-      # find the menu_item with this id
-      menu_item = MenuItem.find(id)
-      menu_item.update_attribute(:position, position)
+    if @menu_item
+      @menu_item.update_attributes(params[:menu_item])
+    end
+    if params[:menu_items_ids].any?
+      @group.menu_items.update_order(params[:menu_items_ids].map(&:to_i))
     end
   end
 
   def destroy
-    @menu_item = MenuItem.find(params[:menu_item_id])
     @menu_item.destroy
   end
 
+  protected
+
+  # this also makes sure that @menu_item belongs to the group if an
+  # id is given.
   def load_menu_items
     @menu_items = @group.menu_items
+    if params[:menu_item_id]
+      @menu_item = @menu_items.find(params[:menu_item_id])
+    end
   end
 
   def fetch_data
