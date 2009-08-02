@@ -25,14 +25,24 @@ module ProfileMethods
   # returns the first profile that matches one of the access symbols in *arg
   # in this order of precedence: foe, friend, peer, fof, stranger.
   def find_by_access(*args)
-    return nil if args.empty?
+    return find_by_no_access if args.empty?
 
     args.map!{|i| if i==:member; :friend; else; i; end}
 
     conditions = args.collect{|access| "profiles.`#{access}` = ?"}.join(' OR ')
     find(
       :first,
-      :conditions => [conditions]+[true]*args.size,
+      :conditions => [conditions] + ([true] * args.size),
+      :order => 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
+    )
+  end
+
+  def find_by_no_access
+    fields = [:foe, :friend, :peer, :fof, :stranger]
+    conditions = fields.collect{|access| "profiles.`#{access}` = ?"}.join(' AND ')
+    find(
+      :first,
+      :conditions => [conditions] + ([false] * fields.size),
       :order => 'foe DESC, friend DESC, peer DESC, fof DESC, stranger DESC'
     )
   end
@@ -45,6 +55,10 @@ module ProfileMethods
   # a shortcut to grab the 'private' profile
   def private
     @private_profile ||= (find_by_access(:friend) || create(:friend => true))
+  end
+
+  def hidden
+    @hidden_profile ||= (find_by_access || create)
   end
 
   def create_or_build(args={})
