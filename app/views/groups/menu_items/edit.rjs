@@ -1,4 +1,0 @@
-item_dom_id  = dom_id(@menu_item)
-
-# update the menu_item div with the edit form.
-page.replace item_dom_id, :partial => 'edit', :locals => {:menu_item => @menu_item}

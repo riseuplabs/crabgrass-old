@@ -1,2 +1,0 @@
-page.insert_html :bottom, 'menu_items_list', :partial => 'new', :locals => {:menu_item => @menu_item}
-page.hide 'add_menu_item_button'

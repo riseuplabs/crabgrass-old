@@ -23,8 +23,7 @@ class Groups::MenuItemsController < Groups::BaseController
   end
 
   def create
-    @group.add_menu_item(params[:menu_item])
-    @menu_items=@group.menu_items
+    @menu_item=@group.add_menu_item(params[:menu_item])
   end
 
   def update
