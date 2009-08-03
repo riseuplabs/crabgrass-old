@@ -40,6 +40,7 @@ class Conf
   cattr_accessor :chat
   cattr_accessor :signup_mode
   cattr_accessor :needs_email_verification
+  cattr_accessor :dev_email
 
   # are in site, but I think they should be global
   cattr_accessor :translators
@@ -102,6 +103,7 @@ class Conf
     self.chat              = true
     self.needs_email_verification = false
     self.signup_mode       = SIGNUP_MODE[:default]
+    self.dev_email         = ''
 
     # instance configuration
     self.enabled_mods  = []

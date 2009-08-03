@@ -78,6 +78,10 @@ ensure_page_owner
   If true, then every page must have an owner. If false, you are allowed to create
   pages without owners. The default is true.
 
+dev_email
+  Email address where bug reports are sent.
+  Example: dev_email: 'developer@domain.com'
+
 === Sites
 
 Crabgrass can host multiple social networks on one installation, each with their own domain. Each social network is called a 'site', and they are enabled and disabled using the <tt>crabgrass.*.yml</tt> file. The actual data for the site is stored in the database, and can be configured through the admin web interface.
