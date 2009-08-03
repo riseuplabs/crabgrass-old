@@ -45,6 +45,10 @@ module UrlHelper
     {:controller => '/groups/features', :action => nil, :id => @group}.merge(options)
   end
 
+  def groups_menu_items_params(options={})
+    {:controller => '/groups/menu_items', :action => nil, :id => @group}.merge(options)
+  end
+
   def me_params(options={})
     if options[:action].to_sym == :search
       options.delete(:action)

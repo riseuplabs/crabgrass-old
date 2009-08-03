@@ -1,0 +1,22 @@
+<li id="<%= dom_id(menu_item) %>" style='width:30em'>
+  <div class='hover' id="<%= dom_id(menu_item, :edit) %>">
+    <% spinner_id = "add_menu_item_spinner" %>
+    <% url = groups_menu_items_url(:action=>'create') %>
+    <% form_remote_for( menu_item,
+                       :url      => url,
+                       :method   => :post,
+                       :html     => {:action => url, :id => dom_id(menu_item, :form)}, # non-ajax fallback
+                       :loading  => show_spinner(spinner_id)
+    ) do |f| -%>
+      <div style="float: right; width: 7em; text-align: right;">
+        <%= spinner(spinner_id) %>
+        <%= submit_tag 'Create'.t %>
+      </div>
+      <%= f.label :title, 'Title'.t, :style => 'width:6em'%>
+      <%= f.text_field :title, :size => 70, :style => 'width:15em'%> 
+      <br/>
+      <%= f.label :link, 'Link'.t, :style => 'width:6em'%>
+      <%= f.text_field :link, :size => 70, :style => 'width:15em'%>
+    <% end %>
+  </div>
+</li>

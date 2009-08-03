@@ -67,6 +67,13 @@ module Groups::BasePermission
   end
 
   ##
+  ## GROUP MENU ITEMS
+  ##
+  def may_edit_menu?(group = @group)
+    group and current_user.may?(:admin, group)
+  end
+
+  ##
   ## ORGANIZATIONAL PERMISSIONS
   ##
 
