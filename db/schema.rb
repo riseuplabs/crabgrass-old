@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090729020153) do
+ActiveRecord::Schema.define(:version => 20090730115644) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -295,6 +295,16 @@ ActiveRecord::Schema.define(:version => 20090729020153) do
 
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
+
+  create_table "menu_items", :force => true do |t|
+    t.string   "title"
+    t.string   "link"
+    t.integer  "position",   :limit => 11
+    t.integer  "group_id",   :limit => 11
+    t.boolean  "default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messages", :force => true do |t|
     t.datetime "created_at"

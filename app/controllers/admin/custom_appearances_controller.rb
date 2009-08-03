@@ -5,7 +5,7 @@ class Admin::CustomAppearancesController < Admin::BaseController
   helper ColorPickerHelper, Admin::UsersHelper, Admin::GroupsHelper, Admin::EmailBlastsHelper, Admin::AnnouncementsHelper, Admin::PagesHelper, Admin::PostsHelper, 'custom_appearances', 'admin/custom_appearances'
   permissions 'admin/custom_appearances'
 
-  verify :method => :post, :only => [:update]
+  verify :method => [:post, :put], :only => [:update]
   before_filter :view_setup, :except => [:favicon, :available]
   before_filter :login_required, :except => [:favicon]
   prepend_before_filter :fetch_data, :except => [:favicon, :new]
