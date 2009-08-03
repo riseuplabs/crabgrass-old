@@ -136,6 +136,12 @@ div#top_menu
     border-color= !menu_border_color
     border-style: solid
     z-index: 99
+    h3
+      padding= !menu_item_padding
+      &.see_all
+        font-size: smaller
+        font-variant: small-caps
+        color: blue
     ul
       border: 0 none transparent
       width: auto
@@ -165,6 +171,8 @@ div#top_menu
     div.leftcol
       float: left
       width: 17em
+      &.menu_me
+        padding: 0.4em 1em
     div.rightcol
       width: 17em
       margin-left: 17em

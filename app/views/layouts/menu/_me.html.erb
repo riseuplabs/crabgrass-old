@@ -2,7 +2,7 @@
   ## The onclick remote function gets called once when this menu becomes visible
   ##%>
 <div class="menu_items" style="display: none" onclick="<%= remote_function(:url => me_params(:action => :recent_pages)) %>">
-  <div class="leftcol">
+  <div class="leftcol menu_me">
     <%= render :partial => 'me/mebar', :locals => { :skip_ids => true, :no_create_page_bubble => true}  %>
   </div>
   <div class="rightcol">
