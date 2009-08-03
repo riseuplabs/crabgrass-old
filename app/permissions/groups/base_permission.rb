@@ -70,7 +70,9 @@ module Groups::BasePermission
   ## GROUP MENU ITEMS
   ##
   def may_edit_menu?(group = @group)
-    group and current_user.may?(:admin, group)
+    group and
+    current_user.may?(:admin, group) and
+    group == Site.current.network
   end
 
   ##

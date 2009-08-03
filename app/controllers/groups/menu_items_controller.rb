@@ -11,25 +11,36 @@ class Groups::MenuItemsController < Groups::BaseController
   def index
   end
 
-  def show
-  end
+  # not used yet.
+  #def show
+  #end
 
-  def new
-    @menu_item = MenuItem.new
-    @menu_item.position = @group.menu_items.count
-  end
+  # we are not using this right now. there is a
+  # new empty menu item displayed at the end of the
+  # list.
+  #def new
+  #  @menu_item = MenuItem.new
+  #  @menu_item.position = @group.menu_items.count
+  #end
 
-  def edit
-  end
+  #not used yet.
+  #the list also displays edit forms.
+  #def edit
+  #end
 
   def create
     @menu_item=@group.add_menu_item(params[:menu_item])
   end
 
+  # this can be called in two ways:
+  # * saving an edited menu_item
+  # * changing the order of menu_items via drag&drop.
   def update
+    # single item changed:
     if @menu_item
       @menu_item.update_attributes(params[:menu_item])
     end
+    # order changed:
     if params[:menu_items_list].any?
       @group.menu_items.update_order(params[:menu_items_list].map(&:to_i))
     end
