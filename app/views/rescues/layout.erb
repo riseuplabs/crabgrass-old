@@ -118,7 +118,7 @@
     <div id='bugreport'>
        <% form_tag('/bugreport/submit') do %>
          Please add a description of how you got to this page, and any additional comments:<br>
-         <%= text_area_tag(:comments) %>
+         <%= text_area_tag(:comments, nil, :size => "50x5") %>
          <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
          <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
          <%= hidden_field_tag('error_action', request.parameters['action']) %>
