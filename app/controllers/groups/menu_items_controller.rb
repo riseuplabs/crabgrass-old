@@ -31,8 +31,8 @@ class Groups::MenuItemsController < Groups::BaseController
     if @menu_item
       @menu_item.update_attributes(params[:menu_item])
     end
-    if params[:menu_items_ids].any?
-      @group.menu_items.update_order(params[:menu_items_ids].map(&:to_i))
+    if params[:menu_items_list].any?
+      @group.menu_items.update_order(params[:menu_items_list].map(&:to_i))
     end
   end
 

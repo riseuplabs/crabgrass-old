@@ -1,20 +1,19 @@
-<tr id="<%= dom_id(menu_item) %>" class="menu_item_drag_handle">
-  <td>
-    <%= menu_item.position + 1 %>
-    <% spinner_id = "edit_menu_item_spinner_#{menu_item.position + 1}" %>
-  </td>
-  <td style="width:50%">
-    <%= text_field 'menu_item', 'title', :size => 70, :style => 'width:95%' %>
-  </td>
-  <td style="width:50%">
-    <%= text_field 'menu_item', 'link', :size => 70, :style => 'width:95%'%>
-  </td>
-  <td>
-    <% button_id = dom_id(menu_item, :add_buttons) # id used to show the spinner %>
-    <%= link_to_function_icon('ok', save_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
-  </td>
-  <td>
-    <% button_id = dom_id(menu_item, :cancel_buttons) # id used to show the spinner %>
-    <%= link_to_function_icon('cancel', cancel_add_menu_item_function(menu_item, button_id)) %>
-  </td>
-</tr>
+<li id="<%= dom_id(menu_item) %>" style='width:30em'>
+  <div class='hover' id="<%= dom_id(menu_item, :edit) %>">
+    <% spinner_id = "add_menu_item_spinner" %>
+    <% url = groups_menu_items_url(:action=>'create') %>
+    <% form_remote_for( menu_item,
+                       :url      => url,
+                       :method   => :post,
+                       :html     => {:action => url, :id => dom_id(menu_item, :form)}, # non-ajax fallback
+                       :loading  => show_spinner(spinner_id)
+    ) do |f| -%>
+      <div style="float: right; width: 7em; text-align: right;">
+        <%= spinner(spinner_id) %>
+        <%= submit_tag 'Create'.t %>
+      </div>
+      <%= f.text_field :title, :size => 70, :style => 'width:21em'%>
+      <%= f.text_field :link, :size => 70, :style => 'width:21em'%>
+    <% end %>
+  </div>
+</li>

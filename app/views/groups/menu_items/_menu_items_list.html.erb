@@ -1,21 +1,3 @@
-<div id="menu_items_list">
-  <% form_id = 'edit_menu_item_form'%>
-  <% url = groups_menu_items_url(:action=>'update', :_method => :put) %>
-  <% spinner_id = "menu_items_ids_" + rand(10000).to_s %>
-  <% form_remote_tag(
-    :url      => url,
-    :html     => {:action => url, :id => form_id}, # non-ajax fallback
-    :update => 'menu_items_list_container',
-    :loading  => show_spinner(spinner_id)
-  ) do -%>
-    <table>
-      <tbody id="menu_items_table">
-        <%= render :partial => 'menu_item', :collection => @menu_items %>
-      </tbody>
-    </table>
-    <%= add_menu_item_button(spinner_id)%>
-    <%= cancel_menu_item_button(spinner_id)%>
-    <%= spinner(spinner_id)%>
-    <%= handle_update_menu_item_order_javascript('menu_items_table', spinner_id) %>
-  <% end -%>
-</div>
+<ol id="menu_items_list">
+  <%= render :partial => 'menu_item', :collection => @menu_items %>
+</ol>

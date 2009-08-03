@@ -1,15 +1,38 @@
-<tr id="<%= dom_id(menu_item) %>" class="menu_item_drag_handle">
-  <td>
-    <%= menu_item.position + 1 %>
-  </td>
-  <td style="width:100%">
-    <% button_id = dom_id(menu_item, :edit_buttons) # id used to show the spinner %>
-    <%= link_to_function(
-      render(:partial => 'menu_item_div', :locals => {:menu_item => menu_item}),
-      edit_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
-  </td>
-  <td>
-  </td>
-  <td>
-  </td>
-</tr>
+<li id="<%= dom_id(menu_item) %>" class="menu_item_drag_handle" style='width:30em'>
+  <div class='hover' id="<%= dom_id(menu_item, :show) %>">
+    <div style="float: right; width: 7em; text-align: right;">
+      <% spinner_id = dom_id(menu_item, :edit_buttons) # id used to show the spinner %>
+      <%= spinner(spinner_id) %>
+      <%= link_to_function( "edit".t, nil) do |page|
+        page.toggle(dom_id(menu_item, :show))
+        page.toggle(dom_id(menu_item, :edit))
+      end %><br/>
+      <%= link_to_function('delete'.t, destroy_menu_item_remote_function(menu_item, spinner_id))%>
+    </div>
+    <b><%= menu_item.title %></b>
+    <br/>
+    <%= menu_item.link %>
+  </div>
+  <div class='hover' id="<%= dom_id(menu_item, :edit) %>" style='display:none'>
+    <% url = groups_menu_items_url(:action=>'update') %>
+    <% form_remote_for( menu_item,
+      :url      => url,
+      :method   => :put,
+      :html     => {:action => url, :method => :put, :id => dom_id(menu_item, :form)}, # non-ajax fallback
+      :loading  => show_spinner(spinner_id)
+    ) do |f| -%>
+      <div style="float: right; width: 7em; text-align: right;">
+        <%= spinner(spinner_id) %>
+        <%= submit_tag 'Save'.t %>
+        <%= link_to_function('cancel'.t, nil) do |page|
+          page.toggle(dom_id(menu_item, :show))
+          page.toggle(dom_id(menu_item, :edit))
+        end %>
+      </div>
+      <% spinner_id = "edit_menu_item_spinner_#{menu_item.position + 1}" %>
+      <%= f.text_field :title, :size => 70, :style => 'width:21em'%>
+      <%= f.text_field :link, :size => 70, :style => 'width:21em'%>
+      <%= tag(:input, :type => :hidden, :name => 'menu_item_id', :value => menu_item.id)%>
+    <% end %>
+  </div>
+</li>

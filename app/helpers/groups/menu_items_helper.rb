@@ -96,12 +96,11 @@ module Groups::MenuItemsHelper
   def handle_update_menu_item_order_javascript(container_id, spinner_id)
     # require 'ruby-debug';debugger;1-1
     sortable_element container_id,
-        :tag => 'tr',
+        :tag => 'li',
         :handle => 'menu_item_drag_handle',
         :ghosting => true,
         :constraint => :vertical,
         :url => { :controller => 'groups/menu_items', :action => 'update', :id => @group.name},
-        :update => 'menu_items_list_container',
         :method => :put,
         :loading => show_spinner(spinner_id),
         :loaded => hide_spinner(spinner_id)
