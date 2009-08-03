@@ -2,18 +2,14 @@
   <td>
     <%= menu_item.position + 1 %>
   </td>
-  <td style="width:50%">
-    <%= menu_item.title %>
-  </td>
-  <td style="width:50%">
-    <%= menu_item.link %>
-  </td>
-  <td>
+  <td style="width:100%">
     <% button_id = dom_id(menu_item, :edit_buttons) # id used to show the spinner %>
-    <%= link_to_function_icon('pencil', edit_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
+    <%= link_to_function(
+      render(:partial => 'menu_item_div', :locals => {:menu_item => menu_item}),
+      edit_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
   </td>
   <td>
-    <% button_id = dom_id(menu_item, :minus_buttons) # id used to show the spinner %>
-    <%= link_to_function_icon('minus', destroy_menu_item_remote_function(menu_item, button_id), :id => button_id)%>
+  </td>
+  <td>
   </td>
 </tr>

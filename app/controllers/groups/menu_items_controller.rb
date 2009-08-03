@@ -4,6 +4,7 @@ class Groups::MenuItemsController < Groups::BaseController
   before_filter :fetch_data
   before_filter :login_required
   before_filter :load_menu_items
+  stylesheet 'menu_items'
 
   verify :only => :update, :method => :put
 

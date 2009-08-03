@@ -13,22 +13,9 @@
         <%= render :partial => 'menu_item', :collection => @menu_items %>
       </tbody>
     </table>
-    <%= button_to_remote("Add".t,
-      :url    => groups_menu_items_url(:action=>'new'),
-      :html   => {:action => groups_menu_items_url(:action=>'new')}, # non-ajax fallback
-      :update => 'menu_items_table',
-      :position => :bottom,
-      :loading => show_spinner(spinner_id),
-      :loaded => hide_spinner(spinner_id)
-    ) %>
-    <%= submit_tag 'Save'.t %>
-    <%= button_to_remote "Cancel".t,
-    :url      => url, # same as for the form. Update without data will just reload.
-    :html     => {:action => url, :id => form_id}, # non-ajax fallback
-    :update => 'menu_items_list_container',
-    :loading  => show_spinner(spinner_id)
-    %>
+    <%= add_menu_item_button(spinner_id)%>
+    <%= cancel_menu_item_button(spinner_id)%>
     <%= spinner(spinner_id)%>
-    <%= handle_update_menu_item_order_javascript('menu_items_ids', spinner_id) %>
+    <%= handle_update_menu_item_order_javascript('menu_items_table', spinner_id) %>
   <% end -%>
 </div>

@@ -73,6 +73,26 @@ module Groups::MenuItemsHelper
     })
   end
 
+  def add_menu_item_button(spinner_id, disabled=false)
+    button_to_remote("Add".t, {
+      :url    => groups_menu_items_url(:action=>'new'),
+      :html   => {:action => groups_menu_items_url(:action=>'new')}, # non-ajax fallback
+      :loading => show_spinner(spinner_id),
+      :loaded => hide_spinner(spinner_id)
+    },
+      :id => 'add_menu_item_button'
+    )
+  end
+
+  def cancel_menu_item_button(spinner_id)
+    url = groups_menu_items_url(:action=>'update', :_method => :put)
+    button_to_remote "Cancel".t,
+      :url      => url, # same as for the form. Update without data will just reload.
+      :html     => {:action => url}, # non-ajax fallback
+      :update => 'menu_items_list_container',
+      :loading  => show_spinner(spinner_id)
+  end
+
   def handle_update_menu_item_order_javascript(container_id, spinner_id)
     # require 'ruby-debug';debugger;1-1
     sortable_element container_id,
