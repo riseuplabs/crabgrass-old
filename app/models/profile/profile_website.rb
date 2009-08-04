@@ -3,9 +3,9 @@
 =end
 
 class ProfileWebsite < ActiveRecord::Base
-
   set_table_name 'websites'
 
+  validates_presence_of_optional_attributes
   validates_presence_of :site_title
   validates_presence_of :site_url
 

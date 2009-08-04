@@ -3,9 +3,9 @@
 =end
 
 class ProfileEmailAddress < ActiveRecord::Base
-
   set_table_name 'email_addresses'
 
+  validates_presence_of_optional_attributes
   validates_presence_of :email_type
   validates_presence_of :email_address
   #validates_as_email :email_address

@@ -3,8 +3,9 @@
 =end
 
 class ProfileLocation < ActiveRecord::Base
-
   set_table_name 'locations'
+
+  validates_presence_of_optional_attributes
 
   belongs_to  :profile
 

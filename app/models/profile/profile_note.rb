@@ -2,9 +2,10 @@
 
 =end
 class ProfileNote < ActiveRecord::Base
-  validates_presence_of :body
-
   set_table_name 'profile_notes'
+
+  validates_presence_of_optional_attributes
+  validates_presence_of :body
 
   belongs_to :profile
 

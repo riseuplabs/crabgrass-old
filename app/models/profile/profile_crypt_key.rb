@@ -1,9 +1,10 @@
 require 'keyring'
 
 class ProfileCryptKey < ActiveRecord::Base
-  validates_presence_of :key
-
   set_table_name 'crypt_keys'
+
+  validates_presence_of_optional_attributes
+  validates_presence_of :key
 
   belongs_to :profile
 

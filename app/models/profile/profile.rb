@@ -69,6 +69,8 @@ Currently unused: may_burden, may_spy, language.
 
 class Profile < ActiveRecord::Base
 
+  validates_presence_of_optional_attributes
+
   belongs_to :language
 
   ##
@@ -84,8 +86,6 @@ class Profile < ActiveRecord::Base
     self.entity_type = 'User' if self.entity_type =~ /User/
     self.entity_type = 'Group' if self.entity_type =~ /Group/
   end
-
-  validate :has_required_fields
 
   ##
   ## CONSTANTS
@@ -219,56 +219,6 @@ class Profile < ActiveRecord::Base
     self.update_attributes( params )
     self.reload
     self
-  end
-
-  # takes an array of any number of symbols and hashes
-  # [:first_name, {:phone_numbers => :phone_number}, {:locations => :country}, {:locations => [:street, city]}]
-  # to be used during validation. validation will fails if any of the fields is blank?
-  def required_fields=(fields = [])
-    # select required fields for the profiles itself
-    @required_profile_fields = fields.select {|field| field.is_a? Symbol}
-    # sub_fields are hashes like this {:locations => :city}, {:locations => [:city, country]}
-    # they need to be merged
-    subfields = fields.select {|field| field.is_a? Hash}
-    # turn a collection of these: [{:phone_numbers => :phone_number}, {:locations => :country}, {:locations => [:street, city]}]
-    # into this: {:location => [:city, :street, country], :phone_numbers => [:phone_number]}
-    @required_profile_sub_fields = {}
-
-    subfields.each do |subfield_hash|
-      # subfield hash = {:locations=>[:city, :country]}
-      subfield_hash.each do |subfield_title, value_or_values|
-        # subfield is :locations, :phone_numbers, etc.
-        # value is a symbol, or an array of symbols: :city, or [:city, country]
-        @required_profile_sub_fields[subfield_title] ||= []
-        @required_profile_sub_fields[subfield_title] += [value_or_values].flatten
-      end
-    end
-
-  end
-
-  def has_required_fields
-    if @required_profile_fields
-      @required_profile_fields.each do |field|
-        self.errors.add(field, "is required"[:is_required]) if self[field].blank?
-      end
-    end
-
-    return unless @required_profile_sub_fields
-    @required_profile_sub_fields.each do |profile_data, fields|
-      # profile_data looks like :locations
-      # fields looks like [:city, country]
-      fields.each do |field|
-        passes = false
-        datas = self.send(profile_data)
-        datas.each do |data|
-          # data is an instance like ProfileLocation or ProfileWebsite
-          passes = true unless data[field].blank?
-        end
-        # one of the locations, websites, emails, etc. has the required field
-        # if passes is true
-        self.errors.add(field, "is required"[:is_required]) unless passes
-      end
-    end
   end
 
   def cover

@@ -3,9 +3,9 @@
 =end
 
 class ProfileImAddress < ActiveRecord::Base
-
   set_table_name 'im_addresses'
 
+  validates_presence_of_optional_attributes
   validates_presence_of :im_type
   validates_presence_of :im_address
 
