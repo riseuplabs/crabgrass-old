@@ -1,11 +1,21 @@
 <%-
-  create_page_class = false if create_page_class.nil?
+  inline_create_page = false if inline_create_page.nil?
   skip_ids = false if skip_ids.nil?
 -%>
 
-<%= create_page_link(nil, {:class => create_page_class}) %>
+<%= create_page_link(nil) unless inline_create_page %>
 
 <ul class='side_list'>
+
+  <% if inline_create_page %>
+    <% active = controller?(:pages) && action?(:create) %>
+    <li class='small_icon plus_16<%= active ? ' active' : '' %>'><%= link_to_active(
+      "Create Page"[:contribute_content_link],
+      {:controller => '/pages', :action => 'create'},
+      active
+    ) %></li>
+  <% end %>
+
   <% active = controller?('me/dashboard') %>
   <li class='small_icon house_16<%= active ? ' active' : '' %>'><%= link_to_active(
     'Dashboard'[:me_dashboard_link],

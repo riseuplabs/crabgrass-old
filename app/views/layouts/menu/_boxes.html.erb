@@ -18,8 +18,8 @@
 %>
 
 <% if not entities.empty? %>
-<div class="menu_items" style="display: none"> 
-  <h3><%= heading %> <span class='see_all'> &raquo; <a href='<%= see_all_url %>'>See All</a></span></h3>
+<div class="menu_items" style="display: none">
+  <h3 class="dim"><%= heading %>&nbsp;&nbsp;<span class='see_all'><%= link_to "See All"[:see_all_link] + ARROW, see_all_url %></span></h3>
   <div class='leftcol'>
     <ul>
       <%- for entity in left_col -%>
