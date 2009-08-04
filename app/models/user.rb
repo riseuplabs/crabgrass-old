@@ -230,6 +230,10 @@ class User < ActiveRecord::Base
     rating_for(rateable) ? true : false
   end
 
+  def birthday
+    self.profile.birthday
+  end
+
 
   ##
   ## PERMISSIONS
