@@ -551,7 +551,7 @@ module PageHelper
     #  klass = 'contribute group_contribute'
     icon = 'plus'
     text = "Create Page"[:contribute_content_link]
-    klass = options[:no_create_page_bubble] ? '' : 'contribute'
+    klass = options[:class] || 'contribute'
     #klass = 'contribute' if options[:create_page_bubble]
     content_tag(:div,
       link_to(text, url, :class => "small_icon #{icon}_16"),

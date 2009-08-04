@@ -131,17 +131,17 @@ div#top_menu
     top: 2.4em
     left: 0
     background= !menu_item_active_fg_color
-    padding: 0.5em
+    padding: 0.75em 0.5em 0.5em
     border-width: 1px 2px 2px 1px
     border-color= !menu_border_color
     border-style: solid
     z-index: 99
     h3
-      padding= !menu_item_padding
+      padding: 0px 0px 2px 4px
+      margin: 0
       &.see_all
         font-size: smaller
         font-variant: small-caps
-        color: blue
     ul
       border: 0 none transparent
       width: auto
@@ -172,7 +172,7 @@ div#top_menu
       float: left
       width: 17em
       &.menu_me
-        padding: 0.4em 1em
+        padding: 0em 1em
     div.rightcol
       width: 17em
       margin-left: 17em
@@ -183,6 +183,10 @@ div#top_menu
     div.rightcol
       width: 23em
       margin-left: 12em
+      border-left: 1px solid
+      padding-left: 4px
+    div.create_page_dropdown
+      padding: 0px 0px 4px 0px
     ul.recent_pages li
       margin-top: 0.5em
 
