@@ -4,12 +4,10 @@ class BasePage::TitleController < ApplicationController
   helper 'base_page'
   permissions 'base_page'
 
-  # return the edit title form via rjs
+  # return the edit title form
   def edit
-    render :template => 'base_page/title/edit_title'
   end
 
-  # TODO: add non-ajax version.
   def update
     if params[:save]
       @old_name = @page.name
@@ -19,7 +17,15 @@ class BasePage::TitleController < ApplicationController
       @page.updated_by = current_user
       @new_name = @page.name
       unless @page.save
-        render(:template => 'base_page/title/edit_title') and return
+        ## TODO: make this the automatic behavior on errors when modalbox is open.
+        render :update do |page|
+          page.replace('modal_message', message_text(:object => @page))
+          page << hide_spinner('save_title')
+          page.select('submit').each do |submit|
+            submit.disable = false
+          end
+        end
+        return
       end
     end
     render :template => 'base_page/title/update_title'

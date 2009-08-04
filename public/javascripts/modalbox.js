@@ -589,6 +589,11 @@ Modalbox.Methods = {
 		this._setPosition();
 	},
 
+	// should be called when you have programatically altered the size of the modalbox.
+	updatePosition: function () {
+		this._setPosition();
+	},
+
 	_getScrollTop: function () { //From: http://www.quirksmode.org/js/doctypes.html
 		var theTop;
 		if (document.documentElement && document.documentElement.scrollTop)

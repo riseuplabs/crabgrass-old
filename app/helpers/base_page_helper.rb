@@ -219,8 +219,8 @@ module BasePageHelper
       :page_id => @page.id,
       :name => options.delete(:name)
     })
-    options.merge!(:after_hide => 'afterHide()')
-    link_to_modal(options.delete(:label), popup_url, options)
+    #options.merge!(:after_hide => 'afterHide()')
+    link_to_modal(options.delete(:label), {:url => popup_url}, options)
   end
 
   # to be included in the popup result for any popup that should refresh the sidebar when it closes.

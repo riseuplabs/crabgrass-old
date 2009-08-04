@@ -1,5 +1,6 @@
 page.replace_html 'title', :partial => 'base_page/title/title'
-page.replace_html 'message', ''
+#page.replace_html 'message', ''
+page.call 'Modalbox.hide'
 
 #
 # the problem:
@@ -12,7 +13,7 @@ page.replace_html 'message', ''
 # chars in the title.
 #
 # TODO: support cases where you are adding a name or removing a name.
-# 
+#
 
 if !@new_name.nil? and !@old_name.nil? and @old_name != @new_name
   page << "$$('.page_url').each( function(link) {link.href = link.href.replace(/(.*\\/)%s($|\\/|\\?)/, '$1%s$2')} );" % [Regexp.escape(@old_name), Regexp.escape(@new_name)]

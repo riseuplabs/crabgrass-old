@@ -689,6 +689,7 @@ all_groups: "All Groups"
 all_networks: "All Networks"
 # ^^ i think this should go away soon, as soon as we have a better group directory.
 all_states: "All States"
+page_name_description: "Optional unique name (used to create the URL for this page)"
 
 # page list
 

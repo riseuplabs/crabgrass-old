@@ -1,7 +1,7 @@
 <% form_remote_tag(
   :url => {:controller => '/base_page/trash', :action => 'update', :page_id => @page.id},
   :loading => show_spinner('popup')) do -%>
-  <blockquote>
+
     <ul class='plain'>
       <li>
         <label class="radio">
@@ -26,7 +26,7 @@
       <%# trash_page_line %>
       <%# destroy_page_line %>
     </ul>
-  </blockquote>
+
   <div class="buttons">
     <%= spinner 'popup' %>
     <%= close_modal_button(:cancel) %>
