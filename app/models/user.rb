@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   include CrabgrassDispatcher::Validations
   validates_handle :login
 
+  validates_presence_of_optional_attributes
+
   validates_presence_of :email, :if => :should_validate_email
 
   validates_as_email :email
@@ -137,6 +139,33 @@ class User < ActiveRecord::Base
   def profile(reload=false)
     @profile = nil if reload
     @profile ||= self.profiles.visible_by(User.current)
+  end
+
+  def setup_profile_required_info(visible_profile, hidden_profile)
+    # don't duplicate validation for email
+    unless self.should_validate_email
+      self.optional_validation_attributes = [:email]
+    end
+
+    visible_profile.optional_validation_attributes = [:first_name, :last_name, :organization]
+    visible_profile.locations.first.optional_validation_attributes = [:city, :country_name]
+
+    hidden_profile.optional_validation_attributes = [:birthday]
+  end
+
+  def missing_profile_info?
+    # TODO: make this dynamically configurable
+    hidden_profile = self.profiles.hidden
+    if Site.current.profile_enabled?(:public)
+      visible_profile = self.profiles.public
+    else
+      visible_profile = self.profiles.private
+    end
+
+    visible_profile.locations[0] ||= ProfileLocation.new
+    self.setup_profile_required_info(visible_profile, hidden_profile)
+
+    return !visible_profile.has_optional_validation_attributes? || !hidden_profile.has_optional_validation_attributes?
   end
 
   ##

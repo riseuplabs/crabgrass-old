@@ -3,7 +3,9 @@ class AccountController < ApplicationController
   stylesheet 'account'
 
   before_filter :view_setup
-  before_filter :setup_profiles, :only => :signup
+  before_filter :setup_user_from_current, :only => :missing_info
+  before_filter :setup_user, :only => :signup
+  before_filter :find_or_build_profiles, :only => [:signup, :missing_info]
 
   skip_before_filter :redirect_unverified_user, :only => [:unverified, :login, :logout, :signup, :verify_email]
 
@@ -64,22 +66,18 @@ class AccountController < ApplicationController
       raise PermissionDenied.new('new user registration is closed at this time')
     end
 
-    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
-    @hidden_profile.email_addresses.build(:email_address => @user.email, :email_type => "Other")
-    # require 'ruby-debug';debugger;1-1
-
     if request.post?
       if params[:usage_agreement_accepted] != "1"
         flash_message_now :error => "Acceptance of the usage agreement is required"[:usage_agreement_required]
-        raise ErrorMessage.new
+        raise Exception.new
       end
       # @hidden_profile
       @user.avatar = Avatar.new
 
       # @visible_profile.entity = @user
       # @hidden_profile.entity = @user
-      @user.profiles << @visible_profile
-      @user.profiles << @hidden_profile
+      # @user.profiles << @visible_profile
+      # @user.profiles << @hidden_profile
 
       @user.unverified = current_site.needs_email_verification
 
@@ -96,22 +94,30 @@ class AccountController < ApplicationController
     end
   rescue Exception => exc
     @user = exc.record if exc.record
-    # massage the errors a bit
-    @hidden_profile.errors.each {|attribute, msg|
-      if attribute == "email_address"
-        @user.errors.add('email', msg)
-      else
-        @visible_profile.errors.add(attribute, msg)
-      end
-      }
 
-    if @user
-      @user.errors.clear_for_attribute("profiles")
-      flash_message_now :object => @user
-    end
+    clean_up_registration_errors(@user, @visible_profile, @hidden_profile)
+
+    flash_message_now :object => @user if @user
     flash_message_now :object => @visible_profile
+    flash_message_now :object => @visible_profile.locations[0]
+  end
 
-    render :action => 'signup'
+  def missing_info
+    if request.post?
+      @user.email = params[:user][:email]
+      @hidden_profile.email_addresses[0].email_address = @user.email
+
+      @user.save!
+      @visible_profile.save!
+      @visible_profile.locations[0].save!
+      @hidden_profile.save!
+      redirect_to params[:redirect] || current_site.login_redirect(current_user)
+    end
+  rescue ActiveRecord::RecordInvalid => exc
+    clean_up_registration_errors(@user, @visible_profile, @hidden_profile)
+    flash_message_now :object => @user if @user
+    flash_message_now :object => @visible_profile
+    flash_message_now :object => @visible_profile.locations[0]
   end
 
 
@@ -197,7 +203,21 @@ class AccountController < ApplicationController
     end
   end
 
+
   protected
+  def clean_up_registration_errors(user, visible_profile, hidden_profile)
+    # profile errors will be in profiles
+    user.errors.clear_for_attribute("profiles") if user
+    # we're going to show location errors on their own
+    visible_profile.errors.clear_for_attribute("locations")
+    # email address is validated by the user model
+    hidden_profile.errors.clear_for_attribute("email_addresses") if user
+    # copy hidden profile errors to visible profile
+    hidden_profile.errors.each {|attribute, msg|
+      visible_profile.errors.add(attribute, msg)
+    }
+  end
+
   #def send_welcome_message(user)
   #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
   #  page.save
@@ -209,6 +229,8 @@ class AccountController < ApplicationController
     params[:redirect] = nil unless params[:redirect].any?
     if current_user.unverified?
       redirect_to :action => 'unverified'
+    elsif current_user.missing_profile_info?
+      redirect_to :action => 'missing_info', :redirect => params[:redirect] || current_site.login_redirect(current_user)
     else
       redirect_to(params[:redirect] || current_site.login_redirect(current_user))
     end
@@ -223,21 +245,47 @@ class AccountController < ApplicationController
     @active_tab = :home
   end
 
-  def setup_profiles
-    if params[:visible_profile] and params[:visible_profile][:locations]
-      visible_profile_location = ProfileLocation.create(params[:visible_profile][:locations].first)
-      params[:visible_profile].delete(:locations)
-    end
-    @visible_profile = Profile.new(params[:visible_profile] || {})
-    @visible_profile.locations << visible_profile_location if visible_profile_location
-    @visible_profile.required_fields = [:first_name, :last_name, :organization, {:locations => [:city, :country_name]}]
-    if current_site.profile_enabled?(:public)
-      @visible_profile.stranger = true
+  def setup_user_from_current
+    if logged_in?
+      @user = current_user
     else
-      @visible_profile.friend = true
+      raise "Not logged in."
     end
-    @hidden_profile = Profile.new(params[:hidden_profile] || {})
-    @hidden_profile.required_fields = [:birthday, {:email_addresses => :email_address}]
-    # require 'ruby-debug';debugger;1-1
   end
+
+  def setup_user
+    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
+  end
+
+  def find_or_build_profiles
+    # hidden profile
+    @hidden_profile = @user.profiles.hidden
+    @hidden_profile.email_addresses.build(:email_address => @user.email, :email_type => "Other")
+    @hidden_profile.attributes = @hidden_profile.attributes.merge(params[:hidden_profile] || {})
+
+    # visible profile
+    @visible_profile = if current_site.profile_enabled?(:public)
+      @user.profiles.public
+    else
+      @user.profiles.private
+    end
+
+    # the location for public profile
+    if params[:visible_profile] and params[:visible_profile][:locations]
+      updated_location = ProfileLocation.new(params[:visible_profile][:locations].first)
+      params[:visible_profile].delete(:locations)
+    else
+      updated_location = ProfileLocation.new
+    end
+
+    @visible_profile.attributes = @visible_profile.attributes.merge(params[:visible_profile] || {})
+
+    @visible_profile.locations[0] ||= ProfileLocation.new
+    location = @visible_profile.locations[0]
+    location.attributes = location.attributes.merge(updated_location.attributes)
+
+    @user.setup_profile_required_info(@visible_profile, @hidden_profile)
+  end
+
+
 end

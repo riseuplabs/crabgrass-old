@@ -155,4 +155,3 @@ class ActiveRecord::Errors
     @errors.delete(attribute.to_s)
   end
 end
-

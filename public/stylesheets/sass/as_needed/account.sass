@@ -2,10 +2,7 @@ table.login td.login
   padding: 2em
   vertical-align: top
 
-table.signup td
-  .field_required_mark
-    color= !error_color
-    font-size: 1.1em
+table.signup td, div.missing_info
   :vertical-align top
 
   &.title
@@ -36,3 +33,7 @@ table.signup td
       padding: 2px
     label
       color: red
+
+.field_required_mark
+  color= !error_color
+  font-size: 1.1em

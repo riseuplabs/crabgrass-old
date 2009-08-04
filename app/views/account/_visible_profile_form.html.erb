@@ -1,0 +1,34 @@
+<% fields_for :visible_profile, @visible_profile do |profile| %>
+  <p>
+    <%= profile.label :first_name, "First Name"[:first_name_label] %><br/>
+    <%= required_field_mark %>
+    <%= profile.text_field :first_name %>
+  </p>
+
+  <p>
+    <%= profile.label :last_name, "Last Name"[:last_name] %><br/>
+    <%= required_field_mark %>
+    <%= profile.text_field :last_name %>
+  </p>
+
+  <% profile.fields_for :locations, @visible_profile.locations[0], :index => nil do |profile_location| %>
+    <p>
+      <%= profile_location.label :country_name, "Country"[:location_country] %><br/>
+      <%= required_field_mark %>
+      <%= profile_location.text_field :country_name %>
+    </p>
+
+    <p>
+      <%= profile_location.label :city, "City"[:location_city] %><br/>
+      <%= required_field_mark %>
+      <%= profile_location.text_field :city %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= profile.label :organization, "Organization"[:organization] %><br/>
+    <%= required_field_mark %>
+    <%= profile.text_field :organization %>
+  </p>
+
+<% end %>

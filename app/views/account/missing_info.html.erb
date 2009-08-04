@@ -1,0 +1,20 @@
+<h3><%= "We would like to know more about you. Please fill in the information below."[:more_profile_info_required] %></h3>
+<div class="missing_info">
+  <% form_for(:user, current_user, :html => {:id => 'signup_form'}) do |user| -%>
+
+    <%= render :partial => 'visible_profile_form' %>
+
+    <%= render :partial => 'hidden_profile_form', :locals => {:user => user} %>
+
+    <p><%= submit_tag 'Save Information'[:save_information] -%>
+    <%= "or"[:or] -%>
+    <%= link_to "skip for now"[:skip_for_now], params[:redirect] || current_site.login_redirect(current_user) -%>
+    <em><%= "(you'll be asked for this information next time you login)"[:skip_for_now_explanation] %></em>
+    </p>
+    <%= hidden_field_tag 'redirect', params[:redirect] if params[:redirect] %>
+  <% end %>
+  <br/>
+  <p>
+    <%= required_field_mark %> <em><%= 'This is a required field.'[:required_field_note] %></em>
+  </p>
+</div>

@@ -1,0 +1,17 @@
+<p>
+  <%= "PRIVATE INFO: "[:private_info] %>
+  <i> <%= "Items below will only be seen by site administrators"[:private_info_description] %></i>
+</p>
+
+<p>
+  <%= user.label :email, "Your Email"[:signup_email] %><br/>
+  <%= required_field_mark %>
+  <%= user.text_field :email %>
+</p>
+<% fields_for :hidden_profile, @hidden_profile do |profile| %>
+  <p>
+    <%= profile.label :birthday, "Date of Birth"[:date_of_birth] %><br/>
+    <%= required_field_mark %>
+    <%= profile.date_select :birthday, :start_year => 1900, :end_year => 2009 %>
+  </p>
+<% end %>
