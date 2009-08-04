@@ -53,7 +53,6 @@ class RankedVotePageController < BasePageController
     if @poll.valid? and @possible.valid?
       @page.unresolve
       redirect_to page_url(@page) unless request.xhr?
-      render :template => 'ranked_vote_page/add_possible'
     else
       @poll.possibles.delete(@possible)
       flash_message_now :object => @possible unless @possible.valid?
@@ -92,13 +91,11 @@ class RankedVotePageController < BasePageController
     @possible = @poll.possibles.find(params[:id])
     params[:possible].delete('name')
     @possible.update_attributes(params[:possible])
-    render :template => 'ranked_vote_page/update_possible'
   end
 
   def edit_possible
     return unless request.xhr?
     @possible = @poll.possibles.find(params[:id])
-    render :template => 'ranked_vote_page/edit_possible'
   end
 
   def destroy_possible
