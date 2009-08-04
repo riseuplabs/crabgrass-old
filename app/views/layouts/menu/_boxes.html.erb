@@ -18,7 +18,8 @@
 %>
 
 <% if not entities.empty? %>
-<div class="menu_items" style="display: none">
+<div class="menu_items" style="display: none"> 
+  <h3><%= heading %> <span class='see_all'> &raquo; <a href='<%= see_all_url %>'>See All</a></span></h3>
   <div class='leftcol'>
     <ul>
       <%- for entity in left_col -%>

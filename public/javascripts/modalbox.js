@@ -330,9 +330,12 @@ Modalbox.Methods = {
 						}.bind(window));
 					}.bind(this));
 				} else // URL given as a parameter. We'll request it via Ajax
-					new Ajax.Request( this.content, { method: this.options.method.toLowerCase(), parameters: this.options.params,
+					new Ajax.Request( this.content, {
+						method: this.options.method.toLowerCase(),
+						parameters: this.options.params,
 						onSuccess: function(transport) {this._loadContentSuccess(transport)}.bind(this),
 						// added for cg
+						evalScripts: true,
 						onComplete: function(transport) {this.event('onComplete')}.bind(this),
 						onLoading: function(transport) {this.event('onLoading')}.bind(this),
 						// end cg
@@ -364,12 +367,13 @@ Modalbox.Methods = {
 		}
 		// end cg
 
-		var response = new String(transport.responseText);
-		this._insertContent(transport.responseText.stripScripts(), function(){
-			response.extractScripts().map(function(script) {
-				return eval(script.replace("<!--", "").replace("// -->", ""));
-			}.bind(window));
-		});
+		this._insertContent(transport.responseText);
+//		var response = new String(transport.responseText);
+//		this._insertContent(transport.responseText.stripScripts(), function(){
+//			response.extractScripts().map(function(script) {
+//				return eval(script.replace("<!--", "").replace("// -->", ""));
+//			}.bind(window));
+//		});
 	},
 
 	_insertContent: function(content, callback){
@@ -582,6 +586,11 @@ Modalbox.Methods = {
 
 	_setWidthAndPosition: function () {
 		$(this.MBwindow).setStyle({width: this.options.width + "px"});
+		this._setPosition();
+	},
+
+	// should be called when you have programatically altered the size of the modalbox.
+	updatePosition: function () {
 		this._setPosition();
 	},
 

@@ -39,4 +39,3 @@ sites:
 # bound to test.host
 #  - name: site2
 #    admin_group: superadmins
-

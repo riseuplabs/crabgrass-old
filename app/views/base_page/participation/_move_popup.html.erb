@@ -1,24 +1,9 @@
-<%
-  after_load_js = %Q[
-   after_load_function = function() {
-  }]
-
-  close_action = {
-    :url => {:controller => 'base_page/participation', :action => 'move', :page_id => @page.id, :cancel => true},
-    :loading => show_spinner('move')
-  }
-%>
-<%= javascript_tag(after_load_js) %>
-<% popup('Move This Page'[:move_this_page], :id => 'move_popup', :width => '28em') do -%>
-  <% form_tag(:controller => 'base_page/participation', :action => 'move', :page_id => @page.id) do -%>
-    <blockquote>
-      <%= "Move this page to a different group"[:move_page_to_different_group] %>:
-      <p><%= select_tag 'group_id', options_for_page_owner(:group => @page.group) %></p>
-    </blockquote>
-    <div class='buttons'>
-      <%= spinner('move') %>
-      <%= close_modal_button %><%= submit_tag("Move"[:move_button], :name => 'move') %>
-    </div>
-  <% end -%>
+<% form_tag(:controller => 'base_page/participation', :action => 'move', :page_id => @page.id) do -%>
+  <%= "Move this page to a different group"[:move_page_to_different_group] %>:
+  <p><%= select_tag 'group_id', options_for_page_owner(:group => @page.group) %></p>
+  <div class='buttons'>
+    <%= spinner('move') %>
+    <%= close_modal_button %><%= submit_tag("Move"[:move_button], :name => 'move') %>
+  </div>
 <% end -%>
 

@@ -1,5 +1,4 @@
 <%# refresh_sidebar_on_close %>
-  <blockquote>
   <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>
   <p><%= "Use radio buttons to select the page cover"[:use_radio_buttons_to_select_page_cover] %>
   <table class="styled">
@@ -21,7 +20,6 @@
     <%= f.file_field 'uploaded_data', :size => '20' %>&nbsp;<%= submit_tag 'Upload'[:upload] %><br/>
     <label><%= check_box_tag('use_as_cover', "1") %> <%= "Use as cover"[:use_as_cover] %></label>
   <% end -%>
-  </blockquote>
 
   <div class='buttons'>
     <% form_remote_tag(

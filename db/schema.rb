@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090729020153) do
+ActiveRecord::Schema.define(:version => 20090802032835) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -296,6 +296,16 @@ ActiveRecord::Schema.define(:version => 20090729020153) do
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
 
+  create_table "menu_items", :force => true do |t|
+    t.string   "title"
+    t.string   "link"
+    t.integer  "position",   :limit => 11
+    t.integer  "group_id",   :limit => 11
+    t.boolean  "default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
     t.string   "type"
@@ -445,10 +455,10 @@ ActiveRecord::Schema.define(:version => 20090729020153) do
   create_table "profiles", :force => true do |t|
     t.integer  "entity_id",              :limit => 11
     t.string   "entity_type"
-    t.boolean  "stranger"
-    t.boolean  "peer"
-    t.boolean  "friend"
-    t.boolean  "foe"
+    t.boolean  "stranger",                             :default => false, :null => false
+    t.boolean  "peer",                                 :default => false, :null => false
+    t.boolean  "friend",                               :default => false, :null => false
+    t.boolean  "foe",                                  :default => false, :null => false
     t.string   "name_prefix"
     t.string   "first_name"
     t.string   "middle_name"
@@ -460,7 +470,7 @@ ActiveRecord::Schema.define(:version => 20090729020153) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "birthday",               :limit => 8
-    t.boolean  "fof"
+    t.boolean  "fof",                                  :default => false, :null => false
     t.text     "summary"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11

@@ -64,13 +64,13 @@
       var linksDiv = document.getElementById('links');
       var detailsToggle = document.getElementById('details');
       var contentDiv = document.getElementById('content');
-      //var bugreportDiv = document.getElementById('bugreport');
-      //var bugreportLink = document.getElementById('bugreport_link');
+      var bugreportDiv = document.getElementById('bugreport');
+      var bugreportLink = document.getElementById('bugreport_link');
       linksDiv.style.display = "block";
       contentDiv.style.display = "none";
-      //bugreportDiv.style.display = "none";
+      bugreportDiv.style.display = "none";
       addEvent(detailsToggle, 'click', toggleDetails, false);
-      //addEvent(bugreportLink, 'click', toggleBugreport, false);
+      addEvent(bugreportLink, 'click', toggleBugreport, false);
     }
 
     function addEvent(elm, evType, fn, useCapture) {
@@ -112,24 +112,22 @@
     <div id='header'>
       <h1>You have encountered a crabgrass error!</h1>
       <div id='links'>
-        <a href="/me/dashboard">Go Back</a><!--| <a href="#" id='bugreport_link'>Submit Bugreport</a>--> | <a href="#" id="details">Show Details</a> 
+        <a href="/me/dashboard">Go Back</a> | <a href="#" id='bugreport_link'>Submit Bugreport</a> | <a href="#" id="details">Show Details</a> 
       </div>
     </div>
-<!--
     <div id='bugreport'>
        <% form_tag('/bugreport/submit') do %>
          Please add a description of how you got to this page, and any additional comments:<br>
-         <%= text_area_tag(:comments) %>
+         <%= text_area_tag(:comments, nil, :size => "50x5") %>
          <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
          <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
          <%= hidden_field_tag('error_action', request.parameters['action']) %>
          <%= hidden_field_tag('exception_detailed_message', exception_detailed_message(@exception)) %>
-         <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace) %>
+         <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace.join("\n")) %>
          <br>
          <%= submit_tag("Submit Bug Report") %>
        <% end %>
     </div>
--->
     <div id='content'>
       <%= @contents %>
     </div>

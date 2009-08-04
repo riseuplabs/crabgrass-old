@@ -102,7 +102,7 @@ class Site < ActiveRecord::Base
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
     :enforce_ssl, :show_exceptions, :require_user_email, :domain, :profiles,
     :profile_fields, :chat?, :translation_group, :limited?, :signup_mode,
-    :needs_email_verification
+    :needs_email_verification, :dev_email
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)

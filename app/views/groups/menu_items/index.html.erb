@@ -1,0 +1,35 @@
+<%= settings_tabs %>
+
+<!-- table for some pretty formatting -->
+<table class='form'>
+  <tr>
+    <td>
+    <blockquote>
+      <%= render :partial => 'menu_items_form' %>
+    </blockquote>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="info">
+        <%= "Adding, removing and reordering menu items on this list will immediately update what menu items users see."[:updating_this_list_will_update_menu_items] %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<% form_tag(groups_params(:action => 'show'), :method => :get, :multipart => false) do %>
+
+  <p class="form_buttons"><%= submit_tag "Done"[:done_button], :name => nil %></p>
+<% end %>
+
+  
+  <tr>
+    <td></td>
+    <td>
+      <div class='buttons'>
+        <%= spinner 'menu_items' %>
+      </div>
+    </td>
+  </tr>

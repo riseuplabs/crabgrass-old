@@ -16,30 +16,38 @@ module ModalboxHelper
 
   # creates a popup-link using modalbox
   #
-  # contents may be:
+  # contents of the modalbox may be specified in options hash:
   # - url: then contents for the modalbox are loaded via ajax
   # - html: the html is used to populate the modalbox
-  # - js Element object: the javascript object used to populate the modalbox.
   #
   # if options[:icon], then the modalbox is not shown until after its contents
   # are loaded.
   #
-  def link_to_modal(label, contents, options={})
+  # for example:
+  #
+  #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
+  #
+  def link_to_modal(label, options={}, html_options={})
     options.reverse_merge! :title => label
-    html_options = [:id, :class, :style, :icon]
-    if options[:icon]
-      icon = options[:icon]
-      options[:id] ||= 'link%s'%rand(1000000)
+    #html_options = [:id, :class, :style, :icon]
+    icon = options.delete(:icon) || html_options.delete(:icon)
+    contents = options.delete(:url) || options.delete(:html)
+    if contents.is_a? Hash
+      contents = url_for contents
+    end
+    if icon
+      html_options[:id] ||= 'link%s'%rand(1000000)
+      html_options[:icon] = icon
       options.merge!(
         :loading => spinner_icon_on(icon, options[:id]),
         :complete => spinner_icon_off(icon, options[:id]),
         :showAfterLoading => true
       )
-      function = modalbox_function(contents, options.forbid(html_options))
-      link_to_function_with_icon(label, function, options.allow(html_options))
+      function = modalbox_function(contents, options)
+      link_to_function_with_icon(label, function, html_options)
     else
-      function = modalbox_function(contents, options.forbid(html_options))
-      link_to_function(label, function, options.allow(html_options))
+      function = modalbox_function(contents, options)
+      link_to_function(label, function, html_options)
     end
   end
 
@@ -48,11 +56,10 @@ module ModalboxHelper
     button_to_function((label == :cancel ? "Cancel"[:cancel_button] : "Close"[:close_button]), 'Modalbox.hide();')
   end
 
-  # to be called each and every time the popup might have changed size
+  # to be called each and every time you have programmatically changed the size
+  # of the modalbox.
   def resize_modal
-    # i have removed all the resize code from Modalbox. it seemed to be only needed for
-    # animations, and it made compatibility with cg more difficult.
-    "" #'Modalbox.resizeToContent();'
+    'Modalbox.updatePosition();'
   end
 
   # loads the localized string into modalbox
