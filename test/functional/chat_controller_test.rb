@@ -45,4 +45,22 @@ class ChatControllerTest < Test::Unit::TestCase
     post :channel, :id => groups(:rainbow).name
     assert_response :success, "should reach chat channel"
   end
+
+  def test_channel_archive_when_not_logged_in
+    get :archive, :id => groups(:rainbow).name
+    assert_response :redirect, "should require login to reach chat archive"
+  end
+
+  def test_channel_archive_when_not_in_group
+    login_as :quentin
+    get :archive, :id => groups(:rainbow).name
+    assert_response :redirect, "should require group membership to reach chat archive"
+  end
+
+  def test_channel_archive_when_in_group
+    login_as :blue
+    get :archive, :id => groups(:rainbow).name
+    assert_response :success, "should reach chat archive"
+  end
+
 end

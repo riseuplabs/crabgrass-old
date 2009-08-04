@@ -18,12 +18,20 @@ class User < ActiveRecord::Base
   include CrabgrassDispatcher::Validations
   validates_handle :login
 
-  validates_presence_of :email if Conf.require_user_email
-  # ^^ TODO: make this site specific
+  validates_presence_of :email, :if => :should_validate_email
 
   validates_as_email :email
   before_validation 'self.email = nil if email.empty?'
   # ^^ makes the validation succeed if email == ''
+
+  def should_validate_email
+    should_validate = if Site.current
+      Site.current.require_user_email
+    else
+      Conf.require_user_email
+    end
+    should_validate
+  end
 
   ##
   ## NAMED SCOPES
@@ -283,4 +291,5 @@ class User < ActiveRecord::Base
   # TODO: this does not belong here, should be in the mod, but it was not working
   # there.
   include UserExtension::SuperAdmin rescue NameError
+  include UserExtension::Moderator  rescue NameError
 end

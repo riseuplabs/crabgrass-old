@@ -21,6 +21,9 @@ module UserExtension::Pages
         def pending
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
+        def recent_pages
+          find(:all, :order => 'changed_at DESC', :limit => 15)
+        end
       end
 
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify

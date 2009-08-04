@@ -32,7 +32,7 @@
 #
 
 class DispatchController < ApplicationController
-
+  
   def process(request, response, method = :perform_action, *arguments)
     super(request, response, :dispatch)
   end

@@ -39,6 +39,8 @@ class Conf
   cattr_accessor :translation_group
   cattr_accessor :chat
   cattr_accessor :signup_mode
+  cattr_accessor :needs_email_verification
+  cattr_accessor :dev_email
 
   # are in site, but I think they should be global
   cattr_accessor :translators
@@ -99,6 +101,9 @@ class Conf
     self.show_exceptions   = true
     self.domain            = 'localhost'
     self.chat              = true
+    self.needs_email_verification = false
+    self.signup_mode       = SIGNUP_MODE[:default]
+    self.dev_email         = ''
 
     # instance configuration
     self.enabled_mods  = []
@@ -139,8 +144,9 @@ class Conf
 
   # can be called from a test's setup method in order to enable sites
   # for a particular set of tests without enabling sites for all tests.
-  def self.enable_site_testing(site=nil)
-    self.enabled_site_ids = [1,2]
+  def self.enable_site_testing(site = nil)
+    enabled_ids = site ? [site.id] : [1, 2]
+    self.enabled_site_ids = enabled_ids
   end
 
   def self.disable_site_testing

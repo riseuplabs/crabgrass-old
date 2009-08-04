@@ -1,6 +1,6 @@
 #
-# This is the main global crabgrass configuration. 
-# 
+# This is the main global crabgrass configuration.
+#
 # Most of the time, no other configuration should be required other than the
 # options in this file. Unusual options might be configured elsewhere.
 #
@@ -11,7 +11,7 @@
 
 #
 # development tips:
-# 
+#
 #  * to work with super_admin, enable super_admin mod and site 'site1'.
 #
 
@@ -39,4 +39,3 @@ sites:
 # bound to test.host
 #  - name: site2
 #    admin_group: superadmins
-

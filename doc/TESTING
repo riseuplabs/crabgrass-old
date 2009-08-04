@@ -39,8 +39,37 @@ To run the test for a particular tool or mod:
 
 When running tests, the request host is 'test.host'. There is a site with this domain setup in the fixtures. Normally, it is not enabled. 
 
-Those tests that would like to test sites can call Conf.enable_site_testing()
-in setup().
+To run a test case with some site set, use enable_site_testing(site_fixture) in the setup method and disable_site_testing in teardown.
+
+
+To run a test method with a particular site you can use with_site method For example:
+
+  def test_local_title
+    with_site :local do
+      get :index
+      assert_select 'title', "site1"
+      assert_select 'title', Site.current.title
+    end
+  end
+
+You can automatically repeat several tests with different site configs.
+For example:
+
+  repeat_with_sites(:local => {:title => "Site One"},
+                  :test => {:title => "Site Two"}) do
+    def test_title
+      get :index
+      assert_select 'title', Site.current.title
+    end
+  end
+
+The above code will generate two methods:
+1) test_title_with_site_local
+2) test_title_with_site_test
+Those methods will set the site properties and will execute the original code. 'test_title' will get renamed to 'do_test_title' which will prevent it from being run by itself.
+
+Instead of overriding Conf parameters for test_with_sites (like {:title => ...}), you can use 'true' (or 'false' to disable) as a value. You can use site 'nil' to generate test_title_with_site_nil for no site testing.
+
 
 == Adding a new page fixture
 

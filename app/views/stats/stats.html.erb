@@ -1,0 +1,51 @@
+<% @title_box = content_tag(:h1, 'Statistics') %>
+<% @info_box_class = 'tabs' %>
+<% @info_box = Formy.tabs do |f|
+  f.tab do |t|
+    t.label 'Week'
+    t.url url_for(:action => 'week')
+    t.selected action?(:week)
+  end
+  f.tab do |t|
+    t.label 'Month'
+    t.url url_for(:action => 'month')
+    t.selected action?(:month)
+  end
+  f.tab do |t|
+    t.label 'Year'
+    t.url url_for(:action => 'year')
+    t.selected action?(:year)
+  end
+  f.tab do |t|
+    t.label 'All Time'
+    t.url url_for(:action => 'all_time')
+    t.selected action?(:all_time)
+  end
+end %>
+
+<% partials = [] %>
+
+<% Dir.glob(File.dirname(__FILE__)+'/sections/*.erb').each do |file| %>
+  <% content = render(:partial => 'stats/sections/'+File.basename(file).sub(/^_/,'')) %>
+  <% partials << {:content => content, :order => @order} %>
+<% end %>
+
+<% partials.sort!{|a,b| a[:order] <=> b[:order] } %>
+
+<ul>
+<% @toc.each do |section| %>
+  <li><%= link_to section[:title], '#'+section[:name] %></li>
+  <% if section[:children] %>
+    <ul>
+    <% section[:children].each do |subsection| %>
+      <li><%= link_to subsection[:title], '#'+subsection[:name] %></li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
+</ul>
+
+<% partials.each do |partial| %>
+  <%= partial[:content] %>
+<% end %>
+

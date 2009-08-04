@@ -45,6 +45,10 @@ module UrlHelper
     {:controller => '/groups/features', :action => nil, :id => @group}.merge(options)
   end
 
+  def groups_menu_items_params(options={})
+    {:controller => '/groups/menu_items', :action => nil, :id => @group}.merge(options)
+  end
+
   def me_params(options={})
     if options[:action].to_sym == :search
       options.delete(:action)
@@ -298,24 +302,32 @@ module UrlHelper
   # options:
   #   :avatar => nil | :xsmall | :small | :medium | :large | :xlarge (default: nil)
   #   :format => :short | :full | :both | :hover | :twolines (default: full)
-  #   :block => false | true (default: false)
+  #   :block => false | true (default: false) DEPRECATED, use :tag instead.
   #   :link => nil | true | url (default: nil)
   #   :class => passed through to the tag as html class attr
   #   :style => passed through to the tag as html style attr
+  #   :tag   => the html tag to use for this display (ie :div, :span, :li, :a, etc)
+  #
   def display_entity(entity, options={})
     options = {:format => :full}.merge(options)
     display = nil; hover = nil
     options[:class] = [options[:class], 'entity'].join(' ')
     options[:block] = true if options[:format] == :twolines
+    options[:link] = true if options[:tag] == :a
 
     name = entity.name
     display_name = h(entity.display_name)
     both_names = h(entity.both_names)
     if options[:link]
       url = options[:link] === true ? url_for_entity(entity) : options[:link]
-      name = link_to(name, url)
-      display_name = link_to(display_name, url)
-      both_name = link_to(both_names, url)
+      if options[:tag] == :a
+        href = url
+      else
+        name         = link_to(name, url)
+        display_name = link_to(display_name, url)
+        both_name    = link_to(both_names, url)
+        href = nil
+      end
     end
 
     if options[:avatar]
@@ -335,8 +347,11 @@ module UrlHelper
       options[:style] = [options[:style], "position:relative"].compact.join(';')
       # ^^ to allow absolute popup with respect to the name
     end
-    element = options[:block] ? :div : :span
-    content_tag(element, display, :style => options[:style], :class => options[:class], :title => title)
+    if options[:format] == :twolines and name != display_name
+      options[:class] = [options[:class], 'two'].combine
+    end
+    element = options[:tag] || (options[:block] ? :div : :span)
+    content_tag(element, display, :style => options[:style], :class => options[:class], :title => title, :href => href)
   end
 
   ##
