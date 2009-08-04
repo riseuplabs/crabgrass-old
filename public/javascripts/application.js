@@ -139,6 +139,9 @@ function eventTarget(event) {
 // POSITION
 //
 
+//
+// this should be replaced with element.cumulativeOffset()
+//
 function absolutePosition(obj) {
   var curleft = curtop = 0;
   if (obj.offsetParent) {
