@@ -1,17 +1,17 @@
 <%
 =begin
 
-This is the master partial to display any list of pages. 
+This is the master partial to display any list of pages.
 
 It slices, it dices! It has magical properties! In other words, it is flexible
-and can be used in every case where you need a table of pages. 
+and can be used in every case where you need a table of pages.
 
 local variables which may be passed in
 ------------------------------------
 
   * pages: an array of pages. the default is @pages variable.
 
-  * columns: what columns to display. default is 
+  * columns: what columns to display. default is
     [:icon, :title, :updated_by, :update_at, :posts]
     or @columns variable.
 
@@ -30,7 +30,7 @@ pages   ||= @pages
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 colspan = columns.size
 heading = true if heading.nil?
-show_pagination_controls = true if pages.is_a? WillPaginate::Collection
+show_pagination_controls = true if pages.respond_to?(:total_entries)
 pagination_options = {} if pagination_options.nil?
 show_time_dividers = @path.sort_by_time? if show_time_dividers.nil?
 any_results = pages.any?

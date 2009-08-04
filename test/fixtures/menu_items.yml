@@ -1,0 +1,36 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+external:
+  title: external test
+  link: "http://we.riseup.net"
+  position: 1
+  group_id: 1
+  default: false
+
+tags:
+  title: tags test
+  link: tags/pale
+  position: 2
+  group_id: 1
+  default: false
+
+page_outsite_group:
+  title: Page test outsite group
+  link: /blue/beauty-is-in-the-street+250
+  position: 3
+  group_id: 1
+  default: false
+
+page_for_group:
+  title: Page test
+  link: beauty-is-in-the-street+250
+  position: 4
+  group_id: 1
+  default: false
+
+network:
+  title: Committee test
+  link: /fai
+  position: 0
+  group_id: 1
+  default: false

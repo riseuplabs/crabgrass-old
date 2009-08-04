@@ -59,13 +59,6 @@ module ImageHelper
   ## returns the img tag for the page's icon
   def page_icon(page)
     content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
-#    image_tag "pages/#{page.icon}", :size => "22x22"
-  end
-
-  ## returns css style text to display the page's icon
-  def page_icon_style(icon)
-   # XXX
-   "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
 
   ##
@@ -125,10 +118,14 @@ module ImageHelper
   def link_to_remote_with_icon(label, options, html_options={})
     icon = options.delete(:icon) || html_options.delete(:icon)
     id = html_options[:id] || 'link%s'%rand(1000000)
-    icon_options = {
-      :loading => spinner_icon_on(icon, id),
-      :complete => spinner_icon_off(icon, id)
-    }
+    if options[:confirm]
+      icon_options = {} # don't bother with spinner for confirm links
+    else
+      icon_options = {
+        :loading => spinner_icon_on(icon, id),
+        :complete => spinner_icon_off(icon, id)
+      }
+    end
     html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
     html_options[:id] ||= id
     link_to_remote(
@@ -197,7 +194,9 @@ module ImageHelper
   # creates an img tag for a thumbnail, optionally scaling the image or cropping
   # the image to meet new dimensions (using html/css, not actually scaling/cropping)
   #
-  # eg: thumbnail_img_tag(thumb, :crop => '22x22')
+  # eg: thumbnail_img_tag(asset, :medium, :crop => '22x22')
+  #
+  # thumbnail_name: one of :small, :medium, :large
   #
   # options:
   #  * :crop   -- the img is first scaled, then cropped to allow it to
@@ -209,7 +208,7 @@ module ImageHelper
   #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
-  def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
+  def thumbnail_img_tag(asset, thumbnail_name, options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]

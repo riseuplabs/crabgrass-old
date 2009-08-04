@@ -1,8 +1,7 @@
 module WikiHelper
 
   def wiki_action(action, hash={})
-    {:controller => 'wiki', :action => action, :group_id => @group.id,
-     :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
+    {:controller => 'wiki', :action => action, :group_id => @group.id, :profile_id => (@profile ? @profile.id : nil)}.merge(hash)
   end
 
   def wiki_edit_link(wiki_id=nil)
@@ -74,33 +73,44 @@ module WikiHelper
   def popup_image_list(wiki)
     style = "height:64px;width:64px"
     if @images.any?
-      items = @images.collect do |asset|
-        urls = %['#{asset.thumbnail(:small).url}', '#{asset.thumbnail(:medium).url}', '#{asset.thumbnail(:large).url}', '#{asset.url}']
-        insert_text = %{'!' + [#{urls}][$('#{'image_size-' + wiki.id.to_s}').value] + '!' + ($('#{'image_link-' + wiki.id.to_s}').checked ? ':#{asset.url}' : '')}
-        function = %[insertAtCursor('#{wiki_body_id(wiki)}',#{insert_text})]
-        img = thumbnail_img_tag(asset, :small, :scale => '64x64')
-        link_to_function(img, function, :class => 'thumbnail', :title => asset.filename, :style => style)
-      end
-      content_tag :div, items, :class => 'swatch_list'
+      items = radio_buttons_tag(:image, @images.collect do |asset|
+        [thumbnail_img_tag(asset, :small, :scale => '64x64'), asset.id]
+      end)
+      data = @images.collect do |asset|
+        content_tag(:input, '', :id => "#{asset.id}_thumbnail_data", :value => thumbnail_urls_to_json(asset), :type => 'hidden')
+      end.join
+      content_tag :div, data + items, :class => 'swatch_list'
     end
+  end
+
+  def thumbnail_urls_to_json(asset)
+    { :small  => asset.thumbnail(:small).url,
+      :medium => asset.thumbnail(:medium).url,
+      :large  => asset.thumbnail(:large).url,
+      :full   => asset.url }.to_json
+  end
+
+  def insert_image_function(wiki)
+    "insertImage('%s');" % wiki_body_id(wiki)
   end
 
   def create_wiki_toolbar(wiki)
     body_id = wiki_body_id(wiki)
     toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = image_popup_code_for_wiki_toolbar(wiki)
+    image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
 
     "wiki_edit_add_toolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
   end
 
-  def image_popup_code_for_wiki_toolbar(wiki)
-    text = "<img src='/images/textile-editor/img.png'/>"
-    spinner = spinner('image', :show => true)
-    remote_function(
-      :loading => replace_html('markdown_image_button-' + wiki.id.to_s, spinner),
-      :complete => replace_html('markdown_image_button-' + wiki.id.to_s, ''),
-      :url => image_popup_show_url(wiki))
-  end
+#  def image_popup_code_for_wiki_toolbar(wiki)
+    #text = "<img src='/images/textile-editor/img.png'/>"
+    #spinner = spinner('image', :show => true)
+#    remote_function(
+#      :loading => replace_html('markdown_image_button-' + wiki.id.to_s, spinner),
+#      :complete => replace_html('markdown_image_button-' + wiki.id.to_s, ''),
+#      :url => image_popup_show_url(wiki))
+#    modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
+#  end
 
   def image_popup_upload_url(wiki)
     # this method is used both by WikiPageController and WikiPage to
@@ -108,7 +118,7 @@ module WikiHelper
     if @page and @page.data and @page.data == wiki
       page_xurl(@page, :action => 'image_popup_upload', :wiki_id => wiki.id)
     else
-      wiki_action('image_popup_upload', :wiki_id => wiki.id)
+      url_for(wiki_action('image_popup_upload', :wiki_id => wiki.id).merge({:escape => false}))
     end
   end
 
@@ -118,7 +128,7 @@ module WikiHelper
     if @page and @page.data and @page.data == wiki
       page_xurl(@page, :action => 'image_popup_show', :wiki_id => wiki.id)
     else
-      wiki_action('image_popup_show', :wiki_id => wiki.id)
+      url_for(wiki_action('image_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
     end
   end
 

@@ -1,0 +1,38 @@
+<% @title_box = content_tag :h1, 'Chat Archive'[:chat_archive_headline] %>
+
+<% if !@months.empty? and !@messages -%>
+<blockquote>
+  <table class='archive_calendar'>
+    <tr>
+      <td>&nbsp;</td>
+      <%- '1'.upto('12') do |month| -%>
+        <td><b><%= month %></b></td>
+      <%- end -%>
+    </tr>
+    <%- @start_year.upto(@current_year.to_s) do |year| -%>
+    <tr>
+      <td><b><%= year %></b></td>
+      <%- '1'.upto('12') do |month| -%>
+        <td> 
+          <%- if month_data = @months.detect {|a| a['year'] == year and a['month'] == month} -%> 
+           <%- klass = @parsed.first_arg_for('date') == "#{year}-#{month}" ? 'invert' : '' -%>
+            <%= link_to "x" , {:controller => 'chat', :action => 'archive', :path => ['date', "#{year}-#{month}"]}, :class => klass %>
+          <%- else -%>
+            &nbsp;
+          <%- end -%>
+        </td>
+      <%- end -%>
+    </tr>
+    <%- end -%>
+  </table>
+</blockquote>
+
+<br/>
+
+<%= render :partial => 'chat/month_list' %>
+
+<% elsif @messages -%>
+
+<%= render :partial => 'chat/day_list' %>
+
+<% end -%>

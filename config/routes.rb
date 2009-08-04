@@ -18,6 +18,17 @@ ActionController::Routing::Routes.draw do |map|
   # optionally load these plugin routes, if they happen to be loaded
   map.from_plugin :super_admin rescue NameError
   map.from_plugin :gibberize   rescue NameError
+  map.from_plugin :moderation  rescue NameError
+
+  map.namespace :admin do |admin|
+    admin.resources :announcements
+    admin.resources :email_blasts
+    admin.resources :users, :only => [:new, :create]
+    admin.resources :groups, :only => [:new, :create]
+    admin.resources :custom_appearances, :only => [:edit, :update]
+    admin.sites 'sites/:action', :controller => 'sites'
+    admin.root :controller  => 'base'
+  end
 
   ##
   ## ASSET
@@ -84,10 +95,14 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.login 'account/login',   :controller => 'account',   :action => 'login'
-  map.resources :custom_appearances, :only => [:edit, :update]
+  #map.resources :custom_appearances, :only => [:edit, :update]
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
+  map.account_verify '/verify_email/:token', :controller => 'account', :action => 'verify_email'
+  map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
+  
+  map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
   ## GROUP
@@ -102,6 +117,11 @@ ActionController::Routing::Routes.draw do |map|
   map.networks 'networks/:action/:id', :controller => 'networks'
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
+  ##
+  ## CHAT
+  ##
+  map.connect 'chat/:action/:id', :controller => 'chat'
+  map.connect 'chat/:action/:id/*path', :controller => 'chat', :action => 'archive'
   ##
   ## DEFAULT ROUTE
   ##

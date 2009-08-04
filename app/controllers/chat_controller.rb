@@ -9,15 +9,26 @@
 class ChatController < ApplicationController
   include ChatHelper
   stylesheet 'chat'
+  stylesheet 'groups'
   permissions 'chat'
   before_filter :login_required
-  prepend_before_filter :get_channel_and_user, :except => :index
+  prepend_before_filter :get_channel_and_user
   append_before_filter :breadcrumbs
 
   # show a list of available channels
   def index
     if logged_in?
       @groups = current_user.all_groups
+      channel_users = {}
+      @groups.each do |group|
+        if group.chat_channel
+          channel_users[group] = group.chat_channel.active_channel_users.size
+        else
+          channel_users[group] = 0
+        end
+      end
+      @group_array = channel_users.sort {|a,b| a[1] <=> b[1]}
+      @group_array.reverse!
     end
   end
 
@@ -99,12 +110,42 @@ class ChatController < ApplicationController
      redirect_to :controller => :me, :action => :dashboard
   end
 
+  def archive
+    @path = params[:path] || []
+    @parsed = parse_filter_path(params[:path])
+    @months = ChatMessage.months(@channel)
+    unless @months.empty?
+      @current_year  = (Date.today).year
+      @start_year    = @months[0]['year'] || @current_year.to_s
+      @current_month = (Date.today).month
+
+      # normalize path
+      unless @parsed.keyword?('date')
+        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']]
+      end
+      @parsed = parse_filter_path(@path)
+      date = @parsed.keyword?('date')[1]
+      date =~ /(\d{4})-(\d{1,2})-?(\d{0,2})/
+      @year = year = $1
+      @month = month = $2
+      @day = day = $3
+      unless day.empty?
+        @messages = []
+        ChatMessage.for_day(@channel, year, month, day).each do |m|
+          @messages << "#{m.sender_name}: #{m.content}"
+        end
+      else
+        @days = ChatMessage.days(@channel, year, month)
+      end
+    end
+  end
+
   private
 
   # Get channel and user info that most methods use
   def get_channel_and_user
     @user = current_user
-    @channel = ChatChannel.find_by_id(params[:id])
+    @channel = ChatChannel.find_by_id(params[:id]) if params[:id] !~ /\D/
     unless @channel
       @group = Group.find_by_name(params[:id])
       if @group

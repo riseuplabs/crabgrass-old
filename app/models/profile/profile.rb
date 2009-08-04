@@ -12,49 +12,47 @@ Order of profile presidence (user sees the first one that matches):
  (3) peer     \  might see 'private' profile
  (4) fof      /  or might be see 'public' profile
  (5) stranger } the 'public' profile
-
   create_table "profiles", :force => true do |t|
-   t.integer  "entity_id",              :limit => 11
-   t.string   "entity_type"
-   t.boolean  "stranger"
-   t.boolean  "peer"
-   t.boolean  "friend"
-   t.boolean  "foe"
-   t.string   "name_prefix"
-   t.string   "first_name"
-   t.string   "middle_name"
-   t.string   "last_name"
-   t.string   "name_suffix"
-   t.string   "nickname"
-   t.string   "role"
-   t.string   "organization"
-   t.datetime "created_at"
-   t.datetime "updated_at"
-   t.string   "birthday",               :limit => 8
-   t.boolean  "fof"
-   t.text     "summary"
-   t.integer  "wiki_id",                :limit => 11
-   t.integer  "photo_id",               :limit => 11
-   t.integer  "layout_id",              :limit => 11
-   t.boolean  "may_see",                              :default => true
-   t.boolean  "may_see_committees"
-   t.boolean  "may_see_networks"
-   t.boolean  "may_see_members"
-   t.boolean  "may_request_membership"
-   t.integer  "membership_policy",      :limit => 11, :default => 0
-   t.boolean  "may_see_groups"
-   t.boolean  "may_see_contacts"
-   t.boolean  "may_request_contact",                  :default => true
-   t.boolean  "may_pester",                           :default => true
-   t.boolean  "may_burden"
-   t.boolean  "may_spy"
-   t.string   "language",               :limit => 5
-   t.integer  "discussion_id",          :limit => 11
-   t.string   "place"
-   t.integer  "video_id",               :limit => 11
-   t.text     "summary_html"
+    t.integer  "entity_id",              :limit => 11
+    t.string   "entity_type"
+    t.boolean  "stranger",                             :default => false, :null => false
+    t.boolean  "peer",                                 :default => false, :null => false
+    t.boolean  "friend",                               :default => false, :null => false
+    t.boolean  "foe",                                  :default => false, :null => false
+    t.string   "name_prefix"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "name_suffix"
+    t.string   "nickname"
+    t.string   "role"
+    t.string   "organization"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "birthday",               :limit => 8
+    t.boolean  "fof",                                  :default => false, :null => false
+    t.text     "summary"
+    t.integer  "wiki_id",                :limit => 11
+    t.integer  "photo_id",               :limit => 11
+    t.integer  "layout_id",              :limit => 11
+    t.boolean  "may_see",                              :default => true
+    t.boolean  "may_see_committees"
+    t.boolean  "may_see_networks"
+    t.boolean  "may_see_members"
+    t.boolean  "may_request_membership"
+    t.integer  "membership_policy",      :limit => 11, :default => 0
+    t.boolean  "may_see_groups"
+    t.boolean  "may_see_contacts"
+    t.boolean  "may_request_contact",                  :default => true
+    t.boolean  "may_pester",                           :default => true
+    t.boolean  "may_burden"
+    t.boolean  "may_spy"
+    t.string   "language",               :limit => 5
+    t.integer  "discussion_id",          :limit => 11
+    t.string   "place"
+    t.integer  "video_id",               :limit => 11
+    t.text     "summary_html"
   end
-
 
 Applies to both groups and users: may_see, may_see_groups
 
@@ -110,6 +108,11 @@ class Profile < ActiveRecord::Base
 
   def private?
     friend?
+  end
+
+  def hidden?
+    # a profile is hidden if no relationship fields are set
+    !(friend? || stranger? || fof? || foe? || peer?)
   end
 
   def type

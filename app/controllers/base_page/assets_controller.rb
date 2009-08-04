@@ -6,8 +6,10 @@ class BasePage::AssetsController < ApplicationController
   permissions 'base_page'
 
   def show
-    if params[:close]
-      render :template => 'base_page/reset_sidebar'
+    if params[:popup]
+      render :partial => 'base_page/assets/popup'
+    else
+      render :nothing => true
     end
   end
 

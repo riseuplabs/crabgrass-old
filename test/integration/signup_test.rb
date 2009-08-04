@@ -4,7 +4,7 @@ class SignupTest < ActionController::IntegrationTest
 
   def test_signup_a_new_user
     visit "/"
-    click_link "Need a new account?"
+    click_link "new account"
 
     fill_in "Your login name", :with => "TheUser"
     fill_in "Your Password", :with => "passwD!2$"

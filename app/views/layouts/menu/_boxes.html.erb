@@ -1,0 +1,40 @@
+<%#
+  # this partial display a grid of little avatar boxes.
+  # arguments: groups, people, side
+  # This markup and css may seem odd, but it works in all browsers.
+-%>
+<%
+  ul_class = '' if ul_class.nil?
+  entities = [] if entities.nil?
+  entities.sort! {|a,b| a.name <=> b.name}
+  if entities.size > 3
+    half = entities.size/2.round
+    right_col = entities.slice!(-half, half)
+    left_col = entities
+  else
+    left_col = entities
+    right_col = []
+  end
+%>
+
+<% if not entities.empty? %>
+<div class="menu_items" style="display: none"> 
+  <h3><%= heading %> <span class='see_all'> &raquo; <a href='<%= see_all_url %>'>See All</a></span></h3>
+  <div class='leftcol'>
+    <ul>
+      <%- for entity in left_col -%>
+        <li><%= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines) %></li>
+      <%- end -%>
+    </ul>
+  </div>
+  <% if not right_col.empty? -%>
+    <div class='rightcol'>
+      <ul>
+        <%- for entity in right_col -%>
+          <li><%= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines, :link => true) %></li>
+        <%- end -%>
+      </ul>
+    </div>
+  <% end -%>
+</div>
+<% end %>

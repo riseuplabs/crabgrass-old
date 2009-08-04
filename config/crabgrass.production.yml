@@ -19,7 +19,7 @@ enabled_languages:
   - pt_BR
   - ar_EG
 enabled_mods:
-  - super_admin
+#  - super_admin
 enabled_tools:
   - asset_tool
   - core_tools
