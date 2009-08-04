@@ -25,6 +25,15 @@ module MenuHelper
   ## MENUS
   ##
 
+  def menu_home
+    top_menu(
+      'menu_home',
+      'Home'[:menu_home],
+      '/',
+      :active => @active_tab == :home
+    )
+  end
+
   def menu_me
     top_menu(
       "menu_me",
