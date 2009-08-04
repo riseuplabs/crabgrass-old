@@ -1,5 +1,6 @@
 # adds a newly created task to the bottom of the pending tasks
 page.insert_html :bottom, 'sort_list_pending', :partial => 'task', :locals => {:task => @task}
+page.alert 'bla'
 page.hide 'no_pending_tasks'
 
 # makes sure the new one is sortable
