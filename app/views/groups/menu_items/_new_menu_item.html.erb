@@ -1,0 +1,31 @@
+<%
+  hide = @menu_items.any?
+  @menu_item = MenuItem.new
+-%>
+<div id="new_menu_item_link" style='<%= hide ? "" : "display:none" %>'>
+  <%= link_to_function 'Create a new {thing}'[:create_a_new_thing, 'Link'[:link]],
+    'Element.show("new_menu_item_form_container"); Element.hide("new_menu_item_link");' %>
+</div>
+
+<div id='new_menu_item_form_container' style='<%= hide ? "display:none" : "" %>'>
+  <h4><%= 'Create a new {thing}'[:create_a_new_thing, 'Link'[:link]]%></h4>
+<% form_remote_tag(
+  :url      => groups_menu_items_url(:action=>'create'),
+  :html     => {:action => groups_menu_items_url(:action=>'create'), :id => 'new_menu_item_form'}, # non-ajax fallback
+  :loading  => show_spinner('new_menu_item_loading'),
+  :complete => hide_spinner('new_menu_item_loading'),
+  :success => "$('new_menu_item_form').reset()"
+) do -%>
+   Description:<br/>
+   <%= text_field 'menu_item', 'title', :size => 70 %><br/>
+   Link:<br/>
+   <%= text_field 'menu_item', 'link', :size => 70 %><br/>
+   <p>
+   <%= submit_tag 'Add Item'.t %>
+   <%= button_to_function "Done", "Element.hide('new_menu_item_form_container'); Element.show('new_menu_item_link');" %>
+   <%= spinner('new_menu_item_loading') %>
+   </p>
+ <% end -%>
+</div> <!-- end new menu_item form -->
+
+

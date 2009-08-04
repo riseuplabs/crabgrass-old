@@ -1,5 +1,5 @@
 function quickRedReference() {
-  window.open( 
+  window.open(
     "/static/greencloth",
     "redRef",
     "height=600,width=750/inv,channelmode=0,dependent=0," +
@@ -38,7 +38,7 @@ function toggle_all_checkboxes(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
 }
 
-// submits a form, from the onclick of a link. 
+// submits a form, from the onclick of a link.
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
 // value is optional.
 function submit_form(form_element, name, value) {
@@ -61,26 +61,48 @@ function submit_form(form_element, name, value) {
   }
 }
 
+// give a radio button group name, return the value of the currently
+// selected button.
+function activeRadioValue(name) {
+  try { return $$('input[name='+name+']').detect(function(e){return $F(e)}).value; } catch(e) {}
+}
+
+function insertImage(wikiId) {
+  try {
+    var assetId = activeRadioValue('image');
+    var link = $('link_to_image').checked;
+    var size = activeRadioValue('image_size');
+    var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
+    var url = thumbnails[size];
+    var insertText = '\n!' + url + '!';
+    if (link)
+      insertText += ':' + thumbnails['full'];
+    insertText += '\n';
+    insertAtCursor(wikiId, insertText);
+  } catch(e) {}
+}
+
 //
 // TEXT AREAS
 //
 
-function insertAtCursor(text_area_id, text_to_insert) {
-  var element = $(text_area_id);
-  element.focus();
+function insertAtCursor(textarea, text) {
+  var element = $(textarea);
   if (document.selection) {
     //IE support
     sel = document.selection.createRange();
-    sel.text = text_to_insert;
+    sel.text = text;
   } else if (element.selectionStart || element.selectionStart == '0') {
     //Mozilla/Firefox/Netscape 7+ support
     var startPos = element.selectionStart;
     var endPos   = element.selectionEnd;
-    element.value = element.value.substring(0, startPos) + text_to_insert + element.value.substring(endPos, element.value.length);
-    element.setSelectionRange(endPos+text_to_insert.length, endPos+text_to_insert.length);
+    element.value = element.value.substring(0, startPos) + text + element.value.substring(endPos, element.value.length);
+    element.setSelectionRange(startPos, endPos+text.length);
+    element.scrollTop = startPos
   } else {
-    element.value += text_to_insert;
+    element.value += text;
   }
+  element.focus();
 }
 
 function decorate_wiki_edit_links(ajax_link) {
@@ -117,6 +139,9 @@ function eventTarget(event) {
 // POSITION
 //
 
+//
+// this should be replaced with element.cumulativeOffset()
+//
 function absolutePosition(obj) {
   var curleft = curtop = 0;
   if (obj.offsetParent) {
@@ -171,6 +196,61 @@ function showTabByHash() {
 }
 
 //
+// TOP MENUS
+//
+
+var DropMenu = Class.create({
+  initialize: function(menu_id) {
+//    this.show_timeout = null;
+//    this.hide_timeout = null;
+    this.timeout = null;
+    if(!$(menu_id)) return;
+    this.trigger = $(menu_id);
+    if(!this.trigger) return;
+    this.menu = $(menu_id).down('.menu_items');
+    if(!this.menu) return;
+    this.trigger.observe('mouseover', this.showMenu.bind(this));
+    this.trigger.observe('mouseout', this.hideMenu.bind(this));
+    //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
+  },
+
+  menuIsOpen: function() {
+    return($$('.menu_items').detect(function(e){return e.visible()}) != null);
+  },
+
+  clearEvents: function(event) {
+    event.stop();
+    $$('.menu_items').without(this.menu).invoke('hide');
+  },
+
+  showMenu: function(event) {
+    evalAttributeOnce(this.menu, 'onclick');
+    if (this.timeout) window.clearTimeout(this.timeout);
+    if (this.menuIsOpen()) {
+      this.menu.show();
+      this.clearEvents(event);
+    } else {
+      this.timeout = Element.show.delay(.3,this.menu);
+      this.clearEvents(event);
+    }
+  },
+
+  hideMenu: function(event) {
+    this.clearEvents(event);
+    if (this.timeout) window.clearTimeout(this.timeout);
+    this.timeout = Element.hide.delay(.3, this.menu);
+  }
+
+});
+
+document.observe('dom:loaded', function() {
+  new DropMenu("menu_me");
+  new DropMenu("menu_people");
+  new DropMenu("menu_groups");
+  new DropMenu("menu_networks");
+});
+
+//
 // DEAD SIMPLE AJAX HISTORY
 // allow location.hash change to trigger a callback event.
 //
@@ -186,4 +266,25 @@ function pollHash() {
 document.observe("dom:loaded", function() {
   if (onHashChanged) {setInterval("pollHash()", 100)}
 });
+
+//
+// COMMON MODAL DIALOGS
+//
+
+function loginDialog(txt,options) {
+  var form = '' +
+  '<form class="login_dialog" method="post" action="/account/login">' +
+  '  <input type="hidden" value="#{token}" name="authenticity_token" id="redirect"/>' +
+  '  <input type="hidden" value="#{redirect}" name="redirect" id="redirect"/>' +
+  '  <dl><dt>#{username}</dt><dd><input type="text" name="login" id="login"/></dd>' +
+  '  <dt>#{password}</dt><dd><input type="password" name="password" id="password"/></dd></dl>' +
+  '  <input type="submit" value="#{login}"/>' +
+  '  <span class="small">'
+  if (options['may_signup'])
+     form += '<a href="/account/signup">#{create_account}</a> | '
+  form += '<a href="/account/forgot_password">#{forgot_password}</a></span>' +
+  '</form>'
+  form = form.interpolate(txt);
+  Modalbox.show(form, {title:txt.login, width:350});
+}
 

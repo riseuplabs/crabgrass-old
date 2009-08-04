@@ -1,4 +1,3 @@
 page.replace_html 'popup_holder', :partial => 'base_page/participation/move_popup'
 page['popup_holder'].setStyle( popup_holder_style )
 #page.replace_html 'message', display_messages if display_messages.any?
-

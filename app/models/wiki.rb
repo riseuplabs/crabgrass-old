@@ -402,21 +402,20 @@ class Wiki < ActiveRecord::Base
   ## RELATIONSHIP TO GROUPS
   ##
 
-  # clears the rendered html. this is called
-  # when a group/user name is changed or some other event happens
-  # which might affect how the html is rendered by greencloth.
-  #
+  # Clears the rendered HTML. This should be called when a group/user name is
+  # changed or some other event happens which might affect how the HTML is
+  # rendered by greencloth.
   def self.clear_all_html(owner)
     # for wiki's owned by pages
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE pages.data_type='Wiki' and pages.owner_id = ? AND pages.owner_type = ?)",
+      "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ?",
       owner.id,
       owner.class.class_name
     ]))
 
     # for wiki's owned by by profiles
     Wiki.connection.execute(quote_sql([
-      "UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = ? AND entity_type = ?)",
+      "UPDATE wikis, profiles SET wikis.body_html = NULL WHERE profiles.wiki_id = wikis.id AND profiles.entity_id = ? AND profiles.entity_type = ?",
       owner.id,
       owner.class.class_name
     ]))

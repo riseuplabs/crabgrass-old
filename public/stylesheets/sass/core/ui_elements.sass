@@ -1,6 +1,6 @@
 //
 // UI ELEMENTS
-// 
+//
 
 
 .handle
@@ -31,7 +31,7 @@ ul.floatlist li
 
 //
 // LINKS
-// 
+//
 
 a
   text-decoration: none
@@ -93,7 +93,7 @@ a[name]
 
 //
 // SIDE LIST
-// 
+//
 
 ul.side_list
   padding: 0
@@ -123,7 +123,7 @@ ul.side_list
 
 //
 // TABS
-// 
+//
 
 .tab_area
   background-color: white
@@ -203,6 +203,11 @@ input.checkbox, input.radio
   top: 2px
   margin-left: -1.6em
 
+// in firefox, checkboxes and radio buttons look better this way
+input[type=radio], input[type=checkbox]
+  vertical-align: text-top
+
+
 //
 // ROUNDY CORNERS
 //
@@ -243,7 +248,7 @@ input.checkbox, input.radio
   visibility: hidden
 
 .clear
-  clear: both 
+  clear: both
 
 hr
   &.clear
@@ -294,7 +299,7 @@ span.break
 
 h1
   &.dim
-    color= !dim_heading_color 
+    color= !dim_heading_color
     margin: 0
   &.bright
     color: #5B97CB
@@ -394,7 +399,7 @@ table.pretty
 table.plain
   border-collapse: collapse
   width: 100%
-  td 
+  td
     padding: 0.5em
     &.label
       text-align: right
@@ -470,7 +475,7 @@ table.plain
   position: absolute
   top: 7px
   left: 6px
-  z-index: 200
+  z-index: 200000
 
 .autocomplete
   width: 300px
@@ -621,7 +626,7 @@ table.form
   input[type=text], textarea
     font-size: 1em
     width: 100%
-  
+
 
 .form_buttons
   padding-top: 1em
@@ -646,7 +651,7 @@ form.minisearch
   fieldset
     float: right
     padding= !banner_search_padding
-    border= !banner_search_border 
+    border= !banner_search_border
     background-color= !banner_search_bg_color
   .minisearch_text
     background-color= !banner_search_bg_color
@@ -665,7 +670,7 @@ form.minisearch
 form.mini_search
   table
     padding= !banner_search_padding
-    border= !banner_search_border 
+    border= !banner_search_border
     //background-color= !banner_search_bg_color
     background-color: white
   .mini_search_submit
@@ -681,7 +686,7 @@ form.mini_search
 // SHY LINKS
 //
 
-// these are links or elements that should not be visible until you hover over a parent 
+// these are links or elements that should not be visible until you hover over a parent
 // element. the problem with display:none is that it removes the element from the layout
 // and then making it visible again can lead to weird jerkiness. so, instead, we use opacity
 // for this.

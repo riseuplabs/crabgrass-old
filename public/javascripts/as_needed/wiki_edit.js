@@ -580,6 +580,6 @@ function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image
   });
 }
 
-document.observe('dom:loaded', function() {
+//document.observe('dom:loaded', function() {
   //
-});
+//});

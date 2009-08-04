@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
-  include ErrorHelper     # for displaying errors and messages to the user
+  include FlashMessageHelper     # for displaying errors and messages to the user
   include ContextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     filter_chain.prepend_filter_to_chain(filters, :before, &block)
     filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
   end
-
+  
   protected
 
   ##
@@ -253,7 +253,7 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception=nil)
     if exception
-      if exception.try.options.try[:redirect]
+      if exception.try(:options).try[:redirect]
         flash_message :exception => exception
         redirect_to exception.options[:redirect]
         return

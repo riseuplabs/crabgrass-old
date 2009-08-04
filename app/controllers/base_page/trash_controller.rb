@@ -5,6 +5,7 @@ class BasePage::TrashController < ApplicationController
   permissions 'base_page'
 
   def show
+    render :partial => 'base_page/trash/popup'
   end
 
   def update

@@ -1,6 +1,6 @@
 //
 // ICONS
-// 
+//
 
 // for use with icon + text
 .small_icon
@@ -41,6 +41,22 @@
   background-repeat: no-repeat
   background-position: 0 50%
 
+
+//
+// name icons are for showing an icon with a user or group.
+// we display the icons as background images, aligned center,
+// and then add padding to make enough room for the icon.
+//
+// there are other ways we could do this: we could set the height
+// or the min-height. however, then the text does not appear centered
+// if the icon is much bigger than the line height.
+//
+// the padding method is not ideal:
+// * if the font is a different size, then the top/bottom padding numbers will be wrong
+// * if the text takes up two lines instead of one, then there should be no padding.
+//
+// however, after having tried other methods, the padding method seems to do better.
+//
 .name_icon
   background-repeat: no-repeat
   background-position: 1px 50%
@@ -49,15 +65,18 @@
   &.xsmall
     padding: 2px 0 4px 26px
   &.small
-    padding-left: 36px
-    height: 32px
-    display: block
+    padding: 7px 0 7px 40px
+    line-height: 14px
   &.medium
     padding: 15px 0 15px 60px
     display: block
     font-size: 1.3em
   b
     display: none
+  // this class is set when we know we will have two lines of text
+  &.two
+    padding-top: 0
+    padding-bottom: 0
 
 .name_icon:hover
   b

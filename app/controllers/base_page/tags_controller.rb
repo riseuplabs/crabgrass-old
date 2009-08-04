@@ -5,6 +5,7 @@ class BasePage::TagsController < ApplicationController
   permissions 'base_page'
 
   def show
+    render :partial => 'base_page/tags/popup'
   end
 
   def update

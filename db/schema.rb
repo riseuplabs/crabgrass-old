@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090724101212) do
+ActiveRecord::Schema.define(:version => 20090802032835) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -288,13 +288,23 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
     t.integer  "user_id",      :limit => 11
     t.datetime "created_at"
     t.boolean  "admin",                      :default => false
-    t.datetime "visited_at"
+    t.datetime "visited_at",                 :default => '1000-01-01 00:00:00', :null => false
     t.integer  "total_visits", :limit => 11, :default => 0
     t.string   "join_method"
   end
 
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
+
+  create_table "menu_items", :force => true do |t|
+    t.string   "title"
+    t.string   "link"
+    t.integer  "position",   :limit => 11
+    t.integer  "group_id",   :limit => 11
+    t.boolean  "default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
@@ -445,10 +455,10 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
   create_table "profiles", :force => true do |t|
     t.integer  "entity_id",              :limit => 11
     t.string   "entity_type"
-    t.boolean  "stranger"
-    t.boolean  "peer"
-    t.boolean  "friend"
-    t.boolean  "foe"
+    t.boolean  "stranger",                             :default => false, :null => false
+    t.boolean  "peer",                                 :default => false, :null => false
+    t.boolean  "friend",                               :default => false, :null => false
+    t.boolean  "foe",                                  :default => false, :null => false
     t.string   "name_prefix"
     t.string   "first_name"
     t.string   "middle_name"
@@ -459,8 +469,8 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
     t.string   "organization"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "birthday"
-    t.boolean  "fof"
+    t.string   "birthday",               :limit => 8
+    t.boolean  "fof",                                  :default => false, :null => false
     t.text     "summary"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
@@ -502,8 +512,9 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
     t.integer  "contact_id",    :limit => 11
     t.string   "type",          :limit => 10
     t.integer  "discussion_id", :limit => 11
-    t.datetime "viewed_at"
+    t.datetime "visited_at",                  :default => '1000-01-01 00:00:00', :null => false
     t.integer  "unread_count",  :limit => 11, :default => 0
+    t.integer  "total_visits",  :limit => 11, :default => 0
   end
 
   add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"
@@ -576,6 +587,8 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
     t.integer "signup_mode",              :limit => 1
     t.string  "email_sender_name",        :limit => 40
     t.boolean "needs_email_verification",               :default => false
+    t.string  "profiles"
+    t.string  "profile_fields"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -697,13 +710,14 @@ ActiveRecord::Schema.define(:version => 20090724101212) do
   end
 
   create_table "trackings", :force => true do |t|
-    t.integer  "page_id",    :limit => 11
-    t.integer  "user_id",    :limit => 11
-    t.integer  "group_id",   :limit => 11
+    t.integer  "page_id",         :limit => 11
+    t.integer  "current_user_id", :limit => 11
+    t.integer  "group_id",        :limit => 11
     t.datetime "tracked_at"
     t.boolean  "views"
     t.boolean  "edits"
     t.boolean  "stars"
+    t.integer  "user_id",         :limit => 11
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"

@@ -55,6 +55,8 @@ class Site < ActiveRecord::Base
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
+  serialize :profile_fields
+  serialize :profiles
 
   # this is evil, but used in several important places:
   # (1) for i18n, to be able to customize the strings on a per site basis
@@ -100,7 +102,7 @@ class Site < ActiveRecord::Base
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
     :enforce_ssl, :show_exceptions, :require_user_email, :domain, :profiles,
     :profile_fields, :chat?, :translation_group, :limited?, :signup_mode,
-    :needs_email_verification
+    :needs_email_verification, :dev_email
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
@@ -108,6 +110,22 @@ class Site < ActiveRecord::Base
 
   def profile_enabled?(profile)
     profiles.nil? or profiles.include?(profile.to_s)
+  end
+
+  def profiles=(args)
+    if(args.kind_of?(Hash))
+      write_attribute(:profiles, args.keys.select {|k| args[k].to_i == 1 }.map(&:to_s))
+    else
+      write_attribute(:profiles, args)
+    end
+  end
+
+  def profile_fields=(args)
+    if(args.kind_of?(Hash))
+      write_attribute(:profile_fields, args.keys.select {|k| args[k].to_i == 1 }.map(&:to_s))
+    else
+      write_attribute(:profile_fields, args)
+    end
   end
 
   ##

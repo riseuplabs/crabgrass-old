@@ -5,6 +5,9 @@
 ##
 
 #permission_denied: 'Permission denied'
+#upload_attachment: "Upload Attachment"
+#rename :upload_images -> :upload
+#insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
 ##
 ## UNUSED, BUT KEEP ANYWAY
@@ -73,6 +76,7 @@ return_link: "Return"
 
 summary: "Summary"
 edit: "Edit"
+upload: "Upload"
 preview: "Preview"
 private: "Private"
 public: "Public"
@@ -181,9 +185,9 @@ include_full_checkbox: include link to full image
 ## ACCOUNT
 ##
 
-signup_link: "Need a new account?"
+signup_link: "New Account"
 signup_email_info: "Optional: used if you forget your password"
-forgot_password_link: "I forgot my password"
+forgot_password_link: "Forgot Password"
 signup_info: Choose your login name and your password then click "{sign_up}"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
@@ -402,7 +406,6 @@ upload_image: "Upload Image"
 uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
 select_image_file: "select image file"
 or_image_url: "or image URL"
-upload_images: Upload
 save_changes: Save Changes
 username: Username
 display_name: Display name
@@ -665,6 +668,12 @@ invite_accept_via_existing_account: "I already have an account"
 invite_accept_via_register: "I need to register a new account"
 join_group_success: "You have joined group {group_name}"
 
+# invite/request errors
+
+invite_error_redeemed: "Invite has already been redeemed."
+invite_error_already_member: "You are already a member of that group."
+invite_not_found: "Invite not found"
+
 ##
 ## PAGES
 ##
@@ -683,6 +692,7 @@ all_groups: "All Groups"
 all_networks: "All Networks"
 # ^^ i think this should go away soon, as soon as we have a better group directory.
 all_states: "All States"
+page_name_description: "Optional unique name (used to create the URL for this page)"
 
 # page list
 
@@ -980,7 +990,6 @@ you_are_viewing_version: "You are viewing version :version by :user"
 diff_link: "view changes"
 created_when_by: "created :when by :user"
 insert_image_heading: "Insert Image"
-insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
 wiki_section_edit: "Edit This Section"
 wiki_revert_version: "Revert To Version {version}"

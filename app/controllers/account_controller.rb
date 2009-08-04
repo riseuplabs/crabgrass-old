@@ -203,7 +203,6 @@ class AccountController < ApplicationController
     end
   end
 
-
   protected
   def clean_up_registration_errors(user, visible_profile, hidden_profile)
     # profile errors will be in profiles

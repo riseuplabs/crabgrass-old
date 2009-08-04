@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'account_controller'
 
-
 class AccountControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites, :tokens
 

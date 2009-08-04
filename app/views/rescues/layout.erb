@@ -3,18 +3,17 @@
   <title>Action Controller: Exception caught</title>
   <style>
     body {
-      background-color: #999;
+      background-color: #fff;
       color: #333;
       padding: 1em;
     }
     div#wrapper {
       background: #fafafa;
-      border-right: 4px solid #666;
-      border-bottom: 4px solid #666;
+      border: 4px solid #000;
     }
     div#header {
-      color: #666;
-      background: #dfd;
+      color: #fff;
+      background: #159;
       padding: 10px;
     }
     div#header h1 {
@@ -22,6 +21,24 @@
     }
     div#content {
       padding: 20px;
+    }
+    div#bugreport {
+      padding: 20px;
+    }
+    #links {
+      display: none;
+      font-size: smaller;
+      font-decoration: bold;
+      color: #fff;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #000;
+      background: #fff;
+      text-decoration: underline;
     }
     body, p, ol, ul, td {
       font-family: verdana, arial, helvetica, sans-serif;
@@ -33,16 +50,83 @@
       padding: 10px;
       font-size: 11px;
     }
-    a { color: #000; }
-    a:visited { color: #666; }
-    a:hover { color: #fff; background-color:#000; }
+    #traces a {
+      color: #000;
+    }
 
   </style>
+
+  <script type="text/javascript">
+    function init() {
+      if (!document.getElementById) {
+          return;
+      }
+      var linksDiv = document.getElementById('links');
+      var detailsToggle = document.getElementById('details');
+      var contentDiv = document.getElementById('content');
+      var bugreportDiv = document.getElementById('bugreport');
+      var bugreportLink = document.getElementById('bugreport_link');
+      linksDiv.style.display = "block";
+      contentDiv.style.display = "none";
+      bugreportDiv.style.display = "none";
+      addEvent(detailsToggle, 'click', toggleDetails, false);
+      addEvent(bugreportLink, 'click', toggleBugreport, false);
+    }
+
+    function addEvent(elm, evType, fn, useCapture) {
+      if (elm.addEventListener){
+          elm.addEventListener(evType, fn, useCapture);
+          return true;
+      }else if (elm.attachEvent) {
+          var r = elm.attachEvent('on' + evType, fn);
+          return r;
+      }else {
+          elm['on' + evType] = fn;
+      }
+    }
+
+    function toggleBugreport(e) {
+       bugreport = document.getElementById("bugreport");
+       bugreport.style.display = "block";
+    }
+
+    function toggleDetails(e) {
+      content = document.getElementById("content");
+      detailsLink = document.getElementById("details");
+      if (content.style.display == "block") {
+        //detailsLink.value = "Show Details";
+	detailsLink.innerHTML = "Show Details";
+        content.style.display = "none";
+      }else {
+        //detailsLink.value = "Hide Details";
+        detailsLink.innerHTML = "Hide Details";
+        content.style.display = "block";
+      }
+    }
+    addEvent(window, 'load', init, false);
+  </script>
+
 </head>
 <body>
   <div id='wrapper'>
     <div id='header'>
-      <h1>Ouch! Crabgrass has suffered severe head trauma</h1>
+      <h1>You have encountered a crabgrass error!</h1>
+      <div id='links'>
+        <a href="/me/dashboard">Go Back</a> | <a href="#" id='bugreport_link'>Submit Bugreport</a> | <a href="#" id="details">Show Details</a> 
+      </div>
+    </div>
+    <div id='bugreport'>
+       <% form_tag('/bugreport/submit') do %>
+         Please add a description of how you got to this page, and any additional comments:<br>
+         <%= text_area_tag(:comments, nil, :size => "50x5") %>
+         <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
+         <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
+         <%= hidden_field_tag('error_action', request.parameters['action']) %>
+         <%= hidden_field_tag('exception_detailed_message', exception_detailed_message(@exception)) %>
+         <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace.join("\n")) %>
+         <br>
+         <%= submit_tag("Submit Bug Report") %>
+       <% end %>
     </div>
     <div id='content'>
       <%= @contents %>

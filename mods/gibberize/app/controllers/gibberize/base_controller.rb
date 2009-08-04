@@ -1,6 +1,6 @@
 class Gibberize::BaseController < ApplicationController
 
-  include ErrorHelper
+  include FlashMessageHelper
   include AuthenticatedSystem
 
   layout 'gibberize'
