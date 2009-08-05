@@ -36,7 +36,9 @@ ul.floatlist li
 a
   text-decoration: none
   color= !link_color
-  outline: none
+  // i think setting outline none for all links is a very very bad idea.
+  // it makes it so you cannot see when you have tabbed to a link
+  // outline: none
   &:visited
     color= !link_visited_color
   &:active

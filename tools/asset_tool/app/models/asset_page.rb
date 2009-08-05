@@ -5,10 +5,6 @@ class AssetPage < Page
     false
   end
 
-  def cover
-    return asset if asset.is_a?(ImageAsset)
-  end
-
   def icon
     return asset.small_icon if asset
     return 'page_package'
@@ -25,6 +21,7 @@ class AssetPage < Page
 
   def asset=(a)
     self.data = a
+    self.cover = a if a.is_a?(ImageAsset)
   end
 
   # title is the filename if title hasn't been set

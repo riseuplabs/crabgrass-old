@@ -48,12 +48,12 @@ module UserExtension::SuperAdmin
     end
 
     def friend_of_with_superadmin?(user)
-      return true if superadmin?
+      return true if (superadmin? or user.superadmin?)
       return friend_of_without_superadmin?(user)
     end
 
     def peer_of_with_superadmin?(user)
-      return true if superadmin?
+      return true if (superadmin? or user.superadmin?)
       return peer_of_without_superadmin?(user)
     end
 
