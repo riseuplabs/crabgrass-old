@@ -231,7 +231,8 @@ class User < ActiveRecord::Base
   end
 
   def birthday
-    self.profiles.hidden.birthday.strftime("%Y-%m-%d")
+    profile_birthday = self.profiles.hidden.birthday
+    profile_birthday ? profile_birthday.strftime("%Y-%m-%d") : ''
   end
 
 
