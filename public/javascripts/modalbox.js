@@ -260,7 +260,6 @@ Modalbox.Methods = {
 //		var oWidth = $(this.MBoverlay).getWidth();
 //		var wHeight = $(this.MBwindow).getHeight();
 //		var wWidth = $(this.MBwindow).getWidth();
-//		var hHeight = $(this.MBheader).getHeight();
 //		var cHeight = $(this.MBcontent).getHeight();
 //		var newHeight = ((wHeight - hHeight + byHeight) < cHeight) ? (cHeight + hHeight) : (wHeight + byHeight);
 //		var newWidth = wWidth + byWidth;
@@ -624,5 +623,3 @@ Modalbox.Methods = {
 };
 
 Object.extend(Modalbox, Modalbox.Methods);
-
-if(Modalbox.overrideAlert) window.alert = Modalbox.alert;
