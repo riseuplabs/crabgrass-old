@@ -3,7 +3,7 @@ class WikiPageController < BasePageController
   include ControllerExtension::WikiImagePopup
 
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit'
+  javascript 'wiki_edit', 'wiki_editor_switch'
   helper :wiki # for wiki toolbar stuff
   permissions 'wiki_page'
   #verify :method => :post, :only => [:revert]
