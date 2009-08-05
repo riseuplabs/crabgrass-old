@@ -56,4 +56,30 @@ class Admin::PagesControllerTest < ActionController::TestCase
     assert_redirected_to({:controller => 'account', :action => 'login'},
       "red may not moderate the page.")
   end
+
+  def test_should_get_update_public
+    # TODO: this should only work for pages with public requested
+    login_as :blue
+    get :update_public, :id => Page.first.id
+    assert_response :redirect
+    assert_redirected_to :action => 'index'
+    assert !Page.first.public?
+    assert !Page.first.public_requested?
+    get :update_public, :id => Page.first.id, :public => true
+    assert_response :redirect
+    assert_redirected_to :action => 'index'
+    assert Page.first.public?
+    assert !Page.first.public_requested?
+  end
+
+  def test_should_get_remove_public
+    login_as :blue
+    page=Page.first
+    page.update_attributes :public => true, :public_requested => false
+    get :remove_public,  :id => page.id
+    assert_response :redirect
+    assert_redirected_to :action => 'index'
+    assert !Page.first.public?
+    assert Page.first.public_requested?
+  end
 end
