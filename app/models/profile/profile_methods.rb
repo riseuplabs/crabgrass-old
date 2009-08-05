@@ -58,7 +58,7 @@ module ProfileMethods
   end
 
   def hidden
-    @hidden_profile ||= (find_by_access || create)
+    @hidden_profile ||= (find_by_access || create_or_build)
   end
 
   def create_or_build(args={})
