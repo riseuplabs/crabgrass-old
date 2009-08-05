@@ -5,7 +5,7 @@ class MenuItemTest < ActiveSupport::TestCase
   fixtures :groups, :menu_items, :users
 
   def test_group_menu_items
-    group = Group.find(1)
+    group = groups(:fai)
     assert_not_nil menu_items = group.menu_items
     assert_equal 5, menu_items.count, 'there should be 5 menu items for the first group.'
     menu_items.each_with_index do |m,i|
