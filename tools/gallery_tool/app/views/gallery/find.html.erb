@@ -13,7 +13,7 @@
   <% end %>
 </ul>
 
-<%= pagination_links(@images) %>
+<%= pagination_links(@images, :params => {:action => 'find'}) %>
 
 <p>
   <%= link_to 'cancel'[:cancel_link], page_url(@page) %>
