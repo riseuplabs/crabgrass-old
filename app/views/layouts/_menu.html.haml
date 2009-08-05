@@ -6,15 +6,16 @@
     - if logged_in? and !current_user.unverified?
       - cache(menu_cache_key) do
         - if current_site.network
-          = top_menu 'menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home
-        = top_menu 'menu_me', 'Me'[:menu_me], '/me/dashboard', :active => @active_tab == :me, :menu_items => menu_items('me')
-        = top_menu "menu_people", "People"[:menu_people], people_directory_url(:friends), :active => @active_tab == :people, :menu_items => menu_items('boxes', {:entities => current_user.friends.most_active, :heading  => 'My Friends', :see_all_url=>people_directory_url(:friends) } )
-        = top_menu "menu_groups", "Groups"[:menu_groups], group_directory_url, :active => @active_tab == :groups, :menu_items => menu_items('boxes', {:entities => current_user.primary_groups.most_active, :heading => 'My Groups', :see_all_url=>group_directory_url} )
+          = menu_home
+        = menu_me
+        = menu_people
+        = menu_groups
         - if current_site.has_networks?
-          = top_menu "menu_networks", "Networks"[:menu_networks], network_directory_url, :active => @active_tab == :networks, :menu_items => menu_items('boxes', {:entities => current_user.primary_networks.most_active, :heading => 'My Networks', :see_all_url => network_directory_url} )
+          = menu_networks
         - if current_site.chat?
-          = top_menu "menu_chat", "Chat"[:menu_chat], '/chat', :active => @active_tab == :chat
+          = menu_chat
     - else
-      = top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home)
+      = menu_home
     = call_hook :top_menu
-  %div{ :style => "clear: both;" }
+  %div{ :style => "clear: both" }
+

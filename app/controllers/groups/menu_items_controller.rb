@@ -1,7 +1,7 @@
 class Groups::MenuItemsController < Groups::BaseController
   javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
   helper 'groups'
-  before_filter :fetch_data
+  prepend_before_filter :fetch_data
   before_filter :login_required
   before_filter :load_menu_items
   stylesheet 'menu_items'

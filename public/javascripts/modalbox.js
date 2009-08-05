@@ -354,7 +354,7 @@ Modalbox.Methods = {
 		}
 	},
 
-  _loadContentSuccess: function(transport) {
+	_loadContentSuccess: function(transport) {
 		// added for cg
 		// if the response is javascript, then it is probably the result of rjs, so do nothing.
 		if (transport.getResponseHeader('Content-Type').match(/script/))
@@ -376,6 +376,7 @@ Modalbox.Methods = {
 //		});
 	},
 
+	// replaces current content html with new html
 	_insertContent: function(content, callback){
 //		$(this.MBcontent).hide().update("");
 		if(typeof content == 'string') { // Plain HTML is given
@@ -391,6 +392,7 @@ Modalbox.Methods = {
 				$$("#MB_content select").invoke('setStyle', {'visibility': ''});
 		}
 		this._setPosition();
+		this._updateFocus();
 		// Prepare and resize modal box for content
 //		if(this.options.height == this._options.height) {
 //			try { dim = this.MBwindow.getDimensions(); } catch(e) {}
@@ -410,10 +412,10 @@ Modalbox.Methods = {
 //		}
 	},
 
+	// i am not sure if this is needed anymore
 	_putContent: function(callback){
 		this.MBcontent.show();
-		this.focusableElements = this._findFocusableElements();
-		this._setFocus(); // Setting focus on first 'focusable' element in content (input, select, textarea, link or button)
+		this._updateFocus();
 		if(callback != undefined)
 			callback(); // Executing internal JS from loaded content
 		this.event("afterLoad"); // Passing callback
@@ -461,8 +463,13 @@ Modalbox.Methods = {
 			Event.stopObserving(document, "keydown", this.kbdObserver);
 	},
 
-	_setFocus: function() {
-		/* Setting focus to the first 'focusable' element which is one with tabindex = 1 or the first in the form loaded. */
+	_updateFocus: function() {
+		this.focusableElements = this._findFocusableElements();
+		this._focusFirst();
+	},
+
+	// Setting focus to the first 'focusable' element which is one with tabindex = 1 or the first in the form loaded.
+	_focusFirst: function() {
 		if(this.focusableElements.length > 0 && this.options.autoFocusing == true) {
 			var firstEl = this.focusableElements.find(function (el){
 				return el.tabIndex == 1;

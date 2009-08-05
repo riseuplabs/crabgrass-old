@@ -2,41 +2,28 @@
 <%= render :partial => 'layouts/menu_login' %>
 <ul>
 
-%   if logged_in?
-
 <%# for now, i am disabling these tabs when not logged in. why? because
     the controllers currently bomb out in bad ways if you are not logged in. %>
-<% cache(menu_cache_key) do %>
-%     if current_site.network
-<%=     top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
+
+%   if logged_in?
+%     cache(menu_cache_key) do
+%       if current_site.network
+<%=       top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
+%       end
+<%=     menu_me %>
+<%=     menu_people %>
+<%=     menu_groups %>
+%       if current_site.has_networks?
+<%=       top_menu "menu_networks",
+            "Networks"[:menu_networks],
+            network_directory_url,
+            :active => @active_tab == :networks,
+            :menu_items => menu_items('boxes', {:entities => current_user.primary_networks.most_active, :cache_title => 'networks'} ) %>
+%       end
+%       if current_site.chat?
+<%=       top_menu "menu_chat", "Chat"[:menu_chat], '/chat', :active => @active_tab == :chat %>
+%       end
 %     end
-<%=   top_menu('menu_me', 'Me'[:menu_me], '/me/dashboard', :active => @active_tab == :me, :menu_items => menu_items('me', :cache_title=>'me')) %>
-
-<%=   top_menu "menu_people",
-        "People"[:menu_people],
-        people_directory_url(:friends),
-        :active => @active_tab == :people,
-        :menu_items => menu_items('boxes', {:entities => current_user.friends.most_active, :cache_title => 'people'} ) %>
-
-<%=   top_menu "menu_groups",
-        "Groups"[:menu_groups],
-        group_directory_url,
-        :active => @active_tab == :groups,
-        :menu_items => menu_items('boxes', {:entities => current_user.primary_groups.most_active, :cache_title => 'groups'} ) %>
-
-%     if current_site.has_networks?
-<%=     top_menu "menu_networks",
-          "Networks"[:menu_networks],
-          network_directory_url,
-          :active => @active_tab == :networks,
-          :menu_items => menu_items('boxes', {:entities => current_user.primary_networks.most_active, :cache_title => 'networks'} ) %>
-%     end
-%   if current_site.chat?
-<%=   top_menu "menu_chat", "Chat"[:menu_chat], '/chat', :active => @active_tab == :chat %>
-%   end
-<%# end cache %>
-<% end %>
-
 %   else
 <%=   top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
 %   end
