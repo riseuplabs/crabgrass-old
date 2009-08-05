@@ -90,4 +90,7 @@ module MenuHelper
     top_menu "menu_chat", "Chat"[:menu_chat], '/chat', :active => @active_tab == :chat
   end
 
+  def menu_admin
+    top_menu "menu_admin", "Admin"[:menu_admin], '/admin', :active => @active_tab == :admin
+  end
 end

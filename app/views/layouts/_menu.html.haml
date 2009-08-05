@@ -14,6 +14,8 @@
           = menu_networks
         - if current_site.chat?
           = menu_chat
+        - if may_admin? # this is for any of the admin and moderator permissions
+          = menu_admin
     - else
       = menu_home
     = call_hook :top_menu
