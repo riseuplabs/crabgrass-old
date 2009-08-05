@@ -2,7 +2,7 @@
   <%= gallery_navigation :show %>
 <% end -%>
 
-<h2>Upload Images</h2>
+<h2><%="Upload Images"[:upload_images_link]%> |     <%= link_to_remote('Upload a ZIP-File'[:upload_a_zip_file_link], :url => page_url(@page, :action => 'upload_zip'))%></h2>
 <% form_tag page_url(@page, :action => 'upload'), :method => :post, :multipart => true do -%>
   <table>
     <%= render :partial => 'upload' -%>

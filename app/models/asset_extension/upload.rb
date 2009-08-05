@@ -35,6 +35,39 @@ module AssetExtension
     end
 
     module ClassMethods
+      def make_from_zip(file)
+        # Zip::ZipFile has been modified to make this work.
+        # see lib/extension/zip.rb
+        zipfile = BetterZipFile.new(file)
+        assets = []
+        # array of filenames for which processing failed
+        failures = []
+        # to preserve filenames without too much hacks we work in a
+        # seperate directory.
+        tmp_dir = File.join(RAILS_ROOT, 'tmp', "unzip_#{Time.now.to_i}")
+        Dir.mkdir(tmp_dir)
+        zipfile.entries.each do |entry|
+          begin
+            entry.extract(tmp_filename = File.join(tmp_dir, entry.name))
+            asset = make! :uploaded_data => FileData.new(tmp_filename)
+            assets << asset
+          rescue => exc
+            logger.fatal("Error while extracting asset from ZIP Archive: #{exc.message}")
+            exc.backtrace.each do |bt|
+              logger.fatal(bt)
+            end
+            failures << entry.name rescue nil
+          end
+        end
+        # tidy up
+        if tmp_dir && File.exist?(tmp_dir)
+          (Dir.entries(tmp_dir)-%w(. ..)).each do |fn|
+            File.unlink(File.join(tmp_dir, fn)) rescue nil
+          end
+          Dir.rmdir(tmp_dir)
+        end
+        return [assets, failures.compact]
+      end
     end
 
     module InstanceMethods
