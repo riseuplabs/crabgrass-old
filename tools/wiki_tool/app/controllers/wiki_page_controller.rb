@@ -51,10 +51,7 @@ class WikiPageController < BasePageController
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
       # update
-      if params[:wiki][:body_wysiwyg]
-        require 'undress/greencloth'
-        params[:wiki][:body] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth
-      end
+      params[:wiki][:body] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth if params[:wiki][:body_wysiwyg]
       save
     elsif request.get?
       lock
@@ -63,26 +60,14 @@ class WikiPageController < BasePageController
     # do nothing
   end
 
+  # Handle the switch between Greencloth wiki a editor and Wysiwyg wiki editor
+  # also handles the preview presentation for both
   def update_editors
-    require 'json'
-
     return if @wiki.locked_by_id != current_user.id || !@wiki.editable_by?(current_user)
-
-    response = {}
-
-    if params[:wiki] && params[:wiki][:body]
-      response[:wysiwyg] = GreenCloth.new(params[:wiki][:body]).to_html
-      response[:preview] = response[:wysiwyg] 
-    elsif params[:wiki] && params[:wiki][:body_wysiwyg]
-      require 'undress/greencloth'
-      response[:greencloth] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth
-      response[:preview] = GreenCloth.new(response[:greencloth]).to_html 
-    end
-
-    response.each_pair {|k,v| v.gsub!("\n", "__NEW_LINE__"); v.gsub!("\t", "__TAB_CHAR__")}
-    
+  
+    output_switcher = WikiOutputSwitcher.new(params[:wiki])
     respond_to do |format|
-      format.json  { render :json => response.to_json }
+      format.json  { render :json => output_switcher.to_json }
     end
   end
 

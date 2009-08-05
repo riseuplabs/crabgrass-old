@@ -98,7 +98,7 @@ Rails::Initializer.run do |config|
   # the absolutely required gems
   #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
-  config.gem 'zevarito-undress', :lib => 'undress', :source => 'http://gems.github.com'
+  config.gem 'zevarito-undress', :lib => 'undress/greencloth', :source => 'http://gems.github.com'
 
   #config.frameworks += [ :action_web_service]
   #config.action_web_service = Rails::OrderedOptions.new
