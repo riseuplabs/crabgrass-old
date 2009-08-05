@@ -51,12 +51,39 @@ class WikiPageController < BasePageController
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
       # update
+      if params[:wiki][:body_wysiwyg]
+        require 'undress/greencloth'
+        params[:wiki][:body] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth
+      end
       save
     elsif request.get?
       lock
     end
   rescue WikiLockException => exc
     # do nothing
+  end
+
+  def update_editors
+    require 'json'
+
+    return if @wiki.locked_by_id != current_user.id || !@wiki.editable_by?(current_user)
+
+    response = {}
+
+    if params[:wiki] && params[:wiki][:body]
+      response[:wysiwyg] = GreenCloth.new(params[:wiki][:body]).to_html
+      response[:preview] = response[:wysiwyg] 
+    elsif params[:wiki] && params[:wiki][:body_wysiwyg]
+      require 'undress/greencloth'
+      response[:greencloth] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth
+      response[:preview] = GreenCloth.new(response[:greencloth]).to_html 
+    end
+
+    response.each_pair {|k,v| v.gsub!("\n", "__NEW_LINE__"); v.gsub!("\t", "__TAB_CHAR__")}
+    
+    respond_to do |format|
+      format.json  { render :json => response.to_json }
+    end
   end
 
   def cancel

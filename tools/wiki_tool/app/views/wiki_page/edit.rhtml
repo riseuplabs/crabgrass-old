@@ -1,26 +1,51 @@
-<%# render :partial => 'tabs' %>
-<% content_for :script do -%>
-document.observe('dom:loaded', function() {
-  <%= create_wiki_toolbar(@wiki) %>
-});
-<% end -%>
-<% @show_posts = false -%>
-<% locked_error_message -%>
-<div id='<%= image_popup_id(@wiki) %>' class='image_popup' style='display:none'></div>
-<div class='formbox'>
-  <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
-   <%= hidden_field 'wiki', 'version' %>
-   <div class='fieldset'><%= text_area 'wiki', 'body', :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
-   <%= formatting_reference_link %>
-   <div>
-     <% if locked_for_me? -%>
-       <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
-     <% else -%>
-       <%= submit_tag 'Save'[:save_button], :name => 'save' %>
-     <% end -%>
-     <%# submit_tag 'Save minor edit', :name => 'save_minor' %>
-     <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
-   </div>
-  <% end -%>
-</div>
+<%- @info_box_class = "tabs" -%>
+<%- @info_box = capture do -%>
+<%= Formy.tabs do |f|
+  f.tab do |t|
+    t.id       "link-tab-greencloth"
+    t.selected true
+    t.label    "Text Formatter"[:text_formatter]
+    t.class    "page_url"
+    t.function remote_function(:url       => page_url(@page, :action => 'update_editors'), 
+                               :method    => :post,
+                               :condition => "isTabSelected(this) == false",
+                               :with      => "getCurrentEditorContents('#{wiki_body_id(@wiki)}')",
+                               :complete  => "updateEditor(request, 'greencloth', '#{wiki_body_id(@wiki)}');")
+  end
+  f.tab do |t|
+    t.id       "link-tab-wysiwyg"
+    t.label    "Visual Formatter"[:visual_formatter]
+    t.class    "page_url"
+    t.function remote_function(:url      => page_url(@page, :action => 'update_editors'), 
+                               :method   => :post,
+                               :condition => "isTabSelected(this) == false",
+                               :with     => "getCurrentEditorContents('#{wiki_body_id(@wiki)}')",
+                               :complete => "updateEditor(request, 'wysiwyg', '#{wiki_body_id(@wiki)}');")
+  end
+  f.tab do |t|
+    t.id       "link-tab-preview"
+    t.label    "Preview"[:preview]
+    t.class    "page_url"
+    t.function remote_function(:url      => page_url(@page, :action => 'update_editors'), 
+                               :method   => :post,
+                               :condition => "isTabSelected(this) == false",
+                               :with     => "getCurrentEditorContents('#{wiki_body_id(@wiki)}')",
+                               :complete => "updateEditor(request, 'preview', '#{wiki_body_id(@wiki)}');")
+  end
+end 
+%>
+<%- end -%>
 
+<%- @content_box = capture do -%>
+  <div id="tab-edit-greencloth" class="tab_content">
+    <%= render :partial => "edit_greencloth" %>
+  </div>
+  
+  <div id="tab-edit-wysiwyg" class="tab_content" style="display:none">
+    <%= render :partial => "edit_wysiwyg" %>
+  </div>
+
+  <div id="tab-edit-preview" class="tab_content" style="display:none">
+    <div id="preview_<%= wiki_body_id(@wiki) %>"></div>
+  </div>
+<%- end -%>
