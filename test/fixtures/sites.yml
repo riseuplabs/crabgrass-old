@@ -72,7 +72,8 @@ moderation:
   # this is normally overwritten at startup by crabgrass. however,
   # the way we enable sites for only some tests relies on their being
   # a super_admin_group_id defined for the test site.
-  moderation_group_id: 1 # true levellers
+  # UNCOMMENT THIS IF YOU HAVE RUN THE MODERATION MOD MIGRATIONS
+  # moderation_group_id: 1 # true levellers
   super_admin_group_id: 4001
   login_redirect_url: /me/dashboard
   limited: false
