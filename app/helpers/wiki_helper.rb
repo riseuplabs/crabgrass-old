@@ -73,10 +73,11 @@ module WikiHelper
   def popup_image_list(wiki)
     style = "height:64px;width:64px"
     if @images.any?
-      items = radio_buttons_tag(:image, @images.collect do |asset|
+      images = @images.select{|img| img.url.any? }
+      items = radio_buttons_tag(:image, images.collect do |asset|
         [thumbnail_img_tag(asset, :small, :scale => '64x64'), asset.id]
       end)
-      data = @images.collect do |asset|
+      data = images.collect do |asset|
         content_tag(:input, '', :id => "#{asset.id}_thumbnail_data", :value => thumbnail_urls_to_json(asset), :type => 'hidden')
       end.join
       content_tag :div, data + items, :class => 'swatch_list'
@@ -84,9 +85,9 @@ module WikiHelper
   end
 
   def thumbnail_urls_to_json(asset)
-    { :small  => asset.thumbnail(:small).url,
-      :medium => asset.thumbnail(:medium).url,
-      :large  => asset.thumbnail(:large).url,
+    { :small  => asset.thumbnail(:small).try.url || asset.url,
+      :medium => asset.thumbnail(:medium).try.url || asset.url,
+      :large  => asset.thumbnail(:large).try.url || asset.url,
       :full   => asset.url }.to_json
   end
 
