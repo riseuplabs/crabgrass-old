@@ -56,18 +56,24 @@ profile_fields:
 
 sites:
   - name: climatechange
+    moderation_group: siteadminclimate
     admin_group: siteadminclimate
   - name: globalpulse
     admin_group: siteadminpulse
+    moderation_group: siteadminpulse
   - name: speakafrica
     admin_group: siteadminspeak
+    moderation_group: siteadminspeak
   - name: iaids
     admin_group: siteadminiaids
+    moderation_group: siteadminiaids
   - name: j8summit
     admin_group: siteadminj8
+    moderation_group: siteadminj8
     signup_mode: 2 # that is invite_only
   - name: factsforlife
     admin_group: siteadminffl
+    moderation_group: siteadminffl
 
 ##
 ## SITE DEFAULTS
