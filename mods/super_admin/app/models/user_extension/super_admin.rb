@@ -24,6 +24,11 @@ module UserExtension::SuperAdmin
   end
 
   module InstanceMethods
+    # superadmin is every body's buddy
+    def friend_of?(user)
+      true
+    end
+
     # Returns true if self is a super admin. If self is the current_user
     # then no arguments are required. However, to test superadmin? on any
     # other user requires a site argument.
