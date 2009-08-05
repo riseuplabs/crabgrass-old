@@ -19,6 +19,8 @@ title: "Crabgrass Development"
 enabled_mods:
   - design_tester
   - moderation
+#  - gibberize
+
 email:
   delivery_method: :sendmail
 
