@@ -185,7 +185,7 @@ class AccountControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  repeat_with_sites(:local => {:needs_email_verification => false}) do
+  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:default]}) do
     def test_should_not_send_email_verification_when_not_enabled
       assert_no_difference('ActionMailer::Base.deliveries.size') { post_signup_form }
       assert_response :redirect
@@ -193,7 +193,7 @@ class AccountControllerTest < ActionController::TestCase
     end
   end
 
-  repeat_with_sites(:local => {:needs_email_verification => true}) do
+  repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:verify_email]}) do
 
     def test_signup_with_verification
       assert_difference('User.count', 1) { post_signup_form }
