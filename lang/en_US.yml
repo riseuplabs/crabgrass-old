@@ -139,6 +139,10 @@ move_button: "Move"
 add_button: "Add"
 cancel_button: "Cancel"
 create_button: "Create"
+ok_button: "OK"
+confirm: "Confirm"
+alert: "Alert"
+loading_progress: "Loading..."
 
 ##
 ## NAVIGATION

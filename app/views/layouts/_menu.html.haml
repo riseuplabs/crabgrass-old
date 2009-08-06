@@ -4,18 +4,17 @@
     - # for now, i am disabling these tabs when not logged in. why? because
     - # the controllers currently bomb out in bad ways if you are not logged in.
     - if logged_in? and !current_user.unverified?
-      - cache(menu_cache_key) do
-        - if current_site.network
-          = menu_home
-        = menu_me
-        = menu_people
-        = menu_groups
-        - if current_site.has_networks?
-          = menu_networks
-        - if current_site.chat?
-          = menu_chat
-        - if may_admin? # this is for any of the admin and moderator permissions
-          = menu_admin
+      - if current_site.network
+        = menu_home
+      = menu_me
+      = menu_people
+      = menu_groups
+      - if current_site.has_networks?
+        = menu_networks
+      - if current_site.chat?
+        = menu_chat
+      - if may_admin? # this is for any of the admin and moderator permissions
+        = menu_admin
     - else
       = menu_home
     = call_hook :top_menu
