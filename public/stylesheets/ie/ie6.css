@@ -30,6 +30,31 @@ div.page_list {zoom: 1;}
   zoom: 1; /* triggers hasLayout */
   display: block; /* resets display */
 }
+.menu_items {
+  zoom: 1;
+  display: block;
+  width: 34em
+}
+div.leftcol {
+  width: 16em; 
+  overflow: hidden;
+}
+div.rightcol {
+  position: absolute;
+  left: -1.5em;
+  width: 16em;
+  top: 2.4em;
+  padding-bottom: 0;
+}
+#menu_me div.menu_items{
+  width: 14em;
+}
+#menu_me div.leftcol{
+  width: 12em;  
+}
+#menu_me div.rightcol{
+  display: none;
+}
 
 /* opacity fix */
 .shy { filter: alpha(opacity=0); zoom: 1; background-color: white; }
