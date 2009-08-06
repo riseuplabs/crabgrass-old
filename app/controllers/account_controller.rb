@@ -73,20 +73,19 @@ class AccountController < ApplicationController
       end
       # @hidden_profile
       @user.avatar = Avatar.new
-
       # @visible_profile.entity = @user
       # @hidden_profile.entity = @user
       # @user.profiles << @visible_profile
       # @user.profiles << @hidden_profile
 
-      @user.unverified = current_site.needs_email_verification
+      @user.unverified = current_site.needs_email_verification?
 
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
       current_site.add_user!(current_user)
 
-      send_email_verification if current_site.needs_email_verification
+      send_email_verification if current_site.needs_email_verification?
 
       redirect_to params[:redirect] || current_site.login_redirect(current_user)
       flash_message :title => 'Registration successful'[:signup_success],
