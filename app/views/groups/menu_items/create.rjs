@@ -1,3 +1,2 @@
 # update the new_menu_item li with the created menu_item
-page.replace 'new_menu_item', :partial => 'menu_item'
-page.insert_html :bottom, 'menu_items_list', :partial => 'new', :locals => {:menu_item => MenuItem.new}
+page.replace 'menu_items_form', :partial => 'menu_items_form'

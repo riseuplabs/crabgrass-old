@@ -1,40 +1,11 @@
 module Groups::MenuItemsHelper
 
-  def autocomplete_service_url
-    "/groups/menu_items/auto_complete/" + @group.name
-  end
-
-  def autocomplete_item_selected_function(autocomplete_id)
-    function_code = remote_function({
-      :url => {:controller => 'groups/menu_items', :action => 'create', :id => @group.name},
-      :with => %{'page_id=' + data},
-      :update => 'menu_items_list_container',
-      :loading => show_spinner(autocomplete_id),
-      :complete => hide_spinner(autocomplete_id)
-    })
-
-    # submit the name and clear the input box
-    "function(value, data) { #{function_code}; $('page_name').value='';}"
-  end
-
-  def new_autocomplete_javascript(autocomplete_id)
-    %Q[
-      new Autocomplete('page_name', {
-        serviceUrl:'#{autocomplete_service_url}',
-        minChars:1,
-        maxHeight:500,
-        width:400,
-        onSelect: #{autocomplete_item_selected_function(autocomplete_id)},
-      }, '#{autocomplete_id}');
-    ]
-  end
-
   def destroy_menu_item_remote_function(menu_item, spinner_id)
     remote_function({
       :url => {:controller => 'groups/menu_items', :action => 'destroy', :id => @group.name},
       :with => %Q['menu_item_id=' + #{menu_item.id}],
       :method => :delete,
-      :update => 'menu_items_list_container',
+      :update => 'menu_items_form_container',
       :loading => show_spinner(spinner_id),
       :complete => hide_spinner(spinner_id)
     })
