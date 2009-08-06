@@ -1,7 +1,10 @@
 <%-
+  submenu = 'me_sidebar' if submenu.nil?
   inline_create_page = false if inline_create_page.nil?
   skip_ids = false if skip_ids.nil?
 -%>
+
+<% cache(menu_cache_key(:submenu=>submenu)) do %>
 
 <%= create_page_link(nil) unless inline_create_page %>
 
@@ -9,7 +12,7 @@
 
   <% if inline_create_page %>
     <% active = controller?(:pages) && action?(:create) %>
-    <li class='small_icon plus_16<%= active ? ' active' : '' %>'><%= link_to_active(
+    <li class='small_icon plus_16'><%= link_to_active(
       "Create Page"[:contribute_content_link],
       {:controller => '/pages', :action => 'create'},
       active
@@ -17,35 +20,35 @@
   <% end %>
 
   <% active = controller?('me/dashboard') %>
-  <li class='small_icon house_16<%= active ? ' active' : '' %>'><%= link_to_active(
+  <li class='small_icon house_16'><%= link_to_active(
     'Dashboard'[:me_dashboard_link],
     '/me/dashboard',
     active
   ) %></li>
 
   <% active = controller?('me/inbox') %>
-  <li id="<%= 'inbox_line' unless skip_ids %>" class="small_icon inbox_16<%= active ? ' active' : '' %>"><%= link_to_active(
+  <li id="<%= 'inbox_line' unless skip_ids %>" class="small_icon inbox_16"><%= link_to_active(
      'Inbox'[:me_inbox_link],
     '/me/inbox',
     active
   ) %></li>
 
   <% active = controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
-  <li class="small_icon page_message_16<%= active ? ' active' : '' %>"><%= link_to_active(
+  <li class="small_icon page_message_16"><%= link_to_active(
     'Messages'[:messages],
     my_messages_path,
     active
   ) %></li>
 
   <% active = controller?('me/tasks') %>
-  <li class="small_icon page_tasks_16<%= active ? ' active' : '' %>"><%= link_to_active(
+  <li class="small_icon page_tasks_16"><%= link_to_active(
     'Tasks'[:me_tasks_link],
     '/me/tasks/pending',
     active
   ) %></li>
 
   <% active = controller?('me/requests') %>
-  <li id="<%= 'requests_line' unless skip_ids %>" class='small_icon info_16<%= active ? ' active' : '' %>'><%= link_to_active(
+  <li id="<%= 'requests_line' unless skip_ids %>" class='small_icon info_16'><%= link_to_active(
     'Requests'[:requests],
     {:controller => '/me/requests', :action => 'to_me'},
     active
@@ -75,14 +78,14 @@
 -->
 
     <% active = controller?('me/search') %>
-    <li class="small_icon magnifier_16<%= active ? ' active' : '' %>"><%= link_to_active(
+    <li class="small_icon magnifier_16"><%= link_to_active(
       'Search'[:me_search_link],
       '/me/search',
       active
     ) %></li>
 
     <% active = controller?('me/trash') %>
-    <li id="<%='trash_line' unless skip_ids %>" class="small_icon trash_16<%= active ? ' active' : '' %>"><%= link_to_active(
+    <li id="<%='trash_line' unless skip_ids %>" class="small_icon trash_16"><%= link_to_active(
       'Trash'[:trash],
       {:controller => '/me/trash'},
       active
@@ -90,3 +93,4 @@
 
 </ul>
 
+<% end %>

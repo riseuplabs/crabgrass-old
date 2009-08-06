@@ -276,8 +276,8 @@ function loginDialog(txt,options) {
   '<form class="login_dialog" method="post" action="/account/login">' +
   '  <input type="hidden" value="#{token}" name="authenticity_token" id="redirect"/>' +
   '  <input type="hidden" value="#{redirect}" name="redirect" id="redirect"/>' +
-  '  <dl><dt>#{username}</dt><dd><input type="text" name="login" id="login" tabindex="1"/></dd>' +
-  '  <dt>#{password}</dt><dd><input type="password" name="password" id="password" tabindex="2"/></dd></dl>' +
+  '  <label>#{username}</label><input type="text" name="login" id="login" tabindex="1"/>' +
+  '  <label>#{password}</label><input type="password" name="password" id="password" tabindex="2"/>' +
   '  <input type="submit" value="#{login}" tabindex="3"/>' +
   '  <span class="small">'
   if (options['may_signup'])
