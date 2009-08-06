@@ -41,7 +41,7 @@ div.leftcol {
 }
 div.rightcol {
   position: absolute;
-  left: -1.5em;
+  left: -.5em;
   width: 16em;
   top: 2.4em;
   padding-bottom: 0;
