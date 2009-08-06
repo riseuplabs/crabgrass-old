@@ -53,7 +53,8 @@ module MenuHelper
       :menu_items => menu_items('boxes', {
         :entities => current_user.friends.most_active,
         :heading  => "My Friends"[:my_contacts],
-        :see_all_url => people_directory_url(:friends)
+        :see_all_url => people_directory_url(:friends),
+        :submenu => 'people'
       })
     )
   end
@@ -67,7 +68,8 @@ module MenuHelper
       :menu_items => menu_items('boxes', {
         :entities => current_user.primary_groups.most_active,
         :heading => 'My Groups'[:my_groups],
-        :see_all_url => group_directory_url(:action => 'my')
+        :see_all_url => group_directory_url(:action => 'my'),
+        :submenu => 'groups'
       })
     )
   end
@@ -81,7 +83,8 @@ module MenuHelper
       :menu_items => menu_items('boxes', {
         :entities => current_user.primary_networks.most_active,
         :heading => 'My Networks'[:my_networks],
-        :see_all_url => network_directory_url(:action => 'my')
+        :see_all_url => network_directory_url(:action => 'my'),
+        :submenu => 'networks'
       })
     )
   end

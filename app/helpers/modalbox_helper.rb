@@ -39,8 +39,8 @@ module ModalboxHelper
       html_options[:id] ||= 'link%s'%rand(1000000)
       html_options[:icon] = icon
       options.merge!(
-        :loading => spinner_icon_on(icon, options[:id]),
-        :complete => spinner_icon_off(icon, options[:id]),
+        :loading => spinner_icon_on(icon, html_options[:id]),
+        :complete => spinner_icon_off(icon, html_options[:id]),
         :showAfterLoading => true
       )
       function = modalbox_function(contents, options)
@@ -76,6 +76,13 @@ module ModalboxHelper
 
   def close_modal_function()
     'Modalbox.hide();'
+  end
+
+  def localize_modalbox_strings
+    "Modalbox.setStrings(%s)" % {
+       :ok => "OK"[:ok_button], :cancel => "Cancel"[:cancel_button], :close => "Close"[:close_button],
+       :alert => "Alert"[:alert], :confirm => "Confirm"[:confirm], :loading => "Loading..."[:loading_progress]
+     }.to_json
   end
 
   private

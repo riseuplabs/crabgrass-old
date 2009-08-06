@@ -130,7 +130,7 @@ module LayoutHelper
 
   # extra js that we might sometimes need
   EXTRA_JS = ['dragdrop', 'builder', 'slider']
-  
+
   # includes the correct javascript tags for the current request.
   # if the special symbol :extra has been specified as a required js file,
   # then this expands to all the EXTRA_JS files.
@@ -164,6 +164,7 @@ module LayoutHelper
     lines << optional_javascript_tag
     lines << '<script type="text/javascript">'
     lines << @content_for_script
+    lines << localize_modalbox_strings
     lines << '</script>'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
