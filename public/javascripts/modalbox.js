@@ -43,7 +43,7 @@ Ajax request event listeners:
 */
 
 Prototype.Browser.IE6 = Prototype.Browser.IE &&
-  parseInt(navigator.userAgent.substring(navigator.userAgent.indexOf("MSIE")+5))==6;
+	parseInt(navigator.userAgent.substring(navigator.userAgent.indexOf("MSIE")+5))==6;
 Prototype.Browser.IE7 = Prototype.Browser.IE && !Prototype.Browser.IE6;
 
 if (!window.Modalbox)
@@ -73,8 +73,7 @@ Modalbox.Methods = {
 		params: {},
 		method: 'get', // Default Ajax request method
 		autoFocusing: true, // Toggles auto-focusing for form elements. Disable for long text pages.
-		showAfterLoading: false // if true, the box does not appear until the ajax request returns
-                                // with the contents of the box. has no effect on non-ajax popups
+		showAfterLoading: false // if true, the box does not appear until the ajax request returns with the contents of the box. has no effect on non-ajax popups
 	},
 	_options: new Object,
 
@@ -92,7 +91,7 @@ Modalbox.Methods = {
 		this.setOptions(options);
 
 		//Creating the overlay
-		this.MBoverlay = new Element("div", { id: "MB_overlay", style: "opacity: 0" });
+		this.MBoverlay = new Element("div", { id: "MB_overlay", style: "opacity: 0; display: none" });
 
 		//Creating the modal window
 		this.MBwindow = new Element("div", {id: "MB_window", style: "display: none"}).update(
@@ -195,7 +194,6 @@ Modalbox.Methods = {
 		var prior = this.priorContent.pop();
 		if (prior) {
 			this.show(prior.content, {title:prior.caption, width:prior.width});
-			//this.resizeToContent();
 		} else {
 			this.hide();
 		}
@@ -207,7 +205,6 @@ Modalbox.Methods = {
 	_appear: function() { // First appearing of MB
 		if(!this.options.showAfterLoading)
 			this._makeVisible();
-		//this.MBoverlay.hide();
 		this.loadContent();
 		this._setWidthAndPosition = this._setWidthAndPosition.bindAsEventListener(this);
 		Event.observe(window, "resize", this._setWidthAndPosition);
