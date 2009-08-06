@@ -10,14 +10,14 @@
   </div>
   <div style="display:inline; margin-left:2em;'">
     <%= "Flagged Pages:"%>&nbsp;&nbsp;
-    <%= link_to_active( 'new', :controller => 'admin/pages', :action => 'index', :view => 'new')%>&nbsp;
-    <%= link_to_active( 'vetted',  :controller => 'admin/pages', :action => 'index', :view => 'vetted')%>&nbsp;
-    <%= link_to_active( 'deleted', :controller => 'admin/pages', :action => 'index', :view => 'deleted')%>
+    <%= tab_link('new')%>&nbsp;
+    <%= tab_link('vetted')%>&nbsp;
+    <%= tab_link('deleted')%>
   </div>
   <div style="display:inline; margin-left:2em;'">
     <%= "Request to Make Public:"%>&nbsp;
-    <%= link_to_active( 'requested', :controller => 'admin/pages', :action => 'index', :view => 'public requested')%>&nbsp;
-    <%= link_to_active( 'approved', :controller => 'admin/pages', :action => 'index', :view => 'public')%>
+    <%= tab_link('requested', 'public requested')%>&nbsp;
+    <%= tab_link('approved', 'public')%>
   </div>
 </div>
 <% form_tag({ :action => 'index' }, :method => :get) do %>
